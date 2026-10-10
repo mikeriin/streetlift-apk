@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'app_theme.dart';
 import 'game.dart';
 import 'game_widgets.dart';
+import 'kit/kit.dart';
 import 'progression.dart';
 import 'store.dart';
-import 'ui.dart';
 import 'stats_widgets.dart';
 
+/// Carte de niveau (code mort signalé à UI5, cahier §4.6 : conservé, mis
+/// aux jetons).
 class StatsLevelCard extends StatelessWidget {
   final Progression progress;
   final VoidCallback onTap;
@@ -16,207 +17,232 @@ class StatsLevelCard extends StatelessWidget {
     required this.onTap,
   });
   @override
-  Widget build(BuildContext context) => KCard(
-    color: SL.bordeaux,
-    onTap: onTap,
-    padding: const EdgeInsets.all(22),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'TON NIVEAU',
-                    style: TextStyle(
-                      color: SL.onBrandSoft,
-                      fontSize: 10,
-                      letterSpacing: 1.1,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    progress.rank.title,
-                    style: TextStyle(
-                      color: SL.onBrand,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
-                      height: 1.15,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 14),
-            Text(
-              '${progress.level}',
-              style: TextStyle(
-                color: SL.onBrand,
-                fontSize: 46,
-                height: 1,
-                fontWeight: FontWeight.w700,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
-            ),
-            const SizedBox(width: 8),
-            Icon(Icons.chevron_right_rounded, color: SL.onBrand, size: 20),
-          ],
-        ),
-        const SizedBox(height: 18),
-        KProgressBar(
-          value: progress.fraction,
-          height: 5,
-          color: SL.onBrand,
-          track: SL.onBrand.withValues(alpha: .2),
-          semanticsLabel: 'Progression du niveau',
-          semanticsValue: '${progress.inLevel} sur ${progress.need} XP',
-        ),
-        const SizedBox(height: 9),
-        Text(
-          '${progress.remaining} XP avant le niveau ${progress.level + 1}',
-          style: TextStyle(color: SL.onBrand, fontSize: 12),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          '${progress.earnedBadges} badges',
-          style: TextStyle(color: SL.onBrandSoft, fontSize: 11),
-        ),
-      ],
-    ),
-  );
-}
-
-void showStatsLevel(BuildContext context) {
-  final p = store.progression;
-  statsSheet(context, 'Ton niveau, tes récompenses', [
-    Text(
-      'Niveau ${p.level} · ${p.rank.title}',
-      style: Theme.of(context).textTheme.titleMedium,
-    ),
-    StatsBar(
-      value: p.fraction,
-      label: 'Niveau',
-      description: '${p.inLevel} sur ${p.need} XP',
-    ),
-    Text(
-      '${p.remaining} XP avant le niveau ${p.level + 1} · ${p.totalXp} XP cumulés.',
-    ),
-    const KSection('Tes rangs'),
-    for (final rank in progressRanks)
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: Icon(
-          p.level >= rank.level
-              ? Icons.verified_rounded
-              : Icons.lock_outline_rounded,
-          color: p.level >= rank.level ? SL.success : SL.dim,
-        ),
-        title: Text(rank.title),
-        subtitle: Text(
-          'Niveau ${rank.level} · ${Progression.xpAtLevel(rank.level)} XP cumulés',
-        ),
-        trailing: rank == p.rank ? const KBadge('Actuel') : null,
-      ),
-    const Text('Les rangs décrivent ton parcours dans l’application.'),
-    const KSection('Origine de tes XP'),
-    for (final entry in <String, int>{
-      'Programme': p.programXp,
-      'Objectifs hebdomadaires': p.weeklyXp,
-      'Badges': p.badgeXp,
-    }.entries)
-      Row(
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final soft = k.surPleine.withValues(alpha: .8);
+    return KCard.day(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: Text(entry.key)),
-          const SizedBox(width: 12),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Ton niveau',
+                      style: KType.micro.copyWith(color: soft),
+                    ),
+                    const SizedBox(height: KSpacing.s4),
+                    Text(
+                      progress.rank.title,
+                      style: KType.titreEcran.copyWith(color: k.surPleine),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: KSpacing.s14),
+              Text(
+                '${progress.level}',
+                style: KType.chiffre.copyWith(color: k.surPleine),
+              ),
+              const SizedBox(width: KSpacing.s8),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: k.surPleine,
+                size: KSize.icon,
+              ),
+            ],
+          ),
+          const SizedBox(height: KSpacing.s16),
+          StatsBar(
+            value: progress.fraction,
+            label: 'Progression du niveau',
+            description: '${progress.inLevel} sur ${progress.need} XP',
+            onFill: true,
+          ),
+          const SizedBox(height: KSpacing.s8),
           Text(
-            '${entry.value} XP',
-            style: const TextStyle(fontWeight: FontWeight.w600),
+            '${progress.remaining} XP avant le niveau ${progress.level + 1}',
+            style: KType.detail.copyWith(color: k.surPleine),
+          ),
+          Text(
+            '${progress.earnedBadges} badges',
+            style: KType.detail.copyWith(color: soft),
           ),
         ],
       ),
-  ]);
+    );
+  }
 }
 
-class StatsMissionCard extends StatelessWidget {
-  final WeeklyMission mission;
-  const StatsMissionCard(this.mission, {super.key});
-  @override
-  Widget build(BuildContext context) => KCard(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              mission.complete
-                  ? Icons.check_circle_rounded
-                  : Icons.flag_outlined,
-              color: mission.complete ? SL.success : SL.accent,
-              size: 22,
+/// Feuille de niveau (code mort signalé à UI5, cahier §4.6).
+void showStatsLevel(BuildContext context) {
+  final p = store.progression;
+  statsSheet(
+    context,
+    'Ton niveau, tes récompenses',
+    subtitle: 'Niveau ${p.level}\u00A0· ${p.rank.title}',
+    [
+      StatsBar(
+        value: p.fraction,
+        label: 'Niveau',
+        description: '${p.inLevel} sur ${p.need} XP',
+      ),
+      StatsText(
+        '${p.remaining} XP avant le niveau ${p.level + 1}\u00A0· ${p.totalXp} XP cumulés.',
+      ),
+      const KSectionTitle('Tes rangs'),
+      StatsSheetGroup(
+        children: [
+          for (final rank in progressRanks)
+            Builder(
+              builder: (context) {
+                final k = KTokens.of(context);
+                return StatsSheetRow(
+                  icon: p.level >= rank.level
+                      ? Icons.verified_rounded
+                      : Icons.lock_outline_rounded,
+                  iconColor: p.level >= rank.level ? k.validation : k.texte2,
+                  title: rank.title,
+                  subtitle:
+                      'Niveau ${rank.level}\u00A0· ${Progression.xpAtLevel(rank.level)} XP cumulés',
+                  trailing: rank == p.rank ? const KChip('Actuel') : null,
+                );
+              },
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                mission.title,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 7),
-        Text(mission.detail, style: Theme.of(context).textTheme.bodySmall),
-        const SizedBox(height: 12),
-        StatsBar(
-          value: mission.fraction,
-          label: mission.title,
-          description: '${mission.current} sur ${mission.target}',
-          color: mission.complete ? SL.success : null,
-        ),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 12,
-          runSpacing: 4,
-          children: [
-            Text(
-              mission.complete
-                  ? 'Objectif atteint'
-                  : '${mission.current} / ${mission.target}',
-              style: TextStyle(
-                color: mission.complete ? SL.success : SL.text,
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-              ),
-            ),
-            Text(
-              '+${mission.xp} XP${mission.complete ? ' inclus' : ''}',
-              style: TextStyle(color: SL.dim, fontSize: 12),
-            ),
-          ],
-        ),
-      ],
-    ),
+        ],
+      ),
+      const StatsText('Les rangs décrivent ton parcours dans l’application.'),
+      const KSectionTitle('Origine de tes XP'),
+      StatsSheetGroup(
+        children: [
+          for (final entry in <String, int>{
+            'Programme': p.programXp,
+            'Objectifs hebdomadaires': p.weeklyXp,
+            'Badges': p.badgeXp,
+          }.entries)
+            StatsSheetRow(title: entry.key, value: '${entry.value} XP'),
+        ],
+      ),
+    ],
   );
 }
 
-void showStatsMissions(BuildContext context) {
-  final week = store.progression.week;
-  statsSheet(context, 'Défis de la semaine', [
-    Text(
-      'Du ${statsDate(week.monday)} au ${statsDate(week.monday.add(const Duration(days: 6)))}',
-    ),
-    for (final mission in week.missions) StatsMissionCard(mission),
-    const Text(
-      'Les bonus sont automatiques. Les jours de repos ne cassent pas ta régularité : deux jours actifs dans la semaine suffisent. Les autres défis restent facultatifs.',
-    ),
-  ]);
+/// Défi de la semaine : titre, consigne, jauge, bonus. [overline] : surtitre
+/// (Aperçu) ; [onTap] : ouvre Parcours depuis l'Aperçu ; [inSheet] : posé
+/// dans une feuille (`haute`, rayon des menus, jamais une carte dans une
+/// carte).
+class StatsMissionCard extends StatelessWidget {
+  final WeeklyMission mission;
+  final String? overline;
+  final VoidCallback? onTap;
+  final bool inSheet;
+  const StatsMissionCard(
+    this.mission, {
+    super.key,
+    this.overline,
+    this.onTap,
+    this.inSheet = false,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final done = mission.complete;
+    return KCard(
+      color: inSheet ? k.haute : null,
+      radius: inSheet ? KRadius.menu : null,
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (overline != null) ...[
+            Text(overline!, style: KType.micro.copyWith(color: k.texte2)),
+            const SizedBox(height: KSpacing.s8),
+          ],
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                done ? Icons.check_circle_rounded : Icons.flag_outlined,
+                color: done ? k.validation : k.encre,
+                size: KSize.icon,
+              ),
+              const SizedBox(width: KSpacing.s12),
+              Expanded(
+                child: Text(
+                  mission.title,
+                  style: KType.titreCarte.copyWith(color: k.texte),
+                ),
+              ),
+              if (onTap != null) ...[
+                const SizedBox(width: KSpacing.s8),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  size: KSize.icon,
+                  color: k.texte2,
+                ),
+              ],
+            ],
+          ),
+          const SizedBox(height: KSpacing.s8),
+          Text(mission.detail, style: KType.detail.copyWith(color: k.texte2)),
+          const SizedBox(height: KSpacing.s12),
+          StatsBar(
+            value: mission.fraction,
+            label: mission.title,
+            description: '${mission.current} sur ${mission.target}',
+            color: done ? k.validation : null,
+          ),
+          const SizedBox(height: KSpacing.s8),
+          Wrap(
+            spacing: KSpacing.s12,
+            runSpacing: KSpacing.s4,
+            children: [
+              Text(
+                done
+                    ? 'Objectif atteint'
+                    : '${mission.current}\u00A0/\u00A0${mission.target}',
+                style: KType.micro.copyWith(
+                  color: done ? k.validation : k.texte,
+                ),
+              ),
+              Text(
+                '+${mission.xp} XP${done ? ' inclus' : ''}',
+                style: KType.micro.copyWith(color: k.texte2),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
 
+/// Feuille « Défis de la semaine » (Parcours).
+void showStatsMissions(BuildContext context) {
+  final week = store.progression.week;
+  statsSheet(
+    context,
+    'Défis de la semaine',
+    subtitle:
+        'Du ${statsDate(week.monday)} au ${statsDate(week.monday.add(const Duration(days: 6)))}',
+    [
+      for (final mission in week.missions)
+        StatsMissionCard(mission, inSheet: true),
+      const StatsText(
+        'Les bonus sont automatiques. Les jours de repos ne cassent pas ta régularité : deux jours actifs dans la semaine suffisent. Les autres défis restent facultatifs.',
+        muted: true,
+      ),
+    ],
+  );
+}
+
+/// Parcours (UI3, cahier §4.1) : personnage, arbre des badges (Pratique,
+/// Rythme), et seule entrée des feuilles de jeu (défis, campagne, boss,
+/// saisons, titres).
 class StatsProgression extends StatefulWidget {
   const StatsProgression({super.key});
   @override
@@ -226,158 +252,89 @@ class StatsProgression extends StatefulWidget {
 class _StatsProgressionState extends State<StatsProgression> {
   int _branch = 0;
 
-  Widget _branchButton(
-    BuildContext context,
-    int index,
-    String label,
-    IconData icon, {
-    required bool stacked,
-  }) {
-    final selected = _branch == index;
-    final button = Semantics(
-      selected: selected,
-      child: OutlinedButton(
-        key: ValueKey('stats-branch-$index'),
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
-          backgroundColor: selected ? SL.action : SL.card,
-          foregroundColor: selected ? SL.onAction : SL.dim,
-          side: BorderSide(color: selected ? SL.action : SL.line),
-        ),
-        onPressed: () => setState(() => _branch = index),
-        child: stacked
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(icon, size: 21),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(label, style: const TextStyle(fontSize: 12)),
-                  ),
-                ],
-              )
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(icon, size: 21),
-                  const SizedBox(height: 5),
-                  Text(label, style: const TextStyle(fontSize: 12)),
-                ],
-              ),
-      ),
-    );
-    if (stacked) {
-      return Padding(padding: const EdgeInsets.only(bottom: 8), child: button);
-    }
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: button,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final p = store.progression;
+    final g = store.game;
     final groups = switch (_branch) {
       0 => const {'sessions': 'Séances', 'sets': 'Séries'},
       _ => const {'streak': 'Semaines régulières'},
     };
-    return KList(
+    final defeated = g.bosses.where((b) => b.defeated).length;
+    final boss = g.nextBoss;
+    final season = g.currentSeason;
+    return StatsList(
       key: const PageStorageKey('stats-journey-scroll'),
       children: [
-        const SizedBox(height: 4),
-        KWordFitText(
+        const StatsIntro(
           'Ton arbre de progression',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        Text(
-          'Plusieurs chemins pour avancer. Chaque palier a son objectif.',
-          style: Theme.of(context).textTheme.bodySmall,
+          lead: 'Plusieurs chemins pour avancer. Chaque palier a son objectif.',
         ),
         Column(
           key: const ValueKey('progress-tree'),
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             KCard(
+              key: const ValueKey('stats-character'),
               onTap: () => showCharacterSheet(context),
-              padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
                   RankInsignia(
                     rankIndex: rankIndexOf(p.rank),
                     prestige: GameState.prestigeOf(p.level),
-                    size: 40,
+                    size: KSize.menuIcon,
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: KSpacing.s14),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'NIV. ${p.level} · ${p.rank.title}',
-                          style: Theme.of(context).textTheme.titleMedium,
+                          'Niveau ${p.level}\u00A0· ${p.rank.title}',
+                          style: KType.titreCarte.copyWith(color: k.texte),
                         ),
-                        const SizedBox(height: 3),
                         Text(
-                          '${p.earnedBadges} / ${p.badges.length} badges obtenus',
-                          style: Theme.of(context).textTheme.bodySmall,
+                          'Ta feuille de personnage\u00A0· ${p.earnedBadges}\u00A0/\u00A0${p.badges.length} badges obtenus',
+                          style: KType.detail.copyWith(color: k.texte2),
                         ),
                       ],
                     ),
                   ),
-                  const Icon(Icons.chevron_right_rounded, size: 20),
+                  const SizedBox(width: KSpacing.s8),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    size: KSize.icon,
+                    color: k.texte2,
+                  ),
                 ],
               ),
             ),
-            // L5 : au-delà de 150 % de texte, les trois branches s'empilent
-            // (libellé en entier) au lieu de trois boutons trop étroits.
-            if (MediaQuery.textScalerOf(context).scale(10) <= 15)
-              SizedBox(
-                height: 24,
-                child: CustomPaint(painter: _TreeFork(SL.line, 2)),
-              )
-            else
-              const SizedBox(height: 12),
-            Flex(
-              direction: MediaQuery.textScalerOf(context).scale(10) > 15
-                  ? Axis.vertical
-                  : Axis.horizontal,
-              crossAxisAlignment:
-                  MediaQuery.textScalerOf(context).scale(10) > 15
-                  ? CrossAxisAlignment.stretch
-                  : CrossAxisAlignment.start,
-              children: [
-                for (final (index, label, icon) in [
-                  (0, 'Pratique', Icons.fitness_center_rounded),
-                  (1, 'Rythme', Icons.event_repeat_rounded),
-                ])
-                  _branchButton(
-                    context,
-                    index,
-                    label,
-                    icon,
-                    stacked: MediaQuery.textScalerOf(context).scale(10) > 15,
-                  ),
-              ],
+            const SizedBox(height: KSpacing.s16),
+            KSegmented<int>(
+              semanticLabel: 'Branche de l’arbre',
+              segments: const [KSegment(0, 'Pratique'), KSegment(1, 'Rythme')],
+              selected: _branch,
+              onChanged: (b) => setState(() => _branch = b),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: KSpacing.s20),
             LayoutBuilder(
               builder: (context, bounds) {
                 final columns =
                     groups.length > 1 &&
-                        bounds.maxWidth >= 330 &&
-                        MediaQuery.textScalerOf(context).scale(14) <= 16
+                        bounds.maxWidth >= 300 &&
+                        MediaQuery.textScalerOf(context).scale(1) < 1.3
                     ? 2
                     : 1;
+                const gap = KSpacing.s12;
                 return Wrap(
-                  spacing: 12,
-                  runSpacing: 24,
+                  spacing: gap,
+                  runSpacing: KSpacing.s24,
                   children: [
                     for (final group in groups.entries)
                       SizedBox(
-                        width: (bounds.maxWidth - 12 * (columns - 1)) / columns,
+                        width:
+                            (bounds.maxWidth - gap * (columns - 1)) / columns,
                         child: _BadgeChain(
                           title: group.value,
                           badges: p.badges
@@ -391,29 +348,55 @@ class _StatsProgressionState extends State<StatsProgression> {
             ),
           ],
         ),
-        KMenuTile(
-          icon: Icons.map_outlined,
-          title: 'Campagne, boss et saisons',
-          subtitle: campaignSummary(store.game),
-          onTap: () => showCampaign(context),
+        KMenuGroup(
+          title: 'Défis et récompenses',
+          children: [
+            KMenuRow(
+              key: const ValueKey('stats-missions'),
+              icon: Icons.flag_outlined,
+              title: 'Défis de la semaine',
+              subtitle:
+                  '${p.week.missions.where((m) => m.complete).length}\u00A0/\u00A0${p.week.missions.length} objectifs atteints\u00A0· bonus XP automatiques',
+              onTap: () => showStatsMissions(context),
+            ),
+            KMenuRow(
+              key: const ValueKey('stats-campaign'),
+              icon: Icons.map_outlined,
+              title: 'Campagne',
+              subtitle: campaignSummary(g),
+              onTap: () => showCampaign(context),
+            ),
+            KMenuRow(
+              key: const ValueKey('stats-bosses'),
+              icon: Icons.sports_martial_arts_rounded,
+              title: 'Boss',
+              subtitle: boss == null
+                  ? 'Tous vaincus\u00A0· $defeated\u00A0/\u00A0${g.bosses.length}'
+                  : '$defeated\u00A0/\u00A0${g.bosses.length} vaincus\u00A0· ${boss.name}\u00A0· ${bossHint(g, boss)}',
+              onTap: () => showBosses(context),
+            ),
+            KMenuRow(
+              key: const ValueKey('stats-seasons'),
+              icon: Icons.calendar_month_rounded,
+              title: 'Saisons',
+              subtitle: season == null
+                  ? 'Hors programme'
+                  : 'Saison ${season.index}\u00A0· ${season.name}\u00A0· ${(season.fraction * 100).round()}\u00A0%',
+              onTap: () => showSeasons(context),
+            ),
+            KMenuRow(
+              key: const ValueKey('stats-titles'),
+              icon: Icons.workspace_premium_rounded,
+              title: 'Tes titres',
+              subtitle:
+                  '${g.earnedTitles.length}\u00A0/\u00A0${g.titles.length} obtenus\u00A0· ${store.settings.title.isEmpty ? 'le rang est affiché' : 'affiché : ${store.settings.title}'}',
+              onTap: () => showTitles(context),
+            ),
+          ],
         ),
-        KMenuTile(
-          icon: Icons.workspace_premium_rounded,
-          title: 'Tes titres',
-          subtitle:
-              '${store.game.earnedTitles.length} / ${store.game.titles.length} obtenus · ${store.settings.title.isEmpty ? 'le rang est affiché' : 'affiché : ${store.settings.title}'}',
-          onTap: () => showTitles(context),
-        ),
-        KMenuTile(
-          icon: Icons.flag_outlined,
-          title: 'Défis de la semaine',
-          subtitle:
-              '${p.week.missions.where((m) => m.complete).length} / ${p.week.missions.length} objectifs atteints',
-          onTap: () => showStatsMissions(context),
-        ),
-        Text(
+        const StatsText(
           'Chaque badge rapporte son bonus une seule fois. Ton historique compte déjà dans ces objectifs.',
-          style: Theme.of(context).textTheme.bodySmall,
+          muted: true,
         ),
       ],
     );
@@ -426,20 +409,19 @@ class _BadgeChain extends StatelessWidget {
   const _BadgeChain({required this.title, required this.badges});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final next = badges.where((b) => !b.earned).firstOrNull;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: Text(
-            title.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: SL.dim,
-              fontSize: 11,
-              letterSpacing: .8,
-              fontWeight: FontWeight.w700,
+          padding: const EdgeInsets.only(bottom: KSpacing.s12),
+          child: Semantics(
+            header: true,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: KType.section.copyWith(color: k.texte2),
             ),
           ),
         ),
@@ -448,10 +430,8 @@ class _BadgeChain extends StatelessWidget {
             Center(
               child: Container(
                 width: 2,
-                height: 18,
-                color: badges[i - 1].earned
-                    ? SL.success.withValues(alpha: .6)
-                    : SL.line,
+                height: KSpacing.s16,
+                color: badges[i - 1].earned ? k.validation : k.filet,
               ),
             ),
           _BadgeNode(badges[i], next: badges[i] == next),
@@ -467,16 +447,17 @@ class _BadgeNode extends StatelessWidget {
   const _BadgeNode(this.item, {required this.next});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final status = item.earned
         ? 'Obtenu'
         : next
         ? 'Prochain palier'
         : 'À venir';
     final color = item.earned
-        ? SL.success
+        ? k.validation
         : next
-        ? SL.accent
-        : SL.dim;
+        ? k.encre
+        : k.texte2;
     return Semantics(
       button: true,
       label:
@@ -486,56 +467,60 @@ class _BadgeNode extends StatelessWidget {
       child: KCard(
         key: ValueKey('badge-${item.badge.id}'),
         onTap: () => _detail(context),
-        outline: next ? SL.accent.withValues(alpha: .55) : null,
-        padding: const EdgeInsets.all(16),
+        outline: next ? k.encre : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              item.earned
-                  ? Icons.verified_rounded
-                  : next
-                  ? Icons.radio_button_checked_rounded
-                  : Icons.lock_outline_rounded,
-              color: color,
-              size: 26,
+            Row(
+              children: [
+                Icon(
+                  item.earned
+                      ? Icons.verified_rounded
+                      : next
+                      ? Icons.radio_button_checked_rounded
+                      : Icons.lock_outline_rounded,
+                  color: color,
+                  size: KSize.icon,
+                ),
+                const SizedBox(width: KSpacing.s8),
+                Expanded(
+                  child: Text(
+                    status,
+                    style: KType.micro.copyWith(color: color),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: KSpacing.s8),
             Text(
               item.badge.title,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: KType.corpsFort.copyWith(color: k.texte),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: KSpacing.s8),
             RarityChip(rarityOf(item.badge)),
-            const SizedBox(height: 5),
-            Text(
-              status,
-              style: TextStyle(
-                color: color,
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 12),
+            const SizedBox(height: KSpacing.s12),
             StatsBar(
               value: item.fraction,
               label: item.badge.description,
-              // Palier en cours : dégradé de la charte ; obtenu : vert.
-              color: next ? null : color,
+              color: item.earned ? k.validation : null,
             ),
-            const SizedBox(height: 7),
-            Text(
-              '${item.current.clamp(0, item.badge.target)} / ${item.badge.target}',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 3),
-            Text(
-              '+${item.badge.xp} XP',
-              style: TextStyle(
-                color: color,
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-              ),
+            const SizedBox(height: KSpacing.s8),
+            Wrap(
+              spacing: KSpacing.s8,
+              runSpacing: KSpacing.s4,
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${item.current.clamp(0, item.badge.target)}\u00A0/\u00A0${item.badge.target}',
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
+                Text(
+                  '+${item.badge.xp} XP',
+                  style: KType.micro.copyWith(
+                    color: item.earned ? k.validation : k.texte,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -543,105 +528,87 @@ class _BadgeNode extends StatelessWidget {
     );
   }
 
-  void _detail(BuildContext context) => statsSheet(context, item.badge.title, [
-    Icon(
-      item.earned ? Icons.verified_rounded : Icons.workspace_premium_outlined,
-      size: 54,
-      color: item.earned ? SL.success : SL.accent,
-    ),
-    Text(
-      item.badge.description,
-      style: Theme.of(context).textTheme.titleMedium,
-    ),
-    Align(
-      alignment: Alignment.centerLeft,
-      child: RarityChip(rarityOf(item.badge)),
-    ),
-    StatsBar(
-      value: item.fraction,
-      label: item.badge.title,
-      description: '${item.current} sur ${item.badge.target}',
-    ),
-    Text(
-      item.earned
-          ? 'Objectif atteint · total actuel : ${item.current}'
-          : '${item.current} / ${item.badge.target} · encore ${item.badge.target - item.current} pour ce palier',
-    ),
-    Text(
-      item.earned
-          ? '+${item.badge.xp} XP déjà inclus dans ton total.'
-          : '+${item.badge.xp} XP attribués automatiquement quand l’objectif est atteint.',
-    ),
-    if (item.badge.metric == 'streak')
-      const Text(
-        'Une semaine est régulière à partir de deux jours actifs. Les repos sont compatibles avec cet objectif.',
+  void _detail(BuildContext context) {
+    final status = item.earned
+        ? 'Obtenu'
+        : next
+        ? 'Prochain palier'
+        : 'À venir';
+    statsSheet(context, item.badge.title, subtitle: status, [
+      Builder(
+        builder: (context) {
+          final k = KTokens.of(context);
+          return Row(
+            children: [
+              Icon(
+                item.earned
+                    ? Icons.verified_rounded
+                    : Icons.workspace_premium_outlined,
+                size: KSize.target,
+                color: item.earned ? k.validation : k.encre,
+              ),
+              const SizedBox(width: KSpacing.s12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.badge.description,
+                      style: KType.corpsFort.copyWith(color: k.texte),
+                    ),
+                    const SizedBox(height: KSpacing.s4),
+                    RarityChip(rarityOf(item.badge)),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
-  ]);
-}
-
-class _TreeFork extends CustomPainter {
-  final Color color;
-  final int branches;
-  const _TreeFork(this.color, this.branches);
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-    for (var i = 0; i < branches; i++) {
-      final x = size.width * (i + .5) / branches;
-      final path = Path()
-        ..moveTo(size.width / 2, 0)
-        ..lineTo(size.width / 2, size.height / 2)
-        ..lineTo(x, size.height / 2)
-        ..lineTo(x, size.height);
-      canvas.drawPath(path, paint);
-    }
+      StatsBar(
+        value: item.fraction,
+        label: item.badge.title,
+        description: '${item.current} sur ${item.badge.target}',
+        color: item.earned ? KTokens.of(context).validation : null,
+      ),
+      StatsText(
+        item.earned
+            ? 'Objectif atteint\u00A0· total actuel : ${item.current}'
+            : '${item.current}\u00A0/\u00A0${item.badge.target}\u00A0· encore ${item.badge.target - item.current} pour ce palier',
+      ),
+      StatsText(
+        item.earned
+            ? '+${item.badge.xp} XP déjà inclus dans ton total.'
+            : '+${item.badge.xp} XP attribués automatiquement quand l’objectif est atteint.',
+      ),
+      if (item.badge.metric == 'streak')
+        const StatsText(
+          'Une semaine est régulière à partir de deux jours actifs. Les repos sont compatibles avec cet objectif.',
+          muted: true,
+        ),
+    ]);
   }
-
-  @override
-  bool shouldRepaint(_TreeFork old) =>
-      old.color != color || old.branches != branches;
 }
 
-void showStatsRules(BuildContext context) => showModalBottomSheet<void>(
-  context: context,
-  isScrollControlled: true,
-  useSafeArea: true,
-  builder: (context) => FractionallySizedBox(
-    heightFactor: 0.85,
-    child: ListView(
-      padding: const EdgeInsets.all(20),
-      children: [
-        Text(
-          'Comment progresser',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Le barème de base est conservé : 100 XP pour une journée du programme validée.',
-        ),
-        const SizedBox(height: 14),
-        const Text(
-          'Les badges et les objectifs hebdomadaires ajoutent des bonus automatiques. Les objectifs se renouvellent le lundi et leurs bonus passés restent calculés depuis le journal. Deux séances le même jour comptent pour un seul jour actif. Les jours de récupération du programme ne comptent pas comme des entraînements pour ces bonus.',
-        ),
-        const SizedBox(height: 14),
-        const Text(
-          'Une semaine avec 2 jours actifs prolonge la série de régularité. La semaine en cours peut encore être complétée : elle ne casse pas la série avant le lundi suivant. Aucun entraînement quotidien n’est exigé.',
-        ),
-
-        const SizedBox(height: 14),
-        const Text(
-          'Les XP sont recalculés depuis tes données : supprimer une séance retire les XP et bonus associés. Réimporter la même sauvegarde ne double aucune récompense. Les anciennes séances sans date utilisent, si possible, la date prévue du programme.',
-        ),
-        const SizedBox(height: 16),
-        FilledButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Compris'),
-        ),
-      ],
+/// Feuille « Comprendre les XP » (aide de l'en-tête de Stats).
+void showStatsRules(BuildContext context) => statsSheet(
+  context,
+  'Comprendre les XP',
+  subtitle: 'Comment progresser',
+  closeLabel: 'Compris',
+  const [
+    StatsText(
+      'Le barème de base est conservé : 100 XP pour une journée du programme validée.',
     ),
-  ),
+    StatsText(
+      'Les badges et les objectifs hebdomadaires ajoutent des bonus automatiques. Les objectifs se renouvellent le lundi et leurs bonus passés restent calculés depuis le journal. Deux séances le même jour comptent pour un seul jour actif. Les jours de récupération du programme ne comptent pas comme des entraînements pour ces bonus.',
+    ),
+    StatsText(
+      'Une semaine avec 2 jours actifs prolonge la série de régularité. La semaine en cours peut encore être complétée : elle ne casse pas la série avant le lundi suivant. Aucun entraînement quotidien n’est exigé.',
+    ),
+    StatsText(
+      'Les XP sont recalculés depuis tes données : supprimer une séance retire les XP et bonus associés. Réimporter la même sauvegarde ne double aucune récompense. Les anciennes séances sans date utilisent, si possible, la date prévue du programme.',
+      muted: true,
+    ),
+  ],
 );

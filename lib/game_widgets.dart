@@ -2,45 +2,47 @@
 // personnage, objectif hebdomadaire, série avec boucliers, quêtes, campagne
 // (chapitres), boss, saison, toi contre toi-même, titres, rareté des badges.
 //
-// Tout se dessine avec la charte (bordeaux, rouge, fonds sombres, vert de
-// validation) et supporte 320 px avec texte à 130 % : les lignes longues
-// passent en Wrap ou en Flexible, jamais en Row rigide.
+// UI3 (refonte UI) : tout passe par les jetons du kit (cahier §5) et suit la
+// palette choisie ; les feuilles de jeu ne s'ouvrent que depuis Parcours
+// (cahier §4.1) et n'en ouvrent jamais une autre (plus de feuille empilée).
+// Supporte 320 dp et 200 % de texte : rien n'est coupé, les lignes longues
+// passent à la ligne.
 //
-// Les cartes qui lisent le store étendent `StoreWidget` : l'Aperçu et la
-// feuille de campagne les instancient en `const`, elles se reconstruisent
-// donc elles-mêmes après une séance, un score ou un réglage.
+// Les cartes qui lisent le store étendent `StoreWidget` : l'Aperçu et les
+// feuilles les instancient en `const`, elles se reconstruisent donc
+// elles-mêmes après une séance, un score ou un réglage.
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-import 'app_theme.dart';
 import 'game.dart';
+import 'kalis_clock.dart';
+import 'kit/kit.dart';
 import 'progression.dart';
 import 'stats_widgets.dart';
 import 'store.dart';
 import 'store_widget.dart';
-import 'ui.dart';
-import 'kalis_clock.dart';
 
-Color rarityColor(BadgeRarity r) => switch (r) {
-  BadgeRarity.commun => SL.dim,
-  BadgeRarity.rare => SL.redAccent, // rareté : code fixe (L5-C)
-  BadgeRarity.epique => KPalette.actionRed,
-  BadgeRarity.legendaire => SL.success,
-};
+String _plural(int n, String one, String many) => '$n ${n > 1 ? many : one}';
 
-/// Puce de rareté d'un badge.
+/// R9 : les textes d'aide des attributs (game.dart, hors zone) nomment
+/// encore l'ancienne page ; affichés sous le nom de sa destination.
+String _r9(String text) => text
+    .replaceAll('références Pilotage', 'Mes références')
+    .replaceAll('(Références)', '(Mes références)');
+
+/// Puce de rareté d'un badge : neutre (C5), l'icône distingue les raretés.
 class RarityChip extends StatelessWidget {
   final BadgeRarity rarity;
   const RarityChip(this.rarity, {super.key});
   @override
-  Widget build(BuildContext context) => KBadge(
+  Widget build(BuildContext context) => KChip(
     rarityLabel(rarity),
-    color: rarityColor(rarity),
-    icon: rarity == BadgeRarity.legendaire
-        ? Icons.auto_awesome_rounded
-        : rarity == BadgeRarity.epique
-        ? Icons.diamond_outlined
-        : null,
+    icon: switch (rarity) {
+      BadgeRarity.commun => null,
+      BadgeRarity.rare => Icons.star_outline_rounded,
+      BadgeRarity.epique => Icons.diamond_outlined,
+      BadgeRarity.legendaire => Icons.auto_awesome_rounded,
+    },
   );
 }
 
@@ -49,12 +51,14 @@ class RarityChip extends StatelessWidget {
 // ---------------------------------------------------------------------------
 
 /// Écusson : chevrons (1 à 3) puis étoiles selon le rang, anneau de prestige
-/// au-delà du rang Légende.
+/// au-delà du rang Légende. Aplat de la dominante (`pleine`), marques en
+/// `surPleine` ; [light] : posé sur l'aplat `pleine` (carte du personnage,
+/// récompenses), contour en `surPleine`.
 class RankInsignia extends StatelessWidget {
   final int rankIndex; // 0 Recrue … 6 Légende
   final int prestige;
   final double size;
-  final bool light; // rendu sur fond bordeaux
+  final bool light;
   const RankInsignia({
     super.key,
     required this.rankIndex,
@@ -64,28 +68,37 @@ class RankInsignia extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => ExcludeSemantics(
-    child: SizedBox(
-      width: size,
-      height: size,
-      child: CustomPaint(
-        painter: _InsigniaPainter(
-          rankIndex: rankIndex,
-          prestige: prestige,
-          light: light,
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return ExcludeSemantics(
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: CustomPaint(
+          painter: _InsigniaPainter(
+            rankIndex: rankIndex,
+            prestige: prestige,
+            fill: k.pleine,
+            edge: light ? k.surPleine : k.encre,
+            mark: k.surPleine,
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
+/// Peintre de l'insigne (liste blanche : dessin de données, proportions
+/// relatives à la taille ; couleurs reçues des jetons).
 class _InsigniaPainter extends CustomPainter {
   final int rankIndex, prestige;
-  final bool light;
+  final Color fill, edge, mark;
   const _InsigniaPainter({
     required this.rankIndex,
     required this.prestige,
-    required this.light,
+    required this.fill,
+    required this.edge,
+    required this.mark,
   });
 
   @override
@@ -99,18 +112,14 @@ class _InsigniaPainter extends CustomPainter {
       ..quadraticBezierTo(w * .18, h * .84, w * .12, h * .62)
       ..lineTo(w * .08, h * .2)
       ..close();
-    final fill = Paint()
-      ..shader = const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [KPalette.actionRed, KPalette.burgundy],
-      ).createShader(Offset.zero & size);
-    canvas.drawPath(shield, fill);
-    final edge = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = math.max(1.2, w * .035)
-      ..color = light ? KPalette.light : KPalette.lightRed;
-    canvas.drawPath(shield, edge);
+    canvas.drawPath(shield, Paint()..color = fill);
+    canvas.drawPath(
+      shield,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = math.max(1.2, w * .035)
+        ..color = edge,
+    );
     if (prestige > 0) {
       canvas.drawCircle(
         Offset(w / 2, h / 2),
@@ -118,15 +127,15 @@ class _InsigniaPainter extends CustomPainter {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = math.max(1, w * .03)
-          ..color = KPalette.light.withValues(alpha: .7),
+          ..color = edge.withValues(alpha: .7),
       );
     }
-    final mark = Paint()
+    final stroke = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = math.max(1.6, w * .07)
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round
-      ..color = KPalette.light;
+      ..color = mark;
     final chevrons = math.min(3, rankIndex + 1);
     final stars = math.max(0, rankIndex - 2) + prestige;
     final top = stars > 0 ? h * .42 : h * .34;
@@ -138,7 +147,7 @@ class _InsigniaPainter extends CustomPainter {
           ..moveTo(w * .3, y)
           ..lineTo(w * .5, y + h * .1)
           ..lineTo(w * .7, y),
-        mark,
+        stroke,
       );
     }
     if (stars > 0) {
@@ -147,7 +156,7 @@ class _InsigniaPainter extends CustomPainter {
       final total = n * r * 2.6;
       for (var i = 0; i < n; i++) {
         final cx = w / 2 - total / 2 + r * 1.3 + i * r * 2.6;
-        _star(canvas, Offset(cx, h * .26), r, Paint()..color = KPalette.light);
+        _star(canvas, Offset(cx, h * .26), r, Paint()..color = mark);
       }
     }
   }
@@ -175,7 +184,9 @@ class _InsigniaPainter extends CustomPainter {
   bool shouldRepaint(_InsigniaPainter old) =>
       old.rankIndex != rankIndex ||
       old.prestige != prestige ||
-      old.light != light;
+      old.fill != fill ||
+      old.edge != edge ||
+      old.mark != mark;
 }
 
 int rankIndexOf(ProgressRank rank) => progressRanks.indexOf(rank);
@@ -184,6 +195,8 @@ int rankIndexOf(ProgressRank rank) => progressRanks.indexOf(rank);
 // Radar d'attributs
 // ---------------------------------------------------------------------------
 
+/// Radar des quatre attributs : polygone en `encre` (en `surPleine` sur
+/// l'aplat de la carte du personnage, [light]).
 class AttributeRadar extends StatelessWidget {
   final CharacterSheet sheet;
   final double size;
@@ -195,38 +208,53 @@ class AttributeRadar extends StatelessWidget {
     this.light = false,
   });
   @override
-  Widget build(BuildContext context) => Semantics(
-    label:
-        'Attributs : ${sheet.attributes.map((a) => a.available ? '${a.label} ${a.score} sur 100' : '${a.label} indisponible').join(', ')}.',
-    child: ExcludeSemantics(
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: CustomPaint(
-          painter: _RadarPainter(sheet, light, SL.dark, SL.accentSpec.id),
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final ink = light ? k.surPleine : k.encre;
+    return Semantics(
+      label:
+          'Attributs : ${sheet.attributes.map((a) => a.available ? '${a.label} ${a.score} sur 100' : '${a.label} indisponible').join(', ')}.',
+      child: ExcludeSemantics(
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: CustomPaint(
+            painter: _RadarPainter(
+              sheet,
+              ink: ink,
+              grid: (light ? k.surPleine : k.texte2).withValues(alpha: .35),
+              label: KType.micro.copyWith(
+                color: light ? k.surPleine : k.texte2,
+              ),
+            ),
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
+/// Peintre du radar (liste blanche : dessin de données ; couleurs et style
+/// de texte reçus des jetons).
 class _RadarPainter extends CustomPainter {
   final CharacterSheet sheet;
-  final bool light;
-
-  /// Mode et couleur dominante lus par [paint] : un changement redessine.
-  final bool dark;
-  final String accent;
-  const _RadarPainter(this.sheet, this.light, this.dark, this.accent);
+  final Color ink, grid;
+  final TextStyle label;
+  const _RadarPainter(
+    this.sheet, {
+    required this.ink,
+    required this.grid,
+    required this.label,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = Offset(size.width / 2, size.height / 2);
     final r = math.min(size.width, size.height) / 2 - 14;
-    final grid = Paint()
+    final gridPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1
-      ..color = (light ? SL.onBrandSoft : SL.dim).withValues(alpha: .35);
+      ..color = grid;
     Offset at(int axis, double f) {
       final a = -math.pi / 2 + axis * math.pi / 2;
       return Offset(c.dx + r * f * math.cos(a), c.dy + r * f * math.sin(a));
@@ -240,11 +268,11 @@ class _RadarPainter extends CustomPainter {
           ..lineTo(at(2, f).dx, at(2, f).dy)
           ..lineTo(at(3, f).dx, at(3, f).dy)
           ..close(),
-        grid,
+        gridPaint,
       );
     }
     for (var i = 0; i < 4; i++) {
-      canvas.drawLine(c, at(i, 1), grid);
+      canvas.drawLine(c, at(i, 1), gridPaint);
     }
     // Force en haut, Endurance à droite, Régularité en bas, Technique à gauche.
     final order = [
@@ -263,46 +291,32 @@ class _RadarPainter extends CustomPainter {
       }
     }
     poly.close();
-    canvas.drawPath(
-      poly,
-      Paint()
-        ..shader = LinearGradient(
-          colors: [
-            KPalette.lightRed.withValues(alpha: .55),
-            KPalette.actionRed.withValues(alpha: .35),
-          ],
-        ).createShader(Offset.zero & size),
-    );
+    canvas.drawPath(poly, Paint()..color = ink.withValues(alpha: .3));
     canvas.drawPath(
       poly,
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2
-        ..color = light ? SL.onBrandSoft : KPalette.lightRed,
+        ..strokeJoin = StrokeJoin.round
+        ..color = ink,
     );
     final labels = ['F', 'E', 'R', 'T'];
     for (var i = 0; i < 4; i++) {
       final p = at(i, 1.22);
       final tp = TextPainter(
-        text: TextSpan(
-          text: labels[i],
-          style: TextStyle(
-            color: light ? SL.onBrandSoft : SL.dim,
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        text: TextSpan(text: labels[i], style: label),
         textDirection: TextDirection.ltr,
       )..layout();
       tp.paint(canvas, p - Offset(tp.width / 2, tp.height / 2));
+      tp.dispose();
     }
   }
 
   @override
   bool shouldRepaint(_RadarPainter old) =>
-      old.light != light ||
-      old.dark != dark ||
-      old.accent != accent ||
+      old.ink != ink ||
+      old.grid != grid ||
+      old.label != label ||
       old.sheet.attributes.map((a) => a.score).join() !=
           sheet.attributes.map((a) => a.score).join();
 }
@@ -311,133 +325,89 @@ class _RadarPainter extends CustomPainter {
 // Feuille de personnage (carte héros de l'aperçu)
 // ---------------------------------------------------------------------------
 
+/// Carte du personnage : aplat de la dominante (`pleine`), texte
+/// `surPleine`. Dans l'Aperçu, elle ouvre Parcours (seule entrée de la
+/// feuille de personnage, cahier §4.1).
 class CharacterCard extends StoreWidget {
   final VoidCallback onTap;
   const CharacterCard({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final p = store.progression;
     final g = store.game;
     final next = p.nextRank;
-    return KCard(
-      color: SL.bordeaux,
+    final ink = k.surPleine;
+    final soft = k.surPleine.withValues(alpha: .8);
+    final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+    final insignia = RankInsignia(
+      rankIndex: rankIndexOf(p.rank),
+      prestige: GameState.prestigeOf(p.level),
+      size: KSize.primary,
+      light: true,
+    );
+    final title = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Ton personnage', style: KType.micro.copyWith(color: soft)),
+        const SizedBox(height: KSpacing.s4 / 2),
+        // C3 : le titre passe à la ligne, jamais coupé.
+        Text(store.displayTitle, style: KType.titreEcran.copyWith(color: ink)),
+      ],
+    );
+    final level = Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text('Niveau', style: KType.micro.copyWith(color: soft)),
+        Text('${p.level}', style: KType.chiffre.copyWith(color: ink)),
+      ],
+    );
+    return KCard.day(
       onTap: onTap,
-      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Builder(
-            builder: (context) {
-              final insignia = RankInsignia(
-                rankIndex: rankIndexOf(p.rank),
-                prestige: GameState.prestigeOf(p.level),
-                size: 54,
-                light: true,
-              );
-              final title = Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'TON PERSONNAGE',
-                    style: TextStyle(
-                      color: SL.onBrandSoft,
-                      fontSize: 10,
-                      letterSpacing: 1.1,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  // L5 : retour à la ligne plutôt que réduction du titre.
-                  Text(
-                    store.displayTitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: SL.onBrand,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      height: 1.15,
-                    ),
-                  ),
-                ],
-              );
-              final level = Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    'NIV.',
-                    style: TextStyle(
-                      color: SL.onBrandSoft,
-                      fontSize: 10,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    '${p.level}',
-                    style: TextStyle(
-                      color: SL.onBrand,
-                      fontSize: 40,
-                      height: 1,
-                      fontWeight: FontWeight.w700,
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
-                  ),
-                ],
-              );
-              // L5 : au-delà de 150 % de texte, le titre passe sous l'insigne
-              // et le niveau, sur toute la largeur (plus de mot coupé).
-              if (MediaQuery.textScalerOf(context).scale(10) > 15) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(children: [insignia, const Spacer(), level]),
-                    const SizedBox(height: 10),
-                    title,
-                  ],
-                );
-              }
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  insignia,
-                  const SizedBox(width: 14),
-                  Expanded(child: title),
-                  const SizedBox(width: 10),
-                  level,
-                ],
-              );
-            },
-          ),
-          const SizedBox(height: 16),
-          KProgressBar(
+          // Au-delà de 150 % de texte, le titre passe sous l'insigne et le
+          // niveau, sur toute la largeur (plus de mot coupé).
+          if (large) ...[
+            Row(children: [insignia, const Spacer(), level]),
+            const SizedBox(height: KSpacing.s8),
+            title,
+          ] else
+            Row(
+              children: [
+                insignia,
+                const SizedBox(width: KSpacing.s14),
+                Expanded(child: title),
+                const SizedBox(width: KSpacing.s8),
+                level,
+              ],
+            ),
+          const SizedBox(height: KSpacing.s16),
+          StatsBar(
             value: p.fraction,
-            height: 6,
-            color: SL.onBrand,
-            track: SL.onBrand.withValues(alpha: .2),
-            semanticsLabel: 'Progression du niveau',
-            semanticsValue: '${p.inLevel} sur ${p.need} XP',
+            label: 'Progression du niveau',
+            description: '${p.inLevel} sur ${p.need} XP',
+            onFill: true,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: KSpacing.s8),
           Text(
             next == null
-                ? '${p.remaining} XP avant le niveau ${p.level + 1} · rang maximal atteint'
-                : '${p.remaining} XP avant le niveau ${p.level + 1} · ${next.title} au niveau ${next.level}',
-            style: TextStyle(color: SL.onBrand, fontSize: 12),
+                ? '${p.remaining} XP avant le niveau ${p.level + 1}\u00A0· rang maximal atteint'
+                : '${p.remaining} XP avant le niveau ${p.level + 1}\u00A0· ${next.title} au niveau ${next.level}',
+            style: KType.detail.copyWith(color: ink),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: KSpacing.s16),
           LayoutBuilder(
             builder: (context, bounds) {
-              final wide =
-                  bounds.maxWidth >= 300 &&
-                  MediaQuery.textScalerOf(context).scale(14) <= 17;
+              final wide = bounds.maxWidth >= 300 && !large;
               final rows = Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   for (final a in g.sheet.attributes) ...[
                     _AttributeRow(a),
-                    const SizedBox(height: 7),
+                    const SizedBox(height: KSpacing.s8),
                   ],
                 ],
               );
@@ -446,29 +416,59 @@ class CharacterCard extends StoreWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(child: rows),
-                  const SizedBox(width: 10),
-                  AttributeRadar(sheet: g.sheet, size: 108, light: true),
+                  const SizedBox(width: KSpacing.s12),
+                  AttributeRadar(
+                    sheet: g.sheet,
+                    size: KSize.primary * 2,
+                    light: true,
+                  ),
                 ],
               );
             },
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: KSpacing.s4),
           Wrap(
-            spacing: 8,
-            runSpacing: 6,
+            spacing: KSpacing.s16,
+            runSpacing: KSpacing.s4,
             children: [
-              KBadge(
-                'Série ${g.streak.weeks} sem.',
-                color: SL.onBrandSoft,
-                icon: Icons.local_fire_department_rounded,
+              _OnFillFact(
+                Icons.local_fire_department_rounded,
+                'Série de ${_plural(g.streak.weeks, 'semaine', 'semaines')}',
               ),
-              KBadge(
-                '${g.streak.shields} bouclier${g.streak.shields > 1 ? 's' : ''}',
-                color: SL.onBrandSoft,
-                icon: Icons.shield_outlined,
+              _OnFillFact(
+                Icons.shield_outlined,
+                _plural(g.streak.shields, 'bouclier', 'boucliers'),
               ),
-              KBadge('${p.earnedBadges} badges', color: SL.onBrandSoft),
+              _OnFillFact(
+                Icons.verified_outlined,
+                _plural(p.earnedBadges, 'badge', 'badges'),
+              ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Fait court posé sur l'aplat : icône et texte en `surPleine`.
+class _OnFillFact extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  const _OnFillFact(this.icon, this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    final ink = KTokens.of(context).surPleine;
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: KSpacing.s32),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: KSize.chevron, color: ink),
+          const SizedBox(width: KSpacing.s4),
+          Flexible(
+            child: Text(text, style: KType.detail.copyWith(color: ink)),
           ),
         ],
       ),
@@ -480,210 +480,297 @@ class _AttributeRow extends StatelessWidget {
   final GameAttribute a;
   const _AttributeRow(this.a);
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      SizedBox(
-        width: 86,
-        child: Text(
-          a.label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: SL.onBrandSoft,
-            fontSize: 11.5,
-            fontWeight: FontWeight.w600,
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final label = Text(
+      a.label,
+      style: KType.micro.copyWith(color: k.surPleine.withValues(alpha: .8)),
+    );
+    final value = Text(
+      a.available ? '${a.level}' : '—',
+      textAlign: TextAlign.end,
+      style: KType.chiffrePetit.copyWith(color: k.surPleine),
+    );
+    final bar = StatsBar(
+      value: a.fraction,
+      label: a.label,
+      description: a.available
+          ? '${a.score} sur 100, niveau ${a.level}'
+          : 'indisponible',
+      onFill: true,
+    );
+    // Grand texte : le libellé au-dessus de la jauge, jamais coupé.
+    if (MediaQuery.textScalerOf(context).scale(1) >= 1.3) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(child: label),
+              value,
+            ],
           ),
-        ),
+          const SizedBox(height: KSpacing.s4),
+          bar,
+        ],
+      );
+    }
+    return Row(
+      children: [
+        SizedBox(width: KSize.valueWidth * .6, child: label),
+        Expanded(child: bar),
+        const SizedBox(width: KSpacing.s8),
+        SizedBox(width: KSpacing.s24, child: value),
+      ],
+    );
+  }
+}
+
+/// Fiche complète : attributs détaillés, rangs et origine des XP.
+void showCharacterSheet(BuildContext context) {
+  final p = store.progression;
+  final g = store.game;
+  final prestige = GameState.prestigeOf(p.level);
+  statsSheet(
+    context,
+    'Ta feuille de personnage',
+    subtitle:
+        'Niveau ${p.level}\u00A0· ${p.rank.title}${prestige > 0 ? ' · prestige $prestige' : ''}',
+    [
+      Builder(
+        builder: (context) {
+          final k = KTokens.of(context);
+          return Row(
+            children: [
+              RankInsignia(
+                rankIndex: rankIndexOf(p.rank),
+                prestige: prestige,
+                size: KSize.target,
+              ),
+              const SizedBox(width: KSpacing.s12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    StatsBar(
+                      value: p.fraction,
+                      label: 'Niveau',
+                      description: '${p.inLevel} sur ${p.need} XP',
+                    ),
+                    const SizedBox(height: KSpacing.s8),
+                    Text(
+                      '${p.remaining} XP avant le niveau ${p.level + 1}\u00A0· ${p.totalXp} XP cumulés.',
+                      style: KType.detail.copyWith(color: k.texte2),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
-      Expanded(
-        child: KProgressBar(
-          value: a.fraction,
-          height: 5,
-          color: SL.onBrand,
-          track: SL.onBrand.withValues(alpha: .2),
-          semanticsLabel: a.label,
-          semanticsValue: a.available
-              ? '${a.score} sur 100, niveau ${a.level}'
-              : 'indisponible',
-        ),
+      const KSectionTitle('Attributs'),
+      Center(
+        child: AttributeRadar(sheet: g.sheet, size: KSize.primary * 3),
       ),
-      const SizedBox(width: 8),
-      SizedBox(
-        width: 26,
-        child: Text(
-          a.available ? '${a.level}' : '—',
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            color: SL.onBrand,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
-        ),
+      for (final a in g.sheet.attributes) _AttributeDetail(a),
+      const StatsText(
+        'Les attributs se recalculent depuis Mes références et ton journal. Ils décrivent ton parcours, pas une norme.',
+        muted: true,
+      ),
+      const KSectionTitle('Tes rangs'),
+      StatsSheetGroup(
+        children: [
+          for (final rank in progressRanks)
+            Builder(
+              builder: (context) {
+                final k = KTokens.of(context);
+                return StatsSheetRow(
+                  leading: RankInsignia(
+                    rankIndex: rankIndexOf(rank),
+                    size: KSpacing.s32,
+                  ),
+                  title: rank.title,
+                  subtitle:
+                      'Niveau ${rank.level}\u00A0· ${Progression.xpAtLevel(rank.level)} XP cumulés',
+                  trailing: rank == p.rank
+                      ? const KChip('Actuel')
+                      : Icon(
+                          p.level >= rank.level
+                              ? Icons.verified_rounded
+                              : Icons.lock_outline_rounded,
+                          size: KSize.icon,
+                          color: p.level >= rank.level
+                              ? k.validation
+                              : k.texte2,
+                        ),
+                );
+              },
+            ),
+        ],
+      ),
+      const StatsText(
+        'Au-delà du rang Légende, chaque tranche de dix niveaux ajoute une étoile de prestige à ton insigne.',
+        muted: true,
+      ),
+      const KSectionTitle('Origine de tes XP'),
+      StatsSheetGroup(
+        children: [
+          for (final entry in <String, int>{
+            'Programme': p.programXp,
+            'Objectifs hebdomadaires': p.weeklyXp,
+            'Badges': p.badgeXp,
+          }.entries)
+            StatsSheetRow(title: entry.key, value: '${entry.value} XP'),
+        ],
       ),
     ],
   );
 }
 
-/// Fiche complète : attributs détaillés, titres, rangs et origine des XP.
-void showCharacterSheet(BuildContext context) {
-  final p = store.progression;
-  final g = store.game;
-  statsSheet(context, 'Ta feuille de personnage', [
-    Row(
-      children: [
-        RankInsignia(
-          rankIndex: rankIndexOf(p.rank),
-          prestige: GameState.prestigeOf(p.level),
-          size: 48,
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            'Niveau ${p.level} · ${p.rank.title}${GameState.prestigeOf(p.level) > 0 ? ' · prestige ${GameState.prestigeOf(p.level)}' : ''}',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-      ],
-    ),
-    StatsBar(
-      value: p.fraction,
-      label: 'Niveau',
-      description: '${p.inLevel} sur ${p.need} XP',
-    ),
-    Text(
-      '${p.remaining} XP avant le niveau ${p.level + 1} · ${p.totalXp} XP cumulés.',
-    ),
-    const KSection('Attributs'),
-    Center(child: AttributeRadar(sheet: g.sheet, size: 170)),
-    for (final a in g.sheet.attributes) ...[
-      Row(
+/// Attribut détaillé de la feuille de personnage.
+class _AttributeDetail extends StatelessWidget {
+  final GameAttribute a;
+  const _AttributeDetail(this.a);
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Text(
-              a.available
-                  ? '${a.label} · niveau ${a.level}'
-                  : '${a.label} · indisponible',
-              style: const TextStyle(fontWeight: FontWeight.w600),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  a.available
+                      ? '${a.label}\u00A0· niveau ${a.level}'
+                      : '${a.label}\u00A0· indisponible',
+                  style: KType.corpsFort.copyWith(color: k.texte),
+                ),
+              ),
+              const SizedBox(width: KSpacing.s8),
+              Text(
+                a.available ? '${a.score}\u00A0/\u00A0100' : '—',
+                style: KType.corps.copyWith(color: k.texte),
+              ),
+            ],
+          ),
+          const SizedBox(height: KSpacing.s8),
+          StatsBar(
+            value: a.available ? a.fraction : 0,
+            label: a.label,
+            description: a.available ? '${a.score} sur 100' : 'indisponible',
+          ),
+          const SizedBox(height: KSpacing.s8),
+          Text(_r9(a.hint), style: KType.detail.copyWith(color: k.texte2)),
+          if (a.note != null)
+            Padding(
+              padding: const EdgeInsets.only(top: KSpacing.s4),
+              child: Text(
+                _r9(a.note!),
+                key: ValueKey('attribute-note-${a.id}'),
+                style: KType.detail.copyWith(color: k.texte),
+              ),
             ),
-          ),
-          Text(a.available ? '${a.score} / 100' : '—'),
         ],
       ),
-      StatsBar(
-        value: a.available ? a.fraction : 0,
-        label: a.label,
-        description: a.available ? '${a.score} sur 100' : 'indisponible',
-      ),
-      Text(a.hint, style: Theme.of(context).textTheme.bodySmall),
-      if (a.note != null)
-        Text(
-          a.note!,
-          key: ValueKey('attribute-note-${a.id}'),
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
-        ),
-    ],
-    const Text(
-      'Les attributs se recalculent depuis tes références Pilotage et ton journal. Ils décrivent ton parcours, pas une norme.',
-    ),
-    const KSection('Tes rangs'),
-    for (final rank in progressRanks)
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: RankInsignia(rankIndex: rankIndexOf(rank), size: 36),
-        title: Text(rank.title),
-        subtitle: Text(
-          'Niveau ${rank.level} · ${Progression.xpAtLevel(rank.level)} XP cumulés',
-        ),
-        trailing: rank == p.rank
-            ? const KBadge('Actuel')
-            : p.level >= rank.level
-            ? Icon(Icons.verified_rounded, color: SL.success)
-            : Icon(Icons.lock_outline_rounded, color: SL.dim),
-      ),
-    const Text(
-      'Au-delà du rang Légende, chaque tranche de dix niveaux ajoute une étoile de prestige à ton insigne.',
-    ),
-    const KSection('Origine de tes XP'),
-    for (final entry in <String, int>{
-      'Programme': p.programXp,
-      'Objectifs hebdomadaires': p.weeklyXp,
-      'Badges': p.badgeXp,
-    }.entries)
-      Row(
-        children: [
-          Expanded(child: Text(entry.key)),
-          const SizedBox(width: 12),
-          Text(
-            '${entry.value} XP',
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
-        ],
-      ),
-  ]);
+    );
+  }
 }
 
 // ---------------------------------------------------------------------------
 // Objectif hebdomadaire adaptatif
 // ---------------------------------------------------------------------------
 
+/// Valeurs de l'objectif de la semaine (cahier §4.3) : mêmes segments que
+/// Réglages › Progression et jeu ; 0 = adaptatif.
+const kWeeklyGoalChoices = [0, 2, 3, 4, 5, 6];
+
+/// Carte « Objectif de la semaine » : anneau de la semaine, état, et le
+/// réglage en place (raccourci R2 : même contrôle et mêmes valeurs que
+/// Réglages). Une valeur 1 déjà enregistrée reste affichée telle quelle
+/// jusqu'au prochain choix (aucun segment allumé), sans migration.
 class WeeklyGoalCard extends StoreWidget {
   const WeeklyGoalCard({super.key});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final w = store.game.weekly;
+    final goal = store.settings.weeklyGoal;
     final done = w.reached;
+    final left = w.target - w.done;
     return KCard(
       key: const ValueKey('game-weekly-goal'),
-      onTap: () => showWeeklyGoal(context),
-      padding: const EdgeInsets.all(16),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _Ring(
-            fraction: w.fraction,
-            size: 58,
-            color: done ? SL.success : null,
-            child: Text(
-              '${w.done}/${w.target}',
-              style: TextStyle(
-                color: SL.text,
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-                fontFeatures: const [FontFeature.tabularFigures()],
+          Row(
+            children: [
+              _Ring(
+                fraction: w.fraction,
+                size: KSize.primary,
+                color: done ? k.validation : k.encre,
+                child: Text(
+                  '${w.done}/${w.target}',
+                  style: KType.chiffrePetit.copyWith(color: k.texte),
+                ),
               ),
-            ),
+              const SizedBox(width: KSpacing.s14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Objectif de la semaine',
+                      style: KType.titreCarte.copyWith(color: k.texte),
+                    ),
+                    Text(
+                      done
+                          ? 'Atteint\u00A0· ${_plural(w.done, 'jour actif', 'jours actifs')}'
+                          : '${_plural(left, 'jour actif', 'jours actifs')} à faire',
+                      style: KType.corpsFort.copyWith(
+                        color: done ? k.validation : k.texte,
+                      ),
+                    ),
+                    Text(
+                      w.manual
+                          ? 'Fixé par toi : ${_plural(goal, 'jour', 'jours')} par semaine'
+                          : 'Adaptatif : moyenne de ${statsNumber(w.history)} j sur 4 semaines, plus un',
+                      style: KType.detail.copyWith(color: k.texte2),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Objectif de la semaine',
-                  style: Theme.of(context).textTheme.titleMedium,
+          const SizedBox(height: KSpacing.s16),
+          KSegmented<int>(
+            semanticLabel: 'Objectif de la semaine',
+            segments: [
+              for (final c in kWeeklyGoalChoices)
+                KSegment(
+                  c,
+                  c == 0 ? 'Adaptatif' : '$c',
+                  semanticLabel: c == 0
+                      ? 'Adaptatif'
+                      : '$c jours actifs par semaine',
                 ),
-                const SizedBox(height: 3),
-                Text(
-                  done
-                      ? 'Atteint · ${w.done} jour${w.done > 1 ? 's' : ''} actif${w.done > 1 ? 's' : ''}'
-                      : '${w.target - w.done} jour${w.target - w.done > 1 ? 's' : ''} actif${w.target - w.done > 1 ? 's' : ''} à faire',
-                  style: TextStyle(
-                    color: done ? SL.success : SL.dim,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  w.manual
-                      ? 'Fixé par toi · ajustable'
-                      : 'Adaptatif · moyenne ${statsNumber(w.history)} j sur 4 sem.',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
+            ],
+            selected: goal,
+            onChanged: (choice) {
+              store.settings.weeklyGoal = choice;
+              store.saveSettings();
+              store.notifyListeners();
+            },
+          ),
+          const SizedBox(height: KSpacing.s12),
+          Text(
+            'Adaptatif : la moyenne de tes quatre dernières semaines plus un, entre 2 et le nombre de journées prévues au programme. Deux jours actifs valident toujours la semaine pour la série et les défis ; cet objectif est un cap personnel, sans XP.',
+            style: KType.detail.copyWith(color: k.texte2),
           ),
         ],
       ),
@@ -691,44 +778,15 @@ class WeeklyGoalCard extends StoreWidget {
   }
 }
 
-void showWeeklyGoal(BuildContext context) {
-  final w = store.game.weekly;
-  statsSheet(context, 'Objectif de jours actifs par semaine', [
-    Text(
-      'Proposition adaptative : moyenne des quatre dernières semaines (${statsNumber(w.history)} jour${w.history >= 2 ? 's' : ''}) plus un, entre 2 et le nombre de journées prévues au programme. Tu peux la remplacer.',
-    ),
-    Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: [
-        for (final choice in [0, 2, 3, 4, 5, 6])
-          ChoiceChip(
-            label: Text(choice == 0 ? 'Adaptatif' : '$choice jours'),
-            selected: store.settings.weeklyGoal == choice,
-            onSelected: (_) {
-              store.settings.weeklyGoal = choice;
-              store.saveSettings();
-              store.notifyListeners();
-              Navigator.pop(context);
-            },
-          ),
-      ],
-    ),
-    const Text(
-      'Deux jours actifs valident toujours la semaine pour la série et les défis. Cet objectif est un cap personnel, sans XP : il sert à te situer, pas à te juger.',
-    ),
-  ]);
-}
-
 class _Ring extends StatelessWidget {
   final double fraction, size;
   final Widget child;
-  final Color? color;
+  final Color color;
   const _Ring({
     required this.fraction,
     required this.size,
     required this.child,
-    this.color,
+    required this.color,
   });
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -740,7 +798,7 @@ class _Ring extends StatelessWidget {
         ExcludeSemantics(
           child: CustomPaint(
             size: Size(size, size),
-            painter: _RingPainter(fraction, color ?? SL.action),
+            painter: _RingPainter(fraction, color, KTokens.of(context).filet),
           ),
         ),
         child,
@@ -749,13 +807,20 @@ class _Ring extends StatelessWidget {
   );
 }
 
+/// Peintre de l'anneau (liste blanche : dessin de données).
 class _RingPainter extends CustomPainter {
   final double fraction;
-  final Color color;
-  const _RingPainter(this.fraction, this.color);
+  final Color color, track;
+  const _RingPainter(this.fraction, this.color, this.track);
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTWH(4, 4, size.width - 8, size.height - 8);
+    const stroke = KSpacing.s4 * 1.5;
+    final rect = Rect.fromLTWH(
+      stroke / 2,
+      stroke / 2,
+      size.width - stroke,
+      size.height - stroke,
+    );
     canvas.drawArc(
       rect,
       0,
@@ -763,8 +828,8 @@ class _RingPainter extends CustomPainter {
       false,
       Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 6
-        ..color = SL.progressTrack,
+        ..strokeWidth = stroke
+        ..color = track,
     );
     if (fraction > 0) {
       canvas.drawArc(
@@ -774,7 +839,7 @@ class _RingPainter extends CustomPainter {
         false,
         Paint()
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 6
+          ..strokeWidth = stroke
           ..strokeCap = StrokeCap.round
           ..color = color,
       );
@@ -783,7 +848,7 @@ class _RingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_RingPainter old) =>
-      old.fraction != fraction || old.color != color;
+      old.fraction != fraction || old.color != color || old.track != track;
 }
 
 // ---------------------------------------------------------------------------
@@ -794,58 +859,67 @@ class StreakCard extends StoreWidget {
   const StreakCard({super.key});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final g = store.game;
     final s = g.streak;
+    final missing = (2 - g.weekly.done).clamp(0, 2);
     return KCard(
       key: const ValueKey('game-streak'),
       onTap: () => showStreak(context),
-      padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          Icon(
+          KIconTile(
             Icons.local_fire_department_rounded,
-            color: s.weeks > 0 ? SL.decor : SL.dim,
-            size: 34,
+            color: s.weeks > 0 ? k.accent : k.texte2,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: KSpacing.s14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${s.weeks} semaine${s.weeks > 1 ? 's' : ''} de suite',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  '${_plural(s.weeks, 'semaine', 'semaines')} de suite',
+                  style: KType.titreCarte.copyWith(color: k.texte),
                 ),
-                const SizedBox(height: 3),
-                Row(
+                const SizedBox(height: KSpacing.s4),
+                Wrap(
+                  spacing: KSpacing.s8,
+                  runSpacing: KSpacing.s4,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    for (var i = 0; i < 2; i++)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 4),
-                        child: Icon(
-                          i < s.shields
-                              ? Icons.shield_rounded
-                              : Icons.shield_outlined,
-                          size: 16,
-                          color: i < s.shields ? SL.accent : SL.dim,
+                    Semantics(
+                      label: _plural(s.shields, 'bouclier', 'boucliers'),
+                      child: ExcludeSemantics(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            for (var i = 0; i < 2; i++)
+                              Icon(
+                                i < s.shields
+                                    ? Icons.shield_rounded
+                                    : Icons.shield_outlined,
+                                size: KSize.chevron,
+                                color: i < s.shields ? k.encre : k.texte3,
+                              ),
+                          ],
                         ),
                       ),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        g.deloadWeek
-                            ? 'Semaine de deload : récupérer fait partie du plan'
-                            : s.currentValidated
-                            ? 'Semaine validée · série protégée'
-                            : '${(2 - g.weekly.done).clamp(0, 2)} jour${(2 - g.weekly.done).clamp(0, 2) > 1 ? 's' : ''} pour valider la semaine',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                    ),
+                    Text(
+                      g.deloadWeek
+                          ? 'Semaine de deload : récupérer fait partie du plan'
+                          : s.currentValidated
+                          ? 'Semaine validée\u00A0· série protégée'
+                          : '${_plural(missing, 'jour', 'jours')} pour valider la semaine',
+                      style: KType.detail.copyWith(color: k.texte2),
                     ),
                   ],
                 ),
               ],
             ),
           ),
+          const SizedBox(width: KSpacing.s8),
+          Icon(Icons.chevron_right_rounded, size: KSize.icon, color: k.texte2),
         ],
       ),
     );
@@ -855,21 +929,25 @@ class StreakCard extends StoreWidget {
 void showStreak(BuildContext context) {
   final s = store.game.streak;
   final p = store.progression;
-  statsSheet(context, 'Ta série et tes boucliers', [
-    Text(
-      '${s.weeks} semaine${s.weeks > 1 ? 's' : ''} validée${s.weeks > 1 ? 's' : ''} d\u2019affilée · ${s.shields} bouclier${s.shields > 1 ? 's' : ''} en réserve · meilleure série : ${p.bestStreak}',
-    ),
-    const Text(
-      'Une semaine est validée à partir de deux jours actifs, repos compris. Un bouclier couvre automatiquement une semaine manquée : tu en gagnes un toutes les trois semaines validées d\u2019affilée, deux en réserve au plus. La semaine en cours ne casse jamais la série avant le lundi suivant.',
-    ),
-    if (s.shieldedWeeks.isNotEmpty)
-      Text(
-        'Boucliers utilisés : ${s.shieldedWeeks.map((d) => 'semaine du ${statsDate(d)}').join(', ')}.',
+  statsSheet(
+    context,
+    'Ta série et tes boucliers',
+    subtitle:
+        '${_plural(s.weeks, 'semaine validée', 'semaines validées')} d’affilée\u00A0· ${_plural(s.shields, 'bouclier', 'boucliers')} en réserve\u00A0· meilleure série : ${p.bestStreak}',
+    [
+      const StatsText(
+        'Une semaine est validée à partir de deux jours actifs, repos compris. Un bouclier couvre automatiquement une semaine manquée : tu en gagnes un toutes les trois semaines validées d’affilée, deux en réserve au plus. La semaine en cours ne casse jamais la série avant le lundi suivant.',
       ),
-    const Text(
-      'Les semaines de deload du programme comptent comme les autres : une ou deux séances légères suffisent, l\u2019objectif est de récupérer.',
-    ),
-  ]);
+      if (s.shieldedWeeks.isNotEmpty)
+        StatsText(
+          'Boucliers utilisés : ${s.shieldedWeeks.map((d) => 'semaine du ${statsDate(d)}').join(', ')}.',
+        ),
+      const StatsText(
+        'Les semaines de deload du programme comptent comme les autres : une ou deux séances légères suffisent, l’objectif est de récupérer.',
+        muted: true,
+      ),
+    ],
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -881,26 +959,29 @@ class MainQuestCard extends StoreWidget {
   const MainQuestCard({super.key});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final program = store.program;
     final now = KalisClock.now();
     final g = store.game;
     if (g.programWeek == 0) {
+      // G2 : plus de séance personnelle depuis l'Arsenal ; aucun chemin
+      // écrit (R5).
       return KCard(
-        padding: const EdgeInsets.all(16),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.flag_rounded, color: SL.accent),
-            const SizedBox(width: 10),
+            Icon(Icons.flag_rounded, color: k.encre, size: KSize.icon),
+            const SizedBox(width: KSpacing.s12),
             Expanded(
               child: Text(
                 !program.scheduled
-                    ? 'Quête principale : choisir ton départ depuis l\u2019accueil, ou une séance personnelle depuis l\u2019Arsenal.'
+                    ? 'Quête principale : ton programme commence dès que tu choisis ta date de départ.'
                     : program.beforeStart(now)
-                    ? 'Quête principale : ton programme démarre le ${civilDateLabel(program.start!)}. En attendant, une séance personnelle depuis l\u2019Arsenal.'
+                    ? 'Quête principale : ton programme démarre le ${civilDateLabel(program.start!)}.'
                     : program.afterEnd(now)
-                    ? 'Programme terminé : ton historique reste consultable. Séances personnelles depuis l\u2019Arsenal.'
-                    : 'Quête principale : reprendre le programme, ou une séance personnelle depuis l\u2019Arsenal.',
-                style: Theme.of(context).textTheme.bodyMedium,
+                    ? 'Programme terminé : ton historique reste consultable.'
+                    : 'Quête principale : reprendre ton programme.',
+                style: KType.corps.copyWith(color: k.texte),
               ),
             ),
           ],
@@ -917,10 +998,10 @@ class MainQuestCard extends StoreWidget {
         );
     final done = store.isDone(week.n, day.j);
     final rest = day.exercises.isEmpty;
+    final goal = (g.sessionGoal * 100).round();
     return KCard(
       key: const ValueKey('game-main-quest'),
-      outline: done ? null : SL.accent.withValues(alpha: .45),
-      padding: const EdgeInsets.all(16),
+      outline: done ? null : k.encre,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -932,30 +1013,30 @@ class MainQuestCard extends StoreWidget {
                     : rest
                     ? Icons.bedtime_rounded
                     : Icons.flag_rounded,
-                color: done ? SL.success : SL.accent,
-                size: 22,
+                color: done ? k.validation : k.encre,
+                size: KSize.icon,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: KSpacing.s12),
               Expanded(
                 child: Text(
-                  'Quête principale · S${week.n} J${day.j}',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  'Quête principale\u00A0· S${week.n} J${day.j}',
+                  style: KType.titreCarte.copyWith(color: k.texte),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 6),
-          Text(day.title, style: const TextStyle(fontWeight: FontWeight.w600)),
-          const SizedBox(height: 4),
+          const SizedBox(height: KSpacing.s8),
+          Text(day.title, style: KType.corpsFort.copyWith(color: k.texte)),
+          const SizedBox(height: KSpacing.s4),
           Text(
             done
-                ? 'Validée · XP et bonus déjà comptés'
+                ? 'Validée\u00A0· XP et bonus déjà comptés'
                 : rest
                 ? 'Jour de repos prévu : la série est protégée, la récupération compte.'
                 : g.deloadWeek
-                ? 'Deload : séance allégée, objectif ≥ ${(g.sessionGoal * 100).round()} % des séries sans forcer.'
-                : 'Objectif de séance : valider au moins ${(g.sessionGoal * 100).round()} % des séries.',
-            style: Theme.of(context).textTheme.bodySmall,
+                ? 'Deload : séance allégée, objectif ≥ $goal\u00A0% des séries sans forcer.'
+                : 'Objectif de séance : valider au moins $goal\u00A0% des séries.',
+            style: KType.detail.copyWith(color: k.texte2),
           ),
         ],
       ),
@@ -963,47 +1044,26 @@ class MainQuestCard extends StoreWidget {
   }
 }
 
-/// Quêtes de saison (titres) : exploration des formats et respect des deloads.
+/// Quêtes de saison (titres) : exploration des formats et respect des
+/// deloads ; lignes d'un groupe de feuille.
 class SeasonQuests extends StoreWidget {
   const SeasonQuests({super.key});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final titles = store.game.titles.where(
       (t) => t.id == 'explorer' || t.id == 'guardian',
     );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return StatsSheetGroup(
       children: [
         for (final t in titles)
-          KCard(
-            padding: const EdgeInsets.all(14),
-            child: Row(
-              children: [
-                Icon(
-                  t.earned ? Icons.verified_rounded : Icons.explore_outlined,
-                  color: t.earned ? SL.success : SL.accent,
-                  size: 22,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        t.source,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        t.earned
-                            ? 'Titre obtenu : ${t.name}'
-                            : 'Récompense : titre « ${t.name} »',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          StatsSheetRow(
+            icon: t.earned ? Icons.verified_rounded : Icons.explore_outlined,
+            iconColor: t.earned ? k.validation : k.texte2,
+            title: t.source,
+            subtitle: t.earned
+                ? 'Titre obtenu : ${t.name}'
+                : 'Récompense : titre « ${t.name} »',
           ),
       ],
     );
@@ -1014,36 +1074,73 @@ class SeasonQuests extends StoreWidget {
 // Campagne, boss, saisons
 // ---------------------------------------------------------------------------
 
+/// État d'un chapitre ou d'une saison : libellé, icône, couleur.
+({String label, IconData icon, Color color}) _stage(
+  KTokens k, {
+  required bool complete,
+  required bool current,
+  required String done,
+  required String percent,
+  required bool started,
+}) => (
+  label: complete
+      ? done
+      : current
+      ? 'En cours'
+      : started
+      ? percent
+      : 'À venir',
+  icon: complete
+      ? Icons.verified_rounded
+      : current
+      ? Icons.play_circle_outline_rounded
+      : Icons.lock_outline_rounded,
+  color: complete
+      ? k.validation
+      : current
+      ? k.encre
+      : k.texte2,
+);
+
+/// Bande des chapitres (Aperçu) : une carte par bloc du programme, reliées
+/// par un trait. [onTap] : ouvre Parcours.
 class CampaignStrip extends StoreWidget {
-  const CampaignStrip({super.key});
+  final VoidCallback? onTap;
+  const CampaignStrip({super.key, this.onTap});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final chapters = store.game.chapters;
+    final width =
+        KSize.valueWidth *
+        1.2 *
+        MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 1.6);
     return SingleChildScrollView(
       key: const ValueKey('game-campaign'),
       scrollDirection: Axis.horizontal,
       clipBehavior: Clip.none,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (var i = 0; i < chapters.length; i++) ...[
-            if (i > 0)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: SizedBox(
-                  width: 14,
-                  height: 70,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < chapters.length; i++) ...[
+              if (i > 0)
+                SizedBox(
+                  width: KSpacing.s16,
                   child: Center(
                     child: Container(
                       height: 2,
-                      color: chapters[i - 1].complete ? SL.success : SL.line,
+                      color: chapters[i - 1].complete ? k.validation : k.filet,
                     ),
                   ),
                 ),
+              SizedBox(
+                width: width,
+                child: _ChapterCard(chapters[i], onTap: onTap),
               ),
-            SizedBox(width: 168, child: _ChapterCard(chapters[i])),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -1051,77 +1148,56 @@ class CampaignStrip extends StoreWidget {
 
 class _ChapterCard extends StatelessWidget {
   final Chapter c;
-  const _ChapterCard(this.c);
+  final VoidCallback? onTap;
+  const _ChapterCard(this.c, {this.onTap});
   @override
   Widget build(BuildContext context) {
-    final status = c.complete
-        ? 'Bouclé'
-        : c.current
-        ? 'En cours'
-        : c.doneDays > 0
-        ? '${(c.fraction * 100).round()} %'
-        : 'À venir';
-    final color = c.complete
-        ? SL.success
-        : c.current
-        ? SL.accent
-        : SL.dim;
+    final k = KTokens.of(context);
+    final s = _stage(
+      k,
+      complete: c.complete,
+      current: c.current,
+      done: 'Bouclé',
+      percent: '${(c.fraction * 100).round()}\u00A0%',
+      started: c.doneDays > 0,
+    );
     return KCard(
-      padding: const EdgeInsets.all(14),
-      outline: c.current ? SL.accent.withValues(alpha: .5) : null,
-      onTap: () => showChapter(context, c),
+      outline: c.current ? k.encre : null,
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                c.complete
-                    ? Icons.verified_rounded
-                    : c.current
-                    ? Icons.play_circle_outline_rounded
-                    : Icons.lock_outline_rounded,
-                color: color,
-                size: 20,
-              ),
-              const SizedBox(width: 6),
+              Icon(s.icon, color: s.color, size: KSize.iconSmall),
+              const SizedBox(width: KSpacing.s8),
               Expanded(
                 child: Text(
-                  status,
-                  style: TextStyle(
-                    color: color,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  s.label,
+                  style: KType.micro.copyWith(color: s.color),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: KSpacing.s8),
+          Text(c.name, style: KType.corpsFort.copyWith(color: k.texte)),
+          const SizedBox(height: KSpacing.s4),
           Text(
-            c.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+            'S${c.firstWeek} à S${c.lastWeek}\u00A0· ${c.doneDays}/${c.trainingDays} journées',
+            style: KType.detail.copyWith(color: k.texte2),
           ),
-          const SizedBox(height: 4),
-          Text(
-            'S${c.firstWeek} → S${c.lastWeek} · ${c.doneDays}/${c.trainingDays} journées',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 10),
+          const Spacer(),
+          const SizedBox(height: KSpacing.s12),
           StatsBar(
             value: c.fraction,
             label: c.name,
             description: '${c.doneDays} sur ${c.trainingDays}',
-            color: c.complete ? SL.success : null,
+            color: c.complete ? k.validation : null,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: KSpacing.s8),
           Text(
             'Titre : ${c.title}',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: SL.dim, fontSize: 11),
+            style: KType.detail.copyWith(color: k.texte2),
           ),
         ],
       ),
@@ -1129,93 +1205,67 @@ class _ChapterCard extends StatelessWidget {
   }
 }
 
-void showChapter(BuildContext context, Chapter c) {
-  statsSheet(context, c.name, [
-    Text(
-      'Semaines S${c.firstWeek} à S${c.lastWeek} · ${c.doneDays} journées validées sur ${c.trainingDays}.',
-      style: Theme.of(context).textTheme.titleMedium,
-    ),
-    StatsBar(
-      value: c.fraction,
-      label: c.name,
-      description: '${c.doneDays} sur ${c.trainingDays}',
-    ),
-    Text(
-      c.complete
-          ? 'Chapitre bouclé : titre « ${c.title} » obtenu.'
-          : 'À 75 % des journées d\u2019entraînement validées, le chapitre est bouclé : titre « ${c.title} ». Les imprévus ne bloquent pas la campagne.',
-    ),
-  ]);
-}
-
+/// Carte du prochain boss (Aperçu). [onTap] : ouvre Parcours.
 class BossCard extends StoreWidget {
-  const BossCard({super.key});
+  final VoidCallback? onTap;
+  const BossCard({super.key, this.onTap});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final g = store.game;
     final boss = g.nextBoss;
     final defeated = g.bosses.where((b) => b.defeated).length;
     if (boss == null) {
       return KCard(
-        padding: const EdgeInsets.all(16),
+        onTap: onTap,
         child: Row(
           children: [
-            Icon(Icons.emoji_events_rounded, color: SL.success),
-            const SizedBox(width: 10),
+            KIconTile(Icons.emoji_events_rounded, color: k.validation),
+            const SizedBox(width: KSpacing.s14),
             Expanded(
               child: Text(
-                'Tous les boss sont vaincus : $defeated semaines de tests bouclées.',
-                style: Theme.of(context).textTheme.bodyMedium,
+                'Tous les boss sont vaincus : ${_plural(defeated, 'semaine de tests bouclée', 'semaines de tests bouclées')}.',
+                style: KType.corps.copyWith(color: k.texte),
               ),
             ),
           ],
         ),
       );
     }
-    final weeksAway = boss.firstWeek - g.programWeek;
     final started =
         boss.done > 0 ||
         (g.programWeek >= boss.firstWeek && g.programWeek <= boss.lastWeek);
-    final hint = started
-        ? '${boss.done}/${boss.tests.length} tests validés · un seul test lourd par jour'
-        : weeksAway <= 0
-        ? 'Tests à rattraper : ${boss.tests.length} journées'
-        : weeksAway == 1
-        ? 'La semaine prochaine · deload conseillé avant'
-        : 'Dans $weeksAway semaines (S${boss.firstWeek})';
     return KCard(
       key: const ValueKey('game-boss'),
-      onTap: () => showBoss(context, boss),
-      padding: const EdgeInsets.all(16),
+      onTap: onTap,
       child: Row(
         children: [
-          Icon(
+          KIconTile(
             Icons.sports_martial_arts_rounded,
-            color: started ? SL.decor : SL.accent,
-            size: 34,
+            color: started ? k.accent : k.encre,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: KSpacing.s14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'BOSS · ${boss.name}',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  'Boss\u00A0· ${boss.name}',
+                  style: KType.titreCarte.copyWith(color: k.texte),
                 ),
-                const SizedBox(height: 3),
-                Text(hint, style: Theme.of(context).textTheme.bodySmall),
-                if (defeated > 0) ...[
-                  const SizedBox(height: 3),
-                  Text(
-                    '$defeated boss vaincu${defeated > 1 ? 's' : ''}',
-                    style: TextStyle(
-                      color: SL.success,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
+                const SizedBox(height: KSpacing.s4),
+                Text(
+                  bossHint(g, boss),
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
+                if (defeated > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(top: KSpacing.s4),
+                    child: Text(
+                      '$defeated boss vaincu${defeated > 1 ? 's' : ''}',
+                      style: KType.micro.copyWith(color: k.validation),
                     ),
                   ),
-                ],
               ],
             ),
           ),
@@ -1225,86 +1275,148 @@ class BossCard extends StoreWidget {
   }
 }
 
-void showBoss(BuildContext context, Boss boss) {
-  final program = store.program;
-  statsSheet(context, 'Boss · ${boss.name}', [
-    Text(
-      'Semaine${boss.lastWeek > boss.firstWeek ? 's' : ''} S${boss.firstWeek}${boss.lastWeek > boss.firstWeek ? ' à S${boss.lastWeek}' : ''} · ${boss.done} test${boss.done > 1 ? 's' : ''} validé${boss.done > 1 ? 's' : ''} sur ${boss.tests.length}.',
-      style: Theme.of(context).textTheme.titleMedium,
-    ),
-    for (final (week, day) in boss.tests)
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: Icon(
-          store.isDone(week, day)
-              ? Icons.check_circle_rounded
-              : Icons.radio_button_unchecked_rounded,
-          color: store.isDone(week, day) ? SL.success : SL.dim,
-        ),
-        title: Text(program.week(week).day(day)?.title ?? 'Test'),
-        subtitle: Text('S$week · J$day'),
-      ),
-    Text(
-      boss.defeated
-          ? 'Boss vaincu : titre « ${boss.title} ».'
-          : 'Un seul test lourd par jour, en tête de séance. Le deload qui précède fait partie du combat : arrive reposé. Récompense : titre « ${boss.title} ».',
-    ),
-  ]);
+/// Où en est un boss : tests validés, ou semaines avant ses tests.
+String bossHint(GameState g, Boss boss) {
+  final weeksAway = boss.firstWeek - g.programWeek;
+  final started =
+      boss.done > 0 ||
+      (g.programWeek >= boss.firstWeek && g.programWeek <= boss.lastWeek);
+  return started
+      ? '${boss.done}/${boss.tests.length} tests validés\u00A0· un seul test lourd par jour'
+      : weeksAway <= 0
+      ? 'Tests à rattraper : ${boss.tests.length} journées'
+      : weeksAway == 1
+      ? 'La semaine prochaine\u00A0· deload conseillé avant'
+      : 'Dans $weeksAway semaines (S${boss.firstWeek})';
 }
 
-class SeasonCard extends StoreWidget {
-  const SeasonCard({super.key});
+/// Feuille « Boss » (Parcours) : chaque semaine de tests, ses journées et
+/// sa récompense, sans feuille empilée.
+void showBosses(BuildContext context) {
+  final g = store.game;
+  final defeated = g.bosses.where((b) => b.defeated).length;
+  statsSheet(
+    context,
+    'Boss',
+    subtitle: '$defeated / ${g.bosses.length} vaincus',
+    [
+      const StatsText(
+        'Les semaines de tests du programme sont les boss. Un seul test lourd par jour, en tête de séance. Le deload qui précède fait partie du combat : arrive reposé.',
+      ),
+      for (final b in g.bosses) _BossDetail(b, next: b == g.nextBoss),
+    ],
+  );
+}
+
+/// Ancien point d'entrée (une feuille par boss) : ouvre la feuille « Boss ».
+void showBoss(BuildContext context, Boss boss) => showBosses(context);
+
+class _BossDetail extends StatelessWidget {
+  final Boss boss;
+  final bool next;
+  const _BossDetail(this.boss, {required this.next});
+
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final program = store.program;
+    final weeks =
+        'S${boss.firstWeek}${boss.lastWeek > boss.firstWeek ? ' à S${boss.lastWeek}' : ''}';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        KSectionTitle(
+          '${boss.name}\u00A0· $weeks${!next
+              ? ''
+              : boss.done > 0
+              ? '\u00A0· en cours'
+              : '\u00A0· prochain boss'}',
+          top: KSpacing.s4,
+        ),
+        StatsSheetGroup(
+          children: [
+            for (final (week, day) in boss.tests)
+              StatsSheetRow(
+                icon: store.isDone(week, day)
+                    ? Icons.check_circle_rounded
+                    : Icons.radio_button_unchecked_rounded,
+                iconColor: store.isDone(week, day) ? k.validation : k.texte2,
+                title: program.week(week).day(day)?.title ?? 'Test',
+                subtitle: 'S$week\u00A0· J$day',
+              ),
+          ],
+        ),
+        const SizedBox(height: KSpacing.s8),
+        StatsText(
+          boss.defeated
+              ? 'Boss vaincu : titre « ${boss.title} ».'
+              : '${boss.done}\u00A0/\u00A0${boss.tests.length} tests validés. Récompense : titre « ${boss.title} ».',
+          muted: true,
+        ),
+      ],
+    );
+  }
+}
+
+/// Carte de la saison en cours (Aperçu). [onTap] : ouvre Parcours.
+class SeasonCard extends StoreWidget {
+  final VoidCallback? onTap;
+  const SeasonCard({super.key, this.onTap});
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final g = store.game;
     final s = g.currentSeason;
     if (s == null) {
       return KCard(
-        padding: const EdgeInsets.all(16),
+        onTap: onTap,
         child: Text(
           'Hors programme : les saisons reprennent avec le calendrier des 40 semaines.',
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: KType.corps.copyWith(color: k.texte),
         ),
       );
     }
     final left = s.lastWeek - g.programWeek + 1;
     return KCard(
       key: const ValueKey('game-season'),
-      onTap: () => showSeasons(context),
-      padding: const EdgeInsets.all(16),
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.calendar_month_rounded, color: SL.accent, size: 22),
-              const SizedBox(width: 10),
+              Icon(
+                Icons.calendar_month_rounded,
+                color: k.encre,
+                size: KSize.icon,
+              ),
+              const SizedBox(width: KSpacing.s12),
               Expanded(
                 child: Text(
-                  'Saison ${s.index} · ${s.name}',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  'Saison ${s.index}\u00A0· ${s.name}',
+                  style: KType.titreCarte.copyWith(color: k.texte),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: KSpacing.s8),
           Text(
-            'S${s.firstWeek} → S${s.lastWeek} · $left semaine${left > 1 ? 's' : ''} restante${left > 1 ? 's' : ''} · ${(s.fraction * 100).round()} %',
-            style: Theme.of(context).textTheme.bodySmall,
+            'S${s.firstWeek} à S${s.lastWeek}\u00A0· ${_plural(left, 'semaine restante', 'semaines restantes')}\u00A0· ${(s.fraction * 100).round()}\u00A0%',
+            style: KType.detail.copyWith(color: k.texte2),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: KSpacing.s12),
           StatsBar(
             value: s.fraction,
             label: 'Saison ${s.index}',
             description: '${s.doneDays} sur ${s.trainingDays}',
-            color: s.complete ? SL.success : null,
+            color: s.complete ? k.validation : null,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: KSpacing.s8),
           Text(
             s.complete
                 ? 'Saison bouclée : titre « ${s.title} » obtenu'
-                : 'À 70 % des journées : titre « ${s.title} »',
-            style: TextStyle(color: SL.dim, fontSize: 12),
+                : 'À 70\u00A0% des journées : titre « ${s.title} »',
+            style: KType.detail.copyWith(color: k.texte2),
           ),
         ],
       ),
@@ -1312,140 +1424,209 @@ class SeasonCard extends StoreWidget {
   }
 }
 
+/// Feuille « Saisons » (Parcours) : les quatre saisons et leurs quêtes.
 void showSeasons(BuildContext context) {
   final g = store.game;
-  statsSheet(context, 'Saisons', [
-    const Text(
-      'Quatre saisons de dix semaines rythment le programme. Chaque saison bouclée à 70 % donne son titre ; la campagne, les boss et les badges continuent d\u2019une saison à l\u2019autre, rien n\u2019est remis à zéro.',
-    ),
-    for (final s in g.seasons)
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: Icon(
-          s.complete
-              ? Icons.verified_rounded
-              : s.current
-              ? Icons.play_circle_outline_rounded
-              : Icons.lock_outline_rounded,
-          color: s.complete
-              ? SL.success
-              : s.current
-              ? SL.accent
-              : SL.dim,
-        ),
-        title: Text('Saison ${s.index} · ${s.name}'),
-        subtitle: Text(
-          'S${s.firstWeek} → S${s.lastWeek} · ${s.doneDays}/${s.trainingDays} journées · titre « ${s.title} »',
-        ),
+  statsSheet(
+    context,
+    'Saisons',
+    subtitle: g.currentSeason == null
+        ? 'Hors programme'
+        : 'Saison ${g.currentSeason!.index} en cours',
+    [
+      const StatsText(
+        'Quatre saisons de dix semaines rythment le programme. Chaque saison bouclée à 70\u00A0% donne son titre ; la campagne, les boss et les badges continuent d’une saison à l’autre, rien n’est remis à zéro.',
       ),
-  ]);
+      StatsSheetGroup(
+        children: [
+          for (final s in g.seasons)
+            Builder(
+              builder: (context) {
+                final st = _stage(
+                  KTokens.of(context),
+                  complete: s.complete,
+                  current: s.current,
+                  done: 'Bouclée',
+                  percent: '',
+                  started: false,
+                );
+                return StatsSheetRow(
+                  icon: st.icon,
+                  iconColor: st.color,
+                  title: 'Saison ${s.index}\u00A0· ${s.name}',
+                  subtitle:
+                      'S${s.firstWeek} à S${s.lastWeek}\u00A0· ${s.doneDays}/${s.trainingDays} journées\u00A0· titre « ${s.title} »',
+                );
+              },
+            ),
+        ],
+      ),
+      const KSectionTitle('Quêtes de saison'),
+      const SeasonQuests(),
+    ],
+  );
 }
 
-/// Résumé d'une ligne pour la tuile du Parcours (sans nom de rang).
+/// Résumé d'une ligne pour la ligne « Campagne » du Parcours.
 String campaignSummary(GameState g) {
   final done = g.chapters.where((c) => c.complete).length;
-  final bosses = g.bosses.where((b) => b.defeated).length;
   final current = g.currentChapter;
   final head = current == null ? 'Hors programme' : current.name;
-  return '$head · $done/${g.chapters.length} chapitres bouclés · $bosses/${g.bosses.length} boss vaincus';
+  return '$head\u00A0· $done/${g.chapters.length} chapitres bouclés';
 }
 
-/// Feuille complète de la campagne : chapitres, boss, saisons et quêtes de
-/// saison, pour le Parcours (l'aperçu garde les cartes).
+/// Feuille « Campagne » (Parcours) : chaque chapitre en détail, sans
+/// feuille empilée.
 void showCampaign(BuildContext context) {
   final g = store.game;
-  statsSheet(context, 'Campagne', [
-    const Text(
-      'Un chapitre par bloc du programme, bouclé à 75 % des journées d\u2019entraînement : un titre à la clé. Les semaines de tests sont les boss ; quatre saisons de dix semaines rythment le tout. Rien n\u2019est remis à zéro.',
-    ),
-    const KSection('Chapitres'),
-    const CampaignStrip(),
-    const KSection('Boss'),
-    const BossCard(),
-    for (final b in g.bosses)
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: Icon(
-          b.defeated
-              ? Icons.verified_rounded
-              : Icons.sports_martial_arts_rounded,
-          color: b.defeated ? SL.success : SL.dim,
-        ),
-        title: Text(b.name),
-        subtitle: Text(
-          'S${b.firstWeek}${b.lastWeek > b.firstWeek ? '-S${b.lastWeek}' : ''} · ${b.done}/${b.tests.length} tests · titre « ${b.title} »',
-        ),
-        onTap: () => showBoss(context, b),
+  final done = g.chapters.where((c) => c.complete).length;
+  statsSheet(
+    context,
+    'Campagne',
+    subtitle: '$done / ${g.chapters.length} chapitres bouclés',
+    [
+      const StatsText(
+        'Un chapitre par bloc du programme, bouclé à 75\u00A0% des journées d’entraînement : un titre à la clé. Les semaines de tests sont les boss ; quatre saisons de dix semaines rythment le tout. Rien n’est remis à zéro. Les imprévus ne bloquent pas la campagne.',
       ),
-    const KSection('Saison'),
-    const SeasonCard(),
-    const SeasonQuests(),
-  ]);
+      for (final c in g.chapters) _ChapterDetail(c),
+    ],
+  );
+}
+
+class _ChapterDetail extends StatelessWidget {
+  final Chapter c;
+  const _ChapterDetail(this.c);
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final s = _stage(
+      k,
+      complete: c.complete,
+      current: c.current,
+      done: 'Bouclé',
+      percent: '${(c.fraction * 100).round()}\u00A0%',
+      started: c.doneDays > 0,
+    );
+    return Material(
+      color: k.haute,
+      shape: RoundedRectangleBorder(
+        borderRadius: KRadius.menuRadius,
+        side: c.current
+            ? BorderSide(color: k.encre, width: KSize.current)
+            : BorderSide.none,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(KSpacing.s16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(s.icon, color: s.color, size: KSize.iconSmall),
+                const SizedBox(width: KSpacing.s8),
+                Expanded(
+                  child: Text(
+                    c.name,
+                    style: KType.corpsFort.copyWith(color: k.texte),
+                  ),
+                ),
+                const SizedBox(width: KSpacing.s8),
+                Text(s.label, style: KType.detail.copyWith(color: k.texte2)),
+              ],
+            ),
+            const SizedBox(height: KSpacing.s4),
+            Text(
+              'Semaines S${c.firstWeek} à S${c.lastWeek}\u00A0· ${c.doneDays} journées validées sur ${c.trainingDays}',
+              style: KType.detail.copyWith(color: k.texte2),
+            ),
+            const SizedBox(height: KSpacing.s12),
+            StatsBar(
+              value: c.fraction,
+              label: c.name,
+              description: '${c.doneDays} sur ${c.trainingDays}',
+              color: c.complete ? k.validation : null,
+            ),
+            const SizedBox(height: KSpacing.s8),
+            Text(
+              c.complete
+                  ? 'Chapitre bouclé : titre « ${c.title} » obtenu.'
+                  : 'À 75\u00A0% des journées d’entraînement validées : titre « ${c.title} ».',
+              style: KType.detail.copyWith(color: k.texte),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 // ---------------------------------------------------------------------------
 // Toi contre toi-même
 // ---------------------------------------------------------------------------
 
+/// Cette semaine face à la précédente (le titre est celui de la section).
 class SelfCompareCard extends StoreWidget {
   const SelfCompareCard({super.key});
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final c = store.game.compare;
-    Widget delta(String label, int now, int diff) => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '$now',
-          style: TextStyle(
-            color: SL.text,
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
-        ),
-        Text(
-          diff == 0
-              ? '= sem. passée'
-              : '${diff > 0 ? '+' : ''}$diff vs sem. passée',
-          style: TextStyle(
-            color: diff > 0
-                ? SL.success
-                : diff < 0
-                ? SL.accent
-                : SL.dim,
-            fontSize: 11,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        Text(label, style: Theme.of(context).textTheme.bodySmall),
-      ],
-    );
-    return KCard(
-      key: const ValueKey('game-compare'),
-      padding: const EdgeInsets.all(16),
+    Widget delta(String label, int now, int diff) => Semantics(
+      container: true,
+      label:
+          '$label : $now, ${diff == 0 ? 'comme la semaine passée' : '${diff > 0 ? '+' : ''}$diff par rapport à la semaine passée'}',
+      excludeSemantics: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text('$now', style: KType.chiffre.copyWith(color: k.texte)),
+          Text(label, style: KType.detail.copyWith(color: k.texte)),
           Text(
-            'Toi contre toi-même',
-            style: Theme.of(context).textTheme.titleMedium,
+            diff == 0
+                ? '= sem. passée'
+                : '${diff > 0 ? '+' : ''}$diff vs sem. passée',
+            style: KType.micro.copyWith(
+              color: diff > 0 ? k.validation : k.texte2,
+            ),
           ),
-          const SizedBox(height: 10),
-          Wrap(
-            spacing: 18,
-            runSpacing: 10,
-            children: [
-              delta('entraînements', c.current.sessions, c.sessionsDelta),
-              delta('séries', c.current.sets, c.setsDelta),
-              delta('jours actifs', c.current.activeDays.length, c.daysDelta),
-            ],
+        ],
+      ),
+    );
+    return KCard(
+      key: const ValueKey('game-compare'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          LayoutBuilder(
+            builder: (context, bounds) {
+              final items = [
+                delta('séances', c.current.sessions, c.sessionsDelta),
+                delta('séries', c.current.sets, c.setsDelta),
+                delta('jours actifs', c.current.activeDays.length, c.daysDelta),
+              ];
+              final columns = MediaQuery.textScalerOf(context).scale(1) >= 1.5
+                  ? 1
+                  : 3;
+              const gap = KSpacing.s12;
+              return Wrap(
+                spacing: gap,
+                runSpacing: KSpacing.s12,
+                children: [
+                  for (final item in items)
+                    SizedBox(
+                      width: (bounds.maxWidth - gap * (columns - 1)) / columns,
+                      child: item,
+                    ),
+                ],
+              );
+            },
           ),
           if (c.best != null) ...[
-            const SizedBox(height: 10),
+            const SizedBox(height: KSpacing.s12),
             Text(
               'Meilleure semaine : ${c.best!.sets} séries, semaine du ${statsDate(c.best!.monday)}.',
-              style: Theme.of(context).textTheme.bodySmall,
+              style: KType.detail.copyWith(color: k.texte2),
             ),
           ],
         ],
@@ -1458,55 +1639,58 @@ class SelfCompareCard extends StoreWidget {
 // Titres
 // ---------------------------------------------------------------------------
 
+/// Feuille « Tes titres » (Parcours) : choisir le titre affiché ; un choix
+/// s'applique et ferme la feuille.
 void showTitles(BuildContext context) {
   final titles = store.game.titles;
   final earned = titles.where((t) => t.earned).length;
-  statsSheet(context, 'Tes titres', [
-    Text(
-      '$earned titre${earned > 1 ? 's' : ''} obtenu${earned > 1 ? 's' : ''} sur ${titles.length}. Le titre choisi s\u2019affiche sur ta feuille de personnage à la place du rang.',
-    ),
-    ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Icon(
-        store.settings.title.isEmpty
-            ? Icons.check_circle_rounded
-            : Icons.radio_button_unchecked_rounded,
-        color: store.settings.title.isEmpty ? SL.success : SL.dim,
+  void choose(BuildContext context, String title) {
+    store.settings.title = title;
+    store.saveSettings();
+    store.notifyListeners();
+    Navigator.pop(context);
+  }
+
+  statsSheet(
+    context,
+    'Tes titres',
+    subtitle:
+        '$earned titre${earned > 1 ? 's' : ''} obtenu${earned > 1 ? 's' : ''} sur ${titles.length}',
+    [
+      const StatsText(
+        'Le titre choisi s’affiche sur ta feuille de personnage à la place du rang.',
       ),
-      title: const Text('Afficher mon rang'),
-      onTap: () {
-        store.settings.title = '';
-        store.saveSettings();
-        store.notifyListeners();
-        Navigator.pop(context);
-      },
-    ),
-    for (final t in titles)
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        enabled: t.earned,
-        leading: Icon(
-          !t.earned
-              ? Icons.lock_outline_rounded
-              : store.settings.title == t.name
-              ? Icons.check_circle_rounded
-              : Icons.workspace_premium_rounded,
-          color: !t.earned
-              ? SL.dim
-              : store.settings.title == t.name
-              ? SL.success
-              : SL.accent,
-        ),
-        title: Text(t.name),
-        subtitle: Text(t.source),
-        onTap: t.earned
-            ? () {
-                store.settings.title = t.name;
-                store.saveSettings();
-                store.notifyListeners();
-                Navigator.pop(context);
-              }
-            : null,
+      Builder(
+        builder: (context) {
+          final k = KTokens.of(context);
+          final shown = store.settings.title;
+          return StatsSheetGroup(
+            children: [
+              StatsSheetRow(
+                icon: shown.isEmpty
+                    ? Icons.check_circle_rounded
+                    : Icons.radio_button_unchecked_rounded,
+                iconColor: shown.isEmpty ? k.validation : k.texte2,
+                title: 'Afficher mon rang',
+                onTap: () => choose(context, ''),
+              ),
+              for (final t in titles)
+                StatsSheetRow(
+                  enabled: t.earned,
+                  icon: !t.earned
+                      ? Icons.lock_outline_rounded
+                      : shown == t.name
+                      ? Icons.check_circle_rounded
+                      : Icons.workspace_premium_rounded,
+                  iconColor: shown == t.name ? k.validation : k.texte2,
+                  title: t.name,
+                  subtitle: t.source,
+                  onTap: t.earned ? () => choose(context, t.name) : null,
+                ),
+            ],
+          );
+        },
       ),
-  ]);
+    ],
+  );
 }

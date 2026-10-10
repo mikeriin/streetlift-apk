@@ -66,10 +66,9 @@ void main() {
         for (var branch = 0; branch < 2; branch++) {
           tester.state<ScrollableState>(scroll).position.jumpTo(0);
           await tester.pumpAndSettle();
-          await tester.ensureVisible(
-            find.byKey(ValueKey('stats-branch-$branch')),
-          );
-          await tester.tap(find.byKey(ValueKey('stats-branch-$branch')));
+          // UI3 : branches en segments du kit (KSegmented, clé du segment).
+          await tester.ensureVisible(find.byKey(ValueKey('segment-$branch')));
+          await tester.tap(find.byKey(ValueKey('segment-$branch')));
           await tester.pumpAndSettle();
           for (var i = 0; i < 8; i++) {
             await tester.drag(scroll, const Offset(0, -420));

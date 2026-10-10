@@ -128,10 +128,14 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('nav-1')));
       await tester.pumpAndSettle();
+      // UI3 : champ de recherche du kit (KSearchField), qui porte la clé.
       expect(
         tester
             .widget<TextField>(
-              find.byKey(const ValueKey('stats-history-search')),
+              find.descendant(
+                of: find.byKey(const ValueKey('stats-history-search')),
+                matching: find.byType(TextField),
+              ),
             )
             .controller!
             .text,
@@ -190,7 +194,16 @@ void main() {
           standalone: true,
         ),
       );
-      await tester.tap(find.text('Modifier mes références'));
+      // UI3 (R1, R2) : le raccourci porte le nom de sa destination,
+      // « Mes références ».
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('stats-references')),
+          matching: find.text('Mes références'),
+        ),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const ValueKey('stats-references')));
       await tester.pumpAndSettle();
       expect(find.byType(PilotageScreen), findsOneWidget);
       final input = find.byKey(ValueKey('B8-${store.pilotageEpoch}'));
