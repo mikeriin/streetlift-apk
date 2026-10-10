@@ -356,7 +356,13 @@ void main() {
         }
       }
 
+      // Ferme une feuille ouverte (appui sur le voile), sinon rien : un
+      // appui en haut à gauche sans feuille toucherait le retour.
       Future<void> sheetClose() async {
+        final menus = find.byWidgetPredicate(
+          (w) => w is BottomSheet || w.runtimeType.toString().startsWith('_PopupMenu'),
+        );
+        if (menus.evaluate().isEmpty) return;
         await tester.tapAt(const Offset(12, 60));
         await wait(tester, 900);
       }
@@ -390,6 +396,7 @@ void main() {
       );
       await sheetClose();
       final info = find.byTooltip('Consignes de l’exercice');
+      await scrollTo(tester, info);
       if (info.hitTestable().evaluate().isNotEmpty) {
         await tester.tap(info.hitTestable().first);
       }
