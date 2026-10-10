@@ -113,3 +113,9 @@ Ajouts : queue lourde des notes (8 %, +2 rép.), noteur entier détecté (≥ 20
 - NON traités (à écrire dans la livraison) : M5 (demi-largeur rarement < 6 % : cohérent avec l'erreur mesurée ; contrôle dual rarement déclenché), M6 (crochets d'extension appliqués par l'appelant), M7 (référence de planification hors journal), M8 (résidu du secours), m6, m10, m12, m14, m15.
 - `banc/campagne.py` + `tests/test_campagne.py` existent (harnais de campagne complet, cache /tmp/km1-campagne) : à lancer pour la mesure finale.
 - Fixtures périmées (tests/test_fixtures.py désélectionné) : `fixtures/generer.py` à adapter (validateur obligatoire, événements `plan`) puis régénérer.
+
+## 10/10 08:50 UTC — KM1 LIVRÉ
+- `moteurs` f3801e36 (référence Koach 1.0, kalis_bench 0.3.1), `etiquettes/kalis_bench-v0.3.1`, contrôle complet vert run 38032852629.
+- Campagne finale (1 440 saisons) : 6 critères sur 11 (non atteints : e1RM 4,24 %, mauvais jour 1,14 %, calibration 15 points, rejeu réel 4,3 % / 97 % ; parité : KM2) ; sécurité 0.
+- `pipeline` c1bc68b9 : LIVRAISON_KM1.md, DECISIONS_CP (section KM1), ETAT_CP (ligne KM1 « livré, à valider »). Projet claude.ai : `claude/LIVRAISON_KM1.md`. Page de suivi : section KM1.
+- Rien à reprendre ; suite = décision du pilotage (DECISIONS KM1.2, KM1.5, recommandation).
