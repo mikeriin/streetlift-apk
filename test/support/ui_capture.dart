@@ -15,7 +15,9 @@ const uiCaptureDir = 'validation/UI';
 Future<void> _load(String family, List<String> files) async {
   final loader = FontLoader(family);
   for (final f in files) {
-    loader.addFont(Future.value(ByteData.sublistView(File(f).readAsBytesSync())));
+    loader.addFont(
+      Future.value(ByteData.sublistView(File(f).readAsBytesSync())),
+    );
   }
   await loader.load();
 }
@@ -27,7 +29,9 @@ Future<void> loadUiFonts() async {
     'assets/fonts/Barlow-Medium.ttf',
     'assets/fonts/Barlow-SemiBold.ttf',
   ]);
-  await _load('BarlowSemiCondensed', ['assets/fonts/BarlowSemiCondensed-SemiBold.ttf']);
+  await _load('BarlowSemiCondensed', [
+    'assets/fonts/BarlowSemiCondensed-SemiBold.ttf',
+  ]);
   await _load('BarlowCondensed', [
     'assets/fonts/BarlowCondensed-Medium.ttf',
     'assets/fonts/BarlowCondensed-SemiBold.ttf',
@@ -56,7 +60,8 @@ Future<void> saveUiPng(
   String name, {
   double pixelRatio = 2,
 }) async {
-  final render = boundary.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+  final render =
+      boundary.currentContext!.findRenderObject()! as RenderRepaintBoundary;
   await tester.runAsync(() async {
     final image = await render.toImage(pixelRatio: pixelRatio);
     final png = await image.toByteData(format: ui.ImageByteFormat.png);

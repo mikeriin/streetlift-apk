@@ -332,7 +332,10 @@ class KRestBar extends StatelessWidget {
                   );
                 }
                 return Row(
-                  children: [Expanded(child: time), buttons],
+                  children: [
+                    Expanded(child: time),
+                    buttons,
+                  ],
                 );
               },
             ),

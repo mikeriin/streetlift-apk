@@ -18,7 +18,9 @@ Widget host(
   theme: kitTheme(dark: dark, paletteId: palette),
   home: Builder(
     builder: (context) => MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
+      data: MediaQuery.of(
+        context,
+      ).copyWith(textScaler: TextScaler.linear(scale)),
       child: Scaffold(
         body: scroll
             ? SingleChildScrollView(
@@ -66,7 +68,11 @@ void main() {
       expect(KType.chiffre.fontFamily, KFont.figures);
       expect(KType.chiffre.fontFeatures, KFont.tabular);
       expect(KType.chrono.fontSize, 34);
-      for (final s in [KType.titreRacine, KType.titreEcran, KType.titreSeance]) {
+      for (final s in [
+        KType.titreRacine,
+        KType.titreEcran,
+        KType.titreSeance,
+      ]) {
         expect(s.fontFamily, KFont.title);
         expect(s.fontWeight, FontWeight.w600);
       }
@@ -86,7 +92,12 @@ void main() {
     testWidgets('ressorts : durées non nulles, nulles si animations réduites', (
       tester,
     ) async {
-      for (final m in [KMotion.fast, KMotion.standard, KMotion.slow, KMotion.effect]) {
+      for (final m in [
+        KMotion.fast,
+        KMotion.standard,
+        KMotion.slow,
+        KMotion.effect,
+      ]) {
         expect(m.duration, greaterThan(Duration.zero));
         expect(m.duration, lessThan(const Duration(milliseconds: 400)));
         expect(m.curve.transform(0), 0);
@@ -118,7 +129,9 @@ void main() {
       );
       final k = KTokens.of(tester.element(find.text('Contenu')));
       final m = tester.widget<Material>(
-        find.ancestor(of: find.text('Contenu'), matching: find.byType(Material)).first,
+        find
+            .ancestor(of: find.text('Contenu'), matching: find.byType(Material))
+            .first,
       );
       expect(m.color, k.surface);
       expect(
@@ -142,12 +155,18 @@ void main() {
         final k = KTokens.of(tester.element(find.text('Squat et gainage')));
         final m = tester.widget<Material>(
           find
-              .ancestor(of: find.text('Squat et gainage'), matching: find.byType(Material))
+              .ancestor(
+                of: find.text('Squat et gainage'),
+                matching: find.byType(Material),
+              )
               .first,
         );
         expect(m.color, k.pleine);
         final text = tester.widget<RichText>(
-          find.descendant(of: find.text('Squat et gainage'), matching: find.byType(RichText)),
+          find.descendant(
+            of: find.text('Squat et gainage'),
+            matching: find.byType(RichText),
+          ),
         );
         expect(text.text.style!.color, k.surPleine);
       }
@@ -170,7 +189,9 @@ void main() {
       expect(taps, 1);
     });
 
-    testWidgets('bandeau dans le flux : action et fermeture nommée', (tester) async {
+    testWidgets('bandeau dans le flux : action et fermeture nommée', (
+      tester,
+    ) async {
       var actions = 0, closes = 0;
       await tester.pumpWidget(
         host(
@@ -253,35 +274,46 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('mise en évidence d’une ligne ouverte par la recherche : 1,5 s', (
+    testWidgets(
+      'mise en évidence d’une ligne ouverte par la recherche : 1,5 s',
+      (tester) async {
+        await tester.pumpWidget(
+          host(
+            KMenuGroup(
+              children: [
+                KMenuRow(
+                  title: 'Repos par défaut',
+                  highlight: true,
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+        );
+        final k = KTokens.of(tester.element(find.text('Repos par défaut')));
+        Color fill() =>
+            ((tester
+                        .widget<AnimatedContainer>(
+                          find
+                              .ancestor(
+                                of: find.text('Repos par défaut'),
+                                matching: find.byType(AnimatedContainer),
+                              )
+                              .first,
+                        )
+                        .decoration!
+                    as ShapeDecoration)
+                .color)!;
+        expect(fill(), k.haute);
+        await tester.pump(const Duration(milliseconds: 1600));
+        await tester.pumpAndSettle();
+        expect(fill().a, 0);
+      },
+    );
+
+    testWidgets('interrupteur : toute la ligne bascule le réglage', (
       tester,
     ) async {
-      await tester.pumpWidget(
-        host(
-          KMenuGroup(
-            children: [KMenuRow(title: 'Repos par défaut', highlight: true, onTap: () {})],
-          ),
-        ),
-      );
-      final k = KTokens.of(tester.element(find.text('Repos par défaut')));
-      Color fill() =>
-          ((tester.widget<AnimatedContainer>(
-                        find
-                            .ancestor(
-                              of: find.text('Repos par défaut'),
-                              matching: find.byType(AnimatedContainer),
-                            )
-                            .first,
-                      ).decoration!
-                      as ShapeDecoration)
-                  .color)!;
-      expect(fill(), k.haute);
-      await tester.pump(const Duration(milliseconds: 1600));
-      await tester.pumpAndSettle();
-      expect(fill().a, 0);
-    });
-
-    testWidgets('interrupteur : toute la ligne bascule le réglage', (tester) async {
       var value = false;
       await tester.pumpWidget(
         StatefulBuilder(
@@ -307,7 +339,9 @@ void main() {
       expect(value, isFalse);
     });
 
-    testWidgets('pas à pas : trois pilules séparées, bornes, noms', (tester) async {
+    testWidgets('pas à pas : trois pilules séparées, bornes, noms', (
+      tester,
+    ) async {
       var v = 90;
       final handle = tester.ensureSemantics();
       await tester.pumpWidget(
@@ -372,7 +406,10 @@ void main() {
           tester
                   .widget<AnimatedContainer>(
                     find
-                        .ancestor(of: find.text(label), matching: find.byType(AnimatedContainer))
+                        .ancestor(
+                          of: find.text(label),
+                          matching: find.byType(AnimatedContainer),
+                        )
                         .first,
                   )
                   .decoration!
@@ -380,8 +417,10 @@ void main() {
       expect(deco('Sombre').color, k.pleine);
       expect(deco('Sombre').shape, isA<StadiumBorder>());
       expect(deco('Clair').shape, isA<StadiumBorder>());
-      expect(tester.getSize(find.byKey(const ValueKey('segment-dark'))).height,
-          greaterThanOrEqualTo(KSize.target - 2 * KSpacing.s4));
+      expect(
+        tester.getSize(find.byKey(const ValueKey('segment-dark'))).height,
+        greaterThanOrEqualTo(KSize.target - 2 * KSpacing.s4),
+      );
     });
 
     testWidgets('recherche : saisie, effacement nommé', (tester) async {
@@ -395,7 +434,10 @@ void main() {
       await tester.tap(find.byTooltip('Effacer la recherche'));
       await tester.pump();
       expect(seen, ['repos', '']);
-      expect(tester.getSize(find.byType(TextField)).height, greaterThanOrEqualTo(48));
+      expect(
+        tester.getSize(find.byType(TextField)).height,
+        greaterThanOrEqualTo(48),
+      );
     });
   });
 
@@ -425,7 +467,13 @@ void main() {
         title: 'Séance',
         subtitle: 'Corps entier, S1, J2',
         groups: const [
-          [KAction(icon: Icons.menu_book_outlined, label: 'Consignes de séance', value: 'c')],
+          [
+            KAction(
+              icon: Icons.menu_book_outlined,
+              label: 'Consignes de séance',
+              value: 'c',
+            ),
+          ],
           [
             KAction(
               icon: Icons.delete_outline,
@@ -439,7 +487,9 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Corps entier, S1, J2'), findsOneWidget);
       final k = KTokens.of(tester.element(find.text('Séance')));
-      final del = tester.widget<Text>(find.text('Supprimer l’historique de cette séance'));
+      final del = tester.widget<Text>(
+        find.text('Supprimer l’historique de cette séance'),
+      );
       expect(del.style!.color, k.danger);
       await tester.tap(find.byKey(const ValueKey('sheet-close')));
       await tester.pumpAndSettle();
@@ -448,7 +498,13 @@ void main() {
         ctx,
         title: 'Séance',
         groups: const [
-          [KAction(icon: Icons.menu_book_outlined, label: 'Consignes de séance', value: 'c')],
+          [
+            KAction(
+              icon: Icons.menu_book_outlined,
+              label: 'Consignes de séance',
+              value: 'c',
+            ),
+          ],
         ],
       ).then((v) => got = v);
       await tester.pumpAndSettle();
@@ -466,7 +522,14 @@ void main() {
           ctx,
           title: 'Séance',
           groups: const [
-            [KAction(icon: Icons.delete, label: 'Supprimer', value: 'd', danger: true)],
+            [
+              KAction(
+                icon: Icons.delete,
+                label: 'Supprimer',
+                value: 'd',
+                danger: true,
+              ),
+            ],
             [KAction(icon: Icons.info, label: 'Consignes', value: 'c')],
           ],
         ),
@@ -496,7 +559,10 @@ void main() {
       final k = KTokens.of(tester.element(find.text('Traction pronation')));
       final current = tester.widget<Material>(
         find
-            .ancestor(of: find.text('Traction pronation'), matching: find.byType(Material))
+            .ancestor(
+              of: find.text('Traction pronation'),
+              matching: find.byType(Material),
+            )
             .first,
       );
       expect((current.shape! as RoundedRectangleBorder).side.color, k.encre);
@@ -519,7 +585,9 @@ void main() {
       ).then((v) => got = v);
       await tester.pumpAndSettle();
       final k = KTokens.of(tester.element(find.text('Supprimer')));
-      final ok = tester.widget<FilledButton>(find.byKey(const ValueKey('confirm-ok')));
+      final ok = tester.widget<FilledButton>(
+        find.byKey(const ValueKey('confirm-ok')),
+      );
       expect(ok.style!.backgroundColor!.resolve({}), k.danger);
       await tester.tap(find.text('Annuler'));
       await tester.pumpAndSettle();
@@ -554,7 +622,10 @@ void main() {
         ),
       );
       expect(find.text('PUISSANCE MU + SQUAT ENDURANCE'), findsOneWidget);
-      expect(find.bySemanticsLabel('J6, Puissance MU + squat endurance, à venir'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('J6, Puissance MU + squat endurance, à venir'),
+        findsOneWidget,
+      );
       await tester.tap(find.byTooltip('Résumé du jour'));
       expect(info, 1);
       handle.dispose();
@@ -567,7 +638,12 @@ void main() {
       await tester.pumpWidget(
         host(
           const KSeasonBar(
-            blocks: [KSeasonBlock(3), KSeasonBlock(8), KSeasonBlock(8), KSeasonBlock(21)],
+            blocks: [
+              KSeasonBlock(3),
+              KSeasonBlock(8),
+              KSeasonBlock(8),
+              KSeasonBlock(21),
+            ],
             week: 13,
           ),
         ),
@@ -585,8 +661,16 @@ void main() {
           const KSetTable(
             columns: ['kg', 'Reps'],
             rows: [
-              KSetRow(number: '1', state: KSetState.done, cells: [KSetField('+32,5'), KSetField('5')]),
-              KSetRow(number: '2', state: KSetState.current, cells: [KSetField('+32,5'), KSetField('5')]),
+              KSetRow(
+                number: '1',
+                state: KSetState.done,
+                cells: [KSetField('+32,5'), KSetField('5')],
+              ),
+              KSetRow(
+                number: '2',
+                state: KSetState.current,
+                cells: [KSetField('+32,5'), KSetField('5')],
+              ),
             ],
           ),
         ),
@@ -594,11 +678,16 @@ void main() {
       expect(find.text('kg'), findsOneWidget);
       final k = KTokens.of(tester.element(find.text('kg')));
       final current = tester.widget<Container>(
-        find.ancestor(of: find.text('2'), matching: find.byType(Container)).first,
+        find
+            .ancestor(of: find.text('2'), matching: find.byType(Container))
+            .first,
       );
       final deco = current.decoration! as ShapeDecoration;
       expect((deco.shape as RoundedRectangleBorder).side.color, k.encre);
-      expect(tester.getSize(find.byType(KSetField).first).height, greaterThanOrEqualTo(48));
+      expect(
+        tester.getSize(find.byType(KSetField).first).height,
+        greaterThanOrEqualTo(48),
+      );
     });
 
     testWidgets('barre de repos : −15 s / +15 s, arrêt nommé', (tester) async {
@@ -635,7 +724,11 @@ void main() {
           ),
         ),
       );
-      showKSnack(ctx, message: 'Koach : série suivante dans 2 s', actionLabel: 'Annuler');
+      showKSnack(
+        ctx,
+        message: 'Koach : série suivante dans 2 s',
+        actionLabel: 'Annuler',
+      );
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.text('Koach : série suivante dans 2 s'), findsOneWidget);
@@ -643,7 +736,9 @@ void main() {
   });
 
   group('pages, en-têtes et dock', () {
-    testWidgets('page racine : grand titre replié au défilement', (tester) async {
+    testWidgets('page racine : grand titre replié au défilement', (
+      tester,
+    ) async {
       size(tester, 360, 640);
       await tester.pumpWidget(
         MaterialApp(
@@ -651,13 +746,17 @@ void main() {
           home: KPage.root(
             title: 'Réglages',
             lead: 'L’application à ta façon.',
-            children: [for (var i = 0; i < 30; i++) KCard(child: Text('Ligne $i'))],
+            children: [
+              for (var i = 0; i < 30; i++) KCard(child: Text('Ligne $i')),
+            ],
           ),
         ),
       );
       expect(find.text('RÉGLAGES'), findsNWidgets(2));
       double opacityOf(Finder f) => tester
-          .widget<Opacity>(find.ancestor(of: f, matching: find.byType(Opacity)).first)
+          .widget<Opacity>(
+            find.ancestor(of: f, matching: find.byType(Opacity)).first,
+          )
           .opacity;
       final titles = find.text('RÉGLAGES');
       expect(opacityOf(titles.first) + opacityOf(titles.last), closeTo(1, .01));
@@ -723,50 +822,54 @@ void main() {
       expect(text.overflow, isNot(TextOverflow.ellipsis));
     });
 
-    testWidgets('dock : 4 onglets, libellé de l’onglet actif seul, pilule pleine', (
-      tester,
-    ) async {
-      size(tester, 360, 640);
-      var index = 2;
-      final handle = tester.ensureSemantics();
-      await tester.pumpWidget(
-        StatefulBuilder(
-          builder: (context, set) => MaterialApp(
-            theme: kitTheme(dark: true),
-            home: Scaffold(
-              extendBody: true,
-              bottomNavigationBar: KDock(
-                index: index,
-                onTap: (i) => set(() => index = i),
-                items: const [
-                  KDockItem(Icons.grid_view_rounded, 'Arsenal'),
-                  KDockItem(Icons.insights_rounded, 'Stats'),
-                  KDockItem(Icons.fitness_center_rounded, 'Programme'),
-                  KDockItem(Icons.settings_outlined, 'Réglages'),
-                ],
+    testWidgets(
+      'dock : 4 onglets, libellé de l’onglet actif seul, pilule pleine',
+      (tester) async {
+        size(tester, 360, 640);
+        var index = 2;
+        final handle = tester.ensureSemantics();
+        await tester.pumpWidget(
+          StatefulBuilder(
+            builder: (context, set) => MaterialApp(
+              theme: kitTheme(dark: true),
+              home: Scaffold(
+                extendBody: true,
+                bottomNavigationBar: KDock(
+                  index: index,
+                  onTap: (i) => set(() => index = i),
+                  items: const [
+                    KDockItem(Icons.grid_view_rounded, 'Arsenal'),
+                    KDockItem(Icons.insights_rounded, 'Stats'),
+                    KDockItem(Icons.fitness_center_rounded, 'Programme'),
+                    KDockItem(Icons.settings_outlined, 'Réglages'),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(find.text('PROGRAMME'), findsOneWidget);
-      expect(
-        tester.getSemantics(find.bySemanticsLabel('Programme')),
-        isSemantics(isButton: true, isSelected: true, hasSelectedState: true),
-      );
-      await tester.tap(find.byKey(const ValueKey('nav-0')));
-      await tester.pumpAndSettle();
-      expect(index, 0);
-      final dock = tester.getRect(find.byType(KDock));
-      expect(dock.height, KDock.height);
-      expect(KDock.reserve, KDock.height + 16);
-      for (var i = 0; i < 4; i++) {
-        expect(tester.getSize(find.byKey(ValueKey('nav-$i'))).height, KSize.dockItem);
-      }
-      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
-      handle.dispose();
-    });
+        );
+        await tester.pumpAndSettle();
+        expect(find.text('PROGRAMME'), findsOneWidget);
+        expect(
+          tester.getSemantics(find.bySemanticsLabel('Programme')),
+          isSemantics(isButton: true, isSelected: true, hasSelectedState: true),
+        );
+        await tester.tap(find.byKey(const ValueKey('nav-0')));
+        await tester.pumpAndSettle();
+        expect(index, 0);
+        final dock = tester.getRect(find.byType(KDock));
+        expect(dock.height, KDock.height);
+        expect(KDock.reserve, KDock.height + 16);
+        for (var i = 0; i < 4; i++) {
+          expect(
+            tester.getSize(find.byKey(ValueKey('nav-$i'))).height,
+            KSize.dockItem,
+          );
+        }
+        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+        handle.dispose();
+      },
+    );
 
     testWidgets('sélecteur de palette : 8 pastilles nommées, choix coché', (
       tester,
@@ -774,12 +877,20 @@ void main() {
       String? picked;
       final handle = tester.ensureSemantics();
       await tester.pumpWidget(
-        host(KPalettePicker(selectedId: 'bordeaux', onSelected: (id) => picked = id)),
+        host(
+          KPalettePicker(
+            selectedId: 'bordeaux',
+            onSelected: (id) => picked = id,
+          ),
+        ),
       );
       for (final p in kPaletteSources) {
         expect(find.byKey(ValueKey('accent-${p.id}')), findsOneWidget);
       }
-      expect(find.byKey(const ValueKey('accent-check-bordeaux')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('accent-check-bordeaux')),
+        findsOneWidget,
+      );
       expect(find.text('Bordeaux Performance'), findsWidgets);
       await tester.tap(find.byKey(const ValueKey('accent-neon')));
       expect(picked, 'neon');
@@ -790,19 +901,26 @@ void main() {
   });
 
   group('catalogue', () {
-    for (final (width, scale) in const [(360.0, 1.0), (360.0, 1.3), (320.0, 2.0)]) {
+    for (final (width, scale) in const [
+      (360.0, 1.0),
+      (360.0, 1.3),
+      (320.0, 2.0),
+    ]) {
       for (final dark in [true, false]) {
-        testWidgets('toutes les sections : aucun débordement '
-            '(${width.toInt()} dp, ${(scale * 100).round()} %, ${dark ? 'sombre' : 'clair'})', (
-          tester,
-        ) async {
-          size(tester, width, 2400);
-          for (final s in kitSamples) {
-            await tester.pumpWidget(host(dark: dark, scale: scale, KitSampleView(s)));
-            await tester.pump(const Duration(milliseconds: 1700));
-            expect(tester.takeException(), isNull, reason: s.id);
-          }
-        });
+        testWidgets(
+          'toutes les sections : aucun débordement '
+          '(${width.toInt()} dp, ${(scale * 100).round()} %, ${dark ? 'sombre' : 'clair'})',
+          (tester) async {
+            size(tester, width, 2400);
+            for (final s in kitSamples) {
+              await tester.pumpWidget(
+                host(dark: dark, scale: scale, KitSampleView(s)),
+              );
+              await tester.pump(const Duration(milliseconds: 1700));
+              expect(tester.takeException(), isNull, reason: s.id);
+            }
+          },
+        );
       }
     }
 
@@ -811,7 +929,10 @@ void main() {
     ) async {
       size(tester, 360, 2000);
       await tester.pumpWidget(
-        MaterialApp(theme: kitTheme(dark: true), home: const KitCatalogScreen()),
+        MaterialApp(
+          theme: kitTheme(dark: true),
+          home: const KitCatalogScreen(),
+        ),
       );
       await tester.pumpAndSettle();
       expect(find.text('CATALOGUE DU KIT'), findsOneWidget);

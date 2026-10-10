@@ -359,22 +359,25 @@ void main() {
       },
     );
 
-    test('contraste renforcé : retrouvé à la réouverture, indépendant', () async {
-      app.settings.contrast = true;
-      app.saveSettings();
-      expect(app.contrastMode.value, isTrue);
-      expect(app.accentMode.value, 'bordeaux');
-      await app.flush();
-      final next = await relaunch();
-      expect(next.settings.contrast, isTrue);
-      expect(next.contrastMode.value, isTrue);
-      final data = jsonDecode(next.exportAll()) as Map<String, dynamic>;
-      expect((data['settings'] as Map)['contrast'], true);
-      next.settings.contrast = false;
-      next.saveSettings();
-      final off = jsonDecode(next.exportAll()) as Map<String, dynamic>;
-      expect((off['settings'] as Map).containsKey('contrast'), isFalse);
-    });
+    test(
+      'contraste renforcé : retrouvé à la réouverture, indépendant',
+      () async {
+        app.settings.contrast = true;
+        app.saveSettings();
+        expect(app.contrastMode.value, isTrue);
+        expect(app.accentMode.value, 'bordeaux');
+        await app.flush();
+        final next = await relaunch();
+        expect(next.settings.contrast, isTrue);
+        expect(next.contrastMode.value, isTrue);
+        final data = jsonDecode(next.exportAll()) as Map<String, dynamic>;
+        expect((data['settings'] as Map)['contrast'], true);
+        next.settings.contrast = false;
+        next.saveSettings();
+        final off = jsonDecode(next.exportAll()) as Map<String, dynamic>;
+        expect((off['settings'] as Map).containsKey('contrast'), isFalse);
+      },
+    );
 
     test('suppression locale : retour à Bordeaux', () async {
       app.settings.accent = 'forest';
