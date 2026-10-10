@@ -1,0 +1,73 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: (setUpAll)
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: (setUpAll)
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: racine d’Arsenal recherche directe et les deux entrées
+00:01 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: R3 : le titre reprend le libellé d’entrée pages d’aide
+00:02 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: racine d’Arsenal « pector » : groupe « Muscles » ; un résultat ouvre l’Anatomie sur le bon groupe
+00:02 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: R3 : le titre reprend le libellé d’entrée départ du programme : « Mes références (facultatif) »
+00:02 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: racine d’Arsenal un muscle (pas un groupe) ouvre l’Anatomie sur son groupe
+00:02 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: racine d’Arsenal un muscle (pas un groupe) ouvre l’Anatomie sur son groupe
+00:02 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: racine d’Arsenal un muscle (pas un groupe) ouvre l’Anatomie sur son groupe
+00:02 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: R6 : aucun cul-de-sac tests guidés sans proposition : une action qui résout
+00:02 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: racine d’Arsenal nom d’exercice réel : résultat « Exercices », fiche
+00:02 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: racine d’Arsenal nom d’exercice réel : résultat « Exercices », fiche
+00:02 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: R6 : aucun cul-de-sac programme terminé : « Créer un nouveau programme »
+00:02 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: racine d’Arsenal beaucoup d’exercices : « Voir les n exercices » ouvre la bibliothèque sur la recherche
+00:03 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: remplacer le programme : confirmation au gabarit (« Annuler » garde, « Remplacer » remplace)
+00:03 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: remplacer le programme : confirmation au gabarit (« Annuler » garde, « Remplacer » remplace)
+00:03 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: remplacer le programme : confirmation au gabarit (« Annuler » garde, « Remplacer » remplace)
+00:04 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: remplacer le programme : confirmation au gabarit (« Annuler » garde, « Remplacer » remplace)
+00:04 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: remplacer le programme : confirmation au gabarit (« Annuler » garde, « Remplacer » remplace)
+00:04 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: remplacer le programme : confirmation au gabarit (« Annuler » garde, « Remplacer » remplace)
+00:04 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: remplacer le programme : confirmation au gabarit (« Annuler » garde, « Remplacer » remplace)
+00:04 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_pages_test.dart: (tearDownAll)
+00:05 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_parcours_profil_test.dart: (setUpAll)
+00:05 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: (setUpAll)
+00:06 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_parcours_profil_test.dart: progression en segments : une pilule par étape montrée, « Étape n sur N » (sombre)
+00:06 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_parcours_profil_test.dart: progression en segments : une pilule par étape montrée, « Étape n sur N » (sombre)
+00:07 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Profil « Mes références » ouvre la page « Mes références » ; pas de rubrique « Mode assisté ou libre »
+00:07 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Profil « Mes références » ouvre la page « Mes références » ; pas de rubrique « Mode assisté ou libre »
+00:07 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Profil « Mes références » ouvre la page « Mes références » ; pas de rubrique « Mode assisté ou libre »
+00:07 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_parcours_profil_test.dart: « Passer » : sur les étapes facultatives seulement
+00:08 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_parcours_profil_test.dart: « Passer » : sur les étapes facultatives seulement
+00:08 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_parcours_profil_test.dart: « Passer » : sur les étapes facultatives seulement
+00:08 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Profil retrait de l’accord déclaré et suppression des réponses de santé : confirmés, « Annuler » ne change rien
+00:08 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Profil retrait de l’accord déclaré et suppression des réponses de santé : confirmés, « Annuler » ne change rien
+00:09 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Profil retrait de l’accord déclaré et suppression des réponses de santé : confirmés, « Annuler » ne change rien
+00:09 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_parcours_profil_test.dart: « Ajouter un record » s’ouvre en sous-page et rend le record au brouillon
+00:10 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Mes références effacer toutes mes références : action visible, confirmée
+00:10 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_parcours_profil_test.dart: durée « Autre » réglée en place (plus de dialogue)
+00:10 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Données import par la sous-page : annuler ne change rien, remplacer importe
+00:10 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Données import par la sous-page : annuler ne change rien, remplacer importe
+00:10 +35: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Données mot de confirmation : même règle qu’avant (casse ignorée)
+00:10 +36: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Données suppression par la sous-page : mot exigé, puis effacement
+00:11 +37: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Notifications NotificationSettingsPanel(highlight: reminder) se construit et met la ligne en évidence
+00:11 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: Notifications NotificationSettingsPanel(highlight: reminder-time) se construit et met la ligne en évidence
+00:11 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_profil_test.dart: (tearDownAll)
+00:11 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: (setUpAll)
+00:12 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: l’index couvre chaque réglage et chaque page d’aide (§4.4)
+00:12 +40: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: chaque entrée est trouvée par son libellé et ses mots proches
+00:12 +41: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: mots proches du cahier, sans accents ni majuscules
+00:12 +42: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: « repos » : « Repos par défaut » en premier, classement par score
+00:12 +43: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: une ligne absente n’est pas proposée
+00:12 +44: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: chaque page de réglage s’ouvre avec la ligne en évidence
+00:13 +45: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: chaque page de réglage s’ouvre avec la ligne en évidence
+00:14 +46: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: chaque page de réglage s’ouvre avec la ligne en évidence
+Kalis notifications: LateInitializationError: Field '_instance@1814271368' has not been initialized.
+00:14 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: chaque page de réglage s’ouvre avec la ligne en évidence
+Kalis notifications: LateInitializationError: Field '_instance@1814271368' has not been initialized.
+00:15 +48: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+Kalis notifications: LateInitializationError: Field '_instance@1814271368' has not been initialized.
+Kalis notifications: LateInitializationError: Field '_instance@1814271368' has not been initialized.
+00:18 +49: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+00:18 +50: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+00:18 +51: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+00:18 +52: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: les réglages simples s’appliquent tout de suite
+00:19 +53: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: objectif de la semaine : segments Adaptatif, 2 à 6 (§4.3)
+00:19 +54: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: supprimer les anciennes réponses : confirmation destructive
+00:19 +55: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: Données et confidentialité : textes et libellés sans jargon
+00:19 +56: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: Aide et à propos : version une fois, entrées de l’aide
+00:19 +57: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: Coller une sauvegarde : sous-page, texte rendu à l’aperçu
+00:19 +58: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: mise en évidence : la ligne visée s’allume puis s’éteint
+00:19 +59: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: (tearDownAll)
+00:19 +59: All tests passed!

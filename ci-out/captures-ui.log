@@ -1,0 +1,17 @@
+
+::group::✅ Passing tests
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : sections × sombre, clair × bordeaux, neon
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : jetons et palette dans les 8 palettes, contraste renforcé
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : 320 dp et 200 % de texte
+::endgroup::
+::group::✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_ecrans_capture_test.dart: UI4 : écrans de la zone × sombre, clair × bordeaux, neon
+Kalis notifications: LateInitializationError: Field '_instance@1814271368' has not been initialized.
+Kalis notifications: LateInitializationError: Field '_instance@1814271368' has not been initialized.
+Kalis notifications: LateInitializationError: Field '_instance@1814271368' has not been initialized.
+Kalis notifications: LateInitializationError: Field '_instance@1814271368' has not been initialized.
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_ecrans_capture_test.dart: UI4 : écrans denses à 320 dp et 200 % de texte
+::endgroup::
+
+🎉 5 tests passed.
