@@ -255,7 +255,10 @@ class _FlameTrackState extends State<FlameTrack> {
                 const h = 48.0, flame = 34.0, dot = 7.0;
                 final fill = v == null
                     ? k.filet
-                    : flameColor(v, dark: dark).withValues(alpha: dark ? .55 : 1);
+                    : flameColor(
+                        v,
+                        dark: dark,
+                      ).withValues(alpha: dark ? .55 : 1);
                 return GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTapUp: (d) {
@@ -370,11 +373,11 @@ class _FlameTrackState extends State<FlameTrack> {
             child: Builder(
               builder: (context) {
                 final low = Text(
-                  '1 · ${flameWord(1)}',
+                  '1 · ${flameWord(1).toLowerCase()}',
                   style: legend,
                 );
                 final high = Text(
-                  '${flameWord(10)} · 10',
+                  '${flameWord(10).toLowerCase()} · 10',
                   textAlign: TextAlign.end,
                   style: legend,
                 );

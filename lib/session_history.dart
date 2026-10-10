@@ -373,76 +373,80 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
             header,
             Expanded(
               child: _groups.isEmpty
-          ? const Padding(
-              padding: KSpace.content,
-              child: KEmpty(
-                icon: Icons.check_circle_outline,
-                title: 'Séance effectuée',
-                message: 'Aucune série enregistrée pour cette séance.',
-              ),
-            )
-          : Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                    start: KSpacing.page,
-                    end: KSpacing.page,
-                    bottom: KSpacing.s4,
-                  ),
-                  child: Column(
-                    children: [
-                      // Même repère que la séance : « Exercice 3 sur 7 »
-                      // et le lien « Exercices » (passe à la ligne en
-                      // grand texte).
-                      SizedBox(
-                        width: double.infinity,
-                        child: Wrap(
-                          alignment: WrapAlignment.spaceBetween,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: KSpacing.s8,
-                          children: [
-                            Text(
-                              _page == _groups.length
-                                  ? 'Bilan de séance'
-                                  : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
-                              style: KType.section.copyWith(color: k.texte2),
-                            ),
-                            KTextButton(
-                              icon: Icons.format_list_numbered_rounded,
-                              label: 'Exercices',
-                              onPressed: _chooseExercise,
-                            ),
-                          ],
-                        ),
+                  ? const Padding(
+                      padding: KSpace.content,
+                      child: KEmpty(
+                        icon: Icons.check_circle_outline,
+                        title: 'Séance effectuée',
+                        message: 'Aucune série enregistrée pour cette séance.',
                       ),
-                      SessionProgressDots(
-                        count: _groups.length + 1,
-                        index: _page,
-                        color: k.encre,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: PageView.builder(
-                    controller: _pages,
-                    itemCount: _groups.length + 1,
-                    onPageChanged: (page) => setState(() => _page = page),
-                    itemBuilder: (context, page) => page == _groups.length
-                        ? _summary()
-                        : SessionExercisePage(
-                            key: ValueKey('history-page-$page'),
-                            week: _week,
-                            day: _day,
-                            exs: _groups[page],
-                            timer: _unusedTimer,
-                            history: _snapshot,
-                            unresolvedIds: _unresolved,
+                    )
+                  : Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                            start: KSpacing.page,
+                            end: KSpacing.page,
+                            bottom: KSpacing.s4,
                           ),
-                  ),
-                ),
-              ],
-            ),
+                          child: Column(
+                            children: [
+                              // Même repère que la séance : « Exercice 3 sur 7 »
+                              // et le lien « Exercices » (passe à la ligne en
+                              // grand texte).
+                              SizedBox(
+                                width: double.infinity,
+                                child: Wrap(
+                                  alignment: WrapAlignment.spaceBetween,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  spacing: KSpacing.s8,
+                                  children: [
+                                    Text(
+                                      _page == _groups.length
+                                          ? 'Bilan de séance'
+                                          : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
+                                      style: KType.section.copyWith(
+                                        color: k.texte2,
+                                      ),
+                                    ),
+                                    KTextButton(
+                                      icon: Icons.format_list_numbered_rounded,
+                                      label: 'Exercices',
+                                      onPressed: _chooseExercise,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SessionProgressDots(
+                                count: _groups.length + 1,
+                                index: _page,
+                                color: k.encre,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: PageView.builder(
+                            controller: _pages,
+                            itemCount: _groups.length + 1,
+                            onPageChanged: (page) =>
+                                setState(() => _page = page),
+                            itemBuilder: (context, page) =>
+                                page == _groups.length
+                                ? _summary()
+                                : SessionExercisePage(
+                                    key: ValueKey('history-page-$page'),
+                                    week: _week,
+                                    day: _day,
+                                    exs: _groups[page],
+                                    timer: _unusedTimer,
+                                    history: _snapshot,
+                                    unresolvedIds: _unresolved,
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
             ),
           ],
         ),

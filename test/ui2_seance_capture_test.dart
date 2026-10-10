@@ -406,9 +406,11 @@ void main() {
             (e) =>
                 e.timer != null ||
                 e.interval != null ||
-                const {'emom', 'hold', 'duration'}.contains(
-                  store.logSpec(e).kind,
-                ),
+                const {
+                  'emom',
+                  'hold',
+                  'duration',
+                }.contains(store.logSpec(e).kind),
           )) {
             found = (store.program.week(w), d, i);
           }
@@ -428,7 +430,9 @@ void main() {
     final bilan = skip.evaluate().isNotEmpty;
     await tester.tap(find.text('Exercices'));
     await settle(tester);
-    await tester.tap(find.byKey(ValueKey('list-item-${index + (bilan ? 1 : 0)}')));
+    await tester.tap(
+      find.byKey(ValueKey('list-item-${index + (bilan ? 1 : 0)}')),
+    );
     await settle(tester);
     await shot(tester, 'chrono_mode', true, 'bordeaux');
     final launch = find.textContaining('Lancer');

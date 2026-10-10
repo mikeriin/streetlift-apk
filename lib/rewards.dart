@@ -541,5 +541,7 @@ class _ConfettiPainter extends CustomPainter {
 
 /// Repère de la journée au format des écrans de séance (« S12, J1 ») ; le
 /// titre enregistré dans le journal (« S12 · J1 ») ne change pas.
-String _place(String title) =>
-    title.replaceFirstMapped(RegExp(r'^(S\d+) · (J\d+)$'), (m) => '${m[1]}, ${m[2]}');
+String _place(String title) => title.replaceFirstMapped(
+  RegExp(r'^(S\d+) · (J\d+)$'),
+  (m) => '${m[1]}, ${m[2]}',
+);

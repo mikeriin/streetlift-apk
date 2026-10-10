@@ -1876,8 +1876,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         ],
                       ),
                     if (!readOnly && showIntensity) KChip(nbsp(ex.intensity)),
-                    if (!readOnly && ex.tempo.isNotEmpty)
-                      KChip(nbsp(ex.tempo)),
+                    if (!readOnly && ex.tempo.isNotEmpty) KChip(nbsp(ex.tempo)),
                     if (!readOnly && ex.rest.isNotEmpty && ex.rest != '—')
                       KChip('Repos ${nbsp(ex.rest)}'),
                     if (finalRest != null)
@@ -2230,7 +2229,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         'Notes',
                         style: KType.detail.copyWith(color: t.texte2),
                       ),
-                      Text(log.note, style: KType.corps.copyWith(color: t.texte)),
+                      Text(
+                        log.note,
+                        style: KType.corps.copyWith(color: t.texte),
+                      ),
                     ],
                   ),
                 ),
