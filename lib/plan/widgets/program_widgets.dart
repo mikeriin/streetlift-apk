@@ -426,8 +426,8 @@ double _listOffset(
   double width,
 ) {
   final scaler = MediaQuery.textScalerOf(context);
-  final text = width - 2 * KSpacing.s16 - 2 * KSpacing.s14 - KSpacing.s32 -
-      KSpacing.s14;
+  final text =
+      width - 2 * KSpacing.s16 - 2 * KSpacing.s14 - KSpacing.s32 - KSpacing.s14;
   double measure(String s, TextStyle style) {
     final p = TextPainter(
       text: TextSpan(text: s, style: style),
