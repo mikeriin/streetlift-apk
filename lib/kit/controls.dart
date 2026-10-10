@@ -176,7 +176,9 @@ class KSegmented<T> extends StatelessWidget {
                       button: true,
                       label: s.semanticLabel ?? s.label,
                       excludeSemantics: true,
-                      onTap: onChanged == null ? null : () => onChanged!(s.value),
+                      onTap: onChanged == null
+                          ? null
+                          : () => onChanged!(s.value),
                       child: InkWell(
                         key: ValueKey('segment-${s.value}'),
                         customBorder: KRadius.pill,
@@ -207,7 +209,9 @@ class KSegmented<T> extends StatelessWidget {
                             s.label,
                             textAlign: TextAlign.center,
                             style: KType.libelle.copyWith(
-                              color: s.value == selected ? k.surPleine : k.texte2,
+                              color: s.value == selected
+                                  ? k.surPleine
+                                  : k.texte2,
                             ),
                           ),
                         ),

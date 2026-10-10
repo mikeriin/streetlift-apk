@@ -125,10 +125,7 @@ class KDock extends StatelessWidget {
             context,
           ).clamp(maxScaleFactor: 1.15),
           style: k.titleStyle(
-            KType.libelle.copyWith(
-              fontFamily: KFont.title,
-              color: k.surPleine,
-            ),
+            KType.libelle.copyWith(fontFamily: KFont.title, color: k.surPleine),
           ),
         ),
       ),

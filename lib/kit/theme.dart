@@ -52,7 +52,11 @@ ThemeData kitTheme({
         // thème, ajustée au besoin (≥ 4,5:1).
         inversePrimary: Color(
           kAdjustTone(
-            KRoles.of(paletteId, dark: !dark, contrast: contrast).encre.toARGB32(),
+            KRoles.of(
+              paletteId,
+              dark: !dark,
+              contrast: contrast,
+            ).encre.toARGB32(),
             r.texte.toARGB32(),
             contrast ? 7 : 4.5,
             dark ? -1 : 1,

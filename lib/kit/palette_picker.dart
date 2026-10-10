@@ -79,7 +79,11 @@ class KPalettePicker extends StatelessWidget {
         ),
         if (showPreview) ...[
           const SizedBox(height: KSpacing.s12),
-          KPalettePreview(paletteId: selected, dark: k.dark, contrast: k.contrast),
+          KPalettePreview(
+            paletteId: selected,
+            dark: k.dark,
+            contrast: k.contrast,
+          ),
         ],
       ],
     );

@@ -52,7 +52,11 @@ class KDayRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final quiet = state == KDayState.done || state == KDayState.missed;
-    final (IconData? icon, Color iconColor, String stateLabel) = switch (state) {
+    final (
+      IconData? icon,
+      Color iconColor,
+      String stateLabel,
+    ) = switch (state) {
       KDayState.done => (Icons.check_rounded, k.validation, 'fait'),
       KDayState.missed => (Icons.remove_rounded, k.texte3, 'passé'),
       KDayState.rest => (Icons.bedtime_outlined, k.texte2, 'repos'),
@@ -130,7 +134,11 @@ class KDayRow extends StatelessWidget {
                     SizedBox(
                       width: KSize.target,
                       height: KSize.target,
-                      child: Icon(icon, size: KSize.iconSmall, color: iconColor),
+                      child: Icon(
+                        icon,
+                        size: KSize.iconSmall,
+                        color: iconColor,
+                      ),
                     ),
                 ],
               ),
@@ -208,7 +216,10 @@ class KSeasonBar extends StatelessWidget {
           final pillWidth = painter.width + 2 * KSpacing.s8;
           final pillHeight = painter.height + KSpacing.s4;
           painter.dispose();
-          final left = (x - pillWidth / 2).clamp(0.0, math.max(0.0, width - pillWidth));
+          final left = (x - pillWidth / 2).clamp(
+            0.0,
+            math.max(0.0, width - pillWidth),
+          );
           final starts = <int>[];
           var acc = 0;
           for (final b in blocks) {
@@ -258,12 +269,15 @@ class KSeasonBar extends StatelessWidget {
                                 ? (w - b0) / blocks[i].weeks
                                 : (past ? 1.0 : 0.0);
                             return ClipPath(
-                              clipper: const ShapeBorderClipper(shape: KRadius.pill),
+                              clipper: const ShapeBorderClipper(
+                                shape: KRadius.pill,
+                              ),
                               child: ColoredBox(
                                 color: past ? k.texte3 : k.filet,
                                 child: current
                                     ? Align(
-                                        alignment: AlignmentDirectional.centerStart,
+                                        alignment:
+                                            AlignmentDirectional.centerStart,
                                         child: FractionallySizedBox(
                                           widthFactor: fill,
                                           heightFactor: 1,
@@ -332,7 +346,12 @@ class KTimeline extends StatelessWidget {
     );
   }
 
-  Widget _phase(KTokens k, KPhase p, {required bool first, required bool last}) {
+  Widget _phase(
+    KTokens k,
+    KPhase p, {
+    required bool first,
+    required bool last,
+  }) {
     final current = p.state == KPhaseState.current;
     final past = p.state == KPhaseState.past;
     const node = KSpacing.s12;

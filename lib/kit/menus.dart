@@ -213,7 +213,9 @@ class KMenuRow extends StatelessWidget {
     final ink = !enabled ? k.texte3 : (danger ? k.danger : k.texte);
     final lead =
         leading ??
-        (icon == null ? null : KIconTile(icon!, color: danger ? k.danger : null));
+        (icon == null
+            ? null
+            : KIconTile(icon!, color: danger ? k.danger : null));
     final tail =
         trailing ??
         Row(
@@ -250,7 +252,9 @@ class KMenuRow extends StatelessWidget {
         child: Row(
           children: [
             if (lead != null) ...[lead, const SizedBox(width: KSpacing.s14)],
-            Expanded(child: KRowLabel(title, subtitle: subtitle, color: ink)),
+            Expanded(
+              child: KRowLabel(title, subtitle: subtitle, color: ink),
+            ),
             const SizedBox(width: KSpacing.s12),
             tail,
           ],
@@ -332,11 +336,16 @@ class KStepperRow extends StatelessWidget {
         );
         final label = KRowLabel(title, subtitle: subtitle);
         final narrow =
-            c.maxWidth < KSize.stepperRowMin * MediaQuery.textScalerOf(context).scale(1);
+            c.maxWidth <
+            KSize.stepperRowMin * MediaQuery.textScalerOf(context).scale(1);
         if (narrow) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [label, const SizedBox(height: KSpacing.s8), stepper],
+            children: [
+              label,
+              const SizedBox(height: KSpacing.s8),
+              stepper,
+            ],
           );
         }
         return Row(

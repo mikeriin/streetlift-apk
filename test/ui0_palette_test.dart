@@ -14,11 +14,14 @@ import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/store.dart';
 
-Color _c(String hex) => Color(0xFF000000 | int.parse(hex.substring(1), radix: 16));
+Color _c(String hex) =>
+    Color(0xFF000000 | int.parse(hex.substring(1), radix: 16));
 
 void main() {
   final reference =
-      jsonDecode(File('test/fixtures/ui0_palettes_roles.json').readAsStringSync())
+      jsonDecode(
+            File('test/fixtures/ui0_palettes_roles.json').readAsStringSync(),
+          )
           as Map<String, dynamic>;
 
   group('palettes du propriétaire', () {
@@ -33,14 +36,25 @@ void main() {
         'forest',
         'solar',
       ]);
-      expect(kPaletteSources.map((p) => p.id).toList(), reference.keys.toList());
+      expect(
+        kPaletteSources.map((p) => p.id).toList(),
+        reference.keys.toList(),
+      );
       for (final p in kPaletteSources) {
         final s = reference[p.id]['source'] as Map<String, dynamic>;
         expect(p.nom, reference[p.id]['nom']);
         expect(Color(p.dominante), _c(s['dominante'] as String), reason: p.id);
-        expect(Color(p.secondaire), _c(s['secondaire'] as String), reason: p.id);
+        expect(
+          Color(p.secondaire),
+          _c(s['secondaire'] as String),
+          reason: p.id,
+        );
         expect(Color(p.accent), _c(s['accent'] as String), reason: p.id);
-        expect(Color(p.fondSombre), _c(s['fondSombre'] as String), reason: p.id);
+        expect(
+          Color(p.fondSombre),
+          _c(s['fondSombre'] as String),
+          reason: p.id,
+        );
         expect(Color(p.fondClair), _c(s['fondClair'] as String), reason: p.id);
       }
       expect(kDefaultPaletteId, 'bordeaux');
@@ -87,48 +101,104 @@ void main() {
       expect(kContrast(b.encre, b.surface), greaterThanOrEqualTo(4.5));
     });
 
-    test('32 combinaisons (8 palettes × 2 thèmes × 2 contrastes) : seuils de §5.1', () {
-      for (final p in kPaletteSources) {
-        for (final dark in [true, false]) {
-          for (final strong in [false, true]) {
-            final r = KRoles.of(p.id, dark: dark, contrast: strong);
-            final need = strong ? 7.0 : 4.5, weak = strong ? 4.5 : 3.0;
-            final id = '${p.id} ${dark ? 'sombre' : 'clair'}${strong ? ' renforcé' : ''}';
-            for (final bg in [r.fond, r.surface]) {
-              expect(kContrast(r.texte, bg), greaterThanOrEqualTo(need), reason: '$id texte');
-              expect(kContrast(r.texte2, r.surface), greaterThanOrEqualTo(need), reason: '$id texte2');
-              expect(kContrast(r.encre, r.surface), greaterThanOrEqualTo(need), reason: '$id encre');
-              expect(kContrast(r.accent, r.surface), greaterThanOrEqualTo(need), reason: '$id accent');
-              expect(kContrast(r.second, r.surface), greaterThanOrEqualTo(weak), reason: '$id second');
-            }
-            if (!dark) {
-              expect(kContrast(r.encre, r.fond), greaterThanOrEqualTo(need), reason: '$id encre/fond');
-              expect(kContrast(r.accent, r.fond), greaterThanOrEqualTo(need), reason: '$id accent/fond');
-            }
-            for (final bg in [r.fond, r.surface, r.haute]) {
-              for (final s in [r.validation, r.danger, r.avertissement]) {
-                expect(kContrast(s, bg), greaterThanOrEqualTo(need), reason: '$id état $s sur $bg');
+    test(
+      '32 combinaisons (8 palettes × 2 thèmes × 2 contrastes) : seuils de §5.1',
+      () {
+        for (final p in kPaletteSources) {
+          for (final dark in [true, false]) {
+            for (final strong in [false, true]) {
+              final r = KRoles.of(p.id, dark: dark, contrast: strong);
+              final need = strong ? 7.0 : 4.5, weak = strong ? 4.5 : 3.0;
+              final id =
+                  '${p.id} ${dark ? 'sombre' : 'clair'}${strong ? ' renforcé' : ''}';
+              for (final bg in [r.fond, r.surface]) {
+                expect(
+                  kContrast(r.texte, bg),
+                  greaterThanOrEqualTo(need),
+                  reason: '$id texte',
+                );
+                expect(
+                  kContrast(r.texte2, r.surface),
+                  greaterThanOrEqualTo(need),
+                  reason: '$id texte2',
+                );
+                expect(
+                  kContrast(r.encre, r.surface),
+                  greaterThanOrEqualTo(need),
+                  reason: '$id encre',
+                );
+                expect(
+                  kContrast(r.accent, r.surface),
+                  greaterThanOrEqualTo(need),
+                  reason: '$id accent',
+                );
+                expect(
+                  kContrast(r.second, r.surface),
+                  greaterThanOrEqualTo(weak),
+                  reason: '$id second',
+                );
               }
-              expect(kContrast(r.texte, bg), greaterThanOrEqualTo(need), reason: '$id texte/$bg');
-              expect(kContrast(r.texte2, bg), greaterThanOrEqualTo(4.5), reason: '$id texte2/$bg');
+              if (!dark) {
+                expect(
+                  kContrast(r.encre, r.fond),
+                  greaterThanOrEqualTo(need),
+                  reason: '$id encre/fond',
+                );
+                expect(
+                  kContrast(r.accent, r.fond),
+                  greaterThanOrEqualTo(need),
+                  reason: '$id accent/fond',
+                );
+              }
+              for (final bg in [r.fond, r.surface, r.haute]) {
+                for (final s in [r.validation, r.danger, r.avertissement]) {
+                  expect(
+                    kContrast(s, bg),
+                    greaterThanOrEqualTo(need),
+                    reason: '$id état $s sur $bg',
+                  );
+                }
+                expect(
+                  kContrast(r.texte, bg),
+                  greaterThanOrEqualTo(need),
+                  reason: '$id texte/$bg',
+                );
+                expect(
+                  kContrast(r.texte2, bg),
+                  greaterThanOrEqualTo(4.5),
+                  reason: '$id texte2/$bg',
+                );
+              }
+              for (final (fg, bg) in [
+                (r.surPleine, r.pleine),
+                (r.surEncre, r.encre),
+                (r.surAccent, r.accent),
+                (r.surValidation, r.validation),
+                (r.surDanger, r.danger),
+              ]) {
+                expect(
+                  kContrast(fg, bg),
+                  greaterThanOrEqualTo(4.5),
+                  reason: '$id $fg sur $bg',
+                );
+              }
+              // Repères et barres visibles sur leur piste.
+              expect(
+                kContrast(r.encre, r.filet),
+                greaterThan(1.5),
+                reason: '$id encre/filet',
+              );
+              // Rampe d'intensité : du bas (pleine) au haut, visiblement.
+              expect(
+                kContrast(r.rampe, r.pleine),
+                greaterThan(1.2),
+                reason: '$id rampe',
+              );
             }
-            for (final (fg, bg) in [
-              (r.surPleine, r.pleine),
-              (r.surEncre, r.encre),
-              (r.surAccent, r.accent),
-              (r.surValidation, r.validation),
-              (r.surDanger, r.danger),
-            ]) {
-              expect(kContrast(fg, bg), greaterThanOrEqualTo(4.5), reason: '$id $fg sur $bg');
-            }
-            // Repères et barres visibles sur leur piste.
-            expect(kContrast(r.encre, r.filet), greaterThan(1.5), reason: '$id encre/filet');
-            // Rampe d'intensité : du bas (pleine) au haut, visiblement.
-            expect(kContrast(r.rampe, r.pleine), greaterThan(1.2), reason: '$id rampe');
           }
         }
-      }
-    });
+      },
+    );
 
     test('contraste renforcé : 7:1 et 4,5:1, sans toucher aux aplats', () {
       for (final p in kPaletteSources) {
@@ -138,7 +208,10 @@ void main() {
           expect(kContrast(c.encre, c.surface), greaterThanOrEqualTo(7));
           expect(kContrast(c.texte2, c.surface), greaterThanOrEqualTo(7));
           expect(kContrast(c.second, c.surface), greaterThanOrEqualTo(4.5));
-          expect(kContrast(c.encre, c.surface), greaterThanOrEqualTo(kContrast(n.encre, n.surface)));
+          expect(
+            kContrast(c.encre, c.surface),
+            greaterThanOrEqualTo(kContrast(n.encre, n.surface)),
+          );
           expect(c.fond, n.fond);
           expect(c.surface, n.surface);
           expect(c.pleine, n.pleine);
@@ -147,20 +220,23 @@ void main() {
       }
     });
 
-    test('rampe : encre quand elle se distingue de la dominante, sinon tonalité', () {
-      // Bordeaux sombre : la rampe va de la dominante à l'encre (§5.1).
-      final b = KRoles.of('bordeaux', dark: true);
-      expect(b.rampe, b.encre);
-      // Neon sombre : dominante déjà très claire, rampe vers sa secondaire.
-      final n = KRoles.of('neon', dark: true);
-      expect(n.rampe, n.second);
-      for (final p in kPaletteSources) {
-        for (final dark in [true, false]) {
-          final r = KRoles.of(p.id, dark: dark);
-          if (kContrast(r.encre, r.pleine) >= 2.5) expect(r.rampe, r.encre);
+    test(
+      'rampe : encre quand elle se distingue de la dominante, sinon tonalité',
+      () {
+        // Bordeaux sombre : la rampe va de la dominante à l'encre (§5.1).
+        final b = KRoles.of('bordeaux', dark: true);
+        expect(b.rampe, b.encre);
+        // Neon sombre : dominante déjà très claire, rampe vers sa secondaire.
+        final n = KRoles.of('neon', dark: true);
+        expect(n.rampe, n.second);
+        for (final p in kPaletteSources) {
+          for (final dark in [true, false]) {
+            final r = KRoles.of(p.id, dark: dark);
+            if (kContrast(r.encre, r.pleine) >= 2.5) expect(r.rampe, r.encre);
+          }
         }
-      }
-    });
+      },
+    );
   });
 
   group('préférence et adaptateur', () {
@@ -179,7 +255,15 @@ void main() {
         expect(KAccentSpec.byId(e.key).id, e.value);
         expect(AppSettings.fromJson({'accent': e.key}).accent, e.value);
       }
-      for (final v in <Object?>[null, '', 'bleu', 'BORDEAUX', 7, true, const []]) {
+      for (final v in <Object?>[
+        null,
+        '',
+        'bleu',
+        'BORDEAUX',
+        7,
+        true,
+        const [],
+      ]) {
         expect(normalizePaletteId(v), 'bordeaux');
         expect(normalizeAccent(v), 'bordeaux');
       }
@@ -235,7 +319,10 @@ void main() {
             k.pleine,
           );
           expect(
-            kContrast(t.colorScheme.inversePrimary, t.colorScheme.inverseSurface),
+            kContrast(
+              t.colorScheme.inversePrimary,
+              t.colorScheme.inverseSurface,
+            ),
             greaterThanOrEqualTo(4.5),
           );
         }

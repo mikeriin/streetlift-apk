@@ -33,7 +33,10 @@ class KPrimaryButton extends StatelessWidget {
       foregroundColor: danger ? k.roles.surDanger : k.surPleine,
       disabledBackgroundColor: k.haute,
       disabledForegroundColor: k.texte3,
-      minimumSize: Size(expand ? double.infinity : KSize.primary, KSize.primary),
+      minimumSize: Size(
+        expand ? double.infinity : KSize.primary,
+        KSize.primary,
+      ),
       padding: const EdgeInsets.symmetric(
         horizontal: KSpacing.s24,
         vertical: KSpacing.s14,

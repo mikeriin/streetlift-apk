@@ -292,7 +292,10 @@ class KPage extends StatelessWidget {
     final scroll = CustomScrollView(
       controller: controller,
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      slivers: [if (_root) _RootTitleBar(title: title, trailing: trailing), list],
+      slivers: [
+        if (_root) _RootTitleBar(title: title, trailing: trailing),
+        list,
+      ],
     );
     return Scaffold(
       backgroundColor: k.fond,
@@ -327,10 +330,7 @@ class _RootTitleBar extends StatelessWidget {
     final big = k.titleStyle(KType.titreRacine.copyWith(color: k.texte));
     final small = k.titleStyle(KType.titreEcran.copyWith(color: k.texte));
     final scaler = MediaQuery.textScalerOf(context);
-    final width = math.min(
-      MediaQuery.sizeOf(context).width,
-      KSpacing.maxWidth,
-    );
+    final width = math.min(MediaQuery.sizeOf(context).width, KSpacing.maxWidth);
     final painter = TextPainter(
       text: TextSpan(text: k.title(title), style: big),
       textDirection: Directionality.of(context),
@@ -396,7 +396,8 @@ class _Collapse extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context
         .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
-    if (s == null) return visibleWhenCollapsed ? const SizedBox.shrink() : child;
+    if (s == null)
+      return visibleWhenCollapsed ? const SizedBox.shrink() : child;
     final range = s.maxExtent - s.minExtent;
     final t = range <= 0
         ? 1.0

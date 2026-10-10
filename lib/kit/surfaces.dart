@@ -56,7 +56,10 @@ class KCard extends StatelessWidget {
         : color ??
               (accent == null
                   ? k.surface
-                  : Color.alphaBlend(accent!.withValues(alpha: .08), k.surface));
+                  : Color.alphaBlend(
+                      accent!.withValues(alpha: .08),
+                      k.surface,
+                    ));
     final shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(radius ?? KRadius.card),
       side: outline == null
@@ -191,7 +194,10 @@ class KNotice extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (title != null)
-                    Text(title!, style: KType.corpsFort.copyWith(color: k.texte)),
+                    Text(
+                      title!,
+                      style: KType.corpsFort.copyWith(color: k.texte),
+                    ),
                   Text(message, style: KType.corps.copyWith(color: k.texte)),
                   if (actionLabel != null)
                     Padding(

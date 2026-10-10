@@ -101,7 +101,10 @@ class KSetRow extends StatelessWidget {
           const SizedBox(width: KSpacing.s8),
         ],
         for (final a in actions)
-          SizedBox(width: KSize.target, child: Center(child: a)),
+          SizedBox(
+            width: KSize.target,
+            child: Center(child: a),
+          ),
       ],
     );
     final content = below == null

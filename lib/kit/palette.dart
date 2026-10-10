@@ -144,7 +144,9 @@ KPaletteSource paletteSource(Object? id) {
 double kLuminance(int argb) {
   double ch(int v) {
     final c = v / 255;
-    return c <= 0.04045 ? c / 12.92 : math.pow((c + 0.055) / 1.055, 2.4) as double;
+    return c <= 0.04045
+        ? c / 12.92
+        : math.pow((c + 0.055) / 1.055, 2.4) as double;
   }
 
   return 0.2126 * ch((argb >> 16) & 0xFF) +
@@ -298,7 +300,11 @@ class KRoles {
   static final Map<String, KRoles> _cache = {};
 
   /// Rôles d'une palette (identifiant normalisé par [normalizePaletteId]).
-  static KRoles of(Object? paletteId, {required bool dark, bool contrast = false}) {
+  static KRoles of(
+    Object? paletteId, {
+    required bool dark,
+    bool contrast = false,
+  }) {
     final p = paletteSource(paletteId);
     return _cache.putIfAbsent(
       '${p.id}|$dark|$contrast',
@@ -306,14 +312,19 @@ class KRoles {
     );
   }
 
-  static KRoles _derive(KPaletteSource p, {required bool dark, required bool contrast}) {
+  static KRoles _derive(
+    KPaletteSource p, {
+    required bool dark,
+    required bool contrast,
+  }) {
     final strong = contrast ? 7.0 : 4.5;
     final weak = contrast ? 4.5 : 3.0;
     final int fond, surface, haute, filet, texte, texte3, encre, second, accent;
     int texte2;
     if (dark) {
       final f = Hct.fromInt(p.fondSombre);
-      int sd(double dt) => Hct.from(f.hue, math.min(f.chroma, 16), f.tone + dt).toInt();
+      int sd(double dt) =>
+          Hct.from(f.hue, math.min(f.chroma, 16), f.tone + dt).toInt();
       fond = p.fondSombre;
       surface = sd(5);
       haute = sd(10);
@@ -334,9 +345,19 @@ class KRoles {
       texte = Hct.from(f.hue, 4, 10).toInt();
       texte2 = Hct.from(f.hue, 6, 40).toInt();
       texte3 = Hct.from(f.hue, 6, 60).toInt();
-      encre = kAdjustTone(kAdjustTone(p.dominante, _white, strong, -1), fond, strong, -1);
+      encre = kAdjustTone(
+        kAdjustTone(p.dominante, _white, strong, -1),
+        fond,
+        strong,
+        -1,
+      );
       second = kAdjustTone(p.secondaire, _white, weak, -1);
-      accent = kAdjustTone(kAdjustTone(p.accent, _white, strong, -1), fond, strong, -1);
+      accent = kAdjustTone(
+        kAdjustTone(p.accent, _white, strong, -1),
+        fond,
+        strong,
+        -1,
+      );
       if (contrast) {
         texte2 = kAdjustTone(kAdjustTone(texte2, _white, 7, -1), fond, 7, -1);
       }
@@ -361,7 +382,9 @@ class KRoles {
 
     final validation = state(dark ? kValidationSombre : kValidationClair);
     final danger = state(dark ? kDangerSombre : kDangerClair);
-    final avertissement = state(dark ? kAvertissementSombre : kAvertissementClair);
+    final avertissement = state(
+      dark ? kAvertissementSombre : kAvertissementClair,
+    );
     var rampe = encre;
     if (kContrastArgb(rampe, pleine) < 2.5) {
       if (dark) {

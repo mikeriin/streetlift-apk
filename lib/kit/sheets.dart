@@ -47,10 +47,7 @@ class _SheetHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
-    final head = Text(
-      title,
-      style: KType.titreSeance.copyWith(color: k.texte),
-    );
+    final head = Text(title, style: KType.titreSeance.copyWith(color: k.texte));
     final sub = subtitle == null
         ? null
         : Text(subtitle!, style: KType.detail.copyWith(color: k.texte2));
@@ -156,7 +153,10 @@ class KActionSheet<T> extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(a.label, style: KType.corpsMoyen.copyWith(color: ink)),
+                          Text(
+                            a.label,
+                            style: KType.corpsMoyen.copyWith(color: ink),
+                          ),
                           if (a.detail != null)
                             Text(
                               a.detail!,
@@ -311,7 +311,9 @@ class KListSheet extends StatelessWidget {
     Widget badge(KListItem it, int number) {
       final current = it.state == KListState.current;
       final done = it.state == KListState.done;
-      final Color fill = current ? k.pleine : (it.icon != null ? Colors.transparent : k.haute);
+      final Color fill = current
+          ? k.pleine
+          : (it.icon != null ? Colors.transparent : k.haute);
       final Color ink = current
           ? k.surPleine
           : done
@@ -369,7 +371,9 @@ class KListSheet extends StatelessWidget {
                       key: ValueKey('list-item-$i'),
                       onTap: it.enabled ? () => onSelected(i) : null,
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(minHeight: KSize.primary),
+                        constraints: const BoxConstraints(
+                          minHeight: KSize.primary,
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: KSpacing.s14,
@@ -386,17 +390,22 @@ class KListSheet extends StatelessWidget {
                                   children: [
                                     Text(
                                       it.title,
-                                      style: (current
-                                              ? KType.corpsFort
-                                              : KType.corpsMoyen)
-                                          .copyWith(
-                                            color: it.enabled ? k.texte : k.texte3,
-                                          ),
+                                      style:
+                                          (current
+                                                  ? KType.corpsFort
+                                                  : KType.corpsMoyen)
+                                              .copyWith(
+                                                color: it.enabled
+                                                    ? k.texte
+                                                    : k.texte3,
+                                              ),
                                     ),
                                     if (it.detail != null)
                                       Text(
                                         it.detail!,
-                                        style: KType.detail.copyWith(color: k.texte2),
+                                        style: KType.detail.copyWith(
+                                          color: k.texte2,
+                                        ),
                                       ),
                                   ],
                                 ),
@@ -498,7 +507,10 @@ class KConfirm extends StatelessWidget {
           children: [
             Semantics(
               header: true,
-              child: Text(title, style: KType.titreSeance.copyWith(color: k.texte)),
+              child: Text(
+                title,
+                style: KType.titreSeance.copyWith(color: k.texte),
+              ),
             ),
             const SizedBox(height: KSpacing.s8),
             Text(message, style: KType.corps.copyWith(color: k.texte2)),
@@ -508,11 +520,17 @@ class KConfirm extends StatelessWidget {
                 // Grand texte : boutons l'un sous l'autre, le verbe en haut.
                 final stacked =
                     c.maxWidth <
-                    2 * KSize.valueWidth * MediaQuery.textScalerOf(context).scale(1);
+                    2 *
+                        KSize.valueWidth *
+                        MediaQuery.textScalerOf(context).scale(1);
                 if (stacked) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [confirm, const SizedBox(height: KSpacing.s8), cancel],
+                    children: [
+                      confirm,
+                      const SizedBox(height: KSpacing.s8),
+                      cancel,
+                    ],
                   );
                 }
                 return Row(

@@ -327,9 +327,8 @@ class KTokens extends ThemeExtension<KTokens> {
   String title(String text) => capsTitles ? text.toUpperCase() : text;
 
   /// Style d'un titre en capitales : interlettrage léger (U3).
-  TextStyle titleStyle(TextStyle style) => capsTitles
-      ? style.copyWith(letterSpacing: KType.capsSpacing)
-      : style;
+  TextStyle titleStyle(TextStyle style) =>
+      capsTitles ? style.copyWith(letterSpacing: KType.capsSpacing) : style;
 
   @override
   KTokens copyWith({KRoles? roles, bool? capsTitles}) => KTokens(

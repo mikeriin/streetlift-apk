@@ -22,12 +22,14 @@ final List<KitSample> kitSamples = [
   KitSample('jetons', 'Jetons de couleur', (context) {
     final k = KTokens.of(context);
     final roles = k.roles.named.entries.toList()
-      ..addAll({
-        'validation': k.validation,
-        'danger': k.danger,
-        'avertissement': k.avertissement,
-        'rampe': k.roles.rampe,
-      }.entries);
+      ..addAll(
+        {
+          'validation': k.validation,
+          'danger': k.danger,
+          'avertissement': k.avertissement,
+          'rampe': k.roles.rampe,
+        }.entries,
+      );
     return Wrap(
       spacing: KSpacing.s8,
       runSpacing: KSpacing.s8,
@@ -49,7 +51,10 @@ final List<KitSample> kitSamples = [
                   ),
                 ),
                 Text(e.key, style: KType.detail.copyWith(color: k.texte)),
-                Text(kHex(e.value), style: KType.detail.copyWith(color: k.texte2)),
+                Text(
+                  kHex(e.value),
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
               ],
             ),
           ),
@@ -104,7 +109,11 @@ final List<KitSample> kitSamples = [
           children: [
             KTonalButton(label: 'Voir la saison', onPressed: _noop),
             KTextButton(label: 'Pourquoi ?', onPressed: _noop),
-            KIconButton(icon: Icons.more_vert_rounded, tooltip: "Plus d'actions", onPressed: _noop),
+            KIconButton(
+              icon: Icons.more_vert_rounded,
+              tooltip: "Plus d'actions",
+              onPressed: _noop,
+            ),
           ],
         ),
         SizedBox(height: KSpacing.s12),
@@ -128,12 +137,20 @@ final List<KitSample> kitSamples = [
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(k.title("J3, aujourd'hui"), style: KType.micro.copyWith(color: k.surPleine)),
+                  Text(
+                    k.title("J3, aujourd'hui"),
+                    style: KType.micro.copyWith(color: k.surPleine),
+                  ),
                   Text(
                     k.title('Squat et gainage'),
-                    style: k.titleStyle(KType.titreSeance.copyWith(color: k.surPleine)),
+                    style: k.titleStyle(
+                      KType.titreSeance.copyWith(color: k.surPleine),
+                    ),
                   ),
-                  Text('34–49 min', style: KType.chiffre.copyWith(color: k.surPleine)),
+                  Text(
+                    '34–49 min',
+                    style: KType.chiffre.copyWith(color: k.surPleine),
+                  ),
                   Text(
                     '6 exercices, 19 séries, 136 rép.',
                     style: KType.detail.copyWith(color: k.surPleine),
@@ -145,7 +162,9 @@ final List<KitSample> kitSamples = [
         ),
         const SizedBox(height: KSpacing.s12),
         const KCard(
-          child: Text('Carte de contenu : lignes, champs, puces, jamais une autre carte.'),
+          child: Text(
+            'Carte de contenu : lignes, champs, puces, jamais une autre carte.',
+          ),
         ),
         const SizedBox(height: KSpacing.s12),
         const KNotice(
@@ -236,9 +255,19 @@ final List<KitSample> kitSamples = [
           week: 13,
         ),
         const SizedBox(height: KSpacing.s16),
-        const KDayRow(number: 'J1', title: 'Muscle-up + tirage lourd', state: KDayState.done, onTap: _noop),
+        const KDayRow(
+          number: 'J1',
+          title: 'Muscle-up + tirage lourd',
+          state: KDayState.done,
+          onTap: _noop,
+        ),
         const SizedBox(height: KSpacing.s8),
-        const KDayRow(number: 'J2', title: 'Dip lourd + poussée', state: KDayState.missed, onTap: _noop),
+        const KDayRow(
+          number: 'J2',
+          title: 'Dip lourd + poussée',
+          state: KDayState.missed,
+          onTap: _noop,
+        ),
         const SizedBox(height: KSpacing.s8),
         const KDayRow(
           number: 'J6',
@@ -247,12 +276,26 @@ final List<KitSample> kitSamples = [
           onInfo: _noop,
         ),
         const SizedBox(height: KSpacing.s8),
-        const KDayRow(number: 'J7', title: 'Repos complet', state: KDayState.rest),
+        const KDayRow(
+          number: 'J7',
+          title: 'Repos complet',
+          state: KDayState.rest,
+        ),
         const SizedBox(height: KSpacing.s16),
         const KTimeline(
           phases: [
-            KPhase('Reprise', dates: '01/09 – 21/09', length: '3 sem.', state: KPhaseState.past),
-            KPhase('Force', dates: '22/09 – 16/11', length: '8 sem.', state: KPhaseState.current),
+            KPhase(
+              'Reprise',
+              dates: '01/09 – 21/09',
+              length: '3 sem.',
+              state: KPhaseState.past,
+            ),
+            KPhase(
+              'Force',
+              dates: '22/09 – 16/11',
+              length: '8 sem.',
+              state: KPhaseState.current,
+            ),
             KPhase('Puissance', dates: '17/11 – 11/01', length: '8 sem.'),
           ],
         ),
@@ -265,7 +308,11 @@ final List<KitSample> kitSamples = [
       children: [
         const Wrap(
           spacing: KSpacing.s8,
-          children: [KChip('RIR 4'), KChip('Difficulté 3/10'), KChip('Repos 4 min')],
+          children: [
+            KChip('RIR 4'),
+            KChip('Difficulté 3/10'),
+            KChip('Repos 4 min'),
+          ],
         ),
         const SizedBox(height: KSpacing.s12),
         KSetTable(
@@ -274,8 +321,16 @@ final List<KitSample> kitSamples = [
             KSetRow(
               number: '1',
               state: KSetState.done,
-              cells: const [KSetField('+32,5', dimmed: true), KSetField('5', dimmed: true)],
-              actions: [Icon(Icons.check_circle_rounded, color: KTokens.of(context).validation)],
+              cells: const [
+                KSetField('+32,5', dimmed: true),
+                KSetField('5', dimmed: true),
+              ],
+              actions: [
+                Icon(
+                  Icons.check_circle_rounded,
+                  color: KTokens.of(context).validation,
+                ),
+              ],
             ),
             KSetRow(
               number: '2',
@@ -285,7 +340,11 @@ final List<KitSample> kitSamples = [
                 KSetField('5', onSurface: true, onTap: _noop),
               ],
               actions: const [
-                KIconButton(icon: Icons.check_rounded, tooltip: 'Valider la série 2', onPressed: _noop),
+                KIconButton(
+                  icon: Icons.check_rounded,
+                  tooltip: 'Valider la série 2',
+                  onPressed: _noop,
+                ),
               ],
             ),
             const KSetRow(
@@ -296,9 +355,19 @@ final List<KitSample> kitSamples = [
           ],
         ),
         const SizedBox(height: KSpacing.s16),
-        const KSnack(message: 'Koach : série suivante dans 2 s', actionLabel: 'Annuler', onAction: _noop),
+        const KSnack(
+          message: 'Koach : série suivante dans 2 s',
+          actionLabel: 'Annuler',
+          onAction: _noop,
+        ),
         const SizedBox(height: KSpacing.s8),
-        const KRestBar(remaining: '2:27', progress: .98, onMinus: _noop, onPlus: _noop, onStop: _noop),
+        const KRestBar(
+          remaining: '2:27',
+          progress: .98,
+          onMinus: _noop,
+          onPlus: _noop,
+          onStop: _noop,
+        ),
       ],
     );
   }),
@@ -308,7 +377,9 @@ final List<KitSample> kitSamples = [
       children: [
         Material(
           color: KTokens.of(context).surface,
-          shape: const RoundedRectangleBorder(borderRadius: KRadius.sheetRadius),
+          shape: const RoundedRectangleBorder(
+            borderRadius: KRadius.sheetRadius,
+          ),
           child: KActionSheet<String>(
             title: 'Séance',
             subtitle: 'Corps entier, S1, J2',
@@ -316,8 +387,16 @@ final List<KitSample> kitSamples = [
             onClose: _noop,
             groups: const [
               [
-                KAction(icon: Icons.menu_book_outlined, label: 'Consignes de séance', value: 'consignes'),
-                KAction(icon: Icons.favorite_border_rounded, label: 'Bilan du jour', value: 'bilan'),
+                KAction(
+                  icon: Icons.menu_book_outlined,
+                  label: 'Consignes de séance',
+                  value: 'consignes',
+                ),
+                KAction(
+                  icon: Icons.favorite_border_rounded,
+                  label: 'Bilan du jour',
+                  value: 'bilan',
+                ),
               ],
               [
                 KAction(
@@ -326,7 +405,11 @@ final List<KitSample> kitSamples = [
                   value: 'douleur',
                   tone: KActionTone.warning,
                 ),
-                KAction(icon: Icons.tune_rounded, label: 'Mes références', value: 'references'),
+                KAction(
+                  icon: Icons.tune_rounded,
+                  label: 'Mes références',
+                  value: 'references',
+                ),
               ],
               [
                 KAction(
@@ -344,15 +427,29 @@ final List<KitSample> kitSamples = [
           height: 420,
           child: Material(
             color: KTokens.of(context).surface,
-            shape: const RoundedRectangleBorder(borderRadius: KRadius.sheetRadius),
+            shape: const RoundedRectangleBorder(
+              borderRadius: KRadius.sheetRadius,
+            ),
             child: KListSheet(
               title: 'Dans cette séance',
               summary: '7 exercices, 22 min',
               onSelected: (_) {},
               items: const [
-                KListItem('Bilan du jour', detail: 'Ressenti et changements de Koach', icon: Icons.favorite_border_rounded),
-                KListItem('Échauffement', detail: '6 min', state: KListState.done),
-                KListItem('Test max tractions au poids de corps', detail: '1 série au maximum', state: KListState.current),
+                KListItem(
+                  'Bilan du jour',
+                  detail: 'Ressenti et changements de Koach',
+                  icon: Icons.favorite_border_rounded,
+                ),
+                KListItem(
+                  'Échauffement',
+                  detail: '6 min',
+                  state: KListState.done,
+                ),
+                KListItem(
+                  'Test max tractions au poids de corps',
+                  detail: '1 série au maximum',
+                  state: KListState.current,
+                ),
                 KListItem('Traction pronation', detail: '3 × 6, RIR 2'),
                 KListItem('Gainage creux', detail: '3 × 30 s'),
               ],
@@ -362,7 +459,8 @@ final List<KitSample> kitSamples = [
         const SizedBox(height: KSpacing.s16),
         KConfirm(
           title: "Supprimer l'historique de cette séance ?",
-          message: 'Les séries saisies aujourd’hui seront effacées. Le programme ne change pas.',
+          message:
+              'Les séries saisies aujourd’hui seront effacées. Le programme ne change pas.',
           confirmLabel: 'Supprimer',
           destructive: true,
           onConfirm: _noop,
@@ -403,7 +501,8 @@ class _SettingsSampleState extends State<_SettingsSample> {
           KStepperRow(
             title: 'Repos par défaut',
             subtitle: 'Quand l’exercice n’en indique pas',
-            value: '${_rest ~/ 60} min ${(_rest % 60).toString().padLeft(2, '0')}',
+            value:
+                '${_rest ~/ 60} min ${(_rest % 60).toString().padLeft(2, '0')}',
             onDecrement: _rest > 15 ? () => setState(() => _rest -= 15) : null,
             onIncrement: () => setState(() => _rest += 15),
             decrementLabel: 'Retirer 15 s',
@@ -533,7 +632,10 @@ class _KitCatalogScreenState extends State<KitCatalogScreen> {
               children: [
                 KSegmentedRow<bool>(
                   title: 'Thème',
-                  segments: const [KSegment(true, 'Sombre'), KSegment(false, 'Clair')],
+                  segments: const [
+                    KSegment(true, 'Sombre'),
+                    KSegment(false, 'Clair'),
+                  ],
                   selected: dark,
                   onChanged: (v) => setState(() => _dark = v),
                 ),

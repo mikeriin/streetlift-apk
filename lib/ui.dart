@@ -222,10 +222,9 @@ class KActionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
-      final scale = MediaQuery.textScalerOf(context).scale(1).clamp(
-        1.0,
-        double.infinity,
-      );
+      final scale = MediaQuery.textScalerOf(
+        context,
+      ).scale(1).clamp(1.0, double.infinity);
       final stacked =
           constraints.maxWidth <
           children.length * minButtonWidth * scale +
@@ -262,10 +261,9 @@ class KFieldGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
-      final scale = MediaQuery.textScalerOf(context).scale(1).clamp(
-        1.0,
-        double.infinity,
-      );
+      final scale = MediaQuery.textScalerOf(
+        context,
+      ).scale(1).clamp(1.0, double.infinity);
       final paired =
           children.length > 1 &&
           constraints.maxWidth >=
