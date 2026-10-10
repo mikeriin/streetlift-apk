@@ -104,27 +104,27 @@ class Component extends DCLogic {
   renderVals() {
     var T = {
       bordeaux: {fond: '#F6F2EF', surface: '#FFFFFF', haute: '#F6F2EF', filet: '#D9D6D3', texte: '#1C1C17', texte2: '#605F54', texte3: '#939186', pleine: '#551515', surPleine: '#FFFFFF', encre: '#551515', second: '#8E3030', accent: '#916632'},
-      obsidian: {fond: '#F2F3F5', surface: '#FFFFFF', haute: '#F2F3F5', filet: '#D5D7D9', texte: '#191C1E', texte2: '#5A5F62', texte3: '#8C9195', pleine: '#D73E44', surPleine: '#FFFFFF', encre: '#CD363D', second: '#E67254', accent: '#906800'},
+      obsidian: {fond: '#F2F3F5', surface: '#FFFFFF', haute: '#F2F3F5', filet: '#D5D7D9', texte: '#191C1E', texte2: '#5A5F62', texte3: '#8C9195', pleine: '#E5484D', surPleine: '#111111', encre: '#CD363D', second: '#E67254', accent: '#906800'},
       arctic: {fond: '#F5F8FC', surface: '#FFFFFF', haute: '#F5F8FC', filet: '#D8DCDF', texte: '#191C1E', texte2: '#5A5F63', texte3: '#8D9195', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#2563EB', second: '#4795F2', accent: '#008073'},
       neon: {fond: '#F2F9EA', surface: '#FFFFFF', haute: '#F2F9EA', filet: '#D6DCCF', texte: '#1A1C18', texte2: '#5C6058', texte3: '#8E928A', pleine: '#B4F044', surPleine: '#111111', encre: '#567B00', second: '#2BA690', accent: '#7458E4'},
       titanium: {fond: '#E8EDF0', surface: '#FFFFFF', haute: '#E8EDF0', filet: '#CCD1D4', texte: '#191C1D', texte2: '#5A5F62', texte3: '#8C9194', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#4C6474', second: '#8396A1', accent: '#8E6310'},
       violet: {fond: '#F5F1FF', surface: '#FFFFFF', haute: '#F5F1FF', filet: '#D8D5E0', texte: '#1C1B1F', texte2: '#5F5D64', texte3: '#928F97', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#7546DB', second: '#A181EE', accent: '#007D71'},
       forest: {fond: '#F4F5EE', surface: '#FFFFFF', haute: '#F4F5EE', filet: '#D7D9D2', texte: '#1A1C19', texte2: '#5C6058', texte3: '#8E928A', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#236B50', second: '#6FA076', accent: '#886B32'},
-      solar: {fond: '#FFF6ED', surface: '#FFFFFF', haute: '#FFF6ED', filet: '#E2DAD1', texte: '#1F1B16', texte2: '#655D53', texte3: '#988F84', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#C34A17', second: '#DC7B46', accent: '#8F6D00'}
+      solar: {fond: '#FFF6ED', surface: '#FFFFFF', haute: '#FFF6ED', filet: '#E2DAD1', texte: '#1F1B16', texte2: '#655D53', texte3: '#988F84', pleine: '#D95A27', surPleine: '#111111', encre: '#C34A17', second: '#DC7B46', accent: '#8F6D00'}
     };
     var a = T[this.props.palette] || T.violet;
     a.on = a.surPleine;
     var caps = this.props.capitales !== false;
     var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     var ANAT = {
-      bordeaux: ['/_blob/df0193c127aef4346188a2afe5906851', '/_blob/83d216670632efba64271b4b7f0e3c6d'],
-      obsidian: ['/_blob/654adbc19fc1900fbb62f34f4dfb3e83', '/_blob/532ca7f02409386bdcf3339cd64796e8'],
+      bordeaux: ['/_blob/f3fba41d4857334c74f52035ada9b8b0', '/_blob/b2c1f45438d518513c595d34904add9f'],
+      obsidian: ['/_blob/2c5820c5ef533c30816cb0daeb638ffb', '/_blob/513bf18581fa350e03250f91d7104f60'],
       arctic: ['/_blob/a6d26baf65a7103e815b7f59e7bfd1ca', '/_blob/e76678686ddc8320bf9633c81f3bac0e'],
       neon: ['/_blob/4e1c6407538d6b1667646a1054ccb243', '/_blob/5254153de02e561b3f2b02e0faf0652e'],
       titanium: ['/_blob/30fca93a977435e05ae927daabe096fb', '/_blob/9d2889d40d0aa8d8f46225ba24d6dbfa'],
       violet: ['/_blob/ecbe7654fbbc4e7de49c501334b3ec92', '/_blob/5b71765e181c8d51221962bb2c9bc418'],
       forest: ['/_blob/6fdb8fcf24a3f3b417f8ee357ba0370b', '/_blob/11d8a87e4b00d742308ce07ac2c01201'],
-      solar: ['/_blob/e00fe718289018b41bd1d9f413badd49', '/_blob/9d0035abc0431c1ffc51293a6e5aec80']
+      solar: ['/_blob/3c25d5f0919a0740540e6cb6cca67146', '/_blob/8055bc39474e38f206277e2f5f9fb1ad']
     };
     var an = ANAT[this.props.palette] || ANAT.violet;
     var hex = a.pleine.replace('#', '');

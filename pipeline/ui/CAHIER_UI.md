@@ -100,21 +100,22 @@ Sources : [Samsung One UI](https://developer.samsung.com/one-ui/overview.html) ;
 **Dérivation** (`lib/kit/palette.dart`, test qui retrouve `inputs/palettes_roles.json` à l'identique) : la valeur du propriétaire est gardée telle quelle quand elle passe le contraste de son rôle ; sinon on garde sa teinte et sa chroma (HCT) et on ne déplace que sa tonalité, du plus petit pas (0,5) suffisant.
 - `fond` = fond du propriétaire. Sombre : `surface`, `haute`, `filet` = même teinte, chroma ≤ 16, tonalité + 5, + 10, + 15. Clair : `surface` blanc, `haute` = fond, `filet` = tonalité − 10.
 - `texte` (tonalité 95 / 10), `texte2` (70 / 40), `texte3` (50 / 60, inactif seulement), teinte du fond, chroma ≤ 6.
-- `pleine` (bouton principal, jour courant, onglet actif, carte du jour) = dominante ; en sombre, tonalité relevée à 35 au moins. `surPleine` = blanc ou `#121212`, le plus contrasté (≥ 4,5:1) ; texte blanc retenu si 6 points de tonalité au plus suffisent.
+- `pleine` (bouton principal, jour courant, onglet actif, carte du jour, pastille de semaine) = **dominante exacte du propriétaire, en clair comme en sombre, jamais ajustée** (décision du 10/10/2026, 10:11). Seul le texte posé dessus s'adapte : `surPleine` = blanc ou `#121212`, le plus contrasté (≥ 4,5:1 vérifié pour les 8 palettes).
+- La dominante n'est **jamais** utilisée comme couleur de texte ou d'icône sur fond sombre quand elle y est illisible (`#551515` sur `#222223` : 1,6:1) ; ce rôle est celui d'`encre`.
 - `encre` (élément courant, repère, chiffre mis en avant, lien) = dominante ajustée à ≥ 4,5:1 sur `surface` (et sur `fond` en clair).
 - `second` (données, barres secondaires) = secondaire ajustée à ≥ 3:1. `accent` (records, réussites, Jour J) = accent ajusté à ≥ 4,5:1.
 - **Contraste renforcé** : mêmes règles à 7:1 (et 4,5:1 au lieu de 3:1).
 
 | Palette (identifiant) | Source : dominante / secondaire / accent / fond sombre / fond clair | Sombre : pleine / texte sur pleine / encre / second / accent / surface | Clair : pleine / texte sur pleine / encre / second / accent |
 | --- | --- | --- | --- |
-| Bordeaux Performance (`bordeaux`, **défaut**) | `#551515` / `#8E3030` / `#D9A66C` / `#181819` / `#F6F2EF` | `#873B38` / `#FFFFFF` / `#CA6F6A` / `#B24B49` / `#D9A66C` / `#222223` | `#551515` / `#FFFFFF` / `#551515` / `#8E3030` / `#916632` |
-| Obsidian Energy (`obsidian`) | `#E5484D` / `#FF8566` / `#FFC857` / `#121316` / `#F2F3F5` | `#D73E44` / `#FFFFFF` / `#EA4C50` / `#FF8566` / `#FFC857` / `#1C1D20` | `#D73E44` / `#FFFFFF` / `#CD363D` / `#E67254` / `#906800` |
+| Bordeaux Performance (`bordeaux`, **défaut**) | `#551515` / `#8E3030` / `#D9A66C` / `#181819` / `#F6F2EF` | `#551515` / `#FFFFFF` / `#CA6F6A` / `#B24B49` / `#D9A66C` / `#222223` | `#551515` / `#FFFFFF` / `#551515` / `#8E3030` / `#916632` |
+| Obsidian Energy (`obsidian`) | `#E5484D` / `#FF8566` / `#FFC857` / `#121316` / `#F2F3F5` | `#E5484D` / `#121212` / `#EA4C50` / `#FF8566` / `#FFC857` / `#1C1D20` | `#E5484D` / `#121212` / `#CD363D` / `#E67254` / `#906800` |
 | Arctic Motion (`arctic`) | `#2563EB` / `#4F9CF9` / `#14B8A6` / `#152238` / `#F5F8FC` | `#2563EB` / `#FFFFFF` / `#668EFF` / `#4F9CF9` / `#14B8A6` / `#242D3D` | `#2563EB` / `#FFFFFF` / `#2563EB` / `#4795F2` / `#008073` |
 | Neon Athlete (`neon`) | `#B4F044` / `#67D8C0` / `#8C72FF` / `#101510` / `#F2F9EA` | `#B4F044` / `#121212` / `#B4F044` / `#67D8C0` / `#8C72FF` / `#1A1F1A` | `#B4F044` / `#121212` / `#567B00` / `#2BA690` / `#7458E4` |
 | Titanium Pro (`titanium`) | `#4C6474` / `#8A9DA8` / `#D5A24C` / `#171E24` / `#E8EDF0` | `#4C6474` / `#FFFFFF` / `#7992A3` / `#8A9DA8` / `#D5A24C` / `#21282F` | `#4C6474` / `#FFFFFF` / `#4C6474` / `#8396A1` / `#8E6310` |
 | Violet Momentum (`violet`) | `#7546DB` / `#AC8CFA` / `#29BFB0` / `#181427` / `#F5F1FF` | `#7546DB` / `#FFFFFF` / `#986CFF` / `#AC8CFA` / `#29BFB0` / `#221E31` | `#7546DB` / `#FFFFFF` / `#7546DB` / `#A181EE` / `#007D71` |
 | Forest Endurance (`forest`) | `#236B50` / `#7BAC81` / `#D7B374` / `#17251D` / `#F4F5EE` | `#236B50` / `#FFFFFF` / `#5CA283` / `#7BAC81` / `#D7B374` / `#213027` | `#236B50` / `#FFFFFF` / `#236B50` / `#6FA076` / `#886B32` |
-| Solar Sprint (`solar`) | `#D95A27` / `#FF9760` / `#E8BC49` / `#211B1A` / `#FFF6ED` | `#CA4F1C` / `#FFFFFF` / `#E86531` / `#FF9760` / `#E8BC49` / `#2C2524` | `#CA4F1C` / `#FFFFFF` / `#C34A17` / `#DC7B46` / `#8F6D00` |
+| Solar Sprint (`solar`) | `#D95A27` / `#FF9760` / `#E8BC49` / `#211B1A` / `#FFF6ED` | `#D95A27` / `#121212` / `#E86531` / `#FF9760` / `#E8BC49` / `#2C2524` | `#D95A27` / `#121212` / `#C34A17` / `#DC7B46` / `#8F6D00` |
 
 Préférence `accent` : anciens identifiants relus `rouge` → `bordeaux`, `jaune` → `neon`, `vert` → `forest`, `violet` → `violet`, `orange` → `solar`, `turquoise` → `arctic` ; absent ou inconnu → `bordeaux` ; import d'une ancienne sauvegarde jamais refusé pour ça.
 
@@ -247,7 +248,7 @@ Si la limite hebdomadaire du plan Max approche (KM1 tourne sur Fable), UI1 à UI
 | U2 | Illustrations de Koach, logo et anatomie intouchables (§1). |
 | U3 | Capitales conservées pour les titres (style actuel), appliquées uniformément par le style ; réglable en un jeton si le propriétaire préfère les minuscules (interrupteur « capitales » des maquettes). |
 | U4 | Police Barlow, embarquée. |
-| U5 | Les 8 palettes du propriétaire remplacent les 6 couleurs ; Bordeaux Performance par défaut ; valeurs gardées sauf contraste insuffisant (tonalité HCT ajustée : Bordeaux en sombre, Obsidian et Solar d'une nuance pour le texte blanc, accents et encres en clair). |
+| U5 | Les 8 palettes du propriétaire remplacent les 6 couleurs ; Bordeaux Performance par défaut ; **dominantes exactes partout pour les aplats** (correction du propriétaire, 10:11) ; texte noir sur les boutons d'Obsidian, Solar et Neon (le blanc y serait illisible) ; seules les couleurs de texte et d'icône dérivées (`encre`, `second`, `accent`) sont ajustées en tonalité quand le contraste l'exige. |
 | U6 | Mode « Contraste renforcé » ajouté dans Apparence. |
 | U7 | Frise de 40 points de l'accueil remplacée par une barre de saison par blocs (même information). |
 | U8 | Un seul modèle pour tous les menus (§4) ; menus ⋮ en feuilles d'actions. |

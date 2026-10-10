@@ -108,14 +108,14 @@ a{color:inherit}a:hover{color:inherit}
 class Component extends DCLogic {
   renderVals() {
     var T = {
-      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#873B38', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
-      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#D73E44', surPleine: '#FFFFFF', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
+      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#551515', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
+      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#E5484D', surPleine: '#111111', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
       arctic: {fond: '#152238', surface: '#242D3D', haute: '#2F3748', filet: '#3A4354', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#668EFF', second: '#4F9CF9', accent: '#14B8A6'},
       neon: {fond: '#101510', surface: '#1A1F1A', haute: '#242A24', filet: '#2F342E', texte: '#F2F0ED', texte2: '#AAACA7', texte3: '#757873', pleine: '#B4F044', surPleine: '#111111', encre: '#B4F044', second: '#67D8C0', accent: '#8C72FF'},
       titanium: {fond: '#171E24', surface: '#21282F', haute: '#2C3339', filet: '#373E45', texte: '#F2F0F1', texte2: '#AAABAE', texte3: '#76777A', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#7992A3', second: '#8A9DA8', accent: '#D5A24C'},
       violet: {fond: '#181427', surface: '#221E31', haute: '#2D293C', filet: '#383347', texte: '#F4EFF1', texte2: '#AEAAAF', texte3: '#79767A', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#986CFF', second: '#AC8CFA', accent: '#29BFB0'},
       forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
-      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
+      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#D95A27', surPleine: '#111111', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
     };
     var a = T[this.props.palette] || T.bordeaux;
     a.on = a.surPleine;

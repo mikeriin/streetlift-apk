@@ -71,18 +71,10 @@ def on_color(fill):
 
 
 def fill_role(d, dark):
+    # Décision du propriétaire (10/10/2026, 10:11) : la dominante est utilisée
+    # telle quelle pour les aplats ; seul le texte posé dessus s'adapte.
     f = d
-    if dark and hct(f).tone < 35:
-        f = tone(f, 35)
     on, c = on_color(f)
-    if on != "#FFFFFF":
-        # préférer un texte blanc si 6 points de tonalité au plus suffisent
-        t0 = hct(f).tone
-        for k in range(1, 13):
-            g = tone(f, t0 - k * 0.5)
-            if cr(g, "#FFFFFF") >= 4.5:
-                f, on, c = g, "#FFFFFF", cr(g, "#FFFFFF")
-                break
     if c < 4.5:
         f = adjust(f, on, 4.5, -1 if on == "#FFFFFF" else 1)
         on, c = on_color(f)

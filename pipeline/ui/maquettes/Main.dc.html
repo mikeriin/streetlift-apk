@@ -103,28 +103,28 @@ a{color:inherit}a:hover{color:inherit}
 class Component extends DCLogic {
   renderVals() {
     var T = {
-      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#873B38', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
-      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#D73E44', surPleine: '#FFFFFF', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
+      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#551515', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
+      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#E5484D', surPleine: '#111111', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
       arctic: {fond: '#152238', surface: '#242D3D', haute: '#2F3748', filet: '#3A4354', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#668EFF', second: '#4F9CF9', accent: '#14B8A6'},
       neon: {fond: '#101510', surface: '#1A1F1A', haute: '#242A24', filet: '#2F342E', texte: '#F2F0ED', texte2: '#AAACA7', texte3: '#757873', pleine: '#B4F044', surPleine: '#111111', encre: '#B4F044', second: '#67D8C0', accent: '#8C72FF'},
       titanium: {fond: '#171E24', surface: '#21282F', haute: '#2C3339', filet: '#373E45', texte: '#F2F0F1', texte2: '#AAABAE', texte3: '#76777A', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#7992A3', second: '#8A9DA8', accent: '#D5A24C'},
       violet: {fond: '#181427', surface: '#221E31', haute: '#2D293C', filet: '#383347', texte: '#F4EFF1', texte2: '#AEAAAF', texte3: '#79767A', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#986CFF', second: '#AC8CFA', accent: '#29BFB0'},
       forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
-      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
+      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#D95A27', surPleine: '#111111', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
     };
     var a = T[this.props.palette] || T.bordeaux;
     a.on = a.surPleine;
     var caps = this.props.capitales !== false;
     var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     var ANAT = {
-      bordeaux: ['/_blob/df0193c127aef4346188a2afe5906851', '/_blob/83d216670632efba64271b4b7f0e3c6d'],
-      obsidian: ['/_blob/654adbc19fc1900fbb62f34f4dfb3e83', '/_blob/532ca7f02409386bdcf3339cd64796e8'],
+      bordeaux: ['/_blob/f3fba41d4857334c74f52035ada9b8b0', '/_blob/b2c1f45438d518513c595d34904add9f'],
+      obsidian: ['/_blob/2c5820c5ef533c30816cb0daeb638ffb', '/_blob/513bf18581fa350e03250f91d7104f60'],
       arctic: ['/_blob/a6d26baf65a7103e815b7f59e7bfd1ca', '/_blob/e76678686ddc8320bf9633c81f3bac0e'],
       neon: ['/_blob/4e1c6407538d6b1667646a1054ccb243', '/_blob/5254153de02e561b3f2b02e0faf0652e'],
       titanium: ['/_blob/30fca93a977435e05ae927daabe096fb', '/_blob/9d2889d40d0aa8d8f46225ba24d6dbfa'],
       violet: ['/_blob/ecbe7654fbbc4e7de49c501334b3ec92', '/_blob/5b71765e181c8d51221962bb2c9bc418'],
       forest: ['/_blob/6fdb8fcf24a3f3b417f8ee357ba0370b', '/_blob/11d8a87e4b00d742308ce07ac2c01201'],
-      solar: ['/_blob/e00fe718289018b41bd1d9f413badd49', '/_blob/9d0035abc0431c1ffc51293a6e5aec80']
+      solar: ['/_blob/3c25d5f0919a0740540e6cb6cca67146', '/_blob/8055bc39474e38f206277e2f5f9fb1ad']
     };
     var an = ANAT[this.props.palette] || ANAT.bordeaux;
     var hex = a.pleine.replace('#', '');
