@@ -386,7 +386,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
                         Padding(
                           padding: const EdgeInsetsDirectional.only(
                             start: KSpacing.page,
-                            end: KSpacing.page,
+                            end: KSpacing.s12,
                             bottom: KSpacing.s4,
                           ),
                           child: Column(
