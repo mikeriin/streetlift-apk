@@ -1,0 +1,73 @@
+diff --git a/integration_test/tour_ui_test.dart b/integration_test/tour_ui_test.dart
+index 6921a2a..704b455 100644
+--- a/integration_test/tour_ui_test.dart
++++ b/integration_test/tour_ui_test.dart
+@@ -424,26 +424,16 @@ void main() {
+         () => find.textContaining('Jour J'),
+       ],
+     ], () => find.byType(EventDayScreen));
+-    await route(
+-      tester,
+-      'mes_references',
+-      [
+-        [settingsTab, () => text('Mes références')],
+-        [settingsTab, () => textCi('Profil'), () => text('Mes références')],
+-        [settingsTab, () => text('Programme'), () => text('Références')],
+-      ],
+-      () => find.byType(PilotageScreen),
+-    );
++    await route(tester, 'mes_references', [
++      [settingsTab, () => text('Mes références')],
++      [settingsTab, () => textCi('Profil'), () => text('Mes références')],
++      [settingsTab, () => text('Programme'), () => text('Références')],
++    ], () => find.byType(PilotageScreen));
+     // Un réglage précis : la ligne « Repos par défaut » visible à l'écran.
+-    await route(
+-      tester,
+-      'reglage_repos',
+-      [
+-        [settingsTab, () => text('Séance')],
+-        [settingsTab, () => text('Chronomètres')],
+-      ],
+-      () => find.text('Repos par défaut'),
+-    );
++    await route(tester, 'reglage_repos', [
++      [settingsTab, () => text('Séance')],
++      [settingsTab, () => text('Chronomètres')],
++    ], () => find.text('Repos par défaut'));
+     releve['captures'] = shots;
+     record();
+   });
+diff --git a/lib/kit/sheets.dart b/lib/kit/sheets.dart
+index c89ccc8..ba05bf3 100644
+--- a/lib/kit/sheets.dart
++++ b/lib/kit/sheets.dart
+@@ -486,9 +486,10 @@ class KConfirm extends StatelessWidget {
+     );
+     final cancel = FilledButton(
+       key: const ValueKey('confirm-cancel'),
+-      style: style(k.haute, k.texte).copyWith(
+-        side: WidgetStatePropertyAll(k.controlSide),
+-      ),
++      style: style(
++        k.haute,
++        k.texte,
++      ).copyWith(side: WidgetStatePropertyAll(k.controlSide)),
+       onPressed: onCancel,
+       child: Text(cancelLabel, textAlign: TextAlign.center),
+     );
+diff --git a/test/g2_retrait_test.dart b/test/g2_retrait_test.dart
+index 18b948d..d9c5c23 100644
+--- a/test/g2_retrait_test.dart
++++ b/test/g2_retrait_test.dart
+@@ -240,7 +240,9 @@ void main() {
+       // de couleur, relu vers sa palette (vert → forest) et réenregistré
+       // ainsi ; l'état n'est jamais refusé pour ça.
+       final settingsDisk = Map<String, dynamic>.from(disk['settings'] as Map);
+-      final settingsSeed = Map<String, dynamic>.from(program['settings'] as Map);
++      final settingsSeed = Map<String, dynamic>.from(
++        program['settings'] as Map,
++      );
+       expect(settingsSeed['accent'], 'vert');
+       expect(settingsDisk['accent'], 'forest');
+       settingsDisk.remove('accent');
