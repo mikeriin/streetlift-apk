@@ -367,35 +367,50 @@ class _FlameTrackState extends State<FlameTrack> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '1 · ${flameWord(1).toLowerCase()}',
-                    style: legend,
-                  ),
-                ),
+            child: Builder(
+              builder: (context) {
+                final low = Text(
+                  '1 · ${flameWord(1).toLowerCase()}',
+                  style: legend,
+                );
+                final high = Text(
+                  '${flameWord(10).toLowerCase()} · 10',
+                  textAlign: TextAlign.end,
+                  style: legend,
+                );
                 // « Je ne sais pas », discret (lien texte `texte2`, 48 dp),
-                // au centre sous la ligne ; texte agrandi sur écran étroit :
-                // à la ligne au lieu de déborder.
-                Flexible(
-                  flex: 2,
-                  child: KTextButton(
-                    key: const ValueKey('flame-unknown'),
-                    label: 'Je ne sais pas',
-                    dense: true,
-                    color: k.texte2,
-                    onPressed: widget.unknown ? null : widget.onUnknown,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    '${flameWord(10).toLowerCase()} · 10',
-                    textAlign: TextAlign.end,
-                    style: legend,
-                  ),
-                ),
-              ],
+                // au centre sous la ligne.
+                final unknown = KTextButton(
+                  key: const ValueKey('flame-unknown'),
+                  label: 'Je ne sais pas',
+                  dense: true,
+                  color: k.texte2,
+                  onPressed: widget.unknown ? null : widget.onUnknown,
+                );
+                // Grand texte : les deux bornes sur une ligne, le lien
+                // dessous (aucun mot coupé, C3).
+                if (MediaQuery.textScalerOf(context).scale(1) > 1.3) {
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(child: low),
+                          const SizedBox(width: KSpacing.s8),
+                          Expanded(child: high),
+                        ],
+                      ),
+                      unknown,
+                    ],
+                  );
+                }
+                return Row(
+                  children: [
+                    Expanded(child: low),
+                    Flexible(flex: 2, child: unknown),
+                    Expanded(child: high),
+                  ],
+                );
+              },
             ),
           ),
           if (widget.intro) ...[

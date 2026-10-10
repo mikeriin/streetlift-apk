@@ -2422,7 +2422,11 @@ class _SetFieldState extends State<_SetField> {
       );
     }
     // La pilule entière est touchable (48 dp) : un appui sélectionne tout.
-    return GestureDetector(
+    // Un nombre reste entier dans sa pilule (cahier §5.2) : au-delà de
+    // 130 % de texte, le chiffre du champ n'est plus agrandi.
+    return MediaQuery.withClampedTextScaling(
+      maxScaleFactor: 1.3,
+      child: GestureDetector(
       behavior: HitTestBehavior.opaque,
       excludeFromSemantics: true,
       onTap: _selectAll,
@@ -2467,6 +2471,7 @@ class _SetFieldState extends State<_SetField> {
             ),
           ),
         ),
+      ),
       ),
     );
   }

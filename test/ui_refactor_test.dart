@@ -15,6 +15,7 @@ import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'phone_test_support.dart' show swipePage;
+import 'support/ui_capture.dart' show loadUiFonts;
 
 Widget page(Widget child, {bool dark = true, double textScale = 1.3}) =>
     MaterialApp(
@@ -281,6 +282,11 @@ void main() {
   testWidgets(
     'cinq séries, charge et effort restent visibles sans défilement',
     (tester) async {
+      // UI2 : mesure avec les polices réelles (Barlow) : la police de test
+      // (un carré par caractère) élargit chaque mot et fait passer à la
+      // ligne titres et puces qui tiennent sur une ligne sur le téléphone ;
+      // le tableau des séries a maintenant des champs de 48 dp (C13).
+      await loadUiFonts();
       small(tester, size: const Size(360, 760));
       tester.view.padding = const FakeViewPadding(top: 24, bottom: 24);
       addTearDown(tester.view.resetPadding);
