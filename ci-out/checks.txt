@@ -1,0 +1,13 @@
+lot=UI0
+rapide=false
+pub=success
+format=success
+analyze=success
+ui_tokens_zone=success
+python=success
+dart=failure
+dart_dev=failure
+captures_ui=success
+captures=failure
+build_debug=success
+build_profile=success
