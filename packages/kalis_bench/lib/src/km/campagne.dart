@@ -210,9 +210,7 @@ double? kmErreurType(Iterable<num?> xs) {
   }
   final m = kmSommePy(ys) / ys.length;
   return math.sqrt(
-    kmSommePy(<double>[
-          for (final x in ys) math.pow(x - m, 2).toDouble(),
-        ]) /
+    kmSommePy(<double>[for (final x in ys) math.pow(x - m, 2).toDouble()]) /
         (ys.length - 1) /
         ys.length,
   );
@@ -688,17 +686,13 @@ Map<int, Map<String, List<Object?>>> kmEpreuvesParJour(KmTour tour) {
   }
   final epreuves = kmEpreuvesParJour(tour);
   final unites = <kc.Json>[];
-  final echeances = <int>{for (final p in prev) kc.ent(p['echeance'])}
-      .toList()
+  final echeances = <int>{for (final p in prev) kc.ent(p['echeance'])}.toList()
     ..sort();
   for (final e in echeances) {
-    final ps = kmTriStable(
-      <kc.Json>[
-        for (final p in prev)
-          if (kc.ent(p['echeance']) == e) p,
-      ],
-      (a, b) => _cmpNum(kc.dbl(a['semaine']), kc.dbl(b['semaine'])),
-    );
+    final ps = kmTriStable(<kc.Json>[
+      for (final p in prev)
+        if (kc.ent(p['echeance']) == e) p,
+    ], (a, b) => _cmpNum(kc.dbl(a['semaine']), kc.dbl(b['semaine'])));
     final cibles = kc.dictOuVide(ps.last['cibles']);
     final semE = kc.divEnt(e, 7);
     if (!joursEpreuve.contains(e)) {
@@ -803,8 +797,9 @@ List<Object?> kmBlocsServisPrescrits(
   final jourDe = <(int, int, int, int), int>{};
   for (final s in kc.jl(saison['sessions'])) {
     final l = kc.jl(s);
-    jourDe[(kc.ent(l[0]), kc.ent(l[1]), kc.ent(l[2]), kc.ent(l[3]))] =
-        kc.ent(l[4]);
+    jourDe[(kc.ent(l[0]), kc.ent(l[1]), kc.ent(l[2]), kc.ent(l[3]))] = kc.ent(
+      l[4],
+    );
   }
   final blocs = kc.jl(kc.copieProfonde(saison['blocks']));
   for (final (g, bi, wb, di, items) in tour.servi) {
@@ -1073,8 +1068,7 @@ Map<String, Object?> kmSecuriteSaison(
     final blocsS = kmBlocsServisPrescrits(saison, tour, testsFaits: sans);
     final serv = constats(blocsS);
     var (cl, ex) = kmClasserConstats(initial, serv);
-    if (sans &&
-        (kc.vrai(cl['introduit']) || kc.vrai(cl['aggrave']))) {
+    if (sans && (kc.vrai(cl['introduit']) || kc.vrai(cl['aggrave']))) {
       (cl, ex) = kmRetirerRetoursALEcrit(
         saison,
         constats,
@@ -1285,9 +1279,9 @@ Map<KmTriplet, kc.Json> kmChargerTemoin(
   List<KmJob> jobs,
   Map<String, List<kc.Json>?> temoins,
 ) {
-  final triplets = <KmTriplet>{for (final j in jobs) (j.$1, j.$2, j.$3)}
-      .toList()
-    ..sort(_cmpTriplet);
+  final triplets = <KmTriplet>{
+    for (final j in jobs) (j.$1, j.$2, j.$3),
+  }.toList()..sort(_cmpTriplet);
   final parCle = <String, Map<String, kc.Json>>{};
   final out = <KmTriplet, kc.Json>{};
   for (final (cle, scen, v) in triplets) {
@@ -1423,9 +1417,7 @@ Map<String, Object?> kmCritereE1rm(KmAgregats a) {
         for (final v in _triees(a.kv.keys))
           v: <String, Object?>{
             'koach': a.kv[v]!.ligneJson(kmRang),
-            'temoin': a.tv.containsKey(v)
-                ? a.tv[v]!.ligneJson(kmRang)
-                : null,
+            'temoin': a.tv.containsKey(v) ? a.tv[v]!.ligneJson(kmRang) : null,
           },
       },
       'par_niveau': <String, Object?>{
@@ -1434,9 +1426,7 @@ Map<String, Object?> kmCritereE1rm(KmAgregats a) {
             // La référence suppose chaque niveau du témoin présent chez
             // Koach (KeyError sinon) : ici null.
             'koach': a.kn[n]?.ligneJson(kmRang),
-            'temoin': a.tn.containsKey(n)
-                ? a.tn[n]!.ligneJson(kmRang)
-                : null,
+            'temoin': a.tn.containsKey(n) ? a.tn[n]!.ligneJson(kmRang) : null,
           },
       },
       'autres_modes_rang_6': <String, Object?>{
@@ -1526,10 +1516,7 @@ Map<String, Object?> _tousModes(KmAgregats a) {
 
 /// Critère 4 : couverture de l'intervalle à 90 % (rangs >= 3)
 /// (`campagne.critere_couverture`). [defautModeleSd] : valeur en vigueur.
-Map<String, Object?> kmCritereCouverture(
-  KmAgregats a,
-  Object? defautModeleSd,
-) {
+Map<String, Object?> kmCritereCouverture(KmAgregats a, Object? defautModeleSd) {
   final x = a.k['loadedMain']!.apres(kmRangCouverture);
   final c = x == null ? null : kc.dbl(x['couverture']);
   final lo = kmSeuilCouverture[0];
@@ -1590,7 +1577,8 @@ Map<String, Object?> kmCritereCouverture(
       continue;
     }
     final pm = kmSommeD(<double>[for (final x in sel) x.$1]) / n;
-    final om = kmSommePy(<double>[
+    final om =
+        kmSommePy(<double>[
           for (final x in sel)
             if (x.$2) 1.0,
         ]) /
@@ -1624,10 +1612,7 @@ double? _erreurPonderee(List<Map<String, Object?>> dec, int n) => n > 0
           n
     : null;
 
-List<(double, bool)> _paires(
-  kc.Json? p,
-  kc.Json parCible,
-) => <(double, bool)>[
+List<(double, bool)> _paires(kc.Json? p, kc.Json parCible) => <(double, bool)>[
   if (p != null && kc.vrai(p['p']))
     for (final ex in _triees(kc.jm(p['p']).keys))
       if (parCible.containsKey(ex))
@@ -1867,12 +1852,11 @@ Map<String, Object?> kmCritereCalibration(
   };
 }
 
-List<double> _ratios(Object? evs, String mode, int iBest, int iMax) =>
-    <double>[
-      for (final e0 in kc.jl(evs))
-        if (kc.jl(e0)[1] == mode && kc.vrai(kc.jl(e0)[iMax]))
-          kc.dbl(kc.jl(e0)[iBest]) / kc.dbl(kc.jl(e0)[iMax]),
-    ];
+List<double> _ratios(Object? evs, String mode, int iBest, int iMax) => <double>[
+  for (final e0 in kc.jl(evs))
+    if (kc.jl(e0)[1] == mode && kc.vrai(kc.jl(e0)[iMax]))
+      kc.dbl(kc.jl(e0)[iBest]) / kc.dbl(kc.jl(e0)[iMax]),
+];
 
 Map<(String, String, String, int), kc.Json> _runsTemoin(
   Map<KmTriplet, kc.Json> temoin,
@@ -1943,10 +1927,10 @@ Map<String, Object?> kmCritereJourJ(
         (parScen, scen),
         (parVer, v),
       ]) {
-        final x = d.putIfAbsent(cleD, () => <List<double>>[
-          <double>[],
-          <double>[],
-        ]);
+        final x = d.putIfAbsent(
+          cleD,
+          () => <List<double>>[<double>[], <double>[]],
+        );
         x[0].addAll(rk);
         x[1].addAll(rt);
       }
@@ -2110,7 +2094,9 @@ Map<String, Object?> kmCritereSecurite(
       'aggravations': a,
       'poussees': p,
       'violations': v,
-      'codes': _sommeDicts(<Object?>[for (final x in runs) x['violationCodes']]),
+      'codes': _sommeDicts(<Object?>[
+        for (final x in runs) x['violationCodes'],
+      ]),
     };
   }
 
@@ -2384,8 +2370,7 @@ Map<String, Object?> kmSecondaires(
     },
     'seances_faites_sur_prevues': kmMoyenne(<double>[
       for (final r in ok)
-        if (kc.vrai(r['prevues']))
-          kc.ent(r['seances']) / kc.dbl(r['prevues']),
+        if (kc.vrai(r['prevues'])) kc.ent(r['seances']) / kc.dbl(r['prevues']),
     ]),
   };
 }
@@ -2419,7 +2404,9 @@ Map<String, Object?> kmSectionTemoin(
       '1_erreur_e1rm_rang_6': <String, Object?>{
         'comparable': true,
         'koach': criteres['1_erreur_e1rm_rang_6']!['mesure'],
-        'temoin': kc.jmOu(d('1_erreur_e1rm_rang_6', <String>['temoin']))?['mae'],
+        'temoin': kc.jmOu(
+          d('1_erreur_e1rm_rang_6', <String>['temoin']),
+        )?['mae'],
         'temoin_par_verite': <String, Object?>{
           for (final v in _triees(a.tv.keys))
             v: a.tv[v]!.ligneJson(kmRang)?['mae'],
@@ -2441,7 +2428,8 @@ Map<String, Object?> kmSectionTemoin(
         'koach': criteres['4_couverture_90']!['mesure'],
         'temoin': cov?['couverture'],
         'n_temoin': cov?['n'],
-        'note': "intervalle annoncé par 0.3.1 (|erreur| <= 1,6449 × sd relatif)",
+        'note':
+            "intervalle annoncé par 0.3.1 (|erreur| <= 1,6449 × sd relatif)",
       },
       '5_calibration_p_reussite': <String, Object?>{
         'comparable': false,
@@ -2644,9 +2632,7 @@ String kmResume(Map<String, Object?> s) {
   );
   final pv = kc.jm(dd['par_verite']);
   lignes.add(
-    '      par vérité : ${[
-      for (final v in _triees(pv.keys)) '$v ${_f(g(g(pv[v], 'koach'), 'mae'), true)}/${_f(g(g(pv[v], 'temoin'), 'mae'), true)}',
-    ].join(', ')}',
+    '      par vérité : ${[for (final v in _triees(pv.keys)) '$v ${_f(g(g(pv[v], 'koach'), 'mae'), true)}/${_f(g(g(pv[v], 'temoin'), 'mae'), true)}'].join(', ')}',
   );
   d = kc.jm(c['2_mauvais_jour_isole']);
   final h = kc.jm(kc.jm(d['detail'])['horizons']);
@@ -2687,10 +2673,8 @@ String kmResume(Map<String, Object?> s) {
       'cible (C13.11.2) : écart max ${_f(d['mesure'], true)} (déciles de n '
       '>= $kmNMinDecileCible) ; n=${d['n']} ; graines '
       '${k2['graines_presentes']} ; '
-      '${[
-        for (final x in kc.jl(k2['deciles']))
-          if (kc.ent(g(x, 'n')) > 0) 'd${g(x, 'decile')} n=${g(x, 'n')} p=${_f(g(x, 'p_prevue'), true)} obs=${_f(g(x, 'observee'), true)}',
-      ].join(', ')}',
+      '${[for (final x in kc.jl(k2['deciles']))
+        if (kc.ent(g(x, 'n')) > 0) 'd${g(x, 'decile')} n=${g(x, 'n')} p=${_f(g(x, 'p_prevue'), true)} obs=${_f(g(x, 'observee'), true)}'].join(', ')}',
     );
     final k1 = kc.jm(d5['mesure_km1']);
     lignes.add(

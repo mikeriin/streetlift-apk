@@ -2541,9 +2541,7 @@ class Seances {
     final pr = jld(jm(p['planification'])['prudence_charge']);
     final prudence = t.seances > 3 ? pr[1] : pr[0];
     var voulu = chargePour(exId, reps, rir, prudence)!;
-    final trace = <Object?>[
-      'modele ${voulu.toStringAsFixed(1)} (rir ${rir.toStringAsFixed(1)})',
-    ];
+    final trace = <Object?>['modele ${fixe(voulu, 1)} (rir ${fixe(rir, 1)})'];
     if (tech['kind'] == 'top_set_backoff' &&
         index >= 1 &&
         plan['tete'] != null) {
@@ -2551,7 +2549,7 @@ class Seances {
       final drop = dbl(ou(tech['backoffDropPct'], 0.08));
       final tete = (plan['tete'] as num) + t.fraction * m.poidsKg;
       voulu = _seMin(voulu, tete * (1 - drop) - t.fraction * m.poidsKg);
-      trace.add('allegee ${voulu.toStringAsFixed(1)}');
+      trace.add('allegee ${fixe(voulu, 1)}');
     }
     // Intensité : la charge vise l'effort écrit, déplacé par la
     // planification dans son plafond ; la part écrite du 1RM borne par le
@@ -2588,9 +2586,9 @@ class Seances {
       if (voulu > haut) {
         voulu = haut;
         trace.add(
-          'part ecrite ${part.toStringAsFixed(3)}'
+          'part ecrite ${fixe(part, 3)}'
           '${vrai(plan['verrou']) ? ' verrou' : ''} -> '
-          '${voulu.toStringAsFixed(1)}',
+          '${fixe(voulu, 1)}',
         );
       }
     }
@@ -2641,8 +2639,8 @@ class Seances {
     charge = _bornesHausse(exId, item, charge, plan, t, grille, hi, index);
     if (charge != avantBornes) {
       trace.add(
-        'hausse bornee ${avantBornes.toStringAsFixed(2)} -> '
-        '${charge.toStringAsFixed(2)}',
+        'hausse bornee ${fixe(avantBornes, 2)} -> '
+        '${fixe(charge, 2)}',
       );
     }
     // Dans la séance : après un échec, -7,5 % gardé ; jamais plus lourd un
@@ -2686,9 +2684,7 @@ class Seances {
         mem.chargeDerniere != null &&
         charge > mem.chargeDerniere!) {
       charge = mem.chargeDerniere!;
-      trace.add(
-        'pas de hausse (douleur ou bilan) -> ${charge.toStringAsFixed(2)}',
-      );
+      trace.add('pas de hausse (douleur ou bilan) -> ${fixe(charge, 2)}');
     }
     if (charge < grille.minimum) {
       charge = grille.minimum;
@@ -2739,9 +2735,9 @@ class Seances {
         'role': null,
         'repere': true,
         'trace': <Object?>[
-          'repere ${chargeR.toStringAsFixed(1)} (modele '
-              '${vouluR.toStringAsFixed(1)}, plafond '
-              '${plafondR.toStringAsFixed(1)})',
+          'repere ${fixe(chargeR, 1)} (modele '
+              '${fixe(vouluR, 1)}, plafond '
+              '${fixe(plafondR, 1)})',
         ],
       };
     }
@@ -3323,9 +3319,7 @@ class Seances {
           'flames': flammesDeRir(2.0),
           'role': 'test',
           'repere': true,
-          'trace': <Object?>[
-            'vrai test, confirmation ${derniere.toStringAsFixed(1)}',
-          ],
+          'trace': <Object?>['vrai test, confirmation ${fixe(derniere, 1)}'],
         };
       } else {
         final paliers = jl(ta['rampe_pas_par_rir']);
@@ -3407,7 +3401,7 @@ class Seances {
       'flames': flammesDeRir(2.0),
       'role': 'test',
       'repere': true,
-      'trace': <Object?>['vrai test ${charge.toStringAsFixed(1)}'],
+      'trace': <Object?>['vrai test ${fixe(charge, 1)}'],
     };
   }
 

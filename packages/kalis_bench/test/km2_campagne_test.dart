@@ -422,56 +422,58 @@ void main() {
     expect(kmReprPy(12.0), '12.0');
   });
 
-  test('critère 5 : calibration par cible, mesure de KM1 et mesure C13.11.2',
-      () {
-    final ok = _saisonsCalibration();
-    final c5 = kmCritereCalibration(ok, false);
-    // Mesure fixée (C13.11.2) : graines 0 à 5, une prévision par cible.
-    expect(c5['mesure'], 0.5977166666666667);
-    expect(c5['n'], 648);
-    expect(c5['respecte'], isFalse);
-    final d = c5['detail']! as _Json;
-    final k2 = d['mesure_km2']! as _Json;
-    expect(k2['deciles_peuples'], 6);
-    expect(k2['graines_completes'], isTrue);
-    expect(k2['graines_presentes'], <int>[0, 1, 2, 3, 4, 5]);
-    expect(d['mesurable'], isTrue);
-    final dec = k2['deciles']! as List<Object?>;
-    expect(dec[9], <String, Object?>{
-      'decile': 9,
-      'n': 72,
-      'p_prevue': 0.93105,
-      'observee': 0.3333333333333333,
-      'ecart': 0.5977166666666667,
-    });
-    expect(dec[2], <String, Object?>{
-      'decile': 2,
-      'n': 180,
-      'p_prevue': 0.2511,
-      'observee': 0.4,
-      'ecart': 0.14890000000000003,
-    });
-    // Mesure de KM1 et compléments, comme la référence.
-    final k1 = d['mesure_km1']! as _Json;
-    expect(k1['mesure'], 0.4920142857142857);
-    expect(k1['n'], 2436);
-    final pc = d['par_cible']! as _Json;
-    expect(pc['ecart_max'], 0.4920142857142857);
-    expect(pc['deciles_peuples'], 7);
-    expect(pc['erreur_ponderee_tous_cas'], 0.22627413793103449);
-    expect(pc['part_des_cas_juges'], 1.0);
-    final une = pc['une_prevision_par_cible']! as _Json;
-    expect(une['n'], 756);
-    expect(une['ecart_max'], 0.5024785714285716);
-    final tc = d['toutes_les_cibles']! as _Json;
-    expect(tc['ecart_max_deciles_n20'], 0.28107096857142855);
-    expect(tc['dates_insuffisantes'], <String, Object?>{});
-    final debut = (tc['par_date']! as _Json)['debut']! as _Json;
-    expect(debut['p_moyenne'], 0.15832279);
-    expect(debut['reussite_observee'], 0.17142857142857143);
-    expect(d['exclusions'], <String, Object?>{'sans_echeance': 210});
-    expect(d['unites_sans_prevision_a_la_date'], <String, Object?>{
-      'moins_4_semaines': 42,
-    });
-  });
+  test(
+    'critère 5 : calibration par cible, mesure de KM1 et mesure C13.11.2',
+    () {
+      final ok = _saisonsCalibration();
+      final c5 = kmCritereCalibration(ok, false);
+      // Mesure fixée (C13.11.2) : graines 0 à 5, une prévision par cible.
+      expect(c5['mesure'], 0.5977166666666667);
+      expect(c5['n'], 648);
+      expect(c5['respecte'], isFalse);
+      final d = c5['detail']! as _Json;
+      final k2 = d['mesure_km2']! as _Json;
+      expect(k2['deciles_peuples'], 6);
+      expect(k2['graines_completes'], isTrue);
+      expect(k2['graines_presentes'], <int>[0, 1, 2, 3, 4, 5]);
+      expect(d['mesurable'], isTrue);
+      final dec = k2['deciles']! as List<Object?>;
+      expect(dec[9], <String, Object?>{
+        'decile': 9,
+        'n': 72,
+        'p_prevue': 0.93105,
+        'observee': 0.3333333333333333,
+        'ecart': 0.5977166666666667,
+      });
+      expect(dec[2], <String, Object?>{
+        'decile': 2,
+        'n': 180,
+        'p_prevue': 0.2511,
+        'observee': 0.4,
+        'ecart': 0.14890000000000003,
+      });
+      // Mesure de KM1 et compléments, comme la référence.
+      final k1 = d['mesure_km1']! as _Json;
+      expect(k1['mesure'], 0.4920142857142857);
+      expect(k1['n'], 2436);
+      final pc = d['par_cible']! as _Json;
+      expect(pc['ecart_max'], 0.4920142857142857);
+      expect(pc['deciles_peuples'], 7);
+      expect(pc['erreur_ponderee_tous_cas'], 0.22627413793103449);
+      expect(pc['part_des_cas_juges'], 1.0);
+      final une = pc['une_prevision_par_cible']! as _Json;
+      expect(une['n'], 756);
+      expect(une['ecart_max'], 0.5024785714285716);
+      final tc = d['toutes_les_cibles']! as _Json;
+      expect(tc['ecart_max_deciles_n20'], 0.28107096857142855);
+      expect(tc['dates_insuffisantes'], <String, Object?>{});
+      final debut = (tc['par_date']! as _Json)['debut']! as _Json;
+      expect(debut['p_moyenne'], 0.15832279);
+      expect(debut['reussite_observee'], 0.17142857142857143);
+      expect(d['exclusions'], <String, Object?>{'sans_echeance': 210});
+      expect(d['unites_sans_prevision_a_la_date'], <String, Object?>{
+        'moins_4_semaines': 42,
+      });
+    },
+  );
 }

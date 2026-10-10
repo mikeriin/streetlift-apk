@@ -342,7 +342,7 @@ Json kmCibleDe(Json item, int index) {
     final t = kc.jm(tl[index < tl.length ? index : tl.length - 1]);
     Object? pick(String k, [String? k2]) {
       final v = t[k];
-      return v == null ? item[k2 ?? k] : v;
+      return v ?? item[k2 ?? k];
     }
 
     return <String, Object?>{
@@ -445,9 +445,12 @@ KmTour kmSimuler(
   final parSemaine = <int, List<(int, int, int, int)>>{};
   for (final s0 in kc.jl(saison['sessions'])) {
     final s = kc.jl(s0);
-    parSemaine
-        .putIfAbsent(kc.ent(s[0]), () => <(int, int, int, int)>[])
-        .add((kc.ent(s[1]), kc.ent(s[2]), kc.ent(s[3]), kc.ent(s[4])));
+    parSemaine.putIfAbsent(kc.ent(s[0]), () => <(int, int, int, int)>[]).add((
+      kc.ent(s[1]),
+      kc.ent(s[2]),
+      kc.ent(s[3]),
+      kc.ent(s[4]),
+    ));
   }
   politique.debut(saison, profil, livre);
   var courant = profil;
@@ -668,7 +671,8 @@ KmTour kmSimuler(
             basis = it;
           }
         }
-        final basisLow = (hold ? basis['secondsLow'] : basis['repsLow']) as num?;
+        final basisLow =
+            (hold ? basis['secondsLow'] : basis['repsLow']) as num?;
         final basisHigh =
             (hold ? basis['secondsHigh'] : basis['repsHigh']) as num?;
         final count = exerciseSessions[exId] ?? 0;
@@ -694,7 +698,8 @@ KmTour kmSimuler(
           final num flamesTarget = flamesTarget0 as num;
           final flamesInt = _meEnt(flamesTarget, 'flames');
           var low = (hold ? target['secondsLow'] : target['repsLow']) as num?;
-          var high = (hold ? target['secondsHigh'] : target['repsHigh']) as num?;
+          var high =
+              (hold ? target['secondsHigh'] : target['repsHigh']) as num?;
           low ??= high;
           high ??= low;
           if (low == null || high == null) {
@@ -976,8 +981,7 @@ KmTour kmSimuler(
               truth,
               loadKg: loadD,
               low: _meEnt(low, 'low'),
-              high:
-                  (served == 'amrap' && technique!['durationSeconds'] == null)
+              high: (served == 'amrap' && technique!['durationSeconds'] == null)
                   ? _meEnt(high + 200, 'high')
                   : _meEnt(high, 'high'),
               flamesTarget: flamesInt,
@@ -1151,8 +1155,7 @@ KmTour kmSimuler(
         final num lo = low ?? (high ?? 8);
         final num hi = high ?? (low ?? 8);
         final n =
-            (lo + hi) / 2 +
-            (flames == null ? 3.0 : _meFlammesVersRir(flames));
+            (lo + hi) / 2 + (flames == null ? 3.0 : _meFlammesVersRir(flames));
         final est = politique.estimer(exId, n);
         if (est == null) {
           continue;

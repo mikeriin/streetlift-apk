@@ -11,6 +11,8 @@
 //       [--partie i/n] [--parametres fichier] [--fiches fichier]
 //       [--adversaires fichier] [--rejeu fichier]
 //   dart run bin/km2.dart assembler --sortie criteres_km2.json <parties…|dossier>
+//   dart run bin/km2.dart adversaires (--rejouer <adversaires_v1.json> | --chercher …)
+//       (voir bin/km2_adversaire.dart)
 //
 // Sans --partie : la campagne entière, sortie JSON au schéma
 // `kalis_bench/criteres_km2/1` (même schéma que criteres_km1.json, plus la
@@ -40,6 +42,7 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 
 import 'common.dart';
+import 'km2_adversaire.dart' show km2Adversaires;
 
 const String _reference = '../kalis_adapt/reference';
 const String _parametresDefaut = '$_reference/params/koach_params_v1.json';
@@ -64,6 +67,10 @@ const String _usage =
 
 Future<void> main(List<String> args) async {
   try {
+    if (args.isNotEmpty && args.first == 'adversaires') {
+      await km2Adversaires(args.sublist(1));
+      return;
+    }
     if (args.isNotEmpty && args.first == 'assembler') {
       await _assembler(args.sublist(1));
     } else {
@@ -220,9 +227,10 @@ List<String> _lireProfils(String arg, List<String> tous) {
 // Entrées
 // ----------------------------------------------------------------------
 
-Map<String, Map<String, Object?>> _profilsBruts() => <String, Map<String, Object?>>{
-  for (final j in readSeasonJson()) j['key']! as String: j,
-};
+Map<String, Map<String, Object?>> _profilsBruts() =>
+    <String, Map<String, Object?>>{
+      for (final j in readSeasonJson()) j['key']! as String: j,
+    };
 
 List<String> _scenariosDe(Map<String, Object?> json) => <String>[
   for (final s in SeasonScenario.values)
@@ -644,7 +652,9 @@ Future<List<Object?>> _executerTaches(
       sortie.close();
       erreurs.close();
       if (enCours != null && !fin.isCompleted) {
-        fin.completeError(StateError('isolat arrêté pendant la tâche $enCours'));
+        fin.completeError(
+          StateError('isolat arrêté pendant la tâche $enCours'),
+        );
       }
     });
     await Isolate.spawn<List<Object?>>(
@@ -699,8 +709,7 @@ _Matrice _matrice(
     verites,
     graines,
   );
-  final paires = <(String, String)>{for (final j in jobs) (j.$1, j.$2)}
-      .toList()
+  final paires = <(String, String)>{for (final j in jobs) (j.$1, j.$2)}.toList()
     ..sort((a, b) {
       final c = a.$1.compareTo(b.$1);
       return c != 0 ? c : a.$2.compareTo(b.$2);
@@ -709,26 +718,28 @@ _Matrice _matrice(
   return _Matrice(profils, scenarios, jobs, paires, jobsMj);
 }
 
-Map<String, Object?> _configuration(_Options o, _Matrice m) =>
-    <String, Object?>{
-      'profils': m.profils,
-      'scenarios': m.scenarios,
-      'verites': o.verites,
-      'graines': o.grainesConfig,
-      'trajectoires': o.trajectoires,
-      'planificateur': !o.sansPlanificateur,
-      'extensions': o.sansPlanificateur
-          ? <String>[]
-          : <String>['Planification', 'Surveillance', 'ControleDual', 'Adherence'],
-      'defaut_modele_sd': o.defautModele,
-      'rapide': o.rapide,
-      'semaines': o.semaines,
-      'graines_temoin': o.grainesTemoin,
-      'temoin': o.temoinDossier == null
-          ? 'kmWitnessSeason (calculé)'
-          : 'lu dans ${o.temoinDossier}',
-      'moteur': 'kalis_adapt 1.0.0 (Dart)',
-    };
+Map<String, Object?> _configuration(
+  _Options o,
+  _Matrice m,
+) => <String, Object?>{
+  'profils': m.profils,
+  'scenarios': m.scenarios,
+  'verites': o.verites,
+  'graines': o.grainesConfig,
+  'trajectoires': o.trajectoires,
+  'planificateur': !o.sansPlanificateur,
+  'extensions': o.sansPlanificateur
+      ? <String>[]
+      : <String>['Planification', 'Surveillance', 'ControleDual', 'Adherence'],
+  'defaut_modele_sd': o.defautModele,
+  'rapide': o.rapide,
+  'semaines': o.semaines,
+  'graines_temoin': o.grainesTemoin,
+  'temoin': o.temoinDossier == null
+      ? 'kmWitnessSeason (calculé)'
+      : 'lu dans ${o.temoinDossier}',
+  'moteur': 'kalis_adapt 1.0.0 (Dart)',
+};
 
 // ----------------------------------------------------------------------
 // Campagne (une part ou entière)
@@ -961,7 +972,9 @@ Future<void> _assembler(List<String> args) async {
         <String>[
           for (final f in d.listSync())
             if (f is File &&
-                RegExp(r'km2_partie_\d+_sur_\d+\.json(\.gz)?$').hasMatch(f.path))
+                RegExp(
+                  r'km2_partie_\d+_sur_\d+\.json(\.gz)?$',
+                ).hasMatch(f.path))
               f.path,
         ]..sort(),
       );
@@ -1115,7 +1128,8 @@ Map<String, Object?> _assemblerParties(
   final cles = <String>{for (final j in m.jobs) j.$1};
   for (final cle in cles) {
     if (o.temoinDossier != null) {
-      final x = _lireJson('${o.temoinDossier}/$cle.json.gz') ??
+      final x =
+          _lireJson('${o.temoinDossier}/$cle.json.gz') ??
           _lireJson('${o.temoinDossier}/$cle.json');
       temoins[cle] = x is List<Object?>
           ? <kc.Json>[for (final s in x) kc.jm(s)]
@@ -1209,7 +1223,9 @@ Future<void> _calerCouverture(
   List<String> tous,
 ) async {
   final set9 =
-      Platform.environment['KM2_SET9'] ?? Platform.environment['KM1_SET9'] ?? '';
+      Platform.environment['KM2_SET9'] ??
+      Platform.environment['KM1_SET9'] ??
+      '';
   final profils = _lireProfils(
     set9.isNotEmpty && File(set9).existsSync() ? set9 : o.profils,
     tous,
@@ -1229,13 +1245,17 @@ Future<void> _calerCouverture(
     final opts = Map<String, Object?>.of(kc.jm(cfg['options']));
     opts['defaut_modele'] = x;
     cfg['options'] = opts;
-    final r = await _executerTaches(<Map<String, Object?>>[
-      for (final j in jobs)
-        <String, Object?>{
-          'type': 'saison',
-          'job': <Object?>[j.$1, j.$2, j.$3, j.$4],
-        },
-    ], cfg, o.coeurs);
+    final r = await _executerTaches(
+      <Map<String, Object?>>[
+        for (final j in jobs)
+          <String, Object?>{
+            'type': 'saison',
+            'job': <Object?>[j.$1, j.$2, j.$3, j.$4],
+          },
+      ],
+      cfg,
+      o.coeurs,
+    );
     final c = kmCouverture(<kc.Json>[for (final x in r) kc.jm(x)]);
     essais[x] = c;
     stdout.writeln(

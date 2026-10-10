@@ -182,7 +182,8 @@ void _pareil(List<String> ecarts, String quoi) {
   expect(
     ecarts,
     isEmpty,
-    reason: '$quoi : premiers écarts (attendu = Python, obtenu = Dart)\n'
+    reason:
+        '$quoi : premiers écarts (attendu = Python, obtenu = Dart)\n'
         '${ecarts.join('\n')}',
   );
 }
@@ -190,8 +191,8 @@ void _pareil(List<String> ecarts, String quoi) {
 /// Saison de référence que Python a lue : blocs d'un scénario qui renvoie
 /// à la saison de base (`blocksAs`) recopiés comme `donnees.saisons_reference`.
 Map<String, Object?> _saisonPython(String cle, String scenario) {
-  final saisons = _lireJson('$_reference/donnees/reference/$cle.json.gz')!
-      as List<Object?>;
+  final saisons =
+      _lireJson('$_reference/donnees/reference/$cle.json.gz')! as List<Object?>;
   Map<String, Object?>? base;
   Map<String, Object?>? cible;
   for (final s0 in saisons) {
@@ -227,7 +228,8 @@ Map<String, Map<String, Object?>> _fiches() {
 void main() {
   final fichiers = <String>[
     for (final f in Directory(_dossier).listSync())
-      if (f is File && (f.path.endsWith('.json') || f.path.endsWith('.json.gz')))
+      if (f is File &&
+          (f.path.endsWith('.json') || f.path.endsWith('.json.gz')))
         f.path,
   ]..sort();
 
@@ -357,10 +359,7 @@ void main() {
             (s! as Map<String, Object?>)['trace'],
         ];
         _pareil(
-          kmEcarts(
-            traces(tourAttendu()['sets']),
-            traces(tourObtenu()['sets']),
-          ),
+          kmEcarts(traces(tourAttendu()['sets']), traces(tourObtenu()['sets'])),
           'tour.sets[].trace',
         );
       });
@@ -423,10 +422,7 @@ void main() {
       });
 
       test('journaux des extensions du banc', () {
-        _pareil(
-          kmEcarts(attendu['journaux'], obtenu['journaux']),
-          'journaux',
-        );
+        _pareil(kmEcarts(attendu['journaux'], obtenu['journaux']), 'journaux');
       });
 
       test('états des extensions', () {
@@ -436,7 +432,13 @@ void main() {
   }
 
   test('comparateur : chemins, tolérance et types', () {
-    expect(kmEcarts(<String, Object?>{'a': 1.0}, <String, Object?>{'a': 1.0 + 1e-12}), isEmpty);
+    expect(
+      kmEcarts(
+        <String, Object?>{'a': 1.0},
+        <String, Object?>{'a': 1.0 + 1e-12},
+      ),
+      isEmpty,
+    );
     expect(
       kmEcarts(<String, Object?>{'a': 1.0}, <String, Object?>{'a': 1.001}),
       hasLength(1),
@@ -448,8 +450,13 @@ void main() {
     expect(kmEcarts(<Object?>[1], <Object?>[1.0]), isEmpty);
     expect(
       kmEcarts(
-        <String, Object?>{'x': <Object?>[1, 2]},
-        <String, Object?>{'x': <Object?>[1], 'y': null},
+        <String, Object?>{
+          'x': <Object?>[1, 2],
+        },
+        <String, Object?>{
+          'x': <Object?>[1],
+          'y': null,
+        },
       ),
       hasLength(2),
     );

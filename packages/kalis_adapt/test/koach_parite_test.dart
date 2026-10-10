@@ -98,10 +98,6 @@ void comparer(
   if (o is Map<String, Object?> && a is Map<String, Object?>) {
     final cles = {...o.keys, ...a.keys}.toList()..sort();
     for (final k in cles) {
-      if (k == 'trace') {
-        // Texte de diagnostic hors contrat (§ 3.3) : non comparé.
-        continue;
-      }
       if (!o.containsKey(k)) {
         ecarts.add('$chemin.$k : absent (attendu ${_court(a[k])})');
       } else if (!a.containsKey(k)) {
