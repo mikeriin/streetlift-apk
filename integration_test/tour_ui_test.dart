@@ -353,6 +353,17 @@ void main() {
         if (skip.hitTestable().evaluate().isNotEmpty) {
           await tester.tap(skip.hitTestable().first);
           await wait(tester, 1500);
+          return;
+        }
+        // Bilan déjà passé (séance rouverte) : la page du bilan montre son
+        // résumé ; « Premier exercice » mène à la page du premier exercice
+        // (appui non compté : les parcours partent de cette page).
+        final start = find.byKey(const ValueKey('bilan-start'));
+        if (start.evaluate().isEmpty) return;
+        await scrollTo(tester, start);
+        if (start.hitTestable().evaluate().isNotEmpty) {
+          await tester.tap(start.hitTestable().first);
+          await wait(tester, 1500);
         }
       }
 
