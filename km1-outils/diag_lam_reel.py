@@ -18,5 +18,5 @@ for s in conv['seances']:
         se = e['serie']
         if abs(d) > 0.01: moves.append((round(d,3), s['cle'], se['exerciseId'], se.get('reps'), se.get('externalLoadKg'), se.get('flames'), se.get('failed'), se.get('role')))
     for e in s.get('apres', []): k.observe(e)
-    print(s['cle'], round(m.m[LAM],3))
+    print(s["cle"], round(m.m[LAM],3), round(m.m[19],3))
 for x in sorted(moves, key=lambda x:-abs(x[0]))[:40]: print(x)

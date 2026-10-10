@@ -20,7 +20,7 @@ import math
 
 import numpy as np
 
-from .numerique import interval_moments, point_moments, category_moments, clamp
+from .numerique import interval_moments, point_moments, category_moments, clamp, norm_ppf
 
 INF = math.inf
 NQ = 10
@@ -628,10 +628,13 @@ class Modele(object):
                             lo_a = mid
                     alpha = lo_a
                 m += alpha * pas
+                # Pas raccourci : la covariance suit le gain réduit (forme
+                # de Joseph avec le gain alpha·K : facteur 2·alpha − alpha²).
+                v2a = v - (2.0 * alpha - alpha * alpha) * (v - v2)
                 if fige:
-                    self._covariance_partielle(P, ph, pg, v, v2)
+                    self._covariance_partielle(P, ph, pg, v, v2a)
                 else:
-                    P -= np.outer(ph, ph) * ((v - v2) / (v * v))
+                    P -= np.outer(ph, ph) * ((v - v2a) / (v * v))
             elif fige:
                 m += pg * ((mu2 - mu) / v)
                 self._covariance_partielle(P, ph, pg, v, v2)
@@ -821,7 +824,7 @@ class Modele(object):
         flammes = s.get('flames')
         cible = s.get('target') or {}
         echec = bool(s.get('failed'))
-        repos = s.get('restSeconds') or 90
+        repos = 90 if s.get('restSeconds') is None else s['restSeconds']
         charge = self.masse(t, externe)
         sans_charge = t.type == 'reps'
         if charge <= 0 and not sans_charge:
@@ -1019,7 +1022,7 @@ class Modele(object):
         sec = s.get('seconds') or 0
         flammes = s.get('flames')
         echec = bool(s.get('failed'))
-        repos = s.get('restSeconds') or 90
+        repos = 90 if s.get('restSeconds') is None else s['restSeconds']
         if sec <= 0 and not echec:
             return None
         idx, co = self._h_capacite(t)
@@ -1138,7 +1141,11 @@ class Modele(object):
         if t is None or t.type != 'charge' or raison not in ('too_heavy', 'too_light'):
             return
         lam, k = self.courbe(t)
-        lnL = math.log(self.masse(t, charge_kg))
+        masse = self.masse(t, charge_kg)
+        if masse <= 0 or reps is None:
+            return
+        rir = 0.0 if rir is None else rir
+        lnL = math.log(masse)
         idx, co = self._h_capacite(t, jour=False)
         const = t.base - lnL - self._g(lam, k, reps + rir)
         s2 = self.p['mesure']['bruit_raison_refus'] ** 2
@@ -1154,7 +1161,11 @@ class Modele(object):
         if t is None or t.type != 'charge':
             return
         lam, k = self.courbe(t)
-        lnL = math.log(self.masse(t, charge_kg))
+        masse = self.masse(t, charge_kg)
+        if masse <= 0 or reps is None:
+            return
+        rir = 0.0 if rir is None else rir
+        lnL = math.log(masse)
         idx, co = self._h_capacite(t, jour=False)
         const = t.base - lnL - self._g(lam, k, reps + rir)
         self._observer_hors(idx, co, const, None, None, self.p['mesure']['bruit_charge_manuelle'] ** 2, point=0.0)
@@ -1295,7 +1306,7 @@ class Modele(object):
         c = self.capacite(ex_id)
         if c is None:
             return None
-        z = 1.6448536269514722 if niveau == 0.90 else 1.959963984540054
+        z = 1.6448536269514722 if niveau == 0.90 else norm_ppf(0.5 + 0.5 * niveau)
         return math.exp(c[0] - z * c[1]), math.exp(c[0]), math.exp(c[0] + z * c[1])
 
     def valeur(self, ex_id):

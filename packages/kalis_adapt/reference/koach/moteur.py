@@ -69,12 +69,16 @@ class Koach(object):
         elif typ == 'cran':
             m.changer_cran(e['exerciseId'], e['facteur'])
         elif typ == 'poids':
-            m.poids_kg = float(e['poids_kg'])
+            if e.get('poids_kg') is not None and float(e['poids_kg']) > 0:
+                m.poids_kg = float(e['poids_kg'])
         elif typ == 'decision':
             for x in self.extensions:
                 x.decision(self, e)
         elif typ == 'charge_manuelle':
-            m.observer_charge_manuelle(e['exerciseId'], e['loadKg'], e['reps'], e['rir'])
+            m.observer_charge_manuelle(e['exerciseId'], e['loadKg'], e.get('reps'), e.get('rir'))
+        elif typ == 'parametres':
+            from .rupture import appliquer_parametres
+            appliquer_parametres(self, e['fichier'])
         elif typ == 'plan':
             # Appel de plan() rejoué : il a des effets sur la mémoire des
             # séances (rampes, paliers, raisons) ; le rejouer rend l'état

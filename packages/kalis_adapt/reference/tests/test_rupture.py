@@ -413,3 +413,30 @@ def test_calibrer_alerte():
     assert t[1]['fausses_alertes_100'] < 2.0
     assert t[1]['delai_median'] is not None and t[1]['delai_median'] <= 10
     print(t)
+
+
+def test_import_ne_touche_pas_les_garde_fous():
+    """Relecture M3 : plafonds du cahier, amplitudes des essais, conditions
+    des tests et seuil de douleur ne changent pas par un import ; les
+    probabilités restent dans ]0, 1[."""
+    base = params()
+    for sec, cle, v in (('planification', 'plafond_volume', 0.3), ('planification', 'plafond_intensite', 0.1),
+                        ('controle_dual', 'amplitude_volume', 0.15), ('rupture', 'douleur_secours', 10),
+                        ('test_adaptatif', 'jours_min_entre_tests', 1), ('jour', 'mauvais_jour_proba', 0.0),
+                        ('mesure', 'note_aberrante', 0.0)):
+        k, s = koach_minimal()
+        r = importer_parametres(k, {'schema': base['schema'], 'version': base['version'], sec: {cle: v}})
+        assert not r['ok'], (sec, cle)
+        assert k.params[sec][cle] == base[sec][cle]
+
+
+def test_import_rejoue_depuis_le_journal():
+    from koach.moteur import rejouer
+    base = params()
+    k, s = koach_minimal()
+    r = importer_parametres(k, {'schema': base['schema'], 'version': base['version'],
+                                'mesure': {'bruit_test': base['mesure']['bruit_test'] * 1.5}})
+    assert r['ok'], r
+    assert k.journal[-1]['type'] == 'parametres'
+    k2 = rejouer(params(), k.fiches, k.profil, json.loads(json.dumps(k.journal)))
+    assert k2.params['mesure']['bruit_test'] == k.params['mesure']['bruit_test']

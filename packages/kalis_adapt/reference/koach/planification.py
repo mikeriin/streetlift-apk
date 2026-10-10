@@ -34,7 +34,7 @@ import numpy as np
 
 from .modele import NQ, RHO, EPS, KG, CLASSES, C_LIN, C_LOG
 from .moteur import Extension
-from .numerique import Mulberry32, fnv1a32, clamp, cholesky_semi
+from .numerique import Mulberry32, fnv1a32, clamp, cholesky_semi, arrondi
 
 SEMAINES_VERROUILLEES = ('intro', 'deload', 'taper', 'test', 'competition', 'transition')
 GRILLE_INTENSITE = (-0.05, -0.025, 0.0, 0.025, 0.05)
@@ -91,6 +91,12 @@ class Planification(Extension):
         self.p = dict(params['planification'])
         self.p.update(options or {})
         self.fiches = fiches
+        # Le validateur de sécurité est obligatoire : sans lui aucun plan
+        # modulé n'est contrôlé. `options['sans_validateur']` (essais de
+        # parité numérique seulement) le remplace par un refus de TOUTE
+        # modulation qui s'écarte de la référence au-delà des plafonds.
+        if validateur is None and not (options or {}).get('sans_validateur'):
+            raise ValueError('Planification : validateur de sécurité obligatoire')
         self.validateur = validateur
         self.semaines = []
         self.blocs = None
@@ -407,7 +413,7 @@ class Planification(Extension):
         for w in range(depuis, fin + 1):
             t = self._table(w)
             if t is None:
-                F = F * math.exp(-1.0)
+                F = F * math.exp(-7.0 / self._tau_lent())
                 continue
             j = blocs.index(t['bloc'])
             a = A[:, j, :]
@@ -552,7 +558,7 @@ class Planification(Extension):
         meilleur_x = np.zeros(d)
         meilleure_v = None
         evalues = 0
-        elite_n = max(2, int(round(pop * pl['elite'])))
+        elite_n = max(2, int(arrondi(pop * pl['elite'])))
         lis = pl['lissage']
         candidats_finaux = []
         for it in range(iters):
@@ -614,8 +620,8 @@ class Planification(Extension):
                       'objectif': float(det['J'][0]), 'transport': float(dist[0]),
                       'p_cibles': {ex: float(pc[0, e]) for e, ex in enumerate(self.suivis) if ex in self.cibles},
                       'p_cibles_reference': {ex: float(p_ref[0, e]) for e, ex in enumerate(self.suivis) if ex in self.cibles},
-                      'volume': {str(b): [round(float(x), 4) for x in vol[b]] for b in blocs},
-                      'intensite': {str(b): round(float(inten[b]), 4) for b in blocs},
+                      'volume': {str(b): [arrondi(float(x), 4) for x in vol[b]] for b in blocs},
+                      'intensite': {str(b): arrondi(float(inten[b]), 4) for b in blocs},
                       'qualites': list(qualites)})
         self.historique.append(ligne)
         return ligne
@@ -747,12 +753,12 @@ class Planification(Extension):
                                 fiche = self.fiches.get(item['exerciseId']) or {}
                                 bw = fiche.get('fraction', 0.0) * self.poids_corps
                                 if item.get('percentOfOneRm') is not None:
-                                    item['percentOfOneRm'] = round(item['percentOfOneRm'] * (1 + ecart), 4)
+                                    item['percentOfOneRm'] = arrondi(item['percentOfOneRm'] * (1 + ecart), 4)
                                 inten = item.get('intensity')
                                 if inten and inten.get('basis') == 'percent_one_rm' and inten.get('value') is not None:
-                                    inten['value'] = round(inten['value'] * (1 + ecart), 4)
+                                    inten['value'] = arrondi(inten['value'] * (1 + ecart), 4)
                                 if item.get('startLoadKg') is not None:
-                                    item['startLoadKg'] = round((item['startLoadKg'] + bw) * (1 + ecart) - bw, 3)
+                                    item['startLoadKg'] = arrondi((item['startLoadKg'] + bw) * (1 + ecart) - bw, 3)
             return blocs
         finally:
             self.plan = garde

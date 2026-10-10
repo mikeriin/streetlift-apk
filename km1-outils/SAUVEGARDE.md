@@ -103,3 +103,13 @@ Ajouts : queue lourde des notes (8 %, +2 rép.), noteur entier détecté (≥ 20
 - Rejeu exact : `plan()` verse un événement `plan` (contraintes canoniques JSON) ; `observe` le rejoue ; test `tests/test_rejeu_exact.py` (état bit à bit). `_observer_hors` met à jour les deux branches.
 - Outils : `km1-outils/rejeu.sh`, `diag_lam_reel.py`, `diag_mj.py`.
 - Reste : règles 0.3.1 non reprises (A4 poignet, A7 zones fragiles, A10 endurance), campagne complète + calage couverture, adversaire final, CI Dart, fixtures, contrat/sources, relecture Opus, livraison.
+
+## 10/10 ~00:10 UTC — relecture Opus du code traitée (notes/RELECTURE_OPUS_CODE.md : 4 bloquants, 8 majeurs)
+- Sous-agent sécurité (2 passes) : règles 0.3.1 reprises (poignet A4, zones fragiles A7.2, endurance A10, surmenage A6.2, techniques A9.2, renvoi pro, coupure…), tableau `notes/SECURITE_KOACH_COUVERTURE.md` ; accessoires et schéma changé bornés comme 0.3.1 ; pas de vrai test après coupure (B2) ; plafond des tenues exp(mu) ; bras N-of-1 sous les garde-fous (M2). Borne « dernier passage » en semaine verrouillée essayée puis RETIRÉE (coût mesuré ; 0.3.1 borne par la charge écrite).
+- B1 : `mesure.porte_note_ouverte` 99 → 1,0 (note ouverte versée seulement si la prévision est à moins d'un écart-type de la borne) ; banc inchangé ou mieux, plateau synthétique (km1-outils/plateau.py) +5..14 % → +4..7 % (reste : progression a priori + séries loin de l'échec).
+- B3 : BP appris (0,25 ± 0,15) ; BA reste 0 (non identifiable séparément) → décision à écrire. Rejeu réel : 4,2 % moyenne, 2,1 % médiane, couverture 97 % (n = 38).
+- M4 : quadrature `category_moments` à pas choisi sur la vraisemblance (fenêtre [a−8T, b+8T], ≤ 1 200 points) ; exacte contre quadrature dense. `math.erfc` gardé dans `_category_mass` (vitesse Python ; = erfc portable à 2e-13).
+- M1 : `Planification` refuse `validateur=None` (sauf `options['sans_validateur']`). M3 : import de paramètres journalisé (événement `parametres`), garde-fous figés (`rupture.FIGEES`), bornes des probabilités. m1 (Joseph avec pas raccourci), m3 (`numerique.arrondi`), m4 (repos 0 s), m5 (gardes), m9, m11, m13 faits.
+- NON traités (à écrire dans la livraison) : M5 (demi-largeur rarement < 6 % : cohérent avec l'erreur mesurée ; contrôle dual rarement déclenché), M6 (crochets d'extension appliqués par l'appelant), M7 (référence de planification hors journal), M8 (résidu du secours), m6, m10, m12, m14, m15.
+- `banc/campagne.py` + `tests/test_campagne.py` existent (harnais de campagne complet, cache /tmp/km1-campagne) : à lancer pour la mesure finale.
+- Fixtures périmées (tests/test_fixtures.py désélectionné) : `fixtures/generer.py` à adapter (validateur obligatoire, événements `plan`) puis régénérer.

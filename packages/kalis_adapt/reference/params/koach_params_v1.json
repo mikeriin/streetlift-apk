@@ -92,7 +92,7 @@
     ],
     "biais_rir_proportionnel": [
       0.25,
-      0.0
+      0.15
     ],
     "k_nerveux_local": [
       0.0047,
@@ -155,7 +155,7 @@
     "bruit_rir_reference": 5.0,
     "dispersion_fatigue_intra": 0.3,
     "note_aberrante": 0.05,
-    "porte_note_ouverte": 99,
+    "porte_note_ouverte": 1.0,
     "note_erreur_grossiere": [
       0.08,
       2.0
