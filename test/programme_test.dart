@@ -142,9 +142,8 @@ void main() {
         );
         expect(rect.top, greaterThanOrEqualTo(previousBottom));
         expect(rect.bottom, lessThan(dockTop));
-        // UI1 : ligne de jour de la maquette « Accueil » (52 dp ; 56 pour un
-        // titre sur deux lignes, jamais coupé, C3) ; la semaine entière
-        // reste visible (L5).
+        // UI1 : ligne de jour de 48 dp (56 pour un titre sur deux lignes,
+        // jamais coupé, C3) ; la semaine entière reste visible (L5).
         if (day != 4) expect(rect.height, lessThanOrEqualTo(56));
         final expected = day <= 2
             ? Icons.check_circle_rounded
