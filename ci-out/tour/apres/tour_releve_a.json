@@ -1,0 +1,80 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "palette": "bordeaux",
+  "palette_enregistree": "bordeaux",
+  "session": "personnelle",
+  "ecrans": {
+    "accueil": true,
+    "accueil_bas": true,
+    "mon_programme": true,
+    "ma_saison": true,
+    "evolution": true,
+    "seance": true,
+    "stats": true,
+    "stats_bas": true,
+    "stats_parcours": true,
+    "stats_parcours_bas": true,
+    "stats_performances": true,
+    "stats_performances_bas": true,
+    "stats_historique": true,
+    "stats_historique_bas": true,
+    "stats_feuille_personnage": true,
+    "records": true,
+    "arsenal": true,
+    "reglages": true,
+    "reglages_apparence": true,
+    "reglages_contraste": true,
+    "reglages_bas": true,
+    "references": true
+  },
+  "parcours": {
+    "mon_programme": {
+      "appuis": 1,
+      "chemin": 0
+    },
+    "ma_saison": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "evolution": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "jour_j": null,
+    "mes_references": {
+      "appuis": 3,
+      "chemin": 2
+    },
+    "reglage_repos": {
+      "appuis": 2,
+      "chemin": 1
+    },
+    "records": {
+      "appuis": 3,
+      "chemin": 0
+    },
+    "mes_references_stats": {
+      "appuis": 3,
+      "chemin": 0
+    },
+    "objectif_semaine": {
+      "appuis": 2,
+      "chemin": 0
+    }
+  },
+  "sous_le_dock": {
+    "accueil": [],
+    "stats": [],
+    "stats_parcours": [],
+    "stats_performances": [],
+    "stats_historique": [],
+    "arsenal": [],
+    "reglages": []
+  },
+  "accueil": true,
+  "session_de_test_active": false,
+  "palette_lue": "bordeaux",
+  "seance": "S13-J3",
+  "captures": 22
+}

@@ -1,0 +1,11 @@
+
+::group::✅ Passing tests
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : sections × sombre, clair × bordeaux, neon
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : jetons et palette dans les 8 palettes, contraste renforcé
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_capture_test.dart: Stats : onglets et Records × sombre, clair × bordeaux, neon
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : 320 dp et 200 % de texte
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_capture_test.dart: Stats : feuilles de jeu × sombre, clair × bordeaux, neon
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_capture_test.dart: Stats : 320 dp et 200 % de texte, sans débordement
+::endgroup::
+
+🎉 6 tests passed.
