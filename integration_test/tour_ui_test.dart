@@ -424,26 +424,16 @@ void main() {
         () => find.textContaining('Jour J'),
       ],
     ], () => find.byType(EventDayScreen));
-    await route(
-      tester,
-      'mes_references',
-      [
-        [settingsTab, () => text('Mes références')],
-        [settingsTab, () => textCi('Profil'), () => text('Mes références')],
-        [settingsTab, () => text('Programme'), () => text('Références')],
-      ],
-      () => find.byType(PilotageScreen),
-    );
+    await route(tester, 'mes_references', [
+      [settingsTab, () => text('Mes références')],
+      [settingsTab, () => textCi('Profil'), () => text('Mes références')],
+      [settingsTab, () => text('Programme'), () => text('Références')],
+    ], () => find.byType(PilotageScreen));
     // Un réglage précis : la ligne « Repos par défaut » visible à l'écran.
-    await route(
-      tester,
-      'reglage_repos',
-      [
-        [settingsTab, () => text('Séance')],
-        [settingsTab, () => text('Chronomètres')],
-      ],
-      () => find.text('Repos par défaut'),
-    );
+    await route(tester, 'reglage_repos', [
+      [settingsTab, () => text('Séance')],
+      [settingsTab, () => text('Chronomètres')],
+    ], () => find.text('Repos par défaut'));
     releve['captures'] = shots;
     record();
   });

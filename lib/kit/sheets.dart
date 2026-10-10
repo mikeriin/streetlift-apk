@@ -486,9 +486,10 @@ class KConfirm extends StatelessWidget {
     );
     final cancel = FilledButton(
       key: const ValueKey('confirm-cancel'),
-      style: style(k.haute, k.texte).copyWith(
-        side: WidgetStatePropertyAll(k.controlSide),
-      ),
+      style: style(
+        k.haute,
+        k.texte,
+      ).copyWith(side: WidgetStatePropertyAll(k.controlSide)),
       onPressed: onCancel,
       child: Text(cancelLabel, textAlign: TextAlign.center),
     );
