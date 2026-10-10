@@ -520,9 +520,7 @@ class KConfirm extends StatelessWidget {
                 // Grand texte : boutons l'un sous l'autre, le verbe en haut.
                 final stacked =
                     c.maxWidth <
-                    2 *
-                        KSize.valueWidth *
-                        MediaQuery.textScalerOf(context).scale(1);
+                    4 * KSize.target * MediaQuery.textScalerOf(context).scale(1);
                 if (stacked) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

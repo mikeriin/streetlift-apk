@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
+import 'package:streetlift_tracker/kit/kit.dart' show KRoles;
 import 'package:streetlift_tracker/store.dart';
 
 double contrast(Color a, Color b) {

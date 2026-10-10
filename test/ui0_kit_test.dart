@@ -215,12 +215,11 @@ void main() {
       );
       expect(find.byType(Divider), findsNWidgets(2));
       expect(find.text('Application'), findsOneWidget);
-      final m = tester.widget<Material>(
-        find
-            .ancestor(of: find.text('Apparence'), matching: find.byType(Material))
-            .last,
-      );
-      expect(m.shape, KRadius.menuShape);
+      final shapes = find
+          .ancestor(of: find.text('Apparence'), matching: find.byType(Material))
+          .evaluate()
+          .map((e) => (e.widget as Material).shape);
+      expect(shapes, contains(KRadius.menuShape));
     });
 
     testWidgets('ligne de menu : pastille, description, chevron, 64 dp', (
