@@ -304,6 +304,9 @@ void main() {
             )
             .first,
       );
+      // Défilement fini avant l'appui (sinon l'appui ne fait qu'arrêter
+      // l'élan de la liste).
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Choisir une semaine'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Semaine 9'));
