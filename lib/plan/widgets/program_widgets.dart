@@ -197,7 +197,7 @@ class ProgramDayRow extends StatelessWidget {
         onTap: onTap,
         onLongPress: onLongPress,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: KSize.search),
+          constraints: const BoxConstraints(minHeight: KSize.target),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(
               KSpacing.s14,

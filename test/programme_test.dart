@@ -11,9 +11,16 @@ import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
+import 'support/ui_capture.dart' show loadUiFonts;
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
+    // UI1 : polices réelles (Barlow) : les mesures de mise en page (semaine
+    // entière visible, L5) se font sur le rendu du téléphone, pas sur la
+    // police de test où chaque lettre est un carré (les titres, jamais
+    // coupés depuis C3, y passeraient tous sur deux lignes).
+    await loadUiFonts();
     SharedPreferences.setMockInitialValues({});
     await store.init();
     // L4 : ces parcours portent sur une installation existante, sur le
@@ -142,9 +149,8 @@ void main() {
         );
         expect(rect.top, greaterThanOrEqualTo(previousBottom));
         expect(rect.bottom, lessThan(dockTop));
-        // UI1 : ligne de jour de la maquette « Accueil » (52 dp ; 56 pour un
-        // titre sur deux lignes, jamais coupé, C3) ; la semaine entière
-        // reste visible (L5).
+        // UI1 : ligne de jour de 48 dp (56 pour un titre sur deux lignes,
+        // jamais coupé, C3) ; la semaine entière reste visible (L5).
         if (day != 4) expect(rect.height, lessThanOrEqualTo(56));
         final expected = day <= 2
             ? Icons.check_circle_rounded
@@ -287,21 +293,30 @@ void main() {
       await open(tester);
       await tester.tap(find.byKey(const ValueKey('selected-week')));
       await tester.pumpAndSettle();
+      // UI1 : feuille de contenu de la semaine (clé `week-sheet`).
       await tester.scrollUntilVisible(
         find.text('Choisir une semaine'),
         200,
-        scrollable: find.byType(Scrollable).last,
+        scrollable: find
+            .descendant(
+              of: find.byKey(const ValueKey('week-sheet')),
+              matching: find.byType(Scrollable),
+            )
+            .first,
       );
+      // Défilement fini avant l'appui (sinon l'appui ne fait qu'arrêter
+      // l'élan de la liste).
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Choisir une semaine'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Semaine 7'));
+      await tester.tap(find.text('Semaine 9'));
       await tester.pumpAndSettle();
-      expect(find.text('S7'), findsOneWidget);
+      expect(find.text('S9'), findsOneWidget);
       expect(find.byType(MuscleMap2D), findsNothing);
       await revealCard(tester, 2);
       await tester.longPress(find.byKey(const ValueKey('programme-day-2')));
       await tester.pumpAndSettle();
-      expect(find.text('Résumé · S7 · J2'), findsOneWidget);
+      expect(find.text('Résumé · S9 · J2'), findsOneWidget);
       expect(tester.takeException(), null);
     },
   );

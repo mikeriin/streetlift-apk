@@ -379,7 +379,6 @@ class _HomeScreenState extends State<HomeScreen> {
           dates: _dates(store.program.weekDates(w.n)),
           onChoose: _pickWeek,
         ),
-        const SizedBox(height: KSpacing.s4),
         _WeekSlider(
           week: week,
           count: store.program.weeks.length,
@@ -388,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onDetails: () => _weekDetails(w),
           onChoose: _pickWeek,
         ),
-        const SizedBox(height: KSpacing.s8),
+        const SizedBox(height: KSpacing.s4),
         // Départ à choisir, à venir ou terminé ; séances à reprendre.
         if (ProgramStartBanner.visible(store.program, now)) ...[
           ProgramStartBanner(now: now, padding: EdgeInsets.zero),
@@ -566,8 +565,12 @@ class _HomeHeader extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(dates, style: KType.detail.copyWith(color: k.texte2)),
-                  Text(block, style: KType.detail.copyWith(color: k.texte2)),
+                  // Dates et bloc dans un même paragraphe : la semaine
+                  // entière reste visible à l'écran (L5).
+                  Text(
+                    '$dates · $block',
+                    style: KType.detail.copyWith(color: k.texte2),
+                  ),
                 ],
               ),
             ),
@@ -845,14 +848,14 @@ class _TodayCard extends StatelessWidget {
         ),
       ],
       if (estimate != null) ...[
-        const SizedBox(height: KSpacing.s8),
+        const SizedBox(height: KSpacing.s4),
         // Un chiffre ne se coupe jamais : sa taille baisse s'il le faut.
         KFitTitle(
           estimate.durationLabel,
           style: KType.chiffre.copyWith(color: ink),
         ),
         Text('Estimé, repos inclus', style: KType.detail.copyWith(color: ink)),
-        const SizedBox(height: KSpacing.s8),
+        const SizedBox(height: KSpacing.s4),
         // Volume au format de C9 (« 6 exercices, 19 séries, 136 rép. »).
         Text(
           '${day.exercises.length} exercices, '
@@ -957,7 +960,10 @@ class _TodayCard extends StatelessWidget {
       onLongPressHint: 'Afficher le résumé',
       child: ExcludeSemantics(
         child: KCard.day(
-          padding: const EdgeInsets.all(KSpacing.s16),
+          padding: const EdgeInsets.symmetric(
+            horizontal: KSpacing.s16,
+            vertical: KSpacing.s14,
+          ),
           onTap: onOpen,
           onLongPress: onSummary,
           child: body,
