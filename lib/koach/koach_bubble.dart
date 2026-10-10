@@ -272,7 +272,11 @@ class KoachSays extends StatelessWidget {
     if (MediaQuery.textScalerOf(context).scale(1) >= 1.5) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [koach, const SizedBox(height: KSpacing.s8), child],
+        children: [
+          koach,
+          const SizedBox(height: KSpacing.s8),
+          child,
+        ],
       );
     }
     return Row(

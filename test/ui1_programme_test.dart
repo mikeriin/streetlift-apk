@@ -262,9 +262,14 @@ void main() {
     await tester.pumpWidget(
       page(const Scaffold(body: Text('Accueil')), navigator: navigator),
     );
-    // Une journée qu'aucun autre test n'a validée (la récompense d'une
-    // journée n'est donnée qu'une fois).
-    final week = store.program.weeks[3];
+    // Données neuves : la journée rapporte de nouveau ses XP.
+    SharedPreferences.setMockInitialValues({});
+    await store.eraseAllData();
+    store.program.start = DateTime(2026, 7, 13);
+    store.startOrigin = 'migration';
+    final week = store.program.weeks.firstWhere(
+      (w) => w.days.any((d) => d.exercises.isNotEmpty),
+    );
     final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
     final nav = navigator.currentState!;
     unawaited(openProgramDay(nav, week, day));
