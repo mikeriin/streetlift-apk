@@ -18,10 +18,12 @@ adb shell wm size 540x960 || true
 adb shell wm density 240 || true
 adb shell svc power stayon true || true
 adb shell wm dismiss-keyguard || true
-echo "cote=${UI_TOUR_COTE:-apres}" > "$out/tour.txt"
-echo "ecran=$(adb shell wm size 2>/dev/null | tr -d '\r' | tail -n 1)" >> "$out/tour.txt"
+parts="${UI_TOUR_PARTS:-a b c d}"
+bilan="$out/tour_$(echo "$parts" | tr -d ' ').txt"
+echo "cote=${UI_TOUR_COTE:-apres}" > "$bilan"
+echo "ecran=$(adb shell wm size 2>/dev/null | tr -d '\r' | tail -n 1)" >> "$bilan"
 code=0
-for part in a b c d; do
+for part in $parts; do
   adb shell am force-stop fr.tchoupi.streetlift_tracker || true
   timeout 900 flutter drive --no-pub \
     --driver=test_driver/integration_test.dart \
@@ -44,9 +46,9 @@ for part in a b c d; do
       -d emulator-5554 > "$out/drive-tour-$part.log" 2>&1
     c=$?
   fi
-  echo "tour_$part=$c" >> "$out/tour.txt"
+  echo "tour_$part=$c" >> "$bilan"
   [ "$c" -ne 0 ] && code=$c
   tail -n 20 "$out/drive-tour-$part.log"
 done
-cat "$out/tour.txt"
+cat "$bilan"
 exit "$code"

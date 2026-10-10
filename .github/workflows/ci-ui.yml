@@ -358,7 +358,9 @@ jobs:
     # Tour de captures et relevé des parcours (cahier UI §6.2, §6.3) : sur
     # le lot (« apres ») et sur la base b7996b3f (« avant »), même test
     # (integration_test/tour_ui_test.dart du lot, posé sur la base).
-    name: Tour UI sur émulateur (${{ matrix.cote }})
+    # Une tâche par côté et par partie (a à d), en parallèle : le tour complet
+    # des quatre lots dépassait 70 min en une seule tâche (fusion UI3+UI4).
+    name: Tour UI sur émulateur (${{ matrix.cote }}, ${{ matrix.part }})
     if: ${{ !endsWith(github.ref_name, '-rapide') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 70
@@ -366,6 +368,7 @@ jobs:
       fail-fast: false
       matrix:
         cote: [apres, avant]
+        part: [a, b, c, d]
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     defaults:
@@ -436,11 +439,11 @@ jobs:
           disable-animations: true
           emulator-build: 13823996
           emulator-options: -no-window -gpu swangle_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
-          script: UI_TOUR_COTE=${{ matrix.cote }} bash tools/ci_ui_drive.sh
+          script: UI_TOUR_COTE=${{ matrix.cote }} UI_TOUR_PARTS=${{ matrix.part }} bash tools/ci_ui_drive.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: tour-${{ matrix.cote }}
+          name: tour-${{ matrix.cote }}-${{ matrix.part }}
           path: build/ci3d/
           if-no-files-found: warn
 
@@ -538,8 +541,12 @@ jobs:
           mkdir -p ci-out/packages && cp -r artifacts/packages/. ci-out/packages/ 2>/dev/null || true
           mkdir -p ci-out/emulateur && cp -r artifacts/emulateur/. ci-out/emulateur/ 2>/dev/null || true
           mkdir -p ci-out/tour/apres ci-out/tour/avant
-          cp -r artifacts/tour-apres/. ci-out/tour/apres/ 2>/dev/null || true
-          cp -r artifacts/tour-avant/. ci-out/tour/avant/ 2>/dev/null || true
+          for cote in apres avant; do
+            for d in artifacts/tour-$cote artifacts/tour-$cote-*; do
+              [ -d "$d" ] && cp -r "$d"/. "ci-out/tour/$cote/"
+            done
+          done
+          true
           mkdir -p ci-out/captures-ui && cp -r artifacts/captures-ui/. ci-out/captures-ui/ 2>/dev/null || true
           cp artifacts/captures-avant/captures-avant.log ci-out/ 2>/dev/null || true
           pip install --quiet pillow
