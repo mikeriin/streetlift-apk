@@ -1,5 +1,46 @@
 # Journal
 
+## 0.3.1 — 09/10/2026 (lot KM1)
+
+Ajouts additifs pour la référence Python de `kalis_adapt` 1.0 (méthode Koach). Couple `kalis_plan` 0.3.1 ×
+`kalis_adapt` 0.3.1 inchangé ; **aucun changement des critères, des profils types, des attentes de coach ni des
+grilles du panel** ; le rapport du banc (`bin/kalis_bench_cli.dart`, `bin/run.dart`) n'importe aucun de ces ajouts :
+seule sa ligne de version change.
+
+- **Exports KM1** (`lib/src/km/km_export.dart`, `dart run bin/km1.dart --sortie <dossier>`) : fiches du catalogue
+  vues par le modèle de vérité (complétées de ce que lisent les critères de sécurité), tirages de départ des
+  athlètes simulés, saisons de référence de `kalis_plan` (blocs, calendrier, échéances), traces des modèles de
+  vérité de force et d'endurance, mesures du témoin `kalis_adapt` 0.3.1 par saison.
+- **Outils** (`bin/km_common.dart`, dossier d'entrée `km1_entree/`) : constats de sécurité de blocs écrits
+  ailleurs (`securite/*.json.gz` → `securite_dart.json.gz`, `kmSafetyOfBlocks`, même lecture que
+  `safetyFindings`) et saisons du témoin sur des athlètes adversariaux (`adversaires.json` →
+  `adversaires_temoin.json.gz`, `kmAdversaryRun` : fiche d'athlète recouverte, multiplicateurs de vérité à la
+  création de chaque exercice).
+- Test `test/km_export_test.dart` : saison de référence déterministe et complète, sécurité de blocs identique à
+  `safetyFindings` sur la même vue, athlète adversarial déterministe dont la fiche recouverte agit.
+
+## 0.3.0 — 09/10/2026 (lot CY)
+
+Couple `kalis_plan` 0.3.1 × `kalis_adapt` 0.3.1. Grilles, profils types et critères inchangés.
+
+- **Saisons croisées pour tous les profils du banc** (street et autres disciplines) : exports `saisons/`,
+  campagne `saisons.json` / `SAISONS.md`, `saisons/SECURITE.md`.
+- **Deux scénarios imposés de plus** : `changement_discipline` (la première discipline secondaire devient la
+  principale à mi-saison, profils qui en ont une) et `course_ajoutee` (10 km annoncé en semaine 5, couru en
+  semaine 10, profil street hybride) ; un scénario sans objet pour un profil n'est pas simulé.
+
+## 0.2.4 — 09/10/2026 (lot CP2, partie 1)
+
+Couple `kalis_plan` 0.3.0 × `kalis_adapt` 0.3.0. Profils types, attentes de coach et grilles du panel
+**inchangés**.
+
+- Adaptateur : un point faible d'un groupe musculaire (sans mouvement prioritaire) devient la spécialisation
+  « muscle » du profil, nommée dans le vocabulaire `muscles` du catalogue (le premier seulement : le contrat
+  n'en porte qu'une).
+- Critère `seance_trop_longue` : le jour de l'épreuve (test de l'échéance, note `event_day`) n'est plus compté —
+  sa durée est celle de l'épreuve choisie par l'athlète (un 10 km de débutante dans un créneau d'une heure), même
+  règle que la relecture de `kalis_plan` qui exempte les emplacements imposés.
+
 ## 0.2.3 — 08/10/2026 (lot CA2, partie 1)
 
 Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.3.0. Profils types, attentes de coach, critères de sécurité et grilles

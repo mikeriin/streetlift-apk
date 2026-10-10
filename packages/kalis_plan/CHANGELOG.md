@@ -1,5 +1,90 @@
 # Journal des versions de kalis_plan
 
+## 0.3.1
+
+Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contrat inchangé (notes de coach
+additives). Constats de la relecture documentée de CP2 (manches 7 et 8) : `docs/CALIBRAGE_CY.md` de
+`kalis_bench`.
+
+- **Avis médical avant la première semaine** : note de bloc `clearance_first` quand le questionnaire de santé
+  est « prudent » ou qu'une gêne déclarée atteint 5/10 (ACSM 2015, dépistage avant l'activité) ;
+  l'application la montre avant la première séance (`docs/INTEGRATION_CI.md`).
+- **Épaule opérée ou à antécédent** : note `shoulder_history` sur le développé au-dessus de la tête.
+- **Pas de test maximal sur une articulation douloureuse** : gêne relevée au bloc précédent à 3/10 ou plus,
+  gêne déclarée à 4/10 ou plus, zone à l'arrêt (tests de fin de bloc et objectif daté ; une vraie épreuve
+  reste écrite).
+- **Jour de test de tirage** : le travail ordinaire de tirage vertical et de muscle-up qui restait après les
+  tests saute.
+- **Premier muscle-up** : le test d'un muscle-up jamais réussi vise une répétition propre (au lieu de 8 à 15).
+- **Course** : lendemain d'une course d'épreuve sans footing écrit ; texte de la règle de durée aligné sur la
+  règle appliquée (plus longue course des quatre dernières semaines + 10 %).
+- **Croisement (CY, boucle 1)** : le plafond de volume de répétitions ne compte plus les variantes plus faciles
+  que le mouvement (pompe mains surélevées, sur les genoux, assistée), qui gardent leur propre dose ; débutant
+  qui vise la première traction : deux séries assistées chaque jour (douze séries de tirage vertical par semaine
+  au plus avec descentes et tenue) ; plateau de traction sans lest à douze tractions et plus : archer et
+  typewriter d'abord (environ un tiers du maximum par côté).
+- **Croisement (CY, boucle 2)** : après une échéance de course, la sortie longue repart à 70 % de la plus
+  longue puis +10 % par semaine au plus ; la note « zone de l'épreuve » suit les répétitions écrites quand le
+  garde-fou de volume les réduit ; temps du créneau inutilisé : en semaine de construction (street, musculation,
+  force), tant que la séance prend moins de 80 % du créneau, une série de plus aux lignes du mouvement visé puis
+  aux principaux, cinq au plus, sous les garde-fous de volume (`coachFillShare`).
+- **Relecture indépendante du code (CY)** : le remplissage du créneau laisse telles quelles les lignes réduites
+  pour une douleur ou une gêne et les lignes d'un groupe, et ne joue pas les quatre premières semaines d'une
+  reprise après dix semaines de coupure ou plus ; le plafond de répétitions d'un mouvement absent des semaines
+  d'avant repart du plafond de première semaine ; le retrait du tirage un jour de test voit aussi les tests de
+  l'échéance ; le test à une répétition est réservé au premier muscle-up ; `shoulder_history` ne suit qu'une
+  zone déclarée (pas une tendance) ; texte de `duration_step` complété (reprise après une course).
+
+## 0.3.0
+
+Lot CP2, partie 1 (« les autres disciplines ») du pipeline « Calibrage des programmes ». `kalis_core` 0.4.3,
+contrat additif (nouvelles notes de coach, nouveaux styles internes). Le chemin street est inchangé dans sa
+méthode (passe complète du panel street en fin de lot : `docs/CALIBRAGE_CP2.md`). Journal et sources :
+`docs/CALIBRAGE_CP2.md`, partie 1 ; sources vérifiées des règles chiffrées : même document.
+
+- **Le coach écrit les autres disciplines** : `coachEligible` accepte un profil au schéma 3 dont la discipline
+  principale est la musculation, la course et le cardio, le CrossFit, la mobilité ou la forme générale (avec
+  n'importe quelles disciplines secondaires). Styles : hypertrophie, force (force athlétique et force générale),
+  endurance, conditionnement, santé (`lib/src/coach/general.dart`). Un débutant ne fait pas de force
+  athlétique (séries égales, double progression).
+- **Musculation** : répartition de la semaine selon le nombre de séances (corps entier, haut / bas, poussée /
+  tirage / jambes), polyarticulaires d'abord et une isolation en position allongée par muscle, groupe
+  prioritaire (spécialisation « muscle » du profil) en tête de séance, quatre séries, trois fois par semaine dès
+  quatre séances (pratique de terrain, choix raisonné) ; charges à environ 72 % du 1RM pour 8 à 12 répétitions à 2
+  ou 3 en réserve, charge calibrée quand la barre vide dépasse le 1RM estimé.
+- **Force** : squat deux à trois fois, couché trois à quatre fois, soulevé de terre une à deux fois par semaine,
+  séries de tête et séries allégées, variantes de la phase faible ; antécédent lombaire : soulevé de terre en
+  séries égales modérées, sans série de tête ni test.
+- **Course** : sortie longue le jour le plus long, tracée d'une semaine à l'autre (110 % au plus de la plus
+  longue des quatre semaines d'avant ; Frandsen et al. 2025), bornée au départ par la plus longue course connue ;
+  une à deux séances de qualité, allure des fractions au kilomètre tirée du test, allure de l'objectif une semaine
+  sur deux ; débutant : footing entier les six premières semaines ; affûtage à trois fractions (Bosquet et al.
+  2007) ; test de mi-parcours sur la moitié de la distance, borné par le créneau ; l'épreuve elle-même le jour J ;
+  12 min gardées pour le renforcement du coureur ; échauffement de coureur.
+- **Conditionnement (CrossFit)** : pièces au format codifié (AMRAP, EMOM, « pour le temps », suite imposée,
+  intervalles) ramenées à la durée du créneau, bloc de force à partir de 40 min, rameur et course de la pièce au
+  format de la pièce, tours d'une pièce « pour le temps » ajustables par les garde-fous de volume, réserve de la
+  reprise respectée ; muscle-up visé : pratique, dips à la barre droite, préparation scapulaire, tirage de la pièce
+  au rowing.
+- **Santé, mobilité, senior** : renforcement deux à trois fois par semaine, équilibre à chaque séance à partir de
+  65 ans (OMS 2020 ; Sherrington et al. 2019), assis-debout de chaise, étirements à chaque séance, repos de 60 à
+  75 s, marche et cardio à faible impact qui prennent le temps restant (et la consigne dit la même durée) ; genou
+  gêné : chaise haute à 45-60° et flexion limitée ; cardio déclaré en discipline secondaire en fin de séance.
+- Semaines « de test » sans test (musculation, santé) écrites comme des allègements ; un mouvement d'épreuve que
+  le programme n'entraîne pas ne se teste pas ; échauffement et version courte selon la discipline.
+- Relecture de `kalis_plan` (`coachAudit`) : le jour d'une course d'épreuve (test chronométré de l'échéance)
+  n'est pas compté dans la durée des séances.
+- Mode prudent (questionnaire de santé, 65 ans et plus) : CrossFit écrit en programme de santé ; course sans
+  séance de qualité.
+- Notes : échauffement et version courte propres à la discipline (`warmup_run`, `warmup_gym`, `warmup_health`,
+  `short_run`, `short_health` ; `value` en minutes) ; nouvelles notes `wod_pace`, `chair_squat`, `knee_shallow`, `balance_progress`,
+  `hold_support` (`docs/NOTES_COACH.md`).
+- **Changements qui touchent aussi le chemin street** (sécurité ou correction ; vérifiés par la passe complète du
+  panel street de fin de lot) : une charge écrite au-dessus du 1RM de travail (barre vide trop lourde) devient
+  « à calibrer » ; `interval_pace` donne l'allure au kilomètre (le texte disait « 400 m ») ; affûtage de course à
+  trois fractions ; plancher d'une course facile borné par le créneau ; consigne `easy_pace` alignée sur la durée
+  réduite d'une marche de fin de séance.
+
 ## 0.2.3
 
 Lot CP2, partie 0 (« finir le street ») du pipeline « Calibrage des programmes ». `kalis_core` 0.4.2, contrat

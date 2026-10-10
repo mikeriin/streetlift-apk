@@ -1,6 +1,6 @@
 # kalis_plan face au générateur L10
 
-Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan 0.2.3) à partir de `docs/data/l10_sorties.json.gz` — ne pas modifier à la main ; `test/docs_test.dart` le compare au moteur. Lecture et limites de la comparaison : `docs/VALIDATION.md`, § 5.
+Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan 0.3.1) à partir de `docs/data/l10_sorties.json.gz` — ne pas modifier à la main ; `test/docs_test.dart` le compare au moteur. Lecture et limites de la comparaison : `docs/VALIDATION.md`, § 5.
 
 Les deux générateurs reçoivent les mêmes 40 profils types (kalis_core). L'ancien générateur (L10, version 1.0.0, graine 0) ne lit qu'une partie du profil : la traduction est décrite dans `tool/l10_export_test.dart.txt`. Semaine comparée : la semaine 3 de L10 (première semaine de charge sans calibrage) et la dernière semaine de montée de kalis_plan. Chaque durée est celle que le générateur estime lui-même ; les séries par groupe sont recomptées de la même façon des deux côtés (muscle principal 1, muscle secondaire 0,5, exercices de travail seulement).
 

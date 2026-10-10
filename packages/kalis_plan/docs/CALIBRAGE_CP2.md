@@ -49,4 +49,43 @@ Banc : 0 violation de sécurité sur les 17 saisons street et leurs 7 scénarios
 
 ## Partie 1 — autres disciplines (0.3.0)
 
-À écrire.
+### Mesure de départ
+
+Les dix profils « autres » du banc passaient par le chemin 0.1 (inchangé depuis CP1) : mesure de départ = `packages/kalis_bench/docs/BASELINE_0_1.md` (23 violations de sécurité sur ces profils). Le panel a été étalonné sur deux ancres hors street avant la première boucle (CR.6 : force athlétique experte 9,5/9/9/9, course mauvaise 0/0,5/0/0 ; `cp2-outils/notes/ancres_autres`).
+
+### Contrôles et invariants
+
+Propriétés « autres disciplines » : 10 240 profils aléatoires (`test/coach_general_properties_*_test.dart`, `randomGeneralProfile`) : relecture `coachAudit` (durée des séances, plafonds et hausses de volume par groupe, réserve, charges, tests), sortie longue ≤ 110 % de la plus longue des quatre semaines d'avant (ou de la course connue + 25 %), pas de squat ni de soulevé de terre ≥ 85 % la veille ou le jour d'une course dure (interférence). Premier contrôle de la partie 1 : 64 fichiers de propriétés en échec ; après les corrections : 0.
+
+### Boucles du panel (10 profils × 4 écoles = 40 couples)
+
+| Passe | Code (contrôle) | Couples renotés | Couples à 9 | Minimum | Moyenne |
+| --- | --- | --- | --- | --- | --- |
+| a1 (départ du chemin coach) | run 37852402019 | 40 | 4 | 3,5 | 6,15 |
+| a2 (boucle 1) | run 37856208345 | 36 | 6 | 5 | 7,15 |
+| a3 (boucle 2) | run 37862085855 | 34 | 8 | 5 | 7,61 |
+| a4 (boucle 3) | run 37865081103 | 16 | 13 | 5,5 | 7,88 |
+| fa (boucle 4 ; passe finale complète, candidat 0.3.0) | run 37871717821 | 40 | 15 | 5 | 7,92 |
+
+(Couples dont l'export n'a pas changé : note de la passe d'avant reprise ; le panel varie d'environ un point sur un programme inchangé.)
+
+Arrêt du calibrage après la boucle 4 (budget d'utilisation ; C9.2 : 5 boucles au plus). **Cible C7.5 non atteinte** : 15 couples sur 40 à 9. Notes finales par profil (force, calisthénie, hypertrophie, santé) : `autres_01` 9/8/9/9, `autres_02` 7/7/7/7, `autres_03` 9/8/9/9, `autres_04` 7/6/6,5/8, `autres_05` 9/7,5/8/8, `autres_06` 8/8/9/8, `autres_07` 9/9/9/9, `autres_08` 5/5,5/7/6,5, `autres_09` 9/8/9/9, `autres_10` 8/8/8/7. Banc : 0 violation de sécurité sur les 27 profils (0.1 : 23 sur les autres).
+
+### Street après la partie 1 (non-régression)
+
+Passe complète des 68 couples street sur les saisons du candidat 0.3.0 (même contrôle, `kalis_adapt` 0.3.0) : **19 couples à 9, minimum 5, moyenne 7,71** (fin de la partie 0 : 14, 5, 7,62). Le street n'est pas dégradé.
+
+### Sources vérifiées des règles chiffrées (sous-agent de recherche, 09/10/2026)
+
+| Règle | Verdict | Source |
+| --- | --- | --- |
+| Affûtage : volume −41 à 60 % sur 2 semaines, intensité gardée | confirmé | Bosquet, Montpetit, Arvisais, Mujika, *Med Sci Sports Exerc* 2007;39:1358-65 |
+| Séance de course ≤ 110 % de la plus longue des 30 jours | confirmé | Frandsen et al., *Br J Sports Med* 2025;59:1203-1210 |
+| +10 % par semaine | nuancé : plafond de confort, non validé (Buist et al. 2008 ; Nielsen et al. 2014) ; le garde-fou bloquant est celui par séance | — |
+| ≈ 80 % du volume à basse intensité | confirmé (descriptif) | Seiler 2010 ; Stöggl & Sperlich 2014, 2015 |
+| Senior : équilibre et force fonctionnelle ≥ 3 j/sem ; −24 % de chutes | confirmé | OMS 2020 (Bull et al., *BJSM* 2020) ; Sherrington et al., Cochrane 2019 |
+| 150 à 300 min/sem d'activité modérée | confirmé | OMS 2020 |
+| ≥ 10 séries par muscle et par semaine | nuancé (tendance, p = 0,074) | Schoenfeld, Ogborn, Krieger, *J Sports Sci* 2017 |
+| Spécialisation +30 à 50 % de séries | pratique de terrain, choix raisonné | rendements décroissants : Pelland et al., *Sports Med* 2026 |
+| Reprise ≤ 10 %/sem | nuancé (sportifs sains) | Soligard et al., *BJSM* 2016 ; Ardern et al., *BJSM* 2016 (continuum, sans pourcentage) |
+| Conditionnement : rhabdomyolyse, progression, mise à l'échelle | confirmé | Bergeron et al., *Curr Sports Med Rep* 2011 (consensus CHAMP-ACSM) |

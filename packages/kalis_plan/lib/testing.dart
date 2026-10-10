@@ -839,6 +839,123 @@ AthleteProfile randomCoachProfile(Catalog catalog, int seed) {
   );
 }
 
+/// Profil aléatoire des autres disciplines (CP2, partie 1) de graine
+/// [seed] : le profil street de même graine, avec une discipline
+/// principale parmi la musculation, la course, le CrossFit, la mobilité et
+/// la forme générale, des secondaires prises dans toutes les disciplines,
+/// souvent le matériel d'une salle, parfois des 1RM et un chrono.
+AthleteProfile randomGeneralProfile(Catalog catalog, int seed) {
+  final base = randomCoachProfile(catalog, seed);
+  final r = SeededRandom(fnvMix(0x47454E45, seed));
+  T pick<T>(List<T> values) => values[r.nextInt(values.length)];
+  bool chance(int pct) => r.nextInt(100) < pct;
+  const primaries = <TrainingDiscipline>[
+    TrainingDiscipline.musculation,
+    TrainingDiscipline.musculation,
+    TrainingDiscipline.cardio,
+    TrainingDiscipline.crossfit,
+    TrainingDiscipline.mobility,
+    TrainingDiscipline.generalFitness,
+  ];
+  final primary = pick(primaries);
+  final others = <TrainingDiscipline>[
+    for (final d in TrainingDiscipline.values)
+      if (d != primary) d,
+  ];
+  final share = chance(40) ? 0 : 10 * (1 + r.nextInt(4));
+  final mix = DisciplineMix(
+    primary: primary,
+    primaryPct: 100 - share,
+    secondaries: share == 0
+        ? const <DisciplineShare>[]
+        : <DisciplineShare>[
+            DisciplineShare(discipline: pick(others), pct: share),
+          ],
+  );
+  final equipment = <String>[...base.equipment];
+  void own(String item) {
+    if (catalog.equipmentVocabulary.contains(item) &&
+        !equipment.contains(item)) {
+      equipment.add(item);
+    }
+  }
+
+  final gym = chance(60);
+  if (gym) {
+    for (final item in const <String>[
+      'barre olympique',
+      'disques',
+      'cage / rack',
+      'banc plat',
+      'haltères',
+      'poulie',
+      'machine guidée',
+      'presse à cuisses',
+      'kettlebell',
+      'rameur',
+      'vélo / home-trainer',
+      'box / plinth',
+    ]) {
+      own(item);
+    }
+  }
+  if (primary == TrainingDiscipline.cardio || chance(30)) {
+    own('piste ou terrain extérieur');
+  }
+  final benchmarks = <Benchmark>[...?base.benchmarks];
+  if (chance(40)) {
+    for (final (id, kg) in const <(String, double)>[
+      ('mu-back-squat-barre-haute', 100),
+      ('mu-developpe-couche-barre', 70),
+      ('mu-souleve-de-terre-conventionnel', 120),
+    ]) {
+      benchmarks.add(
+        Benchmark(
+          exerciseId: id,
+          kind: BenchmarkKind.loadReps,
+          source: BenchmarkSource.declared,
+          reps: 1,
+          externalLoadKg: (kg * (0.6 + r.nextInt(9) / 10) / 2.5).round() * 2.5,
+        ),
+      );
+    }
+  }
+  if (chance(40)) {
+    benchmarks.add(
+      Benchmark(
+        exerciseId: 'ca-footing-endurance-fondamentale',
+        kind: BenchmarkKind.timeTrial,
+        source: BenchmarkSource.declared,
+        seconds: 60 * (20 + r.nextInt(50)),
+        distanceMeters: 5000.0 + 1000 * r.nextInt(6),
+      ),
+    );
+  }
+  return base.copyWith(
+    disciplines: mix,
+    equipment: equipment,
+    equipmentByPlace: null,
+    places: <Place>{...base.places, if (gym) Place.gym}.toList(),
+    benchmarks: benchmarks.isEmpty ? null : benchmarks,
+  );
+}
+
+/// Requête de création pour le profil aléatoire des autres disciplines de
+/// graine [seed].
+PlanRequest randomGeneralRequest(
+  Catalog catalog,
+  int seed, {
+  int planSeed = 0,
+}) {
+  final profile = randomGeneralProfile(catalog, seed);
+  return PlanRequest(
+    profile: profile,
+    seed: planSeed,
+    startDate: CivilDate(2026, 10, 5).addDays(seed % 5 == 0 ? seed % 7 : 0),
+    locks: const <PlanLock>[],
+  );
+}
+
 /// Requête de création pour le profil street aléatoire de graine [seed] ;
 /// le premier jour du bloc varie avec la graine (tous les jours de la
 /// semaine sont couverts).

@@ -27,11 +27,22 @@ final class KalisAdapt implements AdaptEngine, EventDayAdvisor {
   /// [legacy] : les blocs qui portent les champs de `kalis_core` 0.4.0 sont
   /// servis comme par `kalis_adapt` 0.1 (comparaison des deux versions) ;
   /// par défaut, ils passent par le mode coach.
+  ///
+  /// [restructureImported] : un bloc importé (plus de six semaines, le
+  /// programme de 40 semaines du propriétaire) reçoit aussi les
+  /// propositions de restructuration de `kalis_plan` (DECISIONS_CP.md C11 :
+  /// toutes les fonctionnalités s'y appliquent ; l'application l'active pour
+  /// ce programme, avec la sauvegarde de l'original). Par défaut, comme
+  /// avant : jamais de restructuration d'un bloc importé.
   KalisAdapt({
     this.params = AdaptParams.standard,
     PlanEngine? plan,
     this.legacy = false,
+    this.restructureImported = false,
   }) : plan = plan ?? KalisPlan();
+
+  /// Vrai : un bloc importé peut être restructuré (voir le constructeur).
+  final bool restructureImported;
 
   /// Paramètres.
   final AdaptParams params;
@@ -121,6 +132,7 @@ final class KalisAdapt implements AdaptEngine, EventDayAdvisor {
       params,
       profile: input.profile,
       legacy: legacy,
+      restructureImported: restructureImported,
     );
     final state = ModelState(params);
     final digests = <SessionDigest>[];
