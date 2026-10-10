@@ -18,6 +18,7 @@ import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/notification_settings.dart';
 import 'package:streetlift_tracker/notifications.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
+import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
@@ -122,6 +123,29 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(PilotageScreen), findsNothing);
       expect(find.byType(ProfileScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('« Comment marche ton programme ? » : dans Aide et à '
+        'propos, plus dans le Profil (R1) ; raccourcis sous « Mon suivi »', (
+      tester,
+    ) async {
+      phone(tester);
+      seedProfile();
+      await tester.pumpWidget(page(const ProfileScreen()));
+      await tester.pumpAndSettle();
+      expect(find.text('Mon suivi'), findsOneWidget);
+      await scrollToAction(tester, key('profile-health'));
+      expect(key('program-explainer-open'), findsNothing);
+      expect(find.text('Comment marche ton programme ?'), findsNothing);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+      await tester.pumpWidget(
+        page(const SettingsScreen(page: SettingsPage.about)),
+      );
+      await tester.pumpAndSettle();
+      await scrollToAction(tester, key('about-explainer'));
+      expect(find.text('Comment marche ton programme ?'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
 

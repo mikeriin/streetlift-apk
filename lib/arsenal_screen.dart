@@ -166,6 +166,7 @@ class _ArsenalScreenState extends State<ArsenalScreen> {
         KMenuGroup(
           key: const ValueKey('arsenal-results-exercises'),
           title: 'Exercices',
+          dividerIndent: KSpacing.s16,
           children: [
             for (final e in exercises.take(ArsenalScreen.exerciseLimit))
               KMenuRow(
@@ -179,7 +180,6 @@ class _ArsenalScreenState extends State<ArsenalScreen> {
             if (exercises.length > ArsenalScreen.exerciseLimit)
               KMenuRow(
                 key: const ValueKey('arsenal-ex-all'),
-                icon: Icons.menu_book_outlined,
                 title: 'Voir les ${exercises.length} exercices',
                 subtitle: 'Dans la bibliothèque, avec les filtres',
                 onTap: () => _push(ExerciseLibraryScreen(initialQuery: q)),

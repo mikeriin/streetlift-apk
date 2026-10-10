@@ -380,6 +380,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         _field('other', 'Autre remarque', _other),
         KMenuGroup(
           title: 'Ajouter (facultatif)',
+          dividerIndent: KSpacing.s16,
           children: [
             KSwitchRow(
               key: const ValueKey('feedback-include-version'),

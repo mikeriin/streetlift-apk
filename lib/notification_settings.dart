@@ -71,10 +71,10 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
       ).format(context);
       final groups = <Widget>[
         KMenuGroup(
+          dividerIndent: KSpacing.s16,
           children: [
             KSwitchRow(
               key: const ValueKey('notif-reminder'),
-              icon: Icons.notifications_outlined,
               title: 'Rappels de séance',
               subtitle: 'La séance du programme à l’heure choisie.',
               value: s.notifOn,
@@ -92,7 +92,6 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
             if (s.notifOn)
               KMenuRow(
                 key: const ValueKey('notif-reminder-time'),
-                icon: Icons.schedule_rounded,
                 title: 'Heure du rappel',
                 // L12 (KT-070) : jamais de rappel un jour de repos ni
                 // pendant une pause (réglage « Ignorer les jours de repos »
@@ -150,14 +149,12 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
               ),
               if (blocked)
                 KMenuRow(
-                  icon: Icons.settings_outlined,
                   title: 'Ouvrir les réglages Android',
                   enabled: !busy,
                   onTap: () => open(allowed ? 'channel' : 'notifications'),
                 ),
               if (error != null)
                 KMenuRow(
-                  icon: Icons.refresh_rounded,
                   title: 'Réessayer',
                   chevron: false,
                   enabled: !busy,
@@ -165,7 +162,6 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
                 ),
               if (error != null && state.technicalError != null)
                 KMenuRow(
-                  icon: Icons.copy_rounded,
                   title: 'Copier le rapport technique',
                   chevron: false,
                   onTap: () async {
@@ -181,16 +177,15 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
           KMenuGroup(
             key: const ValueKey('notif-android'),
             title: 'Options Android',
+            dividerIndent: KSpacing.s16,
             children: [
               if (access?.exact == true)
                 const KMenuRow(
-                  icon: Icons.alarm_on_rounded,
                   title: 'Heure précise autorisée.',
                   chevron: false,
                 )
               else
                 KMenuRow(
-                  icon: Icons.alarm_rounded,
                   title: 'Autoriser l’heure précise',
                   subtitle:
                       'Android peut retarder les rappels en veille. Tu peux '
@@ -205,13 +200,11 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
                   }),
                 ),
               KMenuRow(
-                icon: Icons.notifications_active_outlined,
                 title: 'Notifications',
                 subtitle: 'Réglages Android des rappels',
                 onTap: () => open('channel'),
               ),
               KMenuRow(
-                icon: Icons.battery_std_rounded,
                 title: 'Batterie',
                 subtitle: 'Réglages Android de la batterie',
                 onTap: () => open('battery'),

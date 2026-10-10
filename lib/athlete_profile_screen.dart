@@ -18,7 +18,6 @@ import 'koach/koach_view.dart';
 import 'pilotage_screen.dart' show PilotageScreen;
 import 'plan/plan_screens.dart' show openPlanCreation;
 import 'profile_completion.dart';
-import 'program_explainer.dart';
 import 'program_screens.dart' show ProgramScreen;
 import 'program_start.dart' show longCivilDate;
 import 'store.dart';
@@ -75,12 +74,27 @@ class CautionCard extends StatelessWidget {
               ),
             ],
           ),
+          // Raisons : puces alignées (retrait suspendu), en texte courant ;
+          // le conseil dessous, en texte secondaire.
           if (status.reasons.isNotEmpty) ...[
             const SizedBox(height: KSpacing.s8),
             for (final r in status.reasons)
-              Text(
-                '• ${kCautionReasonLabels[r] ?? r}',
-                style: KType.corps.copyWith(color: k.texte),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ExcludeSemantics(
+                    child: Text(
+                      '•  ',
+                      style: KType.corps.copyWith(color: k.texte),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      kCautionReasonLabels[r] ?? r,
+                      style: KType.corps.copyWith(color: k.texte),
+                    ),
+                  ),
+                ],
               ),
           ],
           if (on) ...[
@@ -197,7 +211,8 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   // R5 : la destination est un bouton, pas un chemin écrit.
-                  if (a.programChangePending)
+                  if (a.programChangePending) ...[
+                    const SizedBox(height: KSpacing.s12),
                     Align(
                       alignment: AlignmentDirectional.centerStart,
                       child: KTonalButton(
@@ -212,10 +227,12 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ],
                 ],
               ),
         groups: [
           KMenuGroup(
+            title: 'Mon suivi',
             children: [
               // CU : questions du profil v3 encore sans réponse.
               if (a != null && pending > 0)
@@ -304,18 +321,6 @@ class ProfileScreen extends StatelessWidget {
             ),
             _healthCard(context, legacy, a),
           ],
-          if (a != null)
-            KMenuGroup(
-              title: 'Aide',
-              children: [
-                KMenuRow(
-                  key: const ValueKey('program-explainer-open'),
-                  icon: Icons.help_outline_rounded,
-                  title: 'Comment marche ton programme ?',
-                  onTap: () => showProgramExplainer(context),
-                ),
-              ],
-            ),
         ],
       );
     },

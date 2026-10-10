@@ -50,7 +50,10 @@ final _screens = <String, Finder>{
   'koach-gallery': find.byType(KoachGalleryScreen),
   'feedback': find.byType(FeedbackScreen),
   'licences': find.byType(MentionsScreen),
-  'diagnostic-3d': find.byType(Engine3DScreen),
+  'compat-3d': find.byType(Engine3DScreen),
+  // Bandeau d'information de « Données et confidentialité » (pas une
+  // ligne) : la page s'ouvre, le bandeau y est.
+  'android-backup': find.byKey(const ValueKey('settings-android-backup')),
 };
 
 void main() {
@@ -91,7 +94,7 @@ void main() {
         'delete-answers', 'erase', //
         'profile', 'references', 'guided-tests', 'safety', 'recovery', //
         'explainer', 'koach-gallery', 'feedback', 'licences', //
-        'diagnostic-3d',
+        'compat-3d',
       ]),
     );
     for (final e in settingsSearchIndex) {

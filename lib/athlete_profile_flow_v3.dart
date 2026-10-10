@@ -1933,6 +1933,7 @@ class _SpecializationSheetState extends State<_SpecializationSheet> {
           )
         else if (_kind == SpecializationKind.muscle)
           KMenuGroup(
+            dividerIndent: KSpacing.s16,
             children: [
               KMenuRow(
                 key: const ValueKey('spec-muscle'),

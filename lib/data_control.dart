@@ -261,40 +261,67 @@ Future<EraseStatus?> eraseAppData(
   return result.status;
 }
 
-/// Bas de page des sous-pages de confirmation : action principale, puis
-/// « Annuler » (même effet que le retour), au-dessus du clavier.
+/// Bas de page des sous-pages de confirmation, dans l'ordre de `KConfirm` :
+/// « Annuler » (même effet que le retour) à gauche, l'action principale à
+/// droite, même hauteur (56) ; grand texte ou écran étroit : l'un sous
+/// l'autre, l'action en haut. Au-dessus du clavier.
 class _PageActions extends StatelessWidget {
   final Widget primary;
   const _PageActions({required this.primary});
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
-    child: SafeArea(
-      top: false,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          KSpacing.page,
-          KSpacing.s8,
-          KSpacing.page,
-          KSpacing.s16,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            primary,
-            const SizedBox(height: KSpacing.s8),
-            KTonalButton(
-              label: 'Annuler',
-              expand: true,
-              onPressed: () => Navigator.maybePop(context),
-            ),
-          ],
+  Widget build(BuildContext context) {
+    final cancel = ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: KSize.primary),
+      child: KTonalButton(
+        label: 'Annuler',
+        expand: true,
+        onPressed: () => Navigator.maybePop(context),
+      ),
+    );
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            KSpacing.page,
+            KSpacing.s8,
+            KSpacing.page,
+            KSpacing.s16,
+          ),
+          child: LayoutBuilder(
+            builder: (context, c) {
+              final stacked =
+                  c.maxWidth <
+                  6 * KSize.target * MediaQuery.textScalerOf(context).scale(1);
+              if (stacked) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    primary,
+                    const SizedBox(height: KSpacing.s8),
+                    cancel,
+                  ],
+                );
+              }
+              return IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(child: cancel),
+                    const SizedBox(width: KSpacing.s8),
+                    Expanded(child: primary),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 /// Ligne d'information d'un aperçu : libellé, puis valeur.
@@ -478,6 +505,7 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
               'références, réglages, profil et données Koach. Aucune fusion.',
         ),
         KMenuGroup(
+          dividerIndent: KSpacing.s16,
           children: [
             KSwitchRow(
               key: const ValueKey('import-backup-first'),
@@ -566,6 +594,7 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
         ]),
         KMenuGroup(
           title: 'Confirmation',
+          dividerIndent: KSpacing.s16,
           children: [
             KSwitchRow(
               key: const ValueKey('erase-export-first'),

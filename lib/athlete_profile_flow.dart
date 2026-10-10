@@ -1145,6 +1145,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           'tu choisis la principale et tu doses les deux autres.',
     ),
     KMenuGroup(
+      dividerIndent: KSpacing.s16,
       children: [
         KSwitchRow(
           key: const ValueKey('flow-street'),
@@ -2134,6 +2135,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           ],
         ),
         KMenuGroup(
+          dividerIndent: KSpacing.s16,
           children: [
             KSwitchRow(
               key: const ValueKey('limitation-resolved'),
@@ -2176,6 +2178,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         ),
         if (q != null) ...[
           KMenuGroup(
+            dividerIndent: KSpacing.s16,
             children: [
               KSwitchRow(
                 key: const ValueKey('limitation-effort-known'),

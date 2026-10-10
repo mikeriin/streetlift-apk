@@ -172,12 +172,16 @@ class _NumTile extends StatelessWidget {
         KRowLabel(label, subtitle: subtitle),
         if (provenance != 'set') ...[
           const SizedBox(height: KSpacing.s4),
+          // C5 : une valeur inconnue est un état prévu, pas une erreur ;
+          // seule la valeur à vérifier porte une couleur d'état.
           Text(
             provenance == 'unknown'
                 ? 'Non renseigné'
                 : 'À vérifier · valeur d’une version précédente',
             key: ValueKey('$refCell-provenance'),
-            style: KType.micro.copyWith(color: k.danger),
+            style: provenance == 'unknown'
+                ? KType.detail.copyWith(color: k.texte2)
+                : KType.micro.copyWith(color: k.avertissement),
           ),
         ],
         Wrap(

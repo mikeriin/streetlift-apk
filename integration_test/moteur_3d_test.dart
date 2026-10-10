@@ -136,7 +136,7 @@ void main() {
     expect(stats['couleurs'] as int, greaterThan(12), reason: label);
   }
 
-  testWidgets('Réglages › Aide et à propos › Diagnostic 3D, thème sombre', (
+  testWidgets('Réglages › Aide et à propos › Compatibilité 3D, thème sombre', (
     tester,
   ) async {
     await openApp(tester, 'dark');

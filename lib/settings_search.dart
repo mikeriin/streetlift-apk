@@ -348,13 +348,21 @@ final List<SettingsSearchEntry> settingsSearchIndex = [
     page: SettingsPage.data,
     available: () => store.retiredNotice != null,
   ),
-  SettingsSearchEntry.setting(
+  // Information (bandeau, pas une ligne) : la page s'ouvre et l'amène à
+  // l'écran, sans mise en évidence.
+  SettingsSearchEntry.screen(
     id: 'android-backup',
     label: 'Sauvegarde Android',
     description: 'Sauvegarde Google du téléphone',
     words: ['android', 'google', 'sauvegarde', 'cloud', 'transfert'],
     path: _backups,
-    page: SettingsPage.data,
+    kind: SettingsSearchKind.setting,
+    open: _screen(
+      () => const SettingsScreen(
+        page: SettingsPage.data,
+        highlight: 'android-backup',
+      ),
+    ),
   ),
   SettingsSearchEntry.setting(
     id: 'privacy',
@@ -459,10 +467,10 @@ final List<SettingsSearchEntry> settingsSearchIndex = [
     open: _screen(() => const MentionsScreen()),
   ),
   SettingsSearchEntry.screen(
-    id: 'diagnostic-3d',
-    label: 'Diagnostic 3D',
+    id: 'compat-3d',
+    label: 'Compatibilité 3D',
     description: 'Rendu test, compatibilité du téléphone et fluidité',
-    words: ['3d', 'moteur', 'diagnostic', 'compatibilite', 'fluidite'],
+    words: ['3d', 'moteur', 'rendu', 'compatibilite', 'fluidite'],
     path: _about,
     open: _screen(() => const Engine3DScreen()),
   ),

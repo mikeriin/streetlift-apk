@@ -193,11 +193,8 @@ void main() {
     await reach(tester, share);
     // UI4 : « Partager mon avis » est le bouton principal du kit, en bas.
     expect(tester.widget<KPrimaryButton>(share).onPressed, isNull);
-    await reach(
-      tester,
-      find.byKey(const ValueKey('feedback-blocked')),
-      up: true,
-    );
+    // UI4 : le bouton est fixé en bas ; le champ est plus bas dans la liste.
+    await reach(tester, find.byKey(const ValueKey('feedback-blocked')));
     await tester.enterText(
       find.byKey(const ValueKey('feedback-blocked')),
       'Le chrono coupe la musique',
@@ -245,10 +242,11 @@ void main() {
       page(const SettingsScreen(page: SettingsPage.about), scale: 1.3),
     );
     await tester.pumpAndSettle();
+    // UI4 : l'aide d'abord, l'avertissement ensuite.
     for (final key in [
-      'wellness-disclaimer',
       'about-safety',
       'about-feedback',
+      'wellness-disclaimer',
     ]) {
       await reach(tester, find.byKey(ValueKey(key)));
     }
@@ -263,6 +261,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('recovery-screen')), findsOneWidget);
 
+    // Nouvelle application : les pages ouvertes au-dessus sont fermées.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpAndSettle();
     await tester.pumpWidget(
       page(const SettingsScreen(page: SettingsPage.data), scale: 1.3),
     );
