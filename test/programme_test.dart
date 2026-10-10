@@ -11,9 +11,16 @@ import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
+import 'support/ui_capture.dart' show loadUiFonts;
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
+    // UI1 : polices réelles (Barlow) : les mesures de mise en page (semaine
+    // entière visible, L5) se font sur le rendu du téléphone, pas sur la
+    // police de test où chaque lettre est un carré (les titres, jamais
+    // coupés depuis C3, y passeraient tous sur deux lignes).
+    await loadUiFonts();
     SharedPreferences.setMockInitialValues({});
     await store.init();
     // L4 : ces parcours portent sur une installation existante, sur le
