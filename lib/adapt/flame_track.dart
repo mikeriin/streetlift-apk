@@ -255,7 +255,10 @@ class _FlameTrackState extends State<FlameTrack> {
                 const h = 48.0, flame = 34.0, dot = 7.0;
                 final fill = v == null
                     ? k.filet
-                    : flameColor(v, dark: dark).withValues(alpha: .55);
+                    : flameColor(
+                        v,
+                        dark: dark,
+                      ).withValues(alpha: dark ? .55 : 1);
                 return GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTapUp: (d) {
@@ -367,35 +370,42 @@ class _FlameTrackState extends State<FlameTrack> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '1 · ${flameWord(1).toLowerCase()}',
-                    style: legend,
-                  ),
-                ),
+            child: Builder(
+              builder: (context) {
+                final low = Text(
+                  '1 · ${flameWord(1).toLowerCase()}',
+                  style: legend,
+                );
+                final high = Text(
+                  '${flameWord(10).toLowerCase()} · 10',
+                  textAlign: TextAlign.end,
+                  style: legend,
+                );
                 // « Je ne sais pas », discret (lien texte `texte2`, 48 dp),
-                // au centre sous la ligne ; texte agrandi sur écran étroit :
-                // à la ligne au lieu de déborder.
-                Flexible(
-                  flex: 2,
-                  child: KTextButton(
-                    key: const ValueKey('flame-unknown'),
-                    label: 'Je ne sais pas',
-                    dense: true,
-                    color: k.texte2,
-                    onPressed: widget.unknown ? null : widget.onUnknown,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    '${flameWord(10).toLowerCase()} · 10',
-                    textAlign: TextAlign.end,
-                    style: legend,
-                  ),
-                ),
-              ],
+                // au centre sous la ligne.
+                final unknown = KTextButton(
+                  key: const ValueKey('flame-unknown'),
+                  label: 'Je ne sais pas',
+                  dense: true,
+                  color: k.texte2,
+                  onPressed: widget.unknown ? null : widget.onUnknown,
+                );
+                // Les deux bornes de l'échelle aux extrémités, l'action
+                // « Je ne sais pas » dessous, à part (ce n'est pas une
+                // valeur de l'échelle).
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(child: low),
+                        const SizedBox(width: KSpacing.s8),
+                        Expanded(child: high),
+                      ],
+                    ),
+                    unknown,
+                  ],
+                );
+              },
             ),
           ),
           if (widget.intro) ...[

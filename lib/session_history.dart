@@ -350,92 +350,107 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     // action n'écrit (archive hors du journal) ; sinon la séance est dite
     // enregistrée et son menu ⋮ propose la correction et la suppression.
     final where = _week.n > 0 ? '${sessionPlace(_week, _day)}, ' : '';
-    final state = _editable ? 'séance enregistrée' : 'lecture seule';
-    return KScreen(
-      appBar: KTopBar.sub(
-        title: _day.title,
-        subtitle: where.isEmpty
-            ? '${state[0].toUpperCase()}${state.substring(1)}'
-            : '$where$state',
-        action: _editable
-            ? KIconButton(
-                icon: Icons.more_vert_rounded,
-                tooltip: 'Options de l’historique',
-                onPressed: _openMenu,
-              )
-            : null,
-      ),
-      body: _groups.isEmpty
-          ? const Padding(
-              padding: KSpace.content,
-              child: KEmpty(
-                icon: Icons.check_circle_outline,
-                title: 'Séance effectuée',
-                message: 'Aucune série enregistrée pour cette séance.',
-              ),
+    // Même en-tête que la séance (C1) : retour, titre jamais coupé,
+    // repère et état, une seule action.
+    final header = SessionHeader(
+      title: _day.title,
+      subtitle: where.isEmpty
+          ? (_editable ? 'Séance enregistrée' : 'Lecture seule')
+          : '$where${_editable ? 'séance enregistrée' : 'lecture seule'}',
+      action: _editable
+          ? KIconButton(
+              icon: Icons.more_vert_rounded,
+              tooltip: 'Options de l’historique',
+              onPressed: _openMenu,
             )
-          : Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                    start: KSpacing.page,
-                    end: KSpacing.page,
-                    bottom: KSpacing.s4,
-                  ),
-                  child: Column(
-                    children: [
-                      // Même repère que la séance : « Exercice 3 sur 7 »
-                      // et le lien « Exercices » (passe à la ligne en
-                      // grand texte).
-                      SizedBox(
-                        width: double.infinity,
-                        child: Wrap(
-                          alignment: WrapAlignment.spaceBetween,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: KSpacing.s8,
-                          children: [
-                            Text(
-                              _page == _groups.length
-                                  ? 'Bilan de séance'
-                                  : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
-                              style: KType.section.copyWith(color: k.texte2),
-                            ),
-                            KTextButton(
-                              icon: Icons.format_list_numbered_rounded,
-                              label: 'Exercices',
-                              onPressed: _chooseExercise,
-                            ),
-                          ],
-                        ),
+          : null,
+    );
+    return KScreen(
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            header,
+            Expanded(
+              child: _groups.isEmpty
+                  ? const Padding(
+                      padding: KSpace.content,
+                      child: KEmpty(
+                        icon: Icons.check_circle_outline,
+                        title: 'Séance effectuée',
+                        message: 'Aucune série enregistrée pour cette séance.',
                       ),
-                      SessionProgressDots(
-                        count: _groups.length + 1,
-                        index: _page,
-                        color: k.encre,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: PageView.builder(
-                    controller: _pages,
-                    itemCount: _groups.length + 1,
-                    onPageChanged: (page) => setState(() => _page = page),
-                    itemBuilder: (context, page) => page == _groups.length
-                        ? _summary()
-                        : SessionExercisePage(
-                            key: ValueKey('history-page-$page'),
-                            week: _week,
-                            day: _day,
-                            exs: _groups[page],
-                            timer: _unusedTimer,
-                            history: _snapshot,
-                            unresolvedIds: _unresolved,
+                    )
+                  : Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                            start: KSpacing.page,
+                            end: KSpacing.s12,
+                            bottom: KSpacing.s4,
                           ),
-                  ),
-                ),
-              ],
+                          child: Column(
+                            children: [
+                              // Même repère que la séance : « Exercice 3 sur 7 »
+                              // et le lien « Exercices » (passe à la ligne en
+                              // grand texte).
+                              SizedBox(
+                                width: double.infinity,
+                                child: Wrap(
+                                  alignment: WrapAlignment.spaceBetween,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  spacing: KSpacing.s8,
+                                  children: [
+                                    Text(
+                                      _page == _groups.length
+                                          ? 'Bilan de séance'
+                                          : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
+                                      style: KType.section.copyWith(
+                                        color: k.texte2,
+                                      ),
+                                    ),
+                                    KTextButton(
+                                      icon: Icons.format_list_numbered_rounded,
+                                      label: 'Exercices',
+                                      onPressed: _chooseExercise,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SessionProgressDots(
+                                count: _groups.length + 1,
+                                index: _page,
+                                color: k.encre,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: PageView.builder(
+                            controller: _pages,
+                            itemCount: _groups.length + 1,
+                            onPageChanged: (page) =>
+                                setState(() => _page = page),
+                            itemBuilder: (context, page) =>
+                                page == _groups.length
+                                ? _summary()
+                                : SessionExercisePage(
+                                    key: ValueKey('history-page-$page'),
+                                    week: _week,
+                                    day: _day,
+                                    exs: _groups[page],
+                                    timer: _unusedTimer,
+                                    history: _snapshot,
+                                    unresolvedIds: _unresolved,
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
             ),
+          ],
+        ),
+      ),
       // 5.5.2 : plus de boutons Précédent / Suivant (glissement).
     );
   }
