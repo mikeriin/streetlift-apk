@@ -1,8 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:660:24 • unnecessary_non_null_assertion
-warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:675:42 • unnecessary_non_null_assertion
-warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:675:50 • unnecessary_non_null_assertion
-   info • The import of 'package:streetlift_tracker/adapt/session_adapt.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/store.dart'. Try removing the import directive • test/ci1h_charge_fixe_test.dart:24:8 • unnecessary_import
-
-4 issues found. (ran in 15.3s)

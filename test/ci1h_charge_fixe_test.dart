@@ -21,7 +21,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/adapt/adapt_summary_screen.dart'
     show summaryTargetText;
 import 'package:streetlift_tracker/adapt/adapt_texts.dart';
-import 'package:streetlift_tracker/adapt/session_adapt.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -57,6 +56,25 @@ Future<void> _ownerEasy(AppStore app, {int lastWeek = 13, int lastJ = 4}) async 
       }
     }
   }
+  // Références du Pilotage du propriétaire (maximums de répétitions,
+  // 1RM) : lignes « N × (coef × réf.) reps » portées au moteur.
+  final pilot = (b['pilotage'] as Map).cast<String, dynamic>();
+  const refs = {
+    'B4': 71.5,
+    'B8': 55.0,
+    'B9': 75.0,
+    'B10': 15.0,
+    'B11': 120.0,
+    'B16': 10.0,
+    'B17': 30.0,
+    'B18': 70.0,
+    'B19': 65.0,
+    'B20': 35.0,
+  };
+  for (final e in refs.entries) {
+    pilot.putIfAbsent(e.key, () => e.value);
+  }
+  b['pilotage'] = pilot;
   b['programStart'] = {
     'status': 'set',
     'date': '2026-07-13',
@@ -316,7 +334,7 @@ void main() {
       // Allègement d'une douleur : gardé.
       final hurt = fixedLoadItem(
         it.copyWith(
-          startLoadKg: 50,
+          startLoadKg: 50.0,
           reasons: const [
             kc.Reason(code: 'adapt.pain_reported', params: {'zone': 'knee'}),
           ],
