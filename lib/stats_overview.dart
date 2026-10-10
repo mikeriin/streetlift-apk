@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import 'app_theme.dart';
 import 'game_widgets.dart';
+import 'kit/kit.dart';
 import 'progression.dart';
 import 'store.dart';
-import 'ui.dart';
 import 'stats_navigation.dart';
 import 'stats_progression.dart';
 import 'stats_widgets.dart';
 
+/// « n jour actif » / « n jours actifs ».
+String statsPlural(int n, String one, String many) => '$n ${n > 1 ? many : one}';
+
+/// Aperçu (UI3, cahier §4.1) : le résumé. Ses cartes et ses lignes ouvrent
+/// l'onglet concerné, jamais une feuille déjà joignable ailleurs (les
+/// feuilles de jeu vivent dans Parcours) ; l'objectif de la semaine se règle
+/// sur place (raccourci R2, mêmes segments que Réglages).
 class StatsOverview extends StatelessWidget {
   final ValueChanged<StatsSection> onSection;
   const StatsOverview({super.key, required this.onSection});
@@ -17,49 +23,39 @@ class StatsOverview extends StatelessWidget {
     final remaining = p.week.missions.where((m) => !m.complete).toList()
       ..sort((a, b) => b.fraction.compareTo(a.fraction));
     final next = remaining.firstOrNull ?? p.week.missions.first;
-    return KList(
+    final validated = p.week.missions.where((m) => m.complete).length;
+    void journey() => onSection(StatsSection.journey);
+    return StatsList(
       key: const PageStorageKey('stats-overview-scroll'),
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 6, bottom: 2),
-          child: Text(
-            'Chaque effort construit la suite.',
-            style: TextStyle(color: SL.dim, fontSize: 14),
-          ),
-        ),
-        CharacterCard(onTap: () => showCharacterSheet(context)),
-        const KSection('Objectif et série'),
+        CharacterCard(onTap: journey),
+        const KSectionTitle('Objectif et série'),
         // Pleine largeur : à 320 px avec texte agrandi, deux colonnes ne
         // laisseraient pas la place aux anneaux et aux boucliers.
         const WeeklyGoalCard(),
         const StreakCard(),
-        const KSection(
-          'Quêtes',
-          subtitle: 'Principale : ta prochaine journée · hebdo : bonus XP',
-        ),
+        const KSectionTitle('Quêtes'),
         const MainQuestCard(),
-        StatsMissionCard(next),
-        KSection(
-          'Campagne',
-          subtitle: 'Chapitres du programme, boss et saison',
-          actionLabel: 'Parcours',
-          onAction: () => onSection(StatsSection.journey),
+        StatsMissionCard(
+          next,
+          overline:
+              'Défis de la semaine · $validated / ${p.week.missions.length} validés · bonus XP automatiques',
+          onTap: journey,
         ),
-        const CampaignStrip(),
-        const BossCard(),
-        const SeasonCard(),
-        const KSection('Toi contre toi-même'),
+        KSectionTitle('Campagne', actionLabel: 'Parcours', onAction: journey),
+        CampaignStrip(onTap: journey),
+        BossCard(onTap: journey),
+        SeasonCard(onTap: journey),
+        const KSectionTitle('Toi contre toi-même'),
         const SelfCompareCard(),
-        KSection(
-          'Cette semaine',
-          subtitle:
-              'Du ${statsDate(p.week.monday)} au ${statsDate(p.week.monday.add(const Duration(days: 6)))}',
+        KSectionTitle(
+          'Cette semaine, du ${statsDate(p.week.monday)} au ${statsDate(p.week.monday.add(const Duration(days: 6)))}',
         ),
         StatsGrid(
           children: [
             StatsMetric(
               '${p.week.sessions}',
-              'Entraînements terminés',
+              'Séances terminées',
               Icons.fitness_center_rounded,
             ),
             StatsMetric(
@@ -79,29 +75,13 @@ class StatsOverview extends StatelessWidget {
             ),
           ],
         ),
-        KMenuTile(
-          icon: Icons.flag_outlined,
-          title: remaining.isEmpty ? 'Défis validés' : 'Défis de la semaine',
-          subtitle:
-              '${p.week.missions.where((m) => m.complete).length} / ${p.week.missions.length} objectifs atteints · bonus XP automatiques',
-          onTap: () => showStatsMissions(context),
-        ),
-        KMenuTile(
-          icon: Icons.account_tree_rounded,
-          title: 'Arbre de progression',
-          subtitle: '${p.earnedBadges} badges obtenus · pratique et rythme',
-          onTap: () => onSection(StatsSection.journey),
-        ),
-        const KSection(
-          'Ton rythme',
-          subtitle: '8 dernières semaines · jours actifs',
-        ),
+        const KSectionTitle('Ton rythme, sur les 8 dernières semaines'),
         _ActivityCard(p),
-        Text(
+        const StatsText(
           'Deux jours actifs valident une semaine. Les jours de repos font partie du parcours.',
-          style: Theme.of(context).textTheme.bodySmall,
+          muted: true,
         ),
-        const KSection('Depuis tes débuts'),
+        const KSectionTitle('Depuis tes débuts'),
         StatsGrid(
           children: [
             StatsMetric(
@@ -122,17 +102,32 @@ class StatsOverview extends StatelessWidget {
             ),
           ],
         ),
-        KMenuTile(
-          icon: Icons.insights_rounded,
-          title: 'Performances et références',
-          subtitle: 'Force, endurance, muscles et records',
-          onTap: () => onSection(StatsSection.performance),
-        ),
-        KMenuTile(
-          icon: Icons.history_rounded,
-          title: 'Tout ton historique',
-          subtitle: 'Séances et notes',
-          onTap: () => onSection(StatsSection.history),
+        KMenuGroup(
+          title: 'Aller plus loin',
+          children: [
+            KMenuRow(
+              key: const ValueKey('stats-open-journey'),
+              icon: Icons.account_tree_rounded,
+              title: 'Parcours',
+              subtitle:
+                  '${p.earnedBadges} badges obtenus, défis, campagne, boss, saisons et titres',
+              onTap: journey,
+            ),
+            KMenuRow(
+              key: const ValueKey('stats-open-performance'),
+              icon: Icons.insights_rounded,
+              title: 'Performances',
+              subtitle: 'Mes références, records, force, endurance et muscles',
+              onTap: () => onSection(StatsSection.performance),
+            ),
+            KMenuRow(
+              key: const ValueKey('stats-open-history'),
+              icon: Icons.history_rounded,
+              title: 'Historique',
+              subtitle: 'Toutes tes séances et leurs notes',
+              onTap: () => onSection(StatsSection.history),
+            ),
+          ],
         ),
       ],
     );
@@ -142,121 +137,141 @@ class StatsOverview extends StatelessWidget {
 class _ActivityCard extends StatelessWidget {
   final Progression progress;
   const _ActivityCard(this.progress);
-  @override
-  Widget build(BuildContext context) => KCard(
-    key: const ValueKey('stats-activity'),
-    onTap: () => statsSheet(context, 'Ton activité sur 8 semaines', [
-      Text(
-        'Meilleure série : ${progress.bestStreak} semaine${progress.bestStreak > 1 ? 's' : ''} · ${progress.activeWeeks} semaines validées',
-      ),
-      for (final week in progress.recentWeeks.reversed)
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          leading: Icon(
-            week.activeDays.length >= 2
-                ? Icons.check_circle_rounded
-                : Icons.calendar_today_outlined,
-            color: week.activeDays.length >= 2 ? SL.success : SL.dim,
-          ),
-          title: Text('Semaine du ${statsDate(week.monday)}'),
-          subtitle: Text(
-            '${week.activeDays.length} jours actifs · ${week.sessions} séances · ${week.sets} séries',
-          ),
-        ),
-    ]),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+
+  void _detail(BuildContext context) {
+    final best = progress.bestStreak;
+    statsSheet(
+      context,
+      'Ton activité sur 8 semaines',
+      subtitle:
+          'Meilleure série : ${statsPlural(best, 'semaine', 'semaines')} · ${statsPlural(progress.activeWeeks, 'semaine validée', 'semaines validées')}',
+      [
+        StatsSheetGroup(
           children: [
-            Expanded(
-              child: Text(
-                'Une habitude qui se construit',
-                style: Theme.of(context).textTheme.titleMedium,
+            for (final week in progress.recentWeeks.reversed)
+              Builder(
+                builder: (context) {
+                  final k = KTokens.of(context);
+                  final ok = week.activeDays.length >= 2;
+                  return StatsSheetRow(
+                    icon: ok
+                        ? Icons.check_circle_rounded
+                        : Icons.calendar_today_outlined,
+                    iconColor: ok ? k.validation : k.texte2,
+                    title: 'Semaine du ${statsDate(week.monday)}',
+                    subtitle:
+                        '${statsPlural(week.activeDays.length, 'jour actif', 'jours actifs')} · ${statsPlural(week.sessions, 'séance', 'séances')} · ${statsPlural(week.sets, 'série', 'séries')}',
+                  );
+                },
               ),
-            ),
-            const Icon(Icons.chevron_right_rounded, size: 20),
           ],
         ),
-        const SizedBox(height: 16),
-        Semantics(
-          label:
-              'Jours actifs, de la semaine la plus ancienne à la plus récente : ${progress.recentWeeks.map((w) => w.activeDays.length).join(', ')}. Appuyer pour le détail.',
-          child: ExcludeSemantics(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                for (final week in progress.recentWeeks)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Column(
-                        children: [
-                          Text(
-                            '${week.activeDays.length}',
-                            style: TextStyle(color: SL.dim, fontSize: 11),
-                          ),
-                          const SizedBox(height: 6),
-                          SizedBox(
-                            height: 64,
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: FractionallySizedBox(
-                                heightFactor: (week.activeDays.length / 7)
-                                    .clamp(.045, 1.0),
-                                widthFactor: 1,
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    color: week.activeDays.isEmpty
-                                        ? SL.dot
-                                        : null,
-                                    gradient: week.activeDays.isEmpty
-                                        ? null
-                                        : const LinearGradient(
-                                            begin: Alignment.bottomCenter,
-                                            end: Alignment.topCenter,
-                                            colors: [
-                                              KPalette.burgundy,
-                                              KPalette.actionRed,
-                                            ],
-                                          ),
-                                    border: week.activeDays.isEmpty
-                                        ? null
-                                        : Border.all(color: SL.dim),
-                                    borderRadius: BorderRadius.circular(10),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final weeks = progress.recentWeeks;
+    const chart = KSize.primary + KSpacing.s8;
+    return KCard(
+      key: const ValueKey('stats-activity'),
+      onTap: () => _detail(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Une habitude qui se construit',
+                  style: KType.titreCarte.copyWith(color: k.texte),
+                ),
+              ),
+              Icon(
+                Icons.chevron_right_rounded,
+                size: KSize.icon,
+                color: k.texte2,
+              ),
+            ],
+          ),
+          const SizedBox(height: KSpacing.s16),
+          Semantics(
+            label:
+                'Jours actifs, de la semaine la plus ancienne à la plus récente : ${weeks.map((w) => w.activeDays.length).join(', ')}. Appuyer pour le détail.',
+            child: ExcludeSemantics(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  for (var i = 0; i < weeks.length; i++)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: KSpacing.s4,
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              '${weeks[i].activeDays.length}',
+                              style: KType.micro.copyWith(color: k.texte2),
+                            ),
+                            const SizedBox(height: KSpacing.s4),
+                            SizedBox(
+                              height: chart,
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: FractionallySizedBox(
+                                  heightFactor:
+                                      (weeks[i].activeDays.length / 7).clamp(
+                                        .08,
+                                        1.0,
+                                      ),
+                                  widthFactor: 1,
+                                  child: DecoratedBox(
+                                    decoration: ShapeDecoration(
+                                      // Semaine en cours en `encre`, les
+                                      // précédentes en `second` (données).
+                                      color: weeks[i].activeDays.isEmpty
+                                          ? k.filet
+                                          : i == weeks.length - 1
+                                          ? k.encre
+                                          : k.second,
+                                      shape: KRadius.pill,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                statsDate(progress.recentWeeks.first.monday),
-                style: Theme.of(context).textTheme.bodySmall,
+          const SizedBox(height: KSpacing.s8),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  statsDate(weeks.first.monday),
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                'Cette sem.',
-                textAlign: TextAlign.end,
-                style: Theme.of(context).textTheme.bodySmall,
+              const SizedBox(width: KSpacing.s8),
+              Flexible(
+                child: Text(
+                  'Cette semaine',
+                  textAlign: TextAlign.end,
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -21,7 +21,7 @@ import 'package:streetlift_tracker/store.dart';
 
 import 'support/ui_capture.dart';
 
-const _prefix = 'ui3_avant';
+const _prefix = 'ui3';
 
 /// Journal d'exemple : départ il y a 60 jours, trois séances par semaine
 /// pendant huit semaines, charges en progression (records), références.
@@ -84,7 +84,7 @@ void main() {
     required bool dark,
     required String palette,
     double width = 390,
-    double height = 2400,
+    double height = 3400,
     double scale = 1,
   }) async {
     tester.view.physicalSize = Size(width, height);

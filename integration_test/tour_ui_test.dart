@@ -37,6 +37,7 @@ import 'package:streetlift_tracker/plan/evolution_widgets.dart';
 import 'package:streetlift_tracker/plan/event_day_screen.dart';
 import 'package:streetlift_tracker/plan/season_view.dart';
 import 'package:streetlift_tracker/program_screens.dart';
+import 'package:streetlift_tracker/records_screen.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
@@ -347,12 +348,51 @@ void main() {
       await home(tester);
     }
 
-    // Stats (UI3).
+    // Stats (UI3) : chaque rubrique, haut et bas de page ; la page Records ;
+    // la feuille de personnage (ouverte depuis Parcours).
+    Future<void> statsSection(WidgetTester tester, int i) async {
+      final f = find.byKey(ValueKey('stats-section-$i'));
+      if (f.evaluate().isEmpty) return;
+      await tester.ensureVisible(f.first);
+      await tester.tap(f.first);
+      await wait(tester, 1200);
+    }
+
     await tab(tester, 1);
+    await statsSection(tester, 0);
     await screen(tester, 'stats');
     await toEnd(tester);
     await underDock(tester, 'stats');
     await screen(tester, 'stats_bas');
+    for (final (i, name) in const [
+      (1, 'stats_parcours'),
+      (2, 'stats_performances'),
+      (3, 'stats_historique'),
+    ]) {
+      await statsSection(tester, i);
+      await screen(tester, name);
+      await toEnd(tester);
+      await underDock(tester, name);
+      await screen(tester, '${name}_bas');
+    }
+    await statsSection(tester, 1);
+    final character = find.byKey(const ValueKey('stats-character'));
+    await scrollTo(tester, character);
+    if (character.hitTestable().evaluate().isNotEmpty) {
+      await tester.tap(character.hitTestable().first);
+      await wait(tester, 1200);
+      await screen(tester, 'stats_feuille_personnage');
+      await appNavigator.currentState!.maybePop();
+      await wait(tester, 800);
+    }
+    await statsSection(tester, 0);
+    await home(tester);
+    await screen(
+      tester,
+      'records',
+      open: const RecordsScreen(),
+      check: find.byType(RecordsScreen),
+    );
     await home(tester);
 
     // Arsenal et Réglages (UI4).
@@ -434,6 +474,30 @@ void main() {
       [settingsTab, () => text('Séance')],
       [settingsTab, () => text('Chronomètres')],
     ], () => find.text('Repos par défaut'));
+    // Stats (UI3) : Records (absent de la base), Mes références par le
+    // raccourci de Performances, objectif de la semaine (réglage visible).
+    Finder statsTab() => find.byKey(const ValueKey('nav-1'));
+    Finder statsPart(int i) => find.byKey(ValueKey('stats-section-$i'));
+    await route(tester, 'records', [
+      [statsTab, () => statsPart(2), () => find.byKey(const ValueKey('stats-records'))],
+    ], () => find.byType(RecordsScreen));
+    await route(tester, 'mes_references_stats', [
+      [statsTab, () => statsPart(2), () => find.byKey(const ValueKey('stats-references'))],
+      [statsTab, () => statsPart(2), () => text('Modifier mes références')],
+    ], () => find.byType(PilotageScreen));
+    await route(
+      tester,
+      'objectif_semaine',
+      [
+        [statsTab, () => statsPart(0)],
+        [statsTab, () => statsPart(0), () => find.byKey(const ValueKey('game-weekly-goal'))],
+      ],
+      () => find.byWidgetPredicate(
+        (w) =>
+            w.key == const ValueKey('segment-3') ||
+            (w is ChoiceChip && w.label is Text && (w.label as Text).data == '3 jours'),
+      ),
+    );
     releve['captures'] = shots;
     record();
   });
