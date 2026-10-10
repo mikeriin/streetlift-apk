@@ -1,0 +1,434 @@
+{
+ "bordeaux": {
+  "nom": "Bordeaux Performance",
+  "source": {
+   "dominante": "#551515",
+   "secondaire": "#8E3030",
+   "accent": "#D9A66C",
+   "fondSombre": "#181819",
+   "fondClair": "#F6F2EF"
+  },
+  "sombre": {
+   "fond": "#181819",
+   "surface": "#222223",
+   "haute": "#2D2C2E",
+   "filet": "#383738",
+   "texte": "#F3F0F1",
+   "texte2": "#ABABAF",
+   "texte3": "#77777A",
+   "pleine": "#873B38",
+   "surPleine": "#FFFFFF",
+   "encre": "#CA6F6A",
+   "second": "#B24B49",
+   "accent": "#D9A66C",
+   "_c": {
+    "texte/fond": 15.67,
+    "texte2/surface": 6.95,
+    "surPleine/pleine": 7.74,
+    "encre/surface": 4.54,
+    "accent/surface": 7.28,
+    "second/surface": 3.02
+   }
+  },
+  "clair": {
+   "fond": "#F6F2EF",
+   "surface": "#FFFFFF",
+   "haute": "#F6F2EF",
+   "filet": "#D9D6D3",
+   "texte": "#1C1C17",
+   "texte2": "#605F54",
+   "texte3": "#939186",
+   "pleine": "#551515",
+   "surPleine": "#FFFFFF",
+   "encre": "#551515",
+   "second": "#8E3030",
+   "accent": "#916632",
+   "_c": {
+    "texte/fond": 15.36,
+    "texte2/surface": 6.44,
+    "surPleine/pleine": 13.96,
+    "encre/surface": 13.96,
+    "accent/surface": 5.06,
+    "second/surface": 8.03
+   }
+  }
+ },
+ "obsidian": {
+  "nom": "Obsidian Energy",
+  "source": {
+   "dominante": "#E5484D",
+   "secondaire": "#FF8566",
+   "accent": "#FFC857",
+   "fondSombre": "#121316",
+   "fondClair": "#F2F3F5"
+  },
+  "sombre": {
+   "fond": "#121316",
+   "surface": "#1C1D20",
+   "haute": "#27272B",
+   "filet": "#313235",
+   "texte": "#F3F0F1",
+   "texte2": "#ABABAF",
+   "texte3": "#77777A",
+   "pleine": "#D73E44",
+   "surPleine": "#FFFFFF",
+   "encre": "#EA4C50",
+   "second": "#FF8566",
+   "accent": "#FFC857",
+   "_c": {
+    "texte/fond": 16.41,
+    "texte2/surface": 7.36,
+    "surPleine/pleine": 4.5,
+    "encre/surface": 4.53,
+    "accent/surface": 10.96,
+    "second/surface": 7.06
+   }
+  },
+  "clair": {
+   "fond": "#F2F3F5",
+   "surface": "#FFFFFF",
+   "haute": "#F2F3F5",
+   "filet": "#D5D7D9",
+   "texte": "#191C1E",
+   "texte2": "#5A5F62",
+   "texte3": "#8C9195",
+   "pleine": "#D73E44",
+   "surPleine": "#FFFFFF",
+   "encre": "#CD363D",
+   "second": "#E67254",
+   "accent": "#906800",
+   "_c": {
+    "texte/fond": 15.43,
+    "texte2/surface": 6.47,
+    "surPleine/pleine": 4.5,
+    "encre/surface": 5.01,
+    "accent/surface": 5.04,
+    "second/surface": 3.04
+   }
+  }
+ },
+ "arctic": {
+  "nom": "Arctic Motion",
+  "source": {
+   "dominante": "#2563EB",
+   "secondaire": "#4F9CF9",
+   "accent": "#14B8A6",
+   "fondSombre": "#152238",
+   "fondClair": "#F5F8FC"
+  },
+  "sombre": {
+   "fond": "#152238",
+   "surface": "#242D3D",
+   "haute": "#2F3748",
+   "filet": "#3A4354",
+   "texte": "#F3F0F1",
+   "texte2": "#ABABAF",
+   "texte3": "#77777A",
+   "pleine": "#2563EB",
+   "surPleine": "#FFFFFF",
+   "encre": "#668EFF",
+   "second": "#4F9CF9",
+   "accent": "#14B8A6",
+   "_c": {
+    "texte/fond": 14.07,
+    "texte2/surface": 6.05,
+    "surPleine/pleine": 5.17,
+    "encre/surface": 4.53,
+    "accent/surface": 5.56,
+    "second/surface": 4.91
+   }
+  },
+  "clair": {
+   "fond": "#F5F8FC",
+   "surface": "#FFFFFF",
+   "haute": "#F5F8FC",
+   "filet": "#D8DCDF",
+   "texte": "#191C1E",
+   "texte2": "#5A5F63",
+   "texte3": "#8D9195",
+   "pleine": "#2563EB",
+   "surPleine": "#FFFFFF",
+   "encre": "#2563EB",
+   "second": "#4795F2",
+   "accent": "#008073",
+   "_c": {
+    "texte/fond": 16.08,
+    "texte2/surface": 6.46,
+    "surPleine/pleine": 5.17,
+    "encre/surface": 5.17,
+    "accent/surface": 4.84,
+    "second/surface": 3.07
+   }
+  }
+ },
+ "neon": {
+  "nom": "Neon Athlete",
+  "source": {
+   "dominante": "#B4F044",
+   "secondaire": "#67D8C0",
+   "accent": "#8C72FF",
+   "fondSombre": "#101510",
+   "fondClair": "#F2F9EA"
+  },
+  "sombre": {
+   "fond": "#101510",
+   "surface": "#1A1F1A",
+   "haute": "#242A24",
+   "filet": "#2F342E",
+   "texte": "#F2F0ED",
+   "texte2": "#AAACA7",
+   "texte3": "#757873",
+   "pleine": "#B4F044",
+   "surPleine": "#121212",
+   "encre": "#B4F044",
+   "second": "#67D8C0",
+   "accent": "#8C72FF",
+   "_c": {
+    "texte/fond": 16.24,
+    "texte2/surface": 7.31,
+    "surPleine/pleine": 13.82,
+    "encre/surface": 12.34,
+    "accent/surface": 4.75,
+    "second/surface": 9.69
+   }
+  },
+  "clair": {
+   "fond": "#F2F9EA",
+   "surface": "#FFFFFF",
+   "haute": "#F2F9EA",
+   "filet": "#D6DCCF",
+   "texte": "#1A1C18",
+   "texte2": "#5C6058",
+   "texte3": "#8E928A",
+   "pleine": "#B4F044",
+   "surPleine": "#121212",
+   "encre": "#567B00",
+   "second": "#2BA690",
+   "accent": "#7458E4",
+   "_c": {
+    "texte/fond": 15.95,
+    "texte2/surface": 6.42,
+    "surPleine/pleine": 13.82,
+    "encre/surface": 4.97,
+    "accent/surface": 4.93,
+    "second/surface": 3.02
+   }
+  }
+ },
+ "titanium": {
+  "nom": "Titanium Pro",
+  "source": {
+   "dominante": "#4C6474",
+   "secondaire": "#8A9DA8",
+   "accent": "#D5A24C",
+   "fondSombre": "#171E24",
+   "fondClair": "#E8EDF0"
+  },
+  "sombre": {
+   "fond": "#171E24",
+   "surface": "#21282F",
+   "haute": "#2C3339",
+   "filet": "#373E45",
+   "texte": "#F2F0F1",
+   "texte2": "#AAABAE",
+   "texte3": "#76777A",
+   "pleine": "#4C6474",
+   "surPleine": "#FFFFFF",
+   "encre": "#7992A3",
+   "second": "#8A9DA8",
+   "accent": "#D5A24C",
+   "_c": {
+    "texte/fond": 14.84,
+    "texte2/surface": 6.49,
+    "surPleine/pleine": 6.21,
+    "encre/surface": 4.58,
+    "accent/surface": 6.46,
+    "second/surface": 5.3
+   }
+  },
+  "clair": {
+   "fond": "#E8EDF0",
+   "surface": "#FFFFFF",
+   "haute": "#E8EDF0",
+   "filet": "#CCD1D4",
+   "texte": "#191C1D",
+   "texte2": "#5A5F62",
+   "texte3": "#8C9194",
+   "pleine": "#4C6474",
+   "surPleine": "#FFFFFF",
+   "encre": "#4C6474",
+   "second": "#8396A1",
+   "accent": "#8E6310",
+   "_c": {
+    "texte/fond": 14.53,
+    "texte2/surface": 6.47,
+    "surPleine/pleine": 6.21,
+    "encre/surface": 6.21,
+    "accent/surface": 5.33,
+    "second/surface": 3.07
+   }
+  }
+ },
+ "violet": {
+  "nom": "Violet Momentum",
+  "source": {
+   "dominante": "#7546DB",
+   "secondaire": "#AC8CFA",
+   "accent": "#29BFB0",
+   "fondSombre": "#181427",
+   "fondClair": "#F5F1FF"
+  },
+  "sombre": {
+   "fond": "#181427",
+   "surface": "#221E31",
+   "haute": "#2D293C",
+   "filet": "#383347",
+   "texte": "#F4EFF1",
+   "texte2": "#AEAAAF",
+   "texte3": "#79767A",
+   "pleine": "#7546DB",
+   "surPleine": "#FFFFFF",
+   "encre": "#986CFF",
+   "second": "#AC8CFA",
+   "accent": "#29BFB0",
+   "_c": {
+    "texte/fond": 15.81,
+    "texte2/surface": 7.06,
+    "surPleine/pleine": 5.75,
+    "encre/surface": 4.56,
+    "accent/surface": 7.07,
+    "second/surface": 6.07
+   }
+  },
+  "clair": {
+   "fond": "#F5F1FF",
+   "surface": "#FFFFFF",
+   "haute": "#F5F1FF",
+   "filet": "#D8D5E0",
+   "texte": "#1C1B1F",
+   "texte2": "#5F5D64",
+   "texte3": "#928F97",
+   "pleine": "#7546DB",
+   "surPleine": "#FFFFFF",
+   "encre": "#7546DB",
+   "second": "#A181EE",
+   "accent": "#007D71",
+   "_c": {
+    "texte/fond": 15.42,
+    "texte2/surface": 6.49,
+    "surPleine/pleine": 5.75,
+    "encre/surface": 5.75,
+    "accent/surface": 5.03,
+    "second/surface": 3.05
+   }
+  }
+ },
+ "forest": {
+  "nom": "Forest Endurance",
+  "source": {
+   "dominante": "#236B50",
+   "secondaire": "#7BAC81",
+   "accent": "#D7B374",
+   "fondSombre": "#17251D",
+   "fondClair": "#F4F5EE"
+  },
+  "sombre": {
+   "fond": "#17251D",
+   "surface": "#213027",
+   "haute": "#2C3B32",
+   "filet": "#37463D",
+   "texte": "#F2F0EE",
+   "texte2": "#A9ACA8",
+   "texte3": "#757874",
+   "pleine": "#236B50",
+   "surPleine": "#FFFFFF",
+   "encre": "#5CA283",
+   "second": "#7BAC81",
+   "accent": "#D7B374",
+   "_c": {
+    "texte/fond": 14.01,
+    "texte2/surface": 6.03,
+    "surPleine/pleine": 6.38,
+    "encre/surface": 4.58,
+    "accent/surface": 6.98,
+    "second/surface": 5.31
+   }
+  },
+  "clair": {
+   "fond": "#F4F5EE",
+   "surface": "#FFFFFF",
+   "haute": "#F4F5EE",
+   "filet": "#D7D9D2",
+   "texte": "#1A1C19",
+   "texte2": "#5C6058",
+   "texte3": "#8E928A",
+   "pleine": "#236B50",
+   "surPleine": "#FFFFFF",
+   "encre": "#236B50",
+   "second": "#6FA076",
+   "accent": "#886B32",
+   "_c": {
+    "texte/fond": 15.64,
+    "texte2/surface": 6.42,
+    "surPleine/pleine": 6.38,
+    "encre/surface": 6.38,
+    "accent/surface": 5.0,
+    "second/surface": 3.01
+   }
+  }
+ },
+ "solar": {
+  "nom": "Solar Sprint",
+  "source": {
+   "dominante": "#D95A27",
+   "secondaire": "#FF9760",
+   "accent": "#E8BC49",
+   "fondSombre": "#211B1A",
+   "fondClair": "#FFF6ED"
+  },
+  "sombre": {
+   "fond": "#211B1A",
+   "surface": "#2C2524",
+   "haute": "#37302F",
+   "filet": "#423B39",
+   "texte": "#F7EFED",
+   "texte2": "#B4A9A7",
+   "texte3": "#7F7573",
+   "pleine": "#CA4F1C",
+   "surPleine": "#FFFFFF",
+   "encre": "#E86531",
+   "second": "#FF9760",
+   "accent": "#E8BC49",
+   "_c": {
+    "texte/fond": 14.98,
+    "texte2/surface": 6.57,
+    "surPleine/pleine": 4.52,
+    "encre/surface": 4.54,
+    "accent/surface": 8.39,
+    "second/surface": 7.05
+   }
+  },
+  "clair": {
+   "fond": "#FFF6ED",
+   "surface": "#FFFFFF",
+   "haute": "#FFF6ED",
+   "filet": "#E2DAD1",
+   "texte": "#1F1B16",
+   "texte2": "#655D53",
+   "texte3": "#988F84",
+   "pleine": "#CA4F1C",
+   "surPleine": "#FFFFFF",
+   "encre": "#C34A17",
+   "second": "#DC7B46",
+   "accent": "#8F6D00",
+   "_c": {
+    "texte/fond": 16.03,
+    "texte2/surface": 6.47,
+    "surPleine/pleine": 4.52,
+    "encre/surface": 4.87,
+    "accent/surface": 4.82,
+    "second/surface": 3.02
+   }
+  }
+ }
+}

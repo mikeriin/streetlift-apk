@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Programme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Semi+Condensed:wght@500;600&amp;family=Barlow+Condensed:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--texte)}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
+  <div style="padding: 28px 20px 96px; display: flex; flex-direction: column; gap: 24px">
+
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 30px; line-height: 36px">Programme</h1>
+      <div style="color: var(--texte2)">Expert streetlifting, 40 semaines</div>
+    </div>
+
+    <section aria-label="Saison" style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 40px; font-variant-numeric: tabular-nums">S13<span style="color: var(--texte2); font-size: 22px"> / 40</span></span>
+        <span style="color: var(--texte2)">27 semaines avant les tests</span>
+      </div>
+      <div style="position: relative; display: flex; gap: 3px; height: 28px" role="img" aria-label="Saison : semaine 13 sur 40, bloc force">
+        <sc-for list="{{blocks}}" as="b" hint-placeholder-count="6">
+          <div style="{{b.bar}}"></div>
+        </sc-for>
+        <div style="position: absolute; top: -6px; bottom: -6px; left: 31%; width: 3px; border-radius: 2px; background: var(--texte)"></div>
+      </div>
+    </section>
+
+    <section aria-label="Blocs" style="display: flex; flex-direction: column">
+      <sc-for list="{{blocks}}" as="b" hint-placeholder-count="6">
+        <div style="display: grid; grid-template-columns: 14px 1fr auto; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--filet)">
+          <div style="{{b.dot}}"></div>
+          <div style="display: flex; flex-direction: column">
+            <span style="{{b.nameStyle}}">{{b.name}}</span>
+            <span style="color: var(--texte2); font-size: 13px; line-height: 18px">{{b.weeks}}</span>
+          </div>
+          <span style="color: var(--texte2); font-size: 14px">{{b.state}}</span>
+        </div>
+      </sc-for>
+    </section>
+
+    <section aria-label="Semaine 13" style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0 0 6px; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px">Semaine 13</h2>
+      <sc-for list="{{week}}" as="w" hint-placeholder-count="6">
+        <div style="{{w.row}}">
+          <span style="color: var(--texte2); font-size: 14px">{{w.day}}</span>
+          <span>{{w.title}}</span>
+          <span style="{{w.tagStyle}}">{{w.tag}}</span>
+        </div>
+      </sc-for>
+    </section>
+  </div>
+
+  <nav aria-label="Navigation principale" style="position: absolute; left: 0; right: 0; bottom: 0; height: 72px; background: var(--surface); border-top: 1px solid var(--filet); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+    <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Aujourd'hui</a>
+    <a href="Programme.dc.html" aria-current="page" style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte); font-size: 12px; font-weight: 600">
+      <div style="position: absolute; top: 0; width: 28px; height: 3px; border-radius: 0 0 3px 3px; background: {{a.ink}}"></div>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="{{a.ink}}" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Programme</a>
+    <a href="Progres.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19l5-6 4 3 7-9"/><path d="M15 7h5v5"/></svg>Progrès</a>
+    <a href="#" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 9v6M21 9v6M6 6v12M18 6v12M6 12h12"/></svg>Exercices</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var T = {
+      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#873B38', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
+      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#D73E44', surPleine: '#FFFFFF', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
+      arctic: {fond: '#152238', surface: '#242D3D', haute: '#2F3748', filet: '#3A4354', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#668EFF', second: '#4F9CF9', accent: '#14B8A6'},
+      neon: {fond: '#101510', surface: '#1A1F1A', haute: '#242A24', filet: '#2F342E', texte: '#F2F0ED', texte2: '#AAACA7', texte3: '#757873', pleine: '#B4F044', surPleine: '#111111', encre: '#B4F044', second: '#67D8C0', accent: '#8C72FF'},
+      titanium: {fond: '#171E24', surface: '#21282F', haute: '#2C3339', filet: '#373E45', texte: '#F2F0F1', texte2: '#AAABAE', texte3: '#76777A', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#7992A3', second: '#8A9DA8', accent: '#D5A24C'},
+      violet: {fond: '#181427', surface: '#221E31', haute: '#2D293C', filet: '#383347', texte: '#F4EFF1', texte2: '#AEAAAF', texte3: '#79767A', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#986CFF', second: '#AC8CFA', accent: '#29BFB0'},
+      forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
+      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
+    };
+    var a = T[this.props.accent] || T.bordeaux;
+    a.vive = a.pleine; a.ink = a.encre; a.on = a.surPleine;
+    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var raw = [
+      ['Tests', 3, 'S1 à S3', 'done'], ['Hypertrophie', 8, 'S4 à S11', 'done'], ['Force', 8, 'S12 à S19', 'now'],
+      ['Force max', 6, 'S20 à S25', 'next'], ['Endurance', 6, 'S26 à S31', 'next'], ['Peaking et tests', 9, 'S32 à S40', 'next']
+    ];
+    var col = { done: 'var(--texte3)', now: a.ink, next: 'var(--filet)' };
+    var blocks = raw.map(function (r) {
+      var c = col[r[3]];
+      return {
+        name: r[0], weeks: r[2],
+        state: r[3] === 'done' ? 'Terminé' : (r[3] === 'now' ? 'Semaine 2 sur 8' : r[1] + ' semaines'),
+        bar: 'flex: ' + r[1] + ' 1 0; border-radius: 6px; background: ' + c + ';',
+        dot: 'width: 10px; height: 10px; border-radius: 5px; background: ' + (r[3] === 'next' ? 'var(--texte3)' : c) + ';',
+        nameStyle: r[3] === 'now' ? 'font-weight: 600' : (r[3] === 'done' ? 'color: var(--texte2)' : '')
+      };
+    });
+    var w = [
+      ['mer. 7', 'Muscle-up et tirage lourd', 'Fait', 'done'], ['jeu. 8', 'Dip lourd et poussée', 'Fait', 'done'],
+      ['sam. 10', 'Squat et gainage', 'Aujourd’hui', 'today'], ['dim. 11', 'Tirage, volume et endurance', '50 min', ''],
+      ['lun. 12', 'Poussée, volume et endurance', '55 min', ''], ['mar. 13', 'Puissance muscle-up et squat', '60 min', '']
+    ];
+    var baseRow = 'display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 8px; min-height: 48px; padding: 0 12px; border-radius: 14px; ';
+    var week = w.map(function (r) {
+      return {
+        day: r[0], title: r[1], tag: r[2],
+        row: baseRow + (r[3] === 'today' ? 'background: var(--surface); box-shadow: inset 0 0 0 1.5px ' + a.ink + ';' : ''),
+        tagStyle: r[3] === 'done' ? 'color: #5CB860; font-size: 14px' : (r[3] === 'today' ? 'color: ' + a.ink + '; font-size: 14px; font-weight: 600' : 'color: var(--texte2); font-size: 14px')
+      };
+    });
+    return { a: a, blocks: blocks, week: week, vars: vars };
+  }
+}
+</script>
+</body>
+</html>

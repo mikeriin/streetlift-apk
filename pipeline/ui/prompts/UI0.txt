@@ -1,0 +1,16 @@
+Lot UI0 — Fondations de la refonte UI et UX (Kalis Track). Effort élevé, exactitude avant vitesse.
+
+Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md, pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, les maquettes (sources HTML dans pipeline/ui/maquettes/, une par écran ; lien du canevas dans le cahier) et pipeline/ui/inputs/.
+
+Fais exactement le contenu « UI0 — Fondations » du cahier (§6.3), dans les fichiers que le cahier attribue à UI0 (§6.2), avec le système de §4 :
+1. Branche `refonte-ui` depuis `main` b7996b3f. Workflow `.github/workflows/ci-ui.yml` (copie de `ci-3d.yml` : déclenché par `claude/ci-ui-*`, concurrence par branche, `ci-out/` recommité sur la branche de contrôle du lot, rendus « avant » pris sur `main` b7996b3f). Tant qu'il n'existe pas sur la branche poussée, contrôle sur `claude/ci-3d`.
+2. Polices Barlow (trois largeurs) embarquées avec leur licence OFL et leurs empreintes ; aucune permission INTERNET.
+3. `lib/kit/` : jetons en trois couches (globaux, alias, composants), `palette.dart` (dérivation de §4.1 avec `material_color_utilities` ; test qui retrouve `inputs/palettes_roles.json` à l'identique, tonalités arrondies comme le script), contraste renforcé, `ThemeExtension`, `buildTheme` réécrit ; tous les composants de §4.4 avec test de widget et captures ; ressorts de §4.5 ; catalogue des composants en mode dev.
+4. Préférence `accent` : 8 palettes, relecture des anciens identifiants (§4.1), import d'une sauvegarde ancienne accepté ; sélecteur dans Apparence avec aperçu ; interrupteur « Contraste renforcé ».
+5. Navigation de §3.1 : `KNavBar` fixe à 4 onglets, ouverture sur Aujourd'hui, écran Profil et réglages poussé depuis Aujourd'hui (il héberge pour l'instant l'écran Réglages actuel), mode dev déplacé (plus de poignée DEV sur les écrans) ; écrans existants branchés tels quels dans les nouveaux onglets.
+6. `ui.dart` et `app_theme.dart` gardent leurs noms publics (ré-export ou adaptateurs vers `lib/kit/`) pour que les écrans non encore refaits compilent et s'affichent aux nouvelles couleurs et polices ; aucun écran de zone n'est refait ici.
+7. `tools/check_ui_tokens.py` (cahier §5.1) avec `--zone <LOT>` et relevé de départ par fichier, branché en CI (non bloquant hors zone).
+8. `integration_test/tour_ui_test.dart` : squelette qui ouvre chaque écran principal en sombre et clair, palettes `bordeaux` et `neon`, et mesure les parcours de §5.4 sur l'état actuel (colonne « dev6.11.1 » : mesure-la sur `main` b7996b3f avec le même script) ; chaque lot d'écrans y ajoutera sa zone.
+9. Écris dans ta livraison le mode d'emploi du kit pour les lots UI1 à UI4 (où trouver quoi, comment ajouter un écran au tour, comment lancer le contrôle de zone).
+
+Fin de lot : PIPELINE_UI.md §4 (refonte-ui poussée, livraison, ETAT_UI « livré », notification, arrêt).

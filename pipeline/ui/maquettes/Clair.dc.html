@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Aujourd'hui, thème clair</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Semi+Condensed:wght@500;600&amp;family=Barlow+Condensed:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--texte)}a:hover{color:#000000}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
+  <div style="padding: 28px 20px 96px; display: flex; flex-direction: column; gap: 24px">
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-start">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="color: var(--texte2); font-size: 14px">Samedi 10 octobre</div>
+        <button style="all: unset; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 30px; line-height: 36px">Semaine 13
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div style="color: var(--texte2)">Bloc force, semaine 2 sur 8</div>
+      </div>
+      <button aria-label="Profil et réglages" style="all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: 22px; background: var(--surface); display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+      </button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+      <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+        <div style="{{d.cell}}">
+          <div style="font-size: 12px; line-height: 16px; opacity: .8">{{d.dow}}</div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 26px; font-variant-numeric: tabular-nums">{{d.n}}</div>
+          <div style="height: 14px; display: flex; align-items: center; justify-content: center">
+            <sc-if value="{{d.done}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Faite" role="img"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></sc-if>
+            <sc-if value="{{d.planned}}" hint-placeholder-val="{{false}}"><div style="{{d.ring}}"></div></sc-if>
+            <sc-if value="{{d.rest}}" hint-placeholder-val="{{false}}"><div style="width: 8px; height: 2px; background: var(--texte3)"></div></sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <section style="background: var(--surface); border-radius: 28px; padding: 20px; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <div style="display: flex; justify-content: space-between; color: var(--texte2); font-size: 14px"><span>Aujourd'hui</span><span>Séance 3 sur 6</span></div>
+        <h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 30px; line-height: 36px">Squat et gainage</h1>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+        <div><div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 40px">6</div><div style="color: var(--texte2); font-size: 13px">exercices</div></div>
+        <div><div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 40px">19</div><div style="color: var(--texte2); font-size: 13px">séries</div></div>
+        <div><div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 40px">45<span style="font-size: 20px; margin-left: 2px">min</span></div><div style="color: var(--texte2); font-size: 13px">estimées</div></div>
+      </div>
+      <div style="display: flex; flex-direction: column">
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--filet)"><span>Back squat</span><span style="color: var(--texte2); font-variant-numeric: tabular-nums">5 × 3 à 117,5 kg</span></div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--filet)"><span>Squat pause</span><span style="color: var(--texte2); font-variant-numeric: tabular-nums">3 × 4 à 95 kg</span></div>
+        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--filet)"><span>Planche lestée</span><span style="color: var(--texte2); font-variant-numeric: tabular-nums">3 × 45 s</span></div>
+        <div style="padding: 10px 0 0; border-top: 1px solid var(--filet); color: var(--texte2)">et 3 autres exercices</div>
+      </div>
+      <a href="Seance.dc.html" style="display: flex; align-items: center; justify-content: center; height: 56px; border-radius: 16px; background: {{a.vive}}; color: {{a.surPleine}}; font-weight: 600; font-size: 17px; text-decoration: none">Commencer la séance</a>
+    </section>
+
+    <a href="Koach.dc.html" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--surface); border-radius: 16px; text-decoration: none; color: var(--texte)">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="{{a.accent}}" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.6 2.2-4.6.2 1.8 1 2.8 2 3.2C11 9 10.8 6 12 3z"/></svg>
+      <span style="flex: 1">Koach a relevé ton squat de 2,5 kg après la séance de jeudi.</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <section style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0 0 4px; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px">Ensuite</h2>
+      <div style="display: grid; grid-template-columns: 64px 1fr auto; align-items: center; padding: 12px 0; border-top: 1px solid var(--filet)"><span style="color: var(--texte2)">Dim. 11</span><span>Tirage, volume et endurance</span><span style="color: var(--texte2)">50 min</span></div>
+      <div style="display: grid; grid-template-columns: 64px 1fr auto; align-items: center; padding: 12px 0; border-top: 1px solid var(--filet)"><span style="color: var(--texte2)">Lun. 12</span><span>Poussée, volume et endurance</span><span style="color: var(--texte2)">55 min</span></div>
+    </section>
+  </div>
+
+  <nav aria-label="Navigation principale" style="position: absolute; left: 0; right: 0; bottom: 0; height: 72px; background: var(--surface); border-top: 1px solid var(--filet); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+    <a href="Clair.dc.html" aria-current="page" style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte); font-size: 12px; font-weight: 600">
+      <div style="position: absolute; top: 0; width: 28px; height: 3px; border-radius: 0 0 3px 3px; background: {{a.ink}}"></div>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="{{a.ink}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Aujourd'hui</a>
+    <a href="Programme.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Programme</a>
+    <a href="Progres.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19l5-6 4 3 7-9"/><path d="M15 7h5v5"/></svg>Progrès</a>
+    <a href="#" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 9v6M21 9v6M6 6v12M18 6v12M6 12h12"/></svg>Exercices</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"violet"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var T = {
+      bordeaux: {fond: '#F6F2EF', surface: '#FFFFFF', haute: '#F6F2EF', filet: '#D9D6D3', texte: '#1C1C17', texte2: '#605F54', texte3: '#939186', pleine: '#551515', surPleine: '#FFFFFF', encre: '#551515', second: '#8E3030', accent: '#916632'},
+      obsidian: {fond: '#F2F3F5', surface: '#FFFFFF', haute: '#F2F3F5', filet: '#D5D7D9', texte: '#191C1E', texte2: '#5A5F62', texte3: '#8C9195', pleine: '#D73E44', surPleine: '#FFFFFF', encre: '#CD363D', second: '#E67254', accent: '#906800'},
+      arctic: {fond: '#F5F8FC', surface: '#FFFFFF', haute: '#F5F8FC', filet: '#D8DCDF', texte: '#191C1E', texte2: '#5A5F63', texte3: '#8D9195', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#2563EB', second: '#4795F2', accent: '#008073'},
+      neon: {fond: '#F2F9EA', surface: '#FFFFFF', haute: '#F2F9EA', filet: '#D6DCCF', texte: '#1A1C18', texte2: '#5C6058', texte3: '#8E928A', pleine: '#B4F044', surPleine: '#111111', encre: '#567B00', second: '#2BA690', accent: '#7458E4'},
+      titanium: {fond: '#E8EDF0', surface: '#FFFFFF', haute: '#E8EDF0', filet: '#CCD1D4', texte: '#191C1D', texte2: '#5A5F62', texte3: '#8C9194', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#4C6474', second: '#8396A1', accent: '#8E6310'},
+      violet: {fond: '#F5F1FF', surface: '#FFFFFF', haute: '#F5F1FF', filet: '#D8D5E0', texte: '#1C1B1F', texte2: '#5F5D64', texte3: '#928F97', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#7546DB', second: '#A181EE', accent: '#007D71'},
+      forest: {fond: '#F4F5EE', surface: '#FFFFFF', haute: '#F4F5EE', filet: '#D7D9D2', texte: '#1A1C19', texte2: '#5C6058', texte3: '#8E928A', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#236B50', second: '#6FA076', accent: '#886B32'},
+      solar: {fond: '#FFF6ED', surface: '#FFFFFF', haute: '#FFF6ED', filet: '#E2DAD1', texte: '#1F1B16', texte2: '#655D53', texte3: '#988F84', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#C34A17', second: '#DC7B46', accent: '#8F6D00'}
+    };
+    var a = T[this.props.accent] || T.violet;
+    a.vive = a.pleine; a.ink = a.encre;
+    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var base = 'display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0 6px; border-radius: 14px; ';
+    var raw = [
+      ['mer.', '7', 'done'], ['jeu.', '8', 'done'], ['ven.', '9', 'rest'], ['sam.', '10', 'today'],
+      ['dim.', '11', 'planned'], ['lun.', '12', 'planned'], ['mar.', '13', 'planned']
+    ];
+    var days = raw.map(function (r) {
+      var today = r[2] === 'today';
+      return {
+        dow: r[0], n: r[1],
+        done: r[2] === 'done', rest: r[2] === 'rest', planned: r[2] === 'planned' || today,
+        ring: 'width: 6px; height: 6px; border-radius: 3px; border: 1.5px solid ' + (today ? a.surPleine : 'var(--texte2)') + ';',
+        cell: base + (today ? 'background: ' + a.vive + '; color: ' + a.surPleine + ';' : 'background: var(--surface); color: var(--texte);')
+      };
+    });
+    return { a: a, days: days, vars: vars };
+  }
+}
+</script>
+</body>
+</html>

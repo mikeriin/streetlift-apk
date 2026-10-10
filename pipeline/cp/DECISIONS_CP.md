@@ -446,3 +446,9 @@ Lot livré le 09/10/2026, à valider par la conversation de pilotage (C8.1) : de
 - **Recommandation (C8, le pilotage décide)** : valider dev6.11.1 et la donner au propriétaire à la place de dev6.11.0 ; lot CI final ensuite (limites restantes de CI1 à CI1g, points « non déterminés » des notes d'intégration, répétition du rappel de la carte).
 
 ### CI
+
+## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
+
+- **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
+- **C14.2** Ordre de la voie App : refonte UI (UI0 → UI1 à UI4 en parallèle → UI5, dev6.12.0) **avant** le lot CI final et la base v1.1, qui seront faits sur le nouveau système. KM1 et KM2 (voie moteurs) ne sont pas touchés ; jalon de KM3 inchangé (APK le 16/11/2026).
+- **C14.3** CI1g (dev6.11.1, « à valider ») est la base de départ de la refonte (`main` b7996b3f).

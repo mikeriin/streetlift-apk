@@ -1,0 +1,58 @@
+PALETTES DE COULEURS — APPLICATION DE COACHING ET SUIVI SPORTIF
+=============================================================
+
+1. BORDEAUX PERFORMANCE — Premium / Puissance
+   Dominante :   #551515
+   Secondaire :  #8E3030
+   Accent :      #D9A66C
+   Fond sombre : #181819
+   Fond clair :  #F6F2EF
+
+2. OBSIDIAN ENERGY — Intense / Moderne
+   Dominante :   #E5484D
+   Secondaire :  #FF8566
+   Accent :      #FFC857
+   Fond sombre : #121316
+   Fond clair :  #F2F3F5
+
+3. ARCTIC MOTION — Minimaliste / Précis
+   Dominante :   #2563EB
+   Secondaire :  #4F9CF9
+   Accent :      #14B8A6
+   Fond clair :  #F5F8FC
+   Fond sombre : #152238
+
+4. NEON ATHLETE — Futuriste / Dynamique
+   Dominante :   #B4F044
+   Secondaire :  #67D8C0
+   Accent :      #8C72FF
+   Fond sombre : #101510
+   Fond clair :  #F2F9EA
+
+5. TITANIUM PRO — Technique / Sobre
+   Dominante :   #4C6474
+   Secondaire :  #8A9DA8
+   Accent :      #D5A24C
+   Fond sombre : #171E24
+   Fond clair :  #E8EDF0
+
+6. VIOLET MOMENTUM — Digital / Innovant
+   Dominante :   #7546DB
+   Secondaire :  #AC8CFA
+   Accent :      #29BFB0
+   Fond sombre : #181427
+   Fond clair :  #F5F1FF
+
+7. FOREST ENDURANCE — Nature / Équilibre
+   Dominante :   #236B50
+   Secondaire :  #7BAC81
+   Accent :      #D7B374
+   Fond clair :  #F4F5EE
+   Fond sombre : #17251D
+
+8. SOLAR SPRINT — Énergie / Motivation
+   Dominante :   #D95A27
+   Secondaire :  #FF9760
+   Accent :      #E8BC49
+   Fond sombre : #211B1A
+   Fond clair :  #FFF6ED
