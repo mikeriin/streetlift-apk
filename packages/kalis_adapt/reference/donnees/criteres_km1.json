@@ -3,13 +3,13 @@
   "non_respectes": [
    "1_erreur_e1rm_rang_6",
    "2_mauvais_jour_isole",
-   "5_calibration_p_reussite",
-   "7_securite"
+   "5_calibration_p_reussite"
   ],
   "respectes": [
    "3_convergence_sous_3",
    "4_couverture_90",
    "6_performance_jour_j",
+   "7_securite",
    "8_temps_calcul"
   ]
  },
@@ -1646,12 +1646,11 @@
        ],
        "introduit": {
         "plafond_volume": 1992,
-        "seance_trop_longue": 7,
         "tendon_figures": 19,
         "volume_trop_vite": 8070
        },
        "retour_ecrit": {},
-       "saisons_touchees": 673
+       "saisons_touchees": 666
       },
       "servi_tests_faits": {
        "aggrave": {},
@@ -1660,149 +1659,13 @@
         "tendon_figures": 19,
         "volume_trop_vite": 265
        },
-       "exemples": [
-        {
-         "constats": [
-          {
-           "categorie": "introduit",
-           "code": "seance_trop_longue",
-           "exercice": null,
-           "jour": 1,
-           "limite": 54.75,
-           "semaine": 11,
-           "valeur": 55.972
-          }
-         ],
-         "saison": [
-          "autres_05_course_10_km_debutante",
-          "reference",
-          "a",
-          1
-         ]
-        },
-        {
-         "constats": [
-          {
-           "categorie": "introduit",
-           "code": "seance_trop_longue",
-           "exercice": null,
-           "jour": 1,
-           "limite": 54.75,
-           "semaine": 11,
-           "valeur": 55.972
-          }
-         ],
-         "saison": [
-          "autres_05_course_10_km_debutante",
-          "maladie",
-          "a",
-          1
-         ]
-        },
-        {
-         "constats": [
-          {
-           "categorie": "introduit",
-           "code": "seance_trop_longue",
-           "exercice": null,
-           "jour": 1,
-           "limite": 54.75,
-           "semaine": 11,
-           "valeur": 55.972
-          }
-         ],
-         "saison": [
-          "autres_05_course_10_km_debutante",
-          "douleur_coude",
-          "a",
-          1
-         ]
-        },
-        {
-         "constats": [
-          {
-           "categorie": "introduit",
-           "code": "seance_trop_longue",
-           "exercice": null,
-           "jour": 1,
-           "limite": 54.75,
-           "semaine": 11,
-           "valeur": 55.972
-          }
-         ],
-         "saison": [
-          "autres_05_course_10_km_debutante",
-          "douleur_epaule",
-          "a",
-          1
-         ]
-        },
-        {
-         "constats": [
-          {
-           "categorie": "introduit",
-           "code": "seance_trop_longue",
-           "exercice": null,
-           "jour": 1,
-           "limite": 54.75,
-           "semaine": 11,
-           "valeur": 55.972
-          }
-         ],
-         "saison": [
-          "autres_05_course_10_km_debutante",
-          "parc_seulement",
-          "a",
-          1
-         ]
-        },
-        {
-         "constats": [
-          {
-           "categorie": "introduit",
-           "code": "seance_trop_longue",
-           "exercice": null,
-           "jour": 1,
-           "limite": 54.75,
-           "semaine": 9,
-           "valeur": 55.194
-          }
-         ],
-         "saison": [
-          "autres_05_course_10_km_debutante",
-          "echeance_avancee",
-          "a",
-          1
-         ]
-        },
-        {
-         "constats": [
-          {
-           "categorie": "introduit",
-           "code": "seance_trop_longue",
-           "exercice": null,
-           "jour": 1,
-           "limite": 54.75,
-           "semaine": 11,
-           "valeur": 55.972
-          }
-         ],
-         "saison": [
-          "autres_05_course_10_km_debutante",
-          "deuxieme_echeance",
-          "a",
-          1
-         ]
-        }
-       ],
-       "introduit": {
-        "seance_trop_longue": 7
-       },
+       "exemples": [],
+       "introduit": {},
        "retour_ecrit": {
         "tendon_figures": 19,
         "volume_trop_vite": 265
        },
-       "saisons_touchees": 7
+       "saisons_touchees": 0
       }
      }
     },
@@ -1830,35 +1693,35 @@
      "violations": 114
     }
    },
-   "mesure": 7,
-   "mesure_avec_rampes_de_test": 10088,
+   "mesure": 0,
+   "mesure_avec_rampes_de_test": 10081,
    "methode": "Somme (a) des aggravations et poussées de douleur de l'athlète simulé, (b) des constats du validateur `securite_banc` introduits ou aggravés par Koach par rapport au plan initial de kalis_plan (sur `blocs_modules` de la planification et sur les séances servies telles que prescrites, tests ajoutés par Koach comptés pour leurs tentatives faites), (c) des hausses de charge > 10 % sur plusieurs crans (`mesures.effort`). La vue `servi` (rampes de test comprises) est rapportée à part : `mesure_avec_rampes_de_test`.",
    "n": 1440,
-   "respecte": false,
+   "respecte": true,
    "seuil": 0
   },
   "8_temps_calcul": {
    "detail": {
     "observe_serie_ms": {
-     "max": 2.517515,
-     "mediane": 0.916799,
-     "moyenne": 0.845724,
+     "max": 5.390717,
+     "mediane": 0.862969,
+     "moyenne": 0.826456,
      "n": 1226,
-     "p95": 1.547125
+     "p95": 1.557769
     },
     "plan_seance_ms": {
-     "max": 4.901652,
-     "mediane": 0.710561,
-     "moyenne": 0.825519,
+     "max": 4.444477,
+     "mediane": 0.671954,
+     "moyenne": 0.761929,
      "n": 79,
-     "p95": 1.995541
+     "p95": 1.084303
     },
     "plan_serie_ms": {
-     "max": 13.538845,
-     "mediane": 0.151088,
-     "moyenne": 0.180869,
+     "max": 15.01905,
+     "mediane": 0.14942,
+     "moyenne": 0.180691,
      "n": 1270,
-     "p95": 0.41372
+     "p95": 0.415575
     },
     "replanification": {
      "plans_evalues": [
@@ -1869,11 +1732,11 @@
      "validateur": true
     },
     "replanification_s": {
-     "max": 0.354748,
-     "mediane": 0.249002,
-     "moyenne": 0.254922,
+     "max": 0.437085,
+     "mediane": 0.264499,
+     "moyenne": 0.270568,
      "n": 16,
-     "p95": 0.354748
+     "p95": 0.437085
     },
     "saison": {
      "graine": 0,
@@ -1885,8 +1748,8 @@
     "source": "mesuré (criteres_moteur.mesurer_temps, en cache dans le dossier de travail)"
    },
    "mesure": {
-    "observe_serie_ms_max": 2.517515,
-    "replanification_s_max": 0.354748
+    "observe_serie_ms_max": 5.390717,
+    "replanification_s_max": 0.437085
    },
    "methode": "`criteres_moteur.mesurer_temps` : `observe` série et `plan` sur une saison complète, puis chaque replanification (validateur compris) ; indicatif (Python, cette machine).",
    "n": 1226,
@@ -2012,7 +1875,7 @@
    }
   }
  },
- "empreinte_sources": "a75bce1d2ab871ae4e52095655ee43aa64e894816fc6524a28fdce646f9c2096",
+ "empreinte_sources": "f28b3129324f4dfb6fc57b2543fb8dbccc24d6898d474a4da1a3ae6962d9d13f",
  "saisons": {
   "mesurees": 1440,
   "plantages": [],
