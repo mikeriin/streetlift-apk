@@ -360,7 +360,9 @@ void main() {
       // appui en haut à gauche sans feuille toucherait le retour.
       Future<void> sheetClose() async {
         final menus = find.byWidgetPredicate(
-          (w) => w is BottomSheet || w.runtimeType.toString().startsWith('_PopupMenu'),
+          (w) =>
+              w is BottomSheet ||
+              w.runtimeType.toString().startsWith('_PopupMenu'),
         );
         if (menus.evaluate().isEmpty) return;
         await tester.tapAt(const Offset(12, 60));
