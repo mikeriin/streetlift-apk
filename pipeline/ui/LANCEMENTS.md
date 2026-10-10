@@ -4,7 +4,7 @@ Contexte écrit par la conversation de pilotage, une section par lot. Une sectio
 
 ## UI0
 
-**Pas encore lancé** : le propriétaire valide les maquettes et le cahier avant tout lancement (10/10/2026, 09:32). Ses corrections seront ajoutées ici sous « Corrections du propriétaire » avant le lancement.
+**Lancé le 10/10/2026 à 11:46** sur feu vert du propriétaire (« Lance ui0 »), après validation du cahier version 3 ; ce feu vert confirme aussi les décisions U1 à U9 (DECISIONS_UI.md U0.10).
 - Palettes : les 8 du propriétaire (`inputs/palettes_kalis_track.txt`) ; tableau de référence `inputs/palettes_roles.json`.
 - KM1 tourne en parallèle sur `moteurs` : ne touche ni `packages/` ni `moteurs`.
 - Aucun autre lot de la voie application ne tourne : `claude/ci-3d` est libre pour UI0.
