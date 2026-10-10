@@ -1925,7 +1925,7 @@
     "pire_cas_adversarial": {
      "critere": {
       "libelle": "pire cas de Koach >= pire cas du témoin (performance le jour J, moyenne par adversaire)",
-      "pire_koach": 0.788516,
+      "pire_koach": 0.798913,
       "pire_temoin": 0.0,
       "respecte": true,
       "saisons_temoin_manquantes": 0
@@ -1934,9 +1934,9 @@
      "pires": {
       "e1rm6": {
        "koach": {
-        "moyenne": 0.092,
+        "moyenne": 0.086556,
         "n": 32,
-        "pire": 0.236824
+        "pire": 0.194152
        },
        "temoin": {
         "moyenne": 0.119649,
@@ -1947,9 +1947,9 @@
       "n": 32,
       "perf_a": {
        "koach": {
-        "moyenne": 0.857102,
+        "moyenne": 0.87224,
         "n": 18,
-        "pire": 0.788516
+        "pire": 0.798913
        },
        "temoin": {
         "moyenne": 0.603271,
@@ -1959,9 +1959,9 @@
       },
       "perf_a_par_saison": {
        "koach": {
-        "moyenne": 0.81405,
+        "moyenne": 0.833319,
         "n": 18,
-        "pire": 0.732583
+        "pire": 0.730866
        },
        "temoin": {
         "moyenne": 0.541558,
@@ -1974,7 +1974,7 @@
         "aggravations": 0,
         "plantages": 0,
         "poussees": 0,
-        "violations_indicatives": 139
+        "violations_indicatives": 170
        },
        "temoin": {
         "aggravations": 0,

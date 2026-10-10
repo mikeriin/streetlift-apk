@@ -38,11 +38,11 @@ Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `p
 
 ## Résultats publiés
 
-- `donnees/criteres_km1.json` : critères chiffrés du cahier sur la matrice du banc (Koach complet contre 0.3.1), première campagne de la correction 1 (Koach 1.0.1), faite avant les changements de la section G de `CHANGEMENTS_C1.md` (correction de `elargir`, tentatives hors du gel de la branche « mauvais jour », trois paramètres de `planification` remesurés) : elle ne mesure donc pas exactement le code et les paramètres actuels. Les mesures de quatre critères y changent de méthode (C13.10.2) : erreur d'e1RM en moyenne des trois vérités, mauvais jour en contrefactuel apparié, calibration de P(réussite) par cible, rejeu réel seulement rapporté.
+- `donnees/criteres_km1.json` : critères chiffrés du cahier sur la matrice du banc (Koach 1.0.1 complet contre 0.3.1), campagne finale de la correction 1 (code et paramètres livrés). Mesures fixées par C13.10.2 : erreur d'e1RM en moyenne des trois vérités, mauvais jour en contrefactuel apparié, calibration de P(réussite) par cible, rejeu réel seulement rapporté.
 - `donnees/criteres_km1_avant_correction1.json` : la même campagne pour KM1 (Koach 1.0), gardée pour la comparaison avant / après.
-- `donnees/comparaison_adversaires.json` : pire cas adversarial (mesuré avec Koach 1.0, KM1).
-- `donnees/rejeu_journal_agregats.json` : rejeu du journal réel, agrégats (mesuré avec Koach 1.0, KM1).
-- `donnees/criteres_moteur.json` : temps, mauvais jour isolé, déterminisme (mesuré avec Koach 1.0, KM1 ; non refait pour 1.0.1 à la date de ce document).
-- `donnees/validation_briques_6_7.json` : rupture, adhérence, contrôle dual ; **mesuré le 09/10/2026 sur un état antérieur du moteur** (avant les dernières règles de sécurité), non refait ; les tests `tests/test_briques_6_7_banc.py` vérifient le moteur final sur des cas réduits.
+- `donnees/comparaison_adversaires.json` : pire cas adversarial, Koach 1.0.1 rejoué sur les adversaires trouvés contre Koach 1.0 (pas de nouvelle recherche).
+- `donnees/rejeu_journal_agregats.json` : rejeu du journal réel, agrégats (mesuré avec Koach 1.0, KM1 ; non refait pour 1.0.1).
+- `donnees/criteres_moteur.json` : temps, mauvais jour isolé (saisons divergentes et contrefactuel apparié), déterminisme (Koach 1.0.1).
+- `donnees/validation_briques_6_7.json` : rupture, adhérence, contrôle dual (refait le 10/10/2026 avec Koach 1.0.1).
 
-Le détail par critère, les limites et ce qui reste sont dans `pipeline/cp/livraisons/LIVRAISON_KM1.md` (branche `pipeline`) pour 1.0 ; ceux de 1.0.1 iront dans la livraison de la correction 1, une fois la campagne finie. La liste exacte des changements de la correction 1 est dans `km1-outils/c1/CHANGEMENTS_C1.md`.
+Le détail par critère, les limites et ce qui reste sont dans `pipeline/cp/livraisons/LIVRAISON_KM1.md` (Koach 1.0) et `pipeline/cp/livraisons/LIVRAISON_KM1_correction1.md` (Koach 1.0.1), branche `pipeline`. La liste exacte des changements de la correction 1 est dans `CHANGEMENTS_1_0_1.md`.

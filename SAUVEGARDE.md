@@ -151,3 +151,11 @@ Reste : critère 5 (calibration par cible : simuler l'échelle des tentatives da
 - **Critère 2** : `criteres_moteur.mauvais_jour_apparie_saison` (rejeu du journal : base[0..j) + séance du mauvais jour + base(j..)) ; `mesurer_mauvais_jour(apparie=True)` ; campagne : critère = apparié, saisons divergentes rapportées. Mesure appariée avant correction : 1,15 % (encore > 1 %). **Correction** : branche « mauvais jour » où les capacités sont « considérées » (`jour.mauvais_jour_fige_capacite` = true, `modele._observer(fige_alt=…)`) → 0,93 / 0,93 / 0,81 % (36 saisons) ; et l'erreur d'e1RM du sous-ensemble passe de 3,91 à 3,68 %.
 - Campagne : critère 1 = moyenne des trois vérités ; critère 5 par cible (déciles ≥ 30) ; rejeu réel rapporté seulement (`campagne.py`, `tests/test_campagne.py` adaptés).
 Reste : pytest complet, fixtures (13), campagne complète (cache à refaire), banc adversarial (comparaison), rejeu du journal réel (rapport), contrat/SOURCES/README/params version 1.0.1, relecture indépendante (Opus), commit moteurs, livraison, état, page de suivi, notification.
+
+## 10/10 ~17:45 UTC — KM1 CORRECTION 1 LIVRÉE
+- `moteurs` 17df8ca (Koach 1.0.1 ; `CHANGEMENTS_1_0_1.md`, note datée du contrat, 13 fixtures, 224 tests verts) ; `kalis_bench` inchangé (aucun contrôle relancé).
+- Campagne finale (1 440 saisons, cache /tmp/km1-campagne/64f0eb3a7d5acfd3) : 7 critères sur 11 ; e1RM 3,98 % (non), mauvais jour 0,95 % (oui), couverture 90,4 %, calibration par cible 22 points (non), jour J 0,941, adversarial 0,799, sécurité 0.
+- Une première campagne (jour J en recul à 0,915) a fait trouver le bogue de `modele.elargir` (diagonales seules) ; corrigé avant la campagne finale.
+- `pipeline` cdc09bc : LIVRAISON_KM1_correction1.md, DECISIONS_CP (KM1 correction 1), ETAT_CP (KM1 « livré (correction 1) »). Projet claude.ai : `claude/LIVRAISON_KM1_correction1.md`. Page de suivi : section KM1 c1 (version 41).
+- NON fait : rejeu du journal réel (fichiers d'accompagnement de KM1 non sauvegardés, reconstruction refusée par le contrôle d'autorisations ; archive déchiffrée supprimée) ; nouvelle recherche adversariale contre 1.0.1.
+- Rien à reprendre ; suite = décision du pilotage (critères 1 et 5 ; KM2).

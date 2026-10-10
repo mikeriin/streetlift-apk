@@ -1,0 +1,42 @@
+  <section class="lot" id="km1c1">
+    <div class="lot-head">
+      <h2><b>KM1 c1</b> · Méthode Koach : correction 1, Koach 1.0.1</h2>
+      <span class="pill wait">À trancher</span>
+      <span class="pill wait">7 critères sur 11</span>
+    </div>
+    <dl class="facts">
+      <div><dt>Livré</dt><dd>référence Python 1.0.1 · 13 fixtures</dd></div>
+      <div><dt>kalis_bench</dt><dd>inchangé (0.3.1)</dd></div>
+      <div><dt>Commit moteurs</dt><dd>17df8ca</dd></div>
+      <div><dt>Livré le</dt><dd>10/10/2026</dd></div>
+    </dl>
+    <p class="lede">La passe de correction demandée après KM1. Un mauvais jour isolé ne déplace plus ton estimation de plus de 1 %. Le jour de l'épreuve, Koach te fait soulever plus près de ton maximum (94,1 % contre 93,3 %, et 92,5 % pour le moteur actuel) : un bogue de Koach 1.0, qui le rendait trop prudent après une alerte, est corrigé. Rien ne change encore dans l'application.</p>
+    <div class="callout">
+      <p><b>Deux critères ne passent pas.</b> L'erreur sur ton maximum estimé descend de 4,2 % à 4,0 %, pour 3 % visés : ce qui manque est une mesure près de l'échec à peu de répétitions, que les tests à réserve gardée ne donnent pas, surtout chez le débutant. La probabilité annoncée d'atteindre une cible reste mal réglée sur les deux tirages de la campagne (22 points d'écart au pire), alors qu'elle l'est sur quatre autres tirages (1 à 6 points) : la mesure demande plus de tirages pour conclure. Le pilotage tranche : correction 2, ou écart documenté.</p>
+    </div>
+    <div>
+      <h3>Critères du cahier</h3>
+      <div class="scroll"><table class="checks"><thead><tr><th>Critère (seuil)</th><th>Koach 1.0</th><th>Koach 1.0.1</th></tr></thead><tbody>
+        <tr><td>Erreur d'e1RM après 6 séances (sous 3 %)</td><td class="num">4,2 %</td><td class="note num">4,0 %</td></tr>
+        <tr><td>Effet d'un mauvais jour isolé (sous 1 %)</td><td class="num">1,1 %</td><td class="good num">0,95 %</td></tr>
+        <tr><td>Séances pour passer sous 3 % (au plus 0.3.1 : 6,2)</td><td class="num">2,7</td><td class="good num">2,8</td></tr>
+        <tr><td>Couverture de l'intervalle à 90 % (88 à 92 %)</td><td class="num">88,5 %</td><td class="good num">90,4 %</td></tr>
+        <tr><td>Calibration de P(réussite) par cible (5 points au plus)</td><td class="num">12 points</td><td class="note num">22 points</td></tr>
+        <tr><td>Performance le jour J (au moins 0.3.1 : 92,5 %)</td><td class="num">93,3 %</td><td class="good num">94,1 %</td></tr>
+        <tr><td>Pire cas du banc adversarial (au moins 0.3.1)</td><td class="num">79 %</td><td class="good num">80 %</td></tr>
+        <tr><td>Violations de sécurité (0)</td><td class="num">0</td><td class="good num">0</td></tr>
+        <tr><td>Parité Python / Dart (1e-9)</td><td class="num">KM2</td><td class="num">KM2 (13 fixtures régénérées)</td></tr>
+        <tr><td>Rejeu de ton journal réel</td><td class="num">4,3 % (38 séries)</td><td class="num">non refait ; jugé à la bascule</td></tr>
+        <tr><td>Temps de calcul (10 s, 50 ms)</td><td class="num">0,44 s · 5 ms</td><td class="good num">0,49 s · 14 ms</td></tr>
+      </tbody></table></div>
+    </div>
+    <div>
+      <h3>Pour toi</h3>
+      <ul class="plain">
+        <li>Note l'effort (flammes) sur un maximum de séries : le rejeu de ton journal sera jugé juste avant la bascule, sur 100 séries notées au moins.</li>
+        <li>Trois choix de cette passe attendent une confirmation : test du débutant à 3 répétitions avec 2 en réserve, un cran entier de charge permis dans une montée de test sur les machines à gros crans, ouverture des tentatives relevée de 1,2 % après un affûtage.</li>
+      </ul>
+    </div>
+    <p class="lede">Détail : <span class="path">pipeline/cp/livraisons/LIVRAISON_KM1_correction1.md</span> ; liste des changements : <span class="path">packages/kalis_adapt/reference/CHANGEMENTS_1_0_1.md</span> (branche moteurs).</p>
+  </section>
+

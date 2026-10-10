@@ -1,6 +1,6 @@
 # Sources des paramètres de Koach 1.0
 
-Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026, puis mis à jour le 10/10/2026 pour la version 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10 ; liste des changements : `km1-outils/c1/CHANGEMENTS_C1.md`, sections A à G ; la section G corrige `modele.elargir` et remesure trois clés de `planification`). Fichier décrit : `params/koach_params_v1.json` version `1.0.1-ref.1`, SHA-256 `c8aa09ebc7fb337bf93500b2fda695e95df611d4e5181fa615886faf6092157f`, 317 clés (6 à la racine, 311 dans les onze sections). Version 1.0 : `1.0.0-ref.1`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 300 dans les sections ; 299 écrit par erreur en 1.0).
+Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026, puis mis à jour le 10/10/2026 pour la version 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10 ; liste des changements : `CHANGEMENTS_1_0_1.md`, sections A à G ; la section G corrige `modele.elargir` et remesure trois clés de `planification`). Fichier décrit : `params/koach_params_v1.json` version `1.0.1-ref.1`, SHA-256 `c8aa09ebc7fb337bf93500b2fda695e95df611d4e5181fa615886faf6092157f`, 317 clés (6 à la racine, 311 dans les onze sections). Version 1.0 : `1.0.0-ref.1`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 300 dans les sections ; 299 écrit par erreur en 1.0).
 Compagnon de `CONTRAT_1_0.md` (§ 7 : rôle de chaque clé et module lecteur).
 
 ## Comment lire ce document
@@ -149,7 +149,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `mauvais_jour_proba_bilan_bas` | 0.45 | choix raisonné | Aucune source. |
 | `mauvais_jour_moyenne` | -0.06 | choix raisonné | −6 % ; vérité C : −4 % (SAUVEGARDE). Non calé. |
 | `mauvais_jour_sigma` | 0.045 | choix raisonné | Aucune source. |
-| `mauvais_jour_fige_capacite` | true | choix raisonné | 1.0.1. Dans la branche « mauvais jour », la séance s'explique par l'effet de jour : la capacité n'y est pas déplacée (CONTRAT § 4.5), sauf pour une série de rôle `attempt`, qui mesure la capacité (`_fige_mauvais_jour(t, s)`, CHANGEMENTS_C1.md § G). Mesure de contrôle (contrefactuel apparié, 36 saisons) : effet d'un mauvais jour isolé 1,15 % → 0,93 % (CHANGEMENTS_C1.md § D). |
+| `mauvais_jour_fige_capacite` | true | choix raisonné | 1.0.1. Dans la branche « mauvais jour », la séance s'explique par l'effet de jour : la capacité n'y est pas déplacée (CONTRAT § 4.5), sauf pour une série de rôle `attempt`, qui mesure la capacité (`_fige_mauvais_jour(t, s)`, CHANGEMENTS_1_0_1.md § G). Mesure de contrôle (contrefactuel apparié, 36 saisons) : effet d'un mauvais jour isolé 1,15 % → 0,93 % (CHANGEMENTS_1_0_1.md § D). |
 
 ### Section `fatigue`
 
@@ -232,7 +232,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `risque_tendon_plancher` | 4.0 | choix raisonné | Aucune source. |
 | `horizon_sans_echeance_sem` | 12 | choix raisonné | Cahier, Méthodes § 1 : « P(continuer sur 12 semaines) ». |
 | `sigma_prevision_semaine` | 0.004 | choix raisonné | Aucune source. |
-| `gain_affutage` | 0.012 | mesure sur le banc | 1.0.1, désormais lue (`planification.evaluer`, `seance._tentative`). Écart moyen ln max du jour − prévision à frais : +1,2 % sur le banc (graines 2 à 5, après la correction de `elargir`, 1 188 unités chargées ; CHANGEMENTS_C1.md § G ; outils de mesure : `km1-outils/c1/calib.py`, `ana_cal.py`). Première mesure, avant cette correction : +0,7 % (graines 0 à 5, 1 758 unités chargées). Reprend la règle `coachTaperGain` de 0.3.1 (0,02, inventaire A8.2) avec le gain mesuré, qui reste en dessous. Travis et al. 2020 (+1,8 à +6,4 % selon le mouvement, vérifié texte) reste un contexte, non utilisé. En 1.0 : 0.015, non lue. |
+| `gain_affutage` | 0.012 | mesure sur le banc | 1.0.1, désormais lue (`planification.evaluer`, `seance._tentative`). Écart moyen ln max du jour − prévision à frais : +1,2 % sur le banc (graines 2 à 5, après la correction de `elargir`, 1 188 unités chargées ; CHANGEMENTS_1_0_1.md § G ; outils de mesure : `km1-outils/c1/calib.py`, `ana_cal.py`). Première mesure, avant cette correction : +0,7 % (graines 0 à 5, 1 758 unités chargées). Reprend la règle `coachTaperGain` de 0.3.1 (0,02, inventaire A8.2) avec le gain mesuré, qui reste en dessous. Travis et al. 2020 (+1,8 à +6,4 % selon le mouvement, vérifié texte) reste un contexte, non utilisé. En 1.0 : 0.015, non lue. |
 | `graine` | 20261009 | choix raisonné | Date du lot ; arbitraire. |
 | `prudence_charge` | [0.6, 0.25] | choix raisonné | Quantile prudent 0,6 sd puis 0,25 sd après 3 séances ; aucune source. |
 | `transport_creation` | 0.25 | choix raisonné | Aucune source. |
@@ -241,9 +241,9 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `abandon_surcharge` | 3.0 | choix raisonné | Aucune source (Perri 2002 : adhérence meilleure à intensité modérée, sens seulement). |
 | `gain_min` | 0.002 | choix raisonné | Aucune source. |
 | `rendement_test_sd` | 0.055 | mesure sur le banc | 1.0.1 : dispersion hors prévision d'un test en répétitions le jour J, 5,5 % (405 unités en répétitions ; `calib.py`, `ana_cal.py`). En 1.0 : 0.07, écart-type du rendement d'un test chargé (0,073 sur 267 tests). |
-| `erreur_estimation_echeance_sd` | 0.03 | mesure sur le banc | 1.0.1. sd(estimation du jour − ln max du jour) = 4,1 %, dont effet de jour 2,8 % : √(4,1² − 2,8²) ≈ 3,0 % (graines 2 à 5, après la correction de `elargir`, 1 188 unités chargées ; CHANGEMENTS_C1.md § G). Première mesure, avant cette correction : 4,9 % dont 2,8 %, soit 0,04 (graines 0 à 5, 1 758 unités chargées). |
-| `tentative_sd_jour` | 0.046 | mesure sur le banc | 1.0.1. Écart-type du jour médian au premier essai de l'échelle des tentatives : 4,6 % (45 saisons à cibles × 3 vérités × graines 0 à 5, 1 758 unités chargées ; `calib.py`, `ana_cal.py`). Inchangé après la correction de `elargir` (CHANGEMENTS_C1.md § G). |
-| `tentative_manque` | 0.018 | mesure sur le banc | 1.0.1. Manque moyen de l'échelle des tentatives à sa barre la plus haute possible : 1,8 % (graines 2 à 5, après la correction de `elargir`, 1 188 unités chargées ; CHANGEMENTS_C1.md § G). Première mesure, avant cette correction : 2,8 % (graines 0 à 5, 1 758 unités chargées). |
+| `erreur_estimation_echeance_sd` | 0.03 | mesure sur le banc | 1.0.1. sd(estimation du jour − ln max du jour) = 4,1 %, dont effet de jour 2,8 % : √(4,1² − 2,8²) ≈ 3,0 % (graines 2 à 5, après la correction de `elargir`, 1 188 unités chargées ; CHANGEMENTS_1_0_1.md § G). Première mesure, avant cette correction : 4,9 % dont 2,8 %, soit 0,04 (graines 0 à 5, 1 758 unités chargées). |
+| `tentative_sd_jour` | 0.046 | mesure sur le banc | 1.0.1. Écart-type du jour médian au premier essai de l'échelle des tentatives : 4,6 % (45 saisons à cibles × 3 vérités × graines 0 à 5, 1 758 unités chargées ; `calib.py`, `ana_cal.py`). Inchangé après la correction de `elargir` (CHANGEMENTS_1_0_1.md § G). |
+| `tentative_manque` | 0.018 | mesure sur le banc | 1.0.1. Manque moyen de l'échelle des tentatives à sa barre la plus haute possible : 1,8 % (graines 2 à 5, après la correction de `elargir`, 1 188 unités chargées ; CHANGEMENTS_1_0_1.md § G). Première mesure, avant cette correction : 2,8 % (graines 0 à 5, 1 758 unités chargées). |
 | `tentative_cible_proba` | 0.35 | repris de 0.3.1 | `attemptRecordProbability` = 0,35 (inventaire A8.2), la règle de `seance._tentative` pour tenter la cible, portée dans l'échelle simulée de la planification. |
 
 ### Section `securite`
@@ -392,7 +392,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `assiduite_secours` | 0.7 | choix raisonné | Cahier, Méthodes § 9 : « assiduité sous 70 % ». |
 | `assiduite_secours_semaines` | 2 | choix raisonné | Cahier, Méthodes § 9 : « sur 2 semaines ». |
 | `douleur_secours` | 2 | choix raisonné | Cahier, Méthodes § 9 : « douleur supérieure à 2/10 ». |
-| `elargissement_rien_de_special` | 4.0 | choix raisonné | Cahier § 9 « incertitude élargie » (qualitatif) ; ×4 choisi. Depuis 1.0.1 (CHANGEMENTS_C1.md § G), la variance de toute capacité est multipliée exactement par ce facteur, soit un écart-type × 2 (`modele.elargir`, P ← D P D) ; en 1.0, seules les diagonales l'étaient et l'écart-type d'une capacité était multiplié par bien plus (mesuré : × 7). |
+| `elargissement_rien_de_special` | 4.0 | choix raisonné | Cahier § 9 « incertitude élargie » (qualitatif) ; ×4 choisi. Depuis 1.0.1 (CHANGEMENTS_1_0_1.md § G), la variance de toute capacité est multipliée exactement par ce facteur, soit un écart-type × 2 (`modele.elargir`, P ← D P D) ; en 1.0, seules les diagonales l'étaient et l'écart-type d'une capacité était multiplié par bien plus (mesuré : × 7). |
 | `semaine_allegee_series` | 0.6 | repris de 0.3.1 | `deloadVolumeFactor` = 0,6 de kalis_plan (inventaire A6.3). |
 | `semaine_allegee_rir` | 2.0 | repris de 0.3.1 | `deloadRirBonus` = 2 de kalis_plan (inventaire A6.3). |
 | `a_priori_alpha` | 2.0 | choix raisonné | Aucune source. |
@@ -405,7 +405,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `journal_dossier` | 60 | choix raisonné | Taille du dossier. |
 | `douleur_recente_j` | 7 | choix raisonné | Même fenêtre de 7 jours que la règle A1.6 de 0.3.1. |
 | `residu_reps_reference` | 8.0 | choix raisonné | 8 répétitions = point commun de toutes les formes de la courbe (`G8`, CONTRAT § 5.1 ; en 1.0 : point où les deux branches `C_LIN` et `C_LOG` sont égales). Sert à `_residu_e1rm`, chemin jamais pris avec le modèle (CONTRAT, annexe A.2, M8). |
-| `mauvais_jours_suite` | 2 | mesure sur le banc | 1.0.1. Mesure (162 saisons de référence, 162 de maladie, moteur sans extension ; CHANGEMENTS_C1.md § D) : à 2 séances de suite, 0,41 alerte pour 100 séances en référence et maladie détectée dans 67 saisons sur 162 ; à 3, 0,04 et 23 sur 162. BOCPD seule en KM1 : 19,8 %. Gardé à 2 après la correction de `elargir` (§ G), comme filet contre une capacité qui resterait figée lors d'une vraie baisse ; mesure non refaite. |
+| `mauvais_jours_suite` | 2 | mesure sur le banc | 1.0.1. Mesure (162 saisons de référence, 162 de maladie, moteur sans extension ; CHANGEMENTS_1_0_1.md § D) : à 2 séances de suite, 0,41 alerte pour 100 séances en référence et maladie détectée dans 67 saisons sur 162 ; à 3, 0,04 et 23 sur 162. BOCPD seule en KM1 : 19,8 %. Gardé à 2 après la correction de `elargir` (§ G), comme filet contre une capacité qui resterait figée lors d'une vraie baisse ; mesure non refaite. |
 | `mauvais_jour_poids` | 0.5 | choix raisonné | 1.0.1. Une séance compte comme mauvais jour quand la branche « mauvais jour » y est la plus probable (poids ≥ 0,5). Aucune source chiffrée. |
 
 ### Section `controle_dual`
