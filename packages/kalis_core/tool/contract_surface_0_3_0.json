@@ -1,0 +1,6060 @@
+{
+ "version": "0.3.0",
+ "enums": {
+  "CatalogDiscipline": [
+   "Musculation",
+   "Street workout",
+   "Streetlifting",
+   "Calisthénie statique",
+   "Calisthénie dynamique",
+   "CrossFit / WOD",
+   "Cardio",
+   "Mobilité"
+  ],
+  "ExerciseLevel": [
+   "Débutant",
+   "Intermédiaire",
+   "Avancé",
+   "Élite"
+  ],
+  "MovementPattern": [
+   "adducteurs_abducteurs",
+   "auto_massage",
+   "balistique",
+   "cardio_continu",
+   "cardio_fractionne",
+   "charniere_hanche",
+   "compression",
+   "conditionnement",
+   "corde_a_sauter",
+   "cou",
+   "equilibre_mains",
+   "etirement_dynamique",
+   "etirement_statique",
+   "extension_genou",
+   "extension_hanche",
+   "extension_rachis",
+   "fente",
+   "figure_dynamique_poussee",
+   "figure_dynamique_tirage",
+   "figure_statique_mixte",
+   "figure_statique_poussee",
+   "figure_statique_tirage",
+   "flexion_genou",
+   "flexion_hanche",
+   "flexion_tronc",
+   "freestyle",
+   "gainage_anti_extension",
+   "gainage_anti_flexion_laterale",
+   "gainage_anti_rotation",
+   "gymnastique_crossfit",
+   "halterophilie",
+   "isolation_biceps",
+   "isolation_dos",
+   "isolation_epaules",
+   "isolation_pectoraux",
+   "isolation_trapezes",
+   "isolation_triceps",
+   "marche",
+   "mobilite_articulaire",
+   "mollets",
+   "pliometrie",
+   "porte",
+   "poussee_horizontale",
+   "poussee_inclinee",
+   "poussee_verticale_basse",
+   "poussee_verticale_haute",
+   "prehension",
+   "preparation_scapulaire",
+   "respiration",
+   "rotation_tronc",
+   "souplesse",
+   "sprint",
+   "squat",
+   "tirage_horizontal",
+   "tirage_vertical",
+   "transition_muscle_up"
+  ],
+  "MovementFamily": [
+   "cardio",
+   "conditionnement",
+   "cou",
+   "explosif",
+   "figure_dynamique",
+   "figure_statique",
+   "gainage",
+   "isolation_bras",
+   "isolation_haut",
+   "isolation_jambes",
+   "jambes_genou",
+   "jambes_hanche",
+   "mobilite",
+   "porte",
+   "poussee",
+   "recuperation",
+   "tirage",
+   "tronc"
+  ],
+  "MovementPlane": [
+   "sagittal",
+   "frontal",
+   "transversal",
+   "multiple"
+  ],
+  "Articularity": [
+   "polyarticulaire",
+   "monoarticulaire",
+   "non_applicable"
+  ],
+  "ContractionMode": [
+   "dynamique",
+   "isometrique",
+   "excentrique",
+   "explosif",
+   "cyclique",
+   "passif"
+  ],
+  "Place": [
+   "salle",
+   "maison",
+   "exterieur"
+  ],
+  "Joint": [
+   "epaule",
+   "coude",
+   "poignet",
+   "lombaires",
+   "genou",
+   "hanche",
+   "cheville"
+  ],
+  "JointStress": [
+   "faible",
+   "moyenne",
+   "forte"
+  ],
+  "LoadType": [
+   "aucune",
+   "poids_du_corps",
+   "lest",
+   "barre",
+   "halteres",
+   "kettlebell",
+   "machine",
+   "poulie",
+   "elastique",
+   "autre"
+  ],
+  "MeasureUnit": [
+   "repetitions",
+   "secondes",
+   "distance",
+   "calories"
+  ],
+  "Laterality": [
+   "bilateral",
+   "unilateral",
+   "alterne"
+  ],
+  "FractionSource": [
+   "publiee",
+   "derivee",
+   "estimee"
+  ],
+  "Sex": [
+   "female",
+   "male",
+   "undisclosed"
+  ],
+  "TrainingDiscipline": [
+   "musculation",
+   "street_workout",
+   "streetlifting",
+   "calisthenics",
+   "crossfit",
+   "cardio",
+   "mobility",
+   "general_fitness"
+  ],
+  "StreetStyle": [
+   "streetlifting",
+   "sets_reps",
+   "calisthenics"
+  ],
+  "GuidanceMode": [
+   "assisted",
+   "free"
+  ],
+  "BodyZone": [
+   "neck",
+   "shoulder",
+   "elbow",
+   "wrist_hand",
+   "upper_back",
+   "lower_back",
+   "chest",
+   "abdomen",
+   "hip",
+   "thigh",
+   "knee",
+   "lower_leg",
+   "ankle_foot"
+  ],
+  "BodySide": [
+   "left",
+   "right",
+   "both"
+  ],
+  "LevelMeasure": [
+   "max_reps",
+   "one_rm_kg",
+   "max_hold_seconds",
+   "time_seconds"
+  ],
+  "GoalKind": [
+   "performance",
+   "habit"
+  ],
+  "GoalOrigin": [
+   "user",
+   "suggested"
+  ],
+  "GoalMetric": [
+   "one_rm_kg",
+   "max_reps",
+   "max_hold_seconds",
+   "skill_unlocked",
+   "time_seconds",
+   "distance_meters"
+  ],
+  "ExperienceLevel": [
+   "beginner",
+   "intermediate",
+   "advanced",
+   "elite"
+  ],
+  "HealthScreeningOutcome": [
+   "standard",
+   "cautious",
+   "not_answered"
+  ],
+  "SessionOrigin": [
+   "program",
+   "imported"
+  ],
+  "SetKind": [
+   "warmup",
+   "work",
+   "calibration",
+   "test"
+  ],
+  "PainPhase": [
+   "before",
+   "during",
+   "after"
+  ],
+  "SlotRole": [
+   "main",
+   "secondary",
+   "accessory",
+   "skill",
+   "core",
+   "conditioning",
+   "mobility",
+   "warmup",
+   "cooldown"
+  ],
+  "LockKind": [
+   "keep_slot",
+   "require_exercise",
+   "exclude_exercise",
+   "keep_day"
+  ],
+  "ReviewKind": [
+   "can_do",
+   "cannot_do",
+   "dislike",
+   "add",
+   "remove",
+   "replace"
+  ],
+  "VariantKind": [
+   "easier",
+   "equivalent",
+   "other_equipment",
+   "other"
+  ],
+  "ChangeKind": [
+   "exercise_added",
+   "exercise_removed",
+   "exercise_replaced",
+   "exercise_moved",
+   "order_changed",
+   "prescription_changed",
+   "day_added",
+   "day_removed"
+  ],
+  "WeekKind": [
+   "intro",
+   "build",
+   "deload",
+   "test"
+  ],
+  "LoadBasis": [
+   "external",
+   "bodyweight",
+   "bodyweight_plus_external",
+   "unloaded"
+  ],
+  "RestructureScope": [
+   "session",
+   "week",
+   "block"
+  ],
+  "ProposalKind": [
+   "load",
+   "reps",
+   "volume",
+   "exercise_swap",
+   "session_restructure",
+   "block_restructure",
+   "deload",
+   "pain_sparing",
+   "schedule"
+  ],
+  "ProposalScope": [
+   "set",
+   "exercise",
+   "session",
+   "week",
+   "block"
+  ],
+  "UnlockLevel": [
+   "loads_reps",
+   "volume",
+   "exercise_swap",
+   "session_restructure",
+   "block_restructure"
+  ],
+  "AdjustmentKind": [
+   "load_reduced",
+   "sets_reduced",
+   "exercise_swapped",
+   "exercise_removed",
+   "rest_increased",
+   "load_increased"
+  ],
+  "IntraSessionAction": [
+   "keep",
+   "load_up",
+   "load_down",
+   "reps_up",
+   "reps_down",
+   "stop_exercise",
+   "rest_more"
+  ],
+  "CapacityUnit": [
+   "one_rm_kg",
+   "max_reps",
+   "max_hold_seconds",
+   "meters_per_second"
+  ],
+  "ProposalStatus": [
+   "auto_applied",
+   "accepted",
+   "refused",
+   "undone"
+  ],
+  "XpSource": [
+   "effort",
+   "consistency",
+   "record",
+   "milestone",
+   "quest"
+  ],
+  "AthleteAttribute": [
+   "strength",
+   "endurance",
+   "power",
+   "technique",
+   "mobility",
+   "consistency"
+  ],
+  "MovementRankTier": [
+   "unranked",
+   "bronze",
+   "silver",
+   "gold",
+   "platinum",
+   "diamond",
+   "elite"
+  ],
+  "QuestKind": [
+   "daily",
+   "weekly",
+   "campaign",
+   "koach"
+  ],
+  "QuestStatus": [
+   "active",
+   "completed",
+   "expired"
+  ],
+  "KreditSource": [
+   "quest",
+   "chest",
+   "level_up",
+   "milestone",
+   "record"
+  ],
+  "DelightKind": [
+   "record",
+   "chest",
+   "week_streak",
+   "session_grade",
+   "combo",
+   "ghost",
+   "first_time",
+   "level_up",
+   "rank_up",
+   "goal_milestone",
+   "quest_completed"
+  ],
+  "SessionGrade": [
+   "s",
+   "a",
+   "b",
+   "c"
+  ],
+  "RecordKind": [
+   "one_rm_kg",
+   "max_reps",
+   "max_hold_seconds",
+   "volume_kg",
+   "time_seconds",
+   "distance_meters"
+  ],
+  "BreakReason": [
+   "vacation",
+   "illness",
+   "injury",
+   "other"
+  ]
+ },
+ "enumIdentifiers": {
+  "CatalogDiscipline": [
+   "musculation",
+   "streetWorkout",
+   "streetlifting",
+   "calisthenicsStatic",
+   "calisthenicsDynamic",
+   "crossfit",
+   "cardio",
+   "mobility"
+  ],
+  "ExerciseLevel": [
+   "beginner",
+   "intermediate",
+   "advanced",
+   "elite"
+  ],
+  "MovementPattern": [
+   "adducteursAbducteurs",
+   "autoMassage",
+   "balistique",
+   "cardioContinu",
+   "cardioFractionne",
+   "charniereHanche",
+   "compression",
+   "conditionnement",
+   "cordeASauter",
+   "cou",
+   "equilibreMains",
+   "etirementDynamique",
+   "etirementStatique",
+   "extensionGenou",
+   "extensionHanche",
+   "extensionRachis",
+   "fente",
+   "figureDynamiquePoussee",
+   "figureDynamiqueTirage",
+   "figureStatiqueMixte",
+   "figureStatiquePoussee",
+   "figureStatiqueTirage",
+   "flexionGenou",
+   "flexionHanche",
+   "flexionTronc",
+   "freestyle",
+   "gainageAntiExtension",
+   "gainageAntiFlexionLaterale",
+   "gainageAntiRotation",
+   "gymnastiqueCrossfit",
+   "halterophilie",
+   "isolationBiceps",
+   "isolationDos",
+   "isolationEpaules",
+   "isolationPectoraux",
+   "isolationTrapezes",
+   "isolationTriceps",
+   "marche",
+   "mobiliteArticulaire",
+   "mollets",
+   "pliometrie",
+   "porte",
+   "pousseeHorizontale",
+   "pousseeInclinee",
+   "pousseeVerticaleBasse",
+   "pousseeVerticaleHaute",
+   "prehension",
+   "preparationScapulaire",
+   "respiration",
+   "rotationTronc",
+   "souplesse",
+   "sprint",
+   "squat",
+   "tirageHorizontal",
+   "tirageVertical",
+   "transitionMuscleUp"
+  ],
+  "MovementFamily": [
+   "cardio",
+   "conditionnement",
+   "cou",
+   "explosif",
+   "figureDynamique",
+   "figureStatique",
+   "gainage",
+   "isolationBras",
+   "isolationHaut",
+   "isolationJambes",
+   "jambesGenou",
+   "jambesHanche",
+   "mobilite",
+   "porte",
+   "poussee",
+   "recuperation",
+   "tirage",
+   "tronc"
+  ],
+  "MovementPlane": [
+   "sagittal",
+   "frontal",
+   "transversal",
+   "multiple"
+  ],
+  "Articularity": [
+   "multiJoint",
+   "singleJoint",
+   "notApplicable"
+  ],
+  "ContractionMode": [
+   "dynamicEffort",
+   "isometric",
+   "eccentric",
+   "explosive",
+   "cyclic",
+   "passive"
+  ],
+  "Place": [
+   "gym",
+   "home",
+   "outdoor"
+  ],
+  "Joint": [
+   "shoulder",
+   "elbow",
+   "wrist",
+   "lumbar",
+   "knee",
+   "hip",
+   "ankle"
+  ],
+  "JointStress": [
+   "low",
+   "moderate",
+   "high"
+  ],
+  "LoadType": [
+   "none",
+   "bodyweight",
+   "addedWeight",
+   "barbell",
+   "dumbbells",
+   "kettlebell",
+   "machine",
+   "cable",
+   "band",
+   "other"
+  ],
+  "MeasureUnit": [
+   "repetitions",
+   "seconds",
+   "distance",
+   "calories"
+  ],
+  "Laterality": [
+   "bilateral",
+   "unilateral",
+   "alternating"
+  ],
+  "FractionSource": [
+   "published",
+   "derived",
+   "estimated"
+  ],
+  "Sex": [
+   "female",
+   "male",
+   "undisclosed"
+  ],
+  "TrainingDiscipline": [
+   "musculation",
+   "streetWorkout",
+   "streetlifting",
+   "calisthenics",
+   "crossfit",
+   "cardio",
+   "mobility",
+   "generalFitness"
+  ],
+  "StreetStyle": [
+   "streetlifting",
+   "setsReps",
+   "calisthenics"
+  ],
+  "GuidanceMode": [
+   "assisted",
+   "free"
+  ],
+  "BodyZone": [
+   "neck",
+   "shoulder",
+   "elbow",
+   "wristHand",
+   "upperBack",
+   "lowerBack",
+   "chest",
+   "abdomen",
+   "hip",
+   "thigh",
+   "knee",
+   "lowerLeg",
+   "ankleFoot"
+  ],
+  "BodySide": [
+   "left",
+   "right",
+   "both"
+  ],
+  "LevelMeasure": [
+   "maxReps",
+   "oneRmKg",
+   "maxHoldSeconds",
+   "timeSeconds"
+  ],
+  "GoalKind": [
+   "performance",
+   "habit"
+  ],
+  "GoalOrigin": [
+   "user",
+   "suggested"
+  ],
+  "GoalMetric": [
+   "oneRmKg",
+   "maxReps",
+   "maxHoldSeconds",
+   "skillUnlocked",
+   "timeSeconds",
+   "distanceMeters"
+  ],
+  "ExperienceLevel": [
+   "beginner",
+   "intermediate",
+   "advanced",
+   "elite"
+  ],
+  "HealthScreeningOutcome": [
+   "standard",
+   "cautious",
+   "notAnswered"
+  ],
+  "SessionOrigin": [
+   "program",
+   "imported"
+  ],
+  "SetKind": [
+   "warmup",
+   "work",
+   "calibration",
+   "test"
+  ],
+  "PainPhase": [
+   "before",
+   "during",
+   "after"
+  ],
+  "SlotRole": [
+   "main",
+   "secondary",
+   "accessory",
+   "skill",
+   "core",
+   "conditioning",
+   "mobility",
+   "warmup",
+   "cooldown"
+  ],
+  "LockKind": [
+   "keepSlot",
+   "requireExercise",
+   "excludeExercise",
+   "keepDay"
+  ],
+  "ReviewKind": [
+   "canDo",
+   "cannotDo",
+   "dislike",
+   "add",
+   "remove",
+   "replace"
+  ],
+  "VariantKind": [
+   "easier",
+   "equivalent",
+   "otherEquipment",
+   "other"
+  ],
+  "ChangeKind": [
+   "exerciseAdded",
+   "exerciseRemoved",
+   "exerciseReplaced",
+   "exerciseMoved",
+   "orderChanged",
+   "prescriptionChanged",
+   "dayAdded",
+   "dayRemoved"
+  ],
+  "WeekKind": [
+   "intro",
+   "build",
+   "deload",
+   "test"
+  ],
+  "LoadBasis": [
+   "external",
+   "bodyweight",
+   "bodyweightPlusExternal",
+   "unloaded"
+  ],
+  "RestructureScope": [
+   "session",
+   "week",
+   "block"
+  ],
+  "ProposalKind": [
+   "load",
+   "reps",
+   "volume",
+   "exerciseSwap",
+   "sessionRestructure",
+   "blockRestructure",
+   "deload",
+   "painSparing",
+   "schedule"
+  ],
+  "ProposalScope": [
+   "set",
+   "exercise",
+   "session",
+   "week",
+   "block"
+  ],
+  "UnlockLevel": [
+   "loadsReps",
+   "volume",
+   "exerciseSwap",
+   "sessionRestructure",
+   "blockRestructure"
+  ],
+  "AdjustmentKind": [
+   "loadReduced",
+   "setsReduced",
+   "exerciseSwapped",
+   "exerciseRemoved",
+   "restIncreased",
+   "loadIncreased"
+  ],
+  "IntraSessionAction": [
+   "keep",
+   "loadUp",
+   "loadDown",
+   "repsUp",
+   "repsDown",
+   "stopExercise",
+   "restMore"
+  ],
+  "CapacityUnit": [
+   "oneRmKg",
+   "maxReps",
+   "maxHoldSeconds",
+   "metersPerSecond"
+  ],
+  "ProposalStatus": [
+   "autoApplied",
+   "accepted",
+   "refused",
+   "undone"
+  ],
+  "XpSource": [
+   "effort",
+   "consistency",
+   "record",
+   "milestone",
+   "quest"
+  ],
+  "AthleteAttribute": [
+   "strength",
+   "endurance",
+   "power",
+   "technique",
+   "mobility",
+   "consistency"
+  ],
+  "MovementRankTier": [
+   "unranked",
+   "bronze",
+   "silver",
+   "gold",
+   "platinum",
+   "diamond",
+   "elite"
+  ],
+  "QuestKind": [
+   "daily",
+   "weekly",
+   "campaign",
+   "koach"
+  ],
+  "QuestStatus": [
+   "active",
+   "completed",
+   "expired"
+  ],
+  "KreditSource": [
+   "quest",
+   "chest",
+   "levelUp",
+   "milestone",
+   "record"
+  ],
+  "DelightKind": [
+   "record",
+   "chest",
+   "weekStreak",
+   "sessionGrade",
+   "combo",
+   "ghost",
+   "firstTime",
+   "levelUp",
+   "rankUp",
+   "goalMilestone",
+   "questCompleted"
+  ],
+  "SessionGrade": [
+   "s",
+   "a",
+   "b",
+   "c"
+  ],
+  "RecordKind": [
+   "oneRmKg",
+   "maxReps",
+   "maxHoldSeconds",
+   "volumeKg",
+   "timeSeconds",
+   "distanceMeters"
+  ],
+  "BreakReason": [
+   "vacation",
+   "illness",
+   "injury",
+   "other"
+  ]
+ },
+ "types": {
+  "Reason": {
+   "module": "common",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "code",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "params",
+     "type": "json",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "DisciplineShare": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "discipline",
+     "type": "enum:TrainingDiscipline",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "pct",
+     "type": "int",
+     "min": 1,
+     "max": 99,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "DisciplineMix": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "primary",
+     "type": "enum:TrainingDiscipline",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "primaryPct",
+     "type": "int",
+     "min": 1,
+     "max": 100,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "secondaries",
+     "type": "list:obj:DisciplineShare",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": 2,
+     "ref": null
+    }
+   ]
+  },
+  "StreetMode": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "primary",
+     "type": "enum:StreetStyle",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "streetliftingPct",
+     "type": "int",
+     "min": 0,
+     "max": 100,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "setsRepsPct",
+     "type": "int",
+     "min": 0,
+     "max": 100,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "calisthenicsPct",
+     "type": "int",
+     "min": 0,
+     "max": 100,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "MovementLevel": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "measure",
+     "type": "enum:LevelMeasure",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "known",
+     "type": "bool",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "low",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "high",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "distanceMeters",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Goal": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "id",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kind",
+     "type": "enum:GoalKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "origin",
+     "type": "enum:GoalOrigin",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "createdOn",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "metric",
+     "type": "enum:GoalMetric?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "targetValue",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "distanceMeters",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "loadKg",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "durationSeconds",
+     "type": "int?",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "targetDate",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sessionsPerWeek",
+     "type": "int?",
+     "min": 1,
+     "max": 14,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weeks",
+     "type": "int?",
+     "min": 1,
+     "max": 104,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "DaySlot": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "weekday",
+     "type": "int",
+     "min": 1,
+     "max": 7,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "minutes",
+     "type": "int",
+     "min": 10,
+     "max": 300,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "place",
+     "type": "enum:Place?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PlaceEquipment": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "place",
+     "type": "enum:Place",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "equipment",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "LoadIncrement": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "loadType",
+     "type": "enum:LoadType",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "stepKg",
+     "type": "double",
+     "min": 0.05,
+     "max": 50,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "minKg",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Limitation": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "zone",
+     "type": "enum:BodyZone",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "side",
+     "type": "enum:BodySide",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "joint",
+     "type": "enum:Joint?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "discomfort",
+     "type": "int",
+     "min": 0,
+     "max": 10,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "HealthScreeningRef": {
+   "module": "profile",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "questionnaireId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "answeredOn",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "outcome",
+     "type": "enum:HealthScreeningOutcome",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "AthleteProfile": {
+   "module": "profile",
+   "schemaVersion": 2,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 2,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "displayName",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": 40,
+     "ref": null
+    },
+    {
+     "name": "sex",
+     "type": "enum:Sex",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "birthYear",
+     "type": "int",
+     "min": 1900,
+     "max": 2100,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "heightCm",
+     "type": "int",
+     "min": 100,
+     "max": 250,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "bodyWeightKg",
+     "type": "double?",
+     "min": 25,
+     "max": 300,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "disciplines",
+     "type": "obj:DisciplineMix",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "streetMode",
+     "type": "obj:StreetMode?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "movementLevels",
+     "type": "list:obj:MovementLevel",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "goals",
+     "type": "list:obj:Goal",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "availability",
+     "type": "list:obj:DaySlot",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": 7,
+     "ref": null
+    },
+    {
+     "name": "places",
+     "type": "list:enum:Place",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": 3,
+     "ref": null
+    },
+    {
+     "name": "equipment",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "equipmentByPlace",
+     "type": "list:obj:PlaceEquipment?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "loadIncrements",
+     "type": "list:obj:LoadIncrement",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "limitations",
+     "type": "list:obj:Limitation",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "likedExerciseIds",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "dislikedExerciseIds",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "knownExerciseIds",
+     "type": "list:string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "cannotDoExerciseIds",
+     "type": "list:string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "experience",
+     "type": "enum:ExperienceLevel?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "guidanceMode",
+     "type": "enum:GuidanceMode",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "healthScreening",
+     "type": "obj:HealthScreeningRef?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "createdOn",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "updatedOn",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PainReport": {
+   "module": "journal",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "zone",
+     "type": "enum:BodyZone",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "side",
+     "type": "enum:BodySide",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "joint",
+     "type": "enum:Joint?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "intensity",
+     "type": "int",
+     "min": 0,
+     "max": 10,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "phase",
+     "type": "enum:PainPhase",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    }
+   ]
+  },
+  "HealthCheck": {
+   "module": "journal",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "overall",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sleepQuality",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sleepHours",
+     "type": "double?",
+     "min": 0,
+     "max": 24,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "energy",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "mood",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "soreness",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "stress",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "motivation",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "nutrition",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "hydration",
+     "type": "int?",
+     "min": 1,
+     "max": 5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "minutesAvailable",
+     "type": "int?",
+     "min": 0,
+     "max": 600,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "pains",
+     "type": "list:obj:PainReport?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "SetTarget": {
+   "module": "journal",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "repsLow",
+     "type": "int?",
+     "min": 0,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "repsHigh",
+     "type": "int?",
+     "min": 0,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "secondsLow",
+     "type": "int?",
+     "min": 0,
+     "max": 86400,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "secondsHigh",
+     "type": "int?",
+     "min": 0,
+     "max": 86400,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "distanceMeters",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "calories",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "loadKg",
+     "type": "double?",
+     "min": -300,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "flames",
+     "type": "int?",
+     "min": 1,
+     "max": 10,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "SetRecord": {
+   "module": "journal",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "exerciseOrder",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "setIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kind",
+     "type": "enum:SetKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "externalLoadKg",
+     "type": "double?",
+     "min": -300,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reps",
+     "type": "int?",
+     "min": 0,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "seconds",
+     "type": "int?",
+     "min": 0,
+     "max": 86400,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "distanceMeters",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "calories",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "flames",
+     "type": "int?",
+     "min": 1,
+     "max": 10,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "success",
+     "type": "bool",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "excluded",
+     "type": "bool",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "slotId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "side",
+     "type": "enum:BodySide?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "target",
+     "type": "obj:SetTarget?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "TrainingBreak": {
+   "module": "journal",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "startDate",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "endDate",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reason",
+     "type": "enum:BreakReason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ProgramRef": {
+   "module": "journal",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "blockId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weekIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "dayIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "SessionRecord": {
+   "module": "journal",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "id",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "origin",
+     "type": "enum:SessionOrigin",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "programRef",
+     "type": "obj:ProgramRef?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "resume",
+     "type": "bool",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "completed",
+     "type": "bool",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "durationMinutes",
+     "type": "int?",
+     "min": 0,
+     "max": 600,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "bodyWeightKg",
+     "type": "double?",
+     "min": 25,
+     "max": 300,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "place",
+     "type": "enum:Place?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "healthCheck",
+     "type": "obj:HealthCheck?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sets",
+     "type": "list:obj:SetRecord",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "pains",
+     "type": "list:obj:PainReport",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "plannedWorkSets",
+     "type": "int?",
+     "min": 0,
+     "max": 500,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "TrainingLog": {
+   "module": "journal",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sessions",
+     "type": "list:obj:SessionRecord",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "breaks",
+     "type": "list:obj:TrainingBreak?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PlanLock": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "kind",
+     "type": "enum:LockKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "dayIndex",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "slotId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    }
+   ]
+  },
+  "PlanSlot": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "slotId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "role",
+     "type": "enum:SlotRole",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "locked",
+     "type": "bool",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PlanDay": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "dayIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weekday",
+     "type": "int",
+     "min": 1,
+     "max": 7,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "minutesBudget",
+     "type": "int",
+     "min": 0,
+     "max": 300,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "focus",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "slots",
+     "type": "list:obj:PlanSlot",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ScoreComponent": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "code",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "value",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weight",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PlanScore": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "total",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "components",
+     "type": "list:obj:ScoreComponent",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Pass1Plan": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "blockId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "blockIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weeks",
+     "type": "int",
+     "min": 1,
+     "max": 52,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "startDate",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "seed",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "engineVersion",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "days",
+     "type": "list:obj:PlanDay",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "score",
+     "type": "obj:PlanScore",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ReviewAction": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "kind",
+     "type": "enum:ReviewKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "slotId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "dayIndex",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "replacementExerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    }
+   ]
+  },
+  "ProfileDelta": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "knownExerciseIds",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "unknownExerciseIds",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "likedExerciseIds",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "dislikedExerciseIds",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    }
+   ]
+  },
+  "PlanChange": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "kind",
+     "type": "enum:ChangeKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "dayIndex",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weekIndex",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "slotId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "fromExerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "toExerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "fromDayIndex",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "fromPrescription",
+     "type": "obj:ExercisePrescription?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "toPrescription",
+     "type": "obj:ExercisePrescription?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PlanDiff": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "changes",
+     "type": "list:obj:PlanChange",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ReviewResult": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "plan",
+     "type": "obj:Pass1Plan",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "diff",
+     "type": "obj:PlanDiff",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "locks",
+     "type": "list:obj:PlanLock",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "profileDelta",
+     "type": "obj:ProfileDelta",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Variant": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "kind",
+     "type": "enum:VariantKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "similarity",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "VariantSet": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "slotId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "targeted",
+     "type": "list:obj:Variant",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": 3,
+     "ref": null
+    },
+    {
+     "name": "all",
+     "type": "list:obj:Variant",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ExercisePrescription": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "slotId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "sets",
+     "type": "int",
+     "min": 1,
+     "max": 20,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "repsLow",
+     "type": "int?",
+     "min": 1,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "repsHigh",
+     "type": "int?",
+     "min": 1,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "secondsLow",
+     "type": "int?",
+     "min": 1,
+     "max": 86400,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "secondsHigh",
+     "type": "int?",
+     "min": 1,
+     "max": 86400,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "distanceMeters",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "calories",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "targetFlames",
+     "type": "int?",
+     "min": 1,
+     "max": 10,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "restSeconds",
+     "type": "int?",
+     "min": 0,
+     "max": 900,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "startLoadKg",
+     "type": "double?",
+     "min": -300,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "percentOfOneRm",
+     "type": "double?",
+     "min": 0,
+     "max": 1.5,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "toCalibrate",
+     "type": "bool",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "loadBasis",
+     "type": "enum:LoadBasis",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "setTargets",
+     "type": "list:obj:SetTarget?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "groupId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "format",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kind",
+     "type": "enum:SetKind?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "DayPrescription": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "dayIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "items",
+     "type": "list:obj:ExercisePrescription",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "WeekPrescription": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "weekIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kind",
+     "type": "enum:WeekKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "days",
+     "type": "list:obj:DayPrescription",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Pass2Plan": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "blockId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "engineVersion",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weeks",
+     "type": "list:obj:WeekPrescription",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ProgramBlock": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "pass1",
+     "type": "obj:Pass1Plan",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "pass2",
+     "type": "obj:Pass2Plan",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ExerciseEstimate": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "unit",
+     "type": "enum:CapacityUnit",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "capacity",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "standardError",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weeklyTrend",
+     "type": "double",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "observations",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "lastObservedOn",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "FatigueState": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "fitness",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "fatigue",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "readiness",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PainTrend": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "zone",
+     "type": "enum:BodyZone",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "side",
+     "type": "enum:BodySide",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sessionsReported",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "lastIntensity",
+     "type": "int",
+     "min": 0,
+     "max": 10,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "consecutiveAboveThreshold",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "AdaptationSummary": {
+   "module": "adapt",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "asOf",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weeksObserved",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sessionsPlanned",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sessionsCompleted",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "unlockLevel",
+     "type": "enum:UnlockLevel",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "confidence",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "estimates",
+     "type": "list:obj:ExerciseEstimate",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "fatigue",
+     "type": "obj:FatigueState?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "pains",
+     "type": "list:obj:PainTrend",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "avoidedExerciseIds",
+     "type": "list:string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "AdaptInput": {
+   "module": "adapt",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "profile",
+     "type": "obj:AthleteProfile",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "block",
+     "type": "obj:ProgramBlock",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "log",
+     "type": "obj:TrainingLog",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "today",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "state",
+     "type": "json?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "decisions",
+     "type": "list:obj:ProposalDecision?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "SessionRequest": {
+   "module": "adapt",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "input",
+     "type": "obj:AdaptInput",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weekIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "dayIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "healthCheck",
+     "type": "obj:HealthCheck?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "place",
+     "type": "enum:Place?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "AdviceRequest": {
+   "module": "adapt",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "input",
+     "type": "obj:AdaptInput",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "session",
+     "type": "obj:SessionPlan",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "done",
+     "type": "list:obj:SetRecord",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "slotId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "healthCheck",
+     "type": "obj:HealthCheck?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ProposalDecision": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "proposalId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "status",
+     "type": "enum:ProposalStatus",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PersonalRecord": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "kind",
+     "type": "enum:RecordKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "value",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sessionId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "previousValue",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "SessionAdjustment": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "kind",
+     "type": "enum:AdjustmentKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "replacementExerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "loadFactor",
+     "type": "double?",
+     "min": 0,
+     "max": 2,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "setsDelta",
+     "type": "int?",
+     "min": -20,
+     "max": 20,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "SessionPlan": {
+   "module": "adapt",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "blockId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weekIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "dayIndex",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "items",
+     "type": "list:obj:ExercisePrescription",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "adjustments",
+     "type": "list:obj:SessionAdjustment",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "confidence",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "IntraSessionAdvice": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "action",
+     "type": "enum:IntraSessionAction",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "nextLoadKg",
+     "type": "double?",
+     "min": -300,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "nextRepsLow",
+     "type": "int?",
+     "min": 0,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "nextRepsHigh",
+     "type": "int?",
+     "min": 0,
+     "max": 1000,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "nextSeconds",
+     "type": "int?",
+     "min": 0,
+     "max": 86400,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "slotId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "restSeconds",
+     "type": "int?",
+     "min": 0,
+     "max": 900,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "confidence",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Proposal": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "id",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kind",
+     "type": "enum:ProposalKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "scope",
+     "type": "enum:ProposalScope",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "createdOn",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "confidence",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "unlockLevel",
+     "type": "enum:UnlockLevel",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "autoApplicable",
+     "type": "bool",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "diff",
+     "type": "obj:PlanDiff?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "block",
+     "type": "obj:ProgramBlock?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "EngineLogEntry": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "sequence",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "engine",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "event",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "confidence",
+     "type": "double?",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "data",
+     "type": "json",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "AdaptReview": {
+   "module": "adapt",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "summary",
+     "type": "obj:AdaptationSummary",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "proposals",
+     "type": "list:obj:Proposal",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "state",
+     "type": "json",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "log",
+     "type": "list:obj:EngineLogEntry",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "records",
+     "type": "list:obj:PersonalRecord?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "XpEntry": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "sequence",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "source",
+     "type": "enum:XpSource",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "amount",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sessionId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "refId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "KreditEntry": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "sequence",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "source",
+     "type": "enum:KreditSource",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "amount",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "refId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "LevelState": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "level",
+     "type": "int",
+     "min": 1,
+     "max": 100,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "prestige",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "totalXp",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "xpIntoLevel",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "xpForNextLevel",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "AttributeScore": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "attribute",
+     "type": "enum:AthleteAttribute",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "value",
+     "type": "double",
+     "min": 0,
+     "max": 100,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "best",
+     "type": "double?",
+     "min": 0,
+     "max": 100,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "MovementRank": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "exerciseId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "tier",
+     "type": "enum:MovementRankTier",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "score",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "nextTierAt",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Quest": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "id",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kind",
+     "type": "enum:QuestKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "template",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "params",
+     "type": "json",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "startsOn",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "endsOn",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "progress",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "target",
+     "type": "double",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "status",
+     "type": "enum:QuestStatus",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "rewardXp",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "rewardKredits",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Milestone": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "fraction",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reachedOn",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Prediction": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "expectedOn",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "earliestOn",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "latestOn",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "confidence",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "method",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "GoalProgress": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "goalId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "current",
+     "type": "double",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "target",
+     "type": "double",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "fraction",
+     "type": "double",
+     "min": 0,
+     "max": 1,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "achievedOn",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "milestones",
+     "type": "list:obj:Milestone",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "prediction",
+     "type": "obj:Prediction?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "baseline",
+     "type": "double?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "overdue",
+     "type": "bool?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "suggestedDate",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "suggestedTarget",
+     "type": "double?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "DelightEvent": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "kind",
+     "type": "enum:DelightKind",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "sessionId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "exerciseId",
+     "type": "string?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": "exercise"
+    },
+    {
+     "name": "recordKind",
+     "type": "enum:RecordKind?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "value",
+     "type": "double?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "previousValue",
+     "type": "double?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "grade",
+     "type": "enum:SessionGrade?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "combo",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "streakWeeks",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kredits",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "QuestState": {
+   "module": "quest",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "xp",
+     "type": "list:obj:XpEntry",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kredits",
+     "type": "list:obj:KreditEntry",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "quests",
+     "type": "list:obj:Quest",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "lastEvaluatedOn",
+     "type": "date?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "data",
+     "type": "json",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "QuestClaim": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "questId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "date",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "QuestInput": {
+   "module": "quest",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "profile",
+     "type": "obj:AthleteProfile",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "log",
+     "type": "obj:TrainingLog",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "block",
+     "type": "obj:ProgramBlock?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "adaptation",
+     "type": "obj:AdaptationSummary?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "state",
+     "type": "obj:QuestState",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "today",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "seed",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "claims",
+     "type": "list:obj:QuestClaim?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "QuestOutcome": {
+   "module": "quest",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "state",
+     "type": "obj:QuestState",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "level",
+     "type": "obj:LevelState",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "attributes",
+     "type": "list:obj:AttributeScore",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "ranks",
+     "type": "list:obj:MovementRank",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "goals",
+     "type": "list:obj:GoalProgress",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "events",
+     "type": "list:obj:DelightEvent",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "kreditBalance",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "weekStreak",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "suggestedGoals",
+     "type": "list:obj:Goal?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "records",
+     "type": "list:obj:PersonalRecord?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "extras",
+     "type": "json?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "PlanRequest": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "profile",
+     "type": "obj:AthleteProfile",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "seed",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "startDate",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "blockWeeks",
+     "type": "int?",
+     "min": 4,
+     "max": 6,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "locks",
+     "type": "list:obj:PlanLock",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "previousBlock",
+     "type": "obj:ProgramBlock?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "adaptation",
+     "type": "obj:AdaptationSummary?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "NextBlockRequest": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "profile",
+     "type": "obj:AthleteProfile",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "seed",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "startDate",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "previous",
+     "type": "obj:ProgramBlock",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "adaptation",
+     "type": "obj:AdaptationSummary",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "locks",
+     "type": "list:obj:PlanLock",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "RestructureRequest": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "profile",
+     "type": "obj:AthleteProfile",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "seed",
+     "type": "int",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "today",
+     "type": "date",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "current",
+     "type": "obj:ProgramBlock",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "scope",
+     "type": "enum:RestructureScope",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "dayIndex",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "fromWeekIndex",
+     "type": "int?",
+     "min": 0,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "reasons",
+     "type": "list:obj:Reason",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "locks",
+     "type": "list:obj:PlanLock",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "adaptation",
+     "type": "obj:AdaptationSummary?",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "ReviewRequest": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "request",
+     "type": "obj:PlanRequest",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "current",
+     "type": "obj:Pass1Plan",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "action",
+     "type": "obj:ReviewAction",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "VariantsRequest": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "request",
+     "type": "obj:PlanRequest",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "current",
+     "type": "obj:Pass1Plan",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "slotId",
+     "type": "string",
+     "min": null,
+     "max": null,
+     "minLen": 1,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "Pass2Request": {
+   "module": "plan",
+   "schemaVersion": 1,
+   "fields": [
+    {
+     "name": "schemaVersion",
+     "type": "int",
+     "min": 1,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "request",
+     "type": "obj:PlanRequest",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "pass1",
+     "type": "obj:Pass1Plan",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  },
+  "BlockProposal": {
+   "module": "plan",
+   "schemaVersion": null,
+   "fields": [
+    {
+     "name": "block",
+     "type": "obj:ProgramBlock",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    },
+    {
+     "name": "diff",
+     "type": "obj:PlanDiff",
+     "min": null,
+     "max": null,
+     "minLen": null,
+     "maxLen": null,
+     "ref": null
+    }
+   ]
+  }
+ },
+ "reasons": [
+  [
+   "plan.discipline_share",
+   {
+    "discipline": "string",
+    "pct": "int"
+   }
+  ],
+  [
+   "plan.movement_coverage",
+   {
+    "pattern": "string"
+   }
+  ],
+  [
+   "plan.muscle_volume",
+   {
+    "muscle": "string",
+    "weeklySets": "double",
+    "targetLow": "double",
+    "targetHigh": "double"
+   }
+  ],
+  [
+   "plan.fatigue_balance",
+   {
+    "dayIndex": "int"
+   }
+  ],
+  [
+   "plan.time_budget",
+   {
+    "minutes": "int"
+   }
+  ],
+  [
+   "plan.equipment_available",
+   {
+    "place": "string"
+   }
+  ],
+  [
+   "plan.equipment_missing",
+   {
+    "equipment": "string"
+   }
+  ],
+  [
+   "plan.level_match",
+   {
+    "difficulty": "int"
+   }
+  ],
+  [
+   "plan.prerequisite_missing",
+   {
+    "exerciseId": "exercise"
+   }
+  ],
+  [
+   "plan.joint_limitation",
+   {
+    "joint": "string",
+    "discomfort": "int"
+   }
+  ],
+  [
+   "plan.user_likes",
+   {}
+  ],
+  [
+   "plan.user_dislikes",
+   {}
+  ],
+  [
+   "plan.user_cannot_do",
+   {}
+  ],
+  [
+   "plan.user_added",
+   {}
+  ],
+  [
+   "plan.user_removed",
+   {}
+  ],
+  [
+   "plan.user_replaced",
+   {}
+  ],
+  [
+   "plan.lock_kept",
+   {}
+  ],
+  [
+   "plan.goal_support",
+   {
+    "goalId": "string"
+   }
+  ],
+  [
+   "plan.variety",
+   {}
+  ],
+  [
+   "plan.reoptimized",
+   {
+    "scoreBefore": "double",
+    "scoreAfter": "double"
+   }
+  ],
+  [
+   "plan.variant_easier",
+   {
+    "difficultyDelta": "int"
+   }
+  ],
+  [
+   "plan.variant_equivalent",
+   {
+    "similarity": "double"
+   }
+  ],
+  [
+   "plan.variant_other_equipment",
+   {
+    "equipment": "string"
+   }
+  ],
+  [
+   "plan.start_load_conservative",
+   {
+    "fractionOfEstimate": "double"
+   }
+  ],
+  [
+   "plan.to_calibrate",
+   {}
+  ],
+  [
+   "plan.week_kind",
+   {
+    "kind": "string"
+   }
+  ],
+  [
+   "plan.progression_from_previous_block",
+   {
+    "exerciseId": "exercise"
+   }
+  ],
+  [
+   "plan.adaptation_applied",
+   {
+    "proposalKind": "string"
+   }
+  ],
+  [
+   "plan.cautious_health",
+   {}
+  ],
+  [
+   "plan.restructure_scope",
+   {
+    "scope": "string"
+   }
+  ],
+  [
+   "adapt.flames_below_target",
+   {
+    "delta": "double",
+    "sets": "int"
+   }
+  ],
+  [
+   "adapt.flames_above_target",
+   {
+    "delta": "double",
+    "sets": "int"
+   }
+  ],
+  [
+   "adapt.set_failed",
+   {
+    "missingReps": "int"
+   }
+  ],
+  [
+   "adapt.load_up",
+   {
+    "deltaKg": "double"
+   }
+  ],
+  [
+   "adapt.load_down",
+   {
+    "deltaKg": "double"
+   }
+  ],
+  [
+   "adapt.reps_up",
+   {
+    "delta": "int"
+   }
+  ],
+  [
+   "adapt.reps_down",
+   {
+    "delta": "int"
+   }
+  ],
+  [
+   "adapt.volume_up",
+   {
+    "sets": "int"
+   }
+  ],
+  [
+   "adapt.volume_down",
+   {
+    "sets": "int"
+   }
+  ],
+  [
+   "adapt.calibration",
+   {
+    "session": "int"
+   }
+  ],
+  [
+   "adapt.estimate_updated",
+   {
+    "exerciseId": "exercise",
+    "capacity": "double",
+    "standardError": "double"
+   }
+  ],
+  [
+   "adapt.low_confidence",
+   {
+    "confidence": "double"
+   }
+  ],
+  [
+   "adapt.unlock_level",
+   {
+    "level": "string"
+   }
+  ],
+  [
+   "adapt.health_low",
+   {
+    "overall": "int"
+   }
+  ],
+  [
+   "adapt.sleep_low",
+   {
+    "sleepQuality": "int"
+   }
+  ],
+  [
+   "adapt.time_short",
+   {
+    "minutesAvailable": "int",
+    "minutesPlanned": "int"
+   }
+  ],
+  [
+   "adapt.pain_reported",
+   {
+    "zone": "string",
+    "intensity": "int"
+   }
+  ],
+  [
+   "adapt.pain_persistent",
+   {
+    "zone": "string",
+    "sessions": "int"
+   }
+  ],
+  [
+   "adapt.fatigue_high",
+   {
+    "readiness": "double"
+   }
+  ],
+  [
+   "adapt.deload",
+   {
+    "weekIndex": "int"
+   }
+  ],
+  [
+   "adapt.plateau",
+   {
+    "exerciseId": "exercise",
+    "weeks": "int"
+   }
+  ],
+  [
+   "adapt.exercise_skipped",
+   {
+    "exerciseId": "exercise",
+    "times": "int"
+   }
+  ],
+  [
+   "adapt.missed_sessions",
+   {
+    "missed": "int",
+    "planned": "int"
+   }
+  ],
+  [
+   "adapt.resume_after_break",
+   {
+    "days": "int"
+   }
+  ],
+  [
+   "adapt.no_rating",
+   {
+    "sets": "int"
+   }
+  ],
+  [
+   "quest.xp_effort",
+   {
+    "sets": "int",
+    "capped": "bool"
+   }
+  ],
+  [
+   "quest.xp_consistency",
+   {
+    "weeks": "int"
+   }
+  ],
+  [
+   "quest.xp_record",
+   {
+    "exerciseId": "exercise",
+    "recordKind": "string"
+   }
+  ],
+  [
+   "quest.xp_milestone",
+   {
+    "goalId": "string",
+    "fraction": "double"
+   }
+  ],
+  [
+   "quest.xp_quest",
+   {
+    "questId": "string"
+   }
+  ],
+  [
+   "quest.level_up",
+   {
+    "level": "int"
+   }
+  ],
+  [
+   "quest.prestige",
+   {
+    "prestige": "int"
+   }
+  ],
+  [
+   "quest.rank_up",
+   {
+    "exerciseId": "exercise",
+    "tier": "string"
+   }
+  ],
+  [
+   "quest.weak_point",
+   {
+    "attribute": "string"
+   }
+  ],
+  [
+   "quest.campaign_chapter",
+   {
+    "blockIndex": "int"
+   }
+  ],
+  [
+   "quest.goal_suggested",
+   {
+    "exerciseId": "exercise"
+   }
+  ],
+  [
+   "quest.prediction_updated",
+   {
+    "goalId": "string"
+   }
+  ],
+  [
+   "adapt.ratings_uninformative",
+   {
+    "confirmRate": "double",
+    "sets": "int"
+   }
+  ],
+  [
+   "adapt.benchmark_set",
+   {
+    "rir": "double"
+   }
+  ],
+  [
+   "adapt.place_changed",
+   {
+    "place": "string"
+   }
+  ],
+  [
+   "adapt.load_held",
+   {
+    "cause": "string"
+   }
+  ],
+  [
+   "adapt.increment_coarse",
+   {
+    "stepKg": "double"
+   }
+  ],
+  [
+   "adapt.readiness",
+   {
+    "readiness": "double"
+   }
+  ],
+  [
+   "adapt.volume_response",
+   {
+    "muscle": "string",
+    "weeklySets": "double"
+   }
+  ],
+  [
+   "adapt.load_floor",
+   {
+    "minKg": "double"
+   }
+  ],
+  [
+   "quest.no_reward_pain",
+   {
+    "zone": "string",
+    "intensity": "int"
+   }
+  ],
+  [
+   "quest.xp_capped",
+   {
+    "scope": "string",
+    "cap": "int"
+   }
+  ],
+  [
+   "quest.combo",
+   {
+    "length": "int",
+    "bonus": "int"
+   }
+  ],
+  [
+   "quest.session_grade",
+   {
+    "completion": "double",
+    "accuracy": "double",
+    "records": "int"
+   }
+  ],
+  [
+   "quest.daily",
+   {
+    "dayKind": "string"
+   }
+  ],
+  [
+   "quest.weekly",
+   {
+    "planned": "int"
+   }
+  ],
+  [
+   "quest.campaign_boss",
+   {
+    "blockIndex": "int"
+   }
+  ],
+  [
+   "quest.lagging_exercise",
+   {
+    "exerciseId": "exercise"
+   }
+  ],
+  [
+   "quest.weekday_focus",
+   {
+    "weekday": "int"
+   }
+  ],
+  [
+   "quest.xp_rest",
+   {
+    "days": "int"
+   }
+  ],
+  [
+   "quest.streak",
+   {
+    "weeks": "int"
+   }
+  ],
+  [
+   "quest.streak_paused",
+   {
+    "cause": "string"
+   }
+  ],
+  [
+   "quest.chest",
+   {
+    "guaranteed": "bool"
+   }
+  ],
+  [
+   "quest.goal_late",
+   {
+    "goalId": "string"
+   }
+  ],
+  [
+   "quest.first_time",
+   {
+    "exerciseId": "exercise"
+   }
+  ],
+  [
+   "quest.ghost_beaten",
+   {
+    "exerciseId": "exercise",
+    "reference": "string"
+   }
+  ],
+  [
+   "quest.start_bonus",
+   {
+    "sessions": "int"
+   }
+  ]
+ ]
+}
