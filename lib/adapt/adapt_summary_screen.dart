@@ -33,6 +33,30 @@ String _todayText(AdaptExerciseSummary e) {
   return ' (aujourd’hui : $a)';
 }
 
+const _weekdays = [
+  'lundi',
+  'mardi',
+  'mercredi',
+  'jeudi',
+  'vendredi',
+  'samedi',
+  'dimanche',
+];
+
+/// CI1h (C15.4) : séance visée par « La prochaine fois » : « — S14 · J6,
+/// samedi 17/10 » (sans date : « — S14 · J6 »).
+String summaryTargetText(AdaptExerciseSummary e) {
+  final w = e.nextWeek, j = e.nextJ;
+  if (w == null || j == null) return '';
+  final d = e.nextDate;
+  final date = d == null
+      ? ''
+      : ', ${_weekdays[d.weekday - 1]} '
+            '${d.day.toString().padLeft(2, '0')}/'
+            '${d.month.toString().padLeft(2, '0')}';
+  return ' — S$w · J$j$date';
+}
+
 /// Résumé de Koach en fin de séance.
 class AdaptSummaryScreen extends StatefulWidget {
   final WeekPlan week;
@@ -119,8 +143,11 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
             ),
           if (next.isNotEmpty)
             _section('summary-next', 'La prochaine fois', [
+              // CI1h (C15.4) : une prévision, recalculée le jour venu.
+              'Prévision : je recalcule chaque séance le jour venu, avec ton '
+                  'bilan.',
               for (final e in next)
-                '${e.name} : ${_goalText(e.next!)}'
+                '${e.name} : ${_goalText(e.next!)}${summaryTargetText(e)}'
                     '${_todayText(e)}.',
             ]),
           if (_sets() case final sets? when sets.isNotEmpty)

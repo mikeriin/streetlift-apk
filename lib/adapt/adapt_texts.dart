@@ -309,6 +309,13 @@ String? adaptReasonText(
         // du maximum) ; avant, texte par défaut.
         'cap' =>
           'Charge plafonnée : la hausse reste mesurée, pour rester sûre.',
+        // CI1h (C15.2) : charge écrite fixe d'une ligne du programme.
+        'program' =>
+          'Charge fixée par ton programme : je règle seulement les '
+              'répétitions.',
+        'program_bodyweight' =>
+          'Sans lest, comme l’écrit ton programme : je règle seulement les '
+              'répétitions.',
         _ => 'Charge gardée cette fois.',
       };
     case 'adapt.increment_coarse':

@@ -41,6 +41,24 @@ part of 'store.dart';
 /// Échéance de la fin du programme importé (C11 : fin de S40).
 const kImportedEventId = 'kt-fin-programme-importe';
 
+/// CI1h (C15.2) : charge écrite fixe d'une ligne du programme importé
+/// (`load.type == 'fixed'` : « Squat endurance @ 70 kg », 0 kg de lest pour
+/// une ligne au poids du corps), qui contraint la charge servie ; null :
+/// charge libre. Exception : une ligne qui laisse le choix de la charge
+/// dans son nom (« Dead-hang lesté ou PdC »).
+double? importedFixedLoadKg(Exercise e) {
+  final l = e.load;
+  final kg = l.kg;
+  if (l.type != 'fixed' || kg == null || !kg.isFinite) return null;
+  if (kg < 0 || kg > 1000) return null;
+  final name = ' ${normalizeText(e.name)} ';
+  if (name.contains(' ou ') &&
+      (name.contains('lest') || name.contains('pdc'))) {
+    return null;
+  }
+  return kg;
+}
+
 /// Bloc du moteur tiré du programme importé.
 class ImportedSegment {
   /// Rang du bloc (0 = premier).
@@ -101,6 +119,12 @@ class ImportedProgram {
   /// CI1f : références estimées pour « N × ? reps » : référence →
   /// (valeur, source).
   final Map<String, (double, String)> estimates;
+
+  /// CI1h (C15.2) : lignes à charge fixe du programme (`load.type ==
+  /// 'fixed'`, 0 kg de lest pour une ligne au poids du corps), par
+  /// « semaine|emplacement » : (exercice écrit, charge écrite). Recalculé
+  /// à chaque chargement, jamais écrit dans la sauvegarde.
+  final Map<String, (String, double)> fixedLoad;
   const ImportedProgram({
     required this.segments,
     required this.season,
@@ -110,6 +134,7 @@ class ImportedProgram {
     this.asWritten = const {},
     this.exerciseOf = const {},
     this.estimates = const {},
+    this.fixedLoad = const {},
   });
 
   ImportedSegment? segmentOf(int week) {
@@ -423,6 +448,7 @@ extension ImportedProgramStore on AppStore {
     final slots = <String, String>{};
     final asWritten = <String>{};
     final exerciseOf = <String, String>{};
+    final fixedLoad = <String, (String, double)>{};
     final eventDay = start == null
         ? null
         : civilOf(
@@ -561,6 +587,7 @@ extension ImportedProgramStore on AppStore {
         asWritten: asWritten,
         exerciseOf: exerciseOf,
         estimates: estimates,
+        fixedLoad: fixedLoad,
       );
       if (seg != null) segments.add(seg);
     }
@@ -574,6 +601,7 @@ extension ImportedProgramStore on AppStore {
       asWritten: asWritten,
       exerciseOf: exerciseOf,
       estimates: estimates,
+      fixedLoad: fixedLoad,
     );
   }
 
@@ -592,6 +620,7 @@ extension ImportedProgramStore on AppStore {
     required Set<String> asWritten,
     required Map<String, String> exerciseOf,
     required Map<String, (double, String)> estimates,
+    required Map<String, (String, double)> fixedLoad,
   }) {
     final weeks =
         <
@@ -658,6 +687,10 @@ extension ImportedProgramStore on AppStore {
           // Par semaine : l'emplacement est partagé d'une semaine à
           // l'autre (même exercice, même journée).
           if (it.asWritten) asWritten.add('$n|$slot');
+          // CI1h (C15.2) : charge écrite fixe, contrainte de la ligne.
+          if (importedFixedLoadKg(e) case final kg?) {
+            fixedLoad['$n|$slot'] = (item.exerciseId, kg);
+          }
           final named = content.idFor(e.name);
           if (named != null && named != item.exerciseId) {
             exerciseOf['$n|$slot'] = item.exerciseId;
