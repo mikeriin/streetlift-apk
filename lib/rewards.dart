@@ -241,15 +241,15 @@ class _RewardScreenState extends State<RewardScreen>
                 const SizedBox(height: KSpacing.s12),
                 // Surtitre de réussite (`accent`), capitales du système (U3).
                 Text(
-                  k.title(r.heading),
+                  r.heading,
                   textAlign: TextAlign.center,
-                  style: k.titleStyle(KType.micro.copyWith(color: k.accent)),
+                  style: KType.section.copyWith(color: k.accent),
                 ),
                 const SizedBox(height: KSpacing.s8),
                 Semantics(
                   header: true,
                   child: Text(
-                    k.title(r.title),
+                    k.title(_place(r.title)),
                     textAlign: TextAlign.center,
                     style: k.titleStyle(
                       KType.titreEcran.copyWith(color: k.texte),
@@ -390,6 +390,7 @@ class _LootLine extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: KSpacing.s8),
       child: KCard(
+        radius: KRadius.menu,
         padding: const EdgeInsets.symmetric(
           horizontal: KSpacing.s14,
           vertical: KSpacing.s12,
@@ -432,8 +433,10 @@ class _Ceremony extends StatelessWidget {
   Widget build(BuildContext context) {
     final rank = progressRanks.lastWhere((p) => p.level <= r.levelAfter);
     final k = KTokens.of(context);
-    // Aplat principal (carte du jour du kit : `pleine`, texte `surPleine`).
-    return KCard.day(
+    // Carte de cérémonie : `surface` cernée d'`accent` (réussite) ; un seul
+    // aplat `pleine` à l'écran, « Continuer » (C2).
+    return KCard(
+      outline: k.accent,
       key: const ValueKey('reward-ceremony'),
       child: Column(
         children: [
@@ -441,25 +444,25 @@ class _Ceremony extends StatelessWidget {
             rankIndex: rankIndexOf(rank),
             prestige: GameState.prestigeOf(r.levelAfter),
             size: 84,
-            light: true,
+            light: k.dark,
           ),
           const SizedBox(height: KSpacing.s12),
           Text(
-            k.title(r.promotion ? 'Promotion' : 'Niveau supérieur'),
+            r.promotion ? 'Promotion' : 'Niveau supérieur',
             textAlign: TextAlign.center,
-            style: k.titleStyle(KType.micro.copyWith(color: k.surPleine)),
+            style: KType.section.copyWith(color: k.accent),
           ),
           const SizedBox(height: KSpacing.s4),
           Text(
             r.promotion ? rank.title : 'Niveau ${r.levelAfter}',
             textAlign: TextAlign.center,
-            style: KType.titreEcran.copyWith(color: k.surPleine),
+            style: KType.titreEcran.copyWith(color: k.texte),
           ),
           if (r.promotion)
             Text(
               'Niveau ${r.levelAfter}',
               textAlign: TextAlign.center,
-              style: KType.detail.copyWith(color: k.surPleine),
+              style: KType.detail.copyWith(color: k.texte2),
             ),
         ],
       ),
@@ -535,3 +538,8 @@ class _ConfettiPainter extends CustomPainter {
   @override
   bool shouldRepaint(_ConfettiPainter old) => old.t != t;
 }
+
+/// Repère de la journée au format des écrans de séance (« S12, J1 ») ; le
+/// titre enregistré dans le journal (« S12 · J1 ») ne change pas.
+String _place(String title) =>
+    title.replaceFirstMapped(RegExp(r'^(S\d+) · (J\d+)$'), (m) => '${m[1]}, ${m[2]}');

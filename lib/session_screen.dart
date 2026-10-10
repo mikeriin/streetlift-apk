@@ -277,8 +277,9 @@ class _SessionScreenState extends State<SessionScreen> {
   }
 
   /// Hauteur de la barre de chrono quand elle est affichée.
-  double _barHeight() =>
-      ctl.visible ? (_barKey.currentContext?.size?.height ?? 0) : 0;
+  double _barHeight() => ctl.visible && page != bilanPage
+      ? (_barKey.currentContext?.size?.height ?? 0)
+      : 0;
 
   /// « Supprimer l'historique de cette séance » (R8 : verbe exact,
   /// confirmation, `danger`).
@@ -610,7 +611,13 @@ class _SessionScreenState extends State<SessionScreen> {
                               ),
                       ),
                     ),
-                    _TimerBar(key: _barKey, ctl: ctl),
+                    // Page de fin : pas de barre de repos (le chrono continue,
+                    // son signal de fin aussi) ; un seul aplat, « Terminer la
+                    // séance » (C2).
+                    Offstage(
+                      offstage: page == bilanPage,
+                      child: _TimerBar(key: _barKey, ctl: ctl),
+                    ),
                   ],
                 ],
               ),
@@ -1717,11 +1724,24 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         : null;
     // CI1 : lignes nommées par leur rôle dans la technique servie (série
     // de tête, allégées, montées, tentatives, intervalles).
-    String rowLabel(int i) =>
+    String baseLabel(int i) =>
         (widget.adapt && ex.engine
             ? store.adaptRowLabel(widget.week.n, widget.day.j, ex, i)
             : null) ??
         store.setLabel(sp, i);
+    // Un rôle répété sur plusieurs lignes (« Test ») est numéroté : chaque
+    // ligne du tableau se distingue.
+    final baseLabels = [for (var i = 0; i < log.sets.length; i++) baseLabel(i)];
+    String rowLabel(int i) {
+      final label = i < baseLabels.length ? baseLabels[i] : baseLabel(i);
+      final same = [
+        for (var j = 0; j < baseLabels.length; j++)
+          if (baseLabels[j] == label) j,
+      ];
+      if (same.length < 2 || RegExp(r'\d').hasMatch(label)) return label;
+      return '$label ${same.indexOf(i) + 1}';
+    }
+
     final missing = _missingReference(ex, readOnly);
     final (coach, coachRow) = !readOnly && widget.adapt && ex.engine
         ? _coachPanel(ex)
@@ -1838,11 +1858,26 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                     if (!unresolved &&
                         (sp.kind != 'reps' || sp.myo || sp.cluster))
                       KChip(kindLabel),
+                    // État (C5) : texte et icône en `validation`, pas une puce.
                     if (readOnly)
-                      const KChip('Enregistré', icon: Icons.check_rounded),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.check_circle_rounded,
+                            size: KSize.iconSmall,
+                            color: t.validation,
+                          ),
+                          const SizedBox(width: KSpacing.s4),
+                          Text(
+                            'Enregistré',
+                            style: KType.libelle.copyWith(color: t.validation),
+                          ),
+                        ],
+                      ),
                     if (!readOnly && showIntensity) KChip(nbsp(ex.intensity)),
                     if (!readOnly && ex.tempo.isNotEmpty)
-                      KChip('Tempo ${nbsp(ex.tempo)}'),
+                      KChip(nbsp(ex.tempo)),
                     if (!readOnly && ex.rest.isNotEmpty && ex.rest != '—')
                       KChip('Repos ${nbsp(ex.rest)}'),
                     if (finalRest != null)
@@ -1949,9 +1984,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                             ),
                           ),
                         ),
-                        KTextButton(
+                        KTonalButton(
                           label: 'Reprendre',
-                          dense: true,
                           onPressed: () => _reusePrevious(k, prev.log),
                         ),
                       ],
@@ -2134,10 +2168,17 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                     },
                   ),
                   const SizedBox(width: KSpacing.s4),
+                  // Le compteur reste entier : il se réduit en grand texte
+                  // plutôt que de couper « séries » (C3).
                   Expanded(
-                    child: Text(
-                      '${log.sets.length} série${log.sets.length > 1 ? 's' : ''}',
-                      style: KType.libelle.copyWith(color: t.texte2),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        '${log.sets.length} série${log.sets.length > 1 ? 's' : ''}',
+                        maxLines: 1,
+                        style: KType.libelle.copyWith(color: t.texte2),
+                      ),
                     ),
                   ),
                   KIconButton(
@@ -2174,11 +2215,24 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           if (_notesOpen.contains(k)) ...[
             const SizedBox(height: KSpacing.s8),
             if (readOnly)
-              InputDecorator(
-                decoration: _noteDecoration(t, label: 'Notes'),
-                child: Text(
-                  log.note,
-                  style: KType.corps.copyWith(color: t.texte),
+              Material(
+                color: t.haute,
+                shape: KRadius.menuShape,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: KSpacing.s16,
+                    vertical: KSpacing.s12,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Notes',
+                        style: KType.detail.copyWith(color: t.texte2),
+                      ),
+                      Text(log.note, style: KType.corps.copyWith(color: t.texte)),
+                    ],
+                  ),
                 ),
               )
             else

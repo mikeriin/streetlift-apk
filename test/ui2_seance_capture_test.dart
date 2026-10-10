@@ -23,6 +23,8 @@ import 'package:streetlift_tracker/adapt/health_check.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/game.dart';
+import 'package:streetlift_tracker/kit/kit.dart' show showKSnack;
+import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/rewards.dart';
 import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
@@ -212,6 +214,29 @@ void main() {
         await settle(tester);
         await shot(tester, 'serie_validee', dark, palette);
 
+        // Message de Koach posé au-dessus de la barre de repos (C8).
+        final ctx = tester.element(find.byType(PageView));
+        showKSnack(
+          ctx,
+          message: 'Koach : série suivante dans 2 s',
+          bottom: SessionBottomInset.of(ctx),
+          actionLabel: 'Annuler',
+          onAction: () {},
+        );
+        await settle(tester);
+        await shot(tester, 'message_koach', dark, palette);
+        ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
+        await settle(tester);
+
+        // Suppression de l'historique : confirmation (R8).
+        await tester.tap(find.byTooltip('Options de séance'));
+        await settle(tester);
+        await tester.tap(find.text('Supprimer l’historique de cette séance'));
+        await settle(tester);
+        await shot(tester, 'confirmation', dark, palette);
+        await tester.tap(find.byKey(const ValueKey('confirm-cancel')));
+        await settle(tester);
+
         // Fin de séance (dernière page).
         await tester.tap(find.text('Exercices'));
         await settle(tester);
@@ -367,5 +392,59 @@ void main() {
     await shot(tester, 'cinq_series', true, 'bordeaux', suffix: '_360');
     await close(tester);
     store.clearSession(8, 1);
+  }, skip: !uiCaptureEnabled);
+
+  testWidgets('chrono de mode : bouton et barre lancée', (tester) async {
+    // Première page de la saison avec un chrono de mode (EMOM, AMRAP,
+    // intervalles, tenue) ou une tenue chronométrée.
+    (WeekPlan, DayPlan, int)? found;
+    for (final w in [12, 13, 14, 15, 16]) {
+      for (final d in store.program.week(w).days) {
+        final groups = store.groups(d, week: w);
+        for (var i = 0; i < groups.length && found == null; i++) {
+          if (groups[i].any(
+            (e) =>
+                e.timer != null ||
+                e.interval != null ||
+                const {'emom', 'hold', 'duration'}.contains(
+                  store.logSpec(e).kind,
+                ),
+          )) {
+            found = (store.program.week(w), d, i);
+          }
+        }
+      }
+    }
+    if (found == null) return;
+    final (week, day, index) = found;
+    store.clearSession(week.n, day.j);
+    await show(
+      tester,
+      SessionScreen(week: week, day: day),
+      dark: true,
+      palette: 'bordeaux',
+    );
+    final skip = find.byKey(const ValueKey('feel-skip'));
+    final bilan = skip.evaluate().isNotEmpty;
+    await tester.tap(find.text('Exercices'));
+    await settle(tester);
+    await tester.tap(find.byKey(ValueKey('list-item-${index + (bilan ? 1 : 0)}')));
+    await settle(tester);
+    await shot(tester, 'chrono_mode', true, 'bordeaux');
+    final launch = find.textContaining('Lancer');
+    final timer = find.byTooltip('Compte à rebours');
+    if (launch.evaluate().isNotEmpty) {
+      await tester.ensureVisible(launch.first);
+      await settle(tester);
+      await tester.tap(launch.first);
+    } else if (timer.evaluate().isNotEmpty) {
+      await tester.ensureVisible(timer.first);
+      await settle(tester);
+      await tester.tap(timer.first);
+    }
+    await settle(tester);
+    await shot(tester, 'chrono_lance', true, 'bordeaux');
+    await close(tester);
+    store.clearSession(week.n, day.j);
   }, skip: !uiCaptureEnabled);
 }

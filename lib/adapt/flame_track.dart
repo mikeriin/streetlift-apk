@@ -255,7 +255,7 @@ class _FlameTrackState extends State<FlameTrack> {
                 const h = 48.0, flame = 34.0, dot = 7.0;
                 final fill = v == null
                     ? k.filet
-                    : flameColor(v, dark: dark).withValues(alpha: .55);
+                    : flameColor(v, dark: dark).withValues(alpha: dark ? .55 : 1);
                 return GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTapUp: (d) {
@@ -370,11 +370,11 @@ class _FlameTrackState extends State<FlameTrack> {
             child: Builder(
               builder: (context) {
                 final low = Text(
-                  '1 · ${flameWord(1).toLowerCase()}',
+                  '1 · ${flameWord(1)}',
                   style: legend,
                 );
                 final high = Text(
-                  '${flameWord(10).toLowerCase()} · 10',
+                  '${flameWord(10)} · 10',
                   textAlign: TextAlign.end,
                   style: legend,
                 );
@@ -387,27 +387,19 @@ class _FlameTrackState extends State<FlameTrack> {
                   color: k.texte2,
                   onPressed: widget.unknown ? null : widget.onUnknown,
                 );
-                // Grand texte : les deux bornes sur une ligne, le lien
-                // dessous (aucun mot coupé, C3).
-                if (MediaQuery.textScalerOf(context).scale(1) > 1.3) {
-                  return Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(child: low),
-                          const SizedBox(width: KSpacing.s8),
-                          Expanded(child: high),
-                        ],
-                      ),
-                      unknown,
-                    ],
-                  );
-                }
-                return Row(
+                // Les deux bornes de l'échelle aux extrémités, l'action
+                // « Je ne sais pas » dessous, à part (ce n'est pas une
+                // valeur de l'échelle).
+                return Column(
                   children: [
-                    Expanded(child: low),
-                    Flexible(flex: 2, child: unknown),
-                    Expanded(child: high),
+                    Row(
+                      children: [
+                        Expanded(child: low),
+                        const SizedBox(width: KSpacing.s8),
+                        Expanded(child: high),
+                      ],
+                    ),
+                    unknown,
                   ],
                 );
               },

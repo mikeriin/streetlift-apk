@@ -350,22 +350,29 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     // action n'écrit (archive hors du journal) ; sinon la séance est dite
     // enregistrée et son menu ⋮ propose la correction et la suppression.
     final where = _week.n > 0 ? '${sessionPlace(_week, _day)}, ' : '';
-    final state = _editable ? 'séance enregistrée' : 'lecture seule';
+    // Même en-tête que la séance (C1) : retour, titre jamais coupé,
+    // repère et état, une seule action.
+    final header = SessionHeader(
+      title: _day.title,
+      subtitle: where.isEmpty
+          ? (_editable ? 'Séance enregistrée' : 'Lecture seule')
+          : '$where${_editable ? 'séance enregistrée' : 'lecture seule'}',
+      action: _editable
+          ? KIconButton(
+              icon: Icons.more_vert_rounded,
+              tooltip: 'Options de l’historique',
+              onPressed: _openMenu,
+            )
+          : null,
+    );
     return KScreen(
-      appBar: KTopBar.sub(
-        title: _day.title,
-        subtitle: where.isEmpty
-            ? '${state[0].toUpperCase()}${state.substring(1)}'
-            : '$where$state',
-        action: _editable
-            ? KIconButton(
-                icon: Icons.more_vert_rounded,
-                tooltip: 'Options de l’historique',
-                onPressed: _openMenu,
-              )
-            : null,
-      ),
-      body: _groups.isEmpty
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            header,
+            Expanded(
+              child: _groups.isEmpty
           ? const Padding(
               padding: KSpace.content,
               child: KEmpty(
@@ -436,6 +443,10 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
                 ),
               ],
             ),
+            ),
+          ],
+        ),
+      ),
       // 5.5.2 : plus de boutons Précédent / Suivant (glissement).
     );
   }
