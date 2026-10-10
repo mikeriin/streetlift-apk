@@ -353,10 +353,29 @@ void main() {
         if (skip.hitTestable().evaluate().isNotEmpty) {
           await tester.tap(skip.hitTestable().first);
           await wait(tester, 1500);
+          return;
+        }
+        // Bilan déjà passé (séance rouverte) : la page du bilan montre son
+        // résumé ; « Premier exercice » mène à la page du premier exercice
+        // (appui non compté : les parcours partent de cette page).
+        final start = find.byKey(const ValueKey('bilan-start'));
+        if (start.evaluate().isEmpty) return;
+        await scrollTo(tester, start);
+        if (start.hitTestable().evaluate().isNotEmpty) {
+          await tester.tap(start.hitTestable().first);
+          await wait(tester, 1500);
         }
       }
 
+      // Ferme une feuille ouverte (appui sur le voile), sinon rien : un
+      // appui en haut à gauche sans feuille toucherait le retour.
       Future<void> sheetClose() async {
+        final menus = find.byWidgetPredicate(
+          (w) =>
+              w is BottomSheet ||
+              w.runtimeType.toString().startsWith('_PopupMenu'),
+        );
+        if (menus.evaluate().isEmpty) return;
         await tester.tapAt(const Offset(12, 60));
         await wait(tester, 900);
       }
@@ -390,6 +409,7 @@ void main() {
       );
       await sheetClose();
       final info = find.byTooltip('Consignes de l’exercice');
+      await scrollTo(tester, info);
       if (info.hitTestable().evaluate().isNotEmpty) {
         await tester.tap(info.hitTestable().first);
       }
