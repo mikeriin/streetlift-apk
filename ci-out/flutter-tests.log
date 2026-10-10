@@ -1,0 +1,78 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: (setUpAll)
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: (setUpAll)
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: sept cartes accessibles, séance du jour développée et appui court direct
+00:02 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: sept cartes accessibles, séance du jour développée et appui court direct
+00:02 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: accueil (programme du propriétaire) semaine : titre « Semaine n ▾ » vers le choix, ⓘ par jour vers le résumé (R7)
+00:02 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: accueil (programme du propriétaire) semaine : titre « Semaine n ▾ » vers le choix, ⓘ par jour vers le résumé (R7)
+00:02 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: appui long sur le slider choisit directement une semaine
+
+Warning: A call to longPress() with finder "Found 1 widget with key [<'selected-week'>]: [
+  KeyedSubtree-[<'selected-week'>],
+]" derived an Offset (Offset(180.0, 120.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderSemanticsAnnotations#e2c84 relayoutBoundary=up13
+The hit test result at that offset is: HitTestResult(RenderDecoratedBox#4283f@Offset(160.0, 24.0), RenderPointerListener#3b407@Offset(160.0, 24.0), RenderSemanticsGestureHandler#31453@Offset(160.0, 24.0), RenderSemanticsAnnotations#fd249@Offset(160.0, 24.0), RenderSemanticsAnnotations#ceb80@Offset(160.0, 24.0), _RenderLayoutBuilder#14d0d@Offset(160.0, 24.0), RenderRepaintBoundary#466ff@Offset(160.0, 24.0), RenderIndexedSemantics#bd348@Offset(160.0, 24.0), RenderSliverList@(mainAxis: 88.0, crossAxis: 160.0), RenderSliverPadding@(mainAxis: 96.0, crossAxis: 180.0), RenderViewport#9d2e3@Offset(180.0, 96.0), RenderIgnorePointer#2afe7@Offset(180.0, 96.0), RenderSemanticsAnnotations#17766@Offset(180.0, 96.0), RenderPointerListener#38953@Offset(180.0, 96.0), RenderSemanticsGestureHandler#904e7@Offset(180.0, 96.0), RenderPointerListener#31ca8@Offset(180.0, 96.0), _RenderScrollSemantics#c1e7d@Offset(180.0, 96.0), RenderClipRect#7c54f@Offset(180.0, 96.0), RenderAnimatedOpacity#4f763@Offset(180.0, 96.0), RenderClipRect#cf6a1@Offset(180.0, 96.0), RenderPointerListener#78102@Offset(180.0, 96.0), RenderSemanticsGestureHandler#800a0@Offset(180.0, 96.0), RenderConstrainedBox#c74fc@Offset(180.0, 96.0), RenderPositionedBox#74856@Offset(180.0, 96.0), RenderPadding#2065a@Offset(180.0, 120.0), RenderCustomMultiChildLayoutBox#267e8@Offset(180.0, 120.0), _RenderInkFeatures#6b150@Offset(180.0, 120.0), RenderPhysicalModel#44c03@Offset(180.0, 120.0), RenderIndexedStack#150f4@Offset(180.0, 120.0), RenderAnimatedOpacity#eed64@Offset(180.0, 120.0), RenderClipRect#f9e52@Offset(180.0, 120.0), _RenderLayoutBuilder#7c30d@Offset(180.0, 120.0), RenderCustomMultiChildLayoutBox#fe1e6@Offset(180.0, 120.0), _RenderInkFeatures#4d582@Offset(180.0, 120.0), RenderPhysicalModel#13c50@Offset(180.0, 120.0), RenderSemanticsAnnotations#56187@Offset(180.0, 120.0), RenderRepaintBoundary#e0640@Offset(180.0, 120.0), RenderIgnorePointer#a42cf@Offset(180.0, 120.0), RenderAnimatedOpacity#02536@Offset(180.0, 120.0), RenderRepaintBoundary#800cc@Offset(180.0, 120.0), RenderSemanticsAnnotations#fe024@Offset(180.0, 120.0), RenderOffstage#7f67f@Offset(180.0, 120.0), RenderSemanticsAnnotations#2127d@Offset(180.0, 120.0), _RenderTheater#a2220@Offset(180.0, 120.0), RenderAbsorbPointer#85ea8@Offset(180.0, 120.0), RenderPointerListener#c9dc7@Offset(180.0, 120.0), RenderSemanticsAnnotations#657a9@Offset(180.0, 120.0), RenderCustomPaint#7b5ef@Offset(180.0, 120.0), RenderSemanticsAnnotations#3abc8@Offset(180.0, 120.0), RenderSemanticsAnnotations#0a6a6@Offset(180.0, 120.0), RenderSemanticsAnnotations#f2d72@Offset(180.0, 120.0), RenderTapRegionSurface#53a19@Offset(180.0, 120.0), RenderSemanticsAnnotations#e6556@Offset(180.0, 120.0), RenderSemanticsAnnotations#9b9fd@Offset(180.0, 120.0), HitTestEntry<HitTestTarget>#41c86(_ReusableRenderView#a65da), HitTestEntry<HitTestTarget>#0df98(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.longPress (package:flutter_test/src/controller.dart:1212:7)
+#3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart:176:18)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "longPress()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:02 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: appui long sur le slider choisit directement une semaine
+00:03 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: accueil (programme du propriétaire) accueil à 320 dp et 200 % : rien de coupé ni de débordant (sombre)
+00:03 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: appui court sur une séance faite ouvre son historique sans modifier les saisies
+00:03 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: accueil (programme du propriétaire) accueil à 320 dp et 200 % : rien de coupé ni de débordant (clair)
+00:03 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: accueil (programme du propriétaire) accueil à 320 dp et 200 % : rien de coupé ni de débordant (clair)
+00:03 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: appui court ouvre le détail ; glisser atteint les bornes sans ouvrir de fiche
+00:03 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: appui court ouvre le détail ; glisser atteint les bornes sans ouvrir de fiche
+00:04 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: §4.6 : les récompenses viennent après « Fin de séance »
+00:04 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: la fiche semaine donne accès au choix de semaine et conserve les gestes des cartes
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'selected-week'>]: [
+  KeyedSubtree-[<'selected-week'>],
+]" derived an Offset (Offset(180.0, 120.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderSemanticsAnnotations#ad32f relayoutBoundary=up13
+The hit test result at that offset is: HitTestResult(RenderDecoratedBox#93501@Offset(160.0, 24.0), RenderPointerListener#3f4dc@Offset(160.0, 24.0), RenderSemanticsGestureHandler#a88c1@Offset(160.0, 24.0), RenderSemanticsAnnotations#11634@Offset(160.0, 24.0), RenderSemanticsAnnotations#b3273@Offset(160.0, 24.0), _RenderLayoutBuilder#85f47@Offset(160.0, 24.0), RenderRepaintBoundary#78087@Offset(160.0, 24.0), RenderIndexedSemantics#0c4c1@Offset(160.0, 24.0), RenderSliverList@(mainAxis: 88.0, crossAxis: 160.0), RenderSliverPadding@(mainAxis: 96.0, crossAxis: 180.0), RenderViewport#a4f79@Offset(180.0, 96.0), RenderIgnorePointer#eccba@Offset(180.0, 96.0), RenderSemanticsAnnotations#25adb@Offset(180.0, 96.0), RenderPointerListener#6fc6a@Offset(180.0, 96.0), RenderSemanticsGestureHandler#91b11@Offset(180.0, 96.0), RenderPointerListener#8650c@Offset(180.0, 96.0), _RenderScrollSemantics#739db@Offset(180.0, 96.0), RenderClipRect#a9339@Offset(180.0, 96.0), RenderAnimatedOpacity#dadc9@Offset(180.0, 96.0), RenderClipRect#4f99a@Offset(180.0, 96.0), RenderPointerListener#81a84@Offset(180.0, 96.0), RenderSemanticsGestureHandler#4991c@Offset(180.0, 96.0), RenderConstrainedBox#a5bf1@Offset(180.0, 96.0), RenderPositionedBox#af2e9@Offset(180.0, 96.0), RenderPadding#9c1cc@Offset(180.0, 120.0), RenderCustomMultiChildLayoutBox#ddffd@Offset(180.0, 120.0), _RenderInkFeatures#f79b9@Offset(180.0, 120.0), RenderPhysicalModel#61c31@Offset(180.0, 120.0), RenderIndexedStack#87ae1@Offset(180.0, 120.0), RenderAnimatedOpacity#52d4f@Offset(180.0, 120.0), RenderClipRect#08ac9@Offset(180.0, 120.0), _RenderLayoutBuilder#f420a@Offset(180.0, 120.0), RenderCustomMultiChildLayoutBox#f5992@Offset(180.0, 120.0), _RenderInkFeatures#ed51d@Offset(180.0, 120.0), RenderPhysicalModel#a031d@Offset(180.0, 120.0), RenderSemanticsAnnotations#b585b@Offset(180.0, 120.0), RenderRepaintBoundary#4c5c1@Offset(180.0, 120.0), RenderIgnorePointer#f0347@Offset(180.0, 120.0), RenderAnimatedOpacity#64d15@Offset(180.0, 120.0), RenderRepaintBoundary#cd54e@Offset(180.0, 120.0), RenderSemanticsAnnotations#b72a3@Offset(180.0, 120.0), RenderOffstage#90281@Offset(180.0, 120.0), RenderSemanticsAnnotations#ec2a5@Offset(180.0, 120.0), _RenderTheater#4df45@Offset(180.0, 120.0), RenderAbsorbPointer#f4993@Offset(180.0, 120.0), RenderPointerListener#26aa5@Offset(180.0, 120.0), RenderSemanticsAnnotations#7ea62@Offset(180.0, 120.0), RenderCustomPaint#c8dd4@Offset(180.0, 120.0), RenderSemanticsAnnotations#61a6c@Offset(180.0, 120.0), RenderSemanticsAnnotations#98651@Offset(180.0, 120.0), RenderSemanticsAnnotations#c878d@Offset(180.0, 120.0), RenderTapRegionSurface#86493@Offset(180.0, 120.0), RenderSemanticsAnnotations#53027@Offset(180.0, 120.0), RenderSemanticsAnnotations#4d9a4@Offset(180.0, 120.0), HitTestEntry<HitTestTarget>#047cb(_ReusableRenderView#a65da), HitTestEntry<HitTestTarget>#dc865(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart:294:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:04 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: la fiche semaine donne accès au choix de semaine et conserve les gestes des cartes
+00:04 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: sortie d'une séance sans fin de séance : la vérification de niveau a toujours lieu au retour
+00:05 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: balayage, clavier et conservation de la semaine dans les onglets
+00:06 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: programme créé avec Koach (profil street, compétition) Ma saison en 2 appuis, Jour J en 3 depuis l'accueil
+00:06 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: la navigation libère la place du clavier dans STATS
+00:06 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: programme créé avec Koach (profil street, compétition) Évolution en 2 appuis ; mode réglé par segments
+00:06 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: résumé à 320 px avec texte 130 %, thème true
+00:06 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: programme créé avec Koach (profil street, compétition) « Revenir à un programme précédent » : feuille d'actions, confirmation, « Annuler » ne change rien (R8)
+00:06 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: programme créé avec Koach (profil street, compétition) « Revenir à un programme précédent » : feuille d'actions, confirmation, « Annuler » ne change rien (R8)
+00:07 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_copie_programme_test.dart: un jour de récupération garde un résumé lisible et reste ouvrable
+00:07 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: programme créé avec Koach (profil street, compétition) 320 dp et 200 % : Mon programme, Ma saison, Jour J, Évolution, Où j'en suis (sombre)
+00:07 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: programme créé avec Koach (profil street, compétition) 320 dp et 200 % : Mon programme, Ma saison, Jour J, Évolution, Où j'en suis (clair)
+00:08 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: programme créé avec Koach (profil street, compétition) Mon programme : cibles de 48 dp et boutons nommés (C13)
+00:08 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: états vides (R6) Évolution sans profil : « Créer mon profil »
+00:08 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: états vides (R6) Ma saison sans saison : une action, jamais un cul-de-sac
+00:08 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: états vides (R6) Mon programme sans profil : « Créer mon profil »
+00:08 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: compte à rebours en deux parties (C9)
+00:08 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/ui1_programme_test.dart: (tearDownAll)
+00:08 +29: All tests passed!
