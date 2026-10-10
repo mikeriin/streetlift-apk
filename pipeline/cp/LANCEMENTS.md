@@ -205,7 +205,7 @@ Les deux sessions du 05/10 se sont arrêtées sur la limite hebdomadaire du plan
 - **Rejeu du journal réel** : n'est plus un critère de KM1 (C13.10.2.d) ; refais-le et rapporte-le seulement (même archive chiffrée sur `cp-references`, agrégats seulement).
 - **Fin de passe** : commit « Kalis Track moteurs (KM1 correction 1) : référence Koach 1.0.1 » sur `moteurs` (rebase avant), contrôle `claude/ci-cp-a` vert si le banc Dart change ; `LIVRAISON_KM1_correction1.md` (pipeline et projet claude.ai) avec le tableau des 11 critères avant / après ; ligne KM1 « livré (correction 1) » ; notification ; arrête-toi.
 
-## KM2 — portage Dart, `kalis_adapt` 1.0.0 (à lancer dès qu'une place se libère, tâche « Opus 5.5, effort maximal, moteurs »)
+## KM2 — portage Dart, `kalis_adapt` 1.0.0 (lancé le 10/10/2026 vers 21:05 UTC, tâche « Opus 5.5, effort maximal, moteurs »)
 
 - Lot : **KM2** (ligne de l'état « à faire »), prompt `prompts/KM2.txt`, cahier `CAHIER_KM.md`. Décisions : `DECISIONS_CP.md` **C13.9** (Opus), **C13.10**, **C13.11** (KM1 validé, écarts documentés). Délégation totale (C8) ; validation par le pilotage.
 - **Base** : `moteurs` 17df8ca (référence Koach **1.0.1**, `packages/kalis_adapt/reference/`). Lis d'abord la **note datée du 10/10** en tête de `CONTRAT_1_0.md`, `CHANGEMENTS_1_0_1.md`, l'annexe A, `livraisons/LIVRAISON_KM1.md` et `livraisons/LIVRAISON_KM1_correction1.md` (§ 7 « Pour KM2 »). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM2`.
@@ -213,7 +213,8 @@ Les deux sessions du 05/10 se sont arrêtées sur la limite hebdomadaire du plan
 - **À porter en plus du moteur** (limites de KM1, annexe A) : crochets d'extension (semaine allégée, modulation hebdomadaire, bras d'essai, forme d'adhérence) appliqués **dans la façade** de `kalis_adapt`, pas par l'appelant ; référence de planification versée au journal (rejeu exact de la planification) ; validateur de sécurité côté Dart (celui de `kalis_bench`) branché sur le planificateur.
 - **Mesures à faire en Dart** (le moteur Dart donne les mêmes chiffres que la référence) : tous les critères du cahier contre `kalis_adapt` 0.3.1 ; **critère 5 selon C13.11.2** (graines 0 à 5, une prévision par cible 4 semaines avant l'échéance, déciles d'au moins 30 cibles ; s'il dépasse 5 points, dis-le : le pilotage lancera une correction 2 limitée au jumeau) ; nouvelle recherche adversariale contre le moteur final (témoin Dart dans la même campagne) ; temps sur la VM Dart (≤ 10 s, ≤ 50 ms).
 - **Ne change aucune méthode** : un écart avec la référence est un défaut de portage. Critère 1 : ne doit pas reculer (3,98 % en moyenne A/B/C).
-- Budget : d'autres sessions peuvent tourner (refonte UI) ; sous-agents sur Opus, sauvegardes toutes les 30 minutes, pas de surveillance en boucle.
+- Budget : d'autres sessions peuvent tourner (UI5 de la refonte, CI1h sur accord du propriétaire) ; sous-agents sur Opus, sauvegardes toutes les 30 minutes, pas de surveillance en boucle.
+- **C15 (charge fixe, CI1h)** : se fait dans l'application, au-dessus de `kalis_adapt` ; rien à changer dans `packages/` pour KM2 (C15.3).
 
 ## CI1h — charge fixe du programme et prévision de fin de séance (préparé le 10/10/2026 vers 21:00 UTC ; lancement sur accord du propriétaire, C15)
 
