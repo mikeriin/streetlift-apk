@@ -110,7 +110,7 @@ class SessionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: KSize.dock),
+      constraints: const BoxConstraints(minHeight: KSize.primary),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
         child: Row(
@@ -636,7 +636,7 @@ class _SessionScreenState extends State<SessionScreen> {
       padding: const EdgeInsets.only(
         left: KSpacing.page,
         right: KSpacing.s12,
-        bottom: KSpacing.s8,
+        bottom: KSpacing.s4,
       ),
       child: Column(
         children: [
@@ -1699,10 +1699,15 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final loadLabel = readOnly
         ? (recordedLoads.length == 1 ? '${recordedLoads.single} kg' : '—')
         : store.loadLabel(ex, week: widget.week.n, day: widget.day.j);
-    final showBigLoad =
+    final shownLoad =
         (readOnly || !noLoad) &&
         loadLabel != '—' &&
         (loadLabel != 'PdC' || showKg);
+    // Une charge chiffrée en grand ; « à renseigner » ou « ? » passe dans
+    // le lien vers « Mes références » (ou une puce), le volume prend alors
+    // le grand chiffre.
+    final numericLoad = RegExp(r'\d').hasMatch(loadLabel);
+    final showBigLoad = shownLoad && numericLoad;
     final kindLabel = _kindLabel(sp);
     final showIntensity =
         ex.intensity.isNotEmpty &&
@@ -1742,9 +1747,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       key: ValueKey('exercise-card-${ex.id}'),
       padding: const EdgeInsets.fromLTRB(
         KSpacing.s16,
-        KSpacing.s16,
         KSpacing.s12,
-        KSpacing.s8,
+        KSpacing.s12,
+        KSpacing.s4,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1826,6 +1831,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                             : KType.chiffre.copyWith(color: t.encre),
                       ),
                     ),
+                    if (shownLoad && !numericLoad && missing == null)
+                      KChip('Charge : $loadLabel'),
                     // « Reps » redit l'en-tête de colonne : la puce ne
                     // nomme que les autres mesures.
                     if (!unresolved &&
@@ -1953,7 +1960,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               ],
             ),
           ),
-          const SizedBox(height: KSpacing.s12),
+          const SizedBox(height: KSpacing.s8),
           // ----- Chronos de mode -----
           if (!readOnly &&
               interval != null &&
@@ -2100,10 +2107,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             ),
           // ----- Barre d'outils de la série (C13 : 48 dp) -----
           if (!readOnly) ...[
-            const SizedBox(height: KSpacing.s8),
+            const SizedBox(height: KSpacing.s4),
             Divider(height: 1, thickness: 1, color: t.filet),
             Padding(
-              padding: const EdgeInsets.only(top: KSpacing.s4),
+              padding: EdgeInsets.zero,
               child: Row(
                 children: [
                   KIconButton(
@@ -2371,7 +2378,18 @@ class _SetFieldState extends State<_SetField> {
   final _focus = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocus);
+  }
+
+  void _onFocus() {
+    if (mounted) setState(() {});
+  }
+
+  @override
   void dispose() {
+    _focus.removeListener(_onFocus);
     _focus.dispose();
     super.dispose();
   }
@@ -2413,8 +2431,13 @@ class _SetFieldState extends State<_SetField> {
         shape: shape,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: KSize.target),
+          // Champ sans focus : les gestes vont à la pilule (un appui
+          // sélectionne tout, un glissement horizontal change de page) ;
+          // avec le focus, au champ (curseur, sélection).
           child: Center(
-            child: TextField(
+            child: IgnorePointer(
+              ignoring: !_focus.hasFocus,
+              child: TextField(
               controller: widget.controller,
               focusNode: _focus,
               keyboardType: TextInputType.numberWithOptions(
@@ -2424,10 +2447,6 @@ class _SetFieldState extends State<_SetField> {
               textAlignVertical: TextAlignVertical.center,
               style: style,
               cursorColor: k.encre,
-              // Pas de sélection au glissé : un glissement horizontal parti
-              // d'un champ change de page comme ailleurs (l'appui
-              // sélectionne déjà tout le nombre).
-              enableInteractiveSelection: false,
               decoration: InputDecoration(
                 isDense: true,
                 filled: false,
@@ -2444,6 +2463,7 @@ class _SetFieldState extends State<_SetField> {
               ),
               onTap: _selectAll,
               onChanged: widget.onChanged,
+            ),
             ),
           ),
         ),
