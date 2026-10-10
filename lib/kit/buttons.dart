@@ -83,7 +83,7 @@ class KTonalButton extends StatelessWidget {
         horizontal: KSpacing.s20,
         vertical: KSpacing.s12,
       ),
-      shape: KRadius.pill,
+      shape: k.controlPill,
       textStyle: KType.corpsFort,
     );
     final text = Text(label, textAlign: TextAlign.center);

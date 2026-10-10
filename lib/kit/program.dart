@@ -423,9 +423,14 @@ class KTimeline extends StatelessWidget {
                                   : k.texte,
                             ),
                       ),
-                      if (p.dates != null)
+                      // Dates et durée sur une ligne de détail (rien ne se
+                      // tasse à droite en grand texte).
+                      if (p.dates != null || p.length != null)
                         Text(
-                          p.dates!,
+                          [
+                            if (p.dates != null) p.dates!,
+                            if (p.length != null) p.length!,
+                          ].join(' · '),
                           style: KType.detail.copyWith(color: k.texte2),
                         ),
                     ],
@@ -433,16 +438,6 @@ class KTimeline extends StatelessWidget {
                 ),
               ),
             ),
-            if (p.length != null)
-              Padding(
-                padding: const EdgeInsetsDirectional.only(start: KSpacing.s8),
-                child: Center(
-                  child: Text(
-                    p.length!,
-                    style: KType.detail.copyWith(color: k.texte2),
-                  ),
-                ),
-              ),
           ],
         ),
       ),
