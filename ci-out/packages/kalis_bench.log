@@ -1,0 +1,14 @@
+== kalis_bench
+Resolving dependencies...
+Downloading packages...
+  lints 4.0.0 (6.1.0 available)
+Got dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 30 files (0 changed) in 0.24 seconds.
+Analyzing kalis_bench...
+No issues found!
+No tests ran.
+No tests were found.
+tests : échec
+durée : 5 s

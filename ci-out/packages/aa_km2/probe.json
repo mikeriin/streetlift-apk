@@ -1,0 +1,1529 @@
+{
+ "bilan": {
+  "non_respectes": [
+   "1_erreur_e1rm_rang_6",
+   "2_mauvais_jour_isole",
+   "4_couverture_90",
+   "5_calibration_p_reussite"
+  ],
+  "respectes": [
+   "3_convergence_sous_3",
+   "6_performance_jour_j",
+   "7_securite",
+   "8_temps_calcul"
+  ]
+ },
+ "configuration": {
+  "defaut_modele_sd": null,
+  "extensions": [
+   "Planification",
+   "Surveillance",
+   "ControleDual",
+   "Adherence"
+  ],
+  "graines": 1,
+  "graines_temoin": 16,
+  "moteur": "kalis_adapt 1.0.0 (Dart)",
+  "planificateur": true,
+  "profils": [
+   "street_07_avance_streetlifting_competition"
+  ],
+  "rapide": false,
+  "scenarios": [
+   "reference"
+  ],
+  "semaines": null,
+  "temoin": "kmWitnessSeason (calculé)",
+  "trajectoires": 1000,
+  "verites": "a"
+ },
+ "criteres": {
+  "1_erreur_e1rm_rang_6": {
+   "detail": {
+    "autres_modes_rang_6": {
+     "hold": {
+      "koach": {
+       "biais": -0.154132,
+       "couverture": 1.0,
+       "mae": 0.154132,
+       "n": 2,
+       "rmse": 0.156228,
+       "sd": 0.328338,
+       "sous3": 0.0
+      },
+      "temoin": {
+       "biais": -0.324362,
+       "couverture": 0.3125,
+       "mae": 0.331891,
+       "n": 16,
+       "rmse": 0.352091,
+       "sous3": 0.0
+      }
+     },
+     "loaded": {
+      "koach": {
+       "biais": 0.03758,
+       "couverture": 0.9,
+       "mae": 0.04036,
+       "n": 10,
+       "rmse": 0.051846,
+       "sd": 0.062033,
+       "sous3": 0.6
+      },
+      "temoin": {
+       "biais": -0.036579,
+       "couverture": 0.9375,
+       "mae": 0.066644,
+       "n": 160,
+       "rmse": 0.109333,
+       "sous3": 0.40625
+      }
+     },
+     "reps": {
+      "koach": {
+       "biais": -0.094965,
+       "couverture": 1.0,
+       "mae": 0.177167,
+       "n": 4,
+       "rmse": 0.214805,
+       "sd": 0.21121,
+       "sous3": 0.25
+      },
+      "temoin": {
+       "biais": -0.287437,
+       "couverture": 0.125,
+       "mae": 0.386454,
+       "n": 64,
+       "rmse": 0.458133,
+       "sous3": 0.03125
+      }
+     }
+    },
+    "koach": {
+     "biais": 0.036228,
+     "couverture": 1.0,
+     "mae": 0.036228,
+     "n": 4,
+     "rmse": 0.036899,
+     "sd": 0.035485,
+     "sous3": 0.25
+    },
+    "par_niveau": {
+     "2": {
+      "koach": {
+       "biais": 0.036228,
+       "couverture": 1.0,
+       "mae": 0.036228,
+       "n": 4,
+       "rmse": 0.036899,
+       "sd": 0.035485,
+       "sous3": 0.25
+      },
+      "temoin": {
+       "biais": 0.031076,
+       "couverture": 1.0,
+       "mae": 0.045212,
+       "n": 21,
+       "rmse": 0.056427,
+       "sous3": 0.52381
+      }
+     }
+    },
+    "par_verite": {
+     "a": {
+      "koach": {
+       "biais": 0.036228,
+       "couverture": 1.0,
+       "mae": 0.036228,
+       "n": 4,
+       "rmse": 0.036899,
+       "sd": 0.035485,
+       "sous3": 0.25
+      },
+      "temoin": {
+       "biais": 0.031076,
+       "couverture": 1.0,
+       "mae": 0.045212,
+       "n": 21,
+       "rmse": 0.056427,
+       "sous3": 0.52381
+      }
+     }
+    },
+    "temoin": {
+     "biais": 0.031076,
+     "couverture": 1.0,
+     "mae": 0.045212,
+     "n": 21,
+     "rmse": 0.056427,
+     "sous3": 0.52381
+    },
+    "toutes_estimations": 0.036228
+   },
+   "mesure": 0.036228,
+   "methode": "MAE relative |e1RM estimé / e1RM vrai − 1| au rang 6 (6e jour d'entraînement de l'exercice, dernière estimation du jour, `KmEstimations`) sur les mouvements principaux chargés, moyenne des modèles de vérité du banc (C13.10.2.a) ; témoin : `kmWitnessSeason` 0.3.1 (16 graines) sur les mêmes saisons. Écart documenté accepté (C13.11.1) : ne bloque pas la bascule, ne doit pas reculer.",
+   "n": 4,
+   "respecte": false,
+   "seuil": 0.03
+  },
+  "2_mauvais_jour_isole": {
+   "detail": {
+    "erreurs": 0,
+    "horizons": {
+     "apres": {
+      "max_abs": 0.003634,
+      "mediane_abs": 0.003634,
+      "moyenne_abs": 0.003634,
+      "n": 1,
+      "p95_abs": 0.003634,
+      "signe_moyen": -0.003634
+     },
+     "plus_1": {
+      "max_abs": 0.019989,
+      "mediane_abs": 0.019989,
+      "moyenne_abs": 0.019989,
+      "n": 1,
+      "p95_abs": 0.019989,
+      "signe_moyen": -0.019989
+     },
+     "plus_2": {
+      "max_abs": 0.01683,
+      "mediane_abs": 0.01683,
+      "moyenne_abs": 0.01683,
+      "n": 1,
+      "p95_abs": 0.01683,
+      "signe_moyen": -0.01683
+     }
+    },
+    "jobs": 1,
+    "plantages": 0,
+    "saisons": 1,
+    "saisons_divergentes": {
+     "horizons": {
+      "apres": {
+       "max_abs": 0.003634,
+       "mediane_abs": 0.003634,
+       "moyenne_abs": 0.003634,
+       "n": 1,
+       "p95_abs": 0.003634,
+       "signe_moyen": -0.003634
+      },
+      "plus_1": {
+       "max_abs": 0.025887,
+       "mediane_abs": 0.025887,
+       "moyenne_abs": 0.025887,
+       "n": 1,
+       "p95_abs": 0.025887,
+       "signe_moyen": -0.025887
+      },
+      "plus_2": {
+       "max_abs": 0.02602,
+       "mediane_abs": 0.02602,
+       "moyenne_abs": 0.02602,
+       "n": 1,
+       "p95_abs": 0.02602,
+       "signe_moyen": -0.02602
+      }
+     },
+     "mesure": 0.02602,
+     "note": "mesure de KM1 : les deux saisons divergent après le mauvais jour"
+    }
+   },
+   "mesure": 0.019989,
+   "methode": "`kmAgregerMauvaisJour(apparie: true)` : contrefactuel apparié (C13.10.2.b). Le journal de la saison est rejoué deux fois dans un moteur neuf : tel quel, puis avec la séance du mauvais jour (−6 % de capacité, 2e moitié, après 6 séances) à la place de la séance du même jour, les séances suivantes restant celles de la saison telle quelle ; écart relatif des e1RM des principaux chargés juste après, +1 et +2 séances ; mesure = pire moyenne absolue des trois horizons.",
+   "n": 1,
+   "respecte": false,
+   "seuil": 0.01
+  },
+  "3_convergence_sous_3": {
+   "detail": {
+    "koach": {
+     "mediane_censuree": 1.5,
+     "moyenne_atteints": 2.25,
+     "moyenne_censuree": 2.25,
+     "n": 4,
+     "part_jamais": 0.0
+    },
+    "par_verite": {
+     "a": {
+      "koach": {
+       "mediane_censuree": 1.5,
+       "moyenne_atteints": 2.25,
+       "moyenne_censuree": 2.25,
+       "n": 4,
+       "part_jamais": 0.0
+      },
+      "temoin": {
+       "mediane_censuree": 5.5,
+       "moyenne_atteints": 8.442623,
+       "moyenne_censuree": 9.21875,
+       "n": 64,
+       "part_jamais": 0.046875
+      }
+     }
+    },
+    "premier_rang_mae_sous_3": {
+     "koach": 5,
+     "temoin": 12
+    },
+    "temoin": {
+     "mediane_censuree": 5.5,
+     "moyenne_atteints": 8.442623,
+     "moyenne_censuree": 9.21875,
+     "n": 64,
+     "part_jamais": 0.046875
+    }
+   },
+   "mesure": 2.25,
+   "methode": "Par exercice principal chargé et par saison, premier rang de séance où |erreur| < 3 % (`first_under`) ; moyenne avec « jamais » compté 25 (censure), à comparer au témoin 0.3.1 sur les mêmes (profil, scénario, vérité) ; seuil = valeur du témoin.",
+   "n": 4,
+   "respecte": true,
+   "seuil": 9.21875
+  },
+  "4_couverture_90": {
+   "detail": {
+    "defaut_modele_sd": 0.015,
+    "par_mode_rangs_3_et_plus": {
+     "hold": {
+      "couverture": 1.0,
+      "n": 44
+     },
+     "loaded": {
+      "couverture": 0.979058,
+      "n": 191
+     },
+     "loadedMain": {
+      "couverture": 0.961538,
+      "n": 52
+     },
+     "reps": {
+      "couverture": 0.833333,
+      "n": 84
+     }
+    },
+    "par_rang": {
+     "1": {
+      "couverture": 1.0,
+      "n": 4,
+      "sd": 0.06197
+     },
+     "12": {
+      "couverture": 1.0,
+      "n": 4,
+      "sd": 0.034006
+     },
+     "24": null,
+     "3": {
+      "couverture": 0.75,
+      "n": 4,
+      "sd": 0.041559
+     },
+     "6": {
+      "couverture": 1.0,
+      "n": 4,
+      "sd": 0.035485
+     }
+    },
+    "par_verite": {
+     "a": {
+      "couverture": 0.961538,
+      "n": 52
+     }
+    },
+    "tous_modes_rangs_3_et_plus": {
+     "couverture": 0.943574,
+     "n": 319
+    }
+   },
+   "mesure": 0.961538,
+   "methode": "Part des estimations (principaux chargés, rangs >= 3) dont l'intervalle à 90 % de Koach [exp(mu ∓ 1,645 sd)] contient la capacité vraie (à frais).",
+   "n": 52,
+   "respecte": false,
+   "seuil": [
+    0.88,
+    0.92
+   ]
+  },
+  "5_calibration_p_reussite": {
+   "detail": {
+    "exclusions": {},
+    "mesurable": false,
+    "mesure_km1": {
+     "mesurable": false,
+     "mesure": null,
+     "methode": "KM1 (C13.10.2.c) : toutes les prévisions (début, mi-saison, 4 semaines avant) de toutes les graines, déciles de 30 cas au moins.",
+     "n": 12,
+     "respecte": false
+    },
+    "mesure_km2": {
+     "deciles": [
+      {
+       "decile": 0,
+       "ecart": 0.009,
+       "n": 2,
+       "observee": 0.0,
+       "p_prevue": 0.009,
+       "signal": "n < 30"
+      },
+      {
+       "decile": 1,
+       "ecart": 0.11,
+       "n": 1,
+       "observee": 0.0,
+       "p_prevue": 0.11,
+       "signal": "n < 30"
+      },
+      {
+       "decile": 2,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 3,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 4,
+       "ecart": 0.496,
+       "n": 1,
+       "observee": 0.0,
+       "p_prevue": 0.496,
+       "signal": "n < 30"
+      },
+      {
+       "decile": 5,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 6,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 7,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 8,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 9,
+       "n": 0,
+       "signal": "vide"
+      }
+     ],
+     "deciles_peuples": 0,
+     "ecart_max": null,
+     "erreur_ponderee_tous_cas": 0.156,
+     "graines_completes": false,
+     "graines_demandees": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "graines_presentes": [
+      0
+     ],
+     "mesurable": false,
+     "n": 4,
+     "part_des_cas_juges": 0.0,
+     "unites": 1
+    },
+    "par_cible": {
+     "deciles": [
+      {
+       "decile": 0,
+       "ecart": 0.0226,
+       "n": 5,
+       "observee": 0.0,
+       "p_prevue": 0.0226,
+       "signal": "n < 30"
+      },
+      {
+       "decile": 1,
+       "ecart": 0.1205,
+       "n": 4,
+       "observee": 0.0,
+       "p_prevue": 0.1205,
+       "signal": "n < 30"
+      },
+      {
+       "decile": 2,
+       "ecart": 0.2475,
+       "n": 2,
+       "observee": 0.0,
+       "p_prevue": 0.2475,
+       "signal": "n < 30"
+      },
+      {
+       "decile": 3,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 4,
+       "ecart": 0.496,
+       "n": 1,
+       "observee": 0.0,
+       "p_prevue": 0.496,
+       "signal": "n < 30"
+      },
+      {
+       "decile": 5,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 6,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 7,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 8,
+       "n": 0,
+       "signal": "vide"
+      },
+      {
+       "decile": 9,
+       "n": 0,
+       "signal": "vide"
+      }
+     ],
+     "deciles_peuples": 0,
+     "ecart_max": null,
+     "erreur_ponderee_tous_cas": 0.132167,
+     "n": 12,
+     "part_des_cas_juges": 0.0,
+     "une_prevision_par_cible": {
+      "deciles": [
+       {
+        "decile": 0,
+        "ecart": 0.009,
+        "n": 2,
+        "observee": 0.0,
+        "p_prevue": 0.009,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 1,
+        "ecart": 0.11,
+        "n": 1,
+        "observee": 0.0,
+        "p_prevue": 0.11,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 2,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 3,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 4,
+        "ecart": 0.496,
+        "n": 1,
+        "observee": 0.0,
+        "p_prevue": 0.496,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 5,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 6,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 7,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 8,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 9,
+        "n": 0,
+        "signal": "vide"
+       }
+      ],
+      "ecart_max": null,
+      "n": 4
+     },
+     "unites": 1,
+     "variante_capacite_du_jour": {
+      "deciles": [
+       {
+        "decile": 0,
+        "ecart": 0.0226,
+        "n": 5,
+        "observee": 0.0,
+        "p_prevue": 0.0226,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 1,
+        "ecart": 0.1205,
+        "n": 4,
+        "observee": 0.0,
+        "p_prevue": 0.1205,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 2,
+        "ecart": 0.2475,
+        "n": 2,
+        "observee": 0.0,
+        "p_prevue": 0.2475,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 3,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 4,
+        "ecart": 0.496,
+        "n": 1,
+        "observee": 0.0,
+        "p_prevue": 0.496,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 5,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 6,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 7,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 8,
+        "n": 0,
+        "signal": "vide"
+       },
+       {
+        "decile": 9,
+        "n": 0,
+        "signal": "vide"
+       }
+      ],
+      "ecart_max": null,
+      "n": 12
+     }
+    },
+    "toutes_les_cibles": {
+     "dates_insuffisantes": {
+      "debut": 0,
+      "mi_saison": 0,
+      "moins_4_semaines": 0
+     },
+     "ecart_max_deciles_n20": null,
+     "par_date": {
+      "debut": {
+       "deciles": [
+        {
+         "decile": 0,
+         "ecart": 0.0,
+         "n": 1,
+         "observee": 0.0,
+         "p_prevue": 0.0,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 1,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 2,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 3,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 4,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 5,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 6,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 7,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 8,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 9,
+         "n": 0,
+         "signal": "vide"
+        }
+       ],
+       "deciles_mesurables": 0,
+       "ecart_max_deciles_n20": null,
+       "n": 1,
+       "p_moyenne": 0.0,
+       "reussite_observee": 0.0,
+       "variante_capacite_du_jour": {
+        "deciles": [
+         {
+          "decile": 0,
+          "ecart": 0.0,
+          "n": 1,
+          "observee": 0.0,
+          "p_prevue": 0.0,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 1,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 2,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 3,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 4,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 5,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 6,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 7,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 8,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 9,
+          "n": 0,
+          "signal": "vide"
+         }
+        ],
+        "ecart_max_deciles_n20": null,
+        "reussite_observee": 0.0
+       }
+      },
+      "mi_saison": {
+       "deciles": [
+        {
+         "decile": 0,
+         "ecart": 0.0,
+         "n": 1,
+         "observee": 0.0,
+         "p_prevue": 0.0,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 1,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 2,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 3,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 4,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 5,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 6,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 7,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 8,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 9,
+         "n": 0,
+         "signal": "vide"
+        }
+       ],
+       "deciles_mesurables": 0,
+       "ecart_max_deciles_n20": null,
+       "n": 1,
+       "p_moyenne": 0.0,
+       "reussite_observee": 0.0,
+       "variante_capacite_du_jour": {
+        "deciles": [
+         {
+          "decile": 0,
+          "ecart": 0.0,
+          "n": 1,
+          "observee": 0.0,
+          "p_prevue": 0.0,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 1,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 2,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 3,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 4,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 5,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 6,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 7,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 8,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 9,
+          "n": 0,
+          "signal": "vide"
+         }
+        ],
+        "ecart_max_deciles_n20": null,
+        "reussite_observee": 0.0
+       }
+      },
+      "moins_4_semaines": {
+       "deciles": [
+        {
+         "decile": 0,
+         "ecart": 0.0,
+         "n": 1,
+         "observee": 0.0,
+         "p_prevue": 0.0,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 1,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 2,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 3,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 4,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 5,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 6,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 7,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 8,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 9,
+         "n": 0,
+         "signal": "vide"
+        }
+       ],
+       "deciles_mesurables": 0,
+       "ecart_max_deciles_n20": null,
+       "n": 1,
+       "p_moyenne": 0.0,
+       "reussite_observee": 0.0,
+       "variante_capacite_du_jour": {
+        "deciles": [
+         {
+          "decile": 0,
+          "ecart": 0.0,
+          "n": 1,
+          "observee": 0.0,
+          "p_prevue": 0.0,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 1,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 2,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 3,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 4,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 5,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 6,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 7,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 8,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 9,
+          "n": 0,
+          "signal": "vide"
+         }
+        ],
+        "ecart_max_deciles_n20": null,
+        "reussite_observee": 0.0
+       }
+      }
+     }
+    },
+    "unites_sans_prevision_a_la_date": {}
+   },
+   "mesure": null,
+   "methode": "Calibration PAR CIBLE, mesure fixée par C13.11.2 : P(cible atteinte à l'échéance) prévue par la planification (`p_cibles` de la replanification, `Planification.previsions`) 4 semaines avant l'échéance (une seule prévision par cible), saisons des graines 0 à 5, contre la réussite observée de la cible (meilleure barre réussie, ou valeur faite, au test du jour J >= cible) ; déciles de probabilité prévue, écart |prévu − observé| max sur les déciles d'au moins 30 cibles ; mesurable avec au moins 2 déciles peuplés et les six graines présentes. Mesure de KM1 (toutes les dates, toutes les graines) dans `detail.mesure_km1` ; P(toutes les cibles) par date dans `detail.toutes_les_cibles`.",
+   "n": 4,
+   "respecte": false,
+   "seuil": 0.05
+  },
+  "6_performance_jour_j": {
+   "detail": {
+    "par_mode": {
+     "hold": {
+      "ecart_apparie_moyen": null,
+      "ecart_apparie_se": null,
+      "koach": null,
+      "par_scenario": {},
+      "par_verite": {},
+      "saisons_appariees": 0,
+      "saisons_sans_test": {
+       "aucun_test": 0,
+       "koach_sans_test": 0,
+       "temoin_absent": 0,
+       "temoin_sans_test": 0
+      },
+      "temoin": null,
+      "tests": [
+       0,
+       0
+      ]
+     },
+     "loaded": {
+      "ecart_apparie_moyen": 0.021106,
+      "ecart_apparie_se": null,
+      "koach": 0.982719,
+      "par_scenario": {
+       "reference": {
+        "koach": 0.982719,
+        "n": [
+         4,
+         4
+        ],
+        "temoin": 0.961613
+       }
+      },
+      "par_verite": {
+       "a": {
+        "koach": 0.982719,
+        "n": [
+         4,
+         4
+        ],
+        "temoin": 0.961613
+       }
+      },
+      "saisons_appariees": 1,
+      "saisons_sans_test": {
+       "aucun_test": 0,
+       "koach_sans_test": 0,
+       "temoin_absent": 0,
+       "temoin_sans_test": 0
+      },
+      "temoin": 0.961613,
+      "tests": [
+       4,
+       4
+      ]
+     },
+     "reps": {
+      "ecart_apparie_moyen": null,
+      "ecart_apparie_se": null,
+      "koach": null,
+      "par_scenario": {},
+      "par_verite": {},
+      "saisons_appariees": 0,
+      "saisons_sans_test": {
+       "aucun_test": 0,
+       "koach_sans_test": 0,
+       "temoin_absent": 0,
+       "temoin_sans_test": 0
+      },
+      "temoin": null,
+      "tests": [
+       0,
+       0
+      ]
+     }
+    },
+    "temoin_toutes_graines": {
+     "moyenne": 0.952108,
+     "n": 64
+    }
+   },
+   "mesure": 0.982719,
+   "methode": "Jour de l'échéance, mouvements chargés testés : meilleure charge totale réussie / maximum vrai du jour (`kmEvenements`, ligne `events` de `kmRunSummary` pour le témoin), moyenne sur les tests des saisons appariées (même profil, scénario, vérité et graine) où Koach et le témoin ont tous deux un test ; seuil = moyenne du témoin.",
+   "n": 1,
+   "respecte": true,
+   "seuil": 0.961613
+  },
+  "7_securite": {
+   "detail": {
+    "a_douleur": {
+     "aggravations": 0,
+     "poussees": 0
+    },
+    "b_validateur": {
+     "note": "`plan_module` = blocs de référence + plan de la planification (`Planification.blocsModules`) ; `servi` = blocs de référence où chaque séance faite est remplacée par les items servis par Koach (séries prescrites, contrôle dual et allègement compris) ; `servi_tests_faits` = idem, tests ajoutés par Koach comptés pour leurs tentatives faites (le validateur compte chaque tentative prescrite d'une rampe de test comme une série dure)",
+     "plan_initial": {},
+     "vues": {
+      "plan_module": {
+       "aggrave": {},
+       "deja_initial": {},
+       "exemples": [],
+       "introduit": {},
+       "retour_ecrit": {},
+       "saisons_touchees": 0
+      },
+      "servi": {
+       "aggrave": {},
+       "deja_initial": {},
+       "exemples": [
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 25.0,
+           "semaine": 1,
+           "valeur": 26.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 25.0,
+           "semaine": 1,
+           "valeur": 28.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 25.0,
+           "semaine": 1,
+           "valeur": 28.0
+          }
+         ],
+         "saison": [
+          "street_07_avance_streetlifting_competition",
+          "reference",
+          "a",
+          0
+         ]
+        }
+       ],
+       "introduit": {
+        "plafond_volume": 6,
+        "volume_trop_vite": 16
+       },
+       "retour_ecrit": {},
+       "saisons_touchees": 1
+      },
+      "servi_tests_faits": {
+       "aggrave": {},
+       "deja_initial": {},
+       "dont_dus_aux_manquees": {},
+       "exemples": [],
+       "introduit": {},
+       "retour_ecrit": {},
+       "saisons_touchees": 0
+      }
+     }
+    },
+    "c_hausses_trop_fortes": 0,
+    "temoin_apparie": {
+     "aggravations": 0,
+     "codes": {},
+     "poussees": 0,
+     "saisons": 1,
+     "violations": 0
+    },
+    "temoin_hausses_trop_fortes": 8,
+    "temoin_toutes_graines": {
+     "aggravations": 0,
+     "codes": {},
+     "poussees": 0,
+     "saisons": 16,
+     "violations": 0
+    }
+   },
+   "mesure": 0,
+   "mesure_avec_rampes_de_test": 22,
+   "methode": "Somme (a) des aggravations et poussées de douleur de l'athlète simulé, (b) des constats du validateur de sécurité du banc (`safetyFindings`) introduits ou aggravés par Koach par rapport au plan initial de kalis_plan (sur `blocsModules` de la planification et sur les séances servies telles que prescrites, tests ajoutés par Koach comptés pour leurs tentatives faites), (c) des hausses de charge > 10 % sur plusieurs crans (`kmEffort`). La vue `servi` (rampes de test comprises) est rapportée à part : `mesure_avec_rampes_de_test`.",
+   "n": 1,
+   "respecte": true,
+   "seuil": 0
+  },
+  "8_temps_calcul": {
+   "detail": {
+    "mise_a_jour_serie_ms": {
+     "max": 44.798,
+     "mediane": 0.639,
+     "moyenne": 0.775104,
+     "n": 1221,
+     "p95": 1.178
+    },
+    "observe_serie_ms": {
+     "max": 44.413,
+     "mediane": 0.608,
+     "moyenne": 0.710984,
+     "n": 1221,
+     "p95": 1.067
+    },
+    "plan_seance_ms": {
+     "max": 10.207,
+     "mediane": 0.328,
+     "moyenne": 0.522367,
+     "n": 79,
+     "p95": 0.745
+    },
+    "plan_serie_ms": {
+     "max": 10.459,
+     "mediane": 0.029,
+     "moyenne": 0.066106,
+     "n": 1264,
+     "p95": 0.117
+    },
+    "replanification": {
+     "plans_evalues": [
+      267
+     ],
+     "plans_max": 256,
+     "trajectoires": 1000,
+     "validateur": true
+    },
+    "replanification_s": {
+     "max": 0.4744,
+     "mediane": 0.132493,
+     "moyenne": 0.137851,
+     "n": 16,
+     "p95": 0.4744
+    },
+    "saison": {
+     "graine": 0,
+     "profil": "street_07_avance_streetlifting_competition",
+     "scenario": "reference",
+     "semaines": 16,
+     "verite": "a"
+    },
+    "source": "mesuré sur la VM Dart (kmMesurerTemps)"
+   },
+   "mesure": {
+    "mise_a_jour_serie_ms_max": 44.798,
+    "observe_serie_ms_max": 44.413,
+    "replanification_s_max": 0.4744
+   },
+   "methode": "`kmMesurerTemps` : `observe` série, `plan` de la série suivante et `plan` de séance sur une saison complète, puis chaque replanification (validateur compris), VM Dart ; critère série = mise à jour après une série (observe + plan de la série suivante).",
+   "n": 1221,
+   "respecte": true,
+   "seuil": {
+    "replanification_s": 10.0,
+    "serie_ms": 50.0
+   }
+  },
+  "9_rappels": {
+   "detail": {
+    "pire_cas_adversarial": {
+     "critere": {
+      "libelle": "pire cas de Koach >= pire cas du témoin (performance le jour J, moyenne par adversaire)",
+      "pire_koach": 0.798913,
+      "pire_temoin": 0.0,
+      "respecte": true,
+      "saisons_temoin_manquantes": 0
+     },
+     "fichier": "donnees/comparaison_adversaires.json",
+     "pires": {
+      "e1rm6": {
+       "koach": {
+        "moyenne": 0.086556,
+        "n": 32,
+        "pire": 0.194152
+       },
+       "temoin": {
+        "moyenne": 0.119649,
+        "n": 32,
+        "pire": 0.353069
+       }
+      },
+      "n": 32,
+      "perf_a": {
+       "koach": {
+        "moyenne": 0.87224,
+        "n": 18,
+        "pire": 0.798913
+       },
+       "temoin": {
+        "moyenne": 0.603271,
+        "n": 18,
+        "pire": 0.0
+       }
+      },
+      "perf_a_par_saison": {
+       "koach": {
+        "moyenne": 0.833319,
+        "n": 18,
+        "pire": 0.730866
+       },
+       "temoin": {
+        "moyenne": 0.541558,
+        "n": 18,
+        "pire": 0.0
+       }
+      },
+      "securite": {
+       "koach": {
+        "aggravations": 0,
+        "plantages": 0,
+        "poussees": 0,
+        "violations_indicatives": 170
+       },
+       "temoin": {
+        "aggravations": 0,
+        "poussees": 10,
+        "violations": 16
+       }
+      }
+     }
+    },
+    "rejeu_journal": {
+     "fichier": "donnees/rejeu_journal_agregats.json",
+     "objectif_brique_8": {
+      "couverture_dans_88_92_pct": false,
+      "erreur_moyenne_sous_3_pct": false
+     },
+     "rejeu": {
+      "causes": {
+       "A_exercice_sans_serie_retenue_aucune_serie_notee_dure": 6
+      },
+      "exercices_suivis_par_le_moteur": 42,
+      "seances_avant_evaluation": 24,
+      "seances_evaluees": 11,
+      "seances_rejouees": 35
+     },
+     "series_fiables": {
+      "biais_signe_median": -0.0561,
+      "biais_signe_moyen": -0.0483,
+      "couverture_90": 1.0,
+      "demi_largeur_mediane_pct": 15.67,
+      "erreur_mediane": 0.0677,
+      "erreur_moyenne": 0.0666,
+      "n": 10,
+      "sd_jour_median": 0.0868
+     },
+     "tests_reels": {
+      "biais_signe_median": -0.0314,
+      "biais_signe_moyen": 0.0089,
+      "couverture_90": 1.0,
+      "erreur_mediane": 0.0615,
+      "erreur_moyenne": 0.0802,
+      "n": 4
+     },
+     "une_seance_d_avance": {
+      "biais_signe_median": -0.0019,
+      "biais_signe_moyen": -0.0027,
+      "couverture_90": 0.974,
+      "demi_largeur_mediane_pct": 15.75,
+      "erreur_mediane": 0.0225,
+      "erreur_moyenne": 0.0427,
+      "n": 38,
+      "sd_jour_median": 0.0873
+     }
+    }
+   },
+   "methode": "lecture seule des fichiers existants, sans recalcul",
+   "rapporte_seulement": [
+    "rejeu_journal"
+   ],
+   "respecte": {
+    "pire_cas_adversarial": true
+   }
+  }
+ },
+ "empreinte_sources": "c103adc281969fb504cfd4f0ce08aa5143c250effb5720ffce93e151fc823a54",
+ "saisons": {
+  "mesurees": 1,
+  "plantages": [],
+  "plantees": 0,
+  "prevues": 1,
+  "temoin_triplets": 1
+ },
+ "schema": "kalis_bench/criteres_km2/1",
+ "secondaires": {
+  "alertes_rupture_par_100_seances": {
+   "alertes": 0,
+   "koach": 0.0,
+   "seances": 79
+  },
+  "ecart_effort": {
+   "koach": 2.658317,
+   "temoin": 0.68028
+  },
+  "echecs": {
+   "koach": 0.000978,
+   "temoin": 0.00332
+  },
+  "gain_moyen_hebdo": {
+   "koach": 0.000048,
+   "temoin": 0.000164
+  },
+  "mae_rang_6": {
+   "hold": {
+    "koach": {
+     "biais": -0.154132,
+     "couverture": 1.0,
+     "mae": 0.154132,
+     "n": 2,
+     "rmse": 0.156228,
+     "sd": 0.328338,
+     "sous3": 0.0
+    },
+    "temoin": {
+     "biais": -0.324362,
+     "couverture": 0.3125,
+     "mae": 0.331891,
+     "n": 16,
+     "rmse": 0.352091,
+     "sous3": 0.0
+    }
+   },
+   "reps": {
+    "koach": {
+     "biais": -0.094965,
+     "couverture": 1.0,
+     "mae": 0.177167,
+     "n": 4,
+     "rmse": 0.214805,
+     "sd": 0.21121,
+     "sous3": 0.25
+    },
+    "temoin": {
+     "biais": -0.287437,
+     "couverture": 0.125,
+     "mae": 0.386454,
+     "n": 64,
+     "rmse": 0.458133,
+     "sous3": 0.03125
+    }
+   }
+  },
+  "seances_faites_sur_prevues": 0.9875,
+  "tentatives_reussies": {
+   "koach": 0.916667
+  }
+ },
+ "temoin": {
+  "criteres": {
+   "1_erreur_e1rm_rang_6": {
+    "comparable": true,
+    "koach": 0.036228,
+    "temoin": 0.045212,
+    "temoin_par_verite": {
+     "a": 0.045212
+    }
+   },
+   "2_mauvais_jour_isole": {
+    "comparable": false,
+    "note": "contrefactuel apparié : rejeu du journal de Koach, sans équivalent dans 0.3.1"
+   },
+   "3_convergence_sous_3": {
+    "comparable": true,
+    "koach": 2.25,
+    "temoin": 9.21875
+   },
+   "4_couverture_90": {
+    "comparable": true,
+    "koach": 0.961538,
+    "n_temoin": 655,
+    "note": "intervalle annoncé par 0.3.1 (|erreur| <= 1,6449 × sd relatif)",
+    "temoin": 0.99084
+   },
+   "5_calibration_p_reussite": {
+    "comparable": false,
+    "note": "0.3.1 ne prévoit pas P(réussite)"
+   },
+   "6_performance_jour_j": {
+    "comparable": true,
+    "koach": 0.982719,
+    "temoin": 0.961613
+   },
+   "7_securite": {
+    "comparable": true,
+    "koach": 0,
+    "note": "témoin apparié : aggravations + poussées + violations du programme réalisé (`realizedFindings`)",
+    "temoin": 0
+   },
+   "8_temps_calcul": {
+    "comparable": false,
+    "note": "critère propre à Koach (seuils absolus)"
+   },
+   "9_rappels": {
+    "comparable": true,
+    "koach": 0.798913,
+    "temoin": 0.0
+   }
+  },
+  "source": "`kmWitnessSeason` (mêmes profils, scénarios et vérités)",
+  "version": "0.3.1"
+ }
+}

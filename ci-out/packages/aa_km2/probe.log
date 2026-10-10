@@ -1,0 +1,24 @@
+critère 8 (temps) ...
+campagne KM2 : 1 saisons dans la matrice, 1 pour cette part, 0 en cache, 1 à calculer ; 1 saisons du témoin ; 1 × 2 mauvais jours ; 4 tâches sur 1 isolat(s)
+  1/4 tâches (0 plantée(s)) — 4 s, reste ~11 s
+  2/4 tâches (0 plantée(s)) — 9 s, reste ~9 s
+  3/4 tâches (0 plantée(s)) — 12 s, reste ~4 s
+  4/4 tâches (0 plantée(s)) — 14 s, reste ~0 s
+saisons : 1 prévues, 1 mesurées, 0 plantées
+[NON] 1 e1RM rang 6 : Koach 3.62 % (n=4), témoin 4.52 % ; seuil < 3 %
+      par vérité : a 3.62 %/4.52 %
+[NON] 2 mauvais jour : |écart| moyen 0.36 % (après) 2.00 % (+1) 1.68 % (+2), médian après 0.36 %, signé -0.36 % ; seuil < 1 %
+[OK ] 3 convergence : premier passage (censuré) Koach 2.25, témoin 9.219 ; atteints 2.25 / 8.443 ; jamais 0.00 % / 4.69 %
+[NON] 4 couverture 90 % (rangs >= 3) : 96.15 % (n=52) ; par rang 1:100.00 %, 3:75.00 %, 6:100.00 %, 12:100.00 %, 24:— ; seuil 88–92 %
+[NON] 5 calibration P(réussite) par cible (C13.11.2) : écart max — (déciles de n >= 30) ; n=4 ; graines [0] ; d0 n=2 p=0.90 % obs=0.00 %, d1 n=1 p=11.00 % obs=0.00 %, d4 n=1 p=49.60 % obs=0.00 %
+      mesure de KM1 (toutes dates) : écart max — (n=12)
+      exclusions : {}
+[OK ] 6 jour J (chargé, best/max) : Koach 0.9827, témoin 0.9616 (1 saisons appariées, écart 0.02111 ± —) ; sans test {"aucun_test": 0, "koach_sans_test": 0, "temoin_absent": 0, "temoin_sans_test": 0}
+[OK ] 7 sécurité : douleur {"aggravations": 0, "poussees": 0}, hausses 0, validateur {"plan_module": {"aggrave": {}, "deja_initial": {}, "introduit": {}}, "servi": {"aggrave": {}, "deja_initial": {}, "introduit": {"plafond_volume": 6, "volume_trop_vite": 16}}, "servi_tests_faits": {"aggrave": {}, "deja_initial": {}, "introduit": {}}} ; témoin apparié {"aggravations": 0, "poussees": 0, "violations": 0}
+[OK ] 8 temps : mise à jour série max 44.8 ms (observe seul 44.41 ms), replanification max 0.4744 s (mesuré sur la VM Dart (kmMesurerTemps))
+      9 rappels : {"pire_cas_adversarial": true}
+secondaires : MAE6 reps 17.72 %/38.65 %, tenues 15.41 %/33.19 %, écart effort 2.658/0.6803, échecs 0.10 %/0.33 %, gain 4.8e-05/0.000164, alertes/100 séances 0
+bilan : respectés ["3_convergence_sous_3", "6_performance_jour_j", "7_securite", "8_temps_calcul"] ; NON respectés ["1_erreur_e1rm_rang_6", "2_mauvais_jour_isole", "4_couverture_90", "5_calibration_p_reussite"]
+durée : 23 s ; sortie /home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_km2/probe.json
+probe: 26 s, code 0
+4
