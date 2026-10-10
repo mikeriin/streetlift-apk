@@ -483,10 +483,13 @@ def principal(rapide=False, coeurs=2):
     if rapide:
         temps = mesurer_temps(semaines=4, options={'trajectoires': 200})
         mj = mesurer_mauvais_jour(jobs=[('street_16_specialisation_traction_lestee', 'a', 0)], coeurs=1)
+        mja = mesurer_mauvais_jour(jobs=[('street_16_specialisation_traction_lestee', 'a', 0)], coeurs=1,
+                                   apparie=True)
         det = mesurer_determinisme(semaines=6, trajectoires=200)
     else:
         temps = mesurer_temps()
         mj = mesurer_mauvais_jour(coeurs=coeurs)
+        mja = mesurer_mauvais_jour(coeurs=coeurs, apparie=True)
         det = mesurer_determinisme()
     return {
         'version': 1,
@@ -497,6 +500,7 @@ def principal(rapide=False, coeurs=2):
                     'coeurs': os.cpu_count(), 'plateforme': platform.platform()},
         'temps': temps,
         'mauvais_jour': mj,
+        'mauvais_jour_apparie': mja,
         'determinisme': det,
         'duree_s': time.time() - t0,
     }

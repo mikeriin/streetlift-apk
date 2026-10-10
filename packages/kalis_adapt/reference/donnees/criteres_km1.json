@@ -2,13 +2,13 @@
  "bilan": {
   "non_respectes": [
    "1_erreur_e1rm_rang_6",
-   "5_calibration_p_reussite",
-   "6_performance_jour_j"
+   "5_calibration_p_reussite"
   ],
   "respectes": [
    "2_mauvais_jour_isole",
    "3_convergence_sous_3",
    "4_couverture_90",
+   "6_performance_jour_j",
    "7_securite",
    "8_temps_calcul"
   ]
@@ -66,13 +66,13 @@
     "autres_modes_rang_6": {
      "hold": {
       "koach": {
-       "biais": -0.053023,
-       "couverture": 0.939804,
-       "mae": 0.145497,
+       "biais": -0.04882,
+       "couverture": 0.940557,
+       "mae": 0.149492,
        "n": 2658,
-       "rmse": 0.188365,
-       "sd": 0.30099,
-       "sous3": 0.140331
+       "rmse": 0.223231,
+       "sd": 0.304622,
+       "sous3": 0.137698
       },
       "temoin": {
        "biais": -0.229988,
@@ -85,13 +85,13 @@
      },
      "loaded": {
       "koach": {
-       "biais": 0.010317,
-       "couverture": 0.962918,
-       "mae": 0.055432,
+       "biais": 0.008566,
+       "couverture": 0.961532,
+       "mae": 0.054486,
        "n": 5771,
-       "rmse": 0.082317,
-       "sd": 0.125896,
-       "sous3": 0.405302
+       "rmse": 0.085231,
+       "sd": 0.118196,
+       "sous3": 0.412753
       },
       "temoin": {
        "biais": -0.064402,
@@ -104,13 +104,13 @@
      },
      "reps": {
       "koach": {
-       "biais": -0.011071,
-       "couverture": 0.941652,
-       "mae": 0.100438,
-       "n": 9392,
-       "rmse": 0.14117,
-       "sd": 0.18018,
-       "sous3": 0.235413
+       "biais": -0.011632,
+       "couverture": 0.939849,
+       "mae": 0.098501,
+       "n": 9393,
+       "rmse": 0.140059,
+       "sd": 0.180149,
+       "sous3": 0.245076
       },
       "temoin": {
        "biais": -0.164093,
@@ -123,24 +123,24 @@
      }
     },
     "koach": {
-     "biais": -0.005335,
-     "couverture": 0.937282,
-     "mae": 0.043394,
+     "biais": -0.008562,
+     "couverture": 0.921022,
+     "mae": 0.039814,
      "n": 1722,
-     "rmse": 0.066594,
-     "sd": 0.099004,
-     "sous3": 0.504065
+     "rmse": 0.061142,
+     "sd": 0.066186,
+     "sous3": 0.538328
     },
     "par_niveau": {
      "0": {
       "koach": {
-       "biais": -0.018131,
-       "couverture": 0.892308,
-       "mae": 0.071217,
+       "biais": -0.022171,
+       "couverture": 0.879487,
+       "mae": 0.06711,
        "n": 390,
-       "rmse": 0.10348,
-       "sd": 0.12335,
-       "sous3": 0.379487
+       "rmse": 0.099437,
+       "sd": 0.100868,
+       "sous3": 0.405128
       },
       "temoin": {
        "biais": -0.049292,
@@ -153,13 +153,13 @@
      },
      "1": {
       "koach": {
-       "biais": -0.003989,
-       "couverture": 0.953052,
-       "mae": 0.034326,
+       "biais": -0.005447,
+       "couverture": 0.945227,
+       "mae": 0.033258,
        "n": 639,
-       "rmse": 0.048644,
-       "sd": 0.085625,
-       "sous3": 0.564945
+       "rmse": 0.047308,
+       "sd": 0.062256,
+       "sous3": 0.580595
       },
       "temoin": {
        "biais": -0.02291,
@@ -172,13 +172,13 @@
      },
      "2": {
       "koach": {
-       "biais": -0.001096,
-       "couverture": 0.945493,
-       "mae": 0.035699,
+       "biais": -0.004933,
+       "couverture": 0.907757,
+       "mae": 0.032383,
        "n": 477,
-       "rmse": 0.050599,
-       "sd": 0.097433,
-       "sous3": 0.507338
+       "rmse": 0.043221,
+       "sd": 0.048477,
+       "sous3": 0.54717
       },
       "temoin": {
        "biais": -0.001346,
@@ -191,13 +191,13 @@
      },
      "3": {
       "koach": {
-       "biais": 0.004425,
+       "biais": -0.001219,
        "couverture": 0.953704,
-       "mae": 0.03698,
+       "mae": 0.026334,
        "n": 216,
-       "rmse": 0.058028,
-       "sd": 0.09809,
-       "sous3": 0.541667
+       "rmse": 0.034707,
+       "sd": 0.054296,
+       "sous3": 0.634259
       },
       "temoin": {
        "biais": 0.005767,
@@ -212,13 +212,13 @@
     "par_verite": {
      "a": {
       "koach": {
-       "biais": -0.002003,
-       "couverture": 0.989547,
-       "mae": 0.029283,
+       "biais": -0.002769,
+       "couverture": 0.987805,
+       "mae": 0.027978,
        "n": 574,
-       "rmse": 0.037744,
-       "sd": 0.067666,
-       "sous3": 0.576655
+       "rmse": 0.035356,
+       "sd": 0.054367,
+       "sous3": 0.587108
       },
       "temoin": {
        "biais": -0.008903,
@@ -231,13 +231,13 @@
      },
      "b": {
       "koach": {
-       "biais": -0.010129,
-       "couverture": 0.916376,
-       "mae": 0.061056,
+       "biais": -0.01392,
+       "couverture": 0.918118,
+       "mae": 0.054333,
        "n": 574,
-       "rmse": 0.093023,
-       "sd": 0.110575,
-       "sous3": 0.404181
+       "rmse": 0.084983,
+       "sd": 0.078534,
+       "sous3": 0.466899
       },
       "temoin": {
        "biais": -0.090258,
@@ -250,13 +250,13 @@
      },
      "c": {
       "koach": {
-       "biais": -0.003874,
-       "couverture": 0.905923,
-       "mae": 0.039844,
+       "biais": -0.008997,
+       "couverture": 0.857143,
+       "mae": 0.03713,
        "n": 574,
-       "rmse": 0.056802,
-       "sd": 0.11877,
-       "sous3": 0.531359
+       "rmse": 0.052375,
+       "sd": 0.065656,
+       "sous3": 0.560976
       },
       "temoin": {
        "biais": 0.022202,
@@ -276,9 +276,9 @@
      "rmse": 0.104318,
      "sous3": 0.330037
     },
-    "toutes_estimations": 0.043394
+    "toutes_estimations": 0.039814
    },
-   "mesure": 0.043394,
+   "mesure": 0.039814,
    "methode": "MAE relative |e1RM estimé / e1RM vrai − 1| au rang 6 (6e jour d'entraînement de l'exercice, dernière estimation du jour, `mesures.Estimations`) sur les mouvements principaux chargés, moyenne des modèles de vérité du banc (C13.10.2.a) ; témoin : export 0.3.1 (16 graines) sur les mêmes saisons.",
    "n": 1722,
    "respecte": false,
@@ -336,14 +336,14 @@
       },
       "plus_2": {
        "max_abs": 0.042697,
-       "mediane_abs": 0.006567,
-       "moyenne_abs": 0.009804,
+       "mediane_abs": 0.006513,
+       "moyenne_abs": 0.009671,
        "n": 48,
        "p95_abs": 0.030032,
-       "signe_moyen": -0.005522
+       "signe_moyen": -0.005389
       }
      },
-     "mesure": 0.009804,
+     "mesure": 0.009671,
      "note": "mesure de KM1 : les deux saisons divergent après le mauvais jour"
     }
    },
@@ -357,19 +357,19 @@
    "detail": {
     "koach": {
      "mediane_censuree": 2.0,
-     "moyenne_atteints": 2.980416,
-     "moyenne_censuree": 4.876957,
+     "moyenne_atteints": 2.807763,
+     "moyenne_censuree": 4.855705,
      "n": 1788,
-     "part_jamais": 0.08613
+     "part_jamais": 0.092282
     },
     "par_verite": {
      "a": {
       "koach": {
        "mediane_censuree": 2.0,
-       "moyenne_atteints": 2.832461,
-       "moyenne_censuree": 3.687919,
+       "moyenne_atteints": 2.772174,
+       "moyenne_censuree": 3.555369,
        "n": 596,
-       "part_jamais": 0.038591
+       "part_jamais": 0.035235
       },
       "temoin": {
        "mediane_censuree": 7.0,
@@ -382,10 +382,10 @@
      "b": {
       "koach": {
        "mediane_censuree": 3.0,
-       "moyenne_atteints": 3.568317,
-       "moyenne_censuree": 6.840604,
+       "moyenne_atteints": 3.196819,
+       "moyenne_censuree": 6.598993,
        "n": 596,
-       "part_jamais": 0.152685
+       "part_jamais": 0.15604
       },
       "temoin": {
        "mediane_censuree": 18.5,
@@ -398,10 +398,10 @@
      "c": {
       "koach": {
        "mediane_censuree": 2.0,
-       "moyenne_atteints": 2.598921,
-       "moyenne_censuree": 4.102349,
+       "moyenne_atteints": 2.486239,
+       "moyenne_censuree": 4.412752,
        "n": 596,
-       "part_jamais": 0.067114
+       "part_jamais": 0.08557
       },
       "temoin": {
        "mediane_censuree": 6,
@@ -424,7 +424,7 @@
      "part_jamais": 0.306801
     }
    },
-   "mesure": 4.876957,
+   "mesure": 4.855705,
    "methode": "Par exercice principal chargé et par saison, premier rang de séance où |erreur| < 3 % (`first_under`) ; moyenne avec « jamais » compté 25 (censure), à comparer au témoin 0.3.1 sur les mêmes (profil, scénario, vérité) ; seuil = valeur du témoin.",
    "n": 1788,
    "respecte": true,
@@ -435,71 +435,71 @@
     "defaut_modele_sd": 0.015,
     "par_mode_rangs_3_et_plus": {
      "hold": {
-      "couverture": 0.941467,
-      "n": 50416
+      "couverture": 0.940395,
+      "n": 50415
      },
      "loaded": {
-      "couverture": 0.954082,
-      "n": 98263
+      "couverture": 0.947027,
+      "n": 98276
      },
      "loadedMain": {
-      "couverture": 0.918642,
-      "n": 23919
+      "couverture": 0.903816,
+      "n": 23923
      },
      "reps": {
-      "couverture": 0.92025,
-      "n": 165705
+      "couverture": 0.918388,
+      "n": 165711
      }
     },
     "par_rang": {
      "1": {
       "couverture": 0.974832,
       "n": 1788,
-      "sd": 0.12384
+      "sd": 0.118237
      },
      "12": {
-      "couverture": 0.927641,
-      "n": 1382,
-      "sd": 0.087812
+      "couverture": 0.912572,
+      "n": 1384,
+      "sd": 0.052918
      },
      "24": {
-      "couverture": 0.839779,
+      "couverture": 0.823204,
       "n": 362,
-      "sd": 0.074538
+      "sd": 0.05472
      },
      "3": {
-      "couverture": 0.961582,
+      "couverture": 0.960452,
       "n": 1770,
-      "sd": 0.088537
+      "sd": 0.080899
      },
      "6": {
-      "couverture": 0.937282,
+      "couverture": 0.921022,
       "n": 1722,
-      "sd": 0.099004
+      "sd": 0.066186
      }
     },
     "par_verite": {
      "a": {
-      "couverture": 0.959493,
-      "n": 7974
+      "couverture": 0.958224,
+      "n": 7971
      },
      "b": {
-      "couverture": 0.88149,
+      "couverture": 0.871206,
       "n": 7974
      },
      "c": {
-      "couverture": 0.914942,
-      "n": 7971
+      "couverture": 0.882051,
+      "n": 7978
      }
     },
     "tous_modes_rangs_3_et_plus": {
-     "couverture": 0.934227,
-     "n": 314384
+     "couverture": 0.930869,
+     "n": 314402
     }
    },
-   "mesure": 0.918642,
+   "mesure": 0.903816,
    "methode": "Part des estimations (principaux chargés, rangs >= 3) dont l'intervalle à 90 % de Koach [exp(mu ∓ 1,645 sd)] contient la capacité vraie (à frais).",
-   "n": 23919,
+   "n": 23923,
    "respecte": true,
    "seuil": [
     0.88,
@@ -519,70 +519,67 @@
      "deciles": [
       {
        "decile": 0,
-       "ecart": 0.005856,
-       "n": 1192,
-       "observee": 0.026007,
-       "p_prevue": 0.031862
+       "ecart": 0.006281,
+       "n": 1140,
+       "observee": 0.038596,
+       "p_prevue": 0.032316
       },
       {
        "decile": 1,
-       "ecart": 0.044075,
-       "n": 359,
-       "observee": 0.097493,
-       "p_prevue": 0.141568
+       "ecart": 0.066934,
+       "n": 408,
+       "observee": 0.063725,
+       "p_prevue": 0.130659
       },
       {
        "decile": 2,
-       "ecart": 0.159615,
-       "n": 91,
-       "observee": 0.076923,
-       "p_prevue": 0.236538
+       "ecart": 0.221183,
+       "n": 169,
+       "observee": 0.023669,
+       "p_prevue": 0.244852
       },
       {
        "decile": 3,
-       "ecart": 0.104094,
-       "n": 139,
-       "observee": 0.244604,
-       "p_prevue": 0.348698
+       "ecart": 0.070923,
+       "n": 78,
+       "observee": 0.282051,
+       "p_prevue": 0.352974
       },
       {
        "decile": 4,
-       "ecart": 0.267033,
-       "n": 92,
-       "observee": 0.173913,
-       "p_prevue": 0.440946
+       "ecart": 0.083955,
+       "n": 66,
+       "observee": 0.363636,
+       "p_prevue": 0.447591
       },
       {
        "decile": 5,
-       "ecart": 0.103778,
-       "n": 18,
-       "observee": 0.444444,
-       "p_prevue": 0.548222,
+       "ecart": 0.09244,
+       "n": 25,
+       "observee": 0.44,
+       "p_prevue": 0.53244,
        "signal": "n < 30"
       },
       {
        "decile": 6,
-       "ecart": 0.6212,
-       "n": 5,
-       "observee": 0.0,
-       "p_prevue": 0.6212,
+       "ecart": 0.029667,
+       "n": 12,
+       "observee": 0.666667,
+       "p_prevue": 0.637,
        "signal": "n < 30"
       },
       {
        "decile": 7,
-       "ecart": 0.7295,
-       "n": 2,
-       "observee": 0.0,
-       "p_prevue": 0.7295,
+       "ecart": 0.299,
+       "n": 1,
+       "observee": 1.0,
+       "p_prevue": 0.701,
        "signal": "n < 30"
       },
       {
        "decile": 8,
-       "ecart": 0.821,
-       "n": 1,
-       "observee": 0.0,
-       "p_prevue": 0.821,
-       "signal": "n < 30"
+       "n": 0,
+       "signal": "vide"
       },
       {
        "decile": 9,
@@ -591,70 +588,71 @@
       }
      ],
      "deciles_peuples": 5,
-     "ecart_max": 0.267033,
-     "erreur_ponderee_tous_cas": 0.044033,
+     "ecart_max": 0.221183,
+     "erreur_ponderee_tous_cas": 0.045228,
      "n": 1899,
-     "part_des_cas_juges": 0.986309,
+     "part_des_cas_juges": 0.979989,
      "une_prevision_par_cible": {
       "deciles": [
        {
         "decile": 0,
-        "ecart": 0.009302,
-        "n": 377,
-        "observee": 0.013263,
-        "p_prevue": 0.022565
+        "ecart": 0.005979,
+        "n": 385,
+        "observee": 0.031169,
+        "p_prevue": 0.02519
        },
        {
         "decile": 1,
-        "ecart": 0.051662,
-        "n": 68,
-        "observee": 0.088235,
-        "p_prevue": 0.139897
+        "ecart": 0.127977,
+        "n": 87,
+        "observee": 0.011494,
+        "p_prevue": 0.139471
        },
        {
         "decile": 2,
-        "ecart": 0.238889,
-        "n": 27,
-        "observee": 0.0,
-        "p_prevue": 0.238889,
+        "ecart": 0.204069,
+        "n": 29,
+        "observee": 0.034483,
+        "p_prevue": 0.238552,
         "signal": "n < 30"
        },
        {
         "decile": 3,
-        "ecart": 0.020981,
-        "n": 53,
-        "observee": 0.339623,
-        "p_prevue": 0.360604
+        "ecart": 0.021286,
+        "n": 21,
+        "observee": 0.380952,
+        "p_prevue": 0.359667,
+        "signal": "n < 30"
        },
        {
         "decile": 4,
-        "ecart": 0.239513,
-        "n": 39,
-        "observee": 0.205128,
-        "p_prevue": 0.444641
+        "ecart": 0.139029,
+        "n": 34,
+        "observee": 0.323529,
+        "p_prevue": 0.462559
        },
        {
         "decile": 5,
-        "ecart": 0.1426,
-        "n": 5,
-        "observee": 0.4,
-        "p_prevue": 0.5426,
+        "ecart": 0.018333,
+        "n": 12,
+        "observee": 0.5,
+        "p_prevue": 0.518333,
         "signal": "n < 30"
        },
        {
         "decile": 6,
-        "ecart": 0.619667,
-        "n": 3,
-        "observee": 0.0,
-        "p_prevue": 0.619667,
+        "ecart": 0.13675,
+        "n": 4,
+        "observee": 0.5,
+        "p_prevue": 0.63675,
         "signal": "n < 30"
        },
        {
         "decile": 7,
-        "ecart": 0.747,
+        "ecart": 0.299,
         "n": 1,
-        "observee": 0.0,
-        "p_prevue": 0.747,
+        "observee": 1.0,
+        "p_prevue": 0.701,
         "signal": "n < 30"
        },
        {
@@ -668,7 +666,7 @@
         "signal": "vide"
        }
       ],
-      "ecart_max": 0.239513,
+      "ecart_max": 0.139029,
       "n": 573
      },
      "unites": 225,
@@ -676,70 +674,67 @@
       "deciles": [
        {
         "decile": 0,
-        "ecart": 0.030218,
-        "n": 1192,
-        "observee": 0.062081,
-        "p_prevue": 0.031862
+        "ecart": 0.031719,
+        "n": 1140,
+        "observee": 0.064035,
+        "p_prevue": 0.032316
        },
        {
         "decile": 1,
-        "ecart": 0.217763,
-        "n": 359,
-        "observee": 0.359331,
-        "p_prevue": 0.141568
+        "ecart": 0.1414,
+        "n": 408,
+        "observee": 0.272059,
+        "p_prevue": 0.130659
        },
        {
         "decile": 2,
-        "ecart": 0.038187,
-        "n": 91,
-        "observee": 0.274725,
-        "p_prevue": 0.236538
+        "ecart": 0.031834,
+        "n": 169,
+        "observee": 0.213018,
+        "p_prevue": 0.244852
        },
        {
         "decile": 3,
-        "ecart": 0.190871,
-        "n": 139,
-        "observee": 0.539568,
-        "p_prevue": 0.348698
+        "ecart": 0.300872,
+        "n": 78,
+        "observee": 0.653846,
+        "p_prevue": 0.352974
        },
        {
         "decile": 4,
-        "ecart": 0.026446,
-        "n": 92,
-        "observee": 0.467391,
-        "p_prevue": 0.440946
+        "ecart": 0.325136,
+        "n": 66,
+        "observee": 0.772727,
+        "p_prevue": 0.447591
        },
        {
         "decile": 5,
-        "ecart": 0.229556,
-        "n": 18,
-        "observee": 0.777778,
-        "p_prevue": 0.548222,
+        "ecart": 0.26756,
+        "n": 25,
+        "observee": 0.8,
+        "p_prevue": 0.53244,
         "signal": "n < 30"
        },
        {
         "decile": 6,
-        "ecart": 0.0212,
-        "n": 5,
-        "observee": 0.6,
-        "p_prevue": 0.6212,
+        "ecart": 0.363,
+        "n": 12,
+        "observee": 1.0,
+        "p_prevue": 0.637,
         "signal": "n < 30"
        },
        {
         "decile": 7,
-        "ecart": 0.7295,
-        "n": 2,
-        "observee": 0.0,
-        "p_prevue": 0.7295,
+        "ecart": 0.299,
+        "n": 1,
+        "observee": 1.0,
+        "p_prevue": 0.701,
         "signal": "n < 30"
        },
        {
         "decile": 8,
-        "ecart": 0.179,
-        "n": 1,
-        "observee": 1.0,
-        "p_prevue": 0.821,
-        "signal": "n < 30"
+        "n": 0,
+        "signal": "vide"
        },
        {
         "decile": 9,
@@ -747,7 +742,7 @@
         "signal": "vide"
        }
       ],
-      "ecart_max": 0.217763,
+      "ecart_max": 0.325136,
       "n": 1899
      }
     },
@@ -756,57 +751,63 @@
       "mi_saison": 1,
       "moins_4_semaines": 1
      },
-     "ecart_max_deciles_n20": 0.111757,
+     "ecart_max_deciles_n20": 0.132667,
      "par_date": {
       "debut": {
        "deciles": [
         {
          "decile": 0,
-         "ecart": 0.001645,
-         "n": 183,
+         "ecart": 0.002457,
+         "n": 184,
          "observee": 0.0,
-         "p_prevue": 0.001645
+         "p_prevue": 0.002457
         },
         {
          "decile": 1,
-         "ecart": 0.111757,
-         "n": 37,
+         "ecart": 0.132667,
+         "n": 36,
          "observee": 0.0,
-         "p_prevue": 0.111757
+         "p_prevue": 0.132667
         },
         {
          "decile": 2,
-         "n": 0,
-         "signal": "vide"
+         "ecart": 0.223,
+         "n": 1,
+         "observee": 0.0,
+         "p_prevue": 0.223,
+         "signal": "n < 20"
         },
         {
          "decile": 3,
-         "ecart": 0.312,
-         "n": 2,
+         "ecart": 0.311,
+         "n": 1,
          "observee": 0.0,
-         "p_prevue": 0.312,
+         "p_prevue": 0.311,
          "signal": "n < 20"
         },
         {
          "decile": 4,
-         "ecart": 0.4225,
-         "n": 2,
+         "ecart": 0.413,
+         "n": 1,
          "observee": 0.0,
-         "p_prevue": 0.4225,
+         "p_prevue": 0.413,
          "signal": "n < 20"
         },
         {
          "decile": 5,
-         "ecart": 0.557,
+         "ecart": 0.563,
          "n": 1,
          "observee": 0.0,
-         "p_prevue": 0.557,
+         "p_prevue": 0.563,
          "signal": "n < 20"
         },
         {
          "decile": 6,
-         "n": 0,
-         "signal": "vide"
+         "ecart": 0.335,
+         "n": 1,
+         "observee": 1.0,
+         "p_prevue": 0.665,
+         "signal": "n < 20"
         },
         {
          "decile": 7,
@@ -825,59 +826,65 @@
         }
        ],
        "deciles_mesurables": 2,
-       "ecart_max_deciles_n20": 0.111757,
+       "ecart_max_deciles_n20": 0.132667,
        "n": 225,
-       "p_moyenne": 0.02872,
-       "reussite_observee": 0.0,
+       "p_moyenne": 0.032902,
+       "reussite_observee": 0.004444,
        "variante_capacite_du_jour": {
         "deciles": [
          {
           "decile": 0,
-          "ecart": 0.00382,
-          "n": 183,
-          "observee": 0.005464,
-          "p_prevue": 0.001645
+          "ecart": 0.002978,
+          "n": 184,
+          "observee": 0.005435,
+          "p_prevue": 0.002457
          },
          {
           "decile": 1,
-          "ecart": 0.37473,
-          "n": 37,
-          "observee": 0.486486,
-          "p_prevue": 0.111757
+          "ecart": 0.367333,
+          "n": 36,
+          "observee": 0.5,
+          "p_prevue": 0.132667
          },
          {
           "decile": 2,
-          "n": 0,
-          "signal": "vide"
+          "ecart": 0.777,
+          "n": 1,
+          "observee": 1.0,
+          "p_prevue": 0.223,
+          "signal": "n < 20"
          },
          {
           "decile": 3,
-          "ecart": 0.688,
-          "n": 2,
+          "ecart": 0.689,
+          "n": 1,
           "observee": 1.0,
-          "p_prevue": 0.312,
+          "p_prevue": 0.311,
           "signal": "n < 20"
          },
          {
           "decile": 4,
-          "ecart": 0.5775,
-          "n": 2,
+          "ecart": 0.587,
+          "n": 1,
           "observee": 1.0,
-          "p_prevue": 0.4225,
+          "p_prevue": 0.413,
           "signal": "n < 20"
          },
          {
           "decile": 5,
-          "ecart": 0.443,
+          "ecart": 0.437,
           "n": 1,
           "observee": 1.0,
-          "p_prevue": 0.557,
+          "p_prevue": 0.563,
           "signal": "n < 20"
          },
          {
           "decile": 6,
-          "n": 0,
-          "signal": "vide"
+          "ecart": 0.335,
+          "n": 1,
+          "observee": 1.0,
+          "p_prevue": 0.665,
+          "signal": "n < 20"
          },
          {
           "decile": 7,
@@ -895,7 +902,7 @@
           "signal": "vide"
          }
         ],
-        "ecart_max_deciles_n20": 0.37473,
+        "ecart_max_deciles_n20": 0.367333,
         "reussite_observee": 0.106667
        }
       },
@@ -903,52 +910,55 @@
        "deciles": [
         {
          "decile": 0,
-         "ecart": 0.009917,
-         "n": 206,
+         "ecart": 0.009069,
+         "n": 204,
          "observee": 0.0,
-         "p_prevue": 0.009917
+         "p_prevue": 0.009069
         },
         {
          "decile": 1,
-         "ecart": 0.118,
-         "n": 2,
+         "ecart": 0.1472,
+         "n": 5,
          "observee": 0.0,
-         "p_prevue": 0.118,
+         "p_prevue": 0.1472,
          "signal": "n < 20"
         },
         {
          "decile": 2,
-         "ecart": 0.285,
-         "n": 1,
-         "observee": 0.0,
-         "p_prevue": 0.285,
-         "signal": "n < 20"
+         "n": 0,
+         "signal": "vide"
         },
         {
          "decile": 3,
-         "ecart": 0.336364,
-         "n": 11,
+         "ecart": 0.356125,
+         "n": 8,
          "observee": 0.0,
-         "p_prevue": 0.336364,
+         "p_prevue": 0.356125,
          "signal": "n < 20"
         },
         {
          "decile": 4,
-         "ecart": 0.4636,
+         "ecart": 0.4384,
          "n": 5,
          "observee": 0.0,
-         "p_prevue": 0.4636,
+         "p_prevue": 0.4384,
          "signal": "n < 20"
         },
         {
          "decile": 5,
-         "n": 0,
-         "signal": "vide"
+         "ecart": 0.571,
+         "n": 2,
+         "observee": 0.0,
+         "p_prevue": 0.571,
+         "signal": "n < 20"
         },
         {
          "decile": 6,
-         "n": 0,
-         "signal": "vide"
+         "ecart": 0.348,
+         "n": 1,
+         "observee": 1.0,
+         "p_prevue": 0.652,
+         "signal": "n < 20"
         },
         {
          "decile": 7,
@@ -967,60 +977,63 @@
         }
        ],
        "deciles_mesurables": 1,
-       "ecart_max_deciles_n20": 0.009917,
+       "ecart_max_deciles_n20": 0.009069,
        "n": 225,
-       "p_moyenne": 0.038142,
-       "reussite_observee": 0.0,
+       "p_moyenne": 0.041871,
+       "reussite_observee": 0.004444,
        "variante_capacite_du_jour": {
         "deciles": [
          {
           "decile": 0,
-          "ecart": 0.024063,
-          "n": 206,
-          "observee": 0.033981,
-          "p_prevue": 0.009917
+          "ecart": 0.015441,
+          "n": 204,
+          "observee": 0.02451,
+          "p_prevue": 0.009069
          },
          {
           "decile": 1,
-          "ecart": 0.382,
-          "n": 2,
-          "observee": 0.5,
-          "p_prevue": 0.118,
+          "ecart": 0.4528,
+          "n": 5,
+          "observee": 0.6,
+          "p_prevue": 0.1472,
           "signal": "n < 20"
          },
          {
           "decile": 2,
-          "ecart": 0.715,
-          "n": 1,
-          "observee": 1.0,
-          "p_prevue": 0.285,
-          "signal": "n < 20"
+          "n": 0,
+          "signal": "vide"
          },
          {
           "decile": 3,
-          "ecart": 0.663636,
-          "n": 11,
+          "ecart": 0.643875,
+          "n": 8,
           "observee": 1.0,
-          "p_prevue": 0.336364,
+          "p_prevue": 0.356125,
           "signal": "n < 20"
          },
          {
           "decile": 4,
-          "ecart": 0.3364,
+          "ecart": 0.5616,
           "n": 5,
-          "observee": 0.8,
-          "p_prevue": 0.4636,
+          "observee": 1.0,
+          "p_prevue": 0.4384,
           "signal": "n < 20"
          },
          {
           "decile": 5,
-          "n": 0,
-          "signal": "vide"
+          "ecart": 0.429,
+          "n": 2,
+          "observee": 1.0,
+          "p_prevue": 0.571,
+          "signal": "n < 20"
          },
          {
           "decile": 6,
-          "n": 0,
-          "signal": "vide"
+          "ecart": 0.348,
+          "n": 1,
+          "observee": 1.0,
+          "p_prevue": 0.652,
+          "signal": "n < 20"
          },
          {
           "decile": 7,
@@ -1038,7 +1051,7 @@
           "signal": "vide"
          }
         ],
-        "ecart_max_deciles_n20": 0.024063,
+        "ecart_max_deciles_n20": 0.015441,
         "reussite_observee": 0.106667
        }
       },
@@ -1046,63 +1059,63 @@
        "deciles": [
         {
          "decile": 0,
-         "ecart": 0.006163,
-         "n": 178,
+         "ecart": 0.006497,
+         "n": 173,
          "observee": 0.0,
-         "p_prevue": 0.006163
+         "p_prevue": 0.006497
         },
         {
          "decile": 1,
-         "ecart": 0.136,
-         "n": 11,
+         "ecart": 0.144,
+         "n": 9,
          "observee": 0.0,
-         "p_prevue": 0.136,
+         "p_prevue": 0.144,
          "signal": "n < 20"
         },
         {
          "decile": 2,
-         "ecart": 0.205,
-         "n": 1,
+         "ecart": 0.223375,
+         "n": 8,
          "observee": 0.0,
-         "p_prevue": 0.205,
+         "p_prevue": 0.223375,
          "signal": "n < 20"
         },
         {
          "decile": 3,
-         "ecart": 0.3345,
+         "ecart": 0.391,
          "n": 2,
          "observee": 0.0,
-         "p_prevue": 0.3345,
+         "p_prevue": 0.391,
          "signal": "n < 20"
         },
         {
          "decile": 4,
-         "ecart": 0.448,
+         "ecart": 0.467,
          "n": 1,
          "observee": 0.0,
-         "p_prevue": 0.448,
+         "p_prevue": 0.467,
          "signal": "n < 20"
         },
         {
          "decile": 5,
-         "ecart": 0.562,
-         "n": 1,
-         "observee": 0.0,
-         "p_prevue": 0.562,
-         "signal": "n < 20"
+         "n": 0,
+         "signal": "vide"
         },
         {
          "decile": 6,
-         "ecart": 0.613,
+         "ecart": 0.64,
          "n": 1,
          "observee": 0.0,
-         "p_prevue": 0.613,
+         "p_prevue": 0.64,
          "signal": "n < 20"
         },
         {
          "decile": 7,
-         "n": 0,
-         "signal": "vide"
+         "ecart": 0.299,
+         "n": 1,
+         "observee": 1.0,
+         "p_prevue": 0.701,
+         "signal": "n < 20"
         },
         {
          "decile": 8,
@@ -1116,71 +1129,71 @@
         }
        ],
        "deciles_mesurables": 1,
-       "ecart_max_deciles_n20": 0.006163,
+       "ecart_max_deciles_n20": 0.006497,
        "n": 195,
-       "p_moyenne": 0.026103,
-       "reussite_observee": 0.0,
+       "p_moyenne": 0.034856,
+       "reussite_observee": 0.005128,
        "variante_capacite_du_jour": {
         "deciles": [
          {
           "decile": 0,
-          "ecart": 0.021927,
-          "n": 178,
-          "observee": 0.02809,
-          "p_prevue": 0.006163
+          "ecart": 0.006497,
+          "n": 173,
+          "observee": 0.0,
+          "p_prevue": 0.006497
          },
          {
           "decile": 1,
-          "ecart": 0.773091,
-          "n": 11,
-          "observee": 0.909091,
-          "p_prevue": 0.136,
+          "ecart": 0.856,
+          "n": 9,
+          "observee": 1.0,
+          "p_prevue": 0.144,
           "signal": "n < 20"
          },
          {
           "decile": 2,
-          "ecart": 0.795,
-          "n": 1,
-          "observee": 1.0,
-          "p_prevue": 0.205,
+          "ecart": 0.651625,
+          "n": 8,
+          "observee": 0.875,
+          "p_prevue": 0.223375,
           "signal": "n < 20"
          },
          {
           "decile": 3,
-          "ecart": 0.6655,
+          "ecart": 0.609,
           "n": 2,
           "observee": 1.0,
-          "p_prevue": 0.3345,
+          "p_prevue": 0.391,
           "signal": "n < 20"
          },
          {
           "decile": 4,
-          "ecart": 0.552,
+          "ecart": 0.533,
           "n": 1,
           "observee": 1.0,
-          "p_prevue": 0.448,
+          "p_prevue": 0.467,
           "signal": "n < 20"
          },
          {
           "decile": 5,
-          "ecart": 0.438,
-          "n": 1,
-          "observee": 1.0,
-          "p_prevue": 0.562,
-          "signal": "n < 20"
+          "n": 0,
+          "signal": "vide"
          },
          {
           "decile": 6,
-          "ecart": 0.387,
+          "ecart": 0.36,
           "n": 1,
           "observee": 1.0,
-          "p_prevue": 0.613,
+          "p_prevue": 0.64,
           "signal": "n < 20"
          },
          {
           "decile": 7,
-          "n": 0,
-          "signal": "vide"
+          "ecart": 0.299,
+          "n": 1,
+          "observee": 1.0,
+          "p_prevue": 0.701,
+          "signal": "n < 20"
          },
          {
           "decile": 8,
@@ -1193,7 +1206,7 @@
           "signal": "vide"
          }
         ],
-        "ecart_max_deciles_n20": 0.021927,
+        "ecart_max_deciles_n20": 0.006497,
         "reussite_observee": 0.107692
        }
       }
@@ -1203,7 +1216,7 @@
      "moins_4_semaines": 30
     }
    },
-   "mesure": 0.267033,
+   "mesure": 0.221183,
    "methode": "Calibration PAR CIBLE (C13.10.2.c) : P(cible atteinte à l'échéance) prévue par la planification (`p_cibles` de la replanification, journal `previsions` de PlanificationBanc) au début, à mi-chemin et 4 semaines avant l'échéance, contre la réussite observée de la cible (meilleure barre réussie, ou valeur faite, au test du jour J >= cible) ; déciles de probabilité prévue, écart |prévu − observé| max sur les déciles d'au moins 30 cas ; mesurable avec au moins 2 déciles peuplés. P(toutes les cibles) est rapportée par date dans `detail.toutes_les_cibles` (trop rarement atteinte sur le banc pour peupler les déciles).",
    "n": 1899,
    "respecte": false,
@@ -1232,12 +1245,12 @@
       ]
      },
      "loaded": {
-      "ecart_apparie_moyen": -0.013004,
-      "ecart_apparie_se": 0.006195,
-      "koach": 0.915035,
+      "ecart_apparie_moyen": 0.013917,
+      "ecart_apparie_se": 0.002276,
+      "koach": 0.940872,
       "par_scenario": {
        "changement_discipline": {
-        "koach": 0.924347,
+        "koach": 0.944335,
         "n": [
          54,
          54
@@ -1245,7 +1258,7 @@
         "temoin": 0.931392
        },
        "deuxieme_echeance": {
-        "koach": 0.944033,
+        "koach": 0.955284,
         "n": [
          72,
          72
@@ -1253,7 +1266,7 @@
         "temoin": 0.937246
        },
        "douleur_coude": {
-        "koach": 0.911602,
+        "koach": 0.920239,
         "n": [
          12,
          12
@@ -1261,7 +1274,7 @@
         "temoin": 0.891939
        },
        "douleur_epaule": {
-        "koach": 0.912488,
+        "koach": 0.922514,
         "n": [
          12,
          12
@@ -1269,7 +1282,7 @@
         "temoin": 0.892005
        },
        "echeance_avancee": {
-        "koach": 0.901689,
+        "koach": 0.927551,
         "n": [
          72,
          72
@@ -1277,7 +1290,7 @@
         "temoin": 0.913783
        },
        "maladie": {
-        "koach": 0.918183,
+        "koach": 0.942181,
         "n": [
          72,
          72
@@ -1285,7 +1298,7 @@
         "temoin": 0.913744
        },
        "parc_seulement": {
-        "koach": 0.94053,
+        "koach": 0.946649,
         "n": [
          72,
          60
@@ -1293,7 +1306,7 @@
         "temoin": 0.933395
        },
        "reference": {
-        "koach": 0.928779,
+        "koach": 0.945013,
         "n": [
          72,
          72
@@ -1301,7 +1314,7 @@
         "temoin": 0.931708
        },
        "seances_manquees": {
-        "koach": 0.851012,
+        "koach": 0.932458,
         "n": [
          72,
          72
@@ -1311,7 +1324,7 @@
       },
       "par_verite": {
        "a": {
-        "koach": 0.937573,
+        "koach": 0.954996,
         "n": [
          170,
          166
@@ -1319,7 +1332,7 @@
         "temoin": 0.941617
        },
        "b": {
-        "koach": 0.905345,
+        "koach": 0.94029,
         "n": [
          170,
          166
@@ -1327,7 +1340,7 @@
         "temoin": 0.914936
        },
        "c": {
-        "koach": 0.902188,
+        "koach": 0.92733,
         "n": [
          170,
          166
@@ -1349,12 +1362,12 @@
       ]
      },
      "reps": {
-      "ecart_apparie_moyen": 0.01825,
-      "ecart_apparie_se": 0.002038,
-      "koach": 0.972222,
+      "ecart_apparie_moyen": 0.018512,
+      "ecart_apparie_se": 0.00207,
+      "koach": 0.972508,
       "par_scenario": {
        "changement_discipline": {
-        "koach": 0.969972,
+        "koach": 0.969929,
         "n": [
          18,
          18
@@ -1370,7 +1383,7 @@
         "temoin": 0.937775
        },
        "deuxieme_echeance": {
-        "koach": 0.972629,
+        "koach": 0.972586,
         "n": [
          18,
          18
@@ -1378,7 +1391,7 @@
         "temoin": 0.939809
        },
        "echeance_avancee": {
-        "koach": 0.978587,
+        "koach": 0.978465,
         "n": [
          18,
          18
@@ -1386,7 +1399,7 @@
         "temoin": 0.950293
        },
        "maladie": {
-        "koach": 0.971736,
+        "koach": 0.974071,
         "n": [
          18,
          18
@@ -1394,7 +1407,7 @@
         "temoin": 0.956819
        },
        "parc_seulement": {
-        "koach": 0.969972,
+        "koach": 0.969929,
         "n": [
          18,
          18
@@ -1402,7 +1415,7 @@
         "temoin": 0.956588
        },
        "reference": {
-        "koach": 0.969972,
+        "koach": 0.969929,
         "n": [
          18,
          18
@@ -1410,7 +1423,7 @@
         "temoin": 0.956844
        },
        "seances_manquees": {
-        "koach": 0.984174,
+        "koach": 0.984228,
         "n": [
          18,
          18
@@ -1420,7 +1433,7 @@
       },
       "par_verite": {
        "a": {
-        "koach": 0.971766,
+        "koach": 0.97177,
         "n": [
          44,
          44
@@ -1428,7 +1441,7 @@
         "temoin": 0.950981
        },
        "b": {
-        "koach": 0.973997,
+        "koach": 0.973947,
         "n": [
          44,
          44
@@ -1436,7 +1449,7 @@
         "temoin": 0.953874
        },
        "c": {
-        "koach": 0.970904,
+        "koach": 0.971809,
         "n": [
          44,
          44
@@ -1463,10 +1476,10 @@
      "n": 3912
     }
    },
-   "mesure": 0.915035,
+   "mesure": 0.940872,
    "methode": "Jour de l'échéance, mouvements chargés testés : meilleure charge totale réussie / maximum vrai du jour (`mesures.evenements`, ligne « echeance loaded best/max » d'essai2/temoin), moyenne sur les tests des saisons appariées (même profil, scénario, vérité et graine) où Koach et le témoin ont tous deux un test ; seuil = moyenne du témoin.",
    "n": 174,
-   "respecte": false,
+   "respecte": true,
    "seuil": 0.925439
   },
   "7_securite": {
@@ -1651,8 +1664,8 @@
            "exercice": null,
            "jour": null,
            "limite": 12.0,
-           "semaine": 2,
-           "valeur": 18.0
+           "semaine": 13,
+           "valeur": 12.5
           },
           {
            "categorie": "introduit",
@@ -1670,7 +1683,7 @@
            "jour": null,
            "limite": 12.0,
            "semaine": 2,
-           "valeur": 21.0
+           "valeur": 18.0
           }
          ],
          "saison": [
@@ -1762,7 +1775,7 @@
            "exercice": null,
            "jour": null,
            "limite": 12.0,
-           "semaine": 13,
+           "semaine": 12,
            "valeur": 12.5
           },
           {
@@ -1795,10 +1808,10 @@
        "introduit": {
         "plafond_volume": 2422,
         "tendon_figures": 19,
-        "volume_trop_vite": 10865
+        "volume_trop_vite": 10960
        },
        "retour_ecrit": {},
-       "saisons_touchees": 775
+       "saisons_touchees": 778
       },
       "servi_tests_faits": {
        "aggrave": {},
@@ -1811,7 +1824,7 @@
        "introduit": {},
        "retour_ecrit": {
         "tendon_figures": 19,
-        "volume_trop_vite": 265
+        "volume_trop_vite": 260
        },
        "saisons_touchees": 0
       }
@@ -1842,7 +1855,7 @@
     }
    },
    "mesure": 0,
-   "mesure_avec_rampes_de_test": 13306,
+   "mesure_avec_rampes_de_test": 13401,
    "methode": "Somme (a) des aggravations et poussées de douleur de l'athlète simulé, (b) des constats du validateur `securite_banc` introduits ou aggravés par Koach par rapport au plan initial de kalis_plan (sur `blocs_modules` de la planification et sur les séances servies telles que prescrites, tests ajoutés par Koach comptés pour leurs tentatives faites), (c) des hausses de charge > 10 % sur plusieurs crans (`mesures.effort`). La vue `servi` (rampes de test comprises) est rapportée à part : `mesure_avec_rampes_de_test`.",
    "n": 1440,
    "respecte": true,
@@ -1851,25 +1864,25 @@
   "8_temps_calcul": {
    "detail": {
     "observe_serie_ms": {
-     "max": 12.95841,
-     "mediane": 1.001082,
-     "moyenne": 0.916167,
+     "max": 14.273789,
+     "mediane": 1.00483,
+     "moyenne": 0.955678,
      "n": 1221,
-     "p95": 1.548004
+     "p95": 1.699862
     },
     "plan_seance_ms": {
-     "max": 3.931768,
-     "mediane": 0.647433,
-     "moyenne": 0.714171,
+     "max": 4.352708,
+     "mediane": 0.727291,
+     "moyenne": 0.768911,
      "n": 79,
-     "p95": 0.987429
+     "p95": 1.04928
     },
     "plan_serie_ms": {
-     "max": 0.630757,
-     "mediane": 0.151663,
-     "moyenne": 0.162892,
+     "max": 0.818843,
+     "mediane": 0.156688,
+     "moyenne": 0.174055,
      "n": 1264,
-     "p95": 0.365596
+     "p95": 0.402664
     },
     "replanification": {
      "plans_evalues": [
@@ -1880,11 +1893,11 @@
      "validateur": true
     },
     "replanification_s": {
-     "max": 0.459707,
-     "mediane": 0.365848,
-     "moyenne": 0.353075,
+     "max": 0.485519,
+     "mediane": 0.364474,
+     "moyenne": 0.37145,
      "n": 16,
-     "p95": 0.459707
+     "p95": 0.485519
     },
     "saison": {
      "graine": 0,
@@ -1896,8 +1909,8 @@
     "source": "mesuré (criteres_moteur.mesurer_temps, en cache dans le dossier de travail)"
    },
    "mesure": {
-    "observe_serie_ms_max": 12.95841,
-    "replanification_s_max": 0.459707
+    "observe_serie_ms_max": 14.273789,
+    "replanification_s_max": 0.485519
    },
    "methode": "`criteres_moteur.mesurer_temps` : `observe` série et `plan` sur une saison complète, puis chaque replanification (validateur compris) ; indicatif (Python, cette machine).",
    "n": 1221,
@@ -2025,7 +2038,7 @@
    }
   }
  },
- "empreinte_sources": "0ef36ecf54848ff03c05ea9f40b25ceb2ec78fca00c1d51bdee94ac400e95009",
+ "empreinte_sources": "c5565ce7054a8adc7defecab8d46c0666026bee694eb4ac08ac12ed960e44305",
  "saisons": {
   "mesurees": 1440,
   "plantages": [],
@@ -2036,32 +2049,32 @@
  "schema": "kalis_adapt/criteres_km1/1",
  "secondaires": {
   "alertes_rupture_par_100_seances": {
-   "alertes": 2374,
-   "koach": 2.733543,
+   "alertes": 2304,
+   "koach": 2.652941,
    "seances": 86847
   },
   "ecart_effort": {
-   "koach": 3.646643,
+   "koach": 3.347386,
    "temoin": 1.549322
   },
   "echecs": {
-   "koach": 0.006468,
+   "koach": 0.006418,
    "temoin": 0.007212
   },
   "gain_moyen_hebdo": {
-   "koach": 0.002762,
+   "koach": 0.002768,
    "temoin": 0.002532
   },
   "mae_rang_6": {
    "hold": {
     "koach": {
-     "biais": -0.053023,
-     "couverture": 0.939804,
-     "mae": 0.145497,
+     "biais": -0.04882,
+     "couverture": 0.940557,
+     "mae": 0.149492,
      "n": 2658,
-     "rmse": 0.188365,
-     "sd": 0.30099,
-     "sous3": 0.140331
+     "rmse": 0.223231,
+     "sd": 0.304622,
+     "sous3": 0.137698
     },
     "temoin": {
      "biais": -0.229988,
@@ -2074,13 +2087,13 @@
    },
    "reps": {
     "koach": {
-     "biais": -0.011071,
-     "couverture": 0.941652,
-     "mae": 0.100438,
-     "n": 9392,
-     "rmse": 0.14117,
-     "sd": 0.18018,
-     "sous3": 0.235413
+     "biais": -0.011632,
+     "couverture": 0.939849,
+     "mae": 0.098501,
+     "n": 9393,
+     "rmse": 0.140059,
+     "sd": 0.180149,
+     "sous3": 0.245076
     },
     "temoin": {
      "biais": -0.164093,
@@ -2094,7 +2107,7 @@
   },
   "seances_faites_sur_prevues": 0.93914,
   "tentatives_reussies": {
-   "koach": 0.958037
+   "koach": 0.94395
   }
  }
 }

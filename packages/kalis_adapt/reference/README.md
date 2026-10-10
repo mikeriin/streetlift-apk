@@ -38,7 +38,7 @@ Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `p
 
 ## Résultats publiés
 
-- `donnees/criteres_km1.json` : critères chiffrés du cahier sur la matrice du banc (Koach complet contre 0.3.1), campagne de la correction 1 (Koach 1.0.1). Les mesures de quatre critères y changent de méthode (C13.10.2) : erreur d'e1RM en moyenne des trois vérités, mauvais jour en contrefactuel apparié, calibration de P(réussite) par cible, rejeu réel seulement rapporté.
+- `donnees/criteres_km1.json` : critères chiffrés du cahier sur la matrice du banc (Koach complet contre 0.3.1), première campagne de la correction 1 (Koach 1.0.1), faite avant les changements de la section G de `CHANGEMENTS_C1.md` (correction de `elargir`, tentatives hors du gel de la branche « mauvais jour », trois paramètres de `planification` remesurés) : elle ne mesure donc pas exactement le code et les paramètres actuels. Les mesures de quatre critères y changent de méthode (C13.10.2) : erreur d'e1RM en moyenne des trois vérités, mauvais jour en contrefactuel apparié, calibration de P(réussite) par cible, rejeu réel seulement rapporté.
 - `donnees/criteres_km1_avant_correction1.json` : la même campagne pour KM1 (Koach 1.0), gardée pour la comparaison avant / après.
 - `donnees/comparaison_adversaires.json` : pire cas adversarial (mesuré avec Koach 1.0, KM1).
 - `donnees/rejeu_journal_agregats.json` : rejeu du journal réel, agrégats (mesuré avec Koach 1.0, KM1).
