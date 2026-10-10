@@ -1,0 +1,3 @@
+kalis_adapt=success
+kalis_core=success
+kalis_koach=success
