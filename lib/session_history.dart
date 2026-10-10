@@ -349,12 +349,14 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     // En-tête de sous-page (C1). « Lecture seule » seulement quand aucune
     // action n'écrit (archive hors du journal) ; sinon la séance est dite
     // enregistrée et son menu ⋮ propose la correction et la suppression.
-    final where = _week.n > 0 ? 'S${_week.n} · J${_day.j} · ' : '';
-    final state = _editable ? 'Séance enregistrée' : 'Lecture seule';
+    final where = _week.n > 0 ? '${sessionPlace(_week, _day)}, ' : '';
+    final state = _editable ? 'séance enregistrée' : 'lecture seule';
     return KScreen(
       appBar: KTopBar.sub(
         title: _day.title,
-        subtitle: '$where$state',
+        subtitle: where.isEmpty
+            ? '${state[0].toUpperCase()}${state.substring(1)}'
+            : '$where$state',
         action: _editable
             ? KIconButton(
                 icon: Icons.more_vert_rounded,
@@ -382,27 +384,29 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
                   ),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
+                      // Même repère que la séance : « Exercice 3 sur 7 »
+                      // et le lien « Exercices » (passe à la ligne en
+                      // grand texte).
+                      SizedBox(
+                        width: double.infinity,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceBetween,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: KSpacing.s8,
+                          children: [
+                            Text(
                               _page == _groups.length
                                   ? 'Bilan de séance'
-                                  : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} / ${_groups.length}',
-                              style: KType.detail.copyWith(color: k.texte2),
+                                  : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
+                              style: KType.section.copyWith(color: k.texte2),
                             ),
-                          ),
-                          // Texte agrandi : le lien partage la ligne et passe
-                          // à la ligne au lieu de déborder (C3).
-                          Flexible(
-                            child: KTextButton(
-                              icon: Icons.list_alt,
+                            KTextButton(
+                              icon: Icons.format_list_numbered_rounded,
                               label: 'Exercices',
-                              dense: true,
                               onPressed: _chooseExercise,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SessionProgressDots(
                         count: _groups.length + 1,

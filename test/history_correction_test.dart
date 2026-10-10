@@ -160,6 +160,10 @@ void main() {
     // appui rouvre la série et ses champs.
     final line = find.byKey(const ValueKey('set-summary-1'));
     if (line.evaluate().isNotEmpty) {
+      // UI2 : carte d'exercice plus haute (tableau des séries à 48 dp) :
+      // la ligne est amenée à l'écran avant l'appui.
+      await tester.ensureVisible(line.first);
+      await tester.pumpAndSettle();
       await tester.tap(line.first);
       await tester.pumpAndSettle();
     }

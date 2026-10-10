@@ -1800,33 +1800,32 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 ),
                 const SizedBox(height: KSpacing.s8),
                 // Prescription : la charge (ou, sans charge, le volume) en
-                // grand chiffre `encre`, puis les puces neutres (C5).
+                // grand chiffre `encre`, puis les puces neutres (C5) sur la
+                // même ligne quand la place le permet (maquette « Séance »).
                 Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.end,
-                  spacing: KSpacing.s12,
-                  runSpacing: KSpacing.s4,
-                  children: [
-                    if (showBigLoad)
-                      Text(
-                        loadLabel,
-                        style: KType.chiffre.copyWith(color: t.encre),
-                      ),
-                    Text(
-                      readOnly
-                          ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
-                          : nbsp(store.setsLabel(ex)),
-                      style: showBigLoad || readOnly
-                          ? KType.corpsFort.copyWith(color: t.texte)
-                          : KType.chiffre.copyWith(color: t.encre),
-                    ),
-                  ],
-                ),
-                if (missing != null) missing,
-                const SizedBox(height: KSpacing.s8),
-                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: KSpacing.s8,
                   runSpacing: KSpacing.s8,
                   children: [
+                    if (showBigLoad)
+                      Padding(
+                        padding: const EdgeInsets.only(right: KSpacing.s4),
+                        child: Text(
+                          loadLabel,
+                          style: KType.chiffre.copyWith(color: t.encre),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: KSpacing.s4),
+                      child: Text(
+                        readOnly
+                            ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
+                            : nbsp(store.setsLabel(ex)),
+                        style: showBigLoad || readOnly
+                            ? KType.corpsFort.copyWith(color: t.texte)
+                            : KType.chiffre.copyWith(color: t.encre),
+                      ),
+                    ),
                     // « Reps » redit l'en-tête de colonne : la puce ne
                     // nomme que les autres mesures.
                     if (!unresolved &&
@@ -1843,6 +1842,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       KChip('Repos final ${fmt(finalRest)}'),
                   ],
                 ),
+                if (missing != null) missing,
                 // L8 (KT-041) : consigne du mode prudent.
                 // G9 : exercice servi par le moteur, la prudence est dans
                 // ses cibles (pas de seconde règle de charge).

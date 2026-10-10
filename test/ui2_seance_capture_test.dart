@@ -331,4 +331,30 @@ void main() {
     await close(tester);
     store.clearSession(12, 1);
   }, skip: !uiCaptureEnabled);
+
+  testWidgets('360 × 760 : cinq séries visibles sans défilement', (
+    tester,
+  ) async {
+    tester.view.padding = const FakeViewPadding(top: 24, bottom: 24);
+    addTearDown(tester.view.resetPadding);
+    final week = store.program.week(8);
+    final day = week.day(1)!;
+    store.clearSession(8, 1);
+    await show(
+      tester,
+      SessionScreen(week: week, day: day),
+      dark: true,
+      palette: 'bordeaux',
+      width: 360,
+      height: 760,
+    );
+    final skip = find.byKey(const ValueKey('feel-skip'));
+    if (skip.evaluate().isNotEmpty) {
+      await tester.tap(skip);
+      await settle(tester);
+    }
+    await shot(tester, 'cinq_series', true, 'bordeaux', suffix: '_360');
+    await close(tester);
+    store.clearSession(8, 1);
+  }, skip: !uiCaptureEnabled);
 }
