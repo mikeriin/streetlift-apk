@@ -1,0 +1,231 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: jetons rayons des trois familles, espacements, tailles
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: jetons typographie du cahier §5.2
+00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: jetons capitales des titres par le jeton (U3)
+00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: jetons ressorts : durées non nulles, nulles si animations réduites
+00:00 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte de contenu : surface, rayon 24, action
+00:00 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces carte du jour : aplat de la dominante, texte posé dessus
+00:00 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces état vide : action qui résout (R6)
+00:00 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces bandeau dans le flux : action et fermeture nommée
+00:00 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: cartes et surfaces titre de section : 14, 600, texte2, sans capitales (C6)
+00:00 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: menus groupe : séparateurs entre lignes, rayon 20
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: RoundedRectangleBorder:<RoundedRectangleBorder(BorderSide(width: 0.0, style: none),
+BorderRadius.circular(20.0))>
+  Actual: <null>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart:223:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart line 223
+The test description was:
+  groupe : séparateurs entre lignes, rayon 20
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +19 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: menus groupe : séparateurs entre lignes, rayon 20 [E]
+  Test failed. See exception logs above.
+  The test description was: groupe : séparateurs entre lignes, rayon 20
+  
+00:01 +19 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: menus ligne de menu : pastille, description, chevron, 64 dp
+00:01 +20 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: menus mise en évidence d’une ligne ouverte par la recherche : 1,5 s
+00:01 +21 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: menus interrupteur : toute la ligne bascule le réglage
+00:01 +22 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: menus pas à pas : trois pilules séparées, bornes, noms
+00:01 +23 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: menus segments : choix en pilule pleine, même forme choisi ou non
+00:01 +24 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: menus recherche : saisie, effacement nommé
+00:01 +25 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: feuilles et confirmation feuille d’actions : groupes, danger en dernier, Fermer
+00:02 +26 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: feuilles et confirmation action destructrice hors du dernier groupe : refusée (C10)
+00:02 +27 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: feuilles et confirmation feuille de liste : numéros, courant en contour encre
+00:02 +28 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: feuilles et confirmation confirmation : verbe exact, danger si destructeur, Annuler
+00:02 +29 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: programme et séance ligne de jour : titre en capitales, état lu, bouton ⓘ (R7)
+00:02 +30 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: programme et séance barre de saison : même information que la frise (U7)
+00:02 +31 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: programme et séance tableau des séries : ligne courante en contour encre
+00:02 +32 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: programme et séance barre de repos : −15 s / +15 s, arrêt nommé
+00:02 +33 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: programme et séance message court au-dessus du dock
+00:02 +34 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: pages, en-têtes et dock page racine : grand titre replié au défilement
+00:02 +35 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: pages, en-têtes et dock sous-page : retour, titre, une action (C1)
+00:02 +36 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: pages, en-têtes et dock titre jamais coupé (C3) : passe à la ligne, 320 dp et 200 %
+00:02 +37 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: pages, en-têtes et dock dock : 4 onglets, libellé de l’onglet actif seul, pilule pleine
+00:02 +38 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: pages, en-têtes et dock sélecteur de palette : 8 pastilles nommées, choix coché
+00:02 +39 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 100 %, sombre)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<A RenderFlex overflowed by 40 pixels on the right.>
+reglages
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart:804:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart line 804
+The test description was:
+  toutes les sections : aucun débordement (360 dp, 100 %, sombre)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +39 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 100 %, sombre) [E]
+  Test failed. See exception logs above.
+  The test description was: toutes les sections : aucun débordement (360 dp, 100 %, sombre)
+  
+00:03 +39 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 100 %, clair)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<A RenderFlex overflowed by 40 pixels on the right.>
+reglages
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart:804:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart line 804
+The test description was:
+  toutes les sections : aucun débordement (360 dp, 100 %, clair)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +39 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 100 %, clair) [E]
+  Test failed. See exception logs above.
+  The test description was: toutes les sections : aucun débordement (360 dp, 100 %, clair)
+  
+00:03 +39 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 130 %, sombre)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<A RenderFlex overflowed by 88 pixels on the right.>
+reglages
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart:804:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart line 804
+The test description was:
+  toutes les sections : aucun débordement (360 dp, 130 %, sombre)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:04 +39 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 130 %, sombre) [E]
+  Test failed. See exception logs above.
+  The test description was: toutes les sections : aucun débordement (360 dp, 130 %, sombre)
+  
+00:04 +39 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 130 %, clair)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<A RenderFlex overflowed by 88 pixels on the right.>
+reglages
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart:804:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart line 804
+The test description was:
+  toutes les sections : aucun débordement (360 dp, 130 %, clair)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:04 +39 -5: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 130 %, clair) [E]
+  Test failed. See exception logs above.
+  The test description was: toutes les sections : aucun débordement (360 dp, 130 %, clair)
+  
+00:04 +39 -5: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (320 dp, 200 %, sombre)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<A RenderFlex overflowed by 240 pixels on the right.>
+reglages
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart:804:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart line 804
+The test description was:
+  toutes les sections : aucun débordement (320 dp, 200 %, sombre)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:04 +39 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (320 dp, 200 %, sombre) [E]
+  Test failed. See exception logs above.
+  The test description was: toutes les sections : aucun débordement (320 dp, 200 %, sombre)
+  
+00:04 +39 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (320 dp, 200 %, clair)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<A RenderFlex overflowed by 240 pixels on the right.>
+reglages
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart:804:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart line 804
+The test description was:
+  toutes les sections : aucun débordement (320 dp, 200 %, clair)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +39 -7: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (320 dp, 200 %, clair) [E]
+  Test failed. See exception logs above.
+  The test description was: toutes les sections : aucun débordement (320 dp, 200 %, clair)
+  
+00:05 +39 -7: /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue écran du catalogue : palettes, thème et contraste locaux
+00:05 +40 -7: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (320 dp, 200 %, clair)
+  /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (320 dp, 200 %, sombre)
+  /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 100 %, clair)
+  /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_test.dart: catalogue toutes les sections : aucun débordement (360 dp, 100 %, sombre)
+  ... and 3 more

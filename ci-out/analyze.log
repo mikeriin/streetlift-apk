@@ -1,0 +1,11 @@
+Analyzing streetlift-apk...                                     
+
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/kit/catalog.dart:196:12 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes. Try adding 'const' before the literal • lib/kit/catalog.dart:198:17 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/kit/catalog.dart:243:12 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes. Try adding 'const' before the literal • lib/kit/catalog.dart:245:17 • prefer_const_literals_to_create_immutables
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/kit/page.dart:400:7 • curly_braces_in_flow_control_structures
+  error • Undefined name 'KRoles'. Try correcting the name to one that is defined, or defining the name • test/l5c_couleur_test.dart:139:21 • undefined_identifier
+   info • The import of 'package:flutter/semantics.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive • test/ui0_kit_test.dart:6:8 • unnecessary_import
+
+7 issues found. (ran in 19.0s)
