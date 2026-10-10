@@ -13,5 +13,8 @@ Base : main b7996b3f (dev6.11.1). Branche de mise au point : claude/ci-ci1h-rapi
 - Relecture indépendante faite (8 constats, 1 à 7 traités).
 - Commit candidat de main 9ef40dad (arbre d7de5656), contrôle complet poussé sur claude/ci-3d (cc97f610).
 
-## Reste
+## Fait aussi
+- main 9ef40dad publié, build signé run 38091686005 vert, livraison, état « à valider », page de suivi (v42), projet claude.ai.
+
+## Reste (ancien)
 - Lire ci-out du contrôle complet, publier main (avance rapide), build signé, livraison, état, page de suivi, notification.
