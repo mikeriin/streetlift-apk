@@ -179,9 +179,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
         KListItem(
           'Bilan de séance',
           icon: Icons.flag_outlined,
-          state: _page == _groups.length
-              ? KListState.current
-              : KListState.todo,
+          state: _page == _groups.length ? KListState.current : KListState.todo,
         ),
       ],
     );

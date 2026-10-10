@@ -103,10 +103,10 @@ Future<T?> showKContentSheet<T>(
         return SingleChildScrollView(
           key: contentKey,
           padding: const EdgeInsets.only(
-        left: KSpacing.s16,
-        right: KSpacing.s16,
-        bottom: KSpacing.s16,
-      ),
+            left: KSpacing.s16,
+            right: KSpacing.s16,
+            bottom: KSpacing.s16,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
