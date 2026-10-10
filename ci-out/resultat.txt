@@ -1,7 +1,0 @@
-run=38048585910
-commit=21aa9d0e8773d0b91df99eb1e113f4e1279d01dc
-checks=cancelled
-packages=cancelled
-before=success
-tour=cancelled
-emulator=cancelled
