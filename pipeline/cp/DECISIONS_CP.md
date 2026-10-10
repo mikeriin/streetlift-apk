@@ -456,6 +456,13 @@ Lot livré le 09/10/2026, à valider par la conversation de pilotage (C8.1) : de
 - **CI1g.8 Relecture indépendante** (sous-agent Opus) : 9 constats, traités ou vérifiés sans changement.
 - **Recommandation (C8, le pilotage décide)** : valider dev6.11.1 et la donner au propriétaire à la place de dev6.11.0 ; lot CI final ensuite (limites restantes de CI1 à CI1g, points « non déterminés » des notes d'intégration, répétition du rappel de la carte).
 
+### CI1h
+
+- **CI1h.1 Causes** : défaut 1 confirmé par test (moteur seul : 72,5 kg sur un journal facile, 77,5 kg chez le propriétaire ; `startLoadKg` réglée par `kalis_adapt`) ; défaut 2 : prévision avec d'autres entrées que l'ouverture (sans saison, autre jour, autre ligne visée).
+- **CI1h.2 Choix** (C15.7, au plus pragmatique) : « trop dure » = répétitions manquées ou au moins une répétition en réserve de moins que la cible ; baisse = répétitions faites, ou l'écart de RIR, jamais sous la moitié de la cible ; reprise graduée ou allègement d'une douleur gardés ; montée d'échauffement jamais au-dessus de la charge écrite ; exception par le nom (« ou » avec « lesté » ou « PdC ») ; prévision par emplacement d'abord (même ligne), sinon même exercice ; journée commencée ou faite sautée ; bilan donné → jour réel, la séance « sans l'effet du bilan » reste celle de l'ouverture.
+- **CI1h.3 Non traité** : séance future commencée en avance (garde la prescription de sa date prévue).
+- **CI1h.4 Recommandation** : valider dev6.11.2 (détail : `livraisons/LIVRAISON_CI1h.md`).
+
 ### CI
 
 ### KM1
