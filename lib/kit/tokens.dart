@@ -140,6 +140,14 @@ abstract final class KType {
   /// Texte courant.
   static final corps = _s(KFont.text, 15, 22, FontWeight.w400);
 
+  /// Adaptateur des écrans existants (UI0) : texte courant et titres de
+  /// ligne des composants Material historiques, aux métriques d'avant
+  /// (14 / 20, 15 / 20) pour que les écrans pas encore refaits gardent leur
+  /// mise en page. Les composants du kit utilisent [corps] et [corpsFort].
+  static final texteHistorique = _s(KFont.text, 14, 20, FontWeight.w400);
+  static final champHistorique = _s(KFont.text, 15, 20, FontWeight.w400);
+  static final ligneHistorique = _s(KFont.text, 15, 20, FontWeight.w600);
+
   /// Description, valeur secondaire.
   static final detail = _s(KFont.text, 13, 18, FontWeight.w400);
 
