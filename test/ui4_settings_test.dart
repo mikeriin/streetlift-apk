@@ -361,7 +361,8 @@ void main() {
       _app(const SettingsScreen(page: SettingsPage.about)),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Kalis Track $kAppVersion'), findsOneWidget);
+    // Ordre : l'aide d'abord, puis l'avertissement, puis la version en bas.
+    expect(find.text('Aide'), findsOneWidget);
     for (final key in [
       'about-safety',
       'about-explainer',
@@ -374,6 +375,10 @@ void main() {
     }
     expect(find.text('Compatibilité 3D'), findsOneWidget);
     expect(find.text('Moteur 3D'), findsNothing);
+    for (final key in ['wellness-disclaimer', 'about-version']) {
+      await scrollToAction(tester, find.byKey(ValueKey(key)));
+    }
+    expect(find.text('Kalis Track $kAppVersion'), findsOneWidget);
     // « Récupération » vit dans Santé et sécurité (plus de doublon).
     expect(find.byKey(const ValueKey('about-recovery')), findsNothing);
     expect(tester.takeException(), isNull);

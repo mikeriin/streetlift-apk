@@ -242,10 +242,11 @@ void main() {
       page(const SettingsScreen(page: SettingsPage.about), scale: 1.3),
     );
     await tester.pumpAndSettle();
+    // UI4 : l'aide d'abord, l'avertissement ensuite.
     for (final key in [
-      'wellness-disclaimer',
       'about-safety',
       'about-feedback',
+      'wellness-disclaimer',
     ]) {
       await reach(tester, find.byKey(ValueKey(key)));
     }

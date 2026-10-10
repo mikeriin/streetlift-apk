@@ -60,6 +60,7 @@ void main() {
     double width = 390,
     double height = 2200,
     double scale = 1,
+    int settle = 20,
   }) async {
     tester.view.physicalSize = Size(width, height);
     tester.view.devicePixelRatio = 1;
@@ -85,13 +86,17 @@ void main() {
         ),
       ),
     );
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < settle; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
   }
 
-  Future<void> shot(WidgetTester tester, String name) async {
-    for (var i = 0; i < 20; i++) {
+  Future<void> shot(
+    WidgetTester tester,
+    String name, {
+    int settle = 20,
+  }) async {
+    for (var i = 0; i < settle; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
     final e = tester.takeException();
@@ -172,8 +177,14 @@ void main() {
             const SettingsScreen(page: SettingsPage.session, highlight: 'rest'),
             dark: dark,
             palette: palette,
+            settle: 6,
           );
-          await shot(tester, 'ui4_reglages_seance_evidence_$suffix');
+          // Pendant la mise en évidence (1,5 s) : ligne sur fond `haute`.
+          await shot(
+            tester,
+            'ui4_reglages_seance_evidence_$suffix',
+            settle: 0,
+          );
           await tester.pump(const Duration(seconds: 2));
         }
       }

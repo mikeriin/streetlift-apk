@@ -440,6 +440,7 @@ class _Sheet extends StatelessWidget {
   Widget _links(BuildContext context, String key, List<String> ids) =>
       KMenuGroup(
         key: ValueKey('fiche-$key'),
+        dividerIndent: KSpacing.s16,
         children: [
           for (final id in ids)
             KMenuRow(

@@ -222,13 +222,21 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
               KSpacing.page,
               KSpacing.s16,
             ),
+            // Deux boutons de même hauteur (56) : le bouton tonal prend la
+            // hauteur du bouton principal ; écran étroit ou grand texte :
+            // l'un sous l'autre (`KActionRow`).
             child: KActionRow(
               children: [
-                KTonalButton(
-                  key: const ValueKey('start-later'),
-                  expand: true,
-                  onPressed: _saving ? null : () => Navigator.of(context).pop(),
-                  label: _pending ? 'Plus tard' : 'Annuler',
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: KSize.primary),
+                  child: KTonalButton(
+                    key: const ValueKey('start-later'),
+                    expand: true,
+                    onPressed: _saving
+                        ? null
+                        : () => Navigator.of(context).pop(),
+                    label: _pending ? 'Plus tard' : 'Annuler',
+                  ),
                 ),
                 KPrimaryButton(
                   key: const ValueKey('start-confirm'),

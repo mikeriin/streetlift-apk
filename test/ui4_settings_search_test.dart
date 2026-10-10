@@ -51,6 +51,9 @@ final _screens = <String, Finder>{
   'feedback': find.byType(FeedbackScreen),
   'licences': find.byType(MentionsScreen),
   'compat-3d': find.byType(Engine3DScreen),
+  // Bandeau d'information de « Données et confidentialité » (pas une
+  // ligne) : la page s'ouvre, le bandeau y est.
+  'android-backup': find.byKey(const ValueKey('settings-android-backup')),
 };
 
 void main() {

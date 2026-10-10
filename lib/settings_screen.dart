@@ -350,10 +350,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (settings.isNotEmpty)
         KMenuGroup(
           title: 'Réglages',
+          dividerIndent: KSpacing.s16,
           children: [for (final e in settings) row(e)],
         ),
       if (help.isNotEmpty)
-        KMenuGroup(title: 'Aide', children: [for (final e in help) row(e)]),
+        KMenuGroup(
+          title: 'Aide',
+          dividerIndent: KSpacing.s16,
+          children: [for (final e in help) row(e)],
+        ),
     ];
   }
 
@@ -364,6 +369,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final d3 = Display3DSettings.instance..load();
     return [
       KMenuGroup(
+        dividerIndent: KSpacing.s16,
         children: [
           // UI0 : segments du kit ; libellés trop longs (grand texte, écran
           // étroit) : choix l'un sous l'autre, sans mot coupé (L5, C3).
@@ -426,6 +432,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         listenable: d3.listenable,
         builder: (context, _) => KMenuGroup(
           title: 'Anatomie et 3D',
+          dividerIndent: KSpacing.s16,
           children: [
             _mark(
               'muscle-names',
@@ -520,6 +527,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return [
       KMenuGroup(
         title: 'Chronomètres',
+        dividerIndent: KSpacing.s16,
         children: [
           _stepper(
             id: 'rest',
@@ -554,6 +562,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       KMenuGroup(
         title: 'Fin du repos',
+        dividerIndent: KSpacing.s16,
         children: [
           _switch(
             'sound',
@@ -576,6 +585,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       KMenuGroup(
         title: 'Saisie des séries',
+        dividerIndent: KSpacing.s16,
         children: [
           // G9 (D5.4) : la note en flammes, à chaque série, remplace la
           // colonne RIR / RPE (réglages `trackRir` et `rpe` gardés dans les
@@ -598,6 +608,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       KMenuGroup(
         title: 'Écran et unités',
+        dividerIndent: KSpacing.s16,
         children: [
           _switch(
             'wakelock',
@@ -624,6 +635,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final s = store.settings;
     return [
       KMenuGroup(
+        dividerIndent: KSpacing.s16,
         children: [
           _switch(
             'celebrations',
@@ -669,6 +681,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // ------------------------------------------ Données et confidentialité
 
   List<Widget> _data(BuildContext context) {
+    final k = KTokens.of(context);
     final answers = store.koach.answers.length;
     // G10 (D1.4) : Koach L7 et l'adaptation au quotidien L11 sont remplacés
     // par le moteur dynamique ; leurs données restent dans la sauvegarde,
@@ -684,10 +697,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             (lit) => KMenuRow(
               icon: Icons.save_alt_rounded,
               title: 'Exporter une sauvegarde',
-              subtitle:
-                  'Fichier à l’emplacement de ton choix : références, '
-                  'journal, réglages, Koach, profil (données de santé '
-                  'comprises si tu en as saisi). Non chiffré.',
+              subtitle: 'Un fichier à l’emplacement de ton choix, non chiffré',
               highlight: lit,
               onTap: () => exportBackupFile(context, appVersion: kAppVersion),
             ),
@@ -698,8 +708,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               icon: Icons.file_open_outlined,
               title: 'Importer une sauvegarde',
               subtitle:
-                  'Depuis un fichier : aperçu du contenu, puis confirmation '
-                  'avant de remplacer tes données',
+                  'Depuis un fichier : aperçu, puis confirmation avant de '
+                  'remplacer tes données',
               highlight: lit,
               onTap: () => importBackupFile(context, appVersion: kAppVersion),
             ),
@@ -735,8 +745,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Icons.inventory_2_outlined,
                 title: 'Copie d’avant la suppression des WOD',
                 subtitle:
-                    'Toutes tes données d’avant cette mise à jour (WOD, '
-                    'séances perso, crédits) : à partager ou enregistrer',
+                    'Tes données d’avant cette mise à jour (WOD, séances '
+                    'perso, crédits), à partager ou enregistrer',
                 highlight: lit,
                 onTap: () => _push(
                   context,
@@ -744,33 +754,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-          _mark(
-            'android-backup',
-            (lit) => KMenuRow(
-              icon: Icons.info_outline_rounded,
-              title: 'Sauvegarde Android',
-              subtitle:
-                  'L’application ne désactive pas la sauvegarde du système. '
-                  'Si la sauvegarde Google est activée sur ton téléphone, '
-                  'Android peut y copier les données de l’application (au '
-                  'plus une fois par 24 h, en Wi-Fi, à l’arrêt) et les '
-                  'restaurer à la réinstallation ou lors d’un transfert vers '
-                  'un nouveau téléphone. L’application ne peut ni la '
-                  'déclencher, ni la vérifier, ni l’effacer : l’export '
-                  'ci-dessus est la copie que tu contrôles.',
-              highlight: lit,
-            ),
-          ),
         ],
       ),
-      KMenuGroup(
-        title: 'Confidentialité',
-        children: [
-          const _InfoRow(
+      // Contenu d'une sauvegarde : texte sous le groupe (plus dans la ligne).
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
+        child: Text(
+          'Contenu : références, journal, réglages, Koach, profil (données de '
+          'santé comprises si tu en as saisi).',
+          key: const ValueKey('settings-backup-content'),
+          style: KType.detail.copyWith(color: k.texte2),
+        ),
+      ),
+      // Information, pas une action : bandeau sous le groupe. La recherche
+      // y mène (identifiant `android-backup`, amené à l'écran).
+      _mark(
+        'android-backup',
+        (_) => const KNotice(
+          key: ValueKey('settings-android-backup'),
+          icon: Icons.info_outline_rounded,
+          title: 'Sauvegarde Android',
+          message:
+              'L’application ne désactive pas la sauvegarde du système. '
+              'Si la sauvegarde Google est activée sur ton téléphone, '
+              'Android peut y copier les données de l’application (au '
+              'plus une fois par 24 h, en Wi-Fi, à l’arrêt) et les '
+              'restaurer à la réinstallation ou lors d’un transfert vers '
+              'un nouveau téléphone. L’application ne peut ni la '
+              'déclencher, ni la vérifier, ni l’effacer : l’export '
+              'ci-dessus est la copie que tu contrôles.',
+        ),
+      ),
+      const KSectionTitle('Confidentialité'),
+      const KNotice(
+        icon: Icons.phone_android_rounded,
+        message:
             'Tout est calculé et conservé sur ce téléphone, sans compte ni '
             'connexion. Les données de Koach figurent dans l’export et sont '
             'effacées avec les données de l’application.',
-          ),
+      ),
+      KMenuGroup(
+        children: [
           _mark(
             'privacy',
             (lit) => KMenuRow(
@@ -784,33 +808,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ],
       ),
-      if (legacy || issues > 0)
-        KMenuGroup(
-          title: 'Anciennes données de Koach',
-          children: [
-            if (legacy)
-              const KMenuRow(
-                key: ValueKey('settings-legacy-koach'),
-                icon: Icons.history_rounded,
-                title: 'Tes anciennes décisions de Koach',
-                subtitle:
-                    'L’ancien Koach et les adaptations au quotidien sont '
-                    'remplacés par Koach et l’évolution de ton programme '
-                    '(mode assisté ou libre, historique des changements). '
-                    'Tes anciennes décisions restent dans ta sauvegarde, sans '
-                    'être modifiées.',
-              ),
-            if (issues > 0)
-              KMenuRow(
-                icon: Icons.report_outlined,
-                title: 'Anciennes données de Koach relues en partie',
-                subtitle:
-                    '$issues entrée(s) illisible(s) ignorée(s) à '
-                    'l’ouverture ; le reste est chargé. Ton export de '
-                    'sauvegarde contient les données relues.',
-              ),
-          ],
-        ),
+      if (legacy || issues > 0) ...[
+        const KSectionTitle('Anciennes données de Koach'),
+        if (legacy)
+          const KNotice(
+            key: ValueKey('settings-legacy-koach'),
+            icon: Icons.history_rounded,
+            title: 'Tes anciennes décisions de Koach',
+            message:
+                'Tes décisions d’avant la nouvelle méthode restent dans ta '
+                'sauvegarde, sans être modifiées.',
+          ),
+        if (issues > 0)
+          KNotice(
+            icon: Icons.report_outlined,
+            tone: KTone.warning,
+            title: 'Anciennes données de Koach relues en partie',
+            message:
+                '$issues entrée(s) illisible(s) ignorée(s) à '
+                'l’ouverture ; le reste est chargé. Ton export de '
+                'sauvegarde contient les données relues.',
+          ),
+      ],
       // C10 : actions destructrices dans le dernier groupe, confirmées.
       KMenuGroup(
         title: 'Zone sensible',
@@ -851,31 +870,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // --------------------------------------------------- Aide et à propos
 
   List<Widget> _about(BuildContext context) => [
-    KCard(
-      key: const ValueKey('about-version'),
-      child: KRowLabel(
-        'Kalis Track $kAppVersion',
-        subtitle:
-            'Programme streetlifting v3.3 · base d’exercices '
-            'v${store.content.version} '
-            '(${store.content.entries.length} exercices)',
-      ),
-    ),
-    // G1 (D2.4) : visible seulement dans un build de développement.
-    if (kDevBuild)
-      const KCard(
-        key: ValueKey('about-dev-build'),
-        child: KRowLabel(
-          'Build de développement',
-          subtitle:
-              'Mode dev disponible : 5 appuis sur le logo de l’accueil '
-              'ouvrent une session de test séparée de la tienne.',
-        ),
-      ),
-    // L13 (KT-072 à KT-078) : finalité, sécurité, confidentialité, retour
-    // de test.
-    const DisclaimerCard(),
     KMenuGroup(
+      title: 'Aide',
       children: [
         // « Récupération » est une ligne de Santé et sécurité (plus de
         // doublon sur cette page).
@@ -951,6 +947,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ],
     ),
+    // L13 (KT-072 à KT-078) : finalité, sécurité, confidentialité, retour
+    // de test.
+    const KSectionTitle('Avertissement'),
+    const DisclaimerCard(),
+    const KSectionTitle('Version'),
+    KCard(
+      key: const ValueKey('about-version'),
+      child: KRowLabel(
+        'Kalis Track $kAppVersion',
+        subtitle:
+            'Programme streetlifting v3.3 · base d’exercices '
+            'v${store.content.version} '
+            '(${store.content.entries.length} exercices)',
+      ),
+    ),
+    // G1 (D2.4) : visible seulement dans un build de développement.
+    if (kDevBuild)
+      const KCard(
+        key: ValueKey('about-dev-build'),
+        child: KRowLabel(
+          'Build de développement',
+          subtitle:
+              'Mode dev disponible : 5 appuis sur le logo de l’accueil '
+              'ouvrent une session de test séparée de la tienne.',
+        ),
+      ),
   ];
 }
 
@@ -1053,23 +1075,6 @@ class _PasteBackupPageState extends State<PasteBackupPage> {
 }
 
 // ----------------------------------------------------------- composants
-
-/// Ligne d'information d'un groupe (sans action).
-class _InfoRow extends StatelessWidget {
-  final String text;
-  const _InfoRow(this.text);
-
-  @override
-  Widget build(BuildContext context) => KRowFrame(
-    child: Align(
-      alignment: AlignmentDirectional.centerStart,
-      child: Text(
-        text,
-        style: KType.corps.copyWith(color: KTokens.of(context).texte2),
-      ),
-    ),
-  );
-}
 
 /// UI0 (refonte UI) : sélecteur des 8 palettes du propriétaire, avec
 /// aperçu (`KPalettePicker` du kit) ; appliqué tout de suite, enregistré
