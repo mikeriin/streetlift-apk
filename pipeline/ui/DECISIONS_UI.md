@@ -49,6 +49,17 @@ Choix du lot (10/10/2026, session `session_01DfhZd3fMyMGSUKefFeRLGk`), détail d
 
 ## UI1
 
+Choix du lot (10/10/2026, session `session_018ETAYadGCNKByTAfVnsshL`), détail dans `livraisons/LIVRAISON_UI1.md`. La conversation de pilotage valide ou corrige.
+
+- **UI1.1 Ligne « Mon programme »** : place fixe juste après les jours, avant les cartes du moment (toujours au même endroit, quelles que soient les cartes).
+- **UI1.2 Récompenses (§4.6)** : `openProgramDay` attend la fin de la fermeture de la séance et ne vérifie le niveau que si rien n'a été ouvert par-dessus ; la fin de séance de Koach présente les récompenses quand on la quitte. `session_screen.dart` (UI2) inchangé.
+- **UI1.3 Composants de zone** (`lib/plan/widgets/program_widgets.dart`, à promouvoir par UI5) : feuille de contenu `showProgramSheet`, ligne de jour `ProgramDayRow` (états écrits et ⓘ que `KDayRow` n'a pas), `WhyTile`, `showProgramListSheet` (feuille de liste ouverte sur l'élément courant).
+- **UI1.4 Accueil** : en-tête (niveau, semaine, logo) dans la page, qui défile avec la liste comme dans la maquette ; lignes de jour de 48 dp (56 pour un titre sur deux lignes ; 52 dans la maquette, réduit pour L5 avec les vraies polices) ; la semaine entière reste visible à 390 × 844 (L5).
+- **UI1.5 Revenir à un programme précédent** : feuille d'actions (ancien programme, programme d'origine, export de la sauvegarde d'origine) ; retours confirmés par `KConfirm` (« Revenir »), non destructeurs (verbe sans `danger`).
+- **UI1.6 Grand texte (≥ 150 %)** : Koach passe au-dessus de sa bulle ou du texte qu'il accompagne (`KoachBubble`, `KoachSays`), même pose et même taille ; les grands chiffres se réduisent plutôt que de se couper (`KFitTitle`).
+- **UI1.7 Jour J** : titre « Jour J » (R3), échéance en phrase ; objectif en segments courts (« Assurer », « Plus gros total », « Record ») avec la phrase complète dessous.
+- **UI1.8 Formats** : volume « n exercices, n séries, n rép. » (C9) ; « ≥ n min » et secondes d'effort restent ceux de `training_estimate.dart` (logique, hors zone), signalés à UI5.
+
 ## UI2
 
 Choix du lot (10/10/2026, session `session_01UBKNgcL6KGVgMUfEL3Fzdo`), détail dans `livraisons/LIVRAISON_UI2.md`. La conversation de pilotage valide ou corrige.
