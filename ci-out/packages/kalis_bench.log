@@ -1,0 +1,79 @@
+== kalis_bench
+Resolving dependencies...
+Downloading packages...
+  lints 4.0.0 (6.1.0 available)
+Got dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 33 files (0 changed) in 0.31 seconds.
+Analyzing kalis_bench...
+No issues found!
+00:00 +0: loading test/km2_adversaire_test.dart
+00:00 +0 -1: loading test/km2_adversaire_test.dart [E]
+  Failed to load "test/km2_adversaire_test.dart":
+  ../kalis_adapt/lib/src/koach/seance.dart:2589:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'part ecrite ${fixe(part, 3)}'
+                                ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2642:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+          'hausse bornee ${fixe(avantBornes, 2)} -> '
+                                ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2643:17: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+          '${fixe(charge, 2)}',
+                  ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2687:61: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        trace.add('pas de hausse (douleur ou bilan) -> ${fixe(charge, 2)}');
+                                                              ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2738:26: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'repere ${fixe(chargeR, 1)} (modele '
+                           ^
+  ../kalis_adapt/lib/src/koach/seance.dart:3322:62: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'trace': <Object?>['vrai test, confirmation ${fixe(derniere, 1)}'],
+                                                               ^
+00:00 +0 -2: loading test/km2_banc_test.dart [E]
+  Failed to load "test/km2_banc_test.dart":
+  ../kalis_adapt/lib/src/koach/seance.dart:2589:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'part ecrite ${fixe(part, 3)}'
+                                ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2642:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+          'hausse bornee ${fixe(avantBornes, 2)} -> '
+                                ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2643:17: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+          '${fixe(charge, 2)}',
+                  ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2687:61: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        trace.add('pas de hausse (douleur ou bilan) -> ${fixe(charge, 2)}');
+                                                              ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2738:26: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'repere ${fixe(chargeR, 1)} (modele '
+                           ^
+  ../kalis_adapt/lib/src/koach/seance.dart:3322:62: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'trace': <Object?>['vrai test, confirmation ${fixe(derniere, 1)}'],
+                                                               ^
+00:00 +0 -3: loading test/km2_campagne_test.dart [E]
+  Failed to load "test/km2_campagne_test.dart":
+  ../kalis_adapt/lib/src/koach/seance.dart:2589:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'part ecrite ${fixe(part, 3)}'
+                                ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2642:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+          'hausse bornee ${fixe(avantBornes, 2)} -> '
+                                ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2643:17: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+          '${fixe(charge, 2)}',
+                  ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2687:61: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        trace.add('pas de hausse (douleur ou bilan) -> ${fixe(charge, 2)}');
+                                                              ^
+  ../kalis_adapt/lib/src/koach/seance.dart:2738:26: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'repere ${fixe(chargeR, 1)} (modele '
+                           ^
+  ../kalis_adapt/lib/src/koach/seance.dart:3322:62: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+            'trace': <Object?>['vrai test, confirmation ${fixe(derniere, 1)}'],
+                                                               ^
+00:00 +0 -3: Some tests failed.
+
+Failing tests:
+  test/km2_adversaire_test.dart: loading test/km2_adversaire_test.dart
+  test/km2_banc_test.dart: loading test/km2_banc_test.dart
+  test/km2_campagne_test.dart: loading test/km2_campagne_test.dart
+tests : échec
+durée : 9 s
