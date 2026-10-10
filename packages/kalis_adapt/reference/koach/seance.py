@@ -330,14 +330,8 @@ class Seances(object):
         lam0 = ap['courbe_forme'][0]
         k0 = ap['courbe_echelle'][0] + (ap['courbe_bas_du_corps'] if t.bas else 0.0)
         x = -math.log(part)
-        # Inverse de g sur la courbe de population (Newton, pas fixes).
-        r = 1.0 + x / m._dg(lam0, k0, 1.0)
-        for _ in range(12):
-            r -= (m._g(lam0, k0, r) - x) / m._dg(lam0, k0, r)
-            if r < 1.0:
-                r = 1.0
-            if r > 200.0:
-                r = 200.0
+        # Inverse de g sur la courbe de population (forme fermée).
+        r = m._reps_de(lam0, k0, x) if x > 0 else 1.0
         lam, k = m.courbe(t)
         return math.exp(mu - m._g(lam, k, r))
 

@@ -32,7 +32,7 @@ import math
 
 import numpy as np
 
-from .modele import NQ, RHO, EPS, KG, CLASSES, C_LIN, C_LOG
+from .modele import NQ, RHO, EPS, KG, CLASSES, Modele, G8, LN8, _phi
 from .moteur import Extension
 from .numerique import Mulberry32, fnv1a32, clamp, cholesky_semi, arrondi
 
@@ -145,12 +145,13 @@ class Planification(Extension):
         return lam, k
 
     def _g(self, lam, k, r):
-        r = 1.0 if r < 1 else r
-        return math.exp(k) * ((1.0 - lam) * C_LIN * (r - 1.0) + lam * C_LOG * math.log(r))
+        return Modele._g(lam, k, r)
 
     def _dg(self, lam, k, r):
+        """Pente de la courbe, sans le plancher de `Modele._dg`."""
         r = 1.0 if r < 1 else r
-        return math.exp(k) * ((1.0 - lam) * C_LIN + lam * C_LOG / r)
+        gam = 1.0 - lam
+        return math.exp(k) * G8 * math.exp((gam - 1.0) * math.log(r)) / (LN8 * _phi(gam * LN8))
 
     def lignes_item(self, item, ecart=0.0):
         """Séries d'une prescription sous un écart d'intensité : liste de

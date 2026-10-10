@@ -119,3 +119,16 @@ Ajouts : queue lourde des notes (8 %, +2 rép.), noteur entier détecté (≥ 20
 - Campagne finale (1 440 saisons) : 6 critères sur 11 (non atteints : e1RM 4,24 %, mauvais jour 1,14 %, calibration 15 points, rejeu réel 4,3 % / 97 % ; parité : KM2) ; sécurité 0.
 - `pipeline` c1bc68b9 : LIVRAISON_KM1.md, DECISIONS_CP (section KM1), ETAT_CP (ligne KM1 « livré, à valider »). Projet claude.ai : `claude/LIVRAISON_KM1.md`. Page de suivi : section KM1.
 - Rien à reprendre ; suite = décision du pilotage (DECISIONS KM1.2, KM1.5, recommandation).
+
+# KM1 CORRECTION 1 (C13.10) — session Fable du 10/10/2026, 09:15 UTC
+
+Lancement sans ligne « Lot : » ; ETAT_CP : KM1 « à faire (correction 1, C13.10) » → « correction 1 en cours depuis 2026-10-10 09:17 UTC » (pipeline 7b2d6e2). `add_repo` absent de la session ; push vérifié par le push de `pipeline`. Worktree `/home/claude/moteurs` (branche `moteurs`, base f3801e36), outils `km1-outils/` restaurés de la sauvegarde, outils de la passe dans `km1-outils/c1/`.
+
+## 10:20 UTC — diagnostic du critère 1 (LIRE AVANT DE REPRENDRE)
+- Boucle rapide : `c1/q.sh <nom> <graines> "<SETP>" <PATCH>` (27 profils, saison de référence, 3 vérités ; ≈ 3,5 min pour 2 graines) → `c1/tmp_<nom>.pkl/.log` ; `NS=2 python3 c1/ana.py tmp_x.pkl`. Base (2 graines) : A 2,92 / B 5,73 / C 3,49 → 4,05 % (campagne KM1 : 2,97 / 5,89 / 3,86).
+- **L'erreur opérationnelle (charge aux répétitions de travail) n'est que de 2,1 % ; l'erreur d'e1RM (4,0 %) vient de l'extrapolation par la courbe** (corrélation −0,7 à −0,8 avec l'écart de courbe). Oracle « courbe vraie donnée » : 2,64 % (A 2,11 ; B 3,30 ; C 2,53).
+- Les trois vérités sont trois FORMES de courbe par athlète (A exponentielle à plancher ≈ log-linéaire, B = Brzycki linéaire en part du 1RM donc convexe en ln, C = Lombardi puissance) et une ÉCHELLE par exercice (sd 0,18 à 0,20, bas du corps −16 à −20 %). L'ancienne famille (mélange linéaire/log) ne couvrait pas B aux répétitions hautes.
+- **Fait** : famille de Box-Cox dans `koach/modele.py` (`_g`, `_dg`, `_dg_forme`, `_reps_de` inverse fermée, `_phi`, `_phi1`, bornes LAM_MIN/LAM_MAX) ; `planification.py` et `seance.charge_de_part` branchés dessus. Ajustement à 7 équations publiées (Brzycki −0,30 ; Lander −0,29 ; O'Conner 0,14 ; Mayhew 0,25 ; Wathen 0,32 ; Epley 0,33 ; Lombardi 1,0 ; écart max 1,8 % de charge de 2 à 20 rép., `c1/fam.py`) → a priori de forme N(0,2 ; 0,45).
+- Famille seule + a priori large : pas de gain net (4,17 %) : la forme est apprise dans le bon sens (A 0,1-0,2 ; B −0,3 à −0,6 ; C 0,7-0,9) mais pas assez vite, B dépasse.
+- Valeur aberrante du banc : `mu-presse-cuisses-45`, graine 0, vérité B : pente tirée à +3,5 σ (0,044/rép.) → −32 à −43 % d'erreur ; répétée dans 2 profils × tous les scénarios, elle coûte ≈ 1,1 point à B (≈ 0,37 au critère).
+- En cours : oracles biais de note / effet de jour (`c1/oracle_*.py`) pour le budget d'erreur.

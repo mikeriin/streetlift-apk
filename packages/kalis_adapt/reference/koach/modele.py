@@ -42,8 +42,28 @@ DE = 25         # effet de jour de l'exercice en cours
 KL = 26         # sensibilité au compartiment rapide, part locale (qualités sollicitées)
 KG = 27         # sensibilité au compartiment lent, part systémique
 NG = 28
-C_LIN = 0.0265  # pente de la branche linéaire : -ln(part du 1RM) par répétition
-C_LOG = 0.0892  # branche logarithmique, égale à la linéaire à 8 répétitions
+C_LIN = 0.0265  # pente de la courbe log-linéaire (forme 0) : -ln(part du 1RM) par répétition
+C_LOG = 0.0892  # courbe logarithmique (forme 1), égale à la log-linéaire à 8 répétitions
+G8 = C_LIN * 7.0            # -ln(part du 1RM) à 8 répétitions, échelle e^0, toutes formes
+LN8 = math.log(8.0)
+LAM_MIN = -0.8              # forme la plus convexe admise (au-delà de Brzycki, -0,30)
+LAM_MAX = 1.3               # forme la plus concave admise (au-delà de Lombardi, 1)
+
+
+def _phi(x):
+    """(e^x - 1) / x, série près de 0 (portable : ni expm1 ni log1p)."""
+    if -1e-2 < x < 1e-2:
+        return 1.0 + x * (0.5 + x * (1.0 / 6.0 + x * (1.0 / 24.0 + x * (1.0 / 120.0 + x * (
+            1.0 / 720.0 + x / 5040.0)))))
+    return (math.exp(x) - 1.0) / x
+
+
+def _phi1(x):
+    """Dérivée de `_phi` : (e^x (x - 1) + 1) / x², série près de 0."""
+    if -1e-2 < x < 1e-2:
+        return 0.5 + x * (1.0 / 3.0 + x * (0.125 + x * (1.0 / 30.0 + x * (1.0 / 144.0 + x * (
+            1.0 / 840.0 + x / 5760.0)))))
+    return (math.exp(x) * (x - 1.0) + 1.0) / (x * x)
 CLASSES = ['charge', 'reps', 'tenue', 'cardio', 'wod']
 ZONES_TENDON = ['epaule', 'coude', 'poignet', 'lombaires', 'genou', 'hanche', 'cheville']
 
@@ -269,7 +289,7 @@ class Modele(object):
         return out
 
     # ------------------------------------------------------------------
-    # Courbe répétitions ↔ charge : g(R) = e^k (c1 ln R + c2 (R - 1))
+    # Courbe répétitions ↔ charge : famille de Box-Cox, g(R) = e^k G8 B(R, γ) / B(8, γ)
     # ------------------------------------------------------------------
     def _courbe_moyenne(self, reps, bas):
         ap = self.p['a_priori']
@@ -278,39 +298,69 @@ class Modele(object):
 
     @staticmethod
     def _g(lam, k, reps):
-        """-ln(part du 1RM soulevable [reps] fois) : mélange d'une branche
-        linéaire (Epley, Brzycki) et d'une branche logarithmique (Lombardi),
-        égales à 8 répétitions ; [lam] choisit la forme, e^[k] l'échelle."""
+        """-ln(part du 1RM soulevable [reps] fois). Famille de Box-Cox en
+        répétitions : g = e^k · G8 · B(R, γ) / B(8, γ), B(R, γ) = (R^γ - 1) / γ
+        et γ = 1 - [lam]. Toutes les formes se croisent à 8 répétitions ;
+        [lam] = 1 : logarithmique (Lombardi) ; 0 : log-linéaire ; négatif :
+        convexe (part du 1RM linéaire en répétitions : Brzycki, Lander ≈ -0,3) ;
+        e^[k] : échelle. La famille reproduit sept équations publiées à moins
+        de 1,8 % de charge entre 2 et 20 répétitions (SOURCES.md § Courbe)."""
         r = 1.0 if reps < 1 else reps
-        return math.exp(k) * ((1.0 - lam) * C_LIN * (r - 1.0) + lam * C_LOG * math.log(r))
+        gam = 1.0 - lam
+        a = math.log(r)
+        return math.exp(k) * G8 * a * _phi(gam * a) / (LN8 * _phi(gam * LN8))
 
     @staticmethod
     def _dg(lam, k, reps):
+        """Dérivée de g par rapport aux répétitions (plancher 0,004)."""
         r = 1.0 if reps < 1 else reps
-        d = math.exp(k) * ((1.0 - lam) * C_LIN + lam * C_LOG / r)
+        gam = 1.0 - lam
+        d = math.exp(k) * G8 * math.exp((gam - 1.0) * math.log(r)) / (LN8 * _phi(gam * LN8))
         return d if d > 0.004 else 0.004
+
+    @staticmethod
+    def _dg_forme(lam, k, reps):
+        """Dérivée de g par rapport à la forme [lam]."""
+        r = 1.0 if reps < 1 else reps
+        gam = 1.0 - lam
+        a = math.log(r)
+        den = LN8 * _phi(gam * LN8)
+        num = a * _phi(gam * a)
+        d_gam = math.exp(k) * G8 * (a * a * _phi1(gam * a) * den - num * LN8 * LN8 * _phi1(gam * LN8)) / (den * den)
+        return -d_gam
 
     def courbe(self, t, m=None):
         """(forme, échelle) de la courbe de l'exercice : forme et échelle
         de l'utilisateur, échelle propre à l'exercice."""
         m = self.m if m is None else m
-        return clamp(m[LAM], -0.3, 1.2), clamp(m[KU] + m[t.idx + 1], -1.0, 1.0)
+        return clamp(m[LAM], LAM_MIN, LAM_MAX), clamp(m[KU] + m[t.idx + 1], -1.0, 1.0)
+
+    @staticmethod
+    def _reps_de(lam, k, log_ratio):
+        """Inverse de g (forme fermée) : répétitions R telles que
+        g(lam, k, R) = [log_ratio] > 0, bornées à 200."""
+        gam = 1.0 - lam
+        y = log_ratio * LN8 * _phi(gam * LN8) / (math.exp(k) * G8)   # B(R, γ)
+        u = gam * y
+        if u <= -1.0 + 1e-12:
+            return 200.0          # forme concave : charge sous l'asymptote
+        if -1e-2 < u < 1e-2:
+            ln_r = y * (1.0 + u * (-0.5 + u * (1.0 / 3.0 + u * (-0.25 + u * (0.2 + u * (
+                -1.0 / 6.0 + u / 7.0))))))
+        else:
+            ln_r = math.log(1.0 + u) / gam
+        if ln_r > 5.298317366548036:      # ln 200
+            return 200.0
+        r = math.exp(ln_r)
+        return r if r > 1.0 else 1.0
 
     def reps_a(self, t, log_ratio, m=None):
         """Répétitions possibles quand ln(capacité / charge) = log_ratio
-        (inverse de g, Newton à nombre de pas fixe)."""
+        (inverse de g)."""
         lam, k = self.courbe(t, m)
         if log_ratio <= 0:
             return 1.0 + log_ratio * 20.0 if log_ratio > -0.05 else 0.0
-        r = 1.0 + log_ratio / self._dg(lam, k, 1.0)
-        for _ in range(12):
-            f = self._g(lam, k, r) - log_ratio
-            r -= f / self._dg(lam, k, r)
-            if r < 1.0:
-                r = 1.0
-            if r > 200.0:
-                r = 200.0
-        return r
+        return self._reps_de(lam, k, log_ratio)
 
     # ------------------------------------------------------------------
     # Compartiments de fatigue
@@ -758,10 +808,10 @@ class Modele(object):
             for i in (KN, KM, KL, KG):
                 if m[i] < 0.0:
                     m[i] = 0.0
-            if m[LAM] < -0.3:
-                m[LAM] = -0.3
-            if m[LAM] > 1.2:
-                m[LAM] = 1.2
+            if m[LAM] < LAM_MIN:
+                m[LAM] = LAM_MIN
+            if m[LAM] > LAM_MAX:
+                m[LAM] = LAM_MAX
 
     def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu):
         """Linéarise, autour de la moyenne [m], la réserve de la série :
@@ -791,7 +841,7 @@ class Modele(object):
                 d = self._dg(lam, k, R)
                 r1 = R if R > 1 else 1.0
                 dR = 1.0 / d
-                dlam = -math.exp(k) * (C_LOG * math.log(r1) - C_LIN * (r1 - 1.0)) / d
+                dlam = -self._dg_forme(lam, k, r1) / d
                 dk = -self._g(lam, k, R) / d
         v = R * garde - reps
         coefs = [c * dR * garde for c in co]
