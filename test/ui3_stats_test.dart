@@ -367,6 +367,39 @@ void main() {
     });
   }
 
+  testWidgets('Stats tient à 320 dp et 130 % de texte, références connues', (
+    tester,
+  ) async {
+    store.setValue('B8', 30);
+    store.setValue('B4', 72);
+    final errors = <String>[];
+    final previous = FlutterError.onError;
+    FlutterError.onError = (d) => errors.add(d.toString());
+    try {
+      await open(
+        tester,
+        const StatsScreen(standalone: true),
+        width: 320,
+        scale: 1.3,
+      );
+      for (var i = 0; i < 4; i++) {
+        tester
+            .state<StatsScreenState>(find.byType(StatsScreen))
+            .selectSection(StatsSection.values[i]);
+        await tester.pumpAndSettle();
+        for (var j = 0; j < 12; j++) {
+          final s = scrollable();
+          if (s.evaluate().isEmpty) break;
+          await tester.drag(s.first, const Offset(0, -400));
+          await tester.pumpAndSettle();
+        }
+        expect(errors, isEmpty, reason: 'rubrique $i : ${errors.join('\n')}');
+      }
+    } finally {
+      FlutterError.onError = previous;
+    }
+  });
+
   testWidgets('cibles nommées et de 48 dp dans les quatre rubriques', (
     tester,
   ) async {
