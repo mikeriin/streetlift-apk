@@ -63,3 +63,30 @@ Contexte écrit par la conversation de pilotage, une section par lot. Une sectio
 - Index de recherche `settings_search.dart` (§4.4) et son test ; mesure au tour « Repos par défaut » par la recherche (cible 2) et Mes références (cible 2, contre 3 au départ).
 - Objectif de la semaine : segments « Adaptatif, 2, 3, 4, 5, 6 », mêmes que ceux de UI3 dans Stats.
 - `SegmentedButton` Material restants de ta zone → `KSegmented`.
+
+## UI5
+
+**Préparé le 10/10/2026 à 23:55** par le pilotage (délégation du propriétaire, U0.13). Lancé dès que `refonte-ui` est avancé sur la fusion des quatre lots (U0.22).
+- Base : `refonte-ui` = fusion de UI1 à UI4 (0bc6237 si le contrôle `claude/ci-ui-fusion2` est vert ; sinon la tête de `refonte-ui` au lancement). `main` est toujours b7996b3f : la publication se fait en avance rapide.
+- Contrôle : `claude/ci-ui-ui5` (tour en 8 tâches et 3 essais, U0.20, U0.22) ; `claude/ci-ui-ui5-rapide`.
+
+### 1. D'abord : corrections du kit (U0.16), dans cet ordre
+1. **Titre de sous-page tronqué** (`KTopBar.sub` / `KFitTitle`) — **bloquant** : jamais d'ellipse ; 2 lignes, 3 au-delà de 150 % ; barre qui suit le titre. Vérifier « Supprimer les données de l'application », « Progression et jeu », « Données et confidentialité » à 320 dp × 200 %, les noms d'exercice longs de la fiche.
+2. `KSwitchRow` / `KMenuRow` (interrupteur sous le libellé quand la largeur manque), `KSegmented` (48 dp touchables par segment, en largeur comme en hauteur), `KStepperRow` (seuil vers 420 dp), phrase de `KPage.root`, étiquette des champs, `KConfirm` qui défile (UI2), `KIconButton` désactivé (UI1), clés de test (`KConfirm`, `KNotice`, segments, retour, `KStepper`).
+3. **Une seule feuille de contenu** dans le kit à partir de `KInfoSheet` (UI3), `showKContentSheet` (UI2) et `showProgramSheet` (UI1) ; promouvoir aussi `showKChoice`, `SessionHeader`, `SessionProgressDots`, `SessionBottomInset` (UI2), `ProgramDayRow` → `KDayRow`, `WhyTile`, `showProgramListSheet` (élément initial de `showKListSheet`) (UI1), `StatsBar`, `StatsMetric` (UI3). Les lots ont signalé chaque composant au §8 ou §9 de leur livraison.
+4. Titres de feuille sans capitales (U0.17) : corriger le cahier §5.2.
+
+### 2. Ensuite : reliquats signalés par les lots
+- Textes hors zones : `lib/wellbeing.dart` (chemins écrits, R5), `game.dart` (« références Pilotage », R9 ; retirer alors le contournement `_r9` de UI3), titre « MOTEUR 3D » de `engine3d.dart` → « Compatibilité 3D » (R3, U0.15).
+- Formats : virgule décimale dans les champs de charge (U0.19) ; durées « au moins n min » et secondes en minutes au-delà de 90 s, à l'affichage (U0.23) ; espace fine insécable entre nombre et unité dans les formateurs partagés (`athlete_profile.dart` et autres, C9) ; arrondi des kg de `adaptKg` à l'affichage.
+- Changement d'onglet depuis une page (API dans `main.dart`) et action « Ouvrir le programme » pour les états vides de Stats (Historique, Records, quête).
+- Débordement de `historique_seance` à 320 dp × 200 % (18 px, depuis UI0) ; en-tête de séance repliable à 200 % de texte si c'est faisable sans casser la pagination.
+- `KNotice` pour le bandeau « Nouveau : … questions » et la carte des tests guidés si ce n'est pas déjà fait.
+- Contraste du libellé et des icônes du dock translucide sur contenu clair et sombre (U0.12).
+- Code mort `StatsLevelCard`, `showStatsLevel` : à retirer s'il n'a plus d'appel.
+- Carte des muscles de la carte du jour absente de certains rendus de test : vérifier qu'elle est bien présente sur le tour émulateur (illustration intouchable).
+
+### 3. Enfin : intégration et publication (cahier §7.3 « UI5 », prompt UI5)
+Contrôles du §6 bloquants sur tout `lib/` ; tour complet ; relevés avant / après de §6.3 ; relecture indépendante ; installation par-dessus dev6.11.1 ; **dev6.12.0** sur `main`, build signé, run vérifié ; `REFONTE_UI.md` réécrit.
+
+**Dans la livraison, en plus du prompt** : un **récapitulatif des décisions prises sans le propriétaire** (U0.4, U0.12, U0.13 à U0.23 et tes propres choix), chacune avec ce qu'il faudrait changer pour revenir dessus (jeton, composant, texte), pour que le propriétaire ajuste après essai sur téléphone.
