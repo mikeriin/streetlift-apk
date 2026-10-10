@@ -19,6 +19,7 @@ import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
+import 'phone_test_support.dart' show scrollToAction;
 
 const _key = 'kalis_state_v3';
 

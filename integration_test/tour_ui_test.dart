@@ -394,6 +394,11 @@ void main() {
       'pector',
     );
     await screen(tester, 'arsenal_recherche');
+    final clearArsenal = find.byTooltip('Effacer la recherche').hitTestable();
+    if (clearArsenal.evaluate().isNotEmpty) {
+      await tester.tap(clearArsenal.first);
+      await wait(tester, 600);
+    }
     await home(tester);
     await screen(
       tester,
@@ -429,6 +434,12 @@ void main() {
       'repos',
     );
     await screen(tester, 'reglages_recherche');
+    // La recherche est effacée : l'onglet garde son état pour les parcours.
+    final clearSearch = find.byTooltip('Effacer la recherche').hitTestable();
+    if (clearSearch.evaluate().isNotEmpty) {
+      await tester.tap(clearSearch.first);
+      await wait(tester, 600);
+    }
     await home(tester);
     await tab(tester, 3);
     await tapIf(tester, find.byKey(const ValueKey('settings-page-data')));

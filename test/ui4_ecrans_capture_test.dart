@@ -91,11 +91,7 @@ void main() {
     }
   }
 
-  Future<void> shot(
-    WidgetTester tester,
-    String name, {
-    int settle = 20,
-  }) async {
+  Future<void> shot(WidgetTester tester, String name, {int settle = 20}) async {
     for (var i = 0; i < settle; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
@@ -180,11 +176,7 @@ void main() {
             settle: 6,
           );
           // Pendant la mise en évidence (1,5 s) : ligne sur fond `haute`.
-          await shot(
-            tester,
-            'ui4_reglages_seance_evidence_$suffix',
-            settle: 0,
-          );
+          await shot(tester, 'ui4_reglages_seance_evidence_$suffix', settle: 0);
           await tester.pump(const Duration(seconds: 2));
         }
       }
