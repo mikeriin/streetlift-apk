@@ -11,22 +11,42 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                             45.8s
+Running Gradle task 'assembleDebug'...                             52.1s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...        1,249ms
-Connecting to the VM Service is taking longer than expected...
-Still attempting to connect to the VM Service...
-If you do NOT see the Flutter application running, it might have crashed. The device logs (e.g. from adb or XCode) might have more details.
-If you do see the Flutter application running on the device, try re-running with --host-vmservice-port to use a specific port known to be available.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 52660
-This was attempt #50. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 42942
-This was attempt #100. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 38226
-This was attempt #150. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 58300
-This was attempt #200. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 54200
-This was attempt #250. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 44590
-This was attempt #300. Will retry in 0:00:01.600000.
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,214ms
+I/eetlift_tracker( 4909): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4909): Skipped 60 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4909): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:34583/JhyT6lL3hCA=/
+VMServiceFlutterDriver: Isolate found with number: 1191033242253655
+VMServiceFlutterDriver: Isolate 1191033242253655 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4909): 00:00 +0: CI1g b (clair, violet) : avis médical avant la première séance
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4909): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4909): app_time_stats: avg=336.54ms min=3.34ms max=519.95ms count=4
+D/EGL_emulation( 4909): app_time_stats: avg=155.86ms min=5.87ms max=281.30ms count=7
+D/EGL_emulation( 4909): app_time_stats: avg=1160.64ms min=1160.64ms max=1160.64ms count=1
+D/FlutterJNI( 4909): Sending viewport metrics to the engine.
+D/EGL_emulation( 4909): app_time_stats: avg=461.11ms min=216.88ms max=1037.00ms count=4
+Unhandled exception:
+DriverError: Failed to fulfill RequestData due to remote error
+Original error: ext.flutter.driver: (112) Service has disappeared
+Original stack trace:
+#0      new _OutstandingRequest (package:vm_service/src/vm_service.dart:265:34)
+#1      VmService._call.<anonymous closure> (package:vm_service/src/vm_service.dart:1921:25)
+#2      VmService._call (package:vm_service/src/vm_service.dart:1933:8)
+#3      VmService.callServiceExtension (package:vm_service/src/vm_service.dart:1872:14)
+#4      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:327:12)
+#5      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:13)
+#6      integrationDriver (package:integration_test/integration_test_driver.dart:71:42)
+<asynchronous suspension>
+
+
+#0      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:340:7)
+<asynchronous suspension>
+#1      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:7)
+<asynchronous suspension>
+#2      integrationDriver (package:integration_test/integration_test_driver.dart:71:29)
+<asynchronous suspension>
