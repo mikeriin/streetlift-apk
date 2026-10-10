@@ -1368,48 +1368,54 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     return (
       [
         const SizedBox(height: KSpacing.s12),
-        Semantics(
-          container: true,
-          child: Column(
-            key: ValueKey('coach-panel-${ex.id}'),
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (label != null)
-                Text(
-                  label,
-                  key: ValueKey('coach-technique-${ex.id}'),
-                  style: KType.section.copyWith(color: kt.encre),
-                ),
-              for (var i = 0; i < body.length; i++)
-                Text(
-                  body[i],
-                  style: i == 0
-                      ? KType.corps.copyWith(color: kt.texte)
-                      : KType.detail.copyWith(color: kt.texte2),
-                ),
-              for (final p in pain)
-                Padding(
-                  padding: const EdgeInsets.only(top: KSpacing.s8),
-                  child: Row(
-                    key: ValueKey('coach-pain-${ex.id}'),
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.shield_outlined,
-                        size: KSize.iconSmall,
-                        color: kt.avertissement,
-                      ),
-                      const SizedBox(width: KSpacing.s8),
-                      Expanded(
-                        child: Text(
-                          p,
-                          style: KType.detail.copyWith(color: kt.texte),
-                        ),
-                      ),
-                    ],
+        // L'appui sur le panneau ouvre la feuille de Koach, comme avant
+        // (toute sa surface, la ligne ouvrable reste l'accès signalé).
+        GestureDetector(
+          key: ValueKey('coach-panel-${ex.id}'),
+          behavior: HitTestBehavior.opaque,
+          onTap: sheet,
+          child: Semantics(
+            container: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (label != null)
+                  Text(
+                    label,
+                    key: ValueKey('coach-technique-${ex.id}'),
+                    style: KType.section.copyWith(color: kt.encre),
                   ),
-                ),
-            ],
+                for (var i = 0; i < body.length; i++)
+                  Text(
+                    body[i],
+                    style: i == 0
+                        ? KType.corps.copyWith(color: kt.texte)
+                        : KType.detail.copyWith(color: kt.texte2),
+                  ),
+                for (final p in pain)
+                  Padding(
+                    padding: const EdgeInsets.only(top: KSpacing.s8),
+                    child: Row(
+                      key: ValueKey('coach-pain-${ex.id}'),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.shield_outlined,
+                          size: KSize.iconSmall,
+                          color: kt.avertissement,
+                        ),
+                        const SizedBox(width: KSpacing.s8),
+                        Expanded(
+                          child: Text(
+                            p,
+                            style: KType.detail.copyWith(color: kt.texte),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
         if (intra != null && intra > 0)
