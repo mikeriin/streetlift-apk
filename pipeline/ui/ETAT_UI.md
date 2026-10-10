@@ -23,7 +23,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_UI.md §1).
 
 | Lot | Prérequis | Livré | Date | Statut |
 | --- | --- | --- | --- | --- |
-| UI0 | — | — | — | à faire |
+| UI0 | — | — | — | en cours depuis 2026-10-10 09:48 UTC (session session_01DfhZd3fMyMGSUKefFeRLGk) |
 | UI1 | UI0 livré | — | — | en attente de UI0 |
 | UI2 | UI0 livré | — | — | en attente de UI0 |
 | UI3 | UI0 livré | — | — | en attente de UI0 |
