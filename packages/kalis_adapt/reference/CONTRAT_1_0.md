@@ -1126,7 +1126,7 @@ Séries de la ligne pour la montée : `lignes = min(séries écrites, séries se
   1. `plus_lourde(tentative_ouverture_proba, tentative_ouverture_part·e^μ)` ;
   2. remplacée par la plus lourde barre réussie de moins de `barre_recente_j` jours si elle est plus légère et que `récente + bw ≥ tentative_recente_part·e^μ` ;
   2 bis. **plancher** : si la plus lourde barre réussie de moins de `barre_recente_j` jours est plus lourde que l'ouverture calculée, l'ouverture devient `plancher(max(min(récente, tentative_ouverture_part·e^μ − bw), ouverture))`. Conditions : ni bilan bas ni zone de conduite (facteur de baisse = 1), ligne sans `sans_hausse`, pas de coupure en cours (`coupure = 0`), pas d'échec à la dernière séance de l'exercice. Sert quand l'incertitude a été élargie (diagnostic « rien de spécial ») : le quantile prudent tomberait très bas ;
-  2 ter. un jour `sans_hausse` (bilan bas, zone douloureuse, semaine du retour après une coupure un jour d'épreuve), l'ouverture ne dépasse pas le dernier passage de l'exercice (`charge_derniere`) ;
+  2 ter. un jour d'épreuve en semaine de retour après une coupure (`coupure > 0`, test gardé), l'ouverture ne dépasse pas le dernier passage de l'exercice (`charge_derniere`) ; un jour de bilan bas ou de zone douloureuse, seule la baisse `tentative_bilan_bas_part` s'applique (comme 0.3.1) ;
   3. plafonnée par le maximum, sur ces barres, de `(c + bw)(1 + premiere_hausse)(1 + schema_change_part·min(r − 1, schema_change_reps_max)) − bw`, ramené sur la grille. C'est une règle propre à Koach.
 - **Après un échec dans la séance** : la même barre.
 - **Tentatives suivantes** :

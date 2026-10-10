@@ -2,97 +2,99 @@
  "adversaires": [
   {
    "confirme": true,
-   "difficulte": 0.175598,
+   "difficulte": 0.211484,
    "echeance": true,
    "echeances": [
     82
    ],
    "fin_episodes": 75,
-   "generation": 0,
-   "id": "adv-f3afdf8d",
+   "generation": 2,
+   "id": "adv-7ee0da71",
    "key": "street_07_avance_streetlifting_competition",
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.013272,
-    "echecs": 0.009626,
-    "gain": -0.000518,
+    "e1rm6": 0.038028,
+    "echecs": 0.012639,
+    "gain": -0.000615,
     "par_graine": [
      {
       "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.012026,
+      "codes_violations": {
+       "volume_trop_vite": 3
+      },
+      "e1rm6": 0.026611,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.007013,
+      "echecs": 0.004261,
       "evenements": [
        [
         "sl-muscle-up-leste",
         "loaded",
         97.6,
-        105.125104,
-        0.928418
+        115.944771,
+        0.84178
        ],
        [
         "sl-traction-lestee",
         "loaded",
-        128.85,
-        143.676695,
-        0.896805
+        120.1,
+        157.106794,
+        0.764448
        ],
        [
         "sl-dips-leste",
         "loaded",
-        129.3,
-        162.999265,
-        0.793255
+        143.05,
+        178.457531,
+        0.801591
        ]
       ],
       "faites": 57,
-      "gain": -0.000475,
-      "perf_a": 0.872826,
+      "gain": -0.00056,
+      "perf_a": 0.802607,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 80,
       "seed": 0,
-      "violations": 0
+      "violations": 3
      },
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.018451,
+      "e1rm6": 0.065885,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.011111,
+      "echecs": 0.017143,
       "evenements": [
        [
         "sl-muscle-up-leste",
         "loaded",
-        82.6,
-        96.190215,
-        0.858715
+        88.85,
+        102.631229,
+        0.865721
        ],
        [
         "sl-traction-lestee",
         "loaded",
-        130.1,
-        160.679091,
-        0.809688
+        133.85,
+        171.327676,
+        0.781251
        ],
        [
         "sl-dips-leste",
         "loaded",
-        123.05,
-        175.3677,
-        0.701669
+        134.3,
+        185.32829,
+        0.72466
        ]
       ],
       "faites": 44,
-      "gain": -0.000734,
-      "perf_a": 0.790024,
+      "gain": -0.000808,
+      "perf_a": 0.790544,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -103,37 +105,37 @@
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.00934,
+      "e1rm6": 0.021587,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.010753,
+      "echecs": 0.016514,
       "evenements": [
        [
         "sl-muscle-up-leste",
         "loaded",
-        87.6,
-        99.10722,
-        0.883891
+        91.35,
+        106.216983,
+        0.860032
        ],
        [
         "sl-traction-lestee",
         "loaded",
-        113.85,
-        134.180796,
-        0.848482
+        121.35,
+        148.340448,
+        0.818051
        ],
        [
         "sl-dips-leste",
         "loaded",
-        114.3,
-        163.590562,
-        0.698696
+        115.55,
+        180.798774,
+        0.639108
        ]
       ],
       "faites": 49,
-      "gain": -0.000345,
-      "perf_a": 0.810356,
+      "gain": -0.000478,
+      "perf_a": 0.772397,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -142,38 +144,39 @@
       "violations": 0
      }
     ],
-    "perf_a": 0.824402,
-    "perf_a_min": 0.790024,
+    "perf_a": 0.788516,
+    "perf_a_min": 0.772397,
     "plantages": [],
     "poussees": 0,
-    "violations": 0
+    "violations": 3
    },
    "objectif_effectif": "a",
    "parametres": {
     "breakDays": 14,
-    "breakFrom": 0.9983,
-    "capacitePrincipaux": 1.0544,
-    "capaciteTous": 0.9321,
-    "courbePrincipaux": 1.0093,
-    "courbeTous": 1.0324,
-    "daySd": 0.0131,
-    "fatiguePrincipaux": 1.6126,
-    "fatigueTous": 1.2795,
-    "healthAnswerRate": 0.7605,
-    "illnessDays": 6,
-    "illnessFrom": 0.6095,
-    "lazy": 0.149,
-    "missRate": 0.3373,
-    "painDays": 20,
-    "painFrom": 0.7778,
-    "painIntensity": 3,
+    "breakFrom": 0.9848,
+    "capacitePrincipaux": 1.1491,
+    "capaciteTous": 0.9057,
+    "courbePrincipaux": 1.1386,
+    "courbeTous": 0.9666,
+    "daySd": 0.0404,
+    "fatiguePrincipaux": 1.5582,
+    "fatigueTous": 1.2372,
+    "healthAnswerRate": 0.4008,
+    "illnessDays": 7,
+    "illnessFrom": 0.4891,
+    "lazy": 0.0952,
+    "missRate": 0.3349,
+    "painDays": 24,
+    "painFrom": 0.6455,
+    "painIntensity": 4,
     "painZone": "knee",
-    "ratingNoise": 1.2701,
-    "rirBias": -0.1128,
-    "rirBiasSd": 0.1416,
-    "shortTimeRate": 0.0917,
-    "skipRating": 0.0192
+    "ratingNoise": 1.1841,
+    "rirBias": -0.0016,
+    "rirBiasSd": 0.0911,
+    "shortTimeRate": 0.0597,
+    "skipRating": 0.0557
    },
+   "parent": "adv-f3afdf8d",
    "poids_corps": [
     "sl-dips-leste",
     "sl-muscle-up-leste",
@@ -190,130 +193,151 @@
    "spec": {
     "breakDays": 14,
     "breakFromDay": 61,
-    "daySd": 0.0131,
-    "healthAnswerRate": 0.7605,
-    "illnessDays": 6,
-    "illnessFromDay": 45,
-    "lazy": 0.149,
-    "missRate": 0.3373,
-    "painDays": 20,
-    "painFromDay": 45,
-    "painIntensity": 3,
+    "daySd": 0.0404,
+    "healthAnswerRate": 0.4008,
+    "illnessDays": 7,
+    "illnessFromDay": 37,
+    "lazy": 0.0952,
+    "missRate": 0.3349,
+    "painDays": 24,
+    "painFromDay": 36,
+    "painIntensity": 4,
     "painZone": "knee",
-    "ratingNoise": 1.2701,
-    "rirBias": -0.1128,
-    "rirBiasSd": 0.1416,
-    "shortTimeRate": 0.0917,
-    "skipRating": 0.0192
+    "ratingNoise": 1.1841,
+    "rirBias": -0.0016,
+    "rirBiasSd": 0.0911,
+    "shortTimeRate": 0.0597,
+    "skipRating": 0.0557
    },
    "surcharges": {
     "*": {
-     "capacity": 0.9321,
-     "curveB": 1.0324,
-     "fatigueScale": 1.2795,
-     "power": 1.0324,
-     "slope": 1.0324
+     "capacity": 0.9057,
+     "curveB": 0.9666,
+     "fatigueScale": 1.2372,
+     "power": 0.9666,
+     "slope": 0.9666
     },
     "sl-dips-leste": {
-     "capacity": 1.0544,
-     "curveB": 1.0093,
-     "fatigueScale": 1.6126,
-     "power": 1.0093,
-     "slope": 1.0093
+     "capacity": 1.1491,
+     "curveB": 1.1386,
+     "fatigueScale": 1.5582,
+     "power": 1.1386,
+     "slope": 1.1386
     },
     "sl-muscle-up-leste": {
-     "capacity": 1.0544,
-     "curveB": 1.0093,
-     "fatigueScale": 1.6126,
-     "power": 1.0093,
-     "slope": 1.0093
+     "capacity": 1.1491,
+     "curveB": 1.1386,
+     "fatigueScale": 1.5582,
+     "power": 1.1386,
+     "slope": 1.1386
     },
     "sl-squat-competition": {
-     "capacity": 1.0544,
-     "curveB": 1.0093,
-     "fatigueScale": 1.6126,
-     "power": 1.0093,
-     "slope": 1.0093
+     "capacity": 1.1491,
+     "curveB": 1.1386,
+     "fatigueScale": 1.5582,
+     "power": 1.1386,
+     "slope": 1.1386
     },
     "sl-traction-lestee": {
-     "capacity": 1.0544,
-     "curveB": 1.0093,
-     "fatigueScale": 1.6126,
-     "power": 1.0093,
-     "slope": 1.0093
+     "capacity": 1.1491,
+     "curveB": 1.1386,
+     "fatigueScale": 1.5582,
+     "power": 1.1386,
+     "slope": 1.1386
+    },
+    "sl-traction-lestee-pause-bas": {
+     "capacity": 0.92,
+     "curveB": 0.9666,
+     "fatigueScale": 1.2372,
+     "power": 0.9666,
+     "slope": 0.9666
     }
    },
    "u": [
-    0.579252,
-    0.039138,
-    0.295434,
-    0.297905,
-    0.038317,
-    0.963792,
-    0.962444,
-    0.998258,
-    0.585844,
-    0.609546,
-    0.723817,
-    0.15338,
-    0.479252,
-    0.777802,
-    0.028107,
-    0.733941,
-    0.305825,
-    0.377004,
-    0.557919,
-    0.739767,
-    0.681081,
-    0.518412,
-    0.965854
+    0.535695,
+    0.15623,
+    0.132676,
+    0.19045,
+    0.111378,
+    0.956742,
+    0.979362,
+    0.984772,
+    0.664536,
+    0.489146,
+    0.716179,
+    0.344787,
+    0.596735,
+    0.645545,
+    0.729281,
+    0.334176,
+    0.19895,
+    0.306116,
+    0.44293,
+    0.706962,
+    0.893055,
+    0.728822,
+    0.932286
    ]
   },
   {
    "confirme": true,
-   "difficulte": 0.24737,
+   "difficulte": 0.134257,
    "echeance": true,
    "echeances": [
     82
    ],
    "fin_episodes": 75,
-   "generation": 2,
-   "id": "adv-61bd8149",
+   "generation": 1,
+   "id": "adv-80df39f8",
    "key": "street_07_avance_streetlifting_competition",
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.050355,
-    "echecs": 0.00331,
-    "gain": -7.6e-05,
+    "e1rm6": 0.075226,
+    "echecs": 0.002712,
+    "gain": 0.000158,
     "par_graine": [
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.04698,
+      "e1rm6": 0.058144,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.002364,
+      "echecs": 0.00398,
       "evenements": [
+       [
+        "sl-muscle-up-leste",
+        "loaded",
+        105.1,
+        119.321013,
+        0.880817
+       ],
        [
         "sl-traction-lestee",
         "loaded",
-        142.6,
-        151.77182,
-        0.939568
+        148.85,
+        160.036519,
+        0.9301
+       ],
+       [
+        "sl-dips-leste",
+        "loaded",
+        165.55,
+        181.312611,
+        0.913064
        ],
        [
         "sl-squat-competition",
         "loaded",
-        160.0,
-        175.171017,
-        0.913393
+        172.5,
+        182.564123,
+        0.944873
        ]
       ],
-      "faites": 76,
-      "gain": -1.3e-05,
-      "perf_a": 0.926481,
+      "faites": 77,
+      "gain": 0.000211,
+      "perf_a": 0.917214,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -323,67 +347,93 @@
      },
      {
       "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 1
-      },
-      "e1rm6": 0.070714,
+      "codes_violations": {},
+      "e1rm6": 0.124222,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.003736,
+      "echecs": 0.003102,
       "evenements": [
+       [
+        "sl-muscle-up-leste",
+        "loaded",
+        93.85,
+        108.597434,
+        0.864201
+       ],
        [
         "sl-traction-lestee",
         "loaded",
-        93.85,
-        172.849559,
-        0.542958
+        131.35,
+        184.56068,
+        0.71169
+       ],
+       [
+        "sl-dips-leste",
+        "loaded",
+        156.8,
+        198.983661,
+        0.788004
        ],
        [
         "sl-squat-competition",
         "loaded",
-        110.0,
-        177.893744,
-        0.618347
+        155.0,
+        193.817321,
+        0.799722
        ]
       ],
-      "faites": 73,
-      "gain": -0.000118,
-      "perf_a": 0.580652,
+      "faites": 75,
+      "gain": 0.00012,
+      "perf_a": 0.790904,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 80,
       "seed": 1,
-      "violations": 1
+      "violations": 0
      },
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.03337,
+      "e1rm6": 0.043313,
       "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
+      "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.003831,
+      "echecs": 0.001054,
       "evenements": [
+       [
+        "sl-muscle-up-leste",
+        "loaded",
+        98.85,
+        109.303861,
+        0.90436
+       ],
        [
         "sl-traction-lestee",
         "loaded",
-        107.6,
-        149.641564,
-        0.719052
+        138.85,
+        157.423788,
+        0.882014
+       ],
+       [
+        "sl-dips-leste",
+        "loaded",
+        168.05,
+        191.2273,
+        0.878797
        ],
        [
         "sl-squat-competition",
         "loaded",
-        122.5,
-        156.557626,
-        0.782459
+        150.0,
+        168.2981,
+        0.891276
        ]
       ],
-      "faites": 72,
-      "gain": -9.8e-05,
-      "perf_a": 0.750756,
+      "faites": 75,
+      "gain": 0.000142,
+      "perf_a": 0.889112,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -392,39 +442,39 @@
       "violations": 0
      }
     ],
-    "perf_a": 0.75263,
-    "perf_a_min": 0.580652,
+    "perf_a": 0.865743,
+    "perf_a_min": 0.790904,
     "plantages": [],
     "poussees": 0,
-    "violations": 1
+    "violations": 0
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 4,
-    "breakFrom": 0.4311,
-    "capacitePrincipaux": 1.1207,
-    "capaciteTous": 0.9192,
-    "courbePrincipaux": 0.9772,
-    "courbeTous": 0.8637,
-    "daySd": 0.0577,
-    "fatiguePrincipaux": 0.8712,
-    "fatigueTous": 1.4944,
-    "healthAnswerRate": 0.856,
+    "breakDays": 0,
+    "breakFrom": 0.2886,
+    "capacitePrincipaux": 1.1878,
+    "capaciteTous": 0.8875,
+    "courbePrincipaux": 1.0579,
+    "courbeTous": 0.9439,
+    "daySd": 0.0402,
+    "fatiguePrincipaux": 1.0899,
+    "fatigueTous": 1.5401,
+    "healthAnswerRate": 0.958,
     "illnessDays": 10,
-    "illnessFrom": 0.9185,
-    "lazy": 0.3133,
-    "missRate": 0.0867,
-    "painDays": 9,
-    "painFrom": 0.6536,
-    "painIntensity": 4,
-    "painZone": "wrist_hand",
-    "ratingNoise": 0.7954,
-    "rirBias": 0.423,
-    "rirBiasSd": 0.2069,
-    "shortTimeRate": 0.0867,
-    "skipRating": 0.282
+    "illnessFrom": 0.8095,
+    "lazy": 0.403,
+    "missRate": 0.1003,
+    "painDays": 7,
+    "painFrom": 0.607,
+    "painIntensity": 3,
+    "painZone": "elbow",
+    "ratingNoise": 0.9507,
+    "rirBias": 0.4876,
+    "rirBiasSd": 0.1884,
+    "shortTimeRate": 0.1294,
+    "skipRating": 0.2977
    },
-   "parent": "adv-80df39f8",
+   "parent": "adv-580e4fd8",
    "poids_corps": [
     "sl-dips-leste",
     "sl-muscle-up-leste",
@@ -439,92 +489,90 @@
     2
    ],
    "spec": {
-    "breakDays": 4,
-    "breakFromDay": 35,
-    "daySd": 0.0577,
-    "healthAnswerRate": 0.856,
+    "daySd": 0.0402,
+    "healthAnswerRate": 0.958,
     "illnessDays": 10,
-    "illnessFromDay": 61,
-    "lazy": 0.3133,
-    "missRate": 0.0867,
-    "painDays": 9,
-    "painFromDay": 46,
-    "painIntensity": 4,
-    "painZone": "wrist_hand",
-    "ratingNoise": 0.7954,
-    "rirBias": 0.423,
-    "rirBiasSd": 0.2069,
-    "shortTimeRate": 0.0867,
-    "skipRating": 0.282
+    "illnessFromDay": 54,
+    "lazy": 0.403,
+    "missRate": 0.1003,
+    "painDays": 7,
+    "painFromDay": 44,
+    "painIntensity": 3,
+    "painZone": "elbow",
+    "ratingNoise": 0.9507,
+    "rirBias": 0.4876,
+    "rirBiasSd": 0.1884,
+    "shortTimeRate": 0.1294,
+    "skipRating": 0.2977
    },
    "surcharges": {
     "*": {
-     "capacity": 0.9192,
-     "curveB": 0.8637,
-     "fatigueScale": 1.4944,
-     "power": 0.8637,
-     "slope": 0.8637
+     "capacity": 0.8875,
+     "curveB": 0.9439,
+     "fatigueScale": 1.5401,
+     "power": 0.9439,
+     "slope": 0.9439
     },
     "sl-dips-leste": {
-     "capacity": 1.1207,
-     "curveB": 0.9772,
-     "fatigueScale": 0.8712,
-     "power": 0.9772,
-     "slope": 0.9772
+     "capacity": 1.1878,
+     "curveB": 1.0579,
+     "fatigueScale": 1.0899,
+     "power": 1.0579,
+     "slope": 1.0579
     },
     "sl-muscle-up-leste": {
-     "capacity": 1.1207,
-     "curveB": 0.9772,
-     "fatigueScale": 0.8712,
-     "power": 0.9772,
-     "slope": 0.9772
+     "capacity": 1.1878,
+     "curveB": 1.0579,
+     "fatigueScale": 1.0899,
+     "power": 1.0579,
+     "slope": 1.0579
     },
     "sl-squat-competition": {
-     "capacity": 1.1207,
-     "curveB": 0.9772,
-     "fatigueScale": 0.8712,
-     "power": 0.9772,
-     "slope": 0.9772
+     "capacity": 1.1878,
+     "curveB": 1.0579,
+     "fatigueScale": 1.0899,
+     "power": 1.0579,
+     "slope": 1.0579
     },
     "sl-traction-lestee": {
-     "capacity": 1.1207,
-     "curveB": 0.9772,
-     "fatigueScale": 0.8712,
-     "power": 0.9772,
-     "slope": 0.9772
+     "capacity": 1.1878,
+     "curveB": 1.0579,
+     "fatigueScale": 1.0899,
+     "power": 1.0579,
+     "slope": 1.0579
     },
     "sl-traction-lestee-pause-bas": {
      "capacity": 0.92,
-     "curveB": 0.8637,
-     "fatigueScale": 1.4944,
-     "power": 0.8637,
-     "slope": 0.8637
+     "curveB": 0.9439,
+     "fatigueScale": 1.5401,
+     "power": 0.9439,
+     "slope": 0.9439
     }
    },
    "u": [
-    0.288415,
-    0.603149,
-    0.506168,
-    0.626545,
-    0.564015,
-    0.247814,
-    0.272625,
-    0.431115,
-    0.996939,
-    0.918487,
-    0.559233,
-    0.278191,
-    0.093824,
-    0.653574,
-    0.950627,
-    0.840018,
-    0.289091,
-    0.34262,
-    0.246408,
-    0.891436,
-    0.831306,
-    0.461919,
-    0.364335
+    0.399247,
+    0.671149,
+    0.446568,
+    0.806075,
+    0.595454,
+    0.286672,
+    0.028432,
+    0.288604,
+    0.961712,
+    0.809469,
+    0.417365,
+    0.138755,
+    0.026062,
+    0.607001,
+    0.725771,
+    0.953281,
+    0.431243,
+    0.255868,
+    0.401382,
+    0.920907,
+    0.974855,
+    0.600425,
+    0.583105
    ]
   },
   {
@@ -766,440 +814,293 @@
    ]
   },
   {
-   "difficulte": 0.313646,
+   "confirme": true,
+   "difficulte": 0.125327,
    "echeance": true,
    "echeances": [
     68
    ],
    "fin_episodes": 61,
-   "generation": 3,
-   "id": "adv-0c7fb400",
+   "generation": 1,
+   "id": "adv-49208fba",
    "key": "autres_03_powerlifter_competition",
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.038374,
-    "echecs": 0.028477,
-    "gain": 0.00013,
+    "e1rm6": 0.041759,
+    "echecs": 0.011633,
+    "gain": -0.000139,
     "par_graine": [
      {
       "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.029084,
+      "codes_violations": {
+       "volume_trop_vite": 1
+      },
+      "e1rm6": 0.035616,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.025357,
+      "echecs": 0.007389,
       "evenements": [
        [
-        "mu-developpe-couche-barre",
+        "mu-back-squat-barre-basse",
         "loaded",
-        115.0,
-        132.14453,
-        0.870259
+        227.5,
+        245.428416,
+        0.926951
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        237.5,
+        289.86442,
+        0.819349
        ]
       ],
-      "faites": 61,
-      "gain": 0.000131,
-      "perf_a": 0.870259,
+      "faites": 52,
+      "gain": 8.7e-05,
+      "perf_a": 0.87315,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 64,
       "seed": 0,
-      "violations": 0
+      "violations": 1
      },
      {
       "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.047664,
+      "codes_violations": {
+       "volume_trop_vite": 1
+      },
+      "e1rm6": 0.051023,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.031596,
+      "echecs": 0.017065,
       "evenements": [
        [
-        "mu-developpe-couche-barre",
+        "mu-back-squat-barre-basse",
         "loaded",
-        67.5,
-        134.341669,
-        0.50245
+        205.0,
+        245.772503,
+        0.834105
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        250.0,
+        299.088773,
+        0.835872
        ]
       ],
-      "faites": 61,
-      "gain": 0.000128,
-      "perf_a": 0.50245,
+      "faites": 41,
+      "gain": -0.0004,
+      "perf_a": 0.834988,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 64,
       "seed": 1,
-      "violations": 0
+      "violations": 1
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {
+       "volume_trop_vite": 2
+      },
+      "e1rm6": 0.038637,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.010444,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        225.0,
+        233.016924,
+        0.965595
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        252.5,
+        291.514512,
+        0.866166
+       ]
+      ],
+      "faites": 49,
+      "gain": -0.000103,
+      "perf_a": 0.915881,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 2,
+      "violations": 2
      }
     ],
-    "perf_a": 0.686354,
-    "perf_a_min": 0.50245,
+    "perf_a": 0.874673,
+    "perf_a_min": 0.834988,
     "plantages": [],
     "poussees": 0,
-    "violations": 0
+    "violations": 4
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 4,
-    "breakFrom": 0.2792,
-    "capacitePrincipaux": 0.8783,
-    "capaciteTous": 0.9113,
-    "courbePrincipaux": 1.3028,
-    "courbeTous": 1.3053,
-    "daySd": 0.0361,
-    "fatiguePrincipaux": 1.2548,
-    "fatigueTous": 1.235,
-    "healthAnswerRate": 0.376,
-    "illnessDays": 6,
-    "illnessFrom": 0.0196,
-    "lazy": 0.477,
-    "missRate": 0.0229,
-    "painDays": 18,
-    "painFrom": 0.5014,
-    "painIntensity": 7,
-    "painZone": "hip",
-    "ratingNoise": 1.9746,
-    "rirBias": -0.1424,
-    "rirBiasSd": 0.0999,
-    "shortTimeRate": 0.2813,
-    "skipRating": 0.3865
+    "breakDays": 13,
+    "breakFrom": 0.1426,
+    "capacitePrincipaux": 1.1145,
+    "capaciteTous": 0.8041,
+    "courbePrincipaux": 0.9932,
+    "courbeTous": 1.183,
+    "daySd": 0.0352,
+    "fatiguePrincipaux": 0.7112,
+    "fatigueTous": 1.2148,
+    "healthAnswerRate": 0.6419,
+    "illnessDays": 10,
+    "illnessFrom": 0.7809,
+    "lazy": 0.3766,
+    "missRate": 0.2279,
+    "painDays": 13,
+    "painFrom": 0.5511,
+    "painIntensity": 6,
+    "painZone": "elbow",
+    "ratingNoise": 0.5138,
+    "rirBias": 0.4775,
+    "rirBiasSd": 0.0729,
+    "shortTimeRate": 0.1687,
+    "skipRating": 0.0736
    },
-   "parent": "adv-3a065b86",
+   "parent": "adv-cce757f6",
    "poids_corps": [],
    "role": "pire",
    "scenario": "reference",
    "seeds": [
     0,
-    1
+    1,
+    2
    ],
    "spec": {
-    "breakDays": 4,
-    "breakFromDay": 21,
-    "daySd": 0.0361,
-    "healthAnswerRate": 0.376,
-    "illnessDays": 6,
-    "illnessFromDay": 7,
-    "lazy": 0.477,
-    "missRate": 0.0229,
-    "painDays": 18,
-    "painFromDay": 25,
-    "painIntensity": 7,
-    "painZone": "hip",
-    "ratingNoise": 1.9746,
-    "rirBias": -0.1424,
-    "rirBiasSd": 0.0999,
-    "shortTimeRate": 0.2813,
-    "skipRating": 0.3865
+    "breakDays": 13,
+    "breakFromDay": 12,
+    "daySd": 0.0352,
+    "healthAnswerRate": 0.6419,
+    "illnessDays": 10,
+    "illnessFromDay": 42,
+    "lazy": 0.3766,
+    "missRate": 0.2279,
+    "painDays": 13,
+    "painFromDay": 30,
+    "painIntensity": 6,
+    "painZone": "elbow",
+    "ratingNoise": 0.5138,
+    "rirBias": 0.4775,
+    "rirBiasSd": 0.0729,
+    "shortTimeRate": 0.1687,
+    "skipRating": 0.0736
    },
    "surcharges": {
     "*": {
-     "capacity": 0.9113,
-     "curveB": 1.3053,
-     "fatigueScale": 1.235,
-     "power": 1.3053,
-     "slope": 1.3053
+     "capacity": 0.8041,
+     "curveB": 1.183,
+     "fatigueScale": 1.2148,
+     "power": 1.183,
+     "slope": 1.183
     },
     "mu-back-squat-barre-basse": {
-     "capacity": 0.8783,
-     "curveB": 1.3028,
-     "fatigueScale": 1.2548,
-     "power": 1.3028,
-     "slope": 1.3028
+     "capacity": 1.1145,
+     "curveB": 0.9932,
+     "fatigueScale": 0.7112,
+     "power": 0.9932,
+     "slope": 0.9932
     },
     "mu-developpe-couche-barre": {
-     "capacity": 0.8783,
-     "curveB": 1.3028,
-     "fatigueScale": 1.2548,
-     "power": 1.3028,
-     "slope": 1.3028
+     "capacity": 1.1145,
+     "curveB": 0.9932,
+     "fatigueScale": 0.7112,
+     "power": 0.9932,
+     "slope": 0.9932
     },
     "mu-souleve-de-terre-conventionnel": {
-     "capacity": 0.8783,
-     "curveB": 1.3028,
-     "fatigueScale": 1.2548,
-     "power": 1.3028,
-     "slope": 1.3028
+     "capacity": 1.1145,
+     "curveB": 0.9932,
+     "fatigueScale": 0.7112,
+     "power": 0.9932,
+     "slope": 0.9932
     }
    },
    "u": [
-    0.8534,
-    0.008039,
-    0.160826,
-    0.953921,
-    0.772969,
-    0.065402,
-    0.286619,
-    0.279214,
-    0.576265,
-    0.019632,
-    0.927578,
-    0.889263,
-    0.389951,
-    0.501434,
-    0.658561,
-    0.306684,
-    0.937521,
-    0.321186,
-    0.967304,
-    0.70523,
-    0.230214,
-    0.963912,
-    0.720795
+    0.016915,
+    0.660489,
+    0.073869,
+    0.7533,
+    0.14725,
+    0.651022,
+    0.8985,
+    0.142614,
+    0.973186,
+    0.780925,
+    0.293039,
+    0.730552,
+    0.238439,
+    0.551145,
+    0.643695,
+    0.60208,
+    0.562289,
+    0.012503,
+    0.795504,
+    0.68911,
+    0.817643,
+    0.490328,
+    0.166093
    ]
   },
   {
-   "difficulte": 0.311372,
+   "confirme": true,
+   "difficulte": 0.181065,
    "echeance": true,
    "echeances": [
     68
    ],
    "fin_episodes": 61,
    "generation": 0,
-   "id": "adv-1157cf87",
+   "id": "adv-acca5505",
    "key": "autres_03_powerlifter_competition",
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.045152,
-    "echecs": 0.003844,
-    "gain": -0.000581,
-    "par_graine": [
-     {
-      "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 3
-      },
-      "e1rm6": 0.039227,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.005736,
-      "evenements": [
-       [
-        "mu-back-squat-barre-basse",
-        "loaded",
-        197.5,
-        229.184167,
-        0.861752
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        242.5,
-        270.791167,
-        0.895524
-       ]
-      ],
-      "faites": 57,
-      "gain": -0.000555,
-      "perf_a": 0.878638,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 0,
-      "violations": 3
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 3
-      },
-      "e1rm6": 0.051077,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.001953,
-      "evenements": [
-       [
-        "mu-back-squat-barre-basse",
-        "loaded",
-        92.5,
-        226.054077,
-        0.409194
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        160.0,
-        272.088412,
-        0.588044
-       ]
-      ],
-      "faites": 57,
-      "gain": -0.000607,
-      "perf_a": 0.498619,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 1,
-      "violations": 3
-     }
-    ],
-    "perf_a": 0.688628,
-    "perf_a_min": 0.498619,
-    "plantages": [],
-    "poussees": 0,
-    "violations": 6
-   },
-   "objectif_effectif": "a",
-   "parametres": {
-    "breakDays": 12,
-    "breakFrom": 0.9509,
-    "capacitePrincipaux": 1.0109,
-    "capaciteTous": 1.1878,
-    "courbePrincipaux": 1.1104,
-    "courbeTous": 1.3279,
-    "daySd": 0.0251,
-    "fatiguePrincipaux": 0.6167,
-    "fatigueTous": 0.7268,
-    "healthAnswerRate": 0.9064,
-    "illnessDays": 3,
-    "illnessFrom": 0.0595,
-    "lazy": 0.0003,
-    "missRate": 0.0204,
-    "painDays": 15,
-    "painFrom": 0.3323,
-    "painIntensity": 4,
-    "painZone": "wrist_hand",
-    "ratingNoise": 1.9587,
-    "rirBias": 0.6339,
-    "rirBiasSd": 0.0702,
-    "shortTimeRate": 0.0746,
-    "skipRating": 0.4495
-   },
-   "poids_corps": [],
-   "role": "pire",
-   "scenario": "reference",
-   "seeds": [
-    0,
-    1
-   ],
-   "spec": {
-    "breakDays": 12,
-    "breakFromDay": 47,
-    "daySd": 0.0251,
-    "healthAnswerRate": 0.9064,
-    "illnessDays": 3,
-    "illnessFromDay": 10,
-    "lazy": 0.0003,
-    "missRate": 0.0204,
-    "painDays": 15,
-    "painFromDay": 20,
-    "painIntensity": 4,
-    "painZone": "wrist_hand",
-    "ratingNoise": 1.9587,
-    "rirBias": 0.6339,
-    "rirBiasSd": 0.0702,
-    "shortTimeRate": 0.0746,
-    "skipRating": 0.4495
-   },
-   "surcharges": {
-    "*": {
-     "capacity": 1.1878,
-     "curveB": 1.3279,
-     "fatigueScale": 0.7268,
-     "power": 1.3279,
-     "slope": 1.3279
-    },
-    "mu-back-squat-barre-basse": {
-     "capacity": 1.0109,
-     "curveB": 1.1104,
-     "fatigueScale": 0.6167,
-     "power": 1.1104,
-     "slope": 1.1104
-    },
-    "mu-developpe-couche-barre": {
-     "capacity": 1.0109,
-     "curveB": 1.1104,
-     "fatigueScale": 0.6167,
-     "power": 1.1104,
-     "slope": 1.1104
-    },
-    "mu-souleve-de-terre-conventionnel": {
-     "capacity": 1.0109,
-     "curveB": 1.1104,
-     "fatigueScale": 0.6167,
-     "power": 1.1104,
-     "slope": 1.1104
-    }
-   },
-   "u": [
-    0.848385,
-    0.825172,
-    0.065088,
-    0.000558,
-    0.898995,
-    0.058354,
-    0.844306,
-    0.950922,
-    0.280283,
-    0.059476,
-    0.535159,
-    0.255619,
-    0.280769,
-    0.332317,
-    0.434265,
-    0.896006,
-    0.248814,
-    0.974801,
-    0.997259,
-    0.187313,
-    0.577113,
-    0.684913,
-    0.026891
-   ]
-  },
-  {
-   "difficulte": 0.221131,
-   "echeance": true,
-   "echeances": [
-    68
-   ],
-   "fin_episodes": 61,
-   "generation": 2,
-   "id": "adv-c247f31d",
-   "key": "autres_03_powerlifter_competition",
-   "kind": "c",
-   "koach": {
-    "aggravations": 0,
-    "e1rm6": 0.024663,
-    "echecs": 0.038636,
-    "gain": -0.003497,
+    "e1rm6": 0.073455,
+    "echecs": 0.003161,
+    "gain": -0.000188,
     "par_graine": [
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.0344,
+      "e1rm6": 0.057801,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.045775,
+      "echecs": 0.001647,
       "evenements": [
        [
         "mu-developpe-couche-barre",
         "loaded",
-        117.5,
-        121.433858,
-        0.967605
+        137.5,
+        160.530654,
+        0.856534
        ],
        [
         "mu-souleve-de-terre-conventionnel",
         "loaded",
-        202.5,
-        208.626672,
-        0.970633
+        217.5,
+        281.478474,
+        0.772706
        ]
       ],
-      "faites": 54,
-      "gain": -0.003111,
-      "perf_a": 0.969119,
+      "faites": 60,
+      "gain": 0.000153,
+      "perf_a": 0.81462,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -1209,154 +1110,425 @@
      },
      {
       "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 3
-      },
-      "e1rm6": 0.014926,
+      "codes_violations": {},
+      "e1rm6": 0.100221,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.031496,
+      "echecs": 0.002132,
       "evenements": [
        [
         "mu-developpe-couche-barre",
         "loaded",
-        65.0,
-        125.272259,
-        0.51887
+        127.5,
+        164.597743,
+        0.774616
        ],
        [
         "mu-souleve-de-terre-conventionnel",
         "loaded",
-        142.5,
-        216.443516,
-        0.65837
+        230.0,
+        288.16649,
+        0.79815
        ]
       ],
-      "faites": 50,
-      "gain": -0.003884,
-      "perf_a": 0.58862,
+      "faites": 51,
+      "gain": -0.000631,
+      "perf_a": 0.786383,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 64,
       "seed": 1,
-      "violations": 3
+      "violations": 0
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.062342,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 2,
+      "echeance": true,
+      "echecs": 0.005703,
+      "evenements": [
+       [
+        "mu-developpe-couche-barre",
+        "loaded",
+        120.0,
+        144.29267,
+        0.831643
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        250.0,
+        284.10429,
+        0.879959
+       ]
+      ],
+      "faites": 54,
+      "gain": -8.6e-05,
+      "perf_a": 0.855801,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 2,
+      "violations": 0
      }
     ],
-    "perf_a": 0.778869,
-    "perf_a_min": 0.58862,
+    "perf_a": 0.818935,
+    "perf_a_min": 0.786383,
     "plantages": [],
     "poussees": 0,
-    "violations": 3
+    "violations": 0
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 10,
-    "breakFrom": 0.7981,
-    "capacitePrincipaux": 0.8287,
-    "capaciteTous": 0.8486,
-    "courbePrincipaux": 0.9776,
-    "courbeTous": 0.8705,
-    "daySd": 0.0376,
-    "fatiguePrincipaux": 1.0298,
-    "fatigueTous": 0.8345,
-    "healthAnswerRate": 0.4315,
-    "illnessDays": 5,
-    "illnessFrom": 0.0113,
-    "lazy": 0.2855,
-    "missRate": 0.1685,
-    "painDays": 11,
-    "painFrom": 0.6315,
-    "painIntensity": 7,
+    "breakDays": 0,
+    "breakFrom": 0.2724,
+    "capacitePrincipaux": 1.0617,
+    "capaciteTous": 1.1083,
+    "courbePrincipaux": 1.3152,
+    "courbeTous": 0.875,
+    "daySd": 0.046,
+    "fatiguePrincipaux": 0.7669,
+    "fatigueTous": 0.6385,
+    "healthAnswerRate": 0.633,
+    "illnessDays": 8,
+    "illnessFrom": 0.7977,
+    "lazy": 0.2868,
+    "missRate": 0.2011,
+    "painDays": 28,
+    "painFrom": 0.0015,
+    "painIntensity": 5,
     "painZone": "knee",
-    "ratingNoise": 1.9346,
-    "rirBias": 0.0561,
-    "rirBiasSd": 0.1284,
-    "shortTimeRate": 0.0045,
-    "skipRating": 0.2285
+    "ratingNoise": 0.5411,
+    "rirBias": 0.6839,
+    "rirBiasSd": 0.2894,
+    "shortTimeRate": 0.2441,
+    "skipRating": 0.1329
    },
-   "parent": "adv-d869fca0",
    "poids_corps": [],
    "role": "pire",
    "scenario": "reference",
    "seeds": [
     0,
-    1
+    1,
+    2
    ],
    "spec": {
-    "breakDays": 10,
-    "breakFromDay": 42,
-    "daySd": 0.0376,
-    "healthAnswerRate": 0.4315,
-    "illnessDays": 5,
-    "illnessFromDay": 7,
-    "lazy": 0.2855,
-    "missRate": 0.1685,
-    "painDays": 11,
-    "painFromDay": 34,
-    "painIntensity": 7,
+    "daySd": 0.046,
+    "healthAnswerRate": 0.633,
+    "illnessDays": 8,
+    "illnessFromDay": 44,
+    "lazy": 0.2868,
+    "missRate": 0.2011,
+    "painDays": 28,
+    "painFromDay": 7,
+    "painIntensity": 5,
     "painZone": "knee",
-    "ratingNoise": 1.9346,
-    "rirBias": 0.0561,
-    "rirBiasSd": 0.1284,
-    "shortTimeRate": 0.0045,
-    "skipRating": 0.2285
+    "ratingNoise": 0.5411,
+    "rirBias": 0.6839,
+    "rirBiasSd": 0.2894,
+    "shortTimeRate": 0.2441,
+    "skipRating": 0.1329
    },
    "surcharges": {
     "*": {
-     "capacity": 0.8486,
-     "curveB": 0.8705,
-     "fatigueScale": 0.8345,
-     "power": 0.8705,
-     "slope": 0.8705
+     "capacity": 1.1083,
+     "curveB": 0.875,
+     "fatigueScale": 0.6385,
+     "power": 0.875,
+     "slope": 0.875
     },
     "mu-back-squat-barre-basse": {
-     "capacity": 0.8287,
-     "curveB": 0.9776,
-     "fatigueScale": 1.0298,
-     "power": 0.9776,
-     "slope": 0.9776
+     "capacity": 1.0617,
+     "curveB": 1.3152,
+     "fatigueScale": 0.7669,
+     "power": 1.3152,
+     "slope": 1.3152
     },
     "mu-developpe-couche-barre": {
-     "capacity": 0.8287,
-     "curveB": 0.9776,
-     "fatigueScale": 1.0298,
-     "power": 0.9776,
-     "slope": 0.9776
+     "capacity": 1.0617,
+     "curveB": 1.3152,
+     "fatigueScale": 0.7669,
+     "power": 1.3152,
+     "slope": 1.3152
     },
     "mu-souleve-de-terre-conventionnel": {
-     "capacity": 0.8287,
-     "curveB": 0.9776,
-     "fatigueScale": 1.0298,
-     "power": 0.9776,
-     "slope": 0.9776
+     "capacity": 1.0617,
+     "curveB": 1.3152,
+     "fatigueScale": 0.7669,
+     "power": 1.3152,
+     "slope": 1.3152
     }
    },
    "u": [
-    0.840708,
-    0.216896,
-    0.25277,
-    0.571008,
-    0.45697,
-    0.481421,
-    0.679561,
-    0.798145,
-    0.545115,
-    0.011258,
-    0.75627,
-    0.826281,
-    0.169457,
-    0.631456,
-    0.683728,
-    0.36836,
-    0.015142,
-    0.145599,
-    0.260149,
-    0.322312,
-    0.086815,
-    0.462633,
-    0.527721
+    0.049066,
+    0.877803,
+    0.772388,
+    0.573646,
+    0.265876,
+    0.574534,
+    0.024971,
+    0.272385,
+    0.746474,
+    0.797668,
+    0.793953,
+    0.511489,
+    0.745672,
+    0.001478,
+    0.809267,
+    0.592183,
+    0.813591,
+    0.803837,
+    0.269011,
+    0.060793,
+    0.697914,
+    0.980505,
+    0.239795
+   ]
+  },
+  {
+   "confirme": true,
+   "difficulte": 0.188165,
+   "echeance": true,
+   "echeances": [
+    68
+   ],
+   "fin_episodes": 61,
+   "generation": 2,
+   "id": "adv-b3ffcff4",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.086287,
+    "echecs": 0.027798,
+    "gain": -0.004859,
+    "par_graine": [
+     {
+      "aggravations": 0,
+      "codes_violations": {
+       "volume_trop_vite": 1
+      },
+      "e1rm6": 0.111789,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.03125,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        192.5,
+        250.423787,
+        0.768697
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        235.0,
+        300.229511,
+        0.782735
+       ]
+      ],
+      "faites": 42,
+      "gain": -0.005025,
+      "perf_a": 0.775716,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 1,
+      "violations": 1
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.065867,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.021531,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        202.5,
+        232.729355,
+        0.870109
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        240.0,
+        288.461855,
+        0.831999
+       ]
+      ],
+      "faites": 46,
+      "gain": -0.004708,
+      "perf_a": 0.851054,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 2,
+      "violations": 0
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {
+       "volume_trop_vite": 1
+      },
+      "e1rm6": 0.081204,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.030612,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        192.5,
+        244.092611,
+        0.788635
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        260.0,
+        313.692562,
+        0.828837
+       ]
+      ],
+      "faites": 46,
+      "gain": -0.004843,
+      "perf_a": 0.808736,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 3,
+      "violations": 1
+     }
+    ],
+    "perf_a": 0.811835,
+    "perf_a_min": 0.775716,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 2
+   },
+   "objectif_effectif": "a",
+   "parametres": {
+    "breakDays": 13,
+    "breakFrom": 0.2315,
+    "capacitePrincipaux": 1.1524,
+    "capaciteTous": 0.8008,
+    "courbePrincipaux": 1.3098,
+    "courbeTous": 0.9756,
+    "daySd": 0.0161,
+    "fatiguePrincipaux": 0.6736,
+    "fatigueTous": 0.6164,
+    "healthAnswerRate": 0.9006,
+    "illnessDays": 9,
+    "illnessFrom": 0.593,
+    "lazy": 0.1963,
+    "missRate": 0.2981,
+    "painDays": 33,
+    "painFrom": 0.4103,
+    "painIntensity": 3,
+    "painZone": "wrist_hand",
+    "ratingNoise": 1.1915,
+    "rirBias": 0.0435,
+    "rirBiasSd": 0.2531,
+    "shortTimeRate": 0.0395,
+    "skipRating": 0.3
+   },
+   "parent": "adv-e7e48616",
+   "poids_corps": [],
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    1,
+    2,
+    3
+   ],
+   "spec": {
+    "breakDays": 13,
+    "breakFromDay": 16,
+    "daySd": 0.0161,
+    "healthAnswerRate": 0.9006,
+    "illnessDays": 9,
+    "illnessFromDay": 34,
+    "lazy": 0.1963,
+    "missRate": 0.2981,
+    "painDays": 33,
+    "painFromDay": 16,
+    "painIntensity": 3,
+    "painZone": "wrist_hand",
+    "ratingNoise": 1.1915,
+    "rirBias": 0.0435,
+    "rirBiasSd": 0.2531,
+    "shortTimeRate": 0.0395,
+    "skipRating": 0.3
+   },
+   "surcharges": {
+    "*": {
+     "capacity": 0.8008,
+     "curveB": 0.9756,
+     "fatigueScale": 0.6164,
+     "power": 0.9756,
+     "slope": 0.9756
+    },
+    "mu-back-squat-barre-basse": {
+     "capacity": 1.1524,
+     "curveB": 1.3098,
+     "fatigueScale": 0.6736,
+     "power": 1.3098,
+     "slope": 1.3098
+    },
+    "mu-developpe-couche-barre": {
+     "capacity": 1.1524,
+     "curveB": 1.3098,
+     "fatigueScale": 0.6736,
+     "power": 1.3098,
+     "slope": 1.3098
+    },
+    "mu-souleve-de-terre-conventionnel": {
+     "capacity": 1.1524,
+     "curveB": 1.3098,
+     "fatigueScale": 0.6736,
+     "power": 1.3098,
+     "slope": 1.3098
+    }
+   },
+   "u": [
+    0.539547,
+    0.203636,
+    0.655184,
+    0.392561,
+    0.599945,
+    0.851786,
+    0.904514,
+    0.231534,
+    0.844541,
+    0.592958,
+    0.54607,
+    0.17241,
+    0.912779,
+    0.410328,
+    0.156715,
+    0.889509,
+    0.131626,
+    0.0025,
+    0.459007,
+    0.02638,
+    0.900264,
+    0.97323,
+    0.113089
    ]
   },
   {
@@ -2520,141 +2692,177 @@
   },
   {
    "confirme": true,
-   "difficulte": 0.093747,
+   "difficulte": 0.175598,
    "echeance": true,
    "echeances": [
     82
    ],
    "fin_episodes": 75,
    "generation": 0,
-   "id": "adv-b9a7e2f3",
+   "id": "adv-f3afdf8d",
    "key": "street_07_avance_streetlifting_competition",
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.032685,
-    "echecs": 0.00711,
-    "gain": -0.00062,
+    "e1rm6": 0.013272,
+    "echecs": 0.009626,
+    "gain": -0.000518,
     "par_graine": [
      {
       "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 7
-      },
-      "e1rm6": 0.010644,
+      "codes_violations": {},
+      "e1rm6": 0.012026,
       "e1rm_famille": "loadedMain",
-      "e1rm_n": 2,
+      "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.005291,
+      "echecs": 0.007013,
       "evenements": [
        [
-        "sl-squat-competition",
+        "sl-muscle-up-leste",
         "loaded",
-        150.0,
-        158.448672,
-        0.946679
+        97.6,
+        105.125104,
+        0.928418
+       ],
+       [
+        "sl-traction-lestee",
+        "loaded",
+        128.85,
+        143.676695,
+        0.896805
+       ],
+       [
+        "sl-dips-leste",
+        "loaded",
+        129.3,
+        162.999265,
+        0.793255
        ]
       ],
-      "faites": 62,
-      "gain": -0.000605,
-      "perf_a": 0.946679,
+      "faites": 57,
+      "gain": -0.000475,
+      "perf_a": 0.872826,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 80,
       "seed": 0,
-      "violations": 7
+      "violations": 0
      },
      {
       "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 11
-      },
-      "e1rm6": 0.072919,
+      "codes_violations": {},
+      "e1rm6": 0.018451,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.010225,
+      "echecs": 0.011111,
       "evenements": [
        [
-        "sl-squat-competition",
+        "sl-muscle-up-leste",
         "loaded",
-        137.5,
-        169.600637,
-        0.810728
+        82.6,
+        96.190215,
+        0.858715
+       ],
+       [
+        "sl-traction-lestee",
+        "loaded",
+        130.1,
+        160.679091,
+        0.809688
+       ],
+       [
+        "sl-dips-leste",
+        "loaded",
+        123.05,
+        175.3677,
+        0.701669
        ]
       ],
-      "faites": 52,
-      "gain": -0.000679,
-      "perf_a": 0.810728,
+      "faites": 44,
+      "gain": -0.000734,
+      "perf_a": 0.790024,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 80,
       "seed": 1,
-      "violations": 11
+      "violations": 0
      },
      {
       "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 8
-      },
-      "e1rm6": 0.014492,
+      "codes_violations": {},
+      "e1rm6": 0.00934,
       "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
+      "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.005814,
+      "echecs": 0.010753,
       "evenements": [
        [
-        "sl-squat-competition",
+        "sl-muscle-up-leste",
         "loaded",
-        142.5,
-        148.228921,
-        0.961351
+        87.6,
+        99.10722,
+        0.883891
+       ],
+       [
+        "sl-traction-lestee",
+        "loaded",
+        113.85,
+        134.180796,
+        0.848482
+       ],
+       [
+        "sl-dips-leste",
+        "loaded",
+        114.3,
+        163.590562,
+        0.698696
        ]
       ],
-      "faites": 59,
-      "gain": -0.000577,
-      "perf_a": 0.961351,
+      "faites": 49,
+      "gain": -0.000345,
+      "perf_a": 0.810356,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 80,
       "seed": 2,
-      "violations": 8
+      "violations": 0
      }
     ],
-    "perf_a": 0.906253,
-    "perf_a_min": 0.810728,
+    "perf_a": 0.824402,
+    "perf_a_min": 0.790024,
     "plantages": [],
     "poussees": 0,
-    "violations": 26
+    "violations": 0
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 11,
-    "breakFrom": 0.7638,
-    "capacitePrincipaux": 1.0391,
-    "capaciteTous": 0.8001,
-    "courbePrincipaux": 1.2942,
-    "courbeTous": 0.806,
-    "daySd": 0.0252,
-    "fatiguePrincipaux": 0.886,
-    "fatigueTous": 0.8064,
-    "healthAnswerRate": 0.8892,
-    "illnessDays": 2,
-    "illnessFrom": 0.7352,
-    "lazy": 0.4528,
-    "missRate": 0.2885,
-    "painDays": 29,
-    "painFrom": 0.3982,
-    "painIntensity": 4,
-    "painZone": "elbow",
-    "ratingNoise": 1.5439,
-    "rirBias": 0.5419,
-    "rirBiasSd": 0.224,
-    "shortTimeRate": 0.2279,
-    "skipRating": 0.1014
+    "breakDays": 14,
+    "breakFrom": 0.9983,
+    "capacitePrincipaux": 1.0544,
+    "capaciteTous": 0.9321,
+    "courbePrincipaux": 1.0093,
+    "courbeTous": 1.0324,
+    "daySd": 0.0131,
+    "fatiguePrincipaux": 1.6126,
+    "fatigueTous": 1.2795,
+    "healthAnswerRate": 0.7605,
+    "illnessDays": 6,
+    "illnessFrom": 0.6095,
+    "lazy": 0.149,
+    "missRate": 0.3373,
+    "painDays": 20,
+    "painFrom": 0.7778,
+    "painIntensity": 3,
+    "painZone": "knee",
+    "ratingNoise": 1.2701,
+    "rirBias": -0.1128,
+    "rirBiasSd": 0.1416,
+    "shortTimeRate": 0.0917,
+    "skipRating": 0.0192
    },
    "poids_corps": [
     "sl-dips-leste",
@@ -2670,152 +2878,124 @@
     2
    ],
    "spec": {
-    "breakDays": 11,
-    "breakFromDay": 51,
-    "daySd": 0.0252,
-    "healthAnswerRate": 0.8892,
-    "illnessDays": 2,
-    "illnessFromDay": 56,
-    "lazy": 0.4528,
-    "missRate": 0.2885,
-    "painDays": 29,
-    "painFromDay": 22,
-    "painIntensity": 4,
-    "painZone": "elbow",
-    "ratingNoise": 1.5439,
-    "rirBias": 0.5419,
-    "rirBiasSd": 0.224,
-    "shortTimeRate": 0.2279,
-    "skipRating": 0.1014
+    "breakDays": 14,
+    "breakFromDay": 61,
+    "daySd": 0.0131,
+    "healthAnswerRate": 0.7605,
+    "illnessDays": 6,
+    "illnessFromDay": 45,
+    "lazy": 0.149,
+    "missRate": 0.3373,
+    "painDays": 20,
+    "painFromDay": 45,
+    "painIntensity": 3,
+    "painZone": "knee",
+    "ratingNoise": 1.2701,
+    "rirBias": -0.1128,
+    "rirBiasSd": 0.1416,
+    "shortTimeRate": 0.0917,
+    "skipRating": 0.0192
    },
    "surcharges": {
     "*": {
-     "capacity": 0.8001,
-     "curveB": 0.806,
-     "fatigueScale": 0.8064,
-     "power": 0.806,
-     "slope": 0.806
+     "capacity": 0.9321,
+     "curveB": 1.0324,
+     "fatigueScale": 1.2795,
+     "power": 1.0324,
+     "slope": 1.0324
     },
     "sl-dips-leste": {
-     "capacity": 1.0391,
-     "curveB": 1.2942,
-     "fatigueScale": 0.886,
-     "power": 1.2942,
-     "slope": 1.2942
+     "capacity": 1.0544,
+     "curveB": 1.0093,
+     "fatigueScale": 1.6126,
+     "power": 1.0093,
+     "slope": 1.0093
     },
     "sl-muscle-up-leste": {
-     "capacity": 1.0391,
-     "curveB": 1.2942,
-     "fatigueScale": 0.886,
-     "power": 1.2942,
-     "slope": 1.2942
+     "capacity": 1.0544,
+     "curveB": 1.0093,
+     "fatigueScale": 1.6126,
+     "power": 1.0093,
+     "slope": 1.0093
     },
     "sl-squat-competition": {
-     "capacity": 1.0391,
-     "curveB": 1.2942,
-     "fatigueScale": 0.886,
-     "power": 1.2942,
-     "slope": 1.2942
+     "capacity": 1.0544,
+     "curveB": 1.0093,
+     "fatigueScale": 1.6126,
+     "power": 1.0093,
+     "slope": 1.0093
     },
     "sl-traction-lestee": {
-     "capacity": 1.0391,
-     "curveB": 1.2942,
-     "fatigueScale": 0.886,
-     "power": 1.2942,
-     "slope": 1.2942
-    },
-    "sl-traction-lestee-pause-bas": {
-     "capacity": 0.92,
-     "curveB": 0.806,
-     "fatigueScale": 0.8064,
-     "power": 0.806,
-     "slope": 0.806
+     "capacity": 1.0544,
+     "curveB": 1.0093,
+     "fatigueScale": 1.6126,
+     "power": 1.0093,
+     "slope": 1.0093
     }
    },
    "u": [
-    0.700547,
-    0.728327,
-    0.561264,
-    0.905604,
-    0.20272,
-    0.824279,
-    0.75486,
-    0.7638,
-    0.188116,
-    0.735208,
-    0.417933,
-    0.203729,
-    0.780746,
-    0.398159,
-    0.435215,
-    0.876943,
-    0.759799,
-    0.000297,
-    0.125654,
-    0.288871,
-    0.644954,
-    0.952327,
-    0.380755
+    0.579252,
+    0.039138,
+    0.295434,
+    0.297905,
+    0.038317,
+    0.963792,
+    0.962444,
+    0.998258,
+    0.585844,
+    0.609546,
+    0.723817,
+    0.15338,
+    0.479252,
+    0.777802,
+    0.028107,
+    0.733941,
+    0.305825,
+    0.377004,
+    0.557919,
+    0.739767,
+    0.681081,
+    0.518412,
+    0.965854
    ]
   },
   {
-   "difficulte": 0.238116,
+   "difficulte": 0.12092,
    "echeance": true,
    "echeances": [
     82
    ],
    "fin_episodes": 75,
-   "generation": 1,
-   "id": "adv-80df39f8",
+   "generation": 2,
+   "id": "adv-29a6bcfb",
    "key": "street_07_avance_streetlifting_competition",
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.091183,
-    "echecs": 0.003541,
-    "gain": 0.000163,
+    "e1rm6": 0.093094,
+    "echecs": 0.002208,
+    "gain": 0.000145,
     "par_graine": [
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.058144,
+      "e1rm6": 0.065734,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.00398,
+      "echecs": 0.001427,
       "evenements": [
-       [
-        "sl-muscle-up-leste",
-        "loaded",
-        105.1,
-        119.321013,
-        0.880817
-       ],
-       [
-        "sl-traction-lestee",
-        "loaded",
-        148.85,
-        160.036519,
-        0.9301
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        165.55,
-        181.312611,
-        0.913064
-       ],
        [
         "sl-squat-competition",
         "loaded",
-        172.5,
-        182.564123,
-        0.944873
+        177.5,
+        178.172249,
+        0.996227
        ]
       ],
-      "faites": 77,
-      "gain": 0.000211,
-      "perf_a": 0.917214,
+      "faites": 76,
+      "gain": 0.000341,
+      "perf_a": 0.996227,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -2826,44 +3006,23 @@
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.124222,
+      "e1rm6": 0.120454,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.003102,
+      "echecs": 0.00299,
       "evenements": [
-       [
-        "sl-muscle-up-leste",
-        "loaded",
-        91.35,
-        108.597434,
-        0.84118
-       ],
-       [
-        "sl-traction-lestee",
-        "loaded",
-        91.35,
-        180.990597,
-        0.504722
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        105.55,
-        195.139807,
-        0.540894
-       ],
        [
         "sl-squat-competition",
         "loaded",
-        102.5,
-        190.017442,
-        0.539424
+        140.0,
+        183.743247,
+        0.761933
        ]
       ],
-      "faites": 75,
-      "gain": 0.000115,
-      "perf_a": 0.606555,
+      "faites": 74,
+      "gain": -5e-05,
+      "perf_a": 0.761933,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -2872,39 +3031,39 @@
       "violations": 0
      }
     ],
-    "perf_a": 0.761884,
-    "perf_a_min": 0.606555,
+    "perf_a": 0.87908,
+    "perf_a_min": 0.761933,
     "plantages": [],
     "poussees": 0,
     "violations": 0
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 0,
-    "breakFrom": 0.2886,
-    "capacitePrincipaux": 1.1878,
-    "capaciteTous": 0.8875,
-    "courbePrincipaux": 1.0579,
-    "courbeTous": 0.9439,
-    "daySd": 0.0402,
-    "fatiguePrincipaux": 1.0899,
-    "fatigueTous": 1.5401,
-    "healthAnswerRate": 0.958,
+    "breakDays": 4,
+    "breakFrom": 0.2822,
+    "capacitePrincipaux": 1.1493,
+    "capaciteTous": 0.921,
+    "courbePrincipaux": 1.1234,
+    "courbeTous": 1.0576,
+    "daySd": 0.0499,
+    "fatiguePrincipaux": 0.8639,
+    "fatigueTous": 1.5661,
+    "healthAnswerRate": 0.9694,
     "illnessDays": 10,
-    "illnessFrom": 0.8095,
-    "lazy": 0.403,
-    "missRate": 0.1003,
-    "painDays": 7,
-    "painFrom": 0.607,
-    "painIntensity": 3,
-    "painZone": "elbow",
-    "ratingNoise": 0.9507,
-    "rirBias": 0.4876,
-    "rirBiasSd": 0.1884,
-    "shortTimeRate": 0.1294,
-    "skipRating": 0.2977
+    "illnessFrom": 0.8788,
+    "lazy": 0.3565,
+    "missRate": 0.0686,
+    "painDays": 16,
+    "painFrom": 0.5568,
+    "painIntensity": 4,
+    "painZone": "shoulder",
+    "ratingNoise": 0.9376,
+    "rirBias": 0.588,
+    "rirBiasSd": 0.1259,
+    "shortTimeRate": 0.1196,
+    "skipRating": 0.3094
    },
-   "parent": "adv-580e4fd8",
+   "parent": "adv-80df39f8",
    "poids_corps": [
     "sl-dips-leste",
     "sl-muscle-up-leste",
@@ -2918,150 +3077,375 @@
     1
    ],
    "spec": {
-    "daySd": 0.0402,
-    "healthAnswerRate": 0.958,
+    "breakDays": 4,
+    "breakFromDay": 25,
+    "daySd": 0.0499,
+    "healthAnswerRate": 0.9694,
     "illnessDays": 10,
-    "illnessFromDay": 54,
-    "lazy": 0.403,
-    "missRate": 0.1003,
-    "painDays": 7,
-    "painFromDay": 44,
-    "painIntensity": 3,
-    "painZone": "elbow",
-    "ratingNoise": 0.9507,
-    "rirBias": 0.4876,
-    "rirBiasSd": 0.1884,
-    "shortTimeRate": 0.1294,
-    "skipRating": 0.2977
+    "illnessFromDay": 58,
+    "lazy": 0.3565,
+    "missRate": 0.0686,
+    "painDays": 16,
+    "painFromDay": 36,
+    "painIntensity": 4,
+    "painZone": "shoulder",
+    "ratingNoise": 0.9376,
+    "rirBias": 0.588,
+    "rirBiasSd": 0.1259,
+    "shortTimeRate": 0.1196,
+    "skipRating": 0.3094
    },
    "surcharges": {
     "*": {
-     "capacity": 0.8875,
-     "curveB": 0.9439,
-     "fatigueScale": 1.5401,
-     "power": 0.9439,
-     "slope": 0.9439
+     "capacity": 0.921,
+     "curveB": 1.0576,
+     "fatigueScale": 1.5661,
+     "power": 1.0576,
+     "slope": 1.0576
     },
     "sl-dips-leste": {
-     "capacity": 1.1878,
-     "curveB": 1.0579,
-     "fatigueScale": 1.0899,
-     "power": 1.0579,
-     "slope": 1.0579
+     "capacity": 1.1493,
+     "curveB": 1.1234,
+     "fatigueScale": 0.8639,
+     "power": 1.1234,
+     "slope": 1.1234
     },
     "sl-muscle-up-leste": {
-     "capacity": 1.1878,
-     "curveB": 1.0579,
-     "fatigueScale": 1.0899,
-     "power": 1.0579,
-     "slope": 1.0579
+     "capacity": 1.1493,
+     "curveB": 1.1234,
+     "fatigueScale": 0.8639,
+     "power": 1.1234,
+     "slope": 1.1234
     },
     "sl-squat-competition": {
-     "capacity": 1.1878,
-     "curveB": 1.0579,
-     "fatigueScale": 1.0899,
-     "power": 1.0579,
-     "slope": 1.0579
+     "capacity": 1.1493,
+     "curveB": 1.1234,
+     "fatigueScale": 0.8639,
+     "power": 1.1234,
+     "slope": 1.1234
     },
     "sl-traction-lestee": {
-     "capacity": 1.1878,
-     "curveB": 1.0579,
-     "fatigueScale": 1.0899,
-     "power": 1.0579,
-     "slope": 1.0579
-    },
-    "sl-traction-lestee-pause-bas": {
-     "capacity": 0.92,
-     "curveB": 0.9439,
-     "fatigueScale": 1.5401,
-     "power": 0.9439,
-     "slope": 0.9439
+     "capacity": 1.1493,
+     "curveB": 1.1234,
+     "fatigueScale": 0.8639,
+     "power": 1.1234,
+     "slope": 1.1234
     }
    },
    "u": [
-    0.399247,
-    0.671149,
-    0.446568,
-    0.806075,
-    0.595454,
-    0.286672,
-    0.028432,
-    0.288604,
-    0.961712,
-    0.809469,
-    0.417365,
-    0.138755,
-    0.026062,
-    0.607001,
-    0.725771,
-    0.953281,
-    0.431243,
-    0.255868,
-    0.401382,
-    0.920907,
-    0.974855,
-    0.600425,
-    0.583105
+    0.390614,
+    0.776853,
+    0.244735,
+    0.713042,
+    0.618898,
+    0.195941,
+    0.325582,
+    0.282179,
+    0.983102,
+    0.878802,
+    0.269692,
+    0.214319,
+    0.317087,
+    0.556781,
+    0.860223,
+    0.966021,
+    0.398704,
+    0.347311,
+    0.600002,
+    0.937218,
+    0.893529,
+    0.705282,
+    0.356068
    ]
   },
   {
-   "difficulte": 0.09007,
+   "difficulte": 0.086417,
    "echeance": true,
    "echeances": [
     82
    ],
    "fin_episodes": 75,
    "generation": 0,
-   "id": "adv-ca435cc2",
+   "id": "adv-a4374ee7",
    "key": "street_07_avance_streetlifting_competition",
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.03656,
-    "echecs": 0.020026,
-    "gain": -0.00416,
+    "e1rm6": 0.060263,
+    "echecs": 0.028559,
+    "gain": -0.002827,
     "par_graine": [
      {
       "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 2
-      },
-      "e1rm6": 0.03408,
+      "codes_violations": {},
+      "e1rm6": 0.040977,
       "e1rm_famille": "loadedMain",
-      "e1rm_n": 4,
+      "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.015789,
+      "echecs": 0.015027,
       "evenements": [
        [
-        "sl-muscle-up-leste",
+        "sl-squat-competition",
         "loaded",
-        100.1,
-        105.628879,
-        0.947658
-       ],
-       [
-        "sl-traction-lestee",
-        "loaded",
-        135.1,
-        137.111867,
-        0.985327
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        145.55,
-        160.901959,
-        0.904588
+        117.5,
+        127.091421,
+        0.924531
        ]
       ],
-      "faites": 63,
-      "gain": -0.003494,
-      "perf_a": 0.945857,
+      "faites": 76,
+      "gain": -0.002673,
+      "perf_a": 0.924531,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 80,
       "seed": 0,
+      "violations": 0
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {
+       "volume_trop_vite": 2
+      },
+      "e1rm6": 0.079549,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.04209,
+      "evenements": [
+       [
+        "sl-squat-competition",
+        "loaded",
+        125.0,
+        138.483478,
+        0.902635
+       ]
+      ],
+      "faites": 72,
+      "gain": -0.00298,
+      "perf_a": 0.902635,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 80,
+      "seed": 1,
+      "violations": 2
+     }
+    ],
+    "perf_a": 0.913583,
+    "perf_a_min": 0.902635,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 2
+   },
+   "objectif_effectif": "a",
+   "parametres": {
+    "breakDays": 2,
+    "breakFrom": 0.2973,
+    "capacitePrincipaux": 0.823,
+    "capaciteTous": 0.9889,
+    "courbePrincipaux": 1.1086,
+    "courbeTous": 1.1545,
+    "daySd": 0.024,
+    "fatiguePrincipaux": 1.6566,
+    "fatigueTous": 1.0002,
+    "healthAnswerRate": 0.596,
+    "illnessDays": 8,
+    "illnessFrom": 0.6448,
+    "lazy": 0.3684,
+    "missRate": 0.1153,
+    "painDays": 12,
+    "painFrom": 0.6325,
+    "painIntensity": 7,
+    "painZone": "shoulder",
+    "ratingNoise": 0.7393,
+    "rirBias": 0.5495,
+    "rirBiasSd": 0.2731,
+    "shortTimeRate": 0.0791,
+    "skipRating": 0.0337
+   },
+   "poids_corps": [
+    "sl-dips-leste",
+    "sl-muscle-up-leste",
+    "sl-traction-lestee",
+    "sl-traction-lestee-pause-bas"
+   ],
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "spec": {
+    "breakDays": 2,
+    "breakFromDay": 26,
+    "daySd": 0.024,
+    "healthAnswerRate": 0.596,
+    "illnessDays": 8,
+    "illnessFromDay": 46,
+    "lazy": 0.3684,
+    "missRate": 0.1153,
+    "painDays": 12,
+    "painFromDay": 43,
+    "painIntensity": 7,
+    "painZone": "shoulder",
+    "ratingNoise": 0.7393,
+    "rirBias": 0.5495,
+    "rirBiasSd": 0.2731,
+    "shortTimeRate": 0.0791,
+    "skipRating": 0.0337
+   },
+   "surcharges": {
+    "*": {
+     "capacity": 0.9889,
+     "curveB": 1.1545,
+     "fatigueScale": 1.0002,
+     "power": 1.1545,
+     "slope": 1.1545
+    },
+    "sl-dips-leste": {
+     "capacity": 0.92,
+     "curveB": 1.1086,
+     "fatigueScale": 1.6566,
+     "power": 1.1086,
+     "slope": 1.1086
+    },
+    "sl-muscle-up-leste": {
+     "capacity": 0.92,
+     "curveB": 1.1086,
+     "fatigueScale": 1.6566,
+     "power": 1.1086,
+     "slope": 1.1086
+    },
+    "sl-squat-competition": {
+     "capacity": 0.823,
+     "curveB": 1.1086,
+     "fatigueScale": 1.6566,
+     "power": 1.1086,
+     "slope": 1.1086
+    },
+    "sl-traction-lestee": {
+     "capacity": 0.92,
+     "curveB": 1.1086,
+     "fatigueScale": 1.6566,
+     "power": 1.1086,
+     "slope": 1.1086
+    }
+   },
+   "u": [
+    0.242999,
+    0.736265,
+    0.719787,
+    0.736789,
+    0.067415,
+    0.329327,
+    0.192475,
+    0.297266,
+    0.776468,
+    0.644758,
+    0.270113,
+    0.876185,
+    0.188993,
+    0.632489,
+    0.404864,
+    0.551089,
+    0.263597,
+    0.52293,
+    0.752913,
+    0.499193,
+    0.06989,
+    0.682088,
+    0.992157
+   ]
+  },
+  {
+   "confirme": true,
+   "difficulte": 0.111156,
+   "echeance": true,
+   "echeances": [
+    68
+   ],
+   "fin_episodes": 61,
+   "generation": 3,
+   "id": "adv-826c0503",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.034714,
+    "echecs": 0.012876,
+    "gain": -8.8e-05,
+    "par_graine": [
+     {
+      "aggravations": 0,
+      "codes_violations": {
+       "volume_trop_vite": 1
+      },
+      "e1rm6": 0.046661,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.006608,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        235.0,
+        252.317894,
+        0.931365
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        257.5,
+        297.8815,
+        0.864438
+       ]
+      ],
+      "faites": 53,
+      "gain": 0.000111,
+      "perf_a": 0.897901,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 0,
+      "violations": 1
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {
+       "volume_trop_vite": 2
+      },
+      "e1rm6": 0.032903,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.017699,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        215.0,
+        255.718696,
+        0.840768
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        265.0,
+        307.580398,
+        0.861563
+       ]
+      ],
+      "faites": 43,
+      "gain": -0.000274,
+      "perf_a": 0.851165,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 1,
       "violations": 2
      },
      {
@@ -3069,83 +3453,274 @@
       "codes_violations": {
        "volume_trop_vite": 4
       },
-      "e1rm6": 0.039041,
+      "e1rm6": 0.024577,
       "e1rm_famille": "loadedMain",
-      "e1rm_n": 4,
+      "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.024263,
+      "echecs": 0.01432,
       "evenements": [
        [
-        "sl-muscle-up-leste",
+        "mu-back-squat-barre-basse",
         "loaded",
-        86.35,
-        92.2482,
-        0.936062
+        222.5,
+        239.640917,
+        0.928472
        ],
        [
-        "sl-traction-lestee",
+        "mu-souleve-de-terre-conventionnel",
         "loaded",
-        125.1,
-        155.406475,
-        0.804986
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        149.3,
-        169.473926,
-        0.880961
+        272.5,
+        300.619881,
+        0.90646
        ]
       ],
-      "faites": 48,
-      "gain": -0.004826,
-      "perf_a": 0.874003,
+      "faites": 49,
+      "gain": -0.000101,
+      "perf_a": 0.917466,
       "plantage": null,
       "poussees": 0,
       "present": true,
-      "prevues": 80,
-      "seed": 1,
+      "prevues": 64,
+      "seed": 2,
       "violations": 4
      }
     ],
-    "perf_a": 0.90993,
-    "perf_a_min": 0.874003,
+    "perf_a": 0.888844,
+    "perf_a_min": 0.851165,
     "plantages": [],
     "poussees": 0,
-    "violations": 6
+    "violations": 7
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 10,
-    "breakFrom": 0.9852,
-    "capacitePrincipaux": 1.0629,
-    "capaciteTous": 0.8164,
-    "courbePrincipaux": 0.7621,
-    "courbeTous": 0.8994,
-    "daySd": 0.0439,
-    "fatiguePrincipaux": 1.2454,
-    "fatigueTous": 1.2571,
-    "healthAnswerRate": 0.9097,
-    "illnessDays": 4,
-    "illnessFrom": 0.038,
-    "lazy": 0.2295,
-    "missRate": 0.3184,
-    "painDays": 33,
-    "painFrom": 0.4733,
-    "painIntensity": 3,
-    "painZone": "knee",
-    "ratingNoise": 0.5647,
-    "rirBias": 0.0664,
-    "rirBiasSd": 0.1147,
-    "shortTimeRate": 0.2529,
-    "skipRating": 0.1496
+    "breakDays": 13,
+    "breakFrom": 0.2792,
+    "capacitePrincipaux": 1.1462,
+    "capaciteTous": 0.8116,
+    "courbePrincipaux": 1.0325,
+    "courbeTous": 1.2254,
+    "daySd": 0.0361,
+    "fatiguePrincipaux": 0.7003,
+    "fatigueTous": 1.235,
+    "healthAnswerRate": 0.5435,
+    "illnessDays": 9,
+    "illnessFrom": 0.6057,
+    "lazy": 0.4212,
+    "missRate": 0.2209,
+    "painDays": 9,
+    "painFrom": 0.5014,
+    "painIntensity": 6,
+    "painZone": "elbow",
+    "ratingNoise": 0.5231,
+    "rirBias": 0.3773,
+    "rirBiasSd": 0.0999,
+    "shortTimeRate": 0.2813,
+    "skipRating": 0.0776
    },
-   "poids_corps": [
-    "sl-dips-leste",
-    "sl-muscle-up-leste",
-    "sl-traction-lestee",
-    "sl-traction-lestee-pause-bas"
+   "parent": "adv-49208fba",
+   "poids_corps": [],
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
    ],
+   "spec": {
+    "breakDays": 13,
+    "breakFromDay": 18,
+    "daySd": 0.0361,
+    "healthAnswerRate": 0.5435,
+    "illnessDays": 9,
+    "illnessFromDay": 34,
+    "lazy": 0.4212,
+    "missRate": 0.2209,
+    "painDays": 9,
+    "painFromDay": 30,
+    "painIntensity": 6,
+    "painZone": "elbow",
+    "ratingNoise": 0.5231,
+    "rirBias": 0.3773,
+    "rirBiasSd": 0.0999,
+    "shortTimeRate": 0.2813,
+    "skipRating": 0.0776
+   },
+   "surcharges": {
+    "*": {
+     "capacity": 0.8116,
+     "curveB": 1.2254,
+     "fatigueScale": 1.235,
+     "power": 1.2254,
+     "slope": 1.2254
+    },
+    "mu-back-squat-barre-basse": {
+     "capacity": 1.1462,
+     "curveB": 1.0325,
+     "fatigueScale": 0.7003,
+     "power": 1.0325,
+     "slope": 1.0325
+    },
+    "mu-developpe-couche-barre": {
+     "capacity": 1.1462,
+     "curveB": 1.0325,
+     "fatigueScale": 0.7003,
+     "power": 1.0325,
+     "slope": 1.0325
+    },
+    "mu-souleve-de-terre-conventionnel": {
+     "capacity": 1.1462,
+     "curveB": 1.0325,
+     "fatigueScale": 0.7003,
+     "power": 1.0325,
+     "slope": 1.0325
+    }
+   },
+   "u": [
+    0.028043,
+    0.555041,
+    0.160826,
+    0.842324,
+    0.155157,
+    0.631222,
+    0.884086,
+    0.279214,
+    0.892914,
+    0.605721,
+    0.36829,
+    0.632359,
+    0.076171,
+    0.501434,
+    0.658561,
+    0.49273,
+    0.937521,
+    0.035401,
+    0.856946,
+    0.70523,
+    0.886804,
+    0.558084,
+    0.150938
+   ]
+  },
+  {
+   "difficulte": 0.174805,
+   "echeance": true,
+   "echeances": [
+    68
+   ],
+   "fin_episodes": 61,
+   "generation": 2,
+   "id": "adv-34899937",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.070077,
+    "echecs": 0.002658,
+    "gain": 5.2e-05,
+    "par_graine": [
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.039056,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.003257,
+      "evenements": [
+       [
+        "mu-developpe-couche-barre",
+        "loaded",
+        135.0,
+        158.652636,
+        0.850916
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        255.0,
+        278.813811,
+        0.914589
+       ]
+      ],
+      "faites": 59,
+      "gain": 0.000229,
+      "perf_a": 0.882752,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 0,
+      "violations": 0
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.101098,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.002058,
+      "evenements": [
+       [
+        "mu-developpe-couche-barre",
+        "loaded",
+        127.5,
+        163.050575,
+        0.781966
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        215.0,
+        285.40744,
+        0.753309
+       ]
+      ],
+      "faites": 50,
+      "gain": -0.000126,
+      "perf_a": 0.767637,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 1,
+      "violations": 0
+     }
+    ],
+    "perf_a": 0.825195,
+    "perf_a_min": 0.767637,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "objectif_effectif": "a",
+   "parametres": {
+    "breakDays": 2,
+    "breakFrom": 0.377,
+    "capacitePrincipaux": 1.0511,
+    "capaciteTous": 1.0535,
+    "courbePrincipaux": 1.1803,
+    "courbeTous": 0.8327,
+    "daySd": 0.0432,
+    "fatiguePrincipaux": 0.7881,
+    "fatigueTous": 0.6699,
+    "healthAnswerRate": 0.6565,
+    "illnessDays": 7,
+    "illnessFrom": 0.1483,
+    "lazy": 0.306,
+    "missRate": 0.2029,
+    "painDays": 27,
+    "painFrom": 0.2761,
+    "painIntensity": 4,
+    "painZone": "knee",
+    "ratingNoise": 0.5773,
+    "rirBias": 0.795,
+    "rirBiasSd": 0.2782,
+    "shortTimeRate": 0.2256,
+    "skipRating": 0.2598
+   },
+   "parent": "adv-acca5505",
+   "poids_corps": [],
    "role": "pire",
    "scenario": "reference",
    "seeds": [
@@ -3153,695 +3728,281 @@
     1
    ],
    "spec": {
-    "breakDays": 10,
-    "breakFromDay": 65,
-    "daySd": 0.0439,
-    "healthAnswerRate": 0.9097,
-    "illnessDays": 4,
-    "illnessFromDay": 9,
-    "lazy": 0.2295,
-    "missRate": 0.3184,
-    "painDays": 33,
-    "painFromDay": 24,
-    "painIntensity": 3,
+    "breakDays": 2,
+    "breakFromDay": 26,
+    "daySd": 0.0432,
+    "healthAnswerRate": 0.6565,
+    "illnessDays": 7,
+    "illnessFromDay": 14,
+    "lazy": 0.306,
+    "missRate": 0.2029,
+    "painDays": 27,
+    "painFromDay": 14,
+    "painIntensity": 4,
     "painZone": "knee",
-    "ratingNoise": 0.5647,
-    "rirBias": 0.0664,
-    "rirBiasSd": 0.1147,
-    "shortTimeRate": 0.2529,
-    "skipRating": 0.1496
+    "ratingNoise": 0.5773,
+    "rirBias": 0.795,
+    "rirBiasSd": 0.2782,
+    "shortTimeRate": 0.2256,
+    "skipRating": 0.2598
    },
    "surcharges": {
     "*": {
-     "capacity": 0.8164,
-     "curveB": 0.8994,
-     "fatigueScale": 1.2571,
-     "power": 0.8994,
-     "slope": 0.8994
+     "capacity": 1.0535,
+     "curveB": 0.8327,
+     "fatigueScale": 0.6699,
+     "power": 0.8327,
+     "slope": 0.8327
     },
-    "sl-dips-leste": {
-     "capacity": 1.0629,
-     "curveB": 0.7621,
-     "fatigueScale": 1.2454,
-     "power": 0.7621,
-     "slope": 0.7621
+    "mu-back-squat-barre-basse": {
+     "capacity": 1.0511,
+     "curveB": 1.1803,
+     "fatigueScale": 0.7881,
+     "power": 1.1803,
+     "slope": 1.1803
     },
-    "sl-muscle-up-leste": {
-     "capacity": 1.0629,
-     "curveB": 0.7621,
-     "fatigueScale": 1.2454,
-     "power": 0.7621,
-     "slope": 0.7621
+    "mu-developpe-couche-barre": {
+     "capacity": 1.0511,
+     "curveB": 1.1803,
+     "fatigueScale": 0.7881,
+     "power": 1.1803,
+     "slope": 1.1803
     },
-    "sl-squat-competition": {
-     "capacity": 1.0629,
-     "curveB": 0.7621,
-     "fatigueScale": 1.2454,
-     "power": 0.7621,
-     "slope": 0.7621
-    },
-    "sl-traction-lestee": {
-     "capacity": 1.0629,
-     "curveB": 0.7621,
-     "fatigueScale": 1.2454,
-     "power": 0.7621,
-     "slope": 0.7621
-    },
-    "sl-traction-lestee-pause-bas": {
-     "capacity": 0.92,
-     "curveB": 0.8994,
-     "fatigueScale": 1.2571,
-     "power": 0.8994,
-     "slope": 0.8994
+    "mu-souleve-de-terre-conventionnel": {
+     "capacity": 1.0511,
+     "curveB": 1.1803,
+     "fatigueScale": 0.7881,
+     "power": 1.1803,
+     "slope": 1.1803
     }
    },
    "u": [
-    0.075576,
-    0.227764,
-    0.208663,
-    0.458934,
-    0.299225,
-    0.909642,
-    0.713095,
-    0.985204,
-    0.435646,
-    0.03802,
-    0.762282,
-    0.068567,
-    0.898038,
-    0.47329,
-    0.779994,
-    0.899681,
-    0.84291,
-    0.050098,
-    0.317018,
-    0.722544,
-    0.700751,
-    0.028039,
-    0.713406
+    0.089353,
+    0.994758,
+    0.736178,
+    0.611958,
+    0.519675,
+    0.579794,
+    0.152288,
+    0.376985,
+    0.684853,
+    0.148263,
+    0.744115,
+    0.337788,
+    0.697887,
+    0.27614,
+    0.770973,
+    0.618379,
+    0.751997,
+    0.678902,
+    0.182646,
+    0.107725,
+    0.67328,
+    0.79162,
+    0.266396
    ]
   },
   {
-   "difficulte": 0.277669,
+   "difficulte": 0.186594,
    "echeance": true,
    "echeances": [
     68
    ],
    "fin_episodes": 61,
    "generation": 1,
-   "id": "adv-657fec45",
-   "key": "autres_03_powerlifter_competition",
-   "kind": "a",
-   "koach": {
-    "aggravations": 0,
-    "e1rm6": 0.049635,
-    "echecs": 0.026319,
-    "gain": 0.000105,
-    "par_graine": [
-     {
-      "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.051761,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.021841,
-      "evenements": [
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        102.5,
-        121.701384,
-        0.842225
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        205.0,
-        214.793582,
-        0.954405
-       ]
-      ],
-      "faites": 59,
-      "gain": 0.000248,
-      "perf_a": 0.898315,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 0,
-      "violations": 0
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.047509,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.030797,
-      "evenements": [
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        57.5,
-        125.138912,
-        0.459489
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        140.0,
-        221.096806,
-        0.633207
-       ]
-      ],
-      "faites": 53,
-      "gain": -3.8e-05,
-      "perf_a": 0.546348,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 1,
-      "violations": 0
-     }
-    ],
-    "perf_a": 0.722331,
-    "perf_a_min": 0.546348,
-    "plantages": [],
-    "poussees": 0,
-    "violations": 0
-   },
-   "objectif_effectif": "a",
-   "parametres": {
-    "breakDays": 2,
-    "breakFrom": 0.4229,
-    "capacitePrincipaux": 0.8202,
-    "capaciteTous": 0.877,
-    "courbePrincipaux": 1.0996,
-    "courbeTous": 1.2539,
-    "daySd": 0.0287,
-    "fatiguePrincipaux": 1.6086,
-    "fatigueTous": 1.304,
-    "healthAnswerRate": 0.3831,
-    "illnessDays": 0,
-    "illnessFrom": 0.1492,
-    "lazy": 0.4706,
-    "missRate": 0.1567,
-    "painDays": 12,
-    "painFrom": 0.0218,
-    "painIntensity": 5,
-    "painZone": "knee",
-    "ratingNoise": 2.3169,
-    "rirBias": -0.0229,
-    "rirBiasSd": 0.248,
-    "shortTimeRate": 0.0874,
-    "skipRating": 0.4939
-   },
-   "parent": "adv-920ff6e6",
-   "poids_corps": [],
-   "role": "pire",
-   "scenario": "reference",
-   "seeds": [
-    0,
-    1
-   ],
-   "spec": {
-    "breakDays": 2,
-    "breakFromDay": 29,
-    "daySd": 0.0287,
-    "healthAnswerRate": 0.3831,
-    "lazy": 0.4706,
-    "missRate": 0.1567,
-    "painDays": 12,
-    "painFromDay": 7,
-    "painIntensity": 5,
-    "painZone": "knee",
-    "ratingNoise": 2.3169,
-    "rirBias": -0.0229,
-    "rirBiasSd": 0.248,
-    "shortTimeRate": 0.0874,
-    "skipRating": 0.4939
-   },
-   "surcharges": {
-    "*": {
-     "capacity": 0.877,
-     "curveB": 1.2539,
-     "fatigueScale": 1.304,
-     "power": 1.2539,
-     "slope": 1.2539
-    },
-    "mu-back-squat-barre-basse": {
-     "capacity": 0.8202,
-     "curveB": 1.0996,
-     "fatigueScale": 1.6086,
-     "power": 1.0996,
-     "slope": 1.0996
-    },
-    "mu-developpe-couche-barre": {
-     "capacity": 0.8202,
-     "curveB": 1.0996,
-     "fatigueScale": 1.6086,
-     "power": 1.0996,
-     "slope": 1.0996
-    },
-    "mu-souleve-de-terre-conventionnel": {
-     "capacity": 0.8202,
-     "curveB": 1.0996,
-     "fatigueScale": 1.6086,
-     "power": 1.0996,
-     "slope": 1.0996
-    }
-   },
-   "u": [
-    0.952752,
-    0.133768,
-    0.638607,
-    0.941131,
-    0.98774,
-    0.447813,
-    0.14729,
-    0.422865,
-    0.049603,
-    0.149186,
-    0.829937,
-    0.403334,
-    0.195551,
-    0.021793,
-    0.516939,
-    0.314511,
-    0.291278,
-    0.226592,
-    0.897163,
-    0.758296,
-    0.061542,
-    0.667905,
-    0.963395
-   ]
-  },
-  {
-   "difficulte": 0.309512,
-   "echeance": true,
-   "echeances": [
-    68
-   ],
-   "fin_episodes": 61,
-   "generation": 2,
-   "id": "adv-fd0e1acc",
-   "key": "autres_03_powerlifter_competition",
-   "kind": "b",
-   "koach": {
-    "aggravations": 0,
-    "e1rm6": 0.092663,
-    "echecs": 0.001678,
-    "gain": 0.000242,
-    "par_graine": [
-     {
-      "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.064101,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.0,
-      "evenements": [
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        152.5,
-        174.862757,
-        0.872113
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        280.0,
-        307.574961,
-        0.910347
-       ]
-      ],
-      "faites": 63,
-      "gain": 0.000263,
-      "perf_a": 0.89123,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 0,
-      "violations": 0
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.121225,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.003356,
-      "evenements": [
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        77.5,
-        176.580565,
-        0.438893
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        167.5,
-        309.841736,
-        0.540599
-       ]
-      ],
-      "faites": 61,
-      "gain": 0.00022,
-      "perf_a": 0.489746,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 1,
-      "violations": 0
-     }
-    ],
-    "perf_a": 0.690488,
-    "perf_a_min": 0.489746,
-    "plantages": [],
-    "poussees": 0,
-    "violations": 0
-   },
-   "objectif_effectif": "a",
-   "parametres": {
-    "breakDays": 2,
-    "breakFrom": 0.0625,
-    "capacitePrincipaux": 1.1507,
-    "capaciteTous": 1.1157,
-    "courbePrincipaux": 1.2912,
-    "courbeTous": 0.8087,
-    "daySd": 0.0369,
-    "fatiguePrincipaux": 0.6606,
-    "fatigueTous": 0.8255,
-    "healthAnswerRate": 0.7117,
-    "illnessDays": 5,
-    "illnessFrom": 0.4478,
-    "lazy": 0.2953,
-    "missRate": 0.0519,
-    "painDays": 26,
-    "painFrom": 0.2251,
-    "painIntensity": 4,
-    "painZone": "knee",
-    "ratingNoise": 0.5138,
-    "rirBias": 0.6751,
-    "rirBiasSd": 0.29,
-    "shortTimeRate": 0.11,
-    "skipRating": 0.0326
-   },
-   "parent": "adv-21744adc",
-   "poids_corps": [],
-   "role": "pire",
-   "scenario": "reference",
-   "seeds": [
-    0,
-    1
-   ],
-   "spec": {
-    "breakDays": 2,
-    "breakFromDay": 10,
-    "daySd": 0.0369,
-    "healthAnswerRate": 0.7117,
-    "illnessDays": 5,
-    "illnessFromDay": 29,
-    "lazy": 0.2953,
-    "missRate": 0.0519,
-    "painDays": 26,
-    "painFromDay": 13,
-    "painIntensity": 4,
-    "painZone": "knee",
-    "ratingNoise": 0.5138,
-    "rirBias": 0.6751,
-    "rirBiasSd": 0.29,
-    "shortTimeRate": 0.11,
-    "skipRating": 0.0326
-   },
-   "surcharges": {
-    "*": {
-     "capacity": 1.1157,
-     "curveB": 0.8087,
-     "fatigueScale": 0.8255,
-     "power": 0.8087,
-     "slope": 0.8087
-    },
-    "mu-back-squat-barre-basse": {
-     "capacity": 1.1507,
-     "curveB": 1.2912,
-     "fatigueScale": 0.6606,
-     "power": 1.2912,
-     "slope": 1.2912
-    },
-    "mu-developpe-couche-barre": {
-     "capacity": 1.1507,
-     "curveB": 1.2912,
-     "fatigueScale": 0.6606,
-     "power": 1.2912,
-     "slope": 1.2912
-    },
-    "mu-souleve-de-terre-conventionnel": {
-     "capacity": 1.1507,
-     "curveB": 1.2912,
-     "fatigueScale": 0.6606,
-     "power": 1.2912,
-     "slope": 1.2912
-    }
-   },
-   "u": [
-    0.016931,
-    0.868507,
-    0.774116,
-    0.59053,
-    0.065287,
-    0.148317,
-    0.195422,
-    0.062497,
-    0.544513,
-    0.447842,
-    0.817476,
-    0.229959,
-    0.682349,
-    0.225128,
-    0.672982,
-    0.679709,
-    0.366515,
-    0.820362,
-    0.131518,
-    0.311726,
-    0.896619,
-    0.948251,
-    0.09406
-   ]
-  },
-  {
-   "difficulte": 0.190509,
-   "echeance": true,
-   "echeances": [
-    68
-   ],
-   "fin_episodes": 61,
-   "generation": 2,
-   "id": "adv-72fa5984",
+   "id": "adv-05506605",
    "key": "autres_03_powerlifter_competition",
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.043997,
-    "echecs": 0.019131,
-    "gain": -0.004006,
+    "e1rm6": 0.084416,
+    "echecs": 0.045619,
+    "gain": -0.005454,
     "par_graine": [
      {
       "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.047682,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 2,
-      "echeance": true,
-      "echecs": 0.022472,
-      "evenements": [
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        130.0,
-        142.087405,
-        0.91493
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        225.0,
-        244.665051,
-        0.919625
-       ]
-      ],
-      "faites": 54,
-      "gain": -0.003141,
-      "perf_a": 0.917277,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 0,
-      "violations": 0
-     },
-     {
-      "aggravations": 0,
       "codes_violations": {
-       "volume_trop_vite": 2
+       "volume_trop_vite": 1
       },
-      "e1rm6": 0.040312,
+      "e1rm6": 0.081189,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.015789,
+      "echecs": 0.056047,
       "evenements": [
        [
-        "mu-developpe-couche-barre",
+        "mu-back-squat-barre-basse",
         "loaded",
-        95.0,
-        144.343788,
-        0.658151
+        192.5,
+        257.998645,
+        0.746128
        ],
        [
         "mu-souleve-de-terre-conventionnel",
         "loaded",
-        185.0,
-        248.236113,
-        0.745258
+        245.0,
+        301.738377,
+        0.811962
        ]
       ],
-      "faites": 43,
-      "gain": -0.00487,
-      "perf_a": 0.701705,
+      "faites": 39,
+      "gain": -0.005737,
+      "perf_a": 0.779045,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 64,
       "seed": 1,
-      "violations": 2
+      "violations": 1
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.087642,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 2,
+      "echeance": true,
+      "echecs": 0.035191,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        207.5,
+        239.546279,
+        0.866221
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        242.5,
+        292.411163,
+        0.829312
+       ]
+      ],
+      "faites": 40,
+      "gain": -0.00517,
+      "perf_a": 0.847766,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 2,
+      "violations": 0
      }
     ],
-    "perf_a": 0.809491,
-    "perf_a_min": 0.701705,
+    "perf_a": 0.813406,
+    "perf_a_min": 0.779045,
     "plantages": [],
     "poussees": 0,
-    "violations": 2
+    "violations": 1
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 10,
-    "breakFrom": 0.0034,
-    "capacitePrincipaux": 0.9685,
-    "capaciteTous": 1.1698,
-    "courbePrincipaux": 1.06,
-    "courbeTous": 0.9378,
-    "daySd": 0.0145,
-    "fatiguePrincipaux": 0.953,
-    "fatigueTous": 0.7431,
-    "healthAnswerRate": 0.9726,
-    "illnessDays": 9,
-    "illnessFrom": 0.593,
-    "lazy": 0.0283,
-    "missRate": 0.242,
-    "painDays": 28,
-    "painFrom": 0.1098,
-    "painIntensity": 6,
-    "painZone": "knee",
-    "ratingNoise": 0.9677,
-    "rirBias": 0.3469,
-    "rirBiasSd": 0.1882,
-    "shortTimeRate": 0.1477,
-    "skipRating": 0.0623
+    "breakDays": 11,
+    "breakFrom": 0.3947,
+    "capacitePrincipaux": 1.1809,
+    "capaciteTous": 0.8201,
+    "courbePrincipaux": 1.238,
+    "courbeTous": 0.8392,
+    "daySd": 0.0174,
+    "fatiguePrincipaux": 1.2162,
+    "fatigueTous": 1.5164,
+    "healthAnswerRate": 0.873,
+    "illnessDays": 8,
+    "illnessFrom": 0.8969,
+    "lazy": 0.3636,
+    "missRate": 0.3377,
+    "painDays": 34,
+    "painFrom": 0.4416,
+    "painIntensity": 3,
+    "painZone": "wrist_hand",
+    "ratingNoise": 0.7776,
+    "rirBias": -0.0972,
+    "rirBiasSd": 0.24,
+    "shortTimeRate": 0.0888,
+    "skipRating": 0.3875
    },
-   "parent": "adv-82befdb9",
+   "parent": "adv-e7e48616",
    "poids_corps": [],
    "role": "pire",
    "scenario": "reference",
    "seeds": [
-    0,
-    1
+    1,
+    2
    ],
    "spec": {
-    "breakDays": 10,
-    "breakFromDay": 7,
-    "daySd": 0.0145,
-    "healthAnswerRate": 0.9726,
-    "illnessDays": 9,
-    "illnessFromDay": 34,
-    "lazy": 0.0283,
-    "missRate": 0.242,
-    "painDays": 28,
-    "painFromDay": 9,
-    "painIntensity": 6,
-    "painZone": "knee",
-    "ratingNoise": 0.9677,
-    "rirBias": 0.3469,
-    "rirBiasSd": 0.1882,
-    "shortTimeRate": 0.1477,
-    "skipRating": 0.0623
+    "breakDays": 11,
+    "breakFromDay": 24,
+    "daySd": 0.0174,
+    "healthAnswerRate": 0.873,
+    "illnessDays": 8,
+    "illnessFromDay": 49,
+    "lazy": 0.3636,
+    "missRate": 0.3377,
+    "painDays": 34,
+    "painFromDay": 16,
+    "painIntensity": 3,
+    "painZone": "wrist_hand",
+    "ratingNoise": 0.7776,
+    "rirBias": -0.0972,
+    "rirBiasSd": 0.24,
+    "shortTimeRate": 0.0888,
+    "skipRating": 0.3875
    },
    "surcharges": {
     "*": {
-     "capacity": 1.1698,
-     "curveB": 0.9378,
-     "fatigueScale": 0.7431,
-     "power": 0.9378,
-     "slope": 0.9378
+     "capacity": 0.8201,
+     "curveB": 0.8392,
+     "fatigueScale": 1.5164,
+     "power": 0.8392,
+     "slope": 0.8392
     },
     "mu-back-squat-barre-basse": {
-     "capacity": 0.9685,
-     "curveB": 1.06,
-     "fatigueScale": 0.953,
-     "power": 1.06,
-     "slope": 1.06
+     "capacity": 1.1809,
+     "curveB": 1.238,
+     "fatigueScale": 1.2162,
+     "power": 1.238,
+     "slope": 1.238
     },
     "mu-developpe-couche-barre": {
-     "capacity": 0.9685,
-     "curveB": 1.06,
-     "fatigueScale": 0.953,
-     "power": 1.06,
-     "slope": 1.06
+     "capacity": 1.1809,
+     "curveB": 1.238,
+     "fatigueScale": 1.2162,
+     "power": 1.238,
+     "slope": 1.238
     },
     "mu-souleve-de-terre-conventionnel": {
-     "capacity": 0.9685,
-     "curveB": 1.06,
-     "fatigueScale": 0.953,
-     "power": 1.06,
-     "slope": 1.06
+     "capacity": 1.1809,
+     "curveB": 1.238,
+     "fatigueScale": 1.2162,
+     "power": 1.238,
+     "slope": 1.238
     }
    },
    "u": [
-    0.410298,
-    0.523058,
-    0.44576,
-    0.056568,
-    0.124608,
-    0.691322,
-    0.700723,
-    0.003373,
-    0.844541,
-    0.592958,
-    0.743704,
-    0.729628,
-    0.728215,
-    0.109792,
-    0.093507,
-    0.969595,
-    0.492226,
-    0.937214,
-    0.39017,
-    0.209017,
-    0.471427,
-    0.603911,
-    0.451982
+    0.274418,
+    0.055526,
+    0.612778,
+    0.727278,
+    0.77501,
+    0.964763,
+    0.758628,
+    0.394747,
+    0.763239,
+    0.896862,
+    0.451622,
+    0.138174,
+    0.953947,
+    0.441553,
+    0.204457,
+    0.858853,
+    0.296058,
+    0.061165,
+    0.196235,
+    0.905737,
+    0.960427,
+    0.874834,
+    0.69023
    ]
   },
   {
@@ -4971,113 +5132,321 @@
    ]
   },
   {
-   "difficulte": 0.066302,
+   "difficulte": 0.12731,
    "echeance": true,
    "echeances": [
     82
    ],
    "fin_episodes": 75,
-   "generation": 0,
-   "id": "adv-59eb8954",
+   "generation": 2,
+   "id": "adv-c1895f02",
    "key": "street_07_avance_streetlifting_competition",
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.063532,
-    "echecs": 0.00752,
-    "gain": 6.4e-05,
+    "e1rm6": 0.061673,
+    "echecs": 0.006621,
+    "gain": -0.000392,
     "par_graine": [
      {
       "aggravations": 0,
       "codes_violations": {
-       "volume_trop_vite": 1
+       "volume_trop_vite": 4
       },
-      "e1rm6": 0.029938,
+      "e1rm6": 0.027882,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 4,
       "echeance": true,
-      "echecs": 0.00882,
+      "echecs": 0.00597,
       "evenements": [
-       [
-        "sl-muscle-up-leste",
-        "loaded",
-        101.35,
-        114.147499,
-        0.887886
-       ],
        [
         "sl-traction-lestee",
         "loaded",
-        151.35,
-        154.102527,
-        0.982138
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        161.8,
-        174.604454,
-        0.926666
+        135.1,
+        144.301105,
+        0.936237
        ],
        [
         "sl-squat-competition",
         "loaded",
-        162.5,
-        174.851206,
-        0.929362
+        150.0,
+        161.975853,
+        0.926064
        ]
       ],
-      "faites": 71,
-      "gain": -4e-06,
-      "perf_a": 0.931513,
+      "faites": 61,
+      "gain": -0.000597,
+      "perf_a": 0.93115,
       "plantage": null,
       "poussees": 0,
       "present": true,
       "prevues": 80,
       "seed": 0,
-      "violations": 1
+      "violations": 4
      },
      {
       "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.097126,
+      "codes_violations": {
+       "volume_trop_vite": 5
+      },
+      "e1rm6": 0.095465,
       "e1rm_famille": "loadedMain",
-      "e1rm_n": 4,
+      "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.006219,
+      "echecs": 0.007273,
       "evenements": [
-       [
-        "sl-muscle-up-leste",
-        "loaded",
-        97.6,
-        102.089889,
-        0.95602
-       ],
        [
         "sl-traction-lestee",
         "loaded",
-        151.35,
-        169.181977,
-        0.894599
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        178.05,
-        182.899604,
-        0.973485
+        128.85,
+        160.807551,
+        0.801268
        ],
        [
         "sl-squat-competition",
         "loaded",
-        165.0,
-        179.458469,
-        0.919433
+        142.5,
+        172.269784,
+        0.827191
        ]
       ],
-      "faites": 62,
-      "gain": 0.000131,
-      "perf_a": 0.935884,
+      "faites": 52,
+      "gain": -0.000187,
+      "perf_a": 0.81423,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 80,
+      "seed": 1,
+      "violations": 5
+     }
+    ],
+    "perf_a": 0.87269,
+    "perf_a_min": 0.81423,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 9
+   },
+   "objectif_effectif": "a",
+   "parametres": {
+    "breakDays": 14,
+    "breakFrom": 0.7833,
+    "capacitePrincipaux": 1.0658,
+    "capaciteTous": 0.8031,
+    "courbePrincipaux": 1.2879,
+    "courbeTous": 0.8286,
+    "daySd": 0.0292,
+    "fatiguePrincipaux": 0.8218,
+    "fatigueTous": 0.7637,
+    "healthAnswerRate": 0.7954,
+    "illnessDays": 2,
+    "illnessFrom": 0.744,
+    "lazy": 0.4011,
+    "missRate": 0.2826,
+    "painDays": 24,
+    "painFrom": 0.1919,
+    "painIntensity": 3,
+    "painZone": "wrist_hand",
+    "ratingNoise": 2.2331,
+    "rirBias": 0.6408,
+    "rirBiasSd": 0.1557,
+    "shortTimeRate": 0.1823,
+    "skipRating": 0.1142
+   },
+   "parent": "adv-b9a7e2f3",
+   "poids_corps": [
+    "sl-dips-leste",
+    "sl-muscle-up-leste",
+    "sl-traction-lestee",
+    "sl-traction-lestee-pause-bas"
+   ],
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "spec": {
+    "breakDays": 14,
+    "breakFromDay": 50,
+    "daySd": 0.0292,
+    "healthAnswerRate": 0.7954,
+    "illnessDays": 2,
+    "illnessFromDay": 56,
+    "lazy": 0.4011,
+    "missRate": 0.2826,
+    "painDays": 24,
+    "painFromDay": 15,
+    "painIntensity": 3,
+    "painZone": "wrist_hand",
+    "ratingNoise": 2.2331,
+    "rirBias": 0.6408,
+    "rirBiasSd": 0.1557,
+    "shortTimeRate": 0.1823,
+    "skipRating": 0.1142
+   },
+   "surcharges": {
+    "*": {
+     "capacity": 0.8031,
+     "curveB": 0.8286,
+     "fatigueScale": 0.7637,
+     "power": 0.8286,
+     "slope": 0.8286
+    },
+    "sl-dips-leste": {
+     "capacity": 1.0658,
+     "curveB": 1.2879,
+     "fatigueScale": 0.8218,
+     "power": 1.2879,
+     "slope": 1.2879
+    },
+    "sl-muscle-up-leste": {
+     "capacity": 1.0658,
+     "curveB": 1.2879,
+     "fatigueScale": 0.8218,
+     "power": 1.2879,
+     "slope": 1.2879
+    },
+    "sl-squat-competition": {
+     "capacity": 1.0658,
+     "curveB": 1.2879,
+     "fatigueScale": 0.8218,
+     "power": 1.2879,
+     "slope": 1.2879
+    },
+    "sl-traction-lestee": {
+     "capacity": 1.0658,
+     "curveB": 1.2879,
+     "fatigueScale": 0.8218,
+     "power": 1.2879,
+     "slope": 1.2879
+    },
+    "sl-traction-lestee-pause-bas": {
+     "capacity": 0.92,
+     "curveB": 0.8286,
+     "fatigueScale": 0.7637,
+     "power": 0.8286,
+     "slope": 0.8286
+    }
+   },
+   "u": [
+    0.929839,
+    0.832455,
+    0.341058,
+    0.802265,
+    0.228358,
+    0.807478,
+    0.985913,
+    0.783265,
+    0.268371,
+    0.744007,
+    0.437571,
+    0.178114,
+    0.612112,
+    0.191911,
+    0.527899,
+    0.772645,
+    0.607558,
+    0.009492,
+    0.173894,
+    0.235681,
+    0.70741,
+    0.943868,
+    0.307285
+   ]
+  },
+  {
+   "difficulte": 0.118939,
+   "echeance": true,
+   "echeances": [
+    82
+   ],
+   "fin_episodes": 75,
+   "generation": 3,
+   "id": "adv-a36ca6e4",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.073728,
+    "echecs": 0.002134,
+    "gain": 0.000273,
+    "par_graine": [
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.045968,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 4,
+      "echeance": true,
+      "echecs": 0.003168,
+      "evenements": [
+       [
+        "sl-muscle-up-leste",
+        "loaded",
+        107.6,
+        118.069705,
+        0.911326
+       ],
+       [
+        "sl-traction-lestee",
+        "loaded",
+        145.1,
+        162.642896,
+        0.892139
+       ],
+       [
+        "sl-dips-leste",
+        "loaded",
+        161.8,
+        184.36371,
+        0.877613
+       ]
+      ],
+      "faites": 77,
+      "gain": 0.000276,
+      "perf_a": 0.893693,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 80,
+      "seed": 0,
+      "violations": 0
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.101487,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 4,
+      "echeance": true,
+      "echecs": 0.0011,
+      "evenements": [
+       [
+        "sl-muscle-up-leste",
+        "loaded",
+        101.35,
+        109.537666,
+        0.925253
+       ],
+       [
+        "sl-traction-lestee",
+        "loaded",
+        150.1,
+        185.65358,
+        0.808495
+       ],
+       [
+        "sl-dips-leste",
+        "loaded",
+        175.55,
+        201.425195,
+        0.871539
+       ]
+      ],
+      "faites": 74,
+      "gain": 0.00027,
+      "perf_a": 0.868429,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -5086,867 +5455,642 @@
       "violations": 0
      }
     ],
-    "perf_a": 0.933698,
-    "perf_a_min": 0.931513,
+    "perf_a": 0.881061,
+    "perf_a_min": 0.868429,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "objectif_effectif": "a",
+   "parametres": {
+    "breakDays": 2,
+    "breakFrom": 0.2661,
+    "capacitePrincipaux": 1.1967,
+    "capaciteTous": 0.8589,
+    "courbePrincipaux": 0.9943,
+    "courbeTous": 0.8414,
+    "daySd": 0.0237,
+    "fatiguePrincipaux": 1.0529,
+    "fatigueTous": 1.3932,
+    "healthAnswerRate": 0.9247,
+    "illnessDays": 9,
+    "illnessFrom": 0.8529,
+    "lazy": 0.4174,
+    "missRate": 0.0905,
+    "painDays": 20,
+    "painFrom": 0.7096,
+    "painIntensity": 3,
+    "painZone": "hip",
+    "ratingNoise": 0.8186,
+    "rirBias": 0.6703,
+    "rirBiasSd": 0.1903,
+    "shortTimeRate": 0.1123,
+    "skipRating": 0.1916
+   },
+   "parent": "adv-80df39f8",
+   "poids_corps": [
+    "sl-dips-leste",
+    "sl-muscle-up-leste",
+    "sl-traction-lestee",
+    "sl-traction-lestee-pause-bas"
+   ],
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "spec": {
+    "breakDays": 2,
+    "breakFromDay": 24,
+    "daySd": 0.0237,
+    "healthAnswerRate": 0.9247,
+    "illnessDays": 9,
+    "illnessFromDay": 58,
+    "lazy": 0.4174,
+    "missRate": 0.0905,
+    "painDays": 20,
+    "painFromDay": 41,
+    "painIntensity": 3,
+    "painZone": "hip",
+    "ratingNoise": 0.8186,
+    "rirBias": 0.6703,
+    "rirBiasSd": 0.1903,
+    "shortTimeRate": 0.1123,
+    "skipRating": 0.1916
+   },
+   "surcharges": {
+    "*": {
+     "capacity": 0.8589,
+     "curveB": 0.8414,
+     "fatigueScale": 1.3932,
+     "power": 0.8414,
+     "slope": 0.8414
+    },
+    "sl-dips-leste": {
+     "capacity": 1.1967,
+     "curveB": 0.9943,
+     "fatigueScale": 1.0529,
+     "power": 0.9943,
+     "slope": 0.9943
+    },
+    "sl-muscle-up-leste": {
+     "capacity": 1.1967,
+     "curveB": 0.9943,
+     "fatigueScale": 1.0529,
+     "power": 0.9943,
+     "slope": 0.9943
+    },
+    "sl-squat-competition": {
+     "capacity": 1.1967,
+     "curveB": 0.9943,
+     "fatigueScale": 1.0529,
+     "power": 0.9943,
+     "slope": 0.9943
+    },
+    "sl-traction-lestee": {
+     "capacity": 1.1967,
+     "curveB": 0.9943,
+     "fatigueScale": 1.0529,
+     "power": 0.9943,
+     "slope": 0.9943
+    },
+    "sl-traction-lestee-pause-bas": {
+     "capacity": 0.92,
+     "curveB": 0.8414,
+     "fatigueScale": 1.3932,
+     "power": 0.8414,
+     "slope": 0.8414
+    }
+   },
+   "u": [
+    0.306285,
+    0.863486,
+    0.452505,
+    0.834771,
+    0.38316,
+    0.25856,
+    0.140644,
+    0.266132,
+    0.896074,
+    0.852862,
+    0.923762,
+    0.115668,
+    0.458309,
+    0.709629,
+    0.396949,
+    0.916335,
+    0.374192,
+    0.175331,
+    0.200686,
+    0.822976,
+    0.993133,
+    0.492121,
+    0.54937
+   ]
+  },
+  {
+   "confirme": true,
+   "difficulte": 0.082818,
+   "echeance": true,
+   "echeances": [
+    82
+   ],
+   "fin_episodes": 75,
+   "generation": 1,
+   "id": "adv-aa17a101",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.049733,
+    "echecs": 0.039731,
+    "gain": -0.004012,
+    "par_graine": [
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.035704,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 4,
+      "echeance": true,
+      "echecs": 0.016927,
+      "evenements": [
+       [
+        "sl-traction-lestee",
+        "loaded",
+        120.1,
+        121.783695,
+        0.986175
+       ],
+       [
+        "sl-squat-competition",
+        "loaded",
+        125.0,
+        140.915026,
+        0.887059
+       ]
+      ],
+      "faites": 66,
+      "gain": -0.003836,
+      "perf_a": 0.936617,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 80,
+      "seed": 0,
+      "violations": 0
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.061056,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 4,
+      "echeance": true,
+      "echecs": 0.083861,
+      "evenements": [
+       [
+        "sl-traction-lestee",
+        "loaded",
+        125.1,
+        142.572433,
+        0.877449
+       ],
+       [
+        "sl-squat-competition",
+        "loaded",
+        132.5,
+        152.58506,
+        0.868368
+       ]
+      ],
+      "faites": 55,
+      "gain": -0.004171,
+      "perf_a": 0.872908,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 80,
+      "seed": 1,
+      "violations": 0
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.052439,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.018405,
+      "evenements": [
+       [
+        "sl-traction-lestee",
+        "loaded",
+        110.1,
+        114.724986,
+        0.959686
+       ],
+       [
+        "sl-squat-competition",
+        "loaded",
+        120.0,
+        129.820252,
+        0.924355
+       ]
+      ],
+      "faites": 61,
+      "gain": -0.00403,
+      "perf_a": 0.942021,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 80,
+      "seed": 2,
+      "violations": 0
+     }
+    ],
+    "perf_a": 0.917182,
+    "perf_a_min": 0.872908,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "objectif_effectif": "a",
+   "parametres": {
+    "breakDays": 12,
+    "breakFrom": 0.2924,
+    "capacitePrincipaux": 0.9433,
+    "capaciteTous": 0.8209,
+    "courbePrincipaux": 1.3257,
+    "courbeTous": 1.1283,
+    "daySd": 0.0149,
+    "fatiguePrincipaux": 0.8461,
+    "fatigueTous": 1.0721,
+    "healthAnswerRate": 0.5941,
+    "illnessDays": 3,
+    "illnessFrom": 0.8987,
+    "lazy": 0.3482,
+    "missRate": 0.2334,
+    "painDays": 19,
+    "painFrom": 0.0079,
+    "painIntensity": 3,
+    "painZone": "wrist_hand",
+    "ratingNoise": 1.6247,
+    "rirBias": 0.7476,
+    "rirBiasSd": 0.0699,
+    "shortTimeRate": 0.1821,
+    "skipRating": 0.1177
+   },
+   "parent": "adv-1987e7b6",
+   "poids_corps": [
+    "sl-dips-leste",
+    "sl-muscle-up-leste",
+    "sl-traction-lestee",
+    "sl-traction-lestee-pause-bas"
+   ],
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "spec": {
+    "breakDays": 12,
+    "breakFromDay": 23,
+    "daySd": 0.0149,
+    "healthAnswerRate": 0.5941,
+    "illnessDays": 3,
+    "illnessFromDay": 66,
+    "lazy": 0.3482,
+    "missRate": 0.2334,
+    "painDays": 19,
+    "painFromDay": 7,
+    "painIntensity": 3,
+    "painZone": "wrist_hand",
+    "ratingNoise": 1.6247,
+    "rirBias": 0.7476,
+    "rirBiasSd": 0.0699,
+    "shortTimeRate": 0.1821,
+    "skipRating": 0.1177
+   },
+   "surcharges": {
+    "*": {
+     "capacity": 0.8209,
+     "curveB": 1.1283,
+     "fatigueScale": 1.0721,
+     "power": 1.1283,
+     "slope": 1.1283
+    },
+    "sl-dips-leste": {
+     "capacity": 0.9433,
+     "curveB": 1.3257,
+     "fatigueScale": 0.8461,
+     "power": 1.3257,
+     "slope": 1.3257
+    },
+    "sl-muscle-up-leste": {
+     "capacity": 0.9433,
+     "curveB": 1.3257,
+     "fatigueScale": 0.8461,
+     "power": 1.3257,
+     "slope": 1.3257
+    },
+    "sl-squat-competition": {
+     "capacity": 0.9433,
+     "curveB": 1.3257,
+     "fatigueScale": 0.8461,
+     "power": 1.3257,
+     "slope": 1.3257
+    },
+    "sl-traction-lestee": {
+     "capacity": 0.9433,
+     "curveB": 1.3257,
+     "fatigueScale": 0.8461,
+     "power": 1.3257,
+     "slope": 1.3257
+    },
+    "sl-traction-lestee-pause-bas": {
+     "capacity": 0.92,
+     "curveB": 1.1283,
+     "fatigueScale": 1.0721,
+     "power": 1.1283,
+     "slope": 1.1283
+    }
+   },
+   "u": [
+    0.732209,
+    0.944827,
+    0.064347,
+    0.696308,
+    0.23543,
+    0.666825,
+    0.841125,
+    0.292407,
+    0.288764,
+    0.898711,
+    0.499618,
+    0.126185,
+    0.447056,
+    0.007918,
+    0.110204,
+    0.549011,
+    0.607151,
+    0.063646,
+    0.712892,
+    0.56704,
+    0.406345,
+    0.994318,
+    0.335797
+   ]
+  },
+  {
+   "difficulte": 0.107533,
+   "echeance": true,
+   "echeances": [
+    68
+   ],
+   "fin_episodes": 61,
+   "generation": 0,
+   "id": "adv-cce757f6",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.02554,
+    "echecs": 0.004425,
+    "gain": -0.000528,
+    "par_graine": [
+     {
+      "aggravations": 0,
+      "codes_violations": {
+       "volume_trop_vite": 1
+      },
+      "e1rm6": 0.032744,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.0,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        205.0,
+        242.236792,
+        0.846279
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        272.5,
+        294.843755,
+        0.924218
+       ]
+      ],
+      "faites": 39,
+      "gain": -0.000564,
+      "perf_a": 0.885249,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 1,
+      "violations": 1
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.018336,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.00885,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        217.5,
+        228.884157,
+        0.950262
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        242.5,
+        285.593769,
+        0.849108
+       ]
+      ],
+      "faites": 42,
+      "gain": -0.000493,
+      "perf_a": 0.899685,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 2,
+      "violations": 0
+     }
+    ],
+    "perf_a": 0.892467,
+    "perf_a_min": 0.885249,
     "plantages": [],
     "poussees": 0,
     "violations": 1
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 5,
-    "breakFrom": 0.5029,
-    "capacitePrincipaux": 1.1474,
-    "capaciteTous": 1.0843,
-    "courbePrincipaux": 1.102,
-    "courbeTous": 0.9936,
-    "daySd": 0.0431,
-    "fatiguePrincipaux": 0.6239,
-    "fatigueTous": 1.5458,
-    "healthAnswerRate": 0.3668,
-    "illnessDays": 0,
-    "illnessFrom": 0.4804,
-    "lazy": 0.2736,
-    "missRate": 0.1627,
-    "painDays": 7,
-    "painFrom": 0.6645,
-    "painIntensity": 5,
-    "painZone": null,
-    "ratingNoise": 2.0108,
-    "rirBias": 0.757,
-    "rirBiasSd": 0.1964,
-    "shortTimeRate": 0.1252,
-    "skipRating": 0.3473
-   },
-   "poids_corps": [
-    "sl-dips-leste",
-    "sl-muscle-up-leste",
-    "sl-traction-lestee",
-    "sl-traction-lestee-pause-bas"
-   ],
-   "role": "pire",
-   "scenario": "reference",
-   "seeds": [
-    0,
-    1
-   ],
-   "spec": {
-    "breakDays": 5,
-    "breakFromDay": 39,
-    "daySd": 0.0431,
-    "healthAnswerRate": 0.3668,
-    "lazy": 0.2736,
-    "missRate": 0.1627,
-    "ratingNoise": 2.0108,
-    "rirBias": 0.757,
-    "rirBiasSd": 0.1964,
-    "shortTimeRate": 0.1252,
-    "skipRating": 0.3473
-   },
-   "surcharges": {
-    "*": {
-     "capacity": 1.0843,
-     "curveB": 0.9936,
-     "fatigueScale": 1.5458,
-     "power": 0.9936,
-     "slope": 0.9936
-    },
-    "sl-dips-leste": {
-     "capacity": 1.1474,
-     "curveB": 1.102,
-     "fatigueScale": 0.6239,
-     "power": 1.102,
-     "slope": 1.102
-    },
-    "sl-muscle-up-leste": {
-     "capacity": 1.1474,
-     "curveB": 1.102,
-     "fatigueScale": 0.6239,
-     "power": 1.102,
-     "slope": 1.102
-    },
-    "sl-squat-competition": {
-     "capacity": 1.1474,
-     "curveB": 1.102,
-     "fatigueScale": 0.6239,
-     "power": 1.102,
-     "slope": 1.102
-    },
-    "sl-traction-lestee": {
-     "capacity": 1.1474,
-     "curveB": 1.102,
-     "fatigueScale": 0.6239,
-     "power": 1.102,
-     "slope": 1.102
-    }
-   },
-   "u": [
-    0.864704,
-    0.954687,
-    0.472397,
-    0.547137,
-    0.694557,
-    0.464808,
-    0.34129,
-    0.502864,
-    0.01532,
-    0.480362,
-    0.084464,
-    0.502198,
-    0.00251,
-    0.664518,
-    0.768928,
-    0.296443,
-    0.417447,
-    0.750058,
-    0.490995,
-    0.924534,
-    0.889557,
-    0.671776,
-    0.038212
-   ]
-  },
-  {
-   "confirme": true,
-   "difficulte": 0.22104,
-   "echeance": true,
-   "echeances": [
-    82
-   ],
-   "fin_episodes": 75,
-   "generation": 1,
-   "id": "adv-fa5abfed",
-   "key": "street_07_avance_streetlifting_competition",
-   "kind": "b",
-   "koach": {
-    "aggravations": 0,
-    "e1rm6": 0.072267,
-    "echecs": 0.005565,
-    "gain": -0.000105,
-    "par_graine": [
-     {
-      "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 5
-      },
-      "e1rm6": 0.052022,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 4,
-      "echeance": true,
-      "echecs": 0.005579,
-      "evenements": [
-       [
-        "sl-muscle-up-leste",
-        "loaded",
-        103.85,
-        112.124342,
-        0.926204
-       ],
-       [
-        "sl-traction-lestee",
-        "loaded",
-        143.85,
-        148.237179,
-        0.970404
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        0.0,
-        167.667465,
-        0.0
-       ]
-      ],
-      "faites": 70,
-      "gain": -0.000118,
-      "perf_a": 0.632203,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 80,
-      "seed": 0,
-      "violations": 5
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 3
-      },
-      "e1rm6": 0.125764,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 4,
-      "echeance": true,
-      "echecs": 0.008052,
-      "evenements": [
-       [
-        "sl-muscle-up-leste",
-        "loaded",
-        87.6,
-        98.413867,
-        0.890118
-       ],
-       [
-        "sl-traction-lestee",
-        "loaded",
-        98.85,
-        163.367621,
-        0.605077
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        129.3,
-        174.689111,
-        0.740172
-       ]
-      ],
-      "faites": 60,
-      "gain": 5.7e-05,
-      "perf_a": 0.745123,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 80,
-      "seed": 1,
-      "violations": 3
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 4
-      },
-      "e1rm6": 0.039016,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 4,
-      "echeance": true,
-      "echecs": 0.003063,
-      "evenements": [
-       [
-        "sl-muscle-up-leste",
-        "loaded",
-        100.1,
-        103.377992,
-        0.968291
-       ],
-       [
-        "sl-traction-lestee",
-        "loaded",
-        138.85,
-        150.024237,
-        0.925517
-       ],
-       [
-        "sl-dips-leste",
-        "loaded",
-        179.3,
-        182.05674,
-        0.984858
-       ]
-      ],
-      "faites": 65,
-      "gain": -0.000253,
-      "perf_a": 0.959555,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 80,
-      "seed": 2,
-      "violations": 4
-     }
-    ],
-    "perf_a": 0.77896,
-    "perf_a_min": 0.632203,
-    "plantages": [],
-    "poussees": 0,
-    "violations": 12
-   },
-   "objectif_effectif": "a",
-   "parametres": {
-    "breakDays": 5,
-    "breakFrom": 0.7713,
-    "capacitePrincipaux": 1.1107,
-    "capaciteTous": 0.9159,
-    "courbePrincipaux": 0.813,
-    "courbeTous": 0.8348,
-    "daySd": 0.0617,
-    "fatiguePrincipaux": 0.8622,
-    "fatigueTous": 0.7781,
-    "healthAnswerRate": 0.8574,
-    "illnessDays": 0,
-    "illnessFrom": 0.0409,
-    "lazy": 0.2377,
-    "missRate": 0.2092,
-    "painDays": 23,
-    "painFrom": 0.1626,
+    "breakDays": 12,
+    "breakFrom": 0.0797,
+    "capacitePrincipaux": 1.0981,
+    "capaciteTous": 0.8384,
+    "courbePrincipaux": 0.9388,
+    "courbeTous": 1.1226,
+    "daySd": 0.0407,
+    "fatiguePrincipaux": 0.8247,
+    "fatigueTous": 1.1278,
+    "healthAnswerRate": 0.5878,
+    "illnessDays": 9,
+    "illnessFrom": 0.7588,
+    "lazy": 0.2389,
+    "missRate": 0.3238,
+    "painDays": 8,
+    "painFrom": 0.929,
     "painIntensity": 7,
-    "painZone": "hip",
-    "ratingNoise": 2.0217,
-    "rirBias": 0.7373,
-    "rirBiasSd": 0.135,
-    "shortTimeRate": 0.1559,
-    "skipRating": 0.2657
+    "painZone": "shoulder",
+    "ratingNoise": 0.5515,
+    "rirBias": 0.5917,
+    "rirBiasSd": 0.2662,
+    "shortTimeRate": 0.1954,
+    "skipRating": 0.1472
    },
-   "parent": "adv-6c342c24",
-   "poids_corps": [
-    "sl-dips-leste",
-    "sl-muscle-up-leste",
-    "sl-traction-lestee",
-    "sl-traction-lestee-pause-bas"
-   ],
+   "poids_corps": [],
    "role": "pire",
    "scenario": "reference",
    "seeds": [
-    0,
     1,
     2
    ],
    "spec": {
-    "breakDays": 5,
-    "breakFromDay": 56,
-    "daySd": 0.0617,
-    "healthAnswerRate": 0.8574,
-    "lazy": 0.2377,
-    "missRate": 0.2092,
-    "painDays": 23,
-    "painFromDay": 14,
+    "breakDays": 12,
+    "breakFromDay": 10,
+    "daySd": 0.0407,
+    "healthAnswerRate": 0.5878,
+    "illnessDays": 9,
+    "illnessFromDay": 41,
+    "lazy": 0.2389,
+    "missRate": 0.3238,
+    "painDays": 8,
+    "painFromDay": 50,
     "painIntensity": 7,
-    "painZone": "hip",
-    "ratingNoise": 2.0217,
-    "rirBias": 0.7373,
-    "rirBiasSd": 0.135,
-    "shortTimeRate": 0.1559,
-    "skipRating": 0.2657
+    "painZone": "shoulder",
+    "ratingNoise": 0.5515,
+    "rirBias": 0.5917,
+    "rirBiasSd": 0.2662,
+    "shortTimeRate": 0.1954,
+    "skipRating": 0.1472
    },
    "surcharges": {
     "*": {
-     "capacity": 0.9159,
-     "curveB": 0.8348,
-     "fatigueScale": 0.7781,
-     "power": 0.8348,
-     "slope": 0.8348
+     "capacity": 0.8384,
+     "curveB": 1.1226,
+     "fatigueScale": 1.1278,
+     "power": 1.1226,
+     "slope": 1.1226
     },
-    "sl-dips-leste": {
-     "capacity": 1.1107,
-     "curveB": 0.813,
-     "fatigueScale": 0.8622,
-     "power": 0.813,
-     "slope": 0.813
+    "mu-back-squat-barre-basse": {
+     "capacity": 1.0981,
+     "curveB": 0.9388,
+     "fatigueScale": 0.8247,
+     "power": 0.9388,
+     "slope": 0.9388
     },
-    "sl-muscle-up-leste": {
-     "capacity": 1.1107,
-     "curveB": 0.813,
-     "fatigueScale": 0.8622,
-     "power": 0.813,
-     "slope": 0.813
+    "mu-developpe-couche-barre": {
+     "capacity": 1.0981,
+     "curveB": 0.9388,
+     "fatigueScale": 0.8247,
+     "power": 0.9388,
+     "slope": 0.9388
     },
-    "sl-squat-competition": {
-     "capacity": 1.1107,
-     "curveB": 0.813,
-     "fatigueScale": 0.8622,
-     "power": 0.813,
-     "slope": 0.813
-    },
-    "sl-traction-lestee": {
-     "capacity": 1.1107,
-     "curveB": 0.813,
-     "fatigueScale": 0.8622,
-     "power": 0.813,
-     "slope": 0.813
-    },
-    "sl-traction-lestee-pause-bas": {
-     "capacity": 0.92,
-     "curveB": 0.8348,
-     "fatigueScale": 0.7781,
-     "power": 0.8348,
-     "slope": 0.8348
+    "mu-souleve-de-terre-conventionnel": {
+     "capacity": 1.0981,
+     "curveB": 0.9388,
+     "fatigueScale": 0.8247,
+     "power": 0.9388,
+     "slope": 0.9388
     }
    },
    "u": [
-    0.868073,
-    0.934044,
-    0.274251,
-    0.47545,
-    0.531391,
-    0.597836,
-    0.340803,
-    0.771277,
-    0.063318,
-    0.040926,
-    0.891051,
-    0.913184,
-    0.579728,
-    0.162573,
-    0.991802,
-    0.841515,
-    0.519708,
-    0.333769,
-    0.186983,
-    0.253982,
-    0.809243,
-    0.140899,
-    0.354202
+    0.060939,
+    0.780718,
+    0.697466,
+    0.477807,
+    0.294463,
+    0.92521,
+    0.857,
+    0.079699,
+    0.84263,
+    0.758787,
+    0.251566,
+    0.97273,
+    0.051949,
+    0.929036,
+    0.733966,
+    0.54201,
+    0.651226,
+    0.115689,
+    0.704118,
+    0.616485,
+    0.781053,
+    0.391907,
+    0.310727
    ]
   },
   {
-   "difficulte": 0.086417,
+   "difficulte": 0.165199,
    "echeance": true,
    "echeances": [
-    82
+    68
    ],
-   "fin_episodes": 75,
+   "fin_episodes": 61,
    "generation": 0,
-   "id": "adv-a4374ee7",
-   "key": "street_07_avance_streetlifting_competition",
-   "kind": "c",
-   "koach": {
-    "aggravations": 0,
-    "e1rm6": 0.060263,
-    "echecs": 0.028559,
-    "gain": -0.002827,
-    "par_graine": [
-     {
-      "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.040977,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.015027,
-      "evenements": [
-       [
-        "sl-squat-competition",
-        "loaded",
-        117.5,
-        127.091421,
-        0.924531
-       ]
-      ],
-      "faites": 76,
-      "gain": -0.002673,
-      "perf_a": 0.924531,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 80,
-      "seed": 0,
-      "violations": 0
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 2
-      },
-      "e1rm6": 0.079549,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.04209,
-      "evenements": [
-       [
-        "sl-squat-competition",
-        "loaded",
-        125.0,
-        138.483478,
-        0.902635
-       ]
-      ],
-      "faites": 72,
-      "gain": -0.00298,
-      "perf_a": 0.902635,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 80,
-      "seed": 1,
-      "violations": 2
-     }
-    ],
-    "perf_a": 0.913583,
-    "perf_a_min": 0.902635,
-    "plantages": [],
-    "poussees": 0,
-    "violations": 2
-   },
-   "objectif_effectif": "a",
-   "parametres": {
-    "breakDays": 2,
-    "breakFrom": 0.2973,
-    "capacitePrincipaux": 0.823,
-    "capaciteTous": 0.9889,
-    "courbePrincipaux": 1.1086,
-    "courbeTous": 1.1545,
-    "daySd": 0.024,
-    "fatiguePrincipaux": 1.6566,
-    "fatigueTous": 1.0002,
-    "healthAnswerRate": 0.596,
-    "illnessDays": 8,
-    "illnessFrom": 0.6448,
-    "lazy": 0.3684,
-    "missRate": 0.1153,
-    "painDays": 12,
-    "painFrom": 0.6325,
-    "painIntensity": 7,
-    "painZone": "shoulder",
-    "ratingNoise": 0.7393,
-    "rirBias": 0.5495,
-    "rirBiasSd": 0.2731,
-    "shortTimeRate": 0.0791,
-    "skipRating": 0.0337
-   },
-   "poids_corps": [
-    "sl-dips-leste",
-    "sl-muscle-up-leste",
-    "sl-traction-lestee",
-    "sl-traction-lestee-pause-bas"
-   ],
-   "role": "pire",
-   "scenario": "reference",
-   "seeds": [
-    0,
-    1
-   ],
-   "spec": {
-    "breakDays": 2,
-    "breakFromDay": 26,
-    "daySd": 0.024,
-    "healthAnswerRate": 0.596,
-    "illnessDays": 8,
-    "illnessFromDay": 46,
-    "lazy": 0.3684,
-    "missRate": 0.1153,
-    "painDays": 12,
-    "painFromDay": 43,
-    "painIntensity": 7,
-    "painZone": "shoulder",
-    "ratingNoise": 0.7393,
-    "rirBias": 0.5495,
-    "rirBiasSd": 0.2731,
-    "shortTimeRate": 0.0791,
-    "skipRating": 0.0337
-   },
-   "surcharges": {
-    "*": {
-     "capacity": 0.9889,
-     "curveB": 1.1545,
-     "fatigueScale": 1.0002,
-     "power": 1.1545,
-     "slope": 1.1545
-    },
-    "sl-dips-leste": {
-     "capacity": 0.92,
-     "curveB": 1.1086,
-     "fatigueScale": 1.6566,
-     "power": 1.1086,
-     "slope": 1.1086
-    },
-    "sl-muscle-up-leste": {
-     "capacity": 0.92,
-     "curveB": 1.1086,
-     "fatigueScale": 1.6566,
-     "power": 1.1086,
-     "slope": 1.1086
-    },
-    "sl-squat-competition": {
-     "capacity": 0.823,
-     "curveB": 1.1086,
-     "fatigueScale": 1.6566,
-     "power": 1.1086,
-     "slope": 1.1086
-    },
-    "sl-traction-lestee": {
-     "capacity": 0.92,
-     "curveB": 1.1086,
-     "fatigueScale": 1.6566,
-     "power": 1.1086,
-     "slope": 1.1086
-    }
-   },
-   "u": [
-    0.242999,
-    0.736265,
-    0.719787,
-    0.736789,
-    0.067415,
-    0.329327,
-    0.192475,
-    0.297266,
-    0.776468,
-    0.644758,
-    0.270113,
-    0.876185,
-    0.188993,
-    0.632489,
-    0.404864,
-    0.551089,
-    0.263597,
-    0.52293,
-    0.752913,
-    0.499193,
-    0.06989,
-    0.682088,
-    0.992157
-   ]
-  },
-  {
-   "confirme": true,
-   "difficulte": 0.254193,
-   "echeance": true,
-   "echeances": [
-    68
-   ],
-   "fin_episodes": 61,
-   "generation": 1,
-   "id": "adv-3a065b86",
-   "key": "autres_03_powerlifter_competition",
-   "kind": "a",
-   "koach": {
-    "aggravations": 0,
-    "e1rm6": 0.041825,
-    "echecs": 0.024354,
-    "gain": 3.1e-05,
-    "par_graine": [
-     {
-      "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.038673,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.028053,
-      "evenements": [
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        110.0,
-        128.401861,
-        0.856685
-       ]
-      ],
-      "faites": 61,
-      "gain": 2.8e-05,
-      "perf_a": 0.856685,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 0,
-      "violations": 0
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.026775,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.025042,
-      "evenements": [
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        62.5,
-        130.717046,
-        0.478132
-       ]
-      ],
-      "faites": 61,
-      "gain": 3.2e-05,
-      "perf_a": 0.478132,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 1,
-      "violations": 0
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {},
-      "e1rm6": 0.060027,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.019967,
-      "evenements": [
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        102.5,
-        113.560397,
-        0.902603
-       ]
-      ],
-      "faites": 61,
-      "gain": 3.3e-05,
-      "perf_a": 0.902603,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 2,
-      "violations": 0
-     }
-    ],
-    "perf_a": 0.745807,
-    "perf_a_min": 0.478132,
-    "plantages": [],
-    "poussees": 0,
-    "violations": 0
-   },
-   "objectif_effectif": "a",
-   "parametres": {
-    "breakDays": 4,
-    "breakFrom": 0.1426,
-    "capacitePrincipaux": 0.854,
-    "capaciteTous": 0.9291,
-    "courbePrincipaux": 1.2532,
-    "courbeTous": 1.3083,
-    "daySd": 0.0352,
-    "fatiguePrincipaux": 1.2745,
-    "fatigueTous": 1.2148,
-    "healthAnswerRate": 0.4744,
-    "illnessDays": 4,
-    "illnessFrom": 0.1556,
-    "lazy": 0.4785,
-    "missRate": 0.0298,
-    "painDays": 23,
-    "painFrom": 0.5511,
-    "painIntensity": 7,
-    "painZone": "hip",
-    "ratingNoise": 2.1227,
-    "rirBias": -0.0575,
-    "rirBiasSd": 0.0729,
-    "shortTimeRate": 0.1133,
-    "skipRating": 0.3825
-   },
-   "parent": "adv-920ff6e6",
-   "poids_corps": [],
-   "role": "pire",
-   "scenario": "reference",
-   "seeds": [
-    0,
-    1,
-    2
-   ],
-   "spec": {
-    "breakDays": 4,
-    "breakFromDay": 14,
-    "daySd": 0.0352,
-    "healthAnswerRate": 0.4744,
-    "illnessDays": 4,
-    "illnessFromDay": 14,
-    "lazy": 0.4785,
-    "missRate": 0.0298,
-    "painDays": 23,
-    "painFromDay": 24,
-    "painIntensity": 7,
-    "painZone": "hip",
-    "ratingNoise": 2.1227,
-    "rirBias": -0.0575,
-    "rirBiasSd": 0.0729,
-    "shortTimeRate": 0.1133,
-    "skipRating": 0.3825
-   },
-   "surcharges": {
-    "*": {
-     "capacity": 0.9291,
-     "curveB": 1.3083,
-     "fatigueScale": 1.2148,
-     "power": 1.3083,
-     "slope": 1.3083
-    },
-    "mu-back-squat-barre-basse": {
-     "capacity": 0.854,
-     "curveB": 1.2532,
-     "fatigueScale": 1.2745,
-     "power": 1.2532,
-     "slope": 1.2532
-    },
-    "mu-developpe-couche-barre": {
-     "capacity": 0.854,
-     "curveB": 1.2532,
-     "fatigueScale": 1.2745,
-     "power": 1.2532,
-     "slope": 1.2532
-    },
-    "mu-souleve-de-terre-conventionnel": {
-     "capacity": 0.854,
-     "curveB": 1.2532,
-     "fatigueScale": 1.2745,
-     "power": 1.2532,
-     "slope": 1.2532
-    }
-   },
-   "u": [
-    0.898358,
-    0.097409,
-    0.073869,
-    0.957055,
-    0.765062,
-    0.085202,
-    0.301033,
-    0.142614,
-    0.442365,
-    0.155572,
-    0.997171,
-    0.987456,
-    0.552219,
-    0.551145,
-    0.643695,
-    0.416034,
-    0.377615,
-    0.36909,
-    0.971254,
-    0.68911,
-    0.161053,
-    0.896156,
-    0.73595
-   ]
-  },
-  {
-   "difficulte": 0.307858,
-   "echeance": true,
-   "echeances": [
-    68
-   ],
-   "fin_episodes": 61,
-   "generation": 2,
-   "id": "adv-34899937",
+   "id": "adv-c38a753f",
    "key": "autres_03_powerlifter_competition",
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.070077,
-    "echecs": 0.002658,
-    "gain": 5e-05,
+    "e1rm6": 0.064192,
+    "echecs": 0.001965,
+    "gain": -0.000135,
     "par_graine": [
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.039056,
+      "e1rm6": 0.059169,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.003257,
+      "echecs": 0.001934,
       "evenements": [
        [
-        "mu-developpe-couche-barre",
+        "mu-back-squat-barre-basse",
         "loaded",
-        135.0,
-        158.652636,
-        0.850916
+        230.0,
+        257.557307,
+        0.893005
        ],
        [
         "mu-souleve-de-terre-conventionnel",
         "loaded",
-        255.0,
-        278.813811,
-        0.914589
+        270.0,
+        308.551496,
+        0.875057
        ]
       ],
-      "faites": 59,
-      "gain": 0.000229,
-      "perf_a": 0.882752,
+      "faites": 56,
+      "gain": -9.9e-05,
+      "perf_a": 0.884031,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -5957,30 +6101,30 @@
      {
       "aggravations": 0,
       "codes_violations": {},
-      "e1rm6": 0.101098,
+      "e1rm6": 0.069215,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.002058,
+      "echecs": 0.001996,
       "evenements": [
        [
-        "mu-developpe-couche-barre",
+        "mu-back-squat-barre-basse",
         "loaded",
-        75.0,
-        163.050575,
-        0.45998
+        212.5,
+        258.295364,
+        0.822702
        ],
        [
         "mu-souleve-de-terre-conventionnel",
         "loaded",
-        155.0,
-        285.40744,
-        0.543083
+        232.5,
+        310.645011,
+        0.748443
        ]
       ],
-      "faites": 50,
-      "gain": -0.000129,
-      "perf_a": 0.501532,
+      "faites": 55,
+      "gain": -0.000172,
+      "perf_a": 0.785572,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -5989,39 +6133,38 @@
       "violations": 0
      }
     ],
-    "perf_a": 0.692142,
-    "perf_a_min": 0.501532,
+    "perf_a": 0.834801,
+    "perf_a_min": 0.785572,
     "plantages": [],
     "poussees": 0,
     "violations": 0
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 2,
-    "breakFrom": 0.377,
-    "capacitePrincipaux": 1.0511,
-    "capaciteTous": 1.0535,
-    "courbePrincipaux": 1.1803,
-    "courbeTous": 0.8327,
-    "daySd": 0.0432,
-    "fatiguePrincipaux": 0.7881,
-    "fatigueTous": 0.6699,
-    "healthAnswerRate": 0.6565,
-    "illnessDays": 7,
-    "illnessFrom": 0.1483,
-    "lazy": 0.306,
-    "missRate": 0.2029,
-    "painDays": 27,
-    "painFrom": 0.2761,
-    "painIntensity": 4,
-    "painZone": "knee",
-    "ratingNoise": 0.5773,
-    "rirBias": 0.795,
-    "rirBiasSd": 0.2782,
-    "shortTimeRate": 0.2256,
-    "skipRating": 0.2598
+    "breakDays": 12,
+    "breakFrom": 0.6336,
+    "capacitePrincipaux": 1.1659,
+    "capaciteTous": 0.9471,
+    "courbePrincipaux": 0.799,
+    "courbeTous": 1.0744,
+    "daySd": 0.016,
+    "fatiguePrincipaux": 1.2787,
+    "fatigueTous": 1.1242,
+    "healthAnswerRate": 0.8243,
+    "illnessDays": 1,
+    "illnessFrom": 0.5237,
+    "lazy": 0.0891,
+    "missRate": 0.0708,
+    "painDays": 17,
+    "painFrom": 0.997,
+    "painIntensity": 7,
+    "painZone": "wrist_hand",
+    "ratingNoise": 0.7626,
+    "rirBias": 0.2397,
+    "rirBiasSd": 0.3123,
+    "shortTimeRate": 0.0285,
+    "skipRating": 0.0676
    },
-   "parent": "adv-acca5505",
    "poids_corps": [],
    "role": "pire",
    "scenario": "reference",
@@ -6030,336 +6173,319 @@
     1
    ],
    "spec": {
-    "breakDays": 2,
-    "breakFromDay": 26,
-    "daySd": 0.0432,
-    "healthAnswerRate": 0.6565,
-    "illnessDays": 7,
-    "illnessFromDay": 14,
-    "lazy": 0.306,
-    "missRate": 0.2029,
-    "painDays": 27,
-    "painFromDay": 14,
-    "painIntensity": 4,
-    "painZone": "knee",
-    "ratingNoise": 0.5773,
-    "rirBias": 0.795,
-    "rirBiasSd": 0.2782,
-    "shortTimeRate": 0.2256,
-    "skipRating": 0.2598
+    "breakDays": 12,
+    "breakFromDay": 34,
+    "daySd": 0.016,
+    "healthAnswerRate": 0.8243,
+    "illnessDays": 1,
+    "illnessFromDay": 35,
+    "lazy": 0.0891,
+    "missRate": 0.0708,
+    "painDays": 17,
+    "painFromDay": 44,
+    "painIntensity": 7,
+    "painZone": "wrist_hand",
+    "ratingNoise": 0.7626,
+    "rirBias": 0.2397,
+    "rirBiasSd": 0.3123,
+    "shortTimeRate": 0.0285,
+    "skipRating": 0.0676
    },
    "surcharges": {
     "*": {
-     "capacity": 1.0535,
-     "curveB": 0.8327,
-     "fatigueScale": 0.6699,
-     "power": 0.8327,
-     "slope": 0.8327
+     "capacity": 0.9471,
+     "curveB": 1.0744,
+     "fatigueScale": 1.1242,
+     "power": 1.0744,
+     "slope": 1.0744
     },
     "mu-back-squat-barre-basse": {
-     "capacity": 1.0511,
-     "curveB": 1.1803,
-     "fatigueScale": 0.7881,
-     "power": 1.1803,
-     "slope": 1.1803
+     "capacity": 1.1659,
+     "curveB": 0.799,
+     "fatigueScale": 1.2787,
+     "power": 0.799,
+     "slope": 0.799
     },
     "mu-developpe-couche-barre": {
-     "capacity": 1.0511,
-     "curveB": 1.1803,
-     "fatigueScale": 0.7881,
-     "power": 1.1803,
-     "slope": 1.1803
+     "capacity": 1.1659,
+     "curveB": 0.799,
+     "fatigueScale": 1.2787,
+     "power": 0.799,
+     "slope": 0.799
     },
     "mu-souleve-de-terre-conventionnel": {
-     "capacity": 1.0511,
-     "curveB": 1.1803,
-     "fatigueScale": 0.7881,
-     "power": 1.1803,
-     "slope": 1.1803
+     "capacity": 1.1659,
+     "curveB": 0.799,
+     "fatigueScale": 1.2787,
+     "power": 0.799,
+     "slope": 0.799
     }
    },
    "u": [
-    0.089353,
-    0.994758,
-    0.736178,
-    0.611958,
-    0.519675,
-    0.579794,
-    0.152288,
-    0.376985,
-    0.684853,
-    0.148263,
-    0.744115,
-    0.337788,
-    0.697887,
-    0.27614,
-    0.770973,
-    0.618379,
-    0.751997,
-    0.678902,
-    0.182646,
-    0.107725,
-    0.67328,
-    0.79162,
-    0.266396
+    0.262317,
+    0.410235,
+    0.846253,
+    0.178233,
+    0.135274,
+    0.202415,
+    0.817071,
+    0.63359,
+    0.117266,
+    0.52366,
+    0.470504,
+    0.81819,
+    0.374334,
+    0.996976,
+    0.153059,
+    0.804745,
+    0.095036,
+    0.416296,
+    0.62739,
+    0.613392,
+    0.928823,
+    0.110525,
+    0.739183
    ]
   },
   {
    "confirme": true,
-   "difficulte": 0.185385,
+   "difficulte": 0.174276,
    "echeance": true,
    "echeances": [
     68
    ],
    "fin_episodes": 61,
    "generation": 3,
-   "id": "adv-b00eb370",
+   "id": "adv-af0da206",
    "key": "autres_03_powerlifter_competition",
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.044142,
-    "echecs": 0.038153,
-    "gain": -0.003966,
+    "e1rm6": 0.075214,
+    "echecs": 0.03255,
+    "gain": -0.004993,
     "par_graine": [
-     {
-      "aggravations": 0,
-      "codes_violations": {
-       "volume_trop_vite": 3
-      },
-      "e1rm6": 0.053749,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.042105,
-      "evenements": [
-       [
-        "mu-back-squat-barre-basse",
-        "loaded",
-        170.0,
-        173.978262,
-        0.977134
-       ],
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        115.0,
-        120.200262,
-        0.956737
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        197.5,
-        206.309056,
-        0.957302
-       ]
-      ],
-      "faites": 55,
-      "gain": -0.002915,
-      "perf_a": 0.963724,
-      "plantage": null,
-      "poussees": 2,
-      "present": true,
-      "prevues": 64,
-      "seed": 0,
-      "violations": 3
-     },
-     {
-      "aggravations": 0,
-      "codes_violations": {
-       "plafond_volume": 1,
-       "volume_trop_vite": 5
-      },
-      "e1rm6": 0.054622,
-      "e1rm_famille": "loadedMain",
-      "e1rm_n": 3,
-      "echeance": true,
-      "echecs": 0.033097,
-      "evenements": [
-       [
-        "mu-back-squat-barre-basse",
-        "loaded",
-        80.0,
-        179.293162,
-        0.446197
-       ],
-       [
-        "mu-souleve-de-terre-conventionnel",
-        "loaded",
-        132.5,
-        213.394822,
-        0.620915
-       ]
-      ],
-      "faites": 46,
-      "gain": -0.004712,
-      "perf_a": 0.533556,
-      "plantage": null,
-      "poussees": 0,
-      "present": true,
-      "prevues": 64,
-      "seed": 1,
-      "violations": 6
-     },
      {
       "aggravations": 0,
       "codes_violations": {
        "volume_trop_vite": 1
       },
-      "e1rm6": 0.024056,
+      "e1rm6": 0.103258,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.039256,
+      "echecs": 0.024024,
       "evenements": [
        [
         "mu-back-squat-barre-basse",
         "loaded",
-        155.0,
-        162.762367,
-        0.952309
-       ],
-       [
-        "mu-developpe-couche-barre",
-        "loaded",
-        97.5,
-        101.235658,
-        0.963099
+        185.0,
+        253.090273,
+        0.730964
        ],
        [
         "mu-souleve-de-terre-conventionnel",
         "loaded",
-        192.5,
-        208.268323,
-        0.924288
+        222.5,
+        303.050684,
+        0.734201
        ]
       ],
-      "faites": 48,
-      "gain": -0.004272,
-      "perf_a": 0.946565,
+      "faites": 39,
+      "gain": -0.005244,
+      "perf_a": 0.732583,
       "plantage": null,
-      "poussees": 2,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 1,
+      "violations": 1
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {
+       "volume_trop_vite": 4
+      },
+      "e1rm6": 0.078788,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.042017,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        217.5,
+        240.527601,
+        0.904262
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        247.5,
+        304.147558,
+        0.81375
+       ]
+      ],
+      "faites": 42,
+      "gain": -0.004787,
+      "perf_a": 0.859006,
+      "plantage": null,
+      "poussees": 0,
       "present": true,
       "prevues": 64,
       "seed": 2,
-      "violations": 1
+      "violations": 4
+     },
+     {
+      "aggravations": 0,
+      "codes_violations": {},
+      "e1rm6": 0.043596,
+      "e1rm_famille": "loadedMain",
+      "e1rm_n": 3,
+      "echeance": true,
+      "echecs": 0.031609,
+      "evenements": [
+       [
+        "mu-back-squat-barre-basse",
+        "loaded",
+        240.0,
+        250.959697,
+        0.956329
+       ],
+       [
+        "mu-souleve-de-terre-conventionnel",
+        "loaded",
+        257.5,
+        316.01353,
+        0.814839
+       ]
+      ],
+      "faites": 43,
+      "gain": -0.004949,
+      "perf_a": 0.885584,
+      "plantage": null,
+      "poussees": 0,
+      "present": true,
+      "prevues": 64,
+      "seed": 3,
+      "violations": 0
      }
     ],
-    "perf_a": 0.814615,
-    "perf_a_min": 0.533556,
+    "perf_a": 0.825724,
+    "perf_a_min": 0.732583,
     "plantages": [],
-    "poussees": 4,
-    "violations": 10
+    "poussees": 0,
+    "violations": 5
    },
    "objectif_effectif": "a",
    "parametres": {
-    "breakDays": 10,
-    "breakFrom": 0.5982,
-    "capacitePrincipaux": 0.8189,
-    "capaciteTous": 0.8501,
-    "courbePrincipaux": 1.1074,
-    "courbeTous": 0.8602,
+    "breakDays": 11,
+    "breakFrom": 0.1948,
+    "capacitePrincipaux": 1.1669,
+    "capaciteTous": 0.8215,
+    "courbePrincipaux": 1.2614,
+    "courbeTous": 0.8293,
     "daySd": 0.0574,
-    "fatiguePrincipaux": 1.0058,
-    "fatigueTous": 0.7994,
-    "healthAnswerRate": 0.4143,
+    "fatiguePrincipaux": 1.1878,
+    "fatigueTous": 1.4525,
+    "healthAnswerRate": 0.8558,
     "illnessDays": 7,
     "illnessFrom": 0.3995,
-    "lazy": 0.3562,
-    "missRate": 0.2023,
-    "painDays": 12,
-    "painFrom": 0.6218,
-    "painIntensity": 7,
-    "painZone": "wrist_hand",
-    "ratingNoise": 2.1285,
-    "rirBias": -0.0688,
+    "lazy": 0.4344,
+    "missRate": 0.3285,
+    "painDays": 35,
+    "painFrom": 0.4319,
+    "painIntensity": 3,
+    "painZone": "shoulder",
+    "ratingNoise": 0.8556,
+    "rirBias": -0.0779,
     "rirBiasSd": 0.2449,
-    "shortTimeRate": 0.012,
-    "skipRating": 0.2807
+    "shortTimeRate": 0.0723,
+    "skipRating": 0.4397
    },
-   "parent": "adv-c247f31d",
+   "parent": "adv-05506605",
    "poids_corps": [],
    "role": "pire",
    "scenario": "reference",
    "seeds": [
-    0,
     1,
-    2
+    2,
+    3
    ],
    "spec": {
-    "breakDays": 10,
-    "breakFromDay": 33,
+    "breakDays": 11,
+    "breakFromDay": 15,
     "daySd": 0.0574,
-    "healthAnswerRate": 0.4143,
+    "healthAnswerRate": 0.8558,
     "illnessDays": 7,
     "illnessFromDay": 26,
-    "lazy": 0.3562,
-    "missRate": 0.2023,
-    "painDays": 12,
-    "painFromDay": 33,
-    "painIntensity": 7,
-    "painZone": "wrist_hand",
-    "ratingNoise": 2.1285,
-    "rirBias": -0.0688,
+    "lazy": 0.4344,
+    "missRate": 0.3285,
+    "painDays": 35,
+    "painFromDay": 15,
+    "painIntensity": 3,
+    "painZone": "shoulder",
+    "ratingNoise": 0.8556,
+    "rirBias": -0.0779,
     "rirBiasSd": 0.2449,
-    "shortTimeRate": 0.012,
-    "skipRating": 0.2807
+    "shortTimeRate": 0.0723,
+    "skipRating": 0.4397
    },
    "surcharges": {
     "*": {
-     "capacity": 0.8501,
-     "curveB": 0.8602,
-     "fatigueScale": 0.7994,
-     "power": 0.8602,
-     "slope": 0.8602
+     "capacity": 0.8215,
+     "curveB": 0.8293,
+     "fatigueScale": 1.4525,
+     "power": 0.8293,
+     "slope": 0.8293
     },
     "mu-back-squat-barre-basse": {
-     "capacity": 0.8189,
-     "curveB": 1.1074,
-     "fatigueScale": 1.0058,
-     "power": 1.1074,
-     "slope": 1.1074
+     "capacity": 1.1669,
+     "curveB": 1.2614,
+     "fatigueScale": 1.1878,
+     "power": 1.2614,
+     "slope": 1.2614
     },
     "mu-developpe-couche-barre": {
-     "capacity": 0.8189,
-     "curveB": 1.1074,
-     "fatigueScale": 1.0058,
-     "power": 1.1074,
-     "slope": 1.1074
+     "capacity": 1.1669,
+     "curveB": 1.2614,
+     "fatigueScale": 1.1878,
+     "power": 1.2614,
+     "slope": 1.2614
     },
     "mu-souleve-de-terre-conventionnel": {
-     "capacity": 0.8189,
-     "curveB": 1.1074,
-     "fatigueScale": 1.0058,
-     "power": 1.1074,
-     "slope": 1.1074
+     "capacity": 1.1669,
+     "curveB": 1.2614,
+     "fatigueScale": 1.1878,
+     "power": 1.2614,
+     "slope": 1.2614
     }
    },
    "u": [
-    0.900045,
-    0.085504,
+    0.333755,
+    0.075866,
     0.62855,
-    0.712451,
-    0.561433,
-    0.578113,
-    0.686905,
-    0.598204,
+    0.868721,
+    0.879473,
+    0.938545,
+    0.765972,
+    0.194806,
     0.671946,
     0.399497,
-    0.564258,
-    0.871319,
-    0.187781,
-    0.621846,
+    0.25961,
+    0.183212,
+    0.972271,
+    0.431943,
     0.946927,
-    0.349268,
-    0.039838,
-    0.149942,
-    0.239268,
-    0.280252,
-    0.057498,
-    0.680219,
-    0.504669
+    0.839761,
+    0.241078,
+    0.065508,
+    0.175354,
+    0.863677,
+    0.93111,
+    0.90758,
+    0.667178
    ]
   },
   {
@@ -6713,7 +6839,7 @@
    ]
   },
   {
-   "difficulte": 0.181763,
+   "difficulte": 0.078802,
    "echeance": true,
    "echeances": [
     82
@@ -6724,9 +6850,9 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.067336,
+    "e1rm6": 0.067353,
     "echecs": 0.003669,
-    "gain": -0.000172,
+    "gain": -0.000171,
     "par_graine": [
      {
       "aggravations": 0,
@@ -6762,7 +6888,7 @@
       "codes_violations": {
        "volume_trop_vite": 4
       },
-      "e1rm6": 0.100323,
+      "e1rm6": 0.100357,
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
@@ -6771,14 +6897,14 @@
        [
         "sl-squat-competition",
         "loaded",
-        122.5,
+        160.0,
         182.109609,
-        0.672672
+        0.878592
        ]
       ],
       "faites": 65,
-      "gain": -0.000132,
-      "perf_a": 0.672672,
+      "gain": -0.00013,
+      "perf_a": 0.878592,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -6787,8 +6913,8 @@
       "violations": 4
      }
     ],
-    "perf_a": 0.818237,
-    "perf_a_min": 0.672672,
+    "perf_a": 0.921198,
+    "perf_a_min": 0.878592,
     "plantages": [],
     "poussees": 0,
     "violations": 8
@@ -7495,7 +7621,7 @@
    ]
   },
   {
-   "difficulte": 0.260788,
+   "difficulte": 0.081292,
    "echeance": true,
    "echeances": [
     68
@@ -7507,8 +7633,8 @@
    "koach": {
     "aggravations": 0,
     "e1rm6": 0.024495,
-    "echecs": 0.003789,
-    "gain": 0.000237,
+    "echecs": 0.003792,
+    "gain": 0.000236,
     "par_graine": [
      {
       "aggravations": 0,
@@ -7558,33 +7684,33 @@
       "e1rm_famille": "loadedMain",
       "e1rm_n": 3,
       "echeance": true,
-      "echecs": 0.004717,
+      "echecs": 0.004724,
       "evenements": [
        [
         "mu-back-squat-barre-basse",
         "loaded",
-        97.5,
+        162.5,
         194.194624,
-        0.502074
+        0.836789
        ],
        [
         "mu-developpe-couche-barre",
         "loaded",
-        62.5,
+        122.5,
         132.743671,
-        0.470832
+        0.922831
        ],
        [
         "mu-souleve-de-terre-conventionnel",
         "loaded",
-        145.0,
-        233.883404,
-        0.619967
+        212.5,
+        233.456488,
+        0.910234
        ]
       ],
       "faites": 57,
-      "gain": 0.000229,
-      "perf_a": 0.530958,
+      "gain": 0.000228,
+      "perf_a": 0.889951,
       "plantage": null,
       "poussees": 0,
       "present": true,
@@ -7593,8 +7719,8 @@
       "violations": 0
      }
     ],
-    "perf_a": 0.739212,
-    "perf_a_min": 0.530958,
+    "perf_a": 0.918708,
+    "perf_a_min": 0.889951,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -8263,13 +8389,13 @@
   {
    "cellule": "street_07_avance_streetlifting_competition|reference|a",
    "difficulte_initiale_max": 0.175598,
-   "difficulte_max": 0.175598,
+   "difficulte_max": 0.211484,
    "echeances": [
     82
    ],
    "evalues": 11,
    "objectif_effectif": "a",
-   "pire": "adv-f3afdf8d",
+   "pire": "adv-7ee0da71",
    "pire_initial": "adv-f3afdf8d",
    "plantages": 0,
    "principaux": [
@@ -8281,14 +8407,14 @@
   },
   {
    "cellule": "street_07_avance_streetlifting_competition|reference|b",
-   "difficulte_initiale_max": 0.21768,
-   "difficulte_max": 0.24737,
+   "difficulte_initiale_max": 0.106438,
+   "difficulte_max": 0.134257,
    "echeances": [
     82
    ],
    "evalues": 11,
    "objectif_effectif": "a",
-   "pire": "adv-61bd8149",
+   "pire": "adv-80df39f8",
    "pire_initial": "adv-580e4fd8",
    "plantages": 0,
    "principaux": [
@@ -8319,15 +8445,15 @@
   },
   {
    "cellule": "autres_03_powerlifter_competition|reference|a",
-   "difficulte_initiale_max": 0.239303,
-   "difficulte_max": 0.313646,
+   "difficulte_initiale_max": 0.107533,
+   "difficulte_max": 0.125327,
    "echeances": [
     68
    ],
    "evalues": 11,
    "objectif_effectif": "a",
-   "pire": "adv-0c7fb400",
-   "pire_initial": "adv-920ff6e6",
+   "pire": "adv-49208fba",
+   "pire_initial": "adv-cce757f6",
    "plantages": 0,
    "principaux": [
     "mu-back-squat-barre-basse",
@@ -8337,15 +8463,15 @@
   },
   {
    "cellule": "autres_03_powerlifter_competition|reference|b",
-   "difficulte_initiale_max": 0.311372,
-   "difficulte_max": 0.311372,
+   "difficulte_initiale_max": 0.181065,
+   "difficulte_max": 0.181065,
    "echeances": [
     68
    ],
    "evalues": 11,
    "objectif_effectif": "a",
-   "pire": "adv-1157cf87",
-   "pire_initial": "adv-1157cf87",
+   "pire": "adv-acca5505",
+   "pire_initial": "adv-acca5505",
    "plantages": 0,
    "principaux": [
     "mu-back-squat-barre-basse",
@@ -8355,15 +8481,15 @@
   },
   {
    "cellule": "autres_03_powerlifter_competition|reference|c",
-   "difficulte_initiale_max": 0.180424,
-   "difficulte_max": 0.221131,
+   "difficulte_initiale_max": 0.146508,
+   "difficulte_max": 0.188165,
    "echeances": [
     68
    ],
    "evalues": 11,
    "objectif_effectif": "a",
-   "pire": "adv-c247f31d",
-   "pire_initial": "adv-d869fca0",
+   "pire": "adv-b3ffcff4",
+   "pire_initial": "adv-e7e48616",
    "plantages": 0,
    "principaux": [
     "mu-back-squat-barre-basse",
