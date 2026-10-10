@@ -102,12 +102,11 @@ Future<T?> showKContentSheet<T>(
         final k = KTokens.of(ctx);
         return SingleChildScrollView(
           key: contentKey,
-          padding: const EdgeInsets.fromLTRB(
-            KSpacing.s16,
-            0,
-            KSpacing.s16,
-            KSpacing.s16,
-          ),
+          padding: const EdgeInsets.only(
+        left: KSpacing.s16,
+        right: KSpacing.s16,
+        bottom: KSpacing.s16,
+      ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
