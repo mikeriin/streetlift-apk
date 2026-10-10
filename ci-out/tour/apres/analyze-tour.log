@@ -1,0 +1,7 @@
+Analyzing tour_ui_test.dart...                                  
+
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/tour_ui_test.dart:60:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/tour_ui_test.dart:61:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/tour_ui_test.dart:62:3 • prefer_const_declarations
+
+3 issues found. (ran in 16.5s)

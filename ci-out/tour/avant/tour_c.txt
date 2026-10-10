@@ -1,0 +1,3 @@
+cote=avant
+ecran=Override size: 540x960
+tour_c=0
