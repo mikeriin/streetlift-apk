@@ -216,7 +216,13 @@ Les deux sessions du 05/10 se sont arrêtées sur la limite hebdomadaire du plan
 - Budget : d'autres sessions peuvent tourner (UI5 de la refonte, CI1h sur accord du propriétaire) ; sous-agents sur Opus, sauvegardes toutes les 30 minutes, pas de surveillance en boucle.
 - **C15 (charge fixe, CI1h)** : se fait dans l'application, au-dessus de `kalis_adapt` ; rien à changer dans `packages/` pour KM2 (C15.3).
 
-## CI1h — charge fixe du programme et prévision de fin de séance (préparé le 10/10/2026 vers 21:00 UTC ; lancement sur accord du propriétaire, C15)
+## CI1h — charge fixe du programme et prévision de fin de séance (lancé le 10/10/2026 vers 21:05 UTC, tâche « Opus 5.5, effort élevé, application » ; C15)
+
+- **Consigne du propriétaire au lancement (C15.7) : « fais au plus pragmatique ».** Corrige les deux défauts au plus court et au plus sûr ; pas d'architecture nouvelle, pas de refonte, pas d'écran retouché au-delà des deux lignes de texte prévues. Allègements ci-dessous (ils priment sur le reste de cette section) :
+  - Défaut 1 : test global réduit à **une** passe sur toutes les lignes verrouillées du programme avec un journal synthétique « facile » (pas de rejeu des 280 journées avec trois journaux).
+  - Défaut 2 : égalité prévision = séance ouverte vérifiée sur **3** séances (dont S14·J6) ; le cas « séance future commencée en avance » n'est pas traité (rare) : dis-le dans la livraison.
+  - Émulateur : seulement ce que le contrôle `claude/ci-3d` standard fait déjà ; pas de captures dédiées. Tests Dart + build signé suffisent pour livrer.
+  - Exception « Dead-hang lesté ou PdC » : non verrouillée (confirmé).
 
 - Lot : **CI1h** (ligne de l'état passée à « à faire » par le pilotage au lancement). Décision : `DECISIONS_CP.md` **C15** (signalement du propriétaire cité en entier). Délégation (C8) pendant le lot : aucune question au propriétaire ; validation par le pilotage, test réel par le propriétaire.
 - **Base** : pointe de `main` (dev6.11.1, b7996b3f ; dev6.12.0 si UI5 a publié entre-temps). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/CI1h`. **Paquets inchangés** (`kalis_core` 0.4.3, `kalis_plan` / `kalis_adapt` 0.3.1) : aucun changement dans `packages/` (règle de la voie App ; KM2 porte `kalis_adapt`).
@@ -237,7 +243,7 @@ Constat : S14·J6 « Squat endurance @ 70 kg » (`load: fixed 70`, `3 × (1,3 ×
 Constat : le propriétaire lit la fin de séance comme des changements validés, puis ne les retrouve pas en ouvrant la séance de la semaine suivante. Lecture du pilotage : (a) l'écran de fin de séance (`adapt_summary_screen.dart`) est un résumé, sans proposition à accepter ; (b) `_adaptNextGoal` (`session_adapt_store.dart`) prescrit avec d'autres entrées que `adaptOpen` : date prévue de la séance contre jour d'ouverture (une séance future ouverte le soir même porte la fatigue de la séance qui vient de finir), sans saison ; (c) il vise la prochaine occurrence de l'exercice, pas forcément la séance que le propriétaire va ouvrir ; (d) l'écran ne dit ni la séance visée ni que tout est recalculé le jour venu.
 
 1. **Un seul calcul** : la prévision de fin de séance et l'ouverture d'une séance non commencée passent par la même fonction, avec les mêmes entrées (bloc avec les ajustements en place, journal, profil, saison, réglages, contrainte de charge fixe).
-2. **Séance future** : une séance non commencée ouverte **avant** sa date prévue est prescrite **à sa date prévue**, sans bilan du jour ; ouverte le jour même ou après : au jour réel (inchangé). Commencée en avance (première série validée avant sa date) : represcrite d'abord au jour réel, avec une ligne de Koach (« Séance faite en avance : charges recalculées pour aujourd'hui »).
+2. **Séance future** : une séance non commencée ouverte **avant** sa date prévue est prescrite **à sa date prévue**, sans bilan du jour ; ouverte le jour même ou après : au jour réel (inchangé).
 3. **Fin de séance** : chaque ligne de « La prochaine fois » nomme la séance visée et sa date (« Squat endurance : 70 kg × 15 — S14 · J6, samedi 17/10 ») ; sous le titre : « Prévision : je recalcule chaque séance le jour venu, avec ton bilan. » Aucune autre modification de mise en page.
 4. Ne casse rien de CI1c à CI1g (séance non commencée recalculée, consultation sans entrée d'historique, séries validées jamais perdues, couche d'ajustements, retour au programme d'origine).
 
