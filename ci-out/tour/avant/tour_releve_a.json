@@ -1,0 +1,66 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "palette": "bordeaux",
+  "palette_enregistree": "rouge",
+  "session": "personnelle",
+  "ecrans": {
+    "accueil": true,
+    "accueil_bas": true,
+    "mon_programme": true,
+    "ma_saison": true,
+    "evolution": true,
+    "seance": true,
+    "stats": true,
+    "stats_bas": true,
+    "arsenal": true,
+    "arsenal_recherche": true,
+    "anatomie_pectoraux": true,
+    "reglages": true,
+    "reglages_bas": true,
+    "reglages_apparence": true,
+    "reglages_contraste": false,
+    "reglages_seance": true,
+    "reglages_recherche": true,
+    "reglages_donnees": true,
+    "reglages_aide": true,
+    "profil": true,
+    "references": true
+  },
+  "parcours": {
+    "mon_programme": {
+      "appuis": 1,
+      "chemin": 0
+    },
+    "ma_saison": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "evolution": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "jour_j": null,
+    "mes_references": {
+      "appuis": 3,
+      "chemin": 3
+    },
+    "reglage_repos": {
+      "appuis": 2,
+      "chemin": 1
+    },
+    "reglage_repos_recherche": null,
+    "exercices_muscle_recherche": null
+  },
+  "sous_le_dock": {
+    "accueil": [],
+    "stats": [],
+    "arsenal": [],
+    "reglages": []
+  },
+  "accueil": true,
+  "session_de_test_active": false,
+  "palette_lue": "rouge",
+  "seance": "S13-J3",
+  "captures": 21
+}

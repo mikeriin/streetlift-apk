@@ -1,0 +1,93 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             47.7s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,356ms
+I/eetlift_tracker( 5196): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 5196): Skipped 47 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 5196): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:46599/2ilbNv2bdTw=/
+VMServiceFlutterDriver: Isolate found with number: 2925337210270519
+VMServiceFlutterDriver: Isolate 2925337210270519 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 5196): 00:00 +0: CI1f a (sombre, rouge) : myo-reps mini-série par mini-série ; contraste en groupe
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 5196): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 5196): app_time_stats: avg=646.53ms min=214.58ms max=1078.48ms count=2
+D/EGL_emulation( 5196): app_time_stats: avg=174.17ms min=103.30ms max=321.37ms count=6
+D/EGL_emulation( 5196): app_time_stats: avg=1219.91ms min=1219.91ms max=1219.91ms count=1
+D/EGL_emulation( 5196): app_time_stats: avg=213.41ms min=175.01ms max=278.86ms count=5
+D/EGL_emulation( 5196): app_time_stats: avg=602.11ms min=552.65ms max=651.58ms count=2
+I/eetlift_tracker( 5196): Background concurrent mark compact GC freed 2216KB AllocSpace bytes, 15(684KB) LOS objects, 49% free, 2628KB/5257KB, paused 72us,22.689ms total 112.024ms
+D/EGL_emulation( 5196): app_time_stats: avg=13386.07ms min=13386.07ms max=13386.07ms count=1
+D/EGL_emulation( 5196): app_time_stats: avg=121.21ms min=67.69ms max=185.29ms count=7
+D/EGL_emulation( 5196): app_time_stats: avg=110.60ms min=75.57ms max=201.64ms count=7
+D/EGL_emulation( 5196): app_time_stats: avg=112.36ms min=75.21ms max=220.68ms count=7
+D/EGL_emulation( 5196): app_time_stats: avg=103.03ms min=92.69ms max=142.26ms count=7
+D/EGL_emulation( 5196): app_time_stats: avg=97.65ms min=84.40ms max=102.86ms count=7
+D/EGL_emulation( 5196): app_time_stats: avg=163.01ms min=93.95ms max=233.97ms count=6
+W/WindowOnBackDispatcher( 5196): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5196): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5196): app_time_stats: avg=275.60ms min=187.16ms max=425.87ms count=4
+D/EGL_emulation( 5196): app_time_stats: avg=104.67ms min=17.74ms max=142.56ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=100.42ms min=14.57ms max=166.91ms count=10
+D/EGL_emulation( 5196): app_time_stats: avg=231.76ms min=94.32ms max=556.20ms count=5
+D/EGL_emulation( 5196): app_time_stats: avg=119.35ms min=109.29ms max=129.99ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=113.43ms min=109.62ms max=125.38ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=116.62ms min=113.90ms max=120.59ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=116.84ms min=114.61ms max=118.40ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=130.43ms min=107.49ms max=228.63ms count=8
+D/EGL_emulation( 5196): app_time_stats: avg=110.42ms min=102.30ms max=118.05ms count=10
+D/EGL_emulation( 5196): app_time_stats: avg=141.86ms min=114.42ms max=345.56ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=109.16ms min=6.49ms max=192.52ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=129.99ms min=100.90ms max=210.62ms count=8
+D/EGL_emulation( 5196): app_time_stats: avg=117.57ms min=15.58ms max=186.40ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=116.83ms min=18.35ms max=197.64ms count=10
+D/EGL_emulation( 5196): app_time_stats: avg=111.94ms min=17.02ms max=209.54ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=146.49ms min=119.37ms max=236.98ms count=7
+D/EGL_emulation( 5196): app_time_stats: avg=112.86ms min=54.32ms max=181.34ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=137.22ms min=19.29ms max=280.48ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=108.98ms min=14.60ms max=218.44ms count=10
+D/EGL_emulation( 5196): app_time_stats: avg=111.32ms min=17.32ms max=214.82ms count=8
+D/EGL_emulation( 5196): app_time_stats: avg=125.77ms min=12.73ms max=207.14ms count=8
+D/EGL_emulation( 5196): app_time_stats: avg=110.47ms min=12.78ms max=206.46ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=109.38ms min=15.18ms max=198.98ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=81.53ms min=23.42ms max=105.87ms count=10
+D/EGL_emulation( 5196): app_time_stats: avg=113.82ms min=85.63ms max=233.02ms count=8
+D/EGL_emulation( 5196): app_time_stats: avg=144.85ms min=97.69ms max=207.89ms count=7
+D/EGL_emulation( 5196): app_time_stats: avg=114.40ms min=89.14ms max=171.48ms count=7
+W/WindowOnBackDispatcher( 5196): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5196): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5196): app_time_stats: avg=152.42ms min=83.95ms max=197.67ms count=6
+D/EGL_emulation( 5196): app_time_stats: avg=128.80ms min=107.10ms max=203.59ms count=8
+D/EGL_emulation( 5196): app_time_stats: avg=109.23ms min=10.72ms max=189.62ms count=9
+W/eetlift_tracker( 5196): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 5196): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 5196): app_time_stats: avg=118.47ms min=92.74ms max=160.68ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=116.57ms min=109.95ms max=128.29ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=116.62ms min=112.23ms max=121.30ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=116.68ms min=115.88ms max=118.68ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=116.56ms min=115.45ms max=119.18ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=116.60ms min=113.01ms max=120.87ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=128.05ms min=107.63ms max=205.95ms count=8
+D/EGL_emulation( 5196): app_time_stats: avg=112.25ms min=17.65ms max=141.64ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=109.26ms min=13.98ms max=189.99ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=120.73ms min=113.57ms max=134.72ms count=9
+D/EGL_emulation( 5196): app_time_stats: avg=94.66ms min=9.40ms max=214.60ms count=10
+D/EGL_emulation( 5196): app_time_stats: avg=168.95ms min=93.36ms max=230.99ms count=6
+I/flutter ( 5196): 01:13 +1: (tearDownAll)
+I/flutter ( 5196): 01:13 +2: All tests passed!
+D/EGL_emulation( 5196): app_time_stats: avg=149.85ms min=56.70ms max=336.48ms count=7
+All tests passed.
