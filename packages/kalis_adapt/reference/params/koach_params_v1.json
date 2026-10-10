@@ -162,7 +162,7 @@
     ],
     "noteur_entier_notes_min": 20,
     "noteur_entier_part_max": 0.05,
-    "defaut_modele_sd": 0.0
+    "defaut_modele_sd": 0.015
   },
   "jour": {
     "sigma_seance": 0.022,
