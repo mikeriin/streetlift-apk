@@ -150,8 +150,8 @@ void main() {
     });
   }
 
-  // UI4 (R9) : la ligne s'appelle « Diagnostic 3D », dans Aide et à propos.
-  testWidgets('Réglages › Aide et à propos › Diagnostic 3D ouvre l’écran', (
+  // UI4 (R9) : la ligne s'appelle « Compatibilité 3D », dans Aide et à propos.
+  testWidgets('Réglages › Aide et à propos › Compatibilité 3D ouvre l’écran', (
     tester,
   ) async {
     phone(tester);
@@ -161,7 +161,7 @@ void main() {
     await tester.pumpAndSettle();
     final tile = find.byKey(const ValueKey('about-engine3d'));
     await scrollToAction(tester, tile);
-    expect(find.text('Diagnostic 3D'), findsOneWidget);
+    expect(find.text('Compatibilité 3D'), findsOneWidget);
     await tester.tap(tile);
     await _settle(tester, find.text('Non compatible'));
     expect(find.text('MOTEUR 3D'), findsOneWidget);

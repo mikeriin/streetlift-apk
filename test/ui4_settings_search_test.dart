@@ -50,7 +50,7 @@ final _screens = <String, Finder>{
   'koach-gallery': find.byType(KoachGalleryScreen),
   'feedback': find.byType(FeedbackScreen),
   'licences': find.byType(MentionsScreen),
-  'diagnostic-3d': find.byType(Engine3DScreen),
+  'compat-3d': find.byType(Engine3DScreen),
 };
 
 void main() {
@@ -91,7 +91,7 @@ void main() {
         'delete-answers', 'erase', //
         'profile', 'references', 'guided-tests', 'safety', 'recovery', //
         'explainer', 'koach-gallery', 'feedback', 'licences', //
-        'diagnostic-3d',
+        'compat-3d',
       ]),
     );
     for (final e in settingsSearchIndex) {

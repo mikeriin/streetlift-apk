@@ -280,8 +280,10 @@ void main() {
     await tester.pumpWidget(
       page(const SettingsScreen(page: SettingsPage.appearance)),
     );
-    await _settle(tester, find.text('Halo'));
+    await _settle(tester, find.text('APPARENCE'));
     expect(find.text('APPARENCE'), findsOneWidget);
+    // Section en bas de page (liste paresseuse) : atteinte par défilement.
+    await scrollToAction(tester, find.text('Halo'));
     expect(find.text('Anatomie et 3D'), findsOneWidget);
     // M6c : personnage à la peau lisse, plus d'os à afficher.
     expect(find.text('Os visibles'), findsNothing);

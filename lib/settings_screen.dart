@@ -939,11 +939,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         // M1 (mannequin 3D) : rendu test, compatibilité et fluidité.
         _mark(
-          'diagnostic-3d',
+          'compat-3d',
           (lit) => KMenuRow(
             key: const ValueKey('about-engine3d'),
             icon: Icons.view_in_ar_outlined,
-            title: 'Diagnostic 3D',
+            title: 'Compatibilité 3D',
             subtitle: 'Rendu test, compatibilité du téléphone et fluidité',
             highlight: lit,
             onTap: () => _push(context, const Engine3DScreen()),

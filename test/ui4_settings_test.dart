@@ -372,7 +372,7 @@ void main() {
     ]) {
       await scrollToAction(tester, find.byKey(ValueKey(key)));
     }
-    expect(find.text('Diagnostic 3D'), findsOneWidget);
+    expect(find.text('Compatibilité 3D'), findsOneWidget);
     expect(find.text('Moteur 3D'), findsNothing);
     // « Récupération » vit dans Santé et sécurité (plus de doublon).
     expect(find.byKey(const ValueKey('about-recovery')), findsNothing);
