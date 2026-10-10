@@ -370,6 +370,8 @@ void main() {
     }
 
     Future<void> typeIn(WidgetTester tester, Finder field, String q) async {
+      // L'onglet garde sa position de défilement : le champ est remonté.
+      await scrollTo(tester, field);
       final f = field.hitTestable();
       if (f.evaluate().isEmpty) return;
       await tester.tap(f.first);
@@ -525,6 +527,7 @@ void main() {
         await tester.tap(f.first);
         await wait(tester, 1500);
         var taps = 1;
+        await scrollTo(tester, field);
         var ok = field.hitTestable().evaluate().isNotEmpty;
         if (ok) {
           await tester.tap(field.hitTestable().first);
