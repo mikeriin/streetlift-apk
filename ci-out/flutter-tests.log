@@ -1,0 +1,16 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille
+00:01 +1: Aperçu : « Aller plus loin » ouvre les trois autres onglets
+00:01 +2: objectif de la semaine : segments Adaptatif, 2 à 6 ; une valeur 1 reste affichée
+00:01 +3: Parcours : seule entrée de chaque feuille de jeu, sans feuille empilée
+00:02 +4: Parcours : choisir un titre l’affiche et ferme la feuille
+00:02 +5: Performances : Mes références et Records ouvrent leur page
+00:02 +6: Records : journal vide, état vide sans erreur
+00:02 +7: les records se lisent sans modifier le journal
+00:02 +8: Stats tient à 320 dp et 200 % de texte, thème true
+00:03 +9: Stats tient à 320 dp et 200 % de texte, thème false
+00:03 +10: Stats tient à 320 dp et 130 % de texte, références connues
+00:04 +11: cibles nommées et de 48 dp dans les quatre rubriques
+00:04 +12: (tearDownAll)
+00:04 +12: All tests passed!

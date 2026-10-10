@@ -1,0 +1,8 @@
+Relevé des valeurs écrites en dur (cahier UI §6.1) et des menus hors gabarit
+  UI0 : 0
+  UI1 : 92
+  UI2 : 234
+  UI3 : 0
+  UI4 : 131
+  UI5 : 5
+  total : 462
