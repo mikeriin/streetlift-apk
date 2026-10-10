@@ -66,6 +66,7 @@ class _KSearchFieldState extends State<KSearchField> {
           cursorColor: k.encre,
           decoration: InputDecoration(
             hintText: widget.hint,
+            hintMaxLines: 2,
             hintStyle: KType.corps.copyWith(color: k.texte2),
             filled: true,
             fillColor: k.surface,

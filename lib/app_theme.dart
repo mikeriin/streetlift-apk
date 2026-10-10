@@ -277,9 +277,10 @@ class ProgrammeColors {
   Color get circle => p.faint;
   Color get onAccent => p.onAccent;
 
-  /// Curseur de semaine : aplat de la dominante, libellé posé dessus.
-  Color get slider => p.bordeaux;
-  Color get onSlider => p.onBrand;
+  /// Curseur de semaine (frise, pastille « S13 ») : `encre`, lisible sur le
+  /// fond dans les 8 palettes (la dominante Neon ne l'est pas en clair).
+  Color get slider => p.accent;
+  Color get onSlider => p.onAccent;
 }
 
 InputDecoration logDeco({String? hint, String? suffix}) => InputDecoration(

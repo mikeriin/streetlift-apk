@@ -322,7 +322,10 @@ class KListSheet extends StatelessWidget {
       return Container(
         width: KSpacing.s32,
         height: KSpacing.s32,
-        decoration: ShapeDecoration(color: fill, shape: KRadius.pill),
+        decoration: ShapeDecoration(
+          color: fill,
+          shape: current || it.icon != null ? KRadius.pill : k.controlPill,
+        ),
         alignment: Alignment.center,
         child: done && !current
             ? Icon(Icons.check_rounded, size: KSize.iconSmall, color: ink)
@@ -474,13 +477,19 @@ class KConfirm extends StatelessWidget {
       backgroundColor: bg,
       foregroundColor: fg,
       minimumSize: const Size(0, KSize.target),
-      padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
+      padding: const EdgeInsets.symmetric(
+        horizontal: KSpacing.s12,
+        vertical: KSpacing.s12,
+      ),
       shape: KRadius.pill,
       textStyle: KType.corpsFort,
     );
     final cancel = FilledButton(
       key: const ValueKey('confirm-cancel'),
-      style: style(k.haute, k.texte),
+      style: style(
+        k.haute,
+        k.texte,
+      ).copyWith(side: WidgetStatePropertyAll(k.controlSide)),
       onPressed: onCancel,
       child: Text(cancelLabel, textAlign: TextAlign.center),
     );
