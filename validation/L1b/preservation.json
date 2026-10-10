@@ -1,0 +1,149 @@
+{
+  "reference_zip_sha256": "9dfd6221954a1acd673804a498f703ed245f14fd4f8540af9f29e769d584e698",
+  "files_identical_to_R2": [
+    {
+      "path": "android/gradle/wrapper/gradle-wrapper.jar",
+      "sha256": "16caeaf66d57a0d1d2087fef6a97efa62de8da69afa5b908f40db35afc4342da"
+    },
+    {
+      "path": "android/gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "ffc01dc8034ddd96bb95187519a64551ee2ea7e78d2eace137615dec217d86b7"
+    },
+    {
+      "path": "android/gradlew",
+      "sha256": "ec56c02543666d92d9ac5ae7fcc48f88ce4de0deb8b7f9b39928ca46f68c1b2b"
+    },
+    {
+      "path": "android/gradlew.bat",
+      "sha256": "c13c6e91b9a517783976de213d46398c661ea9e17651376d7301e839eaedcc62"
+    },
+    {
+      "path": "assets/exercises_db.json.gz",
+      "sha256": "8564ce8205b8c999cc30067254042edfbafc4511c23a0a311a544a7a805cad0d"
+    },
+    {
+      "path": "assets/icon/icon.png",
+      "sha256": "c0690de53907137354b46f4aee0fdd320a645cbad27ba6cccd445fe2edb17c03"
+    },
+    {
+      "path": "assets/icon/icon_fg.png",
+      "sha256": "e92437300eb40259feaca6b115ec185ec0861ba7d3a69ac241c1ea086e4186dd"
+    },
+    {
+      "path": "assets/icon/logo_mark.png",
+      "sha256": "06511f659459d9b00eeda1d7b573cdbefb2d035f1cd662fd3d49ea7696e755e8"
+    },
+    {
+      "path": "assets/icon/logo_mask.png",
+      "sha256": "3b056152c6264144455e3619f311fb67f8b576694adff19a095a4627c4f9d28b"
+    },
+    {
+      "path": "assets/icon/splash_flag.png",
+      "sha256": "184d8154ea55c8ac1e2240836b171dcd670431293a4d9890c6a3a4e8084165cd"
+    },
+    {
+      "path": "assets/muscles/back_avant_bras.png",
+      "sha256": "287dc57a7db7ba305733b9f888701d00060d1f76ee50bf6c703541cd94c13642"
+    },
+    {
+      "path": "assets/muscles/back_base.png",
+      "sha256": "19a1665ffdc73b122dd4b4a3d3c80be8b5866cd17a7af211721e93ccdc4788c5"
+    },
+    {
+      "path": "assets/muscles/back_dos.png",
+      "sha256": "a116488ee0e7a6cf38bf98bd3fb3fab5b13122ea8f920693f4b4ef4024815589"
+    },
+    {
+      "path": "assets/muscles/back_epaules.png",
+      "sha256": "b127b4c0afb76346bdada9ab1c4fc51e5fae45ce9b45fc592897bd8caf4d72e8"
+    },
+    {
+      "path": "assets/muscles/back_fessiers.png",
+      "sha256": "017236b06958687d65825c60642106cc834435628de2fd0e0068e75742961fed"
+    },
+    {
+      "path": "assets/muscles/back_ischios.png",
+      "sha256": "35b5de2f713bfa5fb81bca09fcd2607ef9198b67aaa9aed437af731f3ac05558"
+    },
+    {
+      "path": "assets/muscles/back_mollets.png",
+      "sha256": "282edfc9b0650c128093ae37dd6cc31ea2eee43f87d0e43199b2ca72cef6e088"
+    },
+    {
+      "path": "assets/muscles/back_triceps.png",
+      "sha256": "4758382a9045ac7a91ecfd99ad16f934616901c5a9ac222b01968ff5f37e65d0"
+    },
+    {
+      "path": "assets/muscles/front_avant_bras.png",
+      "sha256": "b433e449bf2672a37e50aff34e723489b6124cf17999f90466664645adaab9e1"
+    },
+    {
+      "path": "assets/muscles/front_base.png",
+      "sha256": "af6a97c8da09b85f2aa95144512b974efe00eac4cd1685fe5f00a015103eda53"
+    },
+    {
+      "path": "assets/muscles/front_biceps.png",
+      "sha256": "eb323dc5300f0562ca10081a7652428a693dfb65cd9787f7a05d93473fdda133"
+    },
+    {
+      "path": "assets/muscles/front_dos.png",
+      "sha256": "e7def515ffd52996655e529f8dcf0101ff4b4560fd4b23b1c7fa0fcdb6b118f1"
+    },
+    {
+      "path": "assets/muscles/front_epaules.png",
+      "sha256": "54414c2b6e391cdaf5982b6e993b5c756390ec89693f73f7336ca8123644a86a"
+    },
+    {
+      "path": "assets/muscles/front_gainage.png",
+      "sha256": "76002fc7fae3bada25a35ac3994c600b3d97cdb5892664002b2fc89b92c99ed3"
+    },
+    {
+      "path": "assets/muscles/front_mollets.png",
+      "sha256": "f020651639467a87509b9f9e9076b62269f0c57e02f410a11c8d85398551cd82"
+    },
+    {
+      "path": "assets/muscles/front_pectoraux.png",
+      "sha256": "cad4f5d34c010eabeffc8666ebfd23437871ae5d9f5f26c17f09ba83ed42ae44"
+    },
+    {
+      "path": "assets/muscles/front_quadriceps.png",
+      "sha256": "9671d12145e33ce3ab5b4e658ea77151cfa6b4a369c2a63cb7e45b3ea3ef525f"
+    },
+    {
+      "path": "assets/muscles/meta.json",
+      "sha256": "61664a2d2ef8fa8c85be7a829256aea719ee5d087d9245b4550b0c906d1a430a"
+    },
+    {
+      "path": "assets/programme_v33.json.gz",
+      "sha256": "eb6bc659a74b7636b7ba2deafc7f888e2c8860fd4418cd081ea9c23d1f15f6c0"
+    },
+    {
+      "path": "assets/sounds/alarm.wav",
+      "sha256": "b5f28534db5f1e8bb381e44a702b735557b3dd55ec97c18c0aa42422e84ee517"
+    },
+    {
+      "path": "assets/sounds/beep.wav",
+      "sha256": "35fe1c3f79db07728abcaf6b6d4e29e13ffd45696940c392edd2d09a02d19474"
+    },
+    {
+      "path": "pubspec.lock",
+      "sha256": "73837d07776f976bb794a64bcdfe71fbd621e8326fcacd1718e73f72a411d546"
+    },
+    {
+      "path": "pubspec.yaml",
+      "sha256": "a0324cda87395002396cc052b5570fa360b3266b604c621ff06c3b52d1ef0a8e"
+    },
+    {
+      "path": "signing/certificate.sha256",
+      "sha256": "6dcdfdde3a919faaeb25582b33f8e7799e7804f2f6b9f7649ff30d1dca54df78"
+    },
+    {
+      "path": "tools/VerifyApkCertificate.java",
+      "sha256": "a2e3f2d5f3842abaf579d12faf6c5b659bf3d53431f7d6fdc5e978126cf508da"
+    },
+    {
+      "path": "tools/signing.py",
+      "sha256": "ee6a9b07ef164a137596fbb0c5c7bcb09dffe6c07dcd2d86d3904ca89a4f3f5f"
+    }
+  ]
+}

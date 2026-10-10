@@ -1,0 +1,236 @@
+// GÉNÉRÉ par tools/muscles2d/build_map.py — ne pas modifier à la main.
+//
+// M8 correction 2 (5.10.0) : régions dessinées de la carte 2D (une zone
+// = un muscle ou un ensemble de muscles superficiels du pack), rang =
+// valeur de la carte des étiquettes (1…), filtre de l’écran Anatomie.
+import 'muscle_map_2d.dart' show MapGroup, MapRegion;
+
+// Table générée : mise en page du script (dart format ne la touche pas).
+// dart format off
+/// Filtres de l’écran Anatomie (17 groupes).
+const kMapGroups = [
+  MapGroup('trapezes', 'Trapèzes'),
+  MapGroup('deltoides', 'Deltoïdes'),
+  MapGroup('coiffe', 'Coiffe des rotateurs'),
+  MapGroup('pectoraux', 'Pectoraux'),
+  MapGroup('dorsaux', 'Dorsaux'),
+  MapGroup('biceps', 'Biceps'),
+  MapGroup('triceps', 'Triceps'),
+  MapGroup('avant_bras', 'Avant-bras'),
+  MapGroup('abdominaux', 'Abdominaux'),
+  MapGroup('obliques', 'Obliques'),
+  MapGroup('lombaires', 'Lombaires'),
+  MapGroup('fessiers', 'Fessiers'),
+  MapGroup('quadriceps', 'Quadriceps'),
+  MapGroup('ischios', 'Ischio-jambiers'),
+  MapGroup('adducteurs', 'Adducteurs'),
+  MapGroup('mollets', 'Mollets'),
+  MapGroup('tibial', 'Tibial antérieur'),
+];
+
+/// Régions dessinées, dans l’ordre des étiquettes (1…).
+const kMapRegions = [
+  MapRegion(
+    'trapeze_superieur',
+    'Trapèze supérieur',
+    ['trapeze_superieur'],
+    'trapezes',
+  ),
+  MapRegion('trapeze_moyen', 'Trapèze moyen', ['trapeze_moyen'], 'trapezes'),
+  MapRegion(
+    'trapeze_inferieur',
+    'Trapèze inférieur',
+    ['trapeze_inferieur'],
+    'trapezes',
+  ),
+  MapRegion('rhomboides', 'Rhomboïdes', ['rhomboides'], 'trapezes'),
+  MapRegion(
+    'extenseurs_cervicaux',
+    'Extenseurs du cou (splénius)',
+    ['extenseurs_cervicaux'],
+    null,
+  ),
+  MapRegion(
+    'sterno_cleido_mastoidien',
+    'Sterno-cléido-mastoïdien',
+    ['sterno_cleido_mastoidien'],
+    null,
+  ),
+  MapRegion(
+    'cou',
+    'Muscles du cou (sus- et sous-hyoïdiens, scalènes)',
+    [],
+    null,
+  ),
+  MapRegion(
+    'deltoide_anterieur',
+    'Deltoïde antérieur',
+    ['deltoide_anterieur'],
+    'deltoides',
+  ),
+  MapRegion(
+    'deltoide_moyen',
+    'Deltoïde moyen',
+    ['deltoide_moyen'],
+    'deltoides',
+  ),
+  MapRegion(
+    'deltoide_posterieur',
+    'Deltoïde postérieur',
+    ['deltoide_posterieur'],
+    'deltoides',
+  ),
+  MapRegion(
+    'sous_epineux',
+    'Sous-épineux et petit rond',
+    ['infra_epineux', 'petit_rond'],
+    'coiffe',
+  ),
+  MapRegion('grand_rond', 'Grand rond', ['grand_rond'], 'dorsaux'),
+  MapRegion('grand_dorsal', 'Grand dorsal', ['grand_dorsal'], 'dorsaux'),
+  MapRegion(
+    'grand_pectoral',
+    'Grand pectoral',
+    [
+      'grand_pectoral_claviculaire',
+      'grand_pectoral_sterno_costal',
+      'grand_pectoral_abdominal',
+    ],
+    'pectoraux',
+  ),
+  MapRegion(
+    'dentele_anterieur',
+    'Dentelé antérieur',
+    ['dentele_anterieur'],
+    'pectoraux',
+  ),
+  MapRegion(
+    'biceps',
+    'Biceps brachial',
+    ['biceps_chef_long', 'biceps_chef_court'],
+    'biceps',
+  ),
+  MapRegion('brachial', 'Brachial', ['brachial'], 'biceps'),
+  MapRegion(
+    'triceps_long',
+    'Triceps, chef long',
+    ['triceps_chef_long'],
+    'triceps',
+  ),
+  MapRegion(
+    'triceps_lateral',
+    'Triceps, chef latéral',
+    ['triceps_chef_lateral'],
+    'triceps',
+  ),
+  MapRegion(
+    'triceps_medial',
+    'Triceps, chef médial et anconé',
+    ['triceps_chef_medial', 'ancone'],
+    'triceps',
+  ),
+  MapRegion(
+    'brachio_radial',
+    'Brachio-radial',
+    ['brachio_radial'],
+    'avant_bras',
+  ),
+  MapRegion(
+    'flechisseurs',
+    'Fléchisseurs du poignet et des doigts, rond pronateur',
+    [
+      'flechisseurs_du_poignet',
+      'flechisseurs_superficiels_des_doigts',
+      'rond_pronateur',
+    ],
+    'avant_bras',
+  ),
+  MapRegion(
+    'extenseurs',
+    'Extenseurs du poignet et des doigts',
+    ['extenseurs_du_poignet', 'extenseurs_des_doigts'],
+    'avant_bras',
+  ),
+  MapRegion(
+    'droit_abdomen',
+    'Grand droit de l’abdomen',
+    ['droit_abdomen'],
+    'abdominaux',
+  ),
+  MapRegion(
+    'oblique_externe',
+    'Oblique externe',
+    ['oblique_externe'],
+    'obliques',
+  ),
+  MapRegion(
+    'lombaires',
+    'Érecteurs du rachis (fascia thoraco-lombaire)',
+    ['erecteurs_lombaires', 'erecteurs_thoraciques'],
+    'lombaires',
+  ),
+  MapRegion('grand_fessier', 'Grand fessier', ['grand_fessier'], 'fessiers'),
+  MapRegion('moyen_fessier', 'Moyen fessier', ['moyen_fessier'], 'fessiers'),
+  MapRegion(
+    'tenseur_fascia_lata',
+    'Tenseur du fascia lata',
+    ['tenseur_fascia_lata'],
+    'fessiers',
+  ),
+  MapRegion('iliopsoas', 'Ilio-psoas', ['grand_psoas', 'iliaque'], null),
+  MapRegion('couturier', 'Couturier', ['sartorius'], null),
+  MapRegion('pectine', 'Pectiné', ['pectine'], 'adducteurs'),
+  MapRegion(
+    'adducteurs',
+    'Long et grand adducteurs, gracile',
+    ['long_adducteur', 'grand_adducteur', 'gracile'],
+    'adducteurs',
+  ),
+  MapRegion('droit_femoral', 'Droit fémoral', ['droit_femoral'], 'quadriceps'),
+  MapRegion('vaste_lateral', 'Vaste latéral', ['vaste_lateral'], 'quadriceps'),
+  MapRegion('vaste_medial', 'Vaste médial', ['vaste_medial'], 'quadriceps'),
+  MapRegion(
+    'biceps_femoral',
+    'Biceps fémoral',
+    ['biceps_femoral', 'biceps_femoral_chef_court'],
+    'ischios',
+  ),
+  MapRegion(
+    'semi_tendineux',
+    'Semi-tendineux et semi-membraneux',
+    ['semi_tendineux', 'semi_membraneux'],
+    'ischios',
+  ),
+  MapRegion(
+    'gastrocnemien_medial',
+    'Gastrocnémien médial',
+    ['gastrocnemien_medial'],
+    'mollets',
+  ),
+  MapRegion(
+    'gastrocnemien_lateral',
+    'Gastrocnémien latéral',
+    ['gastrocnemien_lateral'],
+    'mollets',
+  ),
+  MapRegion('soleaire', 'Soléaire', ['soleaire'], 'mollets'),
+  MapRegion(
+    'fibulaires',
+    'Long et court fibulaires (loge latérale)',
+    ['fibulaires'],
+    'mollets',
+  ),
+  MapRegion(
+    'tibial_anterieur',
+    'Tibial antérieur',
+    ['tibial_anterieur'],
+    'tibial',
+  ),
+  MapRegion(
+    'extenseurs_orteils',
+    'Extenseurs des orteils et de l’hallux',
+    ['long_extenseur_des_orteils'],
+    'tibial',
+  ),
+];
+// dart format on
