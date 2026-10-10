@@ -75,7 +75,8 @@ JAMAIS = mesures.K_MAX + 1          # premier passage censuré (« jamais » sou
 SEUIL_E1RM = 0.03
 SEUIL_COUVERTURE = (0.88, 0.92)
 SEUIL_CALIBRATION = 0.05
-N_MIN_DECILE = 20
+N_MIN_DECILE = 20                  # P(toutes les cibles), rapporté
+N_MIN_DECILE_CIBLE = 30            # calibration par cible (critère, C13.10.2.c)
 DECILES_MIN = 2                    # déciles de n >= 20 exigés par date pour juger
 SEMAINES_AVANT = 4
 VUES_SECURITE = ('plan_module', 'servi', 'servi_tests_faits')
@@ -695,14 +696,20 @@ def agreger_estimations(ok, temoin):
 def critere_e1rm(K, KV, KN, T, TV, TN):
     k = _ligne(K['loadedMain'], RANG)
     t = _ligne(T['loadedMain'], RANG)
-    mesure = k['mae'] if k else None
+    # C13.10.2.a : moyenne sur les modèles de vérité du banc (égale à la
+    # moyenne de toutes les estimations quand chaque vérité en compte autant).
+    par_v = [(_ligne(KV[v], RANG) or {}).get('mae') for v in sorted(KV)]
+    par_v = [x for x in par_v if x is not None]
+    mesure = sum(par_v) / len(par_v) if par_v else None
     return {
         'mesure': mesure, 'seuil': SEUIL_E1RM, 'n': k['n'] if k else 0,
         'respecte': bool(mesure is not None and mesure < SEUIL_E1RM),
         'methode': ("MAE relative |e1RM estimé / e1RM vrai − 1| au rang 6 (6e jour d'entraînement de "
                     "l'exercice, dernière estimation du jour, `mesures.Estimations`) sur les mouvements "
-                    "principaux chargés ; témoin : export 0.3.1 (16 graines) sur les mêmes saisons."),
+                    "principaux chargés, moyenne des modèles de vérité du banc (C13.10.2.a) ; témoin : "
+                    "export 0.3.1 (16 graines) sur les mêmes saisons."),
         'detail': {
+            'toutes_estimations': k['mae'] if k else None,
             'koach': k, 'temoin': t,
             'par_verite': {v: {'koach': _ligne(KV[v], RANG), 'temoin': _ligne(TV[v], RANG) if v in TV else None}
                            for v in sorted(KV)},
@@ -768,7 +775,8 @@ def _tous_modes(K):
     return {'n': int(n), 'couverture': cov / n if n else None}
 
 
-def _deciles(paires):
+def _deciles(paires, n_min=None):
+    n_min = N_MIN_DECILE if n_min is None else n_min
     out = []
     pire = None
     for d in range(10):
@@ -781,8 +789,8 @@ def _deciles(paires):
         om = sum(1.0 for _, o in sel if o) / n
         e = abs(pm - om)
         ligne = {'decile': d, 'n': n, 'p_prevue': pm, 'observee': om, 'ecart': e}
-        if n < N_MIN_DECILE:
-            ligne['signal'] = 'n < %d' % N_MIN_DECILE
+        if n < n_min:
+            ligne['signal'] = 'n < %d' % n_min
         elif pire is None or e > pire:
             pire = e
         out.append(ligne)
@@ -840,28 +848,32 @@ def critere_calibration(ok, sans_planificateur):
                     marg.append((float(pe), u['reussite_par_cible'][ex]))
                 if ex in (u.get('capacite_par_cible') or {}):
                     marg_cap.append((float(pe), u['capacite_par_cible'][ex]))
-    dec_m, pire_m = _deciles(marg)
-    dec_mc, pire_mc = _deciles(marg_cap)
-    mesurable = all(x is not None for x in pires) and not insuffisant
-    mesure = max(x for x in pires if x is not None) if any(x is not None for x in pires) else None
+    dec_m, pire_m = _deciles(marg, N_MIN_DECILE_CIBLE)
+    dec_mc, pire_mc = _deciles(marg_cap, N_MIN_DECILE_CIBLE)
+    peuples = sum(1 for x in dec_m if x['n'] >= N_MIN_DECILE_CIBLE)
+    mesurable = pire_m is not None and peuples >= DECILES_MIN
+    pires_tout = [x for x in pires if x is not None]
     return {
-        'mesure': mesure, 'seuil': SEUIL_CALIBRATION, 'n': len(unites),
-        'respecte': bool(mesurable and mesure <= SEUIL_CALIBRATION + EPS),
-        'methode': ("P(toutes les cibles atteintes à l'échéance) prévue par la planification (`objectif` de la "
-                    "replanification, journal `previsions` de PlanificationBanc) au début, à mi-chemin et 4 "
-                    "semaines avant l'échéance, contre la réussite observée (meilleure barre réussie au test "
-                    "du jour J >= cible, toutes cibles) ; déciles de probabilité prévue, écart |prévu − observé| "
-                    "max sur les déciles de n >= %d, pire des trois dates ; mesurable seulement si chaque "
-                    "date a au moins %d déciles de n >= %d." % (N_MIN_DECILE, DECILES_MIN, N_MIN_DECILE)),
+        'mesure': pire_m, 'seuil': SEUIL_CALIBRATION, 'n': len(marg),
+        'respecte': bool(mesurable and pire_m <= SEUIL_CALIBRATION + EPS),
+        'methode': ("Calibration PAR CIBLE (C13.10.2.c) : P(cible atteinte à l'échéance) prévue par la "
+                    "planification (`p_cibles` de la replanification, journal `previsions` de PlanificationBanc) "
+                    "au début, à mi-chemin et 4 semaines avant l'échéance, contre la réussite observée de la "
+                    "cible (meilleure barre réussie, ou valeur faite, au test du jour J >= cible) ; déciles de "
+                    "probabilité prévue, écart |prévu − observé| max sur les déciles d'au moins %d cas ; "
+                    "mesurable avec au moins %d déciles peuplés. P(toutes les cibles) est rapportée par date "
+                    "dans `detail.toutes_les_cibles` (trop rarement atteinte sur le banc pour peupler les "
+                    "déciles)." % (N_MIN_DECILE_CIBLE, DECILES_MIN)),
         'detail': {
-            'par_date': par_date,
+            'par_cible': {'n': len(marg), 'unites': len(unites), 'deciles': dec_m, 'deciles_peuples': peuples,
+                          'ecart_max': pire_m,
+                          'variante_capacite_du_jour': {'n': len(marg_cap), 'deciles': dec_mc,
+                                                        'ecart_max': pire_mc}},
+            'toutes_les_cibles': {'par_date': par_date, 'dates_insuffisantes': insuffisant,
+                                  'ecart_max_deciles_n20': max(pires_tout) if pires_tout else None},
             'exclusions': dict(sorted(exclus.items())),
             'unites_sans_prevision_a_la_date': manque,
-            'marginale_par_cible': {'n': len(marg), 'deciles': dec_m, 'ecart_max_deciles_n20': pire_m,
-                                    'variante_capacite_du_jour': {'n': len(marg_cap), 'deciles': dec_mc,
-                                                                  'ecart_max_deciles_n20': pire_mc}},
             'mesurable': mesurable,
-            'dates_insuffisantes': insuffisant,
         },
     }
 
@@ -1024,19 +1036,35 @@ def critere_securite(ok, temoin, sans_planificateur):
     }
 
 
-def critere_mauvais_jour(mj):
-    h = {k: {'moyenne_abs': mj['ecart_abs'][k]['moyenne'], 'mediane_abs': mj['ecart_abs'][k]['mediane'],
-             'p95_abs': mj['ecart_abs'][k]['p95'], 'max_abs': mj['ecart_abs'][k]['max'],
-             'n': mj['ecart_abs'][k]['n'], 'signe_moyen': mj['ecart_signe_moyen'][k]} for k in cm.HORIZONS}
+def _horizons_mj(mj):
+    return {k: {'moyenne_abs': mj['ecart_abs'][k]['moyenne'], 'mediane_abs': mj['ecart_abs'][k]['mediane'],
+                'p95_abs': mj['ecart_abs'][k]['p95'], 'max_abs': mj['ecart_abs'][k]['max'],
+                'n': mj['ecart_abs'][k]['n'], 'signe_moyen': mj['ecart_signe_moyen'][k]} for k in cm.HORIZONS}
+
+
+def critere_mauvais_jour(mj, divergent=None):
+    """[mj] : mesure en contrefactuel apparié (critère, C13.10.2.b) ;
+    [divergent] : mesure de KM1 (deux saisons simulées séparément),
+    rapportée."""
+    h = _horizons_mj(mj)
     moy = [x['moyenne_abs'] for x in h.values() if x['moyenne_abs'] is not None]
+    detail = {'horizons': h, 'saisons': mj['saisons'], 'plantages': len(mj['plantages']),
+              'jobs': mj.get('jobs'), 'erreurs': mj.get('erreurs', 0)}
+    if divergent is not None:
+        hd = _horizons_mj(divergent)
+        md = [x['moyenne_abs'] for x in hd.values() if x['moyenne_abs'] is not None]
+        detail['saisons_divergentes'] = {'horizons': hd, 'mesure': max(md) if md else None,
+                                         'note': 'mesure de KM1 : les deux saisons divergent après le mauvais jour'}
     return {
         'mesure': max(moy) if moy else None, 'seuil': cm.SEUIL_MAUVAIS_JOUR,
         'n': mj['saisons_mesurees'], 'respecte': bool(mj['respecte']),
-        'methode': ("`criteres_moteur.mesurer_mauvais_jour` : même saison rejouée avec une séance à −6 % de "
-                    "capacité (2e moitié, après 6 séances), écart relatif des e1RM des principaux chargés juste "
-                    "après, +1 et +2 séances ; mesure = pire moyenne absolue des trois horizons."),
-        'detail': {'horizons': h, 'saisons': mj['saisons'], 'plantages': len(mj['plantages']),
-                   'jobs': mj.get('jobs')},
+        'methode': ("`criteres_moteur.mesurer_mauvais_jour(apparie=True)` : contrefactuel apparié (C13.10.2.b). "
+                    "Le journal de la saison est rejoué deux fois dans un moteur neuf : tel quel, puis avec la "
+                    "séance du mauvais jour (−6 % de capacité, 2e moitié, après 6 séances) à la place de la "
+                    "séance du même jour, les séances suivantes restant celles de la saison telle quelle ; "
+                    "écart relatif des e1RM des principaux chargés juste après, +1 et +2 séances ; "
+                    "mesure = pire moyenne absolue des trois horizons."),
+        'detail': detail,
     }
 
 
@@ -1077,8 +1105,10 @@ def critere_rappels():
     respecte = {}
     if d is not None and 'respecte' in (d.get('critere') or {}):
         respecte['pire_cas_adversarial'] = bool(d['critere']['respecte'])
-    if j is not None and j.get('objectif_brique_8'):
-        respecte['rejeu_journal'] = bool(all(j['objectif_brique_8'].values()))
+    # C13.10.2.d : le rejeu du journal réel est un critère de BASCULE (au
+    # moins 100 séries notées depuis S12, biais moyen sous 2 %) ; ici il est
+    # seulement rapporté.
+    out['rapporte_seulement'] = ['rejeu_journal']
     out['respecte'] = respecte
     return out
 
@@ -1114,12 +1144,13 @@ def jobs_mj(profils, verites, graines, rapide):
     return [(c, v, g) for c in cles for v in verites for g in range(max(1, min(graines, 2)))]
 
 
-def mesure_mauvais_jour(opts, dossier, jobs):
-    chemin = os.path.join(dossier, 'mauvais_jour__%s.json'
-                          % hashlib.sha256(json.dumps(jobs).encode('utf-8')).hexdigest()[:12])
+def mesure_mauvais_jour(opts, dossier, jobs, apparie=True):
+    chemin = os.path.join(dossier, 'mauvais_jour%s__%s.json'
+                          % ('_apparie' if apparie else '',
+                             hashlib.sha256(json.dumps(jobs).encode('utf-8')).hexdigest()[:12]))
     r = _lire_json(chemin)
     if r is None:
-        r = cm.mesurer_mauvais_jour(jobs=[tuple(j) for j in jobs], coeurs=opts['coeurs'])
+        r = cm.mesurer_mauvais_jour(jobs=[tuple(j) for j in jobs], coeurs=opts['coeurs'], apparie=apparie)
         r.pop('mesures', None)
         r['jobs'] = len(jobs)
         r['plantages'] = [p.get('trace', '')[-300:] for p in r['plantages']]
@@ -1154,13 +1185,14 @@ def campagne(opts, journal=print):
     temoin = charger_temoin(jobs)
     K, KV, KN, T, TV, TN = agreger_estimations(ok, temoin)
     journal('critère 2 (mauvais jour) ...')
-    mj = mesure_mauvais_jour(opts, info['dossier'], jobs_mj(profils, opts['verites'], opts['graines'],
-                                                             opts['rapide']))
+    jmj = jobs_mj(profils, opts['verites'], opts['graines'], opts['rapide'])
+    mj = mesure_mauvais_jour(opts, info['dossier'], jmj, apparie=True)
+    mj_div = mesure_mauvais_jour(opts, info['dossier'], jmj, apparie=False)
     journal('critère 8 (temps) ...')
     tps, source = mesure_temps(opts, info['dossier'])
     criteres = {
         '1_erreur_e1rm_rang_6': critere_e1rm(K, KV, KN, T, TV, TN),
-        '2_mauvais_jour_isole': critere_mauvais_jour(mj),
+        '2_mauvais_jour_isole': critere_mauvais_jour(mj, mj_div),
         '3_convergence_sous_3': critere_convergence(K, KV, T, TV),
         '4_couverture_90': critere_couverture(K, KV, opts),
         '5_calibration_p_reussite': critere_calibration(ok, opts['sans_planificateur']),
@@ -1280,11 +1312,15 @@ def resume(s):
                                for r, x in sorted(d['detail']['par_rang'].items(), key=lambda y: int(y[0])))))
     d = c['5_calibration_p_reussite']
     if d['detail']:
-        pd = d['detail']['par_date']
-        lignes.append('[%s] 5 calibration P(réussite) : écart max %s ; unités %d ; ' % (
-            ok('5_calibration_p_reussite'), f(d['mesure'], True), d['n'])
-            + ', '.join('%s n=%d p=%s obs=%s' % (k, x['n'], f(x['p_moyenne'], True), f(x['reussite_observee'], True))
-                        for k, x in pd.items()))
+        pc = d['detail']['par_cible']
+        lignes.append('[%s] 5 calibration P(réussite) par cible : écart max %s (déciles de n >= %d) ; n=%d ; ' % (
+            ok('5_calibration_p_reussite'), f(d['mesure'], True), N_MIN_DECILE_CIBLE, d['n'])
+            + ', '.join('d%d n=%d p=%s obs=%s' % (x['decile'], x['n'], f(x['p_prevue'], True), f(x['observee'], True))
+                        for x in pc['deciles'] if x['n'] > 0))
+        pd = d['detail']['toutes_les_cibles']['par_date']
+        lignes.append('      toutes les cibles : ' + ', '.join(
+            '%s n=%d p=%s obs=%s' % (k, x['n'], f(x['p_moyenne'], True), f(x['reussite_observee'], True))
+            for k, x in pd.items()))
         lignes.append('      exclusions : %s' % d['detail']['exclusions'])
     else:
         lignes.append('[%s] 5 calibration : %s' % (ok('5_calibration_p_reussite'), d['methode']))

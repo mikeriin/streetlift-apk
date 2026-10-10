@@ -573,6 +573,14 @@ class Modele(object):
             co += [1.0, 1.0, -gn, -ln_, -gm, -lm]
         return idx, co
 
+    def _fige_mauvais_jour(self, t):
+        """Composantes de capacité de la piste (qualités sollicitées, écart
+        de l'exercice) : considérées dans la branche « mauvais jour » quand
+        `jour.mauvais_jour_fige_capacite` est vrai."""
+        if not self.p['jour'].get('mauvais_jour_fige_capacite'):
+            return None
+        return tuple(self._h_capacite(t, jour=False)[0])
+
     @staticmethod
     def _stats(m, P, idx, co):
         """Moyenne et variance de h·x, et le vecteur P h."""
@@ -604,7 +612,7 @@ class Modele(object):
         P -= w * (np.outer(pg, ph) + np.outer(ph, pg) - np.outer(pg, pg))
 
     def _observer(self, idx, co, const, a, b, s2, point=None, melange=None, bruit=None, fonction=None,
-                  fige=None):
+                  fige=None, fige_alt=None):
         """Applique une observation aux deux branches. [a, b] : intervalle sur
         u = h·x + const ; [point] : valeur observée ; [melange] = (poids de
         la note sincère, poids d'une note sans information) ajoute une
@@ -656,6 +664,12 @@ class Modele(object):
             if v <= 0.0:
                 continue
             pg = ph
+            if bi == 1 and fige_alt:
+                # Branche « mauvais jour » : la séance s'explique par l'effet
+                # de jour ; les capacités ([fige_alt]) y sont « considérées »,
+                # non déplacées. Un mauvais jour isolé ne déplace alors la
+                # capacité que par la part de la branche normale.
+                fige = tuple(fige or ()) + tuple(fige_alt)
             if fige:
                 # Composantes « considérées » : elles pèsent dans la variance
                 # prévue mais l'observation ne les déplace pas.
@@ -889,7 +903,8 @@ class Modele(object):
             # Barre manquée : la capacité du moment est sous la charge.
             if not sans_charge:
                 idx, co = self._h_capacite(t)
-                resid = self._observer(idx, co, t.base - lnL, -INF, 0.0, me['bruit_test'] ** 2)
+                resid = self._observer(idx, co, t.base - lnL, -INF, 0.0, me['bruit_test'] ** 2,
+                                       fige_alt=self._fige_mauvais_jour(t))
             rir_c = 0.0
         else:
             percu = not (echec or flammes is None)
@@ -970,7 +985,7 @@ class Modele(object):
                 if flammes is None and not echec:
                     fige = (LAM,) if sans_charge else (LAM, t.idx + 1)
                 resid = self._observer(idx, co, const, a, b, s2, melange=melange, bruit=bruit,
-                                       fonction=exacte, fige=fige)
+                                       fonction=exacte, fige=fige, fige_alt=self._fige_mauvais_jour(t))
             if percu and f_cible is not None and resid is not None and abs(resid[1]) > 1.0:
                 # Notes paresseuses : part des notes égales à la note
                 # préremplie quand l'attendu en est à plus d'une répétition.
@@ -1093,7 +1108,8 @@ class Modele(object):
         bt = me['bruit_tenue']
         extra = (me['dispersion_fatigue_intra'] * sj) ** 2
         if echec:
-            resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0)
+            resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0,
+                                   fige_alt=self._fige_mauvais_jour(t))
             rir_c = 0.0
         elif flammes is None:
             # Tenue faite sans note : versée seulement si la prévision la
@@ -1101,7 +1117,8 @@ class Modele(object):
             mu0, _, _ = self._stats(self.m, self.P, idx, co)
             resid = None
             if mu0 + t.base - ln_s < 0.0:
-                resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra)
+                resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra,
+                                       fige_alt=self._fige_mauvais_jour(t))
             rir_c = 2.0
         else:
             if flammes >= 10:
@@ -1137,7 +1154,7 @@ class Modele(object):
             def exacte(etat, t=t, ln_s=ln_s):
                 return self._lin_tenue(t, etat, ln_s, True)[2]
             resid = self._observer(ix, cx, const, a, b, bruit(pred), melange=melange, bruit=bruit,
-                                   fonction=exacte)
+                                   fonction=exacte, fige_alt=self._fige_mauvais_jour(t))
             self._projeter()
             r = self._lin_tenue(t, self.m, ln_s, False)[3]
             rir_c = r if r > 0 else 0.0

@@ -287,6 +287,7 @@ class Seances(object):
         self.dures_semaines = {}  # semaine -> séries dures servies, tous groupes (allègements)
         self.ecrit_semaines = {}  # semaine -> séries dures écrites des séances vues (allègements)
         self.allegees = {}       # semaine -> semaine allégée par nature (`semaines_allegees`)
+        self.genres = {}         # semaine -> intention ou genre de la semaine (affûtage, compétition…)
         self.servis = None       # items servis de la séance en cours (comptés à la fin de séance)
         self.retour_vol = None   # budgets de la séance en cours (`_budgets_retour`)
 
@@ -403,6 +404,7 @@ class Seances(object):
         self.contexte = contexte
         if contexte and contexte.get('semaine') is not None:
             self.g.noter_semaine(contexte['semaine'], contexte.get('genre'), contexte.get('intention'))
+            self.genres[contexte['semaine']] = contexte.get('intention') or contexte.get('genre')
         self.palier, self.decalage = self.g.palier_bilan(bilan)
         self.coupure = self._coupure(jour)
         self.retour = self._retour(jour)
@@ -2241,6 +2243,15 @@ class Seances(object):
             return grille.plancher(max(total - bw, grille.minimum))
 
         if index == 0 or mem.charge_seance is None:
+            # A8.2 de 0.3.1 : avant la première barre seulement, le maximum
+            # estimé du jour est relevé du gain de l'affûtage quand la
+            # semaine du jour (ou la précédente) est d'affûtage ou de
+            # compétition (`coachTaperGain` 0,02 en 0.3.1 ; ici le gain
+            # mesuré sur le banc, plus petit).
+            sem = (self.contexte or {}).get('semaine')
+            if sem is not None and (self.genres.get(sem) in ('taper', 'competition')
+                                    or self.genres.get(sem - 1) in ('taper', 'competition')):
+                mu += self.p['planification']['gain_affutage']
             charge = plus_lourde(s['tentative_ouverture_proba'], s['tentative_ouverture_part'] * math.exp(mu))
             # Règle A8.2 de 0.3.1 : une barre réussie dans les 42 derniers
             # jours, plus légère que l'ouverture calculée et à 85 % au moins

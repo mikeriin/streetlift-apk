@@ -173,7 +173,8 @@
     "mauvais_jour_proba": 0.1,
     "mauvais_jour_proba_bilan_bas": 0.45,
     "mauvais_jour_moyenne": -0.06,
-    "mauvais_jour_sigma": 0.045
+    "mauvais_jour_sigma": 0.045,
+    "mauvais_jour_fige_capacite": true
   },
   "fatigue": {
     "tau_nerveux_j": 2.5,
@@ -281,18 +282,22 @@
     "risque_tendon_plancher": 4.0,
     "horizon_sans_echeance_sem": 12,
     "sigma_prevision_semaine": 0.004,
-    "gain_affutage": 0.015,
+    "gain_affutage": 0.007,
     "graine": 20261009,
     "prudence_charge": [
       0.6,
       0.25
     ],
     "transport_creation": 0.25,
-    "marge_cible": 0.065,
+    "marge_cible": 0.045,
     "abandon_hebdo": 0.01,
     "abandon_surcharge": 3.0,
     "gain_min": 0.002,
-    "rendement_test_sd": 0.07
+    "rendement_test_sd": 0.055,
+    "erreur_estimation_echeance_sd": 0.04,
+    "tentative_sd_jour": 0.046,
+    "tentative_manque": 0.028,
+    "tentative_cible_proba": 0.35
   },
   "securite": {
     "hausse_par_niveau": [

@@ -268,13 +268,106 @@ def mauvais_jour_saison(cle, verite, graine, scenario='reference', baisse=MAUVAI
     return ligne
 
 
+# ----------------------------------------------------------------------
+# 2 bis. Mauvais jour isolé, contrefactuel apparié (DECISIONS_CP.md C13.10.2.b)
+# ----------------------------------------------------------------------
+def _saison_et_journal(saison, verite, graine, classe=None):
+    """Simule la saison avec `PolitiqueKoach` (sans extension : l'état se
+    recalcule exactement depuis le journal, `tests/test_rejeu_exact.py`) ;
+    renvoie (tour, moteur)."""
+    pol = PolitiqueKoach()
+    ancienne = meneur.SimAthlete
+    if classe is not None:
+        meneur.SimAthlete = classe
+    try:
+        tour = meneur.simuler(saison, vk.infos(), pol, verite, graine)
+    finally:
+        meneur.SimAthlete = ancienne
+    return tour, pol.koach
+
+
+def _seance_du_jour(journal, jour):
+    """(i0, i1) : indices du `seance_debut` et du `seance_fin` de la séance
+    du jour [jour] dans le journal, ou None."""
+    i0 = None
+    for i, e in enumerate(journal):
+        if e['type'] == 'seance_debut' and e['jour'] == jour:
+            i0 = i
+        elif e['type'] == 'seance_fin' and e['jour'] == jour and i0 is not None:
+            return i0, i
+    return None
+
+
+def _rejouer_en_suivant(koach, journal, exercices):
+    """Rejoue [journal] dans un moteur neuf (mêmes paramètres, fiches et
+    profil que [koach]) ; renvoie exercice -> [(jour, e1RM estimé à frais)]
+    relevé à chaque fin de séance où l'exercice a été entraîné."""
+    k = Koach(koach.params, koach.fiches, koach.profil)
+    out = {ex: [] for ex in exercices}
+    for e in journal:
+        k.observe(e)
+        if e['type'] == 'seance_fin':
+            for ex in exercices:
+                t = k.modele.pistes.get(ex)
+                if t is not None and t.jour_seance == e['jour']:
+                    out[ex].append((e['jour'], math.exp(k.modele.capacite(ex)[0])))
+    return out
+
+
+def mauvais_jour_apparie_saison(cle, verite, graine, scenario='reference', baisse=MAUVAIS_JOUR):
+    """Contrefactuel apparié : la saison telle quelle donne un journal J.
+    Le journal contrefactuel est J jusqu'à la veille du mauvais jour, puis
+    la séance du mauvais jour telle que Koach l'a servie à l'athlète à
+    (1 − [baisse]) de sa capacité (mêmes tirages), puis les séances
+    SUIVANTES DE J, à l'identique (mêmes charges servies, mêmes répétitions,
+    mêmes notes). Les deux journaux sont rejoués dans deux moteurs neufs :
+    l'écart des e1RM mesure l'effet de l'observation du mauvais jour, et lui
+    seul (la saison ne diverge pas ensuite). Écarts relatifs juste après,
+    puis 1 et 2 séances de l'exercice plus tard."""
+    s = _saison(cle, scenario)
+    base, k_base = _saison_et_journal(s, verite, graine)
+    choix = choisir_jour(s, base)
+    ligne = {'profil': cle, 'scenario': scenario, 'verite': verite, 'graine': graine}
+    if choix is None:
+        ligne['jour'] = None
+        return ligne
+    jour, exercice = choix
+    _, k_mauvais = _saison_et_journal(s, verite, graine, classe_mauvais_jour(jour, baisse))
+    jb = json.loads(json.dumps(k_base.journal, default=_defaut))
+    jm = json.loads(json.dumps(k_mauvais.journal, default=_defaut))
+    sb = _seance_du_jour(jb, jour)
+    sm = _seance_du_jour(jm, jour)
+    if sb is None or sm is None or sb[0] != sm[0] or \
+            json.dumps(jb[:sb[0]], sort_keys=True) != json.dumps(jm[:sm[0]], sort_keys=True):
+        ligne.update({'jour': jour, 'erreur': 'journaux différents avant le mauvais jour'})
+        return ligne
+    contrefactuel = jb[:sb[0]] + jm[sm[0]:sm[1] + 1] + jb[sb[1] + 1:]
+    exercices = sorted(ex for ex, lst in _par_jour(base).items() if any(j == jour for (j, _) in lst))
+    eb = _rejouer_en_suivant(k_base, jb, exercices)
+    ec = _rejouer_en_suivant(k_base, contrefactuel, exercices)
+    ecarts = {}
+    jours_suivants = {}
+    n = len(HORIZONS)
+    for ex in exercices:
+        paires, jours = _suite(eb[ex], ec[ex], jour, n)
+        ecarts[ex] = [None if (x is None or y is None) else y / x - 1.0 for x, y in paires]
+        jours_suivants[ex] = jours
+    ligne.update({'jour': jour, 'semaine': jour // 7, 'exercice_declencheur': exercice, 'ecarts': ecarts,
+                  'jours': jours_suivants, 'series_du_jour': [sb[1] - sb[0], sm[1] - sm[0]]})
+    return ligne
+
+
 def jobs_mauvais_jour(cles=PROFILS_CHARGES, verites='abc', graines=(0, 1)):
     return [(cle, v, g) for cle in cles for v in verites for g in graines]
 
 
-def mesurer_mauvais_jour(jobs=None, coeurs=2, baisse=MAUVAIS_JOUR):
+def mesurer_mauvais_jour(jobs=None, coeurs=2, baisse=MAUVAIS_JOUR, apparie=False):
+    """[apparie] : contrefactuel apparié (`mauvais_jour_apparie_saison`,
+    mesure du critère depuis C13.10.2.b) ; sinon les deux saisons simulées
+    séparément, qui divergent après le mauvais jour (mesure de KM1)."""
     jobs = jobs_mauvais_jour() if jobs is None else jobs
-    lignes, plantages = vk.paralleles(mauvais_jour_saison, jobs, coeurs=coeurs, kw={'baisse': baisse})
+    lignes, plantages = vk.paralleles(mauvais_jour_apparie_saison if apparie else mauvais_jour_saison, jobs,
+                                      coeurs=coeurs, kw={'baisse': baisse})
     par = {h: [] for h in HORIZONS}
     for ligne in lignes:
         for vals in (ligne.get('ecarts') or {}).values():
@@ -288,7 +381,9 @@ def mesurer_mauvais_jour(jobs=None, coeurs=2, baisse=MAUVAIS_JOUR):
         'baisse': baisse,
         'seances_avant': SEANCES_AVANT,
         'saisons': len(jobs),
-        'saisons_mesurees': sum(1 for x in lignes if x.get('jour') is not None),
+        'saisons_mesurees': sum(1 for x in lignes if x.get('jour') is not None and not x.get('erreur')),
+        'apparie': bool(apparie),
+        'erreurs': sum(1 for x in lignes if x.get('erreur')),
         'ecart_abs': ecart_abs,
         'ecart_signe_moyen': signe,
         'critere': SEUIL_MAUVAIS_JOUR,

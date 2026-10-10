@@ -34,7 +34,7 @@ import numpy as np
 
 from .modele import NQ, RHO, EPS, KG, CLASSES, Modele, G8, LN8, _phi
 from .moteur import Extension
-from .numerique import Mulberry32, fnv1a32, clamp, cholesky_semi, arrondi
+from .numerique import Mulberry32, fnv1a32, clamp, cholesky_semi, arrondi, norm_ppf
 
 SEMAINES_VERROUILLEES = ('intro', 'deload', 'taper', 'test', 'competition', 'transition')
 GRILLE_INTENSITE = (-0.05, -0.025, 0.0, 0.025, 0.05)
@@ -109,6 +109,7 @@ class Planification(Extension):
         self.historique = []      # une ligne par replanification
         self.constats_reference = None
         self.poids_corps = 72.0
+        self._prevu_jour = None   # (moyenne, écart-type) de ln capacité du jour J prévue, par exercice suivi
 
     # ------------------------------------------------------------------
     # Référence
@@ -342,8 +343,24 @@ class Planification(Extension):
         for ex in self.suivis:
             t = m.piste(ex)
             classes.append(t.classe if (t is not None and t.classe is not None) else 0)
+        # Jour de l'échéance (tirés après tous les autres : les nombres
+        # aléatoires communs des tirages précédents ne bougent pas) : effet
+        # de jour de la SÉANCE, commun à toutes les cibles testées ce
+        # jour-là ; erreur de l'estimation que Koach aura lui-même le jour J
+        # (c'est elle qui fixe les barres tentées) ; manque de l'échelle des
+        # tentatives par rapport à sa barre la plus haute possible.
+        bruit_seance = np.empty(n)
+        bruit_est = np.empty((n, max(E, 1)))
+        manque = np.empty((n, max(E, 1)))
+        for a in range(n):
+            bruit_seance[a] = rng.gauss()
+            for b in range(max(E, 1)):
+                bruit_est[a, b] = rng.gauss()
+                u = rng.next()
+                manque[a, b] = -math.log(1.0 - u if u < 1.0 - 1e-12 else 1e-12)
         return {'mu': x[:, :E], 'rho': x[:, E], 'eps': x[:, E + 1:], 'hyp': hyp,
                 'bruit_jour': bruit_jour, 'bruit_proc': bruit_proc, 'classes': classes,
+                'bruit_seance': bruit_seance, 'bruit_est': bruit_est, 'manque': manque,
                 'fatigue': float(m.f_g[1]), 'kg': float(m.m[KG]), 'semaines': m.semaines,
                 'hypotheses': list(m.hypotheses)}
 
@@ -484,20 +501,52 @@ class Planification(Extension):
             mu_fin = tirage['mu'].T[None, :, :] + g_n * taux.T[None, :, :] + proc * tirage['bruit_proc'].T[None, :, :]
             if self.cibles and jour_ech is not None:
                 j = self.params['jour']
-                # Le jour J compte la barre RÉUSSIE, pas la capacité : le
-                # rendement d'un test (meilleure barre / maximum vrai du
-                # jour) a une moyenne (`marge_cible`) et une dispersion
-                # (`rendement_test_sd`) mesurées sur le banc.
-                sd_jour = math.sqrt(j['sigma_seance'] ** 2 + j['sigma_exercice'] ** 2
-                                    + pl['rendement_test_sd'] ** 2)
+                sec = self.params['securite']
                 fe = f_ech if f_ech is not None else F
-                jour = mu_fin - tirage['kg'] * fe[:, None, None] + sd_jour * tirage['bruit_jour'].T[None, :, :]
+                # Capacité à frais le jour J (fatigue lente comprise), puis
+                # capacité du jour : effet de jour de la séance (commun aux
+                # cibles : elles réussissent ou échouent ensemble) et de
+                # l'exercice ; gain moyen de l'affûtage mesuré sur le banc.
+                frais = mu_fin - tirage['kg'] * fe[:, None, None] + pl['gain_affutage']
+                self._prevu_jour = (frais[0].mean(axis=1), frais[0].std(axis=1))
+                jour = frais + j['sigma_seance'] * tirage['bruit_seance'][None, None, :] \
+                    + j['sigma_exercice'] * tirage['bruit_jour'].T[None, :, :]
                 tout = np.ones((C, N), dtype=bool)
+                z1 = norm_ppf(sec['tentative_ouverture_proba'])
+                z2 = norm_ppf(sec['tentative_deuxieme_proba'])
+                z3 = norm_ppf(sec['tentative_troisieme_proba'])
+                zc = norm_ppf(pl['tentative_cible_proba'])
+                sj = pl['tentative_sd_jour']
                 for e, ex in enumerate(self.suivis):
                     if ex not in self.cibles:
                         continue
-                    seuil = math.log(self.cibles[ex]) + pl['marge_cible']
-                    ok = jour[:, e, :] >= seuil
+                    ln_t = math.log(self.cibles[ex])
+                    if self.fiches[ex]['type'] == 'charge':
+                        # Cible chargée : le jour J compte la barre RÉUSSIE.
+                        # Elle est atteinte si l'échelle des tentatives
+                        # (règles A8.2 de 0.3.1, `seance._tentative`) va
+                        # jusqu'à la cible ET si l'athlète la soulève.
+                        # L'échelle part de l'estimation que Koach aura ce
+                        # jour-là : capacité vraie + erreur d'estimation.
+                        est = frais[:, e, :] + pl['erreur_estimation_echeance_sd'] * tirage['bruit_est'][:, e][None, :]
+                        a1 = est + min(math.log(sec['tentative_ouverture_part']), -z1 * sj)
+                        a2 = np.minimum(np.minimum(est - z2 * sj, a1 + math.log(1.0 + sec['tentative_saut_2'])),
+                                        np.log(np.exp(a1) + sec['tentative_saut_kg']))
+                        a3 = np.minimum(a2 + math.log(1.0 + sec['tentative_saut_3']),
+                                        np.log(np.exp(a2) + sec['tentative_saut_kg']))
+                        # Dernier essai : la barre visée est tentée si elle
+                        # est à portée de saut et tenue pour assez probable ;
+                        # sinon la barre du quantile de la 3e tentative.
+                        vise = (ln_t <= a3) & (ln_t <= est - zc * sj)
+                        haut = np.where(vise, a3, np.minimum(a3, est - z3 * sj))
+                        haut = haut - pl['tentative_manque'] * tirage['manque'][:, e][None, :]
+                        ok = (haut >= ln_t - 1e-12) & (jour[:, e, :] >= ln_t)
+                    else:
+                        # Répétitions ou tenue maximales : rendement du test
+                        # (valeur faite / maximum du jour) et dispersion de
+                        # la prévision mesurés sur le banc.
+                        ok = jour[:, e, :] + pl['rendement_test_sd'] * tirage['bruit_est'][:, e][None, :] \
+                            >= ln_t + pl['marge_cible']
                     P_cible[:, e] = ok.mean(axis=1)
                     tout &= ok
                 J = tout.mean(axis=1)
@@ -658,6 +707,9 @@ class Planification(Extension):
                       'objectif': float(det['J'][0]), 'transport': float(dist[0]),
                       'p_cibles': {ex: float(pc[0, e]) for e, ex in enumerate(self.suivis) if ex in self.cibles},
                       'p_cibles_reference': {ex: float(p_ref[0, e]) for e, ex in enumerate(self.suivis) if ex in self.cibles},
+                      'prevu_jour': ({ex: [float(self._prevu_jour[0][e]), float(self._prevu_jour[1][e])]
+                                      for e, ex in enumerate(self.suivis) if ex in self.cibles}
+                                     if getattr(self, '_prevu_jour', None) is not None else {}),
                       'volume': {str(b): [arrondi(float(x), 4) for x in vol[b]] for b in blocs},
                       'intensite': {str(b): arrondi(float(inten[b]), 4) for b in blocs},
                       'qualites': list(qualites)})
