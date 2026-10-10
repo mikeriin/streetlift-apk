@@ -45,52 +45,24 @@ class SettingsScreen extends StatelessWidget {
               'system' => 'Système : suit le thème du téléphone',
               _ => 'Sombre : fond anthracite, lisible en extérieur',
             },
-            // L5 : au-delà de 150 % de texte, trois choix empilés plutôt que
-            // trois segments où « Système » était coupé en deux.
-            below: MediaQuery.textScalerOf(context).scale(10) > 15
-                ? RadioGroup<String>(
-                    groupValue: ['system', 'dark', 'light'].contains(s.theme)
-                        ? s.theme
-                        : 'system',
-                    onChanged: (selected) {
-                      if (selected == null) return;
-                      s.theme = selected;
-                      save();
-                    },
-                    child: Column(
-                      children: [
-                        for (final (value, label) in const [
-                          ('system', 'Système'),
-                          ('dark', 'Sombre'),
-                          ('light', 'Clair'),
-                        ])
-                          RadioListTile<String>(
-                            key: ValueKey('theme-$value'),
-                            value: value,
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(label),
-                          ),
-                      ],
-                    ),
-                  )
-                : SegmentedButton<String>(
-                    expandedInsets: EdgeInsets.zero,
-                    showSelectedIcon: false,
-                    segments: const [
-                      ButtonSegment(value: 'system', label: Text('Système')),
-                      ButtonSegment(value: 'dark', label: Text('Sombre')),
-                      ButtonSegment(value: 'light', label: Text('Clair')),
-                    ],
-                    selected: {
-                      ['system', 'dark', 'light'].contains(s.theme)
-                          ? s.theme
-                          : 'system',
-                    },
-                    onSelectionChanged: (selected) {
-                      s.theme = selected.single;
-                      save();
-                    },
-                  ),
+            // UI0 (refonte UI) : segments du kit (pilules, même forme
+            // choisie ou non) ; libellés trop longs (grand texte, écran
+            // étroit) : choix l'un sous l'autre, sans mot coupé (L5, C3).
+            below: KSegmented<String>(
+              semanticLabel: 'Thème',
+              segments: const [
+                KSegment('system', 'Système'),
+                KSegment('dark', 'Sombre'),
+                KSegment('light', 'Clair'),
+              ],
+              selected: ['system', 'dark', 'light'].contains(s.theme)
+                  ? s.theme
+                  : 'system',
+              onChanged: (selected) {
+                s.theme = selected;
+                save();
+              },
+            ),
           ),
           // L5-C : indépendant du thème ; appliqué tout de suite, enregistré
           // avec les autres réglages.

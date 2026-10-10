@@ -189,8 +189,9 @@ class KPalette {
   /// Validation et succès uniquement.
   Color get success => r.validation;
 
-  /// Logo : texte en sombre, dominante en clair (cahier §5.1).
-  Color get logo => dark ? r.texte : r.pleine;
+  /// Logo : texte en sombre ; en clair, la dominante (cahier §5.1), ou son
+  /// encre quand la dominante est trop claire pour le fond (Neon).
+  Color get logo => dark ? r.texte : r.encre;
   Color get prevViolet => r.texte2;
   Color get danger => r.danger;
   Color get line => r.filet;
