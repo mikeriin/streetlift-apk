@@ -6,11 +6,11 @@ Créé le 02/10/2026 par la conversation de pilotage (demande et questionnaire d
 
 | Voie | Tâche | Identifiant | Lots |
 | --- | --- | --- | --- |
-| A et B (moteurs) | **Fable 5.1, effort maximal, moteurs** (créée le 03/10 22:23 : l'ancienne tâche voie A n'obtenait plus l'accès en écriture au dépôt) | `trig_013zUt5zYSPd9AgCz58HdLYB` | CP1, CA1 (C5.1) ; KM1, KM2 (C13.4) |
+| A et B (moteurs) | **Fable 5.1, effort maximal, moteurs** (créée le 03/10 22:23 : l'ancienne tâche voie A n'obtenait plus l'accès en écriture au dépôt) | `trig_013zUt5zYSPd9AgCz58HdLYB` | CP1, CA1 (C5.1) ; KM1 (C13.4) |
 | A (moteurs) | Fable 5.1, effort maximal, voie A — **désactivée** le 03/10 (accès en écriture refusé à ses sessions) | `trig_01AdGsb14RjjmaqFdrSXsMZX` | CR (historique) |
 | B (moteurs) | Fable 5.1, effort maximal, voie B | `trig_01GKJ1jmozMRy6cJYUdyNtMV` | CQ (historique) ; de secours pour CA1 |
 | App | Opus 5.5, effort élevé, application | `trig_01ETa7PRUGvnrwMrEchoKcc9` | CU, CI |
-| A et B (moteurs) | **Opus 5.5, effort maximal, moteurs** (C5.1) | `trig_01M9KpjaVMDC897vjadunwZP` | CX, CP2, CA2, CY et fins de lot (CR) ; secours de KM1, KM2 (C13.4) |
+| A et B (moteurs) | **Opus 5.5, effort maximal, moteurs** (C5.1) | `trig_01M9KpjaVMDC897vjadunwZP` | CX, CP2, CA2, CY et fins de lot (CR) ; KM2 (C13.9) ; secours de KM1 (C13.4) |
 
 Tous les lots sont lancés par la conversation de pilotage d'après ce fichier (PIPELINE_CP.md §0) ; aucun lot ne lance un autre lot.
 **Un seul lot moteur à la fois** depuis le 03/10/2026 (DECISIONS_CP.md C3.2) : ordre CQ → CR → CP1 → CA1 → CX → CP2 → CA2 → CY ; voie App (CU, CI) en parallèle. Sous-agents sur Opus, sauvegardes sur `cp-sauvegardes/<LOT>` (PIPELINE_CP.md §9). **Depuis le 05/10/2026 (C9.3), CP2 et CA2 tournent en parallèle** (voies A et B, deux sessions de la tâche Opus moteurs, lancées l'une après l'autre).

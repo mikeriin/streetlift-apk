@@ -194,7 +194,7 @@ Trois lots, un seul APK. Toute l'itération se fait dans KM1, sur le banc, sans 
 
 ### KM2 — Portage Dart : `kalis_adapt` 1.0.0
 
-- **Modèle** : Fable 5.1, effort maximal.
+- **Modèle** : Opus 5.5, effort maximal (C13.9 : portage avec oracle exact, Fable inutile).
 - **Prérequis** : KM1 validé.
 - **Contenu** : portage complet ; règles de sécurité de 0.3.1 intégrées comme contraintes dures ; tests de parité à 1e-9 ; athlètes adversariaux ajoutés au banc Dart ; mesure des temps de calcul.
 - **Livraison** : branche fixe `etiquettes/kalis_adapt-v1.0.0`, `LIVRAISON_KM2.md`.

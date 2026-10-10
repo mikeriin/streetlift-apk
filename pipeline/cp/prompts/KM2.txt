@@ -1,5 +1,5 @@
 LOT KM2 — PORTAGE DART : `kalis_adapt` 1.0.0
-Modèle : Fable 5.1, effort maximal (voie A, tâche « Fable 5.1, effort maximal, moteurs »). Validation : automatique, par le pilotage, sur les critères du cahier (DECISIONS_CP.md C13).
+Modèle : Opus 5.5, effort maximal (voie A, tâche « Opus 5.5, effort maximal, moteurs », DECISIONS_CP.md C13.9). Validation : automatique, par le pilotage, sur les critères du cahier (DECISIONS_CP.md C13).
 Prérequis : KM1 livré et validé par le pilotage.
 Branche de travail : `moteurs` (`packages/kalis_adapt/`, `packages/kalis_bench/` ; `kalis_core` seulement selon PIPELINE_CP.md §0). Contrôle : `claude/ci-cp-a`. Sauvegardes : `cp-sauvegardes/KM2`.
 Cahier des charges : `pipeline/cp/CAHIER_KM.md`. Décisions : C13.
