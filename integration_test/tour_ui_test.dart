@@ -366,6 +366,10 @@ void main() {
     final picker = find.byKey(const ValueKey('accent-picker'));
     await scrollTo(tester, picker);
     await screen(tester, 'reglages_apparence', check: picker);
+    // UI0 : interrupteur « Contraste renforcé » sous le sélecteur.
+    final contrast = find.text('Contraste renforcé');
+    await scrollTo(tester, contrast);
+    await screen(tester, 'reglages_contraste', check: contrast);
     await toEnd(tester);
     await underDock(tester, 'reglages');
     await screen(tester, 'reglages_bas');

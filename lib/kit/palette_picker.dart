@@ -29,27 +29,11 @@ class KPalettePicker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Expanded(
-              child: Text(
-                'Palette',
-                style: KType.corpsFort.copyWith(color: k.texte),
-              ),
-            ),
-            Flexible(
-              child: Text(
-                name,
-                textAlign: TextAlign.end,
-                style: KType.libelle.copyWith(
-                  color: k.texte2,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
+        Text('Palette', style: KType.corpsFort.copyWith(color: k.texte)),
+        Text(
+          name,
+          key: const ValueKey('palette-name'),
+          style: KType.detail.copyWith(color: k.texte2),
         ),
         const SizedBox(height: KSpacing.s8),
         LayoutBuilder(
@@ -179,17 +163,12 @@ class KPalettePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final r = KRoles.of(paletteId, dark: dark, contrast: contrast);
     final k = KTokens.of(context);
+    // Aperçu posé dans le flux de la carte, sans cadre (C7 : jamais de carte
+    // dans une carte).
     return ExcludeSemantics(
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: r.fond,
-          shape: RoundedRectangleBorder(
-            borderRadius: KRadius.menuRadius,
-            side: BorderSide(color: k.filet),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(KSpacing.s12),
+      child: Builder(
+        builder: (context) => Padding(
+          padding: EdgeInsets.zero,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -227,7 +206,10 @@ class KPalettePreview extends StatelessWidget {
                 ),
                 decoration: ShapeDecoration(
                   color: r.surface,
-                  shape: KRadius.menuShape,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: KRadius.menuRadius,
+                    side: BorderSide(color: r.filet),
+                  ),
                 ),
                 child: Row(
                   children: [
@@ -243,8 +225,8 @@ class KPalettePreview extends StatelessWidget {
                         vertical: KSpacing.s4 / 2,
                       ),
                       decoration: ShapeDecoration(
-                        color: r.haute,
-                        shape: KRadius.pill,
+                        color: r.surface,
+                        shape: StadiumBorder(side: BorderSide(color: r.filet)),
                       ),
                       child: Text(
                         'Record',

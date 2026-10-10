@@ -325,6 +325,14 @@ class KTokens extends ThemeExtension<KTokens> {
   Color get danger => roles.danger;
   Color get avertissement => roles.avertissement;
 
+  /// Contour des commandes posées en `haute` : en clair, `haute` = `fond`,
+  /// la forme reste lisible sur la page grâce au `filet`.
+  BorderSide get controlSide =>
+      dark ? BorderSide.none : BorderSide(color: filet);
+
+  /// Forme pilule d'une commande en `haute`, contour clair compris.
+  StadiumBorder get controlPill => StadiumBorder(side: controlSide);
+
   /// Jetons du thème de [context] ; à défaut (widget hors d'un thème de
   /// l'application), ceux de la palette par défaut en sombre.
   static KTokens of(BuildContext context) =>

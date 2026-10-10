@@ -215,9 +215,12 @@ class KMenuRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final ink = !enabled ? k.texte3 : (danger ? k.danger : k.texte);
+    // Grand texte (≥ 150 %) : la pastille décorative s'efface et la valeur
+    // passe sous la description, pour qu'aucun mot ne soit coupé (C3).
+    final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
     final lead =
         leading ??
-        (icon == null
+        (icon == null || large
             ? null
             : KIconTile(icon!, color: danger ? k.danger : null));
     final tail =
@@ -225,7 +228,7 @@ class KMenuRow extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (value != null)
+            if (value != null && !large)
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: KSize.valueWidth),
                 child: Text(
@@ -257,7 +260,13 @@ class KMenuRow extends StatelessWidget {
           children: [
             if (lead != null) ...[lead, const SizedBox(width: KSpacing.s14)],
             Expanded(
-              child: KRowLabel(title, subtitle: subtitle, color: ink),
+              child: KRowLabel(
+                title,
+                subtitle: large && value != null
+                    ? [if (subtitle != null) subtitle!, value!].join(' · ')
+                    : subtitle,
+                color: ink,
+              ),
             ),
             const SizedBox(width: KSpacing.s12),
             tail,

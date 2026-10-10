@@ -73,7 +73,7 @@ class KStepper extends StatelessWidget {
         onTap: onTap,
         child: Material(
           color: k.haute,
-          shape: KRadius.pill,
+          shape: k.controlPill,
           child: InkWell(
             customBorder: KRadius.pill,
             onTap: onTap == null
@@ -105,7 +105,7 @@ class KStepper extends StatelessWidget {
           minHeight: KSize.target,
         ),
         padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
-        decoration: ShapeDecoration(color: k.haute, shape: KRadius.pill),
+        decoration: ShapeDecoration(color: k.haute, shape: k.controlPill),
         alignment: Alignment.center,
         // Un nombre reste entier : il se réduit plutôt que de passer à la
         // ligne (cahier §5.2).
@@ -218,7 +218,7 @@ class KSegmented<T> extends StatelessWidget {
                 onTap: onChanged == null ? null : () => onChanged!(s.value),
                 child: Material(
                   color: s.value == selected ? k.pleine : k.haute,
-                  shape: KRadius.pill,
+                  shape: s.value == selected ? KRadius.pill : k.controlPill,
                   child: InkWell(
                     key: ValueKey('segment-${s.value}'),
                     customBorder: KRadius.pill,
@@ -268,7 +268,7 @@ class KSegmented<T> extends StatelessWidget {
       label: semanticLabel,
       container: true,
       child: DecoratedBox(
-        decoration: ShapeDecoration(color: k.haute, shape: KRadius.pill),
+        decoration: ShapeDecoration(color: k.haute, shape: k.controlPill),
         child: Padding(
           padding: const EdgeInsets.all(KSpacing.s4),
           child: IntrinsicHeight(
@@ -368,7 +368,7 @@ class KChip extends StatelessWidget {
       ),
       decoration: ShapeDecoration(
         color: selected ? k.pleine : k.haute,
-        shape: KRadius.pill,
+        shape: selected ? KRadius.pill : k.controlPill,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

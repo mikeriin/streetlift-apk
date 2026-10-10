@@ -420,7 +420,7 @@ final List<KitSample> kitSamples = [
         ),
         const SizedBox(height: KSpacing.s16),
         SizedBox(
-          height: 420,
+          height: 420 * MediaQuery.textScalerOf(context).scale(1),
           child: Material(
             color: KTokens.of(context).surface,
             shape: const RoundedRectangleBorder(

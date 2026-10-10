@@ -34,7 +34,7 @@ class KSetField extends StatelessWidget {
       excludeSemantics: true,
       child: Material(
         color: onSurface ? k.surface : k.haute,
-        shape: KRadius.pill,
+        shape: onSurface ? KRadius.pill : k.controlPill,
         child: InkWell(
           customBorder: KRadius.pill,
           onTap: onTap,
@@ -52,7 +52,7 @@ class KSetField extends StatelessWidget {
                     maxLines: 1,
                     textAlign: TextAlign.center,
                     style: KType.chiffreMoyen.copyWith(
-                      color: dimmed ? k.texte3 : k.texte,
+                      color: dimmed ? k.texte2 : k.texte,
                     ),
                   ),
                 ),
@@ -248,14 +248,29 @@ class KRestBar extends StatelessWidget {
           Semantics(
             label: '$label restant',
             value: remaining,
-            child: SizedBox(
-              height: KSpacing.s4,
-              child: Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: FractionallySizedBox(
-                  widthFactor: v,
-                  heightFactor: 1,
-                  child: ColoredBox(color: k.encre),
+            // Barre en pilule, en retrait des bords arrondis de la carte.
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                KSpacing.s20,
+                KSpacing.s12,
+                KSpacing.s20,
+                0,
+              ),
+              child: SizedBox(
+                height: KSpacing.s4,
+                child: ClipPath(
+                  clipper: const ShapeBorderClipper(shape: KRadius.pill),
+                  child: ColoredBox(
+                    color: k.filet,
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: FractionallySizedBox(
+                        widthFactor: v,
+                        heightFactor: 1,
+                        child: ColoredBox(color: k.encre),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
