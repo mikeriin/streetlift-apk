@@ -118,10 +118,8 @@ Widget _sheetLabel(BuildContext context, String t) => Padding(
   ),
 );
 
-Widget _sheetHint(BuildContext context, String t) => Text(
-  t,
-  style: KType.detail.copyWith(color: KTokens.of(context).texte2),
-);
+Widget _sheetHint(BuildContext context, String t) =>
+    Text(t, style: KType.detail.copyWith(color: KTokens.of(context).texte2));
 
 /// Choix en puces du kit (UI4) ; mêmes clés `'$keyPrefix-<code>'`.
 Widget _sheetChips<T>({
@@ -855,10 +853,7 @@ extension _FlowV3 on AthleteProfileFlowState {
         ),
       for (final id in exercises) ...[
         Padding(
-          padding: const EdgeInsets.only(
-            top: KSpacing.s8,
-            bottom: KSpacing.s4,
-          ),
+          padding: const EdgeInsets.only(top: KSpacing.s8, bottom: KSpacing.s4),
           child: _title(_exerciseName(id)),
         ),
         _sheetChips<WeakPointKind>(
@@ -1436,8 +1431,7 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
               key: ValueKey('benchmark-kind-${o.$1}'),
               label: o.$2,
               selected: k?.code == o.$1,
-              onTap: () =>
-                  setState(() => _kind = BenchmarkKind.fromCode(o.$1)),
+              onTap: () => setState(() => _kind = BenchmarkKind.fromCode(o.$1)),
             ),
         ],
         if (k == BenchmarkKind.loadReps)
@@ -1540,10 +1534,7 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
             padding: const EdgeInsets.only(top: KSpacing.s4),
             child: _sheetHint(context, longDateText(_date!)),
           ),
-        _sheetLabel(
-          context,
-          itemText(q, 'source', 'D’où vient ce chiffre ?'),
-        ),
+        _sheetLabel(context, itemText(q, 'source', 'D’où vient ce chiffre ?')),
         for (final o in itemOptions(q, 'source'))
           _ChoiceRow(
             key: ValueKey('benchmark-source-${o.$1}'),
@@ -1570,9 +1561,8 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
             ],
             selected: (c) =>
                 (c == 'unknown' && _standard == null) || '$_standard' == c,
-            onTap: (c) => setState(
-              () => _standard = c == 'unknown' ? null : c == 'true',
-            ),
+            onTap: (c) =>
+                setState(() => _standard = c == 'unknown' ? null : c == 'true'),
           ),
         ],
         if (_error != null) ...[
@@ -2104,11 +2094,7 @@ class _OtherSportSheetState extends State<_OtherSportSheet> {
         ),
         _sheetLabel(
           context,
-          itemText(
-            q,
-            'minutesPerSession',
-            'Combien de temps à chaque fois ?',
-          ),
+          itemText(q, 'minutesPerSession', 'Combien de temps à chaque fois ?'),
         ),
         _sheetChips<int>(
           keyPrefix: 'sport-minutes',
@@ -2134,11 +2120,7 @@ class _OtherSportSheetState extends State<_OtherSportSheet> {
         ),
         _sheetLabel(
           context,
-          itemText(
-            q,
-            'hard',
-            'C’est intense (matchs, combats, fractionné) ?',
-          ),
+          itemText(q, 'hard', 'C’est intense (matchs, combats, fractionné) ?'),
         ),
         _sheetChips<String>(
           keyPrefix: 'sport-hard',
@@ -2590,8 +2572,7 @@ class _EventSheetState extends State<_EventSheet> {
           _sheetChips<int>(
             keyPrefix: 'event-month',
             options: [
-              for (var i = 0; i < months.length; i++)
-                (i, monthText(months[i])),
+              for (var i = 0; i < months.length; i++) (i, monthText(months[i])),
             ],
             selected: (i) => _approximate && _date == months[i],
             onTap: (i) => setState(() {
@@ -2601,10 +2582,7 @@ class _EventSheetState extends State<_EventSheet> {
             }),
           ),
         ],
-        _sheetLabel(
-          context,
-          itemText(q, 'priority', 'Elle compte comment ?'),
-        ),
+        _sheetLabel(context, itemText(q, 'priority', 'Elle compte comment ?')),
         for (final o in itemOptions(q, 'priority'))
           _ChoiceRow(
             key: ValueKey('event-priority-${o.$1}'),
@@ -2631,19 +2609,15 @@ class _EventSheetState extends State<_EventSheet> {
             _sheetChips<String>(
               keyPrefix: 'event-preset',
               options: [
-                for (final p in _kindPresets)
-                  ('${p['code']}', '${p['label']}'),
+                for (final p in _kindPresets) ('${p['code']}', '${p['label']}'),
                 ('other', 'Autre'),
               ],
-              selected: (c) =>
-                  c == 'other' ? _ruleset == null : _ruleset == c,
+              selected: (c) => c == 'other' ? _ruleset == null : _ruleset == c,
               onTap: (c) => setState(() {
                 if (c == 'other') {
                   _ruleset = null;
                 } else {
-                  _applyPreset(
-                    _kindPresets.firstWhere((p) => p['code'] == c),
-                  );
+                  _applyPreset(_kindPresets.firstWhere((p) => p['code'] == c));
                 }
               }),
             ),

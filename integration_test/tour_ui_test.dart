@@ -386,7 +386,11 @@ void main() {
     await underDock(tester, 'arsenal');
     await home(tester);
     await tab(tester, 0);
-    await typeIn(tester, find.byKey(const ValueKey('arsenal-search')), 'pector');
+    await typeIn(
+      tester,
+      find.byKey(const ValueKey('arsenal-search')),
+      'pector',
+    );
     await screen(tester, 'arsenal_recherche');
     await home(tester);
     await screen(
@@ -417,7 +421,11 @@ void main() {
     await screen(tester, 'reglages_seance');
     await home(tester);
     await tab(tester, 3);
-    await typeIn(tester, find.byKey(const ValueKey('settings-search')), 'repos');
+    await typeIn(
+      tester,
+      find.byKey(const ValueKey('settings-search')),
+      'repos',
+    );
     await screen(tester, 'reglages_recherche');
     await home(tester);
     await tab(tester, 3);

@@ -214,9 +214,7 @@ void main() {
       final raw = jsonEncode(backupOf(store)..['pilotage'] = {'B4': 66});
       final before = store.exportAll();
       await tester.pumpWidget(
-        page(
-          launcher((c) => confirmAndImport(c, raw, appVersion: 'test')),
-        ),
+        page(launcher((c) => confirmAndImport(c, raw, appVersion: 'test'))),
       );
       await tester.tap(find.text('Lancer'));
       await tester.pumpAndSettle();

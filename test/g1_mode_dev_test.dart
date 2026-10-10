@@ -238,10 +238,7 @@ void main() {
           );
           await tester.tap(find.text('Importer normal'));
           await tester.pumpAndSettle();
-          expect(
-            find.text('Importer une sauvegarde de test ?'),
-            findsNothing,
-          );
+          expect(find.text('Importer une sauvegarde de test ?'), findsNothing);
           expect(find.byType(ImportPreviewDialog), findsOneWidget);
           Navigator.of(tester.element(find.byType(ImportPreviewDialog))).pop();
           await tester.pumpAndSettle();

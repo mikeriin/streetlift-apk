@@ -81,7 +81,7 @@ void main() {
       expect(find.byType(KSearchField), findsOneWidget);
       expect(find.text('Exercice ou muscle'), findsOneWidget);
       expect(
-        find.bySemanticsLabel('Rechercher un exercice ou un muscle'),
+        find.bySemanticsLabel(RegExp('Rechercher un exercice ou un muscle')),
         findsWidgets,
       );
       expect(find.text('Consulter'), findsOneWidget);
@@ -112,6 +112,13 @@ void main() {
       await tester.enterText(find.byType(TextField), 'pector');
       await tester.pumpAndSettle();
       final muscles = find.byKey(const ValueKey('arsenal-results-muscles'));
+      // Les exercices viennent d'abord : le groupe « Muscles » est plus bas.
+      await tester.scrollUntilVisible(
+        muscles,
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
       expect(muscles, findsOneWidget);
       // Même règle de correspondance que la bibliothèque (search.dart).
       final hits = searchMuscles('pector');

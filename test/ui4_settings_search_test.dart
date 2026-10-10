@@ -149,9 +149,7 @@ void main() {
       );
     }
     // Tous les mots sont requis.
-    expect(searchSettings('repos son').map((e) => e.id).toList(), [
-      'sound',
-    ]);
+    expect(searchSettings('repos son').map((e) => e.id).toList(), ['sound']);
     expect(searchSettings(''), isEmpty);
     expect(searchSettings('   '), isEmpty);
   });
@@ -211,9 +209,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('chaque page d’aide s’ouvre depuis son résultat', (
-    tester,
-  ) async {
+  testWidgets('chaque page d’aide s’ouvre depuis son résultat', (tester) async {
     phone(tester);
     for (final e in settingsSearchIndex) {
       if (e.page != null) continue;

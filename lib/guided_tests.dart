@@ -523,8 +523,7 @@ class GuidedTestsScreen extends StatelessWidget {
                     key: ValueKey('guided-test-${pr.key}'),
                     icon: Icons.flag_outlined,
                     title:
-                        store.content.byId[pr.exerciseId]?.nom ??
-                        pr.exerciseId,
+                        store.content.byId[pr.exerciseId]?.nom ?? pr.exerciseId,
                     subtitle: pr.test.title,
                     onTap: () => openGuidedTest(context, pr),
                   ),

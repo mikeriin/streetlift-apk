@@ -235,9 +235,7 @@ class _NumTile extends StatelessWidget {
         builder: (context, constraints) {
           final stacked =
               constraints.maxWidth < KSize.stepperRowMin ||
-              MediaQuery.textScalerOf(
-                    context,
-                  ).scale(KType.libelle.fontSize!) >
+              MediaQuery.textScalerOf(context).scale(KType.libelle.fontSize!) >
                   KType.corpsFort.fontSize!;
           if (stacked) {
             return Column(
