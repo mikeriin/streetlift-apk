@@ -1,0 +1,9 @@
+
+::group::✅ /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_ecrans_capture_test.dart: principaux écrans : rendus comparables avant / après L5
+ERREUR historique_seance 320 200 % : A RenderFlex overflowed by 56 pixels on the right.
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/visual_capture_test.dart: rendus bordeaux et anthracite : écrans, thèmes et largeur compacte
+::endgroup::
+
+🎉 2 tests passed.

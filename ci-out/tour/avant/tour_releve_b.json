@@ -1,0 +1,104 @@
+{
+  "partie": "b",
+  "theme": "clair",
+  "palette": "neon",
+  "palette_enregistree": "jaune",
+  "session": "personnelle",
+  "ecrans": {
+    "accueil": true,
+    "accueil_bas": true,
+    "mon_programme": true,
+    "mon_programme_bas": true,
+    "ma_saison": true,
+    "evolution": true,
+    "ou_j_en_suis": true,
+    "jour_j": true,
+    "seance": true,
+    "seance_exercice": true,
+    "seance_tableau": true,
+    "seance_menu": true,
+    "seance_liste": true,
+    "seance_consignes": false,
+    "seance_fin": false,
+    "stats": true,
+    "stats_bas": true,
+    "stats_parcours": true,
+    "stats_parcours_bas": true,
+    "stats_performances": true,
+    "stats_performances_bas": true,
+    "stats_historique": true,
+    "stats_historique_bas": true,
+    "records": true,
+    "arsenal": true,
+    "arsenal_recherche": true,
+    "anatomie_pectoraux": true,
+    "reglages": true,
+    "reglages_bas": true,
+    "reglages_apparence": true,
+    "reglages_contraste": false,
+    "reglages_seance": true,
+    "reglages_recherche": true,
+    "reglages_donnees": true,
+    "reglages_aide": true,
+    "profil": true,
+    "references": true
+  },
+  "parcours": {
+    "seance_fiche": null,
+    "seance_douleur": null,
+    "seance_references": {
+      "appuis": 2,
+      "chemin": 1
+    },
+    "mon_programme": {
+      "appuis": 3,
+      "chemin": 2
+    },
+    "ma_saison": {
+      "appuis": 4,
+      "chemin": 2
+    },
+    "evolution": {
+      "appuis": 4,
+      "chemin": 2
+    },
+    "jour_j": {
+      "appuis": 5,
+      "chemin": 2
+    },
+    "mes_references": {
+      "appuis": 3,
+      "chemin": 3
+    },
+    "reglage_repos": {
+      "appuis": 2,
+      "chemin": 1
+    },
+    "records": null,
+    "mes_references_stats": {
+      "appuis": 3,
+      "chemin": 1
+    },
+    "objectif_semaine": {
+      "appuis": 3,
+      "chemin": 1
+    },
+    "reglage_repos_recherche": null,
+    "exercices_muscle_recherche": null
+  },
+  "sous_le_dock": {
+    "accueil": [],
+    "stats": [],
+    "stats_parcours": [],
+    "stats_performances": [],
+    "stats_historique": [],
+    "arsenal": [],
+    "reglages": []
+  },
+  "accueil": true,
+  "session_de_test_active": false,
+  "palette_lue": "jaune",
+  "seance": "S13-J3",
+  "carte_du_moment": false,
+  "captures": 37
+}

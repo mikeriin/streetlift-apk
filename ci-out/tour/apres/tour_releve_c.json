@@ -1,0 +1,122 @@
+{
+  "partie": "c",
+  "theme": "sombre",
+  "palette": "neon",
+  "palette_enregistree": "neon",
+  "session": "test",
+  "ecrans": {
+    "accueil": true,
+    "accueil_bas": true,
+    "mon_programme": true,
+    "mon_programme_bas": true,
+    "ma_saison": true,
+    "evolution": true,
+    "ou_j_en_suis": true,
+    "jour_j": true,
+    "seance": true,
+    "seance_exercice": true,
+    "seance_tableau": true,
+    "seance_menu": true,
+    "seance_liste": true,
+    "seance_consignes": true,
+    "seance_fin": true,
+    "stats": true,
+    "stats_bas": true,
+    "stats_parcours": true,
+    "stats_parcours_bas": true,
+    "stats_performances": true,
+    "stats_performances_bas": true,
+    "stats_historique": true,
+    "stats_historique_bas": true,
+    "stats_feuille_personnage": true,
+    "records": true,
+    "arsenal": true,
+    "arsenal_recherche": true,
+    "anatomie_pectoraux": true,
+    "reglages": true,
+    "reglages_bas": true,
+    "reglages_apparence": true,
+    "reglages_contraste": true,
+    "reglages_seance": true,
+    "reglages_recherche": true,
+    "reglages_donnees": true,
+    "reglages_aide": true,
+    "profil": true,
+    "references": true
+  },
+  "parcours": {
+    "seance_fiche": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "seance_douleur": {
+      "appuis": 4,
+      "chemin": 0
+    },
+    "seance_references": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "mon_programme": {
+      "appuis": 1,
+      "chemin": 0
+    },
+    "ma_saison": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "evolution": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "jour_j": {
+      "appuis": 3,
+      "chemin": 0
+    },
+    "mes_references": {
+      "appuis": 3,
+      "chemin": 0
+    },
+    "reglage_repos": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "records": {
+      "appuis": 3,
+      "chemin": 0
+    },
+    "mes_references_stats": {
+      "appuis": 3,
+      "chemin": 0
+    },
+    "objectif_semaine": {
+      "appuis": 2,
+      "chemin": 0
+    },
+    "reglage_repos_recherche": {
+      "appuis": 3,
+      "chemin": 0,
+      "saisie": "repos"
+    },
+    "exercices_muscle_recherche": {
+      "appuis": 4,
+      "chemin": 0,
+      "saisie": "pectoraux"
+    }
+  },
+  "sous_le_dock": {
+    "accueil": [],
+    "stats": [],
+    "stats_parcours": [],
+    "stats_performances": [],
+    "stats_historique": [],
+    "arsenal": [],
+    "reglages": []
+  },
+  "accueil": true,
+  "session_de_test_active": true,
+  "palette_lue": "neon",
+  "seance": "S13-J3",
+  "carte_du_moment": false,
+  "captures": 38
+}

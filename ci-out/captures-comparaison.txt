@@ -1,0 +1,65 @@
+validation_2.5.0_arsenal_dark.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_2.5.0_programme_dark.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_2.5.0_stats_apercu_dark.png	1315356 pixels différents	zone (0, 0, 780, 1688)
+validation_2.5.0_stats_vide_dark.png	1316181 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_320_200pct_depart_programme.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_320_200pct_references.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_320_200pct_reglages.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_320_200pct_reglages_chronometres.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_320_200pct_seance.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_320_200pct_stats_apercu.png	918447 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_320_200pct_stats_historique.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_320_200pct_stats_parcours.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_320_200pct_stats_performances.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_depart_programme_clair.png	1186397 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_depart_programme_sombre.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_historique_seance_clair.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_historique_seance_sombre.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_programme_320_200pct_clair.png	887052 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_programme_320_200pct_sombre.png	921600 pixels différents	zone (0, 0, 640, 1440)
+validation_L5-C_apres_references_clair.png	1105106 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_references_sombre.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_reglages_chronometres_clair.png	914927 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_reglages_chronometres_sombre.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_stats_apercu_clair.png	1247880 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_stats_apercu_sombre.png	1315431 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_stats_historique_clair.png	1133769 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_stats_historique_sombre.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_stats_parcours_clair.png	1109659 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_stats_parcours_sombre.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_stats_performances_clair.png	1097007 pixels différents	zone (0, 0, 780, 1688)
+validation_L5-C_apres_stats_performances_sombre.png	1316640 pixels différents	zone (0, 0, 780, 1688)
+validation_2.5.0_arbre_dark_320.png	sans correspondance
+validation_2.5.0_arbre_light_320.png	sans correspondance
+validation_2.5.0_arsenal_light.png	sans correspondance
+validation_2.5.0_chronometres_dark.png	sans correspondance
+validation_2.5.0_chronometres_light.png	sans correspondance
+validation_2.5.0_historique_dark.png	sans correspondance
+validation_2.5.0_historique_light.png	sans correspondance
+validation_2.5.0_programme_dark_320.png	sans correspondance
+validation_2.5.0_programme_dark_390_760.png	sans correspondance
+validation_2.5.0_programme_light.png	sans correspondance
+validation_2.5.0_programme_light_320.png	sans correspondance
+validation_2.5.0_programme_light_390_760.png	sans correspondance
+validation_2.5.0_progression_dark.png	sans correspondance
+validation_2.5.0_progression_light.png	sans correspondance
+validation_2.5.0_references_dark.png	sans correspondance
+validation_2.5.0_references_light.png	sans correspondance
+validation_2.5.0_reglages_dark.png	sans correspondance
+validation_2.5.0_reglages_light.png	sans correspondance
+validation_2.5.0_seance_dark.png	sans correspondance
+validation_2.5.0_seance_light.png	sans correspondance
+validation_2.5.0_stats_activite_dark.png	sans correspondance
+validation_2.5.0_stats_activite_light.png	sans correspondance
+validation_2.5.0_stats_apercu_light.png	sans correspondance
+validation_2.5.0_stats_dark_320.png	sans correspondance
+validation_2.5.0_stats_history_dark.png	sans correspondance
+validation_2.5.0_stats_history_light.png	sans correspondance
+validation_2.5.0_stats_journey_dark.png	sans correspondance
+validation_2.5.0_stats_journey_light.png	sans correspondance
+validation_2.5.0_stats_light_320.png	sans correspondance
+validation_2.5.0_stats_performance_dark.png	sans correspondance
+validation_2.5.0_stats_performance_light.png	sans correspondance
+validation_L5-C_apres_320_200pct_historique_seance.png	sans correspondance
+validation_L5-C_apres_320_200pct_historique_seance_ERREUR.png	sans correspondance
+Total : 31 paires, 0 identiques, 31 différentes, 33 sans correspondance

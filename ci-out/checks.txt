@@ -1,0 +1,13 @@
+lot=FUSION2
+rapide=false
+pub=success
+format=success
+analyze=success
+ui_tokens_zone=failure
+python=success
+dart=success
+dart_dev=success
+captures_ui=success
+captures=success
+build_debug=success
+build_profile=success
