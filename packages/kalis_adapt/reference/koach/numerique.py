@@ -124,7 +124,9 @@ def interval_moments(m, v, s2, a, b):
 
 
 def _category_mass(a, b, u, t):
-    """P(a <= u + e <= b), e ~ N(0, t²)."""
+    """P(a <= u + e <= b), e ~ N(0, t²). `math.erfc` (libm) pour la vitesse
+    de la référence Python : égale à `erfc` du module à 2e-13 près (testé) ;
+    le portage Dart appelle `erfc`."""
     if a == -math.inf:
         return 1.0 if b == math.inf else 0.5 * math.erfc(-(b - u) / t / SQRT2)
     if b == math.inf:
@@ -154,24 +156,66 @@ def category_moments(m, v, a, b, noise_var, steps=52, span=6.5, gross=0.0, gross
     sd = math.sqrt(v)
     if sd <= 0.0:
         return 0.0, m, v
-    h = span / steps
+    # Pas de la grille choisi sur la vraisemblance et non sur l'a priori :
+    # au plus la moitié de sa largeur (écart-type du bruit le plus petit
+    # aux bornes et à la moyenne, ou demi-largeur de l'intervalle). Sans
+    # cela, un a priori très large devant le bruit (exercice nouveau, noteur
+    # précis) laisse la vraisemblance tomber entre deux points.
+    nv_min = noise_var(m)
+    for x in (a, b):
+        if x != math.inf and x != -math.inf:
+            nx = noise_var(x)
+            if nx < nv_min:
+                nv_min = nx
+    large = math.sqrt(nv_min) if nv_min > 0.0 else 0.0
+    fini = a != -math.inf and b != math.inf
+    if fini and 0.5 * (b - a) > large:
+        large = 0.5 * (b - a)
+    zlo = -span
+    zhi = span
+    if fini:
+        # Intervalle fermé : hors de [a − 8T, b + 8T] (T : plus grand
+        # écart-type du bruit, queue lourde comprise) la vraisemblance est
+        # nulle ; la grille ne couvre que cette fenêtre.
+        nv_max = noise_var(m)
+        for x in (a, b):
+            nx = noise_var(x)
+            if nx > nv_max:
+                nv_max = nx
+        T = math.sqrt(nv_max + (gross_sd * gross_sd if gross > 0.0 else 0.0))
+        z1 = (a - 8.0 * T - m) / sd
+        z2 = (b + 8.0 * T - m) / sd
+        if z1 > zlo:
+            zlo = z1
+        if z2 < zhi:
+            zhi = z2
+        if zhi <= zlo:
+            return interval_moments(m, v, noise_var(m), a, b)
+    n = 2 * steps
+    if large > 0.0:
+        besoin = int(math.ceil((zhi - zlo) * sd / (0.5 * large)))
+        if besoin > n:
+            n = besoin if besoin < 1200 else 1200
+    h = (zhi - zlo) / n
     sw = 0.0
     s0 = 0.0
     s1 = 0.0
     s2 = 0.0
-    for i in range(-steps, steps + 1):
-        z = i * h
+    for i in range(0, n + 1):
+        z = zlo + i * h
         u = m + sd * z
         w = math.exp(-0.5 * z * z)
         nv = noise_var(u)
         like = _category_mass(a, b, u, math.sqrt(nv))
         if gross > 0.0:
             like = (1.0 - gross) * like + gross * _category_mass(a, b, u, math.sqrt(nv + gross_sd * gross_sd))
-        sw += w
         wl = w * like
         s0 += wl
         s1 += wl * z
         s2 += wl * z * z
+    # Masse a priori totale (analytique : la grille peut ne couvrir qu'une
+    # fenêtre), dans l'unité de la somme (pas h).
+    sw = math.sqrt(2.0 * math.pi) / h
     if s0 < 1e-280 * sw:
         return interval_moments(m, v, noise_var(m), a, b)
     mz = s1 / s0
@@ -228,3 +272,42 @@ def dart_round(x):
 
 def clamp(x, low, high):
     return low if x < low else (high if x > high else x)
+
+
+def cholesky_semi(S, tol=1e-12):
+    """Facteur triangulaire inférieur L (liste de listes) tel que L Lᵀ = S pour
+    une matrice symétrique semi-définie positive. Algorithme de Cholesky
+    en boucles explicites, sommes dans l'ordre des indices : portable à
+    l'identique (pas de bibliothèque d'algèbre). Un pivot non positif (à
+    [tol] × la plus grande diagonale près) annule sa colonne : la direction
+    correspondante est déjà portée par les colonnes précédentes."""
+    k = len(S)
+    L = [[0.0] * k for _ in range(k)]
+    grand = 0.0
+    for j in range(k):
+        v = float(S[j][j])
+        if v > grand:
+            grand = v
+    seuil = tol * grand
+    for j in range(k):
+        d = float(S[j][j])
+        for q in range(j):
+            d -= L[j][q] * L[j][q]
+        if d <= seuil:
+            continue
+        r = math.sqrt(d)
+        L[j][j] = r
+        for i in range(j + 1, k):
+            x = float(S[i][j])
+            for q in range(j):
+                x -= L[i][q] * L[j][q]
+            L[i][j] = x / r
+    return L
+
+
+def arrondi(x, decimales=0):
+    """Arrondi portable (demi vers le haut, en flottants) : floor(x·10^n +
+    0,5) / 10^n. Remplace `round` de Python (arrondi au pair, décimal exact),
+    sans équivalent identique en Dart."""
+    f = 10.0 ** decimales
+    return math.floor(x * f + 0.5) / f

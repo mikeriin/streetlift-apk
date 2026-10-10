@@ -8,7 +8,8 @@ réussite, le tout sous les contraintes dures de sécurité.
 import math
 
 from .numerique import norm_cdf, norm_ppf, clamp
-from .modele import FI, HH
+from .numerique import arrondi as arrondi_decimal
+from .modele import FI, HH, DS
 from .securite import SEMAINES_VERROUILLEES
 
 INF = math.inf
@@ -29,6 +30,134 @@ def flammes_de_rir(rir):
     if h == 1:
         return 9
     return 11 - h
+
+
+def arrondi(x):
+    """Arrondi au plus proche, moitié vers le haut (`round` de Dart pour
+    x ≥ 0)."""
+    return int(math.floor(x + 0.5))
+
+
+def equivalent_standard(item):
+    """L'item sans sa technique, en séries classiques au même travail
+    approché (`standardEquivalent`, A/session.dart:1622-1686) : paliers
+    (vagues, pyramide) au nombre médian de répétitions ; échelle au milieu ;
+    densité et contre-la-montre en trois séries d'un quart du total ; cluster
+    d'une traite aux deux tiers du total ; les autres gardent séries et
+    plage. Les règles d'autorégulation liées à la série de tête tombent.
+    Modifie [item] en place."""
+    t = item.get('technique') or {}
+    kind = t.get('kind')
+    sets = item.get('sets')
+    low = item.get('repsLow')
+    high = item.get('repsHigh')
+
+    def mediane(reps):
+        r = sorted(reps)
+        return r[len(r) // 2]
+
+    if kind == 'wave' and t.get('waveReps'):
+        low = high = mediane(t['waveReps'])
+    elif kind == 'pyramid' and t.get('pyramidReps'):
+        low = high = mediane(t['pyramidReps'])
+    elif kind == 'ladder':
+        if t.get('ladderStart') is not None and t.get('ladderTop') is not None:
+            low = high = (t['ladderStart'] + t['ladderTop']) // 2
+    elif kind in ('density', 'for_time') and low is not None and high is not None:
+        total = t.get('totalRepsTarget') or high
+        each = total // 4 if total // 4 >= 1 else 1
+        sets = 1 if total < 4 else 3
+        low = high = each
+    elif kind == 'cluster':
+        mini = t.get('miniSets')
+        each = t.get('miniSetReps')
+        if mini is not None and each is not None and low is not None and high is not None:
+            whole = (2 * mini * each + 2) // 3
+            low = high = whole if whole >= 1 else 1
+    regles = [r for r in item.get('autoregulation') or []
+              if r.get('kind') not in ('backoff_from_top_set', 'stop_on_rep_drop')]
+    item['sets'] = sets
+    item['repsLow'] = low
+    item['repsHigh'] = high
+    item['technique'] = None
+    item['setTargets'] = None
+    item['autoregulation'] = regles or None
+    return item
+
+
+def secondes_prescrites(item, sets, vitesse):
+    """Durée prescrite d'une ligne d'endurance, toutes séries (secondes) ;
+    0 sans durée ni distance (`prescribedSeconds`, A/endurance.dart:283-293)."""
+    s = item.get('secondsHigh')
+    if s is None:
+        s = item.get('secondsLow')
+    if s is not None:
+        return float(s * sets)
+    m = item.get('distanceMeters')
+    if m is not None and vitesse > 0:
+        return m * sets / vitesse
+    return 0.0
+
+
+def reduire(item, part):
+    """Ligne ramenée à la part [part] de l'écrit (`scaled`,
+    A/endurance.dart:310-381) : nombre de séries d'un fractionné, durée ou
+    distance de chaque série d'une course continue, répétitions d'une pièce
+    de conditionnement ; jamais au-dessus de l'écrit, arrondi vers le bas
+    (minute au-delà de 300 s, sinon 5 s ; 100 m ; une répétition ; une
+    calorie). Modifie [item] en place ; vrai si quelque chose a changé."""
+    if part >= 1:
+        return False
+    sets = item.get('sets', 0)
+    if sets > 1 and item.get('repsHigh') is None and item.get('repsLow') is None:
+        n = int(math.floor(sets * part))
+        if n < 1:
+            n = 1
+        if n == sets:
+            return False
+        item['sets'] = n
+        return True
+
+    def bas(v, unite, plancher):
+        if v is None:
+            return None
+        x = int(math.floor(v * part / unite)) * unite
+        if x < plancher:
+            x = plancher if plancher < v else v
+        return x
+
+    def bas_reel(v, unite):
+        if v is None:
+            return None
+        x = math.floor(v * part / unite) * unite
+        return (v if v < unite else unite) if x < unite else x
+
+    hi = item.get('secondsHigh')
+    lo = item.get('secondsLow')
+    rh = item.get('repsHigh')
+    rl = item.get('repsLow')
+    m = item.get('distanceMeters')
+    cal = item.get('calories')
+    n_hi = bas(hi, 60 if hi is not None and hi >= 300 else 5, 5)
+    n_lo = bas(lo, 60 if lo is not None and lo >= 300 else 5, 5)
+    if n_lo is not None and n_hi is not None and n_lo > n_hi:
+        n_lo = n_hi
+    n_rh = bas(rh, 1, 1)
+    n_rl = bas(rl, 1, 1)
+    if n_rl is not None and n_rh is not None and n_rl > n_rh:
+        n_rl = n_rh
+    n_m = bas_reel(m, 100)
+    n_cal = bas_reel(cal, 1)
+    if n_hi == hi and n_lo == lo and n_rh == rh and n_rl == rl and n_m == m and n_cal == cal:
+        return False
+    item['secondsHigh'] = n_hi
+    item['secondsLow'] = n_lo
+    item['repsHigh'] = n_rh
+    item['repsLow'] = n_rl
+    item['distanceMeters'] = n_m
+    item['calories'] = n_cal
+    item['setTargets'] = None
+    return True
 
 
 class Grille(object):
@@ -84,7 +213,8 @@ class Memoire(object):
     __slots__ = ('jour', 'charge_max', 'reps_max', 'sec_max', 'sec_total', 'echec', 'schemas',
                  'jours', 'cran_jour', 'haut_de_plage', 'facile', 'bas_manque', 'meilleur_sec',
                  'charge_seance', 'reps_seance', 'sec_seance', 'echec_seance', 'total_seance',
-                 'faciles_seance', 'charges_reussies', 'flammes_seance', 'charge_derniere')
+                 'faciles_seance', 'charges_reussies', 'flammes_seance', 'charge_derniere',
+                 'marques', 'sec_slot', 'forme', 'alerte_jour', 'alerte_part')
 
     def __init__(self):
         self.jour = None
@@ -109,6 +239,14 @@ class Memoire(object):
         self.charges_reussies = []
         self.flammes_seance = None
         self.charge_derniere = None   # plus lourde charge du dernier passage de l'exercice
+        # slotId -> (charge de base d'une semaine de charge, charge de base,
+        # répétitions du schéma) de la dernière séance de l'emplacement
+        # (`SlotMark`, A/coach.dart:323-380, 605-617) : règle du schéma changé.
+        self.marques = {}
+        self.sec_slot = {}            # slotId -> secondes de tenue de la dernière séance de l'emplacement
+        self.forme = []               # (jour, ln capacité + effet de séance), trois au plus (A6.2)
+        self.alerte_jour = None       # jour de la dernière alerte de surmenage (A6.2)
+        self.alerte_part = None
 
 
 class Seances(object):
@@ -124,8 +262,16 @@ class Seances(object):
         self.jour = 0
         self.palier = 0
         self.raisons = []
-        self.courses = []        # (jour, secondes) des 30 derniers jours
-        self.jours_durs = []     # jours de conditionnement dur
+        # Endurance (règles A10 de 0.3.1, `EnduranceHistory`,
+        # A/endurance.dart:96-228), recalculée du journal par `fermer` :
+        self.courses = []        # (jour, secondes, flammes notées max, flammes visées) d'une séance
+        self.jours_durs = []     # jours de conditionnement dur (pièce notée >= endurance_dure_flammes)
+        self.jours_course_dure = []  # jours de course dure (notée >= endurance_dure_flammes)
+        self.jours_actifs = []   # jours d'entraînement (au moins une série hors échauffement)
+        self.course_metres = 0.0     # distance et durée des courses qui disent les deux (vitesse)
+        self.course_secondes = 0.0
+        self.jours_seances = []  # jours des séances fermées (reprise après coupure, A6.1)
+        self.retour = None       # jour de la séance de retour de la dernière coupure
         self.derniere_seance = None
         self.coupure = 0
         self.contexte = None
@@ -254,8 +400,13 @@ class Seances(object):
         if contexte and contexte.get('semaine') is not None:
             self.g.noter_semaine(contexte['semaine'], contexte.get('genre'), contexte.get('intention'))
         self.palier, self.decalage = self.g.palier_bilan(bilan)
-        self.coupure = 0 if self.derniere_seance is None else jour - self.derniere_seance
+        self.coupure = self._coupure(jour)
+        self.retour = self._retour(jour)
         self.raisons = []
+        # A2.2 : renvoi vers un professionnel à la première séance d'un
+        # arrêt, puis à la première séance de chaque semaine d'arrêt.
+        for z in self.g.renvois():
+            self._raison('koach.douleur_persistante', zone=z, consulter=True)
         self.plans = {}
         self.budget_zone = {}
         for z in list(self.g.zones):
@@ -272,6 +423,49 @@ class Seances(object):
             mem.echec_seance = 0
             mem.total_seance = 0.0
             mem.faciles_seance = 0
+
+    def _coupure(self, jour):
+        """Durée de la coupure qui vaut encore aujourd'hui (règle A6.1 de
+        0.3.1, A/session.dart:1096-1113) : au moins `coupure_j` jours depuis
+        la dernière séance, ou une telle coupure dont la séance de retour
+        date de `coupure_fenetre_j` jours au plus (toute la semaine du
+        retour) ; 0 sinon."""
+        js = self.jours_seances
+        s = self.s
+        if not js:
+            return 0
+        if jour - js[-1] >= s['coupure_j']:
+            return jour - js[-1]
+        for i in range(len(js) - 1, 0, -1):
+            if js[i] < jour - s['coupure_fenetre_j']:
+                break
+            if js[i] - js[i - 1] >= s['coupure_j']:
+                return js[i] - js[i - 1]
+        return 0
+
+    def _retour(self, jour):
+        """Jour de la séance de retour de la dernière coupure d'au moins
+        `coupure_j` jours (aujourd'hui si la coupure finit aujourd'hui), ou
+        None. Sert à interdire mesures et tests tant que l'exercice n'a pas été
+        refait `retour_seances_avant_mesure` fois depuis le retour (plus
+        prudent que 0.3.1)."""
+        js = self.jours_seances
+        s = self.s
+        if not js:
+            return None
+        if jour - js[-1] >= s['coupure_j']:
+            return jour
+        for i in range(len(js) - 1, 0, -1):
+            if js[i] - js[i - 1] >= s['coupure_j']:
+                return js[i]
+        return None
+
+    def _apres_retour(self, mem):
+        """Séances de l'exercice faites depuis le retour de coupure (None hors
+        retour)."""
+        if self.retour is None:
+            return None
+        return sum(1 for j in mem.jours if j >= self.retour)
 
     def _dose_semaine(self, z, semaine):
         return self.dose_zone.get(z, {}).get(semaine, 0)
@@ -337,6 +531,9 @@ class Seances(object):
             ex_id = item['exerciseId']
             if plan is not None and ex_id not in testes and item.get('kind') == 'work':
                 vt = self._vrai_test(servi, plan, self.m.pistes.get(ex_id))
+                if vt is not None and not self._duree_permet_test(items, item, vt, sum(
+                        1 for x in out if x.get('koach') == 'vrai_test')):
+                    vt = None
                 if vt is not None:
                     # Vrai test programmé : montée de charge servie comme un
                     # test, à la place d'une série de travail.
@@ -350,15 +547,22 @@ class Seances(object):
                             'loadBasis': item.get('loadBasis'), 'toCalibrate': False,
                             'reasons': [{'code': 'koach.vrai_test', 'params': {}}], 'koach': 'vrai_test'}
                     p2 = dict(plan)
-                    p2.update({'test': True, 'rampe': vt, 'echecs': 0, 'ecrit': test, 'charge_item': None})
+                    p2.update({'test': True, 'rampe': vt, 'echecs': 0, 'ecrit': test, 'charge_item': None,
+                               'durs': 0, 'durs_max': max(1, int(item.get('sets') or 0) - 1)})
                     self.plans[slot] = p2
                     self._raison('koach.vrai_test', exercice=ex_id)
                     out.append(test)
-                    if servi['sets'] >= 3:
-                        servi['sets'] -= 1
+                    # Les deux séries proches de la limite de la montée (la
+                    # barre finale et sa confirmation) remplacent autant de
+                    # séries de travail : le volume dur du jour ne monte pas.
+                    retire = min(int(ta['rampe_series_travail']), servi['sets'] - 1)
+                    if retire > 0:
+                        servi['sets'] -= retire
                     plan['apres_test'] = True
+                    plan['slot_test'] = slot
+                    plan['series_ecrites'] = int(item.get('sets') or 0)
             out.append(servi)
-        return out
+        return self._endurance(out)
 
     def _raison(self, code, **params):
         self.raisons.append({'code': code, 'params': params})
@@ -372,7 +576,9 @@ class Seances(object):
         c = self.contexte or {}
         evenement = bool(c.get('jour_evenement'))
         niveaux, hits = zone if zone else ({}, set())
-        cond = self.g.conduite(niveaux, hits, est_test=est_test, depuis_jour=self.mem(ex_id).jour)
+        mem = self.mem(ex_id)
+        cond = self.g.conduite(niveaux, hits, est_test=est_test, depuis_jour=mem.jour, fiche=fiche,
+                               echauffement=echauffement)
         if cond['retire']:
             self._raison('koach.douleur_retrait', exercice=ex_id, zone=cond['zone'], cause=cond['raison'])
             return None
@@ -384,28 +590,44 @@ class Seances(object):
                 'sans_hausse': cond['sans_hausse'] or self.palier >= 1, 'rir_bonus': cond['rir'],
                 'rir_min': cond['rir_min'], 'part_max': cond['part_max'], 'echecs': 0,
                 'baisse': 1.0, 'verrou': self.verrouillee(), 'ecrit': item, 'tete': None,
-                'repere': False}
+                'repere': False, 'dose_plafonnee': cond['dose_plafonnee'], 'fragile': cond['fragile'],
+                'servi': servi}
+        if self.coupure > 0 and typ in ('charge', 'reps', 'tenue'):
+            # Semaine du retour après une coupure : aucune hausse au-dessus du
+            # dernier passage (plus prudent que 0.3.1, qui réduit seulement
+            # les séries, A6.1) ; pas de mesure ni de test (`_mesure_utile`).
+            plan['sans_hausse'] = True
+        if cond['appui_neutre'] is not None:
+            self._raison('koach.poignet_appui_neutre', exercice=ex_id, intensite=cond['appui_neutre'])
+        if cond['poignet_sensible'] and not echauffement:
+            self._raison('koach.poignet_dose', exercice=ex_id)
+        self._technique(servi, plan, cond)
         if self.palier == 1:
             plan['rir_bonus'] += self.s['bilan_rir_bonus']
         elif self.palier == 2:
             plan['rir_bonus'] += 2 * self.s['bilan_rir_bonus']
             plan['rir_min'] = max(plan['rir_min'] or 0.0, self.s['bilan_bas_rir_min'])
-        series = item.get('sets', 0)
-        if not est_test and not echauffement and typ in ('charge', 'reps', 'tenue'):
-            f = cond['series']
-            if f < 1.0:
-                series = max(1, int(math.floor(series * f + 1e-9)))
+        series = servi.get('sets', 0)
+        if not est_test and typ in ('charge', 'reps', 'tenue'):
+            if not echauffement:
+                f = cond['series']
+                if f < 1.0:
+                    series = max(1, int(math.floor(series * f + 1e-9)))
+            # A6.1 : reprise après coupure, échauffement compris
+            # (A/session.dart:1119-1146 ne l'excepte pas).
             if self.coupure >= self.s['coupure_j']:
                 n = int(math.floor(series * self.s['coupure_series'] + 0.5))
                 if 1 <= n < series:
                     series = n
                     self._raison('koach.reprise_coupure', exercice=ex_id, jours=self.coupure)
-            if self.palier == 2 and item.get('targetFlames') is not None:
-                plancher = 3 if role == 'main' else 2
-                if series > plancher:
-                    series -= 1
+            if not echauffement:
+                if self.palier == 2 and item.get('targetFlames') is not None:
+                    plancher = 3 if role == 'main' else 2
+                    if series > plancher:
+                        series -= 1
+                series = self._surmenage(ex_id, mem, role, series)
         if not echauffement:
-            for z in hits:
+            for z in sorted(hits):
                 if z in self.budget_zone:
                     reste = self.budget_zone[z]
                     if series > reste:
@@ -414,7 +636,7 @@ class Seances(object):
             if series <= 0:
                 self._raison('koach.douleur_retrait', exercice=ex_id, zone=cond['zone'], cause='reprise_dose')
                 return None
-            for z in hits:
+            for z in sorted(hits):
                 if z in self.budget_zone:
                     self.budget_zone[z] -= series
         servi['sets'] = series
@@ -422,6 +644,315 @@ class Seances(object):
         if typ in ('charge', 'reps', 'tenue') and not echauffement:
             servi['setTargets'] = None
         return servi
+
+    def _surmenage(self, ex_id, mem, role, series):
+        """A6.2 : pendant `surmenage_jours` jours après une alerte de
+        surmenage d'un mouvement principal, lignes − arrondi(lignes ×
+        `surmenage_coupe`) (au moins une, jamais la dernière), intensité
+        gardée, en semaine de charge seulement (A/coach.dart:923-958)."""
+        s = self.s
+        c = self.contexte or {}
+        a = mem.alerte_jour
+        if role != 'main' or a is None or series < 2:
+            return series
+        if not (0 < self.jour - a <= s['surmenage_jours']):
+            return series
+        if self.verrouillee() or (c.get('intention') or c.get('genre')) == 'maintenance':
+            return series
+        retire = int(math.floor(series * s['surmenage_coupe'] + 0.5))
+        if retire < 1:
+            retire = 1
+        self._raison('koach.surmenage', exercice=ex_id, series=retire, part=arrondi_decimal(mem.alerte_part, 3))
+        return series - retire
+
+    # ------------------------------------------------------------------
+    # Techniques (règle A9.2 de 0.3.1)
+    # ------------------------------------------------------------------
+    def _technique(self, servi, plan, cond):
+        """Technique au-dessus du niveau du profil : séries classiques
+        équivalentes (A/session.dart:951-973, `standardEquivalent`
+        A/session.dart:1622-1686). Technique qui intensifie : non servie sur
+        zone douloureuse ou en reprise, un jour de bilan au palier 2, en
+        semaine verrouillée ; excentrique accentué non servi à
+        `excentrique_echeance_j` jours ou moins d'une échéance, ni sur zone
+        fragile du profil (`servedTechnique`, A/coach.dart:753-790)."""
+        s = self.s
+        tech = servi.get('technique') or {}
+        kind = tech.get('kind')
+        if not kind or kind == 'standard':
+            return
+        c = self.contexte or {}
+        cause = None
+        if self.g.niveau < s['technique_niveau_acces'].get(kind, 0):
+            cause = 'niveau'
+        elif kind in s['techniques_intensives']:
+            jours = c.get('jours_avant_echeance')
+            if cond['raison'] is not None:
+                cause = 'douleur'
+            elif self.palier >= 2:
+                cause = 'bilan'
+            elif plan['verrou']:
+                cause = 'phase'
+            elif kind == 'accentuated_eccentric' and jours is not None and jours <= s['excentrique_echeance_j']:
+                cause = 'echeance'
+            elif kind == 'accentuated_eccentric' and cond['fragile']:
+                cause = 'antecedent'
+        if cause is None:
+            return
+        if cause == 'niveau':
+            equivalent_standard(servi)
+        else:
+            servi['technique'] = None
+        self._raison('koach.technique_retenue', exercice=servi['exerciseId'], technique=kind, cause=cause)
+
+    # ------------------------------------------------------------------
+    # Endurance et conditionnement (règles A2.3 et A10 de 0.3.1)
+    # ------------------------------------------------------------------
+    def _nature(self, ex_id):
+        """Nature d'un exercice non modélisé (`enduranceKindOf`,
+        A/endurance.dart:56-79) : 'course' (cardio avec matériel de course,
+        hors marche et éducatifs), 'cardio', 'conditionnement', 'mobilite' ;
+        None pour un exercice modélisé."""
+        fiche = self.fiches.get(ex_id) or {}
+        typ = fiche.get('type')
+        if typ == 'cardio':
+            if not ex_id.startswith('ca-marche') and not ex_id.startswith('ca-educatif') and \
+                    any(m in self.s['endurance_materiel_course'] for m in fiche.get('materiel') or []):
+                return 'course'
+            return 'cardio'
+        if typ == 'wod':
+            return 'conditionnement'
+        if typ == 'mobilite':
+            return 'mobilite'
+        return None
+
+    def _vitesse(self):
+        """Vitesse de course (m/s) : celle des courses du journal qui disent
+        distance et durée, sinon `endurance_vitesse` (A/endurance.dart:124-145)."""
+        if self.course_secondes > 0:
+            return self.course_metres / self.course_secondes
+        return self.s['endurance_vitesse']
+
+    def _qualite(self, item):
+        """Séance de course de qualité (`isQualityRun`, A/endurance.dart:295-306)."""
+        f = item.get('targetFlames')
+        if f is not None and rir_de_flammes(f) <= self.s['endurance_qualite_rir'] + 1e-9:
+            return True
+        if item.get('intensity') is not None or item.get('kind') == 'test':
+            return True
+        return any(q in item['exerciseId'] for q in self.s['endurance_qualite_ids'])
+
+    def _course_trop_dure(self):
+        """Une course des `endurance_dure_jours` jours d'avant notée au moins
+        `endurance_dure_marge` flammes au-dessus de la cible, ou au moins
+        `endurance_dure_flammes` + 1 sans cible (`recentRunTooHard`,
+        A/endurance.dart:240-255)."""
+        s = self.s
+        for (j, sec, f, t) in self.courses:
+            if j >= self.jour or j < self.jour - s['endurance_dure_jours'] or f is None:
+                continue
+            if (f - t >= s['endurance_dure_marge']) if t is not None else (f >= s['endurance_dure_flammes'] + 1):
+                return True
+        return False
+
+    def _serie_wod(self):
+        """Jours durs de conditionnement de suite juste avant aujourd'hui ; un
+        jour sans séance ne rompt pas la suite, deux oui ; fenêtre de
+        `wod_fenetre_j` jours (`conditioningStreak`, A/endurance.dart:257-281)."""
+        durs = set(self.jours_durs)
+        actifs = set(self.jours_actifs)
+        n = 0
+        d = self.jour - 1
+        trou = 0
+        while d >= self.jour - self.s['wod_fenetre_j']:
+            if d in durs:
+                n += 1
+                trou = 0
+            elif d not in actifs:
+                trou += 1
+            else:
+                break
+            if trou > 1:
+                break
+            d -= 1
+        return n
+
+    def _endurance(self, out):
+        """Conduite des lignes d'endurance de la séance servie
+        (`_enduranceDay`, A/session.dart:2476-2872) : jamais plus long, plus
+        loin, plus de répétitions ni plus dur que l'écrit. Renvoie la liste
+        des items servis (lignes retirées enlevées)."""
+        s = self.s
+        g = self.g
+        c = self.contexte or {}
+        natures = []
+        for it in out:
+            n = self._nature(it['exerciseId'])
+            if n is not None:
+                natures.append((it, n))
+        if not natures and self.jour - 1 not in self.jours_course_dure:
+            return out
+        retires = []          # identités des items retirés
+        vitesse = self._vitesse()
+        facile_f = flammes_de_rir(s['endurance_facile_rir'])
+
+        def retirer(it, **raison):
+            retires.append(id(it))
+            self._raison(raison.pop('code'), exercice=it['exerciseId'], **raison)
+
+        # 0. A2.3 : douleur qui dure au bas du corps, la course est retirée
+        # tant que l'arrêt tient (A/session.dart:2527-2567).
+        arrets = g.arrets_jambe()
+        if arrets:
+            for it, n in natures:
+                if n == 'course':
+                    retirer(it, code='koach.douleur_retrait', zone=arrets[0], cause='douleur_arret')
+        retour = g.reprise_jambe()
+        # 1. A10.1 : reprise après une coupure (A/session.dart:2569-2575).
+        (court_j, court_p), (long_j, long_p) = s['endurance_reprise'][0], s['endurance_reprise'][1]
+        actif = self.jours_actifs[-1] if self.jours_actifs else None
+        ecart = 0 if actif is None else self.jour - actif
+        reprise = long_p if ecart >= long_j else (court_p if ecart >= court_j else 1.0)
+        cause_reprise = 'reprise_%d' % (long_j if ecart >= long_j else court_j)
+        # 2. A10.2 : jour sans (A/session.dart:2577-2613).
+        if self.palier >= 2:
+            sans = 'bilan_fort'
+        elif self.palier >= 1:
+            sans = 'bilan'
+        elif g.douleur_jambe() >= s['endurance_douleur_jambe']:
+            sans = 'douleur_jambe'
+        elif self._course_trop_dure():
+            sans = 'course_dure'
+        else:
+            sans = None
+        pris = [it['exerciseId'] for it in out]
+        for it, n in natures:
+            if id(it) in retires or n == 'mobilite' or it.get('kind') == 'warmup':
+                continue
+            part = min(reprise, long_p) if (retour and n == 'course') else reprise
+            if part < 1 and reduire(it, part):
+                self._raison('koach.endurance_raccourcie', exercice=it['exerciseId'],
+                             cause=('reprise_%d' % long_j) if part < reprise else cause_reprise,
+                             part=arrondi(part * 100))
+            if sans is None:
+                continue
+            if n == 'course' and self._qualite(it):
+                # Qualité → course facile de la durée de travail écrite ;
+                # sans course facile faisable, la séance est retirée
+                # (A/session.dart:2647-2697).
+                travail = secondes_prescrites(it, it.get('sets', 0), vitesse)
+                fiche = self.fiches.get(it['exerciseId']) or {}
+                cf = s['endurance_course_facile']
+                facile = cf['tapis'] if 'tapis de course' in (fiche.get('materiel') or []) else cf['defaut']
+                ff = self.fiches.get(facile)
+                # Faisable : son matériel est celui de la séance écrite
+                # (Koach ne connaît pas le matériel du jour : plus prudent),
+                # lieu du jour compris.
+                faisable = ff is not None and \
+                    all(m in (fiche.get('materiel') or []) for m in ff.get('materiel') or []) and \
+                    (c.get('lieu') is None or c.get('lieu') in (ff.get('lieux') or [])) and \
+                    travail >= s['endurance_facile_min_s'] and facile not in pris
+                if faisable:
+                    minutes = int(travail // 60)
+                    if minutes < 1:
+                        minutes = 1
+                    f = it.get('targetFlames')
+                    pris.append(facile)
+                    ancien = it['exerciseId']
+                    it.update({'exerciseId': facile, 'sets': 1, 'repsLow': None, 'repsHigh': None,
+                               'distanceMeters': None, 'calories': None,
+                               'secondsLow': minutes * 60, 'secondsHigh': minutes * 60,
+                               'targetFlames': facile_f if (f is None or f > facile_f) else f,
+                               'intensity': None, 'setTargets': None, 'restSeconds': None,
+                               'autoregulation': None, 'groupId': None,
+                               'kind': 'work' if it.get('kind') == 'test' else it.get('kind'),
+                               'test': None})
+                    self._raison('koach.course_facile', exercice=ancien, remplacant=facile, cause=sans)
+                else:
+                    retirer(it, code='koach.endurance_retrait', cause=sans)
+                    continue
+            if self.palier >= 2 and n in ('course', 'cardio') and reduire(it, s['endurance_mauvais_jour']):
+                self._raison('koach.endurance_raccourcie', exercice=it['exerciseId'], cause=sans,
+                             part=arrondi(s['endurance_mauvais_jour'] * 100))
+        # 3. A10.3 : course du jour bornée à la plus longue course des
+        # `endurance_pic_jours` derniers jours + `endurance_pic`
+        # (A/session.dart:2716-2813).
+        plus_longue = 0.0
+        compte = 0
+        for (j, sec, f, t) in self.courses:
+            if j < self.jour and j >= self.jour - s['endurance_pic_jours']:
+                compte += 1
+                if sec > plus_longue:
+                    plus_longue = sec
+        courses = [it for it, n in natures if n == 'course' and id(it) not in retires and it.get('kind') != 'warmup']
+
+        def total():
+            return sum(secondes_prescrites(it, it.get('sets', 0), vitesse) for it in courses)
+
+        if compte >= s['endurance_pic_courses_min'] and plus_longue > 0:
+            plafond = plus_longue * (1 + s['endurance_pic'])
+            avant = total()
+            if avant > plafond + 1e-6:
+                facteur = plafond / avant
+                for it in courses:
+                    change = False
+                    if it.get('kind') == 'test':
+                        # Test plus long que la borne : course bornée à effort
+                        # modéré, test reporté.
+                        f = it.get('targetFlames')
+                        it.update({'kind': 'work', 'test': None, 'intensity': None, 'setTargets': None,
+                                   'targetFlames': None if f is None else min(f, facile_f + 1)})
+                        change = True
+                    if reduire(it, facteur) or change:
+                        self._raison('koach.course_bornee', exercice=it['exerciseId'],
+                                     part=arrondi(s['endurance_pic'] * 100))
+                garde = 0
+                while total() > plafond + 1e-6 and garde < 50:
+                    garde += 1
+                    long_it = None
+                    for it in courses:
+                        if long_it is None or secondes_prescrites(it, it.get('sets', 0), vitesse) > \
+                                secondes_prescrites(long_it, long_it.get('sets', 0), vitesse):
+                            long_it = it
+                    if long_it is None:
+                        break
+                    if long_it.get('sets', 0) > 1:
+                        long_it['sets'] -= 1
+                    else:
+                        essai = dict(long_it)
+                        if not reduire(essai, s['endurance_bornee_reduction']) or \
+                                secondes_prescrites(essai, 1, vitesse) >= secondes_prescrites(long_it, 1, vitesse):
+                            break
+                        long_it.clear()
+                        long_it.update(essai)
+        # 4. A10.4 : conditionnement mis à l'échelle (A/session.dart:2815-2846).
+        cause_wod = sans if (sans is not None and sans != 'course_dure') else \
+            ('jours_durs' if self._serie_wod() >= s['wod_jours_durs'] else None)
+        if cause_wod is not None:
+            for it, n in natures:
+                if n != 'conditionnement' or id(it) in retires or it.get('kind') == 'warmup':
+                    continue
+                if not reduire(it, s['wod_echelle']):
+                    continue
+                f = it.get('targetFlames')
+                if f is not None and f > facile_f + 1:
+                    it['targetFlames'] = f - 1
+                self._raison('koach.wod_echelle', exercice=it['exerciseId'], cause=cause_wod,
+                             part=arrondi(s['wod_echelle'] * 100))
+        # 5. A10.5 : course dure la veille, une flamme de moins sur le bas du
+        # corps modélisé (A/session.dart:2848-2871).
+        if self.jour - 1 in self.jours_course_dure:
+            for it in out:
+                fiche = self.fiches.get(it['exerciseId']) or {}
+                f = it.get('targetFlames')
+                if id(it) in retires or fiche.get('type') not in ('charge', 'reps', 'tenue') or not fiche.get('bas') \
+                        or it.get('kind') in ('test', 'warmup') or f is None or f <= 1:
+                    continue
+                it['targetFlames'] = f - 1
+                self._raison('koach.fatigue_croisee', exercice=it['exerciseId'], cause='course_dure')
+        if not retires:
+            return out
+        return [it for it in out if id(it) not in retires]
 
     # ------------------------------------------------------------------
     # Série suivante
@@ -451,6 +982,15 @@ class Seances(object):
             return None
         if plan['test']:
             return self._cible_test(item, index, plan)
+        if plan.get('slot_test') is not None:
+            # Après une montée de test : séries dures de la montée (réserve
+            # dite de 4 au plus, ou échec) + séries de travail ne dépassent
+            # jamais les séries écrites de la ligne, une série de travail au
+            # moins étant gardée.
+            durs = (self.plans.get(plan['slot_test']) or {}).get('durs', 0)
+            if index >= 1 and durs + index >= plan['series_ecrites']:
+                self._raison('koach.arret_exercice', exercice=item['exerciseId'], cause='volume_test')
+                return None
         if typ == 'charge':
             return self._cible_charge(item, index, plan)
         if typ == 'reps':
@@ -489,6 +1029,17 @@ class Seances(object):
             return False
         if plan['verrou'] or plan['sans_hausse'] or plan['echecs'] > 0 or plan['cond']['raison']:
             return False
+        if plan.get('dose_plafonnee'):
+            # Dose plafonnée (poignet sensible, reprise) : jamais de série
+            # repère (A/coach.dart:1515-1520).
+            return False
+        if self.coupure > 0:
+            # Coupure en cours (semaine du retour, `coupure_fenetre_j`) : ni
+            # vrai test ni série repère.
+            return False
+        n = self._apres_retour(self.mem(item['exerciseId']))
+        if n is not None and n < self.s['retour_seances_avant_mesure']:
+            return False
         if c.get('jours_avant_echeance') is not None and c['jours_avant_echeance'] <= 14:
             return False
         if item.get('dayStress') == 'light':
@@ -513,6 +1064,47 @@ class Seances(object):
             return None
         return 2.0 if self.g.niveau == 0 else 1.5
 
+    @staticmethod
+    def _duree_item_s(p):
+        """Durée estimée d'un item, comme le critère `seance_trop_longue`
+        du banc (transition 45 s, 3 s par répétition, repos entre séries),
+        côtés non comptés (la fiche ne dit pas la latéralité ici)."""
+        n = int(p.get('sets') or 0)
+        if n <= 0:
+            return 0.0
+        if p.get('repsHigh') is not None or p.get('repsLow') is not None:
+            rh = p.get('repsHigh') if p.get('repsHigh') is not None else p.get('repsLow')
+            effort = (rh or 0) * 3.0
+        elif p.get('secondsHigh') is not None or p.get('secondsLow') is not None:
+            sh = p.get('secondsHigh') if p.get('secondsHigh') is not None else p.get('secondsLow')
+            effort = float(sh or 0)
+        else:
+            effort = 30.0
+        rest = p.get('restSeconds')
+        rest = float(60 if rest is None else rest)
+        return 45.0 + n * effort + (n - 1) * rest
+
+    def _duree_permet_test(self, items, item, vt, deja):
+        """Vrai si la montée de test tient dans le budget de la séance
+        (budget × `seance_tolerance` + `seance_tolerance_min` minutes, règle
+        `seance_trop_longue` de 0.3.1) ; sans budget connu : un seul vrai
+        test par séance."""
+        ta = self.p['test_adaptatif']
+        budget = (self.contexte or {}).get('budget')
+        if budget is None:
+            return deja == 0
+        n = ta['rampe_series_max'] + (2 if vt[0] == 1 else 0)
+        repos = max(item.get('restSeconds') or 0, ta['repos_test_s'])
+        ajout = 45.0 + n * vt[0] * 3.0 + (n - 1) * repos
+        retire = min(int(ta['rampe_series_travail']), int(item.get('sets') or 0) - 1)
+        if retire > 0:
+            rh = item.get('repsHigh') if item.get('repsHigh') is not None else (item.get('repsLow') or 0)
+            ajout -= retire * (rh * 3.0 + float(60 if item.get('restSeconds') is None else item['restSeconds']))
+        total = 300.0 + ajout * (deja + 1)
+        for p in items:
+            total += self._duree_item_s(p)
+        return total / 60.0 <= float(budget) * self.s['seance_tolerance'] + self.s['seance_tolerance_min']
+
     def _vrai_test(self, item, plan, t):
         """Vrai test (cahier § 5) d'un mouvement principal chargé dont
         l'intervalle dépasse ± 6 % : une montée de charge de quelques
@@ -531,6 +1123,10 @@ class Seances(object):
         mem = self.mem(item['exerciseId'])
         ref = mem.charge_max if mem.charge_max is not None else None
         if grille is None or ref is None:
+            return None
+        if not any(self.jour - j <= self.s['barre_recente_j'] for (j, c, r) in mem.charges_reussies):
+            # Aucune barre réussie depuis `barre_recente_j` jours : pas de
+            # rampe (le maximum connu est trop ancien pour borner la montée).
             return None
         bw = t.fraction * self.m.poids_kg
         if grille.suivant(ref) + bw > (ref + bw) * (1 + ta['rampe_pas']) + 1e-9:
@@ -582,6 +1178,12 @@ class Seances(object):
         if ecart and not plan['verrou']:
             plaf = self.p['planification']['plafond_intensite']
             voulu = (voulu + bw) * (1 + clamp(ecart, -plaf, plaf)) - bw
+        if part is not None and plan.get('fragile') and part > self.s['surcharge_fragile_max']:
+            # A7.2 : exercice surchargé sur une zone fragile du profil, jamais
+            # plus que le 1RM (`coachOverloadFragileMax`, A/coach.dart:1039-1042 ;
+            # appliqué aussi à une part du 1RM de l'exercice lui-même).
+            part = self.s['surcharge_fragile_max']
+            self._raison('koach.zone_fragile', exercice=ex_id, zone=plan['fragile'], cause='surcharge')
         if part is not None and not (tech.get('kind') == 'top_set_backoff' and index >= 1):
             if plan['verrou'] or self.g.niveau == 0 or part >= self.s['couloir_part_lourde']:
                 haut = self.charge_de_part(ex_id, part) - bw
@@ -624,7 +1226,8 @@ class Seances(object):
             tete = (plan['charge_item'] + bw) * plan['baisse'] - bw
             if charge > tete:
                 charge = grille.plancher(max(tete, grille.minimum))
-        if index >= 1 and plan.get('charge_item') is not None and (plan['sans_hausse'] or plan['echecs'] > 0):
+        if index >= 1 and plan.get('charge_item') is not None and \
+                (plan['sans_hausse'] or plan['echecs'] > 0 or plan.get('dose_plafonnee')):
             if charge > plan['charge_item']:
                 charge = plan['charge_item']
         if index >= 1 and plan.get('charge_item') is not None and tech.get('kind') != 'top_set_backoff':
@@ -635,6 +1238,11 @@ class Seances(object):
                 charge = max(grille.plancher(haut), min(charge, grille.suivant(plan['charge_item'])))
             if charge < bas:
                 charge = grille.proche(bas)
+        # Semaine verrouillée : bornée par la charge écrite (`lockUp` de 0.3.1,
+        # plus haut). La borne « dernier passage de l'exercice » a été
+        # mesurée puis écartée : le dernier passage peut être un autre schéma
+        # (plus de répétitions, plus léger), elle sous-charge la décharge
+        # (écart d'effort 3,2 -> 3,6 ; fausses alertes de rupture 1,4 -> 4,4 %).
         if (plan['sans_hausse'] or plan['cond']['raison']) and mem.charge_derniere is not None \
                 and charge > mem.charge_derniere:
             # Zone douloureuse ou en reprise, bilan bas : jamais plus lourd
@@ -668,25 +1276,32 @@ class Seances(object):
                 'trace': trace}
 
     def _bornes_hausse(self, ex_id, item, charge, plan, t, grille, hi, index):
-        """Bornes de hausse d'une séance à l'autre (règles A7 de 0.3.1) :
-        10/5/5/5 % à schéma égal (moitié sur zone fragile), un cran toujours
-        permis ; aucune hausse après échec, douleur ou bilan bas."""
+        """Bornes de hausse d'une séance à l'autre (règles A7.2 de 0.3.1) :
+        10/5/5/5 % à schéma égal (moitié sur zone fragile, de la conduite ou
+        du profil), un cran toujours permis ; aucune hausse après échec,
+        douleur ou bilan bas ; schéma changé au même emplacement borné sur la
+        dernière séance de l'emplacement."""
         if index > 0:
             return charge
+        s = self.s
         mem = self.mem(ex_id)
         bw = t.fraction * self.m.poids_kg
         cle = (item['slotId'], hi)
         avant = mem.schemas.get(cle)
-        fragile = bool(plan['cond']['zone']) or item.get('koachFragile', False)
-        role = plan['role']
+        douleur = bool(plan['cond']['zone']) or item.get('koachFragile', False)
+        profil = plan.get('fragile')
+        fragile = douleur or bool(profil)
+        # `coachRise[niveau]` (× 0,5 sur zone fragile) pour toute ligne
+        # chargée, accessoires compris : la cible du mode coach de 0.3.1 ne
+        # double pas (A/coach.dart:830-833, 1146-1149 ; le doublement `riseCap`
+        # ne sert qu'à la règle générale de 0.1).
+        h = self.g.hausse_max(fragile)
+        avant_bornes = charge
         if avant is not None:
             if plan['sans_hausse'] or avant[1]:
                 if charge > avant[0]:
                     charge = avant[0]
             else:
-                h = self.g.hausse_max(fragile)
-                if role not in ('main', 'secondary'):
-                    h *= 2
                 haut = (avant[0] + bw) * (1 + h) - bw
                 if charge > haut:
                     cran = grille.suivant(avant[0])
@@ -694,25 +1309,79 @@ class Seances(object):
         else:
             # Schéma nouveau à cet emplacement : pas plus de 10 % (ou un
             # cran) au-dessus de la plus lourde barre réussie des 42 derniers
-            # jours, +2,5 % par répétition de moins (4 au plus).
+            # jours, +2,5 % par répétition de moins (4 au plus). Zone fragile
+            # du profil : moitié de la hausse et aucune part pour les
+            # répétitions de moins (A/coach.dart:1218-1226).
             haut = None
             for (j, c, r) in mem.charges_reussies:
-                if self.jour - j > self.s['barre_recente_j']:
+                if self.jour - j > s['barre_recente_j']:
                     continue
                 moins = r - hi
-                if moins < 0:
+                if moins < 0 or profil:
                     moins = 0
-                if moins > self.s['schema_change_reps_max']:
-                    moins = self.s['schema_change_reps_max']
-                if plan['sans_hausse'] or fragile:
+                if moins > s['schema_change_reps_max']:
+                    moins = s['schema_change_reps_max']
+                if plan['sans_hausse'] or douleur:
                     borne = c
                 else:
-                    borne = (c + bw) * (1 + self.s['premiere_hausse']) * (1 + self.s['schema_change_part'] * moins) - bw
+                    hp = s['premiere_hausse'] * (s['hausse_fragile_facteur'] if profil else 1.0)
+                    borne = (c + bw) * (1 + hp) * (1 + s['schema_change_part'] * moins) - bw
                     borne = max(grille.plancher(borne), grille.suivant(c))
                 if haut is None or borne > haut:
                     haut = borne
             if haut is not None and charge > haut:
                 charge = haut
+        # A7.2 règle 4 : schéma différent de la dernière séance du même
+        # emplacement ; charge totale au plus base × (1 + hausse) × (1 + 2,5 %
+        # par répétition de moins, 4 au plus ; aucune sur zone fragile), un cran
+        # au moins au-dessus de la base ; base = dernière séance d'une semaine
+        # de charge, hors jour de bilan bas (A/coach.dart:605-617, 1200-1235).
+        marque = mem.marques.get(item['slotId'])
+        if marque is not None and marque[2] is not None and marque[2] != hi:
+            base = marque[0] if marque[0] is not None else marque[1]
+            if base is not None:
+                ecart = marque[2] - hi
+                reps = 0 if (ecart <= 0 or fragile) else min(ecart, s['schema_change_reps_max'])
+                cap = grille.plancher((base + bw) * (1 + h) * (1 + s['schema_change_part'] * reps) - bw)
+                pas = grille.suivant(grille.plancher(base))
+                plafond = cap if cap > pas else pas
+                if charge > plafond + 1e-9:
+                    charge = plafond
+        if profil and charge < avant_bornes:
+            self._raison('koach.zone_fragile', exercice=ex_id, zone=profil, cause='hausse')
+        return charge
+
+    def borne_externe(self, item, index, charge):
+        """Charge proposée hors de la prescription (bras d'intensité d'un essai
+        N-of-1, par exemple) ramenée sous les garde-fous de la séance. Renvoie
+        None si aucune hausse n'est permise sur cette ligne aujourd'hui (jour
+        sans hausse ou bilan bas, semaine verrouillée, plafond de part, dose
+        plafonnée, zone douloureuse, en reprise ou fragile, échec dans la
+        séance, test), sinon la charge bornée par les bornes de hausse d'une
+        séance à l'autre et, à partir de la deuxième série, par +5 % (un cran)
+        sur la série précédente. Lecture seule : aucun état n'est modifié."""
+        plan = self.plans.get(item.get('slotId'))
+        if plan is None or plan['type'] != 'charge' or plan['test']:
+            return None
+        cond = plan['cond']
+        if plan['sans_hausse'] or plan['verrou'] or plan['part_max'] is not None or plan.get('dose_plafonnee') \
+                or cond['zone'] or cond['raison'] or plan.get('fragile') or plan['echecs'] > 0 \
+                or plan['baisse'] < 1.0 or item.get('koachFragile'):
+            return None
+        ex_id = item['exerciseId']
+        t = self.m.pistes.get(ex_id)
+        grille = plan['grille']
+        if t is None or grille is None:
+            return None
+        lo, hi = self._plages(item, index)
+        n = len(self.raisons)
+        charge = self._bornes_hausse(ex_id, item, charge, plan, t, grille, hi, index)
+        del self.raisons[n:]
+        bw = t.fraction * self.m.poids_kg
+        if index >= 1 and plan.get('charge_item') is not None:
+            haut = (plan['charge_item'] + bw) * 1.05 - bw
+            if charge > haut:
+                charge = max(grille.plancher(haut), min(charge, grille.suivant(plan['charge_item'])))
         return charge
 
     def _cible_reps(self, item, index, plan):
@@ -733,7 +1402,8 @@ class Seances(object):
         bas = lo
         # Trop facile au haut de la plage : plage étendue (au plus le double,
         # 30 répétitions), en semaine de charge seulement.
-        libre = not (plan['verrou'] or plan['sans_hausse'] or plan['cond']['raison'] or plan['echecs'] > 0)
+        libre = not (plan['verrou'] or plan['sans_hausse'] or plan['cond']['raison'] or plan['echecs'] > 0
+                     or plan.get('dose_plafonnee'))
         fiche = self.fiches.get(ex_id) or {}
         if libre and sur > hi and not item.get('technique') and fiche.get('type_charge') != 'elastique':
             haut = min(sur, 2 * hi, 30)
@@ -751,6 +1421,10 @@ class Seances(object):
             if haut > plaf:
                 haut = plaf
         if plan['echecs'] > 0 and mem.reps_seance is not None and haut > mem.reps_seance:
+            haut = max(1, mem.reps_seance)
+        if plan.get('dose_plafonnee') and index >= 1 and mem.reps_seance is not None and haut > mem.reps_seance:
+            # Dose plafonnée : jamais plus de répétitions que la série
+            # précédente (`clampLocked`, A/coach_advice.dart:133-149).
             haut = max(1, mem.reps_seance)
         if bas > haut:
             bas = haut
@@ -782,7 +1456,9 @@ class Seances(object):
         mu, sd = self.m.capacite_du_jour(ex_id)
         sur = int(math.floor(prevu * math.exp(-0.5 * sd)))
         haut = hi
-        plaf = int(math.floor(self.s['tenue_part_max'] * math.exp(mu + sd)))
+        # Plafond des tenues sur la valeur centrale du maximum du jour, jamais
+        # sur un quantile haut (`coachHoldMaxShare`, A/coach.dart:1463-1467).
+        plaf = int(math.floor(self.s['tenue_part_max'] * math.exp(mu)))
         if haut > plaf and plaf >= 1:
             haut = plaf
         fiche = self.fiches.get(ex_id) or {}
@@ -794,7 +1470,7 @@ class Seances(object):
             h = plan['cond']['hausse_quantite'] if h is None else min(h, plan['cond']['hausse_quantite'])
         if h is not None and mem.sec_max is not None:
             # Tendons : hausse par tenue bornée d'une séance à l'autre.
-            borne = max(int(math.floor(mem.sec_max * (1 + h))), mem.sec_max + 1)
+            borne = max(int(math.floor(mem.sec_max * (1 + h))), mem.sec_max + self.s['tenue_hausse_marge_s'])
             if haut > borne:
                 haut = borne
                 self._raison('koach.tendon', exercice=ex_id)
@@ -802,6 +1478,22 @@ class Seances(object):
             haut = mem.sec_max
         if plan['echecs'] > 0 and mem.sec_seance is not None and haut > mem.sec_seance:
             haut = mem.sec_seance
+        if plan.get('dose_plafonnee') and index >= 1 and mem.sec_seance is not None and haut > mem.sec_seance:
+            # Dose plafonnée : jamais plus long que la tenue précédente
+            # (`clampLocked`, A/coach_advice.dart:133-149).
+            haut = mem.sec_seance
+        tot = mem.sec_slot.get(item['slotId'])
+        n = item.get('sets') or 0
+        if bras_tendus and h is not None and tot and n > 1:
+            # A9.1 : temps total sous tension de l'emplacement borné comme une
+            # tenue (« un seul changement à la fois », A/coach.dart:1895-1929) ;
+            # sans le plancher de 55 % du meilleur maintien (plus prudent).
+            most = max(int(math.floor(tot * (1 + h))), tot + self.s['tenue_hausse_marge_s'])
+            if haut * n > most:
+                chacune = most // n if most // n >= 1 else 1
+                if haut > chacune:
+                    haut = chacune
+                    self._raison('koach.tendon', exercice=ex_id, cause='total')
         if haut < 1:
             haut = 1
         # Cible au ressenti : la tenue s'arrête à la réserve visée, entre le
@@ -835,6 +1527,10 @@ class Seances(object):
         if genre in ('one_rm', 'attempt_simulation') and typ == 'charge':
             return self._tentative(item, index, plan, t)
         if plan.get('rampe') is not None and typ == 'charge':
+            if plan.get('durs_max') is not None and plan.get('durs', 0) >= plan['durs_max']:
+                # Budget de séries dures de la montée atteint (séries écrites
+                # de la ligne moins une série de travail gardée).
+                return None
             return self._rampe(item, index, plan, t)
         if typ == 'charge':
             # Test xRM : charge prévue pour (répétitions + réserve du test).
@@ -847,7 +1543,14 @@ class Seances(object):
             voulu = self.charge_pour(ex_id, hi, rir, 0.25)
             charge = grille.proche(max(voulu, grille.minimum))
             mem = self.mem(ex_id)
-            if plan['sans_hausse'] and mem.charge_derniere is not None and charge > mem.charge_derniere:
+            ecrite = item.get('startLoadKg')
+            if plan['verrou'] and ecrite is not None and charge > ecrite + 1e-9:
+                # A6.5 : semaine allégée ou de test, jamais plus lourd que la
+                # charge écrite (A/coach.dart:2144-2152).
+                charge = ecrite if grille.plancher(ecrite) > ecrite else grille.plancher(ecrite)
+            if (plan['sans_hausse'] or mem.echec) and mem.charge_derniere is not None and charge > mem.charge_derniere:
+                # Après un échec non prévu à la dernière séance aussi (`noUp`,
+                # A/coach.dart:2086, 2154-2160).
                 charge = mem.charge_derniere
             if index >= 1 and mem.charge_seance is not None:
                 # Deuxième essai : un cran de plus si le premier a laissé
@@ -886,10 +1589,11 @@ class Seances(object):
             for (j, c, r) in mem.charges_reussies:
                 if self.jour - j <= self.s['barre_recente_j'] and (recente is None or c > recente):
                     recente = c
-            if recente is not None:
-                plafond = (recente + bw) * (1 + ta['repere_hausse']) - bw
-                if voulu > plafond:
-                    voulu = plafond
+            if recente is None:
+                return None   # pas de barre récente : pas de rampe
+            plafond = (recente + bw) * (1 + ta['repere_hausse']) - bw
+            if voulu > plafond:
+                voulu = plafond
         else:
             derniere = plan.get('charge_item')
             if derniere is None:
@@ -988,6 +1692,31 @@ class Seances(object):
             if recente is not None and recente < charge and \
                     recente + bw >= s['tentative_recente_part'] * math.exp(mu):
                 charge = recente
+            # Incertitude élargie (diagnostic « rien de spécial », coupure) :
+            # le quantile prudent peut tomber très bas. Une barre déjà
+            # réussie dans les 42 jours reste une ouverture sûre : elle sert
+            # de plancher, sans dépasser le plafond d'ouverture, et pas un
+            # jour de bilan bas ou de zone douloureuse.
+            if recente is not None and recente > charge and baisse >= 1.0:
+                plafond = s['tentative_ouverture_part'] * math.exp(mu) - bw
+                charge = grille.plancher(max(min(recente, plafond), charge))
+            # Plus prudent que 0.3.1 : l'ouverture ne dépasse jamais ce que
+            # les barres réussies des 42 derniers jours justifient (+10 %,
+            # +2,5 % par répétition faite au-delà de la première, 4 au plus :
+            # la règle du premier passage à un schéma, A7.2). Une estimation
+            # trop haute ne peut pas, seule, faire ouvrir trop lourd.
+            justifie = None
+            for (j, c, r) in mem.charges_reussies:
+                if self.jour - j > s['barre_recente_j']:
+                    continue
+                plus = r - 1
+                if plus > s['schema_change_reps_max']:
+                    plus = s['schema_change_reps_max']
+                borne = (c + bw) * (1 + s['premiere_hausse']) * (1 + s['schema_change_part'] * plus) - bw
+                if justifie is None or borne > justifie:
+                    justifie = borne
+            if justifie is not None and charge > justifie:
+                charge = grille.plancher(max(justifie, grille.minimum))
             return {'repsLow': 1, 'repsHigh': 1, 'loadKg': charge, 'flames': flammes, 'role': 'attempt'}
         derniere = mem.charge_seance
         if plan['echecs'] > 0 and mem.echec_seance:
@@ -1041,6 +1770,10 @@ class Seances(object):
                 plan['baisse'] = 1.0 - self.s['echec_baisse']
             elif echec:
                 plan['echecs'] += 1
+            if plan['test'] and 'durs' in plan:
+                f = s.get('flames')
+                if echec or f is None or f >= 3:
+                    plan['durs'] += 1
 
     def fermer(self, record):
         """Fin de séance : mémoire par exercice (verrous de la prochaine
@@ -1109,4 +1842,143 @@ class Seances(object):
                 rate = any(x.get('failed') for x in series)
                 atteint = max((x.get('reps') or 0) for x in series) >= (hi or 0)
                 mem.schemas[(slot, hi)] = (premier['externalLoadKg'], rate or not atteint)
+                self._marquer(mem, slot, series, hi)
+            if slot is not None:
+                tot = 0
+                for x in series:
+                    if x.get('kind') != 'warmup' and (x.get('target') or {}).get('role') not in ('test', 'attempt'):
+                        tot += x.get('seconds') or 0
+                if tot > 0:
+                    mem.sec_slot[slot] = tot
+        self._formes(par_ex)
+        self._fermer_endurance(record.get('sets') or [])
+        self.jours_seances.append(jour)
+        if len(self.jours_seances) > 20:
+            self.jours_seances = self.jours_seances[-20:]
         self.derniere_seance = jour
+
+    def _marquer(self, mem, slot, series, hi):
+        """Dernière séance de l'emplacement (règle du schéma changé, A7.2) :
+        charge de base = la plus légère charge échouée, sinon la plus forte
+        réussie ; une semaine verrouillée ou un jour de bilan bas ne remplace
+        pas la base de semaine de charge (A/coach.dart:605-617)."""
+        held = None
+        echouee = None
+        for x in series:
+            c = x.get('externalLoadKg')
+            if x.get('kind') == 'warmup' or c is None or c < 0:
+                continue
+            if x.get('failed'):
+                if echouee is None or c < echouee:
+                    echouee = c
+            elif (x.get('reps') or 0) > 0 and (held is None or c > held):
+                held = c
+        base = echouee if echouee is not None else held
+        avant = mem.marques.get(slot)
+        if self.verrouillee() or self.palier >= 1:
+            base_charge = None if avant is None else (avant[0] if avant[0] is not None else avant[1])
+        else:
+            base_charge = base
+        mem.marques[slot] = (base_charge, base, hi)
+
+    def _forme(self, ex_id):
+        """ln capacité à frais + effet de jour de la séance (mélange des deux
+        branches) : la performance mesurée de la séance, analogue de
+        `f.m[0] + f.m[3]` de 0.3.1 (A/model.dart:1470-1471)."""
+        m = self.m
+        t = m.pistes[ex_id]
+        idx, co = m._h_capacite(t, jour=False)
+        idx = idx + [DS]
+        co = co + [1.0]
+        mu = m._stats(m.m, m.P, idx, co)[0]
+        if m.alt is not None:
+            w = m.poids_mauvais_jour()
+            mu1 = m._stats(m.alt[0], m.alt[1], idx, co)[0]
+            mu = (1 - w) * mu + w * mu1
+        return t.base + mu
+
+    def _formes(self, par_ex):
+        """A6.2 : alerte de surmenage d'un mouvement principal — deux séances
+        mesurées de suite au moins `surmenage_baisse` sous la séance de
+        référence, les trois en `surmenage_fenetre_j` jours au plus ; la
+        séance d'alerte devient la référence (`formAfter`,
+        A/model.dart:432-475)."""
+        s = self.s
+        vus = []
+        for (ex_id, slot), series in par_ex.items():
+            plan = self.plans.get(slot)
+            if plan is None or plan['role'] != 'main' or plan['type'] not in ('charge', 'reps', 'tenue') \
+                    or ex_id in vus or self.m.pistes.get(ex_id) is None:
+                continue
+            if not any(x.get('kind') != 'warmup' and ((x.get('reps') or 0) > 0 or (x.get('seconds') or 0) > 0
+                                                      or x.get('failed')) for x in series):
+                continue
+            vus.append(ex_id)
+            mem = self.mem(ex_id)
+            if self.m.pistes[ex_id].seances < s['surmenage_seances_min']:
+                # Estimation pas encore posée : une baisse de la capacité
+                # estimée pendant les premières séances est de l'apprentissage
+                # (a priori trop haut), pas du surmenage.
+                continue
+            suite = [e for e in mem.forme if e[0] != self.jour] + [(self.jour, self._forme(ex_id))]
+            while len(suite) > 3:
+                suite.pop(0)
+            if len(suite) == 3 and self.jour - suite[0][0] <= s['surmenage_fenetre_j']:
+                limite = suite[0][1] + math.log(1 - s['surmenage_baisse'])
+                if suite[1][1] <= limite and suite[2][1] <= limite:
+                    meilleure = suite[1][1] if suite[1][1] > suite[2][1] else suite[2][1]
+                    mem.alerte_jour = self.jour
+                    mem.alerte_part = math.exp(meilleure - suite[0][1])
+                    suite = [suite[2]]
+            mem.forme = suite
+
+    def _fermer_endurance(self, sets):
+        """Ce que la séance dit de l'endurance (`EnduranceHistory.of`,
+        A/endurance.dart:118-187) : jour d'entraînement, course (durée,
+        effort noté le plus haut et sa cible), course dure, conditionnement
+        dur, vitesse de course."""
+        s = self.s
+        jour = self.jour
+        utiles = [x for x in sets if x.get('kind') != 'warmup' and not x.get('excluded')]
+        for x in sets:
+            if x.get('excluded') or self._nature(x['exerciseId']) != 'course':
+                continue
+            m_ = x.get('distanceMeters')
+            t_ = x.get('seconds')
+            if m_ is not None and t_ is not None and m_ > 0 and t_ > 0:
+                self.course_metres += m_
+                self.course_secondes += t_
+        vitesse = self._vitesse()
+        secondes = 0.0
+        pire = None
+        cible = None
+        dur_wod = False
+        dure = False
+        for x in utiles:
+            n = self._nature(x['exerciseId'])
+            f = x.get('flames')
+            if n == 'conditionnement' and f is not None and f >= s['endurance_dure_flammes']:
+                dur_wod = True
+            if n != 'course':
+                continue
+            t_ = x.get('seconds')
+            m_ = x.get('distanceMeters')
+            secondes += float(t_) if t_ is not None else (0.0 if m_ is None else m_ / vitesse)
+            if f is not None and (pire is None or f > pire):
+                pire = f
+                cible = (x.get('target') or {}).get('flames')
+                if cible is None:
+                    plan = self.plans.get(x.get('slotId'))
+                    if plan is not None and plan.get('servi') is not None:
+                        cible = plan['servi'].get('targetFlames')
+            if f is not None and f >= s['endurance_dure_flammes']:
+                dure = True
+        bas = jour - 60
+        if utiles:
+            self.jours_actifs = [j for j in self.jours_actifs if j >= bas] + [jour]
+        if secondes > 0:
+            self.courses = [e for e in self.courses if e[0] >= bas] + [(jour, secondes, pire, cible)]
+        if dur_wod:
+            self.jours_durs = [j for j in self.jours_durs if j >= bas] + [jour]
+        if dure:
+            self.jours_course_dure = [j for j in self.jours_course_dure if j >= bas] + [jour]

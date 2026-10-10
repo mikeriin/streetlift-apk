@@ -405,7 +405,13 @@ class Surveillance(Extension):
         self.faites += 1
         if resume is not None:
             self.p = self.bocpd.ajouter(resume[1])
-            r = self._residu_e1rm(koach, resume[0])
+            if len(resume) > 5:
+                # Résidu d'e1RM de la séance calculé par le modèle : écart
+                # (ln) entre la capacité du jour après la séance et la
+                # capacité du jour prévue avant, mouvements chargés suivis.
+                r = resume[5] if resume[5] is not None else False
+            else:
+                r = self._residu_e1rm(koach, resume[0])
             if r is None:
                 # Aucune série de la séance n'a laissé de résidu dans le
                 # modèle (moteur de test, résumé fourni par l'appelant) : le
@@ -732,6 +738,16 @@ def importer_parametres(koach, fichier_json):
     erreurs.extend(valider_parametres(actuel, nouveau))
     if erreurs:
         return {'ok': False, 'erreurs': erreurs, 'version': nouveau.get('version')}
+    # L'import est un événement du journal : `rejouer` le réapplique au
+    # même endroit (état recalculable depuis le journal).
+    koach.observe({'type': 'parametres', 'fichier': nouveau})
+    return {'ok': True, 'erreurs': [], 'version': koach.params.get('version')}
+
+
+def appliquer_parametres(koach, nouveau):
+    """Applique un fichier de paramètres déjà validé (événement
+    `parametres` du journal)."""
+    actuel = koach.params
     fusion = copy.deepcopy(actuel)
     for cle in sorted(nouveau.keys()):
         v = nouveau[cle]
@@ -746,15 +762,36 @@ def importer_parametres(koach, fichier_json):
     koach.garde.s = fusion['securite']
     koach.seances.p = fusion
     koach.seances.s = fusion['securite']
+    f_ = fusion['fatigue']
+    koach.modele.tau = [f_['tau_nerveux_j'], f_['tau_musculaire_j'], f_['tau_tendineux_j']]
     for x in koach.extensions:
         f = getattr(x, 'appliquer_parametres', None)
         if f is not None:
             f(fusion)
-    return {'ok': True, 'erreurs': [], 'version': fusion.get('version')}
+        elif hasattr(x, 'p') and isinstance(getattr(x, 'cle_params', None), str):
+            x.p = fusion[x.cle_params]
 
+
+# Garde-fous qu'un import ne peut pas changer (cahier : la sécurité n'est
+# jamais assouplie ; plafonds du § 6, amplitudes des essais, conditions des
+# tests, seuil de douleur du secours), en plus de toute la section `securite`.
+FIGEES = (
+    ('planification', 'plafond_volume'), ('planification', 'plafond_intensite'),
+    ('controle_dual', 'amplitude_volume'), ('controle_dual', 'amplitude_intensite'),
+    ('controle_dual', 'plafond_volume'), ('controle_dual', 'plafond_intensite'),
+    ('controle_dual', 'semaines_min'), ('controle_dual', 'intervalle_max'),
+    ('controle_dual', 'synthetique_semaines_min'), ('controle_dual', 'bras_semaines'),
+    ('test_adaptatif', 'intervalle_declenchement'), ('test_adaptatif', 'jours_min_entre_tests'),
+    ('rupture', 'douleur_secours'),
+)
 
 # Bornes simples : (section, clé) -> (min, max) inclus.
 BORNES = {
+    ('jour', 'mauvais_jour_proba'): (1e-6, 0.999),
+    ('jour', 'mauvais_jour_proba_bilan_bas'): (1e-6, 0.999),
+    ('mesure', 'note_aberrante'): (1e-6, 0.5),
+    ('mesure', 'porte_note_ouverte'): (0.0, 100.0),
+    ('dynamique', 'recuperation_seuil'): (1e-6, 1e6),
     ('rupture', 'hasard'): (1e-6, 0.5),
     ('rupture', 'alerte'): (0.05, 0.999),
     ('rupture', 'residu_secours'): (0.0, 1.0),
@@ -848,6 +885,11 @@ def valider_parametres(actuel, nouveau):
                     _verifier_valeur('%s.%s' % (cle, k), ref, v[k], erreurs)
         else:
             _verifier_valeur(cle, ancien, v, erreurs)
+    for (sec, k) in FIGEES:
+        sv = nouveau.get(sec)
+        if isinstance(sv, dict) and k in sv and isinstance(actuel.get(sec), dict) \
+                and k in actuel[sec] and sv[k] != actuel[sec][k]:
+            erreurs.append('fige: %s.%s (garde-fou, modification interdite)' % (sec, k))
     if not erreurs:
         for (sec, k) in sorted(BORNES.keys()):
             sv = nouveau.get(sec)

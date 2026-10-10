@@ -20,7 +20,7 @@ import math
 
 import numpy as np
 
-from .numerique import interval_moments, point_moments, category_moments, clamp
+from .numerique import interval_moments, point_moments, category_moments, clamp, norm_ppf
 
 INF = math.inf
 NQ = 10
@@ -54,7 +54,8 @@ class Piste(object):
     __slots__ = ('id', 'type', 'classe', 'vecteur', 'base', 'idx', 'fraction', 'bas',
                  'tendon', 'zone_tendon', 'systemique', 'locale', 'seances', 'dernier_jour',
                  'premier_jour', 'stim_semaine', 'series_seance', 'jour_seance', 'declare',
-                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total')
+                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
+                 'jour_prevu', 'jour_vu')
 
     def __init__(self, ex_id, typ, vecteur, base, idx, fraction=0.0, bas=False,
                  tendon=0.0, zone_tendon=None, systemique=1.0, locale=1.0, declare=False,
@@ -85,6 +86,8 @@ class Piste(object):
         self.mesures = 0
         self.groupes = [(int(g), float(w)) for g, w in (groupes or [])]
         self.groupes_total = sum(w for _, w in self.groupes)
+        self.jour_prevu = None     # ln capacité du jour prévue avant la première série de la séance
+        self.jour_vu = None        # ln capacité du jour après la dernière série de la séance
 
 
 class Modele(object):
@@ -247,7 +250,8 @@ class Modele(object):
         if d is not None:
             # Capacité déclarée (record, test du profil) : une observation
             # de la capacité de l'exercice, qui renseigne aussi les qualités.
-            mesure, valeur = d
+            mesure, valeur = d[0], d[1]
+            sd_d = d[2] if len(d) > 2 and d[2] else ap['delta_sd_declare']
             voulu = {'charge': 'one_rm_kg', 'reps': 'max_reps', 'tenue': 'max_hold_seconds'}.get(typ)
             if mesure == voulu and valeur > 0:
                 if typ == 'charge':
@@ -255,7 +259,7 @@ class Modele(object):
                 else:
                     cible = math.log(valeur)
                 hi, hc = self._h_capacite(t, jour=False)
-                self._observer_hors(hi, hc, t.base - cible, None, None, ap['delta_sd_declare'] ** 2, point=0.0)
+                self._observer_hors(hi, hc, t.base - cible, None, None, sd_d ** 2, point=0.0)
                 t.declare = True
         return t
     def _branches(self):
@@ -442,6 +446,8 @@ class Modele(object):
                     self._reset(m, P, DS, 0.0, 1e-10)
                     self._reset(m, P, DE, vrai + gn * m[KN] + ln_ * m[KL] + gm * m[KG] + lm * m[KM], 1e-10)
         if t.jour_seance != self.jour:
+            t.jour_prevu = self.capacite_du_jour(t.id)[0] if t.type == 'charge' and t.seances >= 3 else None
+            t.jour_vu = None
             t.series_seance = []
             t.jour_seance = self.jour
             t.seances += 1
@@ -462,6 +468,15 @@ class Modele(object):
         moments, innovations de la séance versées à la détection de rupture."""
         if not self.en_seance:
             return None
+        # Résidu d'e1RM de la séance : moyenne, sur les mouvements chargés
+        # suivis depuis 3 séances au moins, de l'écart (ln) entre la capacité
+        # du jour vue après la séance et celle prévue avant.
+        ecarts = []
+        for ex_id in self.ordre:
+            t = self.pistes[ex_id]
+            if t.jour_seance == self.jour and t.jour_prevu is not None and t.jour_vu is not None:
+                ecarts.append(t.jour_vu - t.jour_prevu)
+        e1rm = sum(ecarts) / len(ecarts) if ecarts else None
         w = self.poids_mauvais_jour()
         if self.alt is not None and w > 1e-9:
             am, aP, _ = self.alt
@@ -481,7 +496,7 @@ class Modele(object):
         if self.residus_seance:
             zs = [r[0] for r in self.residus_seance]
             rel = [r[1] for r in self.residus_seance]
-            resume = (self.jour, sum(zs) / len(zs), sum(rel) / len(rel), len(zs), w)
+            resume = (self.jour, sum(zs) / len(zs), sum(rel) / len(rel), len(zs), w, e1rm)
             self.histoire_residus.append(resume)
         return resume
 
@@ -528,7 +543,16 @@ class Modele(object):
         m += ph * ((mu2 - mu) / v)
         P -= np.outer(ph, ph) * ((v - v2) / (v * v))
 
-    def _observer(self, idx, co, const, a, b, s2, point=None, melange=None, bruit=None, fonction=None):
+    @staticmethod
+    def _covariance_partielle(P, ph, pg, v, v2):
+        """Mise à jour de covariance quand le gain [pg] est [ph] privé des
+        composantes « considérées » (filtre de Schmidt) : le bloc des
+        composantes écartées reste intact, les covariances croisées suivent."""
+        w = (v - v2) / (v * v)
+        P -= w * (np.outer(pg, ph) + np.outer(ph, pg) - np.outer(pg, pg))
+
+    def _observer(self, idx, co, const, a, b, s2, point=None, melange=None, bruit=None, fonction=None,
+                  fige=None):
         """Applique une observation aux deux branches. [a, b] : intervalle sur
         u = h·x + const ; [point] : valeur observée ; [melange] = (poids de
         la note sincère, poids d'une note sans information) ajoute une
@@ -579,13 +603,20 @@ class Modele(object):
                     resid = ((centre - mu) / math.sqrt(v + s2), centre - mu, informatif and point is None)
             if v <= 0.0:
                 continue
+            pg = ph
+            if fige:
+                # Composantes « considérées » : elles pèsent dans la variance
+                # prévue mais l'observation ne les déplace pas.
+                pg = ph.copy()
+                for i in fige:
+                    pg[i] = 0.0
             if fonction is not None and abs(mu2 - mu) > 1.0:
                 # Grande surprise : la carte état -> réserve n'est pas
                 # linéaire. Le pas garde sa direction (linéarisation à la
                 # moyenne a priori, symétrique) ; sa longueur est réduite
                 # par dichotomie si, sur la carte exacte, il dépasse la
                 # moyenne a posteriori visée.
-                pas = ph * ((mu2 - mu) / v)
+                pas = pg * ((mu2 - mu) / v)
                 alpha = 1.0
                 if abs(fonction(m + pas) - mu) > abs(mu2 - mu):
                     lo_a, hi_a = 0.0, 1.0
@@ -597,7 +628,16 @@ class Modele(object):
                             lo_a = mid
                     alpha = lo_a
                 m += alpha * pas
-                P -= np.outer(ph, ph) * ((v - v2) / (v * v))
+                # Pas raccourci : la covariance suit le gain réduit (forme
+                # de Joseph avec le gain alpha·K : facteur 2·alpha − alpha²).
+                v2a = v - (2.0 * alpha - alpha * alpha) * (v - v2)
+                if fige:
+                    self._covariance_partielle(P, ph, pg, v, v2a)
+                else:
+                    P -= np.outer(ph, ph) * ((v - v2a) / (v * v))
+            elif fige:
+                m += pg * ((mu2 - mu) / v)
+                self._covariance_partielle(P, ph, pg, v, v2)
             else:
                 self._appliquer(m, P, ph, mu - const, v, mu2 - const, v2)
             if bi == 0:
@@ -687,6 +727,8 @@ class Modele(object):
             r = self._serie_tenue(t, s)
         else:
             r = self._serie_endurance(t, s)
+        if t.jour_prevu is not None:
+            t.jour_vu = self.capacite_du_jour(t.id)[0]
         if r is not None:
             self.residus_seance.append(r)
             t.residus.append((self.jour, r[0], r[1]))
@@ -782,7 +824,7 @@ class Modele(object):
         flammes = s.get('flames')
         cible = s.get('target') or {}
         echec = bool(s.get('failed'))
-        repos = s.get('restSeconds') or 90
+        repos = 90 if s.get('restSeconds') is None else s['restSeconds']
         charge = self.masse(t, externe)
         sans_charge = t.type == 'reps'
         if charge <= 0 and not sans_charge:
@@ -835,7 +877,16 @@ class Modele(object):
             if self.sonde is not None:
                 _, var_p, _ = self._stats(self.m, self.P, idx, co)
                 self.sonde.append((t.id, t.type, pred, var_p, s2, a, b, reps, R, sj, len(t.series_seance), t.seances))
-            if b == INF and percu and pred >= a + me['porte_note_ouverte'] * math.sqrt(s2):
+            if flammes is None and not echec and pred >= a:
+                # Série faite SANS note et déjà prévue faisable : elle ne dit
+                # rien. La borne « au moins n répétitions » ne peut déplacer
+                # l'état que vers le haut ; versée à chaque série, elle
+                # fait monter la capacité sans fin (cliquet mesuré au rejeu
+                # d'un journal réel où la plupart des séries ne sont pas
+                # notées). Elle n'est donc versée que si la prévision la
+                # contredit (réserve prévue négative).
+                resid = None
+            elif b == INF and percu and pred >= a + me['porte_note_ouverte'] * math.sqrt(s2):
                 # Note ouverte (« 4 en réserve ou plus ») nettement attendue :
                 # elle ne dit rien de plus. Sans cette porte, l'appariement de
                 # moments rogne à chaque série facile la queue basse de la
@@ -859,8 +910,15 @@ class Modele(object):
 
                 def exacte(etat, t=t, lnL=lnL, reps=reps, sj=sj, sans_charge=sans_charge, percu=percu):
                     return self._lin_force(t, etat, lnL, reps, sj, sans_charge, percu)[2]
+                # Série sans note qui contredit la prévision : elle dit que
+                # la capacité est plus haute, pas quelle est la forme de la
+                # courbe ; la forme (commune) et l'échelle de courbe de
+                # l'exercice sont « considérées », non déplacées.
+                fige = None
+                if flammes is None and not echec:
+                    fige = (LAM,) if sans_charge else (LAM, t.idx + 1)
                 resid = self._observer(idx, co, const, a, b, s2, melange=melange, bruit=bruit,
-                                       fonction=exacte)
+                                       fonction=exacte, fige=fige)
             if percu and f_cible is not None and resid is not None and abs(resid[1]) > 1.0:
                 # Notes paresseuses : part des notes égales à la note
                 # préremplie quand l'attendu en est à plus d'une répétition.
@@ -964,7 +1022,7 @@ class Modele(object):
         sec = s.get('seconds') or 0
         flammes = s.get('flames')
         echec = bool(s.get('failed'))
-        repos = s.get('restSeconds') or 90
+        repos = 90 if s.get('restSeconds') is None else s['restSeconds']
         if sec <= 0 and not echec:
             return None
         idx, co = self._h_capacite(t)
@@ -977,7 +1035,12 @@ class Modele(object):
             resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0)
             rir_c = 0.0
         elif flammes is None:
-            resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra)
+            # Tenue faite sans note : versée seulement si la prévision la
+            # contredit (même règle que pour les répétitions).
+            mu0, _, _ = self._stats(self.m, self.P, idx, co)
+            resid = None
+            if mu0 + t.base - ln_s < 0.0:
+                resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra)
             rir_c = 2.0
         else:
             if flammes >= 10:
@@ -1078,7 +1141,11 @@ class Modele(object):
         if t is None or t.type != 'charge' or raison not in ('too_heavy', 'too_light'):
             return
         lam, k = self.courbe(t)
-        lnL = math.log(self.masse(t, charge_kg))
+        masse = self.masse(t, charge_kg)
+        if masse <= 0 or reps is None:
+            return
+        rir = 0.0 if rir is None else rir
+        lnL = math.log(masse)
         idx, co = self._h_capacite(t, jour=False)
         const = t.base - lnL - self._g(lam, k, reps + rir)
         s2 = self.p['mesure']['bruit_raison_refus'] ** 2
@@ -1094,18 +1161,24 @@ class Modele(object):
         if t is None or t.type != 'charge':
             return
         lam, k = self.courbe(t)
-        lnL = math.log(self.masse(t, charge_kg))
+        masse = self.masse(t, charge_kg)
+        if masse <= 0 or reps is None:
+            return
+        rir = 0.0 if rir is None else rir
+        lnL = math.log(masse)
         idx, co = self._h_capacite(t, jour=False)
         const = t.base - lnL - self._g(lam, k, reps + rir)
         self._observer_hors(idx, co, const, None, None, self.p['mesure']['bruit_charge_manuelle'] ** 2, point=0.0)
 
     def _observer_hors(self, idx, co, const, a, b, s2, point=None):
-        """Observation hors séance (une seule branche)."""
-        alt, self.alt = self.alt, None
+        """Observation hors série (valeur déclarée, raison, charge manuelle) :
+        appliquée aux deux branches du jour sans changer leur poids."""
         lw = self.logw
+        la = self.alt[2] if self.alt is not None else None
         self._observer(idx, co, const, a, b, s2, point=point)
         self.logw = lw
-        self.alt = alt
+        if self.alt is not None:
+            self.alt = (self.alt[0], self.alt[1], la)
 
     def changer_cran(self, ex_id, facteur):
         """Changement de cran d'élastique : la capacité attendue est
@@ -1207,7 +1280,11 @@ class Modele(object):
             return None
         idx, co = self._h_capacite(t, jour=False)
         mu, v, _ = self._stats(self.m, self.P, idx, co)
-        return t.base + mu, math.sqrt(v if v > 0 else 0.0)
+        # Défaut de modèle : part de l'erreur que le filtre gaussien ne
+        # voit pas (forme de courbe, densité supposée), calée sur le banc
+        # pour que l'intervalle à 90 % couvre 88 à 92 %.
+        d = self.p['mesure'].get('defaut_modele_sd', 0.0)
+        return t.base + mu, math.sqrt((v if v > 0 else 0.0) + d * d)
 
     def capacite_du_jour(self, ex_id, avec_bruit_jour=True):
         """(moyenne, écart-type) de ln capacité du moment (effets de jour et
@@ -1229,7 +1306,7 @@ class Modele(object):
         c = self.capacite(ex_id)
         if c is None:
             return None
-        z = 1.6448536269514722 if niveau == 0.90 else 1.959963984540054
+        z = 1.6448536269514722 if niveau == 0.90 else norm_ppf(0.5 + 0.5 * niveau)
         return math.exp(c[0] - z * c[1]), math.exp(c[0]), math.exp(c[0] + z * c[1])
 
     def valeur(self, ex_id):

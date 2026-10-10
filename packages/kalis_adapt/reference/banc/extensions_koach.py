@@ -25,7 +25,7 @@ graine du banc.
 import math
 
 from koach.adherence import Adherence, MOMENTS, DIM
-from koach.dual import ControleDual, calibre, Z90
+from koach.dual import ControleDual, calibre, facteur_borne, Z90
 from koach.moteur import rejouer
 from koach.numerique import Mulberry32, fnv1a32, norm_cdf
 from koach.rupture import Surveillance
@@ -351,48 +351,64 @@ class ControleDualBanc(ControleDual):
                              'demarre': self.essai is not None, 'raison': self.raisons[-1] if self.raisons else None})
 
     def items_du_jour(self, koach, ctx, items):
+        """Bras A (volume) : séries ajoutées à l'exercice traité, le produit
+        (facteur de la planification × facteur du bras) borné par le plafond
+        de volume du cahier par rapport à la RÉFÉRENCE (`dual.facteur_borne`),
+        cumulé sur la semaine en cours."""
         self.genre = ctx.genre_semaine
         mod = self.modulation(ctx.semaine)
         if 'bras' not in mod or mod['volume'] <= 1.0:
             return items
         ex = mod.get('exerciseId')
         if self.semaine_vol is None or self.semaine_vol[0] != ctx.semaine:
-            self.semaine_vol = [ctx.semaine, 0, 0]
+            # [semaine, séries de référence, séries planifiées, séries servies]
+            self.semaine_vol = [ctx.semaine, 0, 0, 0]
         plafond = float((self.params.get('planification') or {}).get('plafond_volume', 0.15))
+        reference = {}
+        for it in (ctx.ecrit or {}).get('items') or []:
+            if it.get('exerciseId') == ex and it.get('kind', 'work') == 'work':
+                reference[it['slotId']] = int(it.get('sets') or 0)
         out = []
         for it in items:
             if it.get('exerciseId') != ex or it.get('kind', 'work') != 'work' or (it.get('sets') or 0) < 1:
                 out.append(it)
                 continue
             n = int(it['sets'])
-            ecrites = self.semaine_vol[1] + n
-            voulu = mod['volume'] * ecrites
-            servies = self.semaine_vol[2] + n
-            # Arrondi au plus proche, puis plafond de la semaine en cours.
-            plus = int(math.floor(voulu - servies + 0.5))
-            while plus > 0 and servies + plus > (1.0 + plafond) * ecrites + 1e-9:
+            ref = self.semaine_vol[1] + reference.get(it['slotId'], n)
+            planifiees = self.semaine_vol[2] + n
+            servies = self.semaine_vol[3] + n
+            if ref > 0:
+                borne = facteur_borne(planifiees / float(ref), mod['volume'], plafond) * ref
+            else:
+                borne = servies
+            plus = int(math.floor(borne - servies + 0.5))
+            while plus > 0 and servies + plus > (1.0 + plafond) * ref + 1e-9:
                 plus -= 1
             plus = plus if plus > 0 else 0
             it = dict(it)
             it['sets'] = n + plus
-            self.semaine_vol[1] = ecrites
-            self.semaine_vol[2] = servies + plus
+            self.semaine_vol[1] = ref
+            self.semaine_vol[2] = planifiees
+            self.semaine_vol[3] = servies + plus
             self.journal.append({'type': 'volume', 'jour': ctx.sim_day, 'semaine': ctx.semaine,
                                  'exerciseId': ex, 'ecrites': n, 'servies': n + plus,
-                                 'ratio_semaine': round(self.semaine_vol[2] / float(self.semaine_vol[1]), 6)})
+                                 'ratio_semaine': round(self.semaine_vol[3] / float(ref), 6) if ref else 1.0})
             out.append(it)
         return out
 
     def cible_serie(self, koach, ctx, item, index, cible):
+        """Bras B (intensité) : charge de travail montée de l'amplitude du
+        bras, jamais un jour où Koach interdit la hausse et jamais au-dessus
+        des bornes de hausse de la séance (`Seances.borne_externe`)."""
         if cible is None or cible.get('loadKg') is None:
             return cible
         mod = self.modulation(ctx.semaine)
         if mod.get('bras') != 'B' or item.get('exerciseId') != mod.get('exerciseId'):
             return cible
-        if cible.get('role') in ('test', 'attempt') or item.get('kind') == 'test':
+        if cible.get('role') in ('test', 'attempt') or item.get('kind') == 'test' or cible.get('repere'):
             return cible
         m = koach.modele
-        t = m.piste(item['exerciseId'])
+        t = m.pistes.get(item['exerciseId'])
         grille = self.politique.grilles.get(item['exerciseId'])
         if t is None or grille is None:
             return cible
@@ -404,6 +420,11 @@ class ControleDualBanc(ControleDual):
         nouveau = grille.plancher(voulu)
         if nouveau <= kg + 1e-9:
             return cible
+        borne = koach.seances.borne_externe(item, index, nouveau)
+        if borne is None or borne <= kg + 1e-9:
+            return cible
+        if nouveau > borne:
+            nouveau = borne
         c = dict(cible)
         c['loadKg'] = nouveau
         self.journal.append({'type': 'intensite', 'jour': ctx.sim_day, 'semaine': ctx.semaine,

@@ -1,0 +1,1099 @@
+{
+ "commande": "python3 -m banc.criteres_moteur --sortie donnees/criteres_moteur.json",
+ "determinisme": {
+  "empreintes": [
+   {
+    "estimations": "6e3913fda1f0d7dec7113a2bd2c61ff184d3542253fda1b351dbb53c2d1f2c48",
+    "extensions": "0f176ddf00067a04f709aa511e75e18afa99e908d3d08a0736913f726c736645",
+    "journal": "81aa2590cfd721acb8201b524e9ad649bf0713f4c0d271bdf523db92c9f9ba12",
+    "posterior": "508d685b10502aab0e3390d4459adbb129c2407a238286835886fe2041cccffd",
+    "seances": 76,
+    "series": "6896b47ec5e84e2410a966f847e2bac17361f2ff6cdfb4c4fe3d11117d0714b4",
+    "series_n": 967,
+    "servi": "395dae197e45179bb8ce825a2a96286028582852bded733a9e8da30c06a893fb"
+   },
+   {
+    "estimations": "6e3913fda1f0d7dec7113a2bd2c61ff184d3542253fda1b351dbb53c2d1f2c48",
+    "extensions": "0f176ddf00067a04f709aa511e75e18afa99e908d3d08a0736913f726c736645",
+    "journal": "81aa2590cfd721acb8201b524e9ad649bf0713f4c0d271bdf523db92c9f9ba12",
+    "posterior": "508d685b10502aab0e3390d4459adbb129c2407a238286835886fe2041cccffd",
+    "seances": 76,
+    "series": "6896b47ec5e84e2410a966f847e2bac17361f2ff6cdfb4c4fe3d11117d0714b4",
+    "series_n": 967,
+    "servi": "395dae197e45179bb8ce825a2a96286028582852bded733a9e8da30c06a893fb"
+   }
+  ],
+  "extensions": [
+   "PlanificationBanc",
+   "SurveillanceBanc",
+   "ControleDualBanc",
+   "AdherenceBanc"
+  ],
+  "identiques": {
+   "estimations": true,
+   "extensions": true,
+   "journal": true,
+   "posterior": true,
+   "seances": true,
+   "series": true,
+   "series_n": true,
+   "servi": true
+  },
+  "processus": "deux interpréteurs, PYTHONHASHSEED = 1 puis 2",
+  "respecte": true,
+  "saison": {
+   "graine": 1,
+   "profil": "street_07_avance_streetlifting_competition",
+   "scenario": "douleur_coude",
+   "semaines": null,
+   "trajectoires": null,
+   "verite": "b"
+  }
+ },
+ "duree_s": 65.82135057449341,
+ "machine": {
+  "coeurs": 2,
+  "numpy": "2.5.3",
+  "plateforme": "Linux-6.18.44-fc-v80-x86_64-with-glibc2.39",
+  "python": "3.13.16"
+ },
+ "mauvais_jour": {
+  "baisse": 0.06,
+  "critere": 0.01,
+  "ecart_abs": {
+   "apres": {
+    "max": 0.043637041266949006,
+    "mediane": 0.010416138472608027,
+    "moyenne": 0.011686991127058987,
+    "n": 48,
+    "p95": 0.02841848766198707
+   },
+   "plus_1": {
+    "max": 0.03774164637001287,
+    "mediane": 0.005985666169529835,
+    "moyenne": 0.008295270762157601,
+    "n": 48,
+    "p95": 0.024955484398142436
+   },
+   "plus_2": {
+    "max": 0.033477950945887014,
+    "mediane": 0.0059214690009033455,
+    "moyenne": 0.00794803766768447,
+    "n": 48,
+    "p95": 0.020335573875097213
+   }
+  },
+  "ecart_signe_moyen": {
+   "apres": -0.009420910147094688,
+   "plus_1": -0.005675809702887791,
+   "plus_2": -0.004222858358565319
+  },
+  "mesures": [
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.026781584655792834,
+      -0.01838046699625473,
+      -0.0171031331737711
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_07_avance_streetlifting_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.002941001996043302,
+      -0.00042481969355168125,
+      0.011154767034209367
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_07_avance_streetlifting_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.043637041266949006,
+      -0.03774164637001287,
+      -0.025667904644026907
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_07_avance_streetlifting_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.013207083642101547,
+      -0.00794307602233768,
+      -0.013230477394923446
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_07_avance_streetlifting_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.007025319067020863,
+      -0.006266150097429146,
+      -0.004463323634182559
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_07_avance_streetlifting_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.011492428869977922,
+      0.00031722177460014045,
+      0.0017587615183034533
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_07_avance_streetlifting_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.022553768879880698,
+      -0.015714408161056737,
+      -0.015863814124847386
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_09_elite_streetlifting",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.003545074129707948,
+      -0.0025606657154106927,
+      0.01112916182584378
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_09_elite_streetlifting",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.036977077752467835,
+      -0.026789569740917285,
+      -0.020335573875097213
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_09_elite_streetlifting",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.02328443312229067,
+      -0.0070393001002320155,
+      -0.008458560992606112
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_09_elite_streetlifting",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.00795118469968914,
+      -0.002839658885675167,
+      0.0017508120057316834
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_09_elite_streetlifting",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.006254078669866714,
+      -0.00021083899661555883,
+      -0.0007246480876084149
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_09_elite_streetlifting",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.006574013981815119,
+      -0.002804160018406998,
+      -0.010619889881539613
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_16_specialisation_traction_lestee",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.003545106133251985,
+      -0.003557061956305896,
+      0.0023234835285506072
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_16_specialisation_traction_lestee",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.01089160036204151,
+      -0.002745945664684557,
+      -0.005141059682606697
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_16_specialisation_traction_lestee",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      0.002319280262170098,
+      0.0029527756223488577,
+      0.002840148360772954
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_16_specialisation_traction_lestee",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.012461182354567057,
+      -0.002360974471640964,
+      -0.00112504230694499
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_16_specialisation_traction_lestee",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "sl-traction-lestee": [
+      -0.0039500660570114254,
+      0.0007154510474267628,
+      0.00011679528545593953
+     ]
+    },
+    "exercice_declencheur": "sl-traction-lestee",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "sl-traction-lestee": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "street_16_specialisation_traction_lestee",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "mu-developpe-couche-barre": [
+      -0.005293848829099224,
+      0.0007028467526921656,
+      0.002149060442866446
+     ],
+     "mu-hip-thrust-barre": [
+      -0.015074902343154672,
+      -0.013793741426425421,
+      -0.013424265362075083
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      -0.01400198384907303,
+      -0.009358472525470174,
+      -0.008507437361846448
+     ]
+    },
+    "exercice_declencheur": "mu-hip-thrust-barre",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-developpe-couche-barre": [
+      56,
+      59,
+      63
+     ],
+     "mu-hip-thrust-barre": [
+      56,
+      57,
+      59
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      56,
+      60,
+      63
+     ]
+    },
+    "profil": "autres_02_hypertrophie_intermediaire",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "mu-developpe-couche-barre": [
+      0.0046812118402943526,
+      0.005705182241630524,
+      0.0024594924843754917
+     ],
+     "mu-hip-thrust-barre": [
+      -0.018110263602705956,
+      -0.016898204020514007,
+      -0.012067746204428076
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      -0.013864506360000806,
+      -0.011665049482173617,
+      -0.0102951959215275
+     ]
+    },
+    "exercice_declencheur": "mu-hip-thrust-barre",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-developpe-couche-barre": [
+      56,
+      59,
+      63
+     ],
+     "mu-hip-thrust-barre": [
+      56,
+      57,
+      59
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      56,
+      60,
+      63
+     ]
+    },
+    "profil": "autres_02_hypertrophie_intermediaire",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "mu-developpe-couche-barre": [
+      -0.006699569252478055,
+      -0.0027820514205201263,
+      -0.003649544256412174
+     ],
+     "mu-hip-thrust-barre": [
+      -0.014384389582781543,
+      -0.012450287222652512,
+      -0.009999429855294006
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      0.01747222958379635,
+      0.012874519611694613,
+      0.009523209804202848
+     ]
+    },
+    "exercice_declencheur": "mu-hip-thrust-barre",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-developpe-couche-barre": [
+      56,
+      59,
+      63
+     ],
+     "mu-hip-thrust-barre": [
+      56,
+      57,
+      59
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      56,
+      60,
+      63
+     ]
+    },
+    "profil": "autres_02_hypertrophie_intermediaire",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "mu-developpe-couche-barre": [
+      -0.009940676583174546,
+      -0.008982104291908266,
+      -0.0009651707223838901
+     ],
+     "mu-hip-thrust-barre": [
+      -0.012453540805818952,
+      -0.010623178730684968,
+      -0.011914044409643165
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      -0.025208769415626442,
+      -0.024955484398142436,
+      -0.033477950945887014
+     ]
+    },
+    "exercice_declencheur": "mu-hip-thrust-barre",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-developpe-couche-barre": [
+      56,
+      59,
+      63
+     ],
+     "mu-hip-thrust-barre": [
+      56,
+      57,
+      59
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      56,
+      60,
+      63
+     ]
+    },
+    "profil": "autres_02_hypertrophie_intermediaire",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "mu-developpe-couche-barre": [
+      -0.0010094150335844265,
+      0.0010300512666694406,
+      0.0027689655401139657
+     ],
+     "mu-hip-thrust-barre": [
+      0.013148743014133268,
+      0.010014433141083634,
+      0.009456701287529512
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      -0.02841848766198707,
+      -0.020761079729946008,
+      -0.017521129508397237
+     ]
+    },
+    "exercice_declencheur": "mu-hip-thrust-barre",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-developpe-couche-barre": [
+      56,
+      59,
+      63
+     ],
+     "mu-hip-thrust-barre": [
+      56,
+      57,
+      59
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      56,
+      60,
+      63
+     ]
+    },
+    "profil": "autres_02_hypertrophie_intermediaire",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "mu-developpe-couche-barre": [
+      -0.01939771024775283,
+      -0.01657288778527244,
+      -0.009452289701682215
+     ],
+     "mu-hip-thrust-barre": [
+      0.0045118984442680254,
+      0.004705389077394706,
+      0.005588890396364343
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      -0.013440835384969874,
+      -0.013269089497673692,
+      -0.012455102940808094
+     ]
+    },
+    "exercice_declencheur": "mu-hip-thrust-barre",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-developpe-couche-barre": [
+      56,
+      59,
+      63
+     ],
+     "mu-hip-thrust-barre": [
+      56,
+      57,
+      59
+     ],
+     "mu-rowing-poulie-assis-triangle": [
+      56,
+      60,
+      63
+     ]
+    },
+    "profil": "autres_02_hypertrophie_intermediaire",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-basse": [
+      -0.0071330438122853,
+      -0.004063791111479476,
+      -0.0039015095683657686
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-basse",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-basse": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_03_powerlifter_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-basse": [
+      -0.0007243439031656695,
+      0.004227097076921593,
+      0.0020233537123015566
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-basse",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-basse": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_03_powerlifter_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-basse": [
+      -0.011835158568519577,
+      -0.001555663193630652,
+      -0.0006599277765300116
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-basse",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-basse": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_03_powerlifter_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-basse": [
+      0.0038770764368092347,
+      0.007066159671251793,
+      0.00602708378412764
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-basse",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-basse": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_03_powerlifter_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-basse": [
+      -0.006919030243971003,
+      -0.0006642299728780721,
+      0.0005911242648537485
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-basse",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-basse": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_03_powerlifter_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-basse": [
+      0.0019456217162698852,
+      0.0022204829670953163,
+      0.002105553822266071
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-basse",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-basse": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_03_powerlifter_competition",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-haute": [
+      -0.009103682374356548,
+      -0.00805520761830869,
+      -0.005815854217679051
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-haute",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-haute": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_04_force_generale_46_ans",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-haute": [
+      -0.00018549512693100123,
+      0.002408740977274837,
+      0.0012950577708383815
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-haute",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-haute": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_04_force_generale_46_ans",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "a"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-haute": [
+      -0.013174791535339847,
+      -0.016156840369344838,
+      -0.012731011389522928
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-haute",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-haute": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_04_force_generale_46_ans",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-haute": [
+      0.00642988222140195,
+      0.00792671419439106,
+      0.01350668153149237
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-haute",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-haute": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_04_force_generale_46_ans",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "b"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-haute": [
+      -0.014111634964638076,
+      -0.004998273911346662,
+      -0.0025304666893578576
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-haute",
+    "graine": 0,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-haute": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_04_force_generale_46_ans",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   },
+   {
+    "ecarts": {
+     "mu-back-squat-barre-haute": [
+      -0.003031505457798178,
+      -0.00032155156218538483,
+      0.0008351990186594715
+     ]
+    },
+    "exercice_declencheur": "mu-back-squat-barre-haute",
+    "graine": 1,
+    "jour": 56,
+    "jours": {
+     "mu-back-squat-barre-haute": [
+      56,
+      63,
+      70
+     ]
+    },
+    "profil": "autres_04_force_generale_46_ans",
+    "scenario": "reference",
+    "semaine": 8,
+    "verite": "c"
+   }
+  ],
+  "note": "écart relatif e1RM (mauvais jour / sans) − 1 par mouvement principal chargé entraîné le jour du mauvais jour ; même graine, même calendrier, même bilan de santé",
+  "plantages": [],
+  "respecte": false,
+  "saisons": 36,
+  "saisons_mesurees": 36,
+  "seances_avant": 6
+ },
+ "rapide": false,
+ "temps": {
+  "critere_replanification_s": 10.0,
+  "critere_serie_ms": 50.0,
+  "note": "indicatif : référence Python (numpy) sur cette machine ; le critère vaut pour le portage Dart",
+  "observe_serie_ms": {
+   "max": 2.7464749982755166,
+   "mediane": 0.5947790014033671,
+   "moyenne": 0.6460024044122132,
+   "n": 1281,
+   "p95": 1.079263998690294
+  },
+  "plan_seance_ms": {
+   "max": 0.746008001442533,
+   "mediane": 0.1738780010782648,
+   "moyenne": 0.18110143037695625,
+   "n": 79,
+   "p95": 0.2595350015326403
+  },
+  "plan_serie_ms": {
+   "max": 1.0942379994958173,
+   "mediane": 0.07318500138353556,
+   "moyenne": 0.0878393524098017,
+   "n": 1291,
+   "p95": 0.2408720029052347
+  },
+  "replanification": {
+   "plans_evalues": [
+    267
+   ],
+   "plans_max": 256,
+   "trajectoires": 1000,
+   "validateur": true
+  },
+  "replanification_s": {
+   "max": 0.23274890299944673,
+   "mediane": 0.17410422549983195,
+   "moyenne": 0.17816548675000377,
+   "n": 16,
+   "p95": 0.23274890299944673
+  },
+  "respecte": true,
+  "saison": {
+   "graine": 0,
+   "profil": "street_07_avance_streetlifting_competition",
+   "scenario": "reference",
+   "semaines": 16,
+   "verite": "a"
+  }
+ },
+ "version": 1
+}

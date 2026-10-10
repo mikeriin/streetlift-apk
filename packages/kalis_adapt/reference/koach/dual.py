@@ -356,6 +356,12 @@ class EssaiN1(object):
                 raisons.append('echeance_proche')
         if self.statut != 'prevu':
             raisons.append('deja_%s' % self.statut)
+        # Contrôle synthétique : il faut assez de semaines AVANT
+        # l'intervention, sinon l'essai modulerait l'athlète sans pouvoir
+        # rien mesurer.
+        pre = contexte.get('semaines_temoin')
+        if pre is not None and pre < int(contexte.get('semaines_temoin_min', DEFAUTS_DUAL['synthetique_semaines_min'])):
+            raisons.append('temoin_trop_court:%d' % pre)
         return len(raisons) == 0, raisons
 
     def demarrer(self, semaine):
@@ -913,6 +919,11 @@ class ControleDual(Extension):
         ok_cal, r_cal = calibre(koach, self.lifts)
         ctx = dict(contexte)
         ctx['calibre'] = ok_cal
+        # Semaines de journal des capacités disponibles avant l'intervention
+        # pour les témoins (contrôle synthétique, cahier § 7 : 6 au moins).
+        ctx['semaines_temoin'] = sum(1 for x in self.pre if all(t in x['mu'] for t in es.temoins)) \
+            if es.temoins else 0
+        ctx['semaines_temoin_min'] = int(_param(self.params, 'synthetique_semaines_min'))
         ok, raisons = es.peut_demarrer(ctx)
         if not ok:
             return False, raisons + r_cal

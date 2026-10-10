@@ -155,13 +155,14 @@
     "bruit_rir_reference": 5.0,
     "dispersion_fatigue_intra": 0.3,
     "note_aberrante": 0.05,
-    "porte_note_ouverte": 99,
+    "porte_note_ouverte": 1.0,
     "note_erreur_grossiere": [
       0.08,
       2.0
     ],
     "noteur_entier_notes_min": 20,
-    "noteur_entier_part_max": 0.05
+    "noteur_entier_part_max": 0.05,
+    "defaut_modele_sd": 0.015
   },
   "jour": {
     "sigma_seance": 0.022,
@@ -169,7 +170,7 @@
     "bilan_par_point": 0.012,
     "bilan_neutre": 4,
     "sigma_seance_avec_bilan": 0.018,
-    "mauvais_jour_proba": 0.05,
+    "mauvais_jour_proba": 0.1,
     "mauvais_jour_proba_bilan_bas": 0.45,
     "mauvais_jour_moyenne": -0.06,
     "mauvais_jour_sigma": 0.045
@@ -260,7 +261,8 @@
     "test_rir_avance": 1.0,
     "rampe_sd_min": 0.05,
     "rampe_confirmations": 2,
-    "rampe_proba_min": 0.75
+    "rampe_proba_min": 0.75,
+    "rampe_series_travail": 1
   },
   "planification": {
     "trajectoires": 1000,
@@ -280,7 +282,13 @@
     "prudence_charge": [
       0.6,
       0.25
-    ]
+    ],
+    "transport_creation": 0.25,
+    "marge_cible": 0.065,
+    "abandon_hebdo": 0.01,
+    "abandon_surcharge": 3.0,
+    "gain_min": 0.002,
+    "rendement_test_sd": 0.07
   },
   "securite": {
     "hausse_par_niveau": [
@@ -389,7 +397,89 @@
     "premiere_hausse": 0.1,
     "reprise_dose_depart": 0.6,
     "reprise_dose_hausse": 0.25,
-    "tentative_recente_part": 0.85
+    "tentative_recente_part": 0.85,
+    "fragile_anciennetes": [
+      "under_6_weeks",
+      "weeks_6_to_12",
+      "months_3_to_12"
+    ],
+    "fragile_gene_min": 2,
+    "fragile_niveau_min": 0.5,
+    "surcharge_fragile_max": 1.0,
+    "poignet_gene_j": 14,
+    "poignet_chaud_j": 7,
+    "poignet_sensible_min": 1,
+    "poignet_sensible_j": 14,
+    "poignet_appui_neutre_materiel": [
+      "parallettes",
+      "poignées"
+    ],
+    "technique_niveau_acces": {
+      "top_set_backoff": 1,
+      "drop_set": 1,
+      "amrap": 1,
+      "pyramid": 1,
+      "ladder": 1,
+      "density": 1,
+      "for_time": 1,
+      "cluster": 2,
+      "rest_pause": 2,
+      "myo_reps": 2,
+      "accentuated_eccentric": 2,
+      "contrast": 2,
+      "wave": 2
+    },
+    "techniques_intensives": [
+      "rest_pause",
+      "myo_reps",
+      "drop_set",
+      "accentuated_eccentric",
+      "amrap",
+      "cluster",
+      "wave",
+      "contrast"
+    ],
+    "excentrique_echeance_j": 10,
+    "tenue_hausse_marge_s": 1,
+    "coupure_fenetre_j": 7,
+    "renvoi_periode_j": 7,
+    "surmenage_baisse": 0.05,
+    "surmenage_jours": 7,
+    "surmenage_fenetre_j": 21,
+    "surmenage_coupe": 0.4,
+    "endurance_materiel_course": [
+      "piste ou terrain extérieur",
+      "tapis de course",
+      "côte ou escaliers"
+    ],
+    "endurance_qualite_ids": [
+      "fractionne",
+      "seuil",
+      "tempo",
+      "30-30",
+      "sprint",
+      "cotes",
+      "fartlek",
+      "intervalles",
+      "navettes",
+      "accelerations"
+    ],
+    "endurance_qualite_rir": 3.0,
+    "endurance_facile_rir": 5.0,
+    "endurance_vitesse": 2.6,
+    "endurance_douleur_jambe": 3,
+    "endurance_dure_flammes": 8,
+    "endurance_dure_marge": 2,
+    "endurance_dure_jours": 3,
+    "endurance_course_facile": {
+      "tapis": "ca-course-tapis-endurance",
+      "defaut": "ca-footing-endurance-fondamentale"
+    },
+    "endurance_facile_min_s": 60,
+    "endurance_bornee_reduction": 0.9,
+    "wod_fenetre_j": 7,
+    "retour_seances_avant_mesure": 2,
+    "surmenage_seances_min": 6
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,
