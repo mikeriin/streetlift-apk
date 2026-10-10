@@ -388,13 +388,7 @@ Future<int?> showProgramListSheet(
   required List<KListItem> items,
   int initial = 0,
 }) {
-  // Hauteur d'une ligne d'une ligne de détail : 56 dp et 4 d'écart ; on
-  // ouvre deux lignes au-dessus de l'élément pour le montrer avec son
-  // voisinage.
-  final controller = ScrollController(
-    initialScrollOffset:
-        (KSize.primary + KSpacing.s4) * (initial > 2 ? initial - 2 : 0),
-  );
+  ScrollController? controller;
   return showModalBottomSheet<int>(
     context: context,
     isScrollControlled: true,
@@ -404,12 +398,53 @@ Future<int?> showProgramListSheet(
     constraints: BoxConstraints(
       maxHeight: MediaQuery.sizeOf(context).height * .85,
     ),
-    builder: (ctx) => KListSheet(
-      title: title,
-      summary: summary,
-      items: items,
-      controller: controller,
-      onSelected: (i) => Navigator.pop(ctx, i),
+    builder: (ctx) => LayoutBuilder(
+      builder: (ctx, c) {
+        // Défilement de départ : hauteur mesurée des lignes qui précèdent
+        // l'élément (deux lignes de voisinage gardées au-dessus).
+        controller ??= ScrollController(
+          initialScrollOffset: _listOffset(ctx, items, initial - 2, c.maxWidth),
+        );
+        return KListSheet(
+          title: title,
+          summary: summary,
+          items: items,
+          controller: controller,
+          onSelected: (i) => Navigator.pop(ctx, i),
+        );
+      },
     ),
-  ).whenComplete(controller.dispose);
+  ).whenComplete(() => controller?.dispose());
+}
+
+/// Hauteur des [count] premières lignes d'une feuille de liste du kit
+/// (mêmes marges et styles que `KListSheet`) pour une largeur [width].
+double _listOffset(
+  BuildContext context,
+  List<KListItem> items,
+  int count,
+  double width,
+) {
+  final scaler = MediaQuery.textScalerOf(context);
+  final text =
+      width - 2 * KSpacing.s16 - 2 * KSpacing.s14 - KSpacing.s32 - KSpacing.s14;
+  double measure(String s, TextStyle style) {
+    final p = TextPainter(
+      text: TextSpan(text: s, style: style),
+      textDirection: Directionality.of(context),
+      textScaler: scaler,
+    )..layout(maxWidth: text > 0 ? text : width);
+    final h = p.height;
+    p.dispose();
+    return h;
+  }
+
+  var y = 0.0;
+  for (var i = 0; i < count && i < items.length; i++) {
+    final it = items[i];
+    var h = measure(it.title, KType.corpsMoyen) + 2 * KSpacing.s8;
+    if (it.detail != null) h += measure(it.detail!, KType.detail);
+    y += (h < KSize.primary ? KSize.primary : h) + KSpacing.s4;
+  }
+  return y;
 }

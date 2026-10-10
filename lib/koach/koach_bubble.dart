@@ -142,6 +142,21 @@ class KoachBubbleState extends State<KoachBubble> {
     );
     final koachLeft = side == KoachSide.right;
     final bubble = _bubble(context, koachLeft);
+    // Grand texte (150 % et plus) : Koach au-dessus de sa bulle, du côté
+    // de son regard ; la bulle garde toute la largeur (aucun mot coupé,
+    // C3). Même pose, même taille.
+    if (MediaQuery.textScalerOf(context).scale(1) >= 1.5) {
+      return Column(
+        crossAxisAlignment: koachLeft
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.end,
+        children: [
+          koach,
+          const SizedBox(height: KSpacing.s4),
+          bubble,
+        ],
+      );
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: koachLeft

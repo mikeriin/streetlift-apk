@@ -378,10 +378,17 @@ class _EvolutionCard extends StatelessWidget {
                       style: detail,
                     ),
                     Text(
-                      '${pending == 0 ? '' : '$pending proposition${pending > 1 ? 's' : ''} en attente, '}'
-                      n == 0
-                          ? 'Aucun changement pour l’instant'
-                          : '$n changement${n > 1 ? 's' : ''} dans l’historique',
+                      capitalized(
+                        [
+                          if (pending > 0)
+                            '$pending proposition${pending > 1 ? 's' : ''} en '
+                                'attente',
+                          n == 0
+                              ? 'aucun changement pour l’instant'
+                              : '$n changement${n > 1 ? 's' : ''} dans '
+                                    'l’historique',
+                        ].join(', '),
+                      ),
                       style: detail,
                     ),
                   ],
