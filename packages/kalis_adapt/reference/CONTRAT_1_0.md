@@ -407,7 +407,7 @@ Une semaine est **verrouillée** si `intention or genre` ∈ {intro, deload, tap
   - `taux = ρ + EPS_classe`.
   - `proc = √(q_delta_semaine·s + sigma_prevision_semaine²·s)`, avec `s = max(1, fin + 1 − depuis)`.
   - `μ_fin = μ + gains[hyp]·taux + proc·bruit_proc`.
-  - Avec cibles **et** échéance : `jour = μ_fin − KG·f_ech + √(sigma_seance² + sigma_exercice²)·bruit_jour`. Une cible est atteinte si `jour ≥ ln(cible) + marge_cible`. `J` = part des trajectoires qui atteignent toutes les cibles (P par cible renvoyée à part).
+  - Avec cibles **et** échéance : `jour = μ_fin − KG·f_ech + √(sigma_seance² + sigma_exercice² + rendement_test_sd²)·bruit_jour`. Le jour J compte la barre réussie et non la capacité : `marge_cible` (0,065) est l'opposé du rendement moyen d'un test, ln(meilleure barre réussie / maximum vrai du jour), et `rendement_test_sd` (0,07) sa dispersion, mesurés sur le banc (267 tests chargés du jour J, 720 saisons : moyenne −0,065, écart-type 0,073). Une cible est atteinte si `jour ≥ ln(cible) + marge_cible`. `J` = part des trajectoires qui atteignent toutes les cibles (P par cible renvoyée à part).
   - Sinon : `J = moyenne(μ_fin − μ) × exp(−abandon_hebdo·(s + abandon_surcharge·surcharge))`, divisé par `echelle` (la valeur J du plan de référence) si elle existe.
 - **Valeur.** `J − lambda_transport·distance − pénalité`.
 
@@ -417,7 +417,7 @@ Une semaine est **verrouillée** si `intention or genre` ∈ {intro, deload, tap
 2. Dimensions : `d = blocs × (qualités actives + 1)`, avec les blocs dans l'ordre de première apparition à partir de `semaine`. `pop = max(4, plans_max // iterations)`. `elite_n = max(2, numerique.arrondi(pop·elite))`. Graine CEM : `fnv1a32('koach-cem:<graine>:<semaine>')`.
 3. Moyenne de départ : le plan en cours, à la première semaine du bloc qui en a un. Écart de départ : ½ plafond.
 4. Pour chaque itération : `X[0] = 0` (référence), `X[1] = moy`, `X[2…]` = `moy + écart·gauss`, tirés ligne par ligne puis bornés. Les candidats sont triés par `(−valeur, indice)`. Mise à jour : `moy = lissage·moy_élite + (1 − lissage)·moy` et `écart = max(lissage·sd_élite + (1 − lissage)·écart ; 1e-4)`, où `sd_élite` est l'écart-type de population (numpy `std`, ddof 0). Les 4 meilleurs candidats de l'itération sont ajoutés en tête de `candidats_finaux`, qui garde aussi les 4 premiers de la liste précédente.
-5. Choix. Les essais sont le meilleur candidat, puis `candidats_finaux`. Un essai est écarté si sa valeur ≤ valeur de référence + `gain_min`. Sinon il est soumis au validateur (`_sur`) jusqu'à 3 fois ; s'il échoue, il est divisé par 2 et resoumis. Le premier essai validé dont la valeur dépasse celle du plan choisi (au départ, la référence) + `gain_min` est retenu.
+5. Choix. Les essais sont le meilleur candidat, puis `candidats_finaux`. Un essai est écarté si sa valeur ≤ valeur de référence + `gain_min`. Sinon il est soumis au validateur (`_sur`) jusqu'à 3 fois ; s'il échoue, il est divisé par 2 et resoumis. Le premier essai validé dont la valeur dépasse celle de la référence + `gain_min` est retenu. **Repli quand aucun essai n'est retenu** (`plan_garde` dans la ligne d'historique) : (a) si toutes les semaines à venir ont déjà une modulation, le plan en cours est gardé tel quel (il a été validé le lundi précédent avec le même passé ; revenir d'un coup à la référence ferait un saut de charge ou de volume) ; (b) sinon la référence, si le validateur l'accepte avec le passé servi ; (c) sinon la dernière modulation servie est prolongée sur les semaines sans modulation (bornée en semaine verrouillée ; non revalidée : aucun saut par construction). Dans le cas (a) et (c), `p_cibles` de la ligne d'historique décrit la référence et non le plan gardé (limite connue).
 6. Le plan retenu est écrit pour toutes les semaines écrites ≥ `semaine`, avec le verrou appliqué : `plan[w] = {volume: [10], intensite}`. La ligne d'historique arrondit volumes et intensités par `numerique.arrondi(x, 4)`.
 
 **Application.** `items_modules(w)` calcule, pour chaque item écrit de la semaine (jours puis items, dans l'ordre écrit), le nombre de séries servies :
@@ -1117,7 +1117,7 @@ Séries de la ligne pour la montée : `lignes = min(séries écrites, séries se
 
 ### 6.5 Tests servis (`_cible_test`)
 
-**`one_rm` ou `attempt_simulation` (charge)** : échelle des tentatives (`_tentative`).
+**`one_rm` ou `attempt_simulation` (charge)** : échelle des tentatives (`_tentative`). La semaine du retour après une coupure (`coupure > 0`), hors jour d'épreuve, le test n'est pas servi (`koach.test_reporte`, cause `coupure`).
 
 - `μ` = μ_jour + ln(1 − `tentative_bilan_bas_part`·palier − `tentative_bilan_bas_part` si une zone de conduite existe) ; `σ = max(σ_jour, 0,01)`.
 - `plus_lourde(p, plafond) = plancher(max(min(e^(μ − Φ⁻¹(p)·σ), plafond) − bw ; minimum))`.
@@ -1125,6 +1125,8 @@ Séries de la ligne pour la montée : `lignes = min(séries écrites, séries se
 - **Ouverture** (index 0 ou aucune charge dans la séance) :
   1. `plus_lourde(tentative_ouverture_proba, tentative_ouverture_part·e^μ)` ;
   2. remplacée par la plus lourde barre réussie de moins de `barre_recente_j` jours si elle est plus légère et que `récente + bw ≥ tentative_recente_part·e^μ` ;
+  2 bis. **plancher** : si la plus lourde barre réussie de moins de `barre_recente_j` jours est plus lourde que l'ouverture calculée, l'ouverture devient `plancher(max(min(récente, tentative_ouverture_part·e^μ − bw), ouverture))`. Conditions : ni bilan bas ni zone de conduite (facteur de baisse = 1), ligne sans `sans_hausse`, pas de coupure en cours (`coupure = 0`), pas d'échec à la dernière séance de l'exercice. Sert quand l'incertitude a été élargie (diagnostic « rien de spécial ») : le quantile prudent tomberait très bas ;
+  2 ter. un jour `sans_hausse` (bilan bas, zone douloureuse, semaine du retour après une coupure un jour d'épreuve), l'ouverture ne dépasse pas le dernier passage de l'exercice (`charge_derniere`) ;
   3. plafonnée par le maximum, sur ces barres, de `(c + bw)(1 + premiere_hausse)(1 + schema_change_part·min(r − 1, schema_change_reps_max)) − bw`, ramené sur la grille. C'est une règle propre à Koach.
 - **Après un échec dans la séance** : la même barre.
 - **Tentatives suivantes** :
@@ -1413,7 +1415,7 @@ Le tableau est généré depuis le JSON (305 clés, dans l'ordre du fichier) et 
 | planification | `graine` | 20261009 | — | Graine des tirages de planification | planification |
 | planification | `prudence_charge` | [0.6, 0.25] | écarts-types | Quantile prudent de la charge (≤ 3 séances, après) | seance._cible_charge |
 | planification | `transport_creation` | 0.25 | /série | Coût de transport d'une série créée ou retirée | planification |
-| planification | `marge_cible` | 0.0 | ln | Marge ajoutée au seuil de cible | planification |
+| planification | `marge_cible` | 0.065 | ln | Marge ajoutée au seuil de cible | planification |
 | planification | `abandon_hebdo` | 0.01 | /sem. | Hasard d'abandon hebdomadaire (sans échéance) | planification |
 | planification | `abandon_surcharge` | 3.0 | — | Poids de la surcharge dans le hasard d'abandon | planification |
 | planification | `gain_min` | 0.002 | valeur | Gain minimal sur la référence pour retenir un plan | planification |
@@ -1884,7 +1886,7 @@ Chaque écart est à acter par le propriétaire (décision C13) ou à corriger.
 | 14 | Méthodes § 9 : secours « résidu d'e1RM supérieur à 5 % deux semaines de suite » | La grandeur moyennée est le déplacement de la capacité du jour pendant la séance, pas un résidu (M8). |
 | 15 | Méthodes § 9 : « Moins de temps → replanification » ; « Fatigue → semaine allégée » | Action codée seulement pour « moins de temps ». La semaine allégée (`appliquer_allegement`) est appliquée par l'appelant (M6). |
 | 16 | Contraintes : « L'état se recalcule depuis le journal et les décisions de l'utilisateur » | Vrai pour le moteur et les extensions (appels de `plan` et imports journalisés, rejeu exact testé), sauf la référence de planification (M7). |
-| 17 | Contraintes : règles de 0.3.1 en contraintes dures | Reprises sauf A1.5, A2.2 (remplaçant du poignet), A6.4, A7.2 (exercice nouveau en part d'un autre mouvement), A7.3, A9.5 (§ 8.1). Les règles de volume (dont le plafond de la 1re semaine) ne vivent que dans le validateur injecté, obligatoire, en constantes du banc. Le feu vert médical reste dans le plan de référence. |
+| 17 | Contraintes : règles de 0.3.1 en contraintes dures | Reprises sauf A1.5, A2.2 (remplaçant du poignet), A6.4, A7.2 (exercice nouveau en part d'un autre mouvement), A7.3, A9.5 (§ 8.1). Les règles de volume sont dans le moteur pour la rampe hebdomadaire, l'allègement, les tenues bras tendus et la durée de séance (« retour gradué », § 8.3) ; le plafond hebdomadaire par niveau et le plafond de la 1re semaine ne vivent que dans le validateur injecté, obligatoire, en constantes du banc. Le plancher « réserve ≥ 1 sur une zone fragile » du critère `contre_indication` du banc n'est pas repris par la séance (les lignes écrites le respectent ; Koach ne baisse pas la réserve écrite sur une zone fragile sauf test). Le feu vert médical reste dans le plan de référence. |
 | 18 | Contraintes : parité Python / Dart à 1e-9 | Écarts connus : `math.erfc` dans `_category_mass` (≤ 2e-13), produits BLAS et réductions numpy de la planification, `round` de Python dans la raison `koach.surmenage` (§ 9.4). Fixtures périmées (§ 9.6). |
 | 19 | Contraintes : calcul (replanification ≤ 10 s, série ≤ 50 ms) | Mesuré sur la référence Python seulement ; à mesurer sur la VM Dart (KM2). |
 

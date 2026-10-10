@@ -1,367 +1,400 @@
 [
  {
-  "id": "adv-31fc0cc1-g0",
+  "id": "adv-f3afdf8d-g0",
   "key": "street_07_avance_streetlifting_competition",
   "kind": "a",
   "scenario": "reference",
   "seed": 0,
   "spec": {
-   "breakDays": 3,
-   "breakFromDay": 42,
-   "daySd": 0.0395,
-   "healthAnswerRate": 0.7849,
-   "illnessDays": 2,
-   "illnessFromDay": 16,
-   "lazy": 0.0019,
-   "missRate": 0.2947,
-   "painDays": 14,
-   "painFromDay": 14,
-   "painIntensity": 5,
-   "painZone": "shoulder",
-   "ratingNoise": 2.2331,
-   "rirBias": 0.4584,
-   "rirBiasSd": 0.0664,
-   "shortTimeRate": 0.1823,
-   "skipRating": 0.2073
+   "breakDays": 14,
+   "breakFromDay": 61,
+   "daySd": 0.0131,
+   "healthAnswerRate": 0.7605,
+   "illnessDays": 6,
+   "illnessFromDay": 45,
+   "lazy": 0.149,
+   "missRate": 0.3373,
+   "painDays": 20,
+   "painFromDay": 45,
+   "painIntensity": 3,
+   "painZone": "knee",
+   "ratingNoise": 1.2701,
+   "rirBias": -0.1128,
+   "rirBiasSd": 0.1416,
+   "shortTimeRate": 0.0917,
+   "skipRating": 0.0192
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9798,
-    "curveB": 1.2855,
-    "fatigueScale": 1.5676,
-    "power": 1.2855,
-    "slope": 1.2855
+    "capacity": 0.9321,
+    "curveB": 1.0324,
+    "fatigueScale": 1.2795,
+    "power": 1.0324,
+    "slope": 1.0324
    },
    "sl-dips-leste": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-muscle-up-leste": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-squat-competition": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-traction-lestee": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    }
   }
  },
  {
-  "id": "adv-31fc0cc1-g1",
+  "id": "adv-f3afdf8d-g1",
   "key": "street_07_avance_streetlifting_competition",
   "kind": "a",
   "scenario": "reference",
   "seed": 1,
   "spec": {
-   "breakDays": 3,
-   "breakFromDay": 42,
-   "daySd": 0.0395,
-   "healthAnswerRate": 0.7849,
-   "illnessDays": 2,
-   "illnessFromDay": 16,
-   "lazy": 0.0019,
-   "missRate": 0.2947,
-   "painDays": 14,
-   "painFromDay": 14,
-   "painIntensity": 5,
-   "painZone": "shoulder",
-   "ratingNoise": 2.2331,
-   "rirBias": 0.4584,
-   "rirBiasSd": 0.0664,
-   "shortTimeRate": 0.1823,
-   "skipRating": 0.2073
+   "breakDays": 14,
+   "breakFromDay": 61,
+   "daySd": 0.0131,
+   "healthAnswerRate": 0.7605,
+   "illnessDays": 6,
+   "illnessFromDay": 45,
+   "lazy": 0.149,
+   "missRate": 0.3373,
+   "painDays": 20,
+   "painFromDay": 45,
+   "painIntensity": 3,
+   "painZone": "knee",
+   "ratingNoise": 1.2701,
+   "rirBias": -0.1128,
+   "rirBiasSd": 0.1416,
+   "shortTimeRate": 0.0917,
+   "skipRating": 0.0192
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9798,
-    "curveB": 1.2855,
-    "fatigueScale": 1.5676,
-    "power": 1.2855,
-    "slope": 1.2855
+    "capacity": 0.9321,
+    "curveB": 1.0324,
+    "fatigueScale": 1.2795,
+    "power": 1.0324,
+    "slope": 1.0324
    },
    "sl-dips-leste": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-muscle-up-leste": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-squat-competition": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-traction-lestee": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    }
   }
  },
  {
-  "id": "adv-31fc0cc1-g2",
+  "id": "adv-f3afdf8d-g2",
   "key": "street_07_avance_streetlifting_competition",
   "kind": "a",
   "scenario": "reference",
   "seed": 2,
   "spec": {
-   "breakDays": 3,
-   "breakFromDay": 42,
-   "daySd": 0.0395,
-   "healthAnswerRate": 0.7849,
-   "illnessDays": 2,
-   "illnessFromDay": 16,
-   "lazy": 0.0019,
-   "missRate": 0.2947,
-   "painDays": 14,
-   "painFromDay": 14,
-   "painIntensity": 5,
-   "painZone": "shoulder",
-   "ratingNoise": 2.2331,
-   "rirBias": 0.4584,
-   "rirBiasSd": 0.0664,
-   "shortTimeRate": 0.1823,
-   "skipRating": 0.2073
+   "breakDays": 14,
+   "breakFromDay": 61,
+   "daySd": 0.0131,
+   "healthAnswerRate": 0.7605,
+   "illnessDays": 6,
+   "illnessFromDay": 45,
+   "lazy": 0.149,
+   "missRate": 0.3373,
+   "painDays": 20,
+   "painFromDay": 45,
+   "painIntensity": 3,
+   "painZone": "knee",
+   "ratingNoise": 1.2701,
+   "rirBias": -0.1128,
+   "rirBiasSd": 0.1416,
+   "shortTimeRate": 0.0917,
+   "skipRating": 0.0192
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9798,
-    "curveB": 1.2855,
-    "fatigueScale": 1.5676,
-    "power": 1.2855,
-    "slope": 1.2855
+    "capacity": 0.9321,
+    "curveB": 1.0324,
+    "fatigueScale": 1.2795,
+    "power": 1.0324,
+    "slope": 1.0324
    },
    "sl-dips-leste": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-muscle-up-leste": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-squat-competition": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    },
    "sl-traction-lestee": {
-    "capacity": 1.1607,
-    "curveB": 1.2204,
-    "fatigueScale": 0.6064,
-    "power": 1.2204,
-    "slope": 1.2204
+    "capacity": 1.0544,
+    "curveB": 1.0093,
+    "fatigueScale": 1.6126,
+    "power": 1.0093,
+    "slope": 1.0093
    }
   }
  },
  {
-  "id": "adv-6e0f6bc7-g0",
+  "id": "adv-61bd8149-g0",
   "key": "street_07_avance_streetlifting_competition",
   "kind": "b",
   "scenario": "reference",
   "seed": 0,
   "spec": {
-   "daySd": 0.051,
-   "healthAnswerRate": 0.8688,
-   "lazy": 0.1912,
-   "missRate": 0.1775,
-   "painDays": 32,
-   "painFromDay": 11,
-   "painIntensity": 7,
-   "painZone": "knee",
-   "ratingNoise": 1.9939,
-   "rirBias": 0.7622,
-   "rirBiasSd": 0.1259,
-   "shortTimeRate": 0.1196,
-   "skipRating": 0.2774
+   "breakDays": 4,
+   "breakFromDay": 35,
+   "daySd": 0.0577,
+   "healthAnswerRate": 0.856,
+   "illnessDays": 10,
+   "illnessFromDay": 61,
+   "lazy": 0.3133,
+   "missRate": 0.0867,
+   "painDays": 9,
+   "painFromDay": 46,
+   "painIntensity": 4,
+   "painZone": "wrist_hand",
+   "ratingNoise": 0.7954,
+   "rirBias": 0.423,
+   "rirBiasSd": 0.2069,
+   "shortTimeRate": 0.0867,
+   "skipRating": 0.282
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9505,
-    "curveB": 0.9354,
-    "fatigueScale": 0.7913,
-    "power": 0.9354,
-    "slope": 0.9354
+    "capacity": 0.9192,
+    "curveB": 0.8637,
+    "fatigueScale": 1.4944,
+    "power": 0.8637,
+    "slope": 0.8637
    },
    "sl-dips-leste": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-muscle-up-leste": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-squat-competition": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-traction-lestee": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
+   },
+   "sl-traction-lestee-pause-bas": {
+    "capacity": 0.92,
+    "curveB": 0.8637,
+    "fatigueScale": 1.4944,
+    "power": 0.8637,
+    "slope": 0.8637
    }
   }
  },
  {
-  "id": "adv-6e0f6bc7-g1",
+  "id": "adv-61bd8149-g1",
   "key": "street_07_avance_streetlifting_competition",
   "kind": "b",
   "scenario": "reference",
   "seed": 1,
   "spec": {
-   "daySd": 0.051,
-   "healthAnswerRate": 0.8688,
-   "lazy": 0.1912,
-   "missRate": 0.1775,
-   "painDays": 32,
-   "painFromDay": 11,
-   "painIntensity": 7,
-   "painZone": "knee",
-   "ratingNoise": 1.9939,
-   "rirBias": 0.7622,
-   "rirBiasSd": 0.1259,
-   "shortTimeRate": 0.1196,
-   "skipRating": 0.2774
+   "breakDays": 4,
+   "breakFromDay": 35,
+   "daySd": 0.0577,
+   "healthAnswerRate": 0.856,
+   "illnessDays": 10,
+   "illnessFromDay": 61,
+   "lazy": 0.3133,
+   "missRate": 0.0867,
+   "painDays": 9,
+   "painFromDay": 46,
+   "painIntensity": 4,
+   "painZone": "wrist_hand",
+   "ratingNoise": 0.7954,
+   "rirBias": 0.423,
+   "rirBiasSd": 0.2069,
+   "shortTimeRate": 0.0867,
+   "skipRating": 0.282
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9505,
-    "curveB": 0.9354,
-    "fatigueScale": 0.7913,
-    "power": 0.9354,
-    "slope": 0.9354
+    "capacity": 0.9192,
+    "curveB": 0.8637,
+    "fatigueScale": 1.4944,
+    "power": 0.8637,
+    "slope": 0.8637
    },
    "sl-dips-leste": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-muscle-up-leste": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-squat-competition": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-traction-lestee": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
+   },
+   "sl-traction-lestee-pause-bas": {
+    "capacity": 0.92,
+    "curveB": 0.8637,
+    "fatigueScale": 1.4944,
+    "power": 0.8637,
+    "slope": 0.8637
    }
   }
  },
  {
-  "id": "adv-6e0f6bc7-g2",
+  "id": "adv-61bd8149-g2",
   "key": "street_07_avance_streetlifting_competition",
   "kind": "b",
   "scenario": "reference",
   "seed": 2,
   "spec": {
-   "daySd": 0.051,
-   "healthAnswerRate": 0.8688,
-   "lazy": 0.1912,
-   "missRate": 0.1775,
-   "painDays": 32,
-   "painFromDay": 11,
-   "painIntensity": 7,
-   "painZone": "knee",
-   "ratingNoise": 1.9939,
-   "rirBias": 0.7622,
-   "rirBiasSd": 0.1259,
-   "shortTimeRate": 0.1196,
-   "skipRating": 0.2774
+   "breakDays": 4,
+   "breakFromDay": 35,
+   "daySd": 0.0577,
+   "healthAnswerRate": 0.856,
+   "illnessDays": 10,
+   "illnessFromDay": 61,
+   "lazy": 0.3133,
+   "missRate": 0.0867,
+   "painDays": 9,
+   "painFromDay": 46,
+   "painIntensity": 4,
+   "painZone": "wrist_hand",
+   "ratingNoise": 0.7954,
+   "rirBias": 0.423,
+   "rirBiasSd": 0.2069,
+   "shortTimeRate": 0.0867,
+   "skipRating": 0.282
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9505,
-    "curveB": 0.9354,
-    "fatigueScale": 0.7913,
-    "power": 0.9354,
-    "slope": 0.9354
+    "capacity": 0.9192,
+    "curveB": 0.8637,
+    "fatigueScale": 1.4944,
+    "power": 0.8637,
+    "slope": 0.8637
    },
    "sl-dips-leste": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-muscle-up-leste": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-squat-competition": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
    },
    "sl-traction-lestee": {
-    "capacity": 1.1716,
-    "curveB": 0.8634,
-    "fatigueScale": 0.8639,
-    "power": 0.8634,
-    "slope": 0.8634
+    "capacity": 1.1207,
+    "curveB": 0.9772,
+    "fatigueScale": 0.8712,
+    "power": 0.9772,
+    "slope": 0.9772
+   },
+   "sl-traction-lestee-pause-bas": {
+    "capacity": 0.92,
+    "curveB": 0.8637,
+    "fatigueScale": 1.4944,
+    "power": 0.8637,
+    "slope": 0.8637
    }
   }
  },
@@ -576,1495 +609,1329 @@
   }
  },
  {
-  "id": "adv-3a065b86-g0",
+  "id": "adv-0c7fb400-g0",
   "key": "autres_03_powerlifter_competition",
   "kind": "a",
   "scenario": "reference",
   "seed": 0,
   "spec": {
    "breakDays": 4,
-   "breakFromDay": 14,
-   "daySd": 0.0352,
-   "healthAnswerRate": 0.4744,
-   "illnessDays": 4,
-   "illnessFromDay": 14,
-   "lazy": 0.4785,
-   "missRate": 0.0298,
-   "painDays": 23,
-   "painFromDay": 24,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 2.1227,
-   "rirBias": -0.0575,
-   "rirBiasSd": 0.0729,
-   "shortTimeRate": 0.1133,
-   "skipRating": 0.3825
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9291,
-    "curveB": 1.3083,
-    "fatigueScale": 1.2148,
-    "power": 1.3083,
-    "slope": 1.3083
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   }
-  }
- },
- {
-  "id": "adv-3a065b86-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 4,
-   "breakFromDay": 14,
-   "daySd": 0.0352,
-   "healthAnswerRate": 0.4744,
-   "illnessDays": 4,
-   "illnessFromDay": 14,
-   "lazy": 0.4785,
-   "missRate": 0.0298,
-   "painDays": 23,
-   "painFromDay": 24,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 2.1227,
-   "rirBias": -0.0575,
-   "rirBiasSd": 0.0729,
-   "shortTimeRate": 0.1133,
-   "skipRating": 0.3825
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9291,
-    "curveB": 1.3083,
-    "fatigueScale": 1.2148,
-    "power": 1.3083,
-    "slope": 1.3083
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   }
-  }
- },
- {
-  "id": "adv-3a065b86-g2",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 4,
-   "breakFromDay": 14,
-   "daySd": 0.0352,
-   "healthAnswerRate": 0.4744,
-   "illnessDays": 4,
-   "illnessFromDay": 14,
-   "lazy": 0.4785,
-   "missRate": 0.0298,
-   "painDays": 23,
-   "painFromDay": 24,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 2.1227,
-   "rirBias": -0.0575,
-   "rirBiasSd": 0.0729,
-   "shortTimeRate": 0.1133,
-   "skipRating": 0.3825
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9291,
-    "curveB": 1.3083,
-    "fatigueScale": 1.2148,
-    "power": 1.3083,
-    "slope": 1.3083
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.854,
-    "curveB": 1.2532,
-    "fatigueScale": 1.2745,
-    "power": 1.2532,
-    "slope": 1.2532
-   }
-  }
- },
- {
-  "id": "adv-862fd625-g0",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 11,
-   "breakFromDay": 38,
-   "daySd": 0.041,
-   "healthAnswerRate": 0.9953,
-   "lazy": 0.0896,
-   "missRate": 0.0887,
-   "painDays": 14,
-   "painFromDay": 10,
-   "painIntensity": 3,
-   "painZone": "wrist_hand",
-   "ratingNoise": 1.5531,
-   "rirBias": 0.6799,
-   "rirBiasSd": 0.0718,
-   "shortTimeRate": 0.0353,
-   "skipRating": 0.4483
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0535,
-    "curveB": 1.1545,
-    "fatigueScale": 0.919,
-    "power": 1.1545,
-    "slope": 1.1545
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   }
-  }
- },
- {
-  "id": "adv-862fd625-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 11,
-   "breakFromDay": 38,
-   "daySd": 0.041,
-   "healthAnswerRate": 0.9953,
-   "lazy": 0.0896,
-   "missRate": 0.0887,
-   "painDays": 14,
-   "painFromDay": 10,
-   "painIntensity": 3,
-   "painZone": "wrist_hand",
-   "ratingNoise": 1.5531,
-   "rirBias": 0.6799,
-   "rirBiasSd": 0.0718,
-   "shortTimeRate": 0.0353,
-   "skipRating": 0.4483
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0535,
-    "curveB": 1.1545,
-    "fatigueScale": 0.919,
-    "power": 1.1545,
-    "slope": 1.1545
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   }
-  }
- },
- {
-  "id": "adv-862fd625-g2",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 11,
-   "breakFromDay": 38,
-   "daySd": 0.041,
-   "healthAnswerRate": 0.9953,
-   "lazy": 0.0896,
-   "missRate": 0.0887,
-   "painDays": 14,
-   "painFromDay": 10,
-   "painIntensity": 3,
-   "painZone": "wrist_hand",
-   "ratingNoise": 1.5531,
-   "rirBias": 0.6799,
-   "rirBiasSd": 0.0718,
-   "shortTimeRate": 0.0353,
-   "skipRating": 0.4483
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0535,
-    "curveB": 1.1545,
-    "fatigueScale": 0.919,
-    "power": 1.1545,
-    "slope": 1.1545
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1262,
-    "curveB": 1.1458,
-    "fatigueScale": 0.6313,
-    "power": 1.1458,
-    "slope": 1.1458
-   }
-  }
- },
- {
-  "id": "adv-2af80929-g0",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 3,
-   "breakFromDay": 41,
-   "daySd": 0.0324,
-   "healthAnswerRate": 0.4492,
-   "illnessDays": 10,
-   "illnessFromDay": 20,
-   "lazy": 0.2278,
-   "missRate": 0.1748,
-   "painDays": 18,
-   "painFromDay": 41,
-   "painIntensity": 5,
-   "painZone": "shoulder",
-   "ratingNoise": 0.5555,
-   "rirBias": 0.7361,
-   "rirBiasSd": 0.2648,
-   "shortTimeRate": 0.1963,
-   "skipRating": 0.1851
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.941,
-    "curveB": 1.2844,
-    "fatigueScale": 1.3544,
-    "power": 1.2844,
-    "slope": 1.2844
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   }
-  }
- },
- {
-  "id": "adv-2af80929-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 3,
-   "breakFromDay": 41,
-   "daySd": 0.0324,
-   "healthAnswerRate": 0.4492,
-   "illnessDays": 10,
-   "illnessFromDay": 20,
-   "lazy": 0.2278,
-   "missRate": 0.1748,
-   "painDays": 18,
-   "painFromDay": 41,
-   "painIntensity": 5,
-   "painZone": "shoulder",
-   "ratingNoise": 0.5555,
-   "rirBias": 0.7361,
-   "rirBiasSd": 0.2648,
-   "shortTimeRate": 0.1963,
-   "skipRating": 0.1851
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.941,
-    "curveB": 1.2844,
-    "fatigueScale": 1.3544,
-    "power": 1.2844,
-    "slope": 1.2844
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   }
-  }
- },
- {
-  "id": "adv-2af80929-g2",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 3,
-   "breakFromDay": 41,
-   "daySd": 0.0324,
-   "healthAnswerRate": 0.4492,
-   "illnessDays": 10,
-   "illnessFromDay": 20,
-   "lazy": 0.2278,
-   "missRate": 0.1748,
-   "painDays": 18,
-   "painFromDay": 41,
-   "painIntensity": 5,
-   "painZone": "shoulder",
-   "ratingNoise": 0.5555,
-   "rirBias": 0.7361,
-   "rirBiasSd": 0.2648,
-   "shortTimeRate": 0.1963,
-   "skipRating": 0.1851
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.941,
-    "curveB": 1.2844,
-    "fatigueScale": 1.3544,
-    "power": 1.2844,
-    "slope": 1.2844
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.0864,
-    "curveB": 0.7889,
-    "fatigueScale": 1.2946,
-    "power": 0.7889,
-    "slope": 0.7889
-   }
-  }
- },
- {
-  "id": "adv-a4ccad90-g0",
-  "key": "street_06_inter_sets_reps",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "daySd": 0.0156,
-   "healthAnswerRate": 0.8195,
-   "illnessDays": 5,
-   "illnessFromDay": 83,
-   "lazy": 0.1199,
-   "missRate": 0.2507,
-   "painDays": 26,
-   "painFromDay": 33,
-   "painIntensity": 7,
-   "painZone": "shoulder",
-   "ratingNoise": 0.8329,
-   "rirBias": -0.0767,
-   "rirBiasSd": 0.0796,
-   "shortTimeRate": 0.0836,
-   "skipRating": 0.396
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8751,
-    "curveB": 0.9542,
-    "fatigueScale": 0.7504,
-    "power": 0.9542,
-    "slope": 0.9542
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   }
-  }
- },
- {
-  "id": "adv-a4ccad90-g1",
-  "key": "street_06_inter_sets_reps",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "daySd": 0.0156,
-   "healthAnswerRate": 0.8195,
-   "illnessDays": 5,
-   "illnessFromDay": 83,
-   "lazy": 0.1199,
-   "missRate": 0.2507,
-   "painDays": 26,
-   "painFromDay": 33,
-   "painIntensity": 7,
-   "painZone": "shoulder",
-   "ratingNoise": 0.8329,
-   "rirBias": -0.0767,
-   "rirBiasSd": 0.0796,
-   "shortTimeRate": 0.0836,
-   "skipRating": 0.396
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8751,
-    "curveB": 0.9542,
-    "fatigueScale": 0.7504,
-    "power": 0.9542,
-    "slope": 0.9542
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   }
-  }
- },
- {
-  "id": "adv-a4ccad90-g2",
-  "key": "street_06_inter_sets_reps",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "daySd": 0.0156,
-   "healthAnswerRate": 0.8195,
-   "illnessDays": 5,
-   "illnessFromDay": 83,
-   "lazy": 0.1199,
-   "missRate": 0.2507,
-   "painDays": 26,
-   "painFromDay": 33,
-   "painIntensity": 7,
-   "painZone": "shoulder",
-   "ratingNoise": 0.8329,
-   "rirBias": -0.0767,
-   "rirBiasSd": 0.0796,
-   "shortTimeRate": 0.0836,
-   "skipRating": 0.396
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8751,
-    "curveB": 0.9542,
-    "fatigueScale": 0.7504,
-    "power": 0.9542,
-    "slope": 0.9542
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.8974,
-    "curveB": 0.9379,
-    "fatigueScale": 0.8486,
-    "power": 0.9379,
-    "slope": 0.9379
-   }
-  }
- },
- {
-  "id": "adv-14c1f72c-g0",
-  "key": "street_06_inter_sets_reps",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 11,
-   "breakFromDay": 83,
-   "daySd": 0.0173,
-   "healthAnswerRate": 0.8691,
-   "illnessDays": 5,
-   "illnessFromDay": 99,
-   "lazy": 0.3614,
-   "missRate": 0.2466,
-   "painDays": 33,
-   "painFromDay": 7,
-   "painIntensity": 4,
-   "painZone": "lower_back",
-   "ratingNoise": 2.4691,
-   "rirBias": 0.0284,
-   "rirBiasSd": 0.1281,
-   "shortTimeRate": 0.15,
-   "skipRating": 0.1413
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8025,
-    "curveB": 1.0386,
-    "fatigueScale": 1.1822,
-    "power": 1.0386,
-    "slope": 1.0386
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1397,
-    "curveB": 0.8636,
-    "fatigueScale": 1.0511,
-    "power": 0.8636,
-    "slope": 0.8636
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1397,
-    "curveB": 0.8636,
-    "fatigueScale": 1.0511,
-    "power": 0.8636,
-    "slope": 0.8636
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1397,
-    "curveB": 0.8636,
-    "fatigueScale": 1.0511,
-    "power": 0.8636,
-    "slope": 0.8636
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1397,
-    "curveB": 0.8636,
-    "fatigueScale": 1.0511,
-    "power": 0.8636,
-    "slope": 0.8636
-   }
-  }
- },
- {
-  "id": "adv-14c1f72c-g1",
-  "key": "street_06_inter_sets_reps",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 11,
-   "breakFromDay": 83,
-   "daySd": 0.0173,
-   "healthAnswerRate": 0.8691,
-   "illnessDays": 5,
-   "illnessFromDay": 99,
-   "lazy": 0.3614,
-   "missRate": 0.2466,
-   "painDays": 33,
-   "painFromDay": 7,
-   "painIntensity": 4,
-   "painZone": "lower_back",
-   "ratingNoise": 2.4691,
-   "rirBias": 0.0284,
-   "rirBiasSd": 0.1281,
-   "shortTimeRate": 0.15,
-   "skipRating": 0.1413
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8025,
-    "curveB": 1.0386,
-    "fatigueScale": 1.1822,
-    "power": 1.0386,
-    "slope": 1.0386
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1397,
-    "curveB": 0.8636,
-    "fatigueScale": 1.0511,
-    "power": 0.8636,
-    "slope": 0.8636
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1397,
-    "curveB": 0.8636,
-    "fatigueScale": 1.0511,
-    "power": 0.8636,
-    "slope": 0.8636
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1397,
-    "curveB": 0.8636,
-    "fatigueScale": 1.0511,
-    "power": 0.8636,
-    "slope": 0.8636
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1397,
-    "curveB": 0.8636,
-    "fatigueScale": 1.0511,
-    "power": 0.8636,
-    "slope": 0.8636
-   }
-  }
- },
- {
-  "id": "adv-ffa45412-g0",
-  "key": "street_06_inter_sets_reps",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 1,
-   "breakFromDay": 22,
-   "daySd": 0.0428,
-   "healthAnswerRate": 0.8516,
+   "breakFromDay": 21,
+   "daySd": 0.0361,
+   "healthAnswerRate": 0.376,
    "illnessDays": 6,
-   "illnessFromDay": 61,
-   "lazy": 0.1505,
-   "missRate": 0.0873,
-   "painDays": 9,
-   "painFromDay": 7,
-   "painIntensity": 5,
-   "painZone": "lower_back",
-   "ratingNoise": 1.278,
-   "rirBias": 0.6713,
-   "rirBiasSd": 0.2733,
-   "shortTimeRate": 0.0229,
-   "skipRating": 0.3614
+   "illnessFromDay": 7,
+   "lazy": 0.477,
+   "missRate": 0.0229,
+   "painDays": 18,
+   "painFromDay": 25,
+   "painIntensity": 7,
+   "painZone": "hip",
+   "ratingNoise": 1.9746,
+   "rirBias": -0.1424,
+   "rirBiasSd": 0.0999,
+   "shortTimeRate": 0.2813,
+   "skipRating": 0.3865
   },
   "surcharges": {
    "*": {
-    "capacity": 0.8595,
-    "curveB": 1.058,
-    "fatigueScale": 0.6355,
-    "power": 1.058,
-    "slope": 1.058
+    "capacity": 0.9113,
+    "curveB": 1.3053,
+    "fatigueScale": 1.235,
+    "power": 1.3053,
+    "slope": 1.3053
    },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.8816,
-    "curveB": 0.7868,
-    "fatigueScale": 0.756,
-    "power": 0.7868,
-    "slope": 0.7868
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8783,
+    "curveB": 1.3028,
+    "fatigueScale": 1.2548,
+    "power": 1.3028,
+    "slope": 1.3028
    },
-   "sw-dips-buste-penche": {
-    "capacity": 0.8816,
-    "curveB": 0.7868,
-    "fatigueScale": 0.756,
-    "power": 0.7868,
-    "slope": 0.7868
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8783,
+    "curveB": 1.3028,
+    "fatigueScale": 1.2548,
+    "power": 1.3028,
+    "slope": 1.3028
    },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.8816,
-    "curveB": 0.7868,
-    "fatigueScale": 0.756,
-    "power": 0.7868,
-    "slope": 0.7868
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.8816,
-    "curveB": 0.7868,
-    "fatigueScale": 0.756,
-    "power": 0.7868,
-    "slope": 0.7868
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8783,
+    "curveB": 1.3028,
+    "fatigueScale": 1.2548,
+    "power": 1.3028,
+    "slope": 1.3028
    }
   }
  },
  {
-  "id": "adv-ffa45412-g1",
+  "id": "adv-0c7fb400-g1",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 4,
+   "breakFromDay": 21,
+   "daySd": 0.0361,
+   "healthAnswerRate": 0.376,
+   "illnessDays": 6,
+   "illnessFromDay": 7,
+   "lazy": 0.477,
+   "missRate": 0.0229,
+   "painDays": 18,
+   "painFromDay": 25,
+   "painIntensity": 7,
+   "painZone": "hip",
+   "ratingNoise": 1.9746,
+   "rirBias": -0.1424,
+   "rirBiasSd": 0.0999,
+   "shortTimeRate": 0.2813,
+   "skipRating": 0.3865
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.9113,
+    "curveB": 1.3053,
+    "fatigueScale": 1.235,
+    "power": 1.3053,
+    "slope": 1.3053
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8783,
+    "curveB": 1.3028,
+    "fatigueScale": 1.2548,
+    "power": 1.3028,
+    "slope": 1.3028
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8783,
+    "curveB": 1.3028,
+    "fatigueScale": 1.2548,
+    "power": 1.3028,
+    "slope": 1.3028
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8783,
+    "curveB": 1.3028,
+    "fatigueScale": 1.2548,
+    "power": 1.3028,
+    "slope": 1.3028
+   }
+  }
+ },
+ {
+  "id": "adv-1157cf87-g0",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 12,
+   "breakFromDay": 47,
+   "daySd": 0.0251,
+   "healthAnswerRate": 0.9064,
+   "illnessDays": 3,
+   "illnessFromDay": 10,
+   "lazy": 0.0003,
+   "missRate": 0.0204,
+   "painDays": 15,
+   "painFromDay": 20,
+   "painIntensity": 4,
+   "painZone": "wrist_hand",
+   "ratingNoise": 1.9587,
+   "rirBias": 0.6339,
+   "rirBiasSd": 0.0702,
+   "shortTimeRate": 0.0746,
+   "skipRating": 0.4495
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1878,
+    "curveB": 1.3279,
+    "fatigueScale": 0.7268,
+    "power": 1.3279,
+    "slope": 1.3279
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 1.0109,
+    "curveB": 1.1104,
+    "fatigueScale": 0.6167,
+    "power": 1.1104,
+    "slope": 1.1104
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 1.0109,
+    "curveB": 1.1104,
+    "fatigueScale": 0.6167,
+    "power": 1.1104,
+    "slope": 1.1104
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 1.0109,
+    "curveB": 1.1104,
+    "fatigueScale": 0.6167,
+    "power": 1.1104,
+    "slope": 1.1104
+   }
+  }
+ },
+ {
+  "id": "adv-1157cf87-g1",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 12,
+   "breakFromDay": 47,
+   "daySd": 0.0251,
+   "healthAnswerRate": 0.9064,
+   "illnessDays": 3,
+   "illnessFromDay": 10,
+   "lazy": 0.0003,
+   "missRate": 0.0204,
+   "painDays": 15,
+   "painFromDay": 20,
+   "painIntensity": 4,
+   "painZone": "wrist_hand",
+   "ratingNoise": 1.9587,
+   "rirBias": 0.6339,
+   "rirBiasSd": 0.0702,
+   "shortTimeRate": 0.0746,
+   "skipRating": 0.4495
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1878,
+    "curveB": 1.3279,
+    "fatigueScale": 0.7268,
+    "power": 1.3279,
+    "slope": 1.3279
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 1.0109,
+    "curveB": 1.1104,
+    "fatigueScale": 0.6167,
+    "power": 1.1104,
+    "slope": 1.1104
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 1.0109,
+    "curveB": 1.1104,
+    "fatigueScale": 0.6167,
+    "power": 1.1104,
+    "slope": 1.1104
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 1.0109,
+    "curveB": 1.1104,
+    "fatigueScale": 0.6167,
+    "power": 1.1104,
+    "slope": 1.1104
+   }
+  }
+ },
+ {
+  "id": "adv-c247f31d-g0",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 42,
+   "daySd": 0.0376,
+   "healthAnswerRate": 0.4315,
+   "illnessDays": 5,
+   "illnessFromDay": 7,
+   "lazy": 0.2855,
+   "missRate": 0.1685,
+   "painDays": 11,
+   "painFromDay": 34,
+   "painIntensity": 7,
+   "painZone": "knee",
+   "ratingNoise": 1.9346,
+   "rirBias": 0.0561,
+   "rirBiasSd": 0.1284,
+   "shortTimeRate": 0.0045,
+   "skipRating": 0.2285
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8486,
+    "curveB": 0.8705,
+    "fatigueScale": 0.8345,
+    "power": 0.8705,
+    "slope": 0.8705
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8287,
+    "curveB": 0.9776,
+    "fatigueScale": 1.0298,
+    "power": 0.9776,
+    "slope": 0.9776
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8287,
+    "curveB": 0.9776,
+    "fatigueScale": 1.0298,
+    "power": 0.9776,
+    "slope": 0.9776
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8287,
+    "curveB": 0.9776,
+    "fatigueScale": 1.0298,
+    "power": 0.9776,
+    "slope": 0.9776
+   }
+  }
+ },
+ {
+  "id": "adv-c247f31d-g1",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 42,
+   "daySd": 0.0376,
+   "healthAnswerRate": 0.4315,
+   "illnessDays": 5,
+   "illnessFromDay": 7,
+   "lazy": 0.2855,
+   "missRate": 0.1685,
+   "painDays": 11,
+   "painFromDay": 34,
+   "painIntensity": 7,
+   "painZone": "knee",
+   "ratingNoise": 1.9346,
+   "rirBias": 0.0561,
+   "rirBiasSd": 0.1284,
+   "shortTimeRate": 0.0045,
+   "skipRating": 0.2285
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8486,
+    "curveB": 0.8705,
+    "fatigueScale": 0.8345,
+    "power": 0.8705,
+    "slope": 0.8705
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8287,
+    "curveB": 0.9776,
+    "fatigueScale": 1.0298,
+    "power": 0.9776,
+    "slope": 0.9776
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8287,
+    "curveB": 0.9776,
+    "fatigueScale": 1.0298,
+    "power": 0.9776,
+    "slope": 0.9776
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8287,
+    "curveB": 0.9776,
+    "fatigueScale": 1.0298,
+    "power": 0.9776,
+    "slope": 0.9776
+   }
+  }
+ },
+ {
+  "id": "adv-e0dbd9f2-g0",
+  "key": "street_06_inter_sets_reps",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 6,
+   "breakFromDay": 83,
+   "daySd": 0.0261,
+   "healthAnswerRate": 0.8691,
+   "illnessDays": 2,
+   "illnessFromDay": 81,
+   "lazy": 0.0258,
+   "missRate": 0.2531,
+   "painDays": 17,
+   "painFromDay": 54,
+   "painIntensity": 5,
+   "painZone": "knee",
+   "ratingNoise": 2.3163,
+   "rirBias": 0.5343,
+   "rirBiasSd": 0.1551,
+   "shortTimeRate": 0.1964,
+   "skipRating": 0.3517
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8211,
+    "curveB": 0.9435,
+    "fatigueScale": 0.9109,
+    "power": 0.9435,
+    "slope": 0.9435
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   }
+  }
+ },
+ {
+  "id": "adv-e0dbd9f2-g1",
+  "key": "street_06_inter_sets_reps",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 6,
+   "breakFromDay": 83,
+   "daySd": 0.0261,
+   "healthAnswerRate": 0.8691,
+   "illnessDays": 2,
+   "illnessFromDay": 81,
+   "lazy": 0.0258,
+   "missRate": 0.2531,
+   "painDays": 17,
+   "painFromDay": 54,
+   "painIntensity": 5,
+   "painZone": "knee",
+   "ratingNoise": 2.3163,
+   "rirBias": 0.5343,
+   "rirBiasSd": 0.1551,
+   "shortTimeRate": 0.1964,
+   "skipRating": 0.3517
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8211,
+    "curveB": 0.9435,
+    "fatigueScale": 0.9109,
+    "power": 0.9435,
+    "slope": 0.9435
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   }
+  }
+ },
+ {
+  "id": "adv-e0dbd9f2-g2",
+  "key": "street_06_inter_sets_reps",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 2,
+  "spec": {
+   "breakDays": 6,
+   "breakFromDay": 83,
+   "daySd": 0.0261,
+   "healthAnswerRate": 0.8691,
+   "illnessDays": 2,
+   "illnessFromDay": 81,
+   "lazy": 0.0258,
+   "missRate": 0.2531,
+   "painDays": 17,
+   "painFromDay": 54,
+   "painIntensity": 5,
+   "painZone": "knee",
+   "ratingNoise": 2.3163,
+   "rirBias": 0.5343,
+   "rirBiasSd": 0.1551,
+   "shortTimeRate": 0.1964,
+   "skipRating": 0.3517
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8211,
+    "curveB": 0.9435,
+    "fatigueScale": 0.9109,
+    "power": 0.9435,
+    "slope": 0.9435
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.8089,
+    "curveB": 1.143,
+    "fatigueScale": 0.636,
+    "power": 1.143,
+    "slope": 1.143
+   }
+  }
+ },
+ {
+  "id": "adv-b8f9715f-g0",
+  "key": "street_06_inter_sets_reps",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 12,
+   "breakFromDay": 39,
+   "daySd": 0.0517,
+   "healthAnswerRate": 0.5637,
+   "illnessDays": 7,
+   "illnessFromDay": 87,
+   "lazy": 0.0444,
+   "missRate": 0.2581,
+   "painDays": 12,
+   "painFromDay": 75,
+   "painIntensity": 4,
+   "painZone": "lower_back",
+   "ratingNoise": 2.3737,
+   "rirBias": 0.1649,
+   "rirBiasSd": 0.1006,
+   "shortTimeRate": 0.2837,
+   "skipRating": 0.1827
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1612,
+    "curveB": 0.8082,
+    "fatigueScale": 1.2785,
+    "power": 0.8082,
+    "slope": 0.8082
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 1.1034,
+    "curveB": 0.82,
+    "fatigueScale": 0.8133,
+    "power": 0.82,
+    "slope": 0.82
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 1.1034,
+    "curveB": 0.82,
+    "fatigueScale": 0.8133,
+    "power": 0.82,
+    "slope": 0.82
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 1.1034,
+    "curveB": 0.82,
+    "fatigueScale": 0.8133,
+    "power": 0.82,
+    "slope": 0.82
+   },
+   "sw-traction-pronation": {
+    "capacity": 1.1034,
+    "curveB": 0.82,
+    "fatigueScale": 0.8133,
+    "power": 0.82,
+    "slope": 0.82
+   }
+  }
+ },
+ {
+  "id": "adv-b8f9715f-g1",
+  "key": "street_06_inter_sets_reps",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 12,
+   "breakFromDay": 39,
+   "daySd": 0.0517,
+   "healthAnswerRate": 0.5637,
+   "illnessDays": 7,
+   "illnessFromDay": 87,
+   "lazy": 0.0444,
+   "missRate": 0.2581,
+   "painDays": 12,
+   "painFromDay": 75,
+   "painIntensity": 4,
+   "painZone": "lower_back",
+   "ratingNoise": 2.3737,
+   "rirBias": 0.1649,
+   "rirBiasSd": 0.1006,
+   "shortTimeRate": 0.2837,
+   "skipRating": 0.1827
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1612,
+    "curveB": 0.8082,
+    "fatigueScale": 1.2785,
+    "power": 0.8082,
+    "slope": 0.8082
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 1.1034,
+    "curveB": 0.82,
+    "fatigueScale": 0.8133,
+    "power": 0.82,
+    "slope": 0.82
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 1.1034,
+    "curveB": 0.82,
+    "fatigueScale": 0.8133,
+    "power": 0.82,
+    "slope": 0.82
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 1.1034,
+    "curveB": 0.82,
+    "fatigueScale": 0.8133,
+    "power": 0.82,
+    "slope": 0.82
+   },
+   "sw-traction-pronation": {
+    "capacity": 1.1034,
+    "curveB": 0.82,
+    "fatigueScale": 0.8133,
+    "power": 0.82,
+    "slope": 0.82
+   }
+  }
+ },
+ {
+  "id": "adv-3442f41c-g0",
+  "key": "street_06_inter_sets_reps",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 11,
+   "breakFromDay": 79,
+   "daySd": 0.0301,
+   "healthAnswerRate": 0.8166,
+   "illnessDays": 9,
+   "illnessFromDay": 20,
+   "lazy": 0.4166,
+   "missRate": 0.2764,
+   "painDays": 19,
+   "painFromDay": 25,
+   "painIntensity": 4,
+   "painZone": "shoulder",
+   "ratingNoise": 1.9275,
+   "rirBias": 0.6474,
+   "rirBiasSd": 0.2266,
+   "shortTimeRate": 0.2713,
+   "skipRating": 0.2352
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.9807,
+    "curveB": 0.7755,
+    "fatigueScale": 1.4626,
+    "power": 0.7755,
+    "slope": 0.7755
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.9372,
+    "curveB": 1.1078,
+    "fatigueScale": 1.6196,
+    "power": 1.1078,
+    "slope": 1.1078
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.9372,
+    "curveB": 1.1078,
+    "fatigueScale": 1.6196,
+    "power": 1.1078,
+    "slope": 1.1078
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.9372,
+    "curveB": 1.1078,
+    "fatigueScale": 1.6196,
+    "power": 1.1078,
+    "slope": 1.1078
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.9372,
+    "curveB": 1.1078,
+    "fatigueScale": 1.6196,
+    "power": 1.1078,
+    "slope": 1.1078
+   }
+  }
+ },
+ {
+  "id": "adv-3442f41c-g1",
   "key": "street_06_inter_sets_reps",
   "kind": "c",
   "scenario": "reference",
   "seed": 1,
   "spec": {
-   "breakDays": 1,
-   "breakFromDay": 22,
-   "daySd": 0.0428,
-   "healthAnswerRate": 0.8516,
-   "illnessDays": 6,
-   "illnessFromDay": 61,
-   "lazy": 0.1505,
-   "missRate": 0.0873,
-   "painDays": 9,
-   "painFromDay": 7,
-   "painIntensity": 5,
-   "painZone": "lower_back",
-   "ratingNoise": 1.278,
-   "rirBias": 0.6713,
-   "rirBiasSd": 0.2733,
-   "shortTimeRate": 0.0229,
-   "skipRating": 0.3614
+   "breakDays": 11,
+   "breakFromDay": 79,
+   "daySd": 0.0301,
+   "healthAnswerRate": 0.8166,
+   "illnessDays": 9,
+   "illnessFromDay": 20,
+   "lazy": 0.4166,
+   "missRate": 0.2764,
+   "painDays": 19,
+   "painFromDay": 25,
+   "painIntensity": 4,
+   "painZone": "shoulder",
+   "ratingNoise": 1.9275,
+   "rirBias": 0.6474,
+   "rirBiasSd": 0.2266,
+   "shortTimeRate": 0.2713,
+   "skipRating": 0.2352
   },
   "surcharges": {
    "*": {
-    "capacity": 0.8595,
-    "curveB": 1.058,
-    "fatigueScale": 0.6355,
-    "power": 1.058,
-    "slope": 1.058
+    "capacity": 0.9807,
+    "curveB": 0.7755,
+    "fatigueScale": 1.4626,
+    "power": 0.7755,
+    "slope": 0.7755
    },
    "sw-dips-barres-paralleles": {
-    "capacity": 0.8816,
-    "curveB": 0.7868,
-    "fatigueScale": 0.756,
-    "power": 0.7868,
-    "slope": 0.7868
+    "capacity": 0.9372,
+    "curveB": 1.1078,
+    "fatigueScale": 1.6196,
+    "power": 1.1078,
+    "slope": 1.1078
    },
    "sw-dips-buste-penche": {
-    "capacity": 0.8816,
-    "curveB": 0.7868,
-    "fatigueScale": 0.756,
-    "power": 0.7868,
-    "slope": 0.7868
+    "capacity": 0.9372,
+    "curveB": 1.1078,
+    "fatigueScale": 1.6196,
+    "power": 1.1078,
+    "slope": 1.1078
    },
    "sw-traction-chest-to-bar": {
-    "capacity": 0.8816,
-    "curveB": 0.7868,
-    "fatigueScale": 0.756,
-    "power": 0.7868,
-    "slope": 0.7868
+    "capacity": 0.9372,
+    "curveB": 1.1078,
+    "fatigueScale": 1.6196,
+    "power": 1.1078,
+    "slope": 1.1078
    },
    "sw-traction-pronation": {
-    "capacity": 0.8816,
-    "curveB": 0.7868,
-    "fatigueScale": 0.756,
-    "power": 0.7868,
-    "slope": 0.7868
+    "capacity": 0.9372,
+    "curveB": 1.1078,
+    "fatigueScale": 1.6196,
+    "power": 1.1078,
+    "slope": 1.1078
    }
   }
  },
  {
-  "id": "adv-361b5189-g0",
+  "id": "adv-9ca48ea4-g0",
   "key": "autres_01_debutant_musculation",
   "kind": "a",
   "scenario": "reference",
   "seed": 0,
   "spec": {
-   "breakDays": 8,
-   "breakFromDay": 35,
-   "daySd": 0.0552,
-   "healthAnswerRate": 0.6475,
-   "illnessDays": 7,
-   "illnessFromDay": 53,
-   "lazy": 0.1377,
-   "missRate": 0.3456,
-   "painDays": 27,
-   "painFromDay": 30,
-   "painIntensity": 4,
-   "painZone": "elbow",
-   "ratingNoise": 1.0812,
-   "rirBias": 0.1494,
-   "rirBiasSd": 0.2209,
-   "shortTimeRate": 0.174,
-   "skipRating": 0.0536
+   "breakDays": 12,
+   "breakFromDay": 41,
+   "daySd": 0.014,
+   "healthAnswerRate": 0.7985,
+   "illnessDays": 10,
+   "illnessFromDay": 77,
+   "lazy": 0.2709,
+   "missRate": 0.064,
+   "painDays": 19,
+   "painFromDay": 12,
+   "painIntensity": 6,
+   "painZone": "shoulder",
+   "ratingNoise": 0.6618,
+   "rirBias": 0.6593,
+   "rirBiasSd": 0.1551,
+   "shortTimeRate": 0.2315,
+   "skipRating": 0.1902
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9509,
-    "curveB": 1.1101,
-    "fatigueScale": 1.4583,
-    "power": 1.1101,
-    "slope": 1.1101
+    "capacity": 1.1559,
+    "curveB": 0.8645,
+    "fatigueScale": 1.414,
+    "power": 0.8645,
+    "slope": 0.8645
    },
    "mu-developpe-incline-halteres": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    },
    "mu-presse-cuisses-45": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    },
    "mu-presse-pectorale-convergente": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    },
    "mu-rowing-poulie-assis-triangle": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    },
    "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    }
   }
  },
  {
-  "id": "adv-361b5189-g1",
+  "id": "adv-9ca48ea4-g1",
   "key": "autres_01_debutant_musculation",
   "kind": "a",
   "scenario": "reference",
   "seed": 1,
   "spec": {
-   "breakDays": 8,
-   "breakFromDay": 35,
-   "daySd": 0.0552,
-   "healthAnswerRate": 0.6475,
-   "illnessDays": 7,
-   "illnessFromDay": 53,
-   "lazy": 0.1377,
-   "missRate": 0.3456,
-   "painDays": 27,
-   "painFromDay": 30,
-   "painIntensity": 4,
-   "painZone": "elbow",
-   "ratingNoise": 1.0812,
-   "rirBias": 0.1494,
-   "rirBiasSd": 0.2209,
-   "shortTimeRate": 0.174,
-   "skipRating": 0.0536
+   "breakDays": 12,
+   "breakFromDay": 41,
+   "daySd": 0.014,
+   "healthAnswerRate": 0.7985,
+   "illnessDays": 10,
+   "illnessFromDay": 77,
+   "lazy": 0.2709,
+   "missRate": 0.064,
+   "painDays": 19,
+   "painFromDay": 12,
+   "painIntensity": 6,
+   "painZone": "shoulder",
+   "ratingNoise": 0.6618,
+   "rirBias": 0.6593,
+   "rirBiasSd": 0.1551,
+   "shortTimeRate": 0.2315,
+   "skipRating": 0.1902
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9509,
-    "curveB": 1.1101,
-    "fatigueScale": 1.4583,
-    "power": 1.1101,
-    "slope": 1.1101
+    "capacity": 1.1559,
+    "curveB": 0.8645,
+    "fatigueScale": 1.414,
+    "power": 0.8645,
+    "slope": 0.8645
    },
    "mu-developpe-incline-halteres": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    },
    "mu-presse-cuisses-45": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    },
    "mu-presse-pectorale-convergente": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    },
    "mu-rowing-poulie-assis-triangle": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    },
    "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 1.0941,
-    "curveB": 1.2088,
-    "fatigueScale": 0.7622,
-    "power": 1.2088,
-    "slope": 1.2088
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
    }
   }
  },
  {
-  "id": "adv-c3904765-g0",
+  "id": "adv-9ca48ea4-g2",
+  "key": "autres_01_debutant_musculation",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 2,
+  "spec": {
+   "breakDays": 12,
+   "breakFromDay": 41,
+   "daySd": 0.014,
+   "healthAnswerRate": 0.7985,
+   "illnessDays": 10,
+   "illnessFromDay": 77,
+   "lazy": 0.2709,
+   "missRate": 0.064,
+   "painDays": 19,
+   "painFromDay": 12,
+   "painIntensity": 6,
+   "painZone": "shoulder",
+   "ratingNoise": 0.6618,
+   "rirBias": 0.6593,
+   "rirBiasSd": 0.1551,
+   "shortTimeRate": 0.2315,
+   "skipRating": 0.1902
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1559,
+    "curveB": 0.8645,
+    "fatigueScale": 1.414,
+    "power": 0.8645,
+    "slope": 0.8645
+   },
+   "mu-developpe-incline-halteres": {
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
+   },
+   "mu-presse-cuisses-45": {
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
+   },
+   "mu-presse-pectorale-convergente": {
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
+   },
+   "mu-rowing-poulie-assis-triangle": {
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
+   },
+   "mu-souleve-de-terre-roumain-barre": {
+    "capacity": 0.9562,
+    "curveB": 1.3008,
+    "fatigueScale": 0.7955,
+    "power": 1.3008,
+    "slope": 1.3008
+   }
+  }
+ },
+ {
+  "id": "adv-dd2de891-g0",
   "key": "autres_01_debutant_musculation",
   "kind": "b",
   "scenario": "reference",
   "seed": 0,
   "spec": {
-   "breakDays": 6,
-   "breakFromDay": 43,
-   "daySd": 0.059,
-   "healthAnswerRate": 0.946,
+   "daySd": 0.0553,
+   "healthAnswerRate": 0.6538,
    "illnessDays": 1,
-   "illnessFromDay": 59,
-   "lazy": 0.4139,
-   "missRate": 0.281,
-   "painDays": 27,
-   "painFromDay": 29,
-   "painIntensity": 3,
-   "painZone": "lower_back",
-   "ratingNoise": 1.8547,
-   "rirBias": 0.1911,
-   "rirBiasSd": 0.2015,
-   "shortTimeRate": 0.2595,
-   "skipRating": 0.0087
+   "illnessFromDay": 72,
+   "lazy": 0.4997,
+   "missRate": 0.3168,
+   "painDays": 22,
+   "painFromDay": 20,
+   "painIntensity": 7,
+   "painZone": "wrist_hand",
+   "ratingNoise": 0.7249,
+   "rirBias": 0.2217,
+   "rirBiasSd": 0.2794,
+   "shortTimeRate": 0.2435,
+   "skipRating": 0.4714
   },
   "surcharges": {
    "*": {
-    "capacity": 1.0684,
-    "curveB": 1.1391,
-    "fatigueScale": 0.9669,
-    "power": 1.1391,
-    "slope": 1.1391
+    "capacity": 0.8577,
+    "curveB": 1.2432,
+    "fatigueScale": 0.7224,
+    "power": 1.2432,
+    "slope": 1.2432
    },
    "mu-developpe-incline-halteres": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-presse-cuisses-45": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-presse-pectorale-convergente": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-rowing-poulie-assis-triangle": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    }
   }
  },
  {
-  "id": "adv-c3904765-g1",
+  "id": "adv-dd2de891-g1",
   "key": "autres_01_debutant_musculation",
   "kind": "b",
   "scenario": "reference",
   "seed": 1,
   "spec": {
-   "breakDays": 6,
-   "breakFromDay": 43,
-   "daySd": 0.059,
-   "healthAnswerRate": 0.946,
+   "daySd": 0.0553,
+   "healthAnswerRate": 0.6538,
    "illnessDays": 1,
-   "illnessFromDay": 59,
-   "lazy": 0.4139,
-   "missRate": 0.281,
-   "painDays": 27,
-   "painFromDay": 29,
-   "painIntensity": 3,
-   "painZone": "lower_back",
-   "ratingNoise": 1.8547,
-   "rirBias": 0.1911,
-   "rirBiasSd": 0.2015,
-   "shortTimeRate": 0.2595,
-   "skipRating": 0.0087
+   "illnessFromDay": 72,
+   "lazy": 0.4997,
+   "missRate": 0.3168,
+   "painDays": 22,
+   "painFromDay": 20,
+   "painIntensity": 7,
+   "painZone": "wrist_hand",
+   "ratingNoise": 0.7249,
+   "rirBias": 0.2217,
+   "rirBiasSd": 0.2794,
+   "shortTimeRate": 0.2435,
+   "skipRating": 0.4714
   },
   "surcharges": {
    "*": {
-    "capacity": 1.0684,
-    "curveB": 1.1391,
-    "fatigueScale": 0.9669,
-    "power": 1.1391,
-    "slope": 1.1391
+    "capacity": 0.8577,
+    "curveB": 1.2432,
+    "fatigueScale": 0.7224,
+    "power": 1.2432,
+    "slope": 1.2432
    },
    "mu-developpe-incline-halteres": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-presse-cuisses-45": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-presse-pectorale-convergente": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-rowing-poulie-assis-triangle": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    }
   }
  },
  {
-  "id": "adv-c3904765-g2",
+  "id": "adv-dd2de891-g2",
   "key": "autres_01_debutant_musculation",
   "kind": "b",
   "scenario": "reference",
   "seed": 2,
   "spec": {
-   "breakDays": 6,
-   "breakFromDay": 43,
-   "daySd": 0.059,
-   "healthAnswerRate": 0.946,
+   "daySd": 0.0553,
+   "healthAnswerRate": 0.6538,
    "illnessDays": 1,
-   "illnessFromDay": 59,
-   "lazy": 0.4139,
-   "missRate": 0.281,
-   "painDays": 27,
-   "painFromDay": 29,
-   "painIntensity": 3,
-   "painZone": "lower_back",
-   "ratingNoise": 1.8547,
-   "rirBias": 0.1911,
-   "rirBiasSd": 0.2015,
-   "shortTimeRate": 0.2595,
-   "skipRating": 0.0087
+   "illnessFromDay": 72,
+   "lazy": 0.4997,
+   "missRate": 0.3168,
+   "painDays": 22,
+   "painFromDay": 20,
+   "painIntensity": 7,
+   "painZone": "wrist_hand",
+   "ratingNoise": 0.7249,
+   "rirBias": 0.2217,
+   "rirBiasSd": 0.2794,
+   "shortTimeRate": 0.2435,
+   "skipRating": 0.4714
   },
   "surcharges": {
    "*": {
-    "capacity": 1.0684,
-    "curveB": 1.1391,
-    "fatigueScale": 0.9669,
-    "power": 1.1391,
-    "slope": 1.1391
+    "capacity": 0.8577,
+    "curveB": 1.2432,
+    "fatigueScale": 0.7224,
+    "power": 1.2432,
+    "slope": 1.2432
    },
    "mu-developpe-incline-halteres": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-presse-cuisses-45": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-presse-pectorale-convergente": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-rowing-poulie-assis-triangle": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    },
    "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 1.1608,
-    "curveB": 1.2494,
-    "fatigueScale": 1.6695,
-    "power": 1.2494,
-    "slope": 1.2494
+    "capacity": 1.0363,
+    "curveB": 1.1924,
+    "fatigueScale": 1.4919,
+    "power": 1.1924,
+    "slope": 1.1924
    }
   }
  },
  {
-  "id": "adv-cfe1cdfc-g0",
+  "id": "adv-1a08bd5d-g0",
   "key": "autres_01_debutant_musculation",
   "kind": "c",
   "scenario": "reference",
   "seed": 0,
   "spec": {
-   "breakDays": 1,
-   "breakFromDay": 89,
-   "daySd": 0.0515,
-   "healthAnswerRate": 0.8545,
+   "daySd": 0.0449,
+   "healthAnswerRate": 0.7773,
    "illnessDays": 7,
-   "illnessFromDay": 57,
-   "lazy": 0.1712,
-   "missRate": 0.1857,
-   "painDays": 21,
-   "painFromDay": 72,
+   "illnessFromDay": 72,
+   "lazy": 0.1201,
+   "missRate": 0.1957,
+   "painDays": 20,
+   "painFromDay": 60,
    "painIntensity": 7,
-   "painZone": "knee",
-   "ratingNoise": 0.9765,
-   "rirBias": 0.2092,
-   "rirBiasSd": 0.135,
-   "shortTimeRate": 0.2096,
-   "skipRating": 0.4308
+   "painZone": "hip",
+   "ratingNoise": 1.1733,
+   "rirBias": 0.1305,
+   "rirBiasSd": 0.0838,
+   "shortTimeRate": 0.1292,
+   "skipRating": 0.3266
   },
   "surcharges": {
    "*": {
-    "capacity": 1.1081,
-    "curveB": 1.0159,
-    "fatigueScale": 1.6636,
-    "power": 1.0159,
-    "slope": 1.0159
+    "capacity": 1.1616,
+    "curveB": 0.9728,
+    "fatigueScale": 1.6176,
+    "power": 0.9728,
+    "slope": 0.9728
    },
    "mu-developpe-incline-halteres": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    },
    "mu-presse-cuisses-45": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    },
    "mu-presse-pectorale-convergente": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    },
    "mu-rowing-poulie-assis-triangle": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    },
    "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    }
   }
  },
  {
-  "id": "adv-cfe1cdfc-g1",
+  "id": "adv-1a08bd5d-g1",
   "key": "autres_01_debutant_musculation",
   "kind": "c",
   "scenario": "reference",
   "seed": 1,
   "spec": {
-   "breakDays": 1,
-   "breakFromDay": 89,
-   "daySd": 0.0515,
-   "healthAnswerRate": 0.8545,
+   "daySd": 0.0449,
+   "healthAnswerRate": 0.7773,
    "illnessDays": 7,
-   "illnessFromDay": 57,
-   "lazy": 0.1712,
-   "missRate": 0.1857,
-   "painDays": 21,
-   "painFromDay": 72,
+   "illnessFromDay": 72,
+   "lazy": 0.1201,
+   "missRate": 0.1957,
+   "painDays": 20,
+   "painFromDay": 60,
    "painIntensity": 7,
-   "painZone": "knee",
-   "ratingNoise": 0.9765,
-   "rirBias": 0.2092,
-   "rirBiasSd": 0.135,
-   "shortTimeRate": 0.2096,
-   "skipRating": 0.4308
+   "painZone": "hip",
+   "ratingNoise": 1.1733,
+   "rirBias": 0.1305,
+   "rirBiasSd": 0.0838,
+   "shortTimeRate": 0.1292,
+   "skipRating": 0.3266
   },
   "surcharges": {
    "*": {
-    "capacity": 1.1081,
-    "curveB": 1.0159,
-    "fatigueScale": 1.6636,
-    "power": 1.0159,
-    "slope": 1.0159
+    "capacity": 1.1616,
+    "curveB": 0.9728,
+    "fatigueScale": 1.6176,
+    "power": 0.9728,
+    "slope": 0.9728
    },
    "mu-developpe-incline-halteres": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    },
    "mu-presse-cuisses-45": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    },
    "mu-presse-pectorale-convergente": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    },
    "mu-rowing-poulie-assis-triangle": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    },
    "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
-   }
-  }
- },
- {
-  "id": "adv-cfe1cdfc-g2",
-  "key": "autres_01_debutant_musculation",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 1,
-   "breakFromDay": 89,
-   "daySd": 0.0515,
-   "healthAnswerRate": 0.8545,
-   "illnessDays": 7,
-   "illnessFromDay": 57,
-   "lazy": 0.1712,
-   "missRate": 0.1857,
-   "painDays": 21,
-   "painFromDay": 72,
-   "painIntensity": 7,
-   "painZone": "knee",
-   "ratingNoise": 0.9765,
-   "rirBias": 0.2092,
-   "rirBiasSd": 0.135,
-   "shortTimeRate": 0.2096,
-   "skipRating": 0.4308
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.1081,
-    "curveB": 1.0159,
-    "fatigueScale": 1.6636,
-    "power": 1.0159,
-    "slope": 1.0159
-   },
-   "mu-developpe-incline-halteres": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
-   },
-   "mu-presse-cuisses-45": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
-   },
-   "mu-presse-pectorale-convergente": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
-   },
-   "mu-rowing-poulie-assis-triangle": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
-   },
-   "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 0.9558,
-    "curveB": 0.7894,
-    "fatigueScale": 1.0681,
-    "power": 0.7894,
-    "slope": 0.7894
+    "capacity": 0.9811,
+    "curveB": 0.7606,
+    "fatigueScale": 1.2614,
+    "power": 0.7606,
+    "slope": 0.7606
    }
   }
  },
@@ -2279,6 +2146,1643 @@
   }
  },
  {
+  "id": "adv-80df39f8-g0",
+  "key": "street_07_avance_streetlifting_competition",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "daySd": 0.0402,
+   "healthAnswerRate": 0.958,
+   "illnessDays": 10,
+   "illnessFromDay": 54,
+   "lazy": 0.403,
+   "missRate": 0.1003,
+   "painDays": 7,
+   "painFromDay": 44,
+   "painIntensity": 3,
+   "painZone": "elbow",
+   "ratingNoise": 0.9507,
+   "rirBias": 0.4876,
+   "rirBiasSd": 0.1884,
+   "shortTimeRate": 0.1294,
+   "skipRating": 0.2977
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8875,
+    "curveB": 0.9439,
+    "fatigueScale": 1.5401,
+    "power": 0.9439,
+    "slope": 0.9439
+   },
+   "sl-dips-leste": {
+    "capacity": 1.1878,
+    "curveB": 1.0579,
+    "fatigueScale": 1.0899,
+    "power": 1.0579,
+    "slope": 1.0579
+   },
+   "sl-muscle-up-leste": {
+    "capacity": 1.1878,
+    "curveB": 1.0579,
+    "fatigueScale": 1.0899,
+    "power": 1.0579,
+    "slope": 1.0579
+   },
+   "sl-squat-competition": {
+    "capacity": 1.1878,
+    "curveB": 1.0579,
+    "fatigueScale": 1.0899,
+    "power": 1.0579,
+    "slope": 1.0579
+   },
+   "sl-traction-lestee": {
+    "capacity": 1.1878,
+    "curveB": 1.0579,
+    "fatigueScale": 1.0899,
+    "power": 1.0579,
+    "slope": 1.0579
+   },
+   "sl-traction-lestee-pause-bas": {
+    "capacity": 0.92,
+    "curveB": 0.9439,
+    "fatigueScale": 1.5401,
+    "power": 0.9439,
+    "slope": 0.9439
+   }
+  }
+ },
+ {
+  "id": "adv-80df39f8-g1",
+  "key": "street_07_avance_streetlifting_competition",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "daySd": 0.0402,
+   "healthAnswerRate": 0.958,
+   "illnessDays": 10,
+   "illnessFromDay": 54,
+   "lazy": 0.403,
+   "missRate": 0.1003,
+   "painDays": 7,
+   "painFromDay": 44,
+   "painIntensity": 3,
+   "painZone": "elbow",
+   "ratingNoise": 0.9507,
+   "rirBias": 0.4876,
+   "rirBiasSd": 0.1884,
+   "shortTimeRate": 0.1294,
+   "skipRating": 0.2977
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8875,
+    "curveB": 0.9439,
+    "fatigueScale": 1.5401,
+    "power": 0.9439,
+    "slope": 0.9439
+   },
+   "sl-dips-leste": {
+    "capacity": 1.1878,
+    "curveB": 1.0579,
+    "fatigueScale": 1.0899,
+    "power": 1.0579,
+    "slope": 1.0579
+   },
+   "sl-muscle-up-leste": {
+    "capacity": 1.1878,
+    "curveB": 1.0579,
+    "fatigueScale": 1.0899,
+    "power": 1.0579,
+    "slope": 1.0579
+   },
+   "sl-squat-competition": {
+    "capacity": 1.1878,
+    "curveB": 1.0579,
+    "fatigueScale": 1.0899,
+    "power": 1.0579,
+    "slope": 1.0579
+   },
+   "sl-traction-lestee": {
+    "capacity": 1.1878,
+    "curveB": 1.0579,
+    "fatigueScale": 1.0899,
+    "power": 1.0579,
+    "slope": 1.0579
+   },
+   "sl-traction-lestee-pause-bas": {
+    "capacity": 0.92,
+    "curveB": 0.9439,
+    "fatigueScale": 1.5401,
+    "power": 0.9439,
+    "slope": 0.9439
+   }
+  }
+ },
+ {
+  "id": "adv-ca435cc2-g0",
+  "key": "street_07_avance_streetlifting_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 65,
+   "daySd": 0.0439,
+   "healthAnswerRate": 0.9097,
+   "illnessDays": 4,
+   "illnessFromDay": 9,
+   "lazy": 0.2295,
+   "missRate": 0.3184,
+   "painDays": 33,
+   "painFromDay": 24,
+   "painIntensity": 3,
+   "painZone": "knee",
+   "ratingNoise": 0.5647,
+   "rirBias": 0.0664,
+   "rirBiasSd": 0.1147,
+   "shortTimeRate": 0.2529,
+   "skipRating": 0.1496
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8164,
+    "curveB": 0.8994,
+    "fatigueScale": 1.2571,
+    "power": 0.8994,
+    "slope": 0.8994
+   },
+   "sl-dips-leste": {
+    "capacity": 1.0629,
+    "curveB": 0.7621,
+    "fatigueScale": 1.2454,
+    "power": 0.7621,
+    "slope": 0.7621
+   },
+   "sl-muscle-up-leste": {
+    "capacity": 1.0629,
+    "curveB": 0.7621,
+    "fatigueScale": 1.2454,
+    "power": 0.7621,
+    "slope": 0.7621
+   },
+   "sl-squat-competition": {
+    "capacity": 1.0629,
+    "curveB": 0.7621,
+    "fatigueScale": 1.2454,
+    "power": 0.7621,
+    "slope": 0.7621
+   },
+   "sl-traction-lestee": {
+    "capacity": 1.0629,
+    "curveB": 0.7621,
+    "fatigueScale": 1.2454,
+    "power": 0.7621,
+    "slope": 0.7621
+   },
+   "sl-traction-lestee-pause-bas": {
+    "capacity": 0.92,
+    "curveB": 0.8994,
+    "fatigueScale": 1.2571,
+    "power": 0.8994,
+    "slope": 0.8994
+   }
+  }
+ },
+ {
+  "id": "adv-ca435cc2-g1",
+  "key": "street_07_avance_streetlifting_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 65,
+   "daySd": 0.0439,
+   "healthAnswerRate": 0.9097,
+   "illnessDays": 4,
+   "illnessFromDay": 9,
+   "lazy": 0.2295,
+   "missRate": 0.3184,
+   "painDays": 33,
+   "painFromDay": 24,
+   "painIntensity": 3,
+   "painZone": "knee",
+   "ratingNoise": 0.5647,
+   "rirBias": 0.0664,
+   "rirBiasSd": 0.1147,
+   "shortTimeRate": 0.2529,
+   "skipRating": 0.1496
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8164,
+    "curveB": 0.8994,
+    "fatigueScale": 1.2571,
+    "power": 0.8994,
+    "slope": 0.8994
+   },
+   "sl-dips-leste": {
+    "capacity": 1.0629,
+    "curveB": 0.7621,
+    "fatigueScale": 1.2454,
+    "power": 0.7621,
+    "slope": 0.7621
+   },
+   "sl-muscle-up-leste": {
+    "capacity": 1.0629,
+    "curveB": 0.7621,
+    "fatigueScale": 1.2454,
+    "power": 0.7621,
+    "slope": 0.7621
+   },
+   "sl-squat-competition": {
+    "capacity": 1.0629,
+    "curveB": 0.7621,
+    "fatigueScale": 1.2454,
+    "power": 0.7621,
+    "slope": 0.7621
+   },
+   "sl-traction-lestee": {
+    "capacity": 1.0629,
+    "curveB": 0.7621,
+    "fatigueScale": 1.2454,
+    "power": 0.7621,
+    "slope": 0.7621
+   },
+   "sl-traction-lestee-pause-bas": {
+    "capacity": 0.92,
+    "curveB": 0.8994,
+    "fatigueScale": 1.2571,
+    "power": 0.8994,
+    "slope": 0.8994
+   }
+  }
+ },
+ {
+  "id": "adv-657fec45-g0",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 29,
+   "daySd": 0.0287,
+   "healthAnswerRate": 0.3831,
+   "lazy": 0.4706,
+   "missRate": 0.1567,
+   "painDays": 12,
+   "painFromDay": 7,
+   "painIntensity": 5,
+   "painZone": "knee",
+   "ratingNoise": 2.3169,
+   "rirBias": -0.0229,
+   "rirBiasSd": 0.248,
+   "shortTimeRate": 0.0874,
+   "skipRating": 0.4939
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.877,
+    "curveB": 1.2539,
+    "fatigueScale": 1.304,
+    "power": 1.2539,
+    "slope": 1.2539
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8202,
+    "curveB": 1.0996,
+    "fatigueScale": 1.6086,
+    "power": 1.0996,
+    "slope": 1.0996
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8202,
+    "curveB": 1.0996,
+    "fatigueScale": 1.6086,
+    "power": 1.0996,
+    "slope": 1.0996
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8202,
+    "curveB": 1.0996,
+    "fatigueScale": 1.6086,
+    "power": 1.0996,
+    "slope": 1.0996
+   }
+  }
+ },
+ {
+  "id": "adv-657fec45-g1",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 29,
+   "daySd": 0.0287,
+   "healthAnswerRate": 0.3831,
+   "lazy": 0.4706,
+   "missRate": 0.1567,
+   "painDays": 12,
+   "painFromDay": 7,
+   "painIntensity": 5,
+   "painZone": "knee",
+   "ratingNoise": 2.3169,
+   "rirBias": -0.0229,
+   "rirBiasSd": 0.248,
+   "shortTimeRate": 0.0874,
+   "skipRating": 0.4939
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.877,
+    "curveB": 1.2539,
+    "fatigueScale": 1.304,
+    "power": 1.2539,
+    "slope": 1.2539
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8202,
+    "curveB": 1.0996,
+    "fatigueScale": 1.6086,
+    "power": 1.0996,
+    "slope": 1.0996
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8202,
+    "curveB": 1.0996,
+    "fatigueScale": 1.6086,
+    "power": 1.0996,
+    "slope": 1.0996
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8202,
+    "curveB": 1.0996,
+    "fatigueScale": 1.6086,
+    "power": 1.0996,
+    "slope": 1.0996
+   }
+  }
+ },
+ {
+  "id": "adv-fd0e1acc-g0",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 10,
+   "daySd": 0.0369,
+   "healthAnswerRate": 0.7117,
+   "illnessDays": 5,
+   "illnessFromDay": 29,
+   "lazy": 0.2953,
+   "missRate": 0.0519,
+   "painDays": 26,
+   "painFromDay": 13,
+   "painIntensity": 4,
+   "painZone": "knee",
+   "ratingNoise": 0.5138,
+   "rirBias": 0.6751,
+   "rirBiasSd": 0.29,
+   "shortTimeRate": 0.11,
+   "skipRating": 0.0326
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1157,
+    "curveB": 0.8087,
+    "fatigueScale": 0.8255,
+    "power": 0.8087,
+    "slope": 0.8087
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 1.1507,
+    "curveB": 1.2912,
+    "fatigueScale": 0.6606,
+    "power": 1.2912,
+    "slope": 1.2912
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 1.1507,
+    "curveB": 1.2912,
+    "fatigueScale": 0.6606,
+    "power": 1.2912,
+    "slope": 1.2912
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 1.1507,
+    "curveB": 1.2912,
+    "fatigueScale": 0.6606,
+    "power": 1.2912,
+    "slope": 1.2912
+   }
+  }
+ },
+ {
+  "id": "adv-fd0e1acc-g1",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 10,
+   "daySd": 0.0369,
+   "healthAnswerRate": 0.7117,
+   "illnessDays": 5,
+   "illnessFromDay": 29,
+   "lazy": 0.2953,
+   "missRate": 0.0519,
+   "painDays": 26,
+   "painFromDay": 13,
+   "painIntensity": 4,
+   "painZone": "knee",
+   "ratingNoise": 0.5138,
+   "rirBias": 0.6751,
+   "rirBiasSd": 0.29,
+   "shortTimeRate": 0.11,
+   "skipRating": 0.0326
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1157,
+    "curveB": 0.8087,
+    "fatigueScale": 0.8255,
+    "power": 0.8087,
+    "slope": 0.8087
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 1.1507,
+    "curveB": 1.2912,
+    "fatigueScale": 0.6606,
+    "power": 1.2912,
+    "slope": 1.2912
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 1.1507,
+    "curveB": 1.2912,
+    "fatigueScale": 0.6606,
+    "power": 1.2912,
+    "slope": 1.2912
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 1.1507,
+    "curveB": 1.2912,
+    "fatigueScale": 0.6606,
+    "power": 1.2912,
+    "slope": 1.2912
+   }
+  }
+ },
+ {
+  "id": "adv-72fa5984-g0",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 7,
+   "daySd": 0.0145,
+   "healthAnswerRate": 0.9726,
+   "illnessDays": 9,
+   "illnessFromDay": 34,
+   "lazy": 0.0283,
+   "missRate": 0.242,
+   "painDays": 28,
+   "painFromDay": 9,
+   "painIntensity": 6,
+   "painZone": "knee",
+   "ratingNoise": 0.9677,
+   "rirBias": 0.3469,
+   "rirBiasSd": 0.1882,
+   "shortTimeRate": 0.1477,
+   "skipRating": 0.0623
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1698,
+    "curveB": 0.9378,
+    "fatigueScale": 0.7431,
+    "power": 0.9378,
+    "slope": 0.9378
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.9685,
+    "curveB": 1.06,
+    "fatigueScale": 0.953,
+    "power": 1.06,
+    "slope": 1.06
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.9685,
+    "curveB": 1.06,
+    "fatigueScale": 0.953,
+    "power": 1.06,
+    "slope": 1.06
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.9685,
+    "curveB": 1.06,
+    "fatigueScale": 0.953,
+    "power": 1.06,
+    "slope": 1.06
+   }
+  }
+ },
+ {
+  "id": "adv-72fa5984-g1",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 7,
+   "daySd": 0.0145,
+   "healthAnswerRate": 0.9726,
+   "illnessDays": 9,
+   "illnessFromDay": 34,
+   "lazy": 0.0283,
+   "missRate": 0.242,
+   "painDays": 28,
+   "painFromDay": 9,
+   "painIntensity": 6,
+   "painZone": "knee",
+   "ratingNoise": 0.9677,
+   "rirBias": 0.3469,
+   "rirBiasSd": 0.1882,
+   "shortTimeRate": 0.1477,
+   "skipRating": 0.0623
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1698,
+    "curveB": 0.9378,
+    "fatigueScale": 0.7431,
+    "power": 0.9378,
+    "slope": 0.9378
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.9685,
+    "curveB": 1.06,
+    "fatigueScale": 0.953,
+    "power": 1.06,
+    "slope": 1.06
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.9685,
+    "curveB": 1.06,
+    "fatigueScale": 0.953,
+    "power": 1.06,
+    "slope": 1.06
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.9685,
+    "curveB": 1.06,
+    "fatigueScale": 0.953,
+    "power": 1.06,
+    "slope": 1.06
+   }
+  }
+ },
+ {
+  "id": "adv-065e1852-g0",
+  "key": "street_06_inter_sets_reps",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 8,
+   "breakFromDay": 74,
+   "daySd": 0.0231,
+   "healthAnswerRate": 0.8782,
+   "illnessDays": 3,
+   "illnessFromDay": 72,
+   "lazy": 0.0138,
+   "missRate": 0.2317,
+   "painDays": 14,
+   "painFromDay": 55,
+   "painIntensity": 3,
+   "painZone": "lower_back",
+   "ratingNoise": 2.0046,
+   "rirBias": 0.6339,
+   "rirBiasSd": 0.1381,
+   "shortTimeRate": 0.146,
+   "skipRating": 0.3591
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.85,
+    "curveB": 1.0411,
+    "fatigueScale": 0.9675,
+    "power": 1.0411,
+    "slope": 1.0411
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.8123,
+    "curveB": 1.092,
+    "fatigueScale": 0.6605,
+    "power": 1.092,
+    "slope": 1.092
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.8123,
+    "curveB": 1.092,
+    "fatigueScale": 0.6605,
+    "power": 1.092,
+    "slope": 1.092
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.8123,
+    "curveB": 1.092,
+    "fatigueScale": 0.6605,
+    "power": 1.092,
+    "slope": 1.092
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.8123,
+    "curveB": 1.092,
+    "fatigueScale": 0.6605,
+    "power": 1.092,
+    "slope": 1.092
+   }
+  }
+ },
+ {
+  "id": "adv-065e1852-g1",
+  "key": "street_06_inter_sets_reps",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 8,
+   "breakFromDay": 74,
+   "daySd": 0.0231,
+   "healthAnswerRate": 0.8782,
+   "illnessDays": 3,
+   "illnessFromDay": 72,
+   "lazy": 0.0138,
+   "missRate": 0.2317,
+   "painDays": 14,
+   "painFromDay": 55,
+   "painIntensity": 3,
+   "painZone": "lower_back",
+   "ratingNoise": 2.0046,
+   "rirBias": 0.6339,
+   "rirBiasSd": 0.1381,
+   "shortTimeRate": 0.146,
+   "skipRating": 0.3591
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.85,
+    "curveB": 1.0411,
+    "fatigueScale": 0.9675,
+    "power": 1.0411,
+    "slope": 1.0411
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.8123,
+    "curveB": 1.092,
+    "fatigueScale": 0.6605,
+    "power": 1.092,
+    "slope": 1.092
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.8123,
+    "curveB": 1.092,
+    "fatigueScale": 0.6605,
+    "power": 1.092,
+    "slope": 1.092
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.8123,
+    "curveB": 1.092,
+    "fatigueScale": 0.6605,
+    "power": 1.092,
+    "slope": 1.092
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.8123,
+    "curveB": 1.092,
+    "fatigueScale": 0.6605,
+    "power": 1.092,
+    "slope": 1.092
+   }
+  }
+ },
+ {
+  "id": "adv-4f3456bc-g0",
+  "key": "street_06_inter_sets_reps",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 8,
+   "breakFromDay": 38,
+   "daySd": 0.0437,
+   "healthAnswerRate": 0.4935,
+   "illnessDays": 7,
+   "illnessFromDay": 35,
+   "lazy": 0.4941,
+   "missRate": 0.1988,
+   "painDays": 19,
+   "painFromDay": 76,
+   "painIntensity": 4,
+   "painZone": "hip",
+   "ratingNoise": 2.4067,
+   "rirBias": 0.1775,
+   "rirBiasSd": 0.1947,
+   "shortTimeRate": 0.145,
+   "skipRating": 0.2928
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1468,
+    "curveB": 0.8369,
+    "fatigueScale": 1.3153,
+    "power": 0.8369,
+    "slope": 0.8369
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-traction-pronation": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   }
+  }
+ },
+ {
+  "id": "adv-4f3456bc-g1",
+  "key": "street_06_inter_sets_reps",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 8,
+   "breakFromDay": 38,
+   "daySd": 0.0437,
+   "healthAnswerRate": 0.4935,
+   "illnessDays": 7,
+   "illnessFromDay": 35,
+   "lazy": 0.4941,
+   "missRate": 0.1988,
+   "painDays": 19,
+   "painFromDay": 76,
+   "painIntensity": 4,
+   "painZone": "hip",
+   "ratingNoise": 2.4067,
+   "rirBias": 0.1775,
+   "rirBiasSd": 0.1947,
+   "shortTimeRate": 0.145,
+   "skipRating": 0.2928
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1468,
+    "curveB": 0.8369,
+    "fatigueScale": 1.3153,
+    "power": 0.8369,
+    "slope": 0.8369
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-traction-pronation": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   }
+  }
+ },
+ {
+  "id": "adv-4f3456bc-g2",
+  "key": "street_06_inter_sets_reps",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 2,
+  "spec": {
+   "breakDays": 8,
+   "breakFromDay": 38,
+   "daySd": 0.0437,
+   "healthAnswerRate": 0.4935,
+   "illnessDays": 7,
+   "illnessFromDay": 35,
+   "lazy": 0.4941,
+   "missRate": 0.1988,
+   "painDays": 19,
+   "painFromDay": 76,
+   "painIntensity": 4,
+   "painZone": "hip",
+   "ratingNoise": 2.4067,
+   "rirBias": 0.1775,
+   "rirBiasSd": 0.1947,
+   "shortTimeRate": 0.145,
+   "skipRating": 0.2928
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.1468,
+    "curveB": 0.8369,
+    "fatigueScale": 1.3153,
+    "power": 0.8369,
+    "slope": 0.8369
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   },
+   "sw-traction-pronation": {
+    "capacity": 1.1128,
+    "curveB": 0.8196,
+    "fatigueScale": 0.6454,
+    "power": 0.8196,
+    "slope": 0.8196
+   }
+  }
+ },
+ {
+  "id": "adv-ab1103cc-g0",
+  "key": "street_06_inter_sets_reps",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 13,
+   "breakFromDay": 34,
+   "daySd": 0.0442,
+   "healthAnswerRate": 0.4654,
+   "illnessDays": 5,
+   "illnessFromDay": 81,
+   "lazy": 0.2537,
+   "missRate": 0.1705,
+   "painDays": 32,
+   "painFromDay": 34,
+   "painIntensity": 3,
+   "painZone": "wrist_hand",
+   "ratingNoise": 1.4737,
+   "rirBias": 0.0873,
+   "rirBiasSd": 0.1529,
+   "shortTimeRate": 0.1061,
+   "skipRating": 0.4727
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8287,
+    "curveB": 1.309,
+    "fatigueScale": 0.7495,
+    "power": 1.309,
+    "slope": 1.309
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.8075,
+    "curveB": 0.8787,
+    "fatigueScale": 0.9623,
+    "power": 0.8787,
+    "slope": 0.8787
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.8075,
+    "curveB": 0.8787,
+    "fatigueScale": 0.9623,
+    "power": 0.8787,
+    "slope": 0.8787
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.8075,
+    "curveB": 0.8787,
+    "fatigueScale": 0.9623,
+    "power": 0.8787,
+    "slope": 0.8787
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.8075,
+    "curveB": 0.8787,
+    "fatigueScale": 0.9623,
+    "power": 0.8787,
+    "slope": 0.8787
+   }
+  }
+ },
+ {
+  "id": "adv-ab1103cc-g1",
+  "key": "street_06_inter_sets_reps",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 13,
+   "breakFromDay": 34,
+   "daySd": 0.0442,
+   "healthAnswerRate": 0.4654,
+   "illnessDays": 5,
+   "illnessFromDay": 81,
+   "lazy": 0.2537,
+   "missRate": 0.1705,
+   "painDays": 32,
+   "painFromDay": 34,
+   "painIntensity": 3,
+   "painZone": "wrist_hand",
+   "ratingNoise": 1.4737,
+   "rirBias": 0.0873,
+   "rirBiasSd": 0.1529,
+   "shortTimeRate": 0.1061,
+   "skipRating": 0.4727
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8287,
+    "curveB": 1.309,
+    "fatigueScale": 0.7495,
+    "power": 1.309,
+    "slope": 1.309
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.8075,
+    "curveB": 0.8787,
+    "fatigueScale": 0.9623,
+    "power": 0.8787,
+    "slope": 0.8787
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.8075,
+    "curveB": 0.8787,
+    "fatigueScale": 0.9623,
+    "power": 0.8787,
+    "slope": 0.8787
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.8075,
+    "curveB": 0.8787,
+    "fatigueScale": 0.9623,
+    "power": 0.8787,
+    "slope": 0.8787
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.8075,
+    "curveB": 0.8787,
+    "fatigueScale": 0.9623,
+    "power": 0.8787,
+    "slope": 0.8787
+   }
+  }
+ },
+ {
+  "id": "adv-26e08ecf-g0",
+  "key": "autres_01_debutant_musculation",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 9,
+   "breakFromDay": 42,
+   "daySd": 0.0212,
+   "healthAnswerRate": 0.6547,
+   "illnessDays": 9,
+   "illnessFromDay": 80,
+   "lazy": 0.2117,
+   "missRate": 0.0341,
+   "painDays": 14,
+   "painFromDay": 12,
+   "painIntensity": 7,
+   "painZone": "lower_back",
+   "ratingNoise": 0.7437,
+   "rirBias": 0.6949,
+   "rirBiasSd": 0.1679,
+   "shortTimeRate": 0.1283,
+   "skipRating": 0.1757
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.067,
+    "curveB": 0.8011,
+    "fatigueScale": 1.5011,
+    "power": 0.8011,
+    "slope": 0.8011
+   },
+   "mu-developpe-incline-halteres": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   },
+   "mu-presse-cuisses-45": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   },
+   "mu-presse-pectorale-convergente": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   },
+   "mu-rowing-poulie-assis-triangle": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   },
+   "mu-souleve-de-terre-roumain-barre": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   }
+  }
+ },
+ {
+  "id": "adv-26e08ecf-g1",
+  "key": "autres_01_debutant_musculation",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 9,
+   "breakFromDay": 42,
+   "daySd": 0.0212,
+   "healthAnswerRate": 0.6547,
+   "illnessDays": 9,
+   "illnessFromDay": 80,
+   "lazy": 0.2117,
+   "missRate": 0.0341,
+   "painDays": 14,
+   "painFromDay": 12,
+   "painIntensity": 7,
+   "painZone": "lower_back",
+   "ratingNoise": 0.7437,
+   "rirBias": 0.6949,
+   "rirBiasSd": 0.1679,
+   "shortTimeRate": 0.1283,
+   "skipRating": 0.1757
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.067,
+    "curveB": 0.8011,
+    "fatigueScale": 1.5011,
+    "power": 0.8011,
+    "slope": 0.8011
+   },
+   "mu-developpe-incline-halteres": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   },
+   "mu-presse-cuisses-45": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   },
+   "mu-presse-pectorale-convergente": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   },
+   "mu-rowing-poulie-assis-triangle": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   },
+   "mu-souleve-de-terre-roumain-barre": {
+    "capacity": 0.9159,
+    "curveB": 1.238,
+    "fatigueScale": 0.7696,
+    "power": 1.238,
+    "slope": 1.238
+   }
+  }
+ },
+ {
+  "id": "adv-7040d1cb-g0",
+  "key": "autres_01_debutant_musculation",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 1,
+   "breakFromDay": 68,
+   "daySd": 0.0602,
+   "healthAnswerRate": 0.7414,
+   "lazy": 0.4339,
+   "missRate": 0.2861,
+   "painDays": 27,
+   "painFromDay": 30,
+   "painIntensity": 7,
+   "painZone": "lower_back",
+   "ratingNoise": 1.8547,
+   "rirBias": 0.0338,
+   "rirBiasSd": 0.2264,
+   "shortTimeRate": 0.2436,
+   "skipRating": 0.0087
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.9122,
+    "curveB": 1.3269,
+    "fatigueScale": 0.7779,
+    "power": 1.3269,
+    "slope": 1.3269
+   },
+   "mu-developpe-incline-halteres": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   },
+   "mu-presse-cuisses-45": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   },
+   "mu-presse-pectorale-convergente": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   },
+   "mu-rowing-poulie-assis-triangle": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   },
+   "mu-souleve-de-terre-roumain-barre": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   }
+  }
+ },
+ {
+  "id": "adv-7040d1cb-g1",
+  "key": "autres_01_debutant_musculation",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 1,
+   "breakFromDay": 68,
+   "daySd": 0.0602,
+   "healthAnswerRate": 0.7414,
+   "lazy": 0.4339,
+   "missRate": 0.2861,
+   "painDays": 27,
+   "painFromDay": 30,
+   "painIntensity": 7,
+   "painZone": "lower_back",
+   "ratingNoise": 1.8547,
+   "rirBias": 0.0338,
+   "rirBiasSd": 0.2264,
+   "shortTimeRate": 0.2436,
+   "skipRating": 0.0087
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.9122,
+    "curveB": 1.3269,
+    "fatigueScale": 0.7779,
+    "power": 1.3269,
+    "slope": 1.3269
+   },
+   "mu-developpe-incline-halteres": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   },
+   "mu-presse-cuisses-45": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   },
+   "mu-presse-pectorale-convergente": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   },
+   "mu-rowing-poulie-assis-triangle": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   },
+   "mu-souleve-de-terre-roumain-barre": {
+    "capacity": 1.0439,
+    "curveB": 1.2208,
+    "fatigueScale": 1.5478,
+    "power": 1.2208,
+    "slope": 1.2208
+   }
+  }
+ },
+ {
+  "id": "adv-c654dbd1-g0",
+  "key": "autres_01_debutant_musculation",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 14,
+   "breakFromDay": 12,
+   "daySd": 0.023,
+   "healthAnswerRate": 0.4279,
+   "illnessDays": 6,
+   "illnessFromDay": 72,
+   "lazy": 0.2738,
+   "missRate": 0.086,
+   "ratingNoise": 0.5972,
+   "rirBias": -0.0722,
+   "rirBiasSd": 0.3077,
+   "shortTimeRate": 0.1634,
+   "skipRating": 0.1644
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.0388,
+    "curveB": 0.7785,
+    "fatigueScale": 0.7675,
+    "power": 0.7785,
+    "slope": 0.7785
+   },
+   "mu-developpe-incline-halteres": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-presse-cuisses-45": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-presse-pectorale-convergente": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-rowing-poulie-assis-triangle": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-souleve-de-terre-roumain-barre": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   }
+  }
+ },
+ {
+  "id": "adv-c654dbd1-g1",
+  "key": "autres_01_debutant_musculation",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 14,
+   "breakFromDay": 12,
+   "daySd": 0.023,
+   "healthAnswerRate": 0.4279,
+   "illnessDays": 6,
+   "illnessFromDay": 72,
+   "lazy": 0.2738,
+   "missRate": 0.086,
+   "ratingNoise": 0.5972,
+   "rirBias": -0.0722,
+   "rirBiasSd": 0.3077,
+   "shortTimeRate": 0.1634,
+   "skipRating": 0.1644
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.0388,
+    "curveB": 0.7785,
+    "fatigueScale": 0.7675,
+    "power": 0.7785,
+    "slope": 0.7785
+   },
+   "mu-developpe-incline-halteres": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-presse-cuisses-45": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-presse-pectorale-convergente": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-rowing-poulie-assis-triangle": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-souleve-de-terre-roumain-barre": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   }
+  }
+ },
+ {
+  "id": "adv-c654dbd1-g2",
+  "key": "autres_01_debutant_musculation",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 2,
+  "spec": {
+   "breakDays": 14,
+   "breakFromDay": 12,
+   "daySd": 0.023,
+   "healthAnswerRate": 0.4279,
+   "illnessDays": 6,
+   "illnessFromDay": 72,
+   "lazy": 0.2738,
+   "missRate": 0.086,
+   "ratingNoise": 0.5972,
+   "rirBias": -0.0722,
+   "rirBiasSd": 0.3077,
+   "shortTimeRate": 0.1634,
+   "skipRating": 0.1644
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.0388,
+    "curveB": 0.7785,
+    "fatigueScale": 0.7675,
+    "power": 0.7785,
+    "slope": 0.7785
+   },
+   "mu-developpe-incline-halteres": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-presse-cuisses-45": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-presse-pectorale-convergente": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-rowing-poulie-assis-triangle": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   },
+   "mu-souleve-de-terre-roumain-barre": {
+    "capacity": 1.1358,
+    "curveB": 1.3016,
+    "fatigueScale": 1.4188,
+    "power": 1.3016,
+    "slope": 1.3016
+   }
+  }
+ },
+ {
+  "id": "adv-59eb8954-g0",
+  "key": "street_07_avance_streetlifting_competition",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 5,
+   "breakFromDay": 39,
+   "daySd": 0.0431,
+   "healthAnswerRate": 0.3668,
+   "lazy": 0.2736,
+   "missRate": 0.1627,
+   "ratingNoise": 2.0108,
+   "rirBias": 0.757,
+   "rirBiasSd": 0.1964,
+   "shortTimeRate": 0.1252,
+   "skipRating": 0.3473
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.0843,
+    "curveB": 0.9936,
+    "fatigueScale": 1.5458,
+    "power": 0.9936,
+    "slope": 0.9936
+   },
+   "sl-dips-leste": {
+    "capacity": 1.1474,
+    "curveB": 1.102,
+    "fatigueScale": 0.6239,
+    "power": 1.102,
+    "slope": 1.102
+   },
+   "sl-muscle-up-leste": {
+    "capacity": 1.1474,
+    "curveB": 1.102,
+    "fatigueScale": 0.6239,
+    "power": 1.102,
+    "slope": 1.102
+   },
+   "sl-squat-competition": {
+    "capacity": 1.1474,
+    "curveB": 1.102,
+    "fatigueScale": 0.6239,
+    "power": 1.102,
+    "slope": 1.102
+   },
+   "sl-traction-lestee": {
+    "capacity": 1.1474,
+    "curveB": 1.102,
+    "fatigueScale": 0.6239,
+    "power": 1.102,
+    "slope": 1.102
+   }
+  }
+ },
+ {
+  "id": "adv-59eb8954-g1",
+  "key": "street_07_avance_streetlifting_competition",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 5,
+   "breakFromDay": 39,
+   "daySd": 0.0431,
+   "healthAnswerRate": 0.3668,
+   "lazy": 0.2736,
+   "missRate": 0.1627,
+   "ratingNoise": 2.0108,
+   "rirBias": 0.757,
+   "rirBiasSd": 0.1964,
+   "shortTimeRate": 0.1252,
+   "skipRating": 0.3473
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.0843,
+    "curveB": 0.9936,
+    "fatigueScale": 1.5458,
+    "power": 0.9936,
+    "slope": 0.9936
+   },
+   "sl-dips-leste": {
+    "capacity": 1.1474,
+    "curveB": 1.102,
+    "fatigueScale": 0.6239,
+    "power": 1.102,
+    "slope": 1.102
+   },
+   "sl-muscle-up-leste": {
+    "capacity": 1.1474,
+    "curveB": 1.102,
+    "fatigueScale": 0.6239,
+    "power": 1.102,
+    "slope": 1.102
+   },
+   "sl-squat-competition": {
+    "capacity": 1.1474,
+    "curveB": 1.102,
+    "fatigueScale": 0.6239,
+    "power": 1.102,
+    "slope": 1.102
+   },
+   "sl-traction-lestee": {
+    "capacity": 1.1474,
+    "curveB": 1.102,
+    "fatigueScale": 0.6239,
+    "power": 1.102,
+    "slope": 1.102
+   }
+  }
+ },
+ {
   "id": "adv-fa5abfed-g0",
   "key": "street_07_avance_streetlifting_competition",
   "kind": "b",
@@ -2483,1867 +3987,6 @@
   }
  },
  {
-  "id": "adv-cc02ee87-g0",
-  "key": "street_07_avance_streetlifting_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 8,
-   "breakFromDay": 28,
-   "daySd": 0.0256,
-   "healthAnswerRate": 0.4966,
-   "illnessDays": 9,
-   "illnessFromDay": 20,
-   "lazy": 0.4525,
-   "missRate": 0.1112,
-   "painDays": 7,
-   "painFromDay": 68,
-   "painIntensity": 6,
-   "painZone": "elbow",
-   "ratingNoise": 0.9541,
-   "rirBias": 0.6269,
-   "rirBiasSd": 0.3082,
-   "shortTimeRate": 0.0168,
-   "skipRating": 0.1812
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8698,
-    "curveB": 1.3064,
-    "fatigueScale": 1.1213,
-    "power": 1.3064,
-    "slope": 1.3064
-   },
-   "sl-dips-leste": {
-    "capacity": 0.92,
-    "curveB": 0.8694,
-    "fatigueScale": 1.2703,
-    "power": 0.8694,
-    "slope": 0.8694
-   },
-   "sl-muscle-up-leste": {
-    "capacity": 0.92,
-    "curveB": 0.8694,
-    "fatigueScale": 1.2703,
-    "power": 0.8694,
-    "slope": 0.8694
-   },
-   "sl-squat-competition": {
-    "capacity": 0.8328,
-    "curveB": 0.8694,
-    "fatigueScale": 1.2703,
-    "power": 0.8694,
-    "slope": 0.8694
-   },
-   "sl-traction-lestee": {
-    "capacity": 0.92,
-    "curveB": 0.8694,
-    "fatigueScale": 1.2703,
-    "power": 0.8694,
-    "slope": 0.8694
-   },
-   "sl-traction-lestee-pause-bas": {
-    "capacity": 0.92,
-    "curveB": 1.3064,
-    "fatigueScale": 1.1213,
-    "power": 1.3064,
-    "slope": 1.3064
-   }
-  }
- },
- {
-  "id": "adv-cc02ee87-g1",
-  "key": "street_07_avance_streetlifting_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 8,
-   "breakFromDay": 28,
-   "daySd": 0.0256,
-   "healthAnswerRate": 0.4966,
-   "illnessDays": 9,
-   "illnessFromDay": 20,
-   "lazy": 0.4525,
-   "missRate": 0.1112,
-   "painDays": 7,
-   "painFromDay": 68,
-   "painIntensity": 6,
-   "painZone": "elbow",
-   "ratingNoise": 0.9541,
-   "rirBias": 0.6269,
-   "rirBiasSd": 0.3082,
-   "shortTimeRate": 0.0168,
-   "skipRating": 0.1812
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8698,
-    "curveB": 1.3064,
-    "fatigueScale": 1.1213,
-    "power": 1.3064,
-    "slope": 1.3064
-   },
-   "sl-dips-leste": {
-    "capacity": 0.92,
-    "curveB": 0.8694,
-    "fatigueScale": 1.2703,
-    "power": 0.8694,
-    "slope": 0.8694
-   },
-   "sl-muscle-up-leste": {
-    "capacity": 0.92,
-    "curveB": 0.8694,
-    "fatigueScale": 1.2703,
-    "power": 0.8694,
-    "slope": 0.8694
-   },
-   "sl-squat-competition": {
-    "capacity": 0.8328,
-    "curveB": 0.8694,
-    "fatigueScale": 1.2703,
-    "power": 0.8694,
-    "slope": 0.8694
-   },
-   "sl-traction-lestee": {
-    "capacity": 0.92,
-    "curveB": 0.8694,
-    "fatigueScale": 1.2703,
-    "power": 0.8694,
-    "slope": 0.8694
-   },
-   "sl-traction-lestee-pause-bas": {
-    "capacity": 0.92,
-    "curveB": 1.3064,
-    "fatigueScale": 1.1213,
-    "power": 1.3064,
-    "slope": 1.3064
-   }
-  }
- },
- {
-  "id": "adv-0c7fb400-g0",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 4,
-   "breakFromDay": 21,
-   "daySd": 0.0361,
-   "healthAnswerRate": 0.376,
-   "illnessDays": 6,
-   "illnessFromDay": 7,
-   "lazy": 0.477,
-   "missRate": 0.0229,
-   "painDays": 18,
-   "painFromDay": 25,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 1.9746,
-   "rirBias": -0.1424,
-   "rirBiasSd": 0.0999,
-   "shortTimeRate": 0.2813,
-   "skipRating": 0.3865
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9113,
-    "curveB": 1.3053,
-    "fatigueScale": 1.235,
-    "power": 1.3053,
-    "slope": 1.3053
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   }
-  }
- },
- {
-  "id": "adv-0c7fb400-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 4,
-   "breakFromDay": 21,
-   "daySd": 0.0361,
-   "healthAnswerRate": 0.376,
-   "illnessDays": 6,
-   "illnessFromDay": 7,
-   "lazy": 0.477,
-   "missRate": 0.0229,
-   "painDays": 18,
-   "painFromDay": 25,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 1.9746,
-   "rirBias": -0.1424,
-   "rirBiasSd": 0.0999,
-   "shortTimeRate": 0.2813,
-   "skipRating": 0.3865
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9113,
-    "curveB": 1.3053,
-    "fatigueScale": 1.235,
-    "power": 1.3053,
-    "slope": 1.3053
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   }
-  }
- },
- {
-  "id": "adv-0c7fb400-g2",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 4,
-   "breakFromDay": 21,
-   "daySd": 0.0361,
-   "healthAnswerRate": 0.376,
-   "illnessDays": 6,
-   "illnessFromDay": 7,
-   "lazy": 0.477,
-   "missRate": 0.0229,
-   "painDays": 18,
-   "painFromDay": 25,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 1.9746,
-   "rirBias": -0.1424,
-   "rirBiasSd": 0.0999,
-   "shortTimeRate": 0.2813,
-   "skipRating": 0.3865
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9113,
-    "curveB": 1.3053,
-    "fatigueScale": 1.235,
-    "power": 1.3053,
-    "slope": 1.3053
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.8783,
-    "curveB": 1.3028,
-    "fatigueScale": 1.2548,
-    "power": 1.3028,
-    "slope": 1.3028
-   }
-  }
- },
- {
-  "id": "adv-378c2da4-g0",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 9,
-   "breakFromDay": 35,
-   "daySd": 0.0436,
-   "healthAnswerRate": 0.9718,
-   "lazy": 0.0704,
-   "missRate": 0.0869,
-   "painDays": 16,
-   "painFromDay": 20,
-   "painIntensity": 3,
-   "painZone": "lower_back",
-   "ratingNoise": 1.9407,
-   "rirBias": 0.7991,
-   "rirBiasSd": 0.0831,
-   "shortTimeRate": 0.0538,
-   "skipRating": 0.3214
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.1898,
-    "curveB": 1.2131,
-    "fatigueScale": 0.8759,
-    "power": 1.2131,
-    "slope": 1.2131
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   }
-  }
- },
- {
-  "id": "adv-378c2da4-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 9,
-   "breakFromDay": 35,
-   "daySd": 0.0436,
-   "healthAnswerRate": 0.9718,
-   "lazy": 0.0704,
-   "missRate": 0.0869,
-   "painDays": 16,
-   "painFromDay": 20,
-   "painIntensity": 3,
-   "painZone": "lower_back",
-   "ratingNoise": 1.9407,
-   "rirBias": 0.7991,
-   "rirBiasSd": 0.0831,
-   "shortTimeRate": 0.0538,
-   "skipRating": 0.3214
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.1898,
-    "curveB": 1.2131,
-    "fatigueScale": 0.8759,
-    "power": 1.2131,
-    "slope": 1.2131
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   }
-  }
- },
- {
-  "id": "adv-378c2da4-g2",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 9,
-   "breakFromDay": 35,
-   "daySd": 0.0436,
-   "healthAnswerRate": 0.9718,
-   "lazy": 0.0704,
-   "missRate": 0.0869,
-   "painDays": 16,
-   "painFromDay": 20,
-   "painIntensity": 3,
-   "painZone": "lower_back",
-   "ratingNoise": 1.9407,
-   "rirBias": 0.7991,
-   "rirBiasSd": 0.0831,
-   "shortTimeRate": 0.0538,
-   "skipRating": 0.3214
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.1898,
-    "curveB": 1.2131,
-    "fatigueScale": 0.8759,
-    "power": 1.2131,
-    "slope": 1.2131
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1375,
-    "curveB": 1.0056,
-    "fatigueScale": 0.6143,
-    "power": 1.0056,
-    "slope": 1.0056
-   }
-  }
- },
- {
-  "id": "adv-69d92dd1-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "daySd": 0.0574,
-   "healthAnswerRate": 0.7447,
-   "illnessDays": 7,
-   "illnessFromDay": 26,
-   "lazy": 0.1745,
-   "missRate": 0.2746,
-   "ratingNoise": 0.7587,
-   "rirBias": 0.4064,
-   "rirBiasSd": 0.2449,
-   "shortTimeRate": 0.0945,
-   "skipRating": 0.3225
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9206,
-    "curveB": 0.7605,
-    "fatigueScale": 1.414,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1834,
-    "curveB": 1.1822,
-    "fatigueScale": 1.2419,
-    "power": 1.1822,
-    "slope": 1.1822
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1834,
-    "curveB": 1.1822,
-    "fatigueScale": 1.2419,
-    "power": 1.1822,
-    "slope": 1.1822
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1834,
-    "curveB": 1.1822,
-    "fatigueScale": 1.2419,
-    "power": 1.1822,
-    "slope": 1.1822
-   }
-  }
- },
- {
-  "id": "adv-69d92dd1-g2",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "daySd": 0.0574,
-   "healthAnswerRate": 0.7447,
-   "illnessDays": 7,
-   "illnessFromDay": 26,
-   "lazy": 0.1745,
-   "missRate": 0.2746,
-   "ratingNoise": 0.7587,
-   "rirBias": 0.4064,
-   "rirBiasSd": 0.2449,
-   "shortTimeRate": 0.0945,
-   "skipRating": 0.3225
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9206,
-    "curveB": 0.7605,
-    "fatigueScale": 1.414,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1834,
-    "curveB": 1.1822,
-    "fatigueScale": 1.2419,
-    "power": 1.1822,
-    "slope": 1.1822
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1834,
-    "curveB": 1.1822,
-    "fatigueScale": 1.2419,
-    "power": 1.1822,
-    "slope": 1.1822
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1834,
-    "curveB": 1.1822,
-    "fatigueScale": 1.2419,
-    "power": 1.1822,
-    "slope": 1.1822
-   }
-  }
- },
- {
-  "id": "adv-af08a082-g0",
-  "key": "street_06_inter_sets_reps",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 6,
-   "breakFromDay": 94,
-   "daySd": 0.03,
-   "healthAnswerRate": 0.385,
-   "illnessDays": 5,
-   "illnessFromDay": 64,
-   "lazy": 0.0438,
-   "missRate": 0.2723,
-   "painDays": 25,
-   "painFromDay": 18,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 0.7402,
-   "rirBias": -0.145,
-   "rirBiasSd": 0.0638,
-   "shortTimeRate": 0.0711,
-   "skipRating": 0.2767
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0103,
-    "curveB": 1.2483,
-    "fatigueScale": 0.6324,
-    "power": 1.2483,
-    "slope": 1.2483
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   }
-  }
- },
- {
-  "id": "adv-af08a082-g1",
-  "key": "street_06_inter_sets_reps",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 6,
-   "breakFromDay": 94,
-   "daySd": 0.03,
-   "healthAnswerRate": 0.385,
-   "illnessDays": 5,
-   "illnessFromDay": 64,
-   "lazy": 0.0438,
-   "missRate": 0.2723,
-   "painDays": 25,
-   "painFromDay": 18,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 0.7402,
-   "rirBias": -0.145,
-   "rirBiasSd": 0.0638,
-   "shortTimeRate": 0.0711,
-   "skipRating": 0.2767
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0103,
-    "curveB": 1.2483,
-    "fatigueScale": 0.6324,
-    "power": 1.2483,
-    "slope": 1.2483
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   }
-  }
- },
- {
-  "id": "adv-af08a082-g2",
-  "key": "street_06_inter_sets_reps",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 6,
-   "breakFromDay": 94,
-   "daySd": 0.03,
-   "healthAnswerRate": 0.385,
-   "illnessDays": 5,
-   "illnessFromDay": 64,
-   "lazy": 0.0438,
-   "missRate": 0.2723,
-   "painDays": 25,
-   "painFromDay": 18,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 0.7402,
-   "rirBias": -0.145,
-   "rirBiasSd": 0.0638,
-   "shortTimeRate": 0.0711,
-   "skipRating": 0.2767
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0103,
-    "curveB": 1.2483,
-    "fatigueScale": 0.6324,
-    "power": 1.2483,
-    "slope": 1.2483
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.9398,
-    "curveB": 1.0941,
-    "fatigueScale": 0.6567,
-    "power": 1.0941,
-    "slope": 1.0941
-   }
-  }
- },
- {
-  "id": "adv-ef4936a3-g0",
-  "key": "street_06_inter_sets_reps",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 2,
-   "breakFromDay": 73,
-   "daySd": 0.056,
-   "healthAnswerRate": 0.5817,
-   "illnessDays": 7,
-   "illnessFromDay": 51,
-   "lazy": 0.3453,
-   "missRate": 0.2818,
-   "painDays": 19,
-   "painFromDay": 13,
-   "painIntensity": 3,
-   "painZone": "knee",
-   "ratingNoise": 0.7606,
-   "rirBias": 0.101,
-   "rirBiasSd": 0.301,
-   "shortTimeRate": 0.2266,
-   "skipRating": 0.0767
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8519,
-    "curveB": 1.0768,
-    "fatigueScale": 1.5472,
-    "power": 1.0768,
-    "slope": 1.0768
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   }
-  }
- },
- {
-  "id": "adv-ef4936a3-g1",
-  "key": "street_06_inter_sets_reps",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 2,
-   "breakFromDay": 73,
-   "daySd": 0.056,
-   "healthAnswerRate": 0.5817,
-   "illnessDays": 7,
-   "illnessFromDay": 51,
-   "lazy": 0.3453,
-   "missRate": 0.2818,
-   "painDays": 19,
-   "painFromDay": 13,
-   "painIntensity": 3,
-   "painZone": "knee",
-   "ratingNoise": 0.7606,
-   "rirBias": 0.101,
-   "rirBiasSd": 0.301,
-   "shortTimeRate": 0.2266,
-   "skipRating": 0.0767
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8519,
-    "curveB": 1.0768,
-    "fatigueScale": 1.5472,
-    "power": 1.0768,
-    "slope": 1.0768
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   }
-  }
- },
- {
-  "id": "adv-ef4936a3-g2",
-  "key": "street_06_inter_sets_reps",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 2,
-   "breakFromDay": 73,
-   "daySd": 0.056,
-   "healthAnswerRate": 0.5817,
-   "illnessDays": 7,
-   "illnessFromDay": 51,
-   "lazy": 0.3453,
-   "missRate": 0.2818,
-   "painDays": 19,
-   "painFromDay": 13,
-   "painIntensity": 3,
-   "painZone": "knee",
-   "ratingNoise": 0.7606,
-   "rirBias": 0.101,
-   "rirBiasSd": 0.301,
-   "shortTimeRate": 0.2266,
-   "skipRating": 0.0767
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.8519,
-    "curveB": 1.0768,
-    "fatigueScale": 1.5472,
-    "power": 1.0768,
-    "slope": 1.0768
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1487,
-    "curveB": 1.265,
-    "fatigueScale": 1.5261,
-    "power": 1.265,
-    "slope": 1.265
-   }
-  }
- },
- {
-  "id": "adv-e71437e4-g0",
-  "key": "street_06_inter_sets_reps",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "daySd": 0.0275,
-   "healthAnswerRate": 0.3832,
-   "illnessDays": 1,
-   "illnessFromDay": 28,
-   "lazy": 0.4617,
-   "missRate": 0.0244,
-   "painDays": 30,
-   "painFromDay": 9,
-   "painIntensity": 4,
-   "painZone": "hip",
-   "ratingNoise": 1.0834,
-   "rirBias": 0.2771,
-   "rirBiasSd": 0.3499,
-   "shortTimeRate": 0.0436,
-   "skipRating": 0.375
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9652,
-    "curveB": 0.9792,
-    "fatigueScale": 0.6921,
-    "power": 0.9792,
-    "slope": 0.9792
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   }
-  }
- },
- {
-  "id": "adv-e71437e4-g1",
-  "key": "street_06_inter_sets_reps",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "daySd": 0.0275,
-   "healthAnswerRate": 0.3832,
-   "illnessDays": 1,
-   "illnessFromDay": 28,
-   "lazy": 0.4617,
-   "missRate": 0.0244,
-   "painDays": 30,
-   "painFromDay": 9,
-   "painIntensity": 4,
-   "painZone": "hip",
-   "ratingNoise": 1.0834,
-   "rirBias": 0.2771,
-   "rirBiasSd": 0.3499,
-   "shortTimeRate": 0.0436,
-   "skipRating": 0.375
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9652,
-    "curveB": 0.9792,
-    "fatigueScale": 0.6921,
-    "power": 0.9792,
-    "slope": 0.9792
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   }
-  }
- },
- {
-  "id": "adv-e71437e4-g2",
-  "key": "street_06_inter_sets_reps",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "daySd": 0.0275,
-   "healthAnswerRate": 0.3832,
-   "illnessDays": 1,
-   "illnessFromDay": 28,
-   "lazy": 0.4617,
-   "missRate": 0.0244,
-   "painDays": 30,
-   "painFromDay": 9,
-   "painIntensity": 4,
-   "painZone": "hip",
-   "ratingNoise": 1.0834,
-   "rirBias": 0.2771,
-   "rirBiasSd": 0.3499,
-   "shortTimeRate": 0.0436,
-   "skipRating": 0.375
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9652,
-    "curveB": 0.9792,
-    "fatigueScale": 0.6921,
-    "power": 0.9792,
-    "slope": 0.9792
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1566,
-    "curveB": 0.7605,
-    "fatigueScale": 0.7978,
-    "power": 0.7605,
-    "slope": 0.7605
-   }
-  }
- },
- {
-  "id": "adv-a36c01dd-g0",
-  "key": "autres_01_debutant_musculation",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 13,
-   "breakFromDay": 45,
-   "daySd": 0.0134,
-   "healthAnswerRate": 0.8647,
-   "illnessDays": 10,
-   "illnessFromDay": 83,
-   "lazy": 0.2014,
-   "missRate": 0.1244,
-   "painDays": 16,
-   "painFromDay": 9,
-   "painIntensity": 7,
-   "painZone": "elbow",
-   "ratingNoise": 0.6482,
-   "rirBias": 0.768,
-   "rirBiasSd": 0.1374,
-   "shortTimeRate": 0.265,
-   "skipRating": 0.1844
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.077,
-    "curveB": 0.9127,
-    "fatigueScale": 1.3243,
-    "power": 0.9127,
-    "slope": 0.9127
-   },
-   "mu-developpe-incline-halteres": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-presse-cuisses-45": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-presse-pectorale-convergente": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-rowing-poulie-assis-triangle": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   }
-  }
- },
- {
-  "id": "adv-a36c01dd-g1",
-  "key": "autres_01_debutant_musculation",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 13,
-   "breakFromDay": 45,
-   "daySd": 0.0134,
-   "healthAnswerRate": 0.8647,
-   "illnessDays": 10,
-   "illnessFromDay": 83,
-   "lazy": 0.2014,
-   "missRate": 0.1244,
-   "painDays": 16,
-   "painFromDay": 9,
-   "painIntensity": 7,
-   "painZone": "elbow",
-   "ratingNoise": 0.6482,
-   "rirBias": 0.768,
-   "rirBiasSd": 0.1374,
-   "shortTimeRate": 0.265,
-   "skipRating": 0.1844
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.077,
-    "curveB": 0.9127,
-    "fatigueScale": 1.3243,
-    "power": 0.9127,
-    "slope": 0.9127
-   },
-   "mu-developpe-incline-halteres": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-presse-cuisses-45": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-presse-pectorale-convergente": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-rowing-poulie-assis-triangle": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   }
-  }
- },
- {
-  "id": "adv-a36c01dd-g2",
-  "key": "autres_01_debutant_musculation",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 2,
-  "spec": {
-   "breakDays": 13,
-   "breakFromDay": 45,
-   "daySd": 0.0134,
-   "healthAnswerRate": 0.8647,
-   "illnessDays": 10,
-   "illnessFromDay": 83,
-   "lazy": 0.2014,
-   "missRate": 0.1244,
-   "painDays": 16,
-   "painFromDay": 9,
-   "painIntensity": 7,
-   "painZone": "elbow",
-   "ratingNoise": 0.6482,
-   "rirBias": 0.768,
-   "rirBiasSd": 0.1374,
-   "shortTimeRate": 0.265,
-   "skipRating": 0.1844
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.077,
-    "curveB": 0.9127,
-    "fatigueScale": 1.3243,
-    "power": 0.9127,
-    "slope": 0.9127
-   },
-   "mu-developpe-incline-halteres": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-presse-cuisses-45": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-presse-pectorale-convergente": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-rowing-poulie-assis-triangle": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   },
-   "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 0.9728,
-    "curveB": 1.2252,
-    "fatigueScale": 0.9604,
-    "power": 1.2252,
-    "slope": 1.2252
-   }
-  }
- },
- {
-  "id": "adv-175a4c1e-g0",
-  "key": "autres_01_debutant_musculation",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 4,
-   "breakFromDay": 61,
-   "daySd": 0.0608,
-   "healthAnswerRate": 0.9664,
-   "illnessDays": 2,
-   "illnessFromDay": 56,
-   "lazy": 0.3474,
-   "missRate": 0.3117,
-   "painDays": 34,
-   "painFromDay": 16,
-   "painIntensity": 3,
-   "painZone": "wrist_hand",
-   "ratingNoise": 1.0904,
-   "rirBias": 0.379,
-   "rirBiasSd": 0.2545,
-   "shortTimeRate": 0.2593,
-   "skipRating": 0.26
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0045,
-    "curveB": 1.0623,
-    "fatigueScale": 0.898,
-    "power": 1.0623,
-    "slope": 1.0623
-   },
-   "mu-developpe-incline-halteres": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   },
-   "mu-presse-cuisses-45": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   },
-   "mu-presse-pectorale-convergente": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   },
-   "mu-rowing-poulie-assis-triangle": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   },
-   "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   }
-  }
- },
- {
-  "id": "adv-175a4c1e-g1",
-  "key": "autres_01_debutant_musculation",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 4,
-   "breakFromDay": 61,
-   "daySd": 0.0608,
-   "healthAnswerRate": 0.9664,
-   "illnessDays": 2,
-   "illnessFromDay": 56,
-   "lazy": 0.3474,
-   "missRate": 0.3117,
-   "painDays": 34,
-   "painFromDay": 16,
-   "painIntensity": 3,
-   "painZone": "wrist_hand",
-   "ratingNoise": 1.0904,
-   "rirBias": 0.379,
-   "rirBiasSd": 0.2545,
-   "shortTimeRate": 0.2593,
-   "skipRating": 0.26
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0045,
-    "curveB": 1.0623,
-    "fatigueScale": 0.898,
-    "power": 1.0623,
-    "slope": 1.0623
-   },
-   "mu-developpe-incline-halteres": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   },
-   "mu-presse-cuisses-45": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   },
-   "mu-presse-pectorale-convergente": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   },
-   "mu-rowing-poulie-assis-triangle": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   },
-   "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 1.1523,
-    "curveB": 1.2203,
-    "fatigueScale": 1.6102,
-    "power": 1.2203,
-    "slope": 1.2203
-   }
-  }
- },
- {
-  "id": "adv-1a08bd5d-g0",
-  "key": "autres_01_debutant_musculation",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "daySd": 0.0449,
-   "healthAnswerRate": 0.7773,
-   "illnessDays": 7,
-   "illnessFromDay": 72,
-   "lazy": 0.1201,
-   "missRate": 0.1957,
-   "painDays": 20,
-   "painFromDay": 60,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 1.1733,
-   "rirBias": 0.1305,
-   "rirBiasSd": 0.0838,
-   "shortTimeRate": 0.1292,
-   "skipRating": 0.3266
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.1616,
-    "curveB": 0.9728,
-    "fatigueScale": 1.6176,
-    "power": 0.9728,
-    "slope": 0.9728
-   },
-   "mu-developpe-incline-halteres": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   },
-   "mu-presse-cuisses-45": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   },
-   "mu-presse-pectorale-convergente": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   },
-   "mu-rowing-poulie-assis-triangle": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   },
-   "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   }
-  }
- },
- {
-  "id": "adv-1a08bd5d-g1",
-  "key": "autres_01_debutant_musculation",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "daySd": 0.0449,
-   "healthAnswerRate": 0.7773,
-   "illnessDays": 7,
-   "illnessFromDay": 72,
-   "lazy": 0.1201,
-   "missRate": 0.1957,
-   "painDays": 20,
-   "painFromDay": 60,
-   "painIntensity": 7,
-   "painZone": "hip",
-   "ratingNoise": 1.1733,
-   "rirBias": 0.1305,
-   "rirBiasSd": 0.0838,
-   "shortTimeRate": 0.1292,
-   "skipRating": 0.3266
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.1616,
-    "curveB": 0.9728,
-    "fatigueScale": 1.6176,
-    "power": 0.9728,
-    "slope": 0.9728
-   },
-   "mu-developpe-incline-halteres": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   },
-   "mu-presse-cuisses-45": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   },
-   "mu-presse-pectorale-convergente": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   },
-   "mu-rowing-poulie-assis-triangle": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   },
-   "mu-souleve-de-terre-roumain-barre": {
-    "capacity": 0.9811,
-    "curveB": 0.7606,
-    "fatigueScale": 1.2614,
-    "power": 0.7606,
-    "slope": 0.7606
-   }
-  }
- },
- {
-  "id": "adv-3528a850-g0",
-  "key": "street_07_avance_streetlifting_competition",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 3,
-   "breakFromDay": 38,
-   "daySd": 0.0469,
-   "healthAnswerRate": 0.835,
-   "illnessDays": 2,
-   "illnessFromDay": 17,
-   "lazy": 0.062,
-   "missRate": 0.3168,
-   "ratingNoise": 2.4131,
-   "rirBias": 0.6068,
-   "rirBiasSd": 0.0553,
-   "shortTimeRate": 0.2273,
-   "skipRating": 0.1647
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9892,
-    "curveB": 1.2685,
-    "fatigueScale": 1.3157,
-    "power": 1.2685,
-    "slope": 1.2685
-   },
-   "sl-dips-leste": {
-    "capacity": 1.12,
-    "curveB": 1.1746,
-    "fatigueScale": 0.6193,
-    "power": 1.1746,
-    "slope": 1.1746
-   },
-   "sl-muscle-up-leste": {
-    "capacity": 1.12,
-    "curveB": 1.1746,
-    "fatigueScale": 0.6193,
-    "power": 1.1746,
-    "slope": 1.1746
-   },
-   "sl-squat-competition": {
-    "capacity": 1.12,
-    "curveB": 1.1746,
-    "fatigueScale": 0.6193,
-    "power": 1.1746,
-    "slope": 1.1746
-   },
-   "sl-traction-lestee": {
-    "capacity": 1.12,
-    "curveB": 1.1746,
-    "fatigueScale": 0.6193,
-    "power": 1.1746,
-    "slope": 1.1746
-   }
-  }
- },
- {
-  "id": "adv-3528a850-g1",
-  "key": "street_07_avance_streetlifting_competition",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 3,
-   "breakFromDay": 38,
-   "daySd": 0.0469,
-   "healthAnswerRate": 0.835,
-   "illnessDays": 2,
-   "illnessFromDay": 17,
-   "lazy": 0.062,
-   "missRate": 0.3168,
-   "ratingNoise": 2.4131,
-   "rirBias": 0.6068,
-   "rirBiasSd": 0.0553,
-   "shortTimeRate": 0.2273,
-   "skipRating": 0.1647
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9892,
-    "curveB": 1.2685,
-    "fatigueScale": 1.3157,
-    "power": 1.2685,
-    "slope": 1.2685
-   },
-   "sl-dips-leste": {
-    "capacity": 1.12,
-    "curveB": 1.1746,
-    "fatigueScale": 0.6193,
-    "power": 1.1746,
-    "slope": 1.1746
-   },
-   "sl-muscle-up-leste": {
-    "capacity": 1.12,
-    "curveB": 1.1746,
-    "fatigueScale": 0.6193,
-    "power": 1.1746,
-    "slope": 1.1746
-   },
-   "sl-squat-competition": {
-    "capacity": 1.12,
-    "curveB": 1.1746,
-    "fatigueScale": 0.6193,
-    "power": 1.1746,
-    "slope": 1.1746
-   },
-   "sl-traction-lestee": {
-    "capacity": 1.12,
-    "curveB": 1.1746,
-    "fatigueScale": 0.6193,
-    "power": 1.1746,
-    "slope": 1.1746
-   }
-  }
- },
- {
-  "id": "adv-fafb1e25-g0",
-  "key": "street_07_avance_streetlifting_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 8,
-   "breakFromDay": 26,
-   "daySd": 0.027,
-   "healthAnswerRate": 0.4602,
-   "illnessDays": 9,
-   "illnessFromDay": 49,
-   "lazy": 0.1879,
-   "missRate": 0.2716,
-   "painDays": 35,
-   "painFromDay": 39,
-   "painIntensity": 4,
-   "painZone": "elbow",
-   "ratingNoise": 0.5177,
-   "rirBias": 0.3357,
-   "rirBiasSd": 0.2621,
-   "shortTimeRate": 0.1103,
-   "skipRating": 0.0341
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0836,
-    "curveB": 0.9925,
-    "fatigueScale": 1.3103,
-    "power": 0.9925,
-    "slope": 0.9925
-   },
-   "sl-dips-leste": {
-    "capacity": 1.1234,
-    "curveB": 1.0458,
-    "fatigueScale": 1.0333,
-    "power": 1.0458,
-    "slope": 1.0458
-   },
-   "sl-muscle-up-leste": {
-    "capacity": 1.1234,
-    "curveB": 1.0458,
-    "fatigueScale": 1.0333,
-    "power": 1.0458,
-    "slope": 1.0458
-   },
-   "sl-squat-competition": {
-    "capacity": 1.1234,
-    "curveB": 1.0458,
-    "fatigueScale": 1.0333,
-    "power": 1.0458,
-    "slope": 1.0458
-   },
-   "sl-traction-lestee": {
-    "capacity": 1.1234,
-    "curveB": 1.0458,
-    "fatigueScale": 1.0333,
-    "power": 1.0458,
-    "slope": 1.0458
-   }
-  }
- },
- {
-  "id": "adv-fafb1e25-g1",
-  "key": "street_07_avance_streetlifting_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 8,
-   "breakFromDay": 26,
-   "daySd": 0.027,
-   "healthAnswerRate": 0.4602,
-   "illnessDays": 9,
-   "illnessFromDay": 49,
-   "lazy": 0.1879,
-   "missRate": 0.2716,
-   "painDays": 35,
-   "painFromDay": 39,
-   "painIntensity": 4,
-   "painZone": "elbow",
-   "ratingNoise": 0.5177,
-   "rirBias": 0.3357,
-   "rirBiasSd": 0.2621,
-   "shortTimeRate": 0.1103,
-   "skipRating": 0.0341
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.0836,
-    "curveB": 0.9925,
-    "fatigueScale": 1.3103,
-    "power": 0.9925,
-    "slope": 0.9925
-   },
-   "sl-dips-leste": {
-    "capacity": 1.1234,
-    "curveB": 1.0458,
-    "fatigueScale": 1.0333,
-    "power": 1.0458,
-    "slope": 1.0458
-   },
-   "sl-muscle-up-leste": {
-    "capacity": 1.1234,
-    "curveB": 1.0458,
-    "fatigueScale": 1.0333,
-    "power": 1.0458,
-    "slope": 1.0458
-   },
-   "sl-squat-competition": {
-    "capacity": 1.1234,
-    "curveB": 1.0458,
-    "fatigueScale": 1.0333,
-    "power": 1.0458,
-    "slope": 1.0458
-   },
-   "sl-traction-lestee": {
-    "capacity": 1.1234,
-    "curveB": 1.0458,
-    "fatigueScale": 1.0333,
-    "power": 1.0458,
-    "slope": 1.0458
-   }
-  }
- },
- {
   "id": "adv-a4374ee7-g0",
   "key": "street_07_avance_streetlifting_competition",
   "kind": "c",
@@ -4470,641 +4113,702 @@
   }
  },
  {
-  "id": "adv-920ff6e6-g0",
+  "id": "adv-3a065b86-g0",
   "key": "autres_03_powerlifter_competition",
   "kind": "a",
   "scenario": "reference",
   "seed": 0,
   "spec": {
-   "breakDays": 3,
-   "breakFromDay": 38,
-   "daySd": 0.0211,
-   "healthAnswerRate": 0.4204,
-   "illnessDays": 2,
-   "illnessFromDay": 14,
-   "lazy": 0.3837,
-   "missRate": 0.1258,
-   "painDays": 17,
-   "painFromDay": 17,
-   "painIntensity": 6,
-   "painZone": "hip",
-   "ratingNoise": 2.4061,
-   "rirBias": 0.0568,
-   "rirBiasSd": 0.1955,
-   "shortTimeRate": 0.14,
-   "skipRating": 0.4561
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9688,
-    "curveB": 1.2831,
-    "fatigueScale": 1.3896,
-    "power": 1.2831,
-    "slope": 1.2831
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.8414,
-    "curveB": 1.1845,
-    "fatigueScale": 1.4778,
-    "power": 1.1845,
-    "slope": 1.1845
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.8414,
-    "curveB": 1.1845,
-    "fatigueScale": 1.4778,
-    "power": 1.1845,
-    "slope": 1.1845
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.8414,
-    "curveB": 1.1845,
-    "fatigueScale": 1.4778,
-    "power": 1.1845,
-    "slope": 1.1845
-   }
-  }
- },
- {
-  "id": "adv-920ff6e6-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 3,
-   "breakFromDay": 38,
-   "daySd": 0.0211,
-   "healthAnswerRate": 0.4204,
-   "illnessDays": 2,
-   "illnessFromDay": 14,
-   "lazy": 0.3837,
-   "missRate": 0.1258,
-   "painDays": 17,
-   "painFromDay": 17,
-   "painIntensity": 6,
-   "painZone": "hip",
-   "ratingNoise": 2.4061,
-   "rirBias": 0.0568,
-   "rirBiasSd": 0.1955,
-   "shortTimeRate": 0.14,
-   "skipRating": 0.4561
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.9688,
-    "curveB": 1.2831,
-    "fatigueScale": 1.3896,
-    "power": 1.2831,
-    "slope": 1.2831
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.8414,
-    "curveB": 1.1845,
-    "fatigueScale": 1.4778,
-    "power": 1.1845,
-    "slope": 1.1845
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.8414,
-    "curveB": 1.1845,
-    "fatigueScale": 1.4778,
-    "power": 1.1845,
-    "slope": 1.1845
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.8414,
-    "curveB": 1.1845,
-    "fatigueScale": 1.4778,
-    "power": 1.1845,
-    "slope": 1.1845
-   }
-  }
- },
- {
-  "id": "adv-b8554c39-g0",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 2,
-   "breakFromDay": 10,
-   "daySd": 0.0369,
-   "healthAnswerRate": 0.8634,
-   "illnessDays": 3,
-   "illnessFromDay": 18,
-   "lazy": 0.0794,
-   "missRate": 0.0145,
-   "painDays": 12,
-   "painFromDay": 29,
-   "painIntensity": 3,
-   "painZone": "wrist_hand",
-   "ratingNoise": 1.8772,
-   "rirBias": 0.5599,
-   "rirBiasSd": 0.124,
-   "shortTimeRate": 0.1308,
-   "skipRating": 0.4773
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.1157,
-    "curveB": 1.3166,
-    "fatigueScale": 0.7798,
-    "power": 1.3166,
-    "slope": 1.3166
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.9738,
-    "curveB": 1.2036,
-    "fatigueScale": 0.6438,
-    "power": 1.2036,
-    "slope": 1.2036
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.9738,
-    "curveB": 1.2036,
-    "fatigueScale": 0.6438,
-    "power": 1.2036,
-    "slope": 1.2036
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.9738,
-    "curveB": 1.2036,
-    "fatigueScale": 0.6438,
-    "power": 1.2036,
-    "slope": 1.2036
-   }
-  }
- },
- {
-  "id": "adv-b8554c39-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 2,
-   "breakFromDay": 10,
-   "daySd": 0.0369,
-   "healthAnswerRate": 0.8634,
-   "illnessDays": 3,
-   "illnessFromDay": 18,
-   "lazy": 0.0794,
-   "missRate": 0.0145,
-   "painDays": 12,
-   "painFromDay": 29,
-   "painIntensity": 3,
-   "painZone": "wrist_hand",
-   "ratingNoise": 1.8772,
-   "rirBias": 0.5599,
-   "rirBiasSd": 0.124,
-   "shortTimeRate": 0.1308,
-   "skipRating": 0.4773
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 1.1157,
-    "curveB": 1.3166,
-    "fatigueScale": 0.7798,
-    "power": 1.3166,
-    "slope": 1.3166
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 0.9738,
-    "curveB": 1.2036,
-    "fatigueScale": 0.6438,
-    "power": 1.2036,
-    "slope": 1.2036
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 0.9738,
-    "curveB": 1.2036,
-    "fatigueScale": 0.6438,
-    "power": 1.2036,
-    "slope": 1.2036
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 0.9738,
-    "curveB": 1.2036,
-    "fatigueScale": 0.6438,
-    "power": 1.2036,
-    "slope": 1.2036
-   }
-  }
- },
- {
-  "id": "adv-d8d64942-g0",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "daySd": 0.0343,
-   "healthAnswerRate": 0.5917,
-   "illnessDays": 10,
-   "illnessFromDay": 21,
-   "lazy": 0.2495,
-   "missRate": 0.2399,
-   "ratingNoise": 0.747,
-   "rirBias": 0.7568,
-   "rirBiasSd": 0.275,
-   "shortTimeRate": 0.1783,
-   "skipRating": 0.2714
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.941,
-    "curveB": 0.8392,
-    "fatigueScale": 1.5164,
-    "power": 0.8392,
-    "slope": 0.8392
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1268,
-    "curveB": 1.238,
-    "fatigueScale": 1.2162,
-    "power": 1.238,
-    "slope": 1.238
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1268,
-    "curveB": 1.238,
-    "fatigueScale": 1.2162,
-    "power": 1.238,
-    "slope": 1.238
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1268,
-    "curveB": 1.238,
-    "fatigueScale": 1.2162,
-    "power": 1.238,
-    "slope": 1.238
-   }
-  }
- },
- {
-  "id": "adv-d8d64942-g1",
-  "key": "autres_03_powerlifter_competition",
-  "kind": "c",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "daySd": 0.0343,
-   "healthAnswerRate": 0.5917,
-   "illnessDays": 10,
-   "illnessFromDay": 21,
-   "lazy": 0.2495,
-   "missRate": 0.2399,
-   "ratingNoise": 0.747,
-   "rirBias": 0.7568,
-   "rirBiasSd": 0.275,
-   "shortTimeRate": 0.1783,
-   "skipRating": 0.2714
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.941,
-    "curveB": 0.8392,
-    "fatigueScale": 1.5164,
-    "power": 0.8392,
-    "slope": 0.8392
-   },
-   "mu-back-squat-barre-basse": {
-    "capacity": 1.1268,
-    "curveB": 1.238,
-    "fatigueScale": 1.2162,
-    "power": 1.238,
-    "slope": 1.238
-   },
-   "mu-developpe-couche-barre": {
-    "capacity": 1.1268,
-    "curveB": 1.238,
-    "fatigueScale": 1.2162,
-    "power": 1.238,
-    "slope": 1.238
-   },
-   "mu-souleve-de-terre-conventionnel": {
-    "capacity": 1.1268,
-    "curveB": 1.238,
-    "fatigueScale": 1.2162,
-    "power": 1.238,
-    "slope": 1.238
-   }
-  }
- },
- {
-  "id": "adv-b21e1c23-g0",
-  "key": "street_06_inter_sets_reps",
-  "kind": "a",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 3,
-   "breakFromDay": 47,
-   "daySd": 0.0173,
-   "healthAnswerRate": 0.8232,
+   "breakDays": 4,
+   "breakFromDay": 14,
+   "daySd": 0.0352,
+   "healthAnswerRate": 0.4744,
    "illnessDays": 4,
-   "illnessFromDay": 94,
-   "lazy": 0.042,
-   "missRate": 0.1831,
-   "painDays": 30,
-   "painFromDay": 54,
-   "painIntensity": 6,
-   "painZone": "shoulder",
-   "ratingNoise": 1.108,
-   "rirBias": -0.0813,
-   "rirBiasSd": 0.139,
-   "shortTimeRate": 0.0042,
-   "skipRating": 0.4536
+   "illnessFromDay": 14,
+   "lazy": 0.4785,
+   "missRate": 0.0298,
+   "painDays": 23,
+   "painFromDay": 24,
+   "painIntensity": 7,
+   "painZone": "hip",
+   "ratingNoise": 2.1227,
+   "rirBias": -0.0575,
+   "rirBiasSd": 0.0729,
+   "shortTimeRate": 0.1133,
+   "skipRating": 0.3825
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9316,
-    "curveB": 0.9248,
-    "fatigueScale": 0.7147,
-    "power": 0.9248,
-    "slope": 0.9248
+    "capacity": 0.9291,
+    "curveB": 1.3083,
+    "fatigueScale": 1.2148,
+    "power": 1.3083,
+    "slope": 1.3083
    },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.8587,
-    "curveB": 1.0919,
-    "fatigueScale": 0.8603,
-    "power": 1.0919,
-    "slope": 1.0919
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
    },
-   "sw-dips-buste-penche": {
-    "capacity": 0.8587,
-    "curveB": 1.0919,
-    "fatigueScale": 0.8603,
-    "power": 1.0919,
-    "slope": 1.0919
+   "mu-developpe-couche-barre": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
    },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.8587,
-    "curveB": 1.0919,
-    "fatigueScale": 0.8603,
-    "power": 1.0919,
-    "slope": 1.0919
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.8587,
-    "curveB": 1.0919,
-    "fatigueScale": 0.8603,
-    "power": 1.0919,
-    "slope": 1.0919
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
    }
   }
  },
  {
-  "id": "adv-b21e1c23-g1",
-  "key": "street_06_inter_sets_reps",
+  "id": "adv-3a065b86-g1",
+  "key": "autres_03_powerlifter_competition",
   "kind": "a",
   "scenario": "reference",
   "seed": 1,
   "spec": {
-   "breakDays": 3,
-   "breakFromDay": 47,
-   "daySd": 0.0173,
-   "healthAnswerRate": 0.8232,
+   "breakDays": 4,
+   "breakFromDay": 14,
+   "daySd": 0.0352,
+   "healthAnswerRate": 0.4744,
    "illnessDays": 4,
-   "illnessFromDay": 94,
-   "lazy": 0.042,
-   "missRate": 0.1831,
-   "painDays": 30,
-   "painFromDay": 54,
-   "painIntensity": 6,
-   "painZone": "shoulder",
-   "ratingNoise": 1.108,
-   "rirBias": -0.0813,
-   "rirBiasSd": 0.139,
-   "shortTimeRate": 0.0042,
-   "skipRating": 0.4536
+   "illnessFromDay": 14,
+   "lazy": 0.4785,
+   "missRate": 0.0298,
+   "painDays": 23,
+   "painFromDay": 24,
+   "painIntensity": 7,
+   "painZone": "hip",
+   "ratingNoise": 2.1227,
+   "rirBias": -0.0575,
+   "rirBiasSd": 0.0729,
+   "shortTimeRate": 0.1133,
+   "skipRating": 0.3825
   },
   "surcharges": {
    "*": {
-    "capacity": 0.9316,
-    "curveB": 0.9248,
-    "fatigueScale": 0.7147,
-    "power": 0.9248,
-    "slope": 0.9248
+    "capacity": 0.9291,
+    "curveB": 1.3083,
+    "fatigueScale": 1.2148,
+    "power": 1.3083,
+    "slope": 1.3083
    },
-   "sw-dips-barres-paralleles": {
-    "capacity": 0.8587,
-    "curveB": 1.0919,
-    "fatigueScale": 0.8603,
-    "power": 1.0919,
-    "slope": 1.0919
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
    },
-   "sw-dips-buste-penche": {
-    "capacity": 0.8587,
-    "curveB": 1.0919,
-    "fatigueScale": 0.8603,
-    "power": 1.0919,
-    "slope": 1.0919
+   "mu-developpe-couche-barre": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
    },
-   "sw-traction-chest-to-bar": {
-    "capacity": 0.8587,
-    "curveB": 1.0919,
-    "fatigueScale": 0.8603,
-    "power": 1.0919,
-    "slope": 1.0919
-   },
-   "sw-traction-pronation": {
-    "capacity": 0.8587,
-    "curveB": 1.0919,
-    "fatigueScale": 0.8603,
-    "power": 1.0919,
-    "slope": 1.0919
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
    }
   }
  },
  {
-  "id": "adv-98b24056-g0",
-  "key": "street_06_inter_sets_reps",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 0,
-  "spec": {
-   "breakDays": 6,
-   "breakFromDay": 99,
-   "daySd": 0.0155,
-   "healthAnswerRate": 0.9514,
-   "illnessDays": 3,
-   "illnessFromDay": 99,
-   "lazy": 0.3553,
-   "missRate": 0.2086,
-   "painDays": 30,
-   "painFromDay": 10,
-   "painIntensity": 4,
-   "painZone": "wrist_hand",
-   "ratingNoise": 2.2599,
-   "rirBias": 0.0276,
-   "rirBiasSd": 0.1354,
-   "shortTimeRate": 0.0846,
-   "skipRating": 0.1166
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.801,
-    "curveB": 1.0158,
-    "fatigueScale": 1.2133,
-    "power": 1.0158,
-    "slope": 1.0158
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
-   }
-  }
- },
- {
-  "id": "adv-98b24056-g1",
-  "key": "street_06_inter_sets_reps",
-  "kind": "b",
-  "scenario": "reference",
-  "seed": 1,
-  "spec": {
-   "breakDays": 6,
-   "breakFromDay": 99,
-   "daySd": 0.0155,
-   "healthAnswerRate": 0.9514,
-   "illnessDays": 3,
-   "illnessFromDay": 99,
-   "lazy": 0.3553,
-   "missRate": 0.2086,
-   "painDays": 30,
-   "painFromDay": 10,
-   "painIntensity": 4,
-   "painZone": "wrist_hand",
-   "ratingNoise": 2.2599,
-   "rirBias": 0.0276,
-   "rirBiasSd": 0.1354,
-   "shortTimeRate": 0.0846,
-   "skipRating": 0.1166
-  },
-  "surcharges": {
-   "*": {
-    "capacity": 0.801,
-    "curveB": 1.0158,
-    "fatigueScale": 1.2133,
-    "power": 1.0158,
-    "slope": 1.0158
-   },
-   "sw-dips-barres-paralleles": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
-   },
-   "sw-dips-buste-penche": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
-   },
-   "sw-traction-chest-to-bar": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
-   },
-   "sw-traction-pronation": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
-   }
-  }
- },
- {
-  "id": "adv-98b24056-g2",
-  "key": "street_06_inter_sets_reps",
-  "kind": "b",
+  "id": "adv-3a065b86-g2",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "a",
   "scenario": "reference",
   "seed": 2,
   "spec": {
-   "breakDays": 6,
-   "breakFromDay": 99,
-   "daySd": 0.0155,
-   "healthAnswerRate": 0.9514,
-   "illnessDays": 3,
-   "illnessFromDay": 99,
-   "lazy": 0.3553,
-   "missRate": 0.2086,
-   "painDays": 30,
-   "painFromDay": 10,
-   "painIntensity": 4,
-   "painZone": "wrist_hand",
-   "ratingNoise": 2.2599,
-   "rirBias": 0.0276,
-   "rirBiasSd": 0.1354,
-   "shortTimeRate": 0.0846,
-   "skipRating": 0.1166
+   "breakDays": 4,
+   "breakFromDay": 14,
+   "daySd": 0.0352,
+   "healthAnswerRate": 0.4744,
+   "illnessDays": 4,
+   "illnessFromDay": 14,
+   "lazy": 0.4785,
+   "missRate": 0.0298,
+   "painDays": 23,
+   "painFromDay": 24,
+   "painIntensity": 7,
+   "painZone": "hip",
+   "ratingNoise": 2.1227,
+   "rirBias": -0.0575,
+   "rirBiasSd": 0.0729,
+   "shortTimeRate": 0.1133,
+   "skipRating": 0.3825
   },
   "surcharges": {
    "*": {
-    "capacity": 0.801,
-    "curveB": 1.0158,
-    "fatigueScale": 1.2133,
-    "power": 1.0158,
-    "slope": 1.0158
+    "capacity": 0.9291,
+    "curveB": 1.3083,
+    "fatigueScale": 1.2148,
+    "power": 1.3083,
+    "slope": 1.3083
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.854,
+    "curveB": 1.2532,
+    "fatigueScale": 1.2745,
+    "power": 1.2532,
+    "slope": 1.2532
+   }
+  }
+ },
+ {
+  "id": "adv-34899937-g0",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 26,
+   "daySd": 0.0432,
+   "healthAnswerRate": 0.6565,
+   "illnessDays": 7,
+   "illnessFromDay": 14,
+   "lazy": 0.306,
+   "missRate": 0.2029,
+   "painDays": 27,
+   "painFromDay": 14,
+   "painIntensity": 4,
+   "painZone": "knee",
+   "ratingNoise": 0.5773,
+   "rirBias": 0.795,
+   "rirBiasSd": 0.2782,
+   "shortTimeRate": 0.2256,
+   "skipRating": 0.2598
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.0535,
+    "curveB": 0.8327,
+    "fatigueScale": 0.6699,
+    "power": 0.8327,
+    "slope": 0.8327
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 1.0511,
+    "curveB": 1.1803,
+    "fatigueScale": 0.7881,
+    "power": 1.1803,
+    "slope": 1.1803
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 1.0511,
+    "curveB": 1.1803,
+    "fatigueScale": 0.7881,
+    "power": 1.1803,
+    "slope": 1.1803
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 1.0511,
+    "curveB": 1.1803,
+    "fatigueScale": 0.7881,
+    "power": 1.1803,
+    "slope": 1.1803
+   }
+  }
+ },
+ {
+  "id": "adv-34899937-g1",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 26,
+   "daySd": 0.0432,
+   "healthAnswerRate": 0.6565,
+   "illnessDays": 7,
+   "illnessFromDay": 14,
+   "lazy": 0.306,
+   "missRate": 0.2029,
+   "painDays": 27,
+   "painFromDay": 14,
+   "painIntensity": 4,
+   "painZone": "knee",
+   "ratingNoise": 0.5773,
+   "rirBias": 0.795,
+   "rirBiasSd": 0.2782,
+   "shortTimeRate": 0.2256,
+   "skipRating": 0.2598
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 1.0535,
+    "curveB": 0.8327,
+    "fatigueScale": 0.6699,
+    "power": 0.8327,
+    "slope": 0.8327
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 1.0511,
+    "curveB": 1.1803,
+    "fatigueScale": 0.7881,
+    "power": 1.1803,
+    "slope": 1.1803
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 1.0511,
+    "curveB": 1.1803,
+    "fatigueScale": 0.7881,
+    "power": 1.1803,
+    "slope": 1.1803
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 1.0511,
+    "curveB": 1.1803,
+    "fatigueScale": 0.7881,
+    "power": 1.1803,
+    "slope": 1.1803
+   }
+  }
+ },
+ {
+  "id": "adv-b00eb370-g0",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 33,
+   "daySd": 0.0574,
+   "healthAnswerRate": 0.4143,
+   "illnessDays": 7,
+   "illnessFromDay": 26,
+   "lazy": 0.3562,
+   "missRate": 0.2023,
+   "painDays": 12,
+   "painFromDay": 33,
+   "painIntensity": 7,
+   "painZone": "wrist_hand",
+   "ratingNoise": 2.1285,
+   "rirBias": -0.0688,
+   "rirBiasSd": 0.2449,
+   "shortTimeRate": 0.012,
+   "skipRating": 0.2807
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8501,
+    "curveB": 0.8602,
+    "fatigueScale": 0.7994,
+    "power": 0.8602,
+    "slope": 0.8602
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   }
+  }
+ },
+ {
+  "id": "adv-b00eb370-g1",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 33,
+   "daySd": 0.0574,
+   "healthAnswerRate": 0.4143,
+   "illnessDays": 7,
+   "illnessFromDay": 26,
+   "lazy": 0.3562,
+   "missRate": 0.2023,
+   "painDays": 12,
+   "painFromDay": 33,
+   "painIntensity": 7,
+   "painZone": "wrist_hand",
+   "ratingNoise": 2.1285,
+   "rirBias": -0.0688,
+   "rirBiasSd": 0.2449,
+   "shortTimeRate": 0.012,
+   "skipRating": 0.2807
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8501,
+    "curveB": 0.8602,
+    "fatigueScale": 0.7994,
+    "power": 0.8602,
+    "slope": 0.8602
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   }
+  }
+ },
+ {
+  "id": "adv-b00eb370-g2",
+  "key": "autres_03_powerlifter_competition",
+  "kind": "c",
+  "scenario": "reference",
+  "seed": 2,
+  "spec": {
+   "breakDays": 10,
+   "breakFromDay": 33,
+   "daySd": 0.0574,
+   "healthAnswerRate": 0.4143,
+   "illnessDays": 7,
+   "illnessFromDay": 26,
+   "lazy": 0.3562,
+   "missRate": 0.2023,
+   "painDays": 12,
+   "painFromDay": 33,
+   "painIntensity": 7,
+   "painZone": "wrist_hand",
+   "ratingNoise": 2.1285,
+   "rirBias": -0.0688,
+   "rirBiasSd": 0.2449,
+   "shortTimeRate": 0.012,
+   "skipRating": 0.2807
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8501,
+    "curveB": 0.8602,
+    "fatigueScale": 0.7994,
+    "power": 0.8602,
+    "slope": 0.8602
+   },
+   "mu-back-squat-barre-basse": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   },
+   "mu-developpe-couche-barre": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   },
+   "mu-souleve-de-terre-conventionnel": {
+    "capacity": 0.8189,
+    "curveB": 1.1074,
+    "fatigueScale": 1.0058,
+    "power": 1.1074,
+    "slope": 1.1074
+   }
+  }
+ },
+ {
+  "id": "adv-4588f127-g0",
+  "key": "street_06_inter_sets_reps",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 79,
+   "daySd": 0.0255,
+   "healthAnswerRate": 0.7274,
+   "illnessDays": 4,
+   "illnessFromDay": 46,
+   "lazy": 0.0155,
+   "missRate": 0.0849,
+   "painDays": 15,
+   "painFromDay": 83,
+   "painIntensity": 3,
+   "painZone": "hip",
+   "ratingNoise": 1.6072,
+   "rirBias": 0.5863,
+   "rirBiasSd": 0.1633,
+   "shortTimeRate": 0.0857,
+   "skipRating": 0.3302
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8473,
+    "curveB": 1.1853,
+    "fatigueScale": 0.8829,
+    "power": 1.1853,
+    "slope": 1.1853
    },
    "sw-dips-barres-paralleles": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
+    "capacity": 0.8636,
+    "curveB": 1.1307,
+    "fatigueScale": 0.6906,
+    "power": 1.1307,
+    "slope": 1.1307
    },
    "sw-dips-buste-penche": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
+    "capacity": 0.8636,
+    "curveB": 1.1307,
+    "fatigueScale": 0.6906,
+    "power": 1.1307,
+    "slope": 1.1307
    },
    "sw-traction-chest-to-bar": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
+    "capacity": 0.8636,
+    "curveB": 1.1307,
+    "fatigueScale": 0.6906,
+    "power": 1.1307,
+    "slope": 1.1307
    },
    "sw-traction-pronation": {
-    "capacity": 1.1627,
-    "curveB": 0.9046,
-    "fatigueScale": 0.8718,
-    "power": 0.9046,
-    "slope": 0.9046
+    "capacity": 0.8636,
+    "curveB": 1.1307,
+    "fatigueScale": 0.6906,
+    "power": 1.1307,
+    "slope": 1.1307
+   }
+  }
+ },
+ {
+  "id": "adv-4588f127-g1",
+  "key": "street_06_inter_sets_reps",
+  "kind": "a",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 79,
+   "daySd": 0.0255,
+   "healthAnswerRate": 0.7274,
+   "illnessDays": 4,
+   "illnessFromDay": 46,
+   "lazy": 0.0155,
+   "missRate": 0.0849,
+   "painDays": 15,
+   "painFromDay": 83,
+   "painIntensity": 3,
+   "painZone": "hip",
+   "ratingNoise": 1.6072,
+   "rirBias": 0.5863,
+   "rirBiasSd": 0.1633,
+   "shortTimeRate": 0.0857,
+   "skipRating": 0.3302
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8473,
+    "curveB": 1.1853,
+    "fatigueScale": 0.8829,
+    "power": 1.1853,
+    "slope": 1.1853
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 0.8636,
+    "curveB": 1.1307,
+    "fatigueScale": 0.6906,
+    "power": 1.1307,
+    "slope": 1.1307
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 0.8636,
+    "curveB": 1.1307,
+    "fatigueScale": 0.6906,
+    "power": 1.1307,
+    "slope": 1.1307
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 0.8636,
+    "curveB": 1.1307,
+    "fatigueScale": 0.6906,
+    "power": 1.1307,
+    "slope": 1.1307
+   },
+   "sw-traction-pronation": {
+    "capacity": 0.8636,
+    "curveB": 1.1307,
+    "fatigueScale": 0.6906,
+    "power": 1.1307,
+    "slope": 1.1307
+   }
+  }
+ },
+ {
+  "id": "adv-ef4936a3-g0",
+  "key": "street_06_inter_sets_reps",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 0,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 73,
+   "daySd": 0.056,
+   "healthAnswerRate": 0.5817,
+   "illnessDays": 7,
+   "illnessFromDay": 51,
+   "lazy": 0.3453,
+   "missRate": 0.2818,
+   "painDays": 19,
+   "painFromDay": 13,
+   "painIntensity": 3,
+   "painZone": "knee",
+   "ratingNoise": 0.7606,
+   "rirBias": 0.101,
+   "rirBiasSd": 0.301,
+   "shortTimeRate": 0.2266,
+   "skipRating": 0.0767
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8519,
+    "curveB": 1.0768,
+    "fatigueScale": 1.5472,
+    "power": 1.0768,
+    "slope": 1.0768
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 1.1487,
+    "curveB": 1.265,
+    "fatigueScale": 1.5261,
+    "power": 1.265,
+    "slope": 1.265
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 1.1487,
+    "curveB": 1.265,
+    "fatigueScale": 1.5261,
+    "power": 1.265,
+    "slope": 1.265
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 1.1487,
+    "curveB": 1.265,
+    "fatigueScale": 1.5261,
+    "power": 1.265,
+    "slope": 1.265
+   },
+   "sw-traction-pronation": {
+    "capacity": 1.1487,
+    "curveB": 1.265,
+    "fatigueScale": 1.5261,
+    "power": 1.265,
+    "slope": 1.265
+   }
+  }
+ },
+ {
+  "id": "adv-ef4936a3-g1",
+  "key": "street_06_inter_sets_reps",
+  "kind": "b",
+  "scenario": "reference",
+  "seed": 1,
+  "spec": {
+   "breakDays": 2,
+   "breakFromDay": 73,
+   "daySd": 0.056,
+   "healthAnswerRate": 0.5817,
+   "illnessDays": 7,
+   "illnessFromDay": 51,
+   "lazy": 0.3453,
+   "missRate": 0.2818,
+   "painDays": 19,
+   "painFromDay": 13,
+   "painIntensity": 3,
+   "painZone": "knee",
+   "ratingNoise": 0.7606,
+   "rirBias": 0.101,
+   "rirBiasSd": 0.301,
+   "shortTimeRate": 0.2266,
+   "skipRating": 0.0767
+  },
+  "surcharges": {
+   "*": {
+    "capacity": 0.8519,
+    "curveB": 1.0768,
+    "fatigueScale": 1.5472,
+    "power": 1.0768,
+    "slope": 1.0768
+   },
+   "sw-dips-barres-paralleles": {
+    "capacity": 1.1487,
+    "curveB": 1.265,
+    "fatigueScale": 1.5261,
+    "power": 1.265,
+    "slope": 1.265
+   },
+   "sw-dips-buste-penche": {
+    "capacity": 1.1487,
+    "curveB": 1.265,
+    "fatigueScale": 1.5261,
+    "power": 1.265,
+    "slope": 1.265
+   },
+   "sw-traction-chest-to-bar": {
+    "capacity": 1.1487,
+    "curveB": 1.265,
+    "fatigueScale": 1.5261,
+    "power": 1.265,
+    "slope": 1.265
+   },
+   "sw-traction-pronation": {
+    "capacity": 1.1487,
+    "curveB": 1.265,
+    "fatigueScale": 1.5261,
+    "power": 1.265,
+    "slope": 1.265
    }
   }
  },

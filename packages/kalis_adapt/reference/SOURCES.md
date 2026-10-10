@@ -21,7 +21,7 @@ Règles suivies :
 - Une clé qu'aucun module de `koach/` ne lit est marquée **Non lue par le moteur** (vérifié par script sur le code du 10/10/2026 : recherche de la chaîne de la clé, hors entrées des dictionnaires de défauts).
 - Aucune référence n'est ajoutée à la liste ci-dessous ; aucun résultat du rejeu d'un journal réel n'est cité.
 
-Les scripts cités sont dans `/home/claude/km1-outils/`. `fit_reponse.py` (sur `/tmp/reponse.json`) et `diag_prior.py` ont été réexécutés le 09/10/2026 ; les chiffres donnés en sont tirés.
+Les scripts cités (`fit_reponse.py`, `diag_prior.py`, `essai2.py`…) sont des outils de travail du lot KM1, conservés sur la branche de sauvegarde `cp-sauvegardes/KM1` (dossier `km1-outils/`). `fit_reponse.py` et `diag_prior.py` ont été réexécutés le 09/10/2026 ; les chiffres donnés en sont tirés.
 
 ## Références de la littérature citées
 
@@ -231,11 +231,11 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `graine` | 20261009 | choix raisonné | Date du lot ; arbitraire. |
 | `prudence_charge` | [0.6, 0.25] | choix raisonné | Quantile prudent 0,6 sd puis 0,25 sd après 3 séances ; aucune source. |
 | `transport_creation` | 0.25 | choix raisonné | Aucune source. |
-| `marge_cible` | 0.0 | choix raisonné | Aucune source. |
+| `marge_cible` | 0.065 | mesure sur le banc | Opposé du rendement moyen d'un test le jour J : ln(meilleure barre réussie / maximum vrai du jour) = −0,065 en moyenne (médiane −0,047) sur 267 tests chargés, 720 saisons (campagne `banc/campagne.py`, 10/10/2026). |
 | `abandon_hebdo` | 0.01 | choix raisonné | 1 %/sem. Littérature lue (Sperandei 2016 : < 5 % actifs à 12 mois en salle) seulement en seconde main et sur une autre population : non cité. |
 | `abandon_surcharge` | 3.0 | choix raisonné | Aucune source (Perri 2002 : adhérence meilleure à intensité modérée, sens seulement). |
 | `gain_min` | 0.002 | choix raisonné | Aucune source. |
-| `rendement_test_sd` | 0.07 | mesure sur le banc | Ligne ajoutée le 10/10/2026 (clé présente dans le fichier sans ligne de source). Dispersion du rendement d'un test le jour J (meilleure barre réussie / maximum vrai du jour), ajoutée à l'écart-type du jour dans la prévision de P(réussite) (`planification`, commentaire du code : « mesurées sur le banc ») ; la mesure source n'est pas citée dans le code. |
+| `rendement_test_sd` | 0.07 | mesure sur le banc | Écart-type de ln(meilleure barre réussie / maximum vrai du jour) : 0,073 sur les mêmes 267 tests du jour J (campagne `banc/campagne.py`, 10/10/2026) ; ajouté à l'écart-type du jour dans P(cible). |
 
 ### Section `securite`
 
