@@ -329,10 +329,7 @@ final class _VeriteScenario {
     }
     final lf = sp['otherPlaceFromDay'];
     if (lf != null) {
-      lieu = (
-        kc.ent(lf),
-        kc.ent(lf) + kc.ent(_pkGet(sp, 'otherPlaceDays', 0)),
-      );
+      lieu = (kc.ent(lf), kc.ent(lf) + kc.ent(_pkGet(sp, 'otherPlaceDays', 0)));
     }
     final cf = sp['breakFromDay'];
     if (cf != null) {
@@ -1241,7 +1238,8 @@ final class PolitiqueKoach implements KmPolitique {
   List<double>? estimer(String exId, double n) {
     final m = koach.modele;
     final t = m.piste(exId);
-    if (t == null || !const <String>['charge', 'reps', 'tenue'].contains(t.type)) {
+    if (t == null ||
+        !const <String>['charge', 'reps', 'tenue'].contains(t.type)) {
       return null;
     }
     final (mu, sd) = m.capacite(exId)!;

@@ -117,3 +117,29 @@ bool dans(Object? x, Iterable<Object?> liste) {
   }
   return false;
 }
+
+/// `'%.nf' % x` de Python : arrondi correct de la valeur binaire exacte,
+/// au pair sur une égalité exacte (`toStringAsFixed` arrondit l'égalité
+/// vers le haut).
+String fixe(double x, int n) {
+  if (x.isNaN) return 'nan';
+  if (x.isInfinite) return x > 0 ? 'inf' : '-inf';
+  final s = x.toStringAsFixed(n);
+  if (n >= 20 || x.abs() >= 1e21) return s;
+  final l = x.abs().toStringAsFixed(20);
+  final p = l.indexOf('.');
+  final reste = l.substring(p + 1 + n);
+  if (reste[0] != '5' || reste.substring(1).replaceAll('0', '').isNotEmpty) {
+    return s;
+  }
+  // Égalité exacte : garder la troncature si son dernier chiffre est pair.
+  final tronque = l.substring(0, p + 1 + n);
+  final chiffres = tronque.replaceAll('.', '');
+  final dernier = int.parse(chiffres[chiffres.length - 1]);
+  var v = BigInt.parse(chiffres);
+  if (dernier.isOdd) v += BigInt.one;
+  var t = v.toString().padLeft(n + 1, '0');
+  if (n > 0) t = '${t.substring(0, t.length - n)}.${t.substring(t.length - n)}';
+  final neg = x < 0 || (x == 0 && x.isNegative);
+  return neg ? '-$t' : t;
+}

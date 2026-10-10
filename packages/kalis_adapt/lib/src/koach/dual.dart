@@ -305,7 +305,7 @@ class Reponse {
     }
     final demi = z90 * c.$2;
     if (!(demi < imax)) {
-      raisons.add('intervalle_large:$ex:${demi.toStringAsFixed(4)}');
+      raisons.add('intervalle_large:$ex:${fixe(demi, 4)}');
     }
   }
   return (raisons.isEmpty, raisons);

@@ -1,8 +1,0 @@
-Formatted lib/src/km/campagne.dart
-Formatted lib/src/km/criteres_moteur.dart
-Formatted lib/src/km/meneur.dart
-Formatted lib/src/km/politique_koach.dart
-Formatted test/km2_banc_test.dart
-Formatted test/km2_campagne_test.dart
-Formatted bin/km2.dart
-Formatted 30 files (7 changed) in 0.81 seconds.

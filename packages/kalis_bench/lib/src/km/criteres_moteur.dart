@@ -148,8 +148,8 @@ double kmArrondiPy(double x, [int n = 6]) {
   final hi = bd.getUint32(0, Endian.big);
   final lo = bd.getUint32(4, Endian.big);
   final expBits = (hi >> 20) & 0x7ff;
-  var mant = BigInt.from(hi & 0xfffff) * BigInt.from(0x100000000) +
-      BigInt.from(lo);
+  var mant =
+      BigInt.from(hi & 0xfffff) * BigInt.from(0x100000000) + BigInt.from(lo);
   int e;
   if (expBits == 0) {
     e = -1074;
@@ -201,9 +201,7 @@ Map<String, Object?> kmStats(Iterable<double> xs) {
       'max': null,
     };
   }
-  final med = n % 2 == 1
-      ? ys[n ~/ 2]
-      : 0.5 * (ys[n ~/ 2 - 1] + ys[n ~/ 2]);
+  final med = n % 2 == 1 ? ys[n ~/ 2] : 0.5 * (ys[n ~/ 2 - 1] + ys[n ~/ 2]);
   return <String, Object?>{
     'n': n,
     'moyenne': kmSommeD(ys) / n,
@@ -388,11 +386,8 @@ final class KmBanc {
 
   /// Validateur de sécurité de la saison [saison]
   /// (`securite_banc.constats_saison`).
-  KmConstatsSaison constatsDe(kc.Json saison) => KmConstatsSaison(
-    catalog,
-    profils[saison['key']! as String]!,
-    saison,
-  );
+  KmConstatsSaison constatsDe(kc.Json saison) =>
+      KmConstatsSaison(catalog, profils[saison['key']! as String]!, saison);
 
   /// Trajectoires du jumeau des paramètres.
   int get trajectoiresParDefaut {
@@ -443,7 +438,8 @@ final class KmConstatsSaison {
   List<kc.Json> constats([List<Object?>? blocs]) {
     final blocksJson = blocs ?? kc.jl(saison['blocks']);
     final blocks = <ProgramBlock>[
-      for (final b in blocksJson) ProgramBlock.fromJson(benchObject(b, 'blocks')),
+      for (final b in blocksJson)
+        ProgramBlock.fromJson(benchObject(b, 'blocks')),
     ];
     final bw = saison['blockWeeks'] == null
         ? null
@@ -514,8 +510,7 @@ base class KmPolitiqueDeleguee extends KmPolitique {
   ) => interne.prochaineSerie(ctx, item, index, done);
 
   @override
-  void cranChange(String exId, int change) =>
-      interne.cranChange(exId, change);
+  void cranChange(String exId, int change) => interne.cranChange(exId, change);
 
   @override
   void terminer(KmContexte ctx, kc.Json record) =>
@@ -643,12 +638,12 @@ final class PolitiqueChrono extends KmPolitiqueDeleguee {
 class PlanificationChrono extends kc.Planification {
   /// Planification chronométrée par [chrono].
   PlanificationChrono(
-    kc.Json params,
-    Map<String, kc.Json> fiches,
-    kc.Validateur? validateur,
-    kc.Json? options,
+    super.params,
+    super.fiches,
+    super.validateur,
+    super.options,
     this.chrono,
-  ) : super(params, fiches, validateur, options);
+  );
 
   /// Chronomètre.
   final KmChrono chrono;
@@ -1111,9 +1106,7 @@ Map<String, Object?> kmAgregerMauvaisJour(
   bool apparie = false,
   double baisse = kmMauvaisJour,
 }) {
-  final par = <String, List<double>>{
-    for (final h in kmHorizons) h: <double>[],
-  };
+  final par = <String, List<double>>{for (final h in kmHorizons) h: <double>[]};
   for (final ligne in lignes) {
     for (final vals in kc.dictOuVide(ligne['ecarts']).values) {
       final vs = kc.jl(vals);
