@@ -282,7 +282,7 @@
     "risque_tendon_plancher": 4.0,
     "horizon_sans_echeance_sem": 12,
     "sigma_prevision_semaine": 0.004,
-    "gain_affutage": 0.007,
+    "gain_affutage": 0.012,
     "graine": 20261009,
     "prudence_charge": [
       0.6,
@@ -294,9 +294,9 @@
     "abandon_surcharge": 3.0,
     "gain_min": 0.002,
     "rendement_test_sd": 0.055,
-    "erreur_estimation_echeance_sd": 0.04,
+    "erreur_estimation_echeance_sd": 0.03,
     "tentative_sd_jour": 0.046,
-    "tentative_manque": 0.028,
+    "tentative_manque": 0.018,
     "tentative_cible_proba": 0.35
   },
   "securite": {

@@ -575,11 +575,15 @@ class Modele(object):
             co += [1.0, 1.0, -gn, -ln_, -gm, -lm]
         return idx, co
 
-    def _fige_mauvais_jour(self, t):
+    def _fige_mauvais_jour(self, t, s=None):
         """Composantes de capacité de la piste (qualités sollicitées, écart
         de l'exercice) : considérées dans la branche « mauvais jour » quand
         `jour.mauvais_jour_fige_capacite` est vrai."""
         if not self.p['jour'].get('mauvais_jour_fige_capacite'):
+            return None
+        if s is not None and (s.get('role') or (s.get('target') or {}).get('role')) == 'attempt':
+            # Tentative maximale (jour d'épreuve, test 1RM) : elle mesure la
+            # capacité, la branche « mauvais jour » la lit comme la normale.
             return None
         return tuple(self._h_capacite(t, jour=False)[0])
 
@@ -909,7 +913,7 @@ class Modele(object):
             if not sans_charge:
                 idx, co = self._h_capacite(t)
                 resid = self._observer(idx, co, t.base - lnL, -INF, 0.0, me['bruit_test'] ** 2,
-                                       fige_alt=self._fige_mauvais_jour(t))
+                                       fige_alt=self._fige_mauvais_jour(t, s))
             rir_c = 0.0
         else:
             percu = not (echec or flammes is None)
@@ -990,7 +994,7 @@ class Modele(object):
                 if flammes is None and not echec:
                     fige = (LAM,) if sans_charge else (LAM, t.idx + 1)
                 resid = self._observer(idx, co, const, a, b, s2, melange=melange, bruit=bruit,
-                                       fonction=exacte, fige=fige, fige_alt=self._fige_mauvais_jour(t))
+                                       fonction=exacte, fige=fige, fige_alt=self._fige_mauvais_jour(t, s))
             if percu and f_cible is not None and resid is not None and abs(resid[1]) > 1.0:
                 # Notes paresseuses : part des notes égales à la note
                 # préremplie quand l'attendu en est à plus d'une répétition.
@@ -1118,7 +1122,7 @@ class Modele(object):
         extra = (me['dispersion_fatigue_intra'] * sj) ** 2
         if echec:
             resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0,
-                                   fige_alt=self._fige_mauvais_jour(t))
+                                   fige_alt=self._fige_mauvais_jour(t, s))
             rir_c = 0.0
         elif flammes is None:
             # Tenue faite sans note : versée seulement si la prévision la
@@ -1127,7 +1131,7 @@ class Modele(object):
             resid = None
             if mu0 + t.base - ln_s < 0.0:
                 resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra,
-                                       fige_alt=self._fige_mauvais_jour(t))
+                                       fige_alt=self._fige_mauvais_jour(t, s))
             rir_c = 2.0
         else:
             if flammes >= 10:
@@ -1163,7 +1167,7 @@ class Modele(object):
             def exacte(etat, t=t, ln_s=ln_s):
                 return self._lin_tenue(t, etat, ln_s, True)[2]
             resid = self._observer(ix, cx, const, a, b, bruit(pred), melange=melange, bruit=bruit,
-                                   fonction=exacte, fige_alt=self._fige_mauvais_jour(t))
+                                   fonction=exacte, fige_alt=self._fige_mauvais_jour(t, s))
             self._projeter()
             r = self._lin_tenue(t, self.m, ln_s, False)[3]
             rir_c = r if r > 0 else 0.0
@@ -1348,12 +1352,18 @@ class Modele(object):
 
     def elargir(self, facteur):
         """« Rien de spécial » au diagnostic : incertitude élargie sur les
-        capacités, réapprentissage rapide (cahier § 9)."""
-        for ex_id in self.ordre:
-            t = self.pistes[ex_id]
-            self.P[t.idx, t.idx] *= facteur
-        for q in range(NQ):
-            self.P[TH + q, TH + q] *= facteur
+        capacités, réapprentissage rapide (cahier § 9). La variance de toute
+        capacité (combinaison des qualités et de l'écart de l'exercice) est
+        multipliée par [facteur] : lignes et colonnes des composantes de
+        capacité multipliées par √facteur (P ← D P D). Multiplier les seules
+        diagonales défaisait les covariances négatives entre qualités et
+        écarts d'exercice et multipliait l'écart-type d'une capacité par
+        bien plus que √facteur (mesuré : × 7 au lieu de × 2)."""
+        r = math.sqrt(facteur)
+        idx = [TH + q for q in range(NQ)] + [self.pistes[ex_id].idx for ex_id in self.ordre]
+        for i in idx:
+            self.P[i, :] *= r
+            self.P[:, i] *= r
         self.elargi += 1
 
     # ------------------------------------------------------------------
