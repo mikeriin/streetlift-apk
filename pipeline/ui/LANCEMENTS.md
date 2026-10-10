@@ -67,7 +67,8 @@ Contexte écrit par la conversation de pilotage, une section par lot. Une sectio
 ## UI5
 
 **Préparé le 10/10/2026 à 23:55** par le pilotage (délégation du propriétaire, U0.13). Lancé dès que `refonte-ui` est avancé sur la fusion des quatre lots (U0.22).
-- Base : `refonte-ui` = fusion de UI1 à UI4 (0bc6237 si le contrôle `claude/ci-ui-fusion2` est vert ; sinon la tête de `refonte-ui` au lancement). `main` est toujours b7996b3f : la publication se fait en avance rapide.
+**Lancé le 11/10/2026 à 01:15** par le pilotage (U0.24, U0.25).
+- Base : `refonte-ui` = **0bc6237** (fusion de UI1 à UI4, contrôle vert, U0.24). **Première action** : fusionner en avance rapide le commit **48bda98** (`claude/ci-ui-fusion3`), qui ajoute `main` dev6.11.2 (CI1h) avec son seul conflit déjà résolu (U0.25) ; lire le résultat du contrôle run 38094241871 et corriger si besoin (logique de CI1h intouchable, présentation de la refonte gardée). `main` = 9ef40da : la publication de dev6.12.0 se fait en avance rapide depuis là.
 - Contrôle : `claude/ci-ui-ui5` (tour en 8 tâches et 3 essais, U0.20, U0.22) ; `claude/ci-ui-ui5-rapide`.
 
 ### 1. D'abord : corrections du kit (U0.16), dans cet ordre
