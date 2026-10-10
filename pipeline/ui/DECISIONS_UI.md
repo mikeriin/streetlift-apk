@@ -48,6 +48,17 @@ Choix du lot (10/10/2026, session `session_01DfhZd3fMyMGSUKefFeRLGk`), détail d
 
 ## UI2
 
+Choix du lot (10/10/2026, session `session_01UBKNgcL6KGVgMUfEL3Fzdo`), détail dans `livraisons/LIVRAISON_UI2.md`. La conversation de pilotage valide ou corrige.
+
+- **UI2.1 Douleur depuis la séance** : « Douleur ou malaise ? » ouvre le Bilan du jour détaillé défilé jusqu'à la section Douleur (lien « Conseils de sécurité » vers la page Santé et sécurité) ; la douleur validée passe au moteur par le même chemin que « Préciser » (`store.adaptAnswer`) ; « Passer » n'applique rien (sinon la question du jour disparaîtrait). Séance sans moteur : la page Santé et sécurité, comme avant. 4 appuis (⋮, Douleur, zone, Enregistrer), contre 5.
+- **UI2.2 Composants de zone** (§7.2) : `lib/adapt/widgets/session_kit.dart` — feuille de contenu (`showKContentSheet`) et confirmation à boutons fixes et clés nommées (`showKChoice`, mode obligatoire pour l'avis médical). Seules ouvertures de route de feuille ou de dialogue hors du kit dans la zone ; à promouvoir par UI5 dans `lib/kit/sheets.dart`.
+- **UI2.3 Repère** : « S12, J1 » sous les titres (maquette) et « Exercice 3 sur 7 » ; les titres enregistrés dans le journal (« S12 · J1 ») ne changent pas.
+- **UI2.4 Page d'exercice** : charge chiffrée en grand chiffre `encre`, sinon le volume ; « à renseigner » devient un lien vers « Mes références » (R2) ; puces neutres sur la ligne du chiffre, sans la puce « Reps » ; notes du coach et calibrage en lignes ouvrables ; chronos de mode en boutons tonaux (aucun bouton plein sur la page).
+- **UI2.5 Tableau des séries** : pilules de 48 dp, chiffre non agrandi au-delà de 130 % de texte, gestes à la pilule tant que le champ n'a pas le focus (glissement de page possible depuis un champ) ; lignes de même rôle numérotées (« Test 1 »).
+- **UI2.6 Barre de repos** : `KRestBar` pour tout décompte ; chronomètre montant et décompte terminé sans −15 s / +15 s ; masquée sur la page Bilan de séance ; messages courts posés au-dessus.
+- **UI2.7 Confirmations ajoutées** (R8) : « Supprimer l'historique de cette séance » (déjà confirmé, verbe aligné), « Repasser en « à faire » » (retire des XP, n'était pas confirmé).
+- **UI2.8 Tests** : 8 fichiers de tests d'écran et 2 cibles émulateur mis à jour (clés des gabarits du kit, libellés « Mes références » et « sur », mesure de densité avec les polices réelles) ; aucune assertion retirée sans remplacement.
+
 ## UI3
 
 Choix du lot (10/10/2026, session `session_01JVF5cveTZDzybGVBq9M1XE`), détail dans `livraisons/LIVRAISON_UI3.md`. La conversation de pilotage valide ou corrige.
