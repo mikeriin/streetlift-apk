@@ -45,7 +45,9 @@ class StatsOverview extends StatelessWidget {
               'Défis de la semaine\u00A0· $validated / ${p.week.missions.length} validés\u00A0· bonus XP automatiques',
           onTap: journey,
         ),
-        const KSectionTitle('Campagne : chapitres du programme, boss et saison'),
+        const KSectionTitle(
+          'Campagne : chapitres du programme, boss et saison',
+        ),
         CampaignStrip(onTap: journey),
         BossCard(onTap: journey),
         SeasonCard(onTap: journey),
@@ -78,7 +80,9 @@ class StatsOverview extends StatelessWidget {
             ),
           ],
         ),
-        const KSectionTitle('Ton rythme : jours actifs des 8 dernières semaines'),
+        const KSectionTitle(
+          'Ton rythme : jours actifs des 8 dernières semaines',
+        ),
         _ActivityCard(p),
         const StatsText(
           'Deux jours actifs valident une semaine. Les jours de repos font partie du parcours.',

@@ -151,18 +151,17 @@ class _RootHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(
         KSpacing.page + KSpacing.s4,
-        KSpacing.s16,
+        KSpacing.s8,
         KSpacing.s12,
         KSpacing.s8,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Semantics(
+          Row(
+            children: [
+              Expanded(
+                child: Semantics(
                   header: true,
                   child: KFitTitle(
                     k.title('Stats'),
@@ -171,23 +170,26 @@ class _RootHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: KSpacing.s4 / 2),
-                Text(
-                  'Chaque effort construit la suite.',
-                  style: KType.corps.copyWith(color: k.texte2),
+              ),
+              const SizedBox(width: KSpacing.s8),
+              action,
+              // Logo à sa place historique (cahier §1 ; gestes du mode dev).
+              const Padding(
+                padding: EdgeInsetsDirectional.only(
+                  start: KSpacing.s4,
+                  end: KSpacing.s8,
                 ),
-              ],
-            ),
+                child: HeaderLogo(),
+              ),
+            ],
           ),
-          const SizedBox(width: KSpacing.s8),
-          action,
-          // Logo à sa place historique (cahier §1 ; gestes du mode dev).
-          const Padding(
-            padding: EdgeInsetsDirectional.only(
-              start: KSpacing.s4,
-              end: KSpacing.s8,
+          // La phrase prend toute la largeur (grand texte).
+          Padding(
+            padding: const EdgeInsetsDirectional.only(end: KSpacing.s8),
+            child: Text(
+              'Chaque effort construit la suite.',
+              style: KType.corps.copyWith(color: k.texte2),
             ),
-            child: HeaderLogo(),
           ),
         ],
       ),
@@ -224,34 +226,34 @@ class _StatsTabs extends StatelessWidget {
           ],
         ).createShader(rect),
         child: TabBar(
-        controller: controller,
-        isScrollable: true,
-        tabAlignment: TabAlignment.start,
-        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
-        labelPadding: EdgeInsets.zero,
-        indicator: ShapeDecoration(color: k.pleine, shape: KRadius.pill),
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorPadding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
-        dividerHeight: 0,
-        labelColor: k.surPleine,
-        unselectedLabelColor: k.texte2,
-        labelStyle: KType.libelle,
-        unselectedLabelStyle: KType.libelle,
-        splashBorderRadius: const BorderRadius.all(
-          Radius.circular(KSize.target / 2),
-        ),
-        tabs: [
-          for (final entry in statsSectionLabels.asMap().entries)
-            Tab(
-              key: ValueKey('stats-section-${entry.key}'),
-              height: KSize.target,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
-                child: Text(entry.value),
+          controller: controller,
+          isScrollable: true,
+          tabAlignment: TabAlignment.start,
+          padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
+          labelPadding: EdgeInsets.zero,
+          indicator: ShapeDecoration(color: k.pleine, shape: KRadius.pill),
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorPadding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
+          dividerHeight: 0,
+          labelColor: k.surPleine,
+          unselectedLabelColor: k.texte2,
+          labelStyle: KType.libelle,
+          unselectedLabelStyle: KType.libelle,
+          splashBorderRadius: const BorderRadius.all(
+            Radius.circular(KSize.target / 2),
+          ),
+          tabs: [
+            for (final entry in statsSectionLabels.asMap().entries)
+              Tab(
+                key: ValueKey('stats-section-${entry.key}'),
+                height: KSize.target,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
+                  child: Text(entry.value),
+                ),
               ),
-            ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }

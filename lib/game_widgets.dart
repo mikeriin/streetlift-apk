@@ -1326,7 +1326,11 @@ class _BossDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         KSectionTitle(
-          '${boss.name}\u00A0· $weeks${!next ? '' : boss.done > 0 ? '\u00A0· en cours' : '\u00A0· prochain boss'}',
+          '${boss.name}\u00A0· $weeks${!next
+              ? ''
+              : boss.done > 0
+              ? '\u00A0· en cours'
+              : '\u00A0· prochain boss'}',
           top: KSpacing.s4,
         ),
         StatsSheetGroup(
