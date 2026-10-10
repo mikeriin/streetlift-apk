@@ -110,7 +110,7 @@ class SessionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: KSize.dock),
+      constraints: const BoxConstraints(minHeight: KSize.primary),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
         child: Row(
@@ -636,13 +636,15 @@ class _SessionScreenState extends State<SessionScreen> {
       padding: const EdgeInsets.only(
         left: KSpacing.page,
         right: KSpacing.s12,
-        bottom: KSpacing.s8,
+        bottom: KSpacing.s4,
       ),
       child: Column(
         children: [
           // Texte agrandi (200 %) sur 320 dp : le lien passe sous le repère
           // au lieu de faire déborder la ligne.
-          Wrap(
+          SizedBox(
+            width: double.infinity,
+            child: Wrap(
             alignment: WrapAlignment.spaceBetween,
             crossAxisAlignment: WrapCrossAlignment.center,
             spacing: KSpacing.s8,
@@ -654,6 +656,7 @@ class _SessionScreenState extends State<SessionScreen> {
                 onPressed: _chooseExercise,
               ),
             ],
+          ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: KSpacing.s8),
@@ -1696,10 +1699,15 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final loadLabel = readOnly
         ? (recordedLoads.length == 1 ? '${recordedLoads.single} kg' : '—')
         : store.loadLabel(ex, week: widget.week.n, day: widget.day.j);
-    final showBigLoad =
+    final shownLoad =
         (readOnly || !noLoad) &&
         loadLabel != '—' &&
         (loadLabel != 'PdC' || showKg);
+    // Une charge chiffrée en grand ; « à renseigner » ou « ? » passe dans
+    // le lien vers « Mes références » (ou une puce), le volume prend alors
+    // le grand chiffre.
+    final numericLoad = RegExp(r'\d').hasMatch(loadLabel);
+    final showBigLoad = shownLoad && numericLoad;
     final kindLabel = _kindLabel(sp);
     final showIntensity =
         ex.intensity.isNotEmpty &&
@@ -1739,9 +1747,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       key: ValueKey('exercise-card-${ex.id}'),
       padding: const EdgeInsets.fromLTRB(
         KSpacing.s16,
-        KSpacing.s16,
         KSpacing.s12,
-        KSpacing.s8,
+        KSpacing.s12,
+        KSpacing.s4,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1762,7 +1770,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: KSpacing.s8),
+                        padding: const EdgeInsets.only(top: KSpacing.s12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1797,33 +1805,34 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 ),
                 const SizedBox(height: KSpacing.s8),
                 // Prescription : la charge (ou, sans charge, le volume) en
-                // grand chiffre `encre`, puis les puces neutres (C5).
+                // grand chiffre `encre`, puis les puces neutres (C5) sur la
+                // même ligne quand la place le permet (maquette « Séance »).
                 Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.end,
-                  spacing: KSpacing.s12,
-                  runSpacing: KSpacing.s4,
-                  children: [
-                    if (showBigLoad)
-                      Text(
-                        loadLabel,
-                        style: KType.chiffre.copyWith(color: t.encre),
-                      ),
-                    Text(
-                      readOnly
-                          ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
-                          : nbsp(store.setsLabel(ex)),
-                      style: showBigLoad || readOnly
-                          ? KType.corpsFort.copyWith(color: t.texte)
-                          : KType.chiffre.copyWith(color: t.encre),
-                    ),
-                  ],
-                ),
-                if (missing != null) missing,
-                const SizedBox(height: KSpacing.s8),
-                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: KSpacing.s8,
                   runSpacing: KSpacing.s8,
                   children: [
+                    if (showBigLoad)
+                      Padding(
+                        padding: const EdgeInsets.only(right: KSpacing.s4),
+                        child: Text(
+                          loadLabel,
+                          style: KType.chiffre.copyWith(color: t.encre),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: KSpacing.s4),
+                      child: Text(
+                        readOnly
+                            ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
+                            : nbsp(store.setsLabel(ex)),
+                        style: showBigLoad || readOnly
+                            ? KType.corpsFort.copyWith(color: t.texte)
+                            : KType.chiffre.copyWith(color: t.encre),
+                      ),
+                    ),
+                    if (shownLoad && !numericLoad && missing == null)
+                      KChip('Charge : $loadLabel'),
                     // « Reps » redit l'en-tête de colonne : la puce ne
                     // nomme que les autres mesures.
                     if (!unresolved &&
@@ -1840,6 +1849,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       KChip('Repos final ${fmt(finalRest)}'),
                   ],
                 ),
+                if (missing != null) missing,
                 // L8 (KT-041) : consigne du mode prudent.
                 // G9 : exercice servi par le moteur, la prudence est dans
                 // ses cibles (pas de seconde règle de charge).
@@ -1950,7 +1960,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               ],
             ),
           ),
-          const SizedBox(height: KSpacing.s12),
+          const SizedBox(height: KSpacing.s8),
           // ----- Chronos de mode -----
           if (!readOnly &&
               interval != null &&
@@ -2097,10 +2107,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             ),
           // ----- Barre d'outils de la série (C13 : 48 dp) -----
           if (!readOnly) ...[
-            const SizedBox(height: KSpacing.s8),
+            const SizedBox(height: KSpacing.s4),
             Divider(height: 1, thickness: 1, color: t.filet),
             Padding(
-              padding: const EdgeInsets.only(top: KSpacing.s4),
+              padding: EdgeInsets.zero,
               child: Row(
                 children: [
                   KIconButton(
@@ -2368,7 +2378,18 @@ class _SetFieldState extends State<_SetField> {
   final _focus = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocus);
+  }
+
+  void _onFocus() {
+    if (mounted) setState(() {});
+  }
+
+  @override
   void dispose() {
+    _focus.removeListener(_onFocus);
     _focus.dispose();
     super.dispose();
   }
@@ -2410,8 +2431,13 @@ class _SetFieldState extends State<_SetField> {
         shape: shape,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: KSize.target),
+          // Champ sans focus : les gestes vont à la pilule (un appui
+          // sélectionne tout, un glissement horizontal change de page) ;
+          // avec le focus, au champ (curseur, sélection).
           child: Center(
-            child: TextField(
+            child: IgnorePointer(
+              ignoring: !_focus.hasFocus,
+              child: TextField(
               controller: widget.controller,
               focusNode: _focus,
               keyboardType: TextInputType.numberWithOptions(
@@ -2438,6 +2464,7 @@ class _SetFieldState extends State<_SetField> {
               onTap: _selectAll,
               onChanged: widget.onChanged,
             ),
+            ),
           ),
         ),
       ),
@@ -2461,11 +2488,13 @@ bool _splitColumns(
       2 * KSpacing.page -
       KSpacing.s16 -
       KSpacing.s12 -
-      KSize.target -
+      KSpacing.s12 -
+      (KSize.target - KSpacing.s4) -
       KSize.target * (hasTimer ? 2 : 1) -
       count * KSpacing.s8;
   return count > 2 &&
-      available / count < MediaQuery.textScalerOf(context).scale(64);
+      available / count <
+          MediaQuery.textScalerOf(context).scale(KSize.target + KSpacing.s4);
 }
 
 class _SetRow extends StatefulWidget {
@@ -2701,13 +2730,20 @@ class _SetRowState extends State<_SetRow> {
         ),
       ],
     );
+    // Ligne courante : fond et contour, avec un peu d'air ; les autres
+    // lignes restent serrées (cinq séries visibles sans défilement).
     return Container(
-      padding: const EdgeInsetsDirectional.fromSTEB(
-        KSpacing.s8,
-        KSpacing.s4,
-        KSpacing.s4,
-        KSpacing.s4,
-      ),
+      padding: widget.current
+          ? const EdgeInsetsDirectional.fromSTEB(
+              KSpacing.s8,
+              KSpacing.s4,
+              KSpacing.s4,
+              KSpacing.s4,
+            )
+          : const EdgeInsetsDirectional.only(
+              start: KSpacing.s8,
+              end: KSpacing.s4,
+            ),
       decoration: widget.current
           ? ShapeDecoration(
               color: k.haute,
@@ -3643,14 +3679,16 @@ class _FinishPageState extends State<_FinishPage> {
     final title = week.n == 0 ? week.block : 'S${week.n} · J${day.j}';
     final goal = store.game.sessionGoal;
     final reached = totalSets > 0 && doneSets / totalSets >= goal - 1e-9;
-    return ListView(
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(
         KSpacing.page,
         KSpacing.s8,
         KSpacing.page,
         KSpacing.s24,
       ),
-      children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         KCard(
           padding: const EdgeInsets.all(KSpacing.s20),
           child: Column(
@@ -3750,7 +3788,8 @@ class _FinishPageState extends State<_FinishPage> {
             label: _saving ? 'Enregistrement…' : 'Terminer la séance',
             onPressed: _saving ? null : () => _finish(title),
           ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -3769,14 +3808,16 @@ class _RestDay extends StatelessWidget {
   Widget _build(BuildContext context) {
     final k = KTokens.of(context);
     final done = store.isDone(week.n, day.j);
-    return ListView(
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(
         KSpacing.page,
         KSpacing.s8,
         KSpacing.page,
         KSpacing.s24,
       ),
-      children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         KCard(
           padding: const EdgeInsets.all(KSpacing.s20),
           child: Column(
@@ -3822,7 +3863,8 @@ class _RestDay extends StatelessWidget {
               title: 'S${week.n} · J${day.j}',
             ),
           ),
-      ],
+        ],
+      ),
     );
   }
 }

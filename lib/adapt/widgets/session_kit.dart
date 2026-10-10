@@ -201,6 +201,36 @@ class KChoiceDialog extends StatelessWidget {
       onPressed: onConfirm,
       child: Text(confirmLabel, textAlign: TextAlign.center),
     );
+    // Le contenu défile ; les deux boutons restent en bas, toujours
+    // visibles (petit écran, grand texte).
+    final content = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (icon != null) ...[
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Icon(icon, size: KSize.icon, color: iconColor ?? k.encre),
+          ),
+          const SizedBox(height: KSpacing.s12),
+        ],
+        Semantics(
+          header: true,
+          child: Text(title, style: KType.titreSeance.copyWith(color: k.texte)),
+        ),
+        if (message != null) ...[
+          const SizedBox(height: KSpacing.s8),
+          Text(message!, style: KType.corps.copyWith(color: k.texte2)),
+        ],
+        if (body != null) ...[
+          const SizedBox(height: KSpacing.s8),
+          DefaultTextStyle.merge(
+            style: KType.corps.copyWith(color: k.texte2),
+            child: body!,
+          ),
+        ],
+      ],
+    );
     return Dialog(
       backgroundColor: k.surface,
       shape: KRadius.cardShape,
@@ -208,41 +238,13 @@ class KChoiceDialog extends StatelessWidget {
         horizontal: KSpacing.s24,
         vertical: KSpacing.s24,
       ),
-      child: SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(KSpacing.s24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (icon != null) ...[
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: Icon(
-                  icon,
-                  size: KSize.icon,
-                  color: iconColor ?? k.encre,
-                ),
-              ),
-              const SizedBox(height: KSpacing.s12),
-            ],
-            Semantics(
-              header: true,
-              child: Text(
-                title,
-                style: KType.titreSeance.copyWith(color: k.texte),
-              ),
-            ),
-            if (message != null) ...[
-              const SizedBox(height: KSpacing.s8),
-              Text(message!, style: KType.corps.copyWith(color: k.texte2)),
-            ],
-            if (body != null) ...[
-              const SizedBox(height: KSpacing.s8),
-              DefaultTextStyle.merge(
-                style: KType.corps.copyWith(color: k.texte2),
-                child: body!,
-              ),
-            ],
+            Flexible(child: SingleChildScrollView(child: content)),
             const SizedBox(height: KSpacing.s24),
             LayoutBuilder(
               builder: (context, c) {

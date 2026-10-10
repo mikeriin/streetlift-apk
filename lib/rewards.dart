@@ -340,7 +340,7 @@ class _XpMeter extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'NIV. $level',
+              'Niveau $level',
               style: KType.micro.copyWith(
                 color: k.texte2,
                 fontFeatures: KFont.tabular,
@@ -398,19 +398,26 @@ class _LootLine extends StatelessWidget {
           children: [
             Icon(icon, color: k.accent, size: KSize.icon),
             const SizedBox(width: KSpacing.s12),
+            // Grand texte : le gain passe sous le libellé au lieu de
+            // déborder.
             Expanded(
-              child: Text(
-                line.label,
-                style: KType.corpsFort.copyWith(color: k.texte),
+              child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: KSpacing.s8,
+                children: [
+                  Text(
+                    line.label,
+                    style: KType.corpsFort.copyWith(color: k.texte),
+                  ),
+                  if (line.xp > 0)
+                    Text(
+                      '+${line.xp} XP',
+                      style: KType.chiffrePetit.copyWith(color: k.accent),
+                    ),
+                ],
               ),
             ),
-            if (line.xp > 0) ...[
-              const SizedBox(width: KSpacing.s8),
-              Text(
-                '+${line.xp} XP',
-                style: KType.chiffrePetit.copyWith(color: k.accent),
-              ),
-            ],
           ],
         ),
       ),

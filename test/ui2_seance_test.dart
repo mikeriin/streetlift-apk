@@ -21,6 +21,7 @@ import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/kit/kit.dart';
+import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -175,7 +176,7 @@ void main() {
     tester,
   ) async {
     phone(tester);
-    final (week, day) = await open(tester);
+    await open(tester);
     taps = 0;
     await tap(tester, find.byTooltip('Consignes de l’exercice').first);
     final sheet = find.text('Voir la fiche');

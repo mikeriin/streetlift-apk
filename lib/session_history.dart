@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'adapt/widgets/session_kit.dart' show showKChoice;
 import 'app_theme.dart';
 import 'models.dart';
 import 'session_screen.dart';
@@ -225,12 +226,14 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     final key = _key;
     final plan = key == null ? null : store.correctionPlan(key);
     if (key == null || plan == null) return;
-    final confirmed = await showKConfirm(
+    final confirmed = await showKChoice(
       context,
       title: 'Corriger cette séance ?',
       message:
           '$_head repasse en cours avec toutes ses saisies. Son XP de séance est retiré le temps de la correction et revient quand tu la termines de nouveau. Sa date reste celle d’origine.',
       confirmLabel: 'Corriger',
+      confirmKey: const ValueKey('confirm-ok'),
+      cancelKey: const ValueKey('confirm-cancel'),
     );
     if (!confirmed || !mounted) return;
     if (!store.reopenSession(key)) return;
@@ -246,26 +249,32 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
   Future<void> _delete() async {
     final key = _key;
     if (key == null) return;
-    final confirmed = await showKConfirm(
+    final confirmed = await showKChoice(
       context,
       title: 'Supprimer de l’historique ?',
       message:
           '$_head — séries, notes et statut « fait » seront effacés. L’XP et les bonus de cette séance sont retirés.',
       confirmLabel: 'Supprimer',
+      confirmKey: const ValueKey('confirm-ok'),
+      cancelKey: const ValueKey('confirm-cancel'),
       destructive: true,
     );
     if (!confirmed || !mounted) return;
     final removed = store.deleteLog(key);
-    Navigator.of(context).maybePop();
-    if (removed == null) return;
-    // Message court du kit, montré sur l'écran d'où l'on venait (même
-    // ordre qu'avant : retrait, retour, message).
+    if (removed == null) {
+      Navigator.of(context).maybePop();
+      return;
+    }
+    // Message court du kit, montré sur l'écran d'où l'on venait (messager
+    // de l'application, lu avant le retour).
+    final nav = Navigator.of(context);
     showKSnack(
       context,
       message: 'Séance supprimée de l’historique.',
       actionLabel: 'Annuler',
       onAction: () => store.restoreLog(key, removed),
     );
+    nav.maybePop();
   }
 
   Widget _summary() {
@@ -340,12 +349,14 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     // En-tête de sous-page (C1). « Lecture seule » seulement quand aucune
     // action n'écrit (archive hors du journal) ; sinon la séance est dite
     // enregistrée et son menu ⋮ propose la correction et la suppression.
-    final where = _week.n > 0 ? 'S${_week.n} · J${_day.j} · ' : '';
-    final state = _editable ? 'Séance enregistrée' : 'Lecture seule';
+    final where = _week.n > 0 ? '${sessionPlace(_week, _day)}, ' : '';
+    final state = _editable ? 'séance enregistrée' : 'lecture seule';
     return KScreen(
       appBar: KTopBar.sub(
         title: _day.title,
-        subtitle: '$where$state',
+        subtitle: where.isEmpty
+            ? '${state[0].toUpperCase()}${state.substring(1)}'
+            : '$where$state',
         action: _editable
             ? KIconButton(
                 icon: Icons.more_vert_rounded,
@@ -373,27 +384,29 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
                   ),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
+                      // Même repère que la séance : « Exercice 3 sur 7 »
+                      // et le lien « Exercices » (passe à la ligne en
+                      // grand texte).
+                      SizedBox(
+                        width: double.infinity,
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceBetween,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: KSpacing.s8,
+                          children: [
+                            Text(
                               _page == _groups.length
                                   ? 'Bilan de séance'
-                                  : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} / ${_groups.length}',
-                              style: KType.detail.copyWith(color: k.texte2),
+                                  : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
+                              style: KType.section.copyWith(color: k.texte2),
                             ),
-                          ),
-                          // Texte agrandi : le lien partage la ligne et passe
-                          // à la ligne au lieu de déborder (C3).
-                          Flexible(
-                            child: KTextButton(
-                              icon: Icons.list_alt,
+                            KTextButton(
+                              icon: Icons.format_list_numbered_rounded,
                               label: 'Exercices',
-                              dense: true,
                               onPressed: _chooseExercise,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SessionProgressDots(
                         count: _groups.length + 1,

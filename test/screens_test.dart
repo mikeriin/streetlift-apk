@@ -89,7 +89,7 @@ void main() {
     await tester.pumpWidget(
       app(SessionScreen(week: week, day: week.days.single)),
     );
-    await tester.tap(find.textContaining('Chrono 3600'));
+    await tester.tap(find.textContaining('chrono de 3600'));
     await tester.pump();
     expect(tester.takeException(), null);
     await tester.pumpWidget(const SizedBox());

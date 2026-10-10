@@ -635,6 +635,7 @@ void main() {
       final button = find.byTooltip('Valider la série 1').first;
       final introBefore = store.flamesIntroSeen;
       await tester.ensureVisible(button);
+      await tester.pumpAndSettle();
       await tester.tap(button);
       await tester.pumpAndSettle();
       final log = store.logs['S12-J1']!.ex[first.id]!;
@@ -774,7 +775,7 @@ void main() {
         expect(find.byKey(const ValueKey('flame-thumb')), findsNothing);
         await tester.tap(find.byKey(const ValueKey('flame-menu')));
         await tester.pumpAndSettle();
-        await tester.tap(find.byKey(const ValueKey('flame-exclude')));
+        await tester.tap(find.byKey(const ValueKey('action-exclude')));
         await tester.pumpAndSettle();
         expect(excluded, isTrue);
         expect(tester.takeException(), isNull);

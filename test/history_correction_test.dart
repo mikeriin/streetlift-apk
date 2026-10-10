@@ -160,6 +160,10 @@ void main() {
     // appui rouvre la série et ses champs.
     final line = find.byKey(const ValueKey('set-summary-1'));
     if (line.evaluate().isNotEmpty) {
+      // UI2 : carte d'exercice plus haute (tableau des séries à 48 dp) :
+      // la ligne est amenée à l'écran avant l'appui.
+      await tester.ensureVisible(line.first);
+      await tester.pumpAndSettle();
       await tester.tap(line.first);
       await tester.pumpAndSettle();
     }
@@ -227,10 +231,12 @@ void main() {
     await open(tester, log, sessionKey: 'S8-J4@old');
     await tester.tap(find.byTooltip('Options de l’historique'));
     await tester.pumpAndSettle();
-    final item = tester.widget<PopupMenuItem<String>>(
-      find.widgetWithText(PopupMenuItem<String>, 'Corriger les saisies'),
+    // UI2 : menu ⋮ en feuille d'actions (C10) ; l'action indisponible y
+    // reste affichée, sans effet.
+    final item = tester.widget<InkWell>(
+      find.byKey(const ValueKey('action-correct')),
     );
-    expect(item.enabled, isFalse);
+    expect(item.onTap, isNull);
     expect(find.text('Supprimer de l’historique'), findsOneWidget);
     await close(tester);
   });
