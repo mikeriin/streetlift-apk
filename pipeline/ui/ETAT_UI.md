@@ -23,7 +23,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_UI.md §1).
 
 | Lot | Prérequis | Livré | Date | Statut |
 | --- | --- | --- | --- | --- |
-| UI0 | — | — | — | en cours depuis 2026-10-10 09:48 UTC (session session_01DfhZd3fMyMGSUKefFeRLGk) |
+| UI0 | — | `refonte-ui` 0e5342df ; contrôle `claude/ci-ui-ui0` run 38050589366 (vert) ; [livraison](livraisons/LIVRAISON_UI0.md) | 2026-10-10 | livré (dev6.12.0-ui0) — à valider par le pilotage |
 | UI1 | UI0 livré | — | — | en attente de UI0 |
 | UI2 | UI0 livré | — | — | en attente de UI0 |
 | UI3 | UI0 livré | — | — | en attente de UI0 |

@@ -17,6 +17,24 @@ Elles font foi (PIPELINE_UI.md). Chaque lot n'écrit que dans sa section.
 
 ## UI0
 
+Choix du lot (10/10/2026, session `session_01DfhZd3fMyMGSUKefFeRLGk`), détail dans `livraisons/LIVRAISON_UI0.md`. La conversation de pilotage valide ou corrige.
+
+- **UI0.1 Version** : `pubspec.yaml` et `kVersion` restent à 6.11.1. « dev6.12.0-ui0 » est une étiquette de lot : une version X.Y.Z-ui0 casserait les tests de version et créerait un conflit dans `settings_screen.dart` à chaque lot. dev6.12.0 sera posée par UI5.
+- **UI0.2 Rampe de l'anatomie** : elle va de `pleine` à `encre` quand l'encre s'en distingue (2,5:1). Sinon, la dominante est éclaircie (sombre) ou assombrie (clair). Neon sombre va vers sa secondaire. Fichiers d'illustration inchangés.
+- **UI0.3 États communs** : la valeur du cahier est gardée, et sa tonalité n'est ajustée (même règle HCT) que si elle passe sous le seuil sur `haute`.
+- **UI0.4 Logo en thème clair** : teinte `encre` au lieu de `pleine`. Identique pour 5 palettes, lisible pour Neon, Obsidian et Solar. Dessin inchangé. **À confirmer par le propriétaire.** La frise de semaine historique passe aussi en `encre`.
+- **UI0.5 Adaptateur** : les textes Material des écrans historiques gardent leurs métriques (14/20, 15/20) jusqu'à leur lot. Les titres de section passent sans capitales partout (C6). En clair, les commandes posées en `haute` (= `fond`) reçoivent un contour `filet` (jeton `controlSide`).
+- **UI0.6 Exceptions de zone** (prompt de UI0) :
+  - `store.dart` : identifiants des 8 palettes, relecture des anciens, réglage `contrast` (écrit seulement s'il est actif) ;
+  - `settings_screen.dart` : sélecteur, contraste, segments du thème ;
+  - `dev/dev_widgets.dart` : poignée DEV de 16 dp, catalogue du kit.
+- **UI0.7 Contrôle des lots** :
+  - `ci-ui.yml`, sur `claude/ci-ui-<lot>` (complet) et `claude/ci-ui-<lot>-rapide` (formatage, analyse, tests `test/<lot>_*`, captures) ;
+  - `tools/check_ui_tokens.py --zone <LOT> --menus` à 0 pour livrer ;
+  - relevé de départ `tools/ui_tokens_depart.json` ;
+  - tour `integration_test/tour_ui_test.dart`, joué aussi sur b7996b3f.
+- **UI0.8 Règle de couleur** : un texte en `encre` ou `accent` ne se pose que sur `fond` ou `surface` (sur `haute`, 3,9:1 pour Bordeaux et Titanium).
+
 ## UI1
 
 ## UI2
