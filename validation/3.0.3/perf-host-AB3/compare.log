@@ -1,0 +1,145 @@
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, base-r3.jsonl, base-r4.jsonl, base-r5.jsonl, base-r6.jsonl, cand-r1.jsonl, cand-r2.jsonl, cand-r3.jsonl, cand-r4.jsonl, cand-r5.jsonl, cand-r6.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| catalog.estimate.pass2 | charge | ms | 54 | 116.936 [71.685–271.705] | 54 | 0.21 [0.182–0.776] | 0.002 | amélioration |
+| catalog.estimate.pass2 | long | ms | 54 | 10.702 [9.995–22.322] | 54 | 0.268 [0.21–0.526] | 0.025 | amélioration |
+| catalog.generate | - | ms | 54 | 3.224 [3.12–4.125] | 54 | 3.204 [3.07–4.156] | 0.994 | gain non démontré |
+| catalog.rank | long | ms | 54 | 23.044 [22.208–26.549] | 54 | 12.21 [11.772–15.122] | 0.53 | amélioration |
+| catalog.recommended | long | ms | 54 | 24.658 [22.961–26.397] | 54 | 24.292 [23.391–27.156] | 0.985 | gain non démontré |
+| catalog.wodStats.all | long | ms | 54 | 18.194 [17.37–29.005] | 54 | 0.744 [0.595–1.362] | 0.041 | amélioration |
+| derive.progression | charge | ms | 54 | 43.206 [40.049–44.931] | 54 | 41.803 [40.494–48.018] | 0.968 | gain non démontré |
+| derive.progression | long | ms | 54 | 13.811 [12.822–14.942] | 54 | 13.506 [12.774–14.663] | 0.978 | gain non démontré |
+| derive.progression | neuf | ms | 54 | 0.046 [0.036–2.25] | 54 | 0.071 [0.043–3.212] | 1.543 | gain non démontré |
+| derive.progression | regulier | ms | 54 | 3.737 [3.311–10.558] | 54 | 3.628 [3.379–7.547] | 0.971 | gain non démontré |
+| derive.progression+game | charge | ms | 54 | 61.708 [58.118–77.892] | 54 | 60.639 [58.784–69.023] | 0.983 | gain non démontré |
+| derive.progression+game | long | ms | 54 | 22.695 [21.454–26.546] | 54 | 22.727 [21.668–24.164] | 1.001 | gain non démontré |
+| derive.progression+game | neuf | ms | 54 | 0.167 [0.149–0.834] | 54 | 0.172 [0.156–2.525] | 1.033 | gain non démontré |
+| derive.progression+game | regulier | ms | 54 | 6.361 [5.718–12.209] | 54 | 6.251 [6.015–6.757] | 0.983 | gain non démontré |
+| import.apply | charge | ms | 30 | 815.482 [764.578–872.887] | 30 | 765.23 [715.145–840.806] | 0.938 | gain non démontré |
+| import.apply | long | ms | 30 | 339.877 [244.766–350.473] | 30 | 304.381 [211.154–342.358] | 0.896 | gain non démontré |
+| import.apply | regulier | ms | 30 | 113.355 [108.678–201.259] | 30 | 79.252 [74.47–165.314] | 0.699 | amélioration |
+| import.preview | charge | ms | 30 | 389.856 [362.185–428.845] | 30 | 386.558 [351.082–413.629] | 0.992 | gain non démontré |
+| import.preview | long | ms | 30 | 129.31 [105.851–146.129] | 30 | 119.501 [98.618–134.771] | 0.924 | gain non démontré |
+| import.preview | regulier | ms | 30 | 39.297 [31.663–94.646] | 30 | 30.144 [26.144–74.463] | 0.767 | gain non démontré |
+| save.encode.exportAll | charge | ms | 54 | 81.636 [60.1–107.744] | 54 | 73.747 [52.903–104.248] | 0.903 | gain non démontré |
+| save.encode.exportAll | long | ms | 54 | 24.135 [21.947–48.458] | 54 | 19.563 [17.034–44.833] | 0.811 | gain non démontré |
+| save.encode.exportAll | neuf | ms | 54 | 3.997 [3.807–5.246] | 54 | 0.445 [0.293–0.935] | 0.111 | amélioration |
+| save.encode.exportAll | regulier | ms | 54 | 8.771 [8.318–20.684] | 54 | 4.732 [4.267–7.187] | 0.539 | amélioration |
+| save.keystroke+flush | charge | ms | 54 | 130.243 [100.072–167.547] | 54 | 120.864 [91.925–159.281] | 0.928 | gain non démontré |
+| save.keystroke+flush | long | ms | 54 | 38.523 [34.488–57.82] | 54 | 35.168 [30.298–53.376] | 0.913 | gain non démontré |
+| save.keystroke+flush | neuf | ms | 54 | 4.181 [4.008–5.15] | 54 | 0.719 [0.547–1.53] | 0.172 | amélioration |
+| save.keystroke+flush | regulier | ms | 54 | 13.383 [12.635–31.536] | 54 | 9.468 [8.485–28.002] | 0.707 | amélioration |
+| save.toggleSet+derive+flush | charge | ms | 54 | 214.69 [194.864–240.665] | 54 | 196.657 [181.286–238.366] | 0.916 | gain non démontré |
+| save.toggleSet+derive+flush | long | ms | 54 | 66.582 [61.235–108.264] | 54 | 59.98 [54.686–103.61] | 0.901 | gain non démontré |
+| save.toggleSet+derive+flush | neuf | ms | 54 | 7.585 [4.581–9.82] | 54 | 1.212 [0.724–1.569] | 0.16 | amélioration |
+| save.toggleSet+derive+flush | regulier | ms | 54 | 20.082 [19.024–23.887] | 54 | 15.816 [14.871–19.693] | 0.788 | amélioration |
+| stats.exerciseBests | charge | ms | 54 | 11.146 [10.284–11.903] | 54 | 11.389 [10.372–12.259] | 1.022 | gain non démontré |
+| stats.exerciseBests | long | ms | 54 | 6.046 [5.286–8.784] | 54 | 6.061 [5.515–7.107] | 1.002 | gain non démontré |
+| stats.exerciseBests | neuf | ms | 54 | 0.0 [0.0–0.0] | 54 | 0.0 [0.0–0.002] |  | gain non démontré |
+| stats.exerciseBests | regulier | ms | 54 | 1.609 [1.479–2.166] | 54 | 1.582 [1.479–2.27] | 0.983 | gain non démontré |
+| stats.history | charge | ms | 54 | 5.862 [5.456–6.643] | 54 | 5.912 [5.396–7.228] | 1.009 | gain non démontré |
+| stats.history | long | ms | 54 | 1.377 [1.196–2.712] | 54 | 1.336 [1.235–2.987] | 0.971 | gain non démontré |
+| stats.history | neuf | ms | 54 | 0.038 [0.033–0.068] | 54 | 0.037 [0.033–0.05] | 0.987 | gain non démontré |
+| stats.history | regulier | ms | 54 | 0.385 [0.272–0.723] | 54 | 0.373 [0.276–0.613] | 0.969 | gain non démontré |
+| stats.weeklyMuscles | charge | ms | 54 | 36.722 [33.957–45.741] | 54 | 34.6 [33.624–44.242] | 0.942 | gain non démontré |
+| stats.weeklyMuscles | long | ms | 54 | 11.938 [10.119–13.903] | 54 | 11.279 [10.344–12.937] | 0.945 | gain non démontré |
+| stats.weeklyMuscles | neuf | ms | 54 | 0.062 [0.052–1.18] | 54 | 0.06 [0.052–0.187] | 0.968 | gain non démontré |
+| stats.weeklyMuscles | regulier | ms | 54 | 3.131 [2.862–3.77] | 54 | 2.968 [2.817–3.556] | 0.948 | gain non démontré |
+| store.init | charge | ms | 54 | 403.173 [369.924–442.408] | 54 | 386.974 [351.943–398.624] | 0.96 | gain non démontré |
+| store.init | long | ms | 54 | 237.62 [137.431–279.486] | 54 | 205.137 [118.363–239.518] | 0.863 | gain non démontré |
+| store.init | neuf | ms | 54 | 63.09 [57.068–213.326] | 54 | 43.114 [37.807–125.199] | 0.683 | gain non démontré |
+| store.init | regulier | ms | 54 | 116.552 [90.514–367.856] | 54 | 97.984 [67.355–178.913] | 0.841 | gain non démontré |
+| ui.appearance.switch | charge | ms | 30 | 357.026 [281.552–553.381] | 30 | 393.884 [276.323–553.614] | 1.103 | gain non démontré |
+| ui.appearance.switch | long | ms | 30 | 195.117 [150.907–328.081] | 30 | 183.231 [155.471–346.261] | 0.939 | gain non démontré |
+| ui.catalog.open | charge | ms | 30 | 80.953 [78.266–100.601] | 30 | 82.657 [79.218–85.754] | 1.021 | gain non démontré |
+| ui.catalog.open | long | ms | 30 | 92.808 [84.344–167.115] | 30 | 102.907 [90.778–180.363] | 1.109 | gain non démontré |
+| ui.catalog.scroll60 | charge | ms | 30 | 27.46 [26.469–31.02] | 30 | 27.321 [24.236–30.407] | 0.995 | gain non démontré |
+| ui.catalog.scroll60 | long | ms | 30 | 39.758 [36.639–55.856] | 30 | 42.974 [35.555–51.693] | 1.081 | gain non démontré |
+| ui.catalog.search | charge | ms | 30 | 39.622 [33.347–54.609] | 30 | 39.362 [34.212–145.8] | 0.993 | gain non démontré |
+| ui.catalog.search | long | ms | 30 | 54.989 [44.44–141.035] | 30 | 62.085 [51.758–141.36] | 1.129 | gain non démontré |
+| ui.firstFrame | charge | ms | 30 | 44.368 [40.625–49.723] | 30 | 44.712 [40.616–104.5] | 1.008 | gain non démontré |
+| ui.firstFrame | long | ms | 30 | 89.642 [59.698–169.473] | 30 | 84.769 [58.362–111.706] | 0.946 | gain non démontré |
+| ui.memory.rss10cycles | charge | bytes | 12 | 678373376.0 [626360320–732790784] | 12 | 680368128.0 [639922176–717971456] | 1.003 | brut (hors comparaison) |
+| ui.memory.rss10cycles | long | bytes | 12 | 494057472.0 [465371136–520978432] | 12 | 489170944.0 [441532416–508952576] | 0.99 | brut (hors comparaison) |
+| ui.nav.firstVisit.arsenal | charge | ms | 18 | 121.743 [99.176–310.582] | 18 | 117.559 [103.127–558.28] | 0.966 | gain non démontré |
+| ui.nav.firstVisit.programmeReturn | charge | ms | 18 | 108.38 [93.488–173.097] | 18 | 102.582 [100.745–360.628] | 0.947 | gain non démontré |
+| ui.nav.firstVisit.stats | charge | ms | 18 | 40.047 [24.369–65.849] | 18 | 43.421 [24.533–130.501] | 1.084 | gain non démontré |
+| ui.nav.firstVisit.statsSections | charge | ms | 54 | 87.328 [20.484–245.827] | 54 | 68.573 [21.286–180.232] | 0.785 | gain non démontré |
+| ui.nav.firstVisit.arsenal | long | ms | 18 | 123.624 [100.616–371.305] | 18 | 125.166 [106.357–384.683] | 1.012 | gain non démontré |
+| ui.nav.firstVisit.programmeReturn | long | ms | 18 | 101.648 [85.09–193.059] | 18 | 96.344 [86.348–197.678] | 0.948 | gain non démontré |
+| ui.nav.firstVisit.stats | long | ms | 18 | 86.112 [42.433–174.256] | 18 | 83.434 [38.496–165.428] | 0.969 | gain non démontré |
+| ui.nav.firstVisit.statsSections | long | ms | 54 | 102.251 [36.316–295.237] | 54 | 101.449 [35.319–265.425] | 0.992 | gain non démontré |
+| ui.session.keystroke | charge | ms | 120 | 93.307 [82.741–293.852] | 120 | 0.035 [0.032–0.072] | 0.0 | amélioration |
+| ui.session.popFirstFrame | charge | ms | 24 | 11.391 [10.287–79.969] | 24 | 56.697 [28.015–70.35] | 4.977 | régression |
+| ui.session.popSettle | charge | ms | 24 | 132.624 [118.273–274.637] | 24 | 137.541 [131.043–242.272] | 1.037 | gain non démontré |
+| ui.session.toggleSet | charge | ms | 48 | 174.762 [158.792–375.206] | 48 | 0.039 [0.035–0.07] | 0.0 | amélioration |
+| ui.session.keystroke | long | ms | 120 | 93.306 [56.667–179.163] | 120 | 0.079 [0.044–0.157] | 0.001 | amélioration |
+| ui.session.popFirstFrame | long | ms | 24 | 16.965 [13.019–44.572] | 24 | 59.587 [33.508–134.364] | 3.512 | régression |
+| ui.session.popSettle | long | ms | 24 | 56.438 [50.527–104.798] | 24 | 75.814 [61.219–122.836] | 1.343 | régression |
+| ui.session.toggleSet | long | ms | 48 | 152.196 [104.333–330.937] | 48 | 0.079 [0.05–0.149] | 0.001 | amélioration |
+| ui.stats.visibleNotify | charge | ms | 60 | 164.934 [153.844–417.037] | 60 | 16.623 [14.068–21.286] | 0.101 | amélioration |
+| ui.stats.visibleNotify | long | ms | 60 | 114.371 [97.863–225.23] | 60 | 15.998 [14.524–27.658] | 0.14 | amélioration |
+
+## Résultats métier (empreintes base / candidate)
+
+| Profil | Champ | Verdict (base / candidate) |
+| --- | --- | --- |
+| charge | bests | identique (18ce07fb35c397a9 / 18ce07fb35c397a9) |
+| charge | credits | identique (-77 / -77) |
+| charge | estimates | identique (77af5c98347524ab / 77af5c98347524ab) |
+| charge | export | identique (63c783420526a41b / 63c783420526a41b) |
+| charge | history | identique (21d0f25f63be420f / 21d0f25f63be420f) |
+| charge | level | identique (92 / 92) |
+| charge | muscles | identique (5acd64723970c1a3 / 5acd64723970c1a3) |
+| charge | recommended | identique (-69e8b78a735b219a / -69e8b78a735b219a) |
+| charge | wodLevels | identique (-34e5fae491df5f84 / -34e5fae491df5f84) |
+| charge | xp | identique (220015 / 220015) |
+| long | bests | identique (-12b9593e787b9f58 / -12b9593e787b9f58) |
+| long | credits | identique (111 / 111) |
+| long | estimates | identique (527ad85574e530f8 / 527ad85574e530f8) |
+| long | export | identique (29492838ba63ce10 / 29492838ba63ce10) |
+| long | history | identique (-e4f854e47a64d82 / -e4f854e47a64d82) |
+| long | level | identique (51 / 51) |
+| long | muscles | identique (-4adf6367afc0a2a / -4adf6367afc0a2a) |
+| long | recommended | identique (-69e8b78a735b219a / -69e8b78a735b219a) |
+| long | wodLevels | identique (4137b7190bb9a8f7 / 4137b7190bb9a8f7) |
+| long | xp | identique (70135 / 70135) |
+| neuf | bests | identique (-340d631b7bdddcdb / -340d631b7bdddcdb) |
+| neuf | credits | identique (3 / 3) |
+| neuf | estimates | identique (527ad85574e530f8 / 527ad85574e530f8) |
+| neuf | export | identique (24e5920facda1d25 / 24e5920facda1d25) |
+| neuf | history | identique (-340d631b7bdddcdb / -340d631b7bdddcdb) |
+| neuf | level | identique (1 / 1) |
+| neuf | muscles | identique (3a392c97dd457cb6 / 3a392c97dd457cb6) |
+| neuf | recommended | identique (6fa61ffa929209a3 / 6fa61ffa929209a3) |
+| neuf | wodLevels | identique (4137b7190bb9a8f7 / 4137b7190bb9a8f7) |
+| neuf | xp | identique (0 / 0) |
+| regulier | bests | identique (-5f40d7b655e09619 / -5f40d7b655e09619) |
+| regulier | credits | identique (53 / 53) |
+| regulier | estimates | identique (527ad85574e530f8 / 527ad85574e530f8) |
+| regulier | export | identique (7de0eaa0935b0bb4 / 7de0eaa0935b0bb4) |
+| regulier | history | identique (-4a6073a74d3adff9 / -4a6073a74d3adff9) |
+| regulier | level | identique (25 / 25) |
+| regulier | muscles | identique (3a392c97dd457cb6 / 3a392c97dd457cb6) |
+| regulier | recommended | identique (3031c157bae209ad / 3031c157bae209ad) |
+| regulier | wodLevels | identique (4137b7190bb9a8f7 / 4137b7190bb9a8f7) |
+| regulier | xp | identique (17425 / 17425) |
+
+## Environnement (première ligne méta de chaque fichier)
+
+- base : Dart 3.7.2 (stable) (Tue Mar 11 04:27:50 2025 -0700) on "linux_x64" ; linux Linux 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 ; 2 CPU ; n=9 ; échauffement=2
+- cand : Dart 3.7.2 (stable) (Tue Mar 11 04:27:50 2025 -0700) on "linux_x64" ; linux Linux 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 ; 2 CPU ; n=9 ; échauffement=2
+
+Inventaire des profils (compté sur les documents) :
+
+- neuf : {'seances': 0, 'series': 0, 'resultatsWod': 0, 'wodPerso': 0}
+- regulier : {'seances': 86, 'series': 1877, 'resultatsWod': 40, 'wodPerso': 0, 'wodModifies': 0, 'achats': 10, 'seancesPersoModeles': 20}
+- long : {'seances': 320, 'series': 6587, 'resultatsWod': 300, 'wodPerso': 0, 'wodModifies': 0, 'achats': 30, 'seancesPersoModeles': 60}
+- charge : {'seances': 840, 'series': 20347, 'resultatsWod': 1500, 'wodPerso': 50, 'wodModifies': 30, 'achats': 150, 'seancesPersoModeles': 150}
+- Document stocké (caractères) : {'neuf': 0, 'regulier': 30511, 'long': 103911, 'charge': 283335}
+exit=0

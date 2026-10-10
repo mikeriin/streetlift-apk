@@ -1,0 +1,1212 @@
+{
+ "schema": 1,
+ "source": "tools/anatomy/build_animated.py (M7) : squelette Mixamo « Ch36 » (mixamorig1:, 65 os), pose de repos en T",
+ "repere": "glTF : y en haut, avant = +z, gauche anatomique = +x ; mètres ; pose = rotation locale (repère du corps) autour de la tête de chaque os",
+ "os": [
+  {
+   "nom": "Hips",
+   "nom_fr": "Hips",
+   "parent": null,
+   "tete": [
+    -0.0,
+    0.997544,
+    0.030079
+   ]
+  },
+  {
+   "nom": "Spine",
+   "nom_fr": "Spine",
+   "parent": "Hips",
+   "tete": [
+    -0.0,
+    1.094716,
+    0.018277
+   ]
+  },
+  {
+   "nom": "Spine1",
+   "nom_fr": "Spine1",
+   "parent": "Spine",
+   "tete": [
+    -0.0,
+    1.208084,
+    0.004507
+   ]
+  },
+  {
+   "nom": "Spine2",
+   "nom_fr": "Spine2",
+   "parent": "Spine1",
+   "tete": [
+    -0.0,
+    1.337648,
+    -0.011229
+   ]
+  },
+  {
+   "nom": "Neck",
+   "nom_fr": "Neck",
+   "parent": "Spine2",
+   "tete": [
+    -0.0,
+    1.483407,
+    -0.028934
+   ]
+  },
+  {
+   "nom": "Head",
+   "nom_fr": "Head",
+   "parent": "Neck",
+   "tete": [
+    -0.0,
+    1.550609,
+    -0.009212
+   ]
+  },
+  {
+   "nom": "HeadTop_End",
+   "nom_fr": "HeadTop_End",
+   "parent": "Head",
+   "tete": [
+    -0.0,
+    1.760608,
+    0.052416
+   ]
+  },
+  {
+   "nom": "LeftShoulder",
+   "nom_fr": "LeftShoulder",
+   "parent": "Spine2",
+   "tete": [
+    0.061401,
+    1.466426,
+    -0.029225
+   ]
+  },
+  {
+   "nom": "LeftArm",
+   "nom_fr": "LeftArm",
+   "parent": "LeftShoulder",
+   "tete": [
+    0.186851,
+    1.432112,
+    -0.029805
+   ]
+  },
+  {
+   "nom": "LeftForeArm",
+   "nom_fr": "LeftForeArm",
+   "parent": "LeftArm",
+   "tete": [
+    0.441324,
+    1.413348,
+    -0.044861
+   ]
+  },
+  {
+   "nom": "LeftHand",
+   "nom_fr": "LeftHand",
+   "parent": "LeftForeArm",
+   "tete": [
+    0.674999,
+    1.422125,
+    -0.035148
+   ]
+  },
+  {
+   "nom": "LeftHandThumb1",
+   "nom_fr": "LeftHandThumb1",
+   "parent": "LeftHand",
+   "tete": [
+    0.710754,
+    1.404506,
+    -0.004754
+   ]
+  },
+  {
+   "nom": "LeftHandThumb2",
+   "nom_fr": "LeftHandThumb2",
+   "parent": "LeftHandThumb1",
+   "tete": [
+    0.739358,
+    1.390411,
+    0.019562
+   ]
+  },
+  {
+   "nom": "LeftHandThumb3",
+   "nom_fr": "LeftHandThumb3",
+   "parent": "LeftHandThumb2",
+   "tete": [
+    0.765147,
+    1.372396,
+    0.037069
+   ]
+  },
+  {
+   "nom": "LeftHandThumb4",
+   "nom_fr": "LeftHandThumb4",
+   "parent": "LeftHandThumb3",
+   "tete": [
+    0.789237,
+    1.357784,
+    0.047711
+   ]
+  },
+  {
+   "nom": "LeftHandIndex1",
+   "nom_fr": "LeftHandIndex1",
+   "parent": "LeftHand",
+   "tete": [
+    0.788569,
+    1.40906,
+    0.009249
+   ]
+  },
+  {
+   "nom": "LeftHandIndex2",
+   "nom_fr": "LeftHandIndex2",
+   "parent": "LeftHandIndex1",
+   "tete": [
+    0.820722,
+    1.40515,
+    0.015489
+   ]
+  },
+  {
+   "nom": "LeftHandIndex3",
+   "nom_fr": "LeftHandIndex3",
+   "parent": "LeftHandIndex2",
+   "tete": [
+    0.850111,
+    1.397796,
+    0.021096
+   ]
+  },
+  {
+   "nom": "LeftHandIndex4",
+   "nom_fr": "LeftHandIndex4",
+   "parent": "LeftHandIndex3",
+   "tete": [
+    0.875636,
+    1.390003,
+    0.025929
+   ]
+  },
+  {
+   "nom": "LeftHandMiddle1",
+   "nom_fr": "LeftHandMiddle1",
+   "parent": "LeftHand",
+   "tete": [
+    0.796955,
+    1.415552,
+    -0.01406
+   ]
+  },
+  {
+   "nom": "LeftHandMiddle2",
+   "nom_fr": "LeftHandMiddle2",
+   "parent": "LeftHandMiddle1",
+   "tete": [
+    0.830755,
+    1.410078,
+    -0.011698
+   ]
+  },
+  {
+   "nom": "LeftHandMiddle3",
+   "nom_fr": "LeftHandMiddle3",
+   "parent": "LeftHandMiddle2",
+   "tete": [
+    0.861194,
+    1.401782,
+    -0.009748
+   ]
+  },
+  {
+   "nom": "LeftHandMiddle4",
+   "nom_fr": "LeftHandMiddle4",
+   "parent": "LeftHandMiddle3",
+   "tete": [
+    0.88926,
+    1.395774,
+    -0.007863
+   ]
+  },
+  {
+   "nom": "LeftHandRing1",
+   "nom_fr": "LeftHandRing1",
+   "parent": "LeftHand",
+   "tete": [
+    0.800635,
+    1.417536,
+    -0.036697
+   ]
+  },
+  {
+   "nom": "LeftHandRing2",
+   "nom_fr": "LeftHandRing2",
+   "parent": "LeftHandRing1",
+   "tete": [
+    0.8266,
+    1.409238,
+    -0.036373
+   ]
+  },
+  {
+   "nom": "LeftHandRing3",
+   "nom_fr": "LeftHandRing3",
+   "parent": "LeftHandRing2",
+   "tete": [
+    0.852083,
+    1.403154,
+    -0.035925
+   ]
+  },
+  {
+   "nom": "LeftHandRing4",
+   "nom_fr": "LeftHandRing4",
+   "parent": "LeftHandRing3",
+   "tete": [
+    0.873762,
+    1.398075,
+    -0.035535
+   ]
+  },
+  {
+   "nom": "LeftHandPinky1",
+   "nom_fr": "LeftHandPinky1",
+   "parent": "LeftHand",
+   "tete": [
+    0.788416,
+    1.419019,
+    -0.057681
+   ]
+  },
+  {
+   "nom": "LeftHandPinky2",
+   "nom_fr": "LeftHandPinky2",
+   "parent": "LeftHandPinky1",
+   "tete": [
+    0.814904,
+    1.412328,
+    -0.058881
+   ]
+  },
+  {
+   "nom": "LeftHandPinky3",
+   "nom_fr": "LeftHandPinky3",
+   "parent": "LeftHandPinky2",
+   "tete": [
+    0.835656,
+    1.405289,
+    -0.059933
+   ]
+  },
+  {
+   "nom": "LeftHandPinky4",
+   "nom_fr": "LeftHandPinky4",
+   "parent": "LeftHandPinky3",
+   "tete": [
+    0.854164,
+    1.398449,
+    -0.060907
+   ]
+  },
+  {
+   "nom": "RightShoulder",
+   "nom_fr": "RightShoulder",
+   "parent": "Spine2",
+   "tete": [
+    -0.061402,
+    1.466426,
+    -0.028643
+   ]
+  },
+  {
+   "nom": "RightArm",
+   "nom_fr": "RightArm",
+   "parent": "RightShoulder",
+   "tete": [
+    -0.186852,
+    1.432112,
+    -0.028062
+   ]
+  },
+  {
+   "nom": "RightForeArm",
+   "nom_fr": "RightForeArm",
+   "parent": "RightArm",
+   "tete": [
+    -0.441325,
+    1.413347,
+    -0.044772
+   ]
+  },
+  {
+   "nom": "RightHand",
+   "nom_fr": "RightHand",
+   "parent": "RightForeArm",
+   "tete": [
+    -0.674999,
+    1.422124,
+    -0.035651
+   ]
+  },
+  {
+   "nom": "RightHandThumb1",
+   "nom_fr": "RightHandThumb1",
+   "parent": "RightHand",
+   "tete": [
+    -0.711552,
+    1.404246,
+    -0.004551
+   ]
+  },
+  {
+   "nom": "RightHandThumb2",
+   "nom_fr": "RightHandThumb2",
+   "parent": "RightHandThumb1",
+   "tete": [
+    -0.740795,
+    1.389943,
+    0.020331
+   ]
+  },
+  {
+   "nom": "RightHandThumb3",
+   "nom_fr": "RightHandThumb3",
+   "parent": "RightHandThumb2",
+   "tete": [
+    -0.766081,
+    1.372174,
+    0.0374
+   ]
+  },
+  {
+   "nom": "RightHandThumb4",
+   "nom_fr": "RightHandThumb4",
+   "parent": "RightHandThumb3",
+   "tete": [
+    -0.790514,
+    1.36055,
+    0.048135
+   ]
+  },
+  {
+   "nom": "RightHandIndex1",
+   "nom_fr": "RightHandIndex1",
+   "parent": "RightHand",
+   "tete": [
+    -0.793883,
+    1.409646,
+    0.011901
+   ]
+  },
+  {
+   "nom": "RightHandIndex2",
+   "nom_fr": "RightHandIndex2",
+   "parent": "RightHandIndex1",
+   "tete": [
+    -0.824305,
+    1.404481,
+    0.016329
+   ]
+  },
+  {
+   "nom": "RightHandIndex3",
+   "nom_fr": "RightHandIndex3",
+   "parent": "RightHandIndex2",
+   "tete": [
+    -0.851694,
+    1.397397,
+    0.020251
+   ]
+  },
+  {
+   "nom": "RightHandIndex4",
+   "nom_fr": "RightHandIndex4",
+   "parent": "RightHandIndex3",
+   "tete": [
+    -0.87602,
+    1.39119,
+    0.023736
+   ]
+  },
+  {
+   "nom": "RightHandMiddle1",
+   "nom_fr": "RightHandMiddle1",
+   "parent": "RightHand",
+   "tete": [
+    -0.795083,
+    1.414638,
+    -0.014667
+   ]
+  },
+  {
+   "nom": "RightHandMiddle2",
+   "nom_fr": "RightHandMiddle2",
+   "parent": "RightHandMiddle1",
+   "tete": [
+    -0.829506,
+    1.41048,
+    -0.011794
+   ]
+  },
+  {
+   "nom": "RightHandMiddle3",
+   "nom_fr": "RightHandMiddle3",
+   "parent": "RightHandMiddle2",
+   "tete": [
+    -0.860567,
+    1.402103,
+    -0.009393
+   ]
+  },
+  {
+   "nom": "RightHandMiddle4",
+   "nom_fr": "RightHandMiddle4",
+   "parent": "RightHandMiddle3",
+   "tete": [
+    -0.889125,
+    1.396053,
+    -0.007117
+   ]
+  },
+  {
+   "nom": "RightHandRing1",
+   "nom_fr": "RightHandRing1",
+   "parent": "RightHand",
+   "tete": [
+    -0.798279,
+    1.416034,
+    -0.035809
+   ]
+  },
+  {
+   "nom": "RightHandRing2",
+   "nom_fr": "RightHandRing2",
+   "parent": "RightHandRing1",
+   "tete": [
+    -0.825914,
+    1.410342,
+    -0.036104
+   ]
+  },
+  {
+   "nom": "RightHandRing3",
+   "nom_fr": "RightHandRing3",
+   "parent": "RightHandRing2",
+   "tete": [
+    -0.851654,
+    1.402619,
+    -0.036528
+   ]
+  },
+  {
+   "nom": "RightHandRing4",
+   "nom_fr": "RightHandRing4",
+   "parent": "RightHandRing3",
+   "tete": [
+    -0.874893,
+    1.398051,
+    -0.036763
+   ]
+  },
+  {
+   "nom": "RightHandPinky1",
+   "nom_fr": "RightHandPinky1",
+   "parent": "RightHand",
+   "tete": [
+    -0.789631,
+    1.41883,
+    -0.057677
+   ]
+  },
+  {
+   "nom": "RightHandPinky2",
+   "nom_fr": "RightHandPinky2",
+   "parent": "RightHandPinky1",
+   "tete": [
+    -0.815321,
+    1.412831,
+    -0.058765
+   ]
+  },
+  {
+   "nom": "RightHandPinky3",
+   "nom_fr": "RightHandPinky3",
+   "parent": "RightHandPinky2",
+   "tete": [
+    -0.835483,
+    1.405461,
+    -0.059793
+   ]
+  },
+  {
+   "nom": "RightHandPinky4",
+   "nom_fr": "RightHandPinky4",
+   "parent": "RightHandPinky3",
+   "tete": [
+    -0.853445,
+    1.399696,
+    -0.060646
+   ]
+  },
+  {
+   "nom": "LeftUpLeg",
+   "nom_fr": "LeftUpLeg",
+   "parent": "Hips",
+   "tete": [
+    0.080782,
+    0.94352,
+    0.02472
+   ]
+  },
+  {
+   "nom": "LeftLeg",
+   "nom_fr": "LeftLeg",
+   "parent": "LeftUpLeg",
+   "tete": [
+    0.118212,
+    0.518115,
+    -0.002235
+   ]
+  },
+  {
+   "nom": "LeftFoot",
+   "nom_fr": "LeftFoot",
+   "parent": "LeftLeg",
+   "tete": [
+    0.151803,
+    0.098706,
+    -0.031057
+   ]
+  },
+  {
+   "nom": "LeftToeBase",
+   "nom_fr": "LeftToeBase",
+   "parent": "LeftFoot",
+   "tete": [
+    0.163136,
+    0.007542,
+    0.102162
+   ]
+  },
+  {
+   "nom": "LeftToe_End",
+   "nom_fr": "LeftToe_End",
+   "parent": "LeftToeBase",
+   "tete": [
+    0.169052,
+    0.006997,
+    0.163936
+   ]
+  },
+  {
+   "nom": "RightUpLeg",
+   "nom_fr": "RightUpLeg",
+   "parent": "Hips",
+   "tete": [
+    -0.080782,
+    0.94352,
+    0.022561
+   ]
+  },
+  {
+   "nom": "RightLeg",
+   "nom_fr": "RightLeg",
+   "parent": "RightUpLeg",
+   "tete": [
+    -0.118213,
+    0.518115,
+    -0.002084
+   ]
+  },
+  {
+   "nom": "RightFoot",
+   "nom_fr": "RightFoot",
+   "parent": "RightLeg",
+   "tete": [
+    -0.151803,
+    0.098707,
+    -0.031774
+   ]
+  },
+  {
+   "nom": "RightToeBase",
+   "nom_fr": "RightToeBase",
+   "parent": "RightFoot",
+   "tete": [
+    -0.163137,
+    0.007539,
+    0.102391
+   ]
+  },
+  {
+   "nom": "RightToe_End",
+   "nom_fr": "RightToe_End",
+   "parent": "RightToeBase",
+   "tete": [
+    -0.169053,
+    0.006993,
+    0.163905
+   ]
+  }
+ ],
+ "postures": {
+  "affichage": {
+   "nom": "Pose d'affichage (bras abaissés)",
+   "app": false,
+   "rotations": {
+    "LeftArm": [
+     0.0,
+     0.0,
+     -0.573576,
+     0.819152
+    ],
+    "RightArm": [
+     0.0,
+     0.0,
+     0.573576,
+     0.819152
+    ],
+    "LeftForeArm": [
+     0.0,
+     0.0,
+     0.069756,
+     0.997564
+    ],
+    "RightForeArm": [
+     0.0,
+     0.0,
+     -0.069756,
+     0.997564
+    ]
+   },
+   "translation": [
+    0,
+    0,
+    0
+   ]
+  }
+ },
+ "peau": {
+  "fichier": "assets/anatomy/peau_mixamo.bin",
+  "format": "4 os puis 4 poids (octets, somme 255) par sommet, maillages dans l'ordre ci-dessous",
+  "maillages": [
+   {
+    "nom": "abductor_pollicis_longus_left",
+    "sommets": 20
+   },
+   {
+    "nom": "abductor_pollicis_longus_right",
+    "sommets": 20
+   },
+   {
+    "nom": "adductor_longus_left",
+    "sommets": 71
+   },
+   {
+    "nom": "adductor_longus_right",
+    "sommets": 71
+   },
+   {
+    "nom": "adductor_magnus_left",
+    "sommets": 44
+   },
+   {
+    "nom": "adductor_magnus_right",
+    "sommets": 44
+   },
+   {
+    "nom": "anconeus_muscle_left",
+    "sommets": 30
+   },
+   {
+    "nom": "anconeus_muscle_right",
+    "sommets": 30
+   },
+   {
+    "nom": "biceps_brachii_left",
+    "sommets": 207
+   },
+   {
+    "nom": "biceps_brachii_right",
+    "sommets": 207
+   },
+   {
+    "nom": "biceps_femoris_long_left",
+    "sommets": 211
+   },
+   {
+    "nom": "biceps_femoris_long_right",
+    "sommets": 211
+   },
+   {
+    "nom": "brachialis_left",
+    "sommets": 28
+   },
+   {
+    "nom": "brachialis_right",
+    "sommets": 28
+   },
+   {
+    "nom": "brachioradialis_muscle_left",
+    "sommets": 74
+   },
+   {
+    "nom": "brachioradialis_muscle_right",
+    "sommets": 74
+   },
+   {
+    "nom": "deltoid_anterior_left",
+    "sommets": 114
+   },
+   {
+    "nom": "deltoid_anterior_right",
+    "sommets": 114
+   },
+   {
+    "nom": "deltoid_lateral_left",
+    "sommets": 23
+   },
+   {
+    "nom": "deltoid_lateral_right",
+    "sommets": 23
+   },
+   {
+    "nom": "deltoid_posterior_left",
+    "sommets": 105
+   },
+   {
+    "nom": "deltoid_posterior_right",
+    "sommets": 105
+   },
+   {
+    "nom": "erector_spinae_left",
+    "sommets": 79
+   },
+   {
+    "nom": "erector_spinae_right",
+    "sommets": 79
+   },
+   {
+    "nom": "extensor_carpi_radialis_brevis_left",
+    "sommets": 8
+   },
+   {
+    "nom": "extensor_carpi_radialis_brevis_right",
+    "sommets": 8
+   },
+   {
+    "nom": "extensor_carpi_radialis_longus_left",
+    "sommets": 21
+   },
+   {
+    "nom": "extensor_carpi_radialis_longus_right",
+    "sommets": 21
+   },
+   {
+    "nom": "extensor_carpi_ulnaris_left",
+    "sommets": 20
+   },
+   {
+    "nom": "extensor_carpi_ulnaris_right",
+    "sommets": 20
+   },
+   {
+    "nom": "extensor_digiti_minimi_left",
+    "sommets": 14
+   },
+   {
+    "nom": "extensor_digiti_minimi_right",
+    "sommets": 14
+   },
+   {
+    "nom": "extensor_digitorum_left",
+    "sommets": 36
+   },
+   {
+    "nom": "extensor_digitorum_longus_left",
+    "sommets": 91
+   },
+   {
+    "nom": "extensor_digitorum_longus_right",
+    "sommets": 91
+   },
+   {
+    "nom": "extensor_digitorum_right",
+    "sommets": 36
+   },
+   {
+    "nom": "extensor_pollicis_brevis_left",
+    "sommets": 21
+   },
+   {
+    "nom": "extensor_pollicis_brevis_right",
+    "sommets": 21
+   },
+   {
+    "nom": "external_oblique_left",
+    "sommets": 189
+   },
+   {
+    "nom": "external_oblique_right",
+    "sommets": 189
+   },
+   {
+    "nom": "fibularis_brevis_left",
+    "sommets": 81
+   },
+   {
+    "nom": "fibularis_brevis_right",
+    "sommets": 81
+   },
+   {
+    "nom": "fibularis_longus_left",
+    "sommets": 24
+   },
+   {
+    "nom": "fibularis_longus_right",
+    "sommets": 24
+   },
+   {
+    "nom": "fibularis_tertius_left",
+    "sommets": 36
+   },
+   {
+    "nom": "fibularis_tertius_right",
+    "sommets": 36
+   },
+   {
+    "nom": "flexor_carpi_radialis_left",
+    "sommets": 61
+   },
+   {
+    "nom": "flexor_carpi_radialis_right",
+    "sommets": 61
+   },
+   {
+    "nom": "flexor_carpi_ulnaris_left",
+    "sommets": 41
+   },
+   {
+    "nom": "flexor_carpi_ulnaris_right",
+    "sommets": 41
+   },
+   {
+    "nom": "flexor_digitorum_longus_left",
+    "sommets": 59
+   },
+   {
+    "nom": "flexor_digitorum_longus_right",
+    "sommets": 62
+   },
+   {
+    "nom": "flexor_digitorum_superficialis_left",
+    "sommets": 97
+   },
+   {
+    "nom": "flexor_digitorum_superficialis_right",
+    "sommets": 97
+   },
+   {
+    "nom": "foot_left",
+    "sommets": 787
+   },
+   {
+    "nom": "foot_right",
+    "sommets": 787
+   },
+   {
+    "nom": "gastrocnemius_lateral_left",
+    "sommets": 130
+   },
+   {
+    "nom": "gastrocnemius_lateral_right",
+    "sommets": 130
+   },
+   {
+    "nom": "gastrocnemius_medial_left",
+    "sommets": 163
+   },
+   {
+    "nom": "gastrocnemius_medial_right",
+    "sommets": 163
+   },
+   {
+    "nom": "gluteus_maximus_left",
+    "sommets": 232
+   },
+   {
+    "nom": "gluteus_maximus_right",
+    "sommets": 232
+   },
+   {
+    "nom": "gluteus_medius_left",
+    "sommets": 49
+   },
+   {
+    "nom": "gluteus_medius_right",
+    "sommets": 49
+   },
+   {
+    "nom": "gracilis_left",
+    "sommets": 128
+   },
+   {
+    "nom": "gracilis_right",
+    "sommets": 128
+   },
+   {
+    "nom": "hand_left",
+    "sommets": 1718
+   },
+   {
+    "nom": "hand_right",
+    "sommets": 1718
+   },
+   {
+    "nom": "head",
+    "sommets": 877
+   },
+   {
+    "nom": "iliopsoas_left",
+    "sommets": 23
+   },
+   {
+    "nom": "iliopsoas_right",
+    "sommets": 23
+   },
+   {
+    "nom": "infraspinatus_left",
+    "sommets": 23
+   },
+   {
+    "nom": "infraspinatus_right",
+    "sommets": 23
+   },
+   {
+    "nom": "latissimus_dorsi_left",
+    "sommets": 261
+   },
+   {
+    "nom": "latissimus_dorsi_right",
+    "sommets": 261
+   },
+   {
+    "nom": "neck_muscles_left",
+    "sommets": 49
+   },
+   {
+    "nom": "neck_muscles_right",
+    "sommets": 49
+   },
+   {
+    "nom": "palmaris_longus_muscle_left",
+    "sommets": 48
+   },
+   {
+    "nom": "palmaris_longus_muscle_right",
+    "sommets": 48
+   },
+   {
+    "nom": "peau",
+    "sommets": 1667
+   },
+   {
+    "nom": "pectineus_left",
+    "sommets": 62
+   },
+   {
+    "nom": "pectineus_right",
+    "sommets": 62
+   },
+   {
+    "nom": "pectoralis_major_abdominal_left",
+    "sommets": 23
+   },
+   {
+    "nom": "pectoralis_major_abdominal_right",
+    "sommets": 23
+   },
+   {
+    "nom": "pectoralis_major_clavicular_left",
+    "sommets": 51
+   },
+   {
+    "nom": "pectoralis_major_clavicular_right",
+    "sommets": 51
+   },
+   {
+    "nom": "pectoralis_major_sternocostal_left",
+    "sommets": 83
+   },
+   {
+    "nom": "pectoralis_major_sternocostal_right",
+    "sommets": 83
+   },
+   {
+    "nom": "pronator_teres_left",
+    "sommets": 17
+   },
+   {
+    "nom": "pronator_teres_right",
+    "sommets": 17
+   },
+   {
+    "nom": "rectus_abdominis_left",
+    "sommets": 176
+   },
+   {
+    "nom": "rectus_abdominis_right",
+    "sommets": 176
+   },
+   {
+    "nom": "rectus_femoris_left",
+    "sommets": 179
+   },
+   {
+    "nom": "rectus_femoris_right",
+    "sommets": 179
+   },
+   {
+    "nom": "sartorius_left",
+    "sommets": 220
+   },
+   {
+    "nom": "sartorius_right",
+    "sommets": 220
+   },
+   {
+    "nom": "scalenus_medius_left",
+    "sommets": 18
+   },
+   {
+    "nom": "scalenus_medius_right",
+    "sommets": 18
+   },
+   {
+    "nom": "semimembranosus_left",
+    "sommets": 67
+   },
+   {
+    "nom": "semimembranosus_right",
+    "sommets": 67
+   },
+   {
+    "nom": "semitendinosus_left",
+    "sommets": 82
+   },
+   {
+    "nom": "semitendinosus_right",
+    "sommets": 82
+   },
+   {
+    "nom": "serratus_anterior_left",
+    "sommets": 63
+   },
+   {
+    "nom": "serratus_anterior_right",
+    "sommets": 63
+   },
+   {
+    "nom": "soleus_left",
+    "sommets": 102
+   },
+   {
+    "nom": "soleus_right",
+    "sommets": 102
+   },
+   {
+    "nom": "sternocleidomastoid_left",
+    "sommets": 20
+   },
+   {
+    "nom": "sternocleidomastoid_right",
+    "sommets": 20
+   },
+   {
+    "nom": "tensor_fasciae_latae_left",
+    "sommets": 96
+   },
+   {
+    "nom": "tensor_fasciae_latae_right",
+    "sommets": 96
+   },
+   {
+    "nom": "teres_major_left",
+    "sommets": 19
+   },
+   {
+    "nom": "teres_major_right",
+    "sommets": 19
+   },
+   {
+    "nom": "teres_minor_left",
+    "sommets": 27
+   },
+   {
+    "nom": "teres_minor_right",
+    "sommets": 27
+   },
+   {
+    "nom": "tibialis_anterior_left",
+    "sommets": 93
+   },
+   {
+    "nom": "tibialis_anterior_right",
+    "sommets": 93
+   },
+   {
+    "nom": "trapezius_lower_left",
+    "sommets": 60
+   },
+   {
+    "nom": "trapezius_lower_right",
+    "sommets": 60
+   },
+   {
+    "nom": "trapezius_middle_left",
+    "sommets": 83
+   },
+   {
+    "nom": "trapezius_middle_right",
+    "sommets": 83
+   },
+   {
+    "nom": "trapezius_upper_left",
+    "sommets": 51
+   },
+   {
+    "nom": "trapezius_upper_right",
+    "sommets": 51
+   },
+   {
+    "nom": "triceps_brachii_left",
+    "sommets": 203
+   },
+   {
+    "nom": "triceps_brachii_right",
+    "sommets": 203
+   },
+   {
+    "nom": "vastus_lateralis_left",
+    "sommets": 76
+   },
+   {
+    "nom": "vastus_lateralis_right",
+    "sommets": 76
+   },
+   {
+    "nom": "vastus_medialis_left",
+    "sommets": 100
+   },
+   {
+    "nom": "vastus_medialis_right",
+    "sommets": 100
+   }
+  ]
+ }
+}
