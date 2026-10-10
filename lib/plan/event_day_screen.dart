@@ -13,11 +13,30 @@ import '../koach/koach_bubble.dart' show KoachSays;
 import '../store.dart';
 import '../ui.dart';
 
-const _objectives = <kc.EventObjective, String>{
-  kc.EventObjective.secureTotal: 'Assurer un total',
-  kc.EventObjective.maxTotal: 'Viser le plus gros total',
-  kc.EventObjective.record: 'Tenter un record',
+/// Objectif du jour : libellé court du segment, phrase complète dessous.
+const _objectives = <kc.EventObjective, (String, String)>{
+  kc.EventObjective.secureTotal: ('Assurer', 'Assurer un total'),
+  kc.EventObjective.maxTotal: ('Plus gros total', 'Viser le plus gros total'),
+  kc.EventObjective.record: ('Record', 'Tenter un record'),
 };
+
+const _monthNames = [
+  'janvier',
+  'février',
+  'mars',
+  'avril',
+  'mai',
+  'juin',
+  'juillet',
+  'août',
+  'septembre',
+  'octobre',
+  'novembre',
+  'décembre',
+];
+
+/// Charge d'un échauffement : « Poids du corps » à 0 kg.
+String _load(double kg) => kg <= 0 ? 'Poids du corps' : adaptKg(kg);
 
 String _rest(int s) => s < 120
     ? '$s\u00A0s'
@@ -102,10 +121,16 @@ class _EventDayScreenState extends State<EventDayScreen> {
               semanticLabel: 'Objectif du jour',
               segments: [
                 for (final e in _objectives.entries)
-                  KSegment(e.key, e.value),
+                  KSegment(e.key, e.value.$1, semanticLabel: e.value.$2),
               ],
               selected: _objective,
               onChanged: (v) => setState(() => _objective = v),
+            ),
+            const SizedBox(height: KSpacing.s8),
+            Text(
+              _objectives[_objective]!.$2,
+              key: const ValueKey('event-objective-text'),
+              style: KType.corps.copyWith(color: k.texte2),
             ),
           ],
         ),
@@ -146,10 +171,14 @@ class _EventDayScreenState extends State<EventDayScreen> {
                   ),
                 if ((lift.warmup ?? const <kc.WarmupStep>[]).isNotEmpty &&
                     done.isEmpty) ...[
-                  const KSectionTitle('Échauffement', top: KSpacing.s12),
+                  const SizedBox(height: KSpacing.s12),
+                  Text(
+                    'Échauffement',
+                    style: KType.section.copyWith(color: k.texte2),
+                  ),
                   for (final w in lift.warmup!)
                     Text(
-                      '${adaptKg(w.loadKg)} × ${w.reps}'
+                      '${_load(w.loadKg)} × ${w.reps}'
                       '${w.restSeconds == null ? '' : ', repos ${_rest(w.restSeconds!)}'}',
                       style: body,
                     ),
@@ -268,8 +297,13 @@ class _EventDayScreenState extends State<EventDayScreen> {
     }
     return KPage.sub(
       key: const ValueKey('event-day'),
-      title: widget.event.name ?? 'Jour J',
-      subtitle: widget.event.name == null ? null : 'Jour J',
+      // R3 : le titre reprend le libellé qui y mène (« Jour J : … »).
+      title: 'Jour J',
+      lead:
+          '${widget.event.name ?? 'Ton échéance'}, le '
+          '${widget.event.date.day == 1 ? '1er' : widget.event.date.day}\u00a0'
+          '${_monthNames[widget.event.date.month - 1]}\u00a0'
+          '${widget.event.date.year}.',
       children: children,
     );
   }

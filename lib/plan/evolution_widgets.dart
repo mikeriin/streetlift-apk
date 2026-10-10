@@ -196,7 +196,10 @@ List<Widget> _evolutionSheet(BuildContext context, EvolutionEntry e) {
   return [
     KoachBubble(
       key: const ValueKey('evo-sheet-koach'),
-      pose: evolutionPose(e.proposal.kind, pending: e.status == EvoStatus.pending),
+      pose: evolutionPose(
+        e.proposal.kind,
+        pending: e.status == EvoStatus.pending,
+      ),
       koachHeight: KSize.primary * 2,
       text: evolutionHeadlineOf(e),
       why: evolutionWhy(e),
@@ -389,9 +392,7 @@ class EvolutionUnlockCard extends StatelessWidget {
                           ? Icons.check_circle_rounded
                           : Icons.lock_outline_rounded,
                       size: KSize.iconSmall,
-                      color: l.index <= u.level.index
-                          ? k.validation
-                          : k.texte2,
+                      color: l.index <= u.level.index ? k.validation : k.texte2,
                     ),
                     const SizedBox(width: KSpacing.s12),
                     Expanded(
@@ -420,9 +421,8 @@ class EvolutionUnlockCard extends StatelessWidget {
             ),
           const SizedBox(height: KSpacing.s8),
           Text(
-            '${u.weeksObserved} semaine${u.weeksObserved > 1 ? 's' : ''} de '
-            'séances suivies. Même débloqué, je ne propose un changement que '
-            'si je suis assez sûr de moi.',
+            '${_observed(u.weeksObserved)}. Même débloqué, je ne propose '
+            'un changement que si je suis assez sûr de moi.',
             style: KType.detail.copyWith(color: k.texte2),
           ),
         ],
@@ -626,6 +626,11 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
     },
   );
 }
+
+/// Semaines de séances suivies, en clair (« Aucune… » à zéro).
+String _observed(int n) => n == 0
+    ? 'Aucune semaine de séances suivie pour l’instant'
+    : '$n semaine${n > 1 ? 's' : ''} de séances suivie${n > 1 ? 's' : ''}';
 
 String _date(String? iso) {
   if (iso == null || iso.length < 10) return '';

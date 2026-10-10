@@ -104,7 +104,7 @@ Future<void> showProgramExplainer(BuildContext context) =>
       context,
       draggable: true,
       listKey: const ValueKey('program-explainer'),
-      title: 'Comment marche ton programme',
+      title: 'Comment marche ton programme ?',
       children: (ctx) {
         final k = KTokens.of(ctx);
         return [

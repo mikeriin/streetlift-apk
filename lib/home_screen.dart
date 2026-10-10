@@ -159,13 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
         for (final w in weeks)
           KListItem(
             'Semaine ${w.n}',
-            detail: [
-              _dates(store.program.weekDates(w.n)),
-              w.block,
-              if (_isCurrentWeek(w.n)) 'Semaine actuelle',
-              '${w.days.where((d) => store.isDone(w.n, d.j)).length} / '
-                  '${w.days.length} faites',
-            ].join(' · '),
+            detail:
+                '${[_dates(store.program.weekDates(w.n)), w.block, if (_isCurrentWeek(w.n)) 'semaine actuelle'].join(', ')}. '
+                '${w.days.where((d) => store.isDone(w.n, d.j)).length}\u00a0/\u00a0'
+                '${w.days.length}\u00a0journées validées',
             state: w.n == week
                 ? KListState.current
                 : w.days.every((d) => store.isDone(w.n, d.j))
@@ -191,8 +188,10 @@ class _HomeScreenState extends State<HomeScreen> {
       final done = w.days.where((d) => store.isDone(w.n, d.j)).length;
       return [
         Text(
-          [w.block, if (w.days.first.cycle.isNotEmpty) w.days.first.cycle]
-              .join(' · '),
+          [
+            w.block,
+            if (w.days.first.cycle.isNotEmpty) w.days.first.cycle,
+          ].join(' · '),
           style: KType.corps.copyWith(color: k.texte),
         ),
         Text(
@@ -280,9 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: KSpacing.s4),
           Text(
             done ? 'Séance effectuée' : 'Séance à faire',
-            style: KType.detail.copyWith(
-              color: done ? k.validation : k.texte2,
-            ),
+            style: KType.detail.copyWith(color: done ? k.validation : k.texte2),
           ),
           const SizedBox(height: KSpacing.s8),
           if (d.exercises.isEmpty)
@@ -418,10 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        for (final m in moments) ...[
-          const SizedBox(height: KSpacing.s12),
-          m,
-        ],
+        for (final m in moments) ...[const SizedBox(height: KSpacing.s12), m],
       ];
       return Scaffold(
         backgroundColor: k.fond,
@@ -530,7 +524,7 @@ class _HomeHeader extends StatelessWidget {
     final k = KTokens.of(context);
     final (rank, length) = weekInBlock;
     final block = length > 1
-        ? '${week.block}, semaine $rank sur $length'
+        ? '${week.block}, semaine\u00a0$rank\u00a0sur\u00a0$length'
         : week.block;
     final title = Semantics(
       button: true,
@@ -588,11 +582,7 @@ class _HomeHeader extends StatelessWidget {
         children: [
           const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              LevelPill(),
-              Spacer(),
-              HeaderLogo(),
-            ],
+            children: [LevelPill(), Spacer(), HeaderLogo()],
           ),
           const SizedBox(height: KSpacing.s8),
           title,
@@ -737,10 +727,7 @@ class _WeekSliderState extends State<_WeekSlider> {
                 child: Center(
                   child: KeyedSubtree(
                     key: const ValueKey('selected-week'),
-                    child: KSeasonBar(
-                      blocks: widget.blocks,
-                      week: widget.week,
-                    ),
+                    child: KSeasonBar(blocks: widget.blocks, week: widget.week),
                   ),
                 ),
               ),
@@ -802,30 +789,45 @@ class _TodayCard extends StatelessWidget {
       color: ink,
     );
     final texts = <Widget>[
-      Row(
-        children: [
-          Flexible(
-            child: Text(
-              k.title('J${day.j}, aujourd’hui'),
-              style: KType.micro.copyWith(
-                color: ink,
-                letterSpacing: KType.capsSpacing * 2,
-              ),
-            ),
+      // Surtitre et état sur une ligne de texte : l'état suit le dernier
+      // mot et ne se retrouve jamais seul à la ligne (C3).
+      Text.rich(
+        TextSpan(
+          style: KType.micro.copyWith(
+            color: ink,
+            letterSpacing: KType.capsSpacing * 2,
           ),
-          const SizedBox(width: KSpacing.s8),
-          if (written != null) ...[
-            Text(
-              written,
-              key: ValueKey(
-                inProgress ? 'day-in-progress-${day.j}' : 'day-resume-${day.j}',
+          children: [
+            // Gluon de mots (U+2060) : pas de coupure avant l'état.
+            TextSpan(text: '${k.title('J${day.j}, aujourd’hui')}\u2060'),
+            if (written != null)
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: KSpacing.s8,
+                  ),
+                  child: Text(
+                    written,
+                    key: ValueKey(
+                      inProgress
+                          ? 'day-in-progress-${day.j}'
+                          : 'day-resume-${day.j}',
+                    ),
+                    style: KType.micro.copyWith(color: ink),
+                  ),
+                ),
               ),
-              style: KType.micro.copyWith(color: ink),
+            if (written != null) const TextSpan(text: '\u2060'),
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: KSpacing.s8),
+                child: icon,
+              ),
             ),
-            const SizedBox(width: KSpacing.s4),
           ],
-          icon,
-        ],
+        ),
       ),
       const SizedBox(height: KSpacing.s4),
       Text(
@@ -846,18 +848,20 @@ class _TodayCard extends StatelessWidget {
       ],
       if (estimate != null) ...[
         const SizedBox(height: KSpacing.s8),
-        Text(estimate.durationLabel, style: KType.chiffre.copyWith(color: ink)),
-        Text(
-          'Estimé, repos inclus',
-          style: KType.detail.copyWith(color: ink),
+        // Un chiffre ne se coupe jamais : sa taille baisse s'il le faut.
+        KFitTitle(
+          estimate.durationLabel,
+          style: KType.chiffre.copyWith(color: ink),
         ),
+        Text('Estimé, repos inclus', style: KType.detail.copyWith(color: ink)),
         const SizedBox(height: KSpacing.s8),
+        // Volume au format de C9 (« 6 exercices, 19 séries, 136 rép. »).
         Text(
           '${day.exercises.length} exercices, '
-          '${estimate.sets.round()} séries',
+          '${estimate.sets.round()} séries, '
+          '${estimate.volumeLabel.replaceAll(' · ', ', ')}',
           style: KType.detail.copyWith(color: ink),
         ),
-        Text(estimate.volumeLabel, style: KType.detail.copyWith(color: ink)),
       ],
     ];
     // G5 (D6.4) : Koach sur la carte du jour, sa pose dit la journée
@@ -874,13 +878,9 @@ class _TodayCard extends StatelessWidget {
       width: KSpacing.s32 + KSpacing.s8,
       colors: KoachColors.onColor(k.pleine),
     );
-    final side = Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        koach,
-        if (estimate != null) ...[
-          const SizedBox(height: KSpacing.s8),
-          SizedBox(
+    final map = estimate == null
+        ? null
+        : SizedBox(
             width: MediaQuery.sizeOf(context).width < 350
                 ? KSize.primary + KSpacing.s32
                 : _mapWidth,
@@ -894,10 +894,53 @@ class _TodayCard extends StatelessWidget {
               viewLabels: false,
               subject: 'muscles de la séance',
             ),
-          ),
-        ],
-      ],
-    );
+          );
+    // Grand texte (au-delà de 130 %) : les textes prennent toute la
+    // largeur, la carte des muscles passe dessous.
+    final large = MediaQuery.textScalerOf(context).scale(1) > 1.3;
+    final Widget body = large
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: texts.take(3).toList(),
+                    ),
+                  ),
+                  const SizedBox(width: KSpacing.s8),
+                  koach,
+                ],
+              ),
+              ...texts.skip(3),
+              if (map != null) ...[const SizedBox(height: KSpacing.s12), map],
+            ],
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: texts,
+                ),
+              ),
+              const SizedBox(width: KSpacing.s8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  koach,
+                  if (map != null) ...[
+                    const SizedBox(height: KSpacing.s8),
+                    map,
+                  ],
+                ],
+              ),
+            ],
+          );
     return Semantics(
       button: true,
       selected: true,
@@ -919,19 +962,7 @@ class _TodayCard extends StatelessWidget {
           padding: const EdgeInsets.all(KSpacing.s16),
           onTap: onOpen,
           onLongPress: onSummary,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: texts,
-                ),
-              ),
-              const SizedBox(width: KSpacing.s8),
-              side,
-            ],
-          ),
+          child: body,
         ),
       ),
     );

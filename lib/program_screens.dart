@@ -170,7 +170,8 @@ class ProgramScreen extends StatelessWidget {
         KMenuGroup(
           title: 'Changer de programme',
           children: [
-            if (PlanStore(store).planBlockEnding || PlanStore(store).planImportedNextBlockOffered)
+            if (PlanStore(store).planBlockEnding ||
+                PlanStore(store).planImportedNextBlockOffered)
               KMenuRow(
                 key: const ValueKey('program-next-block'),
                 icon: Icons.skip_next_outlined,
@@ -243,7 +244,7 @@ class ProgramScreen extends StatelessWidget {
               key: const ValueKey('program-explainer-open'),
               icon: Icons.help_outline_rounded,
               title: 'Comment marche ton programme ?',
-              subtitle: 'Création, séances et évolution, en 8 étapes',
+              subtitle: 'Création, séances et évolution, en 8\u00a0étapes',
               onTap: () => showProgramExplainer(context),
             ),
           ],
@@ -362,8 +363,9 @@ class _EvolutionCard extends StatelessWidget {
                     const SizedBox(height: KSpacing.s4),
                     Text(
                       store.adaptMode == 'free'
-                          ? 'Mode libre : je propose, tu décides.'
-                          : 'Mode assisté : j’applique et je t’explique.',
+                          ? 'Mode libre : je te propose, tu décides.'
+                          : 'Mode assisté : je l’applique moi-même et je te '
+                                'dis pourquoi.',
                       style: KType.corps.copyWith(color: k.texte),
                     ),
                     Text(
@@ -377,7 +379,9 @@ class _EvolutionCard extends StatelessWidget {
                     ),
                     Text(
                       '${pending == 0 ? '' : '$pending proposition${pending > 1 ? 's' : ''} en attente, '}'
-                      '$n changement${n > 1 ? 's' : ''} dans l’historique',
+                      n == 0
+                          ? 'Aucun changement pour l’instant'
+                          : '$n changement${n > 1 ? 's' : ''} dans l’historique',
                       style: detail,
                     ),
                   ],
@@ -475,8 +479,9 @@ Future<void> confirmUndoPlan(BuildContext context) async {
     context,
     title: 'Revenir à l’ancien programme ?',
     message:
-        'Ton programme d’avant est rétabli. Ton journal ne change pas : les '
-        'séances faites et les séries validées restent.',
+        'Ton nouveau programme est retiré et celui d’avant est rétabli. Ton '
+        'journal ne change pas : les séances faites et les séries validées '
+        'restent.',
     confirmLabel: 'Revenir',
   );
   if (!ok || !context.mounted) return;
@@ -598,6 +603,7 @@ class ProgramHomeCard extends StatelessWidget {
                   KTextButton(
                     key: const ValueKey('program-home-later'),
                     label: 'Plus tard',
+                    color: KTokens.of(context).texte2,
                     onPressed: () => PlanStore(store).snoozePlanPosition(),
                   ),
                 ],

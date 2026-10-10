@@ -172,7 +172,9 @@ SeasonOverview seasonOverviewOf(
   final phases = <SeasonPhaseView>[];
   for (final p in season?.phases ?? const <kc.SeasonPhase>[]) {
     final start = _day(p.startDate);
-    final end = start.add(Duration(days: p.weeks * 7 - 1));
+    // Jour civil (pas de durée ajoutée : un passage à l'heure d'hiver
+    // décalerait la fin d'un jour).
+    final end = DateTime(start.year, start.month, start.day + p.weeks * 7 - 1);
     phases.add(
       SeasonPhaseView(
         code: p.kind.code,
@@ -286,10 +288,7 @@ String _long(DateTime d, DateTime today) =>
   if (days == 0) return ('Aujourd’hui', '$event, le $when');
   if (days == 1) return ('Demain', '$event, le $when');
   if (days < 14) return ('$days jours', 'avant $event, le $when');
-  return (
-    '${days ~/ 7} semaines',
-    'avant $event, le $when ($days jours)',
-  );
+  return ('${days ~/ 7} semaines', 'avant $event, le $when ($days jours)');
 }
 
 DateTime _today() {
@@ -402,8 +401,10 @@ class SeasonCard extends StatelessWidget {
                     ),
                     if (count != null) ...[
                       const SizedBox(height: KSpacing.s4),
-                      Text(
-                        count.$1,
+                      KFitTitle(
+                        // Espaces ordinaires : le grand chiffre passe à la
+                        // ligne entre les mots plutôt que de se couper.
+                        count.$1.replaceAll('\u00a0', ' '),
                         style: KType.chiffre.copyWith(color: k.encre),
                       ),
                       Text(
@@ -419,7 +420,7 @@ class SeasonCard extends StatelessWidget {
                           'Phase en cours : ${phaseLabel(cur.code)}, '
                           'jusqu’au ${_short(cur.end)}',
                         ),
-                        style: KType.corps.copyWith(color: k.texte),
+                        style: detail,
                       ),
                     ],
                     if (next != null)
@@ -491,8 +492,8 @@ class SeasonScreen extends StatelessWidget {
                     view.eventName!,
                     style: KType.section.copyWith(color: k.texte2),
                   ),
-                  Text(
-                    _long(view.eventDate!, today),
+                  KFitTitle(
+                    _long(view.eventDate!, today).replaceAll('\u00a0', ' '),
                     style: KType.chiffre.copyWith(color: k.texte),
                   ),
                   Text(
@@ -537,8 +538,10 @@ class SeasonScreen extends StatelessWidget {
                       phaseTitle(p.code),
                       dates:
                           '${_short(p.start)} – ${_short(p.end)}'
-                          '${p.eventName == null ? '' : ', ${p.eventName}'}',
-                      length: '${p.weeks} semaine${p.weeks > 1 ? 's' : ''}',
+                          '${p.eventName == null || p.eventName == view.eventName ? '' : ', ${p.eventName}'}',
+                      length:
+                          '${p.weeks}\u00a0semaine${p.weeks > 1 ? 's' : ''}'
+                          '${p.current ? ', en cours' : ''}',
                       state: p.current
                           ? KPhaseState.current
                           : p.past

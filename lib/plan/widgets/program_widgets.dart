@@ -56,8 +56,6 @@ class ProgramSheetHeader extends StatelessWidget {
               style: KType.detail.copyWith(color: k.texte2),
             ),
           ),
-        if (title != null || subtitle != null)
-          const SizedBox(height: KSpacing.s12),
       ],
     );
   }
@@ -366,7 +364,10 @@ class _WhyTileState extends State<WhyTile> {
                 for (final r in widget.reasons)
                   Padding(
                     padding: const EdgeInsets.only(bottom: KSpacing.s4),
-                    child: Text(r, style: KType.corps.copyWith(color: k.texte2)),
+                    child: Text(
+                      r,
+                      style: KType.corps.copyWith(color: k.texte2),
+                    ),
                   ),
               ],
             ),
