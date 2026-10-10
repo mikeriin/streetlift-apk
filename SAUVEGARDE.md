@@ -9,7 +9,8 @@ Base : refonte-ui 0e5342df. Branche locale : ui/UI3. Contrôle rapide : claude/c
 - Composant nouveau : lib/stats/widgets/k_info_sheet.dart (feuille d'information, à promouvoir).
 - Tests : test/ui3_stats_test.dart ; stats_test et progression_screens_test adaptés (finders) ; tour : section Stats et parcours records, mes_references_stats, objectif_semaine.
 
-## En cours
+## Livré (17:30 UTC)
+- ui/UI3 f7de57c1, run complet 38066918616, livraison et ETAT_UI poussés sur pipeline (b85f926c), projet claude.ai.
 - Contrôle rapide vert (run 38059276243, commit 54bf57fc) ; contrôle complet lancé sur claude/ci-ui-ui3 ; relecture Opus.
 
 ## Reste
