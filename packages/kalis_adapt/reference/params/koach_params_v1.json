@@ -503,7 +503,8 @@
     "endurance_bornee_reduction": 0.9,
     "wod_fenetre_j": 7,
     "retour_seances_avant_mesure": 2,
-    "surmenage_seances_min": 6
+    "surmenage_seances_min": 6,
+    "duree_vitesse_defaut": 2.5
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,
