@@ -10,7 +10,7 @@ Base : refonte-ui 0e5342df. Branche locale : ui/UI3. Contrôle rapide : claude/c
 - Tests : test/ui3_stats_test.dart ; stats_test et progression_screens_test adaptés (finders) ; tour : section Stats et parcours records, mes_references_stats, objectif_semaine.
 
 ## En cours
-- Premier contrôle rapide du code (format, analyse, tests ui3, captures).
+- Contrôle rapide vert (run 38059276243, commit 54bf57fc) ; contrôle complet lancé sur claude/ci-ui-ui3 ; relecture Opus.
 
 ## Reste
 - Corriger la CI, regarder chaque capture (4 variantes), contrôle complet, relecture Opus, livraison, ETAT_UI, notification.

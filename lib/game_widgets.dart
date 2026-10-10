@@ -347,10 +347,7 @@ class CharacterCard extends StoreWidget {
         Text('Ton personnage', style: KType.micro.copyWith(color: soft)),
         const SizedBox(height: KSpacing.s4 / 2),
         // C3 : le titre passe à la ligne, jamais coupé.
-        Text(
-          store.displayTitle,
-          style: KType.titreEcran.copyWith(color: ink),
-        ),
+        Text(store.displayTitle, style: KType.titreEcran.copyWith(color: ink)),
       ],
     );
     final level = Column(
@@ -795,11 +792,7 @@ class _Ring extends StatelessWidget {
         ExcludeSemantics(
           child: CustomPaint(
             size: Size(size, size),
-            painter: _RingPainter(
-              fraction,
-              color,
-              KTokens.of(context).filet,
-            ),
+            painter: _RingPainter(fraction, color, KTokens.of(context).filet),
           ),
         ),
         child,
@@ -1112,7 +1105,10 @@ class CampaignStrip extends StoreWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final chapters = store.game.chapters;
-    final width = KSize.valueWidth * 1.2 * MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 1.6);
+    final width =
+        KSize.valueWidth *
+        1.2 *
+        MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 1.6);
     return SingleChildScrollView(
       key: const ValueKey('game-campaign'),
       scrollDirection: Axis.horizontal,
@@ -1170,7 +1166,10 @@ class _ChapterCard extends StatelessWidget {
               Icon(s.icon, color: s.color, size: KSize.iconSmall),
               const SizedBox(width: KSpacing.s8),
               Expanded(
-                child: Text(s.label, style: KType.micro.copyWith(color: s.color)),
+                child: Text(
+                  s.label,
+                  style: KType.micro.copyWith(color: s.color),
+                ),
               ),
             ],
           ),
@@ -1376,7 +1375,11 @@ class SeasonCard extends StoreWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.calendar_month_rounded, color: k.encre, size: KSize.icon),
+              Icon(
+                Icons.calendar_month_rounded,
+                color: k.encre,
+                size: KSize.icon,
+              ),
               const SizedBox(width: KSpacing.s12),
               Expanded(
                 child: Text(

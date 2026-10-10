@@ -8,7 +8,8 @@ import 'stats_progression.dart';
 import 'stats_widgets.dart';
 
 /// « n jour actif » / « n jours actifs ».
-String statsPlural(int n, String one, String many) => '$n ${n > 1 ? many : one}';
+String statsPlural(int n, String one, String many) =>
+    '$n ${n > 1 ? many : one}';
 
 /// Aperçu (UI3, cahier §4.1) : le résumé. Ses cartes et ses lignes ouvrent
 /// l'onglet concerné, jamais une feuille déjà joignable ailleurs (les
@@ -174,7 +175,7 @@ class _ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final weeks = progress.recentWeeks;
-    const chart = KSize.primary + KSpacing.s8;
+    const chart = KSize.primary + KSpacing.s32;
     return KCard(
       key: const ValueKey('stats-activity'),
       onTap: () => _detail(context),
@@ -222,12 +223,9 @@ class _ActivityCard extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: FractionallySizedBox(
-                                  heightFactor:
-                                      (weeks[i].activeDays.length / 7).clamp(
-                                        .08,
-                                        1.0,
-                                      ),
-                                  widthFactor: 1,
+                                  heightFactor: (weeks[i].activeDays.length / 7)
+                                      .clamp(.08, 1.0),
+                                  widthFactor: .5,
                                   child: DecoratedBox(
                                     decoration: ShapeDecoration(
                                       // Semaine en cours en `encre`, les
