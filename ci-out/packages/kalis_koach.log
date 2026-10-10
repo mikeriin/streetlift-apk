@@ -52,7 +52,7 @@ Downloading packages...
 Changed 48 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 15 files (0 changed) in 0.79 seconds.
+Formatted 15 files (0 changed) in 0.83 seconds.
 Analyzing kalis_koach...
 No issues found!
 00:00 +0: loading test/art_test.dart
@@ -74,14 +74,14 @@ No issues found!
 00:00 +15: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +16: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +17: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +18: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +19: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +20: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +21: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +22: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +23: test/lines_test.dart: paramètres paramètre manquant refusé
-00:00 +24: test/properties_test.dart: toutes les variantes sont atteintes
-00:00 +25: test/properties_test.dart: toutes les variantes sont atteintes
+00:00 +18: test/lines_test.dart: couverture aucune clé orpheline, aucune clé manquante
+00:00 +19: test/properties_test.dart: toutes les variantes sont atteintes
+00:00 +20: test/properties_test.dart: toutes les variantes sont atteintes
+00:00 +21: test/lines_test.dart: couverture table des raisons : exemples attendus présents
+00:00 +22: test/lines_test.dart: couverture table des raisons extensible
+00:00 +23: test/lines_test.dart: paramètres chaque message n’utilise que les paramètres déclarés
+00:00 +24: test/lines_test.dart: paramètres paramètre manquant refusé
+00:00 +25: test/lines_test.dart: textes longueur des bulles, explications et libellés
 00:00 +26: test/lines_test.dart: textes aucune allégation médicale ni promesse de résultat
 00:00 +27: test/lines_test.dart: textes tutoiement : jamais de vouvoiement
 00:00 +28: test/lines_test.dart: textes douleur : renvoi vers un professionnel de santé

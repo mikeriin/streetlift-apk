@@ -11,22 +11,79 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                             45.0s
+Running Gradle task 'assembleDebug'...                             21.2s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...        1,161ms
-Connecting to the VM Service is taking longer than expected...
-Still attempting to connect to the VM Service...
-If you do NOT see the Flutter application running, it might have crashed. The device logs (e.g. from adb or XCode) might have more details.
-If you do see the Flutter application running on the device, try re-running with --host-vmservice-port to use a specific port known to be available.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 50452
-This was attempt #50. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 36134
-This was attempt #100. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 53308
-This was attempt #150. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 47820
-This was attempt #200. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 58432
-This was attempt #250. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 44504
-This was attempt #300. Will retry in 0:00:01.600000.
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,374ms
+I/Choreographer( 4952): Skipped 50 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4952): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4952): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:46505/eYlieonVLGc=/
+VMServiceFlutterDriver: Isolate found with number: 3293139130034155
+VMServiceFlutterDriver: Isolate 3293139130034155 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4952): 00:00 +0: CI1f a (sombre, rouge) : myo-reps mini-série par mini-série ; contraste en groupe
+VMServiceFlutterDriver: Connected to Flutter application.
+D/SharedPreferencesImpl( 4952): Time required to fsync /data/user/0/fr.tchoupi.streetlift_tracker/shared_prefs/FlutterSharedPreferences.xml: [<1: 0, <2: 0, <4: 0, <8: 0, <16: 0, <32: 0, <64: 0, <128: 0, <256: 0, <512: 1, <1024: 0, <2048: 0, <4096: 0, <8192: 0, <16384: 0, >=16384: 0]
+D/ProfileInstaller( 4952): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4952): app_time_stats: avg=279.81ms min=5.64ms max=1051.07ms count=7
+D/EGL_emulation( 4952): app_time_stats: avg=237.72ms min=6.37ms max=909.33ms count=7
+D/EGL_emulation( 4952): app_time_stats: avg=158.13ms min=137.96ms max=184.44ms count=7
+D/EGL_emulation( 4952): app_time_stats: avg=4316.58ms min=160.88ms max=12205.23ms count=3
+D/EGL_emulation( 4952): app_time_stats: avg=141.16ms min=62.79ms max=195.31ms count=8
+D/EGL_emulation( 4952): app_time_stats: avg=127.27ms min=53.21ms max=159.74ms count=8
+D/EGL_emulation( 4952): app_time_stats: avg=105.11ms min=46.66ms max=171.17ms count=8
+D/EGL_emulation( 4952): app_time_stats: avg=129.66ms min=49.78ms max=171.16ms count=8
+D/EGL_emulation( 4952): app_time_stats: avg=149.30ms min=3.09ms max=239.19ms count=7
+D/EGL_emulation( 4952): app_time_stats: avg=195.62ms min=137.27ms max=259.77ms count=5
+W/WindowOnBackDispatcher( 4952): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4952): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4952): app_time_stats: avg=95.42ms min=9.54ms max=265.88ms count=10
+D/EGL_emulation( 4952): app_time_stats: avg=88.33ms min=6.61ms max=200.82ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=148.50ms min=79.56ms max=348.33ms count=7
+D/EGL_emulation( 4952): app_time_stats: avg=99.25ms min=1.93ms max=173.85ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=116.60ms min=114.32ms max=118.78ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=116.72ms min=116.23ms max=117.07ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=116.60ms min=115.15ms max=118.32ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=116.63ms min=116.32ms max=116.84ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=116.63ms min=116.19ms max=117.22ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=130.37ms min=116.30ms max=217.38ms count=8
+D/EGL_emulation( 4952): app_time_stats: avg=90.64ms min=13.11ms max=156.14ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=87.96ms min=8.10ms max=178.49ms count=12
+D/EGL_emulation( 4952): app_time_stats: avg=88.32ms min=9.59ms max=133.73ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=92.08ms min=7.33ms max=165.73ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=86.78ms min=5.34ms max=145.81ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=110.72ms min=64.77ms max=195.26ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=87.10ms min=12.49ms max=160.19ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=104.81ms min=10.59ms max=188.35ms count=10
+D/EGL_emulation( 4952): app_time_stats: avg=82.51ms min=10.66ms max=181.48ms count=12
+D/EGL_emulation( 4952): app_time_stats: avg=94.62ms min=10.65ms max=193.14ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=118.61ms min=13.53ms max=253.83ms count=10
+D/EGL_emulation( 4952): app_time_stats: avg=90.54ms min=10.38ms max=140.38ms count=10
+D/EGL_emulation( 4952): app_time_stats: avg=86.38ms min=10.58ms max=147.72ms count=11
+D/EGL_emulation( 4952): app_time_stats: avg=132.84ms min=76.94ms max=207.97ms count=8
+D/EGL_emulation( 4952): app_time_stats: avg=124.37ms min=71.09ms max=151.21ms count=7
+W/WindowOnBackDispatcher( 4952): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4952): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4952): app_time_stats: avg=123.33ms min=56.35ms max=240.02ms count=8
+D/EGL_emulation( 4952): app_time_stats: avg=90.49ms min=15.97ms max=174.97ms count=10
+D/EGL_emulation( 4952): app_time_stats: avg=81.74ms min=2.16ms max=189.80ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=111.62ms min=88.98ms max=124.41ms count=10
+I/eetlift_tracker( 4952): Background concurrent mark compact GC freed 1055KB AllocSpace bytes, 28(1456KB) LOS objects, 49% free, 2640KB/5281KB, paused 51us,5.140ms total 27.749ms
+W/eetlift_tracker( 4952): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4952): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4952): app_time_stats: avg=116.62ms min=114.20ms max=118.84ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=116.66ms min=115.23ms max=118.28ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=116.67ms min=116.25ms max=117.12ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=116.86ms min=115.59ms max=118.98ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=116.45ms min=114.70ms max=117.65ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=120.14ms min=90.83ms max=173.08ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=80.56ms min=11.30ms max=136.19ms count=12
+D/EGL_emulation( 4952): app_time_stats: avg=75.95ms min=8.35ms max=150.11ms count=12
+D/EGL_emulation( 4952): app_time_stats: avg=110.94ms min=14.45ms max=190.15ms count=9
+D/EGL_emulation( 4952): app_time_stats: avg=105.58ms min=6.86ms max=227.19ms count=10
+D/EGL_emulation( 4952): app_time_stats: avg=135.00ms min=70.62ms max=195.80ms count=7
+I/flutter ( 4952): 01:07 +1: (tearDownAll)
+I/flutter ( 4952): 01:07 +2: All tests passed!
+All tests passed.
+D/EGL_emulation( 4952): app_time_stats: avg=109.83ms min=6.66ms max=195.34ms count=8

@@ -160,7 +160,7 @@ ok
 test_zones_and_whitelist (test_ui_tokens.ScanTest.test_zones_and_whitelist) ... ok
 
 ----------------------------------------------------------------------
-Ran 158 tests in 9.634s
+Ran 158 tests in 12.227s
 
 OK (skipped=12)
 OK : apk-absents, refus Gradle attendu observé.
@@ -260,6 +260,6 @@ Relevé des valeurs écrites en dur (cahier UI §6.1)
   UI1 : 1
   total : 1
 OK : 40 semaines, 280 jours, 1812 exercices du programme, 625 exercices de la base.
-OK : arbre du dépôt contrôlé fichier par fichier, 984 fichiers, 64813576 octets.
-OK : arbre suivi sans secret, 984 fichiers contrôlés un par un (64813576 octets).
+OK : arbre du dépôt contrôlé fichier par fichier, 984 fichiers, 64814312 octets.
+OK : arbre suivi sans secret, 984 fichiers contrôlés un par un (64814312 octets).
 OK : 5 ressources chiffrées, aucun clair suivi.

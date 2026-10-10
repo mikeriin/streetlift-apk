@@ -1,0 +1,34 @@
+{
+  "partie": "b",
+  "theme": "clair",
+  "couleur_dominante": "violet",
+  "accueil": true,
+  "jour": "S20-J1",
+  "absents": {
+    "N × ? reps": 145,
+    "EMOM N min × ? reps par minute": 6
+  },
+  "myo_page": true,
+  "myo_ligne": "B3-10-0",
+  "myo_parties": 4,
+  "myo_conseil": "Encore 1 mini-série au plus (10 s entre deux) ; arrête dès qu’une mini-série n’atteint plus 4.",
+  "chrono_intra": true,
+  "myo_serie": {
+    "reps": "24",
+    "parts": [
+      12,
+      4,
+      4,
+      4
+    ],
+    "validee": true
+  },
+  "contraste_page": true,
+  "groupe_titre": "Circuit · 3 tours · 3 min entre deux tours",
+  "groupe_resultat": {
+    "gj3-mu-squat-saute": {
+      "rounds": 2,
+      "completed": false
+    }
+  }
+}
