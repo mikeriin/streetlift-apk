@@ -70,7 +70,7 @@ ThemeData kitTheme({
     borderRadius: const BorderRadius.all(Radius.circular(KSize.target / 2)),
     borderSide: BorderSide(color: r.filet),
   );
-  final pill = WidgetStatePropertyAll<OutlinedBorder>(KRadius.pill);
+  const pill = WidgetStatePropertyAll<OutlinedBorder>(KRadius.pill);
   return ThemeData(
     useMaterial3: true,
     brightness: dark ? Brightness.dark : Brightness.light,

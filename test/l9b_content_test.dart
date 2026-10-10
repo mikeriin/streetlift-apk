@@ -463,10 +463,11 @@ void main() {
               // Défilement réel : liste des muscles, puis variantes en bas
               // (G3 : gestes lents, pour ne pas dépasser l'en-tête d'un
               // geste lancé sur une fiche longue).
-              await scrollSlowlyTo(tester, find.text('MUSCLES'));
+              // UI0 (refonte UI, C6) : titres de section sans capitales.
+              await scrollSlowlyTo(tester, find.text('Muscles'));
               await scrollSlowlyTo(tester, find.byType(MuscleMap2D));
               expect(tester.takeException(), null);
-              await scrollSlowlyTo(tester, find.text('VARIANTES'));
+              await scrollSlowlyTo(tester, find.text('Variantes'));
               expect(tester.takeException(), null);
             },
           );
@@ -491,7 +492,7 @@ void main() {
       // tête sans animation.
       expect(find.textContaining('Démonstration indisponible'), findsNothing);
       expect(find.byType(ExerciseMannequin), findsNothing);
-      await scrollSlowlyTo(tester, find.text('MUSCLES'));
+      await scrollSlowlyTo(tester, find.text('Muscles'));
       expect(tester.takeException(), null);
     });
 

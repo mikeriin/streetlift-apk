@@ -93,13 +93,13 @@ void main() {
       final mode = dark ? 'sombre' : 'clair';
       await show(
         const SettingsScreen(),
-        KAccentSpec.jaune,
+        KAccentSpec.neon,
         dark,
         size: const Size(320, 720),
         text: 2,
       );
       await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('accent-turquoise')),
+        find.byKey(const ValueKey('accent-solar')),
         200,
         scrollable: find.byType(Scrollable).first,
       );
@@ -109,7 +109,7 @@ void main() {
       }
       await show(
         RootNav(referenceDate: DateTime(2026, 9, 30, 9)),
-        KAccentSpec.jaune,
+        KAccentSpec.neon,
         dark,
         size: const Size(320, 720),
         text: 2,

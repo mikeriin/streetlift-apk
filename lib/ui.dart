@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'kit/kit.dart';
 
-export 'kit/kit.dart';
+// Les transitions restent importées par `motion.dart` (écrans existants).
+export 'kit/kit.dart' hide KContentTransition, KPageTransitionsBuilder;
 
 /// Règles partagées par tous les écrans : espacements, surfaces et actions.
 class KSpace {
@@ -170,7 +171,7 @@ class KBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: KSpacing.s8,
-        vertical: KSpacing.s4 / 2,
+        vertical: KSpacing.s4,
       ),
       decoration: ShapeDecoration(
         color: color == null ? k.haute : c.withValues(alpha: .16),

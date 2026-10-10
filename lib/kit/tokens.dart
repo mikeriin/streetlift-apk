@@ -71,6 +71,10 @@ abstract final class KSize {
   /// laquelle le pas à pas passe sous son libellé (à 100 % de texte).
   static const double valueWidth = 140, stepperRowMin = 300;
 
+  /// Largeur sous laquelle les commandes de la barre de repos passent sous
+  /// le temps restant (à 100 % de texte).
+  static const double restBarMin = 300;
+
   /// Champ de recherche.
   static const double search = 52;
 

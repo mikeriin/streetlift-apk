@@ -1,4 +1,6 @@
 // L5-C — Sélecteur « Couleur dominante » et application sans redémarrage.
+// UI0 (refonte UI) : sélecteur des 8 palettes du kit (pastilles de 56 dp,
+// 4 par ligne, 8 à partir de 448 dp de large), mêmes comportements.
 // Tests de widgets (moteur de test Flutter) : ils ne remplacent ni un essai
 // TalkBack réel ni un essai sur téléphone. Données synthétiques.
 import 'dart:convert';
@@ -14,10 +16,11 @@ import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
+import 'package:streetlift_tracker/kit/kit.dart' show KTokens, KRoles;
 
 Widget settingsPage({
   required bool dark,
-  KAccentSpec accent = KAccentSpec.rouge,
+  KAccentSpec accent = KAccentSpec.bordeaux,
   double textScale = 1,
 }) => MaterialApp(
   theme: buildTheme(dark, accent),
@@ -44,7 +47,8 @@ Future<void> resetAppearance() async {
   store.debugWriteHook = null;
   store.settings
     ..theme = 'dark'
-    ..accent = 'rouge';
+    ..accent = 'bordeaux'
+    ..contrast = false;
   store.saveSettings();
   await store.flush();
 }
@@ -67,12 +71,12 @@ void main() {
   tearDown(resetAppearance);
 
   for (final (width, scale, columns) in [
-    (390.0, 1.0, 2),
-    (600.0, 1.0, 3),
-    (320.0, 1.0, 2),
-    (390.0, 1.3, 2),
-    (390.0, 2.0, 1),
-    (320.0, 2.0, 1),
+    (390.0, 1.0, 4),
+    (600.0, 1.0, 8),
+    (320.0, 1.0, 4),
+    (390.0, 1.3, 4),
+    (390.0, 2.0, 4),
+    (320.0, 2.0, 4),
   ]) {
     testWidgets(
       'sélecteur à $width px, texte ${(scale * 100).round()} % : $columns colonne(s)',
@@ -82,7 +86,7 @@ void main() {
           await tester.pumpWidget(settingsPage(dark: dark, textScale: scale));
           await tester.pumpAndSettle();
           await tester.scrollUntilVisible(
-            find.byKey(const ValueKey('accent-turquoise')),
+            find.byKey(const ValueKey('accent-solar')),
             200,
             scrollable: find.byType(Scrollable).first,
           );
@@ -94,13 +98,16 @@ void main() {
             expect(option, findsOneWidget);
             final rect = tester.getRect(option);
             expect(rect.height, greaterThanOrEqualTo(48));
+            expect(rect.width, greaterThanOrEqualTo(48));
             expect(rect.right, lessThanOrEqualTo(width));
-            expect(find.text(spec.label), findsOneWidget);
+            expect(find.byTooltip(spec.label), findsOneWidget);
             rows.add(rect.top.roundToDouble());
             lefts.add(rect.left.roundToDouble());
           }
+          // Nom de la palette choisie, lisible sans la couleur.
+          expect(find.text('Bordeaux Performance'), findsWidgets);
           expect(lefts.length, columns, reason: 'colonnes $width $scale');
-          expect(rows.length, (6 / columns).ceil());
+          expect(rows.length, (8 / columns).ceil());
           expect(tester.takeException(), isNull);
         }
       },
@@ -114,12 +121,15 @@ void main() {
       await tester.pumpWidget(settingsPage(dark: true));
       await tester.pumpAndSettle();
       final handle = tester.ensureSemantics();
-      expect(find.byKey(const ValueKey('accent-check-rouge')), findsOneWidget);
-      expect(find.byKey(const ValueKey('accent-check-jaune')), findsNothing);
       expect(
-        tester.getSemantics(find.byKey(const ValueKey('accent-rouge'))),
+        find.byKey(const ValueKey('accent-check-bordeaux')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('accent-check-neon')), findsNothing);
+      expect(
+        tester.getSemantics(find.byKey(const ValueKey('accent-bordeaux'))),
         isSemantics(
-          label: 'Rouge Kalis',
+          label: 'Bordeaux Performance',
           isButton: true,
           isInMutuallyExclusiveGroup: true,
           hasCheckedState: true,
@@ -128,27 +138,25 @@ void main() {
         ),
       );
       expect(
-        tester.getSemantics(find.byKey(const ValueKey('accent-jaune'))),
+        tester.getSemantics(find.byKey(const ValueKey('accent-neon'))),
         isSemantics(
-          label: 'Jaune',
+          label: 'Neon Athlete',
           isInMutuallyExclusiveGroup: true,
           hasCheckedState: true,
           isChecked: false,
         ),
       );
       handle.dispose();
-      await tester.tap(find.byKey(const ValueKey('accent-jaune')));
+      await tester.tap(find.byKey(const ValueKey('accent-neon')));
       await tester.pumpAndSettle();
-      expect(store.settings.accent, 'jaune');
-      expect(store.accentMode.value, 'jaune');
+      expect(store.settings.accent, 'neon');
+      expect(store.accentMode.value, 'neon');
       expect(store.settings.theme, 'dark');
-      await tester.pumpWidget(
-        settingsPage(dark: true, accent: KAccentSpec.jaune),
-      );
+      await tester.pumpWidget(settingsPage(dark: true, accent: KAccentSpec.neon));
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('accent-check-jaune')), findsOneWidget);
-      expect(find.byKey(const ValueKey('accent-check-rouge')), findsNothing);
-      expect(find.textContaining('Jaune ·'), findsOneWidget);
+      expect(find.byKey(const ValueKey('accent-check-neon')), findsOneWidget);
+      expect(find.byKey(const ValueKey('accent-check-bordeaux')), findsNothing);
+      expect(find.textContaining('Neon Athlete :'), findsOneWidget);
     },
   );
 
@@ -157,20 +165,20 @@ void main() {
     await tester.pumpWidget(settingsPage(dark: false));
     await tester.pumpAndSettle();
     for (final id in [
-      'vert',
+      'forest',
       'violet',
-      'orange',
-      'turquoise',
-      'jaune',
-      'vert',
+      'solar',
+      'arctic',
+      'neon',
+      'forest',
     ]) {
       await tester.tap(find.byKey(ValueKey('accent-$id')));
       await tester.pump();
     }
     await tester.pumpAndSettle();
     await store.flush();
-    expect(store.settings.accent, 'vert');
-    expect(store.accentMode.value, 'vert');
+    expect(store.settings.accent, 'forest');
+    expect(store.accentMode.value, 'forest');
     expect(store.hasUnsavedChanges, isFalse);
   });
 
@@ -249,7 +257,7 @@ void main() {
       await store.flush();
       final before = journal();
 
-      for (final spec in [KAccentSpec.vert, KAccentSpec.jaune]) {
+      for (final spec in [KAccentSpec.forest, KAccentSpec.neon]) {
         store.settings.accent = spec.id;
         store.saveSettings();
         await tester.pumpAndSettle();
@@ -301,7 +309,7 @@ void main() {
       addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
       store.settings
         ..theme = 'system'
-        ..accent = 'orange';
+        ..accent = 'solar';
       store.saveSettings();
       tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
       await tester.pumpWidget(const SLApp());
@@ -311,7 +319,7 @@ void main() {
       expect(theme().brightness, Brightness.dark);
       expect(
         theme().colorScheme.primary,
-        const KPalette(true, KAccentSpec.orange).accent,
+        const KPalette(true, KAccentSpec.solar).accent,
       );
       expect(SL.dark, isTrue);
       tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
@@ -319,11 +327,11 @@ void main() {
       expect(theme().brightness, Brightness.light);
       expect(
         theme().colorScheme.primary,
-        const KPalette(false, KAccentSpec.orange).accent,
+        const KPalette(false, KAccentSpec.solar).accent,
       );
       expect(SL.dark, isFalse);
-      expect(SL.accentSpec, same(KAccentSpec.orange));
-      expect(store.settings.accent, 'orange');
+      expect(SL.accentSpec, same(KAccentSpec.solar));
+      expect(store.settings.accent, 'solar');
       expect(store.settings.theme, 'system');
       expect(tester.state(find.byType(HomeScreen)), same(home));
       expect(tester.takeException(), isNull);
@@ -333,7 +341,7 @@ void main() {
   );
 
   testWidgets(
-    'les six couleurs × clair/sombre : accueil et réglages sans erreur',
+    'les huit palettes × clair/sombre : accueil et réglages sans erreur',
     (tester) async {
       screen(tester, const Size(360, 780));
       await tester.pumpWidget(const SLApp());
@@ -364,4 +372,38 @@ void main() {
       await tester.pumpAndSettle();
     },
   );
+
+  testWidgets('interrupteur « Contraste renforcé » : appliqué tout de suite', (
+    tester,
+  ) async {
+    screen(tester, const Size(390, 844));
+    await tester.pumpWidget(const SLApp());
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('nav-3')));
+    await tester.pumpAndSettle();
+    final row = find.text('Contraste renforcé');
+    await tester.scrollUntilVisible(
+      row,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+    expect(store.settings.contrast, isTrue);
+    expect(store.contrastMode.value, isTrue);
+    expect(SL.contrast, isTrue);
+    final t = Theme.of(tester.element(row));
+    expect(t.extension<KTokens>()!.contrast, isTrue);
+    expect(
+      t.colorScheme.primary,
+      KRoles.of('bordeaux', dark: true, contrast: true).encre,
+    );
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+    expect(store.settings.contrast, isFalse);
+    expect(SL.contrast, isFalse);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpAndSettle();
+  });
 }

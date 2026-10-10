@@ -52,11 +52,7 @@ class KDayRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final quiet = state == KDayState.done || state == KDayState.missed;
-    final (
-      IconData? icon,
-      Color iconColor,
-      String stateLabel,
-    ) = switch (state) {
+    final (IconData icon, Color iconColor, String stateLabel) = switch (state) {
       KDayState.done => (Icons.check_rounded, k.validation, 'fait'),
       KDayState.missed => (Icons.remove_rounded, k.texte3, 'passé'),
       KDayState.rest => (Icons.bedtime_outlined, k.texte2, 'repos'),
@@ -216,10 +212,9 @@ class KSeasonBar extends StatelessWidget {
           final pillWidth = painter.width + 2 * KSpacing.s8;
           final pillHeight = painter.height + KSpacing.s4;
           painter.dispose();
-          final left = (x - pillWidth / 2).clamp(
-            0.0,
-            math.max(0.0, width - pillWidth),
-          );
+          final left = (x - pillWidth / 2)
+              .clamp(0.0, math.max(0.0, width - pillWidth))
+              .toDouble();
           final starts = <int>[];
           var acc = 0;
           for (final b in blocks) {

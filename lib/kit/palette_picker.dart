@@ -109,6 +109,7 @@ class _Swatch extends StatelessWidget {
     return Semantics(
       inMutuallyExclusiveGroup: true,
       selected: selected,
+      checked: selected,
       button: true,
       label: palette.nom,
       excludeSemantics: true,

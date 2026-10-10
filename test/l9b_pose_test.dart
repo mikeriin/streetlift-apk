@@ -24,13 +24,18 @@ double _contrast(Color a, Color b) {
 }
 
 /// Accents du moteur de référence (kt_pose.js, ACCENTS) : sombre, clair.
+// UI0 (refonte UI) : les 8 palettes du propriétaire remplacent les six
+// couleurs ; l'accent du moteur de référence reste celui de l'application
+// (`KPalette.accent` = rôle `encre`, tableau `palettes_roles.json`).
 const _referenceAccents = {
-  'rouge': (0xFFD96968, 0xFF5E1615),
-  'jaune': (0xFFF5C400, 0xFF7A5800),
-  'vert': (0xFF4EC08A, 0xFF0B4D33),
-  'violet': (0xFFB38CF2, 0xFF44146B),
-  'orange': (0xFFF2924A, 0xFF6E2E05),
-  'turquoise': (0xFF3EC4C4, 0xFF08494F),
+  'bordeaux': (0xFFCA6F6A, 0xFF551515),
+  'obsidian': (0xFFEA4C50, 0xFFCD363D),
+  'arctic': (0xFF668EFF, 0xFF2563EB),
+  'neon': (0xFFB4F044, 0xFF567B00),
+  'titanium': (0xFF7992A3, 0xFF4C6474),
+  'violet': (0xFF986CFF, 0xFF7546DB),
+  'forest': (0xFF5CA283, 0xFF236B50),
+  'solar': (0xFFE86531, 0xFFC34A17),
 };
 
 void main() {
@@ -165,7 +170,7 @@ void main() {
   });
 
   group('recoloration par rôles', () {
-    test('6 palettes × 2 modes : accent du moteur de référence', () {
+    test('8 palettes × 2 modes : accent du moteur de référence', () {
       for (final spec in KAccentSpec.all) {
         final ref = _referenceAccents[spec.id]!;
         for (final dark in const [true, false]) {

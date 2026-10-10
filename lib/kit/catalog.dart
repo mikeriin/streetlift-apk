@@ -197,23 +197,23 @@ final List<KitSample> kitSamples = [
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const KSearchField(hint: 'Rechercher un réglage'),
-        KMenuGroup(
+        const KMenuGroup(
           title: 'Application',
           children: [
-            const KMenuRow(
+            KMenuRow(
               icon: Icons.palette_outlined,
               title: 'Apparence',
               subtitle: 'Thème, palette, contraste, anatomie 3D',
               onTap: _noop,
             ),
-            const KMenuRow(
+            KMenuRow(
               icon: Icons.timer_outlined,
               title: 'Séance',
               subtitle: 'Saisie, chronomètres, écran et unités',
               onTap: _noop,
               highlight: true,
             ),
-            const KMenuRow(
+            KMenuRow(
               icon: Icons.notifications_none_rounded,
               title: 'Notifications',
               subtitle: 'Rappel de séance et son heure',
@@ -222,9 +222,9 @@ final List<KitSample> kitSamples = [
             ),
           ],
         ),
-        KMenuGroup(
+        const KMenuGroup(
           title: 'Plus',
-          children: const [
+          children: [
             KMenuRow(
               icon: Icons.delete_outline_rounded,
               title: 'Supprimer les données',
@@ -332,14 +332,14 @@ final List<KitSample> kitSamples = [
                 ),
               ],
             ),
-            KSetRow(
+            const KSetRow(
               number: '2',
               state: KSetState.current,
-              cells: const [
+              cells: [
                 KSetField('+32,5', onSurface: true, onTap: _noop),
                 KSetField('5', onSurface: true, onTap: _noop),
               ],
-              actions: const [
+              actions: [
                 KIconButton(
                   icon: Icons.check_rounded,
                   tooltip: 'Valider la série 2',
@@ -457,7 +457,7 @@ final List<KitSample> kitSamples = [
           ),
         ),
         const SizedBox(height: KSpacing.s16),
-        KConfirm(
+        const KConfirm(
           title: "Supprimer l'historique de cette séance ?",
           message:
               'Les séries saisies aujourd’hui seront effacées. Le programme ne change pas.',

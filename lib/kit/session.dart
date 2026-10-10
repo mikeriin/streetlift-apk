@@ -260,26 +260,20 @@ class KRestBar extends StatelessWidget {
               KSpacing.s12,
               KSpacing.s12,
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(label, style: KType.micro.copyWith(color: k.texte2)),
-                      Text(
-                        remaining,
-                        style: KType.chrono.copyWith(color: k.texte),
-                      ),
-                    ],
-                  ),
-                ),
-                small(minusLabel, onMinus),
-                const SizedBox(width: KSpacing.s4),
-                small(plusLabel, onPlus),
-                const SizedBox(width: KSpacing.s8),
-                Tooltip(
+            child: LayoutBuilder(
+              builder: (context, c) {
+                final time = Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(label, style: KType.micro.copyWith(color: k.texte2)),
+                    Text(
+                      remaining,
+                      style: KType.chrono.copyWith(color: k.texte),
+                    ),
+                  ],
+                );
+                final stop = Tooltip(
                   message: stopLabel,
                   child: Semantics(
                     button: true,
@@ -303,8 +297,43 @@ class KRestBar extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ],
+                );
+                final buttons = Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    small(minusLabel, onMinus),
+                    const SizedBox(width: KSpacing.s4),
+                    small(plusLabel, onPlus),
+                    const SizedBox(width: KSpacing.s8),
+                    stop,
+                  ],
+                );
+                // Grand texte ou écran étroit : les commandes passent sous
+                // le temps restant (rien n'est coupé).
+                final scale = MediaQuery.textScalerOf(context).scale(1);
+                if (c.maxWidth < KSize.restBarMin * scale) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      time,
+                      const SizedBox(height: KSpacing.s8),
+                      Wrap(
+                        spacing: KSpacing.s4,
+                        runSpacing: KSpacing.s4,
+                        children: [
+                          small(minusLabel, onMinus),
+                          small(plusLabel, onPlus),
+                          stop,
+                        ],
+                      ),
+                    ],
+                  );
+                }
+                return Row(
+                  children: [Expanded(child: time), buttons],
+                );
+              },
             ),
           ),
         ],

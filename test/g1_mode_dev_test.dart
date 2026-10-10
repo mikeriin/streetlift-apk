@@ -282,7 +282,7 @@ void main() {
         final perso = AppStore();
         await perso.init();
         perso.settings
-          ..accent = 'turquoise'
+          ..accent = 'arctic'
           ..theme = 'dark';
         perso.saveSettings();
         expect(
@@ -311,7 +311,7 @@ void main() {
         final test = AppStore();
         await test.init();
         expect(test.isFreshInstall, isTrue);
-        expect(test.settings.accent, 'rouge');
+        expect(test.settings.accent, 'bordeaux');
         expect(test.program.start, isNull);
         expect(test.profile, isNull);
         test.settings.accent = 'violet';
@@ -385,7 +385,7 @@ void main() {
         final back = AppStore();
         await back.init();
         expect(back.isFreshInstall, isFalse);
-        expect(back.settings.accent, 'turquoise');
+        expect(back.settings.accent, 'arctic');
         expect(
           jsonDecode(back.exportForFile(appVersion: 't', at: at)),
           exportBefore,
