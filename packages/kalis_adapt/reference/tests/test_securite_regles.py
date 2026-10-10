@@ -711,3 +711,177 @@ def test_bras_volume_borne_par_la_reference():
     d2 = _bras({'bras': 'A', 'exerciseId': ex, 'intensite': 1.0, 'volume': 1.1})
     out = d2.items_du_jour(None, _Ctx(3, ecrit), [dict(it) for it in ecrit['items']])
     assert 20 < sum(it['sets'] for it in out) <= 22
+
+
+# ----------------------------------------------------------------------
+# Retour gradué au volume (critères `volume_trop_vite`, `tendon_figures` et
+# `seance_trop_longue` du validateur du banc)
+# ----------------------------------------------------------------------
+from banc import securite_banc as sb
+
+
+def pompes(slot, sets, **kw):
+    it = {'slotId': slot, 'exerciseId': 'sw-pompe', 'kind': 'work', 'sets': sets, 'repsLow': 8, 'repsHigh': 10,
+          'targetFlames': 7}
+    it.update(kw)
+    return it
+
+
+def support(slot, sets, secondes):
+    return {'slotId': slot, 'exerciseId': 'cs-support-barres-paralleles', 'kind': 'work', 'sets': sets,
+            'secondsLow': secondes, 'secondsHigh': secondes, 'targetFlames': 7}
+
+
+def seance_faite(k, jour, items, genre='accumulation', **contexte):
+    """Ouvre, sert et ferme une séance dont toutes les séries servies sont
+    faites ; renvoie les items servis."""
+    ouvrir(k, jour, genre=genre, **contexte)
+    out = k.seances.prescrire(copy.deepcopy(items), {}, {}, {})
+    sets = []
+    for it in out:
+        for i in range(it['sets']):
+            sets.append({'exerciseId': it['exerciseId'], 'slotId': it['slotId'], 'setIndex': i,
+                         'kind': it.get('kind'), 'reps': it.get('repsHigh'), 'seconds': it.get('secondsHigh'),
+                         'flames': 7, 'failed': False, 'target': {'flames': 7}})
+    k.seances.fermer({'sets': sets})
+    return out
+
+
+def test_retour_gradue_apres_trois_semaines_reduites():
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+    assert k.seances.vol_semaines[2][0] == 4.0          # pectoraux : 4 séries dures créditées
+    # Retour à l'écrit (10 séries) : +20 % ou +2 séries, et +30 % ou +4 sur
+    # deux semaines ; la plus basse des deux limites tient (comme le banc).
+    l1, l2 = sb.limites_volume([False] * 4, [4.0, 4.0, 4.0, 10.0], 3)
+    assert (l1, l2) == (6.0, 8.0)
+    out = seance_faite(k, 22, [pompes('p', 10)])
+    assert out[0]['sets'] == 6
+    r = [x for x in k.seances.raisons if x['code'] == 'koach.retour_gradue']
+    assert r and r[0]['params']['groupe'] == 'chest' and r[0]['params']['limite'] == 6.0
+    # La semaine suivante repart des 6 séries faites : 6 × 1,2 = 7,2 ou 8.
+    out = seance_faite(k, 29, [pompes('p', 10)])
+    assert out[0]['sets'] == 8
+
+
+def test_retour_gradue_reserve_les_seances_restantes_et_compte_les_manquees():
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+    # Séance restante de la semaine écrite à 4 séries : réservée en entier
+    # (manquée, le banc la compte à son volume écrit).
+    out = seance_faite(k, 22, [pompes('p', 10)], reste_semaine=[[pompes('p', 4)]])
+    assert out[0]['sets'] == 2
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+    # Séance manquée plus tôt dans la semaine : son écrit compte.
+    out = seance_faite(k, 24, [pompes('p', 10)],
+                       manquees=[{'semaine': 3, 'genre': 'accumulation', 'items': [pompes('p', 5)]}])
+    assert out[0]['sets'] == 1
+    # Plus rien de permis : ligne retirée.
+    out = seance_faite(k, 25, [pompes('p', 3)])
+    assert out == []
+    assert any(x['code'] == 'koach.retour_gradue' and x['params']['series'] == 0 for x in k.seances.raisons)
+
+
+def test_retour_gradue_semaines_allegees():
+    # Trois semaines allégées (décharge) : le volume peut revenir à la
+    # semaine allégée / 0,5 (`RAMP_SHARE`), soit 8 séries pour 4.
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)], genre='deload')
+    assert sb.limite_rampe([True, True, True, False], [4.0, 4.0, 4.0, 0.0], 3, 0.2, 2.0) == 8.0
+    out = seance_faite(k, 22, [pompes('p', 10)])
+    assert out[0]['sets'] == 8
+    # Une semaine de charge parmi les trois : rampe ordinaire.
+    k = koach()
+    for w, genre in enumerate(('accumulation', 'deload', 'deload')):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)], genre=genre)
+    out = seance_faite(k, 22, [pompes('p', 10)])
+    assert out[0]['sets'] == 6
+    # Première semaine : aucune limite.
+    k = koach()
+    out = seance_faite(k, 1, [pompes('p', 10)], genre='intro')
+    assert out[0]['sets'] == 10
+
+
+def test_retour_gradue_semaine_d_allegement_reste_un_allegement():
+    # Trois semaines servies à 4 séries (écrit : 10) ; la décharge écrite à 6
+    # séries est un allègement au vu de l'écrit (6 ≤ 0,7 × 10) : servie, elle
+    # doit l'être au vu du servi (≤ 0,7 × 4 = 2,8 séries dures).
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+        k.seances.ecrit_semaines[w] = 10.0    # écrit de la semaine (séances non vues ici)
+    assert sb.semaine_allegee([4.0, 4.0, 4.0, 2.0], 3, [False] * 4)
+    assert not sb.semaine_allegee([4.0, 4.0, 4.0, 3.0], 3, [False] * 4)
+    out = seance_faite(k, 22, [pompes('p', 6)], genre='deload')
+    assert out[0]['sets'] == 2
+    r = [x for x in k.seances.raisons if x['code'] == 'koach.retour_gradue']
+    assert r[0]['params']['groupe'] == 'allegement'
+    # Semaine de charge dont l'écrit n'est pas un allègement : pas de borne
+    # d'allègement (seule la rampe : 6 séries).
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+    out = seance_faite(k, 22, [pompes('p', 6)])
+    assert out[0]['sets'] == 6
+
+
+def test_retour_gradue_tenues_bras_tendus():
+    k = koach(niveau=1)
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [support('s', 1, 10)])
+    assert k.seances.tenue_semaines[2]['push'] == 10.0
+    lim = sb.limite_tenue([False] * 4, [10.0, 10.0, 10.0, 0.0], 3, 1)
+    assert lim == 15.0                                  # 10 × 1,15 = 11,5 ou 10 + 5
+    out = seance_faite(k, 22, [support('s', 3, 10)])
+    # Mêmes séries, tenues raccourcies : 3 × 5 s = 15 s.
+    assert (out[0]['sets'], out[0]['secondsHigh'], out[0]['secondsLow']) == (3, 5, 5)
+    r = [x for x in k.seances.raisons if x['code'] == 'koach.retour_gradue']
+    assert r[0]['params']['groupe'] == 'bras_tendus_push' and r[0]['params']['secondes'] == 5
+    # Sans tenue de la famille dans les trois semaines : aucune hausse contrôlée.
+    k = koach(niveau=1)
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+    assert sb.limite_tenue([False] * 4, [0.0] * 4, 3, 1) is None
+    out = seance_faite(k, 22, [support('s', 1, 20)])
+    assert out[0]['secondsHigh'] == 20
+
+
+def test_duree_bornee_course_bornee_un_jour_d_epreuve():
+    epreuve = {'slotId': 'r', 'exerciseId': 'ca-footing-endurance-fondamentale', 'kind': 'test', 'sets': 1,
+               'distanceMeters': 21100.0, 'targetFlames': 9, 'test': {'kind': 'time_trial'},
+               'reasons': [{'code': 'plan.test_scheduled', 'params': {'note': 'event_day'}}]}
+    budget = 45
+    admis = budget * 1.15 + 3
+    # Course bornée (plus longue course du mois + 10 %) : le test devient une
+    # course de travail, qui n'est plus exemptée par le banc ; sa durée est
+    # ramenée à la durée admise.
+    k = koach()
+    k.seances.courses = [(5, 3000.0, 4, 4), (10, 3000.0, 4, 4), (15, 3000.0, 4, 4)]
+    k.seances.jours_actifs = [5, 10, 15, 19]
+    ouvrir(k, 20, budget=budget, jour_evenement=True)
+    out = servir(k, [epreuve])
+    assert out[0]['kind'] == 'work' and out[0]['distanceMeters'] is None
+    assert any(r['code'] == 'koach.seance_bornee' for r in k.seances.raisons)
+    fiche = {'laterality': FICHES['ca-footing-endurance-fondamentale']['lateralite'], 'resistance': False}
+    assert sb.duree_item_secondes(out[0], fiche) / 60.0 <= admis
+    # Sans course bornée, le test du jour d'épreuve reste exempté.
+    k = koach()
+    ouvrir(k, 20, budget=budget, jour_evenement=True)
+    out = servir(k, [epreuve])
+    assert out[0]['kind'] == 'test' and out[0]['distanceMeters'] == 21100.0
+    # Séance écrite dans le budget : servie telle quelle ; écrite au-delà du
+    # budget : bornée à l'écrit (jamais plus longue), pas raccourcie.
+    k = koach()
+    ouvrir(k, 20, budget=10)
+    ecrit = [pompes('p', 3, restSeconds=90)]
+    assert k.seances._duree_seance(ecrit, 2.6) <= 10 * 1.15 + 3
+    assert servir(k, ecrit)[0]['sets'] == 3
+    k = koach()
+    ouvrir(k, 20, budget=5)
+    out = servir(k, [pompes('p', 3, restSeconds=90)])
+    assert out[0]['sets'] == 3

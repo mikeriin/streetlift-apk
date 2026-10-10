@@ -387,9 +387,40 @@ def securite_saison(saison, infos, tour, pol):
         cl, ex = classer_constats(initial, serv)
         if sans and (cl['introduit'] or cl['aggrave']):
             cl, ex = retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s)
+            # Diagnostic seulement (ne change aucun classement) : constats
+            # absents du plan initial qui disparaissent quand les séances
+            # manquées sont vidées, c'est-à-dire dus au seul volume écrit des
+            # séances manquées (que `blocs_servis_prescrits` garde).
+            out[vue + '_dus_aux_manquees'] = constats_dus_aux_manquees(saison, infos, tour, initial, serv,
+                                                                        blocs_s)
         out[vue] = cl
         out[vue + '_exemples'] = ex
     return out
+
+
+def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
+    """{code: n} des constats de [serv] absents du plan initial (même clé)
+    qui disparaissent quand chaque séance manquée de [blocs_s] est vidée
+    (diagnostic : le volume écrit d'une séance manquée compte dans la vue
+    servie ; Koach ne le sert pas et ne peut que le réserver)."""
+    faites = set((g, bi, wb, di) for (g, bi, wb, di, items) in tour.servi)
+    vide = copy.deepcopy(blocs_s)
+    for (g, bi, wb, di, sim_day) in saison['sessions']:
+        if (g, bi, wb, di) in faites:
+            continue
+        for w in vide[bi]['pass2']['weeks']:
+            if w['weekIndex'] == wb:
+                for d in w['days']:
+                    if d['dayIndex'] == di:
+                        d['items'] = []
+    cles_ini = set(_cle_constat(c) for c in initial)
+    restent = set(_cle_constat(c) for c in sb.constats_saison(saison, infos, blocs=vide))
+    out = {}
+    for c in serv:
+        k = _cle_constat(c)
+        if k not in cles_ini and k not in restent:
+            out[c['code']] = out.get(c['code'], 0) + 1
+    return dict(sorted(out.items()))
 
 
 def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s):
@@ -938,6 +969,11 @@ def critere_securite(ok, temoin, sans_planificateur):
                     exemples.append({'saison': r['saison'], 'constats': r['securite'][vue + '_exemples']})
         cats['saisons_touchees'] = n_intro
         cats['exemples'] = exemples
+        if vue == 'servi_tests_faits':
+            # Diagnostic (hors mesure) : constats « introduits » ou « retour à
+            # l'écrit » dus au seul volume écrit des séances manquées.
+            cats['dont_dus_aux_manquees'] = _somme_dicts(r['securite'].get(vue + '_dus_aux_manquees') or {}
+                                                         for r in ok)
         sec[vue] = cats
         saisons_intro[vue] = n_intro
     initial = _somme_dicts(r['securite']['initial'] for r in ok)

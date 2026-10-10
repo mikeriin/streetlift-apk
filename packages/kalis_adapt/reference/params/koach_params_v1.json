@@ -374,6 +374,30 @@
     "volume_hausse_series": 2,
     "volume_hausse_2sem": 0.3,
     "volume_hausse_2sem_series": 4,
+    "volume_reprise_part": 0.5,
+    "volume_groupes_majeurs": [
+      "chest",
+      "delt_anterior",
+      "delt_middle",
+      "delt_posterior",
+      "lats",
+      "upper_back",
+      "biceps",
+      "triceps",
+      "abs",
+      "lower_back",
+      "glutes",
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "serie_dure_rir_max": 4.0,
+    "semaines_allegees": [
+      "intro",
+      "deload",
+      "test"
+    ],
+    "tenue_hausse_hebdo_s": 5.0,
     "decharge_part": 0.7,
     "decharge_max_semaines": [
       12,
@@ -396,7 +420,7 @@
     "barre_recente_j": 42,
     "premiere_hausse": 0.1,
     "reprise_dose_depart": 0.6,
-    "reprise_dose_hausse": 0.25,
+    "reprise_dose_hausse": 0.2,
     "tentative_recente_part": 0.85,
     "fragile_anciennetes": [
       "under_6_weeks",
