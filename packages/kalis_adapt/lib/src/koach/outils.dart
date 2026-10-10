@@ -121,7 +121,8 @@ bool dans(Object? x, Iterable<Object?> liste) {
 /// `'%.nf' % x` de Python : arrondi correct de la valeur binaire exacte,
 /// au pair sur une égalité exacte (`toStringAsFixed` arrondit l'égalité
 /// vers le haut).
-String fixe(double x, int n) {
+String fixe(num x0, int n) {
+  final x = x0.toDouble();
   if (x.isNaN) return 'nan';
   if (x.isInfinite) return x > 0 ? 'inf' : '-inf';
   final s = x.toStringAsFixed(n);

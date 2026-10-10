@@ -1,4 +1,0 @@
-Formatted lib/src/km/adversaire.dart
-Formatted test/km2_adversaire_test.dart
-Formatted bin/km2_adversaire.dart
-Formatted 33 files (3 changed) in 0.32 seconds.
