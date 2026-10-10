@@ -105,8 +105,8 @@ SCENARIOS = [
      'verite': 'c', 'graine': 7, 'semaines': 2,
      'bilan_bas': [0, 1, 3, 5, 7], 'techniques': ['drop_set', 'myo_reps']},
     {'n': 9, 'titre': 'Hypertrophie : surmenage d\'un mouvement principal, arrêt d\'exercice après échecs',
-     'cle': 'autres_02_hypertrophie_intermediaire', 'scenario': 'reference',
-     'verite': 'c', 'graine': 0, 'semaines': 2},
+     'cle': 'autres_02_hypertrophie_intermediaire', 'scenario': 'maladie',
+     'verite': 'b', 'graine': 0, 'semaines': 7},
     {'n': 10, 'titre': 'Semi-marathon : douleur qui dure (course retirée), bilans au palier 2 '
                        '(course raccourcie ou retirée)',
      'cle': 'autres_06_semi_marathon_intermediaire', 'scenario': 'reference',

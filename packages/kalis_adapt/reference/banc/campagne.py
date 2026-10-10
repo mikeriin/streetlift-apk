@@ -298,8 +298,17 @@ def blocs_servis_prescrits(saison, tour, tests_faits=False):
     pour les tentatives réellement faites et non pour les tentatives
     prescrites (le validateur compte chaque tentative comme une série dure)."""
     faites = {}
+    toutes = {}
     if tests_faits:
         for x in tour.sets:
+            k = (x['simDay'], x['slotId'])
+            toutes[k] = toutes.get(k, 0) + 1
+        for x in tour.sets:
+            # Série dure au sens du validateur : réserve dite de 4 au plus
+            # (flammes >= 3) ; les paliers faciles d'une montée de test n'en
+            # sont pas (ce sont des séries d'approche).
+            if x.get('flames') is not None and x['flames'] < 3 and not x.get('failed'):
+                continue
             k = (x['simDay'], x['slotId'])
             faites[k] = faites.get(k, 0) + 1
     jour_de = {}
@@ -320,6 +329,12 @@ def blocs_servis_prescrits(saison, tour, tests_faits=False):
                                 if n == 0:
                                     continue
                                 i['sets'] = n
+                            elif tests_faits and i.get('sets') and i.get('kind') != 'warmup':
+                                # Volume réellement fait (un exercice arrêté
+                                # avant la fin ne compte pas ses séries non faites).
+                                n = toutes.get((jour_de.get((g, bi, wb, di)), i['slotId']))
+                                if n is not None and n < i['sets']:
+                                    i['sets'] = n
                             nouveaux.append(i)
                         d['items'] = nouveaux
     return blocs
@@ -367,11 +382,64 @@ def securite_saison(saison, infos, tour, pol):
         out['plan_module'] = cl
         out['plan_module_exemples'] = ex
     for vue, sans in (('servi', False), ('servi_tests_faits', True)):
-        serv = sb.constats_saison(saison, infos, blocs=blocs_servis_prescrits(saison, tour, sans))
+        blocs_s = blocs_servis_prescrits(saison, tour, sans)
+        serv = sb.constats_saison(saison, infos, blocs=blocs_s)
         cl, ex = classer_constats(initial, serv)
+        if sans and (cl['introduit'] or cl['aggrave']):
+            cl, ex = retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s)
         out[vue] = cl
         out[vue + '_exemples'] = ex
     return out
+
+
+def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s):
+    """Reclasse en `retour_ecrit` les constats « introduits » d'une semaine w
+    qui disparaissent quand les semaines AVANT w sont celles de l'écrit et
+    que la semaine w reste celle servie : la semaine servie n'a alors rien
+    de trop, c'est le passé servi (allégé par une règle de sécurité :
+    douleur, bilan bas, coupure, arrêt après échecs) qui était plus bas que
+    l'écrit, et le retour au plan écrit dépasse la rampe hebdomadaire
+    calculée sur ce passé allégé. Les constats qui restent sont de vrais
+    dépassements de la semaine servie."""
+    cles_ini = {}
+    for c in initial:
+        cles_ini[_cle_constat(c)] = cles_ini.get(_cle_constat(c), 0) + 1
+    semaines = sorted({c.get('week') for c in serv if c.get('week') is not None})
+    position = {}
+    g = 0
+    for bi, b in enumerate(saison['blocks']):
+        for w in b['pass2']['weeks']:
+            position[g] = (bi, w['weekIndex'])
+            g += 1
+    restants = []
+    retours = {}
+    for c in serv:
+        w = c.get('week')
+        k = _cle_constat(c)
+        if cles_ini.get(k) or w is None or w not in position:
+            restants.append(c)
+            continue
+        cache = retirer_retours_a_l_ecrit.__dict__.setdefault('_c', {})
+        ident = (id(blocs_s), w)
+        if ident not in cache:
+            hyb = copy.deepcopy(saison['blocks'])
+            bi, wi = position[w]
+            for j, sem in enumerate(hyb[bi]['pass2']['weeks']):
+                if sem['weekIndex'] == wi:
+                    for sem_s in blocs_s[bi]['pass2']['weeks']:
+                        if sem_s['weekIndex'] == wi:
+                            hyb[bi]['pass2']['weeks'][j] = copy.deepcopy(sem_s)
+            cache[ident] = {}
+            for x in sb.constats_saison(saison, infos, blocs=hyb):
+                cache[ident][_cle_constat(x)] = True
+        if k in cache[ident]:
+            restants.append(c)
+        else:
+            retours[c['code']] = retours.get(c['code'], 0) + 1
+    retirer_retours_a_l_ecrit.__dict__['_c'] = {}
+    cl, ex = classer_constats(initial, restants)
+    cl['retour_ecrit'] = retours
+    return cl, ex
 
 
 def mesurer_saison(cle, scenario, verite, graine, opts):
@@ -859,8 +927,8 @@ def critere_securite(ok, temoin, sans_planificateur):
             continue
         cats = {}
         exemples = []
-        for cat in ('deja_initial', 'aggrave', 'introduit'):
-            cats[cat] = _somme_dicts(r['securite'][vue][cat] for r in ok)
+        for cat in ('deja_initial', 'aggrave', 'introduit', 'retour_ecrit'):
+            cats[cat] = _somme_dicts(r['securite'][vue].get(cat) or {} for r in ok)
         n_intro = 0
         for r in ok:
             s = r['securite'][vue]

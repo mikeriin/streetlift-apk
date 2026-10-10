@@ -261,7 +261,8 @@
     "test_rir_avance": 1.0,
     "rampe_sd_min": 0.05,
     "rampe_confirmations": 2,
-    "rampe_proba_min": 0.75
+    "rampe_proba_min": 0.75,
+    "rampe_series_travail": 1
   },
   "planification": {
     "trajectoires": 1000,
@@ -283,10 +284,11 @@
       0.25
     ],
     "transport_creation": 0.25,
-    "marge_cible": 0.0,
+    "marge_cible": 0.065,
     "abandon_hebdo": 0.01,
     "abandon_surcharge": 3.0,
-    "gain_min": 0.002
+    "gain_min": 0.002,
+    "rendement_test_sd": 0.07
   },
   "securite": {
     "hausse_par_niveau": [
@@ -476,7 +478,8 @@
     "endurance_facile_min_s": 60,
     "endurance_bornee_reduction": 0.9,
     "wod_fenetre_j": 7,
-    "retour_seances_avant_mesure": 2
+    "retour_seances_avant_mesure": 2,
+    "surmenage_seances_min": 6
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

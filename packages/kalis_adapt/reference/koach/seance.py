@@ -8,6 +8,7 @@ réussite, le tout sous les contraintes dures de sécurité.
 import math
 
 from .numerique import norm_cdf, norm_ppf, clamp
+from .numerique import arrondi as arrondi_decimal
 from .modele import FI, HH, DS
 from .securite import SEMAINES_VERROUILLEES
 
@@ -530,6 +531,9 @@ class Seances(object):
             ex_id = item['exerciseId']
             if plan is not None and ex_id not in testes and item.get('kind') == 'work':
                 vt = self._vrai_test(servi, plan, self.m.pistes.get(ex_id))
+                if vt is not None and not self._duree_permet_test(items, item, vt, sum(
+                        1 for x in out if x.get('koach') == 'vrai_test')):
+                    vt = None
                 if vt is not None:
                     # Vrai test programmé : montée de charge servie comme un
                     # test, à la place d'une série de travail.
@@ -543,13 +547,20 @@ class Seances(object):
                             'loadBasis': item.get('loadBasis'), 'toCalibrate': False,
                             'reasons': [{'code': 'koach.vrai_test', 'params': {}}], 'koach': 'vrai_test'}
                     p2 = dict(plan)
-                    p2.update({'test': True, 'rampe': vt, 'echecs': 0, 'ecrit': test, 'charge_item': None})
+                    p2.update({'test': True, 'rampe': vt, 'echecs': 0, 'ecrit': test, 'charge_item': None,
+                               'durs': 0, 'durs_max': max(1, int(item.get('sets') or 0) - 1)})
                     self.plans[slot] = p2
                     self._raison('koach.vrai_test', exercice=ex_id)
                     out.append(test)
-                    if servi['sets'] >= 3:
-                        servi['sets'] -= 1
+                    # Les deux séries proches de la limite de la montée (la
+                    # barre finale et sa confirmation) remplacent autant de
+                    # séries de travail : le volume dur du jour ne monte pas.
+                    retire = min(int(ta['rampe_series_travail']), servi['sets'] - 1)
+                    if retire > 0:
+                        servi['sets'] -= retire
                     plan['apres_test'] = True
+                    plan['slot_test'] = slot
+                    plan['series_ecrites'] = int(item.get('sets') or 0)
             out.append(servi)
         return self._endurance(out)
 
@@ -651,7 +662,7 @@ class Seances(object):
         retire = int(math.floor(series * s['surmenage_coupe'] + 0.5))
         if retire < 1:
             retire = 1
-        self._raison('koach.surmenage', exercice=ex_id, series=retire, part=round(mem.alerte_part, 3))
+        self._raison('koach.surmenage', exercice=ex_id, series=retire, part=arrondi_decimal(mem.alerte_part, 3))
         return series - retire
 
     # ------------------------------------------------------------------
@@ -971,6 +982,15 @@ class Seances(object):
             return None
         if plan['test']:
             return self._cible_test(item, index, plan)
+        if plan.get('slot_test') is not None:
+            # Après une montée de test : séries dures de la montée (réserve
+            # dite de 4 au plus, ou échec) + séries de travail ne dépassent
+            # jamais les séries écrites de la ligne, une série de travail au
+            # moins étant gardée.
+            durs = (self.plans.get(plan['slot_test']) or {}).get('durs', 0)
+            if index >= 1 and durs + index >= plan['series_ecrites']:
+                self._raison('koach.arret_exercice', exercice=item['exerciseId'], cause='volume_test')
+                return None
         if typ == 'charge':
             return self._cible_charge(item, index, plan)
         if typ == 'reps':
@@ -1043,6 +1063,47 @@ class Seances(object):
         if not self._mesure_utile(item, plan, t):
             return None
         return 2.0 if self.g.niveau == 0 else 1.5
+
+    @staticmethod
+    def _duree_item_s(p):
+        """Durée estimée d'un item, comme le critère `seance_trop_longue`
+        du banc (transition 45 s, 3 s par répétition, repos entre séries),
+        côtés non comptés (la fiche ne dit pas la latéralité ici)."""
+        n = int(p.get('sets') or 0)
+        if n <= 0:
+            return 0.0
+        if p.get('repsHigh') is not None or p.get('repsLow') is not None:
+            rh = p.get('repsHigh') if p.get('repsHigh') is not None else p.get('repsLow')
+            effort = (rh or 0) * 3.0
+        elif p.get('secondsHigh') is not None or p.get('secondsLow') is not None:
+            sh = p.get('secondsHigh') if p.get('secondsHigh') is not None else p.get('secondsLow')
+            effort = float(sh or 0)
+        else:
+            effort = 30.0
+        rest = p.get('restSeconds')
+        rest = float(60 if rest is None else rest)
+        return 45.0 + n * effort + (n - 1) * rest
+
+    def _duree_permet_test(self, items, item, vt, deja):
+        """Vrai si la montée de test tient dans le budget de la séance
+        (budget × `seance_tolerance` + `seance_tolerance_min` minutes, règle
+        `seance_trop_longue` de 0.3.1) ; sans budget connu : un seul vrai
+        test par séance."""
+        ta = self.p['test_adaptatif']
+        budget = (self.contexte or {}).get('budget')
+        if budget is None:
+            return deja == 0
+        n = ta['rampe_series_max'] + (2 if vt[0] == 1 else 0)
+        repos = max(item.get('restSeconds') or 0, ta['repos_test_s'])
+        ajout = 45.0 + n * vt[0] * 3.0 + (n - 1) * repos
+        retire = min(int(ta['rampe_series_travail']), int(item.get('sets') or 0) - 1)
+        if retire > 0:
+            rh = item.get('repsHigh') if item.get('repsHigh') is not None else (item.get('repsLow') or 0)
+            ajout -= retire * (rh * 3.0 + float(60 if item.get('restSeconds') is None else item['restSeconds']))
+        total = 300.0 + ajout * (deja + 1)
+        for p in items:
+            total += self._duree_item_s(p)
+        return total / 60.0 <= float(budget) * self.s['seance_tolerance'] + self.s['seance_tolerance_min']
 
     def _vrai_test(self, item, plan, t):
         """Vrai test (cahier § 5) d'un mouvement principal chargé dont
@@ -1466,6 +1527,10 @@ class Seances(object):
         if genre in ('one_rm', 'attempt_simulation') and typ == 'charge':
             return self._tentative(item, index, plan, t)
         if plan.get('rampe') is not None and typ == 'charge':
+            if plan.get('durs_max') is not None and plan.get('durs', 0) >= plan['durs_max']:
+                # Budget de séries dures de la montée atteint (séries écrites
+                # de la ligne moins une série de travail gardée).
+                return None
             return self._rampe(item, index, plan, t)
         if typ == 'charge':
             # Test xRM : charge prévue pour (répétitions + réserve du test).
@@ -1627,6 +1692,14 @@ class Seances(object):
             if recente is not None and recente < charge and \
                     recente + bw >= s['tentative_recente_part'] * math.exp(mu):
                 charge = recente
+            # Incertitude élargie (diagnostic « rien de spécial », coupure) :
+            # le quantile prudent peut tomber très bas. Une barre déjà
+            # réussie dans les 42 jours reste une ouverture sûre : elle sert
+            # de plancher, sans dépasser le plafond d'ouverture, et pas un
+            # jour de bilan bas ou de zone douloureuse.
+            if recente is not None and recente > charge and baisse >= 1.0:
+                plafond = s['tentative_ouverture_part'] * math.exp(mu) - bw
+                charge = grille.plancher(max(min(recente, plafond), charge))
             # Plus prudent que 0.3.1 : l'ouverture ne dépasse jamais ce que
             # les barres réussies des 42 derniers jours justifient (+10 %,
             # +2,5 % par répétition faite au-delà de la première, 4 au plus :
@@ -1697,6 +1770,10 @@ class Seances(object):
                 plan['baisse'] = 1.0 - self.s['echec_baisse']
             elif echec:
                 plan['echecs'] += 1
+            if plan['test'] and 'durs' in plan:
+                f = s.get('flames')
+                if echec or f is None or f >= 3:
+                    plan['durs'] += 1
 
     def fermer(self, record):
         """Fin de séance : mémoire par exercice (verrous de la prochaine
@@ -1838,6 +1915,11 @@ class Seances(object):
                 continue
             vus.append(ex_id)
             mem = self.mem(ex_id)
+            if self.m.pistes[ex_id].seances < s['surmenage_seances_min']:
+                # Estimation pas encore posée : une baisse de la capacité
+                # estimée pendant les premières séances est de l'apprentissage
+                # (a priori trop haut), pas du surmenage.
+                continue
             suite = [e for e in mem.forme if e[0] != self.jour] + [(self.jour, self._forme(ex_id))]
             while len(suite) > 3:
                 suite.pop(0)

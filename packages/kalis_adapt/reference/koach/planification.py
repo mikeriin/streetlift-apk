@@ -483,7 +483,12 @@ class Planification(Extension):
             mu_fin = tirage['mu'].T[None, :, :] + g_n * taux.T[None, :, :] + proc * tirage['bruit_proc'].T[None, :, :]
             if self.cibles and jour_ech is not None:
                 j = self.params['jour']
-                sd_jour = math.sqrt(j['sigma_seance'] ** 2 + j['sigma_exercice'] ** 2)
+                # Le jour J compte la barre RÉUSSIE, pas la capacité : le
+                # rendement d'un test (meilleure barre / maximum vrai du
+                # jour) a une moyenne (`marge_cible`) et une dispersion
+                # (`rendement_test_sd`) mesurées sur le banc.
+                sd_jour = math.sqrt(j['sigma_seance'] ** 2 + j['sigma_exercice'] ** 2
+                                    + pl['rendement_test_sd'] ** 2)
                 fe = f_ech if f_ech is not None else F
                 jour = mu_fin - tirage['kg'] * fe[:, None, None] + sd_jour * tirage['bruit_jour'].T[None, :, :]
                 tout = np.ones((C, N), dtype=bool)
@@ -584,7 +589,7 @@ class Planification(Extension):
         # recherche, et passer le validateur de sécurité.
         ref = np.zeros((1, d))
         v_ref, p_ref, _ = self.evaluer(ref, tirage, semaine, blocs, qualites, echelle=echelle)
-        choisi = np.zeros(d)
+        choisi = None
         v_choisi = float(v_ref[0])
         essais = [meilleur_x] + candidats_finaux
         for x in essais:
@@ -604,17 +609,49 @@ class Planification(Extension):
                     choisi = xx
                     v_choisi = float(vxx[0])
                     break
-        vol, inten = self.decoder(choisi, blocs, qualites)
-        for w in range(semaine, self.horizon):
-            t = self._table(w)
-            if t is None:
-                continue
-            a = vol[t['bloc']].copy()
-            i = inten[t['bloc']]
-            if t['verrou']:
-                a = np.minimum(a, 1.0)
-                i = min(i, 0.0)
-            self.plan[w] = {'volume': [float(x) for x in a], 'intensite': float(i)}
+        garde = False
+        if choisi is None:
+            # Aucun plan meilleur et sûr. Revenir d'un coup à la référence
+            # ferait un saut de charge ou de volume après des semaines
+            # modulées (jusqu'à +10 % d'une semaine à l'autre) : le plan en
+            # cours, validé lundi dernier avec le même passé, est gardé ;
+            # à défaut la référence si le validateur l'accepte ; à défaut la
+            # dernière modulation servie est prolongée (aucun saut).
+            a_venir = [w for w in range(semaine, self.horizon) if self._table(w) is not None]
+            if all(w in self.plan for w in a_venir):
+                garde = True
+            elif self._sur(np.zeros(d), semaine, blocs, qualites):
+                choisi = np.zeros(d)
+            else:
+                garde = True
+                passees = [w for w in sorted(self.plan) if w < semaine]
+                derniere = self.plan[passees[-1]] if passees else None
+                for w in a_venir:
+                    if w in self.plan or derniere is None:
+                        continue
+                    t = self._table(w)
+                    a = [float(x) for x in derniere['volume']]
+                    i = float(derniere['intensite'])
+                    if t['verrou']:
+                        a = [min(x, 1.0) for x in a]
+                        i = min(i, 0.0)
+                    self.plan[w] = {'volume': a, 'intensite': i}
+        if choisi is not None:
+            vol, inten = self.decoder(choisi, blocs, qualites)
+            for w in range(semaine, self.horizon):
+                t = self._table(w)
+                if t is None:
+                    continue
+                a = vol[t['bloc']].copy()
+                i = inten[t['bloc']]
+                if t['verrou']:
+                    a = np.minimum(a, 1.0)
+                    i = min(i, 0.0)
+                self.plan[w] = {'volume': [float(x) for x in a], 'intensite': float(i)}
+        else:
+            choisi = np.zeros(d)
+            vol, inten = self.decoder(choisi, blocs, qualites)
+        ligne['plan_garde'] = garde
         v, pc, dist, det = self.evaluer(choisi[None, :], tirage, semaine, blocs, qualites, detail=True, echelle=echelle)
         ligne.update({'plans': evalues + 2 + len(essais), 'valeur': float(v[0]), 'valeur_reference': float(v_ref[0]),
                       'objectif': float(det['J'][0]), 'transport': float(dist[0]),

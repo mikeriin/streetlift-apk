@@ -222,7 +222,7 @@ def test_surmenage_alerte_et_lignes_retirees():
     k = koach()
     s = k.seances
     ex = 'mu-back-squat-barre-basse'
-    k.modele.piste(ex)
+    k.modele.piste(ex).seances = 6      # estimation posée (hors apprentissage du début)
     valeurs = iter([5.0, 4.9, 4.9])     # deux séances à −9,5 % de la référence
     s._forme = lambda ex_id: next(valeurs)
     for jour in (1, 5, 9):
