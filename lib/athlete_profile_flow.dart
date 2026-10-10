@@ -843,10 +843,8 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     t,
     style: KType.corpsFort.copyWith(color: KTokens.of(context).texte),
   );
-  Widget _hint(String t) => Text(
-    t,
-    style: KType.detail.copyWith(color: KTokens.of(context).texte2),
-  );
+  Widget _hint(String t) =>
+      Text(t, style: KType.detail.copyWith(color: KTokens.of(context).texte2));
 
   /// Choix en puces du kit (UI4) : une puce choisie prend l'aplat `pleine`.
   /// Un nouvel appui sur une puce choisie la décoche (`onSelected(o, false)`),
@@ -866,11 +864,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           o.$2,
           key: ValueKey('$keyPrefix-${_keyOf(o.$1)}'),
           selected: selected(o.$1),
-          onTap:
-              multi &&
-                  enabled != null &&
-                  !enabled(o.$1) &&
-                  !selected(o.$1)
+          onTap: multi && enabled != null && !enabled(o.$1) && !selected(o.$1)
               ? null
               : () => setState(() => onSelected(o.$1, !selected(o.$1))),
         ),
@@ -1471,8 +1465,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   Future<T?> _openForm<T>({
     required Key key,
     required String title,
-    required List<Widget> Function(BuildContext ctx, StateSetter set)
-    children,
+    required List<Widget> Function(BuildContext ctx, StateSetter set) children,
     required Widget Function(BuildContext ctx, StateSetter set) action,
   }) => Navigator.of(context).push<T>(
     MaterialPageRoute<T>(
@@ -1545,9 +1538,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     });
   }
 
-  Future<String?> _pickExercise() => Navigator.of(context).push<String>(
-    MaterialPageRoute(builder: (_) => const ExercisePickerPage()),
-  );
+  Future<String?> _pickExercise() => Navigator.of(
+    context,
+  ).push<String>(MaterialPageRoute(builder: (_) => const ExercisePickerPage()));
 
   /// Modifie l'objectif [i] sans le supprimer (même identifiant, même
   /// place dans la liste).

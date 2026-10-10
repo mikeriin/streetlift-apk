@@ -40,10 +40,8 @@ class DisclaimerCard extends StatelessWidget {
 }
 
 /// Titre d'une carte (texte de santé ou de conseil).
-Widget _title(BuildContext context, String t) => Text(
-  t,
-  style: KType.titreCarte.copyWith(color: KTokens.of(context).texte),
-);
+Widget _title(BuildContext context, String t) =>
+    Text(t, style: KType.titreCarte.copyWith(color: KTokens.of(context).texte));
 
 /// Texte courant d'une carte.
 Widget _text(BuildContext context, String t, {Key? key, bool strong = false}) =>
@@ -425,9 +423,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               : () async {
                   await Clipboard.setData(ClipboardData(text: text));
                   if (!context.mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Texte copié.')),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('Texte copié.')));
                 },
           icon: Icons.copy_rounded,
           label: 'Copier le texte',

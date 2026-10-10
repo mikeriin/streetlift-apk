@@ -199,7 +199,11 @@ void main() {
       await tester.tap(row);
       await tester.pumpAndSettle();
       // Le réglage est sur cette page : l'appui 2 le change.
-      await scrollToAction(tester, find.text(entry.label).first);
+      await tester.scrollUntilVisible(
+        find.text(entry.label),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text(entry.label), findsWidgets, reason: entry.id);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
@@ -231,6 +235,11 @@ void main() {
     expect(store.settings.defaultRest, rest + 15);
     expect(find.text(settingsSecondsLabel(rest + 15)), findsOneWidget);
     // §4.6 : description corrigée de la vibration.
+    await tester.scrollUntilVisible(
+      find.textContaining('Fin de chrono, validation et records'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(
       find.textContaining('Fin de chrono, validation et records'),
       findsOneWidget,

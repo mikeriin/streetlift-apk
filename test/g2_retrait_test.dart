@@ -438,11 +438,7 @@ void main() {
         store = AppStore();
         await store.init();
       });
-      await pump(
-        tester,
-        const SettingsScreen(page: SettingsPage.data),
-        true,
-      );
+      await pump(tester, const SettingsScreen(page: SettingsPage.data), true);
       final tile = find.byKey(const ValueKey('settings-retired-copy'));
       await tester.scrollUntilVisible(
         tile,
@@ -453,10 +449,7 @@ void main() {
       await tester.pumpAndSettle();
       // UI4 (R3) : le titre reprend le libellé de l'entrée des Réglages
       // (capitales des titres, U3).
-      expect(
-        find.text('COPIE D’AVANT LA SUPPRESSION DES WOD'),
-        findsOneWidget,
-      );
+      expect(find.text('COPIE D’AVANT LA SUPPRESSION DES WOD'), findsOneWidget);
       await tester.scrollUntilVisible(
         find.byKey(const ValueKey('retired-notice-close')),
         200,

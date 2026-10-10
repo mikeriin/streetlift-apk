@@ -133,7 +133,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.highlight != null) {
+    // Notifications : le panneau met lui-même ses lignes en évidence ; elles
+    // sont en haut de la page.
+    if (widget.highlight != null &&
+        widget.page != SettingsPage.notifications) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _reveal(0));
     }
   }
@@ -1099,8 +1102,6 @@ class _AccentPicker extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          KRowLabel('Palette', subtitle: current.label),
-          const SizedBox(height: KSpacing.s8),
           KPalettePicker(selectedId: current.id, onSelected: onSelected),
           const SizedBox(height: KSpacing.s8),
           Text(

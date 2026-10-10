@@ -29,8 +29,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streetlift_tracker/anatomy_screen.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
+import 'package:streetlift_tracker/athlete_profile_screen.dart';
 import 'package:streetlift_tracker/dev/dev_session.dart';
+import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
 import 'package:streetlift_tracker/plan/evolution_widgets.dart';
@@ -355,14 +358,56 @@ void main() {
     await screen(tester, 'stats_bas');
     await home(tester);
 
-    // Arsenal et Réglages (UI4).
+    // Arsenal et Réglages (UI4). Les clés du lot (racine d'Arsenal,
+    // rubriques des Réglages) n'existent pas sur la base : l'appui est alors
+    // sauté et la capture montre l'écran d'avant au même endroit.
+    Future<void> tapIf(WidgetTester tester, Finder f) async {
+      await scrollTo(tester, f);
+      final hit = f.hitTestable();
+      if (hit.evaluate().isEmpty) return;
+      await tester.tap(hit.first);
+      await wait(tester, 1500);
+    }
+
+    Future<void> typeIn(WidgetTester tester, Finder field, String q) async {
+      final f = field.hitTestable();
+      if (f.evaluate().isEmpty) return;
+      await tester.tap(f.first);
+      await wait(tester, 400);
+      await tester.enterText(f.first, q);
+      await wait(tester, 1200);
+      FocusManager.instance.primaryFocus?.unfocus();
+      await wait(tester, 800);
+    }
+
     await tab(tester, 0);
     await screen(tester, 'arsenal');
     await toEnd(tester);
     await underDock(tester, 'arsenal');
     await home(tester);
+    await tab(tester, 0);
+    await typeIn(
+      tester,
+      find.byKey(const ValueKey('arsenal-search')),
+      'pector',
+    );
+    await screen(tester, 'arsenal_recherche');
+    await home(tester);
+    await screen(
+      tester,
+      'anatomie_pectoraux',
+      open: const AnatomyScreen(initialGroup: 'pectoraux'),
+      check: find.byType(AnatomyScreen),
+    );
+    await home(tester);
     await tab(tester, 3);
     await screen(tester, 'reglages');
+    await toEnd(tester);
+    await underDock(tester, 'reglages');
+    await screen(tester, 'reglages_bas');
+    await home(tester);
+    await tab(tester, 3);
+    await tapIf(tester, find.byKey(const ValueKey('settings-page-appearance')));
     final picker = find.byKey(const ValueKey('accent-picker'));
     await scrollTo(tester, picker);
     await screen(tester, 'reglages_apparence', check: picker);
@@ -370,9 +415,33 @@ void main() {
     final contrast = find.text('Contraste renforcé');
     await scrollTo(tester, contrast);
     await screen(tester, 'reglages_contraste', check: contrast);
-    await toEnd(tester);
-    await underDock(tester, 'reglages');
-    await screen(tester, 'reglages_bas');
+    await home(tester);
+    await tab(tester, 3);
+    await tapIf(tester, find.byKey(const ValueKey('settings-page-session')));
+    await screen(tester, 'reglages_seance');
+    await home(tester);
+    await tab(tester, 3);
+    await typeIn(
+      tester,
+      find.byKey(const ValueKey('settings-search')),
+      'repos',
+    );
+    await screen(tester, 'reglages_recherche');
+    await home(tester);
+    await tab(tester, 3);
+    await tapIf(tester, find.byKey(const ValueKey('settings-page-data')));
+    await screen(tester, 'reglages_donnees');
+    await home(tester);
+    await tab(tester, 3);
+    await tapIf(tester, find.byKey(const ValueKey('settings-page-about')));
+    await screen(tester, 'reglages_aide');
+    await home(tester);
+    await screen(
+      tester,
+      'profil',
+      open: const ProfileScreen(),
+      check: find.byType(ProfileScreen),
+    );
     await home(tester);
     await screen(
       tester,
@@ -425,6 +494,11 @@ void main() {
       ],
     ], () => find.byType(EventDayScreen));
     await route(tester, 'mes_references', [
+      [
+        settingsTab,
+        () => find.byKey(const ValueKey('settings-profile')),
+        () => find.byKey(const ValueKey('profile-references')),
+      ],
       [settingsTab, () => text('Mes références')],
       [settingsTab, () => textCi('Profil'), () => text('Mes références')],
       [settingsTab, () => text('Programme'), () => text('Références')],
@@ -434,6 +508,75 @@ void main() {
       [settingsTab, () => text('Séance')],
       [settingsTab, () => text('Chronomètres')],
     ], () => find.text('Repos par défaut'));
+    // UI4 : parcours avec saisie (recherche) ; appuis comptés onglet compris,
+    // la saisie n'est pas un appui. Null si le chemin n'existe pas (base).
+    Future<void> typedRoute(
+      String name,
+      int tabIndex,
+      Finder field,
+      String query,
+      List<Finder Function()> steps,
+      Finder Function() reached,
+    ) async {
+      await home(tester);
+      Object? result;
+      final f = find.byKey(ValueKey('nav-$tabIndex'));
+      if (f.evaluate().isNotEmpty) {
+        await tester.tap(f.first);
+        await wait(tester, 1500);
+        var taps = 1;
+        var ok = field.hitTestable().evaluate().isNotEmpty;
+        if (ok) {
+          await tester.tap(field.hitTestable().first);
+          taps++;
+          await wait(tester, 400);
+          await tester.enterText(field.hitTestable().first, query);
+          await wait(tester, 1200);
+          FocusManager.instance.primaryFocus?.unfocus();
+          await wait(tester, 800);
+        }
+        for (final step in steps) {
+          if (!ok) break;
+          final s = step();
+          await scrollTo(tester, s);
+          final hit = s.hitTestable();
+          if (hit.evaluate().isEmpty) {
+            ok = false;
+            break;
+          }
+          await tester.tap(hit.first);
+          taps++;
+          await wait(tester, 1500);
+        }
+        if (ok) await scrollTo(tester, reached());
+        if (ok && await until(tester, reached(), max: 30)) {
+          result = {'appuis': taps, 'chemin': 0, 'saisie': query};
+        }
+      }
+      (releve['parcours'] as Map<String, Object?>)[name] = result;
+      record();
+      await home(tester);
+    }
+
+    await typedRoute(
+      'reglage_repos_recherche',
+      3,
+      find.byKey(const ValueKey('settings-search')),
+      'repos',
+      [() => find.byKey(const ValueKey('settings-result-rest'))],
+      () => find.text('Repos par défaut'),
+    );
+    await typedRoute(
+      'exercices_muscle_recherche',
+      0,
+      find.byKey(const ValueKey('arsenal-search')),
+      'pectoraux',
+      [
+        () => find.byKey(const ValueKey('arsenal-group-pectoraux')),
+        () => find.byKey(const ValueKey('anatomy-exercises-pectoraux')),
+      ],
+      () => find.byType(ExerciseLibraryScreen),
+    );
     releve['captures'] = shots;
     record();
   });
