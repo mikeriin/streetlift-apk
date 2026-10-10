@@ -32,11 +32,20 @@ class StatsPerformance extends StatelessWidget {
     final records = statsRecords(store);
     final unknownLifts = defaults.mainLifts.any((l) => !store.refKnown(l.ref));
     final unknownReps = defaults.repMax.any((r) => !store.refKnown(r.ref));
-    Widget fillIn() => KNotice(
-      message:
+    Widget fillIn() => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const StatsText(
           'Renseigne-les quand tu les connais : les jauges partent de ces valeurs.',
-      actionLabel: 'Mes références',
-      onAction: () => openReferences(context),
+          muted: true,
+        ),
+        const SizedBox(height: KSpacing.s8),
+        KTonalButton(
+          label: 'Mes références',
+          icon: Icons.tune_rounded,
+          onPressed: () => openReferences(context),
+        ),
+      ],
     );
     return StatsList(
       key: const PageStorageKey('stats-performance-scroll'),

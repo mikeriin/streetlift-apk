@@ -84,7 +84,7 @@ void showStatsLevel(BuildContext context) {
   statsSheet(
     context,
     'Ton niveau, tes récompenses',
-    subtitle: 'Niveau ${p.level} · ${p.rank.title}',
+    subtitle: 'Niveau ${p.level}\u00A0· ${p.rank.title}',
     [
       StatsBar(
         value: p.fraction,
@@ -92,7 +92,7 @@ void showStatsLevel(BuildContext context) {
         description: '${p.inLevel} sur ${p.need} XP',
       ),
       StatsText(
-        '${p.remaining} XP avant le niveau ${p.level + 1} · ${p.totalXp} XP cumulés.',
+        '${p.remaining} XP avant le niveau ${p.level + 1}\u00A0· ${p.totalXp} XP cumulés.',
       ),
       const KSectionTitle('Tes rangs'),
       StatsSheetGroup(
@@ -108,7 +108,7 @@ void showStatsLevel(BuildContext context) {
                   iconColor: p.level >= rank.level ? k.validation : k.texte2,
                   title: rank.title,
                   subtitle:
-                      'Niveau ${rank.level} · ${Progression.xpAtLevel(rank.level)} XP cumulés',
+                      'Niveau ${rank.level}\u00A0· ${Progression.xpAtLevel(rank.level)} XP cumulés',
                   trailing: rank == p.rank ? const KChip('Actuel') : null,
                 );
               },
@@ -204,7 +204,7 @@ class StatsMissionCard extends StatelessWidget {
               Text(
                 done
                     ? 'Objectif atteint'
-                    : '${mission.current} / ${mission.target}',
+                    : '${mission.current}\u00A0/\u00A0${mission.target}',
                 style: KType.micro.copyWith(
                   color: done ? k.validation : k.texte,
                 ),
@@ -291,11 +291,11 @@ class _StatsProgressionState extends State<StatsProgression> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Niveau ${p.level} · ${p.rank.title}',
+                          'Niveau ${p.level}\u00A0· ${p.rank.title}',
                           style: KType.titreCarte.copyWith(color: k.texte),
                         ),
                         Text(
-                          'Ta feuille de personnage · ${p.earnedBadges} / ${p.badges.length} badges obtenus',
+                          'Ta feuille de personnage\u00A0· ${p.earnedBadges}\u00A0/\u00A0${p.badges.length} badges obtenus',
                           style: KType.detail.copyWith(color: k.texte2),
                         ),
                       ],
@@ -356,7 +356,7 @@ class _StatsProgressionState extends State<StatsProgression> {
               icon: Icons.flag_outlined,
               title: 'Défis de la semaine',
               subtitle:
-                  '${p.week.missions.where((m) => m.complete).length} / ${p.week.missions.length} objectifs atteints · bonus XP automatiques',
+                  '${p.week.missions.where((m) => m.complete).length}\u00A0/\u00A0${p.week.missions.length} objectifs atteints\u00A0· bonus XP automatiques',
               onTap: () => showStatsMissions(context),
             ),
             KMenuRow(
@@ -371,8 +371,8 @@ class _StatsProgressionState extends State<StatsProgression> {
               icon: Icons.sports_martial_arts_rounded,
               title: 'Boss',
               subtitle: boss == null
-                  ? 'Tous vaincus · $defeated / ${g.bosses.length}'
-                  : '${boss.name} · ${bossHint(g, boss)}',
+                  ? 'Tous vaincus\u00A0· $defeated\u00A0/\u00A0${g.bosses.length}'
+                  : '$defeated\u00A0/\u00A0${g.bosses.length} vaincus\u00A0· ${boss.name}\u00A0· ${bossHint(g, boss)}',
               onTap: () => showBosses(context),
             ),
             KMenuRow(
@@ -381,7 +381,7 @@ class _StatsProgressionState extends State<StatsProgression> {
               title: 'Saisons',
               subtitle: season == null
                   ? 'Hors programme'
-                  : 'Saison ${season.index} · ${season.name} · ${(season.fraction * 100).round()} %',
+                  : 'Saison ${season.index}\u00A0· ${season.name}\u00A0· ${(season.fraction * 100).round()}\u00A0%',
               onTap: () => showSeasons(context),
             ),
             KMenuRow(
@@ -389,7 +389,7 @@ class _StatsProgressionState extends State<StatsProgression> {
               icon: Icons.workspace_premium_rounded,
               title: 'Tes titres',
               subtitle:
-                  '${g.earnedTitles.length} / ${g.titles.length} obtenus · ${store.settings.title.isEmpty ? 'le rang est affiché' : 'affiché : ${store.settings.title}'}',
+                  '${g.earnedTitles.length}\u00A0/\u00A0${g.titles.length} obtenus\u00A0· ${store.settings.title.isEmpty ? 'le rang est affiché' : 'affiché : ${store.settings.title}'}',
               onTap: () => showTitles(context),
             ),
           ],
@@ -511,7 +511,7 @@ class _BadgeNode extends StatelessWidget {
               alignment: WrapAlignment.spaceBetween,
               children: [
                 Text(
-                  '${item.current.clamp(0, item.badge.target)} / ${item.badge.target}',
+                  '${item.current.clamp(0, item.badge.target)}\u00A0/\u00A0${item.badge.target}',
                   style: KType.detail.copyWith(color: k.texte2),
                 ),
                 Text(
@@ -573,8 +573,8 @@ class _BadgeNode extends StatelessWidget {
       ),
       StatsText(
         item.earned
-            ? 'Objectif atteint · total actuel : ${item.current}'
-            : '${item.current} / ${item.badge.target} · encore ${item.badge.target - item.current} pour ce palier',
+            ? 'Objectif atteint\u00A0· total actuel : ${item.current}'
+            : '${item.current}\u00A0/\u00A0${item.badge.target}\u00A0· encore ${item.badge.target - item.current} pour ce palier',
       ),
       StatsText(
         item.earned

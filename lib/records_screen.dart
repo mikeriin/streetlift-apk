@@ -99,7 +99,7 @@ class RecordsScreen extends StatelessWidget {
           if (weighted.isNotEmpty)
             KMenuGroup(
               key: const ValueKey('records-weighted'),
-              title: 'Avec charge',
+              title: 'Meilleure charge',
               children: [
                 for (final r in weighted)
                   KMenuRow(
@@ -107,14 +107,14 @@ class RecordsScreen extends StatelessWidget {
                     leading: icon(),
                     title: r.name,
                     subtitle:
-                        '${statsNumber(r.bests.bestKg)} kg × ${r.bests.bestKgReps} · 1RM estimé ${statsNumber(r.bests.bestE1rm)} kg${_on(r.weightedAt)}',
+                        '${statsNumber(r.bests.bestKg)} kg × ${r.bests.bestKgReps}\u00A0· 1RM estimé ${statsNumber(r.bests.bestE1rm)} kg${_on(r.weightedAt)}',
                   ),
               ],
             ),
           if (bodyweight.isNotEmpty)
             KMenuGroup(
               key: const ValueKey('records-bodyweight'),
-              title: 'Au poids de corps',
+              title: 'Meilleures répétitions au poids de corps',
               children: [
                 for (final r in bodyweight)
                   KMenuRow(

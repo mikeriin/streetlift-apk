@@ -35,15 +35,19 @@ class StatsOverview extends StatelessWidget {
         // laisseraient pas la place aux anneaux et aux boucliers.
         const WeeklyGoalCard(),
         const StreakCard(),
-        const KSectionTitle('Quêtes'),
+        const KSectionTitle(
+          'Quêtes : ta prochaine journée et les défis de la semaine (bonus XP)',
+        ),
         const MainQuestCard(),
         StatsMissionCard(
           next,
           overline:
-              'Défis de la semaine · $validated / ${p.week.missions.length} validés · bonus XP automatiques',
+              'Défis de la semaine\u00A0· $validated / ${p.week.missions.length} validés\u00A0· bonus XP automatiques',
           onTap: journey,
         ),
-        KSectionTitle('Campagne', actionLabel: 'Parcours', onAction: journey),
+        const KSectionTitle(
+          'Campagne : chapitres du programme, boss et saison',
+        ),
         CampaignStrip(onTap: journey),
         BossCard(onTap: journey),
         SeasonCard(onTap: journey),
@@ -76,7 +80,9 @@ class StatsOverview extends StatelessWidget {
             ),
           ],
         ),
-        const KSectionTitle('Ton rythme, sur les 8 dernières semaines'),
+        const KSectionTitle(
+          'Ton rythme : jours actifs des 8 dernières semaines',
+        ),
         _ActivityCard(p),
         const StatsText(
           'Deux jours actifs valident une semaine. Les jours de repos font partie du parcours.',
@@ -145,7 +151,7 @@ class _ActivityCard extends StatelessWidget {
       context,
       'Ton activité sur 8 semaines',
       subtitle:
-          'Meilleure série : ${statsPlural(best, 'semaine', 'semaines')} · ${statsPlural(progress.activeWeeks, 'semaine validée', 'semaines validées')}',
+          'Meilleure série : ${statsPlural(best, 'semaine', 'semaines')}\u00A0· ${statsPlural(progress.activeWeeks, 'semaine validée', 'semaines validées')}',
       [
         StatsSheetGroup(
           children: [
@@ -161,7 +167,7 @@ class _ActivityCard extends StatelessWidget {
                     iconColor: ok ? k.validation : k.texte2,
                     title: 'Semaine du ${statsDate(week.monday)}',
                     subtitle:
-                        '${statsPlural(week.activeDays.length, 'jour actif', 'jours actifs')} · ${statsPlural(week.sessions, 'séance', 'séances')} · ${statsPlural(week.sets, 'série', 'séries')}',
+                        '${statsPlural(week.activeDays.length, 'jour actif', 'jours actifs')}\u00A0· ${statsPlural(week.sessions, 'séance', 'séances')}\u00A0· ${statsPlural(week.sets, 'série', 'séries')}',
                   );
                 },
               ),

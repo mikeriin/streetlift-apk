@@ -107,7 +107,7 @@ void main() {
       expect(find.text('Ton arbre de progression'), findsOneWidget);
       // Défi, campagne : même chose.
       for (final target in [
-        find.textContaining('Défis de la semaine ·'),
+        find.textContaining('Défis de la semaine\u00A0·'),
         find
             .descendant(
               of: find.byKey(const ValueKey('game-campaign')),

@@ -24,6 +24,12 @@ import 'store_widget.dart';
 
 String _plural(int n, String one, String many) => '$n ${n > 1 ? many : one}';
 
+/// R9 : les textes d'aide des attributs (game.dart, hors zone) nomment
+/// encore l'ancienne page ; affichés sous le nom de sa destination.
+String _r9(String text) => text
+    .replaceAll('références Pilotage', 'Mes références')
+    .replaceAll('(Références)', '(Mes références)');
+
 /// Puce de rareté d'un badge : neutre (C5), l'icône distingue les raretés.
 class RarityChip extends StatelessWidget {
   final BadgeRarity rarity;
@@ -388,8 +394,8 @@ class CharacterCard extends StoreWidget {
           const SizedBox(height: KSpacing.s8),
           Text(
             next == null
-                ? '${p.remaining} XP avant le niveau ${p.level + 1} · rang maximal atteint'
-                : '${p.remaining} XP avant le niveau ${p.level + 1} · ${next.title} au niveau ${next.level}',
+                ? '${p.remaining} XP avant le niveau ${p.level + 1}\u00A0· rang maximal atteint'
+                : '${p.remaining} XP avant le niveau ${p.level + 1}\u00A0· ${next.title} au niveau ${next.level}',
             style: KType.detail.copyWith(color: ink),
           ),
           const SizedBox(height: KSpacing.s16),
@@ -529,7 +535,7 @@ void showCharacterSheet(BuildContext context) {
     context,
     'Ta feuille de personnage',
     subtitle:
-        'Niveau ${p.level} · ${p.rank.title}${prestige > 0 ? ' · prestige $prestige' : ''}',
+        'Niveau ${p.level}\u00A0· ${p.rank.title}${prestige > 0 ? ' · prestige $prestige' : ''}',
     [
       Builder(
         builder: (context) {
@@ -553,7 +559,7 @@ void showCharacterSheet(BuildContext context) {
                     ),
                     const SizedBox(height: KSpacing.s8),
                     Text(
-                      '${p.remaining} XP avant le niveau ${p.level + 1} · ${p.totalXp} XP cumulés.',
+                      '${p.remaining} XP avant le niveau ${p.level + 1}\u00A0· ${p.totalXp} XP cumulés.',
                       style: KType.detail.copyWith(color: k.texte2),
                     ),
                   ],
@@ -586,7 +592,7 @@ void showCharacterSheet(BuildContext context) {
                   ),
                   title: rank.title,
                   subtitle:
-                      'Niveau ${rank.level} · ${Progression.xpAtLevel(rank.level)} XP cumulés',
+                      'Niveau ${rank.level}\u00A0· ${Progression.xpAtLevel(rank.level)} XP cumulés',
                   trailing: rank == p.rank
                       ? const KChip('Actuel')
                       : Icon(
@@ -641,14 +647,14 @@ class _AttributeDetail extends StatelessWidget {
               Expanded(
                 child: Text(
                   a.available
-                      ? '${a.label} · niveau ${a.level}'
-                      : '${a.label} · indisponible',
+                      ? '${a.label}\u00A0· niveau ${a.level}'
+                      : '${a.label}\u00A0· indisponible',
                   style: KType.corpsFort.copyWith(color: k.texte),
                 ),
               ),
               const SizedBox(width: KSpacing.s8),
               Text(
-                a.available ? '${a.score} / 100' : '—',
+                a.available ? '${a.score}\u00A0/\u00A0100' : '—',
                 style: KType.corps.copyWith(color: k.texte),
               ),
             ],
@@ -660,12 +666,12 @@ class _AttributeDetail extends StatelessWidget {
             description: a.available ? '${a.score} sur 100' : 'indisponible',
           ),
           const SizedBox(height: KSpacing.s8),
-          Text(a.hint, style: KType.detail.copyWith(color: k.texte2)),
+          Text(_r9(a.hint), style: KType.detail.copyWith(color: k.texte2)),
           if (a.note != null)
             Padding(
               padding: const EdgeInsets.only(top: KSpacing.s4),
               child: Text(
-                a.note!,
+                _r9(a.note!),
                 key: ValueKey('attribute-note-${a.id}'),
                 style: KType.detail.copyWith(color: k.texte),
               ),
@@ -724,7 +730,7 @@ class WeeklyGoalCard extends StoreWidget {
                     ),
                     Text(
                       done
-                          ? 'Atteint · ${_plural(w.done, 'jour actif', 'jours actifs')}'
+                          ? 'Atteint\u00A0· ${_plural(w.done, 'jour actif', 'jours actifs')}'
                           : '${_plural(left, 'jour actif', 'jours actifs')} à faire',
                       style: KType.corpsFort.copyWith(
                         color: done ? k.validation : k.texte,
@@ -903,7 +909,7 @@ class StreakCard extends StoreWidget {
                       g.deloadWeek
                           ? 'Semaine de deload : récupérer fait partie du plan'
                           : s.currentValidated
-                          ? 'Semaine validée · série protégée'
+                          ? 'Semaine validée\u00A0· série protégée'
                           : '${_plural(missing, 'jour', 'jours')} pour valider la semaine',
                       style: KType.detail.copyWith(color: k.texte2),
                     ),
@@ -927,7 +933,7 @@ void showStreak(BuildContext context) {
     context,
     'Ta série et tes boucliers',
     subtitle:
-        '${_plural(s.weeks, 'semaine validée', 'semaines validées')} d’affilée · ${_plural(s.shields, 'bouclier', 'boucliers')} en réserve · meilleure série : ${p.bestStreak}',
+        '${_plural(s.weeks, 'semaine validée', 'semaines validées')} d’affilée\u00A0· ${_plural(s.shields, 'bouclier', 'boucliers')} en réserve\u00A0· meilleure série : ${p.bestStreak}',
     [
       const StatsText(
         'Une semaine est validée à partir de deux jours actifs, repos compris. Un bouclier couvre automatiquement une semaine manquée : tu en gagnes un toutes les trois semaines validées d’affilée, deux en réserve au plus. La semaine en cours ne casse jamais la série avant le lundi suivant.',
@@ -1013,7 +1019,7 @@ class MainQuestCard extends StoreWidget {
               const SizedBox(width: KSpacing.s12),
               Expanded(
                 child: Text(
-                  'Quête principale · S${week.n} J${day.j}',
+                  'Quête principale\u00A0· S${week.n} J${day.j}',
                   style: KType.titreCarte.copyWith(color: k.texte),
                 ),
               ),
@@ -1024,12 +1030,12 @@ class MainQuestCard extends StoreWidget {
           const SizedBox(height: KSpacing.s4),
           Text(
             done
-                ? 'Validée · XP et bonus déjà comptés'
+                ? 'Validée\u00A0· XP et bonus déjà comptés'
                 : rest
                 ? 'Jour de repos prévu : la série est protégée, la récupération compte.'
                 : g.deloadWeek
-                ? 'Deload : séance allégée, objectif ≥ $goal % des séries sans forcer.'
-                : 'Objectif de séance : valider au moins $goal % des séries.',
+                ? 'Deload : séance allégée, objectif ≥ $goal\u00A0% des séries sans forcer.'
+                : 'Objectif de séance : valider au moins $goal\u00A0% des séries.',
             style: KType.detail.copyWith(color: k.texte2),
           ),
         ],
@@ -1152,7 +1158,7 @@ class _ChapterCard extends StatelessWidget {
       complete: c.complete,
       current: c.current,
       done: 'Bouclé',
-      percent: '${(c.fraction * 100).round()} %',
+      percent: '${(c.fraction * 100).round()}\u00A0%',
       started: c.doneDays > 0,
     );
     return KCard(
@@ -1177,7 +1183,7 @@ class _ChapterCard extends StatelessWidget {
           Text(c.name, style: KType.corpsFort.copyWith(color: k.texte)),
           const SizedBox(height: KSpacing.s4),
           Text(
-            'S${c.firstWeek} à S${c.lastWeek} · ${c.doneDays}/${c.trainingDays} journées',
+            'S${c.firstWeek} à S${c.lastWeek}\u00A0· ${c.doneDays}/${c.trainingDays} journées',
             style: KType.detail.copyWith(color: k.texte2),
           ),
           const Spacer(),
@@ -1244,7 +1250,7 @@ class BossCard extends StoreWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Boss · ${boss.name}',
+                  'Boss\u00A0· ${boss.name}',
                   style: KType.titreCarte.copyWith(color: k.texte),
                 ),
                 const SizedBox(height: KSpacing.s4),
@@ -1276,11 +1282,11 @@ String bossHint(GameState g, Boss boss) {
       boss.done > 0 ||
       (g.programWeek >= boss.firstWeek && g.programWeek <= boss.lastWeek);
   return started
-      ? '${boss.done}/${boss.tests.length} tests validés · un seul test lourd par jour'
+      ? '${boss.done}/${boss.tests.length} tests validés\u00A0· un seul test lourd par jour'
       : weeksAway <= 0
       ? 'Tests à rattraper : ${boss.tests.length} journées'
       : weeksAway == 1
-      ? 'La semaine prochaine · deload conseillé avant'
+      ? 'La semaine prochaine\u00A0· deload conseillé avant'
       : 'Dans $weeksAway semaines (S${boss.firstWeek})';
 }
 
@@ -1320,7 +1326,11 @@ class _BossDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         KSectionTitle(
-          '${boss.name} · $weeks${next ? ' · prochain' : ''}',
+          '${boss.name}\u00A0· $weeks${!next
+              ? ''
+              : boss.done > 0
+              ? '\u00A0· en cours'
+              : '\u00A0· prochain boss'}',
           top: KSpacing.s4,
         ),
         StatsSheetGroup(
@@ -1332,7 +1342,7 @@ class _BossDetail extends StatelessWidget {
                     : Icons.radio_button_unchecked_rounded,
                 iconColor: store.isDone(week, day) ? k.validation : k.texte2,
                 title: program.week(week).day(day)?.title ?? 'Test',
-                subtitle: 'S$week · J$day',
+                subtitle: 'S$week\u00A0· J$day',
               ),
           ],
         ),
@@ -1340,7 +1350,7 @@ class _BossDetail extends StatelessWidget {
         StatsText(
           boss.defeated
               ? 'Boss vaincu : titre « ${boss.title} ».'
-              : '${boss.done} / ${boss.tests.length} tests validés. Récompense : titre « ${boss.title} ».',
+              : '${boss.done}\u00A0/\u00A0${boss.tests.length} tests validés. Récompense : titre « ${boss.title} ».',
           muted: true,
         ),
       ],
@@ -1383,7 +1393,7 @@ class SeasonCard extends StoreWidget {
               const SizedBox(width: KSpacing.s12),
               Expanded(
                 child: Text(
-                  'Saison ${s.index} · ${s.name}',
+                  'Saison ${s.index}\u00A0· ${s.name}',
                   style: KType.titreCarte.copyWith(color: k.texte),
                 ),
               ),
@@ -1391,7 +1401,7 @@ class SeasonCard extends StoreWidget {
           ),
           const SizedBox(height: KSpacing.s8),
           Text(
-            'S${s.firstWeek} à S${s.lastWeek} · ${_plural(left, 'semaine restante', 'semaines restantes')} · ${(s.fraction * 100).round()} %',
+            'S${s.firstWeek} à S${s.lastWeek}\u00A0· ${_plural(left, 'semaine restante', 'semaines restantes')}\u00A0· ${(s.fraction * 100).round()}\u00A0%',
             style: KType.detail.copyWith(color: k.texte2),
           ),
           const SizedBox(height: KSpacing.s12),
@@ -1405,7 +1415,7 @@ class SeasonCard extends StoreWidget {
           Text(
             s.complete
                 ? 'Saison bouclée : titre « ${s.title} » obtenu'
-                : 'À 70 % des journées : titre « ${s.title} »',
+                : 'À 70\u00A0% des journées : titre « ${s.title} »',
             style: KType.detail.copyWith(color: k.texte2),
           ),
         ],
@@ -1425,7 +1435,7 @@ void showSeasons(BuildContext context) {
         : 'Saison ${g.currentSeason!.index} en cours',
     [
       const StatsText(
-        'Quatre saisons de dix semaines rythment le programme. Chaque saison bouclée à 70 % donne son titre ; la campagne, les boss et les badges continuent d’une saison à l’autre, rien n’est remis à zéro.',
+        'Quatre saisons de dix semaines rythment le programme. Chaque saison bouclée à 70\u00A0% donne son titre ; la campagne, les boss et les badges continuent d’une saison à l’autre, rien n’est remis à zéro.',
       ),
       StatsSheetGroup(
         children: [
@@ -1443,9 +1453,9 @@ void showSeasons(BuildContext context) {
                 return StatsSheetRow(
                   icon: st.icon,
                   iconColor: st.color,
-                  title: 'Saison ${s.index} · ${s.name}',
+                  title: 'Saison ${s.index}\u00A0· ${s.name}',
                   subtitle:
-                      'S${s.firstWeek} à S${s.lastWeek} · ${s.doneDays}/${s.trainingDays} journées · titre « ${s.title} »',
+                      'S${s.firstWeek} à S${s.lastWeek}\u00A0· ${s.doneDays}/${s.trainingDays} journées\u00A0· titre « ${s.title} »',
                 );
               },
             ),
@@ -1462,7 +1472,7 @@ String campaignSummary(GameState g) {
   final done = g.chapters.where((c) => c.complete).length;
   final current = g.currentChapter;
   final head = current == null ? 'Hors programme' : current.name;
-  return '$head · $done/${g.chapters.length} chapitres bouclés';
+  return '$head\u00A0· $done/${g.chapters.length} chapitres bouclés';
 }
 
 /// Feuille « Campagne » (Parcours) : chaque chapitre en détail, sans
@@ -1476,7 +1486,7 @@ void showCampaign(BuildContext context) {
     subtitle: '$done / ${g.chapters.length} chapitres bouclés',
     [
       const StatsText(
-        'Un chapitre par bloc du programme, bouclé à 75 % des journées d’entraînement : un titre à la clé. Les semaines de tests sont les boss ; quatre saisons de dix semaines rythment le tout. Rien n’est remis à zéro. Les imprévus ne bloquent pas la campagne.',
+        'Un chapitre par bloc du programme, bouclé à 75\u00A0% des journées d’entraînement : un titre à la clé. Les semaines de tests sont les boss ; quatre saisons de dix semaines rythment le tout. Rien n’est remis à zéro. Les imprévus ne bloquent pas la campagne.',
       ),
       for (final c in g.chapters) _ChapterDetail(c),
     ],
@@ -1495,12 +1505,17 @@ class _ChapterDetail extends StatelessWidget {
       complete: c.complete,
       current: c.current,
       done: 'Bouclé',
-      percent: '${(c.fraction * 100).round()} %',
+      percent: '${(c.fraction * 100).round()}\u00A0%',
       started: c.doneDays > 0,
     );
     return Material(
       color: k.haute,
-      shape: KRadius.menuShape,
+      shape: RoundedRectangleBorder(
+        borderRadius: KRadius.menuRadius,
+        side: c.current
+            ? BorderSide(color: k.encre, width: KSize.current)
+            : BorderSide.none,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(KSpacing.s16),
         child: Column(
@@ -1522,7 +1537,7 @@ class _ChapterDetail extends StatelessWidget {
             ),
             const SizedBox(height: KSpacing.s4),
             Text(
-              'Semaines S${c.firstWeek} à S${c.lastWeek} · ${c.doneDays} journées validées sur ${c.trainingDays}',
+              'Semaines S${c.firstWeek} à S${c.lastWeek}\u00A0· ${c.doneDays} journées validées sur ${c.trainingDays}',
               style: KType.detail.copyWith(color: k.texte2),
             ),
             const SizedBox(height: KSpacing.s12),
@@ -1536,7 +1551,7 @@ class _ChapterDetail extends StatelessWidget {
             Text(
               c.complete
                   ? 'Chapitre bouclé : titre « ${c.title} » obtenu.'
-                  : 'À 75 % des journées d’entraînement validées : titre « ${c.title} ».',
+                  : 'À 75\u00A0% des journées d’entraînement validées : titre « ${c.title} ».',
               style: KType.detail.copyWith(color: k.texte),
             ),
           ],
