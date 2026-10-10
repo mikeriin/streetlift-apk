@@ -99,7 +99,12 @@ void main() {
       expect(tester.state(find.byType(HomeScreen)), same(initialState));
       await tester.tap(find.byKey(const ValueKey('nav-3')));
       await tester.pumpAndSettle();
+      // UI4 : le thème se règle dans Réglages › Apparence.
+      await tester.tap(find.byKey(const ValueKey('settings-page-appearance')));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Clair'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Retour').last);
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('nav-2')));
       await tester.pumpAndSettle();
@@ -368,13 +373,15 @@ void main() {
     );
     await tester.pumpWidget(page(const SettingsScreen()));
     await tester.pumpAndSettle();
+    // UI4 : les sauvegardes sont dans « Données et confidentialité ».
     await tester.scrollUntilVisible(
-      find.text('Sauvegardes'),
+      find.text('Données et confidentialité'),
       300,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(find.text('Sauvegardes'));
+    await tester.tap(find.text('Données et confidentialité'));
     await tester.pumpAndSettle();
+    expect(find.text('Sauvegardes'), findsOneWidget);
     await tester.scrollUntilVisible(
       find.text('Copier la sauvegarde'),
       350,
@@ -401,10 +408,15 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Coller une sauvegarde'));
     await tester.pumpAndSettle();
-    expect(find.byType(AlertDialog), findsOneWidget);
+    // UI4 : le dialogue devient une sous-page (titre = libellé, R3) ;
+    // « Retour » n'importe rien.
+    expect(find.byType(PasteBackupPage), findsOneWidget);
     expect(find.text('Colle le texte exporté ici'), findsOneWidget);
-    await tester.tap(find.text('Annuler'));
+    expect(find.text('Voir l’aperçu'), findsOneWidget);
+    await tester.tap(find.byTooltip('Retour').last);
     await tester.pumpAndSettle();
+    expect(find.byType(PasteBackupPage), findsNothing);
+    expect(find.text('Coller une sauvegarde'), findsOneWidget);
     expect(tester.takeException(), null);
     await tester.pumpWidget(const SizedBox());
     await tester.pumpAndSettle();

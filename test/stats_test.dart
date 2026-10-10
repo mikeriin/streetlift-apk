@@ -210,7 +210,8 @@ void main() {
       await tester.ensureVisible(input);
       await tester.enterText(input, '62,5');
       await tester.pumpAndSettle();
-      await tester.tap(find.byType(BackButton));
+      // UI4 : en-tête de sous-page du kit (bouton « Retour »).
+      await tester.tap(find.byTooltip('Retour').last);
       await tester.pumpAndSettle();
       expect(store.values['B8'], 62.5);
       expect(find.textContaining('62,5'), findsWidgets);

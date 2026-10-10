@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/game.dart';
+import 'package:streetlift_tracker/kit/buttons.dart' show KTonalButton;
 import 'package:streetlift_tracker/retired_data.dart';
 import 'package:streetlift_tracker/retired_notice_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
@@ -437,7 +438,7 @@ void main() {
         store = AppStore();
         await store.init();
       });
-      await pump(tester, const SettingsScreen(section: 6), true);
+      await pump(tester, const SettingsScreen(page: SettingsPage.data), true);
       final tile = find.byKey(const ValueKey('settings-retired-copy'));
       await tester.scrollUntilVisible(
         tile,
@@ -446,16 +447,18 @@ void main() {
       );
       await tester.tap(tile);
       await tester.pumpAndSettle();
-      expect(find.text('Copie de sécurité'), findsOneWidget);
+      // UI4 (R3) : le titre reprend le libellé de l'entrée des Réglages
+      // (capitales des titres, U3).
+      expect(find.text('COPIE D’AVANT LA SUPPRESSION DES WOD'), findsOneWidget);
       await tester.scrollUntilVisible(
         find.byKey(const ValueKey('retired-notice-close')),
         200,
         scrollable: find.byType(Scrollable).last,
       );
-      final close = tester.widget<TextButton>(
+      final close = tester.widget<KTonalButton>(
         find.byKey(const ValueKey('retired-notice-close'), skipOffstage: false),
       );
-      expect((close.child! as Text).data, 'Fermer');
+      expect(close.label, 'Fermer');
     });
   });
 

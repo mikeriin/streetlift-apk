@@ -22,18 +22,25 @@ void main() {
         MaterialApp(theme: buildTheme(true), home: const SettingsScreen()),
       );
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text('Chronomètres'), 200);
-      await tester.tap(find.text('Chronomètres'));
+      // UI4 : les chronomètres sont une section de Réglages › Séance.
+      await tester.scrollUntilVisible(
+        find.text('Séance'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(find.text('Séance'));
       await tester.pumpAndSettle();
+      expect(find.text('Chronomètres'), findsOneWidget);
       final before = store.settings.defaultRest;
       await tester.tap(find.byTooltip('Augmenter Repos par défaut'));
       await tester.pumpAndSettle();
       expect(store.settings.defaultRest, before + 15);
-      await tester.pageBack();
+      await tester.tap(find.byTooltip('Retour'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Chronomètres'));
+      await tester.tap(find.text('Séance'));
       await tester.pumpAndSettle();
-      expect(find.text('${before + 15}\u00a0s'), findsOneWidget);
+      // C9 : au-delà de 90 s, la durée s'écrit en minutes.
+      expect(find.text(settingsSecondsLabel(before + 15)), findsOneWidget);
       expect(tester.takeException(), null);
       store.settings.defaultRest = before;
       await tester.pumpWidget(const SizedBox());

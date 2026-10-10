@@ -6,7 +6,8 @@
 // laissent le champ absent (D5.8).
 part of 'athlete_profile_flow.dart';
 
-/// Ligne de choix (réponse et précision), lisible à 200 % de texte.
+/// Ligne de choix (réponse et précision), lisible à 200 % de texte ; cible
+/// de 48 dp au moins (C13).
 class _ChoiceRow extends StatelessWidget {
   final String label;
   final String? hint;
@@ -22,45 +23,57 @@ class _ChoiceRow extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Semantics(
-    selected: selected,
-    button: true,
-    inMutuallyExclusiveGroup: !multi,
-    child: InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-        child: Row(
-          children: [
-            ExcludeSemantics(
-              child: Icon(
-                multi
-                    ? (selected
-                          ? Icons.check_box
-                          : Icons.check_box_outline_blank)
-                    : (selected
-                          ? Icons.radio_button_checked
-                          : Icons.radio_button_unchecked),
-                color: selected ? SL.accent : SL.dim,
-              ),
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Semantics(
+      selected: selected,
+      button: true,
+      inMutuallyExclusiveGroup: !multi,
+      child: InkWell(
+        onTap: onTap,
+        customBorder: KRadius.menuShape,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: KSize.target),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: KSpacing.s8,
+              horizontal: KSpacing.s4,
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(label),
-                  if (hint != null)
-                    Text(hint!, style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
+            child: Row(
+              children: [
+                ExcludeSemantics(
+                  child: Icon(
+                    multi
+                        ? (selected
+                              ? Icons.check_box_rounded
+                              : Icons.check_box_outline_blank_rounded)
+                        : (selected
+                              ? Icons.radio_button_checked_rounded
+                              : Icons.radio_button_unchecked_rounded),
+                    color: selected ? k.encre : k.texte2,
+                  ),
+                ),
+                const SizedBox(width: KSpacing.s12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(label, style: KType.corps.copyWith(color: k.texte)),
+                      if (hint != null)
+                        Text(
+                          hint!,
+                          style: KType.detail.copyWith(color: k.texte2),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 /// Nombre saisi (virgule ou point) ; null si vide ou illisible.
@@ -96,14 +109,19 @@ String _durationField(int s) {
 String? _firstViolation(List<Violation> v) =>
     v.isEmpty ? null : 'Réponse incomplète ou hors limites (${v.first.path}).';
 
+/// Libellé d'une question dans un formulaire (ex-feuille).
 Widget _sheetLabel(BuildContext context, String t) => Padding(
-  padding: const EdgeInsets.only(top: 12, bottom: 6),
-  child: Text(t, style: Theme.of(context).textTheme.titleMedium),
+  padding: const EdgeInsets.only(top: KSpacing.s12, bottom: KSpacing.s8),
+  child: Text(
+    t,
+    style: KType.corpsFort.copyWith(color: KTokens.of(context).texte),
+  ),
 );
 
 Widget _sheetHint(BuildContext context, String t) =>
-    Text(t, style: Theme.of(context).textTheme.bodySmall);
+    Text(t, style: KType.detail.copyWith(color: KTokens.of(context).texte2));
 
+/// Choix en puces du kit (UI4) ; mêmes clés `'$keyPrefix-<code>'`.
 Widget _sheetChips<T>({
   required String keyPrefix,
   required List<(T, String)> options,
@@ -111,25 +129,22 @@ Widget _sheetChips<T>({
   required void Function(T) onTap,
   bool multi = false,
 }) => Wrap(
-  spacing: 8,
-  runSpacing: 8,
+  spacing: KSpacing.s8,
   children: [
     for (final o in options)
-      multi
-          ? FilterChip(
-              key: ValueKey('$keyPrefix-${o.$1}'),
-              label: Text(o.$2),
-              selected: selected(o.$1),
-              onSelected: (_) => onTap(o.$1),
-            )
-          : ChoiceChip(
-              key: ValueKey('$keyPrefix-${o.$1}'),
-              label: Text(o.$2),
-              selected: selected(o.$1),
-              onSelected: (_) => onTap(o.$1),
-            ),
+      KChip(
+        o.$2,
+        key: ValueKey('$keyPrefix-${o.$1}'),
+        selected: selected(o.$1),
+        onTap: () => onTap(o.$1),
+      ),
   ],
 );
+
+/// Formulaire (ex-feuille du bas) poussé en sous-page ; rend sa valeur par
+/// `Navigator.pop` (cahier §4.5).
+Future<T?> _pushForm<T>(BuildContext context, Widget page) =>
+    Navigator.of(context).push<T>(MaterialPageRoute<T>(builder: (_) => page));
 
 String _exerciseName(String id) => store.content.byId[id]?.nom ?? id;
 
@@ -137,7 +152,7 @@ Future<String?> _pickExerciseFor(
   BuildContext context, {
   List<String> suggested = const [],
   List<String>? only,
-  String title = 'CHOISIR UN EXERCICE',
+  String title = 'Choisir un exercice',
 }) => Navigator.of(context).push<String>(
   MaterialPageRoute(
     builder: (_) =>
@@ -162,32 +177,40 @@ extension _FlowV3 on AthleteProfileFlowState {
   }
 
   /// Carte d'une question : texte, mot de Koach, réponses, « Passer ».
+  /// UI4 : le « Passer » de la question est aussi relevé pour le « Passer »
+  /// de l'étape.
   Widget _questionCard(
     ProfileQuestion q,
     List<Widget> body, {
     VoidCallback? onSkip,
     String? title,
-  }) => KCard(
-    key: ValueKey('q-${q.id}'),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _title(title ?? q.text),
-        if (koachOf(q) case final k?) ...[const SizedBox(height: 4), _hint(k)],
-        const SizedBox(height: 8),
-        ...body,
-        if (q.skip && onSkip != null)
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              key: ValueKey('q-${q.id}-skip'),
-              onPressed: () => _update(onSkip),
-              child: const Text('Passer'),
+  }) {
+    if (q.skip && onSkip != null) _stepSkips.add(onSkip);
+    return KCard(
+      key: ValueKey('q-${q.id}'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _title(title ?? q.text),
+          if (koachOf(q) case final k?) ...[
+            const SizedBox(height: KSpacing.s4),
+            _hint(k),
+          ],
+          const SizedBox(height: KSpacing.s8),
+          ...body,
+          if (q.skip && onSkip != null)
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: KTextButton(
+                key: ValueKey('q-${q.id}-skip'),
+                label: 'Passer',
+                onPressed: () => _update(onSkip),
+              ),
             ),
-          ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 
   List<Widget> _choiceRows(
     ProfileQuestion q,
@@ -287,10 +310,10 @@ extension _FlowV3 on AthleteProfileFlowState {
             title: Text(_exerciseName(list[i].exerciseId)),
             subtitle: Text(benchmarkText(list[i], q)),
             onTap: () => _editBenchmark(i),
-            trailing: IconButton(
+            trailing: KIconButton(
               key: ValueKey('benchmark-remove-$i'),
               tooltip: 'Retirer ce record',
-              icon: const Icon(Icons.close),
+              icon: Icons.close_rounded,
               onPressed: () => _update(() {
                 final next = [...list]..removeAt(i);
                 _d.benchmarks = next;
@@ -299,7 +322,7 @@ extension _FlowV3 on AthleteProfileFlowState {
           ),
         if (_unknownBenchmarks && list.isEmpty)
           const Padding(
-            padding: EdgeInsets.only(bottom: 8),
+            padding: EdgeInsets.only(bottom: KSpacing.s8),
             child: KoachSays(
               key: ValueKey('benchmarks-unknown-koach'),
               pose: KoachPose.thumbsUp,
@@ -310,20 +333,20 @@ extension _FlowV3 on AthleteProfileFlowState {
               ),
             ),
           ),
-        FilledButton.tonalIcon(
+        KTonalButton(
           key: const ValueKey('benchmark-add'),
-          icon: const Icon(Icons.add),
-          label: const Text('Ajouter un record'),
+          icon: Icons.add_rounded,
+          label: 'Ajouter un record',
           onPressed: () => _editBenchmark(null),
         ),
-        const SizedBox(height: 6),
-        OutlinedButton(
+        const SizedBox(height: KSpacing.s8),
+        KTonalButton(
           key: const ValueKey('benchmarks-unknown'),
+          label: 'Je ne sais pas',
           onPressed: () => _update(() {
             _d.benchmarks = null;
             _unknownBenchmarks = true;
           }),
-          child: const Text('Je ne sais pas'),
         ),
       ],
       onSkip: () {
@@ -337,12 +360,9 @@ extension _FlowV3 on AthleteProfileFlowState {
     final q = _q('benchmarks')!;
     final list = [...?_d.benchmarks];
     final old = index == null ? null : list[index];
-    final b = await showModalBottomSheet<Benchmark>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => _BenchmarkSheet(
+    final b = await _pushForm<Benchmark>(
+      context,
+      _BenchmarkSheet(
         question: q,
         initial: old,
         suggested: benchmarkSuggestions(_d, _catalog),
@@ -374,11 +394,11 @@ extension _FlowV3 on AthleteProfileFlowState {
   List<Widget> _movementLevelCards() => [
     if (_d.shownMovements.isNotEmpty)
       Align(
-        alignment: Alignment.centerLeft,
-        child: OutlinedButton.icon(
+        alignment: AlignmentDirectional.centerStart,
+        child: KTonalButton(
           key: const ValueKey('levels-unknown-all'),
-          icon: const Icon(Icons.help_outline),
-          label: const Text('Je ne sais pas, on verra ensemble'),
+          icon: Icons.help_outline_rounded,
+          label: 'Je ne sais pas, on verra ensemble',
           onPressed: () => _update(() {
             for (final m in _d.shownMovements) {
               _d.levels[m.key] = -1;
@@ -393,9 +413,9 @@ extension _FlowV3 on AthleteProfileFlowState {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title(m.label),
-            const SizedBox(height: 2),
+            const SizedBox(height: KSpacing.s4),
             _hint(m.question),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             _chips<int>(
               keyPrefix: 'level-${m.key}',
               options: [
@@ -449,10 +469,10 @@ extension _FlowV3 on AthleteProfileFlowState {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (i > 0)
-                IconButton(
+                KIconButton(
                   key: ValueKey('skill-up-$i'),
                   tooltip: 'Plus prioritaire',
-                  icon: const Icon(Icons.arrow_upward),
+                  icon: Icons.arrow_upward_rounded,
                   onPressed: () => _update(() {
                     final next = [...list];
                     final s = next.removeAt(i);
@@ -460,10 +480,10 @@ extension _FlowV3 on AthleteProfileFlowState {
                     _d.skills = next;
                   }),
                 ),
-              IconButton(
+              KIconButton(
                 key: ValueKey('skill-remove-$i'),
                 tooltip: 'Retirer cette figure',
-                icon: const Icon(Icons.close),
+                icon: Icons.close_rounded,
                 onPressed: () => _update(() {
                   _d.skills = [...list]..removeAt(i);
                 }),
@@ -471,10 +491,10 @@ extension _FlowV3 on AthleteProfileFlowState {
             ],
           ),
         ),
-      FilledButton.tonalIcon(
+      KTonalButton(
         key: const ValueKey('skill-add'),
-        icon: const Icon(Icons.add),
-        label: const Text('Ajouter une figure'),
+        icon: Icons.add_rounded,
+        label: 'Ajouter une figure',
         onPressed: () => _editSkill(null),
       ),
     ], onSkip: () => _d.skills = null);
@@ -486,12 +506,9 @@ extension _FlowV3 on AthleteProfileFlowState {
     if (catalog == null) return;
     final list = [...?_d.skills];
     final old = index == null ? null : list[index];
-    final s = await showModalBottomSheet<SkillState>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => _SkillSheet(
+    final s = await _pushForm<SkillState>(
+      context,
+      _SkillSheet(
         question: q,
         catalog: catalog,
         targets: [for (final e in skillTargets(catalog, _d)) e.id],
@@ -566,16 +583,13 @@ extension _FlowV3 on AthleteProfileFlowState {
       [
         for (final id in rows) ...[
           Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              _exerciseName(id),
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
+            padding: const EdgeInsets.only(top: KSpacing.s8),
+            child: _title(_exerciseName(id)),
           ),
           _hint(
             itemText(q, 'sessionsPerWeek', 'Combien de fois par semaine ?'),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: KSpacing.s4),
           _sheetChips<String>(
             keyPrefix: 'recent-$id-sessions',
             options: sessionsOpts,
@@ -583,11 +597,11 @@ extension _FlowV3 on AthleteProfileFlowState {
             onTap: (c) => _update(() => put(id, sessions: int.parse(c))),
           ),
           if (rowOf(id) != null && rowOf(id)!.sessionsPerWeek > 0) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: KSpacing.s8),
             _hint(
               itemText(q, 'hardSets', 'Combien de séries dures par semaine ?'),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: KSpacing.s4),
             _sheetChips<String>(
               keyPrefix: 'recent-$id-hard',
               options: hardOpts,
@@ -600,20 +614,20 @@ extension _FlowV3 on AthleteProfileFlowState {
             ),
           ],
         ],
-        const SizedBox(height: 8),
-        TextButton.icon(
+        const SizedBox(height: KSpacing.s8),
+        KTonalButton(
           key: const ValueKey('recent-add'),
-          icon: const Icon(Icons.add),
-          label: const Text('Un autre mouvement'),
+          icon: Icons.add_rounded,
+          label: 'Un autre mouvement',
           onPressed: () async {
             final id = await _pickExerciseFor(context);
             if (id == null || !mounted) return;
             _update(() => _extraRecentRows.add(id));
           },
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: KSpacing.s8),
         _title(itemText(q, 'currentPhase', 'En ce moment, tu es plutôt…')),
-        const SizedBox(height: 4),
+        const SizedBox(height: KSpacing.s4),
         for (final o in phaseOpts)
           _ChoiceRow(
             key: ValueKey('q-current_phase-${o.$1}'),
@@ -675,30 +689,30 @@ extension _FlowV3 on AthleteProfileFlowState {
             ' · ${label(prios, events[i].priority.code)}',
           ),
           onTap: () => _editEvent(i),
-          trailing: IconButton(
+          trailing: KIconButton(
             key: ValueKey('event-remove-$i'),
             tooltip: 'Retirer cette échéance',
-            icon: const Icon(Icons.close),
+            icon: Icons.close_rounded,
             onPressed: () => _update(() {
               _d.events = [...events]..removeAt(i);
             }),
           ),
         ),
       Wrap(
-        spacing: 8,
-        runSpacing: 8,
+        spacing: KSpacing.s8,
+        runSpacing: KSpacing.s8,
         children: [
-          FilledButton.tonalIcon(
+          KTonalButton(
             key: const ValueKey('event-add'),
-            icon: const Icon(Icons.event),
-            label: const Text('Ajouter une date'),
+            icon: Icons.event_rounded,
+            label: 'Ajouter une date',
             onPressed: () => _editEvent(null),
           ),
           if (list == null)
-            OutlinedButton(
+            KTonalButton(
               key: const ValueKey('events-none'),
+              label: 'Non',
               onPressed: () => _update(() => _d.events = const <SeasonEvent>[]),
-              child: const Text('Non'),
             ),
         ],
       ),
@@ -709,12 +723,9 @@ extension _FlowV3 on AthleteProfileFlowState {
     final q = _q('events')!;
     final list = [...?_d.events];
     final old = index == null ? null : list[index];
-    final e = await showModalBottomSheet<SeasonEvent>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => _EventSheet(
+    final e = await _pushForm<SeasonEvent>(
+      context,
+      _EventSheet(
         question: q,
         presets: _pq?.rulesetPresets ?? const [],
         today: civilOf(_now),
@@ -768,23 +779,23 @@ extension _FlowV3 on AthleteProfileFlowState {
             contentPadding: EdgeInsets.zero,
             title: Text(specializationText(s, q)),
             onTap: () => _editSpecialization(mainEvent: mainEvent),
-            trailing: IconButton(
+            trailing: KIconButton(
               key: const ValueKey('specialization-remove'),
               tooltip: 'Retirer',
-              icon: const Icon(Icons.close),
+              icon: Icons.close_rounded,
               onPressed: () => _update(() => _d.specialization = null),
             ),
           )
         else
-          FilledButton.tonalIcon(
+          KTonalButton(
             key: const ValueKey('specialization-add'),
-            icon: const Icon(Icons.center_focus_strong_outlined),
-            label: const Text('Choisir'),
+            icon: Icons.center_focus_strong_outlined,
+            label: 'Choisir ta priorité',
             onPressed: () => _editSpecialization(mainEvent: mainEvent),
           ),
         if (mainEvent)
           Padding(
-            padding: const EdgeInsets.only(top: 6),
+            padding: const EdgeInsets.only(top: KSpacing.s8),
             child: _hint(
               'Avec une compétition principale, le reste est entretenu et la '
               'priorité n’est servie que loin de l’échéance.',
@@ -805,12 +816,9 @@ extension _FlowV3 on AthleteProfileFlowState {
         if (e.priority == EventPriority.main)
           for (final l in e.lifts ?? const <CompetitionLift>[]) l.exerciseId,
     ];
-    final s = await showModalBottomSheet<Specialization>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => _SpecializationSheet(
+    final s = await _pushForm<Specialization>(
+      context,
+      _SpecializationSheet(
         question: q,
         catalog: catalog,
         initial: _d.specialization,
@@ -845,11 +853,8 @@ extension _FlowV3 on AthleteProfileFlowState {
         ),
       for (final id in exercises) ...[
         Padding(
-          padding: const EdgeInsets.only(top: 8, bottom: 4),
-          child: Text(
-            _exerciseName(id),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+          padding: const EdgeInsets.only(top: KSpacing.s8, bottom: KSpacing.s4),
+          child: _title(_exerciseName(id)),
         ),
         _sheetChips<WeakPointKind>(
           keyPrefix: 'weak-$id',
@@ -875,10 +880,10 @@ extension _FlowV3 on AthleteProfileFlowState {
           }),
         ),
       ],
-      TextButton.icon(
+      KTonalButton(
         key: const ValueKey('weak-add'),
-        icon: const Icon(Icons.add),
-        label: const Text('Un autre mouvement'),
+        icon: Icons.add_rounded,
+        label: 'Un autre mouvement',
         onPressed: () async {
           final id = await _pickExerciseFor(context);
           if (id == null || !mounted) return;
@@ -927,11 +932,11 @@ extension _FlowV3 on AthleteProfileFlowState {
               }
             }),
           ),
-        const SizedBox(height: 8),
+        const SizedBox(height: KSpacing.s8),
         _hint(
           itemText(q, 'sessionsPerWeek', 'Combien de sorties par semaine ?'),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: KSpacing.s4),
         _sheetChips<String>(
           keyPrefix: 'run-sessions',
           options: itemOptions(q, 'sessionsPerWeek'),
@@ -949,9 +954,9 @@ extension _FlowV3 on AthleteProfileFlowState {
           }),
         ),
         if (base != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: KSpacing.s8),
           _hint(itemText(q, 'longRun', 'Ta plus longue sortie récente ?')),
-          const SizedBox(height: 4),
+          const SizedBox(height: KSpacing.s4),
           _sheetChips<String>(
             keyPrefix: 'run-long',
             options: itemOptions(q, 'longRun'),
@@ -1060,19 +1065,19 @@ extension _FlowV3 on AthleteProfileFlowState {
                 '${sportList[i].mainSport == true ? ' · sport principal' : ''}',
               ),
               onTap: () => _editOtherSport(i),
-              trailing: IconButton(
+              trailing: KIconButton(
                 key: ValueKey('sport-remove-$i'),
                 tooltip: 'Retirer ce sport',
-                icon: const Icon(Icons.close),
+                icon: Icons.close_rounded,
                 onPressed: () => _update(() {
                   _d.otherSports = [...sportList]..removeAt(i);
                 }),
               ),
             ),
-          FilledButton.tonalIcon(
+          KTonalButton(
             key: const ValueKey('sport-add'),
-            icon: const Icon(Icons.add),
-            label: const Text('Ajouter un sport'),
+            icon: Icons.add_rounded,
+            label: 'Ajouter un sport',
             onPressed: () => _editOtherSport(null),
           ),
         ],
@@ -1089,12 +1094,9 @@ extension _FlowV3 on AthleteProfileFlowState {
     final q = _q('outside_load')!;
     final list = [...?_d.otherSports];
     final old = index == null ? null : list[index];
-    final s = await showModalBottomSheet<OtherSport>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => _OtherSportSheet(question: q, initial: old),
+    final s = await _pushForm<OtherSport>(
+      context,
+      _OtherSportSheet(question: q, initial: old),
     );
     if (s == null || !mounted) return;
     _update(() {
@@ -1116,7 +1118,7 @@ extension _FlowV3 on AthleteProfileFlowState {
       (c) => _d.bodyWeightGoal = c == null ? null : BodyWeightGoal.fromCode(c),
       extra: [
         if (target) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: KSpacing.s8),
           TextField(
             key: const ValueKey('q-target-weight'),
             controller: _targetWeight,
@@ -1131,7 +1133,7 @@ extension _FlowV3 on AthleteProfileFlowState {
                   : null;
             },
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: KSpacing.s4),
           _hint('Je ne donne aucun conseil alimentaire.'),
         ],
       ],
@@ -1296,7 +1298,7 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
     final id = await _pickExerciseFor(
       context,
       suggested: widget.suggested,
-      title: 'QUEL MOUVEMENT ?',
+      title: 'Quel mouvement ?',
     );
     if (id == null || !mounted) return;
     setState(() {
@@ -1386,7 +1388,7 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
       bool decimal = false,
       String? hint,
     }) => Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: KSpacing.s8),
       child: TextField(
         key: ValueKey(key),
         controller: c,
@@ -1394,193 +1396,184 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
         decoration: InputDecoration(labelText: label, helperText: hint),
       ),
     );
-    return SingleChildScrollView(
+    // UI4 : sous-page titrée du libellé du bouton qui y mène (R3).
+    return KPage.sub(
       key: const ValueKey('benchmark-sheet'),
-      padding: EdgeInsets.fromLTRB(
-        16,
-        0,
-        16,
-        24 + MediaQuery.viewInsetsOf(context).bottom,
+      title: widget.initial == null
+          ? 'Ajouter un record'
+          : 'Modifier le record',
+      gap: 0,
+      bottom: _FormBottom(
+        child: KPrimaryButton(
+          key: const ValueKey('benchmark-save'),
+          label: widget.initial == null ? 'Ajouter' : 'Enregistrer',
+          onPressed: _save,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            widget.initial == null ? 'Un record' : 'Modifier le record',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          _sheetLabel(context, itemText(q, 'exerciseId', 'Quel mouvement ?')),
-          OutlinedButton(
-            key: const ValueKey('benchmark-exercise'),
-            onPressed: _pick,
-            child: Text(
-              _exercise == null
+      children: [
+        _sheetLabel(context, itemText(q, 'exerciseId', 'Quel mouvement ?')),
+        KMenuGroup(
+          children: [
+            KMenuRow(
+              key: const ValueKey('benchmark-exercise'),
+              icon: Icons.search_rounded,
+              title: _exercise == null
                   ? 'Choisir le mouvement'
                   : _exerciseName(_exercise!),
-            ),
-          ),
-          if (_exercise != null) ...[
-            _sheetLabel(context, itemText(q, 'kind', 'Quel genre de record ?')),
-            for (final o in itemOptions(q, 'kind'))
-              _ChoiceRow(
-                key: ValueKey('benchmark-kind-${o.$1}'),
-                label: o.$2,
-                selected: k?.code == o.$1,
-                onTap: () =>
-                    setState(() => _kind = BenchmarkKind.fromCode(o.$1)),
-              ),
-          ],
-          if (k == BenchmarkKind.loadReps)
-            field(
-              'benchmark-load',
-              _load,
-              itemText(q, 'externalLoadKg', 'Quelle charge ?'),
-              decimal: true,
-              hint: 'En kg',
-            ),
-          if (k == BenchmarkKind.loadReps ||
-              k == BenchmarkKind.maxReps ||
-              k == BenchmarkKind.repsForTime)
-            field(
-              'benchmark-reps',
-              _reps,
-              itemText(q, 'reps', 'Combien de répétitions ?'),
-            ),
-          if (k == BenchmarkKind.loadReps) ...[
-            _sheetLabel(
-              context,
-              itemText(q, 'rir', 'Il t’en restait combien sous le pied ?'),
-            ),
-            _sheetChips<String>(
-              keyPrefix: 'benchmark-rir',
-              options: itemOptions(q, 'rir'),
-              selected: (c) => _rir != null && _rir!.round().toString() == c,
-              onTap: (c) => setState(() {
-                final v = double.parse(c);
-                _rir = _rir == v ? null : v;
-              }),
+              onTap: _pick,
             ),
           ],
-          if (k == BenchmarkKind.timeTrial || k == BenchmarkKind.distanceTrial)
-            field(
-              'benchmark-distance',
-              _distance,
-              itemText(q, 'distanceMeters', 'Quelle distance ?'),
-              decimal: true,
-              hint: 'En km',
+        ),
+        if (_exercise != null) ...[
+          _sheetLabel(context, itemText(q, 'kind', 'Quel genre de record ?')),
+          for (final o in itemOptions(q, 'kind'))
+            _ChoiceRow(
+              key: ValueKey('benchmark-kind-${o.$1}'),
+              label: o.$2,
+              selected: k?.code == o.$1,
+              onTap: () => setState(() => _kind = BenchmarkKind.fromCode(o.$1)),
             ),
-          if (k == BenchmarkKind.maxHold ||
-              k == BenchmarkKind.timeTrial ||
-              k == BenchmarkKind.distanceTrial ||
-              k == BenchmarkKind.repsForTime)
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: TextField(
-                key: const ValueKey('benchmark-seconds'),
-                controller: _seconds,
-                keyboardType: TextInputType.datetime,
-                decoration: InputDecoration(
-                  labelText: itemText(q, 'seconds', 'Combien de temps ?'),
-                  helperText: 'En secondes, ou min:s (ex. 1:30)',
-                ),
-              ),
-            ),
-          if (_bodyweightish)
-            field(
-              'benchmark-bw',
-              _bw,
-              itemText(q, 'bodyWeightKg', 'Ton poids ce jour-là ?'),
-              decimal: true,
-              hint: 'En kg, facultatif',
-            ),
-          _sheetLabel(context, itemText(q, 'date', 'C’était quand ?')),
-          _sheetChips<String>(
-            keyPrefix: 'benchmark-date',
-            options: const [
-              ('month', 'Ce mois-ci'),
-              ('recent', 'Il y a 1 à 3 mois'),
-              ('date', 'Choisir une date'),
-              ('none', 'Je ne sais plus'),
-            ],
-            selected: (c) => _dateChoice == c,
-            onTap: (c) {
-              switch (c) {
-                case 'month':
-                  setState(() {
-                    _dateChoice = c;
-                    _date = widget.today;
-                  });
-                case 'recent':
-                  setState(() {
-                    _dateChoice = c;
-                    _date = widget.today.addDays(-61);
-                  });
-                case 'date':
-                  _pickDate();
-                default:
-                  setState(() {
-                    _dateChoice = c;
-                    _date = null;
-                  });
-              }
-            },
+        ],
+        if (k == BenchmarkKind.loadReps)
+          field(
+            'benchmark-load',
+            _load,
+            itemText(q, 'externalLoadKg', 'Quelle charge ?'),
+            decimal: true,
+            hint: 'En kg',
           ),
-          if (_date != null && _dateChoice == 'date')
-            Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: _sheetHint(context, longDateText(_date!)),
-            ),
+        if (k == BenchmarkKind.loadReps ||
+            k == BenchmarkKind.maxReps ||
+            k == BenchmarkKind.repsForTime)
+          field(
+            'benchmark-reps',
+            _reps,
+            itemText(q, 'reps', 'Combien de répétitions ?'),
+          ),
+        if (k == BenchmarkKind.loadReps) ...[
           _sheetLabel(
             context,
-            itemText(q, 'source', 'D’où vient ce chiffre ?'),
+            itemText(q, 'rir', 'Il t’en restait combien sous le pied ?'),
           ),
-          for (final o in itemOptions(q, 'source'))
-            _ChoiceRow(
-              key: ValueKey('benchmark-source-${o.$1}'),
-              label: o.$2,
-              selected: _source.code == o.$1,
-              onTap: () =>
-                  setState(() => _source = BenchmarkSource.fromCode(o.$1)),
-            ),
-          if (widget.askStandard) ...[
-            _sheetLabel(
-              context,
-              itemText(
-                q,
-                'competitionStandard',
-                'C’était au standard de compétition ?',
-              ),
-            ),
-            _sheetChips<String>(
-              keyPrefix: 'benchmark-standard',
-              options: const [
-                ('true', 'Oui'),
-                ('false', 'Non'),
-                ('unknown', 'Je ne sais pas'),
-              ],
-              selected: (c) =>
-                  (c == 'unknown' && _standard == null) || '$_standard' == c,
-              onTap: (c) => setState(
-                () => _standard = c == 'unknown' ? null : c == 'true',
-              ),
-            ),
-          ],
-          if (_error != null) ...[
-            const SizedBox(height: 10),
-            Text(
-              _error!,
-              key: const ValueKey('benchmark-error'),
-              style: TextStyle(color: SL.danger),
-            ),
-          ],
-          const SizedBox(height: 16),
-          FilledButton(
-            key: const ValueKey('benchmark-save'),
-            onPressed: _save,
-            child: Text(widget.initial == null ? 'Ajouter' : 'Enregistrer'),
+          _sheetChips<String>(
+            keyPrefix: 'benchmark-rir',
+            options: itemOptions(q, 'rir'),
+            selected: (c) => _rir != null && _rir!.round().toString() == c,
+            onTap: (c) => setState(() {
+              final v = double.parse(c);
+              _rir = _rir == v ? null : v;
+            }),
           ),
         ],
-      ),
+        if (k == BenchmarkKind.timeTrial || k == BenchmarkKind.distanceTrial)
+          field(
+            'benchmark-distance',
+            _distance,
+            itemText(q, 'distanceMeters', 'Quelle distance ?'),
+            decimal: true,
+            hint: 'En km',
+          ),
+        if (k == BenchmarkKind.maxHold ||
+            k == BenchmarkKind.timeTrial ||
+            k == BenchmarkKind.distanceTrial ||
+            k == BenchmarkKind.repsForTime)
+          Padding(
+            padding: const EdgeInsets.only(top: KSpacing.s8),
+            child: TextField(
+              key: const ValueKey('benchmark-seconds'),
+              controller: _seconds,
+              keyboardType: TextInputType.datetime,
+              decoration: InputDecoration(
+                labelText: itemText(q, 'seconds', 'Combien de temps ?'),
+                helperText: 'En secondes, ou min:s (ex. 1:30)',
+              ),
+            ),
+          ),
+        if (_bodyweightish)
+          field(
+            'benchmark-bw',
+            _bw,
+            itemText(q, 'bodyWeightKg', 'Ton poids ce jour-là ?'),
+            decimal: true,
+            hint: 'En kg, facultatif',
+          ),
+        _sheetLabel(context, itemText(q, 'date', 'C’était quand ?')),
+        _sheetChips<String>(
+          keyPrefix: 'benchmark-date',
+          options: const [
+            ('month', 'Ce mois-ci'),
+            ('recent', 'Il y a 1 à 3 mois'),
+            ('date', 'Choisir une date'),
+            ('none', 'Je ne sais plus'),
+          ],
+          selected: (c) => _dateChoice == c,
+          onTap: (c) {
+            switch (c) {
+              case 'month':
+                setState(() {
+                  _dateChoice = c;
+                  _date = widget.today;
+                });
+              case 'recent':
+                setState(() {
+                  _dateChoice = c;
+                  _date = widget.today.addDays(-61);
+                });
+              case 'date':
+                _pickDate();
+              default:
+                setState(() {
+                  _dateChoice = c;
+                  _date = null;
+                });
+            }
+          },
+        ),
+        if (_date != null && _dateChoice == 'date')
+          Padding(
+            padding: const EdgeInsets.only(top: KSpacing.s4),
+            child: _sheetHint(context, longDateText(_date!)),
+          ),
+        _sheetLabel(context, itemText(q, 'source', 'D’où vient ce chiffre ?')),
+        for (final o in itemOptions(q, 'source'))
+          _ChoiceRow(
+            key: ValueKey('benchmark-source-${o.$1}'),
+            label: o.$2,
+            selected: _source.code == o.$1,
+            onTap: () =>
+                setState(() => _source = BenchmarkSource.fromCode(o.$1)),
+          ),
+        if (widget.askStandard) ...[
+          _sheetLabel(
+            context,
+            itemText(
+              q,
+              'competitionStandard',
+              'C’était au standard de compétition ?',
+            ),
+          ),
+          _sheetChips<String>(
+            keyPrefix: 'benchmark-standard',
+            options: const [
+              ('true', 'Oui'),
+              ('false', 'Non'),
+              ('unknown', 'Je ne sais pas'),
+            ],
+            selected: (c) =>
+                (c == 'unknown' && _standard == null) || '$_standard' == c,
+            onTap: (c) =>
+                setState(() => _standard = c == 'unknown' ? null : c == 'true'),
+          ),
+        ],
+        if (_error != null) ...[
+          const SizedBox(height: KSpacing.s12),
+          Text(
+            _error!,
+            key: const ValueKey('benchmark-error'),
+            style: KType.detail.copyWith(color: KTokens.of(context).danger),
+          ),
+        ],
+      ],
     );
   }
 }
@@ -1639,7 +1632,7 @@ class _SkillSheetState extends State<_SkillSheet> {
         for (final t in widget.targets)
           if (!widget.taken.contains(t)) t,
       ],
-      title: 'QUELLE FIGURE ?',
+      title: 'Quelle figure ?',
     );
     if (id == null || !mounted) return;
     setState(() {
@@ -1676,98 +1669,99 @@ class _SkillSheetState extends State<_SkillSheet> {
     final steps = t == null
         ? const <CatalogExercise>[]
         : widget.catalog.progressionCandidates(t);
-    return SingleChildScrollView(
+    final k = KTokens.of(context);
+    // UI4 : sous-page titrée du libellé du bouton qui y mène (R3).
+    return KPage.sub(
       key: const ValueKey('skill-sheet'),
-      padding: EdgeInsets.fromLTRB(
-        16,
-        0,
-        16,
-        24 + MediaQuery.viewInsetsOf(context).bottom,
+      title: widget.initial == null
+          ? 'Ajouter une figure'
+          : 'Modifier la figure',
+      gap: 0,
+      bottom: _FormBottom(
+        child: KPrimaryButton(
+          key: const ValueKey('skill-save'),
+          label: widget.initial == null ? 'Ajouter' : 'Enregistrer',
+          onPressed: _save,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text('Une figure', style: Theme.of(context).textTheme.titleLarge),
+      children: [
+        _sheetLabel(
+          context,
+          itemText(q, 'targetExerciseId', 'Quelle figure vises-tu ?'),
+        ),
+        KMenuGroup(
+          children: [
+            KMenuRow(
+              key: const ValueKey('skill-target'),
+              icon: Icons.search_rounded,
+              title: t == null ? 'Choisir la figure' : _exerciseName(t),
+              onTap: _pickTarget,
+            ),
+          ],
+        ),
+        if (t != null) ...[
           _sheetLabel(
             context,
-            itemText(q, 'targetExerciseId', 'Quelle figure vises-tu ?'),
+            itemText(q, 'currentExerciseId', 'Où en es-tu ?'),
           ),
-          OutlinedButton(
-            key: const ValueKey('skill-target'),
-            onPressed: _pickTarget,
-            child: Text(t == null ? 'Choisir la figure' : _exerciseName(t)),
+          for (final e in steps)
+            _ChoiceRow(
+              key: ValueKey('skill-step-${e.id}'),
+              label: e.id == t ? '${e.name} (la figure elle-même)' : e.name,
+              selected: _current == e.id,
+              onTap: () => setState(() => _current = e.id),
+            ),
+          Padding(
+            padding: const EdgeInsets.only(top: KSpacing.s8),
+            child: TextField(
+              key: const ValueKey('skill-hold'),
+              controller: _hold,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: itemText(
+                  q,
+                  'bestHoldSeconds',
+                  'Ton meilleur maintien propre sur cette étape ?',
+                ),
+                helperText: 'En secondes, facultatif',
+              ),
+            ),
           ),
-          if (t != null) ...[
-            _sheetLabel(
-              context,
-              itemText(q, 'currentExerciseId', 'Où en es-tu ?'),
-            ),
-            for (final e in steps)
-              _ChoiceRow(
-                key: ValueKey('skill-step-${e.id}'),
-                label: e.id == t ? '${e.name} (la figure elle-même)' : e.name,
-                selected: _current == e.id,
-                onTap: () => setState(() => _current = e.id),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: TextField(
-                key: const ValueKey('skill-hold'),
-                controller: _hold,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: itemText(
-                    q,
-                    'bestHoldSeconds',
-                    'Ton meilleur maintien propre sur cette étape ?',
-                  ),
-                  helperText: 'En secondes, facultatif',
+          Padding(
+            padding: const EdgeInsets.only(top: KSpacing.s8),
+            child: TextField(
+              key: const ValueKey('skill-reps'),
+              controller: _reps,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: itemText(
+                  q,
+                  'bestReps',
+                  'Ou ton meilleur nombre de répétitions propres ?',
                 ),
+                helperText: 'Facultatif',
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: TextField(
-                key: const ValueKey('skill-reps'),
-                controller: _reps,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: itemText(
-                    q,
-                    'bestReps',
-                    'Ou ton meilleur nombre de répétitions propres ?',
-                  ),
-                  helperText: 'Facultatif',
-                ),
-              ),
+          ),
+          _sheetLabel(
+            context,
+            itemText(q, 'atStepSince', 'Depuis quand tu en es là ?'),
+          ),
+          _sheetChips<String>(
+            keyPrefix: 'skill-tenure',
+            options: itemOptions(q, 'atStepSince'),
+            selected: (c) => _tenure?.code == c,
+            onTap: (c) => setState(
+              () =>
+                  _tenure = _tenure?.code == c ? null : StepTenure.fromCode(c),
             ),
-            _sheetLabel(
-              context,
-              itemText(q, 'atStepSince', 'Depuis quand tu en es là ?'),
-            ),
-            _sheetChips<String>(
-              keyPrefix: 'skill-tenure',
-              options: itemOptions(q, 'atStepSince'),
-              selected: (c) => _tenure?.code == c,
-              onTap: (c) => setState(
-                () => _tenure = _tenure?.code == c
-                    ? null
-                    : StepTenure.fromCode(c),
-              ),
-            ),
-          ],
-          if (_error != null) ...[
-            const SizedBox(height: 10),
-            Text(_error!, style: TextStyle(color: SL.danger)),
-          ],
-          const SizedBox(height: 16),
-          FilledButton(
-            key: const ValueKey('skill-save'),
-            onPressed: _save,
-            child: Text(widget.initial == null ? 'Ajouter' : 'Enregistrer'),
           ),
         ],
-      ),
+        if (_error != null) ...[
+          const SizedBox(height: KSpacing.s12),
+          Text(_error!, style: KType.detail.copyWith(color: k.danger)),
+        ],
+      ],
     );
   }
 }
@@ -1831,10 +1825,29 @@ class _SpecializationSheetState extends State<_SpecializationSheet> {
     final id = await _pickExerciseFor(
       context,
       only: only,
-      title: skill ? 'QUELLE FIGURE ?' : 'QUEL MOUVEMENT ?',
+      title: skill ? 'Quelle figure ?' : 'Quel mouvement ?',
     );
     if (id == null || !mounted) return;
     setState(() => _exercise = id);
+  }
+
+  /// UI4 : choix du muscle dans une feuille de liste (à la place du menu
+  /// déroulant).
+  Future<void> _pickMuscle() async {
+    final muscles = widget.catalog.muscles.toList();
+    final i = await showKListSheet(
+      context,
+      title: 'Muscle',
+      items: [
+        for (final m in muscles)
+          KListItem(
+            m,
+            state: m == _muscle ? KListState.current : KListState.todo,
+          ),
+      ],
+    );
+    if (i == null || !mounted) return;
+    setState(() => _muscle = muscles[i]);
   }
 
   void _save() {
@@ -1878,91 +1891,96 @@ class _SpecializationSheetState extends State<_SpecializationSheet> {
     final kinds = widget.mainEvent
         ? [(SpecializationKind.exercise.code, 'Un mouvement de compétition')]
         : itemOptions(q, 'kind');
-    return SingleChildScrollView(
+    final k = KTokens.of(context);
+    // UI4 : sous-page titrée du libellé du bouton qui y mène (R3).
+    return KPage.sub(
       key: const ValueKey('specialization-sheet'),
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text('Ta priorité', style: Theme.of(context).textTheme.titleLarge),
-          _sheetLabel(context, itemText(q, 'kind', 'Quoi ?')),
-          for (final o in kinds)
-            _ChoiceRow(
-              key: ValueKey('spec-kind-${o.$1}'),
-              label: o.$2,
-              selected: _kind.code == o.$1,
-              onTap: () => setState(() {
-                _kind = SpecializationKind.fromCode(o.$1);
-                _exercise = null;
-              }),
-            ),
-          _sheetLabel(context, 'Lequel ?'),
-          if (_kind == SpecializationKind.exercise ||
-              _kind == SpecializationKind.skill)
-            OutlinedButton(
-              key: const ValueKey('spec-target'),
-              onPressed: _pickExercise,
-              child: Text(
-                _exercise == null ? 'Choisir' : _exerciseName(_exercise!),
-              ),
-            )
-          else if (_kind == SpecializationKind.muscle)
-            DropdownButtonFormField<String>(
-              key: const ValueKey('spec-muscle'),
-              isExpanded: true,
-              initialValue: widget.catalog.muscles.contains(_muscle)
-                  ? _muscle
-                  : null,
-              decoration: const InputDecoration(labelText: 'Muscle'),
-              items: [
-                for (final m in widget.catalog.muscles)
-                  DropdownMenuItem(value: m, child: Text(m)),
-              ],
-              onChanged: (v) => setState(() => _muscle = v),
-            )
-          else
-            for (final p in _patterns)
-              _ChoiceRow(
-                key: ValueKey('spec-pattern-${p.$1.code}'),
-                label: p.$2,
-                selected: _pattern == p.$1,
-                onTap: () => setState(() => _pattern = p.$1),
-              ),
-          _sheetLabel(
-            context,
-            itemText(q, 'weeks', 'Pendant combien de temps ?'),
-          ),
-          _sheetChips<String>(
-            keyPrefix: 'spec-weeks',
-            options: itemOptions(q, 'weeks'),
-            selected: (c) => '$_weeks' == c,
-            onTap: (c) =>
-                setState(() => _weeks = '$_weeks' == c ? null : int.parse(c)),
-          ),
-          if (!widget.mainEvent) ...[
-            _sheetLabel(context, itemText(q, 'maintenance', 'Et le reste ?')),
-            for (final o in itemOptions(q, 'maintenance'))
-              _ChoiceRow(
-                key: ValueKey('spec-maintenance-${o.$1}'),
-                label: o.$2,
-                selected: _maintenance?.code == o.$1,
-                onTap: () => setState(
-                  () => _maintenance = MaintenancePolicy.fromCode(o.$1),
-                ),
-              ),
-          ],
-          if (_error != null) ...[
-            const SizedBox(height: 10),
-            Text(_error!, style: TextStyle(color: SL.danger)),
-          ],
-          const SizedBox(height: 16),
-          FilledButton(
-            key: const ValueKey('spec-save'),
-            onPressed: _save,
-            child: const Text('Enregistrer'),
-          ),
-        ],
+      title: 'Choisir ta priorité',
+      gap: 0,
+      bottom: _FormBottom(
+        child: KPrimaryButton(
+          key: const ValueKey('spec-save'),
+          label: 'Enregistrer',
+          onPressed: _save,
+        ),
       ),
+      children: [
+        _sheetLabel(context, itemText(q, 'kind', 'Quoi ?')),
+        for (final o in kinds)
+          _ChoiceRow(
+            key: ValueKey('spec-kind-${o.$1}'),
+            label: o.$2,
+            selected: _kind.code == o.$1,
+            onTap: () => setState(() {
+              _kind = SpecializationKind.fromCode(o.$1);
+              _exercise = null;
+            }),
+          ),
+        _sheetLabel(context, 'Lequel ?'),
+        if (_kind == SpecializationKind.exercise ||
+            _kind == SpecializationKind.skill)
+          KMenuGroup(
+            children: [
+              KMenuRow(
+                key: const ValueKey('spec-target'),
+                icon: Icons.search_rounded,
+                title: _exercise == null
+                    ? 'Choisir'
+                    : _exerciseName(_exercise!),
+                onTap: _pickExercise,
+              ),
+            ],
+          )
+        else if (_kind == SpecializationKind.muscle)
+          KMenuGroup(
+            dividerIndent: KSpacing.s16,
+            children: [
+              KMenuRow(
+                key: const ValueKey('spec-muscle'),
+                title: 'Muscle',
+                subtitle: widget.catalog.muscles.contains(_muscle)
+                    ? _muscle
+                    : 'Choisir',
+                onTap: _pickMuscle,
+              ),
+            ],
+          )
+        else
+          for (final p in _patterns)
+            _ChoiceRow(
+              key: ValueKey('spec-pattern-${p.$1.code}'),
+              label: p.$2,
+              selected: _pattern == p.$1,
+              onTap: () => setState(() => _pattern = p.$1),
+            ),
+        _sheetLabel(
+          context,
+          itemText(q, 'weeks', 'Pendant combien de temps ?'),
+        ),
+        _sheetChips<String>(
+          keyPrefix: 'spec-weeks',
+          options: itemOptions(q, 'weeks'),
+          selected: (c) => '$_weeks' == c,
+          onTap: (c) =>
+              setState(() => _weeks = '$_weeks' == c ? null : int.parse(c)),
+        ),
+        if (!widget.mainEvent) ...[
+          _sheetLabel(context, itemText(q, 'maintenance', 'Et le reste ?')),
+          for (final o in itemOptions(q, 'maintenance'))
+            _ChoiceRow(
+              key: ValueKey('spec-maintenance-${o.$1}'),
+              label: o.$2,
+              selected: _maintenance?.code == o.$1,
+              onTap: () => setState(
+                () => _maintenance = MaintenancePolicy.fromCode(o.$1),
+              ),
+            ),
+        ],
+        if (_error != null) ...[
+          const SizedBox(height: KSpacing.s12),
+          Text(_error!, style: KType.detail.copyWith(color: k.danger)),
+        ],
+      ],
     );
   }
 }
@@ -2040,139 +2058,113 @@ class _OtherSportSheetState extends State<_OtherSportSheet> {
   Widget build(BuildContext context) {
     final q = widget.question;
     final k = _kind;
-    return SingleChildScrollView(
+    // UI4 : sous-page titrée du libellé du bouton qui y mène (R3).
+    return KPage.sub(
       key: const ValueKey('sport-sheet'),
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text('Un autre sport', style: Theme.of(context).textTheme.titleLarge),
-          _sheetLabel(context, itemText(q, 'kind', 'Quel sport ?')),
+      title: widget.initial == null ? 'Ajouter un sport' : 'Modifier le sport',
+      gap: 0,
+      bottom: _FormBottom(
+        child: KPrimaryButton(
+          key: const ValueKey('sport-save'),
+          label: widget.initial == null ? 'Ajouter' : 'Enregistrer',
+          onPressed: _save,
+        ),
+      ),
+      children: [
+        _sheetLabel(context, itemText(q, 'kind', 'Quel sport ?')),
+        _sheetChips<String>(
+          keyPrefix: 'sport-kind',
+          options: itemOptions(q, 'kind'),
+          selected: (c) => k?.code == c,
+          onTap: (c) => setState(() {
+            _kind = OtherSportKind.fromCode(c);
+            if (_kind == OtherSportKind.combatSport && _regions.isEmpty) {
+              _regions.add(BodyRegion.wholeBody);
+            }
+          }),
+        ),
+        _sheetLabel(
+          context,
+          itemText(q, 'sessionsPerWeek', 'Combien de fois par semaine ?'),
+        ),
+        _sheetChips<int>(
+          keyPrefix: 'sport-sessions',
+          options: [for (var n = 1; n <= 7; n++) (n, '$n')],
+          selected: (n) => _sessions == n,
+          onTap: (n) => setState(() => _sessions = n),
+        ),
+        _sheetLabel(
+          context,
+          itemText(q, 'minutesPerSession', 'Combien de temps à chaque fois ?'),
+        ),
+        _sheetChips<int>(
+          keyPrefix: 'sport-minutes',
+          options: [
+            for (final m in {30, 45, 60, 90, 120, _minutes}.toList()..sort())
+              (m, '$m min'),
+          ],
+          selected: (m) => _minutes == m,
+          onTap: (m) => setState(() => _minutes = m),
+        ),
+        _sheetLabel(
+          context,
+          itemText(q, 'weekdays', 'Toujours les mêmes jours ?'),
+        ),
+        _sheetChips<int>(
+          keyPrefix: 'sport-day',
+          multi: true,
+          options: [for (var d = 1; d <= 7; d++) (d, weekdayTitle(d))],
+          selected: _days.contains,
+          onTap: (d) => setState(
+            () => _days.contains(d) ? _days.remove(d) : _days.add(d),
+          ),
+        ),
+        _sheetLabel(
+          context,
+          itemText(q, 'hard', 'C’est intense (matchs, combats, fractionné) ?'),
+        ),
+        _sheetChips<String>(
+          keyPrefix: 'sport-hard',
+          options: const [('true', 'Oui'), ('false', 'Non')],
+          selected: (c) => '$_hard' == c,
+          onTap: (c) => setState(() => _hard = c == 'true'),
+        ),
+        _sheetLabel(
+          context,
+          itemText(q, 'mainSport', 'C’est ton sport principal ?'),
+        ),
+        _sheetChips<String>(
+          keyPrefix: 'sport-main',
+          options: const [('true', 'Oui'), ('false', 'Non')],
+          selected: (c) => '$_main' == c,
+          onTap: (c) => setState(() => _main = c == 'true'),
+        ),
+        if (k != null && !_knownRegions.contains(k)) ...[
+          _sheetLabel(
+            context,
+            itemText(q, 'regions', 'Ça fait surtout travailler…'),
+          ),
           _sheetChips<String>(
-            keyPrefix: 'sport-kind',
-            options: itemOptions(q, 'kind'),
-            selected: (c) => k?.code == c,
+            keyPrefix: 'sport-region',
+            multi: true,
+            options: itemOptions(q, 'regions'),
+            selected: (c) => _regions.any((r) => r.code == c),
             onTap: (c) => setState(() {
-              _kind = OtherSportKind.fromCode(c);
-              if (_kind == OtherSportKind.combatSport && _regions.isEmpty) {
-                _regions.add(BodyRegion.wholeBody);
-              }
+              final r = BodyRegion.fromCode(c);
+              if (!_regions.remove(r)) _regions.add(r);
             }),
           ),
-          _sheetLabel(
-            context,
-            itemText(q, 'sessionsPerWeek', 'Combien de fois par semaine ?'),
-          ),
-          _sheetChips<int>(
-            keyPrefix: 'sport-sessions',
-            options: [for (var n = 1; n <= 7; n++) (n, '$n')],
-            selected: (n) => _sessions == n,
-            onTap: (n) => setState(() => _sessions = n),
-          ),
-          _sheetLabel(
-            context,
-            itemText(
-              q,
-              'minutesPerSession',
-              'Combien de temps à chaque fois ?',
-            ),
-          ),
-          _sheetChips<int>(
-            keyPrefix: 'sport-minutes',
-            options: [
-              for (final m in {30, 45, 60, 90, 120, _minutes}.toList()..sort())
-                (m, '$m min'),
-            ],
-            selected: (m) => _minutes == m,
-            onTap: (m) => setState(() => _minutes = m),
-          ),
-          _sheetLabel(
-            context,
-            itemText(q, 'weekdays', 'Toujours les mêmes jours ?'),
-          ),
-          _sheetChips<int>(
-            keyPrefix: 'sport-day',
-            multi: true,
-            options: [for (var d = 1; d <= 7; d++) (d, weekdayTitle(d))],
-            selected: _days.contains,
-            onTap: (d) => setState(
-              () => _days.contains(d) ? _days.remove(d) : _days.add(d),
-            ),
-          ),
-          _sheetLabel(
-            context,
-            itemText(
-              q,
-              'hard',
-              'C’est intense (matchs, combats, fractionné) ?',
-            ),
-          ),
-          _sheetChips<String>(
-            keyPrefix: 'sport-hard',
-            options: const [('true', 'Oui'), ('false', 'Non')],
-            selected: (c) => '$_hard' == c,
-            onTap: (c) => setState(() => _hard = c == 'true'),
-          ),
-          _sheetLabel(
-            context,
-            itemText(q, 'mainSport', 'C’est ton sport principal ?'),
-          ),
-          _sheetChips<String>(
-            keyPrefix: 'sport-main',
-            options: const [('true', 'Oui'), ('false', 'Non')],
-            selected: (c) => '$_main' == c,
-            onTap: (c) => setState(() => _main = c == 'true'),
-          ),
-          if (k != null && !_knownRegions.contains(k)) ...[
-            _sheetLabel(
-              context,
-              itemText(q, 'regions', 'Ça fait surtout travailler…'),
-            ),
-            _sheetChips<String>(
-              keyPrefix: 'sport-region',
-              multi: true,
-              options: itemOptions(q, 'regions'),
-              selected: (c) => _regions.any((r) => r.code == c),
-              onTap: (c) => setState(() {
-                final r = BodyRegion.fromCode(c);
-                if (!_regions.remove(r)) _regions.add(r);
-              }),
-            ),
-          ],
-          if (_error != null) ...[
-            const SizedBox(height: 10),
-            Text(_error!, style: TextStyle(color: SL.danger)),
-          ],
-          const SizedBox(height: 16),
-          FilledButton(
-            key: const ValueKey('sport-save'),
-            onPressed: _save,
-            child: Text(widget.initial == null ? 'Ajouter' : 'Enregistrer'),
+        ],
+        if (_error != null) ...[
+          const SizedBox(height: KSpacing.s12),
+          Text(
+            _error!,
+            style: KType.detail.copyWith(color: KTokens.of(context).danger),
           ),
         ],
-      ),
+      ],
     );
   }
-}
-
-/// Cadre d'un élément dans une feuille du bas : un contour (une carte
-/// pleine aurait la couleur des champs en thème sombre).
-class _SheetBox extends StatelessWidget {
-  final EdgeInsetsGeometry padding;
-  final Widget child;
-  const _SheetBox({super.key, required this.padding, required this.child});
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 8),
-    child: DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).dividerColor),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Padding(padding: padding, child: child),
-    ),
-  );
 }
 
 /// Nom court d'une nature d'échéance (titres, récapitulatif).
@@ -2509,7 +2501,7 @@ class _EventSheetState extends State<_EventSheet> {
     bool decimal = false,
     String? hint,
   }) => Padding(
-    padding: const EdgeInsets.only(top: 8),
+    padding: const EdgeInsets.only(top: KSpacing.s8),
     child: TextField(
       key: ValueKey(key),
       controller: c,
@@ -2530,146 +2522,126 @@ class _EventSheetState extends State<_EventSheet> {
           15,
         ),
     ];
-    return SingleChildScrollView(
+    // UI4 : sous-page titrée du libellé du bouton qui y mène (R3).
+    return KPage.sub(
       key: const ValueKey('event-sheet'),
-      padding: EdgeInsets.fromLTRB(
-        16,
-        0,
-        16,
-        24 + MediaQuery.viewInsetsOf(context).bottom,
+      title: widget.initial == null ? 'Ajouter une date' : 'Modifier la date',
+      gap: 0,
+      bottom: _FormBottom(
+        child: KPrimaryButton(
+          key: const ValueKey('event-save'),
+          label: widget.initial == null ? 'Ajouter' : 'Enregistrer',
+          onPressed: _save,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Une date en vue',
-            style: Theme.of(context).textTheme.titleLarge,
+      children: [
+        _sheetLabel(context, itemText(q, 'kind', 'C’est quoi ?')),
+        for (final o in itemOptions(q, 'kind'))
+          _ChoiceRow(
+            key: ValueKey('event-kind-${o.$1}'),
+            label: o.$2,
+            selected: k?.code == o.$1,
+            onTap: () => setState(() {
+              _kind = EventKind.fromCode(o.$1);
+              _ruleset = null;
+            }),
           ),
-          _sheetLabel(context, itemText(q, 'kind', 'C’est quoi ?')),
-          for (final o in itemOptions(q, 'kind'))
-            _ChoiceRow(
-              key: ValueKey('event-kind-${o.$1}'),
-              label: o.$2,
-              selected: k?.code == o.$1,
-              onTap: () => setState(() {
-                _kind = EventKind.fromCode(o.$1);
-                _ruleset = null;
-              }),
+        _sheetLabel(context, itemText(q, 'date', 'Quel jour ?')),
+        Wrap(
+          spacing: KSpacing.s8,
+          runSpacing: KSpacing.s8,
+          children: [
+            KTonalButton(
+              key: const ValueKey('event-date-pick'),
+              icon: Icons.event_rounded,
+              label: _date != null && !_approximate
+                  ? longDateText(_date!)
+                  : 'Choisir le jour',
+              onPressed: _pickDay,
             ),
-          _sheetLabel(context, itemText(q, 'date', 'Quel jour ?')),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              OutlinedButton(
-                key: const ValueKey('event-date-pick'),
-                onPressed: _pickDay,
-                child: Text(
-                  _date != null && !_approximate
-                      ? longDateText(_date!)
-                      : 'Choisir le jour',
-                ),
-              ),
-              OutlinedButton(
-                key: const ValueKey('event-date-month'),
-                onPressed: () => setState(() => _monthPicker = !_monthPicker),
-                child: Text(
-                  _date != null && _approximate
-                      ? 'Vers ${monthText(_date!)}'
-                      : 'Pas encore fixée : un mois',
-                ),
-              ),
+            KTonalButton(
+              key: const ValueKey('event-date-month'),
+              label: _date != null && _approximate
+                  ? 'Vers ${monthText(_date!)}'
+                  : 'Pas encore fixée : un mois',
+              onPressed: () => setState(() => _monthPicker = !_monthPicker),
+            ),
+          ],
+        ),
+        if (_monthPicker) ...[
+          const SizedBox(height: KSpacing.s8),
+          _sheetChips<int>(
+            keyPrefix: 'event-month',
+            options: [
+              for (var i = 0; i < months.length; i++) (i, monthText(months[i])),
             ],
-          ),
-          if (_monthPicker) ...[
-            const SizedBox(height: 8),
-            _sheetChips<int>(
-              keyPrefix: 'event-month',
-              options: [
-                for (var i = 0; i < months.length; i++)
-                  (i, monthText(months[i])),
-              ],
-              selected: (i) => _approximate && _date == months[i],
-              onTap: (i) => setState(() {
-                _date = months[i];
-                _approximate = true;
-                _monthPicker = false;
-              }),
-            ),
-          ],
-          _sheetLabel(
-            context,
-            itemText(q, 'priority', 'Elle compte comment ?'),
-          ),
-          for (final o in itemOptions(q, 'priority'))
-            _ChoiceRow(
-              key: ValueKey('event-priority-${o.$1}'),
-              label: o.$2,
-              selected: _priority?.code == o.$1,
-              onTap: () =>
-                  setState(() => _priority = EventPriority.fromCode(o.$1)),
-            ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: TextField(
-              key: const ValueKey('event-name'),
-              controller: _name,
-              maxLength: 60,
-              decoration: InputDecoration(
-                labelText: '${itemText(q, 'name', 'Son nom ?')} (facultatif)',
-              ),
-            ),
-          ),
-          if (k == EventKind.strengthCompetition ||
-              k == EventKind.repsCompetition) ...[
-            if (_kindPresets.isNotEmpty) ...[
-              _sheetLabel(context, itemText(q, 'ruleset', 'Quel règlement ?')),
-              _sheetChips<String>(
-                keyPrefix: 'event-preset',
-                options: [
-                  for (final p in _kindPresets)
-                    ('${p['code']}', '${p['label']}'),
-                  ('other', 'Autre'),
-                ],
-                selected: (c) =>
-                    c == 'other' ? _ruleset == null : _ruleset == c,
-                onTap: (c) => setState(() {
-                  if (c == 'other') {
-                    _ruleset = null;
-                  } else {
-                    _applyPreset(
-                      _kindPresets.firstWhere((p) => p['code'] == c),
-                    );
-                  }
-                }),
-              ),
-              _sheetHint(
-                context,
-                'Le règlement pré-remplit les mouvements : tout reste '
-                'modifiable.',
-              ),
-            ],
-          ],
-          if (k == EventKind.strengthCompetition) ..._strength(context),
-          if (k == EventKind.repsCompetition) ..._reps(context),
-          if (k == EventKind.race) ..._race(context),
-          if (k == EventKind.freestyleCompetition) ..._freestyle(context),
-          if (_error != null) ...[
-            const SizedBox(height: 10),
-            Text(
-              _error!,
-              key: const ValueKey('event-error'),
-              style: TextStyle(color: SL.danger),
-            ),
-          ],
-          const SizedBox(height: 16),
-          FilledButton(
-            key: const ValueKey('event-save'),
-            onPressed: _save,
-            child: Text(widget.initial == null ? 'Ajouter' : 'Enregistrer'),
+            selected: (i) => _approximate && _date == months[i],
+            onTap: (i) => setState(() {
+              _date = months[i];
+              _approximate = true;
+              _monthPicker = false;
+            }),
           ),
         ],
-      ),
+        _sheetLabel(context, itemText(q, 'priority', 'Elle compte comment ?')),
+        for (final o in itemOptions(q, 'priority'))
+          _ChoiceRow(
+            key: ValueKey('event-priority-${o.$1}'),
+            label: o.$2,
+            selected: _priority?.code == o.$1,
+            onTap: () =>
+                setState(() => _priority = EventPriority.fromCode(o.$1)),
+          ),
+        Padding(
+          padding: const EdgeInsets.only(top: KSpacing.s8),
+          child: TextField(
+            key: const ValueKey('event-name'),
+            controller: _name,
+            maxLength: 60,
+            decoration: InputDecoration(
+              labelText: '${itemText(q, 'name', 'Son nom ?')} (facultatif)',
+            ),
+          ),
+        ),
+        if (k == EventKind.strengthCompetition ||
+            k == EventKind.repsCompetition) ...[
+          if (_kindPresets.isNotEmpty) ...[
+            _sheetLabel(context, itemText(q, 'ruleset', 'Quel règlement ?')),
+            _sheetChips<String>(
+              keyPrefix: 'event-preset',
+              options: [
+                for (final p in _kindPresets) ('${p['code']}', '${p['label']}'),
+                ('other', 'Autre'),
+              ],
+              selected: (c) => c == 'other' ? _ruleset == null : _ruleset == c,
+              onTap: (c) => setState(() {
+                if (c == 'other') {
+                  _ruleset = null;
+                } else {
+                  _applyPreset(_kindPresets.firstWhere((p) => p['code'] == c));
+                }
+              }),
+            ),
+            _sheetHint(
+              context,
+              'Le règlement pré-remplit les mouvements : tout reste '
+              'modifiable.',
+            ),
+          ],
+        ],
+        if (k == EventKind.strengthCompetition) ..._strength(context),
+        if (k == EventKind.repsCompetition) ..._reps(context),
+        if (k == EventKind.race) ..._race(context),
+        if (k == EventKind.freestyleCompetition) ..._freestyle(context),
+        if (_error != null) ...[
+          const SizedBox(height: KSpacing.s12),
+          Text(
+            _error!,
+            key: const ValueKey('event-error'),
+            style: KType.detail.copyWith(color: KTokens.of(context).danger),
+          ),
+        ],
+      ],
     );
   }
 
@@ -2682,49 +2654,52 @@ class _EventSheetState extends State<_EventSheet> {
         itemText(q, 'lifts', 'Les mouvements, dans l’ordre'),
       ),
       for (var i = 0; i < _lifts.length; i++)
-        _SheetBox(
-          key: ValueKey('event-lift-$i'),
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(child: Text(_exerciseName(_lifts[i].exerciseId))),
-                  IconButton(
-                    key: ValueKey('event-lift-remove-$i'),
-                    tooltip: 'Retirer ce mouvement',
-                    icon: const Icon(Icons.close),
-                    onPressed: () => setState(() => _lifts.removeAt(i)),
-                  ),
-                ],
-              ),
-              _sheetHint(context, 'Tentatives'),
-              _sheetChips<int>(
-                keyPrefix: 'event-lift-$i-attempts',
-                options: const [(1, '1'), (2, '2'), (3, '3'), (4, '4')],
-                selected: (n) => _lifts[i].attempts == n,
-                onTap: (n) => setState(() => _lifts[i].attempts = n),
-              ),
-              _num(
-                'event-lift-$i-best',
-                _lifts[i].best,
-                'Ta meilleure barre (kg, facultatif)',
-                decimal: true,
-              ),
-              _num(
-                'event-lift-$i-target',
-                _lifts[i].target,
-                'Ta barre visée (kg, facultatif)',
-                decimal: true,
-              ),
-            ],
+        Padding(
+          padding: const EdgeInsets.only(bottom: KSpacing.s8),
+          child: KCard(
+            key: ValueKey('event-lift-$i'),
+            padding: const EdgeInsets.all(KSpacing.s12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: Text(_exerciseName(_lifts[i].exerciseId))),
+                    KIconButton(
+                      key: ValueKey('event-lift-remove-$i'),
+                      tooltip: 'Retirer ce mouvement',
+                      icon: Icons.close_rounded,
+                      onPressed: () => setState(() => _lifts.removeAt(i)),
+                    ),
+                  ],
+                ),
+                _sheetHint(context, 'Tentatives'),
+                _sheetChips<int>(
+                  keyPrefix: 'event-lift-$i-attempts',
+                  options: const [(1, '1'), (2, '2'), (3, '3'), (4, '4')],
+                  selected: (n) => _lifts[i].attempts == n,
+                  onTap: (n) => setState(() => _lifts[i].attempts = n),
+                ),
+                _num(
+                  'event-lift-$i-best',
+                  _lifts[i].best,
+                  'Ta meilleure barre (kg, facultatif)',
+                  decimal: true,
+                ),
+                _num(
+                  'event-lift-$i-target',
+                  _lifts[i].target,
+                  'Ta barre visée (kg, facultatif)',
+                  decimal: true,
+                ),
+              ],
+            ),
           ),
         ),
-      TextButton.icon(
+      KTonalButton(
         key: const ValueKey('event-lift-add'),
-        icon: const Icon(Icons.add),
-        label: const Text('Ajouter un mouvement'),
+        icon: Icons.add_rounded,
+        label: 'Ajouter un mouvement',
         onPressed: () async {
           final id = await _pickExerciseFor(context);
           if (id == null || !mounted) return;
@@ -2787,10 +2762,9 @@ class _EventSheetState extends State<_EventSheet> {
           selected: _mode?.code == o.$1,
           onTap: () => setState(() => _mode = RepsEventMode.fromCode(o.$1)),
         ),
-      SwitchListTile(
+      KSwitchRow(
         key: const ValueKey('event-format-unknown'),
-        contentPadding: EdgeInsets.zero,
-        title: const Text('Le format sera annoncé le jour même'),
+        title: 'Le format sera annoncé le jour même',
         value: _formatUnknown,
         onChanged: (v) => setState(() => _formatUnknown = v),
       ),
@@ -2800,60 +2774,62 @@ class _EventSheetState extends State<_EventSheet> {
           itemText(q, 'stations', 'Les exercices, dans l’ordre'),
         ),
         for (var i = 0; i < _stations.length; i++)
-          _SheetBox(
-            key: ValueKey('event-station-$i'),
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(_exerciseName(_stations[i].exerciseId)),
-                    ),
-                    IconButton(
-                      key: ValueKey('event-station-remove-$i'),
-                      tooltip: 'Retirer ce poste',
-                      icon: const Icon(Icons.close),
-                      onPressed: () => setState(() => _stations.removeAt(i)),
-                    ),
-                  ],
-                ),
-                _num(
-                  'event-station-$i-reps',
-                  _stations[i].reps,
-                  'Répétitions imposées (facultatif)',
-                ),
-                _num(
-                  'event-station-$i-seconds',
-                  _stations[i].seconds,
-                  'Ou durée imposée, en secondes (facultatif)',
-                ),
-                _num(
-                  'event-station-$i-load',
-                  _stations[i].load,
-                  'Lest (kg, facultatif)',
-                  decimal: true,
-                ),
-                _num(
-                  'event-station-$i-limit',
-                  _stations[i].limit,
-                  'Limite de temps du poste, en secondes (facultatif)',
-                ),
-                SwitchListTile(
-                  key: ValueKey('event-station-$i-unbroken'),
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('Série d’une traite'),
-                  value: _stations[i].unbroken,
-                  onChanged: (v) => setState(() => _stations[i].unbroken = v),
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: KSpacing.s8),
+            child: KCard(
+              key: ValueKey('event-station-$i'),
+              padding: const EdgeInsets.all(KSpacing.s12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(_exerciseName(_stations[i].exerciseId)),
+                      ),
+                      KIconButton(
+                        key: ValueKey('event-station-remove-$i'),
+                        tooltip: 'Retirer ce poste',
+                        icon: Icons.close_rounded,
+                        onPressed: () => setState(() => _stations.removeAt(i)),
+                      ),
+                    ],
+                  ),
+                  _num(
+                    'event-station-$i-reps',
+                    _stations[i].reps,
+                    'Répétitions imposées (facultatif)',
+                  ),
+                  _num(
+                    'event-station-$i-seconds',
+                    _stations[i].seconds,
+                    'Ou durée imposée, en secondes (facultatif)',
+                  ),
+                  _num(
+                    'event-station-$i-load',
+                    _stations[i].load,
+                    'Lest (kg, facultatif)',
+                    decimal: true,
+                  ),
+                  _num(
+                    'event-station-$i-limit',
+                    _stations[i].limit,
+                    'Limite de temps du poste, en secondes (facultatif)',
+                  ),
+                  KSwitchRow(
+                    key: ValueKey('event-station-$i-unbroken'),
+                    title: 'Série d’une traite',
+                    value: _stations[i].unbroken,
+                    onChanged: (v) => setState(() => _stations[i].unbroken = v),
+                  ),
+                ],
+              ),
             ),
           ),
-        TextButton.icon(
+        KTonalButton(
           key: const ValueKey('event-station-add'),
-          icon: const Icon(Icons.add),
-          label: const Text('Ajouter un exercice'),
+          icon: Icons.add_rounded,
+          label: 'Ajouter un exercice',
           onPressed: () async {
             final id = await _pickExerciseFor(context);
             if (id == null || !mounted) return;
@@ -2873,7 +2849,7 @@ class _EventSheetState extends State<_EventSheet> {
         'Ton meilleur total de répétitions (facultatif)',
       ),
       Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: KSpacing.s8),
         child: TextField(
           key: const ValueKey('event-best-time'),
           controller: _bestTime,
@@ -2918,7 +2894,7 @@ class _EventSheetState extends State<_EventSheet> {
         decimal: true,
       ),
       Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: KSpacing.s8),
         child: TextField(
           key: const ValueKey('event-target-time'),
           controller: _targetTime,
@@ -2932,7 +2908,7 @@ class _EventSheetState extends State<_EventSheet> {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: KSpacing.s8),
         child: TextField(
           key: const ValueKey('event-best-time'),
           controller: _bestTime,
@@ -2956,21 +2932,20 @@ class _EventSheetState extends State<_EventSheet> {
       ),
     ),
     Wrap(
-      spacing: 6,
-      runSpacing: 6,
+      spacing: KSpacing.s8,
+      runSpacing: KSpacing.s8,
       children: [
         for (final id in _elements)
-          InputChip(
-            label: Text(_exerciseName(id)),
+          KChip(
+            _exerciseName(id),
             onDeleted: () => setState(() => _elements.remove(id)),
-            deleteButtonTooltipMessage: 'Retirer',
           ),
       ],
     ),
-    TextButton.icon(
+    KTonalButton(
       key: const ValueKey('event-element-add'),
-      icon: const Icon(Icons.add),
-      label: const Text('Ajouter une figure'),
+      icon: Icons.add_rounded,
+      label: 'Ajouter une figure',
       onPressed: () async {
         final id = await _pickExerciseFor(context);
         if (id == null || !mounted || _elements.contains(id)) return;

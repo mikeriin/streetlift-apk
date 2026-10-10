@@ -271,26 +271,33 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Réglages › Affichage 3D : deux réglages activés, enregistrés '
-      '(M6c : plus de « Os visibles »)', (tester) async {
+  // UI4 (cahier §4.1) : section « Anatomie et 3D » de la page Apparence.
+  testWidgets('Réglages › Apparence › Anatomie et 3D : deux réglages activés, '
+      'enregistrés (M6c : plus de « Os visibles »)', (tester) async {
     SharedPreferences.setMockInitialValues({});
     Display3DSettings.instance.reset();
     phone(tester);
-    await tester.pumpWidget(page(const SettingsScreen(section: 10)));
-    await _settle(tester, find.text('Halo'));
-    expect(find.text('AFFICHAGE 3D'), findsOneWidget);
+    await tester.pumpWidget(
+      page(const SettingsScreen(page: SettingsPage.appearance)),
+    );
+    await _settle(tester, find.text('APPARENCE'));
+    expect(find.text('APPARENCE'), findsOneWidget);
+    // Section en bas de page (liste paresseuse) : atteinte par défilement.
+    await scrollToAction(tester, find.text('Halo'));
+    expect(find.text('Anatomie et 3D'), findsOneWidget);
     // M6c : personnage à la peau lisse, plus d'os à afficher.
     expect(find.text('Os visibles'), findsNothing);
     expect(find.byKey(const ValueKey('settings-3d-bones')), findsNothing);
     for (final key in ['names', 'halo']) {
-      final tile = tester.widget<SwitchListTile>(
+      final tile = tester.widget<Switch>(
         find.descendant(
           of: find.byKey(ValueKey('settings-3d-$key')),
-          matching: find.byType(SwitchListTile),
+          matching: find.byType(Switch),
         ),
       );
       expect(tile.value, isTrue, reason: key);
     }
+    await scrollToAction(tester, find.text('Halo'));
     await tester.tap(find.text('Halo'));
     await tester.pumpAndSettle();
     expect(Display3DSettings.instance.halo.value, isFalse);

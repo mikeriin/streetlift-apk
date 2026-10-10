@@ -187,7 +187,8 @@ void main() {
         .isNotEmpty;
     await shot('2_accueil_proposition');
 
-    // Arsenal › Anatomie › Galerie de Koach.
+    // Arsenal › Anatomie : UI4, la galerie de Koach n'y est plus (elle est
+    // dans Réglages › Aide et à propos) ; elle s'ouvre directement.
     await tab(tester, 0);
     final anatomy = find.byKey(const ValueKey('arsenal-anatomy'));
     if (anatomy.evaluate().isNotEmpty) {
@@ -195,19 +196,16 @@ void main() {
       await wait(tester, 2000);
     }
     final entry = find.byKey(const ValueKey('anatomy-koach-gallery'));
-    await scrollTo(tester, entry);
-    releve['entree_galerie'] = entry.evaluate().isNotEmpty;
+    await scrollTo(tester, find.text('Galerie de Koach'));
+    releve['anatomie_sans_galerie'] =
+        entry.evaluate().isEmpty &&
+        find.text('Galerie de Koach').evaluate().isEmpty;
     releve['entree_apercu_3d'] = find
         .byKey(const ValueKey('anatomy-koach-preview'))
         .evaluate()
         .isNotEmpty;
     await shot('3_anatomie_entree');
-    if (entry.evaluate().isNotEmpty) {
-      await tester.tap(entry.first);
-      await wait(tester, 1800);
-    } else {
-      await gallery(tester);
-    }
+    await gallery(tester);
     releve['galerie'] = find.byType(KoachGalleryScreen).evaluate().isNotEmpty;
     await shot('4_galerie_haut');
     await scrollTo(
@@ -367,7 +365,7 @@ void main() {
 
     expect(releve['carte_du_jour'], isTrue);
     expect(releve['proposition_koach'], isTrue);
-    expect(releve['entree_galerie'], isTrue);
+    expect(releve['anatomie_sans_galerie'], isTrue);
     expect(releve['entree_apercu_3d'], isFalse);
     expect(releve['galerie'], isTrue);
     expect(releve['poses'], 36);

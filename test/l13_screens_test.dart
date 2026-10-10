@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/athlete_profile_flow.dart';
+import 'package:streetlift_tracker/kit/buttons.dart' show KPrimaryButton;
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 import 'package:streetlift_tracker/wellbeing_screens.dart';
@@ -190,12 +191,10 @@ void main() {
     // Formulaire vide : rien à partager.
     final share = find.byKey(const ValueKey('feedback-share'));
     await reach(tester, share);
-    expect(tester.widget<ButtonStyleButton>(share).onPressed, isNull);
-    await reach(
-      tester,
-      find.byKey(const ValueKey('feedback-blocked')),
-      up: true,
-    );
+    // UI4 : « Partager mon avis » est le bouton principal du kit, en bas.
+    expect(tester.widget<KPrimaryButton>(share).onPressed, isNull);
+    // UI4 : le bouton est fixé en bas ; le champ est plus bas dans la liste.
+    await reach(tester, find.byKey(const ValueKey('feedback-blocked')));
     await tester.enterText(
       find.byKey(const ValueKey('feedback-blocked')),
       'Le chrono coupe la musique',
@@ -232,20 +231,44 @@ void main() {
     expect(find.textContaining('pas un dispositif médical'), findsOneWidget);
   });
 
-  testWidgets('À propos : avertissement et quatre entrées L13', (tester) async {
+  // UI4 (cahier §4.1) : « Aide et à propos » garde l'avertissement, Santé
+  // et sécurité (qui porte Récupération, plus de doublon) et l'avis ; la
+  // politique de confidentialité passe dans « Données et confidentialité ».
+  testWidgets('Aide et à propos : avertissement et quatre entrées L13', (
+    tester,
+  ) async {
     phone(tester, size: const Size(320, 720));
-    await tester.pumpWidget(page(const SettingsScreen(section: 9), scale: 1.3));
+    await tester.pumpWidget(
+      page(const SettingsScreen(page: SettingsPage.about), scale: 1.3),
+    );
     await tester.pumpAndSettle();
+    // UI4 : l'aide d'abord, l'avertissement ensuite.
     for (final key in [
-      'wellness-disclaimer',
       'about-safety',
-      'about-recovery',
-      'about-privacy',
       'about-feedback',
+      'wellness-disclaimer',
     ]) {
       await reach(tester, find.byKey(ValueKey(key)));
     }
-    await reach(tester, find.byKey(const ValueKey('about-privacy')), up: true);
+    expect(find.byKey(const ValueKey('about-recovery')), findsNothing);
+    await reach(tester, find.byKey(const ValueKey('about-safety')), up: true);
+    await tester.tap(find.byKey(const ValueKey('about-safety')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('safety-screen')), findsOneWidget);
+    // Récupération : une ligne de Santé et sécurité.
+    await reach(tester, find.byKey(const ValueKey('safety-recovery')));
+    await tester.tap(find.byKey(const ValueKey('safety-recovery')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('recovery-screen')), findsOneWidget);
+
+    // Nouvelle application : les pages ouvertes au-dessus sont fermées.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpAndSettle();
+    await tester.pumpWidget(
+      page(const SettingsScreen(page: SettingsPage.data), scale: 1.3),
+    );
+    await tester.pumpAndSettle();
+    await reach(tester, find.byKey(const ValueKey('about-privacy')));
     await tester.tap(find.byKey(const ValueKey('about-privacy')));
     await settleAsset(tester, find.byKey(const ValueKey('privacy-screen')));
     expect(find.byKey(const ValueKey('privacy-screen')), findsOneWidget);

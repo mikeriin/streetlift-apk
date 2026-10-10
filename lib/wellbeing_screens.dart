@@ -6,7 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'app_theme.dart';
 import 'data_control.dart' show eraseAppData;
 import 'exercise_screens.dart' show markdownBlocks;
 import 'athlete_profile_flow.dart';
@@ -19,21 +18,40 @@ class DisclaimerCard extends StatelessWidget {
   const DisclaimerCard({super.key});
 
   @override
-  Widget build(BuildContext context) => KCard(
-    key: const ValueKey('wellness-disclaimer'),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(Icons.health_and_safety_outlined, color: SL.accent),
-        const SizedBox(width: 10),
-        const Expanded(child: Text(kWellnessDisclaimer)),
-      ],
-    ),
-  );
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return KCard(
+      key: const ValueKey('wellness-disclaimer'),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.health_and_safety_outlined, color: k.encre),
+          const SizedBox(width: KSpacing.s12),
+          Expanded(
+            child: Text(
+              kWellnessDisclaimer,
+              style: KType.corps.copyWith(color: k.texte),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
+/// Titre d'une carte (texte de santé ou de conseil).
 Widget _title(BuildContext context, String t) =>
-    Text(t, style: Theme.of(context).textTheme.titleMedium);
+    Text(t, style: KType.titreCarte.copyWith(color: KTokens.of(context).texte));
+
+/// Texte courant d'une carte.
+Widget _text(BuildContext context, String t, {Key? key, bool strong = false}) =>
+    Text(
+      t,
+      key: key,
+      style: (strong ? KType.corpsFort : KType.corps).copyWith(
+        color: KTokens.of(context).texte,
+      ),
+    );
 
 /// Santé et sécurité : signaux d'alerte, douleur, situations particulières.
 class SafetyScreen extends StatelessWidget {
@@ -43,125 +61,126 @@ class SafetyScreen extends StatelessWidget {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: store,
     builder: (context, _) {
+      final k = KTokens.of(context);
       final referral = store.painReferralMovements;
-      return KScreen(
-        appBar: AppBar(title: const Text('SANTÉ ET SÉCURITÉ')),
-        body: KList(
-          key: const ValueKey('safety-screen'),
-          children: [
-            KCard(
-              key: const ValueKey('safety-alert'),
-              accent: SL.accent,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.warning_amber_rounded, color: SL.accent),
-                      const SizedBox(width: 8),
-                      Expanded(child: _title(context, 'Signal d’alerte')),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  for (final s in kAlertSignals)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('•  '),
-                          Expanded(child: Text(s)),
-                        ],
-                      ),
-                    ),
-                  const SizedBox(height: 6),
-                  const Text(
-                    kAlertAdvice,
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-            const KSection('Douleur'),
-            KCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(kPainAdvice),
-                  if (referral.isNotEmpty) ...[
-                    const SizedBox(height: 10),
-                    Text(
-                      key: const ValueKey('safety-referral'),
-                      '${referral.map(koachMovementName).join(', ')} : '
-                      '$kPainReferral',
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            const KSection('Situations particulières'),
-            for (final s in kSpecialSituations)
-              KCard(
-                key: ValueKey('safety-situation-${s.id}'),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      return KPage.sub(
+        key: const ValueKey('safety-screen'),
+        title: 'Santé et sécurité',
+        children: [
+          KCard(
+            key: const ValueKey('safety-alert'),
+            accent: k.avertissement,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    _title(context, s.title),
-                    const SizedBox(height: 4),
-                    Text(s.text),
+                    Icon(Icons.warning_amber_rounded, color: k.avertissement),
+                    const SizedBox(width: KSpacing.s8),
+                    Expanded(child: _title(context, 'Signal d’alerte')),
                   ],
                 ),
-              ),
-            KMenuTile(
-              icon: Icons.bedtime_outlined,
-              title: 'Récupération',
-              subtitle: 'Sommeil, hydratation, repas, régularité',
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute<void>(builder: (_) => const RecoveryScreen()),
+                const SizedBox(height: KSpacing.s8),
+                for (final s in kAlertSignals)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: KSpacing.s4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _text(context, '•  '),
+                        Expanded(child: _text(context, s)),
+                      ],
+                    ),
+                  ),
+                const SizedBox(height: KSpacing.s8),
+                _text(context, kAlertAdvice, strong: true),
+              ],
+            ),
+          ),
+          const KSectionTitle('Douleur'),
+          KCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _text(context, kPainAdvice),
+                if (referral.isNotEmpty) ...[
+                  const SizedBox(height: KSpacing.s12),
+                  _text(
+                    context,
+                    '${referral.map(koachMovementName).join(', ')} : '
+                    '$kPainReferral',
+                    key: const ValueKey('safety-referral'),
+                    strong: true,
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const KSectionTitle('Situations particulières'),
+          for (final s in kSpecialSituations)
+            KCard(
+              key: ValueKey('safety-situation-${s.id}'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _title(context, s.title),
+                  const SizedBox(height: KSpacing.s4),
+                  _text(context, s.text),
+                ],
               ),
             ),
-            const DisclaimerCard(),
-          ],
-        ),
+          KMenuGroup(
+            children: [
+              KMenuRow(
+                key: const ValueKey('safety-recovery'),
+                icon: Icons.bedtime_outlined,
+                title: 'Récupération',
+                subtitle: 'Sommeil, hydratation, repas, régularité',
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const RecoveryScreen(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const DisclaimerCard(),
+        ],
       );
     },
   );
 }
 
-/// Conseils généraux de récupération (KT-072).
+/// Conseils généraux de récupération (KT-072). UI4 (R3) : titre
+/// « Récupération », comme l'entrée qui y mène ; plus d'intro « Récupérer ».
 class RecoveryScreen extends StatelessWidget {
   const RecoveryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => KScreen(
-    appBar: AppBar(title: const Text('RÉCUPÉRATION')),
-    body: KList(
-      key: const ValueKey('recovery-screen'),
-      children: [
-        const KPageIntro(
-          'Récupérer',
-          'Des repères généraux, sans calcul ni objectif de poids.',
-        ),
-        for (final t in kRecoveryTips)
-          KCard(
-            key: ValueKey('recovery-${t.id}'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _title(context, t.title),
-                const SizedBox(height: 4),
-                Text(t.text),
-              ],
-            ),
+  Widget build(BuildContext context) => KPage.sub(
+    key: const ValueKey('recovery-screen'),
+    title: 'Récupération',
+    lead: 'Des repères généraux, sans calcul ni objectif de poids.',
+    children: [
+      for (final t in kRecoveryTips)
+        KCard(
+          key: ValueKey('recovery-${t.id}'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _title(context, t.title),
+              const SizedBox(height: KSpacing.s4),
+              _text(context, t.text),
+            ],
           ),
-      ],
-    ),
+        ),
+    ],
   );
 }
 
 /// Politique de confidentialité (même texte que la version publiée).
+/// UI4 (R3) : titre « Politique de confidentialité », comme l'entrée.
 class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
 
@@ -178,28 +197,36 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
     cache: false,
   );
 
+  static const _title = 'Politique de confidentialité';
+
   @override
-  Widget build(BuildContext context) => KScreen(
-    appBar: AppBar(title: const Text('CONFIDENTIALITÉ')),
-    body: FutureBuilder<String>(
-      future: _text,
-      builder: (context, snap) {
-        if (snap.hasError) {
-          return const KEmpty(
-            icon: Icons.error_outline,
-            title: 'Politique indisponible',
-            message: 'Le texte n’a pas pu être lu. Réinstalle l’application.',
-          );
-        }
-        if (!snap.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return KList(
-          key: const ValueKey('privacy-screen'),
-          children: markdownBlocks(context, snap.data!),
+  Widget build(BuildContext context) => FutureBuilder<String>(
+    future: _text,
+    builder: (context, snap) {
+      if (snap.hasError) {
+        return const KPage.sub(
+          title: _title,
+          children: [
+            KEmpty(
+              icon: Icons.error_outline,
+              title: 'Politique indisponible',
+              message: 'Le texte n’a pas pu être lu. Réinstalle l’application.',
+            ),
+          ],
         );
-      },
-    ),
+      }
+      if (!snap.hasData) {
+        return const KPage.sub(
+          title: _title,
+          children: [Center(child: CircularProgressIndicator())],
+        );
+      }
+      return KPage.sub(
+        key: const ValueKey('privacy-screen'),
+        title: _title,
+        children: markdownBlocks(context, snap.data!),
+      );
+    },
   );
 }
 
@@ -291,158 +318,154 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     decoration: InputDecoration(labelText: label),
   );
 
+  /// UI4 (R3) : titre « Donner mon avis », comme l'entrée ; plus d'intro
+  /// « Ton avis ». Puces du kit, note en segments, cases en interrupteurs,
+  /// « Partager mon avis » en bouton principal en bas.
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final text = _text;
-    return KScreen(
-      appBar: AppBar(title: const Text('DONNER MON AVIS')),
-      body: KList(
-        key: const ValueKey('feedback-screen'),
-        children: [
-          const KPageIntro(
-            'Ton avis',
-            'Rien n’est envoyé automatiquement : tu choisis ce que tu '
-                'partages et avec qui.',
+    return KPage.sub(
+      key: const ValueKey('feedback-screen'),
+      title: 'Donner mon avis',
+      lead:
+          'Rien n’est envoyé automatiquement : tu choisis ce que tu '
+          'partages et avec qui.',
+      bottom: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            KSpacing.page,
+            KSpacing.s8,
+            KSpacing.page,
+            KSpacing.s16,
           ),
-          KCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _title(context, 'Ce que tu as testé'),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final s in kTestScenarios)
-                      ChoiceChip(
-                        key: ValueKey('feedback-scenario-${s.$1}'),
-                        label: Text(s.$3),
-                        selected: _d.scenario == s.$1,
-                        onSelected: (_) => setState(() => _d.scenario = s.$1),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                _title(context, 'Ta note (facultative)'),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  children: [
-                    for (var i = 1; i <= 5; i++)
-                      ChoiceChip(
-                        key: ValueKey('feedback-rating-$i'),
-                        label: Text('$i'),
-                        tooltip: 'Note $i sur 5',
-                        selected: _d.rating == i,
-                        onSelected: (on) =>
-                            setState(() => _d.rating = on ? i : null),
-                      ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          _field('worked', 'Ce qui marche bien', _worked),
-          _field('blocked', 'Ce qui bloque ou gêne', _blocked),
-          _field('other', 'Autre remarque', _other),
-          KCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _title(context, 'Ajouter (facultatif)'),
-                CheckboxListTile(
-                  key: const ValueKey('feedback-include-version'),
-                  contentPadding: EdgeInsets.zero,
-                  value: _d.includeVersion,
-                  onChanged: (v) => setState(() => _d.includeVersion = v!),
-                  title: Text('Version ${widget.appVersion}'),
-                ),
-                if (store.feedbackLevel != null)
-                  CheckboxListTile(
-                    key: const ValueKey('feedback-include-level'),
-                    contentPadding: EdgeInsets.zero,
-                    value: _d.includeLevel,
-                    onChanged: (v) => setState(() => _d.includeLevel = v!),
-                    title: const Text('Mon repère de niveau'),
-                  ),
-                if (store.hasAnyProfile)
-                  CheckboxListTile(
-                    key: const ValueKey('feedback-include-caution'),
-                    contentPadding: EdgeInsets.zero,
-                    value: _d.includeCaution,
-                    onChanged: (v) => setState(() => _d.includeCaution = v!),
-                    title: const Text('Mode prudent actif ou non'),
-                  ),
-                Text(
-                  'Jamais inclus : historique, charges, poids, réponses de '
-                  'santé.',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
-          ),
-          const KSection('Texte qui sera partagé'),
-          KCard(
-            child: SelectableText(
-              key: const ValueKey('feedback-preview'),
-              text,
-            ),
-          ),
-          FilledButton.icon(
+          child: KPrimaryButton(
             key: const ValueKey('feedback-share'),
             onPressed: _busy || _d.isEmpty ? null : _share,
-            icon: const Icon(Icons.ios_share_rounded),
-            label: const Text('Partager mon avis'),
+            icon: Icons.ios_share_rounded,
+            label: 'Partager mon avis',
           ),
-          OutlinedButton.icon(
-            key: const ValueKey('feedback-copy'),
-            onPressed: _d.isEmpty
-                ? null
-                : () async {
-                    await Clipboard.setData(ClipboardData(text: text));
-                    if (!context.mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Texte copié.')),
-                    );
-                  },
-            icon: const Icon(Icons.copy_rounded),
-            label: const Text('Copier le texte'),
-          ),
-        ],
+        ),
       ),
+      children: [
+        const KSectionTitle('Ce que tu as testé'),
+        Wrap(
+          spacing: KSpacing.s8,
+          runSpacing: KSpacing.s8,
+          children: [
+            for (final s in kTestScenarios)
+              KChip(
+                s.$3,
+                key: ValueKey('feedback-scenario-${s.$1}'),
+                selected: _d.scenario == s.$1,
+                onTap: () => setState(() => _d.scenario = s.$1),
+              ),
+          ],
+        ),
+        const KSectionTitle('Ta note (facultative)'),
+        KSegmented<int>(
+          key: const ValueKey('feedback-rating'),
+          semanticLabel: 'Ta note sur 5',
+          segments: [
+            const KSegment(0, 'Aucune', semanticLabel: 'Pas de note'),
+            for (var i = 1; i <= 5; i++)
+              KSegment(i, '$i', semanticLabel: 'Note $i sur 5'),
+          ],
+          selected: _d.rating ?? 0,
+          onChanged: (v) => setState(() => _d.rating = v == 0 ? null : v),
+        ),
+        _field('worked', 'Ce qui marche bien', _worked),
+        _field('blocked', 'Ce qui bloque ou gêne', _blocked),
+        _field('other', 'Autre remarque', _other),
+        KMenuGroup(
+          title: 'Ajouter (facultatif)',
+          dividerIndent: KSpacing.s16,
+          children: [
+            KSwitchRow(
+              key: const ValueKey('feedback-include-version'),
+              title: 'Version ${widget.appVersion}',
+              value: _d.includeVersion,
+              onChanged: (v) => setState(() => _d.includeVersion = v),
+            ),
+            if (store.feedbackLevel != null)
+              KSwitchRow(
+                key: const ValueKey('feedback-include-level'),
+                title: 'Mon repère de niveau',
+                value: _d.includeLevel,
+                onChanged: (v) => setState(() => _d.includeLevel = v),
+              ),
+            if (store.hasAnyProfile)
+              KSwitchRow(
+                key: const ValueKey('feedback-include-caution'),
+                title: 'Mode prudent actif ou non',
+                value: _d.includeCaution,
+                onChanged: (v) => setState(() => _d.includeCaution = v),
+              ),
+          ],
+        ),
+        Text(
+          'Jamais inclus : historique, charges, poids, réponses de santé.',
+          style: KType.detail.copyWith(color: k.texte2),
+        ),
+        const KSectionTitle('Texte qui sera partagé'),
+        KCard(
+          child: SelectableText(
+            key: const ValueKey('feedback-preview'),
+            text,
+            style: KType.corps.copyWith(color: k.texte),
+          ),
+        ),
+        KTonalButton(
+          key: const ValueKey('feedback-copy'),
+          expand: true,
+          onPressed: _d.isEmpty
+              ? null
+              : () async {
+                  await Clipboard.setData(ClipboardData(text: text));
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('Texte copié.')));
+                },
+          icon: Icons.copy_rounded,
+          label: 'Copier le texte',
+        ),
+      ],
     );
   }
 }
 
 /// Profil chargé ou importé de moins de 18 ans : application bloquée
 /// jusqu'à correction de l'année de naissance ou suppression des données.
+/// UI4 : page sans retour (barrière), titre en grand comme une racine.
 class MinorGate extends StatelessWidget {
   const MinorGate({super.key});
 
   @override
-  Widget build(BuildContext context) => KScreen(
-    appBar: AppBar(
-      automaticallyImplyLeading: false,
-      title: const Text('RÉSERVÉE AUX ADULTES'),
-    ),
-    body: KList(
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return KPage.root(
       key: const ValueKey('minor-gate'),
+      title: 'Réservée aux adultes',
       children: [
         KCard(
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.info_outline, color: SL.accent),
-              const SizedBox(height: 8),
-              const Text(
-                'Kalis Track est réservée aux personnes de 18 ans et plus. '
-                'L’année de naissance enregistrée indique moins de 18 ans.',
+              Icon(Icons.info_outline, color: k.encre),
+              const SizedBox(width: KSpacing.s12),
+              Expanded(
+                child: Text(
+                  'Kalis Track est réservée aux personnes de 18 ans et plus. '
+                  'L’année de naissance enregistrée indique moins de 18 ans.',
+                  style: KType.corps.copyWith(color: k.texte),
+                ),
               ),
             ],
           ),
         ),
-        OutlinedButton(
+        KPrimaryButton(
           key: const ValueKey('minor-gate-edit'),
           onPressed: () => Navigator.push(
             context,
@@ -461,14 +484,20 @@ class MinorGate extends StatelessWidget {
                     ),
             ),
           ),
-          child: const Text('Corriger mon année de naissance'),
+          label: 'Corriger mon année de naissance',
         ),
-        TextButton(
-          key: const ValueKey('minor-gate-erase'),
-          onPressed: () => eraseAppData(context, appVersion: kAppVersion),
-          child: const Text('Supprimer les données de l’application'),
+        KMenuGroup(
+          children: [
+            KMenuRow(
+              key: const ValueKey('minor-gate-erase'),
+              icon: Icons.delete_outline,
+              title: 'Supprimer les données de l’application',
+              danger: true,
+              onTap: () => eraseAppData(context, appVersion: kAppVersion),
+            ),
+          ],
         ),
       ],
-    ),
-  );
+    );
+  }
 }

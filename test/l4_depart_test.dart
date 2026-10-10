@@ -13,6 +13,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/data_control.dart';
+import 'package:streetlift_tracker/kit/buttons.dart'
+    show KPrimaryButton, KTextButton;
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/notifications.dart';
@@ -1182,7 +1184,8 @@ void main() {
       await tester.pumpWidget(page(host(_anchor)));
       await tester.tap(find.text('ouvrir'));
       await tester.pumpAndSettle();
-      final button = tester.widget<FilledButton>(
+      // UI4 : bouton principal du kit.
+      final button = tester.widget<KPrimaryButton>(
         find.byKey(const ValueKey('start-confirm')),
       );
       expect(button.onPressed, isNull);
@@ -1334,12 +1337,14 @@ void main() {
             scrollable: list,
           );
           expect(tester.takeException(), isNull);
-          await tester.scrollUntilVisible(
-            find.byKey(const ValueKey('program-start-open')),
-            -200,
-            scrollable: list,
+          // UI4 : action du bandeau du kit (`KNotice`), trouvée par son
+          // libellé dans le bandeau.
+          final open = find.descendant(
+            of: find.byKey(const ValueKey('program-start-banner')),
+            matching: find.widgetWithText(KTextButton, 'Choisir mon départ'),
           );
-          await tester.tap(find.byKey(const ValueKey('program-start-open')));
+          await tester.scrollUntilVisible(open, -200, scrollable: list);
+          await tester.tap(open);
           await tester.pumpAndSettle();
           expect(find.byType(ProgramStartScreen), findsOneWidget);
           await tester.tap(find.byKey(const ValueKey('start-later')));

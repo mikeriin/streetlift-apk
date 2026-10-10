@@ -7,9 +7,9 @@
 // programme commencé, journées faites, profil, WOD joués et débloqués,
 // séances perso, crédits, données « Motivation ». Écrans : annonce de la
 // suppression (haut et bas), accueil et barre de navigation, Arsenal,
-// STATS, Réglages › Sauvegardes (copie). Relevé `g2_releve_<partie>.json` :
-// copie, document réécrit, éléments retirés absents. Captures `g2_*.png`,
-// regardées avant livraison.
+// STATS, Réglages › Données et confidentialité (copie). Relevé
+// `g2_releve_<partie>.json` : copie, document réécrit, éléments retirés
+// absents. Captures `g2_*.png`, regardées avant livraison.
 import 'dart:convert';
 import 'dart:io' show gzip;
 import 'dart:ui' as ui;
@@ -185,16 +185,18 @@ void main() {
       await wait(tester, 1200);
     }
 
-    await section('Sauvegardes');
+    // UI4 : les sauvegardes sont dans « Données et confidentialité ».
+    await section('Données et confidentialité');
     final copyTile = find.byKey(const ValueKey('settings-retired-copy'));
     await scrollTo(tester, copyTile);
     releve['reglages_copie'] = copyTile.evaluate().isNotEmpty;
     await shot('6_reglages_sauvegardes');
     await appNavigator.currentState!.maybePop();
     await wait(tester, 1200);
-    await section('Programme');
+    // UI4 : plus de rubrique « Programme » dans les Réglages ; la racine
+    // liste toutes les rubriques.
     releve['reglages_sans_motivation'] = !shown('Motivation et progression');
-    await shot('7_reglages_programme');
+    await shot('7_reglages_racine');
     record();
 
     expect(releve['copie'], isNotNull);

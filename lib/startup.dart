@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'brand.dart';
+import 'kit/tokens.dart' show KType;
 import 'dev/dev_widgets.dart' show devLogoColor;
 
 /// Le chargement commence pendant les deux secondes d'ouverture. Si les
@@ -190,13 +191,11 @@ class _OpeningFrame extends StatelessWidget {
                     'KALIS TRACK',
                     key: const ValueKey('opening-name'),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      height: 1.2,
-                      fontFamily: 'Roboto',
+                    // UI4 : style du kit (titre d'écran, interlettrage des
+                    // capitales de la marque), hors thème de l'application.
+                    style: KType.titreEcran.copyWith(
                       decoration: TextDecoration.none,
-                      letterSpacing: 3,
-                      fontWeight: FontWeight.w700,
+                      letterSpacing: KType.capsSpacing * 10,
                       color: palette.text,
                     ),
                   ),

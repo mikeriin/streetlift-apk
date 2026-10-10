@@ -111,7 +111,7 @@ void main() {
       'depart_programme': ProgramStartScreen(
         initialDate: DateTime(2026, 7, 13),
       ),
-      'reglages_chronometres': const SettingsScreen(section: 2),
+      'reglages_chronometres': const SettingsScreen(page: SettingsPage.session),
     };
     for (final dark in [true, false]) {
       final mode = dark ? 'sombre' : 'clair';

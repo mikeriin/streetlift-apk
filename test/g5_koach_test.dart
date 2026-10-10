@@ -583,9 +583,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »', (
-      tester,
-    ) async {
+    testWidgets('Anatomie : plus de « Galerie de Koach » (UI4 : Réglages › '
+        'Aide et à propos), galerie ouverte directement', (tester) async {
       tester.view.physicalSize = const Size(1080, 2400);
       tester.view.devicePixelRatio = 3;
       addTearDown(tester.view.reset);
@@ -598,9 +597,12 @@ void main() {
       }
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('anatomy-koach-preview')), findsNothing);
-      final tile = find.byKey(const ValueKey('anatomy-koach-gallery'));
-      await tester.ensureVisible(tile);
-      await tester.tap(tile);
+      expect(find.byKey(const ValueKey('anatomy-koach-gallery')), findsNothing);
+      expect(find.text('Galerie de Koach'), findsNothing);
+      final context = tester.element(find.byType(AnatomyScreen));
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (_) => const KoachGalleryScreen()),
+      );
       await tester.pumpAndSettle();
       expect(find.byType(KoachGalleryScreen), findsOneWidget);
     });

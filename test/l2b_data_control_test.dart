@@ -19,6 +19,7 @@ import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
+import 'phone_test_support.dart' show scrollToAction;
 
 const _key = 'kalis_state_v3';
 
@@ -418,9 +419,10 @@ void main() {
       await tester.pumpAndSettle();
     }
 
+    // UI4 : aperçu et suppression sont des sous-pages à liste paresseuse :
+    // la cible est atteinte par défilement (elle n'est pas encore construite).
     Future<void> tapVisible(WidgetTester tester, Finder target) async {
-      await tester.ensureVisible(target);
-      await tester.pumpAndSettle();
+      await scrollToAction(tester, target);
       await tester.tap(target);
       await tester.pumpAndSettle();
     }
@@ -615,7 +617,7 @@ void main() {
       await tester.tap(find.text('Lancer'));
       await tester.pumpAndSettle();
       final erase = find.widgetWithText(FilledButton, 'Supprimer');
-      await tester.ensureVisible(find.byType(TextField));
+      await scrollToAction(tester, find.byType(TextField));
       await tester.pumpAndSettle();
       expect(tester.widget<FilledButton>(erase).onPressed, isNull);
       await tester.enterText(find.byType(TextField), 'supprime');
@@ -641,7 +643,7 @@ void main() {
       files.onSave = (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
       final before = store.exportAll();
       await start(tester, (c) => eraseAppData(c, appVersion: 'test'));
-      await tester.ensureVisible(find.byType(TextField));
+      await scrollToAction(tester, find.byType(TextField));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField), 'SUPPRIMER');
       await tester.pump();
@@ -683,7 +685,7 @@ void main() {
         await tester.tap(find.text('Lancer'));
         await tester.pumpAndSettle();
         expect(find.byType(EraseDataDialog), findsOneWidget);
-        await tester.ensureVisible(find.byType(TextField));
+        await scrollToAction(tester, find.byType(TextField));
         await tester.pumpAndSettle();
         expect(find.byType(TextField).hitTestable(), findsOneWidget);
         expect(tester.takeException(), isNull);
@@ -699,7 +701,7 @@ void main() {
     ) async {
       phone(tester);
       await tester.pumpWidget(
-        page(const SettingsScreen(section: 6), scale: 1.3),
+        page(const SettingsScreen(page: SettingsPage.data), scale: 1.3),
       );
       await tester.pumpAndSettle();
       for (final label in [

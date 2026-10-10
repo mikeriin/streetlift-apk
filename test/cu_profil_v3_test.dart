@@ -846,15 +846,24 @@ void main() {
       await tap(tester, 'flow-next-welcome');
       await tap(tester, 'flow-sex-male');
       final year = find.byKey(const ValueKey('flow-year'));
+      // UI4 : liste paresseuse, les champs sont atteints par défilement.
+      await scrollToAction(tester, year);
       await tester.enterText(year, '1995');
-      await tester.enterText(find.byKey(const ValueKey('flow-height')), '180');
+      final height = find.byKey(const ValueKey('flow-height'));
+      await scrollToAction(tester, height);
+      await tester.enterText(height, '180');
       await tester.pumpAndSettle();
       await tap(tester, 'flow-next-identity');
       await tap(tester, 'flow-discipline-calisthenics');
       await tap(tester, 'flow-next-discipline');
       // Poids obligatoire : carte sur l'écran de la discipline.
       expect(flow(tester).step, 'discipline');
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('flow-weight-card')),
+      );
       expect(find.byKey(const ValueKey('flow-weight-card')), findsOneWidget);
+      await scrollToAction(tester, find.byKey(const ValueKey('flow-weight')));
       await tester.enterText(find.byKey(const ValueKey('flow-weight')), '68');
       await tester.pumpAndSettle();
       await tap(tester, 'flow-next-discipline');
@@ -866,6 +875,11 @@ void main() {
       await tap(tester, 'flow-next-secondary');
       expect(flow(tester).step, 'experience');
       await tap(tester, 'flow-experience-intermediate');
+      // UI4 : liste paresseuse, la question est atteinte par défilement.
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('q-training_age')),
+      );
       expect(
         find.byKey(const ValueKey('q-training_age')),
         findsOneWidget,
@@ -950,6 +964,8 @@ void main() {
       await tap(tester, 'event-month-6');
       await tap(tester, 'event-priority-main');
       await tap(tester, 'event-preset-final_rep_2lift');
+      // UI4 : l'échéance est une sous-page à liste paresseuse.
+      await scrollToAction(tester, find.byKey(const ValueKey('event-lift-1')));
       expect(find.byKey(const ValueKey('event-lift-1')), findsOneWidget);
       await tap(tester, 'event-class-73');
       await tap(tester, 'event-save');

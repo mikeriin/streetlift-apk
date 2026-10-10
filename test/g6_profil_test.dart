@@ -17,6 +17,7 @@ import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/athlete_profile_flow.dart';
 import 'package:streetlift_tracker/athlete_profile_screen.dart';
 import 'package:streetlift_tracker/goal_suggestions_g6.dart';
+import 'package:streetlift_tracker/kit/kit.dart' show KConfirm;
 import 'package:streetlift_tracker/program_explainer.dart';
 import 'package:streetlift_tracker/store.dart';
 
@@ -667,7 +668,8 @@ void main() {
       await next('availability');
       await tap(tester, 'flow-place-maison');
       await next('places');
-      await tap(tester, 'flow-consent-refused');
+      // UI4 : accord santé en segments du kit (clé `segment-<valeur>`).
+      await tap(tester, 'segment-refused');
       await next('health');
       await tap(tester, 'flow-mode-assisted');
       await next('mode');
@@ -795,9 +797,12 @@ void main() {
         find.byKey(const ValueKey('profile-rubric-identity')),
         findsOneWidget,
       );
+      // UI4 : « Mode assisté ou libre » se règle dans Évolution, plus dans
+      // le Profil ; la dernière rubrique est « Exercices aimés et détestés ».
+      expect(find.byKey(const ValueKey('profile-rubric-mode')), findsNothing);
       await scrollToAction(
         tester,
-        find.byKey(const ValueKey('profile-rubric-mode')),
+        find.byKey(const ValueKey('profile-rubric-preferences')),
       );
       await scrollToAction(
         tester,
@@ -808,15 +813,16 @@ void main() {
       expect(flow(tester).step, 'availability');
       await tap(tester, 'flow-day-7');
       await tap(tester, 'flow-save');
-      expect(find.byKey(const ValueKey('koach-sheet')), findsOneWidget);
+      // UI4 : confirmation du kit (KConfirm) au lieu de la feuille.
+      expect(find.byType(KConfirm), findsOneWidget);
       expect(find.textContaining('touche ton programme'), findsOneWidget);
-      // G7 : Koach propose de recréer le programme ; « Plus tard ».
-      await tap(tester, 'profile-program-later');
+      // G7 : proposition de recréer le programme ; « Plus tard ».
+      await tap(tester, 'confirm-cancel');
       expect(store.athleteProfile!.availability.last.weekday, 7);
       expect(store.athlete!.programChangePending, isTrue);
       // Santé : retrait de l'accord.
       await tap(tester, 'profile-consent-withdraw');
-      await tap(tester, 'withdraw-confirm');
+      await tap(tester, 'confirm-ok');
       expect(store.profile!.health.consent, 'withdrawn');
       await scrollToAction(
         tester,
@@ -918,7 +924,14 @@ void main() {
       await tap(tester, 'redo-start');
       expect(flow(tester).step, 'welcome');
       expect(flow(tester).draft.birthYear, '1990');
-      await tap(tester, 'flow-back');
+      // UI4 : retour de l'en-tête standard (`KTopBar.sub`, clé `flow-back`).
+      await tester.tap(
+        find.descendant(
+          of: find.byKey(const ValueKey('flow-back')),
+          matching: find.byTooltip('Retour'),
+        ),
+      );
+      await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('redo-proposal')), findsOneWidget);
       await tap(tester, 'redo-later');
       expect(find.text('ACCUEIL'), findsOneWidget);

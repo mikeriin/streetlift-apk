@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import 'app_theme.dart';
 import 'athlete_profile.dart';
 import 'athlete_profile_screen.dart';
 import 'content_pack.dart' show ContentIndex, ExerciseEntry;
@@ -27,6 +26,7 @@ import 'muscle_map_2d.dart';
 import 'plan/plan_screens.dart' show openPlanCreation;
 import 'profile_v3.dart';
 import 'program_explainer.dart';
+import 'program_screens.dart' show ProgramScreen;
 import 'store.dart';
 import 'ui.dart';
 import 'wellbeing_screens.dart' show DisclaimerCard, MinorGate;
@@ -96,50 +96,218 @@ class ProfileRedoProposal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final resume = store.athleteDraft?.mode == 'redo';
-    return KScreen(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('TON PROFIL'),
+    return _FlowPage(
+      title: 'Ton profil',
+      listKey: const ValueKey('redo-proposal'),
+      actions: [
+        KPrimaryButton(
+          key: const ValueKey('redo-start'),
+          label: resume ? 'Reprendre mon profil' : 'Refaire mon profil',
+          onPressed: onStart,
+        ),
+        KTonalButton(
+          key: const ValueKey('redo-later'),
+          label: 'Plus tard',
+          expand: true,
+          onPressed: onLater,
+        ),
+      ],
+      children: [
+        KoachSurface(
+          color: k.fond,
+          child: KoachBubble(
+            pose: KoachPose.wave,
+            koachHeight: 120,
+            text: resume
+                ? 'On reprend ton profil là où tu t’étais arrêté ?'
+                : 'Nouveau : on crée ton profil complet ensemble, en 5 '
+                      'minutes environ (disciplines, niveau par mouvement, '
+                      'objectifs, matériel). Il remplace l’ancien profil.',
+            why:
+                'Ton programme, ton historique et tes réglages ne changent '
+                'pas. Le nouveau profil servira à construire et à faire '
+                'évoluer tes programmes dans les prochaines versions.',
+          ),
+        ),
+        Text(
+          'Si tu choisis « Plus tard », je te le reproposerai demain.',
+          textAlign: TextAlign.center,
+          style: KType.detail.copyWith(color: k.texte2),
+        ),
+      ],
+    );
+  }
+}
+
+/// Page du parcours (UI4) : en-tête standard (retour, titre) ou, sans
+/// retour possible, titre en tête de page ; une barre fixe sous l'en-tête
+/// ([top], segments de progression) ; contenu qui défile ; actions fixées en
+/// bas de l'écran, zone du pouce, au-dessus du clavier.
+class _FlowPage extends StatelessWidget {
+  final String title;
+  final VoidCallback? onBack;
+
+  /// Clé de l'en-tête (le bouton retour s'y trouve).
+  final Key? barKey;
+  final Key? listKey;
+  final Widget? top;
+  final List<Widget> children, actions;
+  const _FlowPage({
+    required this.title,
+    this.onBack,
+    this.barKey,
+    this.listKey,
+    this.top,
+    required this.children,
+    this.actions = const [],
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final list = ListView.separated(
+      key: listKey,
+      padding: const EdgeInsets.fromLTRB(
+        KSpacing.page,
+        KSpacing.s8,
+        KSpacing.page,
+        KSpacing.s24,
       ),
-      body: KList(
-        key: const ValueKey('redo-proposal'),
-        children: [
-          KoachSurface(
-            color: SL.bg,
-            child: KoachBubble(
-              pose: KoachPose.wave,
-              koachHeight: 120,
-              text: resume
-                  ? 'On reprend ton profil là où tu t’étais arrêté ?'
-                  : 'Nouveau : on crée ton profil complet ensemble, en 5 '
-                        'minutes environ (disciplines, niveau par mouvement, '
-                        'objectifs, matériel). Il remplace l’ancien profil.',
-              why:
-                  'Ton programme, ton historique et tes réglages ne changent '
-                  'pas. Le nouveau profil servira à construire et à faire '
-                  'évoluer tes programmes dans les prochaines versions.',
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      itemCount: children.length,
+      separatorBuilder: (_, __) => const SizedBox(height: KSpacing.cardGap),
+      itemBuilder: (_, i) => children[i],
+    );
+    return Scaffold(
+      backgroundColor: k.fond,
+      appBar: onBack == null
+          ? null
+          : KTopBar.sub(key: barKey, title: title, onBack: onBack),
+      body: SafeArea(
+        top: onBack == null,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: KSpacing.maxWidth),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (onBack == null)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      KSpacing.page,
+                      KSpacing.s16,
+                      KSpacing.page,
+                      KSpacing.s4,
+                    ),
+                    child: Semantics(
+                      header: true,
+                      child: KFitTitle(
+                        k.title(title),
+                        style: k.titleStyle(
+                          KType.titreEcran.copyWith(color: k.texte),
+                        ),
+                      ),
+                    ),
+                  ),
+                if (top != null)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: KSpacing.page,
+                      right: KSpacing.page,
+                      top: KSpacing.s8,
+                    ),
+                    child: top,
+                  ),
+                Expanded(child: list),
+                if (actions.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      KSpacing.page,
+                      KSpacing.s8,
+                      KSpacing.page,
+                      KSpacing.s16,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (var i = 0; i < actions.length; i++) ...[
+                          if (i > 0) const SizedBox(height: KSpacing.s8),
+                          actions[i],
+                        ],
+                      ],
+                    ),
+                  ),
+              ],
             ),
           ),
-          FilledButton(
-            key: const ValueKey('redo-start'),
-            onPressed: onStart,
-            child: Text(resume ? 'Reprendre mon profil' : 'Refaire mon profil'),
-          ),
-          TextButton(
-            key: const ValueKey('redo-later'),
-            onPressed: onLater,
-            child: const Text('Plus tard'),
-          ),
-          Text(
-            'Si tu choisis « Plus tard », je te le reproposerai demain.',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
+        ),
       ),
     );
   }
+}
+
+/// Progression du parcours en segments (UI4) : une pilule par étape
+/// montrée, séparées de 4 ; faites en `validation`, courante en `pleine`,
+/// à venir en `haute`. Lue « Étape n sur N ».
+class _FlowProgress extends StatelessWidget {
+  final int position, count;
+  const _FlowProgress({required this.position, required this.count});
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Semantics(
+      label: 'Étape $position sur $count',
+      child: ExcludeSemantics(
+        child: Row(
+          key: const ValueKey('flow-progress'),
+          children: [
+            for (var i = 0; i < count; i++) ...[
+              if (i > 0) const SizedBox(width: KSpacing.s4),
+              Expanded(
+                child: Container(
+                  key: ValueKey('flow-progress-$i'),
+                  height: KSpacing.s8,
+                  decoration: ShapeDecoration(
+                    color: i < position - 1
+                        ? k.validation
+                        : i == position - 1
+                        ? k.pleine
+                        : k.haute,
+                    shape: i < position ? KRadius.pill : k.controlPill,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Bas d'une sous-page de formulaire (ex-feuille) : bouton principal.
+class _FormBottom extends StatelessWidget {
+  final Widget child;
+  const _FormBottom({required this.child});
+
+  @override
+  Widget build(BuildContext context) => SafeArea(
+    top: false,
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(
+        KSpacing.page,
+        KSpacing.s8,
+        KSpacing.page,
+        KSpacing.s16,
+      ),
+      child: child,
+    ),
+  );
 }
 
 /// Création (installation neuve), refaire son profil (D1.6), modifier
@@ -206,6 +374,13 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   /// Compléter son profil sans niveau déclaré : la question du niveau est
   /// ajoutée (elle ouvre les autres).
   bool _askExperience = false;
+
+  /// UI4 : « Passer » de chaque question de l'étape affichée (relevés à la
+  /// construction) ; le « Passer » de l'étape les applique tous.
+  final List<VoidCallback> _stepSkips = [];
+
+  /// UI4 : jours dont la durée se règle en place (« Autre »).
+  final Set<int> _minutesOpen = {};
 
   bool get _edit => widget.mode == AthleteFlowMode.edit;
   bool get _complete => widget.mode == AthleteFlowMode.complete;
@@ -436,6 +611,55 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     }
   }
 
+  /// UI4 : « Passer » est proposé sur une étape facultative — que
+  /// `stepError` accepte vide, ou dont toutes les questions montrées sont du
+  /// schéma 3 —, jamais sur l'accueil, le récapitulatif, une rubrique
+  /// modifiée ni la dernière étape de « Compléter mon profil ».
+  bool get _skippable {
+    if (_edit || _minor || _step == 'welcome' || _step == 'recap') {
+      return false;
+    }
+    if (_lastComplete) return false;
+    final p = store.content.questionnaire;
+    if (ProfileDraft().stepError(_step, _now, parcours: p) == null) {
+      return true;
+    }
+    if (p == null) return false;
+    final screen = kStepScreens[_step];
+    final qs = [
+      for (final id in _visible)
+        if (p.question(id) case final q? when q.screen == screen) q,
+    ];
+    return qs.isNotEmpty && qs.every((q) => q.since >= 3);
+  }
+
+  /// UI4 : « Passer » l'étape : chaque question de l'étape revient sans
+  /// réponse (le « Passer » de la question, D5.8), puis l'étape suivante,
+  /// sans validation. Les questions du schéma 3 laissées ainsi sont
+  /// retenues comme passées à l'enregistrement, comme aujourd'hui.
+  void _skipStep() {
+    FocusScope.of(context).unfocus();
+    final skips = List<VoidCallback>.of(_stepSkips);
+    setState(() {
+      for (final f in skips) {
+        f();
+      }
+      _visible = _computeVisible();
+    });
+    if (_fromRecap) {
+      _fromRecap = false;
+      _go('recap');
+      return;
+    }
+    final steps = _steps;
+    final i = steps.indexOf(_step);
+    if (i >= 0 && i + 1 >= steps.length) {
+      _next();
+      return;
+    }
+    _go(i < 0 ? _nearestStep(_step) : steps[i + 1]);
+  }
+
   void _save() {
     // CU : questions du schéma 3 montrées et laissées sans réponse =
     // passées (retenues hors du profil, jamais reproposées d'office).
@@ -486,16 +710,16 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     if (_saved != null) return _doneScreen();
     _visible = _computeVisible();
     final title = _minor
-        ? 'RÉSERVÉE AUX ADULTES'
+        ? 'Réservée aux adultes'
         : _edit
-        ? (kRubricTitles[_step] ?? 'PROFIL').toUpperCase()
+        ? (kRubricTitles[_step] ?? 'Profil')
         : _complete
-        ? 'COMPLÉTER MON PROFIL'
+        ? 'Compléter mon profil'
         : switch (_step) {
             'welcome' =>
-              widget.mode == AthleteFlowMode.redo ? 'TON PROFIL' : 'BIENVENUE',
-            'recap' => 'RÉCAPITULATIF',
-            _ => (kRubricTitles[_step] ?? '').toUpperCase(),
+              widget.mode == AthleteFlowMode.redo ? 'Ton profil' : 'Bienvenue',
+            'recap' => 'Récapitulatif',
+            _ => kRubricTitles[_step] ?? '',
           };
     final steps = _complete ? _steps.length : _steps.length - 1;
     final position = _complete ? _index + 1 : _index;
@@ -505,58 +729,42 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         _complete ||
         _index > 0 ||
         (widget.onCancel != null && _step == 'welcome');
+    // « Passer » de chaque question, relevés pendant la construction.
+    _stepSkips.clear();
+    final body = _minor ? _minorStep() : _stepBody();
     return PopScope(
       canPop: (_edit || (_complete && _index <= 0)) && !_minor,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _back();
       },
-      child: KScreen(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: canBack
-              ? IconButton(
-                  key: const ValueKey('flow-back'),
-                  tooltip: 'Retour',
-                  icon: const Icon(Icons.arrow_back),
+      child: _FlowPage(
+        title: title,
+        onBack: canBack ? _back : null,
+        barKey: const ValueKey('flow-back'),
+        listKey: ValueKey('flow-${_minor ? 'minor' : _step}'),
+        top: !_minor && !_edit && position > 0 && steps > 0
+            ? _FlowProgress(position: position, count: steps)
+            : null,
+        actions: _minor
+            ? [
+                KPrimaryButton(
+                  key: const ValueKey('minor-back'),
+                  label: 'Corriger mon année de naissance',
                   onPressed: _back,
-                )
-              : null,
-          title: Text(title),
-        ),
-        body: KList(
-          key: ValueKey('flow-${_minor ? 'minor' : _step}'),
-          children: [
-            if (!_minor && !_edit && position > 0 && steps > 0)
-              Semantics(
-                label: 'Étape $position sur $steps',
-                child: ExcludeSemantics(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: LinearProgressIndicator(
-                          key: const ValueKey('flow-progress'),
-                          value: position / steps,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        '$position / $steps',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-            if (_minor) ..._minorStep() else ..._stepBody(),
-            if (!_minor) _actions(),
-            if (!_minor && _step == 'welcome') const DisclaimerCard(),
-          ],
-        ),
+              ]
+            : _actions(),
+        children: [
+          ...body,
+          if (!_minor && _step == 'welcome') const DisclaimerCard(),
+        ],
       ),
     );
   }
 
-  Widget _actions() {
+  /// Bouton principal (et « Passer » sur une étape facultative), fixés en
+  /// bas de l'écran.
+  List<Widget> _actions() {
     final label = _edit || _lastComplete
         ? 'Enregistrer'
         : _step == 'welcome'
@@ -568,15 +776,33 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         : _fromRecap
         ? 'Retour au récapitulatif'
         : 'Continuer';
-    return FilledButton(
+    final main = KPrimaryButton(
       key: ValueKey(
         _edit || _lastComplete
             ? 'flow-save'
             : (_fromRecap ? 'flow-to-recap' : 'flow-next-$_step'),
       ),
+      label: label,
       onPressed: _next,
-      child: Text(label),
     );
+    if (!_skippable) return [main];
+    final skip = KTextButton(
+      key: ValueKey('flow-skip-$_step'),
+      label: 'Passer',
+      onPressed: _skipStep,
+    );
+    // Grand texte : « Passer » au-dessus du bouton principal, pour qu'aucun
+    // libellé ne soit coupé (C3) ; sinon à côté.
+    if (MediaQuery.textScalerOf(context).scale(1) >= 1.5) return [skip, main];
+    return [
+      Row(
+        children: [
+          skip,
+          const SizedBox(width: KSpacing.s8),
+          Expanded(child: main),
+        ],
+      ),
+    ];
   }
 
   List<Widget> _minorStep() => [
@@ -592,25 +818,17 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               'Merci de ton intérêt : l’entraînement des plus jeunes mérite un '
               'accompagnement adapté, par exemple dans un club.',
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Aucune donnée n’a été enregistrée.',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            const SizedBox(height: KSpacing.s8),
+            _hint('Aucune donnée n’a été enregistrée.'),
           ],
         ),
       ),
-    ),
-    OutlinedButton(
-      key: const ValueKey('minor-back'),
-      onPressed: _back,
-      child: const Text('Corriger mon année de naissance'),
     ),
   ];
 
   /// Koach présente l'étape.
   Widget _koach(KoachPose pose, String text, {String? why}) => KoachSurface(
-    color: SL.bg,
+    color: KTokens.of(context).fond,
     child: KoachBubble(
       key: ValueKey('flow-koach-$_step'),
       pose: pose,
@@ -621,11 +839,16 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     ),
   );
 
-  Widget _title(String t) =>
-      Text(t, style: Theme.of(context).textTheme.titleMedium);
+  Widget _title(String t) => Text(
+    t,
+    style: KType.corpsFort.copyWith(color: KTokens.of(context).texte),
+  );
   Widget _hint(String t) =>
-      Text(t, style: Theme.of(context).textTheme.bodySmall);
+      Text(t, style: KType.detail.copyWith(color: KTokens.of(context).texte2));
 
+  /// Choix en puces du kit (UI4) : une puce choisie prend l'aplat `pleine`.
+  /// Un nouvel appui sur une puce choisie la décoche (`onSelected(o, false)`),
+  /// comme les anciennes puces Material.
   Widget _chips<T>({
     required String keyPrefix,
     required List<(T, String)> options,
@@ -634,25 +857,17 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     bool multi = false,
     bool Function(T)? enabled,
   }) => Wrap(
-    spacing: 8,
-    runSpacing: 8,
+    spacing: KSpacing.s8,
     children: [
       for (final o in options)
-        multi
-            ? FilterChip(
-                key: ValueKey('$keyPrefix-${_keyOf(o.$1)}'),
-                label: Text(o.$2),
-                selected: selected(o.$1),
-                onSelected: enabled == null || enabled(o.$1) || selected(o.$1)
-                    ? (v) => setState(() => onSelected(o.$1, v))
-                    : null,
-              )
-            : ChoiceChip(
-                key: ValueKey('$keyPrefix-${_keyOf(o.$1)}'),
-                label: Text(o.$2),
-                selected: selected(o.$1),
-                onSelected: (v) => setState(() => onSelected(o.$1, v)),
-              ),
+        KChip(
+          o.$2,
+          key: ValueKey('$keyPrefix-${_keyOf(o.$1)}'),
+          selected: selected(o.$1),
+          onTap: multi && enabled != null && !enabled(o.$1) && !selected(o.$1)
+              ? null
+              : () => setState(() => onSelected(o.$1, !selected(o.$1))),
+        ),
     ],
   );
 
@@ -686,7 +901,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
 
   List<Widget> _welcome() => [
     KoachSurface(
-      color: SL.bg,
+      color: KTokens.of(context).fond,
       child: KoachBubble(
         key: const ValueKey('flow-koach-welcome'),
         pose: KoachPose.wave,
@@ -699,7 +914,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                   'temps et ton matériel.',
         why:
             'Tout reste sur ce téléphone : ni compte, ni publicité. Tu pourras '
-            'tout modifier ensuite dans Réglages › Profil.',
+            'tout modifier ensuite dans ton profil.',
       ),
     ),
     const ProgramExplainerButton(),
@@ -716,7 +931,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title('Ton prénom ou pseudo (facultatif)'),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             TextField(
               key: const ValueKey('flow-name'),
               controller: _nameCtl,
@@ -733,7 +948,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title('Sexe'),
-            const SizedBox(height: 4),
+            const SizedBox(height: KSpacing.s4),
             _hint(
               _koachText(
                 'sex',
@@ -741,7 +956,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                     'classement et aux catégories de compétition.',
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             _chips<Sex>(
               keyPrefix: 'flow-sex',
               options: [for (final s in Sex.values) (s, kSexLabels[s]!)],
@@ -756,9 +971,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title('Année de naissance'),
-            const SizedBox(height: 4),
+            const SizedBox(height: KSpacing.s4),
             _hint('L’application est réservée aux 18 ans et plus.'),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             TextField(
               key: const ValueKey('flow-year'),
               controller: _year,
@@ -775,9 +990,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               }),
             ),
             if (age == 18) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: KSpacing.s8),
               _hint('As-tu déjà fêté tes 18 ans ?'),
-              const SizedBox(height: 6),
+              const SizedBox(height: KSpacing.s8),
               _chips<bool>(
                 keyPrefix: 'flow-adult18',
                 options: const [(true, 'Oui'), (false, 'Pas encore')],
@@ -793,7 +1008,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title('Taille'),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             TextField(
               key: const ValueKey('flow-height'),
               controller: _height,
@@ -805,7 +1020,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               ),
               onChanged: (v) => _d.height = v,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: KSpacing.s12),
             ..._weightField(),
           ],
         ),
@@ -819,7 +1034,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     final required = _d.weightRequired(store.content.questionnaire, _now.year);
     return [
       _title(required ? 'Poids' : 'Poids (facultatif)'),
-      const SizedBox(height: 4),
+      const SizedBox(height: KSpacing.s4),
       _hint(
         _koachText(
           'body_weight',
@@ -828,7 +1043,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               'ne le voit.',
         ),
       ),
-      const SizedBox(height: 8),
+      const SizedBox(height: KSpacing.s8),
       TextField(
         key: const ValueKey('flow-weight'),
         controller: _weight,
@@ -886,7 +1101,8 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     required VoidCallback onTap,
   }) => KCard(
     key: key,
-    accent: selected ? SL.accent : null,
+    // Élément choisi : contour 1,5 dp `encre` (cahier §5.3).
+    outline: selected ? KTokens.of(context).encre : null,
     onTap: () => setState(onTap),
     child: Semantics(
       selected: selected,
@@ -894,19 +1110,25 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       child: Row(
         children: [
           KoachView(pose: pose, height: 52, width: 46, animate: false),
-          const SizedBox(width: 10),
+          const SizedBox(width: KSpacing.s12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [_title(title), const SizedBox(height: 2), _hint(hint)],
+              children: [
+                _title(title),
+                const SizedBox(height: KSpacing.s4),
+                _hint(hint),
+              ],
             ),
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: KSpacing.s8),
           Icon(
             selected
-                ? Icons.radio_button_checked
-                : Icons.radio_button_unchecked,
-            color: selected ? SL.accent : SL.dim,
+                ? Icons.radio_button_checked_rounded
+                : Icons.radio_button_unchecked_rounded,
+            color: selected
+                ? KTokens.of(context).encre
+                : KTokens.of(context).texte2,
           ),
         ],
       ),
@@ -922,15 +1144,17 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           'Le mode street regroupe streetlifting, sets & reps et calisthénie : '
           'tu choisis la principale et tu doses les deux autres.',
     ),
-    KCard(
-      child: SwitchListTile(
-        key: const ValueKey('flow-street'),
-        contentPadding: EdgeInsets.zero,
-        title: const Text('Mode street'),
-        subtitle: const Text('Streetlifting, sets & reps et calisthénie'),
-        value: _d.street,
-        onChanged: (v) => setState(() => _d.setStreet(v)),
-      ),
+    KMenuGroup(
+      dividerIndent: KSpacing.s16,
+      children: [
+        KSwitchRow(
+          key: const ValueKey('flow-street'),
+          title: 'Mode street',
+          subtitle: 'Streetlifting, sets & reps et calisthénie',
+          value: _d.street,
+          onChanged: (v) => setState(() => _d.setStreet(v)),
+        ),
+      ],
     ),
     if (_d.street)
       for (final s in StreetStyle.values)
@@ -975,7 +1199,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     if (_needWeightCard())
       KCard(
         key: const ValueKey('flow-weight-card'),
-        accent: SL.accent,
+        accent: KTokens.of(context).avertissement,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: _weightField(),
@@ -1028,7 +1252,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title('Disciplines secondaires'),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             _chips<TrainingDiscipline>(
               keyPrefix: 'flow-secondary',
               multi: true,
@@ -1057,7 +1281,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               ),
               _hint(dosageInWords(p, _d.primaryPct)),
               for (final e in _d.secondaries.entries.toList()) ...[
-                const SizedBox(height: 14),
+                const SizedBox(height: KSpacing.s14),
                 Text(
                   '${kDisciplineLabels[e.key]} : ${e.value} %',
                   key: ValueKey('flow-pct-${e.key.code}'),
@@ -1098,7 +1322,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               ),
               for (final s in StreetStyle.values)
                 if (s != m.primary) ...[
-                  const SizedBox(height: 14),
+                  const SizedBox(height: KSpacing.s14),
                   Text(
                     '${kStreetStyleLabels[s]} : ${m.pctOf(s)} %',
                     key: ValueKey('flow-pct-${s.code}'),
@@ -1165,16 +1389,17 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
 
   List<Widget> _goalList() => [
     // CU : « Laisse Koach proposer » en premier (PARCOURS_V3.md, `goals`).
-    OutlinedButton.icon(
+    KTonalButton(
       key: const ValueKey('goal-suggest'),
-      icon: const Icon(Icons.lightbulb_outline),
-      label: const Text('Laisse Koach proposer'),
+      icon: Icons.lightbulb_outline_rounded,
+      label: 'Laisse Koach proposer',
+      expand: true,
       onPressed: _suggest,
     ),
     for (var i = 0; i < _d.goals.length; i++)
       KCard(
         key: ValueKey('flow-goal-$i'),
-        accent: i == 0 ? SL.accent : null,
+        accent: i == 0 ? KTokens.of(context).encre : null,
         onTap: () => _editGoal(i),
         child: Row(
           children: [
@@ -1189,106 +1414,120 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                         'proposé par Koach',
                     ].join(' · '),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: KSpacing.s4),
                   Text(goalText(_d.goals[i], _name)),
                 ],
               ),
             ),
             if (i > 0)
-              IconButton(
+              KIconButton(
                 key: ValueKey('flow-goal-main-$i'),
                 tooltip: 'En faire l’objectif principal',
-                icon: const Icon(Icons.star_border),
+                icon: Icons.star_border_rounded,
                 onPressed: () => setState(() {
                   final g = _d.goals.removeAt(i);
                   _d.goals.insert(0, g);
                 }),
               ),
-            IconButton(
+            KIconButton(
               key: ValueKey('flow-goal-edit-$i'),
               tooltip: 'Modifier cet objectif',
-              icon: const Icon(Icons.edit_outlined),
+              icon: Icons.edit_outlined,
               onPressed: () => _editGoal(i),
             ),
-            IconButton(
+            KIconButton(
               key: ValueKey('flow-goal-remove-$i'),
               tooltip: 'Retirer cet objectif',
-              icon: const Icon(Icons.close),
+              icon: Icons.close_rounded,
               onPressed: () => setState(() => _d.goals.removeAt(i)),
             ),
           ],
         ),
       ),
-    FilledButton.tonalIcon(
+    KTonalButton(
       key: const ValueKey('goal-add-performance'),
-      icon: const Icon(Icons.trending_up),
-      label: const Text('Objectif de performance'),
+      icon: Icons.trending_up_rounded,
+      label: 'Objectif de performance',
+      expand: true,
       onPressed: _addPerformance,
     ),
-    FilledButton.tonalIcon(
+    KTonalButton(
       key: const ValueKey('goal-add-habit'),
-      icon: const Icon(Icons.event_repeat),
-      label: const Text('Objectif d’habitude'),
+      icon: Icons.event_repeat_rounded,
+      label: 'Objectif d’habitude',
+      expand: true,
       onPressed: _addHabit,
     ),
   ];
 
+  /// UI4 : formulaire (ex-feuille du bas) en sous-page `KPage.sub`, poussée
+  /// par `Navigator.push` ; le résultat revient par `Navigator.pop` (cahier
+  /// §4.5). [children] et [action] sont reconstruits par `set`.
+  Future<T?> _openForm<T>({
+    required Key key,
+    required String title,
+    required List<Widget> Function(BuildContext ctx, StateSetter set) children,
+    required Widget Function(BuildContext ctx, StateSetter set) action,
+  }) => Navigator.of(context).push<T>(
+    MaterialPageRoute<T>(
+      builder: (_) => StatefulBuilder(
+        builder: (ctx, set) => KPage.sub(
+          key: key,
+          title: title,
+          bottom: _FormBottom(child: action(ctx, set)),
+          children: children(ctx, set),
+        ),
+      ),
+    ),
+  );
+
   Future<void> _suggest() async {
     final list = provisionalGoalSuggestions(_d, civilOf(_now));
     final chosen = <Goal>{};
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, set) => KoachSurface(
-          color:
-              Theme.of(ctx).bottomSheetTheme.backgroundColor ??
-              Theme.of(ctx).colorScheme.surfaceContainerLow,
-          child: SingleChildScrollView(
-            key: const ValueKey('goal-suggestions'),
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+    await _openForm<void>(
+      key: const ValueKey('goal-suggestions'),
+      title: 'Laisse Koach proposer',
+      children: (ctx, set) => [
+        KoachSurface(
+          color: KTokens.of(ctx).fond,
+          child: KoachBubble(
+            pose: KoachPose.idea,
+            koachHeight: 90,
+            text: list.isEmpty
+                ? 'Je n’ai rien de sûr à te proposer pour l’instant. '
+                      'Dis-moi ton niveau sur quelques mouvements.'
+                : 'Voici ce que je te propose, d’après ce que tu m’as '
+                      'dit. Garde ce qui te parle.',
+            why:
+                'Des objectifs prudents, partis du bas de tes '
+                'fourchettes, sur 12 semaines. Tu pourras les changer.',
+          ),
+        ),
+        if (list.isNotEmpty)
+          KCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                KoachBubble(
-                  pose: KoachPose.idea,
-                  koachHeight: 90,
-                  text: list.isEmpty
-                      ? 'Je n’ai rien de sûr à te proposer pour l’instant. '
-                            'Dis-moi ton niveau sur quelques mouvements.'
-                      : 'Voici ce que je te propose, d’après ce que tu m’as '
-                            'dit. Garde ce qui te parle.',
-                  why:
-                      'Des objectifs prudents, partis du bas de tes '
-                      'fourchettes, sur 12 semaines. Tu pourras les changer.',
-                ),
-                const SizedBox(height: 12),
                 for (var i = 0; i < list.length; i++)
-                  CheckboxListTile(
+                  _ChoiceRow(
                     key: ValueKey('goal-suggestion-$i'),
-                    contentPadding: EdgeInsets.zero,
-                    value: chosen.contains(list[i]),
-                    title: Text(goalText(list[i], _name)),
-                    onChanged: (v) => set(
-                      () => v == true
-                          ? chosen.add(list[i])
-                          : chosen.remove(list[i]),
+                    label: goalText(list[i], _name),
+                    multi: true,
+                    selected: chosen.contains(list[i]),
+                    onTap: () => set(
+                      () => chosen.contains(list[i])
+                          ? chosen.remove(list[i])
+                          : chosen.add(list[i]),
                     ),
                   ),
-                const SizedBox(height: 8),
-                FilledButton(
-                  key: const ValueKey('goal-suggestions-add'),
-                  onPressed: () => Navigator.pop(ctx),
-                  child: Text(
-                    chosen.isEmpty ? 'Fermer' : 'Ajouter (${chosen.length})',
-                  ),
-                ),
               ],
             ),
           ),
-        ),
+      ],
+      action: (ctx, set) => KPrimaryButton(
+        key: const ValueKey('goal-suggestions-add'),
+        label: chosen.isEmpty ? 'Fermer' : 'Ajouter (${chosen.length})',
+        onPressed: () => Navigator.pop(ctx),
       ),
     );
     if (!mounted || chosen.isEmpty) return;
@@ -1329,68 +1568,46 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         old?.sessionsPerWeek ??
         (_d.days.isEmpty ? 3 : _d.days.length.clamp(1, 7).toInt());
     var weeks = old?.weeks ?? 8;
-    final ok = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, set) => SingleChildScrollView(
-          key: const ValueKey('goal-habit-sheet'),
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                old == null
-                    ? 'Objectif d’habitude'
-                    : 'Modifier l’objectif d’habitude',
-                style: Theme.of(ctx).textTheme.titleLarge,
+    final ok = await _openForm<bool>(
+      key: const ValueKey('goal-habit-sheet'),
+      title: old == null
+          ? 'Objectif d’habitude'
+          : 'Modifier l’objectif d’habitude',
+      children: (ctx, set) => [
+        const KSectionTitle('Séances par semaine'),
+        Wrap(
+          spacing: KSpacing.s8,
+          children: [
+            for (var n = 1; n <= (sessions > 7 ? sessions : 7); n++)
+              KChip(
+                '$n',
+                key: ValueKey('goal-sessions-$n'),
+                selected: sessions == n,
+                onTap: () => set(() => sessions = n),
               ),
-              const SizedBox(height: 12),
-              _title('Séances par semaine'),
-              const SizedBox(height: 6),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  for (var n = 1; n <= (sessions > 7 ? sessions : 7); n++)
-                    ChoiceChip(
-                      key: ValueKey('goal-sessions-$n'),
-                      label: Text('$n'),
-                      selected: sessions == n,
-                      onSelected: (_) => set(() => sessions = n),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              _title('Pendant'),
-              const SizedBox(height: 6),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  for (final w in {
-                    ...const [4, 6, 8, 12, 16, 24, 52],
-                    weeks,
-                  }.toList()..sort())
-                    ChoiceChip(
-                      key: ValueKey('goal-weeks-$w'),
-                      label: Text('$w semaines'),
-                      selected: weeks == w,
-                      onSelected: (_) => set(() => weeks = w),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              FilledButton(
-                key: const ValueKey('goal-save'),
-                onPressed: () => Navigator.pop(ctx, true),
-                child: Text(old == null ? 'Ajouter' : 'Enregistrer'),
-              ),
-            ],
-          ),
+          ],
         ),
+        const KSectionTitle('Pendant'),
+        Wrap(
+          spacing: KSpacing.s8,
+          children: [
+            for (final w in {
+              ...const [4, 6, 8, 12, 16, 24, 52],
+              weeks,
+            }.toList()..sort())
+              KChip(
+                '$w semaines',
+                key: ValueKey('goal-weeks-$w'),
+                selected: weeks == w,
+                onTap: () => set(() => weeks = w),
+              ),
+          ],
+        ),
+      ],
+      action: (ctx, set) => KPrimaryButton(
+        key: const ValueKey('goal-save'),
+        label: old == null ? 'Ajouter' : 'Enregistrer',
+        onPressed: () => Navigator.pop(ctx, true),
       ),
     );
     if (ok != true || !mounted) return;
@@ -1412,18 +1629,16 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
 
   Future<void> _addPerformance({int? index}) async {
     final old = index == null ? null : _d.goals[index];
-    final g = await showModalBottomSheet<Goal>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => _PerformanceGoalSheet(
-        draft: _d,
-        today: civilOf(_now),
-        name: _name,
-        pick: _pickExercise,
-        id: old?.id ?? nextGoalId(_d.goals),
-        initial: old,
+    final g = await Navigator.of(context).push<Goal>(
+      MaterialPageRoute<Goal>(
+        builder: (_) => _PerformanceGoalSheet(
+          draft: _d,
+          today: civilOf(_now),
+          name: _name,
+          pick: _pickExercise,
+          id: old?.id ?? nextGoalId(_d.goals),
+          initial: old,
+        ),
       ),
     );
     if (g == null || !mounted) return;
@@ -1444,10 +1659,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title('Jours'),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             Wrap(
-              spacing: 6,
-              runSpacing: 6,
+              spacing: KSpacing.s4,
               children: [
                 for (var d = 1; d <= 7; d++)
                   Semantics(
@@ -1455,21 +1669,12 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                     excludeSemantics: true,
                     selected: _d.days.containsKey(d),
                     button: true,
-                    child: FilterChip(
+                    onTap: () => _toggleDay(d, days),
+                    child: KChip(
+                      kWeekdayShort[d - 1],
                       key: ValueKey('flow-day-$d'),
-                      showCheckmark: false,
-                      label: Text(kWeekdayShort[d - 1]),
                       selected: _d.days.containsKey(d),
-                      onSelected: (v) => setState(() {
-                        if (v) {
-                          _d.days[d] = _d.days.isEmpty
-                              ? 45
-                              : _d.days[days.last] ?? 45;
-                        } else {
-                          _d.days.remove(d);
-                          _d.dayPlace.remove(d);
-                        }
-                      }),
+                      onTap: () => _toggleDay(d, days),
                     ),
                   ),
               ],
@@ -1477,72 +1682,84 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           ],
         ),
       ),
-      for (final d in days)
-        KCard(
-          key: ValueKey('flow-day-card-$d'),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _title('${weekdayTitle(d)} : ${_d.days[d]} min'),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  for (final m in kMinutePresets)
-                    ChoiceChip(
-                      key: ValueKey('flow-min-$d-$m'),
-                      label: Text('$m min'),
-                      selected: _d.days[d] == m,
-                      onSelected: (_) => setState(() => _d.days[d] = m),
-                    ),
-                  ChoiceChip(
-                    key: ValueKey('flow-min-$d-other'),
-                    label: const Text('Autre'),
-                    selected: !kMinutePresets.contains(_d.days[d]),
-                    onSelected: (_) => _otherMinutes(d),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+      for (final d in days) _dayCard(d),
     ];
   }
 
-  Future<void> _otherMinutes(int day) async {
-    final c = TextEditingController(text: '${_d.days[day] ?? 45}');
-    final v = await showDialog<int>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Durée du ${weekdayName(day)}'),
-        content: TextField(
-          key: const ValueKey('flow-min-input'),
-          controller: c,
-          autofocus: true,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(labelText: 'Minutes (10 à 300)'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Annuler'),
+  void _toggleDay(int d, List<int> days) => setState(() {
+    if (!_d.days.containsKey(d)) {
+      _d.days[d] = _d.days.isEmpty ? 45 : _d.days[days.last] ?? 45;
+    } else {
+      _d.days.remove(d);
+      _d.dayPlace.remove(d);
+      _minutesOpen.remove(d);
+    }
+  });
+
+  /// Durée d'un jour : puces des durées proposées ; « Autre » règle la
+  /// durée en place (pas à pas de 5 min, de 10 à 300 min), à la place de
+  /// l'ancien dialogue « Durée du <jour> » (C12).
+  Widget _dayCard(int d) {
+    final k = KTokens.of(context);
+    final minutes = _d.days[d] ?? 45;
+    final custom = !kMinutePresets.contains(minutes);
+    final open = custom || _minutesOpen.contains(d);
+    return KCard(
+      key: ValueKey('flow-day-card-$d'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _title('${weekdayTitle(d)} : $minutes min'),
+          const SizedBox(height: KSpacing.s8),
+          Wrap(
+            spacing: KSpacing.s8,
+            children: [
+              for (final m in kMinutePresets)
+                KChip(
+                  '$m min',
+                  key: ValueKey('flow-min-$d-$m'),
+                  selected: !open && minutes == m,
+                  onTap: () => setState(() {
+                    _d.days[d] = m;
+                    _minutesOpen.remove(d);
+                  }),
+                ),
+              KChip(
+                'Autre',
+                key: ValueKey('flow-min-$d-other'),
+                selected: open,
+                onTap: () => setState(() => _minutesOpen.add(d)),
+              ),
+            ],
           ),
-          FilledButton(
-            key: const ValueKey('flow-min-ok'),
-            onPressed: () => Navigator.pop(ctx, int.tryParse(c.text.trim())),
-            child: const Text('OK'),
-          ),
+          if (open) ...[
+            const SizedBox(height: KSpacing.s8),
+            Text(
+              'Durée du ${weekdayName(d)}',
+              style: KType.detail.copyWith(color: k.texte2),
+            ),
+            const SizedBox(height: KSpacing.s4),
+            KStepper(
+              key: ValueKey('flow-min-$d-stepper'),
+              value: '$minutes min',
+              semanticLabel: 'Durée du ${weekdayName(d)}',
+              decrementLabel: 'Moins 5 minutes',
+              incrementLabel: 'Plus 5 minutes',
+              onDecrement: minutes <= 10
+                  ? null
+                  : () => setState(
+                      () => _d.days[d] = minutes - 5 < 10 ? 10 : minutes - 5,
+                    ),
+              onIncrement: minutes >= 300
+                  ? null
+                  : () => setState(
+                      () => _d.days[d] = minutes + 5 > 300 ? 300 : minutes + 5,
+                    ),
+            ),
+          ],
         ],
       ),
     );
-    c.dispose();
-    if (!mounted || v == null) return;
-    if (v < 10 || v > 300) {
-      _toast('Durée par jour : de 10 à 300 minutes.');
-      return;
-    }
-    setState(() => _d.days[day] = v);
   }
 
   // ------------------------------------------------- 8. lieux et matériel
@@ -1570,7 +1787,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _title('Lieux'),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             _chips<Place>(
               keyPrefix: 'flow-place',
               multi: true,
@@ -1595,7 +1812,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _title('Matériel de quel lieu ?'),
-                const SizedBox(height: 8),
+                const SizedBox(height: KSpacing.s8),
                 _chips<Place>(
                   keyPrefix: 'flow-equip-place',
                   options: [for (final p in chosen) (p, kPlaceNames[p]!)],
@@ -1611,21 +1828,20 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _title('Partir de… (${kPlaceNames[current]!.toLowerCase()})'),
-              const SizedBox(height: 8),
+              const SizedBox(height: KSpacing.s8),
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: KSpacing.s8,
                 children: [
                   for (final p in kEquipmentPresets)
-                    ActionChip(
+                    KChip(
+                      p.label,
                       key: ValueKey('flow-preset-${p.id}'),
-                      label: Text(p.label),
-                      onPressed: () =>
+                      onTap: () =>
                           setState(() => _d.places[current] = {...p.equipment}),
                     ),
                 ],
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: KSpacing.s4),
               _hint(
                 '${set.length} élément${set.length > 1 ? 's' : ''} choisi'
                 '${set.length > 1 ? 's' : ''}',
@@ -1635,7 +1851,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         ),
         for (final g in kEquipmentGroups)
           KCard(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: KSpacing.s16),
             child: ExpansionTile(
               key: ValueKey('flow-equip-group-${g.$1}-${current.code}'),
               tilePadding: EdgeInsets.zero,
@@ -1643,21 +1859,21 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               subtitle: Text(
                 '${g.$2.where(set.contains).length} sur ${g.$2.length}',
               ),
-              childrenPadding: const EdgeInsets.only(bottom: 12),
+              childrenPadding: const EdgeInsets.only(bottom: KSpacing.s12),
               children: [
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: AlignmentDirectional.centerStart,
                   child: Wrap(
-                    spacing: 6,
-                    runSpacing: 6,
+                    spacing: KSpacing.s8,
                     children: [
                       for (final e in g.$2)
-                        FilterChip(
+                        KChip(
+                          e,
                           key: ValueKey('equip-$e'),
-                          label: Text(e),
                           selected: set.contains(e),
-                          onSelected: (v) =>
-                              setState(() => v ? set.add(e) : set.remove(e)),
+                          onTap: () => setState(
+                            () => set.contains(e) ? set.remove(e) : set.add(e),
+                          ),
                         ),
                     ],
                   ),
@@ -1666,41 +1882,37 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             ),
           ),
       ],
+      // UI4 : un choix en segments par jour (au plus 4 options) à la place
+      // des menus déroulants.
       if (chosen.length > 1 && days.isNotEmpty)
         KCard(
           key: const ValueKey('flow-dayplaces'),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _title('Lieu de chaque jour (facultatif)'),
-              for (final d in days)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: DropdownButtonFormField<Place?>(
-                    key: ValueKey('flow-dayplace-$d'),
-                    isExpanded: true,
-                    initialValue: _d.dayPlace[d],
-                    decoration: InputDecoration(labelText: weekdayTitle(d)),
-                    items: [
-                      const DropdownMenuItem<Place?>(
-                        value: null,
-                        child: Text('N’importe lequel'),
-                      ),
-                      for (final p in chosen)
-                        DropdownMenuItem<Place?>(
-                          value: p,
-                          child: Text(kPlaceNames[p]!),
-                        ),
-                    ],
-                    onChanged: (v) => setState(() {
-                      if (v == null) {
-                        _d.dayPlace.remove(d);
-                      } else {
-                        _d.dayPlace[d] = v;
-                      }
-                    }),
-                  ),
+              for (final d in days) ...[
+                const SizedBox(height: KSpacing.s12),
+                _hint(weekdayTitle(d)),
+                const SizedBox(height: KSpacing.s4),
+                KSegmented<Place?>(
+                  key: ValueKey('flow-dayplace-$d'),
+                  semanticLabel: 'Lieu du ${weekdayName(d)}',
+                  segments: [
+                    const KSegment<Place?>(null, 'N’importe lequel'),
+                    for (final p in chosen)
+                      KSegment<Place?>(p, kPlaceNames[p]!),
+                  ],
+                  selected: _d.dayPlace[d],
+                  onChanged: (v) => setState(() {
+                    if (v == null) {
+                      _d.dayPlace.remove(d);
+                    } else {
+                      _d.dayPlace[d] = v;
+                    }
+                  }),
                 ),
+              ],
             ],
           ),
         ),
@@ -1710,6 +1922,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   // ------------------------------------------------------------- 9. santé
 
   List<Widget> _health() {
+    final k = KTokens.of(context);
     final given = _d.consent == 'given';
     final lit = <String, double>{
       for (final l in _d.limitations)
@@ -1728,17 +1941,22 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       KCard(
         key: const ValueKey('flow-consent'),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _title('Avant de continuer'),
-            const SizedBox(height: 6),
+            const SizedBox(height: KSpacing.s8),
             const Text(kHealthInfo),
-            const SizedBox(height: 10),
-            _chips<String>(
-              keyPrefix: 'flow-consent',
-              options: const [('given', 'J’accepte'), ('refused', 'Je refuse')],
-              selected: (v) => _d.consent == v,
-              onSelected: (v, _) => _d.consent = v,
+            const SizedBox(height: KSpacing.s12),
+            // UI4 : même contrôle que l'accord du Profil (segments) ; les
+            // choix portent les clés `segment-given` / `segment-refused`.
+            KSegmented<String>(
+              semanticLabel: 'Avant de continuer',
+              segments: const [
+                KSegment('given', 'J’accepte'),
+                KSegment('refused', 'Je refuse'),
+              ],
+              selected: _d.consent,
+              onChanged: (v) => setState(() => _d.consent = v),
             ),
           ],
         ),
@@ -1749,7 +1967,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           child: Text(
             'D’accord : aucune donnée de santé ne sera enregistrée. '
             '$kCautionAdvice Tu pourras donner ton accord plus tard dans '
-            'Réglages › Profil.',
+            'ton profil.',
           ),
         ),
       if (given) ...[
@@ -1758,15 +1976,15 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _title('Questionnaire d’aptitude'),
-              const SizedBox(height: 4),
+              const SizedBox(height: KSpacing.s4),
               _hint(
                 'Réponds par oui ou non. Sans réponse, le mode prudent '
                 's’applique par défaut.',
               ),
               for (final q in kHealthQuestions) ...[
-                const SizedBox(height: 12),
+                const SizedBox(height: KSpacing.s12),
                 Text(q.text),
-                const SizedBox(height: 6),
+                const SizedBox(height: KSpacing.s4),
                 _chips<bool>(
                   keyPrefix: 'flow-q-${q.id}',
                   options: const [(false, 'Non'), (true, 'Oui')],
@@ -1783,7 +2001,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _title('Blessures et gênes (facultatif)'),
-              const SizedBox(height: 4),
+              const SizedBox(height: KSpacing.s4),
               _hint(
                 _koachText(
                   'limitations',
@@ -1793,19 +2011,19 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                 ),
               ),
               if (_d.limitations.isEmpty && !_edit) ...[
-                const SizedBox(height: 8),
-                FilledButton.tonal(
+                const SizedBox(height: KSpacing.s8),
+                KTonalButton(
                   key: const ValueKey('limitations-none'),
+                  label: 'Non, rien',
                   onPressed: _next,
-                  child: const Text('Non, rien'),
                 ),
               ],
-              const SizedBox(height: 8),
+              const SizedBox(height: KSpacing.s8),
               _hint(
                 'Touche la zone sur la carte, ou choisis-la dans la liste '
                 '(articulations comprises).',
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: KSpacing.s8),
               MuscleMap2D(
                 key: const ValueKey('flow-body-map'),
                 views: const [MapView.face, MapView.dos],
@@ -1817,16 +2035,15 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                   if (z != null) _editLimitation(z);
                 },
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: KSpacing.s8),
               Wrap(
-                spacing: 6,
-                runSpacing: 6,
+                spacing: KSpacing.s8,
                 children: [
                   for (final z in BodyZone.values)
-                    ActionChip(
+                    KChip(
+                      kZoneLabels[z]!,
                       key: ValueKey('zone-${z.code}'),
-                      label: Text(kZoneLabels[z]!),
-                      onPressed: () => _editLimitation(z),
+                      onTap: () => _editLimitation(z),
                     ),
                 ],
               ),
@@ -1837,11 +2054,14 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                   title: Text(
                     '${kZoneLabels[l.zone]} · ${kSideLabels[l.side]!.toLowerCase()}',
                   ),
-                  subtitle: Text(limitationText(l)),
+                  subtitle: Text(
+                    limitationText(l),
+                    style: KType.detail.copyWith(color: k.texte2),
+                  ),
                   onTap: () => _editLimitation(l.zone, side: l.side),
-                  trailing: IconButton(
+                  trailing: KIconButton(
                     tooltip: 'Retirer',
-                    icon: const Icon(Icons.close),
+                    icon: Icons.close_rounded,
                     onPressed: () => setState(() => _d.limitations.remove(l)),
                   ),
                 ),
@@ -1892,65 +2112,53 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       BodyZone.chest,
       BodyZone.abdomen,
     };
-    final ok = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, set) => SingleChildScrollView(
-          key: const ValueKey('limitation-sheet'),
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+    // UI4 : sous-page titrée du nom de la zone touchée (R3).
+    final ok = await _openForm<bool>(
+      key: const ValueKey('limitation-sheet'),
+      title: kZoneLabels[zone]!,
+      children: (ctx, set) => [
+        if (zone.joint != null)
+          KLead('Articulation suivie : ${kJointLabels[zone.joint]}'),
+        const KSectionTitle('Côté'),
+        Wrap(
+          spacing: KSpacing.s8,
+          children: [
+            for (final b in BodySide.values)
+              KChip(
+                b == BodySide.both && central.contains(zone)
+                    ? 'Au milieu, ou des deux côtés'
+                    : kSideLabels[b]!,
+                key: ValueKey('limitation-side-${b.code}'),
+                selected: s == b,
+                onTap: () => set(() => s = b),
+              ),
+          ],
+        ),
+        KMenuGroup(
+          dividerIndent: KSpacing.s16,
+          children: [
+            KSwitchRow(
+              key: const ValueKey('limitation-resolved'),
+              title: 'C’est ancien, je ne sens plus rien',
+              value: resolved,
+              onChanged: (v) => set(() {
+                resolved = v;
+                if (resolved) {
+                  level = 0;
+                  since = ConstraintSince.pastResolved;
+                } else if (since == ConstraintSince.pastResolved) {
+                  since = null;
+                }
+              }),
+            ),
+          ],
+        ),
+        KCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                kZoneLabels[zone]!,
-                style: Theme.of(ctx).textTheme.titleLarge,
-              ),
-              if (zone.joint != null)
-                Text(
-                  'Articulation suivie : ${kJointLabels[zone.joint]}',
-                  style: Theme.of(ctx).textTheme.bodySmall,
-                ),
-              const SizedBox(height: 12),
-              _title('Côté'),
-              const SizedBox(height: 6),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  for (final b in BodySide.values)
-                    ChoiceChip(
-                      key: ValueKey('limitation-side-${b.code}'),
-                      label: Text(
-                        b == BodySide.both && central.contains(zone)
-                            ? 'Au milieu, ou des deux côtés'
-                            : kSideLabels[b]!,
-                      ),
-                      selected: s == b,
-                      onSelected: (_) => set(() => s = b),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              CheckboxListTile(
-                key: const ValueKey('limitation-resolved'),
-                contentPadding: EdgeInsets.zero,
-                value: resolved,
-                title: const Text('C’est ancien, je ne sens plus rien'),
-                onChanged: (v) => set(() {
-                  resolved = v ?? false;
-                  if (resolved) {
-                    level = 0;
-                    since = ConstraintSince.pastResolved;
-                  } else if (since == ConstraintSince.pastResolved) {
-                    since = null;
-                  }
-                }),
-              ),
               if (!resolved) ...[
-                Text('Gêne actuelle : ${level.round()}/10'),
+                _title('Gêne actuelle : ${level.round()}/10'),
                 Slider(
                   key: const ValueKey('limitation-level'),
                   value: level,
@@ -1960,30 +2168,37 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                   onChanged: (v) => set(() => level = v),
                 ),
               ],
-              Text(
+              _hint(
                 '0 : aucune gêne aujourd’hui · 10 : la pire imaginable. Une '
-                'douleur forte ou qui dure mérite l’avis d’un professionnel de '
-                'santé.',
-                style: Theme.of(ctx).textTheme.bodySmall,
+                'douleur forte ou qui dure mérite l’avis d’un professionnel '
+                'de santé.',
               ),
-              if (q != null) ...[
-                const SizedBox(height: 12),
-                SwitchListTile(
-                  key: const ValueKey('limitation-effort-known'),
-                  contentPadding: EdgeInsets.zero,
-                  value: effort != null,
-                  title: Text(
-                    itemText(
-                      q,
-                      'effortDiscomfort',
-                      'Quand elle se réveille pendant l’effort, elle monte à '
-                          'combien ?',
-                    ),
-                  ),
-                  onChanged: (v) => set(() => effort = v ? level : null),
+            ],
+          ),
+        ),
+        if (q != null) ...[
+          KMenuGroup(
+            dividerIndent: KSpacing.s16,
+            children: [
+              KSwitchRow(
+                key: const ValueKey('limitation-effort-known'),
+                title: itemText(
+                  q,
+                  'effortDiscomfort',
+                  'Quand elle se réveille pendant l’effort, elle monte à '
+                      'combien ?',
                 ),
-                if (effort != null) ...[
-                  Text('Pendant l’effort : ${effort!.round()}/10'),
+                value: effort != null,
+                onChanged: (v) => set(() => effort = v ? level : null),
+              ),
+            ],
+          ),
+          if (effort != null)
+            KCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _title('Pendant l’effort : ${effort!.round()}/10'),
                   Slider(
                     key: const ValueKey('limitation-effort'),
                     value: effort!,
@@ -1993,59 +2208,51 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                     onChanged: (v) => set(() => effort = v),
                   ),
                 ],
-                if (!resolved) ...[
-                  const SizedBox(height: 8),
-                  _title(itemText(q, 'since', 'Depuis quand ?')),
-                  const SizedBox(height: 6),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      for (final o in sinceOpts)
-                        ChoiceChip(
-                          key: ValueKey('limitation-since-${o.$1}'),
-                          label: Text(o.$2),
-                          selected: since?.code == o.$1,
-                          onSelected: (_) => set(
-                            () => since = since?.code == o.$1
-                                ? null
-                                : ConstraintSince.fromCode(o.$1),
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
-                const SizedBox(height: 12),
-                _title(
-                  itemText(q, 'aggravatedBy', 'Qu’est-ce qui la réveille ?'),
-                ),
-                const SizedBox(height: 6),
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: [
-                    for (final o in aggravating)
-                      FilterChip(
-                        key: ValueKey('limitation-aggravated-${o.$1}'),
-                        label: Text(o.$2),
-                        selected: aggravated.any((a) => a.code == o.$1),
-                        onSelected: (_) => set(() {
-                          final a = AggravatingMovement.fromCode(o.$1);
-                          if (!aggravated.remove(a)) aggravated.add(a);
-                        }),
-                      ),
-                  ],
-                ),
-              ],
-              const SizedBox(height: 12),
-              FilledButton(
-                key: const ValueKey('limitation-save'),
-                onPressed: () => Navigator.pop(ctx, true),
-                child: const Text('Enregistrer'),
               ),
+            ),
+          if (!resolved) ...[
+            KSectionTitle(itemText(q, 'since', 'Depuis quand ?')),
+            Wrap(
+              spacing: KSpacing.s8,
+              children: [
+                for (final o in sinceOpts)
+                  KChip(
+                    o.$2,
+                    key: ValueKey('limitation-since-${o.$1}'),
+                    selected: since?.code == o.$1,
+                    onTap: () => set(
+                      () => since = since?.code == o.$1
+                          ? null
+                          : ConstraintSince.fromCode(o.$1),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+          KSectionTitle(
+            itemText(q, 'aggravatedBy', 'Qu’est-ce qui la réveille ?'),
+          ),
+          Wrap(
+            spacing: KSpacing.s8,
+            children: [
+              for (final o in aggravating)
+                KChip(
+                  o.$2,
+                  key: ValueKey('limitation-aggravated-${o.$1}'),
+                  selected: aggravated.any((a) => a.code == o.$1),
+                  onTap: () => set(() {
+                    final a = AggravatingMovement.fromCode(o.$1);
+                    if (!aggravated.remove(a)) aggravated.add(a);
+                  }),
+                ),
             ],
           ),
-        ),
+        ],
+      ],
+      action: (ctx, set) => KPrimaryButton(
+        key: const ValueKey('limitation-save'),
+        label: 'Enregistrer',
+        onPressed: () => Navigator.pop(ctx, true),
       ),
     );
     if (ok != true || !mounted) return;
@@ -2083,32 +2290,37 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       ),
     );
     final results = [for (final e in all.take(_shown)) e];
+    final k = KTokens.of(context);
     Widget chipList(String title, List<String> ids, String prefix) => KCard(
       key: ValueKey('flow-$prefix-list'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _title(title),
-          const SizedBox(height: 6),
+          const SizedBox(height: KSpacing.s8),
           if (ids.isEmpty)
             _hint('Aucun pour l’instant.')
           else
             Wrap(
-              spacing: 6,
-              runSpacing: 6,
+              spacing: KSpacing.s8,
+              runSpacing: KSpacing.s8,
               children: [
                 for (final id in ids)
-                  InputChip(
+                  KChip(
+                    _name(id),
                     key: ValueKey('flow-$prefix-$id'),
-                    label: Text(_name(id)),
                     onDeleted: () => setState(() => ids.remove(id)),
-                    deleteButtonTooltipMessage: 'Retirer',
                   ),
               ],
             ),
         ],
       ),
     );
+    // UI4 : « Passer » l'étape laisse la question sans réponse (D5.8).
+    _stepSkips.add(() {
+      _d.liked.clear();
+      _d.disliked.clear();
+    });
     return [
       _koach(
         KoachPose.love,
@@ -2119,16 +2331,16 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            KSearch(
+            KSearchField(
               key: const ValueKey('flow-pref-search'),
               controller: _search,
-              hint: 'Chercher dans les 1 039 exercices',
+              hint: 'Rechercher un exercice',
               onChanged: (v) => setState(() {
                 _query = v;
                 _shown = 20;
               }),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: KSpacing.s8),
             _hint(
               _query.trim().isEmpty
                   ? '${all.length} exercices de tes disciplines · cherche '
@@ -2141,7 +2353,10 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                 key: ValueKey('flow-pref-result-${e.id}'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(e.nom),
-                subtitle: Text(e.discipline),
+                subtitle: Text(
+                  e.discipline,
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -2149,8 +2364,11 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                       key: ValueKey('flow-like-${e.id}'),
                       tooltip: 'J’aime',
                       isSelected: _d.liked.contains(e.id),
-                      icon: const Icon(Icons.favorite_border),
-                      selectedIcon: Icon(Icons.favorite, color: SL.accent),
+                      icon: const Icon(Icons.favorite_border_rounded),
+                      selectedIcon: Icon(
+                        Icons.favorite_rounded,
+                        color: k.encre,
+                      ),
                       onPressed: () => setState(() {
                         _d.disliked.remove(e.id);
                         if (!_d.liked.remove(e.id)) _d.liked.add(e.id);
@@ -2161,7 +2379,10 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                       tooltip: 'Je n’aime pas',
                       isSelected: _d.disliked.contains(e.id),
                       icon: const Icon(Icons.thumb_down_outlined),
-                      selectedIcon: Icon(Icons.thumb_down, color: SL.accent),
+                      selectedIcon: Icon(
+                        Icons.thumb_down_rounded,
+                        color: k.encre,
+                      ),
                       onPressed: () => setState(() {
                         _d.liked.remove(e.id);
                         if (!_d.disliked.remove(e.id)) _d.disliked.add(e.id);
@@ -2171,12 +2392,11 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                 ),
               ),
             if (all.length > results.length)
-              TextButton(
+              KTonalButton(
                 key: const ValueKey('flow-pref-more'),
+                label:
+                    'Afficher plus (${all.length - results.length} restants)',
                 onPressed: () => setState(() => _shown += 40),
-                child: Text(
-                  'Afficher plus (${all.length - results.length} restants)',
-                ),
               ),
           ],
         ),
@@ -2238,15 +2458,15 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _hint(kRubricTitles[r]!),
-                      const SizedBox(height: 2),
+                      const SizedBox(height: KSpacing.s4),
                       Text(rubricSummary(r, _d, _name)),
                     ],
                   ),
                 ),
-                IconButton(
+                KIconButton(
                   key: ValueKey('recap-edit-$r'),
                   tooltip: 'Modifier : ${kRubricTitles[r]}',
-                  icon: const Icon(Icons.edit_outlined),
+                  icon: Icons.edit_outlined,
                   onPressed: () {
                     _fromRecap = true;
                     _go(r);
@@ -2265,56 +2485,64 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   Widget _doneScreen() {
     final noProgram = store.program.start == null && !store.programGenerated;
     // G7 : sans programme, Koach enchaîne sur la création du programme.
+    // UI4 (R5) : plus de chemin écrit ; un bouton ouvre Mon programme.
     final text = noProgram
         ? 'Ton profil est prêt ! On crée maintenant ton programme ensemble : '
               'd’abord les exercices de chaque séance, puis les séries et les '
               'charges.'
         : 'Ton profil est enregistré. Ton programme, ton historique et tes '
               'réglages ne changent pas. Tu peux créer un nouveau programme '
-              'dans Réglages › Mon programme.';
-    return KScreen(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(noProgram ? 'TON PROGRAMME' : 'TON PROFIL'),
-      ),
-      body: KList(
-        key: const ValueKey('flow-done'),
-        children: [
-          KoachSurface(
-            color: SL.bg,
-            child: KoachBubble(
-              key: const ValueKey('flow-done-koach'),
-              pose: noProgram ? KoachPose.checklist : KoachPose.thumbsUp,
-              koachHeight: 140,
-              text: text,
+              'depuis Mon programme.';
+    return _FlowPage(
+      title: noProgram ? 'Ton programme' : 'Ton profil',
+      listKey: const ValueKey('flow-done'),
+      actions: [
+        if (noProgram) ...[
+          KPrimaryButton(
+            key: const ValueKey('flow-done-create'),
+            icon: Icons.auto_awesome_outlined,
+            label: 'Créer mon programme',
+            onPressed: () async {
+              final done = widget.onDone;
+              final created = await openPlanCreation(context);
+              if (created) done?.call();
+            },
+          ),
+          KTonalButton(
+            key: const ValueKey('flow-done-continue'),
+            label: 'Plus tard',
+            expand: true,
+            onPressed: widget.onDone,
+          ),
+        ] else
+          KPrimaryButton(
+            key: const ValueKey('flow-done-continue'),
+            label: 'Continuer',
+            onPressed: widget.onDone,
+          ),
+      ],
+      children: [
+        KoachSurface(
+          color: KTokens.of(context).fond,
+          child: KoachBubble(
+            key: const ValueKey('flow-done-koach'),
+            pose: noProgram ? KoachPose.checklist : KoachPose.thumbsUp,
+            koachHeight: 140,
+            text: text,
+          ),
+        ),
+        if (!noProgram)
+          KTonalButton(
+            key: const ValueKey('flow-done-program'),
+            icon: Icons.calendar_month_outlined,
+            label: 'Mon programme',
+            expand: true,
+            onPressed: () => Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(builder: (_) => const ProgramScreen()),
             ),
           ),
-          if (noProgram)
-            FilledButton.icon(
-              key: const ValueKey('flow-done-create'),
-              icon: const Icon(Icons.auto_awesome_outlined),
-              onPressed: () async {
-                final done = widget.onDone;
-                final created = await openPlanCreation(context);
-                if (created) done?.call();
-              },
-              label: const Text('Créer mon programme'),
-            ),
-          if (noProgram)
-            OutlinedButton(
-              key: const ValueKey('flow-done-continue'),
-              onPressed: widget.onDone,
-              child: const Text('Plus tard'),
-            )
-          else
-            FilledButton(
-              key: const ValueKey('flow-done-continue'),
-              onPressed: widget.onDone,
-              child: const Text('Continuer'),
-            ),
-          const ProgramExplainerButton(),
-        ],
-      ),
+        const ProgramExplainerButton(),
+      ],
     );
   }
 }
@@ -2696,7 +2924,7 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final tt = Theme.of(context).textTheme;
+    final k = KTokens.of(context);
     final suggestions = [
       for (final m in widget.draft.movements) m.exerciseId,
       if (_exercise != null &&
@@ -2704,125 +2932,104 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
         _exercise!,
     ];
     final (valueLabel, extraLabel) = _valueLabel;
-    return SingleChildScrollView(
+    // UI4 : sous-page titrée du libellé du bouton qui y mène (R3).
+    return KPage.sub(
       key: const ValueKey('goal-performance-sheet'),
-      padding: EdgeInsets.fromLTRB(
-        16,
-        0,
-        16,
-        24 + MediaQuery.viewInsetsOf(context).bottom,
+      title: widget.initial == null
+          ? 'Objectif de performance'
+          : 'Modifier l’objectif',
+      bottom: _FormBottom(
+        child: KPrimaryButton(
+          key: const ValueKey('goal-save'),
+          label: widget.initial == null ? 'Ajouter' : 'Enregistrer',
+          onPressed: _save,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            widget.initial == null
-                ? 'Objectif de performance'
-                : 'Modifier l’objectif',
-            style: tt.titleLarge,
-          ),
-          const SizedBox(height: 12),
-          Text('Exercice', style: tt.titleMedium),
-          const SizedBox(height: 6),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              for (final id in suggestions)
-                ChoiceChip(
-                  key: ValueKey('goal-ex-$id'),
-                  label: Text(widget.name(id)),
-                  selected: _exercise == id,
-                  onSelected: (_) => _choose(id),
-                ),
-              ActionChip(
-                key: const ValueKey('goal-ex-other'),
-                avatar: const Icon(Icons.search, size: 18),
-                label: const Text('Autre exercice…'),
-                onPressed: () async {
-                  final id = await widget.pick();
-                  if (id != null && mounted) _choose(id);
-                },
+      children: [
+        const KSectionTitle('Exercice'),
+        Wrap(
+          spacing: KSpacing.s8,
+          children: [
+            for (final id in suggestions)
+              KChip(
+                widget.name(id),
+                key: ValueKey('goal-ex-$id'),
+                selected: _exercise == id,
+                onTap: () => _choose(id),
               ),
+            KChip(
+              'Autre exercice…',
+              key: const ValueKey('goal-ex-other'),
+              icon: Icons.search_rounded,
+              onTap: () async {
+                final id = await widget.pick();
+                if (id != null && mounted) _choose(id);
+              },
+            ),
+          ],
+        ),
+        if (_metrics.isNotEmpty) ...[
+          const KSectionTitle('Ce que tu vises'),
+          Wrap(
+            spacing: KSpacing.s8,
+            children: [
+              for (final m in _metrics)
+                KChip(
+                  goalMetricLabel(m),
+                  key: ValueKey('goal-metric-${m.code}'),
+                  selected: _metric == m,
+                  onTap: () => setState(() {
+                    _metric = m;
+                    _extra.text = m == GoalMetric.timeSeconds
+                        ? '${(levelMovementForExercise(_exercise!)?.distanceMeters ?? 5000).round()}'
+                        : '';
+                  }),
+                ),
             ],
           ),
-          if (_metrics.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            Text('Ce que tu vises', style: tt.titleMedium),
-            const SizedBox(height: 6),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final m in _metrics)
-                  ChoiceChip(
-                    key: ValueKey('goal-metric-${m.code}'),
-                    label: Text(goalMetricLabel(m)),
-                    selected: _metric == m,
-                    onSelected: (_) => setState(() {
-                      _metric = m;
-                      _extra.text = m == GoalMetric.timeSeconds
-                          ? '${(levelMovementForExercise(_exercise!)?.distanceMeters ?? 5000).round()}'
-                          : '';
-                    }),
-                  ),
-              ],
-            ),
-          ],
-          if (_metric != null && _metric != GoalMetric.skillUnlocked) ...[
-            const SizedBox(height: 12),
-            TextField(
-              key: const ValueKey('goal-value'),
-              controller: _value,
-              keyboardType: _metric == GoalMetric.timeSeconds
-                  ? TextInputType.datetime
-                  : const TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(labelText: valueLabel),
-            ),
-          ],
-          if (_metric != null && extraLabel != null) ...[
-            const SizedBox(height: 8),
-            TextField(
-              key: const ValueKey('goal-extra'),
-              controller: _extra,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              decoration: InputDecoration(labelText: extraLabel),
-            ),
-          ],
-          const SizedBox(height: 12),
-          OutlinedButton.icon(
-            key: const ValueKey('goal-date'),
-            icon: const Icon(Icons.event_rounded),
-            label: Text('D’ici le ${civilText(_date)}'),
-            onPressed: () async {
-              final first = dateOfCivil(widget.today.addDays(7));
-              final d = await showDatePicker(
-                context: context,
-                initialDate: dateOfCivil(_date),
-                firstDate: first,
-                lastDate: DateTime(first.year + 5),
-              );
-              if (d != null && mounted) setState(() => _date = civilOf(d));
-            },
-          ),
-          if (_error != null) ...[
-            const SizedBox(height: 8),
-            Text(
-              _error!,
-              key: const ValueKey('goal-error'),
-              style: tt.bodySmall?.copyWith(color: SL.accent),
-            ),
-          ],
-          const SizedBox(height: 16),
-          FilledButton(
-            key: const ValueKey('goal-save'),
-            onPressed: _save,
-            child: Text(widget.initial == null ? 'Ajouter' : 'Enregistrer'),
-          ),
         ],
-      ),
+        if (_metric != null && _metric != GoalMetric.skillUnlocked)
+          TextField(
+            key: const ValueKey('goal-value'),
+            controller: _value,
+            keyboardType: _metric == GoalMetric.timeSeconds
+                ? TextInputType.datetime
+                : const TextInputType.numberWithOptions(decimal: true),
+            decoration: InputDecoration(labelText: valueLabel),
+          ),
+        if (_metric != null && extraLabel != null)
+          TextField(
+            key: const ValueKey('goal-extra'),
+            controller: _extra,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            decoration: InputDecoration(labelText: extraLabel),
+          ),
+        KMenuGroup(
+          children: [
+            KMenuRow(
+              key: const ValueKey('goal-date'),
+              icon: Icons.event_rounded,
+              title: 'D’ici le ${civilText(_date)}',
+              onTap: () async {
+                final first = dateOfCivil(widget.today.addDays(7));
+                final d = await showDatePicker(
+                  context: context,
+                  initialDate: dateOfCivil(_date),
+                  firstDate: first,
+                  lastDate: DateTime(first.year + 5),
+                );
+                if (d != null && mounted) setState(() => _date = civilOf(d));
+              },
+            ),
+          ],
+        ),
+        if (_error != null)
+          Text(
+            _error!,
+            key: const ValueKey('goal-error'),
+            style: KType.detail.copyWith(color: k.danger),
+          ),
+      ],
     );
   }
 }
@@ -2837,7 +3044,7 @@ class ExercisePickerPage extends StatefulWidget {
     super.key,
     this.suggested = const [],
     this.only,
-    this.title = 'CHOISIR UN EXERCICE',
+    this.title = 'Choisir un exercice',
   });
 
   @override
@@ -2872,53 +3079,55 @@ class _ExercisePickerPageState extends State<ExercisePickerPage> {
                 e,
           ]
         : const <ExerciseEntry>[];
-    return KScreen(
-      appBar: AppBar(title: Text(widget.title)),
-      body: KList(
-        key: const ValueKey('exercise-picker'),
-        children: [
-          KSearch(
-            controller: _c,
-            hint: 'Chercher un exercice',
-            onChanged: (v) => setState(() {
-              _q = v;
-              _shown = 40;
-            }),
+    // UI4 : sous-page du kit, titre en capitales par le style (U3).
+    return KPage.sub(
+      key: const ValueKey('exercise-picker'),
+      title: widget.title,
+      children: [
+        KSearchField(
+          controller: _c,
+          hint: 'Rechercher un exercice',
+          onChanged: (v) => setState(() {
+            _q = v;
+            _shown = 40;
+          }),
+        ),
+        if (suggested.isNotEmpty)
+          KMenuGroup(
+            title: 'Proposés',
+            children: [
+              for (final e in suggested)
+                KMenuRow(
+                  key: ValueKey('picker-suggested-${e.id}'),
+                  icon: Icons.star_outline_rounded,
+                  title: e.nom,
+                  subtitle: e.discipline,
+                  onTap: () => Navigator.pop(context, e.id),
+                ),
+            ],
           ),
-          if (suggested.isNotEmpty) ...[
-            Text('Proposés', style: Theme.of(context).textTheme.titleSmall),
-            for (final e in suggested)
-              ListTile(
-                key: ValueKey('picker-suggested-${e.id}'),
-                contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.star_outline, color: SL.accent),
-                title: Text(e.nom),
-                subtitle: Text(e.discipline),
-                onTap: () => Navigator.pop(context, e.id),
-              ),
-            Text(
-              'Toute la base',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ],
-          for (final e in list)
-            ListTile(
-              key: ValueKey('picker-${e.id}'),
-              contentPadding: EdgeInsets.zero,
-              title: Text(e.nom),
-              subtitle: Text(e.discipline),
-              onTap: () => Navigator.pop(context, e.id),
-            ),
-          if (all.length > list.length)
-            TextButton(
-              key: const ValueKey('picker-more'),
-              onPressed: () => setState(() => _shown += 40),
-              child: Text(
-                'Afficher plus (${all.length - list.length} restants)',
-              ),
-            ),
-        ],
-      ),
+        if (list.isNotEmpty)
+          KMenuGroup(
+            title: suggested.isNotEmpty ? 'Toute la base' : null,
+            dividerIndent: KSpacing.s16,
+            children: [
+              for (final e in list)
+                KMenuRow(
+                  key: ValueKey('picker-${e.id}'),
+                  title: e.nom,
+                  subtitle: e.discipline,
+                  onTap: () => Navigator.pop(context, e.id),
+                ),
+            ],
+          ),
+        if (all.length > list.length)
+          KTonalButton(
+            key: const ValueKey('picker-more'),
+            label: 'Afficher plus (${all.length - list.length} restants)',
+            expand: true,
+            onPressed: () => setState(() => _shown += 40),
+          ),
+      ],
     );
   }
 }

@@ -3,9 +3,11 @@
 // profonds sont donnés en texte. Couleurs par rôles, jamais en dur.
 import 'package:flutter/material.dart';
 
-import 'app_theme.dart';
 import 'atlas_data.dart';
+import 'engine3d.dart' show kMuscleGray;
+import 'kit/tokens.dart';
 import 'muscle_body.dart';
+import 'muscle_map_2d.dart' show kMuscleRegions, mapRegion;
 import 'pose_painter.dart' show dashPath;
 
 /// Remplissage d'une région : couleur, opacité, contour pointillé éventuel.
@@ -264,46 +266,49 @@ class AtlasRoleLegend extends StatelessWidget {
   /// montre alors le halo posé sur le gris des muscles [haloBase], comme sur
   /// le mannequin. Null : pastilles pleines (carte 2D).
   final double Function(double intensity)? haloAlpha;
+
+  /// Gris des muscles du mannequin (UI4 : même valeur, lue dans
+  /// `engine3d.dart` au lieu d'être recopiée).
   final Color haloBase;
 
   const AtlasRoleLegend({
     super.key,
     this.stretchColor,
     this.haloAlpha,
-    this.haloBase = const Color(0xFF8F8B8A),
+    this.haloBase = kMuscleGray,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget item(String text, BoxDecoration deco) => Row(
+    final k = KTokens.of(context);
+    Widget item(String text, ShapeDecoration deco) => Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(width: 14, height: 14, decoration: deco),
-        const SizedBox(width: 6),
+        const SizedBox(width: KSpacing.s8),
         Flexible(
-          child: Text(text, style: TextStyle(fontSize: 12, color: SL.text)),
+          child: Text(text, style: KType.micro.copyWith(color: k.texte)),
         ),
       ],
     );
-    BoxDecoration deco(Color color, double v) {
+    // UI4 : pastilles rondes, comme la légende de la carte 2D ; couleurs
+    // inchangées (rampe d'intensité, halo, gris du mannequin).
+    ShapeDecoration deco(Color color, double v) {
       final alpha = haloAlpha?.call(v);
       if (alpha == null) {
-        return BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(3),
-        );
+        return ShapeDecoration(color: color, shape: KRadius.pill);
       }
       final glow = color.withValues(alpha: alpha);
-      return BoxDecoration(
+      return ShapeDecoration(
         color: Color.alphaBlend(glow, haloBase),
-        borderRadius: BorderRadius.circular(3),
-        boxShadow: [BoxShadow(color: glow, blurRadius: 6, spreadRadius: 1)],
+        shape: KRadius.pill,
+        shadows: [BoxShadow(color: glow, blurRadius: 6, spreadRadius: 1)],
       );
     }
 
     return Wrap(
-      spacing: 14,
-      runSpacing: 6,
+      spacing: KSpacing.s14,
+      runSpacing: KSpacing.s8,
       children: [
         for (final (text, v) in [
           ('Principal', exerciseRoleHeat.primaire),
@@ -321,4 +326,28 @@ class AtlasRoleLegend extends StatelessWidget {
       ],
     );
   }
+}
+
+// ------------------------- groupes de la carte 2D ---------------------------
+
+/// UI4 : groupe de la carte 2D (filtre de l'Anatomie) d'un muscle de l'atlas
+/// : celui de sa région dessinée. Null pour un muscle profond (non dessiné)
+/// ou une région sans groupe (cou, psoas, couturier).
+String? mapGroupOfAtlasMuscle(String muscle) {
+  for (final id in kMuscleRegions[muscle] ?? const <String>[]) {
+    final group = mapRegion(id)?.group;
+    if (group != null) return group;
+  }
+  return null;
+}
+
+/// UI4 : groupes de la carte 2D de muscles de l'atlas, dans l'ordre
+/// d'apparition, sans doublon (fiche › Muscles, bibliothèque filtrée).
+List<String> mapGroupsOfAtlasMuscles(Iterable<String> muscles) {
+  final out = <String>[];
+  for (final m in muscles) {
+    final g = mapGroupOfAtlasMuscle(m);
+    if (g != null && !out.contains(g)) out.add(g);
+  }
+  return out;
 }

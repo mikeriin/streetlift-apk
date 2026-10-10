@@ -101,7 +101,11 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Canal « Rappel quotidien » désactivé'), findsOneWidget);
+      // UI4 : libellé sans jargon (le canal Android coupé).
+      expect(
+        find.text('Rappels désactivés dans les réglages Android'),
+        findsOneWidget,
+      );
       await tester.scrollUntilVisible(
         find.text('Ouvrir les réglages Android'),
         150,
