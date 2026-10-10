@@ -9,7 +9,9 @@ Base : main b7996b3f (dev6.11.1). Branche de mise au point : claude/ci-ci1h-rapi
 - Test : test/ci1h_charge_fixe_test.dart.
 
 ## En cours
-- Run rapide essai 1.
+- Run rapide essai 4 vert (run 38088619626 : format, analyse, Dart, dev ; python = artefact du workflow rapide sans build-apk.yml).
+- Relecture indépendante faite (8 constats, 1 à 7 traités).
+- Commit candidat de main 9ef40dad (arbre d7de5656), contrôle complet poussé sur claude/ci-3d (cc97f610).
 
 ## Reste
-- Corriger jusqu'au vert, version 6.11.2, docs, contrôle complet claude/ci-3d, main, build signé, livraison, état, page de suivi, notification.
+- Lire ci-out du contrôle complet, publier main (avance rapide), build signé, livraison, état, page de suivi, notification.

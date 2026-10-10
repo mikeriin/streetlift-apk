@@ -499,22 +499,29 @@ const kFixedLoadCause = 'program';
 const kFixedBodyweightCause = 'program_bodyweight';
 
 bool _isPainReason(kc.Reason r) =>
-    r.code == 'adapt.pain_reported' || r.code == 'adapt.pain_persistent';
+    r.code == 'adapt.pain_reported' ||
+    r.code == 'adapt.pain_persistent' ||
+    // Reprise graduée, zone à l'arrêt : charge plafonnée par le moteur.
+    (r.code == 'adapt.load_held' && '${r.params['cause']}'.startsWith('pain'));
 
 /// La charge de la prescription [it] est une charge externe (barre, lest).
 bool fixedLoadApplies(kc.ExercisePrescription it, double kg) =>
     it.loadBasis == kc.LoadBasis.bodyweightPlusExternal ||
     (it.loadBasis == kc.LoadBasis.external && kg > 0);
 
-/// Raison « charge fixée par ton programme » de la prescription [it].
-kc.Reason fixedLoadReason(kc.ExercisePrescription it, double kg) => kc.Reason(
-  code: 'adapt.load_held',
-  params: {
-    'cause': fixedLoadApplies(it, kg) && kg > 0
-        ? kFixedLoadCause
-        : kFixedBodyweightCause,
-  },
-);
+/// Raison « charge fixée par ton programme » de la prescription [it] ;
+/// null pour un exercice sans charge (mobilité, cardio).
+kc.Reason? fixedLoadReason(kc.ExercisePrescription it, double kg) {
+  if (it.loadBasis == kc.LoadBasis.unloaded) return null;
+  final bodyweight =
+      kg == 0 &&
+      (it.loadBasis == kc.LoadBasis.bodyweight ||
+          it.loadBasis == kc.LoadBasis.bodyweightPlusExternal);
+  return kc.Reason(
+    code: 'adapt.load_held',
+    params: {'cause': bodyweight ? kFixedBodyweightCause : kFixedLoadCause},
+  );
+}
 
 /// CI1h (C15.2) : prescription [it] du moteur pour une ligne du programme
 /// à charge écrite fixe [kg] (0 : sans lest) : charge écrite à chaque
@@ -552,8 +559,15 @@ kc.ExercisePrescription fixedLoadItem(
             () {
               final h = cap(t.repsHigh, written?.repsHigh);
               final s = cap(t.secondsHigh, written?.secondsHigh);
+              final v = t.loadKg;
+              // Montée d'échauffement : jamais au-dessus de la charge écrite.
+              final warm = t.role == kc.SetRole.warmup;
               return t.copyWith(
-                loadKg: loaded ? load(t.loadKg) : t.loadKg,
+                loadKg: !loaded
+                    ? v
+                    : warm
+                    ? (v == null || v <= kg ? v : kg)
+                    : load(v),
                 repsHigh: h,
                 repsLow: under(cap(t.repsLow, written?.repsHigh), h),
                 secondsHigh: s,
@@ -593,7 +607,7 @@ kc.ExercisePrescription fixedLoadItem(
       reasons: [
         for (final r in it.reasons)
           if (!dropped(r)) r,
-        fixedLoadReason(it, kg),
+        ?fixedLoadReason(it, kg),
       ],
     );
   }
@@ -637,7 +651,7 @@ kc.IntraSessionAdvice fixedLoadAdvice(
     nextRepsLow: null,
     nextRepsHigh: null,
     nextSeconds: null,
-    reasons: [reason],
+    reasons: [?reason],
   );
   final low = goal.low;
   final missed = done != null && low != null && done < low;
@@ -647,7 +661,7 @@ kc.IntraSessionAdvice fixedLoadAdvice(
       target != null &&
       kc.Flames.isValid(flames) &&
       kc.Flames.isValid(target) &&
-      flames >= target + 2) {
+      flames > target) {
     gap = kc.Flames.toRir(target) - kc.Flames.toRir(flames);
   }
   // Repos en plus du moteur : gardé quand les répétitions ne bougent pas.
@@ -678,7 +692,7 @@ kc.IntraSessionAdvice fixedLoadAdvice(
               code: 'adapt.flames_above_target',
               params: {'delta': gap, 'sets': 1},
             ),
-      reason,
+      ?reason,
     ],
   );
 }
