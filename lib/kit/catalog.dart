@@ -276,11 +276,7 @@ final List<KitSample> kitSamples = [
           onInfo: _noop,
         ),
         SizedBox(height: KSpacing.s8),
-        KDayRow(
-          number: 'J7',
-          title: 'Repos complet',
-          state: KDayState.rest,
-        ),
+        KDayRow(number: 'J7', title: 'Repos complet', state: KDayState.rest),
         SizedBox(height: KSpacing.s16),
         KTimeline(
           phases: [

@@ -166,7 +166,7 @@ class KSegmented<T> extends StatelessWidget {
   bool _fits(BuildContext context, double width) {
     if (!width.isFinite) return true;
     final scaler = MediaQuery.textScalerOf(context);
-    final need = 2 * KSpacing.s4;
+    const need = 2 * KSpacing.s4;
     var total = 0;
     for (final s in segments) {
       total += s.label.length + 2;
