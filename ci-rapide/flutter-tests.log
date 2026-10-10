@@ -1,0 +1,196 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe inventaire : lignes à charge fixe du programme de 40 semaines, exception « lesté ou PdC »
+CI1H|ligne|Négatifs de muscle-up|3|0.0|3
+CI1H|ligne|Mobilité épaules + poignets|64|0.0|64
+CI1H|ligne|Pompes PdC — très léger|9|0.0|9
+CI1H|ligne|Hollow body hold|29|0.0|29
+CI1H|ligne|Pallof press|29|0.0|29
+CI1H|ligne|Marche ou vélo très léger|6|0.0|6
+CI1H|ligne|Mobilité complète|3|0.0|3
+CI1H|ligne|HIIT court|28|0.0|28
+CI1H|ligne|BILAN — report des résultats|6|0.0|0
+CI1H|ligne|TEST MAX MUSCLE-UPS PdC|3|0.0|3
+CI1H|ligne|TEST MAX DIPS PdC|4|0.0|4
+CI1H|ligne|TEST MAX POMPES PdC|4|0.0|4
+CI1H|ligne|Repos actif|3|0.0|3
+CI1H|ligne|TEST MAX TRACTIONS PdC|4|0.0|4
+CI1H|ligne|TEST MAX SQUAT @ 70 kg|4|70.0|4
+CI1H|ligne|Scapular pull-ups|52|0.0|52
+CI1H|ligne|YTW à plat ventre (banc incliné)|26|0.0|26
+CI1H|ligne|Ab wheel|34|0.0|34
+CI1H|ligne|Tractions PdC — séries longues|13|0.0|13
+CI1H|ligne|Dips PdC — séries longues|13|0.0|13
+CI1H|ligne|Pompes PdC — séries longues — enchaîné après les dips|13|0.0|13
+CI1H|ligne|Isométrie maximale — transition MU, 3 angles|25|0.0|25
+CI1H|ligne|Tractions explosives poitrine-barre|34|0.0|34
+CI1H|ligne|Négatifs de muscle-up complets|25|0.0|25
+CI1H|ligne|Transitions de muscle-up à l'élastique|25|0.0|25
+CI1H|ligne|Isométrie maximale — bas de dip|25|0.0|25
+CI1H|ligne|Squat endurance @ 70 kg|33|70.0|33
+CI1H|ligne|False grip hold (anneaux ou barre)|25|0.0|25
+CI1H|ligne|Muscle-ups PdC explosifs|9|0.0|9
+CI1H|ligne|GtG muscle-up — dans la journée|16|0.0|16
+CI1H|ligne|Tractions PdC — séries continues|1|0.0|1
+CI1H|ligne|Tractions PdC — série de référence|7|0.0|7
+CI1H|ligne|Tractions PdC — clusters|17|0.0|17
+CI1H|ligne|Dips PdC — série de référence|7|0.0|7
+CI1H|ligne|Dips PdC — clusters|17|0.0|17
+CI1H|ligne|Pompes PdC — série de référence|7|0.0|7
+CI1H|ligne|Pompes PdC — clusters|7|0.0|7
+CI1H|ligne|Contraste français — squat|10|0.0|10
+CI1H|ligne|Pompes PdC — clusters — enchaîné après les dips|10|0.0|10
+CI1H|ligne|Tractions PdC — EMOM|2|0.0|2
+CI1H|ligne|Dips PdC — EMOM|2|0.0|2
+CI1H|ligne|Pompes PdC — EMOM — enchaîné après les dips|2|0.0|2
+CI1H|ligne|Tractions PdC — échelles dégressives|1|0.0|1
+CI1H|ligne|Dips PdC — échelles dégressives|1|0.0|1
+CI1H|ligne|Pompes PdC — échelles dégressives — enchaîné après les dips|1|0.0|1
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe S14·J6 : squat endurance servi à 70 kg (sans la contrainte : plus lourd, cause confirmée)
+CI1H|avant|S14J6|squat|[72.5, 72.5, 72.5]|15
+CI1H|apres|S14J6|squat|[70.0, 70.0, 70.0]|15
+00:01 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe série très dure : jamais sous la moitié de la cible
+00:01 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe ligne PdC à charge fixe : jamais de lest, même facile
+CI1H|pdc|S14J4|[Tractions PdC — série de référence, Tractions PdC — clusters]
+00:01 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1c_koach_applique_test.dart: ajustement de Koach accepté propositions de la revue sur le bloc importé (relevé)
+00:01 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe douleur au-dessus du seuil : conduite sous douleur appliquée
+CI1H|douleur|S14J6|[]
+00:01 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1c_koach_applique_test.dart: ajustement de Koach accepté propositions de la revue sur le bloc importé (relevé)
+00:01 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1c_koach_applique_test.dart: ajustement de Koach accepté propositions de la revue sur le bloc importé (relevé)
+RELEVE free : bloc legacy-programme-v33/S12 importé=true semaine=12 déblocage=block_restructure propositions=[]
+RELEVE assisted : bloc legacy-programme-v33/S12 importé=true semaine=12 déblocage=block_restructure propositions=[]
+00:02 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:02 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:02 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:03 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:03 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:03 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S1-S7|125|0
+00:04 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1c_koach_applique_test.dart: ajustement de Koach accepté consultation seule : aucune entrée à la fermeture ; bilan donné ou note : entrée gardée
+00:04 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S8-S13 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:04 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S8-S13 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:05 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S8-S13 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S8-S13|102|0
+00:05 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1c_koach_applique_test.dart: séance consultée réponse au bilan puis fermeture : entrée gardée, bilan relu à la réouverture
+00:06 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S14-S19 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:07 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S14-S19 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S14-S19|78|0
+00:07 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1d_paquets_test.dart: textes des nouvelles raisons (0.2.3) nouvelles notes de kalis_plan : rédigées, jamais un code brut
+00:07 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S20-S25 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:07 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S20-S25 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:07 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S20-S25 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:07 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S20-S25 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:08 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S20-S25 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:08 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S20-S25 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S20-S25|107|0
+00:09 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S26-S31 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:10 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S26-S31 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S26-S31|106|0
+00:10 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) annotation du programme du propriétaire : blocs valides au contrat 0.4.0, mode coach, saison et échéance fin S40
+CI1E absent {"N × ? reps":71,"EMOM N min × ? reps par minute":2}
+CI1E segments [legacy-programme-v33/S1:test:test/test/intro, legacy-programme-v33/S4:accumulation:accumulation/accumulation/accumulation/deload, legacy-programme-v33/S8:accumulation:accumulation/accumulation/accumulation/deload, legacy-programme-v33/S12:intensification:test/intensification/intensification/deload, legacy-programme-v33/S16:intensification:intensification/intensification/realization/deload, legacy-programme-v33/S20:realization:intensification/intensification/realization/deload/realization/test, legacy-programme-v33/S26:accumulation:accumulation/accumulation/accumulation/accumulation/deload/test, legacy-programme-v33/S32:intensification:intensification/intensification/intensification/deload, legacy-programme-v33/S36:realization:realization/realization/realization/test/test]
+00:10 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) annotation du programme du propriétaire : blocs valides au contrat 0.4.0, mode coach, saison et échéance fin S40
+00:10 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S32-S36 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:11 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S32-S36 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:12 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S32-S36 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S32-S36|94|0
+00:12 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+00:13 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:13 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) propositions réelles de la revue (relevé) et restructuration acceptée puis annulée, montrée dans le programme
+CI1E revue free : legacy-programme-v33/S12 déblocage=block_restructure propositions=[]
+CI1E revue assisted : legacy-programme-v33/S12 déblocage=block_restructure propositions=[]
+00:13 +35: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S37-S40|67|0
+00:13 +36: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) ajustement de Koach accepté en 6.9.3 (bloc unique) : ramené sur le bloc annoté, toujours appliqué et annulable
+00:13 +37: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 2 — prévision de fin de séance prévision égale à la séance ouverte juste après (S13·J6 → S14, dont S14·J6 ; S14·J4 → S14·J5…)
+00:13 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 2 — prévision de fin de séance prévision égale à la séance ouverte juste après (S13·J6 → S14, dont S14·J6 ; S14·J4 → S14·J5…)
+00:13 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) installation neuve : sauvegarde d’origine au départ du programme ; retour puis revue du moteur (mode assisté) : programme d’origine
+CI1E neuve : avant=false apres=false entrees=[] sections=[]
+00:13 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 2 — prévision de fin de séance prévision égale à la séance ouverte juste après (S13·J6 → S14, dont S14·J6 ; S14·J4 → S14·J5…)
+CI1H|prevision|S13J6|6
+CI1H|prevision|S14J4|6
+CI1H|prevision|S14J5|4
+00:14 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) retour au programme d’origine : sections du programme identiques à la sauvegarde, journal gardé
+CI1E apres retour : differe=false entrees=[] propositions=[]
+00:14 +40: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) retour au programme d’origine : sections du programme identiques à la sauvegarde, journal gardé
+00:14 +41: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 2 — prévision de fin de séance séance future ouverte la veille puis le jour même : recalculée ; prescrite à sa date prévue
+00:14 +42: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 2 — prévision de fin de séance fin de séance : séance visée et date
+00:15 +43: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: paquets 0.3.0 : textes de Koach des codes d’endurance
+00:15 +44: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: journal : une série avec ses mini-séries est une ligne (total et parts) ; myo-reps notés en lignes séparées regroupés si c’est sûr
+00:15 +45: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) myo-reps, durées, HIIT, EMOM, contrastes, échelles : blocs valides, groupes, lignes servies telles qu’écrites
+00:16 +46: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) myo-reps, durées, HIIT, EMOM, contrastes, échelles : blocs valides, groupes, lignes servies telles qu’écrites
+CI1F absent {"N × ? reps":33}
+00:16 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: textes (aucun code brut) toutes les notes de coach de kalis_plan 0.3.1 sont rédigées
+00:16 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) « N × ? reps » : référence estimée d’après le journal (test au maximum), sinon servi tel qu’écrit
+CI1F estimates {B18: 8.0/journal, B19: 8.0/journal}
+00:16 +48: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: textes (aucun code brut) toutes les notes de coach de kalis_plan 0.3.1 sont rédigées
+00:16 +49: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) séance : myo-reps saisis mini-série par mini-série, une série au journal du moteur avec ses parties
+00:16 +50: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) séance : myo-reps saisis mini-série par mini-série, une série au journal du moteur avec ses parties
+00:16 +51: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) séance : myo-reps saisis mini-série par mini-série, une série au journal du moteur avec ses parties
+00:16 +52: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) séance : myo-reps saisis mini-série par mini-série, une série au journal du moteur avec ses parties
+CI1F myo servi {"slotId":"j5-mu-elevation-laterale-halteres","exerciseId":"mu-elevation-laterale-halteres","sets":1,"repsLow":15,"repsHigh":15,"targetFlames":9,"startLoadKg":56.0,"percentOfOneRm":0.647,"toCalibrate":true,"loadBasis":"external","setTargets":[{"repsLow":15,"repsHigh":15,"loadKg":56.0,"flames":9}],"reasons":[{"code":"adapt.low_confidence","params":{"confidence":0.431}},{"code":"adapt.load_down","params":{"deltaKg":6.5}}]} ; bloc {"kind":"myo_reps","miniSets":4,"miniSetReps":4,"intraRestSeconds":10} ; niveau ExperienceLevel.advanced
+00:16 +53: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) gêne déclarée à 6/10 : note du bloc, étape à confirmer une fois par bloc, gardée dans la sauvegarde
+00:16 +53: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) installation neuve en S20 (cible émulateur) : myo-reps servis mini-série par mini-série
+CI1F S20 B3-6 MUSCLE-UP LESTÉ — lift n°1, avant tout tirage engine=true servi=5/cluster/null bloc=5/cluster raisons=[adapt.calibration] plan=cluster
+CI1F S20 B3-7 TRACTION LESTÉE — lift principal engine=true servi=5/null/null bloc=5/cluster raisons=[adapt.calibration] plan=cluster
+CI1F S20 B3-8 Rowing barre penché engine=true servi=4/null/null bloc=4/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-9 Tirage vertical prise neutre engine=true servi=3/null/null bloc=3/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-10 Curl barre EZ engine=true servi=1/myo_reps/null bloc=1/myo_reps raisons=[adapt.calibration] plan=myo_reps
+CI1F S20 B3-11 Face pulls engine=true servi=4/null/null bloc=4/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-12 Rotations externes (par haltère) engine=true servi=3/null/null bloc=3/null raisons=[] plan=null
+CI1F S20 B3-13 Scapular pull-ups engine=true servi=3/null/null bloc=3/null raisons=[] plan=null
+CI1F S20 B3-14 Travail poignet excentrique (haltère) engine=true servi=3/null/null bloc=3/null raisons=[adapt.calibration] plan=null
+00:16 +54: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) gêne déclarée à 6/10 : note du bloc, étape à confirmer une fois par bloc, gardée dans la sauvegarde
+00:17 +55: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) gêne déclarée à 6/10 : note du bloc, étape à confirmer une fois par bloc, gardée dans la sauvegarde
+00:17 +56: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) sans gêne : aucune étape
+00:17 +57: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) épaule à antécédent (musculation) : `shoulder_history` sous chaque développé au-dessus de la tête écrit, avec le bouclier
+CI1G 2/10 past_resolved : développés écrits 9, notés 9
+CI1G 3/10 over_12_months : développés écrits 18, notés 18
+CI1G 6/10 months_3_to_12 : développés écrits 18, notés 18
+00:17 +58: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: séance : étape bloquante (setUpAll)
+00:17 +58: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: séance : étape bloquante « Pas encore » puis rappel en tête ; « J’ai eu l’avis » : plus rien
+00:18 +59: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: séance : étape bloquante « Pas encore » puis rappel en tête ; « J’ai eu l’avis » : plus rien
+00:18 +60: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: séance : étape bloquante « Pas encore » puis rappel en tête ; « J’ai eu l’avis » : plus rien
+00:18 +61: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: séance : étape bloquante « Pas encore » puis rappel en tête ; « J’ai eu l’avis » : plus rien
+00:18 +62: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1b_pain_test.dart: séance servie (mode coach 0.2.2) poignet à 4/10 sur plusieurs séances : arrêt, mouvements retirés, consigne de consulter ; le bloc suivant écrit l’arrêt
+00:18 +63: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1b_pain_test.dart: séance servie (mode coach 0.2.2) poignet à 4/10 sur plusieurs séances : arrêt, mouvements retirés, consigne de consulter ; le bloc suivant écrit l’arrêt
+00:19 +64: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: C11 : programme de 40 semaines blocs du programme importé de six semaines au plus (`restructureImported` sans objet)
+00:19 +65: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1b_pain_test.dart: séance servie (mode coach 0.2.2) test retiré un jour de bilan bas, servi à une séance suivante de la semaine, journalisé à son emplacement
+  aucun test reporté par le moteur (0 essais)
+00:20 +65 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin sans profil v2 : séance hors moteur (L7 inchangé)
+00:21 +66 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:21 +67 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:21 +68 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:21 +69 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:21 +70 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:22 +71 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:22 +72 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:22 +73 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Premier lancement de dev6.1.0 échec de la copie : rien supprimé, nouvel essai au lancement suivant
+00:22 +74 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin journal présenté au moteur : séances passées placées dans le bloc (rang du jour), emplacements, flammes (C9), séance en cours écartée
+00:22 +75 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Premier lancement de dev6.1.0 catalogue jamais utilisé : ni copie ni annonce
+00:22 +76 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conversion G3 inchangée sans les ajouts G9 ; la note en flammes passe avant le RIR, « je ne sais pas » = sans note
+00:22 +77 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conversion G3 inchangée sans les ajouts G9 ; la note en flammes passe avant le RIR, « je ne sais pas » = sans note
+00:22 +78 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Premier lancement de dev6.1.0 ancienne sauvegarde 5.10.1 avec WOD : importée, WOD ignorés, message clair
+00:22 +79 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin bilan (D5.8) : réponses partielles gardées telles quelles, aucune valeur injectée ; mode assisté : ajustement appliqué, annulable
+00:22 +80 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin bilan (D5.8) : réponses partielles gardées telles quelles, aucune valeur injectée ; mode assisté : ajustement appliqué, annulable
+00:22 +81 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Écran d’annonce contenu, partage, « Compris » (sombre)
+00:23 +82 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Écran d’annonce contenu, partage, « Compris » (sombre)
+00:23 +83 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Écran d’annonce contenu, partage, « Compris » (sombre)
+00:23 +84 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Écran d’annonce contenu, partage, « Compris » (sombre)
+00:23 +85 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin douleur : zone épargnée ; règle L13 (> 3/10 plus de 2 séances de suite) → renvoi vers un professionnel
+00:23 +86 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin douleur : zone épargnée ; règle L13 (> 3/10 plus de 2 séances de suite) → renvoi vers un professionnel
+00:23 +87 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Écran d’annonce Réglages › Sauvegardes : la copie reste accessible
+00:24 +88 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil après chaque série, mode assisté : appliqué aux séries suivantes non modifiées, annulable
+00:24 +89 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil après chaque série, mode assisté : appliqué aux séries suivantes non modifiées, annulable
+00:24 +90 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil en mode libre : proposé, appliqué seulement après accord
+00:24 +91 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin sauvegarde : séance du moteur et flammes exportées, relues ; import strict d’une séance du moteur invalide refusé
+00:24 +92 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin résumé de fin : calibrage, capacité avant / après, prochaine fois
+00:24 +93 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin budgets : prescription et conseil sous 1 s en test (VM)
+00:24 +94 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: textes codes de raison du moteur : une phrase pour chaque code dit à l’utilisateur, aucune allégation médicale
+00:24 +95 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans (setUpAll)
+00:25 +95 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:27 +96 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans ligne des flammes : 9 points et la flamme, toucher, glisser, « Je ne sais pas », écarter, clair et sombre
+00:27 +97 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans ligne résumée : tous les types de saisie (correction 2 : aussi sans flammes)
+00:27 +98 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans ligne résumée : flamme alignée avec le texte
+00:27 +99 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans résumé de fin de séance : Koach, calibrage, progrès, prochaine fois
+00:27 +100 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans (tearDownAll)
+00:27 +100 ~1: All tests passed!
