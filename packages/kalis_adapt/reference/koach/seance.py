@@ -2215,9 +2215,13 @@ class Seances(object):
                     and not plan['sans_hausse'] and self.coupure == 0 and not mem.echec:
                 plafond = s['tentative_ouverture_part'] * math.exp(mu) - bw
                 charge = grille.plancher(max(min(recente, plafond), charge))
-            # Jour d'épreuve en semaine de retour (test gardé) ou jour sans
-            # hausse : l'ouverture ne dépasse pas le dernier passage.
-            if plan['sans_hausse'] and mem.charge_derniere is not None and charge > mem.charge_derniere:
+            # Jour d'épreuve en semaine de retour après une coupure (test
+            # gardé) : l'ouverture ne dépasse pas le dernier passage. (Un
+            # jour de bilan bas ou de zone douloureuse, c'est la baisse
+            # `tentative_bilan_bas_part` de 0.3.1 qui joue : borner par le
+            # dernier passage, souvent une série légère d'affûtage, ferait
+            # ouvrir à la moitié du maximum — mesuré sur le banc adversarial.)
+            if self.coupure > 0 and mem.charge_derniere is not None and charge > mem.charge_derniere:
                 charge = mem.charge_derniere
             # Plus prudent que 0.3.1 : l'ouverture ne dépasse jamais ce que
             # les barres réussies des 42 derniers jours justifient (+10 %,
