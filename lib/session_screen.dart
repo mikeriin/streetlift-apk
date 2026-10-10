@@ -645,18 +645,18 @@ class _SessionScreenState extends State<SessionScreen> {
           SizedBox(
             width: double.infinity,
             child: Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: KSpacing.s8,
-            children: [
-              Text(where, style: KType.section.copyWith(color: k.texte2)),
-              KTextButton(
-                label: 'Exercices',
-                icon: Icons.format_list_numbered_rounded,
-                onPressed: _chooseExercise,
-              ),
-            ],
-          ),
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: KSpacing.s8,
+              children: [
+                Text(where, style: KType.section.copyWith(color: k.texte2)),
+                KTextButton(
+                  label: 'Exercices',
+                  icon: Icons.format_list_numbered_rounded,
+                  onPressed: _chooseExercise,
+                ),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: KSpacing.s8),
@@ -2427,51 +2427,54 @@ class _SetFieldState extends State<_SetField> {
     return MediaQuery.withClampedTextScaling(
       maxScaleFactor: 1.3,
       child: GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      excludeFromSemantics: true,
-      onTap: _selectAll,
-      child: Material(
-        color: color,
-        shape: shape,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: KSize.target),
-          // Champ sans focus : les gestes vont à la pilule (un appui
-          // sélectionne tout, un glissement horizontal change de page) ;
-          // avec le focus, au champ (curseur, sélection).
-          child: Center(
-            child: IgnorePointer(
-              ignoring: !_focus.hasFocus,
-              child: TextField(
-              controller: widget.controller,
-              focusNode: _focus,
-              keyboardType: TextInputType.numberWithOptions(
-                decimal: widget.decimal,
-              ),
-              textAlign: TextAlign.center,
-              textAlignVertical: TextAlignVertical.center,
-              style: style,
-              cursorColor: k.encre,
-              decoration: InputDecoration(
-                isDense: true,
-                filled: false,
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintText: '–',
-                hintStyle: style.copyWith(color: k.texte3),
-                semanticCounterText: '',
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: KSpacing.s8,
-                  vertical: KSpacing.s12,
+        behavior: HitTestBehavior.opaque,
+        excludeFromSemantics: true,
+        onTap: _selectAll,
+        child: Material(
+          color: color,
+          shape: shape,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: KSize.target),
+            // Champ sans focus : les gestes vont à la pilule (un appui
+            // sélectionne tout, un glissement horizontal change de page) ;
+            // avec le focus, au champ (curseur, sélection).
+            child: Center(
+              child: IgnorePointer(
+                ignoring: !_focus.hasFocus,
+                child: TextField(
+                  controller: widget.controller,
+                  focusNode: _focus,
+                  keyboardType: TextInputType.numberWithOptions(
+                    decimal: widget.decimal,
+                  ),
+                  textAlign: TextAlign.center,
+                  textAlignVertical: TextAlignVertical.center,
+                  style: style,
+                  cursorColor: k.encre,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    hintText: '–',
+                    hintStyle: style.copyWith(color: k.texte3),
+                    semanticCounterText: '',
+                    // Le texte occupe le milieu de la pilule ; ses marges
+                    // restent touchables (un appui au bord sélectionne
+                    // aussi tout).
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: KSpacing.s8,
+                      vertical: KSpacing.s4,
+                    ),
+                  ),
+                  onTap: _selectAll,
+                  onChanged: widget.onChanged,
                 ),
               ),
-              onTap: _selectAll,
-              onChanged: widget.onChanged,
-            ),
             ),
           ),
         ),
-      ),
       ),
     );
   }
@@ -3694,105 +3697,107 @@ class _FinishPageState extends State<_FinishPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-        KCard(
-          padding: const EdgeInsets.all(KSpacing.s20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      sessionPlace(week, day),
-                      style: KType.titreCarte.copyWith(color: k.texte),
+          KCard(
+            padding: const EdgeInsets.all(KSpacing.s20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        sessionPlace(week, day),
+                        style: KType.titreCarte.copyWith(color: k.texte),
+                      ),
                     ),
-                  ),
-                  Icon(
-                    log.done ? Icons.emoji_events_rounded : Icons.flag_outlined,
-                    size: KSize.target,
-                    color: log.done ? k.accent : k.texte2,
+                    Icon(
+                      log.done
+                          ? Icons.emoji_events_rounded
+                          : Icons.flag_outlined,
+                      size: KSize.target,
+                      color: log.done ? k.accent : k.texte2,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: KSpacing.s12),
+                Text(
+                  '$doneSets / $totalSets',
+                  style: KType.chiffre.copyWith(color: k.encre),
+                ),
+                Text(
+                  'séries validées',
+                  style: KType.corps.copyWith(color: k.texte2),
+                ),
+                if (totalSets > 0) ...[
+                  const SizedBox(height: KSpacing.s12),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        reached
+                            ? Icons.check_circle_rounded
+                            : Icons.radio_button_unchecked_rounded,
+                        size: KSize.iconSmall,
+                        color: reached ? k.validation : k.texte2,
+                      ),
+                      const SizedBox(width: KSpacing.s8),
+                      Expanded(
+                        child: Text(
+                          'Objectif de séance : au moins '
+                          '${(goal * 100).round()} % des séries, '
+                          '${reached ? 'atteint' : 'pas encore'}',
+                          style: KType.detail.copyWith(color: k.texte),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              ),
-              const SizedBox(height: KSpacing.s12),
-              Text(
-                '$doneSets / $totalSets',
-                style: KType.chiffre.copyWith(color: k.encre),
-              ),
-              Text(
-                'séries validées',
-                style: KType.corps.copyWith(color: k.texte2),
-              ),
-              if (totalSets > 0) ...[
-                const SizedBox(height: KSpacing.s12),
+                const SizedBox(height: KSpacing.s8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(
-                      reached
-                          ? Icons.check_circle_rounded
-                          : Icons.radio_button_unchecked_rounded,
+                      Icons.bolt_rounded,
                       size: KSize.iconSmall,
-                      color: reached ? k.validation : k.texte2,
+                      color: k.accent,
                     ),
                     const SizedBox(width: KSpacing.s8),
                     Expanded(
                       child: Text(
-                        'Objectif de séance : au moins '
-                        '${(goal * 100).round()} % des séries, '
-                        '${reached ? 'atteint' : 'pas encore'}',
+                        log.done
+                            ? 'XP et bonus ajoutés à ta progression'
+                            : '+100 XP de base, plus les bonus éventuels',
                         style: KType.detail.copyWith(color: k.texte),
                       ),
                     ),
                   ],
                 ),
               ],
-              const SizedBox(height: KSpacing.s8),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.bolt_rounded,
-                    size: KSize.iconSmall,
-                    color: k.accent,
-                  ),
-                  const SizedBox(width: KSpacing.s8),
-                  Expanded(
-                    child: Text(
-                      log.done
-                          ? 'XP et bonus ajoutés à ta progression'
-                          : '+100 XP de base, plus les bonus éventuels',
-                      style: KType.detail.copyWith(color: k.texte),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
-        ),
-        const SizedBox(height: KSpacing.s24),
-        if (log.done && _unsaved)
-          KPrimaryButton(
-            key: const ValueKey('finish-retry'),
-            icon: Icons.sync_problem_rounded,
-            label: _saving ? 'Enregistrement…' : 'Réessayer l’enregistrement',
-            onPressed: _saving ? null : () => _finish(title),
-          )
-        else if (log.done)
-          KTonalButton(
-            key: const ValueKey('finish-session'),
-            icon: Icons.undo_rounded,
-            label: _saving ? 'Enregistrement…' : 'Repasser en « à faire »',
-            expand: true,
-            onPressed: _saving ? null : () => _undo(title),
-          )
-        else
-          KPrimaryButton(
-            key: const ValueKey('finish-session'),
-            icon: Icons.check_circle_rounded,
-            label: _saving ? 'Enregistrement…' : 'Terminer la séance',
-            onPressed: _saving ? null : () => _finish(title),
-          ),
+          const SizedBox(height: KSpacing.s24),
+          if (log.done && _unsaved)
+            KPrimaryButton(
+              key: const ValueKey('finish-retry'),
+              icon: Icons.sync_problem_rounded,
+              label: _saving ? 'Enregistrement…' : 'Réessayer l’enregistrement',
+              onPressed: _saving ? null : () => _finish(title),
+            )
+          else if (log.done)
+            KTonalButton(
+              key: const ValueKey('finish-session'),
+              icon: Icons.undo_rounded,
+              label: _saving ? 'Enregistrement…' : 'Repasser en « à faire »',
+              expand: true,
+              onPressed: _saving ? null : () => _undo(title),
+            )
+          else
+            KPrimaryButton(
+              key: const ValueKey('finish-session'),
+              icon: Icons.check_circle_rounded,
+              label: _saving ? 'Enregistrement…' : 'Terminer la séance',
+              onPressed: _saving ? null : () => _finish(title),
+            ),
         ],
       ),
     );
@@ -3823,51 +3828,57 @@ class _RestDay extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-        KCard(
-          padding: const EdgeInsets.all(KSpacing.s20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(Icons.bedtime_outlined, size: KSize.target, color: k.encre),
-              const SizedBox(height: KSpacing.s12),
-              Text(
-                k.title('Repos complet'),
-                style: k.titleStyle(KType.titreCarte.copyWith(color: k.texte)),
-              ),
-              const SizedBox(height: KSpacing.s8),
-              Text(
-                day.conduite.isEmpty
-                    ? 'Marche, mobilité légère, sommeil maximal. GtG suspendu. Note ta HRV et ta FC de repos.'
-                    : day.conduite,
-                style: KType.corps.copyWith(color: k.texte2),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: KSpacing.s24),
-        if (done)
-          KTonalButton(
-            icon: Icons.undo_rounded,
-            label: 'Marqué fait',
-            expand: true,
-            onPressed: () => store.markSessionDone(
-              week.n,
-              day.j,
-              false,
-              title: 'S${week.n} · J${day.j}',
-            ),
-          )
-        else
-          KPrimaryButton(
-            icon: Icons.check_rounded,
-            label: 'Marquer comme fait',
-            onPressed: () => store.markSessionDone(
-              week.n,
-              day.j,
-              true,
-              title: 'S${week.n} · J${day.j}',
+          KCard(
+            padding: const EdgeInsets.all(KSpacing.s20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.bedtime_outlined,
+                  size: KSize.target,
+                  color: k.encre,
+                ),
+                const SizedBox(height: KSpacing.s12),
+                Text(
+                  k.title('Repos complet'),
+                  style: k.titleStyle(
+                    KType.titreCarte.copyWith(color: k.texte),
+                  ),
+                ),
+                const SizedBox(height: KSpacing.s8),
+                Text(
+                  day.conduite.isEmpty
+                      ? 'Marche, mobilité légère, sommeil maximal. GtG suspendu. Note ta HRV et ta FC de repos.'
+                      : day.conduite,
+                  style: KType.corps.copyWith(color: k.texte2),
+                ),
+              ],
             ),
           ),
+          const SizedBox(height: KSpacing.s24),
+          if (done)
+            KTonalButton(
+              icon: Icons.undo_rounded,
+              label: 'Marqué fait',
+              expand: true,
+              onPressed: () => store.markSessionDone(
+                week.n,
+                day.j,
+                false,
+                title: 'S${week.n} · J${day.j}',
+              ),
+            )
+          else
+            KPrimaryButton(
+              icon: Icons.check_rounded,
+              label: 'Marquer comme fait',
+              onPressed: () => store.markSessionDone(
+                week.n,
+                day.j,
+                true,
+                title: 'S${week.n} · J${day.j}',
+              ),
+            ),
         ],
       ),
     );

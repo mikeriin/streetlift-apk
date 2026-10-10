@@ -135,7 +135,11 @@ void main() {
     String suffix = '',
   }) async {
     final error = tester.takeException();
-    expect(error, isNull, reason: '$name $palette ${dark ? 'sombre' : 'clair'}');
+    expect(
+      error,
+      isNull,
+      reason: '$name $palette ${dark ? 'sombre' : 'clair'}',
+    );
     if (!uiCaptureEnabled) return;
     await saveUiPng(
       tester,

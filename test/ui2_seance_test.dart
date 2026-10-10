@@ -136,10 +136,7 @@ void main() {
       ],
     );
     expect(groups.last.single.danger, isTrue);
-    expect(
-      groups.take(2).expand((g) => g).any((a) => a.danger),
-      isFalse,
-    );
+    expect(groups.take(2).expand((g) => g).any((a) => a.danger), isFalse);
     // Libellés internes retirés (R9).
     expect(find.textContaining('Pilotage'), findsNothing);
     expect(find.text('Effacer l’historique'), findsNothing);
