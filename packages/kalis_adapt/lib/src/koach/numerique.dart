@@ -82,18 +82,20 @@ double normPpfK(double p) {
   double x;
   if (p < plow) {
     final q = math.sqrt(-2 * math.log(p));
-    x = (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+    x =
+        (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
         ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
   } else if (p <= 1 - plow) {
     final q = p - 0.5;
     final r = q * q;
-    x = (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) *
+    x =
+        (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) *
         q /
         (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
   } else {
     final q = math.sqrt(-2 * math.log(1 - p));
-    x = -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q +
-            c[5]) /
+    x =
+        -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
         ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
   }
   final e = normCdfK(x) - p;
@@ -302,8 +304,7 @@ int fnv1a32(String text) {
   return h;
 }
 
-int dartRound(double x) =>
-    x >= 0 ? (x + 0.5).floor() : -((-x + 0.5).floor());
+int dartRound(double x) => x >= 0 ? (x + 0.5).floor() : -((-x + 0.5).floor());
 
 double clampD(double x, double low, double high) =>
     x < low ? low : (x > high ? high : x);
@@ -347,3 +348,8 @@ double arrondi(double x, [int decimales = 0]) {
   final f = math.pow(10.0, decimales).toDouble();
   return (x * f + 0.5).floorToDouble() / f;
 }
+
+/// P(a ≤ u + e ≤ b), e ~ N(0, t²) (lecture publique pour les tests de
+/// parité).
+double categoryMassK(double a, double b, double u, double t) =>
+    _categoryMass(a, b, u, t);

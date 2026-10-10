@@ -103,7 +103,12 @@ class Koach {
         x.decision(this, e);
       }
     } else if (typ == 'charge_manuelle') {
-      m.observerChargeManuelle(e['exerciseId'] as String, e['loadKg'], e['reps'], e['rir']);
+      m.observerChargeManuelle(
+        e['exerciseId'] as String,
+        e['loadKg'],
+        e['reps'],
+        e['rir'],
+      );
     } else if (typ == 'parametres') {
       appliquerParametres(this, jm(e['fichier']));
     } else if (typ == 'plan') {
@@ -148,8 +153,14 @@ class Koach {
         'musculaire_local': m.m[km],
       },
       'fatigue': <String, Object?>{
-        'nerveux': <String, Object?>{'systemique': m.fG[0], 'local': List<double>.of(m.fL[0])},
-        'musculaire': <String, Object?>{'systemique': m.fG[1], 'local': List<double>.of(m.fL[1])},
+        'nerveux': <String, Object?>{
+          'systemique': m.fG[0],
+          'local': List<double>.of(m.fL[0]),
+        },
+        'musculaire': <String, Object?>{
+          'systemique': m.fG[1],
+          'local': List<double>.of(m.fL[1]),
+        },
         'tendineux': Map<String, Object?>.of(m.fTendon),
         'tau': List<double>.of(m.tau),
       },
@@ -216,7 +227,9 @@ class Koach {
           zones[ex] = <Object?>[Map<String, Object?>.of(niveaux), tri];
         }
       }
-      final slots = [for (final it in listeOuVide(c['items'])) jm(it)['slotId']];
+      final slots = [
+        for (final it in listeOuVide(c['items'])) jm(it)['slotId'],
+      ];
       final roles = <String, Object?>{
         for (final e in dictOuVide(c['roles']).entries)
           if (slots.contains(e.key)) e.key: e.value,

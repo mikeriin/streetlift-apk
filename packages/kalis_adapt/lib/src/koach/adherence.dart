@@ -39,7 +39,11 @@ const List<String> adherenceTypes = [
   'test',
   'allegement',
 ];
-const List<String> adherenceMoments = ['debut_de_seance', 'entre_series', 'prochaine_seance'];
+const List<String> adherenceMoments = [
+  'debut_de_seance',
+  'entre_series',
+  'prochaine_seance',
+];
 const List<String> raisonsCapacite = ['too_heavy', 'too_light'];
 const List<String> raisonsContrainte = ['equipment', 'time'];
 
@@ -65,8 +69,11 @@ const List<String> adherenceNoms = [
   'refus_recents',
 ];
 
-Object? _adParam(Json? params, String cle) =>
-    _ruGet(dictOuVide(dictOuVide(params)['adherence']), cle, defautsAdherence[cle]);
+Object? _adParam(Json? params, String cle) => _ruGet(
+  dictOuVide(dictOuVide(params)['adherence']),
+  cle,
+  defautsAdherence[cle],
+);
 
 /// Modèle d'adhérence (extension du moteur).
 class Adherence extends Extension implements AvecParametres {
@@ -75,7 +82,10 @@ class Adherence extends Extension implements AvecParametres {
     final sd = poidsSd;
     m = List<double>.filled(adherenceDim, 0.0);
     m[0] = biaisInitial;
-    pm = [for (var i = 0; i < adherenceDim; i++) List<double>.filled(adherenceDim, 0.0)];
+    pm = [
+      for (var i = 0; i < adherenceDim; i++)
+        List<double>.filled(adherenceDim, 0.0),
+    ];
     for (var i = 0; i < adherenceDim; i++) {
       pm[i][i] = sd * sd;
     }
@@ -136,7 +146,11 @@ class Adherence extends Extension implements AvecParametres {
 
   /// Vecteur x (16 flottants). [ampleur] : |changement| en pas de grille ;
   /// [contexte] : {bilan_bas, semaine_allegement, moment, refus_recents}.
-  List<double> caracteristiques(Object? typ, Object? ampleur, [Json? contexte]) {
+  List<double> caracteristiques(
+    Object? typ,
+    Object? ampleur, [
+    Json? contexte,
+  ]) {
     if (!adherenceTypes.contains(typ)) {
       throw ArgumentError('type de changement inconnu : ${_ruRepr(typ)}');
     }
@@ -272,7 +286,13 @@ class Adherence extends Extension implements AvecParametres {
       final rir = prop['rir'];
       if (ex != null && charge != null && reps != null && rir != null) {
         // Second canal (D7) : mesure faible de capacité, raison explicite.
-        koach.modele.observerRaison(ex as String, raison, dbl(charge), dbl(reps), dbl(rir));
+        koach.modele.observerRaison(
+          ex as String,
+          raison,
+          dbl(charge),
+          dbl(reps),
+          dbl(rir),
+        );
       }
     } else if (raisonsContrainte.contains(raison)) {
       contraintesListe.add(<String, Object?>{
@@ -285,7 +305,9 @@ class Adherence extends Extension implements AvecParametres {
   }
 
   /// Contraintes de planification datées (matériel, temps).
-  List<Json> contraintes() => [for (final c in contraintesListe) Map<String, Object?>.of(c)];
+  List<Json> contraintes() => [
+    for (final c in contraintesListe) Map<String, Object?>.of(c),
+  ];
 
   // ------------------------------------------------------------------
   // Forme des propositions (garde-fou anti-complaisance)
@@ -309,10 +331,18 @@ class Adherence extends Extension implements AvecParametres {
   /// dont chacun a P(acceptation) >= proba_cible, chaque pas >= pas_min, au
   /// plus paliers_max ; sinon le découpage de plus forte probabilité
   /// minimale. Le dernier palier vaut toujours exactement [cible].
-  Json forme(num cible, num depart, [num? pasMinArg, Object? typ = 'charge_plus', Json? contexte]) {
+  Json forme(
+    num cible,
+    num depart, [
+    num? pasMinArg,
+    Object? typ = 'charge_plus',
+    Json? contexte,
+  ]) {
     final pas = pasMinArg != null ? pasMinArg.toDouble() : pasMin;
     final c = dictOuVide(contexte);
-    final moments = vrai(c['moments_possibles']) ? jl(c['moments_possibles']) : adherenceMoments;
+    final moments = vrai(c['moments_possibles'])
+        ? jl(c['moments_possibles'])
+        : adherenceMoments;
     final d = (cible - depart).abs();
     var nMax = pas > 0 ? (d / pas + 1e-9).floor() : 1;
     if (nMax > paliersMax) {
@@ -379,7 +409,11 @@ class Adherence extends Extension implements AvecParametres {
     final best = meilleur!;
     final paliers = List<num>.of(best.$3);
     paliers[paliers.length - 1] = cible;
-    return <String, Object?>{'paliers': paliers, 'moment': best.$4, 'proba_min': best.$1};
+    return <String, Object?>{
+      'paliers': paliers,
+      'moment': best.$4,
+      'proba_min': best.$1,
+    };
   }
 
   // ------------------------------------------------------------------
@@ -447,16 +481,20 @@ class Adherence extends Extension implements AvecParametres {
 
   static Adherence depuisEtat(Json? params, Json etat) {
     final a = Adherence(params);
-    if (ent(_ruGet(etat, 'version', 0)) != 1 || jl(etat['m']).length != adherenceDim) {
+    if (ent(_ruGet(etat, 'version', 0)) != 1 ||
+        jl(etat['m']).length != adherenceDim) {
       throw ArgumentError("état d'adhérence incompatible");
     }
     a.m = jld(etat['m']);
     a.pm = [for (final r in jl(etat['P'])) jld(r)];
     a.refusJours = [for (final j in jl(etat['refus_jours'])) j as num];
-    a.contraintesListe = [for (final c in jl(etat['contraintes'])) Map<String, Object?>.of(jm(c))];
+    a.contraintesListe = [
+      for (final c in jl(etat['contraintes'])) Map<String, Object?>.of(jm(c)),
+    ];
     a.n = ent(etat['n']);
     a.tranches = [
-      for (final x0 in jl(etat['tranches'])) (ent(jl(x0)[0]), dbl(jl(x0)[1]), ent(jl(x0)[2])),
+      for (final x0 in jl(etat['tranches']))
+        (ent(jl(x0)[0]), dbl(jl(x0)[1]), ent(jl(x0)[2])),
     ];
     return a;
   }

@@ -46,10 +46,12 @@ bool vrai(Object? v) {
 Object? ou(Object? a, Object? b) => vrai(a) ? a : b;
 
 /// `d.get(k) or {}` : dictionnaire, vide si absent ou faux.
-Json dictOuVide(Object? v) => vrai(v) ? v as Map<String, Object?> : <String, Object?>{};
+Json dictOuVide(Object? v) =>
+    vrai(v) ? v as Map<String, Object?> : <String, Object?>{};
 
 /// `d.get(k) or []` : liste, vide si absente ou fausse.
-List<Object?> listeOuVide(Object? v) => vrai(v) ? v as List<Object?> : <Object?>[];
+List<Object?> listeOuVide(Object? v) =>
+    vrai(v) ? v as List<Object?> : <Object?>[];
 
 /// Copie profonde d'une valeur JSON (dictionnaires dans l'ordre d'insertion).
 Object? copieProfonde(Object? v) {

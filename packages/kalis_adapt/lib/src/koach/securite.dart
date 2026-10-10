@@ -152,7 +152,9 @@ class Gardefous {
   /// Nombre de semaines de charge écoulées depuis la levée d'un arrêt (hors
   /// semaine en cours), et vrai si une semaine de charge a commencé depuis.
   (int, bool) _semainesDeCharge(int leve) {
-    final premiere = 7 - (leve % 7) >= 4 ? divEnt(leve, 7) : divEnt(leve, 7) + 1;
+    final premiere = 7 - (leve % 7) >= 4
+        ? divEnt(leve, 7)
+        : divEnt(leve, 7) + 1;
     var n = 0;
     var commencee = false;
     for (var w = premiere; w < semaine + 1; w++) {
@@ -203,7 +205,9 @@ class Gardefous {
     for (final d in zones.values) {
       final dern = d.derniere();
       if (dern != null && dern.$1 == jour) {
-        d.seancesDeSuite = dern.$2 > _n('douleur_seuil') ? d.seancesDeSuite + 1 : 0;
+        d.seancesDeSuite = dern.$2 > _n('douleur_seuil')
+            ? d.seancesDeSuite + 1
+            : 0;
       }
     }
     _arrets(jour);
@@ -368,8 +372,7 @@ class Gardefous {
 
   bool signaleeSemaine(String z) {
     final d = zones[z];
-    return d != null &&
-        d.pireEntre(jour - 6, jour) > _n('reprise_douleur_max');
+    return d != null && d.pireEntre(jour - 6, jour) > _n('reprise_douleur_max');
   }
 
   // ------------------------------------------------------------------

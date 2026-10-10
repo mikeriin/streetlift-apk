@@ -194,7 +194,11 @@ class Modele {
     }
     poidsKg = vrai(profil['poids_kg']) ? dbl(profil['poids_kg']) : 72.0;
     final f = jm(p['fatigue']);
-    tau = [dbl(f['tau_nerveux_j']), dbl(f['tau_musculaire_j']), dbl(f['tau_tendineux_j'])];
+    tau = [
+      dbl(f['tau_nerveux_j']),
+      dbl(f['tau_musculaire_j']),
+      dbl(f['tau_tendineux_j']),
+    ];
     for (final z in zonesTendon) {
       fTendon[z] = 0.0;
       fTendonAigu[z] = 0.0;
@@ -296,7 +300,9 @@ class Modele {
     final typ = fiche['type'] as String;
     if (typ == 'charge') {
       var total =
-          dbl(fiche['ratio']) * poidsKg * jld(ap['niveau_echelle_charge'])[niveau];
+          dbl(fiche['ratio']) *
+          poidsKg *
+          jld(ap['niveau_echelle_charge'])[niveau];
       if (profil['sexe'] == 'female') {
         total *= dbl(ap['facteur_femme']);
       }
@@ -306,10 +312,18 @@ class Modele {
     if (typ == 'reps' || typ == 'tenue') {
       final mn = jld(ap['marge_niveau']);
       final marge = (mn[0] + mn[1] * niveau) - dbl(fiche['difficulte'] ?? 3);
-      final base = typ == 'reps' ? dbl(ap['reps_base']) : dbl(ap['tenue_base_s']);
-      final bornes = typ == 'reps' ? jld(ap['reps_bornes']) : jld(ap['tenue_bornes_s']);
+      final base = typ == 'reps'
+          ? dbl(ap['reps_base'])
+          : dbl(ap['tenue_base_s']);
+      final bornes = typ == 'reps'
+          ? jld(ap['reps_bornes'])
+          : jld(ap['tenue_bornes_s']);
       return math.log(
-        clampD(base * math.exp(dbl(ap['pente_difficulte']) * marge), bornes[0], bornes[1]),
+        clampD(
+          base * math.exp(dbl(ap['pente_difficulte']) * marge),
+          bornes[0],
+          bornes[1],
+        ),
       );
     }
     if (typ == 'cardio') {
@@ -334,7 +348,13 @@ class Modele {
     }
     final fiche = vecteurs[exId];
     if (fiche == null ||
-        !const ['charge', 'reps', 'tenue', 'cardio', 'wod'].contains(fiche['type'])) {
+        !const [
+          'charge',
+          'reps',
+          'tenue',
+          'cardio',
+          'wod',
+        ].contains(fiche['type'])) {
       pistes[exId] = null;
       return null;
     }
@@ -381,13 +401,22 @@ class Modele {
       }
       br.p[idx * c + idx] = math.max(sd * sd - vq, pw(0.5 * sd, 2));
       br.m[idx + 2] = 0.0;
-      br.p[(idx + 2) * c + idx + 2] = pw(dbl(ap['fatigue_intra_exercice_sd']), 2);
+      br.p[(idx + 2) * c + idx + 2] = pw(
+        dbl(ap['fatigue_intra_exercice_sd']),
+        2,
+      );
       if (typ == 'tenue') {
         br.m[idx + 1] = 0.0;
-        br.p[(idx + 1) * c + idx + 1] = pw(dbl(ap['part_tenue_exercice_sd']), 2);
+        br.p[(idx + 1) * c + idx + 1] = pw(
+          dbl(ap['part_tenue_exercice_sd']),
+          2,
+        );
       } else {
         br.m[idx + 1] = nt.bas ? dbl(ap['courbe_bas_du_corps']) : 0.0;
-        br.p[(idx + 1) * c + idx + 1] = pw(dbl(ap['courbe_echelle_exercice_sd']), 2);
+        br.p[(idx + 1) * c + idx + 1] = pw(
+          dbl(ap['courbe_echelle_exercice_sd']),
+          2,
+        );
       }
     }
     pistes[exId] = nt;
@@ -397,7 +426,9 @@ class Modele {
       final dl = jl(d);
       final mesure = dl[0];
       final valeur = dbl(dl[1]);
-      final sdD = (dl.length > 2 && vrai(dl[2])) ? dbl(dl[2]) : dbl(ap['delta_sd_declare']);
+      final sdD = (dl.length > 2 && vrai(dl[2]))
+          ? dbl(dl[2])
+          : dbl(ap['delta_sd_declare']);
       final voulu = const {
         'charge': 'one_rm_kg',
         'reps': 'max_reps',
@@ -411,7 +442,15 @@ class Modele {
           cible = math.log(valeur);
         }
         final (hi, hc) = hCapacite(nt, jour: false);
-        _observerHors(hi, hc, nt.base - cible, null, null, pw(sdD, 2), point: 0.0);
+        _observerHors(
+          hi,
+          hc,
+          nt.base - cible,
+          null,
+          null,
+          pw(sdD, 2),
+          point: 0.0,
+        );
         nt.declare = true;
       }
     }
@@ -423,7 +462,9 @@ class Modele {
   // ------------------------------------------------------------------
   double courbeMoyenne(double reps, bool bas) {
     final ap = jm(p['a_priori']);
-    final k = jld(ap['courbe_echelle'])[0] + (bas ? dbl(ap['courbe_bas_du_corps']) : 0.0);
+    final k =
+        jld(ap['courbe_echelle'])[0] +
+        (bas ? dbl(ap['courbe_bas_du_corps']) : 0.0);
     return gK(jld(ap['courbe_forme'])[0], k, reps);
   }
 
@@ -440,7 +481,10 @@ class Modele {
     final r = reps < 1 ? 1.0 : reps;
     final gam = 1.0 - lamb;
     final d =
-        math.exp(k) * g8 * math.exp((gam - 1.0) * math.log(r)) / (ln8 * phiK(gam * ln8));
+        math.exp(k) *
+        g8 *
+        math.exp((gam - 1.0) * math.log(r)) /
+        (ln8 * phiK(gam * ln8));
     return d > 0.004 ? d : 0.004;
   }
 
@@ -462,7 +506,10 @@ class Modele {
   /// (forme, échelle) de la courbe de l'exercice.
   (double, double) courbe(Piste t, [Float64List? mm]) {
     final x = mm ?? m;
-    return (clampD(x[lam], lamMin, lamMax), clampD(x[ku] + x[t.idx + 1], -1.0, 1.0));
+    return (
+      clampD(x[lam], lamMin, lamMax),
+      clampD(x[ku] + x[t.idx + 1], -1.0, 1.0),
+    );
   }
 
   /// Inverse de g (forme fermée), bornée à 200 répétitions.
@@ -484,7 +531,9 @@ class Modele {
                           (1.0 / 3.0 +
                               u *
                                   (-0.25 +
-                                      u * (0.2 + u * (-1.0 / 6.0 + u / 7.0))))));
+                                      u *
+                                          (0.2 +
+                                              u * (-1.0 / 6.0 + u / 7.0))))));
     } else {
       lnR = math.log(1.0 + u) / gam;
     }
@@ -548,8 +597,10 @@ class Modele {
       }
     }
     if (t.zoneTendon != null && t.tendon > 0) {
-      fTendon[t.zoneTendon!] = fTendon[t.zoneTendon!]! + eff * t.tendon * quantite;
-      fTendonAigu[t.zoneTendon!] = fTendonAigu[t.zoneTendon!]! + eff * t.tendon * quantite;
+      fTendon[t.zoneTendon!] =
+          fTendon[t.zoneTendon!]! + eff * t.tendon * quantite;
+      fTendonAigu[t.zoneTendon!] =
+          fTendonAigu[t.zoneTendon!]! + eff * t.tendon * quantite;
     }
   }
 
@@ -605,7 +656,8 @@ class Modele {
     var pMauvais = dbl(jj['mauvais_jour_proba']);
     final general = bil?['overall'];
     if (general != null) {
-      moyenne = dbl(jj['bilan_par_point']) * (dbl(general) - dbl(jj['bilan_neutre']));
+      moyenne =
+          dbl(jj['bilan_par_point']) * (dbl(general) - dbl(jj['bilan_neutre']));
       sd = dbl(jj['sigma_seance_avec_bilan']);
       if (dbl(general) <= 2) {
         pMauvais = dbl(jj['mauvais_jour_proba_bilan_bas']);
@@ -635,7 +687,14 @@ class Modele {
     }
   }
 
-  static void _reset(Float64List mm, Float64List pp, int c, int idx, double moyenne, double variance) {
+  static void _reset(
+    Float64List mm,
+    Float64List pp,
+    int c,
+    int idx,
+    double moyenne,
+    double variance,
+  ) {
     for (var j = 0; j < c; j++) {
       pp[idx * c + j] = 0.0;
     }
@@ -652,7 +711,9 @@ class Modele {
       _reset(br.m, br.p, br.cap, de, 0.0, pw(dbl(jj['sigma_exercice']), 2));
     }
     if (t.jourSeance != jour) {
-      t.jourPrevu = (t.type == 'charge' && t.seances >= 3) ? capaciteDuJour(t.id)!.$1 : null;
+      t.jourPrevu = (t.type == 'charge' && t.seances >= 3)
+          ? capaciteDuJour(t.id)!.$1
+          : null;
       t.jourVu = null;
       t.seriesSeance = [];
       t.jourSeance = jour;
@@ -684,7 +745,9 @@ class Modele {
         ecarts.add(t.jourVu! - t.jourPrevu!);
       }
     }
-    final double? e1rm = ecarts.isNotEmpty ? somme(ecarts) / ecarts.length : null;
+    final double? e1rm = ecarts.isNotEmpty
+        ? somme(ecarts) / ecarts.length
+        : null;
     final w = poidsMauvaisJour();
     if (_alt != null && w > 1e-9) {
       final am = _alt!.m;
@@ -720,7 +783,14 @@ class Modele {
     if (residusSeance.isNotEmpty) {
       final zs = [for (final r in residusSeance) r.$1];
       final rel = [for (final r in residusSeance) r.$2];
-      resume = (jour, somme(zs) / zs.length, somme(rel) / rel.length, zs.length, w, e1rm);
+      resume = (
+        jour,
+        somme(zs) / zs.length,
+        somme(rel) / rel.length,
+        zs.length,
+        w,
+        e1rm,
+      );
       histoireResidus.add(resume);
     }
     return resume;
@@ -752,7 +822,8 @@ class Modele {
     if (!vrai(jm(p['jour'])['mauvais_jour_fige_capacite'])) {
       return null;
     }
-    if (s != null && ou(s['role'], dictOuVide(s['target'])['role']) == 'attempt') {
+    if (s != null &&
+        ou(s['role'], dictOuVide(s['target'])['role']) == 'attempt') {
       return null;
     }
     return hCapacite(t, jour: false).$1;
@@ -858,7 +929,15 @@ class Modele {
       } else {
         if (bruit != null) {
           final ge = jld(jm(p['mesure'])['note_erreur_grossiere']);
-          (logz, mu2, v2) = categoryMoments(mu, v, a!, b!, bruit, gross: ge[0], grossSd: ge[1]);
+          (logz, mu2, v2) = categoryMoments(
+            mu,
+            v,
+            a!,
+            b!,
+            bruit,
+            gross: ge[0],
+            grossSd: ge[1],
+          );
         } else {
           (logz, mu2, v2) = intervalMoments(mu, v, s2, a!, b!);
         }
@@ -882,18 +961,24 @@ class Modele {
           v2 = variance;
         }
         if (a == -inf) {
-          centre = b!;
+          centre = b;
         } else if (b == inf) {
-          centre = a!;
+          centre = a;
         } else {
-          centre = 0.5 * (a! + b!);
+          centre = 0.5 * (a + b);
         }
       }
       if (bi == 0) {
         final informatif = point != null || (a != -inf && b != inf);
-        final dehors = (point == null) && ((a == -inf && mu > b!) || (b == inf && mu < a!));
+        final dehors =
+            (point == null) &&
+            ((a == -inf && mu > b!) || (b == inf && mu < a!));
         if (informatif || dehors) {
-          resid = ((centre - mu) / math.sqrt(v + s2), centre - mu, informatif && point == null);
+          resid = (
+            (centre - mu) / math.sqrt(v + s2),
+            centre - mu,
+            informatif && point == null,
+          );
         }
       }
       if (v <= 0.0) {
@@ -999,7 +1084,8 @@ class Modele {
     if (flammes == null || dbl(flammes) >= 10) {
       return;
     }
-    if (const [2, 4, 6, 8].contains(flammes) || const [2.0, 4.0, 6.0, 8.0].contains(flammes)) {
+    if (const [2, 4, 6, 8].contains(flammes) ||
+        const [2.0, 4.0, 6.0, 8.0].contains(flammes)) {
       notesDemi += 1;
     } else {
       notesEntieres += 1;
@@ -1014,7 +1100,10 @@ class Modele {
   }
 
   /// Intervalle de réserve perçue d'une note, et son centre.
-  (double, double, double) bornesFlammes(double flammes, [double ouvert = 5.0]) {
+  (double, double, double) bornesFlammes(
+    double flammes, [
+    double ouvert = 5.0,
+  ]) {
     if (flammes >= 10) {
       return (0.0, 0.25, 0.0);
     }
@@ -1035,7 +1124,8 @@ class Modele {
     if (percu <= 0) {
       return 0.0;
     }
-    final v = percu * (1.0 + clampD(x[bp], -0.2, 1.0)) + clampD(x[ba], -2.5, 2.5);
+    final v =
+        percu * (1.0 + clampD(x[bp], -0.2, 1.0)) + clampD(x[ba], -2.5, 2.5);
     return v > 0.0 ? v : 0.0;
   }
 
@@ -1085,7 +1175,11 @@ class Modele {
     if (z2N > 12) {
       final bornes = jld(me['apprentissage_bruit_bornes']);
       final cible = math.sqrt(z2);
-      bruitRir = clampD(bruitRir * (1 + 0.02 * (cible - 1.0)), bornes[0], bornes[1]);
+      bruitRir = clampD(
+        bruitRir * (1 + 0.02 * (cible - 1.0)),
+        bornes[0],
+        bornes[1],
+      );
     }
   }
 
@@ -1233,7 +1327,15 @@ class Modele {
         b = bf.$2;
       }
       final lin = m;
-      final (idx, co, pred, rr, v) = _linForce(t, lin, lnL, reps, sj, sansCharge, percu);
+      final (idx, co, pred, rr, v) = _linForce(
+        t,
+        lin,
+        lnL,
+        reps,
+        sj,
+        sansCharge,
+        percu,
+      );
       final s2 = _bruitForce(percu, v, reps, rr, me, sj);
       var constante = pred;
       for (var k = 0; k < idx.length; k++) {
@@ -1251,7 +1353,9 @@ class Modele {
       }
       if (flammes == null && !echec && pred >= a) {
         resid = null;
-      } else if (b == inf && percu && pred >= a + dbl(me['porte_note_ouverte']) * math.sqrt(s2)) {
+      } else if (b == inf &&
+          percu &&
+          pred >= a + dbl(me['porte_note_ouverte']) * math.sqrt(s2)) {
         resid = null;
       } else {
         double Function(double)? bruit;
@@ -1335,7 +1439,14 @@ class Modele {
     return resid;
   }
 
-  double _bruitForce(bool percu, double v, double reps, double r, Json me, [double sj = 0.0]) {
+  double _bruitForce(
+    bool percu,
+    double v,
+    double reps,
+    double r,
+    Json me, [
+    double sj = 0.0,
+  ]) {
     final extra = pw(dbl(me['dispersion_fatigue_intra']) * sj * r, 2);
     if (!percu) {
       return pw(0.35, 2) + extra;
@@ -1380,7 +1491,8 @@ class Modele {
     for (var k = 0; k < idx.length; k++) {
       eta += co[k] * x[idx[k]];
     }
-    final hhe = clampD(x[hh], 0.03, 0.30) * math.exp(clampD(x[t.idx + 1], -1.0, 1.0));
+    final hhe =
+        clampD(x[hh], 0.03, 0.30) * math.exp(clampD(x[t.idx + 1], -1.0, 1.0));
     var part = math.exp(lnS - eta);
     if (part > 3.0) {
       part = 3.0;
@@ -1527,16 +1639,27 @@ class Modele {
     final fait = dbl(s['doneShare'] ?? 1.0);
     final (idx, co) = hCapacite(t, jour: true);
     final lnD = math.log(demande);
-    final pente = t.type == 'cardio' ? dbl(me['cardio_pente_rir']) : dbl(me['wod_pente_rir']);
+    final pente = t.type == 'cardio'
+        ? dbl(me['cardio_pente_rir'])
+        : dbl(me['wod_pente_rir']);
     final neutre = t.type == 'cardio' ? dbl(me['cardio_charge_neutre']) : 1.0;
-    final bruit = t.type == 'cardio' ? dbl(me['bruit_cardio']) : dbl(me['bruit_wod']);
+    final bruit = t.type == 'cardio'
+        ? dbl(me['bruit_cardio'])
+        : dbl(me['bruit_wod']);
     final double? cible = dblOu(dictOuVide(s['target'])['flames']);
     final rirCible = cible == null
         ? (t.type == 'cardio' ? 5.0 : 2.0)
         : (cible >= 10 ? 0.0 : (11 - cible) / 2.0);
     Residu? resid;
     if (fait < 0.999) {
-      resid = _observer(idx, co, t.base - lnD, -inf, -math.log(1.3), pw(bruit, 2));
+      resid = _observer(
+        idx,
+        co,
+        t.base - lnD,
+        -inf,
+        -math.log(1.3),
+        pw(bruit, 2),
+      );
     } else if (flammes != null) {
       double a;
       double b;
@@ -1559,10 +1682,22 @@ class Modele {
       for (var k = 0; k < idx.length; k++) {
         constante -= cx[k] * m[idx[k]];
       }
-      resid = _observer(idx, cx, constante, a, b, pw(dbl(me['bruit_rir_endurance']), 2));
+      resid = _observer(
+        idx,
+        cx,
+        constante,
+        a,
+        b,
+        pw(dbl(me['bruit_rir_endurance']), 2),
+      );
     }
-    final eff = flammes == null ? 0.6 : effort(flammes < 10 ? (11 - flammes) / 2.0 : 0.0);
-    _chargerCompartiments(t, eff * (vrai(s['fatigueSets']) ? dbl(s['fatigueSets']) : 1.0));
+    final eff = flammes == null
+        ? 0.6
+        : effort(flammes < 10 ? (11 - flammes) / 2.0 : 0.0);
+    _chargerCompartiments(
+      t,
+      eff * (vrai(s['fatigueSets']) ? dbl(s['fatigueSets']) : 1.0),
+    );
     final dose = dbl(s['dose'] ?? 1.0);
     t.stimSemaine[0] += dose;
     t.stimSemaine[1] += dose;
@@ -1572,9 +1707,17 @@ class Modele {
   }
 
   /// Refus motivé « trop lourd » / « trop léger » : mesure faible.
-  void observerRaison(String exId, Object? raison, Object? chargeKg, Object? reps, Object? rir) {
+  void observerRaison(
+    String exId,
+    Object? raison,
+    Object? chargeKg,
+    Object? reps,
+    Object? rir,
+  ) {
     final t = piste(exId);
-    if (t == null || t.type != 'charge' || (raison != 'too_heavy' && raison != 'too_light')) {
+    if (t == null ||
+        t.type != 'charge' ||
+        (raison != 'too_heavy' && raison != 'too_light')) {
       return;
     }
     final (l, k) = courbe(t);
@@ -1595,7 +1738,12 @@ class Modele {
   }
 
   /// Charge modifiée à la main : mesure fiable.
-  void observerChargeManuelle(String exId, Object? chargeKg, Object? reps, Object? rir) {
+  void observerChargeManuelle(
+    String exId,
+    Object? chargeKg,
+    Object? reps,
+    Object? rir,
+  ) {
     final t = piste(exId);
     if (t == null || t.type != 'charge') {
       return;
@@ -1673,7 +1821,10 @@ class Modele {
     final dyn = jm(p['dynamique']);
     final f0 = dbl(dyn['recuperation_seuil']);
     final k =
-        1.0 - dbl(dyn['recuperation_pente']) * (fatigueLente > f0 ? fatigueLente - f0 : 0.0) / f0;
+        1.0 -
+        dbl(dyn['recuperation_pente']) *
+            (fatigueLente > f0 ? fatigueLente - f0 : 0.0) /
+            f0;
     final pl = dbl(dyn['recuperation_plancher']);
     return k > pl ? k : pl;
   }
@@ -1718,7 +1869,10 @@ class Modele {
         final inactif = jour - (t.dernierJour ?? jour);
         if (inactif > dbl(dyn['desentrainement_grace_j'])) {
           m[t.idx] -= dbl(dyn['desentrainement_par_semaine']);
-          pm[t.idx * c + t.idx] += pw(0.5 * dbl(dyn['desentrainement_par_semaine']), 2);
+          pm[t.idx * c + t.idx] += pw(
+            0.5 * dbl(dyn['desentrainement_par_semaine']),
+            2,
+          );
         }
       }
       pm[t.idx * c + t.idx] += dbl(dyn['q_delta_semaine']);
@@ -1740,7 +1894,10 @@ class Modele {
   /// « Rien de spécial » : variance de toute capacité × [facteur].
   void elargir(double facteur) {
     final r = math.sqrt(facteur);
-    final idx = [for (var q = 0; q < nq; q++) th + q, for (final e in ordre) pistes[e]!.idx];
+    final idx = [
+      for (var q = 0; q < nq; q++) th + q,
+      for (final e in ordre) pistes[e]!.idx,
+    ];
     final c = cap;
     for (final i in idx) {
       for (var j = 0; j < c; j++) {
@@ -1791,7 +1948,11 @@ class Modele {
       return null;
     }
     final z = niv == 0.90 ? 1.6448536269514722 : normPpfK(0.5 + 0.5 * niv);
-    return (math.exp(c.$1 - z * c.$2), math.exp(c.$1), math.exp(c.$1 + z * c.$2));
+    return (
+      math.exp(c.$1 - z * c.$2),
+      math.exp(c.$1),
+      math.exp(c.$1 + z * c.$2),
+    );
   }
 
   double? valeur(String exId) {
