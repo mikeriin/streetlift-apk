@@ -171,7 +171,7 @@ class TablePlanification {
 }
 
 /// Extension de planification : replanification hebdomadaire.
-class Planification extends Extension {
+class Planification extends Extension implements AvecItemsDuJour {
   /// [validateur] : fonction(blocs) → liste de constats de sécurité
   /// (critères de 0.3.1 lus sur les blocs) ; [options] : surcharge de
   /// `params['planification']` (banc : moins de trajectoires).
@@ -1759,7 +1759,111 @@ class Planification extends Extension {
   /// Lundi : replanification de la semaine suivante à l'échéance.
   @override
   void finSemaine(Koach koach, Json ligne, Json e) {
+    final w = ent(e['semaine'] ?? 0) + 1;
+    final eps0 = echeancesParSemaine;
+    if (eps0 != null) {
+      // Échéance relue chaque lundi (jours d'épreuve connus à la semaine w,
+      // événement `reference`, KM2) : `PlanificationBanc.fin_semaine`.
+      echeanceJour = echeanceDe(eps0, w, 7 * w);
+    }
     replanifier(koach, ent(e['semaine'] ?? 0) + 1);
+    if (eps0 != null) {
+      _noter(w);
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // Façade 1.0.0 (KM2) : référence versée au journal, crochet de séance
+  // ------------------------------------------------------------------
+  /// Jours d'épreuve connus, semaine par semaine (événement `reference`) ;
+  /// null : échéance fixe ([echeanceJour]).
+  List<List<int>>? echeancesParSemaine;
+
+  /// Prévisions de P(réussite) notées après chaque replanification
+  /// (semaine, échéance, P par cible, P(toutes), cibles en vigueur).
+  final List<Json> previsions = [];
+
+  /// Prochain jour d'épreuve connu à la semaine [semaine], au jour [jour]
+  /// ou après (`planification_banc.echeance_de`).
+  static int? echeanceDe(List<List<int>> parSemaine, int semaine, [int jour = 0]) {
+    if (semaine >= parSemaine.length) {
+      return null;
+    }
+    int? best;
+    for (final d in parSemaine[semaine]) {
+      if (d >= jour && (best == null || d < best)) {
+        best = d;
+      }
+    }
+    return best;
+  }
+
+  void _noter(int semaine) {
+    final ligne = historique.isNotEmpty ? historique.last : null;
+    if (ligne != null && vrai(ligne['p_cibles'])) {
+      previsions.add(<String, Object?>{
+        'semaine': semaine,
+        'echeance': echeanceJour,
+        'p': Map<String, Object?>.of(jm(ligne['p_cibles'])),
+        'p_tout': ligne['objectif'],
+        'cibles': Map<String, Object?>.of(cibles),
+      });
+    }
+  }
+
+  /// Événement `reference` : plan de référence, cibles, échéances, puis
+  /// replanification de la semaine [semaine] (rejeu exact, M7).
+  void surReference(Koach koach, Json e) {
+    final eps0 = e['echeances_par_semaine'];
+    echeancesParSemaine = eps0 == null
+        ? null
+        : [
+            for (final l in jl(eps0)) [for (final d in jl(l)) ent(d)],
+          ];
+    final semaine = ent(e['semaine'] ?? 0);
+    int? ech = e['echeance_jour'] == null ? null : ent(e['echeance_jour']);
+    if (e['echeance_jour'] == null && echeancesParSemaine != null) {
+      ech = echeanceDe(echeancesParSemaine!, semaine, 7 * semaine);
+    }
+    chargerReference(
+      [for (final b in jl(e['blocs'])) jm(b)],
+      e['block_weeks'] == null
+          ? null
+          : [for (final w in jl(e['block_weeks'])) ent(w)],
+      ent(e['horizon']),
+      cibles: <String, num>{
+        for (final c in dictOuVide(e['cibles']).entries) c.key: c.value! as num,
+      },
+      echeanceJour: ech,
+      principaux: [for (final x in listeOuVide(e['principaux'])) x! as String],
+      poidsCorps: e['poids_corps'] as num?,
+    );
+    replanifier(koach, semaine);
+    _noter(semaine);
+  }
+
+  /// Événement `cibles` : buts changés en cours de route
+  /// (`PlanificationBanc.changement_profil`).
+  void surCibles(Json e) {
+    cibles = <String, double>{
+      for (final c in dictOuVide(e['cibles']).entries) c.key: dbl(c.value),
+    };
+    for (final ex in cibles.keys) {
+      if (!suivis.contains(ex) && fiches.containsKey(ex)) {
+        suivis.add(ex);
+        _tables = {};
+      }
+    }
+  }
+
+  @override
+  List<Json> itemsDuJour(Koach koach, ContexteSeance ctx, List<Json> items) {
+    final sem = ctx.semaine;
+    final j = ctx.jourIndex;
+    if (sem == null || j == null || blocs == null) {
+      return items;
+    }
+    return appliquer(sem, j, items);
   }
 
   @override
