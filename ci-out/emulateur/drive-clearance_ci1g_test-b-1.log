@@ -1,0 +1,97 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             66.0s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        2,341ms
+W/eetlift_tracker( 4300): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 4300): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 4300): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 4300): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 4300): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4300): Width is zero. 0,0
+W/HWUI    ( 4300): Unknown dataspace 0
+I/WindowExtensionsImpl( 4300): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4300): Width is zero. 0,0
+D/FlutterJNI( 4300): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4300): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+W/HWUI    ( 4300): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4300): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4300): mapper 4.x is not supported
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:38063/jjyacKbu7hQ=/
+I/Choreographer( 4300): Skipped 137 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4300): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Isolate found with number: 8194855697148183
+VMServiceFlutterDriver: Isolate 8194855697148183 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4300): 00:00 +0: CI1g b (clair, violet) : avis médical avant la première séance
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4300): Installing profile for fr.tchoupi.streetlift_tracker
+I/Choreographer( 4300): Skipped 30 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 4300): Skipped 61 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 4300): Davey! duration=1192ms; Flags=1, FrameTimelineVsyncId=8751, IntendedVsync=126355342613, Vsync=127372009239, InputEventId=0, HandleInputStart=127385377154, AnimationStart=127385378526, PerformTraversalsStart=127385379157, DrawStart=127410615311, FrameDeadline=126372009279, FrameInterval=127384636348, FrameStartTime=16666666, SyncQueued=127437657286, SyncStart=127442990022, IssueDrawCommandsStart=127447546838, SwapBuffers=127524076173, FrameCompleted=127553054609, DequeueBufferDuration=2616776, QueueBufferDuration=5764915, GpuCompleted=127550380527, SwapBuffersCompleted=127553054609, DisplayPresentTime=72904454231359566, CommandSubmissionCompleted=127524076173, 
+D/EGL_emulation( 4300): app_time_stats: avg=593.49ms min=67.10ms max=1307.96ms count=3
+D/EGL_emulation( 4300): app_time_stats: avg=234.94ms min=1.85ms max=770.99ms count=6
+D/EGL_emulation( 4300): app_time_stats: avg=1209.17ms min=293.04ms max=2125.30ms count=2
+D/EGL_emulation( 4300): app_time_stats: avg=785.05ms min=385.76ms max=1184.34ms count=2
+D/FlutterJNI( 4300): Sending viewport metrics to the engine.
+D/EGL_emulation( 4300): app_time_stats: avg=1116.28ms min=1116.28ms max=1116.28ms count=1
+I/eetlift_tracker( 4300): Background concurrent mark compact GC freed 2184KB AllocSpace bytes, 15(684KB) LOS objects, 49% free, 2628KB/5257KB, paused 55us,77.107ms total 716.726ms
+D/EGL_emulation( 4300): app_time_stats: avg=9222.19ms min=9222.19ms max=9222.19ms count=1
+D/EGL_emulation( 4300): app_time_stats: avg=108.51ms min=55.50ms max=165.68ms count=9
+D/EGL_emulation( 4300): app_time_stats: avg=119.36ms min=103.31ms max=147.98ms count=9
+D/EGL_emulation( 4300): app_time_stats: avg=116.61ms min=99.73ms max=133.30ms count=9
+D/EGL_emulation( 4300): app_time_stats: avg=145.84ms min=107.69ms max=332.43ms count=7
+W/WindowOnBackDispatcher( 4300): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4300): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4300): app_time_stats: avg=78.48ms min=10.00ms max=203.20ms count=12
+D/EGL_emulation( 4300): app_time_stats: avg=59.85ms min=6.17ms max=117.26ms count=15
+D/EGL_emulation( 4300): app_time_stats: avg=69.11ms min=10.44ms max=128.25ms count=13
+D/EGL_emulation( 4300): app_time_stats: avg=121.74ms min=86.12ms max=197.55ms count=9
+D/EGL_emulation( 4300): app_time_stats: avg=111.60ms min=86.30ms max=120.33ms count=9
+D/EGL_emulation( 4300): app_time_stats: avg=99.79ms min=34.52ms max=127.13ms count=10
+W/WindowOnBackDispatcher( 4300): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4300): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/FlutterJNI( 4300): Sending viewport metrics to the engine.
+D/EGL_emulation( 4300): app_time_stats: avg=95.71ms min=27.12ms max=136.29ms count=11
+D/EGL_emulation( 4300): app_time_stats: avg=62.20ms min=15.31ms max=133.47ms count=16
+D/EGL_emulation( 4300): app_time_stats: avg=55.90ms min=12.03ms max=118.55ms count=15
+D/EGL_emulation( 4300): app_time_stats: avg=54.52ms min=47.01ms max=70.06ms count=15
+D/EGL_emulation( 4300): app_time_stats: avg=56.87ms min=45.58ms max=102.92ms count=16
+D/EGL_emulation( 4300): app_time_stats: avg=96.25ms min=7.30ms max=372.04ms count=10
+D/FlutterJNI( 4300): Sending viewport metrics to the engine.
+D/EGL_emulation( 4300): app_time_stats: avg=60.78ms min=7.70ms max=131.59ms count=15
+D/EGL_emulation( 4300): app_time_stats: avg=78.42ms min=19.54ms max=170.85ms count=13
+D/EGL_emulation( 4300): app_time_stats: avg=75.67ms min=15.46ms max=133.22ms count=13
+D/EGL_emulation( 4300): app_time_stats: avg=54.70ms min=13.86ms max=111.26ms count=15
+D/EGL_emulation( 4300): app_time_stats: avg=92.35ms min=2.01ms max=205.49ms count=11
+D/EGL_emulation( 4300): app_time_stats: avg=54.58ms min=7.84ms max=102.67ms count=16
+D/EGL_emulation( 4300): app_time_stats: avg=65.34ms min=8.18ms max=130.42ms count=14
+D/EGL_emulation( 4300): app_time_stats: avg=53.01ms min=8.23ms max=102.48ms count=16
+D/EGL_emulation( 4300): app_time_stats: avg=62.81ms min=5.96ms max=110.28ms count=14
+D/EGL_emulation( 4300): app_time_stats: avg=62.17ms min=6.65ms max=130.76ms count=13
+D/EGL_emulation( 4300): app_time_stats: avg=53.42ms min=8.70ms max=127.04ms count=16
+D/EGL_emulation( 4300): app_time_stats: avg=66.40ms min=7.57ms max=140.42ms count=14
+D/EGL_emulation( 4300): app_time_stats: avg=61.23ms min=18.52ms max=101.63ms count=14
+D/EGL_emulation( 4300): app_time_stats: avg=55.25ms min=12.66ms max=107.26ms count=16
+D/EGL_emulation( 4300): app_time_stats: avg=57.25ms min=49.45ms max=69.44ms count=14
+D/EGL_emulation( 4300): app_time_stats: avg=67.82ms min=5.14ms max=206.85ms count=14
+D/EGL_emulation( 4300): app_time_stats: avg=90.35ms min=53.67ms max=210.20ms count=9
+D/EGL_emulation( 4300): app_time_stats: avg=87.29ms min=51.33ms max=129.60ms count=10
+D/EGL_emulation( 4300): app_time_stats: avg=109.91ms min=85.68ms max=118.76ms count=10
+D/EGL_emulation( 4300): app_time_stats: avg=116.67ms min=115.84ms max=117.99ms count=9
+D/EGL_emulation( 4300): app_time_stats: avg=116.58ms min=116.15ms max=116.90ms count=9
+I/flutter ( 4300): 00:57 +1: (tearDownAll)
+I/flutter ( 4300): 00:57 +2: All tests passed!
+All tests passed.

@@ -1,0 +1,6 @@
+cote=apres
+ecran=Override size: 540x960
+tour_a=0
+tour_b=0
+tour_c=0
+tour_d=0
