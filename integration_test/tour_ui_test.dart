@@ -428,6 +428,12 @@ void main() {
           var ok = true;
           for (final step in paths[p]) {
             final f = step();
+            // Cible absente (chemin inexistant sur la base) : abandon
+            // tout de suite, sans faire défiler.
+            if (!await until(tester, f, max: 15)) {
+              ok = false;
+              break;
+            }
             await scrollTo(tester, f);
             final hit = f.hitTestable();
             if (hit.evaluate().isEmpty) {
