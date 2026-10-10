@@ -226,20 +226,29 @@ class _Target extends StatelessWidget {
                   color: reached ? k.validation : k.texte,
                 ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    reached ? Icons.check_circle_outline : Icons.flag_outlined,
-                    size: KSize.chevron,
-                    color: reached ? k.validation : k.texte2,
-                  ),
-                  const SizedBox(width: KSpacing.s4),
-                  Text(
-                    'Cible ${statsNumber(target)} $unit',
-                    style: KType.detail.copyWith(color: k.texte2),
-                  ),
-                ],
+              // Icône dans le texte : la cible passe à la ligne au besoin.
+              Text.rich(
+                TextSpan(
+                  children: [
+                    WidgetSpan(
+                      alignment: PlaceholderAlignment.middle,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                          end: KSpacing.s4,
+                        ),
+                        child: Icon(
+                          reached
+                              ? Icons.check_circle_outline
+                              : Icons.flag_outlined,
+                          size: KSize.chevron,
+                          color: reached ? k.validation : k.texte2,
+                        ),
+                      ),
+                    ),
+                    TextSpan(text: 'Cible ${statsNumber(target)} $unit'),
+                  ],
+                ),
+                style: KType.detail.copyWith(color: k.texte2),
               ),
             ],
           ),
