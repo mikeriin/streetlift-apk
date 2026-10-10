@@ -193,11 +193,11 @@ final List<KitSample> kitSamples = [
     ),
   ),
   KitSample('menus', 'Groupes et lignes de menu', (context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const KSearchField(hint: 'Rechercher un réglage'),
-        const KMenuGroup(
+        KSearchField(hint: 'Rechercher un réglage'),
+        KMenuGroup(
           title: 'Application',
           children: [
             KMenuRow(
@@ -222,7 +222,7 @@ final List<KitSample> kitSamples = [
             ),
           ],
         ),
-        const KMenuGroup(
+        KMenuGroup(
           title: 'Plus',
           children: [
             KMenuRow(
@@ -240,10 +240,10 @@ final List<KitSample> kitSamples = [
     return const _SettingsSample();
   }),
   KitSample('programme', 'Programme', (context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const KSeasonBar(
+        KSeasonBar(
           blocks: [
             KSeasonBlock(3),
             KSeasonBlock(8),
@@ -254,35 +254,35 @@ final List<KitSample> kitSamples = [
           ],
           week: 13,
         ),
-        const SizedBox(height: KSpacing.s16),
-        const KDayRow(
+        SizedBox(height: KSpacing.s16),
+        KDayRow(
           number: 'J1',
           title: 'Muscle-up + tirage lourd',
           state: KDayState.done,
           onTap: _noop,
         ),
-        const SizedBox(height: KSpacing.s8),
-        const KDayRow(
+        SizedBox(height: KSpacing.s8),
+        KDayRow(
           number: 'J2',
           title: 'Dip lourd + poussée',
           state: KDayState.missed,
           onTap: _noop,
         ),
-        const SizedBox(height: KSpacing.s8),
-        const KDayRow(
+        SizedBox(height: KSpacing.s8),
+        KDayRow(
           number: 'J6',
           title: 'Puissance MU + squat endurance',
           onTap: _noop,
           onInfo: _noop,
         ),
-        const SizedBox(height: KSpacing.s8),
-        const KDayRow(
+        SizedBox(height: KSpacing.s8),
+        KDayRow(
           number: 'J7',
           title: 'Repos complet',
           state: KDayState.rest,
         ),
-        const SizedBox(height: KSpacing.s16),
-        const KTimeline(
+        SizedBox(height: KSpacing.s16),
+        KTimeline(
           phases: [
             KPhase(
               'Reprise',

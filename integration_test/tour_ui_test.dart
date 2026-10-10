@@ -169,7 +169,12 @@ void main() {
     if (dock.evaluate().isEmpty) return;
     final rect = tester.getRect(dock.first);
     // Pilule du dock : la bande occupée, sans la marge transparente.
-    final band = Rect.fromLTRB(rect.left, rect.bottom - 80, rect.right, rect.bottom);
+    final band = Rect.fromLTRB(
+      rect.left,
+      rect.bottom - 80,
+      rect.right,
+      rect.bottom,
+    );
     final hidden = <String>[];
     for (final e in find.byType(Text).evaluate()) {
       final w = e.widget as Text;
@@ -375,69 +380,53 @@ void main() {
     // Parcours (cahier §6.3) : chemins de la base d'abord présents dans les
     // deux colonnes ; les lots ajoutent leurs chemins courts en tête.
     Finder settingsTab() => find.byKey(const ValueKey('nav-3'));
-    await route(
-      tester,
-      'mon_programme',
+    await route(tester, 'mon_programme', [
+      [() => text('Mon programme')],
+      [settingsTab, () => text('Mon programme')],
+    ], () => find.byType(ProgramScreen));
+    await route(tester, 'ma_saison', [
       [
-        [() => text('Mon programme')],
-        [settingsTab, () => text('Mon programme')],
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-season')),
       ],
-      () => find.byType(ProgramScreen),
-    );
-    await route(
-      tester,
-      'ma_saison',
       [
-        [() => text('Mon programme'), () => find.byKey(const ValueKey('program-season'))],
-        [settingsTab, () => text('Mon programme'), () => find.byKey(const ValueKey('program-season'))],
+        settingsTab,
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-season')),
       ],
-      () => find.byType(SeasonScreen),
-    );
-    await route(
-      tester,
-      'evolution',
+    ], () => find.byType(SeasonScreen));
+    await route(tester, 'evolution', [
       [
-        [() => text('Mon programme'), () => find.byKey(const ValueKey('program-evolution-open'))],
-        [settingsTab, () => text('Mon programme'), () => find.byKey(const ValueKey('program-evolution-open'))],
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-evolution-open')),
       ],
-      () => find.byType(EvolutionScreen),
-    );
-    await route(
-      tester,
-      'jour_j',
       [
-        [
-          () => text('Mon programme'),
-          () => find.byKey(const ValueKey('program-season')),
-          () => find.textContaining('Jour J'),
-        ],
-        [
-          settingsTab,
-          () => text('Mon programme'),
-          () => find.byKey(const ValueKey('program-season')),
-          () => find.textContaining('Jour J'),
-        ],
+        settingsTab,
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-evolution-open')),
       ],
-      () => find.byType(EventDayScreen),
-    );
-    await route(
-      tester,
-      'mes_references',
+    ], () => find.byType(EvolutionScreen));
+    await route(tester, 'jour_j', [
       [
-        [settingsTab, () => text('Mes références')],
-        [settingsTab, () => text('Références')],
-        [settingsTab, () => textCi('Profil'), () => text('Mes références')],
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-season')),
+        () => find.textContaining('Jour J'),
       ],
-      () => find.byType(PilotageScreen),
-    );
-    await route(
-      tester,
-      'reglage_repos',
       [
-        [settingsTab, () => text('Repos par défaut')],
+        settingsTab,
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-season')),
+        () => find.textContaining('Jour J'),
       ],
-      () => find.text('Repos par défaut').hitTestable(),
-    );
+    ], () => find.byType(EventDayScreen));
+    await route(tester, 'mes_references', [
+      [settingsTab, () => text('Mes références')],
+      [settingsTab, () => text('Références')],
+      [settingsTab, () => textCi('Profil'), () => text('Mes références')],
+    ], () => find.byType(PilotageScreen));
+    await route(tester, 'reglage_repos', [
+      [settingsTab, () => text('Repos par défaut')],
+    ], () => find.text('Repos par défaut').hitTestable());
     releve['captures'] = shots;
     record();
   });
