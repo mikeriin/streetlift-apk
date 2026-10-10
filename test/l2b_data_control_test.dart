@@ -708,7 +708,8 @@ void main() {
         'Copier la sauvegarde',
         'Coller une sauvegarde',
         'Sauvegarde Android',
-        'ZONE SENSIBLE',
+        // UI0 (refonte UI, C6) : titres de section sans capitales.
+        'Zone sensible',
         'Supprimer les données de l’application',
       ]) {
         await tester.scrollUntilVisible(

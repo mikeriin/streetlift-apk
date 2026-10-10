@@ -189,8 +189,9 @@ class KPalette {
   /// Validation et succès uniquement.
   Color get success => r.validation;
 
-  /// Logo : texte en sombre, dominante en clair (cahier §5.1).
-  Color get logo => dark ? r.texte : r.pleine;
+  /// Logo : texte en sombre ; en clair, la dominante (cahier §5.1), ou son
+  /// encre quand la dominante est trop claire pour le fond (Neon).
+  Color get logo => dark ? r.texte : r.encre;
   Color get prevViolet => r.texte2;
   Color get danger => r.danger;
   Color get line => r.filet;
@@ -276,9 +277,10 @@ class ProgrammeColors {
   Color get circle => p.faint;
   Color get onAccent => p.onAccent;
 
-  /// Curseur de semaine : aplat de la dominante, libellé posé dessus.
-  Color get slider => p.bordeaux;
-  Color get onSlider => p.onBrand;
+  /// Curseur de semaine (frise, pastille « S13 ») : `encre`, lisible sur le
+  /// fond dans les 8 palettes (la dominante Neon ne l'est pas en clair).
+  Color get slider => p.accent;
+  Color get onSlider => p.onAccent;
 }
 
 InputDecoration logDeco({String? hint, String? suffix}) => InputDecoration(

@@ -233,10 +233,19 @@ void main() {
         'userExercises',
         'lastLevel',
       ]) {
+        if (k == 'settings') continue;
         expect(jsonDeepEquals(disk[k], program[k]), isTrue, reason: k);
       }
-      // UI0 (refonte UI) : ancien identifiant de couleur relu vers sa
-      // palette (vert → forest), sans refuser l'état.
+      // UI0 (refonte UI) : réglages identiques, sauf l'ancien identifiant
+      // de couleur, relu vers sa palette (vert → forest) et réenregistré
+      // ainsi ; l'état n'est jamais refusé pour ça.
+      final settingsDisk = Map<String, dynamic>.from(disk['settings'] as Map);
+      final settingsSeed = Map<String, dynamic>.from(program['settings'] as Map);
+      expect(settingsSeed['accent'], 'vert');
+      expect(settingsDisk['accent'], 'forest');
+      settingsDisk.remove('accent');
+      settingsSeed.remove('accent');
+      expect(jsonDeepEquals(settingsDisk, settingsSeed), isTrue);
       expect(app.settings.accent, 'forest');
       expect(app.profile?.intValue('sessionMinutes'), 45);
 

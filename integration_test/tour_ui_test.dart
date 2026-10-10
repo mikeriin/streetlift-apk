@@ -232,6 +232,7 @@ void main() {
         taps++;
         await wait(tester, 1500);
       }
+      if (ok) await scrollTo(tester, reached());
       if (ok && await until(tester, reached(), max: 30)) {
         result = {'appuis': taps, 'chemin': p};
       }
@@ -365,6 +366,10 @@ void main() {
     final picker = find.byKey(const ValueKey('accent-picker'));
     await scrollTo(tester, picker);
     await screen(tester, 'reglages_apparence', check: picker);
+    // UI0 : interrupteur « Contraste renforcé » sous le sélecteur.
+    final contrast = find.text('Contraste renforcé');
+    await scrollTo(tester, contrast);
+    await screen(tester, 'reglages_contraste', check: contrast);
     await toEnd(tester);
     await underDock(tester, 'reglages');
     await screen(tester, 'reglages_bas');
@@ -419,14 +424,26 @@ void main() {
         () => find.textContaining('Jour J'),
       ],
     ], () => find.byType(EventDayScreen));
-    await route(tester, 'mes_references', [
-      [settingsTab, () => text('Mes références')],
-      [settingsTab, () => text('Références')],
-      [settingsTab, () => textCi('Profil'), () => text('Mes références')],
-    ], () => find.byType(PilotageScreen));
-    await route(tester, 'reglage_repos', [
-      [settingsTab, () => text('Repos par défaut')],
-    ], () => find.text('Repos par défaut').hitTestable());
+    await route(
+      tester,
+      'mes_references',
+      [
+        [settingsTab, () => text('Mes références')],
+        [settingsTab, () => textCi('Profil'), () => text('Mes références')],
+        [settingsTab, () => text('Programme'), () => text('Références')],
+      ],
+      () => find.byType(PilotageScreen),
+    );
+    // Un réglage précis : la ligne « Repos par défaut » visible à l'écran.
+    await route(
+      tester,
+      'reglage_repos',
+      [
+        [settingsTab, () => text('Séance')],
+        [settingsTab, () => text('Chronomètres')],
+      ],
+      () => find.text('Repos par défaut'),
+    );
     releve['captures'] = shots;
     record();
   });

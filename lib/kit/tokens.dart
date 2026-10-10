@@ -140,6 +140,14 @@ abstract final class KType {
   /// Texte courant.
   static final corps = _s(KFont.text, 15, 22, FontWeight.w400);
 
+  /// Adaptateur des écrans existants (UI0) : texte courant et titres de
+  /// ligne des composants Material historiques, aux métriques d'avant
+  /// (14 / 20, 15 / 20) pour que les écrans pas encore refaits gardent leur
+  /// mise en page. Les composants du kit utilisent [corps] et [corpsFort].
+  static final texteHistorique = _s(KFont.text, 14, 20, FontWeight.w400);
+  static final champHistorique = _s(KFont.text, 15, 20, FontWeight.w400);
+  static final ligneHistorique = _s(KFont.text, 15, 20, FontWeight.w600);
+
   /// Description, valeur secondaire.
   static final detail = _s(KFont.text, 13, 18, FontWeight.w400);
 
@@ -316,6 +324,14 @@ class KTokens extends ThemeExtension<KTokens> {
   Color get validation => roles.validation;
   Color get danger => roles.danger;
   Color get avertissement => roles.avertissement;
+
+  /// Contour des commandes posées en `haute` : en clair, `haute` = `fond`,
+  /// la forme reste lisible sur la page grâce au `filet`.
+  BorderSide get controlSide =>
+      dark ? BorderSide.none : BorderSide(color: filet);
+
+  /// Forme pilule d'une commande en `haute`, contour clair compris.
+  StadiumBorder get controlPill => StadiumBorder(side: controlSide);
 
   /// Jetons du thème de [context] ; à défaut (widget hors d'un thème de
   /// l'application), ceux de la palette par défaut en sombre.

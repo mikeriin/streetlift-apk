@@ -294,7 +294,7 @@ void main() {
           expect(p.dim, r.texte2);
           expect(p.success, r.validation);
           expect(p.danger, r.danger);
-          expect(p.logo, dark ? r.texte : r.pleine);
+          expect(p.logo, dark ? r.texte : r.encre);
           expect(a.principal, Color(paletteSource(a.id).dominante));
           expect(dark ? a.bright : a.vividLight, r.rampe);
         }
