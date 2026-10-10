@@ -14,7 +14,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'app_theme.dart';
+import 'adapt/widgets/session_kit.dart' show showKChoice;
 import 'game.dart';
 import 'game_widgets.dart';
 import 'progression.dart';
@@ -46,55 +46,42 @@ void checkLevelUp(BuildContext context, {Future<void>? after}) {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 3),
-            content: Text(
-              '+${reward.xpGained} XP · niveau ${reward.levelAfter}${reward.levelUp ? ' · niveau supérieur' : ''}',
-            ),
-          ),
-        );
+      // Message court du kit (réglage « Célébrations » coupé).
+      showKSnack(
+        context,
+        message:
+            '+${reward.xpGained} XP · niveau ${reward.levelAfter}${reward.levelUp ? ' · niveau supérieur' : ''}',
+        duration: const Duration(seconds: 3),
+      );
     }
     return;
   }
   if (up == null) return;
-  showDialog<void>(
-    context: context,
-    builder: (ctx) => AlertDialog(
-      title: Row(
-        children: [
-          RankInsignia(
-            rankIndex: rankIndexOf(store.progression.rank),
-            prestige: GameState.prestigeOf(up.to),
-            size: 36,
-          ),
-          const SizedBox(width: 10),
-          Text(
-            'Niveau ${up.to}',
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
-        ],
-      ),
-      content: Text(
-        'Niveau ${up.from} → ${up.to} · ${store.progression.rank.title}.',
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(ctx);
-            openProgression(context);
-          },
-          child: const Text('Ma progression'),
+  // Confirmation du kit (zone UI2) : insigne et phrase, « Ma progression »
+  // ouvre la même page qu'avant, « Continuer » referme.
+  showKChoice(
+    context,
+    title: 'Niveau ${up.to}',
+    body: Row(
+      children: [
+        RankInsignia(
+          rankIndex: rankIndexOf(store.progression.rank),
+          prestige: GameState.prestigeOf(up.to),
+          size: 36,
         ),
-        FilledButton(
-          onPressed: () => Navigator.pop(ctx),
-          child: const Text('Continuer'),
+        const SizedBox(width: KSpacing.s12),
+        Expanded(
+          child: Text(
+            'Niveau ${up.from} → ${up.to} · ${store.progression.rank.title}.',
+          ),
         ),
       ],
     ),
-  );
+    confirmLabel: 'Ma progression',
+    cancelLabel: 'Continuer',
+  ).then((open) {
+    if (open && context.mounted) openProgression(context);
+  });
 }
 
 // Chronologie de l'écran, en millisecondes depuis le départ du décompte.
@@ -222,8 +209,9 @@ class _RewardScreenState extends State<RewardScreen>
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     return Scaffold(
-      backgroundColor: SL.bg.withValues(alpha: .97),
+      backgroundColor: k.fond.withValues(alpha: .97),
       body: SafeArea(
         child: Stack(
           children: [
@@ -241,6 +229,8 @@ class _RewardScreenState extends State<RewardScreen>
                           _confettiMs,
                           Curves.linear,
                         ),
+                        // Couleurs de la palette (décor), lues au dessin.
+                        [k.pleine, k.encre, k.accent, k.second],
                       ),
                     ),
                   ),
@@ -248,27 +238,25 @@ class _RewardScreenState extends State<RewardScreen>
               ),
             KList(
               children: [
-                const SizedBox(height: 12),
+                const SizedBox(height: KSpacing.s12),
+                // Surtitre de réussite (`accent`), capitales du système (U3).
                 Text(
-                  r.heading.toUpperCase(),
+                  k.title(r.heading),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: SL.accent,
-                    fontSize: 12,
-                    letterSpacing: 1.6,
-                    fontWeight: FontWeight.w700,
+                  style: k.titleStyle(KType.micro.copyWith(color: k.accent)),
+                ),
+                const SizedBox(height: KSpacing.s8),
+                Semantics(
+                  header: true,
+                  child: Text(
+                    k.title(r.title),
+                    textAlign: TextAlign.center,
+                    style: k.titleStyle(
+                      KType.titreEcran.copyWith(color: k.texte),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  r.title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 18),
+                const SizedBox(height: KSpacing.s20),
                 AnimatedBuilder(
                   animation: _timeline,
                   builder: (context, _) => _XpMeter(
@@ -279,7 +267,7 @@ class _RewardScreenState extends State<RewardScreen>
                     reward: r,
                   ),
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: KSpacing.s20),
                 for (var i = 0; i < r.lines.length; i++)
                   _Appear(
                     timeline: _timeline,
@@ -288,7 +276,7 @@ class _RewardScreenState extends State<RewardScreen>
                     child: _LootLine(r.lines[i]),
                   ),
                 if (r.levelUp) ...[
-                  const SizedBox(height: 14),
+                  const SizedBox(height: KSpacing.s14),
                   _Appear(
                     timeline: _timeline,
                     totalMs: _totalMs,
@@ -297,23 +285,20 @@ class _RewardScreenState extends State<RewardScreen>
                     child: _Ceremony(r),
                   ),
                 ],
-                const SizedBox(height: 22),
-                FilledButton(
+                const SizedBox(height: KSpacing.s24),
+                // C2 : un seul bouton plein, l'action secondaire en tonal.
+                KPrimaryButton(
                   key: const ValueKey('reward-continue'),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: SL.bordeaux,
-                    foregroundColor: SL.onBrand,
-                    minimumSize: const Size(220, KControl.buttonHeight),
-                  ),
+                  label: 'Continuer',
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Continuer'),
                 ),
-                TextButton(
+                KTonalButton(
+                  label: 'Ma progression',
+                  expand: true,
                   onPressed: () {
                     Navigator.pop(context);
                     openProgression(context);
                   },
-                  child: const Text('Ma progression'),
                 ),
               ],
             ),
@@ -339,51 +324,43 @@ class _XpMeter extends StatelessWidget {
     final inLevel = total - Progression.xpAtLevel(level);
     final need = Progression.needFor(level);
     final gained = (total - reward.xpBefore).round();
-    final rank = progressRanks.lastWhere((k) => k.level <= level);
+    final rank = progressRanks.lastWhere((r) => r.level <= level);
+    final k = KTokens.of(context);
     return Column(
       children: [
+        // Chiffre mis en avant (`encre`, lisible sur le fond de la page).
         Text(
           '+$gained XP',
           key: const ValueKey('reward-xp'),
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: SL.text,
-            fontSize: 44,
-            height: 1,
-            fontWeight: FontWeight.w800,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
+          style: KType.chiffre.copyWith(color: k.encre),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: KSpacing.s14),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'NIV. $level',
-              style: TextStyle(
-                color: SL.dim,
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                letterSpacing: .8,
-                fontFeatures: const [FontFeature.tabularFigures()],
+              style: KType.micro.copyWith(
+                color: k.texte2,
+                fontFeatures: KFont.tabular,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: KSpacing.s8),
+            // C3 : le rang passe à la ligne au lieu d'être coupé.
             Expanded(
               child: Text(
                 '${inLevel.round()} / $need XP · ${rank.title}',
                 textAlign: TextAlign.end,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: SL.dim,
-                  fontSize: 12,
-                  fontFeatures: const [FontFeature.tabularFigures()],
+                style: KType.detail.copyWith(
+                  color: k.texte2,
+                  fontFeatures: KFont.tabular,
                 ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: KSpacing.s8),
         KProgressBar(
           value: need == 0 ? 0 : inLevel / need,
           height: 8,
@@ -408,33 +385,30 @@ class _LootLine extends StatelessWidget {
       'goal' => Icons.track_changes_rounded,
       _ => Icons.fitness_center_rounded,
     };
-    final color = switch (line.kind) {
-      'record' || 'goal' || 'streak' => SL.success,
-      _ => SL.accent,
-    };
+    // Réussites (records, badges, défis, série, objectif) : `accent`.
+    final k = KTokens.of(context);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: KSpacing.s8),
       child: KCard(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: KSpacing.s14,
+          vertical: KSpacing.s12,
+        ),
         child: Row(
           children: [
-            Icon(icon, color: color, size: 22),
-            const SizedBox(width: 12),
+            Icon(icon, color: k.accent, size: KSize.icon),
+            const SizedBox(width: KSpacing.s12),
             Expanded(
               child: Text(
                 line.label,
-                style: const TextStyle(fontWeight: FontWeight.w600),
+                style: KType.corpsFort.copyWith(color: k.texte),
               ),
             ),
             if (line.xp > 0) ...[
-              const SizedBox(width: 8),
+              const SizedBox(width: KSpacing.s8),
               Text(
                 '+${line.xp} XP',
-                style: TextStyle(
-                  color: SL.accent,
-                  fontWeight: FontWeight.w700,
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                ),
+                style: KType.chiffrePetit.copyWith(color: k.accent),
               ),
             ],
           ],
@@ -449,11 +423,11 @@ class _Ceremony extends StatelessWidget {
   const _Ceremony(this.r);
   @override
   Widget build(BuildContext context) {
-    final rank = progressRanks.lastWhere((k) => k.level <= r.levelAfter);
-    return KCard(
+    final rank = progressRanks.lastWhere((p) => p.level <= r.levelAfter);
+    final k = KTokens.of(context);
+    // Aplat principal (carte du jour du kit : `pleine`, texte `surPleine`).
+    return KCard.day(
       key: const ValueKey('reward-ceremony'),
-      color: SL.bordeaux,
-      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           RankInsignia(
@@ -462,30 +436,23 @@ class _Ceremony extends StatelessWidget {
             size: 84,
             light: true,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: KSpacing.s12),
           Text(
-            r.promotion ? 'PROMOTION' : 'NIVEAU SUPÉRIEUR',
-            style: TextStyle(
-              color: SL.onBrandSoft,
-              fontSize: 11,
-              letterSpacing: 1.6,
-              fontWeight: FontWeight.w700,
-            ),
+            k.title(r.promotion ? 'Promotion' : 'Niveau supérieur'),
+            textAlign: TextAlign.center,
+            style: k.titleStyle(KType.micro.copyWith(color: k.surPleine)),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: KSpacing.s4),
           Text(
             r.promotion ? rank.title : 'Niveau ${r.levelAfter}',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: SL.onBrand,
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-            ),
+            style: KType.titreEcran.copyWith(color: k.surPleine),
           ),
           if (r.promotion)
             Text(
               'Niveau ${r.levelAfter}',
-              style: TextStyle(color: SL.onBrandSoft, fontSize: 13),
+              textAlign: TextAlign.center,
+              style: KType.detail.copyWith(color: k.surPleine),
             ),
         ],
       ),
@@ -530,9 +497,8 @@ class _Appear extends StatelessWidget {
 /// Confettis dans la charte, une seule descente.
 class _ConfettiPainter extends CustomPainter {
   final double t;
-  const _ConfettiPainter(this.t);
-  // Couleurs de la dominante (décor), lues au dessin.
-  static List<Color> get _colors => SL.confetti;
+  final List<Color> _colors;
+  const _ConfettiPainter(this.t, this._colors);
   @override
   void paint(Canvas canvas, Size size) {
     // Les 36 premiers pour cent laissent la jauge se remplir d'abord.

@@ -146,10 +146,7 @@ class SessionHeader extends StatelessWidget {
                 ),
               ),
             ),
-            if (action != null)
-              action!
-            else
-              const SizedBox(width: KSize.target),
+            if (action != null) action! else const SizedBox(width: KSize.target),
           ],
         ),
       ),
@@ -568,9 +565,7 @@ class _SessionScreenState extends State<SessionScreen> {
                 children: [
                   header,
                   if (restDay)
-                    Expanded(
-                      child: _RestDay(week: w, day: d),
-                    )
+                    Expanded(child: _RestDay(week: w, day: d))
                   else ...[
                     _strip(k),
                     Expanded(
@@ -715,6 +710,7 @@ class SessionProgressDots extends StatelessWidget {
     );
   }
 }
+
 
 // ------------------------- PAGE EXERCICE(S) ------------------------------
 // Une page = un exercice, ou une paire enchaînée (ex. dips → pompes).
@@ -1120,12 +1116,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       onAction: step == null
           ? null
           : () {
-              store.adaptAdviceDecision(
-                widget.week.n,
-                widget.day,
-                ex,
-                'undone',
-              );
+              store.adaptAdviceDecision(widget.week.n, widget.day, ex, 'undone');
               if (mounted) setState(() => epoch++);
             },
     );
@@ -1826,8 +1817,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   children: [
                     // « Reps » redit l'en-tête de colonne : la puce ne
                     // nomme que les autres mesures.
-                    if (!unresolved &&
-                        (sp.kind != 'reps' || sp.myo || sp.cluster))
+                    if (!unresolved && (sp.kind != 'reps' || sp.myo || sp.cluster))
                       KChip(kindLabel),
                     if (readOnly)
                       const KChip('Enregistré', icon: Icons.check_rounded),
@@ -1995,7 +1985,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             for (var i = 0; i < log.sets.length; i++)
               !log.sets[i].done || (!readOnly && i == _openOf(k)),
           ].any((x) => x))
-            KSetTable(columns: columns, rows: const [], actionCount: actions),
+            KSetTable(
+              columns: columns,
+              rows: const [],
+              actionCount: actions,
+            ),
           for (var i = 0; i < log.sets.length; i++)
             // G9 correction 1 : séries validées résumées en une ligne, sauf
             // la série ouverte (la dernière validée) ; toutes résumées en
@@ -2166,10 +2160,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             if (readOnly)
               InputDecorator(
                 decoration: _noteDecoration(t, label: 'Notes'),
-                child: Text(
-                  log.note,
-                  style: KType.corps.copyWith(color: t.texte),
-                ),
+                child: Text(log.note, style: KType.corps.copyWith(color: t.texte)),
               )
             else
               TextFormField(
@@ -2229,8 +2220,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// Colonnes affichées (charge, vitesse) : feuille d'actions (C10).
   Future<void> _columns(int k, LogSpec sp, bool showKg, bool showV) async {
     final log = logs[k];
-    IconData box(bool on) =>
-        on ? Icons.check_box_rounded : Icons.check_box_outline_blank_rounded;
+    IconData box(bool on) => on
+        ? Icons.check_box_rounded
+        : Icons.check_box_outline_blank_rounded;
     final v = await showKActionSheet<String>(
       context,
       title: 'Colonnes',
@@ -2598,7 +2590,12 @@ class _SetRowState extends State<_SetRow> {
       if (widget.showRir && !compact)
         _f(rir, (t) => e.rir = t, name: 'Effort', field: SetField.effort),
       if (widget.showV && !compact)
-        _f(v, (t) => e.v = t, name: 'Vitesse en m/s', field: SetField.velocity),
+        _f(
+          v,
+          (t) => e.v = t,
+          name: 'Vitesse en m/s',
+          field: SetField.velocity,
+        ),
     ];
     final check = widget.readOnly
         ? Semantics(
@@ -2677,9 +2674,7 @@ class _SetRowState extends State<_SetRow> {
             child: Center(
               child: IconButton(
                 onPressed: widget.onTimer,
-                tooltip: kind == 'holdMax'
-                    ? 'Chrono montant'
-                    : 'Compte à rebours',
+                tooltip: kind == 'holdMax' ? 'Chrono montant' : 'Compte à rebours',
                 style: IconButton.styleFrom(
                   backgroundColor: widget.current ? k.surface : k.haute,
                   foregroundColor: k.texte,
@@ -2695,10 +2690,7 @@ class _SetRowState extends State<_SetRow> {
               ),
             ),
           ),
-        SizedBox(
-          width: KSize.target,
-          child: Center(child: check),
-        ),
+        SizedBox(width: KSize.target, child: Center(child: check)),
       ],
     );
     return Container(
@@ -2763,10 +2755,10 @@ class _SetRowState extends State<_SetRow> {
           if (widget.issue?.message case final message?)
             Padding(
               padding: const EdgeInsetsDirectional.only(
-                start: KSize.target - KSpacing.s4,
-                top: KSpacing.s4,
-                bottom: KSpacing.s4,
-              ),
+        start: KSize.target - KSpacing.s4,
+        top: KSpacing.s4,
+        bottom: KSpacing.s4,
+      ),
               child: Semantics(
                 container: true,
                 liveRegion: true,
@@ -3122,7 +3114,9 @@ class _GroupCardState extends State<_GroupCard> {
                       style: KType.chiffreMoyen.copyWith(color: k.texte),
                       decoration: InputDecoration(
                         hintText: '12:30',
-                        hintStyle: KType.chiffreMoyen.copyWith(color: k.texte3),
+                        hintStyle: KType.chiffreMoyen.copyWith(
+                          color: k.texte3,
+                        ),
                         filled: true,
                         fillColor: k.haute,
                         isDense: true,
@@ -3443,10 +3437,10 @@ class _ClockBar extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(
-              left: KSpacing.s20,
-              top: KSpacing.s12,
-              right: KSpacing.s20,
-            ),
+        left: KSpacing.s20,
+        top: KSpacing.s12,
+        right: KSpacing.s20,
+      ),
             child: SizedBox(
               height: KSpacing.s4,
               child: ClipPath(
@@ -3458,7 +3452,9 @@ class _ClockBar extends StatelessWidget {
                     child: FractionallySizedBox(
                       widthFactor: v,
                       heightFactor: 1,
-                      child: ColoredBox(color: done ? k.validation : k.encre),
+                      child: ColoredBox(
+                        color: done ? k.validation : k.encre,
+                      ),
                     ),
                   ),
                 ),
@@ -3665,7 +3661,9 @@ class _FinishPageState extends State<_FinishPage> {
                     ),
                   ),
                   Icon(
-                    log.done ? Icons.emoji_events_rounded : Icons.flag_outlined,
+                    log.done
+                        ? Icons.emoji_events_rounded
+                        : Icons.flag_outlined,
                     size: KSize.target,
                     color: log.done ? k.accent : k.texte2,
                   ),
