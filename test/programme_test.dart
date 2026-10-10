@@ -300,14 +300,14 @@ void main() {
       );
       await tester.tap(find.text('Choisir une semaine'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Semaine 7'));
+      await tester.tap(find.text('Semaine 9'));
       await tester.pumpAndSettle();
-      expect(find.text('S7'), findsOneWidget);
+      expect(find.text('S9'), findsOneWidget);
       expect(find.byType(MuscleMap2D), findsNothing);
       await revealCard(tester, 2);
       await tester.longPress(find.byKey(const ValueKey('programme-day-2')));
       await tester.pumpAndSettle();
-      expect(find.text('Résumé · S7 · J2'), findsOneWidget);
+      expect(find.text('Résumé · S9 · J2'), findsOneWidget);
       expect(tester.takeException(), null);
     },
   );
