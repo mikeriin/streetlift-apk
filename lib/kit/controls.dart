@@ -95,36 +95,42 @@ class KStepper extends StatelessWidget {
       ),
     );
     final valueBox = Semantics(
-          label: semanticLabel,
-          value: value,
-          liveRegion: true,
-          excludeSemantics: true,
-          child: Container(
-            constraints: const BoxConstraints(
-              minWidth: KSize.target + KSpacing.s24 + KSpacing.s4,
-              minHeight: KSize.target,
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
-            decoration: ShapeDecoration(color: k.haute, shape: KRadius.pill),
-            alignment: Alignment.center,
-            child: Text(
-              value,
-              textAlign: TextAlign.center,
-              style: KType.chiffreMoyen.copyWith(color: k.texte),
-            ),
+      label: semanticLabel,
+      value: value,
+      liveRegion: true,
+      excludeSemantics: true,
+      child: Container(
+        constraints: const BoxConstraints(
+          minWidth: KSize.target + KSpacing.s24 + KSpacing.s4,
+          minHeight: KSize.target,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
+        decoration: ShapeDecoration(color: k.haute, shape: KRadius.pill),
+        alignment: Alignment.center,
+        // Un nombre reste entier : il se réduit plutôt que de passer à la
+        // ligne (cahier §5.2).
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            value,
+            maxLines: 1,
+            textAlign: TextAlign.center,
+            style: KType.chiffreMoyen.copyWith(color: k.texte),
           ),
-        );
-    // Place bornée : la valeur passe à la ligne plutôt que de déborder.
+        ),
+      ),
+    );
+    // Place bornée : la valeur se réduit plutôt que de déborder.
     return LayoutBuilder(
       builder: (context, c) => Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        button(Icons.remove_rounded, decrementLabel, onDecrement),
-        const SizedBox(width: KSpacing.s4),
-        if (c.maxWidth.isFinite) Flexible(child: valueBox) else valueBox,
-        const SizedBox(width: KSpacing.s4),
-        button(Icons.add_rounded, incrementLabel, onIncrement),
-      ],
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          button(Icons.remove_rounded, decrementLabel, onDecrement),
+          const SizedBox(width: KSpacing.s4),
+          if (c.maxWidth.isFinite) Flexible(child: valueBox) else valueBox,
+          const SizedBox(width: KSpacing.s4),
+          button(Icons.add_rounded, incrementLabel, onIncrement),
+        ],
       ),
     );
   }
@@ -156,8 +162,105 @@ class KSegmented<T> extends StatelessWidget {
     this.semanticLabel,
   });
 
+  /// Vrai si chaque libellé tient sur sa largeur sans couper un mot.
+  bool _fits(BuildContext context, double width) {
+    if (!width.isFinite) return true;
+    final scaler = MediaQuery.textScalerOf(context);
+    const need = 2 * KSpacing.s4;
+    var total = 0;
+    for (final s in segments) {
+      total += s.label.length + 2;
+    }
+    for (final s in segments) {
+      var widest = 0.0;
+      for (final w in s.label.split(' ')) {
+        final p = TextPainter(
+          text: TextSpan(text: w, style: KType.libelle),
+          textDirection: Directionality.of(context),
+          textScaler: scaler,
+          maxLines: 1,
+        )..layout();
+        if (p.width > widest) widest = p.width;
+        p.dispose();
+      }
+      // Largeur donnée au segment (flex) contre largeur de son plus long mot.
+      final share = (width - need) * (s.label.length + 2) / total;
+      if (share < widest + 2 * KSpacing.s8) return false;
+    }
+    return true;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, c) =>
+        _fits(context, c.maxWidth) ? _row(context) : _column(context),
+  );
+
+  /// Libellés trop longs (écran étroit, grand texte) : choix l'un sous
+  /// l'autre, mêmes pilules, rien n'est coupé.
+  Widget _column(BuildContext context) {
+    final k = KTokens.of(context);
+    return Semantics(
+      label: semanticLabel,
+      container: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (final s in segments)
+            Padding(
+              padding: const EdgeInsets.only(bottom: KSpacing.s4),
+              child: Semantics(
+                inMutuallyExclusiveGroup: true,
+                selected: s.value == selected,
+                button: true,
+                label: s.semanticLabel ?? s.label,
+                excludeSemantics: true,
+                onTap: onChanged == null ? null : () => onChanged!(s.value),
+                child: Material(
+                  color: s.value == selected ? k.pleine : k.haute,
+                  shape: KRadius.pill,
+                  child: InkWell(
+                    key: ValueKey('segment-${s.value}'),
+                    customBorder: KRadius.pill,
+                    onTap: onChanged == null || s.value == selected
+                        ? null
+                        : () {
+                            HapticFeedback.selectionClick();
+                            onChanged!(s.value);
+                          },
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minHeight: KSize.target,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: KSpacing.s16,
+                          vertical: KSpacing.s8,
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          widthFactor: 1,
+                          child: Text(
+                            s.label,
+                            style: KType.libelle.copyWith(
+                              color: s.value == selected
+                                  ? k.surPleine
+                                  : k.texte2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _row(BuildContext context) {
     final k = KTokens.of(context);
     final motion = KMotion.fast;
     final duration = motion.durationIn(context);
