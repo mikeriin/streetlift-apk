@@ -91,6 +91,11 @@ class MiniSetPlan {
   int suggested(int done) => done == 0 ? first : next;
 }
 
+/// CI1h : contrainte de charge fixe retirée (tests seulement : mesure de ce
+/// que le moteur servirait seul).
+@visibleForTesting
+bool debugDisableFixedLoad = false;
+
 class AdaptExerciseSummary {
   final String exerciseId;
   final String name;
@@ -100,6 +105,11 @@ class AdaptExerciseSummary {
 
   /// Première série de la prochaine séance où l'exercice revient.
   final SetGoal? next;
+
+  /// CI1h (C15.4) : séance visée par [next] (S, J) et sa date prévue.
+  final int? nextWeek;
+  final int? nextJ;
+  final DateTime? nextDate;
   final SetGoal? today;
   const AdaptExerciseSummary({
     required this.exerciseId,
@@ -108,6 +118,9 @@ class AdaptExerciseSummary {
     this.before,
     this.after,
     this.next,
+    this.nextWeek,
+    this.nextJ,
+    this.nextDate,
     this.today,
   });
 
@@ -1023,16 +1036,95 @@ extension SessionAdaptStore on AppStore {
 
   // ------------------------------------------------------- prescription
 
-  kc.AdaptInput? _adaptInput(AdaptPlace place, String excludeKey) {
+  /// Entrées du moteur pour la journée [place] (sans la séance
+  /// [excludeKey]), au jour [day] (aujourd'hui par défaut).
+  kc.AdaptInput? _adaptInput(
+    AdaptPlace place,
+    String excludeKey, {
+    kc.CivilDate? day,
+  }) {
     final profile = adaptProfile;
     if (profile == null) return null;
+    final at = day ?? _adaptToday;
     return kc.AdaptInput(
       profile: profile,
       block: place.block,
-      log: adaptTrainingLog(excludeKey: excludeKey),
-      today: _adaptToday,
+      log: adaptTrainingLog(excludeKey: excludeKey, today: at),
+      today: at,
       season: adaptSeasonOf(place),
     );
+  }
+
+  /// CI1h (C15.4) : jour où se prescrit une séance non commencée de
+  /// S[week]·J[j] sans bilan du jour : sa date prévue quand elle est encore
+  /// à venir (la fatigue du jour retombe d'ici là), sinon aujourd'hui.
+  kc.CivilDate adaptPlanDay(int week, int j) {
+    final today = _adaptToday;
+    if (program.start == null) return today;
+    final planned = civilOf(program.dateFor(week, j));
+    return planned.compareTo(today) > 0 ? planned : today;
+  }
+
+  /// CI1h (C15.4) : **un seul calcul** pour la séance non commencée de
+  /// S[week]·J[j] — celui de l'ouverture et de la prévision de fin de
+  /// séance : bloc avec les ajustements de Koach en place, journal, profil,
+  /// saison, réglages, au jour [adaptPlanDay], sans bilan ni lieu du jour,
+  /// avec la contrainte de charge fixe. Null : hors moteur.
+  kc.SessionPlan? adaptPlannedSession(int week, int j, {AdaptPlace? place}) {
+    final p = place ?? adaptPlaceOf(week, j);
+    if (p == null || !adaptAvailable) return null;
+    final input = _adaptInput(
+      p,
+      sessionKey(week, j),
+      day: adaptPlanDay(week, j),
+    );
+    if (input == null) return null;
+    return _adaptPrescribe(p, input, null, null);
+  }
+
+  // ------------------------------------------------- CI1h : charge fixe
+
+  /// CI1h (C15.2) : charge écrite fixe de l'emplacement [slot] de la
+  /// journée [place] du programme importé, quand l'exercice servi est
+  /// celui de la ligne écrite ; null : charge libre (programme créé,
+  /// ligne sans charge fixe, exercice remplacé).
+  double? _fixedLoadAt(AdaptPlace place, String slot, String exerciseId) {
+    if (!place.imported) return null;
+    final imp = importedProgram;
+    final seg = imp?.byBlockId(place.blockId);
+    if (imp == null || seg == null) return null;
+    final f = imp.fixedLoad['${seg.first + place.weekIndex}|$slot'];
+    if (f == null || f.$1 != exerciseId) return null;
+    return f.$2;
+  }
+
+  /// CI1h : charge fixe de l'emplacement [slot] (exercice [exerciseId]) à
+  /// S[week]·J[j] ; null : charge libre.
+  double? adaptFixedLoad(int week, int j, String slot, String exerciseId) {
+    final place = adaptPlaceOf(week, j);
+    return place == null ? null : _fixedLoadAt(place, slot, exerciseId);
+  }
+
+  /// CI1h (C15.2) : contrainte de charge fixe appliquée à la séance [plan]
+  /// prescrite par le moteur pour la journée [place].
+  kc.SessionPlan _fixedConstrain(AdaptPlace place, kc.SessionPlan plan) {
+    if (!place.imported || debugDisableFixedLoad) return plan;
+    final written = {
+      for (final it in place.day?.items ?? const <kc.ExercisePrescription>[])
+        it.slotId: it,
+    };
+    var changed = false;
+    final items = <kc.ExercisePrescription>[];
+    for (final it in plan.items) {
+      final kg = _fixedLoadAt(place, it.slotId, it.exerciseId);
+      var next = kg == null ? it : fixedLoadItem(it, kg, written[it.slotId]);
+      if (!identical(next, it) && next.validate().isNotEmpty) next = it;
+      if (!identical(next, it)) changed = true;
+      items.add(next);
+    }
+    if (!changed) return plan;
+    final next = plan.copyWith(items: items);
+    return next.validate().isEmpty ? next : plan;
   }
 
   /// CI1 : plan de saison du bloc servi (programme créé au chemin
@@ -1047,14 +1139,17 @@ extension SessionAdaptStore on AppStore {
     kc.AdaptInput input,
     kc.HealthCheck? check,
     kc.Place? where,
-  ) => kalisAdaptEngine.prescribeSession(
-    content.catalog!,
-    kc.SessionRequest(
-      input: input,
-      weekIndex: place.weekIndex,
-      dayIndex: place.dayIndex,
-      healthCheck: check,
-      place: where,
+  ) => _fixedConstrain(
+    place,
+    kalisAdaptEngine.prescribeSession(
+      content.catalog!,
+      kc.SessionRequest(
+        input: input,
+        weekIndex: place.weekIndex,
+        dayIndex: place.dayIndex,
+        healthCheck: check,
+        place: where,
+      ),
     ),
   );
 
@@ -1126,9 +1221,9 @@ extension SessionAdaptStore on AppStore {
           stored;
     }
     try {
-      final input = _adaptInput(place, key);
-      if (input == null) return stored;
-      final plan = _adaptPrescribe(place, input, null, null);
+      // CI1h (C15.4) : même calcul que la prévision de fin de séance.
+      final plan = adaptPlannedSession(week, base.j, place: place);
+      if (plan == null) return stored;
       final a = SessionAdapt(
         blockId: place.blockId,
         weekIndex: place.weekIndex,
@@ -1291,16 +1386,32 @@ extension SessionAdaptStore on AppStore {
     final place = adaptPlaceOf(week, base.j);
     if (place == null || place.blockId != a.blockId) return null;
     try {
-      final input = _adaptInput(place, key);
-      if (input == null) return null;
       final useCheck = _answered(check) ? check : null;
+      // CI1h (C15.4) : sans bilan du jour, une séance pas commencée se
+      // prescrit comme à l'ouverture (date prévue si elle est à venir) ;
+      // avec un bilan, au jour réel. La séance sans l'effet du bilan reste
+      // celle de l'ouverture.
+      final log = logs[key];
+      final started =
+          log != null &&
+          (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)));
+      final planned = started ? null : adaptPlanDay(week, base.j);
+      final input = _adaptInput(
+        place,
+        key,
+        day: useCheck == null ? planned : null,
+      );
+      if (input == null) return null;
       final plan = _adaptPrescribe(place, input, useCheck, where);
       kc.SessionPlan? without;
       if (useCheck != null) {
         // « Garder ma séance » / « Annuler » retire l'effet de la forme du
         // jour, pas les faits donnés : temps disponible et douleurs restent.
         final facts = factsOf(useCheck);
-        final b = _adaptPrescribe(place, input, facts, where);
+        final quietInput = planned == null
+            ? input
+            : _adaptInput(place, key, day: planned) ?? input;
+        final b = _adaptPrescribe(place, quietInput, facts, where);
         if (!jsonDeepEquals(b.toJson(), plan.toJson())) without = b;
       }
       final mode = adaptMode;
@@ -2171,7 +2282,7 @@ extension SessionAdaptStore on AppStore {
     try {
       final input = _adaptInput(placeOf, key);
       if (input == null) return null;
-      final advice = kalisAdaptEngine.adviseNextSet(
+      var advice = kalisAdaptEngine.adviseNextSet(
         content.catalog!,
         kc.AdviceRequest(
           input: input,
@@ -2190,6 +2301,33 @@ extension SessionAdaptStore on AppStore {
             break;
           }
         }
+      }
+      // CI1h (C15.2) : ligne à charge fixe du programme : jamais de
+      // changement de charge entre les séries, seulement les répétitions.
+      final fixed = _fixedLoadAt(placeOf, it.slotId, it.exerciseId);
+      if (fixed != null &&
+          !debugDisableFixedLoad &&
+          (log == null || index >= log.sets.length)) {
+        advice = advice.copyWith(
+          action: kc.IntraSessionAction.keep,
+          nextLoadKg: null,
+          nextRepsLow: null,
+          nextRepsHigh: null,
+          nextSeconds: null,
+        );
+      } else if (fixed != null && !debugDisableFixedLoad && log != null) {
+        final s = log.sets[index];
+        final steps = a.advice[e.id] ?? const <AdviceStep>[];
+        advice = fixedLoadAdvice(
+          advice,
+          item: it,
+          kg: fixed,
+          goal: adviceGoal(it, index, steps),
+          done: s.partsTotal ?? parseWholeNumber(s.reps),
+          flames: s.flames,
+          next: next < 0 ? null : adviceGoal(it, next, steps),
+          planned: next < 0 ? null : planGoal(it, next),
+        );
       }
       if (advice.action == kc.IntraSessionAction.keep ||
           advice.action == kc.IntraSessionAction.restMore ||
@@ -2329,7 +2467,7 @@ extension SessionAdaptStore on AppStore {
         if (!(log?.ex[e.id]?.sets.any((s) => s.done) ?? false)) continue;
         if (!seen.add(id)) continue;
         final it = _adaptItem(a, e.slotId);
-        final next = _adaptNextGoal(week, base.j, id, withLog, nextPlans);
+        final next = _adaptNextGoal(week, base.j, id, e.slotId, nextPlans);
         out.add(
           AdaptExerciseSummary(
             exerciseId: id,
@@ -2340,7 +2478,10 @@ extension SessionAdaptStore on AppStore {
                     it.reasons.any((r) => r.code == 'adapt.calibration')),
             before: find(before, id),
             after: find(after, id),
-            next: next,
+            next: next?.goal,
+            nextWeek: next?.week,
+            nextJ: next?.j,
+            nextDate: next?.date,
             today: it == null ? null : adaptGoal(week, base.j, e, 0),
           ),
         );
@@ -2352,54 +2493,67 @@ extension SessionAdaptStore on AppStore {
   }
 
   /// Première série de la prochaine journée (dans les 6 semaines) où
-  /// l'exercice [id] revient, prescrite avec le journal [log].
-  SetGoal? _adaptNextGoal(
+  /// l'exercice [id] revient, avec la séance visée (S, J, date prévue).
+  ///
+  /// CI1h (C15.4) : prescrite par le même calcul que l'ouverture de cette
+  /// séance ([adaptPlannedSession] : même journal, même saison, mêmes
+  /// réglages, date prévue, charge fixe) ; une journée déjà commencée ou
+  /// faite n'est pas « la prochaine fois ».
+  ({SetGoal goal, int week, int j, DateTime? date})? _adaptNextGoal(
     int week,
     int j,
     String id,
-    kc.TrainingLog log,
+    String? slot,
     Map<String, kc.SessionPlan?> cache,
   ) {
-    final profile = adaptProfile;
-    if (profile == null) return null;
+    // Même ligne du programme d'abord (même emplacement : « Squat endurance »
+    // de J6 → J6 de la semaine suivante), sinon le même exercice.
+    if (slot != null) {
+      final r = _adaptNextGoalOf(week, j, id, slot, cache);
+      if (r != null) return r;
+    }
+    return _adaptNextGoalOf(week, j, id, null, cache);
+  }
+
+  ({SetGoal goal, int week, int j, DateTime? date})? _adaptNextGoalOf(
+    int week,
+    int j,
+    String id,
+    String? slot,
+    Map<String, kc.SessionPlan?> cache,
+  ) {
     for (var n = week; n <= math.min(week + 6, program.weeks.length); n++) {
       for (final d in program.week(n).days) {
         if (n == week && d.j <= j) continue;
         if (d.exercises.isEmpty) continue;
+        final log = logs[sessionKey(n, d.j)];
+        if (log != null &&
+            (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)))) {
+          continue;
+        }
         final place = adaptPlaceOf(n, d.j);
         if (place == null) continue;
         final dayItems = place.day?.items ?? const <kc.ExercisePrescription>[];
-        if (!dayItems.any((it) => it.exerciseId == id)) continue;
-        final k = '${place.blockId}|${place.weekIndex}|${place.dayIndex}';
-        // Prescrite au jour prévu de cette séance (la fatigue du jour
-        // retombe d'ici là), jamais avant aujourd'hui.
-        var day = _adaptToday;
-        if (program.start != null) {
-          final planned = civilOf(program.dateFor(n, d.j));
-          if (planned.compareTo(day) > 0) day = planned;
-        }
-        final plan = cache.putIfAbsent(k, () {
+        bool hit(kc.ExercisePrescription it) =>
+            it.exerciseId == id && (slot == null || it.slotId == slot);
+        if (!dayItems.any(hit)) continue;
+        final plan = cache.putIfAbsent('$n|${d.j}', () {
           try {
-            return kalisAdaptEngine.prescribeSession(
-              content.catalog!,
-              kc.SessionRequest(
-                input: kc.AdaptInput(
-                  profile: profile,
-                  block: place.block,
-                  log: log,
-                  today: day,
-                ),
-                weekIndex: place.weekIndex,
-                dayIndex: place.dayIndex,
-              ),
-            );
+            return adaptPlannedSession(n, d.j, place: place);
           } catch (_) {
             return null;
           }
         });
         if (plan == null) return null;
         for (final it in plan.items) {
-          if (it.exerciseId == id) return planGoal(it, 0);
+          if (hit(it)) {
+            return (
+              goal: planGoal(it, 0),
+              week: n,
+              j: d.j,
+              date: program.start == null ? null : program.dateFor(n, d.j),
+            );
+          }
         }
         return null;
       }
