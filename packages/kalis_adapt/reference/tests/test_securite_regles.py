@@ -885,3 +885,34 @@ def test_duree_bornee_course_bornee_un_jour_d_epreuve():
     ouvrir(k, 20, budget=5)
     out = servir(k, [pompes('p', 3, restSeconds=90)])
     assert out[0]['sets'] == 3
+
+
+def test_pas_de_tentative_maximale_au_retour_de_coupure():
+    """Relecture finale N1 : la semaine du retour après une coupure, un test
+    1RM écrit (hors jour d'épreuve) est reporté ; un jour d'épreuve, l'ouverture
+    ne dépasse pas le dernier passage."""
+    ex = 'mu-back-squat-barre-basse'
+
+    def servir(evenement):
+        k = koach(niveau=2)
+        s = k.seances
+        ouvrir(k, 40)
+        s.coupure = 21
+        if evenement:
+            s.contexte = dict(s.contexte or {}, jour_evenement=True)
+        t = k.modele.piste(ex)
+        t.mesures = 5
+        t.seances = 8
+        mem = s.mem(ex)
+        mem.charge_derniere = 100.0
+        mem.charges_reussies = [(15, 140.0, 1)]
+        item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'test', 'sets': 3, 'repsLow': 1, 'repsHigh': 1,
+                'targetFlames': 10, 'test': {'kind': 'one_rm'}}
+        out = s.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {'s1': 'main'})
+        return s, out
+    s, out = servir(False)
+    assert out == [] and any(r['code'] == 'koach.test_reporte' and r['params'].get('cause') == 'coupure'
+                             for r in s.raisons)
+    s, out = servir(True)
+    assert len(out) == 1
+    assert s.cible(out[0], 0, [])['loadKg'] <= 100.0

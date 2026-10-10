@@ -63,7 +63,7 @@ from banc import securite_banc as sb  # noqa: E402
 SCHEMA = 'kalis_adapt/criteres_km1/1'
 DOSSIER_TRAVAIL = '/tmp/km1-campagne'
 FICHIER_PARAMS = os.path.join(RACINE, 'params', 'koach_params_v1.json')
-SET9 = '/home/claude/km1-outils/SET9'
+SET9 = os.environ.get('KM1_SET9', '')
 SORTIE = os.path.join(RACINE, 'donnees', 'criteres_km1.json')
 
 MODES = ('loadedMain', 'loaded', 'reps', 'hold')

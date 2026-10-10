@@ -626,6 +626,12 @@ class Seances(object):
         if est_test and self.palier >= 1 and not evenement:
             self._raison('koach.test_reporte', exercice=ex_id, cause='bilan_bas')
             return None
+        if est_test and self.coupure > 0 and not evenement and typ == 'charge' \
+                and (item.get('test') or {}).get('kind') in ('one_rm', 'attempt_simulation'):
+            # Semaine du retour après une coupure : pas de tentative maximale
+            # (les barres « récentes » datent d'avant la coupure).
+            self._raison('koach.test_reporte', exercice=ex_id, cause='coupure')
+            return None
         servi = dict(item)
         plan = {'cond': cond, 'role': role, 'test': est_test, 'type': typ, 'grille': grille,
                 'sans_hausse': cond['sans_hausse'] or self.palier >= 1, 'rir_bonus': cond['rir'],
@@ -2205,9 +2211,14 @@ class Seances(object):
             # réussie dans les 42 jours reste une ouverture sûre : elle sert
             # de plancher, sans dépasser le plafond d'ouverture, et pas un
             # jour de bilan bas ou de zone douloureuse.
-            if recente is not None and recente > charge and baisse >= 1.0:
+            if recente is not None and recente > charge and baisse >= 1.0 \
+                    and not plan['sans_hausse'] and self.coupure == 0 and not mem.echec:
                 plafond = s['tentative_ouverture_part'] * math.exp(mu) - bw
                 charge = grille.plancher(max(min(recente, plafond), charge))
+            # Jour d'épreuve en semaine de retour (test gardé) ou jour sans
+            # hausse : l'ouverture ne dépasse pas le dernier passage.
+            if plan['sans_hausse'] and mem.charge_derniere is not None and charge > mem.charge_derniere:
+                charge = mem.charge_derniere
             # Plus prudent que 0.3.1 : l'ouverture ne dépasse jamais ce que
             # les barres réussies des 42 derniers jours justifient (+10 %,
             # +2,5 % par répétition faite au-delà de la première, 4 au plus :
