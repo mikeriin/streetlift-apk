@@ -64,5 +64,5 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 | CI1h | App | CI1g validé (C14.4) | — | — (lot d'application) | — | à faire — lancé le 10/10/2026 21:05 UTC (pilotage, accord du propriétaire, C15.7 « au plus pragmatique ») ; contexte : `LANCEMENTS.md`, section CI1h |
 | CI | App | CY, CU | — | — | — | en attente de CY, CU |
 | KM1 | A | — (C13.2) | référence Python de Koach 1.0.1 (`moteurs` 17df8ca ; 1.0 : f3801e36), 13 fixtures, contrat 1.0 avec note datée ; `kalis_bench` 0.3.1 (`etiquettes/kalis_bench-v0.3.1`). Livraisons : `livraisons/LIVRAISON_KM1.md`, `livraisons/LIVRAISON_KM1_correction1.md` | — (lot sans panel, C13.3) | 2026-10-10 | validé (pilotage, C13.11, 10/10/2026 17:05 UTC) — 7/11 ; écarts documentés : critère 1 (plancher du banc, ne bloque plus la bascule), critère 5 (remesuré en KM2 sur 6 graines), critère 10 (avant la bascule) |
-| KM2 | A | KM1 (validé, C13.11) | — | — | — | à faire (Opus, C13.9) — lancement dès qu'au plus une autre session tourne (C13.11.4) |
+| KM2 | A | KM1 (validé, C13.11) | — | — | — | en cours depuis 2026-10-10 21:03 UTC (Opus 5.5, effort maximal, C13.9) |
 | KM3 | App | KM2 ; lot CI final ; base v1.1 | — | — | — | en attente de KM2, lot CI final, base v1.1 |
