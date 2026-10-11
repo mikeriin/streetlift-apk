@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 6.17.0 : flou progressif (dev6.17.0).
-        self.assertEqual(version, '6.17.0')
+        # 6.17.1 : ligne des flammes en SDF (dev6.17.1).
+        self.assertEqual(version, '6.17.1')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)

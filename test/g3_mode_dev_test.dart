@@ -17,8 +17,8 @@ void main() {
   group('build de développement (G3)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test('version affichée : « dev6.17.0 » (flou progressif)', () {
-      expect(kAppVersion, 'dev6.17.0');
+    test('version affichée : « dev6.17.1 » (ligne des flammes en SDF)', () {
+      expect(kAppVersion, 'dev6.17.1');
     });
 
     test('session de test : même base d\'exercices, session personnelle '

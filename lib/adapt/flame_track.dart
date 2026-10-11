@@ -11,6 +11,8 @@
 // feuille d'actions (C10, une action réversible, donc pas en `danger`) ;
 // « Je ne sais pas » en lien texte discret de 48 dp (C13) ; ligne résumée
 // sans troncature (C3). Le dessin de la flamme ([FlameIcon]) est inchangé.
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kalis_core/kalis_core.dart' show Flames;
@@ -256,23 +258,16 @@ class _FlameTrackState extends State<FlameTrack> {
               builder: (context, c) {
                 final w = c.maxWidth;
                 final cell = w / Flames.max;
-                double x(int i) => cell * (i - .5);
-                const h = 48.0, flame = 34.0, dot = 7.0;
-                // 6.16.0 : la partie parcourue prend, à chaque position, la
-                // couleur du point qui y est posé (dégradé fixe sur toute la
-                // ligne, révélé jusqu'à la flamme) : la barre se fond dans
-                // les points et arrive dans la couleur de la flamme.
-                final full = x(Flames.max) - x(1);
-                final ramp = LinearGradient(
-                  colors: [
-                    for (var i = Flames.min; i <= Flames.max; i++)
-                      flameColor(i, dark: dark),
-                  ],
-                  stops: [
-                    for (var i = Flames.min; i <= Flames.max; i++)
-                      (x(i) - x(1)) / full,
-                  ],
-                );
+                const h = 48.0, flame = 34.0;
+                // 6.17.1 : ligne, points et base de la flamme forment une
+                // seule forme, union lisse de fonctions distance signées
+                // ([FlameTrackPainter]) : la barre se gonfle en douceur dans
+                // chaque point et dans la flamme. Couleur des points jusqu'à
+                // la flamme, `texte3` après.
+                final colors = [
+                  for (var i = Flames.min; i <= Flames.max; i++)
+                    flameColor(i, dark: dark),
+                ];
                 return GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTapUp: (d) {
@@ -289,136 +284,67 @@ class _FlameTrackState extends State<FlameTrack> {
                   child: SizedBox(
                     height: h,
                     width: w,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        // Ligne de fond.
-                        Positioned(
-                          left: x(1),
-                          right: cell / 2,
-                          top: h / 2 - 1,
-                          height: 2,
-                          child: ColoredBox(color: k.filet),
-                        ),
-                        // Partie parcourue jusqu'à la flamme : dégradé des
-                        // couleurs des points, fixe, révélé de gauche à
-                        // droite.
-                        AnimatedPositioned(
-                          duration: motion,
-                          curve: Curves.easeOutCubic,
-                          left: x(1),
-                          width: v == null ? 0 : x(v) - x(1),
-                          top: h / 2 - 1.5,
-                          height: 3,
-                          child: ClipPath(
-                            clipper: const ShapeBorderClipper(
-                              shape: KRadius.pill,
-                            ),
-                            child: OverflowBox(
-                              alignment: Alignment.centerLeft,
-                              minWidth: full,
-                              maxWidth: full,
-                              child: DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  shape: const RoundedRectangleBorder(),
-                                  gradient: ramp,
-                                ),
-                                child: const SizedBox.expand(),
+                    child: TweenAnimationBuilder<double>(
+                      duration: motion,
+                      curve: Curves.easeOutCubic,
+                      tween: Tween(end: (v ?? Flames.min).toDouble()),
+                      builder: (context, at, _) => Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Positioned.fill(
+                            child: CustomPaint(
+                              painter: FlameTrackPainter(
+                                at: v == null ? null : at,
+                                cell: cell,
+                                colors: colors,
+                                rest: k.texte3,
                               ),
                             ),
                           ),
-                        ),
-                        // Halo de la flamme : fondu de sa couleur, qui relie
-                        // la barre à la flamme.
-                        if (v != null)
-                          AnimatedPositioned(
-                            duration: motion,
-                            curve: Curves.easeOutBack,
-                            left: x(v) - flame * .75,
-                            top: h / 2 - flame * .75,
-                            width: flame * 1.5,
-                            height: flame * 1.5,
-                            child: IgnorePointer(
-                              child: TweenAnimationBuilder<Color?>(
-                                duration: motion,
-                                tween: ColorTween(
-                                  end: flameColor(v, dark: dark),
-                                ),
-                                builder: (context, c, _) => DecoratedBox(
-                                  decoration: ShapeDecoration(
-                                    shape: const CircleBorder(),
-                                    gradient: RadialGradient(
-                                      colors: [
-                                        (c ?? k.filet).withValues(alpha: .38),
-                                        (c ?? k.filet).withValues(alpha: 0),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                          // Une case par position (cibles et repères).
+                          for (var i = Flames.min; i <= Flames.max; i++)
+                            Positioned(
+                              key: ValueKey('flame-pos-$i'),
+                              left: cell * (i - 1),
+                              width: cell,
+                              top: 0,
+                              height: h,
+                              child: const SizedBox.expand(),
                             ),
-                          ),
-                        // Les 9 points (10 sans flamme), une case chacun.
-                        for (var i = Flames.min; i <= Flames.max; i++)
-                          Positioned(
-                            key: ValueKey('flame-pos-$i'),
-                            left: cell * (i - 1),
-                            width: cell,
-                            top: 0,
-                            height: h,
-                            child: Center(
-                              child: AnimatedOpacity(
-                                duration: motion,
-                                opacity: i == v ? 0 : 1,
-                                child: AnimatedContainer(
+                          // La flamme choisie, à sa place.
+                          if (v != null)
+                            Positioned(
+                              key: const ValueKey('flame-thumb'),
+                              left: cell * (at - .5) - flame / 2,
+                              top: (h - flame) / 2,
+                              width: flame,
+                              height: flame,
+                              child: IgnorePointer(
+                                child: AnimatedSwitcher(
                                   duration: motion,
-                                  width: dot,
-                                  height: dot,
-                                  decoration: ShapeDecoration(
-                                    shape: const CircleBorder(),
-                                    color: v != null && i < v
-                                        ? flameColor(i, dark: dark)
-                                        : k.texte3,
+                                  transitionBuilder: (child, a) =>
+                                      ScaleTransition(
+                                        scale: Tween(
+                                          begin: .6,
+                                          end: 1.0,
+                                        ).animate(a),
+                                        child: FadeTransition(
+                                          opacity: a,
+                                          child: child,
+                                        ),
+                                      ),
+                                  child: FlameIcon(
+                                    v,
+                                    key: ValueKey('flame-thumb-$v'),
+                                    size: flame,
+                                    semantics: false,
+                                    onBase: true,
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        // La flamme choisie, à sa place.
-                        if (v != null)
-                          AnimatedPositioned(
-                            key: const ValueKey('flame-thumb'),
-                            duration: motion,
-                            curve: Curves.easeOutBack,
-                            left: x(v) - flame / 2,
-                            top: (h - flame) / 2,
-                            width: flame,
-                            height: flame,
-                            child: IgnorePointer(
-                              child: AnimatedSwitcher(
-                                duration: motion,
-                                transitionBuilder: (child, a) =>
-                                    ScaleTransition(
-                                      scale: Tween(
-                                        begin: .6,
-                                        end: 1.0,
-                                      ).animate(a),
-                                      child: FadeTransition(
-                                        opacity: a,
-                                        child: child,
-                                      ),
-                                    ),
-                                child: FlameIcon(
-                                  v,
-                                  key: ValueKey('flame-thumb-$v'),
-                                  size: flame,
-                                  semantics: false,
-                                  onBase: true,
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -594,5 +520,163 @@ class SetSummaryLine extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// 6.17.1 : ligne des flammes dessinée comme une seule forme : union lisse
+/// (« smooth min » polynomial) des fonctions distance signées d'une ligne
+/// (capsule), des points (cercles) et de la base de la flamme (cercle), de
+/// sorte que la ligne s'évase en douceur dans chaque point et sous la
+/// flamme, sans arête. La forme est symétrique autour de la ligne : pour
+/// chaque abscisse, sa demi-hauteur est le zéro de la distance, trouvé par
+/// dichotomie (la distance croît avec l'écart à la ligne). Remplissage :
+/// couleur du point de chaque position jusqu'à la flamme, [rest] après.
+class FlameTrackPainter extends CustomPainter {
+  /// Position de la flamme (1 à 10, continue pendant l'animation) ; null :
+  /// aucune note.
+  final double? at;
+  final double cell;
+  final List<Color> colors;
+  final Color rest;
+
+  /// Rayon des points, demi-épaisseurs de la ligne (parcourue, restante),
+  /// rayon de la base de la flamme, rayon de lissage.
+  static const double dot = 3.5, line = 1.5, lineRest = 1, base = 5, k = 5;
+
+  const FlameTrackPainter({
+    required this.at,
+    required this.cell,
+    required this.colors,
+    required this.rest,
+  });
+
+  double _x(double i) => cell * (i - .5);
+
+  static double _smin(double a, double b) {
+    final h = math.max(k - (a - b).abs(), 0.0) / k;
+    return math.min(a, b) - h * h * k * .25;
+  }
+
+  static double _capsule(double px, double py, double a, double b, double r) {
+    final dx = px < a ? a - px : (px > b ? px - b : 0.0);
+    return math.sqrt(dx * dx + py * py) - r;
+  }
+
+  /// Distance signée de la forme au point (px, py), py mesuré depuis la
+  /// ligne.
+  double _field(double px, double py) {
+    final first = _x(1), last = _x(10);
+    final split = at == null ? first : _x(at!);
+    var d = _capsule(px, py, split, last, lineRest);
+    if (at != null) d = _smin(d, _capsule(px, py, first, split, line));
+    for (var i = 1; i <= 10; i++) {
+      final cx = _x(i.toDouble());
+      // Le point sous la flamme s'efface à mesure qu'elle s'en approche.
+      final double near = at == null
+          ? 1
+          : math.min((cx - split).abs() / cell, 1.0);
+      final r = dot * near;
+      if (r < .2) continue;
+      final dx = px - cx;
+      d = _smin(d, math.sqrt(dx * dx + py * py) - r);
+    }
+    if (at != null) {
+      final dx = px - split;
+      d = _smin(d, math.sqrt(dx * dx + py * py) - base);
+    }
+    return d;
+  }
+
+  /// Demi-hauteur de la forme à l'abscisse [px] (0 : hors de la forme).
+  double _half(double px) {
+    if (_field(px, 0) >= 0) return 0;
+    double lo = 0, hi = base + k;
+    for (var n = 0; n < 18; n++) {
+      final mid = (lo + hi) / 2;
+      if (_field(px, mid) < 0) {
+        lo = mid;
+      } else {
+        hi = mid;
+      }
+    }
+    return lo;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cy = size.height / 2;
+    final top = <Offset>[];
+    final bottom = <Offset>[];
+    final from = _x(1) - base - k, to = _x(10) + base + k;
+    for (var px = from; px <= to; px += .5) {
+      final hh = _half(px);
+      if (hh <= 0) continue;
+      top.add(Offset(px, cy - hh));
+      bottom.add(Offset(px, cy + hh));
+    }
+    if (top.length < 2) return;
+    final path = Path()..moveTo(top.first.dx, top.first.dy);
+    for (final o in top.skip(1)) {
+      path.lineTo(o.dx, o.dy);
+    }
+    for (final o in bottom.reversed) {
+      path.lineTo(o.dx, o.dy);
+    }
+    path.close();
+    // Couleurs : point de chaque position jusqu'à la flamme, puis [rest]
+    // (bascule douce sur une demi-case).
+    final w = size.width <= 0 ? 1.0 : size.width;
+    final stops = <double>[];
+    final cs = <Color>[];
+    if (at == null) {
+      cs.addAll([rest, rest]);
+      stops.addAll([0, 1]);
+    } else {
+      final split = _x(at!);
+      for (var i = 1; i <= 10; i++) {
+        final cx = _x(i.toDouble());
+        if (cx >= split) break;
+        cs.add(colors[i - 1]);
+        stops.add(math.min(math.max(cx / w, 0.0), 1.0));
+      }
+      final int lo = math.min(math.max(at!.floor(), 1), 10);
+      final int hi = math.min(math.max(at!.ceil(), 1), 10);
+      final here = Color.lerp(colors[lo - 1], colors[hi - 1], at! - lo)!;
+      cs.add(here);
+      stops.add(math.min(math.max(split / w, 0.0), 1.0));
+      cs.add(rest);
+      stops.add(math.min(math.max((split + cell / 2) / w, 0.0), 1.0));
+    }
+    final paint = Paint()
+      ..isAntiAlias = true
+      ..shader = LinearGradient(
+        colors: cs,
+        stops: _sorted(stops),
+      ).createShader(Rect.fromLTWH(0, 0, w, size.height));
+    canvas.drawPath(path, paint);
+  }
+
+  /// Arrêts du dégradé croissants (exigé par le moteur de rendu).
+  static List<double> _sorted(List<double> s) {
+    final out = <double>[];
+    for (final v in s) {
+      out.add(out.isEmpty ? v : math.max(v, out.last));
+    }
+    return out;
+  }
+
+  @override
+  bool shouldRepaint(FlameTrackPainter old) =>
+      old.at != at ||
+      old.cell != cell ||
+      old.rest != rest ||
+      !_same(old.colors, colors);
+
+  static bool _same(List<Color> a, List<Color> b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 }
