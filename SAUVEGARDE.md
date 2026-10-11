@@ -34,3 +34,8 @@ Base : `moteurs` df28b47c. Session Fable 5.1, lancée le 11/10/2026 ~05:10 UTC. 
 - Code final 1.0.2-ref.1 (322 clés, SHA 211c9361…). Tests : 190+ passent hors fixtures. Docs faits : CHANGEMENTS_1_0_2.md, CONTRAT (note datée du 11/10, règles, clés), SOURCES, README, PORTAGE_DART (delta).
 - CI : campagne finale relancée à 08:00 UTC (ci-cp-a 41669a56 partie 1/2, ci-cp-b 97be396b partie 2/2). Local : recherche adversariale finale relancée à 08:00.
 - Reste : fixtures (`python3 fixtures/generer.py`), assemblage de la campagne (`/tmp/k/recup.sh` puis `python3 -m banc.campagne --graines 6 --sortie donnees/criteres_km1c2.json`), témoin Dart sur les adversaires finaux (ci/run_temoin.sh, AVEC_DART=1, après la campagne), comparaison 7 bis, données publiées, contrôle complet (arbre de moteurs sur ci-cp-a), push moteurs, livraison, ETAT, page de suivi, notification.
+
+## Fin de lot (11/10/2026, 11:30 UTC)
+KM1c2 livré : `moteurs` 9ac79e40 poussé, `etiquettes/kalis_bench-v0.4.1` créée, contrôle complet run 38129459466 vert,
+`pipeline` 8925729d (livraison, DECISIONS section KM1c2, ETAT « livré »), document du projet `claude/LIVRAISON_KM1c2.md`,
+page de suivi version 45. Rien ne reste à faire pour ce lot.
