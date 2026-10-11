@@ -219,11 +219,10 @@ void main() {
           .day!
           .items
           .firstWhere((w) => w.slotId == it.slotId);
-      expect((it.sets, it.repsLow, it.repsHigh), (
-        written.sets,
-        written.repsLow,
-        written.repsHigh,
-      ));
+      expect(
+        (it.sets, it.repsLow, it.repsHigh),
+        (written.sets, written.repsLow, written.repsHigh),
+      );
       expect(
         it.reasons.any(
           (r) => r.code == 'adapt.load_held' && r.params['cause'] == 'program',

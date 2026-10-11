@@ -1140,7 +1140,9 @@ extension SessionAdaptStore on AppStore {
         if (!identical(next, it) && next.validate().isNotEmpty) next = it;
       }
       if (!identical(next, it)) changed = true;
-      if (next.sets > it.sets) restored.add((it.exerciseId, it.sets - next.sets));
+      if (next.sets > it.sets) {
+        restored.add((it.exerciseId, it.sets - next.sets));
+      }
       items.add(next);
     }
     if (!changed) return plan;

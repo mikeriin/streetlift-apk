@@ -102,8 +102,10 @@ List<kc.ExercisePrescription> _written(AppStore app, int week, int j) =>
     app.adaptPlaceOf(week, j)!.day!.items;
 
 /// Prescription du squat endurance (ligne à 70 kg) de [plan].
-kc.ExercisePrescription _squat(AppStore app, kc.SessionPlan plan) => plan.items
-    .firstWhere((it) => app.adaptFixedLoad(14, 6, it.slotId, it.exerciseId) == 70);
+kc.ExercisePrescription _squat(AppStore app, kc.SessionPlan plan) =>
+    plan.items.firstWhere(
+      (it) => app.adaptFixedLoad(14, 6, it.slotId, it.exerciseId) == 70,
+    );
 
 String _codes(List<kc.Reason> rs) => [for (final r in rs) r.code].join(',');
 
@@ -127,35 +129,42 @@ void main() {
   });
 
   group('défaut A — séance future au jour réel', () {
-    test('S14·J6 ouverte le dimanche d’avant (S14·J1 à J5 pas faites) : '
-        'ordre et exercices écrits, pas de dead-hang, squat 70 kg × 14', () async {
-      await _owner(app);
-      final base = app.program.week(14).day(6)!;
-      final a = app.adaptOpen(14, base)!;
-      expect(a.plan.date.iso, '2026-10-11');
-      final writtenSlots = [for (final it in _written(app, 14, 6)) it.slotId];
-      final servedSlots = [for (final it in a.plan.items) it.slotId];
-      // ignore: avoid_print
-      print('CI1H1|A|dimanche|écrit=$writtenSlots|servi=$servedSlots');
-      expect(servedSlots, writtenSlots);
-      final writtenNames = {for (final e in base.exercises) e.name};
-      final served = app.adaptDay(14, base, a).exercises;
-      for (final e in served) {
-        if (e.name.startsWith('Dead-hang')) {
-          expect(writtenNames, contains(e.name));
+    test(
+      'S14·J6 ouverte le dimanche d’avant (S14·J1 à J5 pas faites) : '
+      'ordre et exercices écrits, pas de dead-hang, squat 70 kg × 14',
+      () async {
+        await _owner(app);
+        final base = app.program.week(14).day(6)!;
+        final a = app.adaptOpen(14, base)!;
+        expect(a.plan.date.iso, '2026-10-11');
+        final writtenSlots = [for (final it in _written(app, 14, 6)) it.slotId];
+        final servedSlots = [for (final it in a.plan.items) it.slotId];
+        // ignore: avoid_print
+        print('CI1H1|A|dimanche|écrit=$writtenSlots|servi=$servedSlots');
+        expect(servedSlots, writtenSlots);
+        final writtenNames = {for (final e in base.exercises) e.name};
+        final served = app.adaptDay(14, base, a).exercises;
+        for (final e in served) {
+          if (e.name.startsWith('Dead-hang')) {
+            expect(writtenNames, contains(e.name));
+          }
         }
-      }
-      final squat = _squat(app, a.plan);
-      final w = _written(app, 14, 6).firstWhere((x) => x.slotId == squat.slotId);
-      expect(w.repsLow, 14, reason: 'round(1,3 × 32 ÷ 3)');
-      expect(squat.repsLow, 14);
-      expect(squat.repsHigh, 14);
-      expect(squat.sets, w.sets);
-      for (var i = 0; i < squat.sets; i++) {
-        expect(planGoal(squat, i).kg, 70);
-        expect(planGoal(squat, i).low, 14);
-      }
-    });
+        final squat = _squat(app, a.plan);
+        final w = _written(
+          app,
+          14,
+          6,
+        ).firstWhere((x) => x.slotId == squat.slotId);
+        expect(w.repsLow, 14, reason: 'round(1,3 × 32 ÷ 3)');
+        expect(squat.repsLow, 14);
+        expect(squat.repsHigh, 14);
+        expect(squat.sets, w.sets);
+        for (var i = 0; i < squat.sets; i++) {
+          expect(planGoal(squat, i).kg, 70);
+          expect(planGoal(squat, i).low, 14);
+        }
+      },
+    );
 
     test('même séance ouverte le samedi avec J4 et J5 réellement manquées : '
         'le report du test reste possible (moteur inchangé le jour même) ; '
@@ -258,11 +267,10 @@ void main() {
             '|servi=${now.sets}×${now.repsLow}@${now.startLoadKg}',
           );
           if (at.day == 11) {
-            expect((now.sets, now.repsLow, now.repsHigh), (
-              written.sets,
-              written.repsLow,
-              written.repsHigh,
-            ));
+            expect(
+              (now.sets, now.repsLow, now.repsHigh),
+              (written.sets, written.repsLow, written.repsHigh),
+            );
             expect(now.startLoadKg, 70);
           }
         }
@@ -332,12 +340,10 @@ void main() {
         reasons: const [kc.Reason(code: 'adapt.reps_down', params: {})],
       );
       final plain = fixedLoadItem(engine, 70, written);
-      expect((plain.sets, plain.repsLow, plain.repsHigh, plain.startLoadKg), (
-        3,
-        14,
-        14,
-        70.0,
-      ));
+      expect(
+        (plain.sets, plain.repsLow, plain.repsHigh, plain.startLoadKg),
+        (3, 14, 14, 70.0),
+      );
       expect(plain.reasons.any((r) => r.code == 'adapt.reps_down'), isFalse);
       expect(plain.validate(), isEmpty);
       for (final r in const [
@@ -376,11 +382,10 @@ void main() {
       );
       expect((leg.sets, leg.repsLow), (2, 11));
       final session = fixedLoadItem(engine, 70, written, sessionLowered: true);
-      expect((session.sets, session.repsLow, session.startLoadKg), (
-        2,
-        11,
-        70.0,
-      ));
+      expect(
+        (session.sets, session.repsLow, session.startLoadKg),
+        (2, 11, 70.0),
+      );
       // Jamais au-delà de la ligne écrite, même quand le moteur baisse.
       final over = fixedLoadItem(
         engine.copyWith(
@@ -402,17 +407,20 @@ void main() {
       final base = app.program.week(14).day(6)!;
       final a = app.adaptOpen(14, base)!;
       final squat = _squat(app, a.plan);
-      final w = _written(app, 14, 6).firstWhere((x) => x.slotId == squat.slotId);
+      final w = _written(
+        app,
+        14,
+        6,
+      ).firstWhere((x) => x.slotId == squat.slotId);
       // ignore: avoid_print
       print(
         'CI1H1|B|coupure8|${squat.sets}×${squat.repsLow}@${squat.startLoadKg}'
         '|raisons=${_codes(squat.reasons)}|séance=${_codes(a.plan.reasons)}',
       );
-      expect((squat.sets, squat.repsLow, squat.repsHigh), (
-        w.sets,
-        w.repsLow,
-        w.repsHigh,
-      ));
+      expect(
+        (squat.sets, squat.repsLow, squat.repsHigh),
+        (w.sets, w.repsLow, w.repsHigh),
+      );
     });
 
     test('bilan bas : le volume du squat peut baisser, charge 70', () async {
@@ -425,7 +433,11 @@ void main() {
         const kc.HealthCheck(overall: 1, sleepQuality: 1),
       )!;
       final squat = _squat(app, a.active);
-      final w = _written(app, 14, 6).firstWhere((x) => x.slotId == squat.slotId);
+      final w = _written(
+        app,
+        14,
+        6,
+      ).firstWhere((x) => x.slotId == squat.slotId);
       // ignore: avoid_print
       print(
         'CI1H1|B|bilan_bas|${squat.sets}×${squat.repsLow}@${squat.startLoadKg}'
