@@ -1,0 +1,2 @@
+cote=apres
+ecran=Override size: 540x960
