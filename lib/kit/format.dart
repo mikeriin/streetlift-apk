@@ -144,3 +144,12 @@ String decimalFieldText(String stored) => stored.replaceAll('.', ',');
 /// avec le point décimal (« 62.5 »), comme le pré-remplissage et le
 /// journal l'ont toujours écrit. Même valeur lue par le journal.
 String decimalStoredText(String typed) => typed.replaceAll(',', '.');
+
+/// Texte de contenu (consignes du programme, données) affiché avec les noms
+/// de pages de l'application (cahier R9, UI5) : « la feuille Pilotage »,
+/// libellé interne des anciennes consignes, devient « Mes références ». Les
+/// données ne changent pas.
+String contentText(String text) => text
+    .replaceAll('de la feuille Pilotage', 'de Mes références')
+    .replaceAll('la feuille Pilotage', 'Mes références')
+    .replaceAll('feuille Pilotage', 'Mes références');

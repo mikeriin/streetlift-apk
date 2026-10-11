@@ -366,7 +366,7 @@ class _SessionScreenState extends State<SessionScreen> {
     context,
     title: 'Consignes de séance',
     subtitle: '${widget.day.title}, ${sessionPlace(widget.week, widget.day)}',
-    builder: (ctx) => Text(widget.day.conduite),
+    builder: (ctx) => Text(contentText(widget.day.conduite)),
   );
 
   /// Menu ⋮ de la séance : feuille d'actions au contenu du §4.1.
@@ -1456,7 +1456,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (ex.cue.isNotEmpty) Text(ex.cue),
+            if (ex.cue.isNotEmpty) Text(contentText(ex.cue)),
             // L10 (KT-057) : pourquoi cet exercice (programme généré).
             if (ex.why.isNotEmpty) ...[
               const SizedBox(height: KSpacing.s8),
