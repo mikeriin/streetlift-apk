@@ -6,7 +6,11 @@
 //     --dart-define=UI_TOUR_PART=a --dart-define=KALIS_DEV=true -d emulator-5554
 // Parties : a = sombre, bordeaux, session personnelle ; b = clair, neon,
 // personnelle ; c = sombre, neon, session de test ; d = clair, bordeaux,
-// session de test.
+// session de test. UI5 : e = sombre, bordeaux, personnelle, téléphone de
+// 320 dp et texte à 200 % (densité et taille de police posées par
+// tools/ci_ui_drive.sh) ; f = les palettes (8 après, 6 couleurs avant), en
+// sombre et en clair, puis le contraste renforcé (après seulement), sur
+// l'accueil et la séance.
 // Le même fichier tourne sur le lot (« après ») et sur main b7996b3f
 // (« avant », palettes sous leurs anciens noms rouge et jaune) : il n'utilise
 // que l'API commune aux deux (magasin, racine `kalisApp`, écrans existants,
@@ -58,9 +62,9 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
   final data = <String, Object?>{};
-  final dark = _part == 'a' || _part == 'c';
+  final dark = _part == 'a' || _part == 'c' || _part == 'e' || _part == 'f';
   final dev = _part == 'c' || _part == 'd';
-  final palette = (_part == 'a' || _part == 'd') ? 'bordeaux' : 'neon';
+  final palette = (_part == 'b' || _part == 'c') ? 'neon' : 'bordeaux';
   final releve = <String, Object?>{
     'partie': _part,
     'theme': dark ? 'sombre' : 'clair',
@@ -314,6 +318,80 @@ void main() {
     releve['session_de_test_active'] = DevSession.active.value;
     releve['palette_lue'] = store.settings.accent;
     record();
+
+    // UI5, partie f : palettes et contraste renforcé sur l'accueil et la
+    // séance (cahier §7.3), puis fin du tour.
+    if (_part == 'f') {
+      final now = store.storeClock();
+      var fw = store.program.weekFor(now);
+      var fj = (store.program.offsetOf(now) ?? 0) % 7 + 1;
+      for (var k = 0; k < 7; k++) {
+        final d = DateTime(now.year, now.month, now.day + k);
+        final ww = store.program.weekFor(d);
+        final jj = (store.program.offsetOf(d) ?? 0) % 7 + 1;
+        final day = store.program.week(ww).day(jj);
+        if (day != null && day.exercises.isNotEmpty) {
+          fw = ww;
+          fj = jj;
+          break;
+        }
+      }
+      final fweek = store.program.week(fw);
+      final fday = fweek.day(fj);
+      Future<void> pair(String name) async {
+        await home(tester);
+        await screen(tester, '${name}_accueil');
+        if (fday == null) return;
+        await push(tester, SessionScreen(week: fweek, day: fday));
+        await screen(tester, '${name}_seance');
+        final skip = find.byKey(const ValueKey('feel-skip'));
+        if (skip.hitTestable().evaluate().isNotEmpty) {
+          await tester.tap(skip.hitTestable().first);
+          await wait(tester, 1500);
+          await screen(tester, '${name}_exercice');
+        }
+        await home(tester);
+      }
+
+      Future<void> apply(String id, bool isDark, bool contrast) async {
+        store.settings.theme = isDark ? 'dark' : 'light';
+        store.settings.accent = id;
+        try {
+          // Réglage ajouté par UI0 : absent de la base (« avant »).
+          (store.settings as dynamic).contrast = contrast;
+        } catch (_) {
+          if (contrast) return;
+        }
+        store.saveSettings();
+        await wait(tester, 1500);
+      }
+
+      final palettes = <String, Object?>{};
+      for (final id in kAccentIds) {
+        for (final isDark in const [true, false]) {
+          await apply(id, isDark, false);
+          final name = 'p_${id}_${isDark ? 'sombre' : 'clair'}';
+          await pair(name);
+          palettes[name] = store.settings.accent;
+        }
+      }
+      var contrastOk = true;
+      for (final id in const ['bordeaux', 'neon']) {
+        if (!kAccentIds.contains(id)) {
+          contrastOk = false;
+          break;
+        }
+        for (final isDark in const [true, false]) {
+          await apply(id, isDark, true);
+          await pair('r_${id}_${isDark ? 'sombre' : 'clair'}');
+        }
+      }
+      releve['palettes'] = palettes;
+      releve['contraste_renforce'] = contrastOk;
+      releve['captures'] = shots;
+      record();
+      return;
+    }
 
     // Programme (UI1).
     await screen(tester, 'accueil');

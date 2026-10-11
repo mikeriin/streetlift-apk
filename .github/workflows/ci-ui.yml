@@ -358,7 +358,8 @@ jobs:
     # Tour de captures et relevé des parcours (cahier UI §6.2, §6.3) : sur
     # le lot (« apres ») et sur la base b7996b3f (« avant »), même test
     # (integration_test/tour_ui_test.dart du lot, posé sur la base).
-    # Une tâche par côté et par partie (a à d), en parallèle : le tour complet
+    # Une tâche par côté et par partie (a à f ; e et f ajoutées par UI5 :
+    # 320 dp × 200 %, palettes et contraste renforcé), en parallèle : le tour complet
     # des quatre lots dépassait 70 min en une seule tâche (fusion UI3+UI4).
     name: Tour UI sur émulateur (${{ matrix.cote }}, ${{ matrix.part }})
     if: ${{ !endsWith(github.ref_name, '-rapide') }}
@@ -368,7 +369,7 @@ jobs:
       fail-fast: false
       matrix:
         cote: [apres, avant]
-        part: [a, b, c, d]
+        part: [a, b, c, d, e, f]
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     defaults:

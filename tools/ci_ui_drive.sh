@@ -6,7 +6,9 @@
 #   a = sombre, bordeaux, session personnelle ;
 #   b = clair, neon, session personnelle ;
 #   c = sombre, neon, session de test (build de développement) ;
-#   d = clair, bordeaux, session de test.
+#   d = clair, bordeaux, session de test ;
+#   e = sombre, bordeaux, personnelle, 320 dp de large et texte à 200 % (UI5) ;
+#   f = palettes et contraste renforcé sur l'accueil et la séance (UI5).
 # Sur la base b7996b3f (« avant »), les palettes bordeaux et neon sont lues
 # sous leurs anciens noms (rouge, jaune). Écrit dans build/ci3d/ : captures
 # tour_<partie>_<écran>.png, relevés tour_releve_<partie>.json (écrans
@@ -25,6 +27,14 @@ echo "ecran=$(adb shell wm size 2>/dev/null | tr -d '\r' | tail -n 1)" >> "$bila
 code=0
 for part in $parts; do
   adb shell am force-stop fr.tchoupi.streetlift_tracker || true
+  if [ "$part" = e ]; then
+    # 540 px à 270 dpi : 320 dp de large ; police système à 200 %.
+    adb shell wm density 270 || true
+    adb shell settings put system font_scale 2.0 || true
+  else
+    adb shell wm density 240 || true
+    adb shell settings put system font_scale 1.0 || true
+  fi
   timeout 900 flutter drive --no-pub \
     --driver=test_driver/integration_test.dart \
     --target=integration_test/tour_ui_test.dart \
