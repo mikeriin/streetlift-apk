@@ -344,7 +344,6 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final k = KTokens.of(context);
     // En-tête de sous-page (C1). « Lecture seule » seulement quand aucune
     // action n'écrit (archive hors du journal) ; sinon la séance est dite
     // enregistrée et son menu ⋮ propose la correction et la suppression.
@@ -353,6 +352,8 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     // repère et état, une seule action.
     final header = KSessionHeader(
       title: _day.title,
+      onTitleTap: _groups.isEmpty ? null : _chooseExercise,
+      titleTapHint: 'Voir la liste des exercices',
       subtitle: where.isEmpty
           ? (_editable ? 'Séance enregistrée' : 'Lecture seule')
           : '$where${_editable ? 'séance enregistrée' : 'lecture seule'}',
@@ -382,50 +383,24 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
                     )
                   : Column(
                       children: [
+                        // Même repère que la séance (correctifs UI,
+                        // 11/10/2026) : « Exercice 3 sur 7 » ouvre la liste.
                         Padding(
                           padding: const EdgeInsetsDirectional.only(
-                            start: KSpacing.page,
-                            end: KSpacing.s12,
-                            bottom: KSpacing.s4,
+                            start: KSpacing.s12,
+                            end: KSpacing.page,
                           ),
-                          child: Column(
-                            children: [
-                              // Même repère que la séance : « Exercice 3 sur 7 »
-                              // et le lien « Exercices » (passe à la ligne en
-                              // grand texte).
-                              SizedBox(
-                                width: double.infinity,
-                                child: Wrap(
-                                  alignment: WrapAlignment.spaceBetween,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  spacing: KSpacing.s8,
-                                  children: [
-                                    Text(
-                                      _page == _groups.length
-                                          ? 'Bilan de séance'
-                                          : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
-                                      style: KType.section.copyWith(
-                                        color: k.texte2,
-                                      ),
-                                    ),
-                                    KTextButton(
-                                      icon: Icons.format_list_numbered_rounded,
-                                      label: 'Exercices',
-                                      onPressed: _chooseExercise,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              KProgressDots(
-                                count: _groups.length + 1,
-                                index: _page,
-                                color: k.encre,
-                              ),
-                            ],
+                          child: KPageStrip(
+                            label: _page == _groups.length
+                                ? 'Bilan de séance'
+                                : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
+                            count: _groups.length + 1,
+                            index: _page,
+                            onList: _chooseExercise,
                           ),
                         ),
                         Expanded(
-                          child: PageView.builder(
+                          child: KSessionPager(
                             controller: _pages,
                             itemCount: _groups.length + 1,
                             onPageChanged: (page) =>

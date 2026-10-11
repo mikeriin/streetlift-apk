@@ -379,7 +379,7 @@ void main() {
           .where((e) => store.adaptSlotOf(w, j, e.id) == swapped.slotId)
           .firstOrNull;
       releve['perso_remplace_servi'] = se?.catalogId == to;
-      final menu = find.text('Exercices');
+      final menu = find.byKey(const ValueKey('session-exercises'));
       if (menu.evaluate().isNotEmpty) {
         await tapF(tester, menu, ms: 900);
         releve['perso_liste_nom'] = find

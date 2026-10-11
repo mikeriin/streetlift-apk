@@ -142,7 +142,7 @@ void main() {
   testWidgets('le bilan rouvre la séance modifiable', (tester) async {
     final log = doneLog();
     await open(tester, log);
-    await tester.tap(find.text('Exercices'));
+    await tester.tap(find.byKey(const ValueKey('session-exercises')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Bilan de séance').last);
     await tester.pumpAndSettle();

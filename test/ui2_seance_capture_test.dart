@@ -192,7 +192,7 @@ void main() {
         await shot(tester, 'menu', dark, palette);
         await tester.tap(find.byKey(const ValueKey('sheet-close')));
         await settle(tester);
-        await tester.tap(find.text('Exercices'));
+        await tester.tap(find.byKey(const ValueKey('session-exercises')));
         await settle(tester);
         await shot(tester, 'liste', dark, palette);
         await tester.tapAt(const Offset(10, 10));
@@ -238,7 +238,7 @@ void main() {
         await settle(tester);
 
         // Fin de séance (dernière page).
-        await tester.tap(find.text('Exercices'));
+        await tester.tap(find.byKey(const ValueKey('session-exercises')));
         await settle(tester);
         await tester.tap(find.text('Bilan de séance').last);
         await settle(tester);
@@ -428,7 +428,7 @@ void main() {
     );
     final skip = find.byKey(const ValueKey('feel-skip'));
     final bilan = skip.evaluate().isNotEmpty;
-    await tester.tap(find.text('Exercices'));
+    await tester.tap(find.byKey(const ValueKey('session-exercises')));
     await settle(tester);
     await tester.tap(
       find.byKey(ValueKey('list-item-${index + (bilan ? 1 : 0)}')),

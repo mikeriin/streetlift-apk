@@ -115,7 +115,7 @@ void main() {
         final check = find.byIcon(Icons.check);
         if (check.evaluate().isNotEmpty) await tester.tap(check.first);
         await swipePage(tester);
-        await tester.tap(find.text('Exercices'));
+        await tester.tap(find.byKey(const ValueKey('session-exercises')));
         await tester.pumpAndSettle();
         await tester.tap(find.text('Bilan de séance').last);
         await tester.pumpAndSettle();

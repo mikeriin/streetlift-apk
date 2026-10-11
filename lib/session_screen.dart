@@ -24,6 +24,7 @@ import 'exercise_screens.dart' show openExerciseSheet;
 import 'plan/coach_texts.dart' as ct;
 import 'koach/koach_bubble.dart'
     show KoachSays, koachLargeText, koachPose, showKoachSheet;
+import 'koach/koach_explanations.dart' show koachGuided;
 import 'koach/koach_view.dart' show KoachColors, KoachView;
 
 import 'timers.dart';
@@ -380,6 +381,12 @@ class _SessionScreenState extends State<SessionScreen> {
       subtitle: '${restDay ? 'Récupération' : d.title}, ${sessionPlace(w, d)}',
       groups: [
         [
+          if (!restDay)
+            const KAction(
+              icon: Icons.format_list_numbered_rounded,
+              label: 'Liste des exercices',
+              value: 'list',
+            ),
           if (d.conduite.isNotEmpty)
             const KAction(
               icon: Icons.menu_book_outlined,
@@ -435,6 +442,8 @@ class _SessionScreenState extends State<SessionScreen> {
     );
     if (choice == null || !mounted) return;
     switch (choice) {
+      case 'list':
+        await _chooseExercise();
       case 'instructions':
         _instructions();
       case 'bilan':
@@ -465,6 +474,10 @@ class _SessionScreenState extends State<SessionScreen> {
     final header = KSessionHeader(
       title: restDay ? 'Récupération' : d.title,
       subtitle: sessionPlace(w, d),
+      // Correctifs UI (11/10/2026) : le titre ouvre la liste des exercices
+      // (appui ou appui long), à la place du bouton « Exercices ».
+      onTitleTap: restDay ? null : _chooseExercise,
+      titleTapHint: 'Voir la liste des exercices',
       action: KIconButton(
         icon: Icons.more_vert_rounded,
         tooltip: 'Options de séance',
@@ -491,7 +504,7 @@ class _SessionScreenState extends State<SessionScreen> {
                   else ...[
                     _strip(k),
                     Expanded(
-                      child: PageView.builder(
+                      child: KSessionPager(
                         controller: pageCtl,
                         onPageChanged: (i) {
                           store.saveLogs(affectsProgression: false);
@@ -543,11 +556,12 @@ class _SessionScreenState extends State<SessionScreen> {
       ),
       // 5.5.2 (demande du propriétaire, 29/09/2026) : plus de boutons
       // Précédent / Suivant, le glissement d'une page à l'autre suffit ; le
-      // bouton « Exercices » et les points restent pour se repérer.
+      // repère « Exercice n sur N » (et le titre) ouvre la liste.
     );
   }
 
-  /// Repère de page (« Exercice 3 sur 7 »), lien « Exercices », points.
+  /// Repère de page (« Exercice 3 sur 7 ») et points sur une ligne ; le
+  /// repère ouvre la liste des exercices (correctifs UI, 11/10/2026).
   Widget _strip(KTokens k) {
     final where = page == bilanPage
         ? 'Bilan de séance'
@@ -556,36 +570,12 @@ class _SessionScreenState extends State<SessionScreen> {
         : '${groups[exerciseIndex].length > 1 ? 'Enchaînement' : 'Exercice'} '
               '${exerciseIndex + 1} sur $nPages';
     return Padding(
-      padding: const EdgeInsets.only(
-        left: KSpacing.page,
-        right: KSpacing.s12,
-        bottom: KSpacing.s4,
-      ),
-      child: Column(
-        children: [
-          // Texte agrandi (200 %) sur 320 dp : le lien passe sous le repère
-          // au lieu de faire déborder la ligne.
-          SizedBox(
-            width: double.infinity,
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: KSpacing.s8,
-              children: [
-                Text(where, style: KType.section.copyWith(color: k.texte2)),
-                KTextButton(
-                  label: 'Exercices',
-                  icon: Icons.format_list_numbered_rounded,
-                  onPressed: _chooseExercise,
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: KSpacing.s8),
-            child: KProgressDots(count: bilanPage + 1, index: page),
-          ),
-        ],
+      padding: const EdgeInsets.only(left: KSpacing.s12, right: KSpacing.page),
+      child: KPageStrip(
+        label: where,
+        count: bilanPage + 1,
+        index: page,
+        onList: _chooseExercise,
       ),
     );
   }
@@ -632,6 +622,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   late final List<ExerciseLog> logs;
   late final List<LogSpec> specs;
   final Set<int> _notesOpen = {};
+
+  /// Exercices dont la séance précédente est affichée (correctifs UI).
+  final Set<int> _prevOpen = {};
   int epoch = 0; // force la recréation des champs (reprise du précédent…)
 
   @override
@@ -1095,18 +1088,18 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         constraints: const BoxConstraints(minHeight: KSize.target),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: KSpacing.s14,
-            vertical: KSpacing.s8,
+            horizontal: KSpacing.s12,
+            vertical: KSpacing.s4,
           ),
           child: Row(
             children: [
-              Icon(icon, size: KSize.iconSmall, color: t.texte2),
+              Icon(icon, size: KSize.iconSmall, color: t.encre),
               const SizedBox(width: KSpacing.s12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: KType.corps.copyWith(color: t.texte)),
+                    Text(title, style: KType.detail.copyWith(color: t.texte)),
                     if (detail != null)
                       Text(
                         detail,
@@ -1136,7 +1129,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// UI2 (C5) : le titre de la consigne en `encre`, sans capitales, le
   /// texte en texte courant ; les notes du coach et le calibrage forment un
   /// groupe de lignes ouvrables ([_openRows]).
-  (List<Widget>, Widget?) _coachPanel(Exercise ex) {
+  (List<Widget>, Widget?) _coachPanel(Exercise ex, {bool intraButton = true}) {
     final it = store.adaptItemFor(widget.week.n, widget.day.j, ex);
     if (it == null) return (const [], null);
     final kt = KTokens.of(context);
@@ -1210,15 +1203,18 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       title: store.splitName(ex.name).$1,
       text: [...lines, ...pain, ...notes].join('\n\n'),
     );
-    final body = label != null
+    final all = label != null
         ? [
             for (final l in lines)
               l.startsWith('$label : ') ? l.substring(label.length + 3) : l,
           ]
         : lines;
+    // Correctifs UI (11/10/2026) : hors mode guidé, une seule ligne de
+    // consigne sur la carte ; la feuille de Koach (appui) donne le reste.
+    final body = koachGuided ? all : all.take(1).toList();
     // Une note au moins, ou deux lignes de consigne : la feuille de Koach
     // les reprend toutes (comme l'appui sur le panneau d'avant).
-    final row = notes.isEmpty && lines.length < 2
+    final row = notes.isEmpty && (lines.length < 2 || !koachGuided)
         ? null
         : _openRow(
             key: ValueKey('coach-notes-${ex.id}'),
@@ -1232,7 +1228,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           );
     return (
       [
-        const SizedBox(height: KSpacing.s12),
+        const SizedBox(height: KSpacing.s8),
         // L'appui sur le panneau ouvre la feuille de Koach, comme avant
         // (toute sa surface, la ligne ouvrable reste l'accès signalé).
         GestureDetector(
@@ -1253,9 +1249,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 for (var i = 0; i < body.length; i++)
                   Text(
                     body[i],
-                    style: i == 0
-                        ? KType.corps.copyWith(color: kt.texte)
-                        : KType.detail.copyWith(color: kt.texte2),
+                    style: KType.detail.copyWith(
+                      color: i == 0 ? kt.texte : kt.texte2,
+                    ),
                   ),
                 for (final p in pain)
                   Padding(
@@ -1283,7 +1279,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             ),
           ),
         ),
-        if (intra != null && intra > 0)
+        if (intraButton && intra != null && intra > 0)
           Padding(
             padding: const EdgeInsets.only(top: KSpacing.s8),
             child: Align(
@@ -1330,7 +1326,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       key: ValueKey('adapt-notes-${ex.id}'),
       icon: Icons.auto_awesome_outlined,
       title: lines.first,
-      detail: lines.length > 1 ? lines[1] : null,
+      // Correctifs UI : le détail en mode guidé seulement (feuille sinon).
+      detail: koachGuided && lines.length > 1 ? lines[1] : null,
       onTap: () => showKoachSheet<void>(
         context,
         pose: koachPose(
@@ -1617,8 +1614,18 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     }
 
     final missing = _missingReference(ex, readOnly);
+    // Bandeau des mini-séries présent (cluster, myo-reps, rest-pause servis
+    // par le moteur) : il porte le mini-repos.
+    final firstOpen = log.sets.indexWhere((s) => !s.done);
+    final miniSets =
+        !readOnly &&
+        widget.adapt &&
+        ex.engine &&
+        firstOpen >= 0 &&
+        store.miniSetPlanFor(widget.week.n, widget.day.j, ex, firstOpen) !=
+            null;
     final (coach, coachRow) = !readOnly && widget.adapt && ex.engine
-        ? _coachPanel(ex)
+        ? _coachPanel(ex, intraButton: !miniSets)
         : (const <Widget>[], null);
     final notesRow = !readOnly && widget.adapt && ex.engine
         ? _adaptNotes(ex)
@@ -1636,13 +1643,37 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     ];
     final actions = 1 + (hasTimer ? 1 : 0);
     final detailStyle = KType.detail.copyWith(color: t.texte2);
+    // Cible de réserve lue dans l'intensité (« Difficulté visée 7/10 ·
+    // RIR 2 ») : badge à droite de la charge ; autre intensité : repère.
+    final rirMatch = RegExp(r'RIR\s*(\S+)').firstMatch(ex.intensity);
+    final levelMatch = RegExp(r'(\d+)\s*/\s*10').firstMatch(ex.intensity);
+    final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.3;
+    final target = !readOnly && showIntensity && rirMatch != null
+        ? (rirMatch.group(1)!, levelMatch?.group(1))
+        : null;
+    final meta = <Widget>[
+      if (shownLoad && !numericLoad && missing == null)
+        _Meta(Icons.fitness_center_rounded, 'Charge : $loadLabel'),
+      // « Reps » redit l'en-tête de colonne : le repère ne nomme que les
+      // autres mesures.
+      if (!unresolved && (sp.kind != 'reps' || sp.myo || sp.cluster))
+        _Meta(Icons.repeat_rounded, kindLabel),
+      if (!readOnly && showIntensity && target == null)
+        _Meta(Icons.local_fire_department_outlined, nbsp(ex.intensity)),
+      if (!readOnly && ex.tempo.isNotEmpty)
+        _Meta(Icons.bolt_rounded, nbsp(ex.tempo)),
+      if (!readOnly && ex.rest.isNotEmpty && ex.rest != '—')
+        _Meta(Icons.timer_outlined, 'Repos ${nbsp(ex.rest)}'),
+      if (finalRest != null)
+        _Meta(Icons.timer_outlined, 'Repos final ${fmt(finalRest)}'),
+    ];
 
     return KCard(
       key: ValueKey('exercise-card-${ex.id}'),
       padding: const EdgeInsets.fromLTRB(
         KSpacing.s16,
-        KSpacing.s12,
-        KSpacing.s12,
+        KSpacing.s8,
+        KSpacing.s8,
         KSpacing.s4,
       ),
       child: Column(
@@ -1664,7 +1695,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: KSpacing.s12),
+                        padding: const EdgeInsets.only(top: KSpacing.s8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1677,12 +1708,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                               ),
                             ),
                             if (subtitle.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: KSpacing.s4,
-                                ),
-                                child: Text(subtitle, style: detailStyle),
-                              ),
+                              Text(subtitle, style: detailStyle),
                           ],
                         ),
                       ),
@@ -1697,70 +1723,90 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       ),
                   ],
                 ),
-                const SizedBox(height: KSpacing.s8),
-                // Prescription : la charge (ou, sans charge, le volume) en
-                // grand chiffre `encre`, puis les puces neutres (C5) sur la
-                // même ligne quand la place le permet (maquette « Séance »).
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: KSpacing.s8,
-                  runSpacing: KSpacing.s8,
+                const SizedBox(height: KSpacing.s4),
+                // Correctifs UI (11/10/2026) : ce qui compte d'un coup d'œil
+                // sur une ligne — charge en grand (`encre`), volume, cible
+                // de réserve (RIR) mise en avant à droite ; le reste en
+                // repères discrets dessous (repos, tempo, technique).
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (showBigLoad)
-                      Padding(
-                        padding: const EdgeInsets.only(right: KSpacing.s4),
-                        child: Text(
-                          frenchNumbersText(loadLabel),
-                          style: KType.chiffre.copyWith(color: t.encre),
-                        ),
-                      ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: KSpacing.s4),
-                      child: Text(
-                        readOnly
-                            ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
-                            : nbsp(store.setsLabel(ex)),
-                        style: showBigLoad || readOnly
-                            ? KType.corpsFort.copyWith(color: t.texte)
-                            : KType.chiffre.copyWith(color: t.encre),
-                      ),
-                    ),
-                    if (shownLoad && !numericLoad && missing == null)
-                      KChip('Charge : $loadLabel'),
-                    // « Reps » redit l'en-tête de colonne : la puce ne
-                    // nomme que les autres mesures.
-                    if (!unresolved &&
-                        (sp.kind != 'reps' || sp.myo || sp.cluster))
-                      KChip(kindLabel),
-                    // État (C5) : texte et icône en `validation`, pas une puce.
-                    if (readOnly)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
+                    Expanded(
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: KSpacing.s8,
+                        runSpacing: KSpacing.s4,
                         children: [
-                          Icon(
-                            Icons.check_circle_rounded,
-                            size: KSize.iconSmall,
-                            color: t.validation,
-                          ),
-                          const SizedBox(width: KSpacing.s4),
-                          Flexible(
-                            child: Text(
-                              'Enregistré',
-                              style: KType.libelle.copyWith(
-                                color: t.validation,
-                              ),
+                          if (showBigLoad)
+                            Text(
+                              frenchNumbersText(loadLabel),
+                              style: KType.chiffre.copyWith(color: t.encre),
                             ),
+                          Text(
+                            readOnly
+                                ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
+                                : nbsp(store.setsLabel(ex)),
+                            style: showBigLoad || readOnly
+                                ? KType.corpsFort.copyWith(color: t.texte)
+                                : KType.chiffre.copyWith(color: t.encre),
                           ),
+                          // Grand texte : la cible passe sous la charge.
+                          if (target case (
+                            final rir,
+                            final level,
+                          ) when largeText)
+                            _TargetBadge(
+                              key: ValueKey('target-${ex.id}'),
+                              rir: rir,
+                              level: level,
+                            ),
+                          // État (C5) : texte et icône en `validation`.
+                          if (readOnly)
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.check_circle_rounded,
+                                  size: KSize.iconSmall,
+                                  color: t.validation,
+                                ),
+                                const SizedBox(width: KSpacing.s4),
+                                Flexible(
+                                  child: Text(
+                                    'Enregistré',
+                                    style: KType.libelle.copyWith(
+                                      color: t.validation,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                         ],
                       ),
-                    if (!readOnly && showIntensity) KChip(nbsp(ex.intensity)),
-                    if (!readOnly && ex.tempo.isNotEmpty) KChip(nbsp(ex.tempo)),
-                    if (!readOnly && ex.rest.isNotEmpty && ex.rest != '—')
-                      KChip('Repos ${nbsp(ex.rest)}'),
-                    if (finalRest != null)
-                      KChip('Repos final ${fmt(finalRest)}'),
+                    ),
+                    if (target case (final rir, final level) when !largeText)
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                          start: KSpacing.s8,
+                          end: KSpacing.s4,
+                        ),
+                        child: _TargetBadge(
+                          key: ValueKey('target-${ex.id}'),
+                          rir: rir,
+                          level: level,
+                        ),
+                      ),
                   ],
                 ),
+                if (meta.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: KSpacing.s8),
+                    child: Wrap(
+                      spacing: KSpacing.s12,
+                      runSpacing: KSpacing.s4,
+                      children: meta,
+                    ),
+                  ),
                 if (missing != null) missing,
                 // L8 (KT-041) : consigne du mode prudent.
                 // G9 : exercice servi par le moteur, la prudence est dans
@@ -1820,7 +1866,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 // Notes du coach et calibrage : deux lignes ouvrables.
                 if (openRows.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(top: KSpacing.s12),
+                    padding: const EdgeInsets.only(top: KSpacing.s8),
                     child: Material(
                       color: t.haute,
                       shape: KRadius.menuShape,
@@ -1842,8 +1888,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       ),
                     ),
                   ),
-                if (prev != null)
+                // Séance précédente : affichée à la demande (icône
+                // d'historique de la barre d'outils), correctifs UI.
+                if (prev != null && _prevOpen.contains(k))
                   Padding(
+                    key: ValueKey('previous-${ex.id}'),
                     padding: const EdgeInsets.only(top: KSpacing.s8),
                     child: Row(
                       children: [
@@ -1903,7 +1952,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               'Lancer ${sp.seconds! ~/ 60} min',
               () => widget.timer.single('DURÉE', sp.seconds!),
             ),
-          if (!readOnly && sp.cluster && sp.intra != null)
+          // Correctifs UI : le mini-repos d'un cluster servi par le moteur
+          // part du bandeau des mini-séries ; pas de second bouton.
+          if (!readOnly && sp.cluster && sp.intra != null && !miniSets)
             _big(
               Icons.av_timer_rounded,
               'Mini-repos du cluster, ${sp.intra} s',
@@ -2058,6 +2109,18 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       ),
                     ),
                   ),
+                  if (prev != null)
+                    KIconButton(
+                      key: ValueKey('${ex.id}-previous-toggle'),
+                      tooltip: _prevOpen.contains(k)
+                          ? 'Masquer la séance précédente'
+                          : 'Séance précédente',
+                      icon: Icons.history_rounded,
+                      color: _prevOpen.contains(k) ? t.encre : t.texte2,
+                      onPressed: () => setState(() {
+                        if (!_prevOpen.add(k)) _prevOpen.remove(k);
+                      }),
+                    ),
                   KIconButton(
                     key: ValueKey('${ex.id}-note-toggle'),
                     tooltip: _notesOpen.contains(k)
@@ -2116,12 +2179,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 ),
               )
             else
-              TextFormField(
-                key: ValueKey('${ex.id}-note'),
-                initialValue: log.note,
-                minLines: 1,
-                maxLines: 3,
-                textAlign: TextAlign.left,
+              _NoteField(
+                fieldKey: ValueKey('${ex.id}-note'),
+                initial: log.note,
                 style: KType.corps.copyWith(color: t.texte),
                 decoration: _noteDecoration(
                   t,
@@ -2347,7 +2407,10 @@ class _SetFieldState extends State<_SetField> {
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
-    final shape = StadiumBorder(
+    // Correctifs UI (11/10/2026) : champ au rayon des groupes (12), plus
+    // une grande pilule.
+    final shape = RoundedRectangleBorder(
+      borderRadius: KRadius.menuRadius,
       side: widget.error
           ? BorderSide(color: k.danger, width: KSize.current)
           : widget.current
@@ -2385,36 +2448,42 @@ class _SetFieldState extends State<_SetField> {
             child: Center(
               child: IgnorePointer(
                 ignoring: !_focus.hasFocus,
-                child: TextField(
-                  controller: widget.controller,
-                  focusNode: _focus,
-                  keyboardType: TextInputType.numberWithOptions(
-                    decimal: widget.decimal,
-                  ),
-                  inputFormatters: widget.decimalComma ? [_decimalComma] : null,
-                  textAlign: TextAlign.center,
-                  textAlignVertical: TextAlignVertical.center,
-                  style: style,
-                  cursorColor: k.encre,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    filled: false,
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    hintText: '–',
-                    hintStyle: style.copyWith(color: k.texte3),
-                    semanticCounterText: '',
-                    // Le texte occupe le milieu de la pilule ; ses marges
-                    // restent touchables (un appui au bord sélectionne
-                    // aussi tout).
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: KSpacing.s8,
-                      vertical: KSpacing.s4,
+                // Même seuil de glissement que la vue paginée : un
+                // glissement commencé sur un champ actif change de page.
+                child: KPagerSlop(
+                  child: TextField(
+                    controller: widget.controller,
+                    focusNode: _focus,
+                    keyboardType: TextInputType.numberWithOptions(
+                      decimal: widget.decimal,
                     ),
+                    inputFormatters: widget.decimalComma
+                        ? [_decimalComma]
+                        : null,
+                    textAlign: TextAlign.center,
+                    textAlignVertical: TextAlignVertical.center,
+                    style: style,
+                    cursorColor: k.encre,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      filled: false,
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: '–',
+                      hintStyle: style.copyWith(color: k.texte3),
+                      semanticCounterText: '',
+                      // Le texte occupe le milieu de la pilule ; ses marges
+                      // restent touchables (un appui au bord sélectionne
+                      // aussi tout).
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: KSpacing.s8,
+                        vertical: KSpacing.s4,
+                      ),
+                    ),
+                    onTap: _selectAll,
+                    onChanged: widget.onChanged,
                   ),
-                  onTap: _selectAll,
-                  onChanged: widget.onChanged,
                 ),
               ),
             ),
@@ -3160,6 +3229,154 @@ class _GroupCardState extends State<_GroupCard> {
 /// CI1f : saisie d'une série mini-série par mini-série (cluster,
 /// rest-pause, myo-reps) : chaque mini-série s'ajoute une à une (valeur
 /// proposée, −/+), le mini-repos se lance, le total remplit la série.
+/// Note d'un exercice (correctifs UI, 11/10/2026) : comme les champs de
+/// série, sans focus les gestes vont au cadre — un appui ouvre la saisie,
+/// un glissement horizontal change de page ; avec le focus, au champ.
+class _NoteField extends StatefulWidget {
+  final Key fieldKey;
+  final String initial;
+  final TextStyle style;
+  final InputDecoration decoration;
+  final ValueChanged<String> onChanged;
+  const _NoteField({
+    required this.fieldKey,
+    required this.initial,
+    required this.style,
+    required this.decoration,
+    required this.onChanged,
+  });
+
+  @override
+  State<_NoteField> createState() => _NoteFieldState();
+}
+
+class _NoteFieldState extends State<_NoteField> {
+  final _focus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocus);
+  }
+
+  void _onFocus() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _focus.removeListener(_onFocus);
+    _focus.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+    behavior: HitTestBehavior.opaque,
+    excludeFromSemantics: true,
+    onTap: _focus.requestFocus,
+    child: IgnorePointer(
+      ignoring: !_focus.hasFocus,
+      child: KPagerSlop(
+        child: TextFormField(
+          key: widget.fieldKey,
+          focusNode: _focus,
+          initialValue: widget.initial,
+          minLines: 1,
+          maxLines: 3,
+          textAlign: TextAlign.left,
+          style: widget.style,
+          decoration: widget.decoration,
+          onChanged: widget.onChanged,
+        ),
+      ),
+    ),
+  );
+}
+
+/// Repère discret d'une carte d'exercice (repos, tempo, technique) : icône
+/// et texte `texte2`, sans fond (correctifs UI, 11/10/2026 : les puces
+/// faisaient autant de boutons qui n'en étaient pas).
+class _Meta extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  const _Meta(this.icon, this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: KSize.chevron - KSpacing.s4, color: k.texte2),
+        const SizedBox(width: KSpacing.s4),
+        Flexible(
+          child: Text(text, style: KType.detail.copyWith(color: k.texte2)),
+        ),
+      ],
+    );
+  }
+}
+
+/// Cible de réserve d'un exercice (« RIR 2 », difficulté 7/10) : le chiffre
+/// à viser en `encre`, sur une pastille tonale (correctifs UI, 11/10/2026 :
+/// « le RIR cible pas assez visible »).
+class _TargetBadge extends StatelessWidget {
+  final String rir;
+  final String? level;
+  const _TargetBadge({super.key, required this.rir, this.level});
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Semantics(
+      label:
+          'Cible : $rir répétition${rir == '1' || rir == '0' ? '' : 's'} en '
+          'réserve${level == null ? '' : ', difficulté $level sur 10'}',
+      excludeSemantics: true,
+      child: Material(
+        color: k.encre.withValues(alpha: .14),
+        shape: RoundedRectangleBorder(
+          borderRadius: KRadius.menuRadius,
+          side: BorderSide(color: k.encre.withValues(alpha: .5)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: KSpacing.s12,
+            vertical: KSpacing.s4,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'RIR $rir',
+                maxLines: 1,
+                style: KType.chiffreMoyen.copyWith(color: k.encre),
+              ),
+              if (level != null)
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.local_fire_department_rounded,
+                      size: KSpacing.s14,
+                      color: k.encre,
+                    ),
+                    const SizedBox(width: KSpacing.s4 / 2),
+                    Text(
+                      '$level/10',
+                      style: KType.micro.copyWith(color: k.texte2),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _MiniSetStrip extends StatefulWidget {
   final String id;
   final MiniSetPlan plan;
@@ -3215,12 +3432,19 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
     widget.onChanged();
   }
 
-  String get _title => switch (widget.plan.kind) {
-    kc.SetTechniqueKind.myoReps => 'Myo-reps : activation, puis mini-séries',
-    kc.SetTechniqueKind.cluster =>
-      'Cluster : ${widget.plan.cap + 1} mini-séries de ${widget.plan.next}',
-    _ => 'Rest-pause : série, puis relances',
-  };
+  /// Titre court : technique, mini-séries et mini-repos (correctifs UI,
+  /// 11/10/2026 : une ligne au lieu d'une consigne).
+  String get _title {
+    final p = widget.plan;
+    final unit = p.seconds ? ' s' : '';
+    return switch (p.kind) {
+      kc.SetTechniqueKind.myoReps =>
+        'Myo-reps · ${p.first}$unit puis ${p.next}$unit · ${p.intra} s',
+      kc.SetTechniqueKind.cluster =>
+        'Cluster · ${p.cap + 1} × ${p.next}$unit · ${p.intra} s',
+      _ => 'Rest-pause · relances après ${p.intra} s',
+    };
+  }
 
   String _partLabel(int i) => switch (widget.plan.kind) {
     kc.SetTechniqueKind.myoReps => i == 0 ? 'Act.' : 'M$i',
@@ -3234,107 +3458,189 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
     final plan = widget.plan;
     final parts = _parts;
     final left = plan.left(parts.length);
-    final unit = plan.seconds ? ' s' : '';
+    final unit = plan.seconds ? ' s' : '';
     final dim = KType.detail.copyWith(color: k.texte2);
+    // Consigne complète en mode guidé ; sinon seulement ce qui demande une
+    // action (« valide la série »).
     final advice = left == 0
         ? (plan.exact
               ? 'Toutes les mini-séries sont faites : valide la série.'
               : 'Plafond atteint : valide la série.')
+        : !koachGuided
+        ? null
         : parts.isEmpty
         ? (plan.kind == kc.SetTechniqueKind.myoReps
               ? 'Note l’activation, puis chaque mini-série.'
               : 'Note chaque mini-série à la fin de son effort.')
         : plan.exact
         ? 'Encore $left mini-série${left > 1 ? 's' : ''} '
-              '(${plan.intra} s entre deux).'
+              '(${plan.intra} s entre deux).'
         : 'Encore $left mini-série${left > 1 ? 's' : ''} au plus '
-              '(${plan.intra} s entre deux) ; arrête dès qu’une '
+              '(${plan.intra} s entre deux) ; arrête dès qu’une '
               'mini-série n’atteint plus ${plan.next}$unit.';
     final noteLabel = parts.isEmpty
         ? (plan.kind == kc.SetTechniqueKind.myoReps
               ? 'Noter l’activation'
               : 'Noter la première mini-série')
         : 'Noter la mini-série';
+    // Cases des mini-séries : faites (valeur, `encre`), à venir (contour).
+    final slots = plan.cap + 1;
+    Widget slot(int i) {
+      final done = i < parts.length;
+      final next = i == parts.length;
+      return Container(
+        key: done ? ValueKey('miniset-part-${widget.id}-$i') : null,
+        constraints: const BoxConstraints(
+          minWidth: KSpacing.s32,
+          minHeight: KSpacing.s24,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
+        alignment: Alignment.center,
+        decoration: ShapeDecoration(
+          color: done ? k.encre : null,
+          shape: StadiumBorder(
+            side: done
+                ? BorderSide.none
+                : BorderSide(
+                    color: next ? k.encre : k.filet,
+                    width: next ? KSize.current : 1,
+                  ),
+          ),
+        ),
+        child: Semantics(
+          label: done
+              ? '${_partLabel(i)} : ${parts[i].value}$unit'
+              : '${_partLabel(i)} à faire',
+          excludeSemantics: true,
+          child: Text(
+            done ? '${parts[i].value}' : _partLabel(i),
+            style: KType.micro.copyWith(
+              color: done ? k.roles.surEncre : (next ? k.encre : k.texte3),
+              fontFeatures: KFont.tabular,
+            ),
+          ),
+        ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsetsDirectional.only(
-        start: KSize.target + KSpacing.s4,
-        top: KSpacing.s8,
-        bottom: KSpacing.s8,
+        start: KSize.target - KSpacing.s4,
+        top: KSpacing.s4,
+        bottom: KSpacing.s4,
       ),
       child: Semantics(
         container: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(_title, style: KType.section.copyWith(color: k.encre)),
-            if (parts.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: KSpacing.s8),
-                child: Wrap(
-                  spacing: KSpacing.s8,
-                  runSpacing: KSpacing.s8,
-                  children: [
-                    for (var i = 0; i < parts.length; i++)
-                      KChip(
-                        '${_partLabel(i)} : ${parts[i].value}$unit',
-                        key: ValueKey('miniset-part-${widget.id}-$i'),
-                      ),
-                  ],
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(top: KSpacing.s8),
-              child: Text(
-                advice,
-                key: ValueKey('miniset-advice-${widget.id}'),
-                style: dim,
-              ),
+        child: Material(
+          color: k.haute,
+          shape: RoundedRectangleBorder(
+            borderRadius: KRadius.menuRadius,
+            side: BorderSide(color: k.encre.withValues(alpha: .4)),
+          ),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+              KSpacing.s12,
+              KSpacing.s8,
+              KSpacing.s4,
+              KSpacing.s8,
             ),
-            if (left > 0)
-              Padding(
-                padding: const EdgeInsets.only(top: KSpacing.s8),
-                child: Wrap(
-                  spacing: KSpacing.s8,
-                  runSpacing: KSpacing.s8,
-                  crossAxisAlignment: WrapCrossAlignment.center,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
                   children: [
-                    KeyedSubtree(
-                      key: ValueKey('miniset-value-${widget.id}'),
-                      child: KStepper(
-                        value: '$value$unit',
-                        semanticLabel: 'Mini-série',
-                        decrementLabel: 'Une de moins',
-                        incrementLabel: 'Une de plus',
-                        onDecrement: value > 0
-                            ? () => setState(() => value--)
-                            : null,
-                        onIncrement: value < 1000
-                            ? () => setState(() => value++)
-                            : null,
+                    Expanded(
+                      child: Text(
+                        _title,
+                        style: KType.libelle.copyWith(color: k.encre),
                       ),
                     ),
-                    Semantics(
-                      button: true,
-                      label: noteLabel,
-                      excludeSemantics: true,
-                      onTap: _add,
-                      child: KTonalButton(
-                        key: ValueKey('miniset-add-${widget.id}'),
-                        label: 'Noter',
-                        onPressed: _add,
+                    if (parts.isNotEmpty)
+                      KIconButton(
+                        key: ValueKey('miniset-undo-${widget.id}'),
+                        icon: Icons.undo_rounded,
+                        tooltip: 'Retirer la dernière mini-série',
+                        color: k.texte2,
+                        onPressed: _removeLast,
                       ),
-                    ),
                   ],
                 ),
-              ),
-            if (parts.isNotEmpty)
-              KTextButton(
-                key: ValueKey('miniset-undo-${widget.id}'),
-                label: 'Retirer la dernière mini-série',
-                alignStart: true,
-                onPressed: _removeLast,
-              ),
-          ],
+                const SizedBox(height: KSpacing.s4),
+                Wrap(
+                  spacing: KSpacing.s4,
+                  runSpacing: KSpacing.s4,
+                  children: [for (var i = 0; i < slots; i++) slot(i)],
+                ),
+                if (advice != null)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: KSpacing.s8,
+                      right: KSpacing.s8,
+                    ),
+                    child: Text(
+                      advice,
+                      key: ValueKey('miniset-advice-${widget.id}'),
+                      style: dim,
+                    ),
+                  ),
+                if (left > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: KSpacing.s8,
+                      right: KSpacing.s8,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: KeyedSubtree(
+                            key: ValueKey('miniset-value-${widget.id}'),
+                            child: KStepper(
+                              value: '$value$unit',
+                              semanticLabel: 'Mini-série',
+                              decrementLabel: 'Une de moins',
+                              incrementLabel: 'Une de plus',
+                              onDecrement: value > 0
+                                  ? () => setState(() => value--)
+                                  : null,
+                              onIncrement: value < 1000
+                                  ? () => setState(() => value++)
+                                  : null,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: KSpacing.s8),
+                        Semantics(
+                          button: true,
+                          label: noteLabel,
+                          excludeSemantics: true,
+                          onTap: _add,
+                          child: Tooltip(
+                            message: noteLabel,
+                            child: Material(
+                              color: k.encre,
+                              shape: KRadius.pill,
+                              child: InkWell(
+                                key: ValueKey('miniset-add-${widget.id}'),
+                                customBorder: KRadius.pill,
+                                onTap: _add,
+                                child: SizedBox.square(
+                                  dimension: KSize.target,
+                                  child: Icon(
+                                    Icons.check_rounded,
+                                    size: KSize.icon,
+                                    color: k.roles.surEncre,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );

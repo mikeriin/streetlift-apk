@@ -125,6 +125,7 @@ void main() {
       ],
       [
         [
+          'Liste des exercices',
           if (store.program.week(12).day(1)!.conduite.isNotEmpty)
             'Consignes de séance',
           'Bilan du jour',
@@ -235,7 +236,7 @@ void main() {
     phone(tester);
     await open(tester);
     // Deuxième exercice par la liste.
-    await tester.tap(find.text('Exercices'));
+    await tester.tap(find.byKey(const ValueKey('session-exercises')));
     await tester.pumpAndSettle();
     final list = find.byType(KListSheet);
     expect(list, findsOneWidget);
@@ -255,7 +256,7 @@ void main() {
     await tester.tap(find.text('45\u202Fmin'));
     await tester.pumpAndSettle();
     expect(find.byType(HealthCheckPage), findsNothing);
-    await tester.tap(find.text('Exercices'));
+    await tester.tap(find.byKey(const ValueKey('session-exercises')));
     await tester.pumpAndSettle();
     final after = tester.widget<KListSheet>(find.byType(KListSheet)).items;
     final current = after.indexWhere((i) => i.state == KListState.current);

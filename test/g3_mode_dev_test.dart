@@ -17,8 +17,8 @@ void main() {
   group('build de développement (G3)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test('version affichée : « dev6.12.0 » (UI5)', () {
-      expect(kAppVersion, 'dev6.12.0');
+    test('version affichée : « dev6.12.1 » (correctifs UI)', () {
+      expect(kAppVersion, 'dev6.12.1');
     });
 
     test('session de test : même base d\'exercices, session personnelle '

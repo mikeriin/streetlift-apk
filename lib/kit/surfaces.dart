@@ -98,7 +98,7 @@ class KCard extends StatelessWidget {
   }
 }
 
-/// Titre de section (C6) : 14, graisse 600, `texte2`, sans capitales, au-dessus
+/// Titre de section (C6) : 14, graisse 600, `encre`, sans capitales, au-dessus
 /// des groupes. [action] : un lien texte à droite (« Modifier », « Tout voir »).
 class KSectionTitle extends StatelessWidget {
   final String text;
@@ -124,7 +124,8 @@ class KSectionTitle extends StatelessWidget {
           Expanded(
             child: Semantics(
               header: true,
-              child: Text(text, style: KType.section.copyWith(color: k.texte2)),
+              // Correctifs UI (11/10/2026) : titres de section en `encre`.
+              child: Text(text, style: KType.section.copyWith(color: k.encre)),
             ),
           ),
           if (actionLabel != null)

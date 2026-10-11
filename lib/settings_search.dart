@@ -116,6 +116,7 @@ String _two(int v) => v.toString().padLeft(2, '0');
 
 const _appearance = 'Apparence';
 const _anatomy = 'Apparence › Anatomie et 3D';
+const _koach = 'Séance › Koach';
 const _timers = 'Séance › Chronomètres';
 const _restEnd = 'Séance › Fin du repos';
 const _input = 'Séance › Saisie des séries';
@@ -180,6 +181,23 @@ final List<SettingsSearchEntry> settingsSearchIndex = [
     value: () => _onOff(Display3DSettings.instance.halo.value),
   ),
   // --------------------------------------------------------------- Séance
+  SettingsSearchEntry.setting(
+    id: 'koach-guided',
+    label: 'Mode guidé',
+    description: 'Koach explique ses choix pendant la séance',
+    words: ['koach', 'guide', 'explications', 'pourquoi', 'aide', 'coach'],
+    path: _koach,
+    page: SettingsPage.session,
+    value: () => _onOff(store.settings.koachGuided),
+  ),
+  SettingsSearchEntry.setting(
+    id: 'koach-explanations',
+    label: 'Comprendre Koach',
+    description: 'Bilan du jour, difficulté, charges, clusters',
+    words: ['koach', 'explications', 'rir', 'cluster', 'difficulte', 'aide'],
+    path: _koach,
+    page: SettingsPage.session,
+  ),
   SettingsSearchEntry.setting(
     id: 'rest',
     label: 'Repos par défaut',
