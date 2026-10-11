@@ -1,5 +1,19 @@
 # Journal
 
+## 0.4.1 — 11/10/2026 (lot KM1c2)
+
+Aucun changement de code du banc, des critères, des profils ni des grilles. La référence Python de Koach passe en
+1.0.2 (`kalis_adapt/reference/`, KM1 correction 2) alors que le moteur Dart reste `kalis_adapt` 1.0.0 (référence
+1.0.1) jusqu'au lot KM2c1 :
+
+- les tests `km2_banc_test.dart`, `km2_validateur_test.dart`, `km2_adversaire_test.dart` et les outils `bin/km2.dart`,
+  `bin/km2_adversaire.dart` lisent la copie figée des paramètres 1.0.1
+  (`kalis_adapt/reference/params/koach_params_d1.json`, à l'octet près l'asset `koach_params_1_0_1.json`) au lieu du
+  fichier vivant `koach_params_v1.json` (désormais `1.0.2-ref.1`) ;
+- le critère 7 bis (adversaires appariés, C13.12) est mesuré par la référence Python (`banc/adversaire.py`,
+  `critere_apparie`) avec le témoin exporté par `bin/km1.dart` ; son portage dans `lib/src/km/adversaire.dart` est
+  laissé au lot KM2c1 (`reference/PORTAGE_DART.md`).
+
 ## 0.4.0 — 11/10/2026 (lot KM2)
 
 Banc Dart de Koach 1.0 (`kalis_adapt` 1.0.0). Ajouts seulement : couple `kalis_plan` 0.3.1 × `kalis_adapt` 0.3.1
