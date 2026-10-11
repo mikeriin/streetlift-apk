@@ -62,21 +62,28 @@ class KTonalButton extends StatelessWidget {
   final IconData? icon;
   final VoidCallback? onPressed;
   final bool expand;
+
+  /// Posé sur un conteneur `haute` (bulle de Koach, groupe d'une feuille) :
+  /// en sombre, fond `filet` pour que le bouton se détache (UI5) ; en clair,
+  /// le contour `filet` suffit déjà.
+  final bool onHaute;
   const KTonalButton({
     super.key,
     required this.label,
     this.onPressed,
     this.icon,
     this.expand = false,
+    this.onHaute = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
+    final fill = onHaute && k.dark ? k.filet : k.haute;
     final style = FilledButton.styleFrom(
-      backgroundColor: k.haute,
+      backgroundColor: fill,
       foregroundColor: k.texte,
-      disabledBackgroundColor: k.haute,
+      disabledBackgroundColor: fill,
       disabledForegroundColor: k.texte3,
       minimumSize: Size(expand ? double.infinity : KSize.target, KSize.target),
       padding: const EdgeInsets.symmetric(

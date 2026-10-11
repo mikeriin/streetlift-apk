@@ -249,6 +249,7 @@ class KoachBubbleState extends State<KoachBubble> {
                               key: a.key,
                               onPressed: a.onPressed,
                               label: a.label,
+                              onHaute: true,
                             ),
                   ],
                 ),

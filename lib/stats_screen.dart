@@ -229,8 +229,10 @@ class _StatsTabs extends StatelessWidget {
           controller: controller,
           isScrollable: true,
           tabAlignment: TabAlignment.start,
-          padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
-          labelPadding: EdgeInsets.zero,
+          // UI5 : la pilule active part de la marge d'écran (20) ; 16 de
+          // marge intérieure, 4 entre deux rubriques.
+          padding: const EdgeInsets.symmetric(horizontal: KSpacing.page),
+          labelPadding: const EdgeInsetsDirectional.only(end: KSpacing.s4),
           indicator: ShapeDecoration(color: k.pleine, shape: KRadius.pill),
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorPadding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
@@ -248,7 +250,7 @@ class _StatsTabs extends StatelessWidget {
                 key: ValueKey('stats-section-${entry.key}'),
                 height: KSize.target,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
+                  padding: const EdgeInsets.symmetric(horizontal: KSpacing.s16),
                   child: Text(entry.value),
                 ),
               ),
