@@ -1,0 +1,5 @@
+Analyzing streetlift-apk...                                     
+
+warning • The declaration 'x' isn't referenced. Try removing the declaration of 'x' • lib/adapt/flame_track.dart:261:24 • unused_element
+
+1 issue found. (ran in 15.9s)

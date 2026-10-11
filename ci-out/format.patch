@@ -1,0 +1,18 @@
+diff --git a/lib/adapt/flame_track.dart b/lib/adapt/flame_track.dart
+index 9b73131..c6ffe46 100644
+--- a/lib/adapt/flame_track.dart
++++ b/lib/adapt/flame_track.dart
+@@ -650,9 +650,10 @@ class FlameTrackPainter extends CustomPainter {
+     }
+     final paint = Paint()
+       ..isAntiAlias = true
+-      ..shader = LinearGradient(colors: cs, stops: _sorted(stops)).createShader(
+-        Rect.fromLTWH(0, 0, w, size.height),
+-      );
++      ..shader = LinearGradient(
++        colors: cs,
++        stops: _sorted(stops),
++      ).createShader(Rect.fromLTWH(0, 0, w, size.height));
+     canvas.drawPath(path, paint);
+   }
+ 
