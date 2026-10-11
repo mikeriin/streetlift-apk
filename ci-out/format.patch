@@ -1,0 +1,83 @@
+diff --git a/lib/kit/dock.dart b/lib/kit/dock.dart
+index ea2fe1c..2179a24 100644
+--- a/lib/kit/dock.dart
++++ b/lib/kit/dock.dart
+@@ -65,38 +65,39 @@ class KDock extends StatelessWidget {
+     // 6.17.0 : flou progressif du contenu qui passe sous le dock.
+     return KFloatingBottom(
+       child: SafeArea(
+-      top: false,
+-      child: SizedBox(
+-        height: height,
+-        child: Center(
+-          child: ConstrainedBox(
+-            constraints: const BoxConstraints(maxWidth: 560),
+-            child: Padding(
+-              padding: const EdgeInsets.fromLTRB(side, 0, side, bottomMargin),
+-              child: ClipPath(
+-                clipper: const ShapeBorderClipper(shape: KRadius.pill),
+-                child: BackdropFilter(
+-                  filter: ui.ImageFilter.blur(
+-                    sigmaX: KSpacing.s20,
+-                    sigmaY: KSpacing.s20,
+-                  ),
+-                  child: DecoratedBox(
+-                    decoration: ShapeDecoration(
+-                      // 96 % avec flou (U0.12) ; opaque en contraste
+-                      // renforcé, où le contenu qui passe dessous ferait
+-                      // tomber les icônes sous 7:1 (UI5).
+-                      color: k.haute.withValues(alpha: k.contrast ? 1 : .96),
+-                      // Correctifs UI (11/10/2026) : plus de liseré gris en
+-                      // sombre (la surface teintée suffit) ; filet en clair.
+-                      shape: StadiumBorder(side: k.controlSide),
++        top: false,
++        child: SizedBox(
++          height: height,
++          child: Center(
++            child: ConstrainedBox(
++              constraints: const BoxConstraints(maxWidth: 560),
++              child: Padding(
++                padding: const EdgeInsets.fromLTRB(side, 0, side, bottomMargin),
++                child: ClipPath(
++                  clipper: const ShapeBorderClipper(shape: KRadius.pill),
++                  child: BackdropFilter(
++                    filter: ui.ImageFilter.blur(
++                      sigmaX: KSpacing.s20,
++                      sigmaY: KSpacing.s20,
+                     ),
+-                    child: Padding(
+-                      padding: const EdgeInsets.all(_pad),
+-                      child: Row(
+-                        children: [
+-                          for (var i = 0; i < items.length; i++)
+-                            _item(context, k, i, duration, motion.curve),
+-                        ],
++                    child: DecoratedBox(
++                      decoration: ShapeDecoration(
++                        // 96 % avec flou (U0.12) ; opaque en contraste
++                        // renforcé, où le contenu qui passe dessous ferait
++                        // tomber les icônes sous 7:1 (UI5).
++                        color: k.haute.withValues(alpha: k.contrast ? 1 : .96),
++                        // Correctifs UI (11/10/2026) : plus de liseré gris en
++                        // sombre (la surface teintée suffit) ; filet en clair.
++                        shape: StadiumBorder(side: k.controlSide),
++                      ),
++                      child: Padding(
++                        padding: const EdgeInsets.all(_pad),
++                        child: Row(
++                          children: [
++                            for (var i = 0; i < items.length; i++)
++                              _item(context, k, i, duration, motion.curve),
++                          ],
++                        ),
+                       ),
+                     ),
+                   ),
+@@ -106,7 +107,6 @@ class KDock extends StatelessWidget {
+           ),
+         ),
+       ),
+-      ),
+     );
+   }
+ 
