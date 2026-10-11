@@ -1,5 +1,36 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.0
+
+Lot KM2 (méthode Koach, `pipeline/cp/CAHIER_KM.md`, décisions C13) : **Koach 1.0**, portage Dart à l'identique
+de la référence Python validée par KM1 (`reference/koach/`, version 1.0.1, contrat `reference/CONTRAT_1_0.md`).
+Contrat **non additif** (seul écart permis à « contrats additifs », C13.5) : l'API de Koach est nouvelle ; le code
+de 0.3.1 reste dans le paquet, inchangé, pour l'application jusqu'à KM3 et comme témoin du banc.
+
+- **`package:kalis_adapt/koach.dart`** : `Koach(params, fiches, profil)` avec `observe`, `posterior`, `plan`
+  (horizons `seance`, `serie`, `semaine`), `explain`, `rejouer` ; estimation (IRT multidimensionnelle sur 10
+  qualités, mesure du RIR, courbe de Box-Cox, fatigue, branche « mauvais jour »), prescription, garde-fous de
+  0.3.1 en contraintes dures, extensions `Planification` (jumeau numérique, entropie croisée, plafonds ±15 % /
+  ±5 %), `Surveillance` (BOCPD, secours, diagnostic), `Adherence` (probit), `ControleDual` (Thompson, N-of-1,
+  contrôle synthétique). Parité avec la référence : les 13 fixtures de KM1 (`test/koach_parite_test.dart`),
+  traces comprises, écart nul en pratique (tolérance 1e-9).
+- **Façade (constats M6, M7 de KM1)** : les crochets d'extension sont appliqués par `plan` lui-même — modulation
+  de la planification, semaine allégée, bras de volume et d'intensité d'un essai, forme d'adhérence (clé
+  `proposition` d'une cible de série) ; la référence de planification est un événement du journal
+  (`reference`, `cibles`) : le rejeu reconstruit aussi la planification. `CONTRAT.md`, § K.
+- **Paramètres en asset versionné** : `assets/koach/koach_params_1_0_1.json` (`1.0.1-ref.1`, 317 clés) et
+  `assets/koach/vecteurs_qualites_v1.json` (1 039 fiches), lus par `lireParametresKoach`, `lireFichesKoach`.
+- **Validateur de sécurité** (`package:kalis_adapt/validateur.dart`) : copie fidèle des critères de sécurité du
+  banc (`kalis_bench` `safetyFindings`), obligatoire pour `Planification` ; `ProfilValidation.depuisProfil`
+  pour l'application. Parité avec le banc testée dans `kalis_bench` (`test/km2_validateur_test.dart`).
+- Tests de propriétés seedés (`test/koach_proprietes_test.dart`, plus de 20 000 entrées).
+- **Textes de Koach** (`package:kalis_adapt/koach_textes.dart`) : une phrase française par code de raison
+  (`texteRaisonKoach` : les 22 codes `koach.*` et leurs causes, causes et actions de la surveillance, raisons du
+  contrôle dual ; `texteQuestionKoach`, `texteChoixKoach` pour le diagnostic), jamais un code brut
+  (`test/koach_textes_test.dart`).
+- Intégration : `docs/INTEGRATION_KM3.md`. Mesures des critères du cahier : `kalis_bench` 0.4.0
+  (`bin/km2.dart`).
+
 ## 0.3.1
 
 Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contrat additif (cinq paramètres, un argument du constructeur).

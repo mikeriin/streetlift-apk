@@ -188,7 +188,9 @@ void main() {
     };
     final read = kmOverridesOf(good);
     expect(read['*'], <String, double>{'capacity': 1.2, 'slope': 1.0});
-    final bad = <String, Object?>{'*': <String, Object?>{'capacity': 'x'}};
+    final bad = <String, Object?>{
+      '*': <String, Object?>{'capacity': 'x'},
+    };
     expect(() => kmOverridesOf(bad), throwsFormatException);
   });
 
