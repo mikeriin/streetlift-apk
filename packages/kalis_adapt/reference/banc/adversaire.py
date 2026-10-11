@@ -1069,7 +1069,52 @@ def comparer(adversaires, sortie_dart, rejouer_koach=True, processus=2):
             'respecte': None if (pk is None or pt is None) else bool(pk >= pt - 1e-12),
             'saisons_temoin_manquantes': sum(len(l['temoin']['manquants']) for l in lignes),
         },
+        'critere_7_bis': critere_apparie(lignes),
     }
+
+
+TOLERANCE_APPARIEE = 0.03      # Koach >= témoin − 0,03 ...
+PART_APPARIEE = 0.90           # ... dans au moins 90 % des cas appariés
+PLANCHER_APPARIE = 0.10        # aucun cas sous témoin − 0,10 (sauf violation de sécurité du témoin)
+
+
+def critere_apparie(lignes):
+    """Critère 7 bis (DECISIONS_CP.md C13.12) : sur les adversaires où les
+    deux moteurs ont un jour J (performance définie pour Koach et pour le
+    témoin, moyenne des graines), Koach >= témoin − 0,03 dans au moins 90 %
+    des cas, et aucun cas sous témoin − 0,10 sauf si le témoin y commet une
+    violation de sécurité (aggravation, poussée de douleur ou constat du
+    validateur ; les cas excusés sont listés). [lignes] : lignes de
+    `comparer`. La variante `temoin_avec_barre` ne garde que les adversaires
+    où le témoin a réussi au moins une barre (performance > 0)."""
+    def juger(sel):
+        cas = []
+        for l in sel:
+            k, t = l['koach']['perf_a'], l['temoin']['perf_a']
+            cas.append((l, _r6(k - t)))
+        n = len(cas)
+        tenus = sum(1 for (_, e) in cas if e >= -TOLERANCE_APPARIEE - 1e-12)
+        sous = []
+        for (l, e) in cas:
+            if e < -PLANCHER_APPARIE - 1e-12:
+                tm = l['temoin']
+                viol = (tm.get('violations') or 0) + (tm.get('aggravations') or 0) + (tm.get('poussees') or 0)
+                sous.append({'id': l['id'], 'ecart': e, 'koach': l['koach']['perf_a'], 'temoin': tm['perf_a'],
+                             'violations_temoin': viol, 'excuse': bool(viol > 0)})
+        part = (tenus / float(n)) if n else None
+        non_excuses = sum(1 for x in sous if not x['excuse'])
+        return {'n': n, 'tenus': tenus, 'part': _r6(part), 'sous_plancher': sous,
+                'sous_plancher_non_excuses': non_excuses,
+                'pire_ecart': _r6(min(e for (_, e) in cas)) if cas else None,
+                'ecart_moyen': _r6(sum(e for (_, e) in cas) / n) if n else None,
+                'respecte': None if not n else bool(part >= PART_APPARIEE - 1e-12 and non_excuses == 0)}
+    apparies = [l for l in lignes if l['koach'].get('perf_a') is not None and l['temoin'].get('perf_a') is not None]
+    out = juger(apparies)
+    out['libelle'] = ('adversaires appariés (jour J pour les deux moteurs) : Koach >= témoin − %.2f dans au moins '
+                      '%d %% des cas, aucun cas sous témoin − %.2f sauf violation de sécurité du témoin'
+                      % (TOLERANCE_APPARIEE, int(round(PART_APPARIEE * 100)), PLANCHER_APPARIE))
+    out['temoin_avec_barre'] = juger([l for l in apparies if l['temoin']['perf_a'] > 0])
+    return out
 
 
 # ---------------------------------------------------------------------------
