@@ -58,6 +58,7 @@ Cause mesurée (adversaire `adv-31c45cfb`, recherche de KM2) : l'estimation éta
 ## D. Banc (banc/*.py)
 - `banc/adversaire.py` : `critere_apparie(lignes)` et clé `critere_7_bis` de `comparer` (C13.12) : adversaires où les deux moteurs ont un jour J ; part des cas où Koach ≥ témoin − 0,03 (seuil 90 %) ; cas sous témoin − 0,10, excusés seulement si le témoin y commet une violation de sécurité ; variante `temoin_avec_barre` ; `hors_critere` (jour J pour un seul moteur ou pour aucun).
 - `banc/campagne.py` : option `--partie i/n` (campagne répartie) ; `estimations.couverture_paires` par saison (recalage hors ligne du critère 4) ; `prevu_jour` et `observe` dans les unités de calibration (critère 5).
+- `banc/calibration_grappes.py` (nouveau) : dépendance des cas du critère 5 (grappes graine × profil × exercice), biais global, distribution de la mesure sous un modèle parfaitement calibré (`donnees/calibration_grappes_km1c2.json`).
 - `banc/mesures.py` : `paires_couverture`. `banc/planification_banc.py` : `prevu_jour` dans `previsions`.
 
 ## E. Tests (tests/)
@@ -78,3 +79,35 @@ Cause mesurée (adversaire `adv-31c45cfb`, recherche de KM2) : l'estimation éta
 - m6 (corrigé) : seuil « dite facile » de 9 flammes pour toute tentative après la deuxième. m7 (corrigé) : variance brute pour le contrôle dual (section C). m8 (corrigé) : `hors_critere`. m9 (corrigé) : message de `--partie`.
 - Laissés, avec la raison : m4 (le palier part de la charge réellement soulevée : `reprise_plafond` borne la séance) ; m6, première partie (`flammes_seance` est la note de la dernière série de l'exercice, tous emplacements : sans effet un jour de tentatives) ; m9, première partie (`--partie` ne répartit pas la mesure du mauvais jour, calculée à l'assemblage) ; m10 (`barres` double `charges_reussies` : à fusionner au portage si KM2c1 le souhaite, mêmes valeurs).
 - Hors diff, signalé par le relecteur (préexistant, non modifié) : après un échec non prévu, 0.3.1 interdit toute hausse par rapport à la dernière séance de l'exercice (`track.noUp` → `lastAny`) ; Koach ne l'interdit que sur le même schéma (`avant[1]`). À trancher par le pilotage (règle plus prudente à ajouter, coût à mesurer).
+
+## G. Mesures finales (code et paramètres livrés)
+
+Campagne : `donnees/criteres_km1c2.json`, graines 0 à 5, 4 320 saisons, 0 plantée, Koach 1.0.2 complet (planification à 1 000 trajectoires, surveillance, contrôle dual, adhérence), exécutée en deux moitiés sur la CI (graines 0, 2, 4 et 1, 3, 5) puis assemblée. Avant = Koach 1.0.1 sur les mêmes saisons (`kalis_bench/docs/data/km2/criteres_km2_g05.json`, Dart = Python à 1e-9).
+
+| Critère | Seuil | 1.0.1 | 1.0.2 |
+| --- | --- | --- | --- |
+| 1 erreur d'e1RM au rang 6 | < 3 % | 3,95 % | 3,92 % (a 2,98 ; b 5,11 ; c 3,66) |
+| 2 mauvais jour isolé | < 1 % | 0,95 % | 0,91 % |
+| 3 convergence sous 3 % (séances) | ≤ témoin 11,98 | 5,25 | 5,28 |
+| 4 couverture à 90 % | 88-92 % | 93,2 % | 89,96 % (n 69 484 ; a 93,9 ; b 88,0 ; c 88,0) |
+| 5 calibration de P(réussite), une prévision par cible | ≤ 5 points | 15,3 points | 16,8 points |
+| 6 jour J (meilleure barre / maximum) | ≥ témoin 0,9324 | 0,9459 | 0,9450 |
+| 7 pire cas adversarial | ≥ témoin (0) | 0,226 | 0,499 (nouvelle recherche de 3 000 saisons contre 1.0.2) |
+| 7 bis apparié | ≥ 90 % à témoin − 0,03 ; aucun sous témoin − 0,10 | 9/24 ; pire écart −0,597 | voir ci-dessous |
+| 8 violations de sécurité | 0 | 0 | 0 (aucune aggravation, aucune poussée, aucune hausse interdite, validateur : rien d'introduit) |
+| 11 temps (Python, runner de la CI) | ≤ 10 s ; ≤ 50 ms | 0,49 s ; 14,3 ms (KM1) | 0,44 s ; 2,8 ms |
+
+Critère 7 bis (Koach 1.0.2 rejoué, témoin 0.3.1 rejoué en Dart) :
+
+| Jeu d'adversaires | Appariés | Koach ≥ témoin − 0,03 | Sous témoin − 0,10 | Pire écart | Pire Koach |
+| --- | --- | --- | --- | --- | --- |
+| KM1 (recherche de 300 contre 1.0) | 24 | 24 (100 %) | 0 | −0,016 | 0,809 |
+| KM2 b300 (contre 1.0.1) | 24 | 23 (96 %) | 0 | −0,070 | 0,805 |
+| KM2 complet b600 (contre 1.0.1) | 24 | 22 (92 %) | 0 | −0,099 | 0,441 |
+| KM2 b3000 (contre 1.0.1) — avant : 9 (38 %), 15 sous le plancher, −0,597 | 24 | 20 (83 %) | 2 | −0,303 | 0,499 |
+| Nouvelle recherche de 3 000 contre 1.0.2 (`adversaires_km1c2.json`) | 24 | 17 (71 %) | 6 | −0,303 | 0,499 |
+
+Lecture :
+- Critère 7 bis : tenu sur trois jeux connus sur quatre, non tenu sur le jeu b3000 de KM2 (83 %) ni sur une recherche neuve contre 1.0.2 (71 %). Les 6 cas sous le plancher de la recherche neuve : 5 sur le profil de streetlifting avancé, 1 sur le powerlifter ; aucun où Koach reste bloqué sur des charges basses (le mécanisme de C13.12 est corrigé : `adv-31c45cfb` passe de 0,226 à plus de 0,80) ; dans les six, sur une graine, un mouvement du jour J finit à zéro : l'estimation y est de 10 à 12 % trop haute (notes bruitées de 1 à 2,5 flammes, réserve dite décalée, séries non notées), l'ouverture tombe au-dessus du maximum du jour (par exemple 145 kg pour un maximum de 142 kg ; 232,5 kg pour 230 kg) et la barre, gardée après un échec (règle A8.2 de 0.3.1, inchangée), est ratée trois fois ; les autres mouvements de la même saison sont à 0,87-0,99. Le témoin, qui ouvre plus bas (91 % d'une estimation elle-même en retard), passe ses barres. Deux itérations faites (palier par barre, puis palier de la plus lourde barre avec la note la plus dure des barres proches) ; la suite relève de l'estimation sous notes non fiables, pas des bornes de reprise.
+- Critère 5 : 16,8 points au pire décile (50-60 % prévus, 71,1 % observés, n 38), contre 15,3. Le défaut systématique de 1.0.1 (10-20 % prévus : 14,1 % pour 3,7 % observés, n 192, 4,2 écarts-types) est réduit (13,8 % pour 6,0 %, n 100) ; l'écart pondéré sur tous les cas passe de 3,2 à 2,4 points ; pour les cas à 10 % et plus, prévu 36,4 % et observé 36,2 % (avant : 31,2 % et 27,4 %). La mesure par déciles ne peut pas descendre à 5 points sur cette matrice (`donnees/calibration_grappes_km1c2.json`) : les 1 758 cas viennent de 96 grappes (graine, profil, exercice), dont 80 à issue unique (le même athlète et la même cible reviennent dans chaque scénario et chaque vérité) ; les 384 cas à 10 % et plus viennent de 42 grappes et 5 profils. Un modèle parfaitement calibré dont les issues sont liées dans la grappe donnerait un écart maximal médian de 21 points (10 % des tirages sous 12 points, aucun sous 5 points sur 2 000) : 16,8 points n'est pas distinguable d'une calibration parfaite, 15,3 non plus. Biais global des cas à 10 % et plus : +0,2 point, intervalle à 90 % par rééchantillonnage des grappes [−7 ; +8].
+- Critères 3 et 6 : variations de 0,03 séance et de 0,0009, dans le bruit de la mesure (écart-type de l'écart apparié du jour J : 0,0016) ; les deux restent tenus avec la même marge sur le témoin.

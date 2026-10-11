@@ -43,7 +43,8 @@ Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `p
 - `donnees/criteres_km1c2.json` : critères du cahier sur six graines (graines 0 à 5, 4 320 saisons, Koach 1.0.2 complet contre 0.3.1), campagne répartie (`--partie`) puis assemblée. Critère 5 mesuré selon C13.11.2 : `detail.par_cible.une_prevision_par_cible`.
 - `donnees/adversaires_km1c2.json` : recherche adversariale de 3 000 saisons contre Koach 1.0.2 ; `donnees/adversaires_km1c2_temoin.json.gz` : témoin 0.3.1 (Dart, `kalis_bench` `bin/km1.dart`) sur ces adversaires ; `donnees/comparaison_adversaires_km1c2.json` : comparaison et critère 7 bis (`critere_7_bis`).
 - `donnees/comparaison_adversaires_km1c2_km2_*.json` et `…_km1_v1.json` : Koach 1.0.2 rejoué sur les adversaires de KM2 (`kalis_bench/docs/data/km2/`) et de KM1, témoin relu (`donnees/temoin_adversaires/`).
-- Les fichiers de 1.0.1 ci-dessous sont gardés pour la comparaison avant / après ; `donnees/criteres_moteur.json` (temps, mauvais jour, déterminisme) est remesuré avec 1.0.2.
+- `donnees/calibration_grappes_km1c2.json` (`python3 -m banc.calibration_grappes <dossier de travail de la campagne>`) : ce que la mesure du critère 5 peut conclure — cas regroupés par grappe (graine, profil, exercice), biais global et distribution de l'écart maximal par décile d'un modèle parfaitement calibré aux issues liées dans la grappe.
+- Les fichiers de 1.0.1 ci-dessous sont gardés pour la comparaison avant / après (dont `donnees/criteres_moteur.json`, non refait) ; le mauvais jour et les temps de 1.0.2 sont dans `donnees/criteres_km1c2.json` (critères 2 et 8 de la campagne).
 
 ## Résultats publiés avec 1.0 et 1.0.1
 
