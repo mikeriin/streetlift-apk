@@ -1,8 +1,8 @@
-lot=CX1
+lot=UI
 rapide=true
 pub=success
 format=failure
-analyze=failure
+analyze=success
 ui_tokens_zone=failure
 python=skipped
 dart=failure

@@ -1,4 +1,4 @@
-zone inconnue : CX1
+zone inconnue : UI
 Relevé des valeurs écrites en dur (cahier UI §6.1) et des menus hors gabarit
   UI0 : 0
   UI1 : 0

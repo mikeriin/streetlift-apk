@@ -1,5 +1,2 @@
 Analyzing streetlift-apk...                                     
-
-   info • The import of 'package:flutter/physics.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive • lib/kit/session.dart:6:8 • unnecessary_import
-
-1 issue found. (ran in 19.7s)
+No issues found! (ran in 19.6s)
