@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : CI1h (pipeline CP), version dev6.11.2 ; précédent : dev6.11.1 (CI1g)**  
-**Date : 10 octobre 2026, Europe/Paris — version : 6.11.2+115, affichée « dev6.11.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : CI1h correction 1 (pipeline CP), version dev6.11.3 ; précédent : dev6.11.2 (CI1h)**  
+**Date : 11 octobre 2026, Europe/Paris — version : 6.11.3+116, affichée « dev6.11.3 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## CI1h correction 1 — Séance future au jour réel, volume écrit des lignes à charge fixe (version dev6.11.3, pipeline CP, DECISIONS_CP.md C15.9)
+
+- **Jour réel (défaut A)** : `adaptPlanDay` retiré ; `adaptPlannedSession` (ouverture et « La prochaine fois ») et `_adaptReprescribe` prescrivent au jour réel. Cause : à la date prévue, les journées d'avant paraissaient passées et non faites et `kalis_adapt` reportait leur test au début de la séance.
+- **Volume écrit (défaut B)** : `fixedLoadItem` sert séries, répétitions ou secondes de la ligne écrite ; exceptions (`fixedVolumeLowered`) : douleur, bilan bas (forme, sommeil, temps), reprise après coupure ; repli « charge seule » si la prescription sortait du contrat ; `setsReduced` retiré pour les séries rétablies.
+- Paquets inchangés ; aucun écran touché. Tests : `test/ci1h_correction1_test.dart`.
 
 ## CI1h — Charge fixe et prévision de fin de séance (version dev6.11.2, pipeline CP, DECISIONS_CP.md C15)
 

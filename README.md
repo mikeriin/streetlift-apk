@@ -1,4 +1,9 @@
-# Kalis Track dev6.11.2 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.11.3 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+
+## dev6.11.3 — Séance future au jour réel, volume écrit tenu (lot CI1h, correction 1)
+
+- **Séance ouverte en avance** : prescrite au jour réel, comme la prévision de fin de séance ; les journées pas encore venues ne sont plus vues comme manquées (plus de test reporté en tête d'une séance future). Le jour venu, la séance est recalculée avec l'état réel.
+- **Lignes à charge fixe** : la charge **et** le volume écrits (séries, répétitions ou secondes) sont servis ; seuls une douleur, un bilan du jour bas, une reprise après coupure et les conseils entre séries les baissent.
 
 ## dev6.11.2 — Charge fixe et prévision de fin de séance (lot CI1h)
 
