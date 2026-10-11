@@ -146,7 +146,6 @@ jobs:
           tail -n 5 out/flutter-tests.log
       - name: Tests Dart du mode dev (KALIS_DEV=true)
         id: dartdev
-        if: steps.lot.outputs.rapide != 'true'
         continue-on-error: true
         run: |
           set -o pipefail
