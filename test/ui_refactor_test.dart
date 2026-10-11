@@ -163,7 +163,7 @@ void main() {
       await swipePage(tester, back: true);
       expect(find.text('14'), findsOneWidget);
       expect(find.text('Première note'), findsOneWidget);
-      await tester.tap(find.text('Exercices'));
+      await tester.tap(find.byKey(const ValueKey('session-exercises')));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Bilan de séance').last);
       await tester.pumpAndSettle();

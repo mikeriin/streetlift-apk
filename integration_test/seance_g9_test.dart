@@ -158,7 +158,7 @@ void main() {
 
   /// Fin de séance : page « Bilan de séance », « Terminer la séance ».
   Future<bool> finish(WidgetTester tester, String shotName) async {
-    await tapF(tester, find.text('Exercices'), ms: 900);
+    await tapF(tester, find.byKey(const ValueKey('session-exercises')), ms: 900);
     await tapF(tester, find.text('Bilan de séance'), ms: 1200);
     await tap(tester, 'finish-session', ms: 2500);
     final ok = await until(

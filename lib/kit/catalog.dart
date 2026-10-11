@@ -209,7 +209,7 @@ final List<KitSample> kitSamples = [
             KMenuRow(
               icon: Icons.timer_outlined,
               title: 'Séance',
-              subtitle: 'Saisie, chronomètres, écran et unités',
+              subtitle: 'Koach, saisie, chronomètres, écran et unités',
               onTap: _noop,
               highlight: true,
             ),

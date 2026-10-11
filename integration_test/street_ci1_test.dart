@@ -371,7 +371,7 @@ void main() {
         // celui d'un groupe « A + B »), sinon pages glissées une à une.
         final card = find.byKey(ValueKey('exercise-card-${e.id}'));
         final title = store.splitName(e.name).$1;
-        final menu = find.text('Exercices');
+        final menu = find.byKey(const ValueKey('session-exercises'));
         if (card.evaluate().isEmpty && menu.evaluate().isNotEmpty) {
           await tapF(tester, menu, ms: 900);
           final tile = find.descendant(

@@ -194,7 +194,7 @@ void main() {
       await tester.tap(find.text('Ouvrir'));
       await tester.pumpAndSettle();
       // Le bilan est la dernière page : accès par le sélecteur d'exercices.
-      await tester.tap(find.text('Exercices'));
+      await tester.tap(find.byKey(const ValueKey('session-exercises')));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Bilan de séance').last);
       await tester.pumpAndSettle();

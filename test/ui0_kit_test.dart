@@ -41,8 +41,8 @@ void size(WidgetTester tester, double width, [double height = 900]) {
 void main() {
   group('jetons', () {
     test('rayons des trois familles, espacements, tailles', () {
-      expect(KRadius.card, 24);
-      expect(KRadius.menu, 20);
+      expect(KRadius.card, 16);
+      expect(KRadius.menu, 12);
       expect(KRadius.pill, isA<StadiumBorder>());
       expect(KSize.target, 48);
       expect(KSize.primary, 56);

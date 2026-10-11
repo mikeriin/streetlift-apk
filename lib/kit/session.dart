@@ -1,7 +1,9 @@
 // UI0 (refonte UI) : composants de la séance (cahier §5.4, C8, C13) —
 // tableau des séries, barre de repos flottante, message court. UI5 : en-tête
 // de séance, points de progression et réserve basse de UI2 promus ici.
+import 'package:flutter/gestures.dart' show DeviceGestureSettings;
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart' show SpringDescription;
 
 import 'buttons.dart';
 import 'page.dart' show KFitTitle;
@@ -21,21 +23,43 @@ class KBottomInset extends InheritedWidget {
 }
 
 /// En-tête de séance (C1) : retour, titre en capitales (U3) jamais coupé,
-/// repère de la journée, une seule action (⋮).
+/// repère de la journée, une seule action (⋮). Correctifs UI (11/10/2026) :
+/// appui (ou appui long) sur le titre : [onTitleTap] (liste des exercices).
 class KSessionHeader extends StatelessWidget {
   final String title;
   final String? subtitle;
   final Widget? action;
+  final VoidCallback? onTitleTap;
+
+  /// Libellé lu par TalkBack pour l'appui sur le titre.
+  final String? titleTapHint;
   const KSessionHeader({
     super.key,
     required this.title,
     this.subtitle,
     this.action,
+    this.onTitleTap,
+    this.titleTapHint,
   });
 
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
+    final heading = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Semantics(
+          header: true,
+          child: KFitTitle(
+            k.title(title),
+            style: k.titleStyle(KType.titreSeance.copyWith(color: k.texte)),
+          ),
+        ),
+        if (subtitle != null)
+          Text(subtitle!, style: KType.detail.copyWith(color: k.texte2)),
+      ],
+    );
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: KSize.primary),
       child: Padding(
@@ -49,29 +73,30 @@ class KSessionHeader extends StatelessWidget {
             ),
             const SizedBox(width: KSpacing.s4),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: KSpacing.s8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Semantics(
-                      header: true,
-                      child: KFitTitle(
-                        k.title(title),
-                        style: k.titleStyle(
-                          KType.titreSeance.copyWith(color: k.texte),
+              child: onTitleTap == null
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: KSpacing.s8,
+                      ),
+                      child: heading,
+                    )
+                  : Semantics(
+                      button: true,
+                      onTapHint: titleTapHint,
+                      child: InkWell(
+                        key: const ValueKey('session-title'),
+                        customBorder: KRadius.menuShape,
+                        onTap: onTitleTap,
+                        onLongPress: onTitleTap,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: KSpacing.s8,
+                            horizontal: KSpacing.s4,
+                          ),
+                          child: heading,
                         ),
                       ),
                     ),
-                    if (subtitle != null)
-                      Text(
-                        subtitle!,
-                        style: KType.detail.copyWith(color: k.texte2),
-                      ),
-                  ],
-                ),
-              ),
             ),
             if (action != null)
               action!
@@ -130,6 +155,132 @@ class KProgressDots extends StatelessWidget {
               ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Repère de page d'une séance (« Exercice 3 sur 7 ») et points, sur une
+/// seule ligne (correctifs UI, 11/10/2026 : plus de bouton « Exercices »).
+/// L'appui sur le repère ouvre la liste ([onList]).
+class KPageStrip extends StatelessWidget {
+  final String label;
+  final int count, index;
+  final VoidCallback? onList;
+  const KPageStrip({
+    super.key,
+    required this.label,
+    required this.count,
+    required this.index,
+    this.onList,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final where = Semantics(
+      button: onList != null,
+      label: label,
+      onTapHint: onList == null ? null : 'Voir la liste des exercices',
+      excludeSemantics: true,
+      child: InkWell(
+        key: const ValueKey('session-exercises'),
+        customBorder: KRadius.pill,
+        onTap: onList,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: KSize.target),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Text(
+                    label,
+                    style: KType.section.copyWith(color: k.texte2),
+                  ),
+                ),
+                if (onList != null) ...[
+                  const SizedBox(width: KSpacing.s4),
+                  Icon(
+                    Icons.expand_more_rounded,
+                    size: KSize.chevron,
+                    color: k.encre,
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    final dots = KProgressDots(count: count, index: index);
+    // Grand texte : les points passent sous le repère.
+    if (MediaQuery.textScalerOf(context).scale(1) > 1.3) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [where, dots],
+      );
+    }
+    return Row(
+      children: [
+        Flexible(child: where),
+        const SizedBox(width: KSpacing.s8),
+        const Spacer(),
+        dots,
+      ],
+    );
+  }
+}
+
+/// Défilement horizontal des pages d'une séance (correctifs UI,
+/// 11/10/2026) : ressort plus ferme (la page se pose vite) et seuil de
+/// glissement horizontal doublé, pour qu'un défilement vertical commencé
+/// pendant la fin d'une animation de page reste un défilement vertical.
+class KPagePhysics extends PageScrollPhysics {
+  const KPagePhysics({super.parent});
+
+  @override
+  KPagePhysics applyTo(ScrollPhysics? ancestor) =>
+      KPagePhysics(parent: buildParent(ancestor));
+
+  @override
+  SpringDescription get spring =>
+      SpringDescription.withDampingRatio(mass: .5, stiffness: 520, ratio: 1);
+}
+
+/// Pages d'une séance ([PageView]) au geste horizontal net : seuil de
+/// glissement doublé pour la seule vue paginée (les pages gardent le seuil
+/// du téléphone pour leur défilement vertical), [KPagePhysics].
+class KSessionPager extends StatelessWidget {
+  final PageController controller;
+  final int itemCount;
+  final IndexedWidgetBuilder itemBuilder;
+  final ValueChanged<int>? onPageChanged;
+  const KSessionPager({
+    super.key,
+    required this.controller,
+    required this.itemCount,
+    required this.itemBuilder,
+    this.onPageChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    // 18 : seuil de glissement par défaut de Flutter (`kTouchSlop`).
+    final slop = media.gestureSettings.touchSlop ?? 18.0;
+    return MediaQuery(
+      data: media.copyWith(
+        gestureSettings: DeviceGestureSettings(touchSlop: slop * 2),
+      ),
+      child: PageView.builder(
+        controller: controller,
+        physics: const KPagePhysics(),
+        onPageChanged: onPageChanged,
+        itemCount: itemCount,
+        itemBuilder: (context, i) =>
+            MediaQuery(data: media, child: itemBuilder(context, i)),
       ),
     );
   }

@@ -26,6 +26,7 @@ import 'package:kalis_koach/kalis_koach.dart'
 import '../athlete_profile.dart'
     show kRegionZones, kSideLabels, kZoneLabels, regionsOfZone, limitationOf;
 import '../koach/koach_bubble.dart';
+import '../koach/koach_explanations.dart';
 import '../koach/koach_view.dart';
 import '../models.dart';
 import '../muscle_map_2d.dart';
@@ -55,7 +56,7 @@ const kHealthWhy =
     'tu n’as pas répondu ne compte pas.';
 
 /// Hauteur d'une tuile de ressenti (maquette « Bilan du jour »).
-const double _feelTileHeight = 96;
+const double _feelTileHeight = 84;
 
 /// Largeur minimale d'une tuile de ressenti pour les poser côte à côte.
 const double _feelTileMinWidth = 52;
@@ -145,13 +146,16 @@ class _KoachWhyHeaderState extends State<KoachWhyHeader> {
             style: style.copyWith(color: k.texte),
           ),
         ),
-        KTextButton(
-          key: const ValueKey('koach-why'),
-          label: _why ? 'Compris' : 'Pourquoi ?',
-          onPressed: () => setState(() => _why = !_why),
-          dense: true,
-          alignStart: true,
-        ),
+        // Correctifs UI (11/10/2026) : « Pourquoi ? » en mode guidé
+        // seulement ; sinon l'explication est dans Réglages › Koach.
+        if (koachGuided)
+          KTextButton(
+            key: const ValueKey('koach-why'),
+            label: _why ? 'Compris' : 'Pourquoi ?',
+            onPressed: () => setState(() => _why = !_why),
+            dense: true,
+            alignStart: true,
+          ),
       ],
     );
     final motion = KMotion.standard;
@@ -395,9 +399,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
           KoachWhyHeader(
             pose: koachPose(KoachUsage.healthCheck),
             text: 'Comment tu te sens ?',
-            why:
-                'Ta réponse règle la séance d’aujourd’hui. Si ça ne va pas, '
-                'je te poserai quelques questions, toutes facultatives.',
+            why: kHealthCheckWhy,
             title: true,
           ),
           const SizedBox(height: KSpacing.s12),
@@ -655,16 +657,17 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
                           onPressed: actions[i].$3,
                           label: actions[i].$2,
                         ),
-                KTextButton(
-                  key: const ValueKey('adjust-why'),
-                  onPressed: () => showKoachSheet<void>(
-                    context,
-                    pose: KoachPose.explainBoard,
-                    title: 'Pourquoi ?',
-                    text: kHealthWhy,
+                if (koachGuided)
+                  KTextButton(
+                    key: const ValueKey('adjust-why'),
+                    onPressed: () => showKoachSheet<void>(
+                      context,
+                      pose: KoachPose.explainBoard,
+                      title: 'Pourquoi ?',
+                      text: kHealthWhy,
+                    ),
+                    label: 'Pourquoi ?',
                   ),
-                  label: 'Pourquoi ?',
-                ),
               ],
             ),
           ],
@@ -693,9 +696,35 @@ class _FeelTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final label = kFeelLabels[level]!;
+    // Correctifs UI (11/10/2026) : tuile au rayon des groupes (12) au lieu
+    // d'une grande pilule, repère de couleur de l'échelle en bas (de
+    // `danger` à `validation`, en passant par l'encre de la palette).
     final shape = RoundedRectangleBorder(
-      borderRadius: KRadius.cardRadius,
+      borderRadius: KRadius.menuRadius,
       side: k.controlSide,
+    );
+    final scale = switch (level) {
+      1 => k.danger,
+      2 => k.avertissement,
+      3 => k.texte3,
+      4 => k.encre,
+      _ => k.validation,
+    };
+    Widget marked(Widget child) => Stack(
+      children: [
+        child,
+        PositionedDirectional(
+          start: KSpacing.s12,
+          end: KSpacing.s12,
+          bottom: 0,
+          child: SizedBox(
+            height: 3,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(color: scale, shape: KRadius.pill),
+            ),
+          ),
+        ),
+      ],
     );
     return Semantics(
       button: true,
@@ -711,7 +740,7 @@ class _FeelTile extends StatelessWidget {
           // Koach posé sur la tuile prend sa couleur pour papier.
           child: KoachSurface(
             color: k.haute,
-            child: horizontal
+            child: marked(horizontal
                 ? Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: KSpacing.s12,
@@ -766,7 +795,7 @@ class _FeelTile extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
+                  )),
           ),
         ),
       ),

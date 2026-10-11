@@ -18,7 +18,7 @@ class KDockItem {
 }
 
 /// Dock flottant : quatre destinations stables ; l'onglet actif s'élargit
-/// en pilule `pleine` (icône et libellé `surPleine`), les autres gardent
+/// en pilule tonale `encre` (icône `encre`, libellé `texte`), les autres gardent
 /// leur icône seule (`texte2`). Les libellés restent dans l'arbre
 /// (accessibilité, tests) : ceux des onglets inactifs sont repliés à
 /// largeur nulle, pas retirés. Une seule animation par onglet pilote
@@ -83,7 +83,9 @@ class KDock extends StatelessWidget {
                       // renforcé, où le contenu qui passe dessous ferait
                       // tomber les icônes sous 7:1 (UI5).
                       color: k.haute.withValues(alpha: k.contrast ? 1 : .96),
-                      shape: StadiumBorder(side: BorderSide(color: k.filet)),
+                      // Correctifs UI (11/10/2026) : plus de liseré gris en
+                      // sombre (la surface teintée suffit) ; filet en clair.
+                      shape: StadiumBorder(side: k.controlSide),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(_pad),
@@ -128,7 +130,7 @@ class KDock extends StatelessWidget {
             context,
           ).clamp(maxScaleFactor: 1.15),
           style: k.titleStyle(
-            KType.libelle.copyWith(fontFamily: KFont.title, color: k.surPleine),
+            KType.libelle.copyWith(fontFamily: KFont.title, color: k.texte),
           ),
         ),
       ),
@@ -140,7 +142,11 @@ class KDock extends StatelessWidget {
       builder: (context, raw, _) {
         final t = raw.clamp(0.0, 1.0);
         final weight = 1 + (activeWeight - 1) * t;
-        final ink = Color.lerp(k.texte2, k.surPleine, t)!;
+        // Correctifs UI (11/10/2026, « le dock manque d'identité ») :
+        // l'onglet actif n'est plus un aplat terne de la dominante mais une
+        // pilule tonale de l'encre (couleur de marque vive), icône en
+        // `encre`, libellé en `texte`, avec un liseré `encre`.
+        final ink = Color.lerp(k.texte2, k.encre, t)!;
         return Expanded(
           flex: (weight * 1000).round(),
           child: Semantics(
@@ -162,12 +168,12 @@ class KDock extends StatelessWidget {
                   },
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
-                      color: Color.lerp(
-                        k.pleine.withValues(alpha: 0),
-                        k.pleine,
-                        t,
+                      color: k.encre.withValues(alpha: .16 * t),
+                      shape: StadiumBorder(
+                        side: BorderSide(
+                          color: k.encre.withValues(alpha: .55 * t),
+                        ),
                       ),
-                      shape: KRadius.pill,
                     ),
                     child: Padding(
                       // Marge de la pilule active ; un onglet replié garde

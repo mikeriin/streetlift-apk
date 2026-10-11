@@ -13,6 +13,7 @@ import 'dev/dev_flags.dart';
 import 'dev/dev_widgets.dart' show HeaderLogo;
 import 'engine3d.dart';
 import 'exercise_screens.dart' show MentionsScreen;
+import 'koach/koach_explanations.dart' show showKoachExplanations;
 import 'koach/koach_gallery_screen.dart';
 import 'mannequin_3d.dart' show Display3DSettings;
 import 'notification_settings.dart';
@@ -26,7 +27,7 @@ import 'kit/kit.dart';
 import 'wellbeing_screens.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.12.0';
+const kVersion = '6.12.1';
 
 /// Version affichée (D0.9) : « dev6.8.0 » dans le build de développement
 /// (APK du propriétaire), « 6.8.0 » dans l’AAB du Play Store.
@@ -43,8 +44,8 @@ enum SettingsPage {
   ),
   session(
     'Séance',
-    'Saisie, chronomètres, écran et unités',
-    'Saisie, chronomètres, écran et unités.',
+    'Koach, saisie, chronomètres, écran et unités',
+    'Koach, saisie, chronomètres, écran et unités.',
     Icons.timer_outlined,
   ),
   notifications(
@@ -524,6 +525,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<Widget> _session() {
     final s = store.settings;
     return [
+      // Correctifs UI (11/10/2026) : les explications de Koach sont ici ;
+      // le mode guidé les remet dans la séance.
+      KMenuGroup(
+        title: 'Koach',
+        dividerIndent: KSpacing.s16,
+        children: [
+          _switch(
+            'koach-guided',
+            'Mode guidé',
+            'Koach explique ses choix pendant la séance',
+            s.koachGuided,
+            (v) => s.koachGuided = v,
+          ),
+          _mark(
+            'koach-explanations',
+            (lit) => KMenuRow(
+              key: const ValueKey('settings-koach-explanations'),
+              icon: Icons.auto_awesome_outlined,
+              title: 'Comprendre Koach',
+              subtitle: 'Bilan du jour, difficulté, charges, clusters',
+              highlight: lit,
+              onTap: () => showKoachExplanations(context),
+            ),
+          ),
+        ],
+      ),
       KMenuGroup(
         title: 'Chronomètres',
         dividerIndent: KSpacing.s16,

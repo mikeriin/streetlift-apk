@@ -31,13 +31,14 @@ abstract final class KSpacing {
 
 /// Rayons (cahier §5.3, U13) : trois familles, seules valeurs.
 abstract final class KRadius {
-  /// Cartes de contenu, carte du jour, tuiles de ressenti, barre de repos,
-  /// haut des feuilles.
-  static const double card = 24;
+  /// Cartes de contenu, carte du jour, barre de repos, haut des feuilles.
+  /// Correctifs UI (11/10/2026) : 24 → 16, cartes moins arrondies.
+  static const double card = 16;
 
   /// Groupes de lignes (menus, réglages, phases, tableau des séries, lignes
-  /// de jour) et lignes surlignées qu'ils contiennent.
-  static const double menu = 20;
+  /// de jour, tuiles de ressenti) et lignes surlignées qu'ils contiennent.
+  /// Correctifs UI (11/10/2026) : 20 → 12.
+  static const double menu = 12;
 
   static const cardRadius = BorderRadius.all(Radius.circular(card));
   static const menuRadius = BorderRadius.all(Radius.circular(menu));

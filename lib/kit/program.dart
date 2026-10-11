@@ -128,7 +128,11 @@ class KDayRow extends StatelessWidget {
                   width: KSpacing.s32,
                   child: Text(
                     'J$day',
-                    style: KType.chiffrePetit.copyWith(color: k.texte2),
+                    // Correctifs UI : numéro du jour en `encre` (à faire).
+                    style: KType.chiffrePetit.copyWith(
+                      color: done ? k.texte2 : k.encre,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 Expanded(
