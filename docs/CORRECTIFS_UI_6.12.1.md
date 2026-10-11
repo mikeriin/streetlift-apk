@@ -48,3 +48,7 @@ Halo retiré. Ligne, points et base de la flamme dessinés comme une seule forme
 ## 6.17.2 — flou continu
 
 Flou progressif sans palier visible : bande portée à 40 dp, 32 paliers (un tous les 1,25 dp) au lieu de 6, flou croissant en courbe quadratique (écart entre paliers voisins ≤ 0,6 de σ), paliers groupés sur une seule capture de l'arrière-plan (`BackdropGroup`, `BackdropFilter.grouped`).
+
+## 6.17.3 — fondu au lieu du flou
+
+Le flou progressif (filtres d'arrière-plan empilés) est retiré : trop coûteux et trop haut. À la place, un fondu vers la couleur du fond sur 24 dp au-dessus du dock et de la barre de repos (0 → 25 → 60 → 85 %, 95 % sous le bloc), un seul dégradé, aucun filtre. Le dock garde son flou derrière sa pilule.

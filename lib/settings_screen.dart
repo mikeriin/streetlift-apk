@@ -27,7 +27,7 @@ import 'kit/kit.dart';
 import 'wellbeing_screens.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.17.2';
+const kVersion = '6.17.3';
 
 /// Version affichée (D0.9) : « dev6.8.0 » dans le build de développement
 /// (APK du propriétaire), « 6.8.0 » dans l’AAB du Play Store.
