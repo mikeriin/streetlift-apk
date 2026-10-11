@@ -27,7 +27,7 @@ import 'package:streetlift_tracker/koach/koach_view.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart' show MannequinMap;
 import 'package:streetlift_tracker/models.dart' show DayPlan;
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/ui.dart' show KCard, kCardColor;
+import 'package:streetlift_tracker/kit/kit.dart';
 
 Widget _page(
   Widget child, {
@@ -173,7 +173,7 @@ void main() {
       );
       final ctx = tester.element(find.byType(Column).first);
       expect(page.paper, Theme.of(ctx).scaffoldBackgroundColor);
-      expect(card.paper, kCardColor(ctx));
+      expect(card.paper, KTokens.of(ctx).surface);
       expect(tinted.paper, isNot(card.paper));
       expect(tinted.ink, KoachColors.darkInk);
     });

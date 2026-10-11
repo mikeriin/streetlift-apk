@@ -1,11 +1,11 @@
 // Briques communes de l'onglet Stats (UI3, refonte UI) : liste des onglets,
-// introduction d'un onglet, jauge, tuile chiffrée, grille, paragraphes et
-// feuille d'information. Tout passe par les jetons du kit (cahier §5) :
-// aucune valeur de présentation écrite ici.
+// introduction d'un onglet, paragraphes, groupes de feuille et feuille
+// d'information (UI5 : jauge, tuile chiffrée et grille promues dans le kit,
+// `KMeter`, `KStatTile`, `KTileGrid`). Tout passe par les jetons du kit
+// (cahier §5) : aucune valeur de présentation écrite ici.
 import 'package:flutter/material.dart';
 
 import 'kit/kit.dart';
-import 'stats/widgets/k_info_sheet.dart';
 
 String statsNumber(num value) => value == value.roundToDouble()
     ? value.toInt().toString()
@@ -90,132 +90,6 @@ class StatsText extends StatelessWidget {
   }
 }
 
-/// Jauge en pilule : piste `filet`, remplissage `encre` (ou [color], un
-/// état : `validation` pour un objectif atteint). [onFill] : posée sur
-/// l'aplat `pleine` (carte du personnage), en `surPleine`.
-class StatsBar extends StatelessWidget {
-  final double value;
-  final String label;
-  final String? description;
-  final Color? color;
-  final bool onFill;
-  const StatsBar({
-    super.key,
-    required this.value,
-    required this.label,
-    this.description,
-    this.color,
-    this.onFill = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final k = KTokens.of(context);
-    final v = value.isNaN ? 0.0 : value.clamp(0.0, 1.0);
-    final fill = onFill ? k.surPleine : (color ?? k.encre);
-    final track = onFill ? k.surPleine.withValues(alpha: .24) : k.filet;
-    return Semantics(
-      label: label,
-      value: description ?? '${(v * 100).round()} %',
-      child: SizedBox(
-        height: KSpacing.s8,
-        width: double.infinity,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(color: track, shape: KRadius.pill),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: FractionallySizedBox(
-              widthFactor: v,
-              heightFactor: 1,
-              child: DecoratedBox(
-                decoration: ShapeDecoration(color: fill, shape: KRadius.pill),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Tuile chiffrée : grand chiffre (chiffres tabulaires), icône, libellé.
-class StatsMetric extends StatelessWidget {
-  final String value, label;
-  final IconData icon;
-  const StatsMetric(this.value, this.label, this.icon, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final k = KTokens.of(context);
-    return Semantics(
-      container: true,
-      label: '$label : $value',
-      excludeSemantics: true,
-      child: KCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Text(
-                    value,
-                    style: KType.chiffre.copyWith(color: k.texte),
-                  ),
-                ),
-                Icon(icon, color: k.encre, size: KSize.iconSmall),
-              ],
-            ),
-            const SizedBox(height: KSpacing.s4),
-            Text(label, style: KType.detail.copyWith(color: k.texte2)),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Grille de tuiles : deux colonnes, une seule à partir de 150 % de texte
-/// ou sous 240 dp.
-class StatsGrid extends StatelessWidget {
-  final List<Widget> children;
-  const StatsGrid({super.key, required this.children});
-
-  @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, bounds) {
-      final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
-      final count = large || bounds.maxWidth < 240 ? 1 : 2;
-      const gap = KSpacing.cardGap;
-      // Tuiles d'une même rangée à la même hauteur.
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (var r = 0; r < children.length; r += count) ...[
-            if (r > 0) const SizedBox(height: gap),
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (var c = r; c < r + count; c++) ...[
-                    if (c > r) const SizedBox(width: gap),
-                    Expanded(
-                      child: c < children.length
-                          ? children[c]
-                          : const SizedBox.shrink(),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ],
-        ],
-      );
-    },
-  );
-}
-
 /// Groupe de lignes d'une feuille : conteneur `haute` au rayon des menus
 /// (la feuille est en `surface`).
 class StatsSheetGroup extends StatelessWidget {
@@ -278,17 +152,17 @@ class StatsSheetRow extends StatelessWidget {
   }
 }
 
-/// Feuille d'information de Stats (gabarit de `KInfoSheet`).
+/// Feuille d'information de Stats (feuille de contenu du kit).
 Future<void> statsSheet(
   BuildContext context,
   String title,
   List<Widget> children, {
   String? subtitle,
   String closeLabel = 'Fermer',
-}) => showKInfoSheet(
+}) => showKContentSheet<void>(
   context,
   title: title,
   subtitle: subtitle,
   closeLabel: closeLabel,
-  children: children,
+  children: (_) => children,
 );

@@ -16,7 +16,7 @@ import 'package:kalis_plan/kalis_plan.dart'
 import '../app_theme.dart';
 import '../dev/dev_session.dart' show DevShare;
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'plan_creation.dart';
 import 'plan_sheets.dart' show planName, planReason;
 import 'plan_texts.dart';
@@ -96,7 +96,7 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
   Widget build(BuildContext context) {
     final catalog = _catalog;
     if (catalog == null) {
-      return const KScreen(body: Center(child: Text('Base non chargée.')));
+      return const KScaffold(body: Center(child: Text('Base non chargée.')));
     }
     final ins = PlanInspector(catalog);
     final plan = _plan;
@@ -111,7 +111,7 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
       violations = const [];
     }
     final proposals = widget.creation?.proposals ?? [plan];
-    return KScreen(
+    return KScaffold(
       appBar: AppBar(
         title: const Text('INSPECTEUR DU MOTEUR'),
         actions: [
@@ -123,7 +123,7 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
           ),
         ],
       ),
-      body: KList(
+      body: KPageList(
         key: const ValueKey('plan-inspector-list'),
         children: [
           Text(
@@ -131,7 +131,7 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
             'graine ${plan.seed} · ${widget.creation?.lastMs ?? 0} ms (dernier appel)',
             style: dim,
           ),
-          const KSection('Propositions'),
+          const KSectionTitle('Propositions'),
           for (var i = 0; i < proposals.length; i++)
             KCard(
               key: ValueKey('inspector-proposal-$i'),
@@ -158,14 +158,14 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
                 ],
               ),
             ),
-          const KSection('Ce que le moteur retient du profil'),
+          const KSectionTitle('Ce que le moteur retient du profil'),
           KCard(
             child: SelectableText(
               const JsonEncoder.withIndent('  ').convert(profile),
               style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
             ),
           ),
-          KSection(
+          KSectionTitle(
             'Contraintes dures (${violations.length} violation${violations.length > 1 ? 's' : ''})',
           ),
           KCard(
@@ -178,7 +178,7 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
               ),
             ),
           ),
-          const KSection('Exercices'),
+          const KSectionTitle('Exercices'),
           for (final d in plan.days)
             for (final s in d.slots)
               KCard(
@@ -219,7 +219,7 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
                   ],
                 ),
               ),
-          const KSection('Pourquoi pas un exercice de plus ?'),
+          const KSectionTitle('Pourquoi pas un exercice de plus ?'),
           KCard(
             child: Builder(
               builder: (context) {

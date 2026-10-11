@@ -24,7 +24,7 @@ import 'package:streetlift_tracker/journal_adapter.dart';
 import 'package:streetlift_tracker/mannequin_clip.dart';
 import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/ui.dart';
+import 'package:streetlift_tracker/kit/kit.dart';
 
 import 'l2_fixtures.dart';
 import 'phone_test_support.dart';

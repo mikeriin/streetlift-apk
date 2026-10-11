@@ -11,10 +11,9 @@ import 'dev/dev_widgets.dart' show HeaderLogo;
 import 'koach/koach_bubble.dart';
 import 'plan/evolution_widgets.dart' show EvolutionScreen;
 import 'plan/plan_screens.dart' show openPlanCreation;
-import 'plan/widgets/program_widgets.dart';
 import 'program_screens.dart' show planCreateBlockedReason;
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Une étape de l'explication : titre et texte.
 typedef ExplainerStep = ({String title, String text});
@@ -100,10 +99,10 @@ const List<ExplainerStep> kProgramExplainer = [
 
 /// Feuille « Comment marche ton programme ? ».
 Future<void> showProgramExplainer(BuildContext context) =>
-    showProgramSheet<void>(
+    showKContentSheet<void>(
       context,
       draggable: true,
-      listKey: const ValueKey('program-explainer'),
+      contentKey: const ValueKey('program-explainer'),
       title: 'Comment marche ton programme ?',
       children: (ctx) {
         final k = KTokens.of(ctx);

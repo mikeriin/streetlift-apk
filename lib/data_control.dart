@@ -13,7 +13,7 @@ import 'kalis_clock.dart';
 import 'notifications.dart';
 import 'session_prefs.dart';
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Replanification des rappels après import ou suppression (remplaçable
 /// par les tests).

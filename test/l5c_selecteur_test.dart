@@ -288,7 +288,7 @@ void main() {
         );
         // Composant qui lit la palette sans dépendre du thème, dans une
         // route empilée : il est bien redessiné.
-        final dots = find.byType(SessionProgressDots);
+        final dots = find.byType(KProgressDots);
         // UI2 : la page courante des points est en `encre` (rôle lisible
         // sur le fond), lu dans les jetons au dessin.
         if (dots.evaluate().isNotEmpty) {

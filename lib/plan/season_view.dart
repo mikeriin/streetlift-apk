@@ -15,7 +15,7 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 import '../athlete_profile_screen.dart' show ProfileScreen;
 import '../koach/koach_bubble.dart' show KoachSays;
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'coach_texts.dart';
 import 'event_day_screen.dart';
 import 'plan_program.dart';

@@ -5,7 +5,6 @@
 // inchangés.
 import 'package:flutter/material.dart';
 
-import 'adapt/widgets/session_kit.dart' show showKContentSheet;
 import 'kit/kit.dart';
 import 'training_estimate.dart';
 

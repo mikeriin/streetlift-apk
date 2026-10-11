@@ -56,24 +56,24 @@ class StatsOverview extends StatelessWidget {
         KSectionTitle(
           'Cette semaine, du ${statsDate(p.week.monday)} au ${statsDate(p.week.monday.add(const Duration(days: 6)))}',
         ),
-        StatsGrid(
+        KTileGrid(
           children: [
-            StatsMetric(
+            KStatTile(
               '${p.week.sessions}',
               'Séances terminées',
               Icons.fitness_center_rounded,
             ),
-            StatsMetric(
+            KStatTile(
               '${p.week.sets}',
               'Séries validées',
               Icons.done_all_rounded,
             ),
-            StatsMetric(
+            KStatTile(
               '${p.week.activeDays.length}',
               'Jours actifs',
               Icons.calendar_today_rounded,
             ),
-            StatsMetric(
+            KStatTile(
               '${p.currentStreak}',
               'Semaines de suite',
               Icons.local_fire_department_outlined,
@@ -89,20 +89,20 @@ class StatsOverview extends StatelessWidget {
           muted: true,
         ),
         const KSectionTitle('Depuis tes débuts'),
-        StatsGrid(
+        KTileGrid(
           children: [
-            StatsMetric(
+            KStatTile(
               '${p.sessions}',
               'Séances terminées',
               Icons.task_alt_rounded,
             ),
-            StatsMetric('${p.sets}', 'Séries au total', Icons.layers_outlined),
-            StatsMetric(
+            KStatTile('${p.sets}', 'Séries au total', Icons.layers_outlined),
+            KStatTile(
               '${p.activeWeeks}',
               'Semaines validées',
               Icons.event_available_rounded,
             ),
-            StatsMetric(
+            KStatTile(
               '${p.bestStreak}',
               'Meilleure série (semaines)',
               Icons.local_fire_department_rounded,

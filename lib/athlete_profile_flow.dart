@@ -28,7 +28,7 @@ import 'profile_v3.dart';
 import 'program_explainer.dart';
 import 'program_screens.dart' show ProgramScreen;
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 import 'wellbeing_screens.dart' show DisclaimerCard, MinorGate;
 
 part 'athlete_profile_flow_v3.dart';

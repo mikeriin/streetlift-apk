@@ -1,7 +1,9 @@
 // UI0 (refonte UI) : thème Material de l'application, construit sur les
-// jetons (cahier §5). Les composants historiques (boutons, champs, listes,
-// feuilles, dialogues) prennent ainsi déjà palettes, polices et rayons avant
-// que les lots d'écrans ne passent aux composants du kit.
+// jetons (cahier §5) : les composants Material encore utilisés (boutons,
+// champs, listes, feuilles, dialogues) prennent palettes, polices et rayons.
+// UI5 : les métriques de texte d'avant la refonte (14 / 20, 15 / 20),
+// gardées par UI0 pour les écrans pas encore refaits, sont retirées : le
+// texte courant suit partout le cahier (§5.2, corps 15 / 22).
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -66,7 +68,7 @@ ThemeData kitTheme({
         shadow: Colors.transparent,
       );
   TextStyle t(TextStyle s, Color c) => s.copyWith(color: c);
-  final field = OutlineInputBorder(
+  final field = KFieldBorder(
     borderRadius: const BorderRadius.all(Radius.circular(KSize.target / 2)),
     borderSide: BorderSide(color: r.filet),
   );
@@ -99,8 +101,8 @@ ThemeData kitTheme({
       titleLarge: t(KType.titreEcran, r.texte),
       titleMedium: t(KType.corpsFort, r.texte),
       titleSmall: t(KType.libelle, r.texte),
-      bodyLarge: t(KType.champHistorique, r.texte),
-      bodyMedium: t(KType.texteHistorique, r.texte),
+      bodyLarge: t(KType.corps, r.texte),
+      bodyMedium: t(KType.corps, r.texte),
       bodySmall: t(KType.detail, r.texte2),
       labelLarge: t(KType.libelle, r.texte),
       labelMedium: t(KType.micro, r.texte2),
@@ -161,9 +163,21 @@ ThemeData kitTheme({
       focusedErrorBorder: field.copyWith(
         borderSide: BorderSide(color: r.danger, width: KSize.current),
       ),
-      labelStyle: t(KType.libelle, r.texte2),
-      floatingLabelStyle: t(KType.libelle, r.encre),
-      hintStyle: t(KType.champHistorique, r.texte2),
+      // Étiquette neutre (`texte2`) dans la pilule ; en `danger` seulement
+      // quand le champ est en erreur (UI5).
+      labelStyle: WidgetStateTextStyle.resolveWith(
+        (s) => t(
+          KType.libelle,
+          s.contains(WidgetState.error) ? r.danger : r.texte2,
+        ),
+      ),
+      floatingLabelStyle: WidgetStateTextStyle.resolveWith(
+        (s) => t(
+          KType.libelle,
+          s.contains(WidgetState.error) ? r.danger : r.texte2,
+        ),
+      ),
+      hintStyle: t(KType.corps, r.texte2),
       helperStyle: t(KType.detail, r.texte2),
       errorStyle: t(KType.detail, r.danger),
       prefixIconColor: r.texte2,
@@ -250,7 +264,7 @@ ThemeData kitTheme({
       textColor: r.texte,
       selectedColor: r.encre,
       selectedTileColor: r.haute,
-      titleTextStyle: t(KType.ligneHistorique, r.texte),
+      titleTextStyle: t(KType.corpsFort, r.texte),
       subtitleTextStyle: t(KType.detail, r.texte2),
       leadingAndTrailingTextStyle: t(KType.detail, r.texte2),
       shape: KRadius.menuShape,
@@ -414,4 +428,63 @@ ThemeData kitTheme({
       selectionHandleColor: r.encre,
     ),
   );
+}
+
+/// Bord des champs du kit : pilule (contour `filet`, `encre` au focus,
+/// `danger` en erreur) dont l'étiquette flottante se pose **dans** la
+/// pilule, au-dessus de la saisie, et non sur le contour (UI5) : le champ
+/// se comporte comme un champ rempli de Material 3 tout en gardant le
+/// contour entier.
+class KFieldBorder extends OutlineInputBorder {
+  const KFieldBorder({
+    super.borderSide,
+    super.borderRadius,
+    super.gapPadding,
+  });
+
+  /// Faux : l'étiquette se pose dans le conteneur, sans couper le contour.
+  @override
+  bool get isOutline => false;
+
+  @override
+  KFieldBorder copyWith({
+    BorderSide? borderSide,
+    BorderRadius? borderRadius,
+    double? gapPadding,
+  }) => KFieldBorder(
+    borderSide: borderSide ?? this.borderSide,
+    borderRadius: borderRadius ?? this.borderRadius,
+    gapPadding: gapPadding ?? this.gapPadding,
+  );
+
+  @override
+  KFieldBorder scale(double t) => KFieldBorder(
+    borderSide: borderSide.scale(t),
+    borderRadius: borderRadius * t,
+    gapPadding: gapPadding * t,
+  );
+
+  @override
+  ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
+    if (a is KFieldBorder) {
+      return KFieldBorder(
+        borderRadius: BorderRadius.lerp(a.borderRadius, borderRadius, t)!,
+        borderSide: BorderSide.lerp(a.borderSide, borderSide, t),
+        gapPadding: a.gapPadding,
+      );
+    }
+    return super.lerpFrom(a, t);
+  }
+
+  @override
+  ShapeBorder? lerpTo(ShapeBorder? b, double t) {
+    if (b is KFieldBorder) {
+      return KFieldBorder(
+        borderRadius: BorderRadius.lerp(borderRadius, b.borderRadius, t)!,
+        borderSide: BorderSide.lerp(borderSide, b.borderSide, t),
+        gapPadding: gapPadding,
+      );
+    }
+    return super.lerpTo(b, t);
+  }
 }

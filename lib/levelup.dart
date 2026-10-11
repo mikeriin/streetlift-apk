@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'store.dart';
 import 'store_widget.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 import 'progression_screen.dart';
 
 export 'rewards.dart' show checkLevelUp;
@@ -110,12 +110,10 @@ class LevelProgressNumber extends StatelessWidget {
             ],
           ),
           const SizedBox(height: KSpacing.s4),
-          KProgressBar(
+          KMeter(
             value: progress,
             height: KSpacing.s4,
-            color: k.encre,
-            track: k.filet,
-            semanticsLabel: 'Progression vers le niveau suivant',
+            label: 'Progression vers le niveau suivant',
           ),
         ],
       ),

@@ -1,9 +1,140 @@
 // UI0 (refonte UI) : composants de la séance (cahier §5.4, C8, C13) —
-// tableau des séries, barre de repos flottante, message court.
+// tableau des séries, barre de repos flottante, message court. UI5 : en-tête
+// de séance, points de progression et réserve basse de UI2 promus ici.
 import 'package:flutter/material.dart';
 
 import 'buttons.dart';
+import 'page.dart' show KFitTitle;
 import 'tokens.dart';
+
+/// Hauteur occupée en bas d'une séance par la barre de chrono (C8) : un
+/// message court (Koach, record, enchaînement) se pose au-dessus.
+class KBottomInset extends InheritedWidget {
+  final double Function() height;
+  const KBottomInset({super.key, required this.height, required super.child});
+
+  static double of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<KBottomInset>()?.height() ??
+      0;
+
+  @override
+  bool updateShouldNotify(KBottomInset oldWidget) => false;
+}
+
+/// En-tête de séance (C1) : retour, titre en capitales (U3) jamais coupé,
+/// repère de la journée, une seule action (⋮).
+class KSessionHeader extends StatelessWidget {
+  final String title;
+  final String? subtitle;
+  final Widget? action;
+  const KSessionHeader({
+    super.key,
+    required this.title,
+    this.subtitle,
+    this.action,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: KSize.primary),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
+        child: Row(
+          children: [
+            KIconButton(
+              icon: Icons.arrow_back_rounded,
+              tooltip: 'Retour',
+              onPressed: () => Navigator.maybePop(context),
+            ),
+            const SizedBox(width: KSpacing.s4),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: KSpacing.s8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Semantics(
+                      header: true,
+                      child: KFitTitle(
+                        k.title(title),
+                        style: k.titleStyle(
+                          KType.titreSeance.copyWith(color: k.texte),
+                        ),
+                      ),
+                    ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle!,
+                        style: KType.detail.copyWith(color: k.texte2),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+            if (action != null)
+              action!
+            else
+              const SizedBox(width: KSize.target),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Points de progression d'une suite de pages : page courante en pilule
+/// `encre` (ou [color]), pages passées en `texte2`, suivantes en `texte3`.
+class KProgressDots extends StatelessWidget {
+  final int count;
+  final int index;
+
+  /// Couleur de la page courante (par défaut `encre`).
+  final Color? color;
+
+  const KProgressDots({
+    super.key,
+    required this.count,
+    required this.index,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final motion = KMotion.fast;
+    return Semantics(
+      label: 'Étape ${index + 1} sur $count',
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          spacing: KSpacing.s4,
+          runSpacing: KSpacing.s4,
+          children: [
+            for (var i = 0; i < count; i++)
+              AnimatedContainer(
+                duration: motion.durationIn(context),
+                curve: motion.curve,
+                width: i == index ? KSpacing.s20 : KSpacing.s8,
+                height: KSpacing.s8 * .75,
+                decoration: ShapeDecoration(
+                  color: i == index
+                      ? (color ?? k.encre)
+                      : i < index
+                      ? k.texte2
+                      : k.texte3,
+                  shape: KRadius.pill,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 /// État d'une ligne du tableau des séries.
 enum KSetState { upcoming, current, done }

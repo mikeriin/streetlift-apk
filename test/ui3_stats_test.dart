@@ -11,7 +11,6 @@ import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
 import 'package:streetlift_tracker/records_screen.dart';
-import 'package:streetlift_tracker/stats/widgets/k_info_sheet.dart';
 import 'package:streetlift_tracker/stats_navigation.dart';
 import 'package:streetlift_tracker/stats_screen.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -103,7 +102,7 @@ void main() {
       await tester.tap(find.text('Ton personnage'));
       await tester.pumpAndSettle();
       expect(section(tester), StatsSection.journey.index);
-      expect(find.byType(KInfoSheet), findsNothing);
+      expect(find.byType(KContentSheet), findsNothing);
       expect(find.text('Ton arbre de progression'), findsOneWidget);
       // Défi, campagne : même chose.
       for (final target in [
@@ -123,7 +122,7 @@ void main() {
         await tester.tap(target.first);
         await tester.pumpAndSettle();
         expect(section(tester), StatsSection.journey.index, reason: '$target');
-        expect(find.byType(KInfoSheet), findsNothing);
+        expect(find.byType(KContentSheet), findsNothing);
       }
       expect(tester.takeException(), isNull);
     },
@@ -209,7 +208,7 @@ void main() {
       await reveal(tester, row);
       await tester.tap(row);
       await tester.pumpAndSettle();
-      final sheet = find.byType(KInfoSheet);
+      final sheet = find.byType(KContentSheet);
       expect(sheet, findsOneWidget, reason: e.key);
       expect(
         find.descendant(of: sheet, matching: find.text(e.value)),
@@ -235,7 +234,7 @@ void main() {
       }
       await tester.tap(find.byKey(const ValueKey('sheet-close')));
       await tester.pumpAndSettle();
-      expect(find.byType(KInfoSheet), findsNothing);
+      expect(find.byType(KContentSheet), findsNothing);
     }
     expect(tester.takeException(), isNull);
   });
@@ -252,7 +251,7 @@ void main() {
     await tester.tap(find.text('Afficher mon rang'));
     await tester.pumpAndSettle();
     expect(store.settings.title, '');
-    expect(find.byType(KInfoSheet), findsNothing);
+    expect(find.byType(KContentSheet), findsNothing);
     expect(tester.takeException(), isNull);
   });
 

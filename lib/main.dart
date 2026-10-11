@@ -14,11 +14,11 @@ import 'session_host.dart';
 import 'session_prefs.dart';
 import 'startup.dart';
 import 'app_theme.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 import 'motion.dart';
 import 'nav_bar.dart';
 export 'nav_bar.dart' show HeroNavBar;
-export 'app_theme.dart' show SL, buildTheme, logDeco;
+export 'app_theme.dart' show SL, buildTheme;
 
 import 'home_screen.dart';
 import 'notifications.dart';
@@ -119,9 +119,9 @@ class _InitErrorApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: buildTheme(true),
-    home: KScreen(
+    home: KScaffold(
       appBar: AppBar(title: const Text('Problème au démarrage')),
-      body: KList(
+      body: KPageList(
         children: [
           const KCard(
             child: Text(

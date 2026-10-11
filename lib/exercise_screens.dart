@@ -18,7 +18,6 @@ import 'mannequin_clip.dart';
 import 'muscle_map_2d.dart';
 import 'search.dart';
 import 'store.dart';
-import 'ui.dart' show kPageColor;
 
 /// Ouvre la fiche d'un exercice de la base v1.1.
 Future<void> openExerciseSheet(BuildContext context, String id) => Navigator.of(
@@ -508,7 +507,7 @@ class _Sheet extends StatelessWidget {
           key: const ValueKey('fiche-mannequin-support'),
           child: ExerciseMannequin(
             key: ValueKey('fiche-muscles-${entry.id}'),
-            background: kPageColor(context),
+            background: KTokens.of(context).fond,
             exerciseId: entry.id,
             height: (MediaQuery.sizeOf(context).height * .45).clamp(
               380.0,

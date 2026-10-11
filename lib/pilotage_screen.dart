@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 class PilotageScreen extends StatelessWidget {
   const PilotageScreen({super.key});
@@ -210,7 +210,10 @@ class _NumTile extends StatelessWidget {
       textInputAction: TextInputAction.done,
       textAlign: TextAlign.center,
       textAlignVertical: TextAlignVertical.center,
-      style: KControl.numberStyle,
+      style: KType.corps.copyWith(
+        fontWeight: KType.corpsFort.fontWeight,
+        fontFeatures: KFont.tabular,
+      ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (t) =>
           (t ?? '').trim().isEmpty || parseReference(t, refCell) != null
@@ -219,9 +222,9 @@ class _NumTile extends StatelessWidget {
       // L5 : le nom de la référence est à côté du champ ; dans le champ, il
       // était tronqué (« Poids de cor… ») et masquait « — ». TalkBack le lit
       // toujours par la sémantique ci-dessous.
-      decoration: logDeco(
-        hint: '—',
-        suffix: unit.startsWith('kg') ? 'kg' : unit,
+      decoration: InputDecoration(
+        hintText: '—',
+        suffixText: unit.startsWith('kg') ? 'kg' : unit,
       ),
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       onChanged: (t) {

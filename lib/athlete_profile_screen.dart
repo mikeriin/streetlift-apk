@@ -21,7 +21,7 @@ import 'profile_completion.dart';
 import 'program_screens.dart' show ProgramScreen;
 import 'program_start.dart' show longCivilDate;
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Texte d'information affiché avant la collecte des données de santé.
 const kHealthInfo =

@@ -15,7 +15,7 @@ import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/athlete_profile_flow.dart';
 import 'package:streetlift_tracker/profile_v3.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/ui.dart';
+import 'package:streetlift_tracker/kit/kit.dart';
 
 import 'phone_test_support.dart';
 

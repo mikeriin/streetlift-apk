@@ -11,7 +11,7 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 import '../adapt/adapt_texts.dart' show adaptKg, adaptReasonText;
 import '../koach/koach_bubble.dart' show KoachSays;
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 
 /// Objectif du jour : libellé court du segment, phrase complète dessous.
 const _objectives = <kc.EventObjective, (String, String)>{

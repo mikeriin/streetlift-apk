@@ -1,5 +1,6 @@
 // UI0 (refonte UI) : surfaces du kit — carte, titre de section, bandeau dans
-// le flux, état vide (cahier §5.4, C6, C7, R6).
+// le flux, état vide (cahier §5.4, C6, C7, R6). UI5 : jauge, tuile chiffrée
+// et grille de tuiles de UI3 promues ici.
 import 'package:flutter/material.dart';
 
 import '../koach/koach_view.dart' show KoachSurface;
@@ -147,6 +148,9 @@ class KNotice extends StatelessWidget {
   final String? actionLabel;
   final VoidCallback? onAction, onClose;
   final String closeLabel;
+
+  /// Clés du bouton d'action et du bouton de fermeture (tests).
+  final Key? actionKey, closeKey;
   const KNotice({
     super.key,
     required this.message,
@@ -157,6 +161,8 @@ class KNotice extends StatelessWidget {
     this.onAction,
     this.onClose,
     this.closeLabel = 'Fermer',
+    this.actionKey,
+    this.closeKey,
   });
 
   @override
@@ -203,6 +209,7 @@ class KNotice extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: KSpacing.s4),
                       child: KTextButton(
+                        key: actionKey,
                         label: actionLabel!,
                         onPressed: onAction,
                         dense: true,
@@ -214,6 +221,7 @@ class KNotice extends StatelessWidget {
             ),
             if (onClose != null)
               IconButton(
+                key: closeKey,
                 tooltip: closeLabel,
                 onPressed: onClose,
                 icon: Icon(Icons.close_rounded, color: k.texte2),
@@ -268,4 +276,136 @@ class KEmpty extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Jauge en pilule : piste `filet`, remplissage `encre` (ou [color], un
+/// état : `validation` pour un objectif atteint). [onFill] : posée sur
+/// l'aplat `pleine` (carte du personnage, carte du jour), en `surPleine`.
+class KMeter extends StatelessWidget {
+  final double value;
+  final String label;
+  final String? description;
+  final Color? color;
+  final bool onFill;
+
+  /// Épaisseur (8 par défaut).
+  final double height;
+  const KMeter({
+    super.key,
+    required this.value,
+    required this.label,
+    this.description,
+    this.color,
+    this.onFill = false,
+    this.height = KSpacing.s8,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final v = value.isNaN ? 0.0 : value.clamp(0.0, 1.0);
+    final fill = onFill ? k.surPleine : (color ?? k.encre);
+    final track = onFill ? k.surPleine.withValues(alpha: .24) : k.filet;
+    return Semantics(
+      label: label,
+      value: description ?? '${(v * 100).round()} %',
+      child: SizedBox(
+        height: height,
+        width: double.infinity,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(color: track, shape: KRadius.pill),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: FractionallySizedBox(
+              widthFactor: v,
+              heightFactor: 1,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(color: fill, shape: KRadius.pill),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Tuile chiffrée : grand chiffre (chiffres tabulaires), icône, libellé.
+class KStatTile extends StatelessWidget {
+  final String value, label;
+  final IconData icon;
+  const KStatTile(this.value, this.label, this.icon, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Semantics(
+      container: true,
+      label: '$label : $value',
+      excludeSemantics: true,
+      child: KCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    value,
+                    style: KType.chiffre.copyWith(color: k.texte),
+                  ),
+                ),
+                Icon(icon, color: k.encre, size: KSize.iconSmall),
+              ],
+            ),
+            const SizedBox(height: KSpacing.s4),
+            Text(label, style: KType.detail.copyWith(color: k.texte2)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Grille de tuiles : deux colonnes, une seule à partir de 150 % de texte
+/// ou sous 240 dp ; tuiles d'une même rangée à la même hauteur.
+class KTileGrid extends StatelessWidget {
+  final List<Widget> children;
+  const KTileGrid({super.key, required this.children});
+
+  /// Largeur sous laquelle la grille passe à une colonne.
+  static const double twoColumnsMin = 240;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, bounds) {
+      final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+      final count = large || bounds.maxWidth < twoColumnsMin ? 1 : 2;
+      const gap = KSpacing.cardGap;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var r = 0; r < children.length; r += count) ...[
+            if (r > 0) const SizedBox(height: gap),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (var c = r; c < r + count; c++) ...[
+                    if (c > r) const SizedBox(width: gap),
+                    Expanded(
+                      child: c < children.length
+                          ? children[c]
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ],
+      );
+    },
+  );
 }

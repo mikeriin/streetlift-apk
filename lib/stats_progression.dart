@@ -57,7 +57,7 @@ class StatsLevelCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: KSpacing.s16),
-          StatsBar(
+          KMeter(
             value: progress.fraction,
             label: 'Progression du niveau',
             description: '${progress.inLevel} sur ${progress.need} XP',
@@ -86,7 +86,7 @@ void showStatsLevel(BuildContext context) {
     'Ton niveau, tes récompenses',
     subtitle: 'Niveau ${p.level}\u00A0· ${p.rank.title}',
     [
-      StatsBar(
+      KMeter(
         value: p.fraction,
         label: 'Niveau',
         description: '${p.inLevel} sur ${p.need} XP',
@@ -190,7 +190,7 @@ class StatsMissionCard extends StatelessWidget {
           const SizedBox(height: KSpacing.s8),
           Text(mission.detail, style: KType.detail.copyWith(color: k.texte2)),
           const SizedBox(height: KSpacing.s12),
-          StatsBar(
+          KMeter(
             value: mission.fraction,
             label: mission.title,
             description: '${mission.current} sur ${mission.target}',
@@ -499,7 +499,7 @@ class _BadgeNode extends StatelessWidget {
             const SizedBox(height: KSpacing.s8),
             RarityChip(rarityOf(item.badge)),
             const SizedBox(height: KSpacing.s12),
-            StatsBar(
+            KMeter(
               value: item.fraction,
               label: item.badge.description,
               color: item.earned ? k.validation : null,
@@ -565,7 +565,7 @@ class _BadgeNode extends StatelessWidget {
           );
         },
       ),
-      StatsBar(
+      KMeter(
         value: item.fraction,
         label: item.badge.title,
         description: '${item.current} sur ${item.badge.target}',

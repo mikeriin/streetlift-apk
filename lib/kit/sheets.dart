@@ -1,9 +1,14 @@
 // UI0 (refonte UI) : gabarits de feuilles et de confirmation (cahier §4.5,
 // C10, R8) — feuille d'actions (tous les menus ⋮), feuille de liste (liste
 // des exercices, choix de semaine, remplacement), confirmation.
+// UI5 : feuille de contenu unique (`KContentSheet`, issue de la feuille de
+// contenu de la séance, de la feuille d'information de Stats et de la
+// feuille du Programme), confirmation à contenu libre et clés par bouton,
+// feuille de liste ouverte sur un élément.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../koach/koach_view.dart' show KoachSurface;
 import 'tokens.dart';
 
 /// Une action d'une feuille d'actions : icône et verbe.
@@ -37,17 +42,22 @@ AnimationStyle _sheetMotion(BuildContext context) => AnimationStyle(
   curve: KMotion.standard.curve,
 );
 
-/// Poignée et en-tête communs des feuilles.
-class _SheetHeader extends StatelessWidget {
-  final String title;
+/// Poignée et en-tête communs des feuilles (actions, liste, contenu) : titre
+/// en casse normale (U0.17 : une feuille se lit comme une phrase), contexte
+/// facultatif. [inline] : contexte à droite du titre quand la place le
+/// permet (feuille de liste).
+class KSheetHeader extends StatelessWidget {
+  final String? title;
   final String? subtitle;
   final bool inline;
-  const _SheetHeader({required this.title, this.subtitle, this.inline = false});
+  const KSheetHeader({super.key, this.title, this.subtitle, this.inline = false});
 
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
-    final head = Text(title, style: KType.titreSeance.copyWith(color: k.texte));
+    final head = title == null
+        ? null
+        : Text(title!, style: KType.titreSeance.copyWith(color: k.texte));
     final sub = subtitle == null
         ? null
         : Text(subtitle!, style: KType.detail.copyWith(color: k.texte2));
@@ -63,31 +73,58 @@ class _SheetHeader extends StatelessWidget {
             decoration: ShapeDecoration(color: k.texte3, shape: KRadius.pill),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            KSpacing.s4,
-            KSpacing.s12,
-            KSpacing.s4,
-            KSpacing.s4,
-          ),
-          child: Semantics(
-            header: true,
-            child: inline && sub != null
-                ? Wrap(
-                    alignment: WrapAlignment.spaceBetween,
-                    crossAxisAlignment: WrapCrossAlignment.end,
-                    spacing: KSpacing.s12,
-                    children: [head, sub],
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [head, if (sub != null) sub],
-                  ),
-          ),
-        ),
+        if (head != null || sub != null)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              KSpacing.s4,
+              KSpacing.s12,
+              KSpacing.s4,
+              KSpacing.s4,
+            ),
+            child: Semantics(
+              header: true,
+              child: inline && head != null && sub != null
+                  ? Wrap(
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.end,
+                      spacing: KSpacing.s12,
+                      children: [head, sub],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [if (head != null) head, if (sub != null) sub],
+                    ),
+            ),
+          )
+        else
+          const SizedBox(height: KSpacing.s8),
       ],
     );
   }
+}
+
+/// Bouton « Fermer » des feuilles (clé `sheet-close`).
+class KSheetCloseButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onPressed;
+  const KSheetCloseButton({
+    super.key,
+    required this.onPressed,
+    this.label = 'Fermer',
+  });
+
+  @override
+  Widget build(BuildContext context) => TextButton(
+    key: const ValueKey('sheet-close'),
+    onPressed: onPressed,
+    style: TextButton.styleFrom(
+      foregroundColor: KTokens.of(context).texte2,
+      minimumSize: const Size.fromHeight(KSize.search),
+      shape: KRadius.pill,
+      textStyle: KType.corpsFort,
+    ),
+    child: Text(label),
+  );
 }
 
 /// Feuille d'actions (C10) : poignée, titre et contexte (« Séance — Corps
@@ -193,7 +230,7 @@ class KActionSheet<T> extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          _SheetHeader(title: title, subtitle: subtitle),
+          KSheetHeader(title: title, subtitle: subtitle),
           for (final g in groups)
             if (g.isNotEmpty)
               Padding(
@@ -212,17 +249,7 @@ class KActionSheet<T> extends StatelessWidget {
                 ),
               ),
           const SizedBox(height: KSpacing.s8),
-          TextButton(
-            key: const ValueKey('sheet-close'),
-            onPressed: onClose,
-            style: TextButton.styleFrom(
-              foregroundColor: k.texte2,
-              minimumSize: const Size.fromHeight(KSize.search),
-              shape: KRadius.pill,
-              textStyle: KType.corpsFort,
-            ),
-            child: Text(closeLabel),
-          ),
+          KSheetCloseButton(onPressed: onClose, label: closeLabel),
         ],
       ),
     );
@@ -346,7 +373,7 @@ class KListSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          _SheetHeader(title: title, subtitle: summary, inline: true),
+          KSheetHeader(title: title, subtitle: summary, inline: true),
           const SizedBox(height: KSpacing.s8),
           Flexible(
             child: ListView.separated(
@@ -430,42 +457,250 @@ class KListSheet extends StatelessWidget {
 }
 
 /// Ouvre une feuille de liste ; rend l'index choisi, null sans choix.
+/// [initial] : élément visible à l'ouverture (choix parmi 40 semaines : la
+/// semaine affichée apparaît d'emblée, deux lignes de voisinage au-dessus).
 Future<int?> showKListSheet(
   BuildContext context, {
   required String title,
   String? summary,
   required List<KListItem> items,
-}) => showModalBottomSheet<int>(
-  context: context,
-  isScrollControlled: true,
-  useSafeArea: true,
-  showDragHandle: false,
-  sheetAnimationStyle: _sheetMotion(context),
-  constraints: BoxConstraints(
-    maxHeight: MediaQuery.sizeOf(context).height * .85,
-  ),
-  builder: (ctx) => KListSheet(
-    title: title,
-    summary: summary,
-    items: items,
-    onSelected: (i) => Navigator.pop(ctx, i),
-  ),
-);
+  int initial = 0,
+}) {
+  ScrollController? controller;
+  return showModalBottomSheet<int>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    showDragHandle: false,
+    sheetAnimationStyle: _sheetMotion(context),
+    constraints: BoxConstraints(
+      maxHeight: MediaQuery.sizeOf(context).height * .85,
+    ),
+    builder: (ctx) => LayoutBuilder(
+      builder: (ctx, c) {
+        controller ??= ScrollController(
+          initialScrollOffset: initial > 2
+              ? _listOffset(ctx, items, initial - 2, c.maxWidth)
+              : 0,
+        );
+        return KListSheet(
+          title: title,
+          summary: summary,
+          items: items,
+          controller: controller,
+          onSelected: (i) => Navigator.pop(ctx, i),
+        );
+      },
+    ),
+  ).whenComplete(() => controller?.dispose());
+}
 
-/// Confirmation (R8) : titre = question, une phrase de conséquence,
-/// « Annuler » et le verbe exact (« Supprimer », « Remplacer », « Revenir ») ;
-/// verbe en `danger` si l'action est destructrice.
+/// Hauteur des [count] premières lignes d'une feuille de liste (mêmes
+/// marges et styles que [KListSheet]) pour une largeur [width].
+double _listOffset(
+  BuildContext context,
+  List<KListItem> items,
+  int count,
+  double width,
+) {
+  final scaler = MediaQuery.textScalerOf(context);
+  final text =
+      width - 2 * KSpacing.s16 - 2 * KSpacing.s14 - KSpacing.s32 - KSpacing.s14;
+  double measure(String s, TextStyle style) {
+    final p = TextPainter(
+      text: TextSpan(text: s, style: style),
+      textDirection: Directionality.of(context),
+      textScaler: scaler,
+    )..layout(maxWidth: text > 0 ? text : width);
+    final h = p.height;
+    p.dispose();
+    return h;
+  }
+
+  var y = 0.0;
+  for (var i = 0; i < count && i < items.length; i++) {
+    final it = items[i];
+    var h = measure(it.title, KType.corpsMoyen) + 2 * KSpacing.s8;
+    if (it.detail != null) h += measure(it.detail!, KType.detail);
+    y += (h < KSize.primary ? KSize.primary : h) + KSpacing.s4;
+  }
+  return y;
+}
+
+/// Feuille de contenu (UI5 : une seule pour toute l'application, issue des
+/// feuilles de contenu de la séance, d'information de Stats et de contenu du
+/// Programme) : poignée, titre et contexte, contenu qui défile (consignes,
+/// détail d'une semaine, informations de jeu, petit formulaire), bouton
+/// « Fermer » toujours visible en bas. Fond `surface` ; Koach posé dessus
+/// prend cette couleur pour papier.
+class KContentSheet extends StatelessWidget {
+  final String? title, subtitle;
+  final List<Widget> children;
+
+  /// Libellé du bouton du bas ; nul : pas de bouton (le contenu porte sa
+  /// propre action, « Enregistrer » par exemple).
+  final String? closeLabel;
+  final VoidCallback? onClose;
+  final ScrollController? controller;
+  final double gap;
+
+  /// Clé de la liste qui défile (tests, défilement jusqu'à un élément).
+  final Key? listKey;
+
+  /// Faux dans une feuille qu'on agrandit en la tirant : la liste prend
+  /// toute la hauteur donnée.
+  final bool shrinkWrap;
+  const KContentSheet({
+    super.key,
+    required this.children,
+    this.title,
+    this.subtitle,
+    this.closeLabel = 'Fermer',
+    this.onClose,
+    this.controller,
+    this.gap = KSpacing.s12,
+    this.listKey,
+    this.shrinkWrap = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return KoachSurface(
+      color: k.surface,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: KSpacing.s16),
+            child: KSheetHeader(title: title, subtitle: subtitle),
+          ),
+          Flexible(
+            child: DefaultTextStyle.merge(
+              style: KType.corps.copyWith(color: k.texte),
+              child: ListView.separated(
+                key: listKey,
+                controller: controller,
+                shrinkWrap: shrinkWrap,
+                padding: EdgeInsets.fromLTRB(
+                  KSpacing.page,
+                  KSpacing.s8,
+                  KSpacing.page,
+                  closeLabel == null
+                      ? KSpacing.s24 + MediaQuery.paddingOf(context).bottom
+                      : KSpacing.s8,
+                ),
+                itemCount: children.length,
+                separatorBuilder: (_, __) => SizedBox(height: gap),
+                itemBuilder: (_, i) => children[i],
+              ),
+            ),
+          ),
+          if (closeLabel != null)
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                KSpacing.s16,
+                0,
+                KSpacing.s16,
+                KSpacing.s16 + MediaQuery.paddingOf(context).bottom,
+              ),
+              child: KSheetCloseButton(
+                label: closeLabel!,
+                onPressed: onClose ?? () => Navigator.maybePop(context),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Ouvre une feuille de contenu ([KContentSheet]) ; [builder] (un seul
+/// bloc) ou [children] (plusieurs, séparés de [gap]) reçoivent le contexte
+/// de la feuille : `Navigator.pop(context, valeur)` la referme avec un
+/// résultat. [draggable] : feuille haute qu'on agrandit en la tirant
+/// (contenu long). 90 % de l'écran au plus sinon.
+Future<T?> showKContentSheet<T>(
+  BuildContext context, {
+  String? title,
+  String? subtitle,
+  WidgetBuilder? builder,
+  List<Widget> Function(BuildContext context)? children,
+  String? closeLabel = 'Fermer',
+  bool draggable = false,
+  double gap = KSpacing.s12,
+  Key? contentKey,
+}) {
+  assert(
+    (builder == null) != (children == null),
+    'showKContentSheet : builder ou children, l\'un des deux.',
+  );
+  return showModalBottomSheet<T>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    showDragHandle: false,
+    backgroundColor: KTokens.of(context).surface,
+    sheetAnimationStyle: _sheetMotion(context),
+    constraints: draggable
+        ? null
+        : BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * .9),
+    builder: (ctx) {
+      List<Widget> items() =>
+          builder != null ? [builder(ctx)] : children!(ctx);
+      Widget sheet({ScrollController? controller, bool shrink = true}) =>
+          KContentSheet(
+            title: title,
+            subtitle: subtitle,
+            closeLabel: closeLabel,
+            onClose: () => Navigator.pop(ctx),
+            controller: controller,
+            gap: gap,
+            listKey: contentKey,
+            shrinkWrap: shrink,
+            children: items(),
+          );
+      return draggable
+          ? DraggableScrollableSheet(
+              expand: false,
+              initialChildSize: .7,
+              maxChildSize: .94,
+              builder: (_, controller) =>
+                  sheet(controller: controller, shrink: false),
+            )
+          : sheet();
+    },
+  );
+}
+
+/// Confirmation (R8, §4.5) : titre = question, une phrase de conséquence
+/// (et un contenu libre facultatif, qui défile), « Annuler » et le verbe
+/// exact (« Supprimer », « Remplacer », « Revenir ») ; verbe en `danger` si
+/// l'action est destructrice. Les deux boutons restent toujours visibles en
+/// bas (petit écran, grand texte). Clés par bouton : [confirmKey]
+/// (`confirm-ok` par défaut) et [cancelKey] (`confirm-cancel`).
 class KConfirm extends StatelessWidget {
-  final String title, message, confirmLabel, cancelLabel;
+  final String title, confirmLabel, cancelLabel;
+  final String? message;
+  final Widget? body;
+  final IconData? icon;
+  final Color? iconColor;
+  final Key? confirmKey, cancelKey;
   final bool destructive;
   final VoidCallback onConfirm, onCancel;
   const KConfirm({
     super.key,
     required this.title,
-    required this.message,
     required this.confirmLabel,
     required this.onConfirm,
     required this.onCancel,
+    this.message,
+    this.body,
+    this.icon,
+    this.iconColor,
+    this.confirmKey,
+    this.cancelKey,
     this.cancelLabel = 'Annuler',
     this.destructive = false,
   });
@@ -485,7 +720,7 @@ class KConfirm extends StatelessWidget {
       textStyle: KType.corpsFort,
     );
     final cancel = FilledButton(
-      key: const ValueKey('confirm-cancel'),
+      key: cancelKey ?? const ValueKey('confirm-cancel'),
       style: style(
         k.haute,
         k.texte,
@@ -494,12 +729,40 @@ class KConfirm extends StatelessWidget {
       child: Text(cancelLabel, textAlign: TextAlign.center),
     );
     final confirm = FilledButton(
-      key: const ValueKey('confirm-ok'),
+      key: confirmKey ?? const ValueKey('confirm-ok'),
       style: destructive
           ? style(k.danger, k.roles.surDanger)
           : style(k.pleine, k.surPleine),
       onPressed: onConfirm,
       child: Text(confirmLabel, textAlign: TextAlign.center),
+    );
+    final content = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (icon != null) ...[
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Icon(icon, size: KSize.icon, color: iconColor ?? k.encre),
+          ),
+          const SizedBox(height: KSpacing.s12),
+        ],
+        Semantics(
+          header: true,
+          child: Text(title, style: KType.titreSeance.copyWith(color: k.texte)),
+        ),
+        if (message != null) ...[
+          const SizedBox(height: KSpacing.s8),
+          Text(message!, style: KType.corps.copyWith(color: k.texte2)),
+        ],
+        if (body != null) ...[
+          const SizedBox(height: KSpacing.s8),
+          DefaultTextStyle.merge(
+            style: KType.corps.copyWith(color: k.texte2),
+            child: body!,
+          ),
+        ],
+      ],
     );
     return Dialog(
       backgroundColor: k.surface,
@@ -514,24 +777,16 @@ class KConfirm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Semantics(
-              header: true,
-              child: Text(
-                title,
-                style: KType.titreSeance.copyWith(color: k.texte),
-              ),
-            ),
-            const SizedBox(height: KSpacing.s8),
-            Text(message, style: KType.corps.copyWith(color: k.texte2)),
+            Flexible(child: SingleChildScrollView(child: content)),
             const SizedBox(height: KSpacing.s24),
             LayoutBuilder(
               builder: (context, c) {
-                // Grand texte : boutons l'un sous l'autre, le verbe en haut.
+                // Libellés longs ou grand texte : boutons l'un sous
+                // l'autre, le verbe en haut.
+                final scale = MediaQuery.textScalerOf(context).scale(1);
                 final stacked =
-                    c.maxWidth <
-                    4 *
-                        KSize.target *
-                        MediaQuery.textScalerOf(context).scale(1);
+                    confirmLabel.length + cancelLabel.length > 24 ||
+                    c.maxWidth < 4 * KSize.target * scale;
                 if (stacked) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -566,18 +821,59 @@ Future<bool> showKConfirm(
   required String confirmLabel,
   String cancelLabel = 'Annuler',
   bool destructive = false,
+  Key? confirmKey,
+  Key? cancelKey,
+}) => showKChoice(
+  context,
+  title: title,
+  message: message,
+  confirmLabel: confirmLabel,
+  cancelLabel: cancelLabel,
+  destructive: destructive,
+  confirmKey: confirmKey,
+  cancelKey: cancelKey,
+);
+
+/// Ouvre une confirmation [KConfirm] au contenu libre ([body]) et à l'icône
+/// d'état facultatifs ; [required] : on n'en sort que par un des deux
+/// boutons (ni retour système, ni appui à côté : avis médical avant la
+/// séance). Vrai seulement si le verbe est choisi.
+Future<bool> showKChoice(
+  BuildContext context, {
+  required String title,
+  String? message,
+  Widget? body,
+  IconData? icon,
+  Color? iconColor,
+  required String confirmLabel,
+  String cancelLabel = 'Annuler',
+  Key? dialogKey,
+  Key? confirmKey,
+  Key? cancelKey,
+  bool destructive = false,
+  bool required = false,
 }) async {
   final ok = await showDialog<bool>(
     context: context,
-    builder: (ctx) => KConfirm(
-      title: title,
-      message: message,
-      confirmLabel: confirmLabel,
-      cancelLabel: cancelLabel,
-      destructive: destructive,
-      onConfirm: () => Navigator.pop(ctx, true),
-      onCancel: () => Navigator.pop(ctx, false),
-    ),
+    barrierDismissible: !required,
+    builder: (ctx) {
+      final dialog = KConfirm(
+        key: dialogKey,
+        title: title,
+        message: message,
+        body: body,
+        icon: icon,
+        iconColor: iconColor,
+        confirmLabel: confirmLabel,
+        cancelLabel: cancelLabel,
+        confirmKey: confirmKey,
+        cancelKey: cancelKey,
+        destructive: destructive,
+        onConfirm: () => Navigator.pop(ctx, true),
+        onCancel: () => Navigator.pop(ctx, false),
+      );
+      return required ? PopScope(canPop: false, child: dialog) : dialog;
+    },
   );
   return ok ?? false;
 }

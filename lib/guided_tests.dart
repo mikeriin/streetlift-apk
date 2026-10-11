@@ -23,7 +23,7 @@ import 'profile_completion.dart' show openProfileCompletion;
 import 'profile_v3.dart';
 import 'program_start.dart' show ProgramStartScreen;
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Test proposé pour un mouvement.
 class TestProposal {

@@ -22,7 +22,7 @@ import 'search.dart' show normalizeText;
 import 'settings_search.dart';
 import 'store.dart';
 import 'store_widget.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 import 'wellbeing_screens.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).

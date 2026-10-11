@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'device.dart';
 import 'notifications.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 class NotificationSettingsPanel extends StatefulWidget {
   final NotificationService? service;

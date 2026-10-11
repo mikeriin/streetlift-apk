@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/levelup.dart';
-import 'package:streetlift_tracker/ui.dart';
+import 'package:streetlift_tracker/kit/kit.dart';
 
 void main() {
   testWidgets('Niv. précède le niveau et la barre représente son avancement', (
@@ -31,8 +31,8 @@ void main() {
         tester.getRect(find.text('Niv.')).right,
         lessThan(tester.getRect(find.text('10')).left),
       );
-      final bar = find.byType(KProgressBar);
-      expect(tester.widget<KProgressBar>(bar).value, progress);
+      final bar = find.byType(KMeter);
+      expect(tester.widget<KMeter>(bar).value, progress);
       expect(
         tester.getRect(bar).top,
         greaterThan(tester.getRect(find.text('10')).bottom),

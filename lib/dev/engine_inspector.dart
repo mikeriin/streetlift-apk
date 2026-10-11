@@ -21,7 +21,7 @@ import '../plan/evolution_texts.dart';
 import '../plan/plan_texts.dart';
 import '../session_prefs.dart' show SessionSpace;
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'dev_flags.dart';
 import 'dev_session.dart' show DevShare;
 
@@ -207,7 +207,7 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
     if (r != null && s != null) {
       final f = s.fatigue;
       children
-        ..add(const KSection('État du moteur'))
+        ..add(const KSectionTitle('État du moteur'))
         ..add(
           KCard(
             key: const ValueKey('inspector-state'),
@@ -257,7 +257,7 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
       final p = session.plan;
       children
         ..add(
-          KSection(
+          KSectionTitle(
             'Séance S${session.week} · J${session.j} '
             '(${session.stored ? 'prescrite' : 'prévision'})',
           ),
@@ -327,7 +327,7 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
         for (final l in r.review.log)
           if (l.event == 'proposal' || l.event == 'proposal_withheld') l,
       ];
-      children.add(KSection('Propositions de la revue (${props.length})'));
+      children.add(KSectionTitle('Propositions de la revue (${props.length})'));
       if (props.isEmpty) {
         children.add(
           const Text(
@@ -368,7 +368,7 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
       }
       if (_estimates.isNotEmpty) {
         children.add(
-          KSection('Capacités estimées (${_estimates.length} exercices)'),
+          KSectionTitle('Capacités estimées (${_estimates.length} exercices)'),
         );
         for (final e in _estimates) {
           children.add(
@@ -381,7 +381,7 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
         }
       }
     }
-    return KScreen(
+    return KScaffold(
       appBar: AppBar(
         title: const Text('INSPECTEUR · MOTEUR DYNAMIQUE'),
         actions: [
@@ -393,7 +393,7 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
           ),
         ],
       ),
-      body: KList(key: const ValueKey('inspector-list'), children: children),
+      body: KPageList(key: const ValueKey('inspector-list'), children: children),
     );
   }
 }

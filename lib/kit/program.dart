@@ -1,147 +1,289 @@
 // UI0 (refonte UI) : composants du programme (cahier §5.4, U7) — ligne de
-// jour, barre de saison par blocs, frise des phases.
+// jour, barre de saison par blocs, frise des phases. UI5 : ligne de jour de
+// UI1 (états écrits, ⓘ) et ligne « Pourquoi ? » dépliable promues ici.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
 import 'tokens.dart';
 
-/// État d'une ligne de jour.
+/// État d'une journée du programme (ligne de jour, carte du jour).
 enum KDayState {
-  /// Jour à venir.
-  upcoming,
+  /// Séance à faire.
+  todo,
 
-  /// Jour fait (séance enregistrée).
+  /// Séance enregistrée.
   done,
 
-  /// Jour passé sans séance.
-  missed,
+  /// Séance commencée, pas encore finie (« En cours »).
+  inProgress,
 
-  /// Jour de repos.
-  rest,
-
-  /// Jour choisi dans la liste (contour `encre`) ; le jour courant lui-même
-  /// est la carte du jour (`KCard.day`).
-  current,
+  /// Séance neutre de reprise (« Reprise »).
+  resume,
 }
 
-/// Ligne de jour (accueil) : numéro, titre (capitales selon U3, jamais
-/// coupé), état. Groupe au rayon des menus (20).
+/// Ligne de jour (accueil, feuille de la semaine ; UI5 : issue de la ligne
+/// de jour de UI1) : numéro, titre (capitales selon U3, jamais coupé),
+/// détail facultatif, état écrit (« En cours », « Reprise ») et icône,
+/// lus par TalkBack. Appui : ouvrir ; appui long : résumé ; [onInfo] :
+/// bouton ⓘ, équivalent visible de l'appui long (R7). Rayon des menus (20),
+/// fond `surface` (`haute` dans une feuille, [color]).
 class KDayRow extends StatelessWidget {
-  final String number, title;
+  final int day;
+  final String title;
   final String? detail;
   final KDayState state;
-  final VoidCallback? onTap, onLongPress;
+  final VoidCallback? onTap, onLongPress, onInfo;
 
-  /// Bouton d'information du jour (R7 : équivalent visible de l'appui long).
-  final VoidCallback? onInfo;
-  final String infoLabel;
+  /// Fond de la ligne (`surface` sur la page, `haute` dans une feuille).
+  final Color? color;
   const KDayRow({
     super.key,
-    required this.number,
+    required this.day,
     required this.title,
     this.detail,
-    this.state = KDayState.upcoming,
+    this.state = KDayState.todo,
     this.onTap,
     this.onLongPress,
     this.onInfo,
-    this.infoLabel = 'Résumé du jour',
+    this.color,
   });
+
+  /// État lu par TalkBack.
+  static String stateLabel(KDayState state) => switch (state) {
+    KDayState.done => 'Séance effectuée',
+    KDayState.inProgress => 'Séance en cours',
+    KDayState.resume => 'Reprise : séance neutre',
+    KDayState.todo => 'Séance à faire',
+  };
+
+  /// État écrit à côté de l'icône (L5), nul pour « à faire » et « fait ».
+  static String? stateText(KDayState state) => switch (state) {
+    KDayState.inProgress => 'En cours',
+    KDayState.resume => 'Reprise',
+    _ => null,
+  };
+
+  /// Icône d'état.
+  static IconData stateIcon(KDayState state) => switch (state) {
+    KDayState.done => Icons.check_circle_rounded,
+    KDayState.inProgress => Icons.timelapse_rounded,
+    KDayState.resume => Icons.fast_forward_rounded,
+    KDayState.todo => Icons.radio_button_unchecked_rounded,
+  };
 
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
-    final quiet = state == KDayState.done || state == KDayState.missed;
-    final (IconData icon, Color iconColor, String stateLabel) = switch (state) {
-      KDayState.done => (Icons.check_rounded, k.validation, 'fait'),
-      KDayState.missed => (Icons.remove_rounded, k.texte3, 'passé'),
-      KDayState.rest => (Icons.bedtime_outlined, k.texte2, 'repos'),
-      KDayState.current => (Icons.chevron_right_rounded, k.encre, 'choisi'),
-      KDayState.upcoming => (Icons.chevron_right_rounded, k.texte2, 'à venir'),
+    final done = state == KDayState.done;
+    final ink = switch (state) {
+      KDayState.done => k.validation,
+      KDayState.inProgress => k.encre,
+      KDayState.resume => k.texte2,
+      KDayState.todo => k.texte3,
     };
-    return Semantics(
-      button: onTap != null,
-      label: '$number, $title, $stateLabel',
-      excludeSemantics: true,
+    final written = stateText(state);
+    final statusLabel = stateLabel(state);
+    final statusIcon = Icon(
+      stateIcon(state),
+      key: ValueKey('day-status-$day'),
+      semanticLabel: statusLabel,
+      size: KSize.icon,
+      color: ink,
+    );
+    final main = Semantics(
+      button: true,
+      label: 'Jour $day · $title. $statusLabel',
+      value: detail,
       onTap: onTap,
       onLongPress: onLongPress,
-      child: Material(
-        color: k.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: KRadius.menuRadius,
-          side: state == KDayState.current
-              ? BorderSide(color: k.encre, width: KSize.current)
-              : BorderSide.none,
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          onLongPress: onLongPress,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: KSize.search),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(
-                KSpacing.s14,
-                KSpacing.s8,
-                KSpacing.s4,
-                KSpacing.s8,
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: KSpacing.s32,
-                    child: Text(
-                      number,
-                      style: KType.chiffrePetit.copyWith(color: k.texte2),
-                    ),
+      onTapHint: done
+          ? 'Afficher l’historique'
+          : state == KDayState.inProgress
+          ? 'Reprendre la séance'
+          : 'Ouvrir la séance',
+      onLongPressHint: onLongPress == null ? null : 'Afficher le résumé',
+      excludeSemantics: true,
+      child: InkWell(
+        onTap: onTap,
+        onLongPress: onLongPress,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: KSize.target),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(
+              KSpacing.s14,
+              KSpacing.s8,
+              onInfo == null ? KSpacing.s14 : KSpacing.s4,
+              KSpacing.s8,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: KSpacing.s32,
+                  child: Text(
+                    'J$day',
+                    style: KType.chiffrePetit.copyWith(color: k.texte2),
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          k.title(title),
-                          style: k.titleStyle(
-                            KType.ligneJour.copyWith(
-                              color: quiet ? k.texte2 : k.texte,
-                            ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        k.title(title),
+                        style: k.titleStyle(
+                          KType.ligneJour.copyWith(
+                            color: done ? k.texte2 : k.texte,
                           ),
                         ),
-                        if (detail != null)
-                          Text(
-                            detail!,
-                            style: KType.detail.copyWith(color: k.texte2),
-                          ),
-                      ],
-                    ),
+                      ),
+                      if (detail != null)
+                        Text(
+                          detail!,
+                          style: KType.detail.copyWith(color: k.texte2),
+                        ),
+                    ],
                   ),
-                  if (onInfo != null)
-                    IconButton(
-                      tooltip: infoLabel,
-                      onPressed: onInfo,
-                      icon: Icon(
-                        Icons.info_outline_rounded,
-                        size: KSize.iconSmall,
-                        color: k.texte2,
-                      ),
-                    )
-                  else
-                    SizedBox(
-                      width: KSize.target,
-                      height: KSize.icon,
-                      child: Icon(
-                        icon,
-                        size: KSize.iconSmall,
-                        color: iconColor,
-                      ),
+                ),
+                const SizedBox(width: KSpacing.s8),
+                if (written != null) ...[
+                  Text(
+                    written,
+                    key: ValueKey(
+                      state == KDayState.inProgress
+                          ? 'day-in-progress-$day'
+                          : 'day-resume-$day',
                     ),
+                    style: KType.micro.copyWith(color: ink),
+                  ),
+                  const SizedBox(width: KSpacing.s4),
                 ],
-              ),
+                statusIcon,
+              ],
             ),
           ),
         ),
       ),
+    );
+    return Material(
+      color: color ?? k.surface,
+      shape: KRadius.menuShape,
+      clipBehavior: Clip.antiAlias,
+      child: onInfo == null
+          ? main
+          : Row(
+              children: [
+                Expanded(child: main),
+                IconButton(
+                  key: ValueKey('day-info-$day'),
+                  tooltip: 'Résumé du jour $day',
+                  onPressed: onInfo,
+                  icon: Icon(
+                    Icons.info_outline_rounded,
+                    size: KSize.iconSmall,
+                    color: k.texte2,
+                  ),
+                ),
+                const SizedBox(width: KSpacing.s4),
+              ],
+            ),
+    );
+  }
+}
+
+/// Ligne d'un changement avec son « Pourquoi ? » dépliable (feuilles de
+/// Koach : ce qui change, ce qui a bougé). Cible de 48 dp, état lu par
+/// TalkBack ; se range dans un `KMenuGroup`.
+class KWhyTile extends StatefulWidget {
+  final String title;
+  final List<String> reasons;
+  const KWhyTile({super.key, required this.title, required this.reasons});
+
+  @override
+  State<KWhyTile> createState() => _KWhyTileState();
+}
+
+class _KWhyTileState extends State<KWhyTile> {
+  bool _open = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final can = widget.reasons.isNotEmpty;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Semantics(
+          button: can,
+          expanded: can ? _open : null,
+          child: InkWell(
+            onTap: can ? () => setState(() => _open = !_open) : null,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: KSize.target),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: KSpacing.s16,
+                  vertical: KSpacing.s8,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.title,
+                            style: KType.corps.copyWith(color: k.texte),
+                          ),
+                          if (can)
+                            Text(
+                              'Pourquoi ?',
+                              style: KType.detail.copyWith(color: k.texte2),
+                            ),
+                        ],
+                      ),
+                    ),
+                    if (can)
+                      AnimatedRotation(
+                        turns: _open ? .5 : 0,
+                        duration: KMotion.fast.durationIn(context),
+                        curve: KMotion.fast.curve,
+                        child: Icon(
+                          Icons.expand_more_rounded,
+                          size: KSize.icon,
+                          color: k.texte2,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        if (_open)
+          Padding(
+            padding: const EdgeInsets.only(
+              left: KSpacing.s16,
+              right: KSpacing.s16,
+              bottom: KSpacing.s12,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (final r in widget.reasons)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: KSpacing.s4),
+                    child: Text(
+                      r,
+                      style: KType.corps.copyWith(color: k.texte2),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+      ],
     );
   }
 }

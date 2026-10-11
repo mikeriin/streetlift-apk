@@ -11,7 +11,7 @@ import 'exercise_screens.dart' show markdownBlocks;
 import 'athlete_profile_flow.dart';
 import 'settings_screen.dart' show kAppVersion;
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Avertissement (démarrage et « À propos »).
 class DisclaimerCard extends StatelessWidget {

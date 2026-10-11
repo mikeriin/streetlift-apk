@@ -11,7 +11,7 @@ import 'models.dart';
 import 'pilotage_screen.dart';
 import 'plan/plan_screens.dart' show openPlanCreation;
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 const _weekdays = [
   'lundi',

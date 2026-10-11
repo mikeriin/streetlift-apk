@@ -14,13 +14,12 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'adapt/widgets/session_kit.dart' show showKChoice;
 import 'game.dart';
 import 'game_widgets.dart';
 import 'progression.dart';
 import 'progression_screen.dart';
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// À appeler après une séance terminée : affiche
 /// le bilan en attente, sinon la cérémonie de niveau seule si le niveau a
@@ -236,7 +235,7 @@ class _RewardScreenState extends State<RewardScreen>
                   ),
                 ),
               ),
-            KList(
+            KPageList(
               children: [
                 const SizedBox(height: KSpacing.s12),
                 // Surtitre de réussite (`accent`), capitales du système (U3).
@@ -361,11 +360,10 @@ class _XpMeter extends StatelessWidget {
           ],
         ),
         const SizedBox(height: KSpacing.s8),
-        KProgressBar(
+        KMeter(
           value: need == 0 ? 0 : inLevel / need,
-          height: 8,
-          semanticsLabel: 'Progression du niveau',
-          semanticsValue: '${inLevel.round()} sur $need XP',
+          label: 'Progression du niveau',
+          description: '${inLevel.round()} sur $need XP',
         ),
       ],
     );

@@ -10,6 +10,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../dev/dev_widgets.dart' show HeaderLogo;
 import 'tokens.dart';
@@ -31,6 +32,77 @@ class KNavigationInset extends InheritedWidget {
   @override
   bool updateShouldNotify(KNavigationInset oldWidget) =>
       bottom != oldWidget.bottom;
+}
+
+/// Échafaudage d'une page qui n'a pas besoin du gabarit [KPage] (écran de
+/// secours, outils du mode dev, historique d'une séance) : fond `fond`,
+/// contenu centré à la largeur maximale, au-dessus du dock (C8).
+class KScaffold extends StatelessWidget {
+  final PreferredSizeWidget? appBar;
+  final Widget? body, bottomNavigationBar;
+  final bool resizeToAvoidBottomInset;
+  const KScaffold({
+    super.key,
+    this.appBar,
+    this.body,
+    this.bottomNavigationBar,
+    this.resizeToAvoidBottomInset = true,
+  });
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: KTokens.of(context).fond,
+    appBar: appBar,
+    resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+    body: body == null
+        ? null
+        : SafeArea(
+            top: false,
+            bottom: KNavigationInset.of(context) == 0,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: KSpacing.maxWidth),
+                child: SizedBox(width: double.infinity, child: body),
+              ),
+            ),
+          ),
+    bottomNavigationBar: bottomNavigationBar,
+  );
+}
+
+/// Liste de page : marges d'écran, écart entre cartes, réserve du dock en
+/// bas (C8).
+class KPageList extends StatelessWidget {
+  final List<Widget> children;
+  final EdgeInsetsGeometry padding;
+  final ScrollController? controller;
+  final double gap;
+
+  /// Marges d'une page (écran 20, haut 8, bas 24).
+  static const contentPadding = EdgeInsets.fromLTRB(
+    KSpacing.page,
+    KSpacing.s8,
+    KSpacing.page,
+    KSpacing.s24,
+  );
+  const KPageList({
+    super.key,
+    required this.children,
+    this.padding = contentPadding,
+    this.controller,
+    this.gap = KSpacing.cardGap,
+  });
+
+  @override
+  Widget build(BuildContext context) => ListView.separated(
+    controller: controller,
+    padding: padding.add(EdgeInsets.only(bottom: KNavigationInset.of(context))),
+    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+    itemCount: children.length,
+    separatorBuilder: (_, __) => SizedBox(height: gap),
+    itemBuilder: (_, i) => children[i],
+  );
 }
 
 /// Titre qui ne se coupe jamais (C3) : retour à la ligne entre les mots ; si
@@ -93,7 +165,15 @@ class KFitTitle extends StatelessWidget {
           fitted = style.copyWith(fontSize: f);
         }
       }
-      return Text(text, style: fitted, textAlign: textAlign, softWrap: true);
+      // `overflow` explicite : un `DefaultTextStyle` parent à ellipse
+      // (barre d'application) limiterait sinon le texte à une ligne.
+      return Text(
+        text,
+        style: fitted,
+        textAlign: textAlign,
+        softWrap: true,
+        overflow: TextOverflow.visible,
+      );
     },
   );
 }
@@ -103,7 +183,10 @@ class KFitTitle extends StatelessWidget {
 /// - [KTopBar.new] : en-tête de marque des destinations principales
 ///   (historique : « KALIS TRACK » ou contenu de [leading], actions, logo).
 /// - [KTopBar.sub] : en-tête de sous-page (C1) — retour, titre (capitales
-///   selon U3), sous-titre facultatif, au plus une action.
+///   selon U3), sous-titre facultatif, au plus une action. Le titre n'est
+///   jamais coupé (C3, UI5) : 2 lignes (3 au-delà de 150 % de texte) à
+///   taille réduite juste assez, puis retour à la ligne libre ; la barre
+///   suit la hauteur du titre.
 class KTopBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final List<Widget> actions;
@@ -111,7 +194,14 @@ class KTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title, subtitle;
   final Widget? action;
   final VoidCallback? onBack;
+
+  /// Faux : pas de bouton retour (page ouverte à la racine d'un parcours).
+  final bool showBack;
   final bool _sub;
+
+  /// Hauteur maximale réservée par l'échafaudage pour un en-tête de
+  /// sous-page ; la barre ne prend que la hauteur de son titre.
+  static const double subMaxHeight = 400;
 
   const KTopBar({
     super.key,
@@ -122,6 +212,7 @@ class KTopBar extends StatelessWidget implements PreferredSizeWidget {
        subtitle = null,
        action = null,
        onBack = null,
+       showBack = false,
        _sub = false;
 
   /// En-tête de sous-page.
@@ -131,13 +222,14 @@ class KTopBar extends StatelessWidget implements PreferredSizeWidget {
     this.subtitle,
     this.action,
     this.onBack,
+    this.showBack = true,
     this.height = KSize.dock,
   }) : leading = null,
        actions = const [],
        _sub = true;
 
   @override
-  Size get preferredSize => Size.fromHeight(height);
+  Size get preferredSize => Size.fromHeight(_sub ? subMaxHeight : height);
 
   @override
   Widget build(BuildContext context) {
@@ -166,51 +258,88 @@ class KTopBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       );
     }
+    final theme = Theme.of(context);
     final titleStyle = k.titleStyle(KType.titreEcran.copyWith(color: k.texte));
-    return AppBar(
-      automaticallyImplyLeading: false,
-      toolbarHeight: height,
-      titleSpacing: 0,
-      leadingWidth: KSize.target + KSpacing.s8,
-      leading: Padding(
-        padding: const EdgeInsetsDirectional.only(start: KSpacing.s8),
-        child: IconButton(
-          tooltip: 'Retour',
-          icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: onBack ?? () => Navigator.maybePop(context),
+    final large = MediaQuery.textScalerOf(context).scale(1) > 1.5;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value:
+          theme.appBarTheme.systemOverlayStyle ??
+          (theme.brightness == Brightness.dark
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle.dark),
+      child: Material(
+        color: k.fond,
+        child: SafeArea(
+          bottom: false,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: height),
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(
+                start: showBack ? KSpacing.s8 : KSpacing.page,
+                end: KSpacing.s8,
+              ),
+              child: Row(
+                children: [
+                  if (showBack)
+                    IconButton(
+                      key: const ValueKey('topbar-back'),
+                      tooltip: 'Retour',
+                      color: k.texte,
+                      icon: const Icon(Icons.arrow_back_rounded),
+                      onPressed: onBack ?? () => Navigator.maybePop(context),
+                    ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: KSpacing.s8,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Semantics(
+                            header: true,
+                            child: KFitTitle(
+                              k.title(title!),
+                              style: titleStyle,
+                              maxLines: large ? 3 : 2,
+                            ),
+                          ),
+                          if (subtitle != null)
+                            Text(
+                              subtitle!,
+                              style: KType.detail.copyWith(color: k.texte2),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (action != null) action!,
+                ],
+              ),
+            ),
+          ),
         ),
       ),
-      title: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Semantics(
-            header: true,
-            child: KFitTitle(k.title(title!), style: titleStyle, maxLines: 2),
-          ),
-          if (subtitle != null)
-            Text(subtitle!, style: KType.detail.copyWith(color: k.texte2)),
-        ],
-      ),
-      actions: [
-        if (action != null) action!,
-        const SizedBox(width: KSpacing.s8),
-      ],
     );
   }
 }
 
 /// Phrase d'introduction sous un titre de page.
+///
+/// [inset] : retrait de 4 dp, aligné sur les titres de section (sous-pages) ;
+/// faux sur une page racine, où la phrase s'aligne sur le grand titre.
 class KLead extends StatelessWidget {
   final String text;
-  const KLead(this.text, {super.key});
+  final bool inset;
+  const KLead(this.text, {super.key, this.inset = true});
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(
-      KSpacing.s4,
+    padding: EdgeInsets.fromLTRB(
+      inset ? KSpacing.s4 : 0,
       0,
-      KSpacing.s4,
+      inset ? KSpacing.s4 : 0,
       KSpacing.s4,
     ),
     child: Text(
@@ -272,7 +401,7 @@ class KPage extends StatelessWidget {
     final inset = KNavigationInset.of(context);
     final safeBottom = inset > 0 ? inset : MediaQuery.paddingOf(context).bottom;
     final body = <Widget>[
-      if (lead != null) KLead(lead!),
+      if (lead != null) KLead(lead!, inset: !_root),
       if (search != null) search!,
       ...children,
     ];

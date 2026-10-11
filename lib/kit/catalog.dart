@@ -256,27 +256,32 @@ final List<KitSample> kitSamples = [
         ),
         SizedBox(height: KSpacing.s16),
         KDayRow(
-          number: 'J1',
+          day: 1,
           title: 'Muscle-up + tirage lourd',
           state: KDayState.done,
           onTap: _noop,
         ),
         SizedBox(height: KSpacing.s8),
         KDayRow(
-          number: 'J2',
+          day: 2,
           title: 'Dip lourd + poussée',
-          state: KDayState.missed,
+          state: KDayState.inProgress,
           onTap: _noop,
         ),
         SizedBox(height: KSpacing.s8),
         KDayRow(
-          number: 'J6',
+          day: 6,
           title: 'Puissance MU + squat endurance',
           onTap: _noop,
           onInfo: _noop,
         ),
         SizedBox(height: KSpacing.s8),
-        KDayRow(number: 'J7', title: 'Repos complet', state: KDayState.rest),
+        KDayRow(
+          day: 7,
+          title: 'Reprise en douceur',
+          state: KDayState.resume,
+          onTap: _noop,
+        ),
         SizedBox(height: KSpacing.s16),
         KTimeline(
           phases: [

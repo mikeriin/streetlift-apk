@@ -33,7 +33,7 @@ import '../program_start.dart' show longCivilDate;
 import '../session_host.dart';
 import '../session_prefs.dart' show SessionSpace;
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'dev_flags.dart';
 import 'dev_session.dart';
 
@@ -384,9 +384,9 @@ class _DevSimulatorScreenState extends State<DevSimulatorScreen> {
   Widget build(BuildContext context) {
     final mode = store.adaptMode;
     final r = _result;
-    return KScreen(
+    return KScaffold(
       appBar: AppBar(title: const Text('SIMULATEUR DE SÉANCES')),
-      body: KList(
+      body: KPageList(
         key: const ValueKey('sim-list'),
         children: [
           KCard(
@@ -401,7 +401,7 @@ class _DevSimulatorScreenState extends State<DevSimulatorScreen> {
               ),
             ),
           ),
-          const KSection('Athlète simulé'),
+          const KSectionTitle('Athlète simulé'),
           RadioGroup<String>(
             groupValue: _athlete,
             onChanged: (v) {
@@ -421,7 +421,7 @@ class _DevSimulatorScreenState extends State<DevSimulatorScreen> {
               ],
             ),
           ),
-          const KSection('Durée'),
+          const KSectionTitle('Durée'),
           Wrap(
             spacing: 8,
             runSpacing: 8,

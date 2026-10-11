@@ -15,7 +15,6 @@ import 'koach/koach_home_card.dart';
 import 'koach/koach_view.dart';
 import 'levelup.dart';
 import 'models.dart';
-import 'plan/widgets/program_widgets.dart';
 import 'session_history.dart';
 import 'session_screen.dart';
 import 'program_explainer.dart';
@@ -28,7 +27,7 @@ import 'guided_tests.dart';
 import 'profile_completion.dart';
 import 'store.dart';
 import 'store_widget.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 import 'motion.dart';
 import 'kalis_clock.dart';
 
@@ -150,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Choix d'une semaine : feuille de liste (§4.5).
   Future<void> _pickWeek() async {
     final weeks = store.program.weeks;
-    final selected = await showProgramListSheet(
+    final selected = await showKListSheet(
       context,
       title: 'Choisir une semaine',
       summary: '${weeks.length} semaines',
@@ -176,10 +175,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Détail d'une semaine : jours (appui : ouvrir, ⓘ : résumé, R7),
   /// retour à la semaine actuelle, choix d'une autre semaine.
-  Future<void> _weekDetails(WeekPlan w) => showProgramSheet<void>(
+  Future<void> _weekDetails(WeekPlan w) => showKContentSheet<void>(
     context,
     draggable: true,
-    listKey: const ValueKey('week-sheet'),
+    contentKey: const ValueKey('week-sheet'),
     title: 'Semaine ${w.n}',
     subtitle: _dates(store.program.weekDates(w.n)),
     gap: KSpacing.s8,
@@ -200,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const KSectionTitle('Séances de la semaine', top: KSpacing.s8),
         for (final d in w.days)
-          ProgramDayRow(
+          KDayRow(
             key: ValueKey('week-sheet-day-${d.j}'),
             day: d.j,
             title: d.title,
@@ -209,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? 'Récupération'
                 : '${d.exercises.length} exercices, '
                       '${store.dayEstimate(d).durationLabel}',
-            status: _status(w, d),
+            state: _status(w, d),
             onTap: () {
               Navigator.pop(sheetContext);
               _open(w, d);
@@ -257,13 +256,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _open(WeekPlan w, DayPlan d) =>
       openProgramDay(Navigator.of(context), w, d);
 
-  ProgramDayStatus _status(WeekPlan w, DayPlan d) {
-    if (store.isDone(w.n, d.j)) return ProgramDayStatus.done;
+  KDayState _status(WeekPlan w, DayPlan d) {
+    if (store.isDone(w.n, d.j)) return KDayState.done;
     if (store.inProgress(store.sessionKey(w.n, d.j))) {
-      return ProgramDayStatus.inProgress;
+      return KDayState.inProgress;
     }
-    if (PlanStore(store).isResume(w.n, d.j)) return ProgramDayStatus.resume;
-    return ProgramDayStatus.todo;
+    if (PlanStore(store).isResume(w.n, d.j)) return KDayState.resume;
+    return KDayState.todo;
   }
 
   void _summary(WeekPlan w, DayPlan d) {
@@ -315,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if (d.exercises.isEmpty) {
-      showProgramSheet<void>(
+      showKContentSheet<void>(
         context,
         title: title,
         children: (context) => [overview(context)],
@@ -351,11 +350,11 @@ class _HomeScreenState extends State<HomeScreen> {
             onSummary: () => _summary(w, d),
           );
         }
-        return ProgramDayRow(
+        return KDayRow(
           key: ValueKey('programme-day-${d.j}'),
           day: d.j,
           title: d.title,
-          status: _status(w, d),
+          state: _status(w, d),
           onTap: () => _open(w, d),
           onLongPress: () => _summary(w, d),
         );
@@ -748,7 +747,7 @@ class _WeekSliderState extends State<_WeekSlider> {
 class _TodayCard extends StatelessWidget {
   final WeekPlan week;
   final DayPlan day;
-  final ProgramDayStatus status;
+  final KDayState status;
   final VoidCallback onOpen, onSummary;
   const _TodayCard({
     super.key,
@@ -766,25 +765,25 @@ class _TodayCard extends StatelessWidget {
     final compact = MediaQuery.sizeOf(context).height < 800;
     final recovery = day.exercises.isEmpty;
     final estimate = recovery ? null : store.dayEstimate(day);
-    final done = status == ProgramDayStatus.done;
-    final inProgress = status == ProgramDayStatus.inProgress;
+    final done = status == KDayState.done;
+    final inProgress = status == KDayState.inProgress;
     final statusLabel = switch (status) {
-      ProgramDayStatus.done => 'Séance effectuée',
-      ProgramDayStatus.inProgress => 'Séance en cours',
-      ProgramDayStatus.resume => 'Reprise : séance neutre',
-      ProgramDayStatus.todo => 'Séance à faire',
+      KDayState.done => 'Séance effectuée',
+      KDayState.inProgress => 'Séance en cours',
+      KDayState.resume => 'Reprise : séance neutre',
+      KDayState.todo => 'Séance à faire',
     };
     final written = switch (status) {
-      ProgramDayStatus.inProgress => 'En cours',
-      ProgramDayStatus.resume => 'Reprise',
+      KDayState.inProgress => 'En cours',
+      KDayState.resume => 'Reprise',
       _ => null,
     };
     final icon = Icon(
       switch (status) {
-        ProgramDayStatus.done => Icons.check_circle_rounded,
-        ProgramDayStatus.inProgress => Icons.timelapse_rounded,
-        ProgramDayStatus.resume => Icons.fast_forward_rounded,
-        ProgramDayStatus.todo => Icons.radio_button_unchecked_rounded,
+        KDayState.done => Icons.check_circle_rounded,
+        KDayState.inProgress => Icons.timelapse_rounded,
+        KDayState.resume => Icons.fast_forward_rounded,
+        KDayState.todo => Icons.radio_button_unchecked_rounded,
       },
       key: ValueKey('day-status-${day.j}'),
       semanticLabel: statusLabel,

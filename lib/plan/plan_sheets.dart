@@ -10,11 +10,10 @@ import '../exercise_screens.dart' show ExerciseFilters, searchExercises;
 import '../koach/flame_icon.dart';
 import '../koach/koach_bubble.dart';
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'plan_creation.dart';
 import 'plan_program.dart';
 import 'plan_texts.dart';
-import 'widgets/program_widgets.dart';
 
 String planName(String id) => store.content.byId[id]?.nom ?? id;
 
@@ -31,17 +30,20 @@ String planDayLabel(kc.Pass1Plan plan, int dayIndex) {
   return 'Jour ${dayIndex + 1}';
 }
 
-/// Feuille de la création (gabarit de feuille de contenu de la zone).
+/// Feuille de la création (feuille de contenu du kit). [closeLabel] nul :
+/// le contenu porte sa propre sortie (« OK » de Koach).
 Future<T?> _sheet<T>(
   BuildContext context,
   WidgetBuilder builder, {
   String? title,
   String? subtitle,
-}) => showProgramSheet<T>(
+  String? closeLabel = 'Fermer',
+}) => showKContentSheet<T>(
   context,
   title: title,
   subtitle: subtitle,
-  children: (context) => [builder(context)],
+  closeLabel: closeLabel,
+  builder: builder,
 );
 
 // ------------------------------------------------------------- variantes
@@ -338,6 +340,7 @@ Future<bool> showStepSheet(BuildContext context, PlanStep step) async {
     context,
     (context) => _StepSheet(step: step),
     title: 'Ce que j’ai changé',
+    closeLabel: null,
   );
   return r == true;
 }
@@ -391,7 +394,7 @@ class _StepSheet extends StatelessWidget {
             dividerIndent: KSpacing.s16,
             children: [
               for (final (c, line) in lines)
-                WhyTile(
+                KWhyTile(
                   key: ValueKey('step-change-${c.slotId ?? line}'),
                   title: line,
                   reasons: [for (final r in c.reasons) planReason(r)],

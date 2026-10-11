@@ -170,6 +170,9 @@ class KIconButton extends StatelessWidget {
       onPressed: onPressed,
       style: IconButton.styleFrom(
         backgroundColor: filled ? k.haute : null,
+        // Désactivé : plus de fond, seule l'icône `texte3` reste (UI5 : une
+        // pastille pleine laissait croire le bouton actif).
+        disabledBackgroundColor: Colors.transparent,
         foregroundColor: color ?? k.texte,
         disabledForegroundColor: k.texte3,
         minimumSize: const Size(KSize.target, KSize.target),
@@ -178,4 +181,50 @@ class KIconButton extends StatelessWidget {
       icon: Icon(icon, size: KSize.icon),
     );
   }
+}
+
+/// Actions voisines (« Annuler », « Continuer ») : même largeur, côte à
+/// côte ; l'une sous l'autre seulement quand la largeur ou la taille du
+/// texte l'exige (aucun libellé coupé).
+class KActionRow extends StatelessWidget {
+  final List<Widget> children;
+  final double minButtonWidth;
+  const KActionRow({
+    super.key,
+    required this.children,
+    this.minButtonWidth = KSize.valueWidth,
+  });
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final scale = MediaQuery.textScalerOf(
+        context,
+      ).scale(1).clamp(1.0, double.infinity);
+      final stacked =
+          constraints.maxWidth <
+          children.length * minButtonWidth * scale +
+              (children.length - 1) * KSpacing.s12;
+      if (stacked) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < children.length; i++) ...[
+              if (i > 0) const SizedBox(height: KSpacing.s12),
+              children[i],
+            ],
+          ],
+        );
+      }
+      return Row(
+        children: [
+          for (var i = 0; i < children.length; i++) ...[
+            if (i > 0) const SizedBox(width: KSpacing.s12),
+            Expanded(child: children[i]),
+          ],
+        ],
+      );
+    },
+  );
 }

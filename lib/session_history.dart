@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'adapt/widgets/session_kit.dart' show showKChoice;
 import 'app_theme.dart';
 import 'models.dart';
 import 'session_screen.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 import 'store.dart';
 
 /// Même présentation que l'exécution, sur une copie détachée des saisies.
@@ -281,7 +280,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     final k = KTokens.of(context);
     final sets = _snapshot.ex.values.expand((ex) => ex.sets).toList();
     final date = DateTime.tryParse(_snapshot.finishedAt ?? '')?.toLocal();
-    return KList(
+    return KPageList(
       children: [
         KCard(
           accent: k.validation,
@@ -352,7 +351,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     final where = _week.n > 0 ? '${sessionPlace(_week, _day)}, ' : '';
     // Même en-tête que la séance (C1) : retour, titre jamais coupé,
     // repère et état, une seule action.
-    final header = SessionHeader(
+    final header = KSessionHeader(
       title: _day.title,
       subtitle: where.isEmpty
           ? (_editable ? 'Séance enregistrée' : 'Lecture seule')
@@ -365,7 +364,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
             )
           : null,
     );
-    return KScreen(
+    return KScaffold(
       body: SafeArea(
         bottom: false,
         child: Column(
@@ -374,7 +373,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
             Expanded(
               child: _groups.isEmpty
                   ? const Padding(
-                      padding: KSpace.content,
+                      padding: KPageList.contentPadding,
                       child: KEmpty(
                         icon: Icons.check_circle_outline,
                         title: 'Séance effectuée',
@@ -417,7 +416,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
                                   ],
                                 ),
                               ),
-                              SessionProgressDots(
+                              KProgressDots(
                                 count: _groups.length + 1,
                                 index: _page,
                                 color: k.encre,

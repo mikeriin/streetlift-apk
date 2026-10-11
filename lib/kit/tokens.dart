@@ -68,8 +68,12 @@ abstract final class KSize {
   static const double menuRow = 64, settingRow = 72;
 
   /// Largeur maximale de la valeur d'une ligne de menu ; largeur sous
-  /// laquelle le pas à pas passe sous son libellé (à 100 % de texte).
-  static const double valueWidth = 140, stepperRowMin = 300;
+  /// laquelle le pas à pas passe sous son libellé (à 100 % de texte ; UI5 :
+  /// relevée de 300 à 420, le libellé gardait trop peu de place à 390 dp).
+  static const double valueWidth = 140, stepperRowMin = 420;
+
+  /// Interrupteur avec sa zone touchable (Material 3, `padded`).
+  static const double switchWidth = 60;
 
   /// Largeur sous laquelle les commandes de la barre de repos passent sous
   /// le temps restant (à 100 % de texte).
@@ -139,14 +143,6 @@ abstract final class KType {
 
   /// Texte courant.
   static final corps = _s(KFont.text, 15, 22, FontWeight.w400);
-
-  /// Adaptateur des écrans existants (UI0) : texte courant et titres de
-  /// ligne des composants Material historiques, aux métriques d'avant
-  /// (14 / 20, 15 / 20) pour que les écrans pas encore refaits gardent leur
-  /// mise en page. Les composants du kit utilisent [corps] et [corpsFort].
-  static final texteHistorique = _s(KFont.text, 14, 20, FontWeight.w400);
-  static final champHistorique = _s(KFont.text, 15, 20, FontWeight.w400);
-  static final ligneHistorique = _s(KFont.text, 15, 20, FontWeight.w600);
 
   /// Description, valeur secondaire.
   static final detail = _s(KFont.text, 13, 18, FontWeight.w400);

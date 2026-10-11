@@ -613,7 +613,7 @@ void main() {
       await tester.pumpWidget(
         host(
           KDayRow(
-            number: 'J6',
+            day: 6,
             title: 'Puissance MU + squat endurance',
             onTap: () {},
             onInfo: () => info++,
@@ -621,11 +621,14 @@ void main() {
         ),
       );
       expect(find.text('PUISSANCE MU + SQUAT ENDURANCE'), findsOneWidget);
+      // UI5 : ligne de jour de UI1 promue (état écrit et lu).
       expect(
-        find.bySemanticsLabel('J6, Puissance MU + squat endurance, à venir'),
+        find.bySemanticsLabel(
+          'Jour 6 · Puissance MU + squat endurance. Séance à faire',
+        ),
         findsOneWidget,
       );
-      await tester.tap(find.byTooltip('Résumé du jour'));
+      await tester.tap(find.byTooltip('Résumé du jour 6'));
       expect(info, 1);
       handle.dispose();
     });

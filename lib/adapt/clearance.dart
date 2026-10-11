@@ -16,8 +16,7 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachUsage;
 import '../koach/koach_bubble.dart';
 import '../plan/coach_texts.dart' show coachText;
 import '../store.dart';
-import '../ui.dart';
-import 'widgets/session_kit.dart';
+import '../kit/kit.dart';
 
 /// Séances où « Pas encore » a été répondu depuis le lancement (clé de la
 /// note et clé du journal : la session de test a ses propres blocs) : la

@@ -14,7 +14,7 @@ import 'athlete_profile_screen.dart' show ProfileScreen;
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Ouvre « Compléter mon profil » ([deferredOnly] : seulement les
 /// questions reportées).

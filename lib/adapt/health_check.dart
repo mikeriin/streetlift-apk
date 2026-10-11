@@ -33,11 +33,10 @@ import '../plan/coach_texts.dart'
     show coachBlockHasPainStop, coachBlockPainNotes;
 import '../plan/evolution_widgets.dart' show EvolutionSessionCard;
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import '../wellbeing_screens.dart' show SafetyScreen;
 import 'adapt_texts.dart';
 import 'clearance.dart';
-import 'widgets/session_kit.dart';
 
 /// Pose de Koach pour chaque réponse à « Comment tu te sens ? ».
 const kFeelPoses = <int, KoachPose>{

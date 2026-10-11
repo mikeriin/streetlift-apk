@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'home_screen.dart' show openProgramDay;
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 class ResumeBanner extends StatelessWidget {
   const ResumeBanner({super.key});

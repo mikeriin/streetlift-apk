@@ -83,7 +83,7 @@ class StatsPerformance extends StatelessWidget {
                 style: KType.titreCarte.copyWith(color: k.texte),
               ),
               const SizedBox(height: KSpacing.s12),
-              StatsBar(
+              KMeter(
                 value: total == 0 ? 0 : store.completedCount / total,
                 label: 'Journées du programme validées',
                 description: '${store.completedCount} sur $total',
@@ -253,7 +253,7 @@ class _Target extends StatelessWidget {
             ],
           ),
           const SizedBox(height: KSpacing.s12),
-          StatsBar(
+          KMeter(
             value: fraction,
             label: name,
             description:

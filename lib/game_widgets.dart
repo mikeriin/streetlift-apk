@@ -385,7 +385,7 @@ class CharacterCard extends StoreWidget {
               ],
             ),
           const SizedBox(height: KSpacing.s16),
-          StatsBar(
+          KMeter(
             value: p.fraction,
             label: 'Progression du niveau',
             description: '${p.inLevel} sur ${p.need} XP',
@@ -491,7 +491,7 @@ class _AttributeRow extends StatelessWidget {
       textAlign: TextAlign.end,
       style: KType.chiffrePetit.copyWith(color: k.surPleine),
     );
-    final bar = StatsBar(
+    final bar = KMeter(
       value: a.fraction,
       label: a.label,
       description: a.available
@@ -552,7 +552,7 @@ void showCharacterSheet(BuildContext context) {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    StatsBar(
+                    KMeter(
                       value: p.fraction,
                       label: 'Niveau',
                       description: '${p.inLevel} sur ${p.need} XP',
@@ -660,7 +660,7 @@ class _AttributeDetail extends StatelessWidget {
             ],
           ),
           const SizedBox(height: KSpacing.s8),
-          StatsBar(
+          KMeter(
             value: a.available ? a.fraction : 0,
             label: a.label,
             description: a.available ? '${a.score} sur 100' : 'indisponible',
@@ -1188,7 +1188,7 @@ class _ChapterCard extends StatelessWidget {
           ),
           const Spacer(),
           const SizedBox(height: KSpacing.s12),
-          StatsBar(
+          KMeter(
             value: c.fraction,
             label: c.name,
             description: '${c.doneDays} sur ${c.trainingDays}',
@@ -1405,7 +1405,7 @@ class SeasonCard extends StoreWidget {
             style: KType.detail.copyWith(color: k.texte2),
           ),
           const SizedBox(height: KSpacing.s12),
-          StatsBar(
+          KMeter(
             value: s.fraction,
             label: 'Saison ${s.index}',
             description: '${s.doneDays} sur ${s.trainingDays}',
@@ -1541,7 +1541,7 @@ class _ChapterDetail extends StatelessWidget {
               style: KType.detail.copyWith(color: k.texte2),
             ),
             const SizedBox(height: KSpacing.s12),
-            StatsBar(
+            KMeter(
               value: c.fraction,
               label: c.name,
               description: '${c.doneDays} sur ${c.trainingDays}',

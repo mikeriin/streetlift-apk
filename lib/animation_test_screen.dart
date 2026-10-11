@@ -19,7 +19,7 @@ import 'exercise_mannequin.dart';
 import 'mannequin_3d.dart';
 import 'mannequin_clip.dart';
 import 'mannequin_player.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 class AnimationTestScreen extends StatefulWidget {
   const AnimationTestScreen({super.key});
@@ -79,9 +79,9 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
             secondaires: muscles.secondaires,
             stabilisateurs: muscles.stabilisateurs,
           );
-    return KScreen(
+    return KScaffold(
       appBar: AppBar(title: const Text('ANIMATION DE TEST')),
-      body: KList(
+      body: KPageList(
         key: const ValueKey('animation-test-list'),
         children: [
           KCard(
@@ -113,7 +113,7 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
               key: const ValueKey('animation-test-support'),
               child: MannequinPlayer(
                 key: _player,
-                background: kPageColor(context),
+                background: KTokens.of(context).fond,
                 clip: clip,
                 intensities: mapped.intensities,
                 view: MannequinView.profil,

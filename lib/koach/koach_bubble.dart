@@ -8,8 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart';
 
-import '../plan/widgets/program_widgets.dart' show showProgramSheet;
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'koach_view.dart';
 
 /// Directeur et textes partagés de l'application.
@@ -335,7 +334,7 @@ class KoachHeader extends StatelessWidget {
 }
 
 /// Feuille du bas où Koach parle (explication, demande) : feuille de
-/// contenu de la zone, titre facultatif.
+/// contenu du kit, titre facultatif.
 Future<T?> showKoachSheet<T>(
   BuildContext context, {
   required KoachPose pose,
@@ -343,10 +342,12 @@ Future<T?> showKoachSheet<T>(
   String? title,
   String? why,
   List<KoachBubbleAction> actions = const [],
-}) => showProgramSheet<T>(
+}) => showKContentSheet<T>(
   context,
-  listKey: const ValueKey('koach-sheet'),
+  contentKey: const ValueKey('koach-sheet'),
   title: title,
+  // Koach porte la sortie (« OK » ou ses actions).
+  closeLabel: null,
   children: (context) => [
     KoachBubble(
       pose: pose,

@@ -23,7 +23,7 @@ import '../muscle_map_2d.dart';
 import '../program_screens.dart' show ProgramScreen;
 import '../session_prefs.dart' show SessionSpace;
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'plan_creation.dart';
 import 'plan_inspector.dart';
 import 'plan_program.dart';
@@ -732,11 +732,10 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                       ),
                       const SizedBox(height: KSpacing.s4),
                       ExcludeSemantics(
-                        child: KProgressBar(
+                        child: KMeter(
                           value: (share[e.key] ?? 0).clamp(0.0, 1.0),
-                          height: KSpacing.s8,
+                          label: disciplineClassLabel(e.key),
                           color: k.second,
-                          track: k.filet,
                         ),
                       ),
                     ],

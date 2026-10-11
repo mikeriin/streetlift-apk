@@ -10,12 +10,11 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 import '../athlete_profile_screen.dart' show ProfileScreen;
 import '../koach/koach_bubble.dart';
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'evolution_texts.dart';
 import 'plan_program.dart' show PlanBlockEntry;
 import 'plan_sheets.dart' show changeLine, planName, planReason;
 import 'plan_texts.dart';
-import 'widgets/program_widgets.dart';
 
 // ------------------------------------------------------------------ outils
 
@@ -183,9 +182,9 @@ List<KoachBubbleAction> evolutionActions(
 
 /// Feuille « ce qui change » d'une proposition (diff expliqué par Koach).
 Future<void> showEvolutionSheet(BuildContext context, EvolutionEntry e) =>
-    showProgramSheet<void>(
+    showKContentSheet<void>(
       context,
-      listKey: const ValueKey('evo-sheet'),
+      contentKey: const ValueKey('evo-sheet'),
       title: evolutionKindTitle(e.proposal.kind),
       children: (context) => _evolutionSheet(context, e),
     );
@@ -212,7 +211,7 @@ List<Widget> _evolutionSheet(BuildContext context, EvolutionEntry e) {
         dividerIndent: KSpacing.s16,
         children: [
           for (final (c, line) in lines)
-            WhyTile(
+            KWhyTile(
               key: ValueKey('evo-change-${c.slotId ?? line}-${c.weekIndex}'),
               title: line,
               reasons: [

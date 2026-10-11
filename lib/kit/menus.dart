@@ -278,7 +278,10 @@ class KMenuRow extends StatelessWidget {
 }
 
 /// Ligne de réglage à interrupteur : toute la ligne bascule le réglage
-/// (cible pleine largeur), qui s'applique tout de suite (§4.5).
+/// (cible pleine largeur), qui s'applique tout de suite (§4.5). Quand le
+/// mot le plus long du libellé ne tient pas à côté de l'interrupteur
+/// (écran étroit, grand texte), l'interrupteur passe sous le libellé : aucun
+/// mot n'est coupé (C3, UI5).
 class KSwitchRow extends StatelessWidget {
   final String title;
   final String? subtitle;
@@ -297,19 +300,84 @@ class KSwitchRow extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => MergeSemantics(
-    child: KMenuRow(
-      title: title,
-      subtitle: subtitle,
-      icon: icon,
-      highlight: highlight,
-      minHeight: KSize.settingRow,
-      chevron: false,
-      enabled: onChanged != null,
-      onTap: onChanged == null ? null : () => onChanged!(!value),
-      trailing: KSwitch(value: value, onChanged: onChanged),
-    ),
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, c) {
+      final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+      final lead = icon != null && !large
+          ? KSize.menuIcon + KSpacing.s14
+          : 0.0;
+      final room =
+          c.maxWidth -
+          2 * KSpacing.s16 -
+          lead -
+          KSpacing.s12 -
+          KSize.switchWidth;
+      final stacked =
+          c.maxWidth.isFinite &&
+          kWidestWord(context, title, KType.corpsFort) > room;
+      final toggle = KSwitch(value: value, onChanged: onChanged);
+      if (!stacked) {
+        return MergeSemantics(
+          child: KMenuRow(
+            title: title,
+            subtitle: subtitle,
+            icon: icon,
+            highlight: highlight,
+            minHeight: KSize.settingRow,
+            chevron: false,
+            enabled: onChanged != null,
+            onTap: onChanged == null ? null : () => onChanged!(!value),
+            trailing: toggle,
+          ),
+        );
+      }
+      final k = KTokens.of(context);
+      return MergeSemantics(
+        child: Semantics(
+          button: onChanged != null,
+          enabled: onChanged != null,
+          child: KRowFrame(
+            highlight: highlight,
+            minHeight: KSize.settingRow,
+            onTap: onChanged == null ? null : () => onChanged!(!value),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                KRowLabel(
+                  title,
+                  subtitle: subtitle,
+                  color: onChanged == null ? k.texte3 : null,
+                ),
+                const SizedBox(height: KSpacing.s4),
+                toggle,
+              ],
+            ),
+          ),
+        ),
+      );
+    },
   );
+}
+
+/// Largeur du mot le plus long de [text] au style [style] et à l'échelle de
+/// texte courante (choix de disposition : un mot ne se coupe jamais).
+double kWidestWord(BuildContext context, String text, TextStyle style) {
+  final scaler = MediaQuery.textScalerOf(context);
+  final direction = Directionality.of(context);
+  var widest = 0.0;
+  for (final word in text.split(RegExp(r'\s+'))) {
+    if (word.isEmpty) continue;
+    final p = TextPainter(
+      text: TextSpan(text: word, style: style),
+      textDirection: direction,
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    if (p.width > widest) widest = p.width;
+    p.dispose();
+  }
+  return widest;
 }
 
 /// Ligne de réglage à pas à pas (valeur au centre, − et + séparés de 4) ;
@@ -321,6 +389,9 @@ class KStepperRow extends StatelessWidget {
   final VoidCallback? onDecrement, onIncrement;
   final String decrementLabel, incrementLabel;
   final bool highlight;
+
+  /// Clés des boutons du pas à pas ([KStepper.keyPrefix]).
+  final String? keyPrefix;
   const KStepperRow({
     super.key,
     required this.title,
@@ -331,6 +402,7 @@ class KStepperRow extends StatelessWidget {
     this.decrementLabel = 'Diminuer',
     this.incrementLabel = 'Augmenter',
     this.highlight = false,
+    this.keyPrefix,
   });
 
   @override
@@ -346,6 +418,7 @@ class KStepperRow extends StatelessWidget {
           decrementLabel: decrementLabel,
           incrementLabel: incrementLabel,
           semanticLabel: title,
+          keyPrefix: keyPrefix,
         );
         final label = KRowLabel(title, subtitle: subtitle);
         final narrow =
@@ -388,9 +461,13 @@ class KSegmentedRow<T> extends StatelessWidget {
     required this.onChanged,
     this.subtitle,
     this.highlight = false,
+    this.keyPrefix = 'segment',
   });
 
   final bool highlight;
+
+  /// Clés des segments ([KSegmented.keyPrefix]).
+  final String keyPrefix;
 
   @override
   Widget build(BuildContext context) {
@@ -412,6 +489,7 @@ class KSegmentedRow<T> extends StatelessWidget {
             selected: selected,
             onChanged: onChanged,
             semanticLabel: title,
+            keyPrefix: keyPrefix,
           ),
         ],
       ),

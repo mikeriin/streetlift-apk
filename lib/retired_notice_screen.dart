@@ -12,7 +12,7 @@ import 'backup_files.dart';
 import 'retired_data.dart';
 import 'session_prefs.dart';
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Partage de la copie par le menu Android (fichier temporaire unique du
 /// cache, servi en lecture seule par `ShareProvider`).

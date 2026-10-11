@@ -15,7 +15,7 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 import '../koach/koach_bubble.dart';
 import '../models.dart' show WeekPlan;
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'plan_texts.dart';
 
 class ProgramPositionScreen extends StatefulWidget {

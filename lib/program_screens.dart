@@ -34,7 +34,7 @@ import 'program_explainer.dart';
 import 'program_start.dart' show ProgramStartScreen, longCivilDate;
 import 'session_prefs.dart' show SessionSpace;
 import 'store.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 const _templateExplain =
     'Expert streetlifting, 40 semaines : le programme du créateur de Kalis '

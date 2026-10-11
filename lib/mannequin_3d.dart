@@ -73,7 +73,7 @@ import 'mannequin_preload.dart';
 import 'mannequin_rig.dart';
 import 'session_prefs.dart';
 import 'muscle_body.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Source du modèle d'exécution (chemin de source lu par `loadScene`).
 const kMannequinAsset = 'assets/anatomy/mannequin.glb';
@@ -1988,7 +1988,7 @@ class Mannequin3DState extends State<Mannequin3D>
       label: '${widget.semanticLabel} (illustration 2D)',
       child: ClipRRect(
         key: const ValueKey('mannequin-fallback'),
-        borderRadius: BorderRadius.circular(KSpace.radius),
+        borderRadius: BorderRadius.circular(KRadius.card),
         child: ColoredBox(
           color: _background(context),
           child: Padding(
@@ -2030,7 +2030,7 @@ class Mannequin3DState extends State<Mannequin3D>
     );
     final touched = _touched;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(KSpace.radius),
+      borderRadius: BorderRadius.circular(KRadius.card),
       child: ColoredBox(
         color: _background(context),
         child: SizedBox(

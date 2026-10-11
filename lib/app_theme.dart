@@ -1,40 +1,18 @@
-// Adaptateur de la refonte UI (UI0, cahier §5) : l'API historique des
-// couleurs (`KAccentSpec`, `KPalette`, `SL`, `ProgrammeColors`), des commandes
-// (`KControl`) et du thème (`buildTheme`) lit désormais les jetons du kit
-// (`lib/kit/`). Les écrans existants compilent sans changement et prennent
-// déjà les 8 palettes du propriétaire, le contraste renforcé et les polices
-// Barlow ; les lots d'écrans passent ensuite aux composants du kit. Ce
-// fichier disparaît à UI5.
+// Rôles de couleur des illustrations et des peintres de données (UI0, cahier
+// §5 ; UI5) : `KAccentSpec` (palette choisie), `KPalette` et `SL` (palette
+// courante, lue par l'anatomie, le mannequin 3D, Koach et les graphiques,
+// fichiers intouchables du cahier §1) et `buildTheme`, qui pose le thème du
+// kit et la palette courante de `SL`. Tout est lu sur les jetons du kit
+// (`lib/kit/`). UI5 a retiré la partie « écrans » de l'adaptateur de UI0
+// (`KControl`, `ProgrammeColors`, `logDeco`, et `ui.dart` entier) : aucun
+// écran n'en dépend plus ; ce qui reste sert les illustrations, qui ne
+// peuvent pas changer d'API.
 import 'package:flutter/material.dart';
 
 import 'kit/palette.dart';
 import 'kit/theme.dart';
-import 'kit/tokens.dart';
 
 export 'kit/palette.dart' show kPaletteSources, normalizePaletteId, kContrast;
-
-/// Commandes tactiles partagées par les formulaires et les séances.
-class KControl {
-  static const double height = KSize.target, radius = KSize.target / 2;
-  static const double iconSize = KSize.iconSmall, gap = KSpacing.s12;
-  static const double buttonHeight = KSize.target;
-  static const density = VisualDensity.standard;
-  static const double formGap = KSpacing.s16;
-  static const shape = KRadius.pill;
-  static const fieldPadding = EdgeInsets.symmetric(
-    horizontal: KSpacing.s14,
-    vertical: KSpacing.s14,
-  );
-  static const selectPadding = EdgeInsets.symmetric(
-    horizontal: KSpacing.s14,
-    vertical: KSpacing.s12,
-  );
-  static final textStyle = KType.corps;
-  static final numberStyle = KType.corps.copyWith(
-    fontWeight: KType.corpsFort.fontWeight,
-    fontFeatures: KFont.tabular,
-  );
-}
 
 /// Palette choisie par l'utilisateur (préférence `accent`).
 ///
@@ -258,55 +236,6 @@ class SL {
   /// [KPalette.redGradient].
   static List<Color> get gradient => _palette.gauge;
 }
-
-class ProgrammeColors {
-  final bool dark;
-  final KAccentSpec spec;
-  const ProgrammeColors(this.dark, [this.spec = KAccentSpec.bordeaux]);
-  factory ProgrammeColors.of(BuildContext context) => ProgrammeColors(
-    Theme.of(context).brightness == Brightness.dark,
-    SL.accentSpec,
-  );
-  KPalette get p => KPalette(dark, spec, SL.contrast);
-  Color get card => p.card;
-  Color get accent => p.accent;
-  Color get muted => p.dim;
-  Color get levelRest => p.dot;
-  Color get green => p.success;
-  Color get volume => p.accent;
-  Color get circle => p.faint;
-  Color get onAccent => p.onAccent;
-
-  /// Curseur de semaine (frise, pastille « S13 ») : `encre`, lisible sur le
-  /// fond dans les 8 palettes (la dominante Neon ne l'est pas en clair).
-  Color get slider => p.accent;
-  Color get onSlider => p.onAccent;
-}
-
-InputDecoration logDeco({String? hint, String? suffix}) => InputDecoration(
-  hintText: hint,
-  suffixText: suffix,
-  isDense: true,
-  filled: true,
-  fillColor: SL.roles.haute,
-  hintStyle: KType.corps.copyWith(color: SL.roles.texte3),
-  contentPadding: const EdgeInsets.symmetric(
-    horizontal: KSpacing.s8,
-    vertical: KSpacing.s8,
-  ),
-  border: OutlineInputBorder(
-    borderRadius: KRadius.menuRadius,
-    borderSide: BorderSide(color: SL.roles.filet),
-  ),
-  enabledBorder: OutlineInputBorder(
-    borderRadius: KRadius.menuRadius,
-    borderSide: BorderSide(color: SL.roles.filet),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderRadius: KRadius.menuRadius,
-    borderSide: BorderSide(color: SL.roles.encre, width: KSize.current),
-  ),
-);
 
 /// Thème de l'application (adaptateur de `kitTheme`) ; positionne aussi la
 /// palette courante de [SL] pour les usages directs et les tests.

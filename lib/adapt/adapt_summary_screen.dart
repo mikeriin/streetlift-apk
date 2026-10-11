@@ -13,7 +13,7 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachUsage;
 import '../koach/koach_bubble.dart';
 import '../models.dart';
 import '../store.dart';
-import '../ui.dart';
+import '../kit/kit.dart';
 import 'adapt_texts.dart';
 import 'flame_track.dart';
 import 'health_check.dart' show KoachWhyHeader;

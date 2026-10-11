@@ -20,7 +20,6 @@ import 'adapt/adapt_texts.dart';
 import 'adapt/clearance.dart';
 import 'adapt/flame_track.dart';
 import 'adapt/health_check.dart';
-import 'adapt/widgets/session_kit.dart';
 import 'exercise_screens.dart' show openExerciseSheet;
 import 'plan/coach_texts.dart' as ct;
 import 'koach/koach_bubble.dart'
@@ -72,90 +71,6 @@ void registerDayRoute(String key, Route<dynamic>? route) {
 
 void unregisterDayRoute(Route<dynamic>? route) =>
     openDayRoutes.removeWhere((e) => identical(e.route, route));
-
-/// UI2 (C8) : hauteur occupée en bas de la séance par la barre de chrono ;
-/// un message court (Koach, record, enchaînement) se pose au-dessus.
-class SessionBottomInset extends InheritedWidget {
-  final double Function() height;
-  const SessionBottomInset({
-    super.key,
-    required this.height,
-    required super.child,
-  });
-
-  static double of(BuildContext context) =>
-      context
-          .dependOnInheritedWidgetOfExactType<SessionBottomInset>()
-          ?.height() ??
-      0;
-
-  @override
-  bool updateShouldNotify(SessionBottomInset oldWidget) => false;
-}
-
-/// UI2 (C1) : en-tête de la séance — retour, titre en capitales (U3) jamais
-/// coupé, repère de la journée, une seule action (⋮).
-class SessionHeader extends StatelessWidget {
-  final String title;
-  final String? subtitle;
-  final Widget? action;
-  const SessionHeader({
-    super.key,
-    required this.title,
-    this.subtitle,
-    this.action,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final k = KTokens.of(context);
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: KSize.primary),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
-        child: Row(
-          children: [
-            KIconButton(
-              icon: Icons.arrow_back_rounded,
-              tooltip: 'Retour',
-              onPressed: () => Navigator.maybePop(context),
-            ),
-            const SizedBox(width: KSpacing.s4),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: KSpacing.s8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Semantics(
-                      header: true,
-                      child: KFitTitle(
-                        k.title(title),
-                        style: k.titleStyle(
-                          KType.titreSeance.copyWith(color: k.texte),
-                        ),
-                      ),
-                    ),
-                    if (subtitle != null)
-                      Text(
-                        subtitle!,
-                        style: KType.detail.copyWith(color: k.texte2),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-            if (action != null)
-              action!
-            else
-              const SizedBox(width: KSize.target),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class SessionScreen extends StatefulWidget {
   final WeekPlan week;
@@ -546,7 +461,7 @@ class _SessionScreenState extends State<SessionScreen> {
     final w = widget.week;
     final d = widget.day;
     final restDay = d.exercises.isEmpty;
-    final header = SessionHeader(
+    final header = KSessionHeader(
       title: restDay ? 'Récupération' : d.title,
       subtitle: sessionPlace(w, d),
       action: KIconButton(
@@ -563,7 +478,7 @@ class _SessionScreenState extends State<SessionScreen> {
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: KSpacing.maxWidth),
-            child: SessionBottomInset(
+            child: KBottomInset(
               height: _barHeight,
               child: Column(
                 children: [
@@ -667,60 +582,9 @@ class _SessionScreenState extends State<SessionScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(right: KSpacing.s8),
-            child: SessionProgressDots(count: bilanPage + 1, index: page),
+            child: KProgressDots(count: bilanPage + 1, index: page),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Points de progression de la séance : page courante en pilule `encre`,
-/// pages passées en `texte2`, suivantes en `texte3`.
-class SessionProgressDots extends StatelessWidget {
-  final int count;
-  final int index;
-
-  /// Couleur de la page courante (par défaut `encre`).
-  final Color? color;
-
-  const SessionProgressDots({
-    super.key,
-    required this.count,
-    required this.index,
-    this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final k = KTokens.of(context);
-    final motion = KMotion.fast;
-    return Semantics(
-      label: 'Étape ${index + 1} sur $count',
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          spacing: KSpacing.s4,
-          runSpacing: KSpacing.s4,
-          children: [
-            for (var i = 0; i < count; i++)
-              AnimatedContainer(
-                duration: motion.durationIn(context),
-                curve: motion.curve,
-                width: i == index ? KSpacing.s20 : KSpacing.s8,
-                height: KSpacing.s8 * .75,
-                decoration: ShapeDecoration(
-                  color: i == index
-                      ? (color ?? k.encre)
-                      : i < index
-                      ? k.texte2
-                      : k.texte3,
-                  shape: KRadius.pill,
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }
@@ -1072,7 +936,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       showKSnack(
         context,
         message: 'Enchaîne : ${store.splitName(widget.exs[1].name).$1}',
-        bottom: SessionBottomInset.of(context),
+        bottom: KBottomInset.of(context),
         duration: const Duration(seconds: 2),
       );
       return;
@@ -1112,7 +976,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     showKSnack(
       context,
       message: 'Koach : $text',
-      bottom: SessionBottomInset.of(context),
+      bottom: KBottomInset.of(context),
       duration: const Duration(seconds: 6),
       // Grand texte : le message garde toute la largeur, Koach s'efface.
       leading: KeyedSubtree(
@@ -1501,7 +1365,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     showKSnack(
       context,
       message: 'Record : ${store.splitName(ex.name).$1}, ${hit.label}',
-      bottom: SessionBottomInset.of(context),
+      bottom: KBottomInset.of(context),
       duration: const Duration(seconds: 3),
       leading: Icon(
         Icons.emoji_events_rounded,

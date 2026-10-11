@@ -22,7 +22,7 @@ import 'app_theme.dart';
 import 'device.dart';
 import 'mannequin_3d.dart';
 import 'mannequin_preload.dart';
-import 'ui.dart';
+import 'kit/kit.dart';
 
 /// Résultat de la vérification du moteur 3D sur cet appareil.
 class Engine3DSupport {
@@ -264,9 +264,9 @@ class Engine3DScreenState extends State<Engine3DScreen> {
   @override
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
-    return KScreen(
+    return KScaffold(
       appBar: AppBar(title: const Text('MOTEUR 3D')),
-      body: KList(
+      body: KPageList(
         key: const ValueKey('engine3d-list'),
         children: [
           _view(dark),
@@ -297,7 +297,7 @@ class Engine3DScreenState extends State<Engine3DScreen> {
           spin: true,
           // M6b : fond de la page (décision du 29/09/2026 : fond de chaque
           // vue 3D = couleur de son support, sans démarcation).
-          background: kPageColor(context),
+          background: KTokens.of(context).fond,
           height: 380,
           onReady: _onReady,
           semanticLabel:
@@ -339,7 +339,7 @@ class Engine3DScreenState extends State<Engine3DScreen> {
       );
     }
     return ClipRRect(
-      borderRadius: BorderRadius.circular(KSpace.radius),
+      borderRadius: BorderRadius.circular(KRadius.card),
       child: ColoredBox(color: sceneBackground(dark), child: child),
     );
   }

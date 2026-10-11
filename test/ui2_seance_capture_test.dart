@@ -219,7 +219,7 @@ void main() {
         showKSnack(
           ctx,
           message: 'Koach : série suivante dans 2 s',
-          bottom: SessionBottomInset.of(ctx),
+          bottom: KBottomInset.of(ctx),
           actionLabel: 'Annuler',
           onAction: () {},
         );
