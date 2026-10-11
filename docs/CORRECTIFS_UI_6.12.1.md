@@ -44,3 +44,7 @@ La partie parcourue de la ligne des flammes est un dégradé des couleurs des po
 ## 6.17.1 — ligne des flammes en union lisse (SDF)
 
 Halo retiré. Ligne, points et base de la flamme dessinés comme une seule forme (`FlameTrackPainter`, `lib/adapt/flame_track.dart`) : union lisse (smooth min polynomial, rayon 5) des distances signées d'une capsule (ligne parcourue 1,5 dp, restante 1 dp), des points (3,5 dp, qui s'effacent sous la flamme) et d'un cercle de 5 dp sous la flamme ; contour obtenu par dichotomie sur la demi-hauteur à chaque demi-pixel. Couleur de chaque point jusqu'à la flamme, `texte3` après ; la position animée de la flamme pilote la forme et la flamme.
+
+## 6.17.2 — flou continu
+
+Flou progressif sans palier visible : bande portée à 40 dp, 32 paliers (un tous les 1,25 dp) au lieu de 6, flou croissant en courbe quadratique (écart entre paliers voisins ≤ 0,6 de σ), paliers groupés sur une seule capture de l'arrière-plan (`BackdropGroup`, `BackdropFilter.grouped`).

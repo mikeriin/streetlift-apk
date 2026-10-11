@@ -14,10 +14,12 @@ class KProgressiveBlur extends StatelessWidget {
   final double fade;
   final double sigma;
 
-  /// Paliers du dégradé de flou.
-  static const int steps = 6;
+  /// Paliers du dégradé de flou : un par dp de la bande (6.17.2 : 6 paliers
+  /// se voyaient), flou croissant en courbe douce (quadratique) pour que
+  /// l'écart entre deux paliers voisins reste sous le seuil visible.
+  static const int steps = 32;
 
-  const KProgressiveBlur({super.key, this.fade = 32, this.sigma = 10});
+  const KProgressiveBlur({super.key, this.fade = 40, this.sigma = 10});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +28,9 @@ class KProgressiveBlur extends StatelessWidget {
       // Réduire les animations : voile seul, sans flou (moins coûteux).
       return _veil(k, 0);
     }
+    // Paliers groupés : une seule capture de l'arrière-plan pour tous.
     Widget band(double s) => ClipRect(
-      child: BackdropFilter(
+      child: BackdropFilter.grouped(
         filter: ui.ImageFilter.blur(sigmaX: s, sigmaY: s),
         child: const SizedBox.expand(),
       ),
@@ -35,28 +38,30 @@ class KProgressiveBlur extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) {
         final h = box.maxHeight;
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            Column(
-              children: [
-                for (var i = 1; i <= steps; i++)
-                  SizedBox(
-                    height: fade / steps,
-                    child: band(sigma * i / steps),
-                  ),
-                Expanded(child: band(sigma)),
-              ],
-            ),
-            _veil(k, h <= 0 ? 0 : fade / h),
-          ],
+        return BackdropGroup(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Column(
+                children: [
+                  for (var i = 1; i <= steps; i++)
+                    SizedBox(
+                      height: fade / steps,
+                      child: band(sigma * (i / steps) * (i / steps)),
+                    ),
+                  Expanded(child: band(sigma)),
+                ],
+              ),
+              _veil(k, h <= 0 ? 0 : fade / h),
+            ],
+          ),
         );
       },
     );
   }
 
   /// Voile du fond : transparent en haut, 60 % au bas de la bande, 70 % en
-  /// bas.
+  /// bas (dégradé continu).
   Widget _veil(KTokens k, double stop) => DecoratedBox(
     decoration: ShapeDecoration(
       shape: const RoundedRectangleBorder(),
@@ -80,7 +85,7 @@ class KProgressiveBlur extends StatelessWidget {
 class KFloatingBottom extends StatelessWidget {
   final Widget child;
   final double fade;
-  const KFloatingBottom({super.key, required this.child, this.fade = 32});
+  const KFloatingBottom({super.key, required this.child, this.fade = 40});
 
   @override
   Widget build(BuildContext context) => Stack(
