@@ -1,0 +1,1 @@
+Contrôle complet des correctifs UI 6.12.1 (candidat 9e59481).
