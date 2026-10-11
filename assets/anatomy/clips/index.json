@@ -1,0 +1,594 @@
+{
+ "schema": 1,
+ "clips": [
+  {
+   "id": "debug_squat",
+   "fichier": "assets/anatomy/clips/debug_squat.ktclip",
+   "exercices": [],
+   "debogage": true,
+   "nom": "Squat lent au poids du corps (animation de test)",
+   "fps": 30,
+   "images": 181,
+   "duree_s": 6.0,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Descente",
+     "type": "excentrique",
+     "debut_s": 0,
+     "fin_s": 3
+    },
+    {
+     "nom": "Pause basse",
+     "type": "isometrique",
+     "debut_s": 3,
+     "fin_s": 4
+    },
+    {
+     "nom": "Montée",
+     "type": "concentrique",
+     "debut_s": 4,
+     "fin_s": 5
+    },
+    {
+     "nom": "Pause haute",
+     "type": "isometrique",
+     "debut_s": 5,
+     "fin_s": 6
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 1982,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 16,
+    "cles": 482,
+    "cles_bassin": 54,
+    "octets_bruts": 4294,
+    "octets": 1982,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.2,
+    "ecart_max_position_mm": 4.96
+   },
+   "source": {
+    "chiffre": "assets_secure/animations/debug_squat.fbx.enc",
+    "sha256": "1c820cfaed1b4aa6d5f39f945e6dc5d6796b63146e9552f4f4ae3af8349433f7",
+    "images_s_source": 30.0,
+    "images_source": 181
+   },
+   "muscles": {
+    "primaires": [
+     "droit_femoral",
+     "vaste_lateral",
+     "vaste_medial",
+     "vaste_intermediaire",
+     "grand_fessier"
+    ],
+    "secondaires": [
+     "biceps_femoral",
+     "biceps_femoral_chef_court",
+     "semi_tendineux",
+     "semi_membraneux",
+     "grand_adducteur",
+     "gastrocnemien_medial",
+     "gastrocnemien_lateral",
+     "soleaire"
+    ],
+    "stabilisateurs": [
+     "erecteurs_lombaires",
+     "droit_abdomen",
+     "oblique_externe",
+     "transverse_abdomen"
+    ]
+   }
+  },
+  {
+   "id": "koach_attente_respiration",
+   "fichier": "assets/anatomy/clips/koach/koach_attente_respiration.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "attente",
+   "boucle": true,
+   "nom": "Respire et change d’appui",
+   "fps": 30,
+   "images": 121,
+   "duree_s": 4.0,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Appui gauche",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 1.75
+    },
+    {
+     "nom": "Appui droit",
+     "type": "isometrique",
+     "debut_s": 1.75,
+     "fin_s": 3.4
+    },
+    {
+     "nom": "Revient",
+     "type": "isometrique",
+     "debut_s": 3.4,
+     "fin_s": 4.0
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 4052,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 50,
+    "cles": 701,
+    "cles_bassin": 46,
+    "octets_bruts": 6092,
+    "octets": 4052,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.199,
+    "ecart_max_position_mm": 5.8
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_attente_respiration.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 121
+   }
+  },
+  {
+   "id": "koach_attente_regard",
+   "fichier": "assets/anatomy/clips/koach/koach_attente_regard.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "attente",
+   "boucle": true,
+   "nom": "Regarde autour et roule les épaules",
+   "fps": 30,
+   "images": 133,
+   "duree_s": 4.4,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Regarde à droite",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 1.2
+    },
+    {
+     "nom": "Regarde à gauche",
+     "type": "isometrique",
+     "debut_s": 1.2,
+     "fin_s": 2.55
+    },
+    {
+     "nom": "Roule les épaules",
+     "type": "isometrique",
+     "debut_s": 2.55,
+     "fin_s": 4.4
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 4233,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 50,
+    "cles": 747,
+    "cles_bassin": 32,
+    "octets_bruts": 6362,
+    "octets": 4233,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.199,
+    "ecart_max_position_mm": 3.98
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_attente_regard.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 133
+   }
+  },
+  {
+   "id": "koach_attente_etirement",
+   "fichier": "assets/anatomy/clips/koach/koach_attente_etirement.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "attente",
+   "boucle": true,
+   "nom": "S’étire les bras puis le cou",
+   "fps": 30,
+   "images": 163,
+   "duree_s": 5.4,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "S’étire",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 1.45
+    },
+    {
+     "nom": "Penche",
+     "type": "isometrique",
+     "debut_s": 1.45,
+     "fin_s": 3.2
+    },
+    {
+     "nom": "Relâche le cou",
+     "type": "isometrique",
+     "debut_s": 3.2,
+     "fin_s": 5.4
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 11579,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 50,
+    "cles": 2105,
+    "cles_bassin": 38,
+    "octets_bruts": 17268,
+    "octets": 11579,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.2,
+    "ecart_max_position_mm": 7.73
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_attente_etirement.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 163
+   },
+   "depassement": "11579 octets > 5120 à 0.2° : tolérance tenue pour des contacts exacts (mains, pieds) ; mouvement riche (doigts, tête, bras), gardé (mesuré)."
+  },
+  {
+   "id": "koach_parle_une_main",
+   "fichier": "assets/anatomy/clips/koach/koach_parle_une_main.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "parle",
+   "boucle": true,
+   "nom": "Explique d’une main",
+   "fps": 30,
+   "images": 127,
+   "duree_s": 4.2,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Présente",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 0.8
+    },
+    {
+     "nom": "Insiste",
+     "type": "isometrique",
+     "debut_s": 0.8,
+     "fin_s": 1.9
+    },
+    {
+     "nom": "Ouvre",
+     "type": "isometrique",
+     "debut_s": 1.9,
+     "fin_s": 2.75
+    },
+    {
+     "nom": "Conclut",
+     "type": "isometrique",
+     "debut_s": 2.75,
+     "fin_s": 4.2
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 7495,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 49,
+    "cles": 1395,
+    "cles_bassin": 50,
+    "octets_bruts": 11669,
+    "octets": 7495,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.2,
+    "ecart_max_position_mm": 6.0
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_parle_une_main.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 127
+   },
+   "depassement": "7495 octets > 5120 à 0.2° : tolérance tenue pour des contacts exacts (mains, pieds) ; mouvement riche (doigts, tête, bras), gardé (mesuré)."
+  },
+  {
+   "id": "koach_parle_deux_mains",
+   "fichier": "assets/anatomy/clips/koach/koach_parle_deux_mains.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "parle",
+   "boucle": true,
+   "nom": "Explique des deux mains",
+   "fps": 30,
+   "images": 130,
+   "duree_s": 4.3,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Propose",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 1.6
+    },
+    {
+     "nom": "Écarte",
+     "type": "isometrique",
+     "debut_s": 1.6,
+     "fin_s": 2.45
+    },
+    {
+     "nom": "Pose un point",
+     "type": "isometrique",
+     "debut_s": 2.45,
+     "fin_s": 4.3
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 9559,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 49,
+    "cles": 1729,
+    "cles_bassin": 30,
+    "octets_bruts": 14201,
+    "octets": 9559,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.2,
+    "ecart_max_position_mm": 5.71
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_parle_deux_mains.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 130
+   },
+   "depassement": "9559 octets > 5120 à 0.2° : tolérance tenue pour des contacts exacts (mains, pieds) ; mouvement riche (doigts, tête, bras), gardé (mesuré)."
+  },
+  {
+   "id": "koach_parle_montre",
+   "fichier": "assets/anatomy/clips/koach/koach_parle_montre.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "parle",
+   "boucle": true,
+   "nom": "Montre quelque chose sur le côté",
+   "fps": 30,
+   "images": 97,
+   "duree_s": 3.2,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Montre",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 1.25
+    },
+    {
+     "nom": "Te regarde",
+     "type": "isometrique",
+     "debut_s": 1.25,
+     "fin_s": 2.0
+    },
+    {
+     "nom": "Revient",
+     "type": "isometrique",
+     "debut_s": 2.0,
+     "fin_s": 3.2
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 5770,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 50,
+    "cles": 1019,
+    "cles_bassin": 28,
+    "octets_bruts": 8510,
+    "octets": 5770,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.199,
+    "ecart_max_position_mm": 6.86
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_parle_montre.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 97
+   },
+   "depassement": "5770 octets > 5120 à 0.2° : tolérance tenue pour des contacts exacts (mains, pieds) ; mouvement riche (doigts, tête, bras), gardé (mesuré)."
+  },
+  {
+   "id": "koach_felicite_applaudit",
+   "fichier": "assets/anatomy/clips/koach/koach_felicite_applaudit.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "felicite",
+   "boucle": false,
+   "nom": "Applaudit",
+   "fps": 30,
+   "images": 97,
+   "duree_s": 3.2,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Lève les mains",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 0.55
+    },
+    {
+     "nom": "Applaudit",
+     "type": "isometrique",
+     "debut_s": 0.55,
+     "fin_s": 2.15
+    },
+    {
+     "nom": "Retour",
+     "type": "isometrique",
+     "debut_s": 2.15,
+     "fin_s": 3.2
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 8487,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 49,
+    "cles": 1682,
+    "cles_bassin": 50,
+    "octets_bruts": 13965,
+    "octets": 8487,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.199,
+    "ecart_max_position_mm": 8.21
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_felicite_applaudit.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 97
+   },
+   "depassement": "8487 octets > 5120 à 0.2° : tolérance tenue pour des contacts exacts (mains, pieds) ; mouvement riche (doigts, tête, bras), gardé (mesuré)."
+  },
+  {
+   "id": "koach_felicite_poing",
+   "fichier": "assets/anatomy/clips/koach/koach_felicite_poing.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "felicite",
+   "boucle": false,
+   "nom": "Lève le poing",
+   "fps": 30,
+   "images": 91,
+   "duree_s": 3.0,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Prend l’élan",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 0.32
+    },
+    {
+     "nom": "Lève le poing",
+     "type": "isometrique",
+     "debut_s": 0.32,
+     "fin_s": 1.05
+    },
+    {
+     "nom": "« Yes ! »",
+     "type": "isometrique",
+     "debut_s": 1.05,
+     "fin_s": 1.95
+    },
+    {
+     "nom": "Retour",
+     "type": "isometrique",
+     "debut_s": 1.95,
+     "fin_s": 3.0
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 8839,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 50,
+    "cles": 1599,
+    "cles_bassin": 40,
+    "octets_bruts": 13234,
+    "octets": 8839,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.2,
+    "ecart_max_position_mm": 7.05
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_felicite_poing.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 91
+   },
+   "depassement": "8839 octets > 5120 à 0.2° : tolérance tenue pour des contacts exacts (mains, pieds) ; mouvement riche (doigts, tête, bras), gardé (mesuré)."
+  },
+  {
+   "id": "koach_felicite_pouce",
+   "fichier": "assets/anatomy/clips/koach/koach_felicite_pouce.ktclip",
+   "exercices": [],
+   "debogage": false,
+   "mascotte": true,
+   "famille": "felicite",
+   "boucle": false,
+   "nom": "Pouce levé",
+   "fps": 30,
+   "images": 91,
+   "duree_s": 3.0,
+   "sur_place": true,
+   "derive_retiree_m": 0.0,
+   "phases": [
+    {
+     "nom": "Prend l’élan",
+     "type": "isometrique",
+     "debut_s": 0.0,
+     "fin_s": 0.3
+    },
+    {
+     "nom": "Pouce levé",
+     "type": "isometrique",
+     "debut_s": 0.3,
+     "fin_s": 2.2
+    },
+    {
+     "nom": "Retour",
+     "type": "isometrique",
+     "debut_s": 2.2,
+     "fin_s": 3.0
+    }
+   ],
+   "phases_source": "reglages",
+   "octets": 6393,
+   "budget_octets": 5120,
+   "compression": {
+    "pistes": 50,
+    "cles": 1130,
+    "cles_bassin": 27,
+    "octets_bruts": 9391,
+    "octets": 6393,
+    "tolerance_deg": 0.2,
+    "ecart_max_deg": 0.2,
+    "ecart_max_position_mm": 6.55
+   },
+   "source": {
+    "script": "tools/anatomy/koach_animations.py",
+    "fbx": "build/koach_fbx/koach_felicite_pouce.fbx (non suivi)",
+    "images_s_source": 30.0,
+    "images_source": 91
+   },
+   "depassement": "6393 octets > 5120 à 0.2° : tolérance tenue pour des contacts exacts (mains, pieds) ; mouvement riche (doigts, tête, bras), gardé (mesuré)."
+  }
+ ],
+ "format": ".ktclip : gzip, en-tête KTC1 ; rotations locales (repère du corps) par os de assets/anatomy/rig_mixamo.json, translation du bassin (mm) ; voir tools/anatomy/import_animations.py",
+ "squelette": "assets/anatomy/rig_mixamo.json"
+}

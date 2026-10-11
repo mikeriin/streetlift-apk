@@ -1,0 +1,10 @@
+build base exit=0
+-rw-r--r-- 1 runner runner 20719036 Sep 26 17:39 apk/base.apk
+build cand exit=0
+-rw-r--r-- 1 runner runner 20724714 Sep 26 17:40 apk/cand.apk
+bench build base exit=0
+bench build cand exit=0
+742bfd5f14489f06166c103d6da090affeed8668d0db7787d689db70007e48d1  apk/base.apk
+3c50d39d77c260d68b093fd3247ef9b07ed5eece2f37fa7399212678ea015253  apk/bench-base.apk
+59707a44a374dcb055c709915ddde32941aa9baf3b805f4381fd651b450b7b50  apk/bench-cand.apk
+53fb93e258fee6569bf4b81e9a2ec742f1d3bbebce6266564ecabf03c332a0fb  apk/cand.apk
