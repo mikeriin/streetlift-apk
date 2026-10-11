@@ -14,3 +14,11 @@ Branche de travail locale `ui/UI5` (partie de `refonte-ui` 48bda98, fusion de ma
 
 ## Reste
 - Contrôle rapide puis complet (claude/ci-ui-ui5), correction format/analyse/tests ; captures regardées ; relecture indépendante ; cahier §5.2 (U0.17) ; REFONTE_UI.md ; version 6.12.0+116 ; main ; livraison.
+
+## Point 07:30 UTC
+- Relecture indépendante faite (verdict : publiable après corrections mineures) ; constats 2, 3, 4, 5, 6, 13 corrigés ; 1, 7, 8 expliqués (livraison §6, §8).
+- main a avancé (dev6.11.3, e351f274) : fusionné (cb03625), version 6.12.0+117.
+- Contrôle complet 3 : run 38121521174 (arbre cb03625).
+- Brouillon de livraison : /tmp (non sauvegardé ailleurs) — à réécrire depuis ce plan si besoin : sections 1 à 9 du gabarit PIPELINE_UI §4.
+- Worktree pipeline local : cahier §5.2 et DECISIONS UI5 écrits, non poussés.
+- Reste : vérifier le run, captures, publier main (avance rapide depuis e351f274), build signé, livraison, ETAT, notification.

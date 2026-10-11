@@ -1,6 +1,6 @@
 # Kalis Track — Refonte UI et UX (dev6.12.0)
 
-Mise à jour : 11 octobre 2026. Version **6.12.0+116**, affichée « dev6.12.0 ». Pipeline « Refonte UI et UX » (lots UI0 à UI5) : cahier `pipeline/ui/CAHIER_UI.md` (version 3), décisions `pipeline/ui/DECISIONS_UI.md`, livraisons `pipeline/ui/livraisons/` (branche `pipeline`). L'ancien registre de la refonte L5 (3.0.2, six couleurs) est conservé dans `docs/REFONTE_UI_L5.md`.
+Mise à jour : 11 octobre 2026. Version **6.12.0+117**, affichée « dev6.12.0 ». Pipeline « Refonte UI et UX » (lots UI0 à UI5) : cahier `pipeline/ui/CAHIER_UI.md` (version 3), décisions `pipeline/ui/DECISIONS_UI.md`, livraisons `pipeline/ui/livraisons/` (branche `pipeline`). L'ancien registre de la refonte L5 (3.0.2, six couleurs) est conservé dans `docs/REFONTE_UI_L5.md`.
 
 Demande du propriétaire (10/10/2026) : « quelque chose de propre qui ne fait pas brouillon », « garder le même principe de l'UI/UX présente mais que ça soit fini », « refonds tous les menus », sans toucher aux illustrations de Koach, du logo et de l'anatomie musculaire. La refonte est donc **une finition** : mêmes écrans, même navigation (dock à 4 onglets, ouverture sur Programme), mêmes parcours et mêmes contenus ; un seul système visuel, des incohérences corrigées et un seul modèle de menus.
 
