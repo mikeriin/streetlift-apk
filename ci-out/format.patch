@@ -1,0 +1,206 @@
+diff --git a/lib/dev/engine_inspector.dart b/lib/dev/engine_inspector.dart
+index 19f7d9d..1972afe 100644
+--- a/lib/dev/engine_inspector.dart
++++ b/lib/dev/engine_inspector.dart
+@@ -393,7 +393,10 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
+           ),
+         ],
+       ),
+-      body: KPageList(key: const ValueKey('inspector-list'), children: children),
++      body: KPageList(
++        key: const ValueKey('inspector-list'),
++        children: children,
++      ),
+     );
+   }
+ }
+diff --git a/lib/kit/controls.dart b/lib/kit/controls.dart
+index 7bb3ef4..bb9645c 100644
+--- a/lib/kit/controls.dart
++++ b/lib/kit/controls.dart
+@@ -411,8 +411,9 @@ class _Slot extends StatelessWidget {
+   const _Slot({required this.width, required this.child});
+ 
+   @override
+-  Widget build(BuildContext context) =>
+-      width == null ? Expanded(child: child) : SizedBox(width: width, child: child);
++  Widget build(BuildContext context) => width == null
++      ? Expanded(child: child)
++      : SizedBox(width: width, child: child);
+ }
+ 
+ /// Puce neutre (C5) : information ou filtre, jamais colorée sans état. Une
+diff --git a/lib/kit/format.dart b/lib/kit/format.dart
+index ef6e69a..f48dcc7 100644
+--- a/lib/kit/format.dart
++++ b/lib/kit/format.dart
+@@ -93,10 +93,8 @@ final _unitAfterNumber = RegExp(
+ /// Texte dont les unités suivent leur nombre après une espace (normale ou
+ /// insécable) : l'espace devient l'espace fine insécable (« 40 à 60 kg »,
+ /// « 30 s à 1 min »). Le reste du texte est gardé.
+-String unitSpacesText(String text) => text.replaceAllMapped(
+-  _unitAfterNumber,
+-  (m) => '${m[1]}$kUnitSpace${m[2]}',
+-);
++String unitSpacesText(String text) =>
++    text.replaceAllMapped(_unitAfterNumber, (m) => '${m[1]}$kUnitSpace${m[2]}');
+ 
+ final _decimalPoint = RegExp(r'(\d)\.(\d)');
+ 
+diff --git a/lib/kit/menus.dart b/lib/kit/menus.dart
+index d740cb3..4849bae 100644
+--- a/lib/kit/menus.dart
++++ b/lib/kit/menus.dart
+@@ -303,9 +303,7 @@ class KSwitchRow extends StatelessWidget {
+   Widget build(BuildContext context) => LayoutBuilder(
+     builder: (context, c) {
+       final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+-      final lead = icon != null && !large
+-          ? KSize.menuIcon + KSpacing.s14
+-          : 0.0;
++      final lead = icon != null && !large ? KSize.menuIcon + KSpacing.s14 : 0.0;
+       final room =
+           c.maxWidth -
+           2 * KSpacing.s16 -
+diff --git a/lib/kit/session.dart b/lib/kit/session.dart
+index 7abd4db..a85d9e9 100644
+--- a/lib/kit/session.dart
++++ b/lib/kit/session.dart
+@@ -14,8 +14,7 @@ class KBottomInset extends InheritedWidget {
+   const KBottomInset({super.key, required this.height, required super.child});
+ 
+   static double of(BuildContext context) =>
+-      context.dependOnInheritedWidgetOfExactType<KBottomInset>()?.height() ??
+-      0;
++      context.dependOnInheritedWidgetOfExactType<KBottomInset>()?.height() ?? 0;
+ 
+   @override
+   bool updateShouldNotify(KBottomInset oldWidget) => false;
+diff --git a/lib/kit/sheets.dart b/lib/kit/sheets.dart
+index cf25bbe..cdcaa62 100644
+--- a/lib/kit/sheets.dart
++++ b/lib/kit/sheets.dart
+@@ -50,7 +50,12 @@ class KSheetHeader extends StatelessWidget {
+   final String? title;
+   final String? subtitle;
+   final bool inline;
+-  const KSheetHeader({super.key, this.title, this.subtitle, this.inline = false});
++  const KSheetHeader({
++    super.key,
++    this.title,
++    this.subtitle,
++    this.inline = false,
++  });
+ 
+   @override
+   Widget build(BuildContext context) {
+@@ -647,8 +652,7 @@ Future<T?> showKContentSheet<T>(
+         ? null
+         : BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * .9),
+     builder: (ctx) {
+-      List<Widget> items() =>
+-          builder != null ? [builder(ctx)] : children!(ctx);
++      List<Widget> items() => builder != null ? [builder(ctx)] : children!(ctx);
+       Widget sheet({ScrollController? controller, bool shrink = true}) =>
+           KContentSheet(
+             title: title,
+diff --git a/lib/kit/theme.dart b/lib/kit/theme.dart
+index a21f630..07b08f2 100644
+--- a/lib/kit/theme.dart
++++ b/lib/kit/theme.dart
+@@ -436,11 +436,7 @@ ThemeData kitTheme({
+ /// se comporte comme un champ rempli de Material 3 tout en gardant le
+ /// contour entier.
+ class KFieldBorder extends OutlineInputBorder {
+-  const KFieldBorder({
+-    super.borderSide,
+-    super.borderRadius,
+-    super.gapPadding,
+-  });
++  const KFieldBorder({super.borderSide, super.borderRadius, super.gapPadding});
+ 
+   /// Faux : l'étiquette se pose dans le conteneur, sans couper le contour.
+   @override
+diff --git a/lib/main.dart b/lib/main.dart
+index 282c87a..37f1c3d 100644
+--- a/lib/main.dart
++++ b/lib/main.dart
+@@ -452,10 +452,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
+       ),
+       bottomNavigationBar: keyboard
+           ? null
+-          : HeroNavBar(
+-              index: _tabIndex,
+-              onTap: _selectTab,
+-            ),
++          : HeroNavBar(index: _tabIndex, onTap: _selectTab),
+     );
+   }
+ }
+diff --git a/lib/plan/plan_program.dart b/lib/plan/plan_program.dart
+index aeb1ded..0aaf398 100644
+--- a/lib/plan/plan_program.dart
++++ b/lib/plan/plan_program.dart
+@@ -578,8 +578,7 @@ const _kFocusDayTitles = <String, String>{
+ String _dayTitle(String focus) {
+   assert(
+     kFocusLabels.entries.every(
+-      (e) =>
+-          _kFocusDayTitles[e.key]?.toLowerCase() == e.value.toLowerCase(),
++      (e) => _kFocusDayTitles[e.key]?.toLowerCase() == e.value.toLowerCase(),
+     ),
+     'Titre de jour différent du thème : mettre _kFocusDayTitles à jour.',
+   );
+diff --git a/test/ui5_installation_test.dart b/test/ui5_installation_test.dart
+index a6ea1b5..317e309 100644
+--- a/test/ui5_installation_test.dart
++++ b/test/ui5_installation_test.dart
+@@ -362,10 +362,7 @@ void main() {
+         expect(normalizeAccent(id), palette);
+         expect(normalizePaletteId(id), palette);
+         expect(KAccentSpec.byId(id).id, palette);
+-        expect(
+-          KRoles.of(id, dark: true),
+-          same(KRoles.of(palette, dark: true)),
+-        );
++        expect(KRoles.of(id, dark: true), same(KRoles.of(palette, dark: true)));
+         final doc = _withAccent(old, id);
+         expect(
+           await d.importBackup(jsonEncode(doc)),
+diff --git a/test/ui5_kit_test.dart b/test/ui5_kit_test.dart
+index 87557f8..16b9afa 100644
+--- a/test/ui5_kit_test.dart
++++ b/test/ui5_kit_test.dart
+@@ -63,10 +63,7 @@ void main() {
+           for (final t in titles) {
+             await tester.pumpWidget(
+               host(
+-                KPage.sub(
+-                  title: t,
+-                  children: const [Text('Contenu')],
+-                ),
++                KPage.sub(title: t, children: const [Text('Contenu')]),
+                 scale: scale,
+               ),
+             );
+@@ -417,9 +414,7 @@ void main() {
+         ),
+       );
+       final button = tester.widget<IconButton>(find.byType(IconButton));
+-      final bg = button.style!.backgroundColor!.resolve({
+-        WidgetState.disabled,
+-      });
++      final bg = button.style!.backgroundColor!.resolve({WidgetState.disabled});
+       expect(bg, Colors.transparent);
+     });
+ 
+@@ -455,7 +450,8 @@ void main() {
+               expect(
+                 kContrast(r.texte2, bg),
+                 greaterThanOrEqualTo(need - .05),
+-                reason: '${source.id} ${dark ? 'sombre' : 'clair'} '
++                reason:
++                    '${source.id} ${dark ? 'sombre' : 'clair'} '
+                     '${contrast ? 'renforcé ' : ''}icône sur $under',
+               );
+             }

@@ -1,0 +1,12 @@
+Changed lib/dev/engine_inspector.dart
+Changed lib/kit/controls.dart
+Changed lib/kit/format.dart
+Changed lib/kit/menus.dart
+Changed lib/kit/session.dart
+Changed lib/kit/sheets.dart
+Changed lib/kit/theme.dart
+Changed lib/main.dart
+Changed lib/plan/plan_program.dart
+Changed test/ui5_installation_test.dart
+Changed test/ui5_kit_test.dart
+Formatted 279 files (11 changed) in 1.92 seconds.
