@@ -31,3 +31,7 @@ Réglages › Apparence : « Couleurs » (Sobres = dérivation de 6.12.0, Normal
 - Carte du lift principal (`Exercise.main`) : contour et surtitre « Lift principal » en `encre`, charge et cible RIR en `encre` ; les autres exercices : carte neutre, charge en `texte`, cible sur `haute`.
 - Cluster : la cible de la ligne est répartie en blocs (`clusterSplit` : 3 reps en 2 blocs → 2 + 1) au lieu de « 2 × 1 » qui contredisait la ligne ; titre « Cluster · 3 reps en 2 blocs, 30 s entre » ; deux lignes au plus : titre, puis cases des blocs (valeur prévue, faite, suivante) et saisie du bloc suivant (− valeur + ✓) côte à côte.
 - Zones de saisie (champs de série, validation, chrono de série, bandeau des blocs, note, champs des formulaires) à la hauteur des espacements choisis (`KDensity.field` : 48 dp × facteur, 36 dp au moins ; 48 dp en « Aérés »).
+
+## 6.16.0 — barre des flammes
+
+La partie parcourue de la ligne des flammes est un dégradé des couleurs des points (chaque position a la couleur de son point, fixe pendant le déplacement, révélée jusqu'à la flamme), sans transparence ; un halo de la couleur de la flamme (fondu radial) relie la barre à la flamme. Dessin de la flamme inchangé.

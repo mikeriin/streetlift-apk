@@ -258,12 +258,21 @@ class _FlameTrackState extends State<FlameTrack> {
                 final cell = w / Flames.max;
                 double x(int i) => cell * (i - .5);
                 const h = 48.0, flame = 34.0, dot = 7.0;
-                final fill = v == null
-                    ? k.filet
-                    : flameColor(
-                        v,
-                        dark: dark,
-                      ).withValues(alpha: dark ? .55 : 1);
+                // 6.16.0 : la partie parcourue prend, à chaque position, la
+                // couleur du point qui y est posé (dégradé fixe sur toute la
+                // ligne, révélé jusqu'à la flamme) : la barre se fond dans
+                // les points et arrive dans la couleur de la flamme.
+                final full = x(Flames.max) - x(1);
+                final ramp = LinearGradient(
+                  colors: [
+                    for (var i = Flames.min; i <= Flames.max; i++)
+                      flameColor(i, dark: dark),
+                  ],
+                  stops: [
+                    for (var i = Flames.min; i <= Flames.max; i++)
+                      (x(i) - x(1)) / full,
+                  ],
+                );
                 return GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTapUp: (d) {
@@ -291,7 +300,9 @@ class _FlameTrackState extends State<FlameTrack> {
                           height: 2,
                           child: ColoredBox(color: k.filet),
                         ),
-                        // Partie parcourue jusqu'à la flamme.
+                        // Partie parcourue jusqu'à la flamme : dégradé des
+                        // couleurs des points, fixe, révélé de gauche à
+                        // droite.
                         AnimatedPositioned(
                           duration: motion,
                           curve: Curves.easeOutCubic,
@@ -299,13 +310,54 @@ class _FlameTrackState extends State<FlameTrack> {
                           width: v == null ? 0 : x(v) - x(1),
                           top: h / 2 - 1.5,
                           height: 3,
-                          child: DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color: fill,
+                          child: ClipPath(
+                            clipper: const ShapeBorderClipper(
                               shape: KRadius.pill,
+                            ),
+                            child: OverflowBox(
+                              alignment: Alignment.centerLeft,
+                              minWidth: full,
+                              maxWidth: full,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  shape: const RoundedRectangleBorder(),
+                                  gradient: ramp,
+                                ),
+                                child: const SizedBox.expand(),
+                              ),
                             ),
                           ),
                         ),
+                        // Halo de la flamme : fondu de sa couleur, qui relie
+                        // la barre à la flamme.
+                        if (v != null)
+                          AnimatedPositioned(
+                            duration: motion,
+                            curve: Curves.easeOutBack,
+                            left: x(v) - flame * .75,
+                            top: h / 2 - flame * .75,
+                            width: flame * 1.5,
+                            height: flame * 1.5,
+                            child: IgnorePointer(
+                              child: TweenAnimationBuilder<Color?>(
+                                duration: motion,
+                                tween: ColorTween(
+                                  end: flameColor(v, dark: dark),
+                                ),
+                                builder: (context, c, _) => DecoratedBox(
+                                  decoration: ShapeDecoration(
+                                    shape: const CircleBorder(),
+                                    gradient: RadialGradient(
+                                      colors: [
+                                        (c ?? k.filet).withValues(alpha: .38),
+                                        (c ?? k.filet).withValues(alpha: 0),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         // Les 9 points (10 sans flamme), une case chacun.
                         for (var i = Flames.min; i <= Flames.max; i++)
                           Positioned(
