@@ -1,0 +1,59 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             76.4s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,944ms
+W/eetlift_tracker( 4195): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 4195): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 4195): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 4195): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 4195): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4195): Width is zero. 0,0
+W/HWUI    ( 4195): Unknown dataspace 0
+I/WindowExtensionsImpl( 4195): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4195): Width is zero. 0,0
+D/FlutterJNI( 4195): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4195): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+W/HWUI    ( 4195): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4195): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4195): mapper 4.x is not supported
+I/Choreographer( 4195): Skipped 112 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4195): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4195): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+D/ProfileInstaller( 4195): Installing profile for fr.tchoupi.streetlift_tracker
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:35983/87PQEarQKzo=/
+VMServiceFlutterDriver: Isolate found with number: 2844657002136255
+VMServiceFlutterDriver: Isolate 2844657002136255 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4195): 00:00 +0: Tour UI d : écrans principaux et parcours
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4195): Skipped 57 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 4195): Davey! duration=1081ms; Flags=1, FrameTimelineVsyncId=8890, IntendedVsync=144318753583, Vsync=145268753545, InputEventId=0, HandleInputStart=145277025361, AnimationStart=145277026853, PerformTraversalsStart=145277027554, DrawStart=145289231900, FrameDeadline=144335420249, FrameInterval=145276793486, FrameStartTime=16666666, SyncQueued=145297003261, SyncStart=145298749460, IssueDrawCommandsStart=145301902835, SwapBuffers=145387193985, FrameCompleted=145402222125, DequeueBufferDuration=4252116, QueueBufferDuration=5531135, GpuCompleted=145402222125, SwapBuffersCompleted=145401814779, DisplayPresentTime=72904454231359566, CommandSubmissionCompleted=145387193985, 
+D/EGL_emulation( 4195): app_time_stats: avg=352.26ms min=65.23ms max=711.44ms count=5
+D/EGL_emulation( 4195): app_time_stats: avg=1477.37ms min=1477.37ms max=1477.37ms count=1
+D/EGL_emulation( 4195): app_time_stats: avg=210.00ms min=107.61ms max=470.58ms count=5
+D/FlutterJNI( 4195): Sending viewport metrics to the engine.
+D/EGL_emulation( 4195): app_time_stats: avg=1269.32ms min=1269.32ms max=1269.32ms count=1
+D/EGL_emulation( 4195): app_time_stats: avg=355.54ms min=52.81ms max=928.20ms count=5
+I/eetlift_tracker( 4195): Background concurrent mark compact GC freed 2212KB AllocSpace bytes, 17(788KB) LOS objects, 49% free, 2632KB/5265KB, paused 124us,17.304ms total 273.897ms
+D/EGL_emulation( 4195): app_time_stats: avg=13502.32ms min=13502.32ms max=13502.32ms count=1
+D/EGL_emulation( 4195): app_time_stats: avg=137.46ms min=80.89ms max=177.39ms count=7
+D/EGL_emulation( 4195): app_time_stats: avg=133.39ms min=42.51ms max=165.25ms count=8
+D/EGL_emulation( 4195): app_time_stats: avg=103.69ms min=55.83ms max=228.04ms count=8
+D/EGL_emulation( 4195): app_time_stats: avg=125.32ms min=49.39ms max=233.99ms count=8
+D/EGL_emulation( 4195): app_time_stats: avg=124.89ms min=70.31ms max=361.75ms count=7
+D/EGL_emulation( 4195): app_time_stats: avg=137.98ms min=115.94ms max=167.08ms count=8
+D/EGL_emulation( 4195): app_time_stats: avg=108.48ms min=37.29ms max=162.10ms count=9
+D/EGL_emulation( 4195): app_time_stats: avg=139.60ms min=53.99ms max=222.73ms count=7
