@@ -19,7 +19,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
-import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
@@ -175,7 +174,7 @@ void main() {
       ];
       // ignore: avoid_print
       print(
-        'CI1H1|A|samedi|ajoutés=${[for (final it in extra) '${it.slotId}:${it.exerciseId}:${it.kind.name}']}|$names',
+        'CI1H1|A|samedi|ajoutés=${[for (final it in extra) '${it.slotId}:${it.exerciseId}:${it.kind?.name}']}|$names',
       );
       expect(extra, isNotEmpty, reason: 'test de J4 reporté par le moteur');
       expect(extra.first.kind, kc.SetKind.test);
@@ -351,6 +350,31 @@ void main() {
         final low = fixedLoadItem(engine.copyWith(reasons: [r]), 70, written);
         expect((low.sets, low.repsLow), (2, 11), reason: r.code);
       }
+      // Douleur posée sur un ajustement de l'exercice seulement (étape 2 bis
+      // du moteur) : la baisse reste.
+      final adj = fixedLoadItem(
+        engine.copyWith(reasons: const []),
+        70,
+        written,
+        adjustmentReasons: const [
+          kc.Reason(code: 'adapt.pain_reported', params: {'zone': 'knee'}),
+        ],
+      );
+      expect((adj.sets, adj.repsLow), (2, 11));
+      // Conduite d'endurance pour une douleur de jambe : la baisse reste.
+      final leg = fixedLoadItem(
+        engine.copyWith(
+          reasons: const [
+            kc.Reason(
+              code: 'adapt.endurance_shortened',
+              params: {'cause': 'leg_pain'},
+            ),
+          ],
+        ),
+        70,
+        written,
+      );
+      expect((leg.sets, leg.repsLow), (2, 11));
       final session = fixedLoadItem(engine, 70, written, sessionLowered: true);
       expect((session.sets, session.repsLow, session.startLoadKg), (
         2,
@@ -370,6 +394,25 @@ void main() {
         written,
       );
       expect((over.repsLow, over.repsHigh), (14, 14));
+    });
+
+    test('dernière séance il y a 8 jours (sans réduction du moteur) : '
+        'volume écrit tenu', () async {
+      await _owner(app, lastWeek: 12, lastJ: 6, s13kg: '70', s13reps: '15');
+      final base = app.program.week(14).day(6)!;
+      final a = app.adaptOpen(14, base)!;
+      final squat = _squat(app, a.plan);
+      final w = _written(app, 14, 6).firstWhere((x) => x.slotId == squat.slotId);
+      // ignore: avoid_print
+      print(
+        'CI1H1|B|coupure8|${squat.sets}×${squat.repsLow}@${squat.startLoadKg}'
+        '|raisons=${_codes(squat.reasons)}|séance=${_codes(a.plan.reasons)}',
+      );
+      expect((squat.sets, squat.repsLow, squat.repsHigh), (
+        w.sets,
+        w.repsLow,
+        w.repsHigh,
+      ));
     });
 
     test('bilan bas : le volume du squat peut baisser, charge 70', () async {

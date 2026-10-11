@@ -8,7 +8,8 @@ Base : main 9ef40dad (dev6.11.2). Branche de travail locale ci1h-c1 (contenu de 
 - Défaut B : `fixedLoadItem` tient séries/répétitions/secondes écrites (sauf douleur, `fixedVolumeLowered` : health_low, sleep_low, time_short, resume_after_break, load_held health*, ou raisons de séance) ; repli charge seule si hors contrat ; `_fixedConstrain` retire `setsReduced` des séries rétablies.
 - Version 6.11.3+116 (pubspec, kVersion, tests G2/G3, test python).
 - Tests : `test/ci1h_correction1_test.dart` (nouveau), `ci1h_charge_fixe_test.dart` adapté.
-- CI rapide : `claude/ci-ci1h-c1-rapide` essai 1 poussé.
+- Relecture indépendante (sous-agent) traitée : exceptions par exercice (raisons de la prescription ou de ses ajustements), bilan bas donné au niveau séance seulement, cibles prolongées et technique écrite, retrait d un seul setsReduced.
+- CI rapide : `claude/ci-ci1h-c1-rapide` essai 2 poussé (essai 1 : analyse — `!` inutiles —, test nullable).
 
 ## Reste
 - Lire résultats CI rapide, corriger (format.patch), cause des 11 répétitions (relevés CI1H1|B|cause).

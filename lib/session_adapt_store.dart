@@ -1103,19 +1103,35 @@ extension SessionAdaptStore on AppStore {
       for (final it in place.day?.items ?? const <kc.ExercisePrescription>[])
         it.slotId: it,
     };
-    final lowered = plan.reasons.any(fixedVolumeLowered);
+    // Bilan du jour bas donné (forme, sommeil) : le moteur peut baisser le
+    // volume de toute la séance. (Une reprise après coupure ou un temps
+    // court ne comptent que sur les exercices que le moteur a vraiment
+    // réduits : raisons de la prescription ou de ses ajustements.)
+    final lowered = plan.reasons.any(
+      (r) =>
+          r.code == 'adapt.health_low' ||
+          r.code == 'adapt.sleep_low' ||
+          (r.code == 'adapt.load_held' &&
+              '${r.params['cause']}'.startsWith('health')),
+    );
     var changed = false;
-    final restored = <String>{};
+    // Séries rétablies : (exercice, écart du moteur) de chaque ligne.
+    final restored = <(String, int)>[];
     final items = <kc.ExercisePrescription>[];
     for (final it in plan.items) {
       final kg = _fixedLoadAt(place, it.slotId, it.exerciseId);
       var next = it;
       if (kg != null) {
+        final adj = [
+          for (final a in plan.adjustments)
+            if (a.exerciseId == it.exerciseId) ...a.reasons,
+        ];
         next = fixedLoadItem(
           it,
           kg,
           written[it.slotId],
           sessionLowered: lowered,
+          adjustmentReasons: adj,
         );
         // Hors contrat avec le volume écrit : charge seule (CI1h).
         if (!identical(next, it) && next.validate().isNotEmpty) {
@@ -1124,20 +1140,23 @@ extension SessionAdaptStore on AppStore {
         if (!identical(next, it) && next.validate().isNotEmpty) next = it;
       }
       if (!identical(next, it)) changed = true;
-      if (next.sets > it.sets) restored.add(it.exerciseId);
+      if (next.sets > it.sets) restored.add((it.exerciseId, it.sets - next.sets));
       items.add(next);
     }
     if (!changed) return plan;
-    // Séries écrites rétablies : « une série de moins » n'est plus vrai.
-    final next = plan.copyWith(
-      items: items,
-      adjustments: [
-        for (final a in plan.adjustments)
-          if (!(a.kind == kc.AdjustmentKind.setsReduced &&
-              restored.contains(a.exerciseId)))
-            a,
-      ],
-    );
+    // Séries écrites rétablies : leur « une série de moins » n'est plus vrai
+    // (un seul ajustement retiré par ligne rétablie).
+    final adjustments = [...plan.adjustments];
+    for (final (id, delta) in restored) {
+      final i = adjustments.indexWhere(
+        (a) =>
+            a.kind == kc.AdjustmentKind.setsReduced &&
+            a.exerciseId == id &&
+            a.setsDelta == delta,
+      );
+      if (i >= 0) adjustments.removeAt(i);
+    }
+    final next = plan.copyWith(items: items, adjustments: adjustments);
     return next.validate().isEmpty ? next : plan;
   }
 

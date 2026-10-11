@@ -339,11 +339,22 @@ vide ou absent.
   (`_adaptPrescribe`) et aux conseils entre séries (`adaptAfterSet`).
 - Prévision (C15.4) : `adaptPlannedSession` est le seul calcul d'une
   séance non commencée (ouverture et « La prochaine fois »), au jour
-  `adaptPlanDay` (date prévue si elle est à venir).
+  `adaptPlanDay` (date prévue si elle est à venir ; retiré par la
+  correction 1 : jour réel).
 - Pas de cible émulateur nouvelle (C15.7) : le contrôle complet joue les
   cibles existantes. Tests Dart du lot : `test/ci1h_charge_fixe_test.dart`
   (relevés `CI1H|…` dans le journal des tests). Mise au point sur
   `claude/ci-ci1h-rapide` (`rapide.yml` seul, comme CI1c).
+
+### CI1h correction 1 (dev6.11.3, pipeline CP, voie App)
+
+- Paquets inchangés ; logique seulement (DECISIONS_CP.md C15.9).
+- Défaut A : `adaptPlanDay` retiré ; une séance non commencée et sa
+  prévision se prescrivent au jour réel (`adaptPlannedSession`).
+- Défaut B : `fixedLoadItem` tient le volume écrit (exceptions :
+  `fixedVolumeLowered`, douleur).
+- Tests Dart : `test/ci1h_correction1_test.dart` (relevés `CI1H1|…`). Mise au
+  point sur `claude/ci-ci1h-c1-rapide` (`rapide.yml` seul).
 
 ### Mode dev dans les tests d'intégration
 
