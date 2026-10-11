@@ -24,12 +24,6 @@ import 'store_widget.dart';
 
 String _plural(int n, String one, String many) => '$n ${n > 1 ? many : one}';
 
-/// R9 : les textes d'aide des attributs (game.dart, hors zone) nomment
-/// encore l'ancienne page ; affichés sous le nom de sa destination.
-String _r9(String text) => text
-    .replaceAll('références Pilotage', 'Mes références')
-    .replaceAll('(Références)', '(Mes références)');
-
 /// Puce de rareté d'un badge : neutre (C5), l'icône distingue les raretés.
 class RarityChip extends StatelessWidget {
   final BadgeRarity rarity;
@@ -666,12 +660,12 @@ class _AttributeDetail extends StatelessWidget {
             description: a.available ? '${a.score} sur 100' : 'indisponible',
           ),
           const SizedBox(height: KSpacing.s8),
-          Text(_r9(a.hint), style: KType.detail.copyWith(color: k.texte2)),
+          Text(a.hint, style: KType.detail.copyWith(color: k.texte2)),
           if (a.note != null)
             Padding(
               padding: const EdgeInsets.only(top: KSpacing.s4),
               child: Text(
-                _r9(a.note!),
+                a.note!,
                 key: ValueKey('attribute-note-${a.id}'),
                 style: KType.detail.copyWith(color: k.texte),
               ),

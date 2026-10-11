@@ -536,7 +536,7 @@ Map<String, dynamic> planWeekJson({
     }
     out.add({
       'j': j,
-      'title': focusLabel(hit.day.focus).toUpperCase(),
+      'title': _dayTitle(hit.day.focus),
       'cycle': kindLabel,
       'conduite': kWeekKindHints[week.kind]!,
       'exercises': exercises,
@@ -554,6 +554,36 @@ Map<String, dynamic> planWeekJson({
     'kind': week.kind.code,
     'days': out,
   };
+}
+
+/// Titre d'un jour au schéma `programme_v33` : donnée en capitales, comme
+/// les titres du programme d'origine (« REPOS »), enregistrée avec les
+/// semaines gardées d'un programme précédent ; jamais mise en forme ici
+/// (l'affichage passe par `KTokens.title`, cahier UI C4). Table écrite en
+/// capitales (sans `toUpperCase`) : `focusLabel(code)` en majuscules, à
+/// l'identique ; un thème inconnu donne « SÉANCE », comme `focusLabel`.
+const _kFocusDayTitles = <String, String>{
+  'mobility': 'MOBILITÉ',
+  'cardio.endurance': 'CARDIO ENDURANCE',
+  'cardio.intervals': 'CARDIO FRACTIONNÉ',
+  'conditioning': 'CONDITIONNEMENT',
+  'skills': 'FIGURES',
+  'strength.lower': 'BAS DU CORPS',
+  'strength.push': 'POUSSÉE',
+  'strength.pull': 'TIRAGE',
+  'strength.upper': 'HAUT DU CORPS',
+  'strength.full_body': 'CORPS ENTIER',
+};
+
+String _dayTitle(String focus) {
+  assert(
+    kFocusLabels.entries.every(
+      (e) =>
+          _kFocusDayTitles[e.key]?.toLowerCase() == e.value.toLowerCase(),
+    ),
+    'Titre de jour différent du thème : mettre _kFocusDayTitles à jour.',
+  );
+  return _kFocusDayTitles[focus] ?? 'SÉANCE';
 }
 
 String _rir(int flames) {

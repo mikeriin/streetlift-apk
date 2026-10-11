@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import '../adapt/adapt_texts.dart' show adaptKg, adaptReasonText;
+import '../adapt/adapt_texts.dart' show adaptKgLabel, adaptReasonText;
 import '../koach/koach_bubble.dart' show KoachSays;
 import '../store.dart';
 import '../kit/kit.dart';
+import '../kit/format.dart';
 
 /// Objectif du jour : libellé court du segment, phrase complète dessous.
 const _objectives = <kc.EventObjective, (String, String)>{
@@ -35,14 +36,12 @@ const _monthNames = [
   'décembre',
 ];
 
-/// Charge d'un échauffement : « Poids du corps » à 0 kg.
-String _load(double kg) => kg <= 0 ? 'Poids du corps' : adaptKg(kg);
+/// Charge d'un échauffement : « Poids du corps » à 0 kg. UI5 (C9) :
+/// charge proposée arrondie à l'affichage ([adaptKgLabel]).
+String _load(double kg) => kg <= 0 ? 'Poids du corps' : adaptKgLabel(kg);
 
-String _rest(int s) => s < 120
-    ? '$s\u00A0s'
-    : s % 60 == 0
-    ? '${s ~/ 60}\u00A0min'
-    : '${s ~/ 60}\u00A0min ${s % 60}\u00A0s';
+/// UI5 (C9) : secondes jusqu'à 90 s, minutes au-delà.
+String _rest(int s) => formatSeconds(s);
 
 class EventDayScreen extends StatefulWidget {
   final kc.SeasonEvent event;
@@ -168,8 +167,10 @@ class _EventDayScreenState extends State<EventDayScreen> {
                 ),
                 if (lift.estimateKg != null)
                   Text(
-                    'Maximum du jour estimé : ${adaptKg(lift.estimateKg!)}'
-                    '${lift.standardErrorKg == null ? '' : ' (± ${adaptKg(lift.standardErrorKg!)})'}',
+                    // UI5 (C9) : estimation arrondie au demi-kilo.
+                    'Maximum du jour estimé : '
+                    '${formatKg(lift.estimateKg!, step: 0.5)}'
+                    '${lift.standardErrorKg == null ? '' : ' (± ${formatKg(lift.standardErrorKg!, step: 0.5)})'}',
                     style: detail,
                   ),
                 if ((lift.warmup ?? const <kc.WarmupStep>[]).isNotEmpty &&
@@ -200,7 +201,7 @@ class _EventDayScreenState extends State<EventDayScreen> {
                       const SizedBox(width: KSpacing.s8),
                       Expanded(
                         child: Text(
-                          'Tentative ${a.index + 1} : ${adaptKg(a.loadKg)}, '
+                          'Tentative ${a.index + 1} : ${adaptKgLabel(a.loadKg)}, '
                           '${a.success ? 'réussie' : 'manquée'}',
                           style: KType.corps.copyWith(
                             color: a.success ? k.validation : k.texte2,
@@ -220,7 +221,7 @@ class _EventDayScreenState extends State<EventDayScreen> {
                         children: [
                           Expanded(
                             child: Text(
-                              'Tentative ${s.index + 1} : ${adaptKg(s.loadKg)}'
+                              'Tentative ${s.index + 1} : ${adaptKgLabel(s.loadKg)}'
                               '${s.successProbability == null ? '' : ', ${(s.successProbability! * 100).round()} % de chances'}',
                               style: s.index == next
                                   ? KType.corpsFort.copyWith(color: k.texte)

@@ -29,6 +29,7 @@ import 'koach/koach_view.dart' show KoachColors, KoachView;
 import 'timers.dart';
 export 'timers.dart' show TimerCtl;
 import 'kit/kit.dart';
+import 'kit/format.dart';
 import 'wellbeing_screens.dart' show SafetyScreen;
 import 'models.dart';
 import 'rewards.dart' show checkLevelUp;
@@ -42,10 +43,11 @@ import 'set_validation.dart' show checkSet;
 
 String fmt(int s) => '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
 
-/// Espace insécable avant les unités (« 3 min », « 90 s »).
+/// Espace fine insécable (C9, [kUnitSpace]) avant les unités (« 3 min »,
+/// « 90 s ») d'un texte du programme.
 String nbsp(String t) => t.replaceAllMapped(
   RegExp(r'(\d) (kg|s|min|reps|lb)\b'),
-  (m) => '${m[1]} ${m[2]}',
+  (m) => '${m[1]}$kUnitSpace${m[2]}',
 );
 
 /// UI2 : repère de la journée affiché sous le titre (« S1, J2 » ; le nom du
@@ -282,7 +284,7 @@ class _SessionScreenState extends State<SessionScreen> {
       title: 'Dans cette séance',
       summary:
           '$count exercice${count > 1 ? 's' : ''}'
-          '${duration.isEmpty ? '' : ', ${nbsp(duration)}'}',
+          '${duration.isEmpty ? '' : ', ${estimateLabelText(duration)}'}',
       items: items,
     );
     if (selected != null && mounted) _go(selected);
@@ -1015,7 +1017,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final seconds = specs[k].kind == 'hold' || specs[k].kind == 'holdMax';
     final amount = adaptAmount(step.low, step.high, seconds: seconds);
     final target = [
-      if (step.kg != null && step.kg! > 0) adaptKg(step.kg!),
+      if (step.kg != null && step.kg! > 0) adaptKgLabel(step.kg!),
       if (amount.isNotEmpty) amount,
     ].join(' × ');
     void decide(String status) {
@@ -1290,7 +1292,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               child: KTonalButton(
                 key: ValueKey('coach-intra-${ex.id}'),
                 icon: Icons.av_timer_rounded,
-                label: 'Mini-repos $intra s',
+                label: 'Mini-repos $intra s',
                 onPressed: () =>
                     widget.timer.single('INTRA', intra, prepare: false),
               ),
@@ -1573,8 +1575,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         .map((s) => s.kg)
         .where((s) => s.isNotEmpty)
         .toSet();
+    final recordedLoad = recordedLoads.length == 1
+        ? unitText(decimalFieldText(recordedLoads.single), 'kg')
+        : '—';
     final loadLabel = readOnly
-        ? (recordedLoads.length == 1 ? '${recordedLoads.single} kg' : '—')
+        ? recordedLoad
         : store.loadLabel(ex, week: widget.week.n, day: widget.day.j);
     final shownLoad =
         (readOnly || !noLoad) &&
@@ -1706,7 +1711,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       Padding(
                         padding: const EdgeInsets.only(right: KSpacing.s4),
                         child: Text(
-                          loadLabel,
+                          frenchNumbersText(loadLabel),
                           style: KType.chiffre.copyWith(color: t.encre),
                         ),
                       ),
@@ -1739,9 +1744,13 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                             color: t.validation,
                           ),
                           const SizedBox(width: KSpacing.s4),
-                          Text(
-                            'Enregistré',
-                            style: KType.libelle.copyWith(color: t.validation),
+                          Flexible(
+                            child: Text(
+                              'Enregistré',
+                              style: KType.libelle.copyWith(
+                                color: t.validation,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -1847,7 +1856,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         const SizedBox(width: KSpacing.s8),
                         Expanded(
                           child: Text(
-                            'S${prev.week} : ${store.summarize(prev.log, kg: showKg)}',
+                            'S${prev.week} : ${frenchNumbersText(store.summarize(prev.log, kg: showKg))}',
                             style: detailStyle.copyWith(
                               fontFeatures: KFont.tabular,
                             ),
@@ -1871,7 +1880,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               _group == null)
             _big(
               Icons.timer_outlined,
-              'Lancer ${interval.rounds} × ${interval.work} s / ${interval.rest} s',
+              'Lancer ${interval.rounds} × ${interval.work} s / ${interval.rest} s',
               () => widget.timer.startInterval(
                 interval.rounds,
                 interval.work,
@@ -1886,19 +1895,19 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               _group == null)
             _big(
               Icons.timer_outlined,
-              'Lancer l’EMOM de ${sp.seconds! ~/ 60} min',
+              'Lancer l’EMOM de ${sp.seconds! ~/ 60} min',
               () => widget.timer.emom(sp.seconds! ~/ 60, 60),
             ),
           if (!readOnly && ex.timer == null && sp.kind == 'duration')
             _big(
               Icons.timer_outlined,
-              'Lancer ${sp.seconds! ~/ 60} min',
+              'Lancer ${sp.seconds! ~/ 60} min',
               () => widget.timer.single('DURÉE', sp.seconds!),
             ),
           if (!readOnly && sp.cluster && sp.intra != null)
             _big(
               Icons.av_timer_rounded,
-              'Mini-repos du cluster, ${sp.intra} s',
+              'Mini-repos du cluster, ${sp.intra} s',
               () => widget.timer.single('INTRA', sp.intra!, prepare: false),
             ),
           // ----- Tableau des séries : en-tête de colonnes + lignes -----
@@ -2216,14 +2225,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         final r = tm['rounds'] as int, itv = tm['interval'] as int;
         return _big(
           Icons.timer_outlined,
-          'Lancer l’EMOM, $r × $itv s',
+          'Lancer l’EMOM, $r × $itv s',
           () => widget.timer.emom(r, itv),
         );
       case 'amrap':
         final s = tm['sec'] as int;
         return _big(
           Icons.timer_outlined,
-          'Lancer l’AMRAP de ${s ~/ 60} min',
+          'Lancer l’AMRAP de ${s ~/ 60} min',
           () => widget.timer.single('AMRAP', s),
         );
       case 'hiit':
@@ -2232,14 +2241,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             rs = tm['rest'] as int;
         return _big(
           Icons.timer_outlined,
-          'Lancer $r × $wk s / $rs s',
+          'Lancer $r × $wk s / $rs s',
           () => widget.timer.startInterval(r, wk, rs),
         );
       case 'hold':
         final s = tm['sec'] as int;
         return _big(
           Icons.timer_outlined,
-          'Lancer le chrono de $s s',
+          'Lancer le chrono de $s s',
           () => widget.timer.single('TENUE', s),
         );
     }
@@ -2267,8 +2276,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       'emom': 'EMOM',
       'amrap': 'AMRAP',
     };
-    if (sp.myo) return 'Myo-reps, mini-repos ${sp.intra} s';
-    if (sp.cluster) return 'Clusters, mini-repos ${sp.intra} s';
+    if (sp.myo) return 'Myo-reps, mini-repos ${sp.intra} s';
+    if (sp.cluster) return 'Clusters, mini-repos ${sp.intra} s';
     return labels[sp.kind] ?? sp.kind;
   }
 }
@@ -2280,16 +2289,26 @@ class SessionExercisePageState extends State<SessionExercisePage> {
 /// Champ de saisie d'une série : pilule de 48 dp, chiffre centré
 /// (`chiffreMoyen`), `surface` sur la ligne courante, `haute` ailleurs ;
 /// contour `danger` quand la saisie est refusée.
+/// U0.19 : dans un champ de charge, un point tapé s'affiche en virgule
+/// (même longueur : curseur et sélection gardés).
+final _decimalComma = TextInputFormatter.withFunction(
+  (_, value) => value.copyWith(text: decimalFieldText(value.text)),
+);
+
 class _SetField extends StatefulWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final bool decimal, current, error, readOnly, dimmed;
+
+  /// U0.19 : un point tapé s'affiche en virgule (champ de charge).
+  final bool decimalComma;
   final String semanticLabel;
   const _SetField({
     required this.controller,
     required this.onChanged,
     required this.semanticLabel,
     this.decimal = true,
+    this.decimalComma = false,
     this.current = false,
     this.error = false,
     this.readOnly = false,
@@ -2373,6 +2392,7 @@ class _SetFieldState extends State<_SetField> {
                   keyboardType: TextInputType.numberWithOptions(
                     decimal: widget.decimal,
                   ),
+                  inputFormatters: widget.decimalComma ? [_decimalComma] : null,
                   textAlign: TextAlign.center,
                   textAlignVertical: TextAlignVertical.center,
                   style: style,
@@ -2486,7 +2506,9 @@ class _SetRowState extends State<_SetRow> {
   @override
   void initState() {
     super.initState();
-    kg = TextEditingController(text: widget.entry.kg);
+    // U0.19 : charge montrée avec la virgule (« 62,5 ») ; le journal garde
+    // le point (« 62.5 »).
+    kg = TextEditingController(text: decimalFieldText(widget.entry.kg));
     reps = TextEditingController(text: widget.entry.reps);
     rir = TextEditingController(text: widget.entry.rir);
     v = TextEditingController(text: widget.entry.v);
@@ -2506,6 +2528,7 @@ class _SetRowState extends State<_SetRow> {
     required String name,
     required SetField field,
     bool decimal = true,
+    bool decimalComma = false,
     bool locked = false,
   }) {
     final done = widget.entry.done;
@@ -2513,6 +2536,7 @@ class _SetRowState extends State<_SetRow> {
       controller: c,
       semanticLabel: '$name, série ${widget.label}',
       decimal: decimal,
+      decimalComma: decimalComma,
       current: widget.current,
       readOnly: widget.readOnly || locked,
       error: widget.issue?.field == field,
@@ -2549,7 +2573,13 @@ class _SetRowState extends State<_SetRow> {
     };
     final cells = <Widget>[
       if (widget.showKg)
-        _f(kg, (t) => e.kg = t, name: 'Charge en kg', field: SetField.kg),
+        _f(
+          kg,
+          (t) => e.kg = decimalStoredText(t),
+          name: 'Charge en kg',
+          field: SetField.kg,
+          decimalComma: true,
+        ),
       _f(
         reps,
         (t) => e.reps = t,
@@ -2789,7 +2819,8 @@ class _CompactField extends StatelessWidget {
 
 String _mmss(int s) => '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
 
-String _minutes(int s) => s % 60 == 0 ? '${s ~/ 60}\u00A0min' : _mmss(s);
+String _minutes(int s) =>
+    s % 60 == 0 ? unitText('${s ~/ 60}', 'min') : _mmss(s);
 
 /// CI1f : libellé d'un groupe (« EMOM 12 min », « Circuit · 3 tours »…).
 String groupTitle(kc.GroupSpec g) {
@@ -2797,7 +2828,7 @@ String groupTitle(kc.GroupSpec g) {
   final rest = g.restBetweenRoundsSeconds;
   final restText = rest == null || rest == 0
       ? ''
-      : ' · ${rest >= 60 ? _minutes(rest) : '$rest\u00A0s'} entre deux tours';
+      : ' · ${rest >= 60 ? _minutes(rest) : unitText('$rest', 's')} entre deux tours';
   return switch (g.format) {
     kc.GroupFormat.superset =>
       'Superset${rounds == null ? '' : ' · $rounds tours'}$restText',
@@ -2809,13 +2840,13 @@ String groupTitle(kc.GroupSpec g) {
       'AMRAP ${_minutes(g.durationSeconds ?? 60)} : un maximum de tours',
     kc.GroupFormat.emom =>
       'EMOM ${_minutes(g.durationSeconds ?? 60)}'
-          '${(g.intervalSeconds ?? 60) == 60 ? '' : ' (départ toutes les ${g.intervalSeconds}\u00A0s)'}',
+          '${(g.intervalSeconds ?? 60) == 60 ? '' : ' (départ toutes les ${unitText('${g.intervalSeconds}', 's')})'}',
     kc.GroupFormat.chipper =>
       'Chipper : tout, une fois, au meilleur temps'
           '${g.timeCapSeconds == null ? '' : ' (limite ${_minutes(g.timeCapSeconds!)})'}',
     kc.GroupFormat.intervals =>
-      'Intervalles · ${rounds ?? 1} × ${g.intervalSeconds ?? 60}\u00A0s'
-          '${rest == null || rest == 0 ? '' : ', récupération $rest\u00A0s'}',
+      'Intervalles · ${rounds ?? 1} × ${unitText('${g.intervalSeconds ?? 60}', 's')}'
+          '${rest == null || rest == 0 ? '' : ', récupération ${unitText('$rest', 's')}'}',
   };
 }
 
@@ -3204,7 +3235,7 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
     final plan = widget.plan;
     final parts = _parts;
     final left = plan.left(parts.length);
-    final unit = plan.seconds ? ' s' : '';
+    final unit = plan.seconds ? ' s' : '';
     final dim = KType.detail.copyWith(color: k.texte2);
     final advice = left == 0
         ? (plan.exact
@@ -3216,9 +3247,9 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
               : 'Note chaque mini-série à la fin de son effort.')
         : plan.exact
         ? 'Encore $left mini-série${left > 1 ? 's' : ''} '
-              '(${plan.intra} s entre deux).'
+              '(${plan.intra} s entre deux).'
         : 'Encore $left mini-série${left > 1 ? 's' : ''} au plus '
-              '(${plan.intra} s entre deux) ; arrête dès qu’une '
+              '(${plan.intra} s entre deux) ; arrête dès qu’une '
               'mini-série n’atteint plus ${plan.next}$unit.';
     final noteLabel = parts.isEmpty
         ? (plan.kind == kc.SetTechniqueKind.myoReps
@@ -3670,7 +3701,7 @@ class _FinishPageState extends State<_FinishPage> {
                       Expanded(
                         child: Text(
                           'Objectif de séance : au moins '
-                          '${(goal * 100).round()} % des séries, '
+                          '${(goal * 100).round()} % des séries, '
                           '${reached ? 'atteint' : 'pas encore'}',
                           style: KType.detail.copyWith(color: k.texte),
                         ),

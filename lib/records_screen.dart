@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'game.dart';
 import 'kit/kit.dart';
+import 'nav_bar.dart';
 import 'search.dart' show normalizeText;
 import 'store.dart';
 import 'store_widget.dart';
@@ -73,6 +74,8 @@ List<StatsRecord> statsRecords(AppStore source) {
 String _on(DateTime? at) =>
     at == null ? '' : '\nLe ${statsDate(at)}/${at.year}';
 
+/// Page Records. Sans record (UI5, R6) : « Ouvrir le programme » ferme la
+/// page et mène à l'onglet Programme.
 class RecordsScreen extends StatelessWidget {
   const RecordsScreen({super.key});
 
@@ -90,11 +93,14 @@ class RecordsScreen extends StatelessWidget {
             'Tes meilleures séries, exercice par exercice, calculées depuis ton journal.',
         children: [
           if (records.isEmpty)
-            const KEmpty(
+            KEmpty(
+              key: const ValueKey('records-empty'),
               icon: Icons.emoji_events_outlined,
               title: 'Aucun record pour l’instant',
               message:
                   'Valide des séries avec une charge ou des répétitions : tes meilleures performances s’afficheront ici.',
+              action: 'Ouvrir le programme',
+              onAction: () => openTab(context, AppTab.program),
             ),
           if (weighted.isNotEmpty)
             KMenuGroup(

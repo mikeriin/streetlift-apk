@@ -2,10 +2,13 @@
 // la feuille passe par la feuille de contenu de la zone (poignée, titre,
 // contenu, « Fermer »), le détail du volume en titre de section (C6) et en
 // groupe de lignes qui rouvrent chacune son estimation. Calculs et textes
-// inchangés.
+// inchangés. UI5 (C9, U0.23) : textes de l'estimation au format français à
+// l'affichage (« au moins 38 min », secondes au-delà de 90 s en minutes,
+// espace fine insécable avant l'unité).
 import 'package:flutter/material.dart';
 
 import 'kit/kit.dart';
+import 'kit/format.dart';
 import 'training_estimate.dart';
 
 void showEstimate(
@@ -88,7 +91,10 @@ class _DetailGroup extends StatelessWidget {
                             ),
                             const SizedBox(height: KSpacing.s4),
                             Text(
-                              '${details[i].estimate.volumeLabel} · ${details[i].estimate.durationLabel}',
+                              estimateLabelText(
+                                '${details[i].estimate.volumeLabel} · '
+                                '${details[i].estimate.durationLabel}',
+                              ),
                               style: KType.detail.copyWith(color: k.texte2),
                             ),
                           ],
@@ -129,7 +135,7 @@ class EstimateView extends StatelessWidget {
           children: [
             _metric(
               k,
-              e.durationLabel,
+              estimateLabelText(e.durationLabel),
               e.clock == null ? 'Temps estimé' : 'Durée prévue',
             ),
             if (e.sets > 0)
@@ -141,12 +147,15 @@ class EstimateView extends StatelessWidget {
           ],
         ),
         const SizedBox(height: KSpacing.s12),
-        Text(e.volumeLabel, style: KType.corpsMoyen.copyWith(color: k.texte)),
+        Text(
+          estimateLabelText(e.volumeLabel),
+          style: KType.corpsMoyen.copyWith(color: k.texte),
+        ),
         if (e.hasTonnage)
           Padding(
             padding: const EdgeInsets.only(top: KSpacing.s4),
             child: Text(
-              '${e.tonnage.label} kg·rép. externes connus',
+              '${unitText(e.tonnage.label, 'kg')}·rép. externes connus',
               style: note,
             ),
           ),
@@ -210,7 +219,8 @@ class EstimateView extends StatelessWidget {
       Text(label, style: KType.detail.copyWith(color: k.texte2)),
     ],
   );
+  // C9 : secondes jusqu'à 90 s, minutes au-delà (formateur du kit).
   String _spanTime(Span s) => s.low.round() == s.high.round()
-      ? TrainingEstimate.formatSeconds(s.low)
-      : '${TrainingEstimate.formatSeconds(s.low)} – ${TrainingEstimate.formatSeconds(s.high)}';
+      ? formatSeconds(s.low)
+      : '${formatSeconds(s.low)} – ${formatSeconds(s.high)}';
 }

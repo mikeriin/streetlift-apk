@@ -86,11 +86,12 @@ const kAlertAdvice =
 
 const kPainAdvice =
     'Une douleur pendant un exercice n’est pas un signal à ignorer. Note-la '
-    'de 0 à 10 dans le bilan Koach : au-dessus de 3/10, aucune hausse de '
+    'de 0 à 10 dans le Bilan du jour : au-dessus de 3/10, aucune hausse de '
     'charge n’est proposée ; deux séances de suite, un allègement de 20 % '
-    'est proposé sur les mouvements principaux ; tu peux aussi échanger l’exercice (Options de '
-    'séance → Échanger un exercice). Kalis Track ne dit pas d’où vient une '
-    'douleur.';
+    'est proposé sur les mouvements principaux. Pendant la séance, touche le '
+    'menu ⋮ puis « Douleur ou malaise ? » : Koach peut remplacer l’exercice '
+    'par un équivalent qui ménage la zone. Kalis Track ne dit pas d’où vient '
+    'une douleur.';
 
 /// Seuil du renvoi vers un professionnel : douleur > 3/10 notée sur plus de
 /// 2 séances de suite pour un même mouvement.
@@ -158,9 +159,10 @@ const kSpecialSituations = <SpecialSituation>[
   SpecialSituation(
     'injury',
     'Reprise après une blessure ou une longue pause',
-    'Déclare ta gêne (zone et intensité) dans Réglages → Programme → Profil : '
-        'au-dessus de 3/10, le mode prudent s’applique. Reprends '
-        'progressivement ; si un professionnel te suit, suis son avis.',
+    'Déclare ta gêne (zone et intensité) depuis ton profil, rubrique Santé, '
+        'blessures et gênes : au-dessus de 3/10, le mode prudent s’applique. '
+        'Reprends progressivement ; si un professionnel te suit, suis son '
+        'avis.',
     'discomfort',
   ),
 ];

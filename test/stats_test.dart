@@ -173,7 +173,7 @@ void main() {
     expect(find.byType(SessionHistoryScreen), findsOneWidget);
     expect(find.text('Amplitude contrôlée'), findsOneWidget);
     // G9 correction 2 : séries en une ligne en relecture.
-    expect(find.text('12,5 kg × 7 reps'), findsOneWidget);
+    expect(find.text('12,5\u202Fkg × 7\u202Freps'), findsOneWidget);
     expect(find.byType(EditableText), findsNothing);
     expect(fingerprint(), before);
     expect(log.done, isTrue);

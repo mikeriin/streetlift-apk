@@ -973,8 +973,8 @@ extension ImportedProgramStore on AppStore {
         : est.$1.toString().replaceAll('.', ',');
     final from = est.$2 == 'profile' ? 'ton profil' : 'ton meilleur test noté';
     return 'Ta référence « ${referenceLabel(s.ref!)} » n’est pas renseignée : '
-        'j’ai pris $v d’après $from. Renseigne-la dans Références pour la '
-        'fixer.';
+        'j’ai pris $v d’après $from. Renseigne-la dans Mes références '
+        'pour la fixer.';
   }
 
   /// Rôle de l'emplacement d'une ligne (comme la portée simple).

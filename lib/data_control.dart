@@ -455,7 +455,7 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
               (final d?, _) => 'S1 · J1 le ${civilDateLabel(d)}',
             }),
             _Line(
-              'Références',
+              'Mes références',
               '${p.referencesSet} renseignées'
                   '${p.referencesHistoric == 0 ? '' : ' · ${p.referencesHistoric} à vérifier'}',
             ),

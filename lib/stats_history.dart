@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'kit/kit.dart';
+import 'nav_bar.dart';
 import 'session_history.dart';
 import 'store.dart';
 import 'stats_data.dart';
@@ -28,6 +29,8 @@ String statsMonth(DateTime d) {
 /// Historique (UI3, cahier §4.1) : recherche, puis les séances terminées
 /// groupées par mois (la plus récente en tête) ; une séance ouvre sa
 /// relecture (⋮ « Corriger les saisies », « Supprimer de l'historique »).
+/// Historique vide (UI5, R6) : « Ouvrir le programme » mène à l'onglet
+/// Programme, où se lance la première séance.
 class StatsHistory extends StatefulWidget {
   const StatsHistory({super.key});
   @override
@@ -80,13 +83,21 @@ class _StatsHistoryState extends State<StatsHistory> {
             ),
           ),
         ),
-        if (entries.isEmpty)
+        if (all.isEmpty)
           KEmpty(
+            key: const ValueKey('stats-history-empty'),
             icon: Icons.history_rounded,
-            title: all.isEmpty ? 'Ton histoire commence ici' : 'Aucun résultat',
-            message: all.isEmpty
-                ? 'Tes séances terminées apparaîtront ici, avec leurs notes.'
-                : 'Essaie un autre mot.',
+            title: 'Ton histoire commence ici',
+            message:
+                'Tes séances terminées apparaîtront ici, avec leurs notes.',
+            action: 'Ouvrir le programme',
+            onAction: () => openTab(context, AppTab.program),
+          )
+        else if (entries.isEmpty)
+          const KEmpty(
+            icon: Icons.history_rounded,
+            title: 'Aucun résultat',
+            message: 'Essaie un autre mot.',
           ),
         for (final g in groups.entries)
           KMenuGroup(

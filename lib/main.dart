@@ -17,7 +17,7 @@ import 'app_theme.dart';
 import 'kit/kit.dart';
 import 'motion.dart';
 import 'nav_bar.dart';
-export 'nav_bar.dart' show HeroNavBar;
+export 'nav_bar.dart' show AppTab, AppTabs, HeroNavBar, openTab;
 export 'app_theme.dart' show SL, buildTheme;
 
 import 'home_screen.dart';
@@ -300,6 +300,9 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
   }
 }
 
+/// Racine des quatre onglets ([AppTab] : Arsenal, Stats, Programme,
+/// Réglages), ouverte sur Programme. UI5 : se lie à [AppTabs] pour que
+/// [openTab] change d'onglet depuis n'importe quel écran.
 class RootNav extends StatefulWidget {
   final DateTime? referenceDate;
   const RootNav({super.key, this.referenceDate});
@@ -308,13 +311,14 @@ class RootNav extends StatefulWidget {
 }
 
 class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
-  int _tabIndex = 2;
-  final Set<int> _visited = {2};
+  int _tabIndex = AppTab.program.index;
+  final Set<int> _visited = {AppTab.program.index};
   final _statsKey = GlobalKey<StatsScreenState>();
   @override
   void initState() {
     super.initState();
     StatsNavigation.bind(this, _openStats);
+    AppTabs.bind(this, (tab) => _selectTab(tab.index));
     WidgetsBinding.instance.addObserver(this);
     store.themeMode.addListener(_onTheme);
     store.accentMode.addListener(_onTheme);
@@ -333,6 +337,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
   @override
   void dispose() {
     StatsNavigation.unbind(this);
+    AppTabs.unbind(this);
     WidgetsBinding.instance.removeObserver(this);
     store.themeMode.removeListener(_onTheme);
     store.accentMode.removeListener(_onTheme);
@@ -341,11 +346,21 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  /// Sélectionne l'onglet [index] (dock ou [openTab]).
+  void _selectTab(int index) {
+    if (!mounted) return;
+    FocusManager.instance.primaryFocus?.unfocus();
+    setState(() {
+      _tabIndex = index;
+      _visited.add(index);
+    });
+  }
+
   void _openStats(StatsSection section) {
     if (!mounted) return;
     setState(() {
-      _tabIndex = 1;
-      _visited.add(1);
+      _tabIndex = AppTab.stats.index;
+      _visited.add(AppTab.stats.index);
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _statsKey.currentState?.selectSection(section);
@@ -439,13 +454,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
           ? null
           : HeroNavBar(
               index: _tabIndex,
-              onTap: (i) {
-                FocusManager.instance.primaryFocus?.unfocus();
-                setState(() {
-                  _tabIndex = i;
-                  _visited.add(i);
-                });
-              },
+              onTap: _selectTab,
             ),
     );
   }

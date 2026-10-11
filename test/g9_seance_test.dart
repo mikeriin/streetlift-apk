@@ -790,13 +790,13 @@ void main() {
         ..done = true;
       expect(
         setDoneText(e('16.25', '8'), const LogSpec('reps')),
-        '16,25 kg × 8 reps',
+        '16,25\u202Fkg × 8\u202Freps',
       );
-      expect(setDoneText(e('', '1'), const LogSpec('reps')), '1 rep');
-      expect(setDoneText(e('', '30'), const LogSpec('hold')), '30 s');
+      expect(setDoneText(e('', '1'), const LogSpec('reps')), '1\u202Frep');
+      expect(setDoneText(e('', '30'), const LogSpec('hold')), '30\u202Fs');
       expect(
         setDoneText(e('', '12'), const LogSpec('duration', seconds: 720)),
-        '12 min',
+        '12\u202Fmin',
       );
       expect(setDoneText(e('0', ''), const LogSpec('reps')), '');
       expect(

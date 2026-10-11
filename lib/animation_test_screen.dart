@@ -80,7 +80,7 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
             stabilisateurs: muscles.stabilisateurs,
           );
     return KScaffold(
-      appBar: AppBar(title: const Text('ANIMATION DE TEST')),
+      appBar: const KTopBar.sub(title: 'Animation de test'),
       body: KPageList(
         key: const ValueKey('animation-test-list'),
         children: [
@@ -126,7 +126,7 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
                   height: 160,
                   child: Center(
                     child: Text(
-                      'Moteur 3D indisponible sur ce téléphone : '
+                      'La 3D n’est pas disponible sur ce téléphone : '
                       'l’animation ne peut pas s’afficher.',
                       textAlign: TextAlign.center,
                       style: tt.bodyMedium,

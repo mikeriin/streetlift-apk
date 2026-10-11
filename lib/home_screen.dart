@@ -28,6 +28,7 @@ import 'profile_completion.dart';
 import 'store.dart';
 import 'store_widget.dart';
 import 'kit/kit.dart';
+import 'kit/format.dart';
 import 'motion.dart';
 import 'kalis_clock.dart';
 
@@ -207,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
             detail: d.exercises.isEmpty
                 ? 'Récupération'
                 : '${d.exercises.length} exercices, '
-                      '${store.dayEstimate(d).durationLabel}',
+                      '${estimateLabelText(store.dayEstimate(d).durationLabel)}',
             state: _status(w, d),
             onTap: () {
               Navigator.pop(sheetContext);
@@ -850,7 +851,7 @@ class _TodayCard extends StatelessWidget {
         const SizedBox(height: KSpacing.s4),
         // Un chiffre ne se coupe jamais : sa taille baisse s'il le faut.
         KFitTitle(
-          estimate.durationLabel,
+          estimateLabelText(estimate.durationLabel),
           style: KType.chiffre.copyWith(color: ink),
         ),
         Text('Estimé, repos inclus', style: KType.detail.copyWith(color: ink)),
@@ -859,7 +860,7 @@ class _TodayCard extends StatelessWidget {
         Text(
           '${day.exercises.length} exercices, '
           '${estimate.sets.round()} séries, '
-          '${estimate.volumeLabel.replaceAll(' · ', ', ')}',
+          '${estimateLabelText(estimate.volumeLabel).replaceAll(' · ', ', ')}',
           style: KType.detail.copyWith(color: ink),
         ),
       ],
@@ -947,8 +948,10 @@ class _TodayCard extends StatelessWidget {
       label: 'Jour ${day.j} · ${day.title}. $statusLabel. Aujourd’hui',
       value: estimate == null
           ? 'Repos et récupération. GtG suspendu.'
-          : '${estimate.durationLabel}, ${day.exercises.length} exercices, '
-                '${estimate.sets.round()} séries, ${estimate.volumeLabel}',
+          : '${estimateLabelText(estimate.durationLabel)}, '
+                '${day.exercises.length} exercices, '
+                '${estimate.sets.round()} séries, '
+                '${estimateLabelText(estimate.volumeLabel)}',
       onTap: onOpen,
       onLongPress: onSummary,
       onTapHint: done

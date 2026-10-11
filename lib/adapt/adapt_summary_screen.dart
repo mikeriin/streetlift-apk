@@ -21,7 +21,7 @@ import 'health_check.dart' show KoachWhyHeader;
 String _goalText(SetGoal g) {
   final amount = adaptAmount(g.low, g.high, seconds: g.seconds);
   return [
-    if (g.kg != null && g.kg! > 0) adaptKg(g.kg!),
+    if (g.kg != null && g.kg! > 0) adaptKgLabel(g.kg!),
     if (amount.isNotEmpty) amount,
   ].join(' × ');
 }

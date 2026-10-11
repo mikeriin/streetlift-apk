@@ -1,5 +1,5 @@
-// M1 (mannequin 3D) : socle du moteur 3D et écran de diagnostic
-// « Moteur 3D » (Réglages › À propos › Moteur 3D).
+// M1 (mannequin 3D) : socle du moteur 3D et écran « Compatibilité 3D »
+// (ligne du même nom dans Aide et à propos ; titre en en-tête du kit, R3).
 //
 // Le moteur est flutter_scene (Flutter GPU sur Impeller), décision du
 // propriétaire du 27/09/2026. Cet écran indique si le téléphone est
@@ -265,7 +265,7 @@ class Engine3DScreenState extends State<Engine3DScreen> {
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
     return KScaffold(
-      appBar: AppBar(title: const Text('MOTEUR 3D')),
+      appBar: const KTopBar.sub(title: 'Compatibilité 3D'),
       body: KPageList(
         key: const ValueKey('engine3d-list'),
         children: [

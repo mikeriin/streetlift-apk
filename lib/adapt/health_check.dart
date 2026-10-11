@@ -34,6 +34,7 @@ import '../plan/coach_texts.dart'
 import '../plan/evolution_widgets.dart' show EvolutionSessionCard;
 import '../store.dart';
 import '../kit/kit.dart';
+import '../kit/format.dart';
 import '../wellbeing_screens.dart' show SafetyScreen;
 import 'adapt_texts.dart';
 import 'clearance.dart';
@@ -1135,7 +1136,7 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
               children: [
                 for (final m in _minuteChoices)
                   KChip(
-                    '$m min',
+                    unitText('$m', 'min'),
                     key: ValueKey('detail-minutes-$m'),
                     selected: _minutes == m,
                     onTap: () =>
@@ -1201,7 +1202,7 @@ Future<int?> showMinutesSheet(BuildContext context, int? current) async {
     items: [
       for (final m in choices)
         KListItem(
-          '$m min',
+          unitText('$m', 'min'),
           icon: Icons.schedule_rounded,
           state: current == m ? KListState.current : KListState.todo,
         ),

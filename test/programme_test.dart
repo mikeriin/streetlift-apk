@@ -207,7 +207,7 @@ void main() {
       expect(find.byType(SessionHistoryScreen), findsOneWidget);
       expect(find.byType(SessionScreen), findsNothing);
       // G9 correction 2 : séries en une ligne en relecture.
-      expect(find.text('12,5 kg × 7 reps'), findsOneWidget);
+      expect(find.text('12,5\u202Fkg × 7\u202Freps'), findsOneWidget);
       expect(find.byType(EditableText), findsNothing);
       expect(find.text('Note conservée'), findsOneWidget);
       expect(jsonEncode(log.toJson()), before);

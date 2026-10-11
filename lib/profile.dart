@@ -499,9 +499,9 @@ CautionStatus evaluateCaution(
 
 /// Test maximal repéré dans le programme (« TEST … », intensité maximale).
 bool isMaxTest(String name, String intensity) {
-  final n = name.trim().toUpperCase();
+  final n = name.trim().toLowerCase();
   final i = intensity.trim().toLowerCase();
-  return n.startsWith('TEST ') || i.startsWith('maximum') || i == 'max';
+  return n.startsWith('test ') || i.startsWith('maximum') || i == 'max';
 }
 
 /// Pourcentage appliqué à une charge exprimée en % du 1RM : plafonné à

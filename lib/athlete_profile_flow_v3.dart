@@ -460,8 +460,8 @@ extension _FlowV3 on AthleteProfileFlowState {
           title: Text(_exerciseName(list[i].targetExerciseId)),
           subtitle: Text(
             'Étape : ${_exerciseName(list[i].currentExerciseId)}'
-            '${list[i].bestHoldSeconds == null ? '' : ' · ${list[i].bestHoldSeconds} s'}'
-            '${list[i].bestReps == null ? '' : ' · ${list[i].bestReps} rép.'}'
+            '${list[i].bestHoldSeconds == null ? '' : ' · ${unitText('${list[i].bestHoldSeconds}', 's')}'}'
+            '${list[i].bestReps == null ? '' : ' · ${unitText('${list[i].bestReps}', 'rép.')}'}'
             '${tenureText(list[i].atStepSince)}',
           ),
           onTap: () => _editSkill(i),
@@ -1060,7 +1060,7 @@ extension _FlowV3 on AthleteProfileFlowState {
               contentPadding: EdgeInsets.zero,
               title: Text(itemOptionLabel(q, 'kind', sportList[i].kind.code)),
               subtitle: Text(
-                '${sportList[i].sessionsPerWeek} × ${sportList[i].minutesPerSession} min par semaine'
+                '${sportList[i].sessionsPerWeek} × ${unitText('${sportList[i].minutesPerSession}', 'min')} par semaine'
                 '${sportList[i].hard == true ? ' · intense' : ''}'
                 '${sportList[i].mainSport == true ? ' · sport principal' : ''}',
               ),
@@ -1141,28 +1141,34 @@ extension _FlowV3 on AthleteProfileFlowState {
   }
 }
 
-/// Texte d'un record (« 100 kg × 3 », « 12 rép. », « 45 s »…).
+/// Texte d'un record (« 100 kg × 3 », « 12 rép. », « 45 s »…) ; UI5 (C9) :
+/// espace fine insécable avant l'unité.
 String benchmarkText(Benchmark b, ProfileQuestion? q) {
   final parts = <String>[];
   switch (b.kind) {
     case BenchmarkKind.loadReps:
-      parts.add('${numText(b.externalLoadKg ?? 0)} kg × ${b.reps ?? 0}');
+      parts.add(
+        '${unitText(numText(b.externalLoadKg ?? 0), 'kg')} × ${b.reps ?? 0}',
+      );
       if (b.rir != null) {
         parts.add('${numText(b.rir!)} en réserve');
       }
     case BenchmarkKind.maxReps:
-      parts.add('${b.reps ?? 0} rép.');
+      parts.add(unitText('${b.reps ?? 0}', 'rép.'));
       if (b.seconds != null) parts.add('en ${durationText(b.seconds!)}');
     case BenchmarkKind.maxHold:
       parts.add(durationText(b.seconds ?? 0));
     case BenchmarkKind.timeTrial:
     case BenchmarkKind.distanceTrial:
       parts.add(
-        '${numText((b.distanceMeters ?? 0) / 1000)} km en '
+        '${unitText(numText((b.distanceMeters ?? 0) / 1000), 'km')} en '
         '${durationText(b.seconds ?? 0)}',
       );
     case BenchmarkKind.repsForTime:
-      parts.add('${b.reps ?? 0} rép. en ${durationText(b.seconds ?? 0)}');
+      parts.add(
+        '${unitText('${b.reps ?? 0}', 'rép.')} en '
+        '${durationText(b.seconds ?? 0)}',
+      );
   }
   if (b.source == BenchmarkSource.competition) parts.add('en compétition');
   if (b.source == BenchmarkSource.guidedTest) parts.add('test guidé');
@@ -2714,8 +2720,8 @@ class _EventSheetState extends State<_EventSheet> {
         _sheetChips<String>(
           keyPrefix: 'event-class',
           options: [
-            for (final c in classes) (numText(c), '${numText(c)} kg'),
-            ('open', 'Plus de ${numText(classes.last)} kg'),
+            for (final c in classes) (numText(c), unitText(numText(c), 'kg')),
+            ('open', 'Plus de ${unitText(numText(classes.last), 'kg')}'),
           ],
           selected: (c) => c == 'open'
               ? _openClass

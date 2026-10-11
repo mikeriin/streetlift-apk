@@ -99,14 +99,19 @@ void main() {
         expect(find.byTooltip('Colonnes'), findsNothing);
         // G9 correction 1 : séance relue, séries validées en une ligne
         // (charge, répétitions, vitesse et flammes).
-        expect(find.text('12,5 kg × 7 reps · 0,55 m/s'), findsOneWidget);
+        expect(
+          find.text('12,5\u202Fkg × 7\u202Freps · 0,55\u202Fm/s'),
+          findsOneWidget,
+        );
         expect(find.text('Note intacte'), findsOneWidget);
         expect(
           find.text('–'),
           findsWidgets,
         ); // les blancs ne sont pas préremplis
         // Toucher une valeur ou la coche ne peut pas changer la saisie.
-        await tester.tap(find.text('12,5 kg × 7 reps · 0,55 m/s'));
+        await tester.tap(
+          find.text('12,5\u202Fkg × 7\u202Freps · 0,55\u202Fm/s'),
+        );
         final check = find.byIcon(Icons.check);
         if (check.evaluate().isNotEmpty) await tester.tap(check.first);
         await swipePage(tester);
@@ -186,7 +191,7 @@ void main() {
     );
     await open(tester, log, sessionKey: store.sessionKey(week.n, day.j));
     // G9 correction 2 : série en une ligne, en secondes.
-    expect(find.text('32 s'), findsOneWidget);
+    expect(find.text('32\u202Fs'), findsOneWidget);
     expect(find.byTooltip('Compte à rebours'), findsNothing);
     expect(find.byIcon(Icons.hourglass_bottom), findsNothing);
     expect(find.textContaining('Lancer'), findsNothing);

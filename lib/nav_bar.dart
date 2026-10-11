@@ -2,6 +2,64 @@ import 'package:flutter/material.dart';
 
 import 'kit/dock.dart';
 
+/// Onglets de la racine, dans l'ordre du dock : [index] est la position de
+/// l'onglet (clé `nav-<index>` de son bouton). Ouverture sur [program].
+enum AppTab { arsenal, stats, program, settings }
+
+/// UI5 (refonte UI, R6) : changement d'onglet depuis n'importe quel écran,
+/// y compris une page empilée au-dessus des onglets (Records, relecture
+/// d'une séance) ou une feuille ouverte.
+///
+/// La racine (`RootNav`, `main.dart`) se lie au montage et se délie au
+/// démontage ; [open] ferme alors tout ce qui est empilé au-dessus de la
+/// racine (routes poussées, feuilles, dialogues du navigateur racine) puis
+/// sélectionne l'onglet, comme un appui sur le dock. Sans racine montée
+/// (écran testé seul), [open] ne fait rien et rend `false`.
+///
+/// ```dart
+/// KEmpty(
+///   …,
+///   action: 'Ouvrir le programme',
+///   onAction: () => openTab(context, AppTab.program),
+/// )
+/// ```
+class AppTabs {
+  AppTabs._();
+
+  static Object? _owner;
+  static ValueChanged<AppTab>? _select;
+
+  /// Une racine est montée : [open] changera d'onglet.
+  static bool get bound => _select != null;
+
+  /// Lie la racine [owner] : [select] sélectionne un onglet.
+  static void bind(Object owner, ValueChanged<AppTab> select) {
+    _owner = owner;
+    _select = select;
+  }
+
+  /// Délie [owner], s'il est encore la racine liée.
+  static void unbind(Object owner) {
+    if (!identical(owner, _owner)) return;
+    _owner = null;
+    _select = null;
+  }
+
+  /// Ramène à la racine (routes empilées fermées) et sélectionne [tab].
+  /// Rend `false` sans racine montée (rien n'est fermé).
+  static bool open(BuildContext context, AppTab tab) {
+    final select = _select;
+    if (select == null) return false;
+    final navigator = Navigator.of(context, rootNavigator: true);
+    navigator.popUntil((route) => route.isFirst);
+    select(tab);
+    return true;
+  }
+}
+
+/// Raccourci de [AppTabs.open] : ouvre l'onglet [tab] depuis [context].
+bool openTab(BuildContext context, AppTab tab) => AppTabs.open(context, tab);
+
 /// Dock flottant de l'application : quatre destinations stables (Arsenal,
 /// Stats, Programme, Réglages), ouverture sur Programme, libellé sur
 /// l'onglet actif seulement. UI0 (refonte UI, C8) : rendu par le dock du kit
@@ -13,6 +71,7 @@ class HeroNavBar extends StatelessWidget {
   /// défilement.
   static const double extent = KDock.reserve;
 
+  /// Une entrée par [AppTab], dans le même ordre.
   static const List<KDockItem> items = [
     KDockItem(Icons.grid_view_rounded, 'Arsenal'),
     KDockItem(Icons.insights_rounded, 'Stats'),

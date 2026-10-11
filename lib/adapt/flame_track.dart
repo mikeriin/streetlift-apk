@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:kalis_core/kalis_core.dart' show Flames;
 
 import '../kit/kit.dart';
+import '../kit/format.dart';
 import '../koach/flame_icon.dart';
 import '../store.dart' show LogSpec, SetEntry;
 
@@ -62,8 +63,10 @@ const kFlamesIntro =
     'visée est déjà placée : touche ou glisse pour corriger.';
 
 /// « 16,25 kg × 8 reps », « 30 s », « 12 reps » : ce qui a été fait.
-/// [units] faux (exercice d'archive inconnu du programme) : les valeurs
-/// saisies telles quelles, sans unité inventée (« 17 · 0.42 »).
+/// UI5 (C9) : espace fine insécable avant l'unité ; une tenue de plus de
+/// 90 s s'écrit en minutes (« 2 min 30 s »). [units] faux (exercice
+/// d'archive inconnu du programme) : les valeurs saisies telles quelles,
+/// sans unité inventée (« 17 · 0.42 »).
 String setDoneText(SetEntry s, LogSpec sp, {bool units = true}) {
   String dec(String v) => v.trim().replaceAll('.', ',');
   final kg = s.kg.trim();
@@ -75,17 +78,20 @@ String setDoneText(SetEntry s, LogSpec sp, {bool units = true}) {
     ].join(' · ');
   }
   final seconds = sp.kind == 'hold' || sp.kind == 'holdMax';
+  final held = seconds ? int.tryParse(reps) : null;
   final amount = reps.isEmpty
       ? ''
+      : held != null
+      ? formatSeconds(held)
       : seconds
-      ? '${dec(reps)} s'
+      ? unitText(dec(reps), 's')
       : sp.kind == 'duration'
-      ? '${dec(reps)} min'
+      ? unitText(dec(reps), 'min')
       : sp.kind == 'distance'
-      ? '${dec(reps)} m'
-      : '${dec(reps)} rep${reps == '1' ? '' : 's'}';
+      ? unitText(dec(reps), 'm')
+      : unitText(dec(reps), 'rep${reps == '1' ? '' : 's'}');
   final load = [
-    if (kg.isNotEmpty && kg != '0') '${dec(kg)} kg',
+    if (kg.isNotEmpty && kg != '0') unitText(dec(kg), 'kg'),
     if (amount.isNotEmpty) amount,
   ].join(' × ');
   final v = s.v.trim();
@@ -94,7 +100,7 @@ String setDoneText(SetEntry s, LogSpec sp, {bool units = true}) {
   final detail = parts == null || parts.length < 2
       ? load
       : '$load (${parts.map((p) => p.value).join('+')})';
-  return v.isEmpty ? detail : '$detail · ${dec(v)} m/s';
+  return v.isEmpty ? detail : '$detail · ${unitText(dec(v), 'm/s')}';
 }
 
 /// Ligne de notation sous une série validée.

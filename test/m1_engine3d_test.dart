@@ -164,7 +164,10 @@ void main() {
     expect(find.text('Compatibilité 3D'), findsOneWidget);
     await tester.tap(tile);
     await _settle(tester, find.text('Non compatible'));
-    expect(find.text('MOTEUR 3D'), findsOneWidget);
+    // R3 : le titre de la page reprend le libellé de la ligne, en capitales
+    // par le jeton U3 (`KTokens.title`, « é » → « É »).
+    expect(find.text('COMPATIBILITÉ 3D'), findsOneWidget);
+    expect(find.text('MOTEUR 3D'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 }

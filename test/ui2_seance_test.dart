@@ -252,7 +252,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('J’ai seulement… minutes'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('45 min'));
+    await tester.tap(find.text('45\u202Fmin'));
     await tester.pumpAndSettle();
     expect(find.byType(HealthCheckPage), findsNothing);
     await tester.tap(find.text('Exercices'));

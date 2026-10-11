@@ -29,6 +29,7 @@ import 'program_explainer.dart';
 import 'program_screens.dart' show ProgramScreen;
 import 'store.dart';
 import 'kit/kit.dart';
+import 'kit/format.dart';
 import 'wellbeing_screens.dart' show DisclaimerCard, MinorGate;
 
 part 'athlete_profile_flow_v3.dart';
@@ -2592,7 +2593,9 @@ CautionStatus draftCaution(ProfileDraft d, UserProfile? legacy, DateTime now) {
   );
 }
 
-/// Résumé d'une rubrique (récapitulatif, Réglages › Profil).
+/// Résumé d'une rubrique (récapitulatif, Réglages › Profil). UI5 (C9) :
+/// nombres séparés de leur unité par l'espace fine insécable (« 75 kg »
+/// jamais coupé en fin de ligne).
 String rubricSummary(
   String rubric,
   ProfileDraft d,
@@ -2604,9 +2607,9 @@ String rubricSummary(
         if (d.displayName.trim().isNotEmpty) d.displayName.trim(),
         if (d.sex != null) kSexLabels[d.sex]!,
         if (d.birthYearValue != null) 'né(e) en ${d.birthYearValue}',
-        if (d.heightValue != null) '${d.heightValue} cm',
+        if (d.heightValue != null) unitText('${d.heightValue}', 'cm'),
         if (d.weightValue != null && !d.weightValue!.isNaN)
-          '${numText(d.weightValue!)} kg',
+          unitText(numText(d.weightValue!), 'kg'),
       ].join(' · ');
     case 'discipline':
       if (d.street) {
@@ -2620,15 +2623,15 @@ String rubricSummary(
         if (m == null) return '—';
         return [
           for (final s in StreetStyle.values)
-            '${kStreetStyleLabels[s]} ${m.pctOf(s)} %',
+            '${kStreetStyleLabels[s]} ${unitText('${m.pctOf(s)}', '%')}',
         ].join(' · ');
       }
       final p = d.primary;
       if (p == null) return '—';
       return [
-        '${kDisciplineLabels[p]} ${d.primaryPct} %',
+        '${kDisciplineLabels[p]} ${unitText('${d.primaryPct}', '%')}',
         for (final e in d.secondaries.entries)
-          '${kDisciplineLabels[e.key]} ${e.value} %',
+          '${kDisciplineLabels[e.key]} ${unitText('${e.value}', '%')}',
       ].join(' · ');
     case 'experience':
       final q = store.content.questionnaire;
@@ -2651,7 +2654,8 @@ String rubricSummary(
           '${name(b.exerciseId)} : ${benchmarkText(b, q?.question('benchmarks'))}',
         for (final m in d.movements)
           if (d.levels[m.key] case final int i)
-            '${m.label} : ${i < 0 ? 'je ne sais pas' : m.bands[i].label}',
+            '${m.label} : '
+                '${i < 0 ? 'je ne sais pas' : unitSpacesText(m.bands[i].label)}',
         for (final sk in d.skills ?? const <SkillState>[])
           '${name(sk.targetExerciseId)} : ${name(sk.currentExerciseId)}',
         if (d.recentTraining case final r? when r.isNotEmpty)
@@ -2698,7 +2702,7 @@ String rubricSummary(
       if (days.isEmpty) return '—';
       return [
         for (final x in days)
-          '${weekdayTitle(x)} ${d.days[x]} min'
+          '${weekdayTitle(x)} ${unitText('${d.days[x]}', 'min')}'
               '${d.dayPlace[x] == null ? '' : ' (${kPlaceNames[d.dayPlace[x]]!.toLowerCase()})'}',
       ].join(' · ');
     case 'places':

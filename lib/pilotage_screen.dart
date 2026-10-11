@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'store.dart';
 import 'kit/kit.dart';
+import 'kit/format.dart';
 
 class PilotageScreen extends StatelessWidget {
   const PilotageScreen({super.key});
@@ -74,7 +75,7 @@ class PilotageScreen extends StatelessWidget {
                   label: l.name,
                   refCell: l.ref,
                   unit: l.unit,
-                  subtitle: 'Cible 12 mois : ${_n(l.target)} ${l.unit}',
+                  subtitle: 'Cible 12 mois : ${unitText(_n(l.target), l.unit)}',
                 ),
             ],
           ),
@@ -88,7 +89,7 @@ class PilotageScreen extends StatelessWidget {
                   refCell: m.ref,
                   unit: 'reps',
                   subtitle:
-                      'Cible 12 mois : ${_n(m.target)} reps · ajuste les '
+                      'Cible 12 mois : ${unitText(_n(m.target), 'reps')} · ajuste les '
                       'jours 4 à 6',
                 ),
             ],

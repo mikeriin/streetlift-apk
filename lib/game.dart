@@ -269,9 +269,9 @@ class CharacterSheet {
     }
     final forceScore = force.isEmpty ? 0 : _mean(force);
     final forceNote = !hasBw
-        ? 'Indisponible : renseigne ton poids du corps et au moins une charge de référence (Références).'
+        ? 'Indisponible : renseigne ton poids du corps et au moins une charge de référence (Mes références).'
         : force.isEmpty
-        ? 'Indisponible : aucune charge de référence renseignée (Références).'
+        ? 'Indisponible : aucune charge de référence renseignée (Mes références).'
         : force.length < 4
         ? 'Calcul partiel : ${force.length} référence${force.length > 1 ? 's' : ''} de force sur 4.'
         : null;
@@ -313,7 +313,7 @@ class CharacterSheet {
     ]);
     reps('B20', [(0, 0), (5, 10), (15, 40), (25, 65), (40, 90), (50, 100)]);
     final enduranceNote = endurance.isEmpty
-        ? 'Maxima en répétitions non renseignés (Références) : endurance indisponible.'
+        ? 'Maxima en répétitions non renseignés (Mes références) : endurance indisponible.'
         : endurance.length < 5
         ? 'Calcul partiel : ${endurance.length} maximum${endurance.length > 1 ? 's' : ''} sur 5.'
         : null;
@@ -361,7 +361,7 @@ class CharacterSheet {
         'force',
         'Force',
         forceScore,
-        'Lest relatif au poids de corps sur tractions, dips, muscle-up et squat (références Pilotage).',
+        'Lest relatif au poids de corps sur tractions, dips, muscle-up et squat (Mes références).',
         available: force.isNotEmpty,
         note: forceNote,
       ),
@@ -369,7 +369,7 @@ class CharacterSheet {
         'endurance',
         'Endurance',
         enduranceScore,
-        'Maxima de répétitions au poids de corps (références Pilotage).',
+        'Maxima de répétitions au poids de corps (Mes références).',
         note: enduranceNote,
       ),
       GameAttribute(
@@ -633,9 +633,9 @@ const _bossNames = [
 ];
 const _bossTitles = ['Testé au feu', 'Maître des 1RM', 'Diesel', 'Finisseur'];
 
-bool isTestDay(DayPlan d) => d.title.trim().toUpperCase().startsWith('TEST');
+bool isTestDay(DayPlan d) => d.title.trim().toLowerCase().startsWith('test');
 bool isDeloadWeek(WeekPlan w) =>
-    w.days.any((d) => d.cycle.toUpperCase().contains('DELOAD'));
+    w.days.any((d) => d.cycle.toLowerCase().contains('deload'));
 
 List<Boss> computeBosses(
   Program program,

@@ -13,6 +13,7 @@
 // continue de décider du mode prudent.
 import 'package:kalis_core/kalis_core.dart';
 
+import 'kit/format.dart';
 import 'profile.dart';
 import 'profile_v3.dart';
 
@@ -854,13 +855,16 @@ String goalMetricLabel(GoalMetric m) => switch (m) {
   GoalMetric.distanceMeters => 'Distance en un temps donné',
 };
 
-/// Durée lisible : « 25 min 30 s », « 45 s », « 1 h 05 ».
+/// Durée lisible : « 25 min 30 s », « 45 s », « 1 h 05 » ; UI5 (C9) :
+/// espace fine insécable avant l'unité.
 String durationText(num seconds) {
   final s = seconds.round();
-  if (s < 60) return '$s s';
+  if (s < 60) return unitText('$s', 's');
   final h = s ~/ 3600, m = (s % 3600) ~/ 60, r = s % 60;
-  if (h > 0) return '$h h ${_two(m)}';
-  return r == 0 ? '$m min' : '$m min ${_two(r)} s';
+  if (h > 0) return '${unitText('$h', 'h')} ${_two(m)}';
+  return r == 0
+      ? unitText('$m', 'min')
+      : '${unitText('$m', 'min')} ${unitText(_two(r), 's')}';
 }
 
 String _num(num v) {
@@ -903,10 +907,10 @@ String goalText(Goal g, String Function(String id) name) {
   final ex = g.exerciseId == null ? '' : name(g.exerciseId!);
   final v = g.targetValue;
   final what = switch (g.metric) {
-    GoalMetric.oneRmKg => '${_num(v ?? 0)} kg sur 1 répétition',
+    GoalMetric.oneRmKg => '${unitText(_num(v ?? 0), 'kg')} sur 1 répétition',
     GoalMetric.maxReps =>
       '${_num(v ?? 0)} répétition${(v ?? 0) > 1 ? 's' : ''} d’affilée'
-          '${g.loadKg != null && g.loadKg! > 0 ? ' à ${_num(g.loadKg!)} kg' : ''}',
+          '${g.loadKg != null && g.loadKg! > 0 ? ' à ${unitText(_num(g.loadKg!), 'kg')}' : ''}',
     GoalMetric.maxHoldSeconds => 'tenir ${durationText(v ?? 0)}',
     GoalMetric.skillUnlocked => 'réussir la figure',
     GoalMetric.timeSeconds =>
@@ -921,8 +925,9 @@ String goalText(Goal g, String Function(String id) name) {
   return '$ex : $what$date';
 }
 
-String _distance(num meters) =>
-    meters >= 1000 ? '${_num(meters / 1000)} km' : '${_num(meters)} m';
+String _distance(num meters) => meters >= 1000
+    ? unitText(_num(meters / 1000), 'km')
+    : unitText(_num(meters), 'm');
 
 /// Grandeurs possibles d'un objectif de performance pour un exercice.
 List<GoalMetric> metricsFor(CatalogExercise e) {

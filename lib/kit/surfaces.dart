@@ -239,6 +239,9 @@ class KEmpty extends StatelessWidget {
   final IconData icon;
   final String title, message;
   final String? action;
+
+  /// Clé du bouton d'action (tests).
+  final Key? actionKey;
   final VoidCallback? onAction;
   const KEmpty({
     super.key,
@@ -246,6 +249,7 @@ class KEmpty extends StatelessWidget {
     required this.title,
     required this.message,
     this.action,
+    this.actionKey,
     this.onAction,
   });
 
@@ -270,7 +274,7 @@ class KEmpty extends StatelessWidget {
           Text(message, style: KType.corps.copyWith(color: k.texte2)),
           if (action != null) ...[
             const SizedBox(height: KSpacing.s16),
-            KTonalButton(label: action!, onPressed: onAction),
+            KTonalButton(key: actionKey, label: action!, onPressed: onAction),
           ],
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'game_widgets.dart';
 import 'kit/kit.dart';
+import 'nav_bar.dart';
 import 'progression.dart';
 import 'store.dart';
 import 'stats_navigation.dart';
@@ -14,7 +15,9 @@ String statsPlural(int n, String one, String many) =>
 /// Aperçu (UI3, cahier §4.1) : le résumé. Ses cartes et ses lignes ouvrent
 /// l'onglet concerné, jamais une feuille déjà joignable ailleurs (les
 /// feuilles de jeu vivent dans Parcours) ; l'objectif de la semaine se règle
-/// sur place (raccourci R2, mêmes segments que Réglages).
+/// sur place (raccourci R2, mêmes segments que Réglages). Quête principale
+/// sans séance du programme (UI5, R6) : « Ouvrir le programme » mène à
+/// l'onglet Programme.
 class StatsOverview extends StatelessWidget {
   final ValueChanged<StatsSection> onSection;
   const StatsOverview({super.key, required this.onSection});
@@ -39,6 +42,14 @@ class StatsOverview extends StatelessWidget {
           'Quêtes : ta prochaine journée et les défis de la semaine (bonus XP)',
         ),
         const MainQuestCard(),
+        if (store.game.programWeek == 0)
+          KTonalButton(
+            key: const ValueKey('stats-quest-open-program'),
+            icon: Icons.fitness_center_rounded,
+            label: 'Ouvrir le programme',
+            expand: true,
+            onPressed: () => openTab(context, AppTab.program),
+          ),
         StatsMissionCard(
           next,
           overline:

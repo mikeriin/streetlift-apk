@@ -213,8 +213,7 @@ class RetiredNoticeScreen extends StatelessWidget {
                   Text(
                     'Faite le ${_date(notice.at)} (${_size(notice.bytes)}), '
                     'avant toute suppression. Elle est gardée dans '
-                    'l’application et reste accessible depuis les Réglages, '
-                    'rubrique « Données et confidentialité ». Elle contient '
+                    'l’application, avec tes sauvegardes. Elle contient '
                     'toutes tes données d’avant la mise à jour et s’importe '
                     'dans la version précédente.',
                     style: body,
