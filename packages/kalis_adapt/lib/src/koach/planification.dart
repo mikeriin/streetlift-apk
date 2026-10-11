@@ -1767,7 +1767,7 @@ class Planification extends Extension implements AvecItemsDuJour {
       echeanceJour = echeanceDe(eps0, w, 7 * w);
     }
     replanifier(koach, ent(e['semaine'] ?? 0) + 1);
-    if (eps0 != null) {
+    if (blocs != null) {
       _noter(w);
     }
   }

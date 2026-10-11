@@ -48,7 +48,8 @@ Textes des raisons : `package:kalis_adapt/koach_textes.dart` (§ 4), testé par 
   - `package:kalis_adapt/koach.dart` : `Koach`, `rejouer`, `Planification`, `Surveillance`, `ControleDual`,
     `Adherence`, `importerParametres`, `lireParametresKoach`, `lireFichesKoach`, `koachVersion`,
     `koachParametresSha256`, `koachFichesSha256`, `Grille`, `Json` ;
-  - `package:kalis_adapt/validateur.dart` : `validateurSecurite`, `ProfilValidation` ;
+  - `package:kalis_adapt/validateur.dart` : `constatsDesBlocs` (validateur à lecture tardive, § 1.2),
+    `validateurSecurite`, `ProfilValidation` ;
   - `package:kalis_adapt/koach_textes.dart` : `texteRaisonKoach`, `texteRaisonDual`, `texteQuestionKoach`,
     `texteChoixKoach`.
 - `package:kalis_adapt/kalis_adapt.dart` (0.3.1 : `KalisAdapt`, `applyProposal`, `unlockLevelFor`) ne doit plus
@@ -64,9 +65,13 @@ final params = lireParametresKoach(await rootBundle.loadString('assets/koach/koa
 final fiches = lireFichesKoach(await rootBundle.loadString('assets/koach/vecteurs_qualites_v1.json'));
 final koach = Koach(params, fiches, profilKoach);           // profilKoach : § 2.6, figé (instantané)
 final validation = ProfilValidation.depuisProfil(athleteProfile, debut: lundiS1);
+late final Planification planification;
+planification = Planification(params, fiches, (blocs) => constatsDesBlocs(blocs,
+    catalog: catalog, profil: validation,
+    // Lecture tardive : l'horizon et les débuts de bloc sont ceux du dernier `reference`.
+    horizonSemaines: planification.horizon, blockWeeks: planification.blockWeeks));
 koach.extensions
-  ..add(Planification(params, fiches, validateurSecurite(
-      catalog: catalog, profil: validation, horizonSemaines: horizon, blockWeeks: blockWeeks)))
+  ..add(planification)
   ..add(Surveillance(params))
   ..add(ControleDual(params, liftsPrincipaux))
   ..add(Adherence(params));
@@ -94,11 +99,15 @@ constats `{code, message, week, dayIndex, exerciseId, value, limit}`), copie fid
 - `catalog` : le `Catalog` de la base v1.1 déjà chargé (`content.catalog`) ;
 - `profil` : `ProfilValidation.depuisProfil(profil, debut: lundiS1)` (`profil.dart`) : niveau, âge, taille, poids,
   records connus, gênes du profil, échéance `main` la plus proche, semaines de pause ;
-- `horizonSemaines` et `blockWeeks` : **les mêmes** que l'événement `reference` (§ 2.6).
+- `horizonSemaines` et `blockWeeks` : **lus au moment de l'appel** dans la planification (`planification.horizon`,
+  `planification.blockWeeks`, posés par le dernier `reference`), comme dans l'exemple du § 1.2 : un validateur
+  construit une fois avec des valeurs figées ne verrait pas les semaines d'un nouveau bloc (sous-détection, relecture
+  indépendante de KM2, M3).
 
 Le validateur n'est pas dans le journal : pour un rejeu exact, il doit être reconstruit avec les mêmes entrées.
-KM3 garde donc, à côté du journal, l'instantané de ces entrées (profil de validation sérialisé, `lundiS1`,
-horizon, `blockWeeks`) pris au moment de chaque `reference` (§ 8, point 4).
+Comme l'horizon et les débuts de bloc viennent du journal (lecture tardive), seul le profil de validation reste hors
+journal : KM3 garde à côté du journal l'instantané du `ProfilValidation` (et de `lundiS1`) utilisé, et le
+reprend tel quel au rejeu (§ 8, point 4).
 
 ### 1.4 Appels
 
@@ -134,12 +143,16 @@ Règles d'appel :
 
 - Mesures de la référence Python (`reference/donnees/criteres_moteur.json`, saison de 16 semaines, 1 000
   trajectoires, validateur) : `observe(serie)` 1,0 ms médiane, `plan(serie)` 0,15 ms, `plan(seance)` 0,7 ms,
-  replanification 0,40 s médiane (0,54 s max). Les temps Dart sont ceux de `LIVRAISON_KM2.md` ; KM3 les mesure sur
+  replanification 0,40 s médiane (0,54 s max). Sur la VM Dart de la CI (KM2, après chauffe JIT, `kalis_bench` `docs/CRITERES_KM2.md`) : replanification
+  0,21 s au plus, `observe(serie)` + `plan(serie)` suivant 21,5 ms au plus (p95 ≈ 1,3 ms) ; KM3 les mesure sur
   émulateur (cahier : replanification ≤ 10 s, série ≤ 50 ms).
 - Une replanification part de trois événements : `reference` (`Planification.surReference`), chaque `semaine_fin`
   (`Planification.finSemaine`, semaine suivante) et `plan` à l'horizon `semaine` avec `replanifier`. `observe`
-  est synchrone : ces trois événements se versent hors du fil d'interface (`Isolate.run` sur une copie, ou travail
-  différé avec un indicateur « Koach prépare ta semaine »). Les autres événements se versent sur le fil principal.
+  est synchrone : ces trois événements se versent hors du fil d'interface (`Isolate.run` sur une copie reconstruite par
+  `rejouer`, aucun autre événement versé pendant le calcul, puis l'instance rendue remplace l'instance vive ; ou
+  travail différé avec un indicateur « Koach prépare ta semaine »). Si `observe` ou `plan` lève une exception,
+  l'événement est retiré du journal (`moteur.dart`) mais l'état de l'instance peut être partiel : reconstruire
+  l'instance par `rejouer`. Les autres événements se versent sur le fil principal.
 - Un rejeu complet refait toutes les replanifications du journal (une par semaine écoulée). Sur 40 semaines, il
   faut compter plusieurs dizaines de secondes : garder l'instance vivante pendant la vie de l'application et ne
   rejouer qu'au démarrage à froid (en arrière-plan, séance servie seulement une fois l'état prêt), à la
@@ -178,7 +191,9 @@ Les événements sont versés dans l'ordre chronologique des jours ; `seance_deb
       `calibre(koach, lifts)` est vrai et qu'aucun essai ne tourne, `decision {jour: 7·(g + 1), essai: {semaine:
       g + 1, cible: {exerciseId}, traites, temoins, contexte, graine, n_bras}}` (cible : le lift principal de plus
       petite demi-largeur ; témoins : au plus 6 exercices présents dans les 8 dernières semaines de
-      `ControleDual.pre` ; `graine` = `planification.graine` du fichier). En pratique le modèle n'est presque
+      `ControleDual.pre` ; `graine` = `planification.graine` du fichier ; `contexte` =
+      `ControleDual.contexteEssai(koach, g + 1, joursEcheance)`, **obligatoire** : un contexte vide laisserait
+      démarrer un essai en affûtage, sous douleur ou près de l'échéance). En pratique le modèle n'est presque
       jamais calibré (M5, § 8) : l'appel coûte peu.
 2. `poids {poids_kg}` quand une pesée nouvelle existe (ou `seance_debut.poids_kg`, § 2.3).
 3. `seance_debut {jour, bilan, poids_kg, contexte}` (§ 2.4).
@@ -267,7 +282,7 @@ K.3) : `Planification.surReference` le lit, recharge la référence et replanifi
 | `horizon` | `importedLastWeek` (40) | `plan.totalWeeks` |
 | `cibles` | buts des mouvements principaux en charge **totale** : `target` des `mainLifts` (kg externe) + `fraction` de la fiche × poids du corps ; `max_reps` des `repMax` ; objectifs changés par l'utilisateur (`koach.objectives`) d'abord | `_pkCiblesDuProfil` : `goals` du profil (`one_rm_kg` → + fraction × poids ; `max_reps`, `max_hold_seconds` tels quels) |
 | `echeance_jour` | `jour` du jour de test de la dernière semaine (S40, 18/04/2027 au plus tard) | jour de l'événement `main` le plus proche (`_pkEcheanceDe`) |
-| `echeances_par_semaine` | facultatif : liste par semaine globale des jours d'épreuve connus (vide sauf S40) ; relue chaque lundi | jours des événements par semaine (`eventDaysByWeek` au banc) |
+| `echeances_par_semaine` | facultatif : à l'indice `g`, **tous** les jours d'épreuve connus à la semaine `g` (pas ceux qui tombent dans `g`) ; chaque lundi `w`, l'échéance devient le plus petit de ces jours ≥ 7·w. Pour le programme importé : `[jourS40]` à chaque indice 0 à 39, ou champ omis (l'échéance reste `echeance_jour`). Une liste vide à un indice coupe l'échéance (planification « sans échéance ») | à chaque indice, les jours de tous les événements connus du profil à cette semaine (`eventDaysByWeek` au banc) |
 | `principaux` | exercices des emplacements `main` des blocs (`_pkPrincipauxDe`) | idem |
 | `poids_corps` | poids du profil (ou dernière pesée) | idem |
 | `cibles_tentatives` | `{exerciseId: charge externe visée}` des buts 1RM (posée en `koachCible` sur les items de test) | `_pkCiblesTentatives` |
@@ -277,6 +292,10 @@ Verser un nouveau `reference` complet à chaque changement de référence : nouv
 programme recréé, « Revenir à mon programme d'origine » (C11.2). `reference` remet le plan à zéro (`plan = {}`) et
 replanifie. Quand seuls les buts changent : `cibles {semaine, cibles, cibles_tentatives}` (`surCibles`, pas de
 replanification immédiate ; la suivante a lieu au lundi).
+
+Items de `plan(seance)` : ceux des blocs du dernier `reference` (même `slotId`, même `dayIndex`) :
+`Planification.appliquer` remplace les séries d'un item par celles de la référence modulée dès que
+`(jour_index, slotId)` y figure (d'après le code).
 
 Identifiants : `exerciseId` partout est celui de la base v1.1 (clé des fiches). Les cibles et `principaux` sans
 fiche sont ignorés par la planification (`chargerReference`, d'après le code).
@@ -374,9 +393,13 @@ Un seul comportement pour tous : Koach propose, l'utilisateur valide d'un tap. P
 
 - L'écran montre, pour chaque série, la cible de `plan(serie)` (charge, plage, flammes) et **une ligne** de raison
   (`texteRaisonKoach` sur la première raison utile de `explain()`, sinon rien).
-- **Suggestion** = changement de charge de la première série d'un exercice chargé par rapport à la séance
-  précédente : la cible porte alors `proposition {type: charge_plus | charge_moins, depart, cible, paliers, moment,
-  proba_min}` (`Koach._proposition`, `moteur.dart`, d'après le code). La charge servie (`loadKg`) reste la cible
+- **Suggestion** = changement de charge de la première série de travail d'un emplacement (même exercice, même
+  `slotId` ; ni test, ni rampe, ni repère, ni tentative) par rapport à son dernier passage : la cible porte alors
+  `proposition {type: charge_plus | charge_moins, depart, cible, pas, ampleur, paliers, moment, proba_min}`
+  (`Koach._proposition`, `moteur.dart`, d'après le code). **Aucune baisse imposée par la sécurité** (douleur active,
+  bilan bas, raison `koach.douleur_*`, `koach.reprise_*`, `koach.poignet_*`, `koach.zone_fragile`,
+  `koach.retour_gradue`, `koach.surmenage` sur l'exercice) n'est présentée comme une suggestion : elle n'a pas de
+  `proposition` et ne se refuse pas (la série est servie à la charge baissée). La charge servie (`loadKg`) reste la cible
   (anti-complaisance, cahier § 8) ; `proposition` règle la présentation : `paliers` (étapes jusqu'à la cible, la
   dernière = la cible) et `moment` (`debut_de_seance` : avant la première série ; `entre_series` : après
   l'échauffement ou la première série ; `prochaine_seance` : annoncé au récapitulatif de fin de séance).

@@ -425,6 +425,21 @@ void main() {
         _pareil(kmEcarts(attendu['journaux'], obtenu['journaux']), 'journaux');
       });
 
+      test('rejeu du journal : même état, extensions et façade comprises', () {
+        final rejoue = PolitiqueKoach.etatComplet(politique.rejouerJournal());
+        final vivant = PolitiqueKoach.etatComplet(politique.koach);
+        _pareil(
+          kmEcarts(
+            _pur(vivant),
+            _pur(rejoue),
+            tolerance: 0,
+            typesStricts: true,
+            typesSouples: const <String>{},
+          ),
+          'rejeu du journal',
+        );
+      });
+
       test('états des extensions', () {
         _pareil(kmEcarts(attendu['etats'], obtenu['etats']), 'etats');
       });

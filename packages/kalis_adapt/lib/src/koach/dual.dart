@@ -1312,6 +1312,38 @@ class ControleDual extends Extension
   /// Journal des modulations servies (banc et mode dev).
   final List<Json> journal = [];
 
+  /// Contribution de chaque (jour, emplacement) au cumul [semaineVol].
+  final Map<(int, String), (num, num, num)> _contribVol = {};
+
+  /// Contexte d'une proposition d'essai N-of-1 (événement `decision`,
+  /// charge utile `essai`) tel que le banc le calcule
+  /// (`ControleDualBanc._contexte`) : semaines avant la prochaine échéance
+  /// connue, affûtage, alerte hors modèle, douleur active. À verser tel
+  /// quel par l'appelant (un contexte vide laisserait démarrer un essai en
+  /// affûtage, sous douleur ou près de l'échéance).
+  Json contexteEssai(Koach koach, int semaine, List<int> joursEcheance) {
+    final jour = 7 * semaine;
+    int? ech;
+    for (final j in [...joursEcheance]..sort()) {
+      if (j >= jour) {
+        ech = ((j - jour) / 7.0).ceil();
+        break;
+      }
+    }
+    var alerte = false;
+    for (final Object x in koach.extensions) {
+      if (x is Surveillance && x.etat()['hors_modele'] == true) {
+        alerte = true;
+      }
+    }
+    return <String, Object?>{
+      'semaines_avant_echeance': ech,
+      'affutage': genre == 'taper',
+      'alerte': alerte,
+      'douleur': koach.garde.actives().isNotEmpty,
+    };
+  }
+
   /// Bras A (volume) : séries ajoutées à l'exercice traité, le produit
   /// (facteur de la planification × facteur du bras) borné par le plafond
   /// de volume par rapport à la RÉFÉRENCE ([ContexteSeance.ecrit]), cumulé
@@ -1330,6 +1362,7 @@ class ControleDual extends Extension
     final ex = mod['exerciseId'];
     if (semaineVol == null || semaineVol![0] != semaine) {
       semaineVol = <num>[semaine, 0, 0, 0];
+      _contribVol.clear();
     }
     final sv = semaineVol!;
     final plafondV = dbl(
@@ -1338,9 +1371,7 @@ class ControleDual extends Extension
     final reference = <String, int>{};
     for (final it in ctx.ecrit) {
       if (it['exerciseId'] == ex && (it['kind'] ?? 'work') == 'work') {
-        reference[it['slotId'] as String] = vrai(it['sets'])
-            ? ent(it['sets'])
-            : 0;
+        reference['${it['slotId']}'] = vrai(it['sets']) ? ent(it['sets']) : 0;
       }
     }
     final out = <Json>[];
@@ -1352,7 +1383,18 @@ class ControleDual extends Extension
         continue;
       }
       final n = ent(it0['sets']);
-      final ref = sv[1] + (reference[it0['slotId']] ?? n);
+      // Séance prescrite une seconde fois le même jour (redémarrage) : sa
+      // première contribution au cumul de la semaine est retirée d'abord
+      // (le plafond reste celui d'une seule prescription).
+      final cleVol = (ctx.jour, '${it0['slotId']}');
+      final avant = _contribVol[cleVol];
+      if (avant != null) {
+        sv[1] -= avant.$1;
+        sv[2] -= avant.$2;
+        sv[3] -= avant.$3;
+      }
+      final refSlot = reference['${it0['slotId']}'] ?? n;
+      final ref = sv[1] + refSlot;
       final planifiees = sv[2] + n;
       final servies = sv[3] + n;
       double borne;
@@ -1377,6 +1419,7 @@ class ControleDual extends Extension
       sv[1] = ref;
       sv[2] = planifiees;
       sv[3] = servies + plus;
+      _contribVol[cleVol] = (refSlot, n, n + plus);
       journal.add(<String, Object?>{
         'type': 'volume',
         'jour': ctx.jour,

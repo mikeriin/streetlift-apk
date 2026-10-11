@@ -61,7 +61,8 @@ contrôlent. Un import ultérieur passe par `importerParametres` (événement `p
 **K.6 Garanties.** Dart pur (aucun `dart:io`, aucune horloge, hasard mulberry32 seedé). Même journal = même
 état (rejeu exact, extensions et planification comprises). Règles de sécurité de 0.3.1 en contraintes dures
 (référence § 8 ; 0 violation sur le banc, `kalis_bench` `bin/km2.dart`, critère 7). Temps (VM Dart de la CI,
-après chauffe JIT) : livraison `LIVRAISON_KM2.md`.
+après chauffe JIT) : replanification 0,21 s au plus, mise à jour après une série 21,5 ms au plus
+(`kalis_bench` `docs/CRITERES_KM2.md` ; livraison `pipeline/cp/livraisons/LIVRAISON_KM2.md`).
 
 **K.7 Limites.** Celles de la référence (§ 10, annexe A), sauf M6 et M7 (traitées par K.3). Restent notamment :
 structure du programme jamais modifiée, contrôle dual rarement calibré (M5), « résidu d'e1RM » du secours qui

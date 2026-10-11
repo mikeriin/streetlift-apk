@@ -23,3 +23,7 @@ Base : `moteurs` 17df8ca. Session Opus 5.5 (tâche moteurs), lancée le 10/10/20
 - Adversaires KM1 rejoués : Koach sans extension pire 0,798913 (= KM1), Koach complet 0,747 ; témoin 0,0. Recherche 300 : pire Koach 0,7699 ; recherche 3000 et Koach complet 600 en cours (ci-cp-b).
 - Campagne graines 0-5 (4320 saisons) : 4 parts calculées (runs sur ci-cp-a/b), copies dans /tmp/claude-0/km2/parts ; assemblage en cours.
 - Reste : critère 5 sur g0-5, docs (LIVRAISON_KM2, données de campagne dans le dépôt), contrôle complet, push moteurs, étiquettes kalis_adapt-v1.0.0 et kalis_bench-v0.4.0, ETAT/page/notification.
+
+## 11/10 01:41 UTC
+- Relecture indépendante traitée ; dev vert (run 38102393460). Commit final squashé : branche locale km2-final (df28b47c) ; contrôle complet poussé sur ci-cp-a (c14c7ddb) — attendre le run, puis push moteurs (avance rapide depuis 17df8ca), étiquettes, pipeline (LIVRAISON_KM2 dans /tmp/claude-0/km2/LIVRAISON_KM2.md, copié dans cette sauvegarde : LIVRAISON_KM2.md).
+- Campagnes : critères g0-5 et g0-1 et adversaires dans packages/kalis_bench/docs/data/km2.

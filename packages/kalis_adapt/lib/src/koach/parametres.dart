@@ -7,10 +7,12 @@ part of 'koach.dart';
 // `reference/qualites/vecteurs_qualites_v1.json` (contrat § 2.5, § 7).
 //
 // Ce module ne lit aucun fichier : il décode et contrôle un texte JSON.
-// L'application lit l'asset avec `rootBundle.loadString(koachAssetParametres)`
-// (clé `packages/kalis_adapt/…` d'un asset déclaré par le paquet) ; les
-// tests et les outils le lisent avec `dart:io` depuis la racine du paquet
-// (`koachFichierParametres`).
+// L'application copie les deux fichiers dans ses propres assets et vérifie
+// leur SHA-256 (`koachParametresSha256`, `koachFichesSha256`) :
+// docs/INTEGRATION_KM3.md, § 3 (le paquet ne déclare pas d'assets Flutter :
+// `koachAssetParametres` et `koachAssetFiches` ne sont que les clés
+// qu'auraient ces assets s'il les déclarait). Les tests et les outils les
+// lisent avec `dart:io` depuis la racine du paquet (`koachFichierParametres`).
 
 /// Version du moteur porté (`koach.VERSION` de la référence Python).
 const String koachVersion = '1.0.1-ref.1';

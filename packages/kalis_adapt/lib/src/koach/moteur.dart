@@ -113,6 +113,17 @@ class Koach {
   /// Verse un événement du journal (§ 2.1).
   void observe(Json e) {
     journal.add(e);
+    try {
+      _observe(e);
+    } catch (_) {
+      // Un événement qui échoue n'entre pas au journal : le journal reste
+      // rejouable (l'appelant reconstruit le moteur par `rejouer`, KM2).
+      journal.removeLast();
+      rethrow;
+    }
+  }
+
+  void _observe(Json e) {
     final typ = e['type'];
     final m = modele;
     if (typ == 'seance_debut') {
@@ -262,7 +273,12 @@ class Koach {
   Object? plan(Json c) {
     final cc = canonique(c);
     journal.add(<String, Object?>{'type': 'plan', 'contraintes': cc});
-    return _plan(cc);
+    try {
+      return _plan(cc);
+    } catch (_) {
+      journal.removeLast();
+      rethrow;
+    }
   }
 
   /// Forme journalisable (JSON) des contraintes.
@@ -410,10 +426,20 @@ class Koach {
     if (cible == null || index != 0 || cible['loadKg'] == null) {
       return cible;
     }
+    // Seules les séries de travail entrent dans la mémoire (comme le banc :
+    // ni test, ni rampe, ni repère, ni échauffement, ni tentative).
+    final kind = item['kind'] ?? 'work';
+    if (kind != 'work' ||
+        cible['role'] != null ||
+        vrai(cible['repere']) ||
+        item['koach'] == 'vrai_test') {
+      return cible;
+    }
     final exId = item['exerciseId'] as String;
+    final cle = '$exId|${item['slotId']}';
     final charge = dbl(cible['loadKg']);
-    final avant = _derniereCharge[exId];
-    _derniereCharge[exId] = charge;
+    final avant = _derniereCharge[cle];
+    _derniereCharge[cle] = charge;
     if (avant == null || (charge - avant).abs() < 1e-9) {
       return cible;
     }
@@ -423,14 +449,23 @@ class Koach {
         ad = x;
       }
     }
-    if (ad == null || item['kind'] == 'test') {
+    if (ad == null) {
+      return cible;
+    }
+    // Une baisse imposée par la sécurité (douleur, reprise, poignet, bilan
+    // bas, zone fragile) n'est jamais une suggestion refusable (cahier,
+    // Contraintes : la sécurité n'est jamais assouplie).
+    if (charge < avant &&
+        (garde.actives().isNotEmpty ||
+            seances.palier > 0 ||
+            _raisonSecurite(raisons, exId))) {
       return cible;
     }
     final g = grillesSeance[exId];
     final pas = (g != null && g.pas > 0) ? g.pas : 2.5;
     final typ = charge > avant ? 'charge_plus' : 'charge_moins';
     final forme = ad.forme(charge, avant, pas, typ, <String, Object?>{
-      'bilan_bas': false,
+      'bilan_bas': seances.palier > 0,
       'semaine_allegement': contexteSeance.genre == 'deload',
       'refus_recents': ad.refusRecents(jour),
     });
@@ -439,10 +474,37 @@ class Koach {
       'type': typ,
       'depart': avant,
       'cible': charge,
+      'pas': pas,
+      'ampleur': (charge - avant).abs() / pas,
       ...forme,
     };
     return out;
   }
+
+  static bool _raisonSecurite(List<Json> rs, String exId) {
+    for (final r in rs) {
+      final code = r['code'];
+      final ex = dictOuVide(r['params'])['exercice'];
+      if (ex != null && ex != exId) {
+        continue;
+      }
+      if (code is String &&
+          (code.startsWith('koach.douleur') ||
+              code.startsWith('koach.reprise') ||
+              code.startsWith('koach.poignet') ||
+              code == 'koach.zone_fragile' ||
+              code == 'koach.retour_gradue' ||
+              code == 'koach.surmenage')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// Charge de la dernière série de travail servie (première série) d'un
+  /// emplacement, mémoire de la forme d'adhérence (lecture, tests de rejeu).
+  Map<String, double> get dernieresCharges =>
+      Map<String, double>.of(_derniereCharge);
 
   /// Les raisons des dernières décisions (§ 3.5).
   List<Json> explain() => List<Json>.of(raisons);

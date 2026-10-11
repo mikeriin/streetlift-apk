@@ -266,7 +266,6 @@ String texteChoixKoach(String question, Object? choix) {
 String _texteKoach(String code, Map<String, Object?> p, NomExercice? noms) {
   final nom = _nomExercice(p['exercice'], noms);
   final ex = nom == null ? 'cet exercice' : '« $nom »';
-  final exMaj = nom == null ? 'Cet exercice' : '« $nom »';
   final cause = p['cause'];
   final zone = _zone(p['zone']);
   final part = _nombre(p['part']);
@@ -332,16 +331,16 @@ String _texteKoach(String code, Map<String, Object?> p, NomExercice? noms) {
           'faisable ici pour la remplacer.';
     case 'koach.course_bornee':
       if (part == null) {
-        return '$exMaj est raccourci : pas beaucoup plus long que ta plus '
+        return 'Je raccourcis $ex : pas beaucoup plus long que ta plus '
             'longue sortie récente.';
       }
-      return '$exMaj est raccourci : pas plus de $part % au-dessus de ta '
+      return 'Je raccourcis $ex : pas plus de $part % au-dessus de ta '
           'plus longue sortie récente.';
     case 'koach.wod_echelle':
       final echelle = part == null
           ? 'allégé'
           : 'à $part % de ce qui était prévu';
-      return '$exMaj est mis à l’échelle, $echelle '
+      return 'Je mets $ex à l’échelle, $echelle '
           '(${_causeEndurance(cause)}).';
     case 'koach.fatigue_croisee':
       return 'Un peu plus de marge sur $ex : ta course d’hier était dure.';
@@ -376,7 +375,7 @@ String _texteKoach(String code, Map<String, Object?> p, NomExercice? noms) {
       final duree = minutes == null
           ? 'le temps dont tu disposes'
           : '$minutes min';
-      return '$exMaj est raccourci ou retiré pour que ta séance tienne en '
+      return 'Je raccourcis ou retire $ex pour que ta séance tienne en '
           '$duree.';
   }
   return texteRaisonKoachGenerique;
@@ -460,18 +459,18 @@ String _texteRetourGradue(Map<String, Object?> p, String ex) {
     borne = limite == null ? '' : ' (au plus $limite séries cette semaine)';
   }
   if (series == 0) {
-    return 'Je retire $ex cette semaine : $qui ont déjà le volume que la '
-        'reprise permet$borne.';
+    return 'Je retire $ex cette semaine : pour $qui, le volume que la '
+        'reprise permet est déjà atteint$borne.';
   }
   if (secondes != null) {
-    return 'Tenue raccourcie à $secondes s sur $ex : $qui remontent en '
-        'volume progressivement$borne.';
+    return 'Tenue raccourcie à $secondes s sur $ex : pour $qui, le volume '
+        'remonte progressivement$borne.';
   }
   var combien = 'Moins de séries';
   if (series != null) {
     combien = series == 1 ? 'Une série' : '$series séries';
   }
-  return '$combien sur $ex : $qui remontent en volume '
+  return '$combien sur $ex : pour $qui, le volume remonte '
       'progressivement$borne.';
 }
 
@@ -554,11 +553,12 @@ String _texteAction(String action, Map<String, Object?> d) {
         morceaux.add('$minutes min au plus par séance');
       }
       if (morceaux.isEmpty) {
-        return 'Noté : tu as moins de temps. J’ajuste tes séances à ce '
-            'temps.';
+        return 'Noté : tu as moins de temps. Je tiens compte de la durée '
+            'disponible de chaque séance.';
       }
-      return 'Noté : ${morceaux.join(', ')}. J’ajuste tes séances à ce '
-          'temps.';
+      return 'Noté : ${morceaux.join(', ')}. Je tiens compte de la durée '
+          'disponible de chaque séance ; le nombre de séances de ton '
+          'programme ne change pas pour l’instant.';
     case 'semaine_allegee':
       final pourcent = _pourcent(d['series']);
       final rir = _nombre(d['rir']);

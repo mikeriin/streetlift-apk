@@ -20,6 +20,7 @@
 /// Dart pur : aucun accès disque (paramètres et fiches sont passés décodés).
 library;
 
+import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
@@ -1319,4 +1320,76 @@ final class PolitiqueKoach implements KmPolitique {
 
   /// Saison en cours.
   Json get saison => _saison;
+
+  /// Rejeu du journal du moteur (après un aller-retour JSON) avec les
+  /// seules classes du moteur, montées comme la politique les monte
+  /// (KM2 : `rejouer_etats` de la référence, étendu à la planification et
+  /// à l'état propre à la façade).
+  kc.Koach rejouerJournal() {
+    final journal = <kc.Json>[
+      for (final e in jsonDecode(jsonEncode(koach.journal)) as List<Object?>)
+        e! as kc.Json,
+    ];
+    final fabriques = <kc.Extension Function()>[];
+    for (final Object x in koach.extensions) {
+      if (x is kc.Planification) {
+        fabriques.add(
+          () => kc.Planification(
+            parametres,
+            koach.fiches,
+            _validateur(_saison),
+            <String, Object?>{'trajectoires': trajectoires},
+          ),
+        );
+      } else if (x is kc.Surveillance) {
+        fabriques.add(() => kc.Surveillance(parametres));
+      } else if (x is kc.ControleDual) {
+        final lifts = List<String>.of(x.lifts);
+        fabriques.add(() => kc.ControleDual(parametres, lifts));
+      } else if (x is kc.Adherence) {
+        fabriques.add(() => kc.Adherence(parametres));
+      }
+    }
+    return kc.rejouer(
+      parametres,
+      koach.fiches,
+      koach.profil,
+      journal,
+      fabriques,
+    );
+  }
+
+  /// État d'un moteur, extensions et façade comprises (comparaison du
+  /// rejeu).
+  static Map<String, Object?> etatComplet(kc.Koach k) {
+    final out = <String, Object?>{
+      'posterior': k.posterior(),
+      'raisons': k.explain(),
+      'cibles_tentatives': k.ciblesTentatives,
+      'dernieres_charges': k.dernieresCharges,
+      'journal': k.journal.length,
+    };
+    for (final Object x in k.extensions) {
+      if (x is kc.Surveillance) {
+        out['Surveillance'] = x.etatComplet();
+      } else if (x is kc.ControleDual) {
+        out['ControleDual'] = x.etat();
+        // Entrées de la façade seulement (le banc y ajoute les siennes :
+        // semaines, propositions d'essai).
+        out['ControleDual.journal'] = <kc.Json>[
+          for (final j in x.journal)
+            if (j['type'] == 'volume' || j['type'] == 'intensite') j,
+        ];
+        out['ControleDual.semaineVol'] = x.semaineVol;
+      } else if (x is kc.Adherence) {
+        out['Adherence'] = x.etat();
+      } else if (x is kc.Planification) {
+        out['Planification'] = x.etat();
+        out['Planification.previsions'] = x.previsions;
+        out['Planification.cibles'] = x.cibles;
+        out['Planification.echeance'] = x.echeanceJour;
+      }
+    }
+    return out;
+  }
 }
