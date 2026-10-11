@@ -52,12 +52,12 @@ Downloading packages...
 Changed 48 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 15 files (0 changed) in 0.60 seconds.
+Formatted 15 files (0 changed) in 0.65 seconds.
 Analyzing kalis_koach...
 No issues found!
 00:00 +0: loading test/art_test.dart
 00:00 +0: test/art_test.dart: catalogue des poses 36 poses, identifiants uniques et alignés sur les dessins
-00:00 +1: test/properties_test.dart: 10 000 demandes aléatoires seedées
+00:00 +1: test/art_test.dart: catalogue des poses 12 poses par planche, cases distinctes
 00:00 +2: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +3: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +4: test/properties_test.dart: 10 000 demandes aléatoires seedées
