@@ -1751,8 +1751,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                                 : KType.chiffre.copyWith(color: t.encre),
                           ),
                           // Grand texte : la cible passe sous la charge.
-                          if (target case (final rir, final level)
-                              when largeText)
+                          if (target case (
+                            final rir,
+                            final level,
+                          ) when largeText)
                             _TargetBadge(
                               key: ValueKey('target-${ex.id}'),
                               rir: rir,
@@ -1782,8 +1784,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         ],
                       ),
                     ),
-                    if (target case (final rir, final level)
-                        when !largeText)
+                    if (target case (final rir, final level) when !largeText)
                       Padding(
                         padding: const EdgeInsetsDirectional.only(
                           start: KSpacing.s8,
