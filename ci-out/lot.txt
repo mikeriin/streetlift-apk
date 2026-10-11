@@ -1,0 +1,1 @@
+lot=UI5 rapide=true

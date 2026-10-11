@@ -1,0 +1,54 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: nombres virgule décimale, entier sans décimale
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: nombres nombre et unité : espace fine insécable
+00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: nombres charge arrondie au pas d’affichage
+00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: durées secondes jusqu’à 90 s, minutes au-delà
+00:00 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: durées plages
+00:00 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: durées « ≥ n min » devient « au moins n min »
+00:00 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: durées libellés de l’estimation au format C9
+00:00 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: durées durée lisible du profil
+00:00 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: textes virgule et espace fine dans un texte du journal
+00:00 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: textes série résumée : unités, tenue longue en minutes
+00:00 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: saisie de la charge (U0.19) virgule ou point, vide ou illisible : null
+00:00 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: saisie de la charge (U0.19) champ : virgule montrée, point enregistré, même valeur
+00:00 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: écrans (setUpAll)
+00:00 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: écrans estimation : « au moins », minutes, espace fine
+00:00 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_format_test.dart: écrans champ de charge : « 62,5 » à l’écran, « 62.5 » au journal
+00:01 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart: programme de 40 semaines, journal et réglages de 6.11.1 installation par-dessus : démarrage, palette Bordeaux, réglages, programme, journal et export identiques
+00:01 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart: programme de 40 semaines, journal et réglages de 6.11.1 fichier de sauvegarde 6.11.1 : aperçu, import puis export identiques
+00:01 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart: programme de 40 semaines, journal et réglages de 6.11.1 anciens identifiants de couleur : relus, jamais refusés
+00:02 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: en-tête de sous-page (C3, U0.16 point 1) titres entiers à 320.0 dp et 100.0 %
+00:02 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart: programme personnel (kalis_plan) de 6.11.1 : semaines, séances, journal et couleur « vert » relus
+00:02 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart: programme personnel (kalis_plan) de 6.11.1 : semaines, séances, journal et couleur « vert » relus
+00:03 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart: programme personnel (kalis_plan) de 6.11.1 : semaines, séances, journal et couleur « vert » relus
+00:03 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart: programme personnel (kalis_plan) de 6.11.1 : semaines, séances, journal et couleur « vert » relus
+00:03 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: en-tête de sous-page (C3, U0.16 point 1) titres entiers à 320.0 dp et 200.0 %
+00:03 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: en-tête de sous-page (C3, U0.16 point 1) titres entiers à 390.0 dp et 200.0 %
+00:03 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: en-tête de sous-page (C3, U0.16 point 1) retour nommé et clé ; retour masqué sur demande
+00:03 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: lignes de réglage (U0.16 points 2 à 4) interrupteur sous le libellé à 320 dp × 200 %
+00:03 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: lignes de réglage (U0.16 points 2 à 4) interrupteur à côté du libellé quand il tient
+00:03 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: lignes de réglage (U0.16 points 2 à 4) pas à pas sous le libellé sous 420 dp, avec ses clés
+00:03 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: segments : 48 dp touchables par segment (C13) objectif de la semaine à 320.0 dp
+00:03 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: segments : 48 dp touchables par segment (C13) objectif de la semaine à 360.0 dp
+00:03 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: segments : 48 dp touchables par segment (C13) objectif de la semaine à 390.0 dp
+00:03 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: segments : 48 dp touchables par segment (C13) grand texte : choix l’un sous l’autre, rien de coupé
+00:03 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: feuilles et confirmation confirmation : message long qui défile, boutons visibles, clés par bouton
+00:03 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: feuilles et confirmation feuille de contenu : titre, contenu, « Fermer »
+00:03 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: feuilles et confirmation feuille de liste ouverte sur l’élément courant
+00:04 +35: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: divers bouton-icône désactivé : sans fond
+00:04 +36: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: divers étiquette des champs dans la pilule (bord non « outline »)
+00:04 +37: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: divers dock translucide : icônes et libellé lisibles (U0.12)
+00:04 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_kit_test.dart: (tearDownAll)
+00:04 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: (setUpAll)
+00:04 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: openTab mêmes onglets, même ordre que le dock
+00:04 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: openTab ouvre Programme depuis Stats (racine)
+00:05 +40: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: openTab ouvre Programme depuis Stats (racine)
+00:05 +41: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: openTab ouvre Programme depuis une page empilée et la ferme
+00:05 +42: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: openTab sans racine montée : rien ne change
+00:06 +43: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: états vides de Stats : « Ouvrir le programme » Historique vide
+00:06 +44: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: états vides de Stats : « Ouvrir le programme » Records vides (page empilée)
+00:06 +45: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: états vides de Stats : « Ouvrir le programme » Quête principale sans séance du programme
+00:06 +46: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: historique d’une séance à 320 × 640 dp, texte 200 %, sans débordement (thème sombre)
+00:07 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: historique d’une séance à 320 × 640 dp, texte 200 %, sans débordement (thème clair)
+00:07 +48: /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_navigation_test.dart: (tearDownAll)
+00:07 +48: All tests passed!
