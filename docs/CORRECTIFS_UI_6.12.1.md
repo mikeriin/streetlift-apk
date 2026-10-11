@@ -35,3 +35,8 @@ Réglages › Apparence : « Couleurs » (Sobres = dérivation de 6.12.0, Normal
 ## 6.16.0 — barre des flammes
 
 La partie parcourue de la ligne des flammes est un dégradé des couleurs des points (chaque position a la couleur de son point, fixe pendant le déplacement, révélée jusqu'à la flamme), sans transparence ; un halo de la couleur de la flamme (fondu radial) relie la barre à la flamme. Dessin de la flamme inchangé.
+
+## 6.17.0 — flou progressif et hauteurs stables
+
+- Flou progressif (`KProgressiveBlur`, `KFloatingBottom`, `lib/kit/blur.dart`) sous le dock et la barre de repos : bande de 32 dp au-dessus du bloc, flou par 6 paliers jusqu'à σ 10 avec un voile du fond (0 → 60 %, 70 % en bas), sans prise d'appui ; voile seul quand les animations sont réduites.
+- Bandeau des blocs : place du bouton d'annulation gardée et hauteur de la ligne des blocs gardée quand tous sont notés (plus de saut de hauteur) ; marge basse de la page d'exercice portée à 56 dp pour sortir de la bande floutée.

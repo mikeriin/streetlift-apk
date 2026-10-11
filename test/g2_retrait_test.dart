@@ -463,10 +463,10 @@ void main() {
   });
 
   test(
-    'version affichée : « 6.16.0 » hors build de développement (barre des flammes)',
+    'version affichée : « 6.17.0 » hors build de développement (flou progressif)',
     () {
-      expect(kVersion, '6.16.0');
-      expect(kAppVersion, '6.16.0');
+      expect(kVersion, '6.17.0');
+      expect(kAppVersion, '6.17.0');
     },
   );
 }

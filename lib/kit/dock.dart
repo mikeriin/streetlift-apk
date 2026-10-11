@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'blur.dart';
 import 'tokens.dart';
 
 /// Un onglet du dock.
@@ -61,7 +62,9 @@ class KDock extends StatelessWidget {
     final k = KTokens.of(context);
     final motion = KMotion.fast;
     final duration = motion.durationIn(context);
-    return SafeArea(
+    // 6.17.0 : flou progressif du contenu qui passe sous le dock.
+    return KFloatingBottom(
+      child: SafeArea(
       top: false,
       child: SizedBox(
         height: height,
@@ -102,6 +105,7 @@ class KDock extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }
