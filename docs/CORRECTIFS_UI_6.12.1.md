@@ -40,3 +40,7 @@ La partie parcourue de la ligne des flammes est un dégradé des couleurs des po
 
 - Flou progressif (`KProgressiveBlur`, `KFloatingBottom`, `lib/kit/blur.dart`) sous le dock et la barre de repos : bande de 32 dp au-dessus du bloc, flou par 6 paliers jusqu'à σ 10 avec un voile du fond (0 → 60 %, 70 % en bas), sans prise d'appui ; voile seul quand les animations sont réduites.
 - Bandeau des blocs : place du bouton d'annulation gardée et hauteur de la ligne des blocs gardée quand tous sont notés (plus de saut de hauteur) ; marge basse de la page d'exercice portée à 56 dp pour sortir de la bande floutée.
+
+## 6.17.1 — ligne des flammes en union lisse (SDF)
+
+Halo retiré. Ligne, points et base de la flamme dessinés comme une seule forme (`FlameTrackPainter`, `lib/adapt/flame_track.dart`) : union lisse (smooth min polynomial, rayon 5) des distances signées d'une capsule (ligne parcourue 1,5 dp, restante 1 dp), des points (3,5 dp, qui s'effacent sous la flamme) et d'un cercle de 5 dp sous la flamme ; contour obtenu par dichotomie sur la demi-hauteur à chaque demi-pixel. Couleur de chaque point jusqu'à la flamme, `texte3` après ; la position animée de la flamme pilote la forme et la flamme.
