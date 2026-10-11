@@ -1,0 +1,1 @@
+lot=CX4 rapide=true

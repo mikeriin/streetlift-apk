@@ -1,0 +1,49 @@
+diff --git a/lib/kit/menus.dart b/lib/kit/menus.dart
+index 037ef33..d96e197 100644
+--- a/lib/kit/menus.dart
++++ b/lib/kit/menus.dart
+@@ -155,7 +155,9 @@ class _KRowFrameState extends State<KRowFrame> {
+         onTap: widget.onTap,
+         onLongPress: widget.onLongPress,
+         child: ConstrainedBox(
+-          constraints: BoxConstraints(minHeight: KDensity.row(widget.minHeight)),
++          constraints: BoxConstraints(
++            minHeight: KDensity.row(widget.minHeight),
++          ),
+           child: Padding(
+             padding: KDensity.pad(widget.padding),
+             child: widget.child,
+diff --git a/lib/settings_search.dart b/lib/settings_search.dart
+index 6eebdb8..70acd5c 100644
+--- a/lib/settings_search.dart
++++ b/lib/settings_search.dart
+@@ -169,10 +169,11 @@ final List<SettingsSearchEntry> settingsSearchIndex = [
+     words: ['couleur', 'intensite', 'vif', 'flashy', 'sobre', 'fade'],
+     path: _appearance,
+     page: SettingsPage.appearance,
+-    value: () => const ['Sobres', 'Normales', 'Vives'][store
+-        .settings
+-        .colorIntensity
+-        .clamp(0, 2)],
++    value: () => const [
++      'Sobres',
++      'Normales',
++      'Vives',
++    ][store.settings.colorIntensity.clamp(0, 2)],
+   ),
+   SettingsSearchEntry.setting(
+     id: 'spacing',
+diff --git a/lib/store.dart b/lib/store.dart
+index ac868bc..c1e4414 100644
+--- a/lib/store.dart
++++ b/lib/store.dart
+@@ -492,7 +492,8 @@ class AppSettings {
+       contrast = j['contrast'] == true,
+       koachGuided = j['koachGuided'] == true,
+       displaySize = normalizeDisplaySize(j['displaySize']),
+-      colorIntensity = j['colorIntensity'] is int &&
++      colorIntensity =
++          j['colorIntensity'] is int &&
+               (j['colorIntensity'] as int) >= 0 &&
+               (j['colorIntensity'] as int) <= 2
+           ? j['colorIntensity'] as int
