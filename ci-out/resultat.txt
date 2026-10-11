@@ -4,4 +4,4 @@ checks=success
 packages=success
 before=success
 tour=success
-emulator=cancelled
+emulator=success
