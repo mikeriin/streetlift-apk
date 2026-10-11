@@ -111,6 +111,14 @@ SCENARIOS = [
                        '(course raccourcie ou retirée)',
      'cle': 'autres_06_semi_marathon_intermediaire', 'scenario': 'reference',
      'verite': 'a', 'graine': 0, 'semaines': 4, 'bilan_bas': [2, 5, 8, 11]},
+    # 1.0.2 (KM1 correction 2) : jour d'épreuve cinq jours après le retour
+    # d'une coupure de 12 jours — reprise par paliers, tentatives (palier
+    # des barres selon la note), semaine de test.
+    {'n': 11, 'titre': 'Force athlétique : coupure de 12 jours avant l\'échéance, reprise par paliers, '
+                       'tentatives du jour J',
+     'cle': 'autres_03_powerlifter_competition', 'scenario': 'reference',
+     'verite': 'b', 'graine': 0, 'semaines': 10,
+     'spec': {'missRate': 0.0, 'breakFromDay': 49, 'breakDays': 12}},
 ]
 
 PLANIFICATIONS = [

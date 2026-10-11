@@ -508,6 +508,29 @@ class Planification(Extension):
                 # cibles : elles réussissent ou échouent ensemble) et de
                 # l'exercice ; gain moyen de l'affûtage mesuré sur le banc.
                 frais = mu_fin - tirage['kg'] * fe[:, None, None] + pl['gain_affutage']
+                # 1.0.2 (C13.12, critère 5) : la dispersion des trajectoires
+                # autour de leur moyenne est ramenée à celle mesurée sur le
+                # banc (`dispersion_echeance` : écart-type de ln(maximum du
+                # jour J) − prévision, effet de jour retiré, rapporté à
+                # l'écart-type des trajectoires ; l'a posteriori du filtre et
+                # le bruit de processus prévoyaient une dispersion trop
+                # large : P(réussite) trop haute pour les cibles hors de
+                # portée, trop basse pour les cibles à portée).
+                # Mesuré pour les cibles chargées seulement, et après
+                # quelques semaines de journal : au départ (semaine 0) la
+                # dispersion de l'a priori est à peu près juste (0,89) ;
+                # l'échelle descend donc de 1 à `dispersion_echeance` sur les
+                # `dispersion_echeance_semaines` premières semaines de
+                # journal. Cibles en répétitions ou en tenue : inchangées
+                # (mesure non concluante).
+                part = tirage['semaines'] / float(pl['dispersion_echeance_semaines'])
+                if part > 1.0:
+                    part = 1.0
+                kd = 1.0 - (1.0 - pl['dispersion_echeance']) * part
+                for e, ex in enumerate(self.suivis):
+                    if ex in self.cibles and self.fiches[ex]['type'] == 'charge':
+                        centre = frais[:, e, :].mean(axis=1)
+                        frais[:, e, :] = centre[:, None] + kd * (frais[:, e, :] - centre[:, None])
                 self._prevu_jour = (frais[0].mean(axis=1), frais[0].std(axis=1))
                 jour = frais + j['sigma_seance'] * tirage['bruit_seance'][None, None, :] \
                     + j['sigma_exercice'] * tirage['bruit_jour'].T[None, :, :]

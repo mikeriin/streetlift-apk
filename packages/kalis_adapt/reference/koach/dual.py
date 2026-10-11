@@ -802,7 +802,7 @@ class ControleDual(Extension):
         suivi = {}
         pre = {}
         for ex in ids:
-            c = m.capacite(ex)
+            c = m.capacite(ex, brut=True)
             if c is None:
                 continue
             mu_post = float(ligne['mu'][ex])
@@ -842,7 +842,7 @@ class ControleDual(Extension):
     def fin_seance(self, koach, resume, e):
         m = koach.modele
         for ex in self._suivables(koach):
-            c = m.capacite(ex)
+            c = m.capacite(ex, brut=True)
             if c is not None:
                 self.cap_seance[ex] = [float(c[0]), float(c[1]) * float(c[1])]
         if self.essai is not None and e.get('douleurs'):

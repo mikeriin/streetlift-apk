@@ -11,7 +11,7 @@ import 'package:test/test.dart';
 const double tolerance = 1e-9;
 
 Json lireFixture(String nom) =>
-    jsonDecode(File('reference/fixtures/$nom').readAsStringSync()) as Json;
+    jsonDecode(File('reference/fix_dart/$nom').readAsStringSync()) as Json;
 
 /// Valeur JSON pure (comme `propre` de la référence).
 Object? propre(Object? x) {

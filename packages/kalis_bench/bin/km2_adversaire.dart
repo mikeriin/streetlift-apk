@@ -57,7 +57,7 @@ import 'package:kalis_plan/kalis_plan.dart';
 import 'common.dart';
 
 const String _reference = '../kalis_adapt/reference';
-const String _parametresDefaut = '$_reference/params/koach_params_v1.json';
+const String _parametresDefaut = '$_reference/params/koach_params_d1.json';
 const String _fichesDefaut = '$_reference/qualites/vecteurs_qualites_v1.json';
 const String _comparaisonKm1 =
     '$_reference/donnees/comparaison_adversaires.json';

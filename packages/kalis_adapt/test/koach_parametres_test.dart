@@ -12,7 +12,7 @@ import 'package:test/test.dart';
 
 import 'koach_parite_test.dart' show comparer, diagnosticDe, lireFixture;
 
-const String _referenceParametres = 'reference/params/koach_params_v1.json';
+const String _referenceParametres = 'reference/params/koach_params_d1.json';
 const String _referenceFiches = 'reference/qualites/vecteurs_qualites_v1.json';
 
 List<int> _octets(String chemin) => File(chemin).readAsBytesSync();

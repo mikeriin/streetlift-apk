@@ -565,9 +565,9 @@ def test_schema_change_au_meme_emplacement():
 
 
 # ----------------------------------------------------------------------
-# Retour de coupure : ni test ni hausse
+# Retour de coupure : ni test ni mesure, reprise par paliers mesurés (1.0.2)
 # ----------------------------------------------------------------------
-def test_retour_de_coupure_ni_test_ni_hausse():
+def test_retour_de_coupure_ni_test_ni_mesure_paliers():
     k = koach(niveau=2)
     s = k.seances
     ex = 'mu-back-squat-barre-basse'
@@ -591,6 +591,9 @@ def test_retour_de_coupure_ni_test_ni_hausse():
     assert all(i.get('kind') != 'test' for i in out)
     plan = s.plans['s1']
     assert not s._mesure_utile(out[-1], plan, t)
+    assert plan.get('reprise') and not plan['sans_hausse']
+    # Sans série versée au journal, aucune série ne dépasse la première, qui
+    # ne dépasse pas la dernière séance du même schéma.
     for i in range(out[-1]['sets']):
         c = s.cible(out[-1], i, [])
         assert c['loadKg'] <= 100.0 and not c.get('repere')
@@ -889,8 +892,8 @@ def test_duree_bornee_course_bornee_un_jour_d_epreuve():
 
 def test_pas_de_tentative_maximale_au_retour_de_coupure():
     """Relecture finale N1 : la semaine du retour après une coupure, un test
-    1RM écrit (hors jour d'épreuve) est reporté ; un jour d'épreuve, l'ouverture
-    ne dépasse pas le dernier passage."""
+    1RM écrit (hors jour d'épreuve) est reporté ; un jour d'épreuve, il est
+    servi."""
     ex = 'mu-back-squat-barre-basse'
 
     def servir(evenement):
@@ -915,4 +918,235 @@ def test_pas_de_tentative_maximale_au_retour_de_coupure():
                              for r in s.raisons)
     s, out = servir(True)
     assert len(out) == 1
-    assert s.cible(out[0], 0, [])['loadKg'] <= 100.0
+    # 1.0.2 : le jour d'épreuve, l'ouverture suit l'estimation sans dépasser le
+    # palier que les barres des 42 jours autorisent (ici 140 kg × 1, non
+    # notée : aucun palier de plus) ; elle n'est plus ancrée sur le dernier
+    # passage (100 kg).
+    assert s.cible(out[0], 0, [])['loadKg'] <= 140.0
+
+
+def _reprise(flammes_dites, cible_modele=130.0, schema=('s1', 5), niveau=2, ordre=None, recentes=True):
+    """Séance de retour après 42 jours de coupure, 5 × 5 écrites (4 servies)
+    au même schéma (dernière séance : 100 kg) ; chaque série est versée avec
+    [flammes_dites] (liste, None = non notée). Renvoie les charges servies.
+    [schema] : schéma connu de la mémoire ; [ordre] : ordre des index
+    demandés sans rien verser ; [recentes] : barres de moins de 42 jours."""
+    k = koach(niveau=niveau)
+    s = k.seances
+    ex = 'mu-back-squat-barre-basse'
+    t = k.modele.piste(ex)
+    t.seances = 12
+    t.mesures = 12
+    jours = [3 * i for i in range(12)]
+    s.jours_seances = list(jours)
+    mem = s.mem(ex)
+    mem.jours = list(jours)
+    mem.charge_max = 100.0
+    mem.charge_derniere = 60.0                 # dernier passage : une série légère d'un autre emplacement
+    retour = jours[-1] + (42 if recentes else 60)
+    mem.charges_reussies = [(j, 100.0, 5) for j in jours]
+    mem.barres = [(j, 100.0, 5, 5) for j in jours]
+    if schema is not None:
+        mem.schemas[schema] = (100.0, False)
+    s.charge_pour = lambda ex_id, reps, rir, prudence=0.0: cible_modele
+    ouvrir(k, retour)
+    item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'work', 'sets': 5, 'repsLow': 5, 'repsHigh': 5,
+            'targetFlames': 7}
+    out = s.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {'s1': 'main'})
+    assert out[-1]['sets'] == 4
+    if ordre is not None:
+        return [s.cible(out[-1], i, [])['loadKg'] for i in ordre], mem, s
+    charges = []
+    for i, f in enumerate(flammes_dites):
+        c = s.cible(out[-1], i, [])
+        charges.append(c['loadKg'])
+        s.serie_faite({'exerciseId': ex, 'slotId': 's1', 'externalLoadKg': c['loadKg'], 'reps': 5, 'flames': f,
+                       'failed': False, 'target': {'repsLow': c['repsLow'], 'repsHigh': c['repsHigh'],
+                                                   'flames': c['flames'], 'role': c.get('role')}})
+    return charges, mem, s
+
+
+def test_reprise_par_paliers_mesures():
+    """1.0.2 (C13.12) : la première série du retour ne dépasse pas la dernière
+    séance du même schéma (et n'est plus ancrée sur le dernier passage de
+    l'exercice) ; chaque série faite, dite au plus aussi dure que visé,
+    autorise le palier suivant (+5 % de la charge totale ou un cran), sans
+    jamais dépasser la borne de hausse d'une séance ordinaire (A7.2 : même
+    schéma + hausse du niveau)."""
+    charges, mem, s = _reprise([5, 5, 5, 5])
+    assert charges == [100.0, 105.0, 105.0, 105.0]  # niveau 2 : +5 % au plus sur le même schéma
+    charges, _, _ = _reprise([5, 5, 5, 5], niveau=0)
+    assert charges == [100.0, 105.0, 110.0, 110.0]  # débutant : +10 % au plus, par paliers de 5 %
+
+
+def test_reprise_palier_non_franchi():
+    """Série dite plus dure que visé, ou non notée : pas de palier suivant."""
+    charges, _, _ = _reprise([9, None, 5, 9])
+    assert charges == [100.0, 100.0, 100.0, 105.0]  # la troisième série, dite facile, autorise la quatrième
+
+
+def test_reprise_serie_demandee_avant_la_premiere():
+    """Relecture M1 : une série d'index ≥ 1 demandée avant la première (aperçu)
+    est bornée comme une première série de reprise."""
+    charges, _, _ = _reprise([], ordre=[1, 0, 2])
+    assert charges == [100.0, 100.0, 100.0]
+
+
+def test_reprise_schema_nouveau():
+    """Relecture B1 : schéma nouveau au retour. Avec des barres de moins de 42
+    jours : au plus la plus lourde (sans hausse). Sans aucune barre récente
+    (longue coupure) : repli sur le dernier passage de l'exercice, comme
+    0.3.1 (`recentHeavy ?? lastAny`), sans hausse."""
+    charges, _, _ = _reprise([], schema=None, ordre=[0])
+    assert charges == [100.0]
+    charges, _, _ = _reprise([], schema=None, ordre=[0, 1], recentes=False)
+    assert charges == [60.0, 60.0]
+
+
+def test_bilan_bas_schema_nouveau_sans_barre_recente():
+    """Relecture B1 : un jour de bilan bas, schéma nouveau et aucune barre
+    réussie depuis 42 jours : jamais plus lourd que le dernier passage."""
+    k = koach(niveau=2)
+    s = k.seances
+    ex = 'mu-back-squat-barre-basse'
+    t = k.modele.piste(ex)
+    t.seances = 12
+    t.mesures = 12
+    mem = s.mem(ex)
+    mem.jours = [0]
+    mem.jour = 0
+    mem.charge_derniere = 60.0
+    mem.charges_reussies = [(0, 100.0, 5)]
+    mem.barres = [(0, 100.0, 5, 5)]
+    s.jours_seances = [0, 10, 20, 30, 40, 50]
+    s.charge_pour = lambda ex_id, reps, rir, prudence=0.0: 130.0
+    ouvrir(k, 56, bilan={'overall': 2})
+    assert s.palier >= 1 and s.coupure == 0
+    item = {'slotId': 's9', 'exerciseId': ex, 'kind': 'work', 'sets': 3, 'repsLow': 5, 'repsHigh': 5,
+            'targetFlames': 7}
+    out = s.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {'s9': 'main'})
+    assert s.cible(out[-1], 0, [])['loadKg'] == 60.0
+
+
+def test_bilan_bas_sans_douleur_borne_par_le_meme_schema():
+    """1.0.2 : un jour de bilan bas sans douleur n'est borné, comme en 0.3.1,
+    que par la dernière séance du même schéma ; l'ancre « dernier passage de
+    l'exercice » ne vaut plus que pour une zone douloureuse ou en reprise."""
+    def servir(douleur):
+        k = koach(niveau=2)
+        s = k.seances
+        ex = 'mu-back-squat-barre-basse'
+        t = k.modele.piste(ex)
+        t.seances = 12
+        t.mesures = 12
+        mem = s.mem(ex)
+        mem.jours = [30]
+        mem.jour = 30
+        mem.charge_derniere = 60.0
+        mem.charges_reussies = [(30, 100.0, 5)]
+        mem.schemas[('s1', 5)] = (100.0, False)
+        s.charge_pour = lambda ex_id, reps, rir, prudence=0.0: 130.0
+        if douleur:
+            k.garde.noter_seance(33, [{'zone': 'knee', 'intensity': 4}])   # active, sous le seuil de retrait
+        ouvrir(k, 34, bilan={'overall': 2})
+        assert s.palier >= 1
+        item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'work', 'sets': 3, 'repsLow': 5, 'repsHigh': 5,
+                'targetFlames': 7}
+        zones = {ex: ({'knee': 0.5}, set())} if douleur else {ex: ({}, set())}
+        out = s.prescrire([item], {ex: Grille(2.5, 20.0)}, zones, {'s1': 'main'})
+        assert out, 'la ligne doit être servie (contrainte moyenne, gêne à 4/10)'
+        return s.cible(out[-1], 0, [])['loadKg']
+    assert servir(False) == 100.0
+    assert servir(True) == 60.0                     # sous douleur : jamais au-dessus du dernier passage
+
+
+def _ouverture(barres, estimation=200.0, ratees=()):
+    k = koach(niveau=2)
+    s = k.seances
+    ex = 'mu-back-squat-barre-basse'
+    ouvrir(k, 40)
+    s.contexte = dict(s.contexte or {}, jour_evenement=True)
+    t = k.modele.piste(ex)
+    t.mesures = 5
+    t.seances = 8
+    mem = s.mem(ex)
+    mem.charge_derniere = 60.0
+    mem.charges_reussies = [(j, c, r) for (j, c, r, f) in barres]
+    mem.barres = list(barres)
+    mem.barres_ratees = list(ratees)
+    import math as _m
+    k.modele.capacite_du_jour = lambda ex_id: (_m.log(estimation), 0.03)
+    item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'test', 'sets': 3, 'repsLow': 1, 'repsHigh': 1,
+            'targetFlames': 10, 'test': {'kind': 'one_rm'}}
+    out = s.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {'s1': 'main'})
+    return s, out, s.cible(out[0], 0, [])['loadKg']
+
+
+def test_ouverture_paliers_selon_la_note():
+    """1.0.2 : l'ouverture suit l'estimation (91 % de 200 kg = 182 kg → 180),
+    sans dépasser le palier que les barres des 42 jours autorisent selon ce
+    que l'athlète en a dit."""
+    assert _ouverture([])[2] == 180.0                                  # aucune barre : l'estimation
+    assert _ouverture([(30, 150.0, 1, None)])[2] == 150.0              # non notée : la barre, sans plus
+    assert _ouverture([(30, 150.0, 1, 10)])[2] == 150.0                # dite à l'échec
+    assert _ouverture([(30, 150.0, 1, 9)])[2] == 152.5                 # 1 en réserve : +2,5 %
+    assert _ouverture([(30, 150.0, 1, 7)])[2] == 157.5                 # 2 en réserve : +5 %
+    assert _ouverture([(30, 150.0, 1, 5)])[2] == 160.0                 # 3 en réserve : +7,5 %
+    assert _ouverture([(30, 150.0, 1, 3)])[2] == 165.0                 # 4 ou plus : +10 %
+    assert _ouverture([(30, 150.0, 5, 3)])[2] == 180.0                 # 5 répétitions faciles : l'estimation
+    assert _ouverture([(-10, 150.0, 1, None)])[2] == 180.0             # barre de plus de 42 jours : ignorée
+    assert _ouverture([(30, 190.0, 1, None)])[2] == 180.0              # jamais au-dessus de l'estimation
+    # Barres proches de la plus lourde (à 5 % près) : la note la plus dure
+    # décide ; une barre non notée parmi elles interdit le palier.
+    assert _ouverture([(30, 150.0, 1, 3), (33, 147.5, 1, 9)])[2] == 152.5
+    assert _ouverture([(30, 150.0, 1, 3), (33, 147.5, 1, None)])[2] == 150.0
+    assert _ouverture([(30, 150.0, 1, 3), (33, 120.0, 1, None)])[2] == 165.0   # barre légère : hors bande
+    # Relecture m5 : une barre ratée récemment, plus lourde que la plus lourde
+    # réussie, plafonne le palier un cran dessous (2,5 %).
+    assert _ouverture([(30, 150.0, 1, 3)], ratees=[(35, 160.0)])[2] == 155.0
+    assert _ouverture([(30, 150.0, 1, 3)], ratees=[(-10, 160.0)])[2] == 165.0   # ratée il y a plus de 42 jours
+    assert _ouverture([(30, 150.0, 1, 3)], ratees=[(35, 140.0)])[2] == 165.0    # ratée puis dépassée depuis
+
+
+def test_tentative_un_cran_apres_une_barre_dite_facile():
+    """1.0.2 : saut en pourcentage plus petit qu'un cran (barre légère) — un
+    cran reste permis quand la barre précédente est dite au plus aussi dure
+    que visé ; sinon la barre est gardée."""
+    def deuxieme(flammes):
+        s, out, c0 = _ouverture([(30, 40.0, 1, None)], estimation=200.0)
+        assert c0 == 40.0
+        s.serie_faite({'exerciseId': out[0]['exerciseId'], 'slotId': 's1', 'externalLoadKg': c0, 'reps': 1,
+                       'flames': flammes, 'failed': False, 'target': {'repsLow': 1, 'repsHigh': 1, 'flames': 7,
+                                                                      'role': 'attempt'}})
+        return s.cible(out[0], 1, [])['loadKg']
+    assert deuxieme(5) == 42.5
+    assert deuxieme(9) == 40.0
+    assert deuxieme(None) == 40.0
+
+
+def test_test_xrm_jour_d_epreuve_en_reprise():
+    """Relecture M2 : le jour d'épreuve en semaine de retour, un test xRM suit
+    l'estimation sous le palier des barres récentes ramené aux répétitions
+    du test ; hors jour d'épreuve, il reste borné par le dernier passage."""
+    def servir(evenement):
+        k = koach(niveau=2)
+        s = k.seances
+        ex = 'mu-back-squat-barre-basse'
+        ouvrir(k, 40)
+        s.coupure = 21
+        if evenement:
+            s.contexte = dict(s.contexte or {}, jour_evenement=True)
+        t = k.modele.piste(ex)
+        t.mesures = 5
+        t.seances = 8
+        mem = s.mem(ex)
+        mem.charge_derniere = 60.0
+        mem.charges_reussies = [(30, 150.0, 1)]
+        mem.barres = [(30, 150.0, 1, None)]
+        s.charge_pour = lambda ex_id, reps, rir, prudence=0.0: 170.0
+        item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'test', 'sets': 1, 'repsLow': 3, 'repsHigh': 3,
+                'targetFlames': 9, 'test': {'kind': 'rep_max', 'targetRir': 1}}
+        out = s.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {'s1': 'main'})
+        return s.cible(out[0], 0, [])['loadKg']
+    assert servir(False) == 60.0
+    assert servir(True) == 142.5                    # 150 / (1 + 2 × 2,5 %) = 142,9 → 142,5

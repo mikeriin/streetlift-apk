@@ -37,7 +37,7 @@ class FauxModele(object):
         self.m[dual.RHO] = rho
         self.pistes = dict((ex, FauxPiste(0)) for ex in ids)
 
-    def capacite(self, ex):
+    def capacite(self, ex, brut=False):
         if ex not in self.sd:
             return None
         mu = self.journal_semaines[-1]['mu'][ex] if self.journal_semaines else 0.0
@@ -143,7 +143,7 @@ class _ModeleKalman(object):
         self.P = dict((e, 0.02 ** 2) for e in ids)
         self.journal_semaines = []
 
-    def capacite(self, e):
+    def capacite(self, e, brut=False):
         return self.mu[e], math.sqrt(self.P[e])
 
 

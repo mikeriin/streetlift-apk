@@ -103,7 +103,7 @@ Map<int, kc.Json> _plan(
 void main() {
   final catalog = loadCatalog();
   final plan = KalisPlan();
-  final parametres = readJsonObject('$_reference/params/koach_params_v1.json');
+  final parametres = readJsonObject('$_reference/params/koach_params_d1.json');
   final vecteurs = readJsonObject(
     '$_reference/qualites/vecteurs_qualites_v1.json',
   );
