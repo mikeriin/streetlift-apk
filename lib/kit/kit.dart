@@ -6,6 +6,7 @@
 // aucune valeur de présentation en dur : il passe par un composant, un
 // formateur (`format.dart`) ou par `KTokens.of(context)` (contrôle :
 // `tools/check_ui_tokens.py --zone UI5`, tout `lib/`).
+export 'blur.dart';
 export 'buttons.dart';
 export 'controls.dart';
 export 'display_scale.dart';

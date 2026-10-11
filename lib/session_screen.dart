@@ -1503,11 +1503,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   Widget build(BuildContext context) => ListView(
     key: PageStorageKey('exercise-scroll-${widget.exs.first.id}'),
     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+    // 6.17.0 : de quoi sortir de la bande floutée de la barre de repos.
     padding: const EdgeInsets.fromLTRB(
       KSpacing.page,
       KSpacing.s4,
       KSpacing.page,
-      KSpacing.s24,
+      KSpacing.s24 + KSpacing.s32,
     ),
     children: [
       if (_group case final g?) ...[
@@ -3650,12 +3651,19 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                         style: KType.detail.copyWith(color: k.texte2),
                       ),
                     ),
-                    if (parts.isNotEmpty)
-                      small(
+                    // 6.17.0 : place gardée même sans bloc noté, pour que
+                    // le bandeau ne grandisse pas au premier bloc.
+                    Visibility(
+                      visible: parts.isNotEmpty,
+                      maintainSize: true,
+                      maintainAnimation: true,
+                      maintainState: true,
+                      child: small(
                         Icons.undo_rounded,
                         'Retirer le dernier bloc',
-                        _removeLast,
+                        parts.isEmpty ? null : _removeLast,
                       ),
+                    ),
                   ],
                 ),
                 Wrap(
@@ -3664,6 +3672,9 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     for (var i = 0; i < slots; i++) slot(i),
+                    // Tous les blocs notés : même hauteur de ligne.
+                    if (left == 0)
+                      SizedBox(height: KDensity.field(KSize.target)),
                     if (left > 0)
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -3808,14 +3819,18 @@ class _TimerBar extends StatelessWidget {
                 onStop: ctl.stop,
                 stopLabel: 'Arrêter',
               );
-        return Padding(
-          padding: EdgeInsets.fromLTRB(
-            KSpacing.s16,
-            KSpacing.s4,
-            KSpacing.s16,
-            KSpacing.s12 + MediaQuery.paddingOf(context).bottom,
+        // 6.17.0 : le contenu qui arrive sous la barre se floute
+        // progressivement.
+        return KFloatingBottom(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+              KSpacing.s16,
+              KSpacing.s4,
+              KSpacing.s16,
+              KSpacing.s12 + MediaQuery.paddingOf(context).bottom,
+            ),
+            child: bar,
           ),
-          child: bar,
         );
       },
     );
