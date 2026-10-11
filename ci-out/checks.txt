@@ -1,0 +1,13 @@
+lot=CX5
+rapide=true
+pub=success
+format=failure
+analyze=success
+ui_tokens_zone=failure
+python=skipped
+dart=success
+dart_dev=success
+captures_ui=success
+captures=skipped
+build_debug=skipped
+build_profile=skipped

@@ -1,0 +1,16 @@
+diff --git a/lib/session_screen.dart b/lib/session_screen.dart
+index d708d9e..8f73117 100644
+--- a/lib/session_screen.dart
++++ b/lib/session_screen.dart
+@@ -2774,10 +2774,7 @@ class _SetRowState extends State<_SetRow> {
+                 style: IconButton.styleFrom(
+                   backgroundColor: widget.current ? k.surface : k.haute,
+                   foregroundColor: k.texte,
+-                  minimumSize: Size(
+-                    KSize.target,
+-                    KDensity.field(KSize.target),
+-                  ),
++                  minimumSize: Size(KSize.target, KDensity.field(KSize.target)),
+                   tapTargetSize: KDensity.factor < 1
+                       ? MaterialTapTargetSize.shrinkWrap
+                       : null,
