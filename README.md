@@ -1,4 +1,11 @@
-# Kalis Track dev6.11.2 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.12.0 — Refonte UI et UX (pipeline « Refonte UI et UX », lots UI0 à UI5)
+
+## dev6.12.0 — Refonte UI et UX : finition, cohérence et menus (lot UI5)
+
+- **Même application, finie** : mêmes écrans, même dock, mêmes parcours et mêmes contenus ; un seul système visuel (`lib/kit/`) : 8 palettes du propriétaire (Bordeaux Performance par défaut) et « Contraste renforcé » dans Réglages › Apparence, police Barlow embarquée, rayons cartes 24 / menus 20 / commandes en pilule, titres jamais coupés.
+- **Menus refaits, une place par chose** : ligne « Mon programme » sur l'accueil (Ma saison, Évolution, Calendrier, Changer de programme), carte Profil en tête des Réglages, « Mes références » partout sous ce nom, recherche dans les Réglages et sur les muscles (Arsenal), Records dans Stats › Performances, feuilles d'actions, de liste et confirmations au même modèle.
+- **Textes et formats** : plus de chemin écrit en toutes lettres ni de libellé interne ; « au moins 22 min », « 62,5 kg » (la virgule est acceptée dans les champs de charge), espace fine avant les unités.
+- Illustrations de Koach, du logo et de l'anatomie inchangées ; aucune donnée, sauvegarde ou logique modifiée (installation par-dessus dev6.11.2 sans perte). Détail : `REFONTE_UI.md`.
 
 ## dev6.11.2 — Charge fixe et prévision de fin de séance (lot CI1h)
 

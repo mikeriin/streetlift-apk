@@ -16,7 +16,8 @@ import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/kit/kit.dart' show KTokens, KRoles, KProgressDots;
+import 'package:streetlift_tracker/kit/kit.dart'
+    show KTokens, KRoles, KProgressDots;
 
 Widget settingsPage({
   required bool dark,
