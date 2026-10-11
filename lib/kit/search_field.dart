@@ -60,6 +60,9 @@ class _KSearchFieldState extends State<KSearchField> {
           onChanged: widget.onChanged,
           onSubmitted: widget.onSubmitted,
           textInputAction: TextInputAction.search,
+          // Grand texte : l'indication passe sur 2 lignes ; la saisie reste
+          // centrée comme les icônes (UI5).
+          textAlignVertical: TextAlignVertical.center,
           autocorrect: false,
           enableSuggestions: false,
           style: KType.corps.copyWith(color: k.texte),

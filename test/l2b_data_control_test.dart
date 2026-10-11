@@ -685,7 +685,15 @@ void main() {
         await tester.tap(find.text('Lancer'));
         await tester.pumpAndSettle();
         expect(find.byType(EraseDataDialog), findsOneWidget);
-        await scrollToAction(tester, find.byType(TextField));
+        // UI5 : texte courant à 15 / 22 (cahier §5.2) ; avec la police de
+        // test (un carré par caractère) à 200 %, la page fait plus de
+        // 15 000 px : plus de pas de défilement qu'avec scrollToAction.
+        await tester.scrollUntilVisible(
+          find.byType(TextField),
+          400,
+          scrollable: find.byType(Scrollable).first,
+          maxScrolls: 120,
+        );
         await tester.pumpAndSettle();
         expect(find.byType(TextField).hitTestable(), findsOneWidget);
         expect(tester.takeException(), isNull);

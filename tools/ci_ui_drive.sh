@@ -35,7 +35,10 @@ for part in $parts; do
     adb shell wm density 240 || true
     adb shell settings put system font_scale 1.0 || true
   fi
-  timeout 900 flutter drive --no-pub \
+  # Partie e (200 %) : plus longue, le texte occupe deux fois plus de place.
+  limit=900
+  [ "$part" = e ] && limit=1500
+  timeout "$limit" flutter drive --no-pub \
     --driver=test_driver/integration_test.dart \
     --target=integration_test/tour_ui_test.dart \
     --dart-define=UI_TOUR_PART=$part \
@@ -48,7 +51,7 @@ for part in $parts; do
     adb kill-server || true
     adb start-server || true
     timeout 60 adb wait-for-device || true
-    timeout 900 flutter drive --no-pub \
+    timeout "$limit" flutter drive --no-pub \
       --driver=test_driver/integration_test.dart \
       --target=integration_test/tour_ui_test.dart \
       --dart-define=UI_TOUR_PART=$part \
@@ -69,7 +72,7 @@ for part in $parts; do
       sleep 2
     done
     adb shell input keyevent 82 || true
-    timeout 900 flutter drive --no-pub \
+    timeout "$limit" flutter drive --no-pub \
       --driver=test_driver/integration_test.dart \
       --target=integration_test/tour_ui_test.dart \
       --dart-define=UI_TOUR_PART=$part \

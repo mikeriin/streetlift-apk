@@ -83,6 +83,12 @@ class KDayRow extends StatelessWidget {
       KDayState.todo => k.texte3,
     };
     final written = stateText(state);
+    final writtenKey = ValueKey(
+      state == KDayState.inProgress
+          ? 'day-in-progress-$day'
+          : 'day-resume-$day',
+    );
+    final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
     final statusLabel = stateLabel(state);
     final statusIcon = Icon(
       stateIcon(state),
@@ -143,18 +149,22 @@ class KDayRow extends StatelessWidget {
                           detail!,
                           style: KType.detail.copyWith(color: k.texte2),
                         ),
+                      // Grand texte : l'état écrit passe sous le titre
+                      // (aucun mot coupé, rien qui déborde).
+                      if (written != null && large)
+                        Text(
+                          written,
+                          key: writtenKey,
+                          style: KType.micro.copyWith(color: ink),
+                        ),
                     ],
                   ),
                 ),
                 const SizedBox(width: KSpacing.s8),
-                if (written != null) ...[
+                if (written != null && !large) ...[
                   Text(
                     written,
-                    key: ValueKey(
-                      state == KDayState.inProgress
-                          ? 'day-in-progress-$day'
-                          : 'day-resume-$day',
-                    ),
+                    key: writtenKey,
                     style: KType.micro.copyWith(color: ink),
                   ),
                   const SizedBox(width: KSpacing.s4),

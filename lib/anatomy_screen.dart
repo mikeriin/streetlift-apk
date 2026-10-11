@@ -393,6 +393,9 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                   key: ValueKey('anatomy-exercises-$g'),
                   label: 'Exercices pour ce muscle',
                   icon: Icons.menu_book_outlined,
+                  // Pleine largeur : en grand texte, le libellé reste sur
+                  // une ou deux lignes (UI5).
+                  expand: true,
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
                       builder: (_) => ExerciseLibraryScreen(muscleGroup: g),

@@ -27,8 +27,10 @@ class KSwitch extends StatelessWidget {
     final sw = Switch(
       value: value,
       onChanged: onChanged,
-      activeTrackColor: k.pleine,
-      activeThumbColor: k.surPleine,
+      // UI5 : rail actif en `encre` (lisible sur `surface` dans les 8
+      // palettes ; la dominante Bordeaux y était à 1,1:1), pouce `surEncre`.
+      activeTrackColor: k.encre,
+      activeThumbColor: k.roles.surEncre,
       inactiveTrackColor: k.haute,
       // Éteint : pouce et contour `texte2` (≥ 4,5:1, critère 1.4.11).
       inactiveThumbColor: k.texte2,
