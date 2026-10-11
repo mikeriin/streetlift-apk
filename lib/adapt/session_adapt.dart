@@ -11,6 +11,8 @@
 // - les conseils pendant la séance, série par série ([AdviceStep]).
 //
 // Fonctions pures : aucune horloge, aucun stockage.
+import 'dart:math' as math;
+
 import 'package:kalis_core/kalis_core.dart' as kc;
 
 import '../plan/coach_texts.dart' show prescriptionRow;
@@ -524,16 +526,31 @@ kc.Reason? fixedLoadReason(kc.ExercisePrescription it, double kg) {
 }
 
 /// CI1h correction 1 (C15.9) : raisons qui laissent le moteur baisser le
-/// volume écrit (répétitions, secondes, séries) d'une ligne à charge fixe :
-/// bilan du jour bas (forme, sommeil, temps disponible), reprise après une
-/// coupure. (La douleur : [_isPainReason].)
-bool fixedVolumeLowered(kc.Reason r) =>
-    r.code == 'adapt.health_low' ||
-    r.code == 'adapt.sleep_low' ||
-    r.code == 'adapt.time_short' ||
-    r.code == 'adapt.resume_after_break' ||
-    (r.code == 'adapt.load_held' &&
-        '${r.params['cause']}'.startsWith('health'));
+/// volume écrit (répétitions, secondes, séries) d'une ligne à charge fixe,
+/// posées sur la prescription ou sur un ajustement de cet exercice : bilan
+/// du jour bas (forme, sommeil, temps disponible), reprise après une
+/// coupure, conduite d'endurance (reprise, bilan, douleur de jambe). (La
+/// douleur : [_isPainReason].)
+bool fixedVolumeLowered(kc.Reason r) {
+  final cause = '${r.params['cause']}';
+  return switch (r.code) {
+    'adapt.health_low' ||
+    'adapt.sleep_low' ||
+    'adapt.time_short' ||
+    'adapt.resume_after_break' => true,
+    'adapt.load_held' => cause.startsWith('health'),
+    'adapt.endurance_shortened' || 'adapt.easy_instead' =>
+      cause.startsWith('resume') ||
+          cause.startsWith('health') ||
+          cause.startsWith('leg_pain'),
+    _ => false,
+  };
+}
+
+/// CI1h correction 1 : raison qui laisse baisser le volume écrit (douleur
+/// comprise).
+bool fixedVolumeException(kc.Reason r) =>
+    fixedVolumeLowered(r) || _isPainReason(r);
 
 /// CI1h (C15.2) : prescription [it] du moteur pour une ligne du programme
 /// à charge écrite fixe [kg] (0 : sans lest) : charge écrite à chaque
@@ -554,6 +571,7 @@ kc.ExercisePrescription fixedLoadItem(
   double kg,
   kc.ExercisePrescription? written, {
   bool sessionLowered = false,
+  List<kc.Reason> adjustmentReasons = const [],
   bool holdVolume = true,
 }) {
   final loaded = fixedLoadApplies(it, kg);
@@ -563,7 +581,8 @@ kc.ExercisePrescription fixedLoadItem(
       written != null &&
       !pain &&
       !sessionLowered &&
-      !it.reasons.any(fixedVolumeLowered);
+      !it.reasons.any(fixedVolumeLowered) &&
+      !adjustmentReasons.any(fixedVolumeException);
   double? load(double? v) {
     if (!loaded) return v;
     // Sans lest : la prescription sans charge reste sans charge.
@@ -576,19 +595,31 @@ kc.ExercisePrescription fixedLoadItem(
   int? cap(int? v, int? max) => v == null || max == null || v <= max ? v : max;
   int? under(int? low, int? high) =>
       low == null || high == null || low <= high ? low : high;
-  final rh = hold ? written!.repsHigh : cap(it.repsHigh, written?.repsHigh);
+  final rh = hold ? written.repsHigh : cap(it.repsHigh, written?.repsHigh);
   final rl = hold
-      ? written!.repsLow
+      ? written.repsLow
       : under(cap(it.repsLow, written?.repsHigh), rh);
   final sh = hold
-      ? written!.secondsHigh
+      ? written.secondsHigh
       : cap(it.secondsHigh, written?.secondsHigh);
   final sl = hold
-      ? written!.secondsLow
+      ? written.secondsLow
       : under(cap(it.secondsLow, written?.secondsHigh), sh);
-  final sets = hold ? written!.sets : it.sets;
-  // Séries écrites rétablies : cibles par série de la ligne écrite.
-  final source = hold && sets != it.sets ? written!.setTargets : it.setTargets;
+  final sets = hold ? written.sets : it.sets;
+  // Séries écrites rétablies : technique et cibles par série de la ligne
+  // écrite ; sans cibles écrites, celles du moteur prolongées (la dernière
+  // répétée) ou tronquées.
+  final restore = hold && sets != it.sets;
+  final engineTargets = it.setTargets;
+  final source = !restore
+      ? engineTargets
+      : written.setTargets ??
+            (engineTargets == null || engineTargets.isEmpty
+                ? null
+                : [
+                    for (var i = 0; i < sets; i++)
+                      engineTargets[math.min(i, engineTargets.length - 1)],
+                  ]);
   final wt = written?.setTargets;
   final targets = source == null
       ? null
@@ -608,10 +639,10 @@ kc.ExercisePrescription fixedLoadItem(
               if (hold && !warm) {
                 return t.copyWith(
                   loadKg: load2,
-                  repsLow: w != null ? w.repsLow : written!.repsLow,
-                  repsHigh: w != null ? w.repsHigh : written!.repsHigh,
-                  secondsLow: w != null ? w.secondsLow : written!.secondsLow,
-                  secondsHigh: w != null ? w.secondsHigh : written!.secondsHigh,
+                  repsLow: w != null ? w.repsLow : written.repsLow,
+                  repsHigh: w != null ? w.repsHigh : written.repsHigh,
+                  secondsLow: w != null ? w.secondsLow : written.secondsLow,
+                  secondsHigh: w != null ? w.secondsHigh : written.secondsHigh,
                 );
               }
               final h = cap(t.repsHigh, written?.repsHigh);
@@ -628,6 +659,7 @@ kc.ExercisePrescription fixedLoadItem(
   final start = loaded ? load(it.startLoadKg) : it.startLoadKg;
   var next = it.copyWith(
     sets: sets,
+    technique: restore ? written.technique : it.technique,
     startLoadKg: start,
     repsLow: rl,
     repsHigh: rh,
