@@ -294,7 +294,13 @@ void main() {
     expect(flow(tester).draft.consent, 'given');
     // UI5 : texte courant à 15 / 22 (cahier §5.2) : les choix sont plus bas
     // dans la liste, construite à la demande ; ils sont amenés à l'écran.
-    await scrollToAction(tester, find.byType(KChip).first);
+    final lists = find.byWidgetPredicate(
+      (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+    );
+    for (var i = 0; i < 30 && find.byType(KChip).evaluate().isEmpty; i++) {
+      await tester.drag(lists.last, const Offset(0, -250));
+      await tester.pumpAndSettle();
+    }
     expect(find.byType(KChip), findsWidgets);
     await tap(tester, 'segment-refused');
     expect(flow(tester).draft.consent, 'refused');

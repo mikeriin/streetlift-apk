@@ -675,6 +675,10 @@ void main() {
         expect(tester.takeException(), isNull);
         await tester.binding.handlePopRoute();
         await tester.pumpAndSettle();
+        // UI5 : arbre remis à zéro entre les deux parcours (le message de
+        // l'import annulé restait affiché par-dessus la page suivante).
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpAndSettle();
         await tester.pumpWidget(
           page(
             launcher((c) => eraseAppData(c, appVersion: 'test')),
@@ -687,13 +691,24 @@ void main() {
         expect(find.byType(EraseDataDialog), findsOneWidget);
         // UI5 : texte courant à 15 / 22 (cahier §5.2) ; avec la police de
         // test (un carré par caractère) à 200 %, la page fait plus de
-        // 15 000 px : plus de pas de défilement qu'avec scrollToAction.
-        await tester.scrollUntilVisible(
-          find.byType(TextField),
-          400,
-          scrollable: find.byType(Scrollable).first,
-          maxScrolls: 120,
+        // 15 000 px : on la fait défiler par sa position jusqu'au champ.
+        final list = tester.state<ScrollableState>(
+          find.byType(Scrollable).first,
         );
+        for (
+          var i = 0;
+          i < 200 && find.byType(TextField).evaluate().isEmpty;
+          i++
+        ) {
+          list.position.jumpTo(
+            (list.position.pixels + 300).clamp(
+              0.0,
+              list.position.maxScrollExtent,
+            ),
+          );
+          await tester.pump();
+        }
+        await tester.ensureVisible(find.byType(TextField));
         await tester.pumpAndSettle();
         expect(find.byType(TextField).hitTestable(), findsOneWidget);
         expect(tester.takeException(), isNull);
