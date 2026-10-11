@@ -24,6 +24,10 @@ de 0.3.1 reste dans le paquet, inchangé, pour l'application jusqu'à KM3 et com
   banc (`kalis_bench` `safetyFindings`), obligatoire pour `Planification` ; `ProfilValidation.depuisProfil`
   pour l'application. Parité avec le banc testée dans `kalis_bench` (`test/km2_validateur_test.dart`).
 - Tests de propriétés seedés (`test/koach_proprietes_test.dart`, plus de 20 000 entrées).
+- **Textes de Koach** (`package:kalis_adapt/koach_textes.dart`) : une phrase française par code de raison
+  (`texteRaisonKoach` : les 22 codes `koach.*` et leurs causes, causes et actions de la surveillance, raisons du
+  contrôle dual ; `texteQuestionKoach`, `texteChoixKoach` pour le diagnostic), jamais un code brut
+  (`test/koach_textes_test.dart`).
 - Intégration : `docs/INTEGRATION_KM3.md`. Mesures des critères du cahier : `kalis_bench` 0.4.0
   (`bin/km2.dart`).
 
