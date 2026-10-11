@@ -25,3 +25,6 @@ Branche de travail locale `ui/UI5` (partie de `refonte-ui` 48bda98, fusion de ma
 
 ## 2026-10-11 11:13 UTC
 Publié : refonte-ui et main = caf5589 (ff depuis e351f27). Reste : vérifier build signé sur main, livraison, ETAT_UI, notification.
+
+## 2026-10-11 11:29 UTC
+LIVRÉ : main caf5589 (build signé 38134737676 vert), pipeline 241ce9a (livraison, ETAT livré), projet claude.ai claude/LIVRAISON_UI5.md.
