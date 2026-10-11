@@ -69,7 +69,9 @@ class _KSearchFieldState extends State<KSearchField> {
           cursorColor: k.encre,
           decoration: InputDecoration(
             hintText: widget.hint,
-            hintMaxLines: 2,
+            // L'indication peut passer sur 2 lignes (grand texte) ; une fois
+            // la saisie commencée, le champ reprend la hauteur d'une ligne.
+            hintMaxLines: value.text.isEmpty ? 2 : 1,
             hintStyle: KType.corps.copyWith(color: k.texte2),
             filled: true,
             fillColor: k.surface,
