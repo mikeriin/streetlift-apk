@@ -176,6 +176,8 @@ La bascule n'a lieu que si tous les critères passent, vérifiés automatiquemen
 - Calibration de P(réussite) : par cible, déciles d'au moins 30 cas.
 - **Critère 1 (C13.11)** : écart documenté accepté (plancher du banc avec des tests à réserve gardée, 3,6 à 3,8 %) ; ne bloque plus la bascule, ne doit pas reculer d'une version à l'autre.
 - **Critère 5 (C13.11)** : graines 0 à 5, une seule prévision par cible (4 semaines avant l'échéance), déciles d'au moins 30 cibles ; mesuré en KM2.
+- **Critère 7 bis (C13.12)** : sur les adversaires appariés (les deux moteurs ont un jour J), Koach ≥ témoin − 0,03 dans au moins 90 % des cas, aucun cas sous témoin − 0,10 sauf violation de sécurité du témoin.
+- **Mesures sur six graines (C13.12)** : critères 4 et 5 mesurés sur les graines 0 à 5.
 - Rejeu du journal réel : critère de **bascule**, vérifié juste avant la bascule sur au moins 100 séries notées depuis S12, avec un biais moyen sous 2 % en valeur absolue ; dans KM1, seulement rapporté.
 
 ## Lots à lancer

@@ -256,3 +256,9 @@ Constat : le propriétaire lit la fin de séance comme des changements validés,
 ### Fin de lot
 
 dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci-3d` vert, build signé réussi, run vérifié. Push sur `main` refusé : commit prêt sur `cp-sauvegardes/CI1h-candidat`, hash dans la livraison et la ligne de l'état, arrêt (le pilotage publie). `LIVRAISON_CI1h.md` (pipeline et projet claude.ai) : cause confirmée de chaque défaut, tableau des lignes à charge fixe, lignes d'écran modifiées (pour UI5), « À tester » court sur le téléphone du propriétaire (S14·J6 : squat servi et tenu à 70 kg ; fin de séance : séance visée et date ; séance de la semaine suivante ouverte en avance : mêmes valeurs que la prévision). Ligne de l'état « à valider », page de suivi, notification « Kalis Track <version> prêt à tester — charge fixe et prévision de fin de séance. Page : <lien> ». Arrête-toi.
+
+## KM1c2 — KM1 correction 2, méthode de Koach 1.0.2 (lancé le 11/10/2026 vers 03:50 UTC, tâche « Fable 5.1, effort maximal, moteurs »)
+
+- Lot : **KM1c2** (ligne de l'état « à faire »), prompt `prompts/KM1c2.txt`. Décision : `DECISIONS_CP.md` **C13.12** (trois points : critère 5, critère 4, critère 7 bis apparié). Délégation totale (C8) ; validation par le pilotage. Lot sans panel (C13.3).
+- Base : `moteurs` df28b47c. Livraisons à lire : `LIVRAISON_KM2.md`, `LIVRAISON_KM1_correction1.md`. Données : `packages/kalis_bench/docs/data/km2/`.
+- En parallèle : UI5 (refonte UI, voie App) ; deux sessions au total.

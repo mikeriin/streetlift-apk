@@ -1,0 +1,14 @@
+LOT KM2c1 — KM2 CORRECTION 1 : PORTAGE COURT DE KOACH 1.0.2 (`kalis_adapt` 1.0.1)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs », C13.9). Validation : automatique, par le pilotage.
+Prérequis : KM1c2 livré et validé.
+Base : `moteurs` à la pointe (référence 1.0.2 de KM1c2). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM2c1`.
+
+OBJECTIF
+Porter en Dart le delta de méthode de la référence 1.0.2 (`CHANGEMENTS_1_0_2.md`), à l'identique : parité 1e-9 sur les fixtures régénérées, mêmes tests que KM2 ; asset de paramètres `1.0.2-ref.1` ; aucune autre modification. API inchangée (KM3 peut déjà intégrer 1.0.0).
+
+CONTENU
+- Delta porté dans `packages/kalis_adapt/lib/src/koach/` ; tests de parité, propriétés, façade, rejeu verts.
+- Banc Dart : campagne sur six graines, critères du cahier + 7 bis, contre 0.3.1 ; temps sur la VM Dart.
+
+FIN DE LOT
+- `kalis_adapt` 1.0.1 (et `kalis_bench` si changé), push `moteurs`, étiquettes, contrôle complet vert ; `LIVRAISON_KM2c1.md` (pipeline et projet claude.ai) ; ligne KM2c1 « livré » ; notification ; arrête-toi.
