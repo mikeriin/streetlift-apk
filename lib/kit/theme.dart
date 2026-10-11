@@ -136,9 +136,10 @@ ThemeData kitTheme({
       isDense: true,
       filled: true,
       fillColor: r.haute,
-      contentPadding: const EdgeInsets.symmetric(
+      // 6.15.0 : hauteur des champs selon les espacements choisis.
+      contentPadding: EdgeInsets.symmetric(
         horizontal: KSpacing.s16,
-        vertical: KSpacing.s14,
+        vertical: KDensity.of(KSpacing.s14),
       ),
       floatingLabelBehavior: FloatingLabelBehavior.always,
       alignLabelWithHint: true,
