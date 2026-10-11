@@ -2,7 +2,7 @@
 
 **Passe actuelle : UI5 (pipeline UI), version dev6.12.0 ; précédent : dev6.11.3 (CI1h correction 1)**  
 **Date : 11 octobre 2026, Europe/Paris — version : 6.12.0+117, affichée « dev6.12.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : contrôlé en CI (branche `claude/ci-ui-ui5`, tour sur émulateur Android) ; à valider par le propriétaire sur téléphone.**
+**Statut : publié sur `main` (UI5) après contrôle complet en CI (branche `claude/ci-ui-ui5`, run 38127114476 : tests, builds, tour sur émulateur après et avant, 16 cibles émulateur) ; à valider par le propriétaire sur téléphone.**
 
 ## UI5 — Refonte UI et UX : intégration et publication (version dev6.12.0, pipeline UI)
 

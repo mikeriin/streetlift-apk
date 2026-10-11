@@ -22,3 +22,6 @@ Branche de travail locale `ui/UI5` (partie de `refonte-ui` 48bda98, fusion de ma
 - Brouillon de livraison : /tmp (non sauvegardé ailleurs) — à réécrire depuis ce plan si besoin : sections 1 à 9 du gabarit PIPELINE_UI §4.
 - Worktree pipeline local : cahier §5.2 et DECISIONS UI5 écrits, non poussés.
 - Reste : vérifier le run, captures, publier main (avance rapide depuis e351f274), build signé, livraison, ETAT, notification.
+
+## 2026-10-11 11:13 UTC
+Publié : refonte-ui et main = caf5589 (ff depuis e351f27). Reste : vérifier build signé sur main, livraison, ETAT_UI, notification.
