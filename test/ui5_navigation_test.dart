@@ -84,7 +84,9 @@ void main() {
     if (section != null) {
       // Rubriques en rangée défilante : la rubrique est d'abord amenée à
       // l'écran.
-      await tester.ensureVisible(find.byKey(ValueKey('stats-section-$section')));
+      await tester.ensureVisible(
+        find.byKey(ValueKey('stats-section-$section')),
+      );
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(ValueKey('stats-section-$section')));
       await tester.pumpAndSettle();

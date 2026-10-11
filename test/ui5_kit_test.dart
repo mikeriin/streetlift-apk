@@ -438,7 +438,10 @@ void main() {
         for (final dark in [true, false]) {
           for (final contrast in [false, true]) {
             final r = KRoles.of(source.id, dark: dark, contrast: contrast);
-            final need = contrast ? 7.0 : 4.5;
+            // Icônes des onglets repliés (élément graphique, critère
+            // 1.4.11 : 3:1, 4,5:1 en contraste renforcé) : on exige 4,5:1
+            // dans les deux modes, le niveau du texte courant.
+            const need = 4.5;
             for (final under in [
               const Color(0xFFFFFFFF),
               const Color(0xFF000000),
