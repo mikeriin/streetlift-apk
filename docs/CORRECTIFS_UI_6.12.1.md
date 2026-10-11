@@ -21,3 +21,7 @@ Réglage ajouté : `AppSettings.koachGuided` (écrit seulement s'il est activé 
 ## 6.13.0 — taille d'affichage
 
 Réglages › Apparence › « Taille d’affichage » : 85, 90, 100, 110 ou 120 %. Toute l'interface (textes, cartes, boutons, feuilles, boîtes de dialogue) est dessinée sur un écran virtuel mis à l'échelle (`KDisplayScale`, `lib/kit/display_scale.dart`), comme la taille d'affichage d'Android ; s'ajoute au réglage du téléphone. `AppSettings.displaySize`, écrit seulement s'il diffère de 100.
+
+## 6.14.0 — couleurs et espacements
+
+Réglages › Apparence : « Couleurs » (Sobres = dérivation de 6.12.0, Normales par défaut, Vives = 6.12.1 ; `kColorIntensity`, `kColorIntensities` dans `lib/kit/palette.dart`) et « Espacements » (Compacts 70 %, Normaux 85 % par défaut, Aérés 100 % ; `KDensity` dans `lib/kit/tokens.dart`, appliqué aux marges intérieures des cartes, des lignes de menu et de jour et aux titres de section, lignes jamais sous 48 dp). Titres de section revenus en `texte2`, pastilles d'icône des menus sur `haute` (icône `encre`). Bordeaux sombre : encre #D56964 en « Normales ».

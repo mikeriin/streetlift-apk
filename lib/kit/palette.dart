@@ -110,6 +110,21 @@ const kPaletteSources = <KPaletteSource>[
   ),
 ];
 
+/// 6.14.0 : intensité des couleurs (Réglages › Apparence) : 0 sobres
+/// (dérivation de dev6.12.0), 1 normales (par défaut), 2 vives (dev6.12.1).
+/// Lue par la dérivation des rôles (sombre) ; l'application la règle avant
+/// de construire le thème.
+int kColorIntensity = 1;
+
+/// Paramètres de chaque intensité : teinte des surfaces sur fond neutre
+/// (chroma, 0 : aucune), encre et secondaire ravivées (facteur, plafond).
+const kColorIntensities =
+    <({double tint, double ink, double second, double cap})>[
+      (tint: 0, ink: 1, second: 1, cap: 0),
+      (tint: 4, ink: 1.25, second: 1.15, cap: 50),
+      (tint: 7, ink: 1.75, second: 1.4, cap: 72),
+    ];
+
 /// Identifiant de la palette par défaut.
 const kDefaultPaletteId = 'bordeaux';
 
@@ -315,7 +330,7 @@ class KRoles {
   }) {
     final p = paletteSource(paletteId);
     return _cache.putIfAbsent(
-      '${p.id}|$dark|$contrast',
+      '${p.id}|$dark|$contrast|$kColorIntensity',
       () => _derive(p, dark: dark, contrast: contrast),
     );
   }
@@ -335,11 +350,12 @@ class KRoles {
       // (chroma < 6) teinte ses surfaces de la dominante (chroma 7 au plus) ;
       // un fond déjà teinté par le propriétaire garde sa teinte. Le fond
       // reste la valeur exacte du propriétaire.
+      final lv = kColorIntensities[kColorIntensity.clamp(0, 2)];
       final d = Hct.fromInt(p.dominante);
-      final neutral = f.chroma < 6;
+      final neutral = f.chroma < 6 && lv.tint > 0;
       final tintHue = neutral ? d.hue : f.hue;
       final tintChroma = neutral
-          ? math.min(d.chroma, 7.0)
+          ? math.min(d.chroma, lv.tint)
           : math.min(f.chroma, 16.0);
       int sd(double dt) => Hct.from(tintHue, tintChroma, f.tone + dt).toInt();
       fond = p.fondSombre;
@@ -351,8 +367,18 @@ class KRoles {
       texte3 = Hct.from(f.hue, 4, 50).toInt();
       // Encre et secondaire ravivées (chroma portée vers 72, teinte gardée)
       // avant l'ajustement de tonalité : la couleur de marque reste vive.
-      encre = kAdjustTone(kVivid(p.dominante, 1.75), surface, strong, 1);
-      second = kAdjustTone(kVivid(p.secondaire, 1.4), surface, weak, 1);
+      encre = kAdjustTone(
+        kVivid(p.dominante, lv.ink, cap: lv.cap),
+        surface,
+        strong,
+        1,
+      );
+      second = kAdjustTone(
+        kVivid(p.secondaire, lv.second, cap: lv.cap),
+        surface,
+        weak,
+        1,
+      );
       accent = kAdjustTone(p.accent, surface, strong, 1);
       if (contrast) texte2 = kAdjustTone(texte2, surface, 7, 1);
     } else {

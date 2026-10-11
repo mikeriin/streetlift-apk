@@ -28,14 +28,14 @@ double _contrast(Color a, Color b) {
 // couleurs ; l'accent du moteur de référence reste celui de l'application
 // (`KPalette.accent` = rôle `encre`, tableau `palettes_roles.json`).
 const _referenceAccents = {
-  'bordeaux': (0xFFDF615C, 0xFF551515),
+  'bordeaux': (0xFFD56964, 0xFF551515),
   'obsidian': (0xFFEA4C50, 0xFFCD363D),
-  'arctic': (0xFF658EFF, 0xFF2563EB),
+  'arctic': (0xFF668EFF, 0xFF2563EB),
   'neon': (0xFFB4F044, 0xFF567B00),
-  'titanium': (0xFF5C94B6, 0xFF4C6474),
-  'violet': (0xFF986BFF, 0xFF7546DB),
+  'titanium': (0xFF7193A9, 0xFF4C6474),
+  'violet': (0xFF986CFF, 0xFF7546DB),
   'forest': (0xFF4CA37F, 0xFF236B50),
-  'solar': (0xFFEE6026, 0xFFC34A17),
+  'solar': (0xFFE86531, 0xFFC34A17),
 };
 
 void main() {

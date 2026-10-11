@@ -50,6 +50,29 @@ void main() {
     expect(find.byType(FittedBox), findsNothing);
   });
 
+  test('6.14.0 : couleurs et espacements, défauts non écrits', () {
+    final d = AppSettings();
+    expect(d.toJson().containsKey('colorIntensity'), isFalse);
+    expect(d.toJson().containsKey('spacing'), isFalse);
+    final s = AppSettings()
+      ..colorIntensity = 0
+      ..spacing = 70;
+    final back = AppSettings.fromJson(s.toJson());
+    expect((back.colorIntensity, back.spacing), (0, 70));
+    expect(AppSettings.fromJson({'colorIntensity': 5}).colorIntensity, 1);
+    expect(AppSettings.fromJson({'spacing': 50}).spacing, 85);
+  });
+
+  test('6.14.0 : intensité des couleurs, sobres = dérivation de 6.12.0', () {
+    addTearDown(() => kColorIntensity = 1);
+    kColorIntensity = 0;
+    expect(kHex(KRoles.of('bordeaux', dark: true).encre), '#CA6F6A');
+    kColorIntensity = 2;
+    expect(kHex(KRoles.of('bordeaux', dark: true).encre), '#DF615C');
+    kColorIntensity = 1;
+    expect(kHex(KRoles.of('bordeaux', dark: true).encre), '#D56964');
+  });
+
   test('réglage : 100 non écrit, valeur inconnue relue à 100', () {
     expect(AppSettings().toJson().containsKey('displaySize'), isFalse);
     final s = AppSettings()..displaySize = 90;

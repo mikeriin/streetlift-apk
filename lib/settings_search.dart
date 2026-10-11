@@ -163,6 +163,31 @@ final List<SettingsSearchEntry> settingsSearchIndex = [
     value: () => '${store.settings.displaySize}\u202F%',
   ),
   SettingsSearchEntry.setting(
+    id: 'color-intensity',
+    label: 'Couleurs',
+    description: 'Sobres, normales ou vives',
+    words: ['couleur', 'intensite', 'vif', 'flashy', 'sobre', 'fade'],
+    path: _appearance,
+    page: SettingsPage.appearance,
+    value: () => const ['Sobres', 'Normales', 'Vives'][store
+        .settings
+        .colorIntensity
+        .clamp(0, 2)],
+  ),
+  SettingsSearchEntry.setting(
+    id: 'spacing',
+    label: 'Espacements',
+    description: 'Marges à l’intérieur des cartes et des lignes',
+    words: ['espacement', 'marge', 'padding', 'compact', 'densite', 'aere'],
+    path: _appearance,
+    page: SettingsPage.appearance,
+    value: () => switch (store.settings.spacing) {
+      70 => 'Compacts',
+      100 => 'Aérés',
+      _ => 'Normaux',
+    },
+  ),
+  SettingsSearchEntry.setting(
     id: 'contrast',
     label: 'Contraste renforcé',
     description: 'Textes et repères plus marqués',

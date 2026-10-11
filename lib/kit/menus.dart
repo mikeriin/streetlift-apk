@@ -77,10 +77,10 @@ class KIconTile extends StatelessWidget {
     return Container(
       width: KSize.menuIcon,
       height: KSize.menuIcon,
-      // Correctifs UI (11/10/2026) : pastille tonale de l'encre, icône en
-      // `encre` (la couleur de marque revient dans les menus).
+      // 6.14.0 : pastille `haute`, icône en `encre` (la couleur de marque
+      // reste présente sans faire de pavés de couleur).
       decoration: ShapeDecoration(
-        color: background ?? k.encre.withValues(alpha: .14),
+        color: background ?? k.haute,
         shape: KRadius.pill,
       ),
       alignment: Alignment.center,
@@ -155,8 +155,11 @@ class _KRowFrameState extends State<KRowFrame> {
         onTap: widget.onTap,
         onLongPress: widget.onLongPress,
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: widget.minHeight),
-          child: Padding(padding: widget.padding, child: widget.child),
+          constraints: BoxConstraints(minHeight: KDensity.row(widget.minHeight)),
+          child: Padding(
+            padding: KDensity.pad(widget.padding),
+            child: widget.child,
+          ),
         ),
       ),
     );
