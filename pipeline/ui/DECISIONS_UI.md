@@ -108,3 +108,16 @@ Choix du lot (10/10/2026, session `session_01EcZvt7jo2rPQi194ZGu9FQ`), détail d
 - **UI4.6 Défaut du kit signalé** (bloquant pour UI5) : titres de `KTopBar.sub` tronqués par une ellipse ; correction proposée dans la livraison §7.
 
 ## UI5
+
+Choix du lot (11/10/2026, session `session_014wA1B8bKecW5barqcLhDf9`), détail et récapitulatif de toutes les décisions prises sans le propriétaire dans `livraisons/LIVRAISON_UI5.md` §6 et §7. La conversation de pilotage valide ou corrige.
+
+- **UI5.1 En-tête de sous-page** : `KTopBar.sub` rendu par le kit (plus d'`AppBar`, dont l'ellipse coupait le titre) ; titre 2 lignes (3 au-delà de 150 %), barre qui suit le titre.
+- **UI5.2 Lignes de réglage** : interrupteur sous le libellé quand son mot le plus long ne tient pas ; pas à pas sous le libellé sous 420 dp ; segments de 48 × 48 dp au moins, largeur selon le libellé.
+- **UI5.3 Champs** : étiquette dans la pilule (`KFieldBorder`), neutre, `danger` en erreur.
+- **UI5.4 Interrupteur actif en `encre`** (la dominante Bordeaux était à 1,1:1 sur `surface` en sombre) ; **dock opaque en contraste renforcé**.
+- **UI5.5 Feuille de contenu unique** (`KContentSheet`), « Fermer » en bas sauf quand Koach porte la sortie ; confirmation unique (`KConfirm`, qui défile, clés par bouton).
+- **UI5.6 Adaptateurs** : `lib/ui.dart` supprimé ; `app_theme.dart` réduit aux rôles des illustrations ; texte courant à 15 / 22 partout.
+- **UI5.7 Formats** : `lib/kit/format.dart` ; charges proposées arrondies au quart de kilo à l'affichage (pas des grilles du moteur).
+- **UI5.8 Bulles de Koach de l'accueil gardées** (pas de `KNotice`, §1 et C14) ; boutons secondaires sur fond `filet` en sombre.
+- **UI5.9 Contrôles bloquants sur tout `lib/`** : jetons et menus à 0, illustrations intactes (`tools/check_ui_illustrations.py`, 89 fichiers) ; tour en 6 parties (e : 320 dp × 200 % ; f : 8 palettes et contraste renforcé).
+- **UI5.10 Non fait** : en-tête de séance repliable à 200 % (risque sur la pagination) ; même estimation de durée entre la carte du jour et la feuille de la séance (calcul, signalé au pilotage).

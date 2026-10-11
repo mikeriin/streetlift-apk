@@ -209,7 +209,7 @@ Illustrations (§1) : Koach garde `KoachColors` (encre claire et papier = suppor
 | --- | --- | --- | --- |
 | `titreRacine` | Semi Condensed 600 | 30 / 36 | titre d'un onglet (Arsenal, Réglages, Stats) |
 | `titreEcran` | Semi Condensed 600 | 22 / 28 | titre d'une sous-page ; semaine de l'accueil |
-| `titreSeance` | Semi Condensed 600 | 20 / 24 | séance, exercice, feuille |
+| `titreSeance` | Semi Condensed 600 | 20 / 24 | séance, exercice ; titre de feuille et de confirmation (casse normale, U0.17) |
 | `titreCarte` | Semi Condensed 600 | 18 / 24 | titre de carte ; ligne de jour (15 / 20) |
 | `corpsFort` | Barlow 600 | 16 / 22 | titre de ligne de menu, boutons |
 | `corps` | Barlow 400 | 15 / 22 | texte courant |
@@ -220,7 +220,7 @@ Illustrations (§1) : Koach garde `KoachColors` (encre claire et papier = suppor
 | `chiffreMoyen` | Condensed 600 | 20 / 24 | champs de saisie, pas à pas |
 | `chrono` | Condensed 600 | 34 / 36 | barre de repos |
 
-Capitales : appliquées par le style (`textTransform`) aux titres `titreRacine`, `titreEcran`, `titreSeance`, lignes de jour et onglet actif, quand `KTokens.capsTitles` est vrai (U3) ; jamais par `toUpperCase()` dans le code. Nombres au format français ; les grands chiffres restent entiers à 200 % de texte.
+Capitales : appliquées par le style (`textTransform`) aux titres `titreRacine`, `titreEcran`, `titreSeance` (sauf les titres de feuille et de confirmation, en casse normale : DECISIONS_UI.md U0.17, correction de UI5), lignes de jour et onglet actif, quand `KTokens.capsTitles` est vrai (U3) ; jamais par `toUpperCase()` dans le code. Nombres au format français ; les grands chiffres restent entiers à 200 % de texte.
 
 ### 5.3 Espacements, formes, élévation
 
