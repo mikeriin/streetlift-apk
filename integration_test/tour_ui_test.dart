@@ -345,6 +345,8 @@ void main() {
         await push(tester, SessionScreen(week: fweek, day: fday));
         await screen(tester, '${name}_seance');
         final skip = find.byKey(const ValueKey('feel-skip'));
+        // Grand texte (partie e) : « Passer » est sous le bilan.
+        if (skip.evaluate().isNotEmpty) await scrollTo(tester, skip);
         if (skip.hitTestable().evaluate().isNotEmpty) {
           await tester.tap(skip.hitTestable().first);
           await wait(tester, 1500);
