@@ -1,7 +1,7 @@
-run=38123734037
-commit=c574f14e79096d8db10d48462505a433e8e5cd28
+run=38127114476
+commit=23dc12f4376dc164ce92e95aefdc1cfaa65a8fda
 checks=success
 packages=success
 before=success
-tour=cancelled
-emulator=success
+tour=success
+emulator=cancelled

@@ -1,7 +1,7 @@
-Total compressé : 61553726
-    16518682  lib/x86_64
-    16153293  lib/armeabi-v7a
-    15855104  lib/arm64-v8a
+Total compressé : 61553179
+    16518271  lib/x86_64
+    16152992  lib/armeabi-v7a
+    15855269  lib/arm64-v8a
      4432967  classes.dex
      2732931  assets/flutter_assets/packages/flutter_scene
      1067962  assets/flutter_assets/assets/muscles
@@ -40,9 +40,9 @@ Total compressé : 61553726
         6004  classes16.dex
         5643  assets/flutter_assets/assets/koach_program.json.gz
 
-    10035204     22037064  lib/armeabi-v7a/libapp.so
-     9278578     20120456  lib/x86_64/libapp.so
-     9017433     19858312  lib/arm64-v8a/libapp.so
+    10034903     22037064  lib/armeabi-v7a/libapp.so
+     9278167     20120456  lib/x86_64/libapp.so
+     9017598     19858312  lib/arm64-v8a/libapp.so
      6460202     13923328  lib/x86_64/libflutter.so
      6080904     12568184  lib/arm64-v8a/libflutter.so
      5238445      9137740  lib/armeabi-v7a/libflutter.so

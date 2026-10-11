@@ -2,12 +2,12 @@
 ::group::❌ /home/runner/work/streetlift-apk/streetlift-apk/test/visual_capture_test.dart: rendus bordeaux et anthracite : écrans, thèmes et largeur compacte (failed)
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#ea991(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#ac81d(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d0829(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#3ec40(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -32,12 +32,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#940ab(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#33272(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#8de8c(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#4b317(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -62,12 +62,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#25d99(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#3e03f(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#b42f2(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#9031f(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -92,12 +92,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#0dad5(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#b0a0d(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#ed4a1(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#7a4af(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -122,12 +122,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#1b0ec(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#c0233(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#21d14(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#39050(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -152,12 +152,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#aed43(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#7d11d(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fd2e7(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#40c15(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -182,12 +182,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#6cc75(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#1ce90(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d3820(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#16f50(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -212,12 +212,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#c96b4(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#827ae(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#26822(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#5cfb1(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -242,12 +242,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fa6c2(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#583ae(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#1cae4(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#5b2f4(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -272,12 +272,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#a9b4c(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#d0739(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#a53a2(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#54f9e(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -302,12 +302,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#7d727(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#5c025(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#bfab7(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#82058(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -332,12 +332,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#015c7(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#25584(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#321a0(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#a06cd(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -362,12 +362,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#0da66(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#9eba6(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d451d(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#ed467(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -392,12 +392,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#8605e(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#85ab8(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#475cb(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#33e02(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -422,12 +422,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#b56e3(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#e7051(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#a895e(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#d4ea9(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -452,12 +452,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#7c0e1(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#d1837(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#824d5(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#ba2fe(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -482,12 +482,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#5aba8(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#80f02(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#f2cea(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#0d97b(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -512,12 +512,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#90916(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#b3a06(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#93dfc(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#debd8(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -542,12 +542,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d105c(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#0a6fb(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d80cd(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#d3c19(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -572,12 +572,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#309a9(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#83953(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#5759f(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#929e7(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -602,12 +602,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#e5169(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#f6a95(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#5e80c(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#43194(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -632,12 +632,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#38ae2(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#96a09(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#0a95a(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#0e6e0(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -662,12 +662,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#74e4e(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#e6d03(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#2c07f(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#8d8e0(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -692,12 +692,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#0231e(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#53599(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#baa49(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#d753e(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -722,12 +722,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#4b1cb(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#85a04(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#de246(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#9aea3(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -752,12 +752,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#215de(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#3a124(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#cbf1b(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#0039a(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -782,12 +782,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#6b7cb(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#7035c(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#51da6(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#989ee(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -812,12 +812,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#f3e6c(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#99451(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#8eccf(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#489a2(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -842,12 +842,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#c552e(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#0f2a7(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#2ed09(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#0f111(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -872,12 +872,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#35cc8(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#15c4a(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#5b6c7(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#98f46(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -902,12 +902,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#43f86(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#f7cdb(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#08d41(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#760f7(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -932,12 +932,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#a0218(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#a9e40(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#79f25(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#b24dd(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -962,12 +962,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#26aae(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#f1803(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#7a851(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#5c945(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -992,12 +992,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#a0f10(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#26b25(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#899f3(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#dfc4e(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1022,12 +1022,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d19eb(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#04476(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#1957a(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#762a6(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1052,12 +1052,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d644c(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#fdf16(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#932ab(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#e11f3(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1082,12 +1082,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#389d2(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#1cd57(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#3cdbd(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#4e40c(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1112,12 +1112,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#769ab(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#15373(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#46369(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#cf7e0(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1142,12 +1142,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#4e12b(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#e2193(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#30e08(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#00249(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1172,12 +1172,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#3ab7a(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#df5cb(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d0edb(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#e043e(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1202,12 +1202,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#19cdf(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#1424a(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#b75cf(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#8dbc4(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1232,12 +1232,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#4bb24(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#4adbf(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#79a3b(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#56b22(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1262,12 +1262,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#0193b(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#f7030(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#e02e3(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#6c214(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1292,12 +1292,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#26028(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#fda2d(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#e6fac(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#b7e8a(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
@@ -1322,12 +1322,12 @@ To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to 
 
 
 Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
-  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#aea4a]], state: ScrollableState#96d1a(position: ScrollPositionWithSingleContext#81283(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#f39d9, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#a8077]], state: ScrollableState#aa934(position: ScrollPositionWithSingleContext#9fd7f(offset: 738.0, range: 0.0..738.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#4e261, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
 ]" derived an Offset (Offset(195.0, 908.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(195.0, 908.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
-The finder corresponds to this RenderBox: RenderClipRect#63558 relayoutBoundary=up5
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#15c84(_ReusableRenderView#88b7c), HitTestEntry<HitTestTarget>#82fa8(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderClipRect#2026b relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#0e3ee(_ReusableRenderView#911b0), HitTestEntry<HitTestTarget>#c65dd(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
