@@ -93,19 +93,19 @@ Campagne : `donnees/criteres_km1c2.json`, graines 0 à 5, 4 320 saisons, 0 plant
 | 5 calibration de P(réussite), une prévision par cible | ≤ 5 points | 15,3 points | 16,8 points |
 | 6 jour J (meilleure barre / maximum) | ≥ témoin 0,9324 | 0,9459 | 0,9450 |
 | 7 pire cas adversarial | ≥ témoin (0) | 0,226 | 0,499 (nouvelle recherche de 3 000 saisons contre 1.0.2) |
-| 7 bis apparié | ≥ 90 % à témoin − 0,03 ; aucun sous témoin − 0,10 | 9/24 ; pire écart −0,597 | voir ci-dessous |
+| 7 bis apparié | ≥ 90 % à témoin − 0,03 ; aucun sous témoin − 0,10 | 10/24 ; 13 sous le plancher ; pire écart −0,597 (jeu b3000 de KM2) | voir ci-dessous |
 | 8 violations de sécurité | 0 | 0 | 0 (aucune aggravation, aucune poussée, aucune hausse interdite, validateur : rien d'introduit) |
 | 11 temps (Python, runner de la CI) | ≤ 10 s ; ≤ 50 ms | 0,49 s ; 14,3 ms (KM1) | 0,44 s ; 2,8 ms |
 
-Critère 7 bis (Koach 1.0.2 rejoué, témoin 0.3.1 rejoué en Dart) :
+Critère 7 bis (Koach 1.0.2 rejoué en Python sans extension, `PolitiqueKoach()`, comme le banc adversarial de KM1 ; témoin 0.3.1 rejoué en Dart, `bin/km1.dart --outils-seuls`). Colonnes 1.0.1 : mesures publiées par KM2 (Dart ; jeu « complet b600 » : Koach complet, les autres sans extension) :
 
-| Jeu d'adversaires | Appariés | Koach ≥ témoin − 0,03 | Sous témoin − 0,10 | Pire écart | Pire Koach |
-| --- | --- | --- | --- | --- | --- |
-| KM1 (recherche de 300 contre 1.0) | 24 | 24 (100 %) | 0 | −0,016 | 0,809 |
-| KM2 b300 (contre 1.0.1) | 24 | 23 (96 %) | 0 | −0,070 | 0,805 |
-| KM2 complet b600 (contre 1.0.1) | 24 | 22 (92 %) | 0 | −0,099 | 0,441 |
-| KM2 b3000 (contre 1.0.1) — avant : 9 (38 %), 15 sous le plancher, −0,597 | 24 | 20 (83 %) | 2 | −0,303 | 0,499 |
-| Nouvelle recherche de 3 000 contre 1.0.2 (`adversaires_km1c2.json`) | 24 | 17 (71 %) | 6 | −0,303 | 0,499 |
+| Jeu d'adversaires | Appariés | 1.0.1 : ≥ témoin − 0,03 ; sous témoin − 0,10 ; pire écart | 1.0.2 : ≥ témoin − 0,03 | 1.0.2 : sous témoin − 0,10 | 1.0.2 : pire écart | Pire Koach (1.0.1 → 1.0.2) |
+| --- | --- | --- | --- | --- | --- | --- |
+| KM1 (recherche de 300 contre 1.0) | 24 | 22 (92 %) ; 1 ; −0,138 | 24 (100 %) | 0 | −0,016 | 0,799 → 0,809 |
+| KM2 b300 (contre 1.0.1) | 24 | 20 (83 %) ; 2 ; −0,138 | 23 (96 %) | 0 | −0,070 | 0,770 → 0,805 |
+| KM2 complet b600 (contre 1.0.1) | 24 | 12 (50 %) ; 6 ; −0,556 | 22 (92 %) | 0 | −0,099 | 0,248 → 0,441 |
+| KM2 b3000 (contre 1.0.1) | 24 | 10 (42 %) ; 13 ; −0,597 | 20 (83 %) | 2 | −0,303 | 0,226 → 0,499 |
+| Nouvelle recherche de 3 000 contre 1.0.2 (`adversaires_km1c2.json`) | 24 | — | 17 (71 %) | 6 | −0,303 | 0,499 |
 
 Lecture :
 - Critère 7 bis : tenu sur trois jeux connus sur quatre, non tenu sur le jeu b3000 de KM2 (83 %) ni sur une recherche neuve contre 1.0.2 (71 %). Les 6 cas sous le plancher de la recherche neuve : 5 sur le profil de streetlifting avancé, 1 sur le powerlifter ; aucun où Koach reste bloqué sur des charges basses (le mécanisme de C13.12 est corrigé : `adv-31c45cfb` passe de 0,226 à plus de 0,80) ; dans les six, sur une graine, un mouvement du jour J finit à zéro : l'estimation y est de 10 à 12 % trop haute (notes bruitées de 1 à 2,5 flammes, réserve dite décalée, séries non notées), l'ouverture tombe au-dessus du maximum du jour (par exemple 145 kg pour un maximum de 142 kg ; 232,5 kg pour 230 kg) et la barre, gardée après un échec (règle A8.2 de 0.3.1, inchangée), est ratée trois fois ; les autres mouvements de la même saison sont à 0,87-0,99. Le témoin, qui ouvre plus bas (91 % d'une estimation elle-même en retard), passe ses barres. Deux itérations faites (palier par barre, puis palier de la plus lourde barre avec la note la plus dure des barres proches) ; la suite relève de l'estimation sous notes non fiables, pas des bornes de reprise.
