@@ -675,6 +675,10 @@ void main() {
         expect(tester.takeException(), isNull);
         await tester.binding.handlePopRoute();
         await tester.pumpAndSettle();
+        // UI5 : arbre remis à zéro entre les deux parcours (le message de
+        // l'import annulé restait affiché par-dessus la page suivante).
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpAndSettle();
         await tester.pumpWidget(
           page(
             launcher((c) => eraseAppData(c, appVersion: 'test')),
