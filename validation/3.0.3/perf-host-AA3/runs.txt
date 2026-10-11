@@ -1,0 +1,4 @@
+base r1 exit=0
+cand r1 exit=0
+cand r2 exit=0
+base r2 exit=0
