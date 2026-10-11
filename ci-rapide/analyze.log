@@ -1,0 +1,16 @@
+Analyzing streetlift-apk...                                     
+
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:579:28 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:581:16 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:584:16 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:587:16 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:589:30 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:591:51 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:611:59 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:612:61 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:613:65 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/adapt/session_adapt.dart:614:67 • unnecessary_non_null_assertion
+warning • Unused import: 'package:streetlift_tracker/models.dart'. Try removing the import directive • test/ci1h_correction1_test.dart:22:8 • unused_import
+  error • The property 'name' can't be unconditionally accessed because the receiver can be 'null'. Try making the access conditional (using '?.') or adding a null check to the target ('!') • test/ci1h_correction1_test.dart:178:101 • unchecked_use_of_nullable_value
+
+12 issues found. (ran in 19.8s)

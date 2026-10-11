@@ -1,0 +1,33 @@
+        'CI1H1|A|samedi|ajoutés=${[for (final it in extra) '${it.slotId}:${it.exerciseId}:${it.kind.name}']}|$names',
+                                                                                          ^^^^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_correction1_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_correction1_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_correction1_test.dart: test/ci1h_correction1_test.dart:178:101: Error: Property 'name' cannot be accessed on 'SetKind?' because it is potentially null.
+   - 'SetKind' is from 'package:kalis_core/src/contracts.dart' ('packages/kalis_core/lib/src/contracts.dart').
+  Try accessing using ?. instead.
+          'CI1H1|A|samedi|ajoutés=${[for (final it in extra) '${it.slotId}:${it.exerciseId}:${it.kind.name}']}|$names',
+                                                                                                      ^^^^
+  .
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:00 +0 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_charge_fixe_test.dart: défaut 1 — charge fixe inventaire : lignes à charge fixe du programme de 40 semaines, exception « lesté ou PdC »
+CI1H|ligne|Négatifs de muscle-up|3|0.0|3
+CI1H|ligne|Mobilité épaules + poignets|64|0.0|64
+CI1H|ligne|Pompes PdC — très léger|9|0.0|9
