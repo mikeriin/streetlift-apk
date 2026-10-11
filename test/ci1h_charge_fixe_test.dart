@@ -10,7 +10,8 @@
 //
 // Défaut 2 : la prévision de fin de séance (« La prochaine fois ») et
 // l'ouverture d'une séance non commencée passent par le même calcul ; une
-// séance future ouverte en avance est prescrite à sa date prévue.
+// séance future ouverte en avance est prescrite au jour réel (CI1h
+// correction 1, C15.9 ; dev6.11.2 la prescrivait à sa date prévue).
 //
 // Données synthétiques ; horloge injectée ; stockage simulé.
 import 'dart:convert';
@@ -212,7 +213,16 @@ void main() {
       // ignore: avoid_print
       print('CI1H|apres|S14J6|squat|${_loads(it)}|${it.repsLow}');
       expect(_loads(it), everyElement(70.0));
-      expect(it.repsHigh, lessThanOrEqualTo(freeSquat.repsHigh!));
+      // CI1h correction 1 (C15.9) : répétitions et séries écrites tenues.
+      final written = app
+          .adaptPlaceOf(14, 6)!
+          .day!
+          .items
+          .firstWhere((w) => w.slotId == it.slotId);
+      expect(
+        (it.sets, it.repsLow, it.repsHigh),
+        (written.sets, written.repsLow, written.repsHigh),
+      );
       expect(
         it.reasons.any(
           (r) => r.code == 'adapt.load_held' && r.params['cause'] == 'program',
@@ -546,18 +556,18 @@ void main() {
     });
 
     test('séance future ouverte la veille puis le jour même : recalculée ; '
-        'prescrite à sa date prévue', () async {
+        'prescrite au jour réel (CI1h correction 1, C15.9)', () async {
       await _ownerEasy(app, lastJ: 6);
       final base = app.program.week(14).day(6)!;
       clock = DateTime(2026, 10, 16, 20); // la veille
       final eve = app.adaptOpen(14, base)!;
       expect(eve.date, '2026-10-16');
-      expect(app.adaptPlanDay(14, 6).iso, '2026-10-17');
+      expect(eve.plan.date.iso, '2026-10-16');
       expect(eve.plan.toJson(), app.adaptPlannedSession(14, 6)!.toJson());
       clock = DateTime(2026, 10, 17, 9); // le jour même
       final day = app.adaptOpen(14, base)!;
       expect(day.date, '2026-10-17');
-      expect(app.adaptPlanDay(14, 6).iso, '2026-10-17');
+      expect(day.plan.date.iso, '2026-10-17');
       expect(day.plan.toJson(), app.adaptPlannedSession(14, 6)!.toJson());
     });
 

@@ -1,7 +1,0 @@
-run=38120925185
-commit=8a7310fc8ecceb8a837bc8be9ec2d9098757a31c
-checks=success
-packages=skipped
-before=skipped
-tour=skipped
-emulator=skipped

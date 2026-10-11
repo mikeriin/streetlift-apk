@@ -1,13 +1,19 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : UI5 (pipeline UI), version dev6.12.0 ; précédent : dev6.11.2 (CI1h)**  
-**Date : 11 octobre 2026, Europe/Paris — version : 6.12.0+116, affichée « dev6.12.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : UI5 (pipeline UI), version dev6.12.0 ; précédent : dev6.11.3 (CI1h correction 1)**  
+**Date : 11 octobre 2026, Europe/Paris — version : 6.12.0+117, affichée « dev6.12.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-ui-ui5`, tour sur émulateur Android) ; à valider par le propriétaire sur téléphone.**
 
 ## UI5 — Refonte UI et UX : intégration et publication (version dev6.12.0, pipeline UI)
 
 - Lots UI0 (kit, palettes, polices), UI1 (Programme), UI2 (Séance), UI3 (Stats), UI4 (Menus) fusionnés dans `refonte-ui`, puis UI5 : corrections du kit (titre de sous-page jamais coupé, interrupteur et pas à pas sous le libellé, segments de 48 dp, étiquette des champs dans la pilule, confirmation qui défile), composants promus dans `lib/kit/` (feuille de contenu unique, ligne de jour, en-tête de séance, jauge, tuiles), adaptateur `lib/ui.dart` supprimé, textes R3/R5/R9, formats C9 (`lib/kit/format.dart`), action « Ouvrir le programme » sur les états vides de Stats.
 - Contrôles : jetons et menus hors gabarit à 0 sur tout `lib/` (`tools/check_ui_tokens.py --zone UI5 --menus`), illustrations intactes (`tools/check_ui_illustrations.py`), installation par-dessus dev6.11.1 (`test/ui5_installation_test.dart`), tour sur émulateur en 6 parties (dont 320 dp × 200 %, 8 palettes et contraste renforcé). Registre : `REFONTE_UI.md` ; livraison : `pipeline/ui/livraisons/LIVRAISON_UI5.md` (branche `pipeline`).
+
+## CI1h correction 1 — Séance future au jour réel, volume écrit des lignes à charge fixe (version dev6.11.3, pipeline CP, DECISIONS_CP.md C15.9)
+
+- **Jour réel (défaut A)** : `adaptPlanDay` retiré ; `adaptPlannedSession` (ouverture et « La prochaine fois ») et `_adaptReprescribe` prescrivent au jour réel. Cause : à la date prévue, les journées d'avant paraissaient passées et non faites et `kalis_adapt` reportait leur test au début de la séance.
+- **Volume écrit (défaut B)** : `fixedLoadItem` sert séries, répétitions ou secondes de la ligne écrite ; exceptions (`fixedVolumeLowered`) : douleur, bilan bas (forme, sommeil, temps), reprise après coupure ; repli « charge seule » si la prescription sortait du contrat ; `setsReduced` retiré pour les séries rétablies.
+- Paquets inchangés ; aucun écran touché. Tests : `test/ci1h_correction1_test.dart`.
 
 ## CI1h — Charge fixe et prévision de fin de séance (version dev6.11.2, pipeline CP, DECISIONS_CP.md C15)
 
