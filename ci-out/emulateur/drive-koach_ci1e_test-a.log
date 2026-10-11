@@ -1,0 +1,87 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             49.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,100ms
+I/eetlift_tracker( 5756): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 5756): Skipped 49 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 5756): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:35307/2QZ363XcJo4=/
+VMServiceFlutterDriver: Isolate found with number: 1159885734795211
+VMServiceFlutterDriver: Isolate 1159885734795211 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 5756): 00:00 +0: CI1e a (sombre, rouge) : programme de 40 semaines sous toutes les fonctionnalités ; retour au programme d’origine
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 5756): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 5756): app_time_stats: avg=310.46ms min=172.06ms max=442.47ms count=4
+D/EGL_emulation( 5756): app_time_stats: avg=150.55ms min=1.71ms max=314.30ms count=7
+D/EGL_emulation( 5756): app_time_stats: avg=620.68ms min=149.66ms max=1091.70ms count=2
+D/EGL_emulation( 5756): app_time_stats: avg=284.40ms min=169.93ms max=707.36ms count=6
+I/eetlift_tracker( 5756): Background concurrent mark compact GC freed 2192KB AllocSpace bytes, 15(684KB) LOS objects, 49% free, 2628KB/5257KB, paused 76us,3.187ms total 100.091ms
+D/EGL_emulation( 5756): app_time_stats: avg=14849.64ms min=14849.64ms max=14849.64ms count=1
+D/EGL_emulation( 5756): app_time_stats: avg=199.36ms min=163.22ms max=278.01ms count=5
+D/EGL_emulation( 5756): app_time_stats: avg=114.23ms min=63.34ms max=200.08ms count=7
+D/EGL_emulation( 5756): app_time_stats: avg=107.52ms min=102.80ms max=112.81ms count=6
+D/EGL_emulation( 5756): app_time_stats: avg=142.76ms min=57.81ms max=203.12ms count=7
+D/EGL_emulation( 5756): app_time_stats: avg=150.15ms min=60.87ms max=211.41ms count=6
+W/WindowOnBackDispatcher( 5756): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5756): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5756): app_time_stats: avg=267.18ms min=191.59ms max=413.26ms count=4
+D/EGL_emulation( 5756): app_time_stats: avg=105.39ms min=3.38ms max=150.67ms count=10
+D/EGL_emulation( 5756): app_time_stats: avg=134.07ms min=90.98ms max=370.71ms count=9
+D/EGL_emulation( 5756): app_time_stats: avg=103.68ms min=12.55ms max=152.40ms count=9
+D/EGL_emulation( 5756): app_time_stats: avg=138.50ms min=14.14ms max=306.71ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=136.47ms min=94.50ms max=217.03ms count=7
+D/EGL_emulation( 5756): app_time_stats: avg=191.12ms min=104.48ms max=288.04ms count=5
+W/WindowOnBackDispatcher( 5756): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5756): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5756): app_time_stats: avg=132.54ms min=13.57ms max=201.31ms count=7
+D/EGL_emulation( 5756): app_time_stats: avg=123.28ms min=106.65ms max=159.97ms count=9
+D/EGL_emulation( 5756): app_time_stats: avg=130.80ms min=12.71ms max=315.54ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=141.88ms min=90.43ms max=201.37ms count=6
+W/WindowOnBackDispatcher( 5756): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5756): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5756): app_time_stats: avg=216.37ms min=65.14ms max=534.09ms count=7
+D/EGL_emulation( 5756): app_time_stats: avg=116.61ms min=11.16ms max=234.66ms count=9
+D/EGL_emulation( 5756): app_time_stats: avg=129.30ms min=19.93ms max=240.88ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=132.66ms min=16.23ms max=307.46ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=185.95ms min=107.34ms max=229.00ms count=5
+D/EGL_emulation( 5756): app_time_stats: avg=177.19ms min=155.74ms max=201.34ms count=6
+D/EGL_emulation( 5756): app_time_stats: avg=149.45ms min=68.25ms max=217.59ms count=6
+D/EGL_emulation( 5756): app_time_stats: avg=181.07ms min=69.23ms max=322.44ms count=6
+D/EGL_emulation( 5756): app_time_stats: avg=119.63ms min=57.32ms max=178.73ms count=7
+W/WindowOnBackDispatcher( 5756): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5756): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5756): app_time_stats: avg=183.54ms min=77.92ms max=280.41ms count=6
+D/EGL_emulation( 5756): app_time_stats: avg=121.13ms min=14.33ms max=223.31ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=106.10ms min=14.49ms max=214.52ms count=10
+D/EGL_emulation( 5756): app_time_stats: avg=93.42ms min=8.33ms max=238.31ms count=10
+D/EGL_emulation( 5756): app_time_stats: avg=104.01ms min=11.24ms max=188.12ms count=10
+D/EGL_emulation( 5756): app_time_stats: avg=140.20ms min=89.39ms max=177.14ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=150.49ms min=117.45ms max=270.29ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=127.76ms min=104.91ms max=160.37ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=91.10ms min=18.88ms max=130.80ms count=10
+D/EGL_emulation( 5756): app_time_stats: avg=164.90ms min=15.95ms max=316.55ms count=7
+D/EGL_emulation( 5756): app_time_stats: avg=113.60ms min=12.64ms max=194.49ms count=9
+D/EGL_emulation( 5756): app_time_stats: avg=105.65ms min=11.50ms max=225.89ms count=10
+D/EGL_emulation( 5756): app_time_stats: avg=113.95ms min=5.45ms max=247.66ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=116.14ms min=21.63ms max=334.07ms count=9
+D/EGL_emulation( 5756): app_time_stats: avg=88.66ms min=3.55ms max=150.65ms count=10
+D/EGL_emulation( 5756): app_time_stats: avg=110.32ms min=93.45ms max=143.62ms count=8
+D/EGL_emulation( 5756): app_time_stats: avg=188.41ms min=153.60ms max=248.48ms count=6
+I/flutter ( 5756): 01:08 +1: (tearDownAll)
+I/flutter ( 5756): 01:08 +2: All tests passed!
+D/EGL_emulation( 5756): app_time_stats: avg=190.69ms min=162.69ms max=209.80ms count=6
+All tests passed.

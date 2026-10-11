@@ -1,0 +1,72 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             93.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        2,964ms
+I/eetlift_tracker( 3990): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 3990): Skipped 106 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 3990): Sending viewport metrics to the engine.
+D/ProfileInstaller( 3990): Installing profile for fr.tchoupi.streetlift_tracker
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:46231/ilMeMKsltQA=/
+VMServiceFlutterDriver: Isolate found with number: 6268613398028631
+VMServiceFlutterDriver: Isolate 6268613398028631 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 3990): 00:00 +0: Tour UI b : écrans principaux et parcours
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 3990): Skipped 53 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 3990): app_time_stats: avg=1088.81ms min=580.69ms max=1596.93ms count=2
+D/EGL_emulation( 3990): app_time_stats: avg=2156.76ms min=2156.76ms max=2156.76ms count=1
+D/EGL_emulation( 3990): app_time_stats: avg=298.18ms min=5.46ms max=1091.94ms count=5
+I/eetlift_tracker( 3990): Background concurrent mark compact GC freed 2127KB AllocSpace bytes, 13(580KB) LOS objects, 49% free, 2588KB/5177KB, paused 111us,8.107ms total 69.682ms
+D/FlutterJNI( 3990): Sending viewport metrics to the engine.
+D/EGL_emulation( 3990): app_time_stats: avg=980.49ms min=149.56ms max=3180.89ms count=4
+D/EGL_emulation( 3990): app_time_stats: avg=1576.07ms min=661.57ms max=2490.56ms count=2
+D/EGL_emulation( 3990): app_time_stats: avg=785.83ms min=294.90ms max=1276.77ms count=2
+D/EGL_emulation( 3990): app_time_stats: avg=15141.44ms min=15141.44ms max=15141.44ms count=1
+D/EGL_emulation( 3990): app_time_stats: avg=180.19ms min=164.21ms max=189.71ms count=6
+D/EGL_emulation( 3990): app_time_stats: avg=167.69ms min=76.78ms max=199.40ms count=6
+D/EGL_emulation( 3990): app_time_stats: avg=168.89ms min=63.10ms max=217.34ms count=6
+D/EGL_emulation( 3990): app_time_stats: avg=205.50ms min=79.30ms max=347.36ms count=5
+D/EGL_emulation( 3990): app_time_stats: avg=192.41ms min=65.46ms max=289.51ms count=6
+D/EGL_emulation( 3990): app_time_stats: avg=159.07ms min=67.05ms max=215.14ms count=7
+D/EGL_emulation( 3990): app_time_stats: avg=200.39ms min=163.25ms max=222.62ms count=5
+D/EGL_emulation( 3990): app_time_stats: avg=129.28ms min=77.74ms max=275.00ms count=6
+D/EGL_emulation( 3990): app_time_stats: avg=216.42ms min=169.37ms max=323.40ms count=5
+D/EGL_emulation( 3990): app_time_stats: avg=177.45ms min=51.92ms max=316.45ms count=6
+Unhandled exception:
+DriverError: Failed to fulfill RequestData due to remote error
+Original error: ext.flutter.driver: (112) Service has disappeared
+Original stack trace:
+#0      new _OutstandingRequest (package:vm_service/src/vm_service.dart:265:34)
+#1      VmService._call.<anonymous closure> (package:vm_service/src/vm_service.dart:1921:25)
+#2      VmService._call (package:vm_service/src/vm_service.dart:1933:8)
+#3      VmService.callServiceExtension (package:vm_service/src/vm_service.dart:1872:14)
+#4      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:327:12)
+#5      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:13)
+#6      integrationDriver (package:integration_test/integration_test_driver.dart:71:42)
+<asynchronous suspension>
+
+
+#0      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:340:7)
+<asynchronous suspension>
+#1      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:7)
+<asynchronous suspension>
+#2      integrationDriver (package:integration_test/integration_test_driver.dart:71:29)
+<asynchronous suspension>
+Failed to stop app
+adb uninstall failed: ProcessException: Process exited abnormally with exit code 20:
+cmd: Can't find service: package
+  Command: /usr/local/lib/android/sdk/platform-tools/adb -s emulator-5554 uninstall fr.tchoupi.streetlift_tracker
+Failed to uninstall app
