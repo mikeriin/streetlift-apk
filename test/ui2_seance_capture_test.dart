@@ -23,7 +23,7 @@ import 'package:streetlift_tracker/adapt/health_check.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/game.dart';
-import 'package:streetlift_tracker/kit/kit.dart' show showKSnack;
+import 'package:streetlift_tracker/kit/kit.dart' show KBottomInset, showKSnack;
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/rewards.dart';
 import 'package:streetlift_tracker/session_history.dart';

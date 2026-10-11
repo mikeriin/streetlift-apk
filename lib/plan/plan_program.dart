@@ -578,8 +578,7 @@ const _kFocusDayTitles = <String, String>{
 String _dayTitle(String focus) {
   assert(
     kFocusLabels.entries.every(
-      (e) =>
-          _kFocusDayTitles[e.key]?.toLowerCase() == e.value.toLowerCase(),
+      (e) => _kFocusDayTitles[e.key]?.toLowerCase() == e.value.toLowerCase(),
     ),
     'Titre de jour différent du thème : mettre _kFocusDayTitles à jour.',
   );

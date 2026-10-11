@@ -5,10 +5,8 @@
 // dernier groupe, confirmée (C10, R8).
 import 'package:flutter/material.dart';
 
-import 'app_theme.dart';
 import 'store.dart';
 import 'kit/kit.dart';
-import 'kit/format.dart';
 
 class PilotageScreen extends StatelessWidget {
   const PilotageScreen({super.key});

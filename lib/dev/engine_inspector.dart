@@ -393,7 +393,10 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
           ),
         ],
       ),
-      body: KPageList(key: const ValueKey('inspector-list'), children: children),
+      body: KPageList(
+        key: const ValueKey('inspector-list'),
+        children: children,
+      ),
     );
   }
 }

@@ -63,10 +63,7 @@ void main() {
           for (final t in titles) {
             await tester.pumpWidget(
               host(
-                KPage.sub(
-                  title: t,
-                  children: const [Text('Contenu')],
-                ),
+                KPage.sub(title: t, children: const [Text('Contenu')]),
                 scale: scale,
               ),
             );
@@ -417,9 +414,7 @@ void main() {
         ),
       );
       final button = tester.widget<IconButton>(find.byType(IconButton));
-      final bg = button.style!.backgroundColor!.resolve({
-        WidgetState.disabled,
-      });
+      final bg = button.style!.backgroundColor!.resolve({WidgetState.disabled});
       expect(bg, Colors.transparent);
     });
 
@@ -451,11 +446,13 @@ void main() {
               r.texte,
               r.fond,
             ]) {
-              final bg = over(r.haute, .96, under);
+              // Opaque en contraste renforcé (lib/kit/dock.dart).
+              final bg = over(r.haute, contrast ? 1 : .96, under);
               expect(
                 kContrast(r.texte2, bg),
                 greaterThanOrEqualTo(need - .05),
-                reason: '${source.id} ${dark ? 'sombre' : 'clair'} '
+                reason:
+                    '${source.id} ${dark ? 'sombre' : 'clair'} '
                     '${contrast ? 'renforcé ' : ''}icône sur $under',
               );
             }

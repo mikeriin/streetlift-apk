@@ -29,7 +29,6 @@ import 'koach/koach_view.dart' show KoachColors, KoachView;
 import 'timers.dart';
 export 'timers.dart' show TimerCtl;
 import 'kit/kit.dart';
-import 'kit/format.dart';
 import 'wellbeing_screens.dart' show SafetyScreen;
 import 'models.dart';
 import 'rewards.dart' show checkLevelUp;

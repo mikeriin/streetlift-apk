@@ -12,7 +12,6 @@ import '../adapt/adapt_texts.dart' show adaptKgLabel, adaptReasonText;
 import '../koach/koach_bubble.dart' show KoachSays;
 import '../store.dart';
 import '../kit/kit.dart';
-import '../kit/format.dart';
 
 /// Objectif du jour : libellé court du segment, phrase complète dessous.
 const _objectives = <kc.EventObjective, (String, String)>{

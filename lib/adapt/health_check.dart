@@ -34,7 +34,6 @@ import '../plan/coach_texts.dart'
 import '../plan/evolution_widgets.dart' show EvolutionSessionCard;
 import '../store.dart';
 import '../kit/kit.dart';
-import '../kit/format.dart';
 import '../wellbeing_screens.dart' show SafetyScreen;
 import 'adapt_texts.dart';
 import 'clearance.dart';
