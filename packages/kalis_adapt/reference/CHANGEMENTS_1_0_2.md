@@ -61,8 +61,8 @@ Cause mesurée (adversaire `adv-31c45cfb`, recherche de KM2) : l'estimation éta
 - `banc/mesures.py` : `paires_couverture`. `banc/planification_banc.py` : `prevu_jour` dans `previsions`.
 
 ## E. Tests (tests/)
-- `test_securite_regles.py` : `test_retour_de_coupure_ni_test_ni_mesure_paliers` (remplace `…_ni_hausse`), `test_reprise_par_paliers_mesures`, `test_reprise_palier_non_franchi`, `test_reprise_terminee_a_la_cible`, `test_bilan_bas_sans_douleur_borne_par_le_meme_schema`, `test_ouverture_paliers_selon_la_note`, `test_tentative_un_cran_apres_une_barre_dite_facile` ; `test_pas_de_tentative_maximale_au_retour_de_coupure` mis à jour.
-- Fixtures de parité régénérées (13).
+- `test_securite_regles.py` : `test_retour_de_coupure_ni_test_ni_mesure_paliers` (remplace `…_ni_hausse`), `test_reprise_par_paliers_mesures`, `test_reprise_palier_non_franchi`, `test_reprise_serie_demandee_avant_la_premiere`, `test_reprise_schema_nouveau`, `test_bilan_bas_schema_nouveau_sans_barre_recente`, `test_bilan_bas_sans_douleur_borne_par_le_meme_schema`, `test_test_xrm_jour_d_epreuve_en_reprise`, `test_ouverture_paliers_selon_la_note`, `test_tentative_un_cran_apres_une_barre_dite_facile` ; `test_pas_de_tentative_maximale_au_retour_de_coupure` mis à jour.
+- Fixtures de parité régénérées (les 13 de 1.0.1) et une quatorzième, `moteur_11.json` (tentatives après une coupure de 12 jours : paliers selon la note). Les fixtures et les paramètres de 1.0.1 restent, figés, dans `fix_dart/` et `params/koach_params_d1.json` : les tests Dart de `kalis_adapt` 1.0.0 et de `kalis_bench` les lisent jusqu'au portage KM2c1.
 - `test_adversaire.py` : `test_critere_apparie_7_bis`. `test_dual.py` : faux modèles avec `brut`.
 
 ## F. Corrections après la relecture indépendante (Opus, 11/10/2026)
