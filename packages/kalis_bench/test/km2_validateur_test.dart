@@ -108,8 +108,7 @@ void main() {
     '$_reference/qualites/vecteurs_qualites_v1.json',
   );
   final fiches = <String, kc.Json>{
-    for (final e in kc.jm(vecteurs['exercices']).entries)
-      e.key: kc.jm(e.value),
+    for (final e in kc.jm(vecteurs['exercices']).entries) e.key: kc.jm(e.value),
   };
   final profils = <String, Map<String, Object?>>{
     for (final p in loadBenchProfiles())
@@ -128,151 +127,144 @@ void main() {
   var saisonsVues = 0;
 
   for (final cle in cles) {
-    test(
-      '$cle : mêmes constats que le banc (référence et blocs modulés)',
-      () {
-        final json = profils[cle]!;
-        for (final scenario in SeasonScenario.values) {
-          if (!seasonScenarioApplies(json, scenario)) {
-            continue;
-          }
-          final saison = kc.jm(
-            jsonDecode(
-              jsonEncode(
-                kmReferenceSeason(catalog, plan, json, scenario, truthSeeds: 0),
-              ),
+    test('$cle : mêmes constats que le banc (référence et blocs modulés)', () {
+      final json = profils[cle]!;
+      for (final scenario in SeasonScenario.values) {
+        if (!seasonScenarioApplies(json, scenario)) {
+          continue;
+        }
+        final saison = kc.jm(
+          jsonDecode(
+            jsonEncode(
+              kmReferenceSeason(catalog, plan, json, scenario, truthSeeds: 0),
             ),
-          );
-          final quoi = '$cle / ${scenario.code}';
-          saisonsVues++;
-          final banc = KmConstatsSaison(catalog, json, saison);
-          final season = KmSeason(catalog, json, scenario);
-          final moteurs = season.adapted.profile;
-          // Le poids des charges (profil des moteurs) est celui de l'indice
-          // de masse corporelle (profil du banc) : un seul champ suffit.
-          expect(season.bench.bodyWeightKg, moteurs.bodyWeightKg, reason: quoi);
-          final parChamps = profilDuBanc(season.bench, moteurs);
-          final profil0 = AthleteProfile.fromJson(
-            kc.jm(kc.jm(kc.jl(saison['profiles'])[0])['profile']),
-          );
-          final parJson = va.ProfilValidation.depuisJsonBanc(
-            kc.jm(saison['benchJson']),
-            poidsCorpsKg: profil0.bodyWeightKg,
-          );
-          final weeks = kc.ent(saison['weeks']);
-          final blockWeeks = _blockWeeks(saison);
-          final blocs = _blocs(saison);
+          ),
+        );
+        final quoi = '$cle / ${scenario.code}';
+        saisonsVues++;
+        final banc = KmConstatsSaison(catalog, json, saison);
+        final season = KmSeason(catalog, json, scenario);
+        final moteurs = season.adapted.profile;
+        // Le poids des charges (profil des moteurs) est celui de l'indice
+        // de masse corporelle (profil du banc) : un seul champ suffit.
+        expect(season.bench.bodyWeightKg, moteurs.bodyWeightKg, reason: quoi);
+        final parChamps = profilDuBanc(season.bench, moteurs);
+        final profil0 = AthleteProfile.fromJson(
+          kc.jm(kc.jm(kc.jl(saison['profiles'])[0])['profile']),
+        );
+        final parJson = va.ProfilValidation.depuisJsonBanc(
+          kc.jm(saison['benchJson']),
+          poidsCorpsKg: profil0.bodyWeightKg,
+        );
+        final weeks = kc.ent(saison['weeks']);
+        final blockWeeks = _blockWeeks(saison);
+        final blocs = _blocs(saison);
 
-          // Blocs de référence, servis et entiers, deux horizons.
-          final attendu = jsonEncode(banc.constats());
-          for (final profil in <va.ProfilValidation>[parChamps, parJson]) {
-            final valider = va.validateurSecurite(
-              catalog: catalog,
-              profil: profil,
-              blockWeeks: blockWeeks,
-              horizonSemaines: weeks,
-            );
-            expect(jsonEncode(valider(blocs)), attendu, reason: quoi);
-          }
-          for (final horizon in <int>[weeks, 4]) {
-            for (final servis in <List<int>?>[blockWeeks, null]) {
-              final view = ProgramView(
-                catalog,
-                BenchProgram(
-                  bench: season.bench,
-                  adapted: season.adapted,
-                  request: PlanRequest(
-                    profile: moteurs,
-                    seed: 0,
-                    startDate: benchStartDate,
-                    locks: const <PlanLock>[],
-                  ),
-                  blocks: va.blocsServis(
-                    <ProgramBlock>[
-                      for (final b in blocs) ProgramBlock.fromJson(b),
-                    ],
-                    servis,
-                  ),
-                  horizonWeeks: horizon,
-                ),
-              );
-              final duBanc = <kc.Json>[
-                for (final f in safetyFindings(view, season.bench)) f.toJson(),
-              ];
-              final copie = va.constatsDesBlocs(
-                blocs,
-                catalog: catalog,
-                profil: parChamps,
-                horizonSemaines: horizon,
-                blockWeeks: servis,
-              );
-              expect(
-                jsonEncode(copie),
-                jsonEncode(duBanc),
-                reason: '$quoi, horizon $horizon, blockWeeks $servis',
-              );
-            }
-          }
-
-          // Blocs modulés aux plafonds de la planification.
+        // Blocs de référence, servis et entiers, deux horizons.
+        final attendu = jsonEncode(banc.constats());
+        for (final profil in <va.ProfilValidation>[parChamps, parJson]) {
           final valider = va.validateurSecurite(
             catalog: catalog,
-            profil: parChamps,
+            profil: profil,
             blockWeeks: blockWeeks,
             horizonSemaines: weeks,
           );
-          final planification = kc.Planification(
-            parametres,
-            fiches,
-            banc.validateur,
-            <String, Object?>{'trajectoires': 10},
-          );
-          planification.chargerReference(
-            blocs,
-            blockWeeks,
-            weeks,
-            poidsCorps: moteurs.bodyWeightKg,
-          );
-          final reference = <String>{
-            for (final c in banc.constats())
-              jsonEncode(<Object?>[
-                c['code'],
-                c['week'],
-                c['dayIndex'],
-                c['exerciseId'],
-              ]),
-          };
-          final n = planification.semaines.length;
-          final plans = <String, Map<int, kc.Json>>{
-            'plus': _plan(n, 1.15, 0.05),
-            'moins': _plan(n, 0.85, -0.05),
-            'alterne': _plan(n, 1.15, 0.05, alterne: true),
-            'alterne_inverse': _plan(n, 0.85, -0.05, alterne: true),
-          };
-          for (final entry in plans.entries) {
-            final modules = planification.blocsModules(entry.value);
-            final duBanc = banc.validateur(modules);
-            expect(
-              jsonEncode(valider(modules)),
-              jsonEncode(duBanc),
-              reason: '$quoi, plan ${entry.key}',
+          expect(jsonEncode(valider(blocs)), attendu, reason: quoi);
+        }
+        for (final horizon in <int>[weeks, 4]) {
+          for (final servis in <List<int>?>[blockWeeks, null]) {
+            final view = ProgramView(
+              catalog,
+              BenchProgram(
+                bench: season.bench,
+                adapted: season.adapted,
+                request: PlanRequest(
+                  profile: moteurs,
+                  seed: 0,
+                  startDate: benchStartDate,
+                  locks: const <PlanLock>[],
+                ),
+                blocks: va.blocsServis(<ProgramBlock>[
+                  for (final b in blocs) ProgramBlock.fromJson(b),
+                ], servis),
+                horizonWeeks: horizon,
+              ),
             );
-            for (final c in duBanc) {
-              final k = jsonEncode(<Object?>[
-                c['code'],
-                c['week'],
-                c['dayIndex'],
-                c['exerciseId'],
-              ]);
-              if (!reference.contains(k)) {
-                ajoutsModules++;
-              }
+            final duBanc = <kc.Json>[
+              for (final f in safetyFindings(view, season.bench)) f.toJson(),
+            ];
+            final copie = va.constatsDesBlocs(
+              blocs,
+              catalog: catalog,
+              profil: parChamps,
+              horizonSemaines: horizon,
+              blockWeeks: servis,
+            );
+            expect(
+              jsonEncode(copie),
+              jsonEncode(duBanc),
+              reason: '$quoi, horizon $horizon, blockWeeks $servis',
+            );
+          }
+        }
+
+        // Blocs modulés aux plafonds de la planification.
+        final valider = va.validateurSecurite(
+          catalog: catalog,
+          profil: parChamps,
+          blockWeeks: blockWeeks,
+          horizonSemaines: weeks,
+        );
+        final planification = kc.Planification(
+          parametres,
+          fiches,
+          banc.validateur,
+          <String, Object?>{'trajectoires': 10},
+        );
+        planification.chargerReference(
+          blocs,
+          blockWeeks,
+          weeks,
+          poidsCorps: moteurs.bodyWeightKg,
+        );
+        final reference = <String>{
+          for (final c in banc.constats())
+            jsonEncode(<Object?>[
+              c['code'],
+              c['week'],
+              c['dayIndex'],
+              c['exerciseId'],
+            ]),
+        };
+        final n = planification.semaines.length;
+        final plans = <String, Map<int, kc.Json>>{
+          'plus': _plan(n, 1.15, 0.05),
+          'moins': _plan(n, 0.85, -0.05),
+          'alterne': _plan(n, 1.15, 0.05, alterne: true),
+          'alterne_inverse': _plan(n, 0.85, -0.05, alterne: true),
+        };
+        for (final entry in plans.entries) {
+          final modules = planification.blocsModules(entry.value);
+          final duBanc = banc.validateur(modules);
+          expect(
+            jsonEncode(valider(modules)),
+            jsonEncode(duBanc),
+            reason: '$quoi, plan ${entry.key}',
+          );
+          for (final c in duBanc) {
+            final k = jsonEncode(<Object?>[
+              c['code'],
+              c['week'],
+              c['dayIndex'],
+              c['exerciseId'],
+            ]);
+            if (!reference.contains(k)) {
+              ajoutsModules++;
             }
           }
         }
-      },
-      timeout: const Timeout(Duration(minutes: 10)),
-    );
+      }
+    }, timeout: const Timeout(Duration(minutes: 10)));
   }
 
   test('les plans modulés ajoutent des constats (comparaison utile)', () {
@@ -283,64 +275,61 @@ void main() {
     expect(ajoutsModules, greaterThan(0));
   });
 
-  test(
-    'depuisProfil : correspondance des champs sur les profils adaptés',
-    () {
-      for (final cle in cles) {
-        final bench = BenchProfile.fromJson(profils[cle]!);
-        final adapted = adaptProfile(bench, catalog: catalog);
-        final duBanc = profilDuBanc(bench, adapted.profile);
-        final app = va.ProfilValidation.depuisProfil(
-          adapted.profile,
-          debut: benchStartDate,
-        );
-        expect(app.niveau, duBanc.niveau, reason: cle);
-        expect(app.anneeNaissance, duBanc.anneeNaissance, reason: cle);
-        expect(app.anneeReference, duBanc.anneeReference, reason: cle);
-        expect(app.age, duBanc.age, reason: cle);
-        expect(app.tailleCm, duBanc.tailleCm, reason: cle);
-        expect(app.poidsCorpsKg, duBanc.poidsCorpsKg, reason: cle);
-        expect(
-          app.indiceMasseCorporelle,
-          duBanc.indiceMasseCorporelle,
-          reason: cle,
-        );
-        expect(
-          <Object?>[
-            for (final r in app.records)
-              <Object?>[r.exerciseId, r.mesure, r.valeur, r.distanceMetres],
-          ],
-          <Object?>[
-            for (final r in duBanc.records)
-              <Object?>[r.exerciseId, r.mesure, r.valeur, r.distanceMetres],
-          ],
-          reason: cle,
-        );
-        expect(app.exercicesConnus, duBanc.exercicesConnus, reason: cle);
-        expect(app.exercicesNonAcquis, duBanc.exercicesNonAcquis, reason: cle);
-        expect(app.prudent, duBanc.prudent, reason: cle);
-        expect(app.semainesEcheance, duBanc.semainesEcheance, reason: cle);
-        // Pause : borne basse de la tranche ; seul le seuil de deux
-        // semaines compte (une semaine d'arrêt est lue comme deux :
-        // prudent).
-        expect(
-          app.semainesPause >= 2,
-          duBanc.semainesPause >= 2 || duBanc.semainesPause == 1,
-          reason: cle,
-        );
-        expect(app.genes, hasLength(duBanc.genes.length), reason: cle);
-        for (var k = 0; k < app.genes.length; k++) {
-          final a = app.genes[k];
-          final b = duBanc.genes[k];
-          expect(a.articulationCatalogue, b.articulationCatalogue, reason: cle);
-          expect(a.gene, b.gene, reason: cle);
-          // Gêne récente : l'application ne distingue pas gêne présente et
-          // antécédent ; elle est au moins aussi prudente que le banc.
-          if (b.recente) {
-            expect(a.recente, isTrue, reason: cle);
-          }
+  test('depuisProfil : correspondance des champs sur les profils adaptés', () {
+    for (final cle in cles) {
+      final bench = BenchProfile.fromJson(profils[cle]!);
+      final adapted = adaptProfile(bench, catalog: catalog);
+      final duBanc = profilDuBanc(bench, adapted.profile);
+      final app = va.ProfilValidation.depuisProfil(
+        adapted.profile,
+        debut: benchStartDate,
+      );
+      expect(app.niveau, duBanc.niveau, reason: cle);
+      expect(app.anneeNaissance, duBanc.anneeNaissance, reason: cle);
+      expect(app.anneeReference, duBanc.anneeReference, reason: cle);
+      expect(app.age, duBanc.age, reason: cle);
+      expect(app.tailleCm, duBanc.tailleCm, reason: cle);
+      expect(app.poidsCorpsKg, duBanc.poidsCorpsKg, reason: cle);
+      expect(
+        app.indiceMasseCorporelle,
+        duBanc.indiceMasseCorporelle,
+        reason: cle,
+      );
+      expect(
+        <Object?>[
+          for (final r in app.records)
+            <Object?>[r.exerciseId, r.mesure, r.valeur, r.distanceMetres],
+        ],
+        <Object?>[
+          for (final r in duBanc.records)
+            <Object?>[r.exerciseId, r.mesure, r.valeur, r.distanceMetres],
+        ],
+        reason: cle,
+      );
+      expect(app.exercicesConnus, duBanc.exercicesConnus, reason: cle);
+      expect(app.exercicesNonAcquis, duBanc.exercicesNonAcquis, reason: cle);
+      expect(app.prudent, duBanc.prudent, reason: cle);
+      expect(app.semainesEcheance, duBanc.semainesEcheance, reason: cle);
+      // Pause : borne basse de la tranche ; seul le seuil de deux
+      // semaines compte (une semaine d'arrêt est lue comme deux :
+      // prudent).
+      expect(
+        app.semainesPause >= 2,
+        duBanc.semainesPause >= 2 || duBanc.semainesPause == 1,
+        reason: cle,
+      );
+      expect(app.genes, hasLength(duBanc.genes.length), reason: cle);
+      for (var k = 0; k < app.genes.length; k++) {
+        final a = app.genes[k];
+        final b = duBanc.genes[k];
+        expect(a.articulationCatalogue, b.articulationCatalogue, reason: cle);
+        expect(a.gene, b.gene, reason: cle);
+        // Gêne récente : l'application ne distingue pas gêne présente et
+        // antécédent ; elle est au moins aussi prudente que le banc.
+        if (b.recente) {
+          expect(a.recente, isTrue, reason: cle);
         }
       }
-    },
-  );
+    }
+  });
 }

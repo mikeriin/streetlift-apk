@@ -252,12 +252,7 @@ void main() {
         final temoin = t.plan(copieJson(jm(ev['contraintes'])));
         expect(_identiques(sortie, temoin), isTrue, reason: 'plan $i');
         comparer(sortie, plans[i]!['sortie'], 'plan[$i].sortie', ecarts);
-        comparer(
-          k.explain(),
-          plans[i]!['raisons'],
-          'plan[$i].raisons',
-          ecarts,
-        );
+        comparer(k.explain(), plans[i]!['raisons'], 'plan[$i].raisons', ecarts);
       } else {
         k.observe(copieJson(ev));
         t.observe(copieJson(ev));

@@ -603,9 +603,7 @@ void _seance(_Releve rel, int nf, int rep, Json d, Map<String, Json> fiches) {
         for (final w in jl(c['items'])) jm(w)['slotId']! as String: jm(w),
       };
       final zones = dictOuVide(c['zones']);
-      servis = <String, Json>{
-        for (final x in items) x['slotId']! as String: x,
-      };
+      servis = <String, Json>{for (final x in items) x['slotId']! as String: x};
       grilles = dictOuVide(c['grilles']);
       rel.entree();
       for (final x in items) {

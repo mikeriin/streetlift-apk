@@ -1,5 +1,26 @@
 # Journal
 
+## 0.4.0 — 11/10/2026 (lot KM2)
+
+Banc Dart de Koach 1.0 (`kalis_adapt` 1.0.0). Ajouts seulement : couple `kalis_plan` 0.3.1 × `kalis_adapt` 0.3.1
+inchangé, **aucun changement des critères de sécurité, des profils types, des attentes de coach ni des grilles du
+panel** ; le rapport du banc (`bin/kalis_bench_cli.dart`) ne change que sa ligne de version.
+
+- **Meneur de saison et politique Koach** (`lib/src/km/meneur.dart`, `politique_koach.dart`) : portages de
+  `reference/banc/meneur.py`, `politique_koach.py`, `extensions_koach.py`, `planification_banc.py` ; Koach complet
+  (planification, surveillance, contrôle dual, adhérence) conduit par sa façade (crochets intégrés, référence au
+  journal). Parité avec la référence Python sur 5 saisons complètes (`test/km2_banc_test.dart`, fixtures de
+  `reference/fixtures/generer_banc_km2.py`).
+- **Campagne des critères du cahier KM** (`lib/src/km/campagne.dart`, `criteres_moteur.dart`, `bin/km2.dart`) :
+  portage de `campagne.py`, `criteres_moteur.py`, `mesures.py` ; Koach contre le témoin `kalis_adapt` 0.3.1 sur la
+  matrice du banc, critère 5 mesuré selon C13.11.2, temps sur la VM Dart, parts exécutables séparément en CI
+  (`--partie i/n`, `assembler`).
+- **Banc adversarial** (`lib/src/km/adversaire.dart`, `bin/km2_adversaire.dart`, `bin/km2.dart adversaires`) :
+  portage de `adversaire.py` (rejeu des adversaires de KM1, nouvelle recherche contre le moteur Dart, témoin dans
+  la même campagne).
+- Tests : `km2_banc_test.dart`, `km2_campagne_test.dart`, `km2_adversaire_test.dart`, `km2_validateur_test.dart`
+  (validateur de `kalis_adapt` identique à `safetyFindings`).
+
 ## 0.3.1 — 09/10/2026 (lot KM1)
 
 Ajouts additifs pour la référence Python de `kalis_adapt` 1.0 (méthode Koach). Couple `kalis_plan` 0.3.1 ×

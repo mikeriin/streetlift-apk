@@ -1204,8 +1204,7 @@ List<ConstatSecurite> constatsSecurite({
   }
 
   // --- Reprise après coupure.
-  if (profile.semainesPause >= LimitesSecurite.breakWeeks &&
-      weeks.isNotEmpty) {
+  if (profile.semainesPause >= LimitesSecurite.breakWeeks && weeks.isNotEmpty) {
     final flagged = <String>{};
     for (final i in weeks.first.items) {
       if (!i.isResistance || i.isWarmup || i.isTest) {
