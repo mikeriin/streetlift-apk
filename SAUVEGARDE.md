@@ -1,20 +1,15 @@
-# Sauvegarde CI1h
+# Sauvegarde CI1h — correction 1 (C15.9)
 
-Base : main b7996b3f (dev6.11.1). Branche de mise au point : claude/ci-ci1h-rapide (workflow rapide.yml).
+Base : main 9ef40dad (dev6.11.2). Branche de travail locale ci1h-c1 (contenu de cette sauvegarde, sans .github).
 
 ## Fait
-- Défaut 1 : `ImportedProgram.fixedLoad` (« semaine|emplacement » → (exercice, kg)), `importedFixedLoadKg` (exception « lesté ou PdC ») ; `fixedLoadItem` / `fixedLoadAdvice` (lib/adapt/session_adapt.dart) ; contrainte dans `_adaptPrescribe` (`_fixedConstrain`) et `adaptAfterSet`.
-- Défaut 2 : `adaptPlanDay`, `adaptPlannedSession` (un seul calcul ouverture/prévision) ; `_adaptReprescribe` au jour prévu sans bilan ; `_adaptNextGoal` → séance visée (S, J, date) ; écran de fin : ligne « Prévision… » et « — S14 · J6, samedi 17/10 ».
-- Textes : `adapt.load_held` causes `program`, `program_bodyweight`.
-- Test : test/ci1h_charge_fixe_test.dart.
+- ETAT_CP : ligne CI1h « en cours depuis 2026-10-11 05:30 UTC (correction 1) ».
+- Défaut A : `adaptPlanDay` retiré ; `adaptPlannedSession` et `_adaptReprescribe` au jour réel (`_adaptInput` sans `day`).
+- Défaut B : `fixedLoadItem` tient séries/répétitions/secondes écrites (sauf douleur, `fixedVolumeLowered` : health_low, sleep_low, time_short, resume_after_break, load_held health*, ou raisons de séance) ; repli charge seule si hors contrat ; `_fixedConstrain` retire `setsReduced` des séries rétablies.
+- Version 6.11.3+116 (pubspec, kVersion, tests G2/G3, test python).
+- Tests : `test/ci1h_correction1_test.dart` (nouveau), `ci1h_charge_fixe_test.dart` adapté.
+- CI rapide : `claude/ci-ci1h-c1-rapide` essai 1 poussé.
 
-## En cours
-- Run rapide essai 4 vert (run 38088619626 : format, analyse, Dart, dev ; python = artefact du workflow rapide sans build-apk.yml).
-- Relecture indépendante faite (8 constats, 1 à 7 traités).
-- Commit candidat de main 9ef40dad (arbre d7de5656), contrôle complet poussé sur claude/ci-3d (cc97f610).
-
-## Fait aussi
-- main 9ef40dad publié, build signé run 38091686005 vert, livraison, état « à valider », page de suivi (v42), projet claude.ai.
-
-## Reste (ancien)
-- Lire ci-out du contrôle complet, publier main (avance rapide), build signé, livraison, état, page de suivi, notification.
+## Reste
+- Lire résultats CI rapide, corriger (format.patch), cause des 11 répétitions (relevés CI1H1|B|cause).
+- Contrôle complet claude/ci-3d, main, build signé, livraison, ETAT, page de suivi, notification.
