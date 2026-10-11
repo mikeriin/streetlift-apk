@@ -79,7 +79,10 @@ class KDock extends StatelessWidget {
                   ),
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
-                      color: k.haute.withValues(alpha: .96),
+                      // 96 % avec flou (U0.12) ; opaque en contraste
+                      // renforcé, où le contenu qui passe dessous ferait
+                      // tomber les icônes sous 7:1 (UI5).
+                      color: k.haute.withValues(alpha: k.contrast ? 1 : .96),
                       shape: StadiumBorder(side: BorderSide(color: k.filet)),
                     ),
                     child: Padding(

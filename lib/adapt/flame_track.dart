@@ -16,7 +16,6 @@ import 'package:flutter/services.dart';
 import 'package:kalis_core/kalis_core.dart' show Flames;
 
 import '../kit/kit.dart';
-import '../kit/format.dart';
 import '../koach/flame_icon.dart';
 import '../store.dart' show LogSpec, SetEntry;
 

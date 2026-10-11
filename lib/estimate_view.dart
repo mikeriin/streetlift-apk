@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 
 import 'kit/kit.dart';
-import 'kit/format.dart';
 import 'training_estimate.dart';
 
 void showEstimate(

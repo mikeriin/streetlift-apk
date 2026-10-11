@@ -28,8 +28,6 @@ import 'profile_completion.dart';
 import 'store.dart';
 import 'store_widget.dart';
 import 'kit/kit.dart';
-import 'kit/format.dart';
-import 'motion.dart';
 import 'kalis_clock.dart';
 
 /// Route au sommet de [nav] (sans rien refermer).

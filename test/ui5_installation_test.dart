@@ -362,10 +362,7 @@ void main() {
         expect(normalizeAccent(id), palette);
         expect(normalizePaletteId(id), palette);
         expect(KAccentSpec.byId(id).id, palette);
-        expect(
-          KRoles.of(id, dark: true),
-          same(KRoles.of(palette, dark: true)),
-        );
+        expect(KRoles.of(id, dark: true), same(KRoles.of(palette, dark: true)));
         final doc = _withAccent(old, id);
         expect(
           await d.importBackup(jsonEncode(doc)),

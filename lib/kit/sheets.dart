@@ -50,7 +50,12 @@ class KSheetHeader extends StatelessWidget {
   final String? title;
   final String? subtitle;
   final bool inline;
-  const KSheetHeader({super.key, this.title, this.subtitle, this.inline = false});
+  const KSheetHeader({
+    super.key,
+    this.title,
+    this.subtitle,
+    this.inline = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -647,8 +652,7 @@ Future<T?> showKContentSheet<T>(
         ? null
         : BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * .9),
     builder: (ctx) {
-      List<Widget> items() =>
-          builder != null ? [builder(ctx)] : children!(ctx);
+      List<Widget> items() => builder != null ? [builder(ctx)] : children!(ctx);
       Widget sheet({ScrollController? controller, bool shrink = true}) =>
           KContentSheet(
             title: title,

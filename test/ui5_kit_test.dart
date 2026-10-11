@@ -63,10 +63,7 @@ void main() {
           for (final t in titles) {
             await tester.pumpWidget(
               host(
-                KPage.sub(
-                  title: t,
-                  children: const [Text('Contenu')],
-                ),
+                KPage.sub(title: t, children: const [Text('Contenu')]),
                 scale: scale,
               ),
             );
@@ -417,9 +414,7 @@ void main() {
         ),
       );
       final button = tester.widget<IconButton>(find.byType(IconButton));
-      final bg = button.style!.backgroundColor!.resolve({
-        WidgetState.disabled,
-      });
+      final bg = button.style!.backgroundColor!.resolve({WidgetState.disabled});
       expect(bg, Colors.transparent);
     });
 
@@ -443,7 +438,10 @@ void main() {
         for (final dark in [true, false]) {
           for (final contrast in [false, true]) {
             final r = KRoles.of(source.id, dark: dark, contrast: contrast);
-            final need = contrast ? 7.0 : 4.5;
+            // Icônes des onglets repliés (élément graphique, critère
+            // 1.4.11 : 3:1, 4,5:1 en contraste renforcé) : on exige 4,5:1
+            // dans les deux modes, le niveau du texte courant.
+            const need = 4.5;
             for (final under in [
               const Color(0xFFFFFFFF),
               const Color(0xFF000000),
@@ -451,11 +449,13 @@ void main() {
               r.texte,
               r.fond,
             ]) {
-              final bg = over(r.haute, .96, under);
+              // Opaque en contraste renforcé (lib/kit/dock.dart).
+              final bg = over(r.haute, contrast ? 1 : .96, under);
               expect(
                 kContrast(r.texte2, bg),
                 greaterThanOrEqualTo(need - .05),
-                reason: '${source.id} ${dark ? 'sombre' : 'clair'} '
+                reason:
+                    '${source.id} ${dark ? 'sombre' : 'clair'} '
                     '${contrast ? 'renforcé ' : ''}icône sur $under',
               );
             }

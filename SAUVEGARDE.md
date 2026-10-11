@@ -9,5 +9,8 @@ Branche de travail locale `ui/UI5` (partie de `refonte-ui` 48bda98, fusion de ma
 - Agents : textes R3/R5/R9 + toUpperCase (jetons UI5 = 0), formats C9 (lib/kit/format.dart, virgule, au moins n min, espace fine), API openTab + états vides Stats, test d'installation.
 - tools/check_ui_illustrations.py + relevé + test Python ; test/ui5_kit_test.dart ; tour parties e (320 dp × 200 %) et f (palettes, contraste).
 
+## En cours
+- Contrôle complet 1 sur claude/ci-ui-ui5 (arbre e129b1b, avant format et seuil du dock) ; cahier §5.2 corrigé dans un worktree pipeline local (non poussé).
+
 ## Reste
 - Contrôle rapide puis complet (claude/ci-ui-ui5), correction format/analyse/tests ; captures regardées ; relecture indépendante ; cahier §5.2 (U0.17) ; REFONTE_UI.md ; version 6.12.0+116 ; main ; livraison.
