@@ -292,6 +292,9 @@ void main() {
     expect(find.byType(FilterChip), findsNothing);
     await tap(tester, 'segment-given');
     expect(flow(tester).draft.consent, 'given');
+    // UI5 : texte courant à 15 / 22 (cahier §5.2) : les choix sont plus bas
+    // dans la liste, construite à la demande ; ils sont amenés à l'écran.
+    await scrollToAction(tester, find.byType(KChip).first);
     expect(find.byType(KChip), findsWidgets);
     await tap(tester, 'segment-refused');
     expect(flow(tester).draft.consent, 'refused');
