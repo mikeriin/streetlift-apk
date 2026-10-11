@@ -1,0 +1,556 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             95.6s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        2,951ms
+D/AccessibilityBridge( 4312): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4312): Width is zero. 0,0
+W/HWUI    ( 4312): Unknown dataspace 0
+W/eetlift_tracker( 4312): Verification of androidx.window.layout.adapter.WindowBackend androidx.window.layout.WindowInfoTracker$Companion$extensionBackend$2.invoke() took 140.747ms (476.03 bytecodes/s) (4296B approximate peak alloc)
+I/WindowExtensionsImpl( 4312): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4312): Width is zero. 0,0
+D/FlutterJNI( 4312): Sending viewport metrics to the engine.
+W/HWUI    ( 4312): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4312): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4312): mapper 4.x is not supported
+I/eetlift_tracker( 4312): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4312): Skipped 119 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4312): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4312): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+D/ProfileInstaller( 4312): Installing profile for fr.tchoupi.streetlift_tracker
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:45399/IioQ-UzcBN4=/
+VMServiceFlutterDriver: Isolate found with number: 4377883936569787
+VMServiceFlutterDriver: Isolate 4377883936569787 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4312): 00:00 +0: Tour UI b : écrans principaux et parcours
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4312): Skipped 38 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 4312): app_time_stats: avg=708.02ms min=3.21ms max=1577.09ms count=3
+D/EGL_emulation( 4312): app_time_stats: avg=1637.23ms min=1637.23ms max=1637.23ms count=1
+D/SharedPreferencesImpl( 4312): Time required to fsync /data/user/0/fr.tchoupi.streetlift_tracker/shared_prefs/FlutterSharedPreferences.xml: [<1: 0, <2: 0, <4: 0, <8: 0, <16: 0, <32: 0, <64: 0, <128: 1, <256: 0, <512: 1, <1024: 0, <2048: 0, <4096: 0, <8192: 0, <16384: 0, >=16384: 0]
+D/EGL_emulation( 4312): app_time_stats: avg=256.23ms min=241.93ms max=273.40ms count=4
+D/SharedPreferencesImpl( 4312): Time required to fsync /data/user/0/fr.tchoupi.streetlift_tracker/shared_prefs/FlutterSharedPreferences.xml: [<1: 0, <2: 0, <4: 0, <8: 0, <16: 0, <32: 0, <64: 0, <128: 1, <256: 0, <512: 2, <1024: 0, <2048: 0, <4096: 0, <8192: 0, <16384: 0, >=16384: 0]
+D/EGL_emulation( 4312): app_time_stats: avg=327.99ms min=24.20ms max=820.50ms count=4
+I/eetlift_tracker( 4312): Background concurrent mark compact GC freed 2095KB AllocSpace bytes, 13(580KB) LOS objects, 49% free, 2588KB/5177KB, paused 43us,14.782ms total 119.817ms
+D/FlutterJNI( 4312): Sending viewport metrics to the engine.
+D/EGL_emulation( 4312): app_time_stats: avg=687.42ms min=28.78ms max=2471.53ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=790.94ms min=375.58ms max=1206.31ms count=2
+D/EGL_emulation( 4312): app_time_stats: avg=15496.28ms min=15496.28ms max=15496.28ms count=1
+D/EGL_emulation( 4312): app_time_stats: avg=334.35ms min=266.07ms max=459.44ms count=3
+D/EGL_emulation( 4312): app_time_stats: avg=183.43ms min=70.48ms max=308.42ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=255.88ms min=169.17ms max=348.33ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=204.92ms min=70.60ms max=272.57ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=168.26ms min=57.88ms max=258.46ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=195.27ms min=177.82ms max=228.13ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=199.83ms min=178.98ms max=242.72ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=299.80ms min=258.57ms max=394.41ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=317.96ms min=71.13ms max=924.73ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=260.31ms min=239.17ms max=282.53ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=271.74ms min=92.95ms max=478.94ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=197.27ms min=47.44ms max=289.34ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=294.44ms min=226.86ms max=397.04ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=259.33ms min=57.41ms max=479.37ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=222.47ms min=9.67ms max=381.16ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=242.77ms min=226.80ms max=266.14ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=277.23ms min=232.40ms max=326.97ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=239.36ms min=49.88ms max=443.65ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=253.21ms min=231.05ms max=272.00ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=197.06ms min=22.57ms max=362.88ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=165.67ms min=14.53ms max=232.55ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=179.75ms min=175.11ms max=188.38ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=215.93ms min=9.15ms max=498.07ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=258.05ms min=177.54ms max=375.00ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=195.15ms min=62.35ms max=245.76ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=223.12ms min=9.16ms max=410.70ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=267.53ms min=251.13ms max=303.22ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=233.43ms min=213.32ms max=251.64ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=251.47ms min=44.87ms max=441.64ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=211.56ms min=68.49ms max=278.84ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=184.91ms min=19.85ms max=360.34ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=190.09ms min=172.99ms max=201.89ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=180.79ms min=8.57ms max=231.59ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=245.92ms min=13.59ms max=421.54ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=205.28ms min=79.72ms max=317.70ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=221.55ms min=162.29ms max=381.41ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=226.06ms min=47.34ms max=357.27ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=256.85ms min=221.46ms max=306.23ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=196.89ms min=14.40ms max=263.11ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=221.18ms min=167.32ms max=369.98ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=130.04ms min=4.77ms max=215.27ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=286.33ms min=172.26ms max=396.91ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=222.23ms min=68.26ms max=433.42ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=235.68ms min=42.60ms max=373.36ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=222.09ms min=172.05ms max=365.31ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=170.95ms min=3.54ms max=389.25ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=187.52ms min=15.10ms max=270.51ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=192.85ms min=181.08ms max=210.38ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=189.77ms min=10.17ms max=375.74ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=194.84ms min=185.36ms max=206.67ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=204.31ms min=13.10ms max=366.14ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=215.51ms min=66.44ms max=352.73ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=250.47ms min=233.99ms max=262.20ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=243.28ms min=230.98ms max=253.67ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=237.56ms min=201.30ms max=273.12ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=159.32ms min=13.78ms max=197.82ms count=7
+D/EGL_emulation( 4312): app_time_stats: avg=150.61ms min=17.12ms max=188.14ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=199.05ms min=12.14ms max=406.53ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=268.24ms min=225.18ms max=327.23ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=235.19ms min=46.28ms max=410.70ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=243.46ms min=230.63ms max=258.45ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=245.54ms min=222.96ms max=275.74ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=208.07ms min=166.12ms max=241.62ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=205.19ms min=11.67ms max=394.01ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=144.40ms min=16.02ms max=199.94ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=168.37ms min=17.85ms max=216.12ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=210.66ms min=174.35ms max=257.71ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=229.27ms min=44.26ms max=339.06ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=290.59ms min=219.13ms max=453.01ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=175.09ms min=12.93ms max=220.69ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=247.25ms min=182.61ms max=348.38ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=165.56ms min=11.64ms max=218.03ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=370.87ms min=226.08ms max=636.46ms count=3
+D/EGL_emulation( 4312): app_time_stats: avg=228.37ms min=200.90ms max=243.51ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=223.83ms min=212.65ms max=233.12ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=268.82ms min=23.75ms max=600.49ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=165.58ms min=12.36ms max=222.56ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=204.85ms min=13.16ms max=398.64ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=188.99ms min=25.90ms max=393.64ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=178.80ms min=159.76ms max=198.86ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=280.15ms min=214.14ms max=439.00ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=171.25ms min=25.97ms max=242.59ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=255.29ms min=176.58ms max=416.13ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=218.59ms min=201.83ms max=253.89ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=227.13ms min=26.83ms max=413.11ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=215.20ms min=193.68ms max=254.22ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=261.33ms min=29.69ms max=411.65ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=170.02ms min=10.74ms max=231.96ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=176.01ms min=156.27ms max=192.96ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=206.85ms min=131.01ms max=376.91ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=151.68ms min=6.80ms max=286.94ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=225.42ms min=22.76ms max=382.93ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=164.26ms min=15.60ms max=225.21ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=138.73ms min=4.11ms max=210.42ms count=7
+D/EGL_emulation( 4312): app_time_stats: avg=294.58ms min=210.47ms max=434.60ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=273.87ms min=183.15ms max=428.04ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=195.06ms min=176.05ms max=239.50ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=210.26ms min=51.09ms max=427.40ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=205.99ms min=132.65ms max=239.86ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=197.95ms min=49.91ms max=274.07ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=187.50ms min=63.17ms max=257.63ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=201.70ms min=56.14ms max=395.56ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=169.44ms min=8.78ms max=256.58ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=184.36ms min=165.48ms max=219.26ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=178.96ms min=139.51ms max=191.88ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=160.23ms min=67.36ms max=180.93ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=196.38ms min=174.50ms max=216.66ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=153.03ms min=18.48ms max=212.41ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=211.10ms min=166.57ms max=366.43ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=153.90ms min=4.19ms max=361.82ms count=7
+D/EGL_emulation( 4312): app_time_stats: avg=184.22ms min=174.99ms max=190.69ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=180.51ms min=172.27ms max=189.71ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=236.11ms min=169.13ms max=361.47ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=193.98ms min=115.05ms max=232.24ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=218.06ms min=189.02ms max=259.28ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=156.18ms min=12.60ms max=190.59ms count=7
+D/EGL_emulation( 4312): app_time_stats: avg=228.85ms min=175.17ms max=419.78ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=233.96ms min=177.43ms max=295.97ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=178.11ms min=151.15ms max=219.67ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=186.02ms min=166.64ms max=209.64ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=243.32ms min=61.84ms max=435.11ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=158.61ms min=48.91ms max=203.21ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=174.97ms min=163.82ms max=182.13ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=232.51ms min=153.80ms max=373.17ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=196.82ms min=21.26ms max=401.00ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=190.16ms min=15.10ms max=382.41ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=198.26ms min=175.74ms max=221.47ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=213.04ms min=127.50ms max=346.16ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=151.81ms min=15.83ms max=198.16ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=175.75ms min=168.19ms max=182.36ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=178.47ms min=138.20ms max=210.23ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=191.47ms min=170.25ms max=231.25ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=189.68ms min=30.14ms max=356.64ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=168.07ms min=152.70ms max=179.52ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=196.48ms min=149.93ms max=257.12ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=246.40ms min=183.60ms max=397.77ms count=4
+W/eetlift_tracker( 4312): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4312): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4312): app_time_stats: avg=158.39ms min=17.19ms max=217.98ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=196.80ms min=28.63ms max=392.75ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=159.25ms min=34.85ms max=199.89ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=194.08ms min=176.60ms max=213.52ms count=5
+E/AccessibilityBridge( 4312): transform has not been initialized for id = 466
+I/AccessibilityBridge( 4312): Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:  +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:  +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4312): Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 540.0, 960.0)
+I/AccessibilityBridge( 4312): Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:  SemanticsNode id=3 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:    +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:    +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4312): Semantics tree:    +-- transform=[1.5, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:    SemanticsNode id=454 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4312): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4312): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:      SemanticsNode id=455 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:        +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4312): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4312): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:        SemanticsNode id=456 identifier=null label=Boîte de dialogue actions=0 flags=6144
+I/AccessibilityBridge( 4312): Semantics tree:          +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:          +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 360.0, 604.0)
+I/AccessibilityBridge( 4312): Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 36.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:          SemanticsNode id=457 identifier=null label=Cou
+I/AccessibilityBridge( 4312): Douleur actions=0 flags=512
+I/AccessibilityBridge( 4312): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:            +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 320.0, 42.0)
+I/AccessibilityBridge( 4312): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 20.0, 246.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:          SemanticsNode id=458 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:            +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4312): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 360.0, 312.0)
+I/AccessibilityBridge( 4312): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 292.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:            SemanticsNode id=465 identifier=null label=null actions=0 flags=262144
+I/AccessibilityBridge( 4312): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:              +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4312): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 360.0, 312.0)
+I/AccessibilityBridge( 4312): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:              SemanticsNode id=459 identifier=null label=Douleur aujourd’hui : 4/10
+I/AccessibilityBridge( 4312): 0 : aucune · 10 : la pire imaginable. Au-dessus de 3/10, j’épargne la zone. Une douleur forte ou qui dure mérite l’avis d’un professionnel de santé. actions=0 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:                +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 320.0, 256.0)
+I/AccessibilityBridge( 4312): Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 20.0, 8.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:                SemanticsNode id=460 identifier=null label=Gauche actions=4194305 flags=270532616
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- rect.ltrb=(0.0, 0.0, 68.094025, 48.0)
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:                SemanticsNode id=461 identifier=null label=Droite actions=4194305 flags=270532616
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- rect.ltrb=(0.0, 0.0, 60.56703, 48.0)
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 76.094025, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:                SemanticsNode id=462 identifier=null label=Des deux côtés actions=4194305 flags=270532620
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- rect.ltrb=(0.0, 0.0, 108.70805, 48.0)
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 144.66106, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:                SemanticsNode id=463 identifier=null label=4/10 actions=4194496 flags=10485952
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- rect.ltrb=(109.2, 0.0, 157.2, 48.0)
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 82.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:                SemanticsNode id=464 identifier=null label=Enregistrer actions=4194305 flags=2097352
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- rect.ltrb=(0.0, 0.0, 320.0, 56.0)
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 200.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:                SemanticsNode id=466 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- textDirection=null
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+I/AccessibilityBridge( 4312): Semantics tree:                  +-- transform=null
+I/AccessibilityBridge( 4312): Semantics tree:    SemanticsNode id=452 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4312): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4312): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4312): Semantics tree:      SemanticsNode id=453 identifier=null label=Fond actions=262145 flags=0
+I/AccessibilityBridge( 4312): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4312): Semantics tree:        +-- textDirection=LTR
+I/AccessibilityBridge( 4312): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 254.0)
+I/AccessibilityBridge( 4312): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+D/EGL_emulation( 4312): app_time_stats: avg=236.58ms min=159.53ms max=392.86ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=152.34ms min=30.86ms max=200.61ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=179.95ms min=167.46ms max=196.06ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=183.21ms min=161.16ms max=222.24ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=179.93ms min=21.92ms max=250.65ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=156.28ms min=18.85ms max=204.26ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=171.21ms min=133.56ms max=184.48ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=263.93ms min=186.67ms max=396.27ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=159.81ms min=61.42ms max=211.85ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=191.01ms min=169.53ms max=228.98ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=162.54ms min=62.63ms max=242.18ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=232.36ms min=159.01ms max=413.42ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=192.05ms min=99.69ms max=305.34ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=166.75ms min=149.05ms max=179.73ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=174.49ms min=167.00ms max=180.34ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=200.74ms min=18.83ms max=414.15ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=188.45ms min=176.52ms max=200.03ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=259.74ms min=175.79ms max=490.51ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=156.73ms min=10.40ms max=362.30ms count=7
+D/EGL_emulation( 4312): app_time_stats: avg=181.86ms min=17.62ms max=360.84ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=207.96ms min=161.38ms max=363.89ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=156.21ms min=12.39ms max=321.51ms count=7
+D/EGL_emulation( 4312): app_time_stats: avg=181.59ms min=170.98ms max=194.56ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=216.89ms min=157.32ms max=364.73ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=176.99ms min=26.75ms max=244.31ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=177.81ms min=148.50ms max=196.15ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=235.25ms min=20.00ms max=386.96ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=162.88ms min=11.66ms max=365.43ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=200.04ms min=175.79ms max=234.18ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=249.75ms min=183.02ms max=427.23ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=253.28ms min=93.96ms max=532.70ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=181.68ms min=177.02ms max=187.10ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=221.94ms min=178.63ms max=239.32ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=191.27ms min=44.61ms max=368.68ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=253.56ms min=226.59ms max=285.21ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=242.10ms min=45.67ms max=404.15ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=197.68ms min=47.22ms max=263.70ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=252.69ms min=223.46ms max=265.22ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=197.70ms min=52.61ms max=275.83ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=178.30ms min=167.82ms max=186.79ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=261.68ms min=59.05ms max=515.78ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=289.67ms min=240.06ms max=368.94ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=165.11ms min=51.93ms max=356.95ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=257.13ms min=170.44ms max=342.07ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=231.02ms min=53.47ms max=398.55ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=175.19ms min=53.92ms max=365.39ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=273.74ms min=177.10ms max=465.15ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=217.84ms min=52.17ms max=271.82ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=221.31ms min=167.34ms max=367.43ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=283.67ms min=65.85ms max=572.76ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=247.70ms min=229.99ms max=282.27ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=184.98ms min=54.26ms max=235.78ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=182.17ms min=44.14ms max=253.37ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=376.87ms min=263.67ms max=520.25ms count=3
+D/EGL_emulation( 4312): app_time_stats: avg=260.68ms min=62.80ms max=390.30ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=251.12ms min=65.73ms max=395.69ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=251.66ms min=238.92ms max=273.61ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=351.26ms min=259.16ms max=527.61ms count=3
+D/EGL_emulation( 4312): app_time_stats: avg=251.91ms min=230.53ms max=274.23ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=274.99ms min=250.59ms max=320.64ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=295.24ms min=273.56ms max=309.30ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=566.28ms min=265.38ms max=1162.28ms count=3
+D/EGL_emulation( 4312): app_time_stats: avg=200.92ms min=53.43ms max=428.95ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=221.15ms min=178.00ms max=255.87ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=253.18ms min=245.73ms max=263.48ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=274.36ms min=236.08ms max=344.57ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=213.75ms min=53.72ms max=262.89ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=209.11ms min=29.56ms max=406.93ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=295.40ms min=232.96ms max=415.46ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=244.32ms min=227.55ms max=283.72ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=255.33ms min=230.46ms max=280.21ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=252.37ms min=237.86ms max=270.18ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=248.87ms min=229.05ms max=258.26ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=172.11ms min=81.99ms max=256.53ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=192.29ms min=147.22ms max=264.22ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=247.48ms min=178.74ms max=322.12ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=219.47ms min=69.06ms max=277.88ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=270.64ms min=84.54ms max=471.22ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=275.45ms min=248.92ms max=292.57ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=243.45ms min=233.67ms max=260.83ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=208.72ms min=49.10ms max=259.86ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=253.67ms min=163.35ms max=358.05ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=241.60ms min=235.80ms max=247.00ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=254.79ms min=54.37ms max=443.97ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=254.23ms min=240.38ms max=263.21ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=194.24ms min=62.15ms max=254.23ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=179.73ms min=176.07ms max=183.34ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=209.04ms min=179.06ms max=260.32ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=242.29ms min=189.87ms max=395.62ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=158.83ms min=7.87ms max=213.41ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=222.86ms min=175.60ms max=405.25ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=255.64ms min=239.51ms max=268.49ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=249.98ms min=231.06ms max=276.97ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=174.98ms min=49.07ms max=233.33ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=190.20ms min=77.62ms max=265.20ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=144.79ms min=37.74ms max=224.17ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=181.61ms min=166.06ms max=202.38ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=287.94ms min=216.08ms max=380.08ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=203.87ms min=40.69ms max=376.06ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=186.42ms min=51.39ms max=236.67ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=203.02ms min=56.97ms max=263.03ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=263.43ms min=219.35ms max=362.00ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=135.78ms min=5.95ms max=203.63ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=284.00ms min=227.70ms max=420.51ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=226.38ms min=53.26ms max=387.97ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=234.83ms min=222.54ms max=250.10ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=185.42ms min=53.50ms max=244.10ms count=5
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:6c783191: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:6c783191: onFailed at PHASE_CLIENT_VIEW_SERVED
+W/InputMethodManager( 4312): Ignoring showSoftInput() as view=io.flutter.embedding.android.FlutterView{750bddc VFE...... .F....ID 0,0-540,960 #1} is not served.
+I/AssistStructure( 4312): Flattened final assist data: 524 bytes, containing 1 windows, 3 views
+D/EGL_emulation( 4312): app_time_stats: avg=226.45ms min=36.28ms max=641.48ms count=5
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:4de3c7c4: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:4de3c7c4: onFailed at PHASE_CLIENT_VIEW_SERVED
+W/InputMethodManager( 4312): Ignoring showSoftInput() as view=io.flutter.embedding.android.FlutterView{750bddc VFE...... .F...... 0,0-540,960 #1 aid=1073741824} is not served.
+D/EGL_emulation( 4312): app_time_stats: avg=243.17ms min=218.90ms max=292.22ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=257.13ms min=240.03ms max=272.84ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=190.66ms min=45.57ms max=258.25ms count=5
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:b1df81b1: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:b1df81b1: onFailed at PHASE_CLIENT_VIEW_SERVED
+D/EGL_emulation( 4312): app_time_stats: avg=171.52ms min=52.12ms max=248.78ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=175.17ms min=166.72ms max=185.45ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=219.15ms min=36.17ms max=477.02ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=240.90ms min=224.95ms max=257.43ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=244.09ms min=86.19ms max=406.55ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=195.23ms min=39.50ms max=264.20ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=250.47ms min=222.82ms max=266.71ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=243.06ms min=239.85ms max=248.73ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=229.50ms min=33.30ms max=381.03ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=153.40ms min=30.65ms max=205.42ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=183.07ms min=162.60ms max=219.30ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=217.88ms min=157.74ms max=435.59ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=252.20ms min=55.35ms max=356.71ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=220.17ms min=155.54ms max=384.37ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=205.14ms min=43.09ms max=304.95ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=195.91ms min=178.48ms max=231.03ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=177.19ms min=150.66ms max=188.29ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=287.51ms min=249.68ms max=372.79ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=254.68ms min=61.86ms max=477.57ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=257.92ms min=49.46ms max=433.27ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=181.31ms min=84.59ms max=271.96ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=249.91ms min=178.35ms max=371.48ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=296.72ms min=211.21ms max=473.77ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=203.41ms min=46.13ms max=278.66ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=210.74ms min=38.82ms max=347.78ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=240.23ms min=221.32ms max=268.54ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=271.15ms min=245.21ms max=296.13ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=268.36ms min=224.33ms max=312.10ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=206.80ms min=53.45ms max=312.82ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=279.84ms min=61.02ms max=477.95ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=190.60ms min=51.12ms max=288.54ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=209.24ms min=153.18ms max=356.61ms count=4
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=257.11ms min=209.91ms max=285.24ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=203.57ms min=185.56ms max=213.24ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=230.04ms min=207.29ms max=273.26ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=169.20ms min=25.08ms max=223.42ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=216.15ms min=18.23ms max=482.75ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=186.57ms min=12.56ms max=455.01ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=272.66ms min=264.08ms max=294.08ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=218.34ms min=70.71ms max=402.51ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=145.11ms min=57.68ms max=182.71ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=139.00ms min=6.58ms max=186.24ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=239.81ms min=54.28ms max=366.13ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=175.52ms min=64.55ms max=257.57ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=232.23ms min=172.98ms max=379.96ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=151.60ms min=59.88ms max=173.38ms count=6
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=205.46ms min=83.24ms max=394.65ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=185.30ms min=173.14ms max=202.99ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=229.68ms min=170.63ms max=414.94ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=269.22ms min=91.96ms max=453.58ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=151.27ms min=49.25ms max=187.89ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=212.90ms min=166.29ms max=353.09ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=145.31ms min=3.41ms max=317.07ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=194.68ms min=43.67ms max=370.00ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=255.37ms min=160.81ms max=378.23ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=157.41ms min=62.85ms max=202.38ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=166.60ms min=153.36ms max=179.55ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=266.22ms min=180.63ms max=391.19ms count=5
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:8c78fd72: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:8c78fd72: onFailed at PHASE_CLIENT_VIEW_SERVED
+W/InputMethodManager( 4312): Ignoring showSoftInput() as view=io.flutter.embedding.android.FlutterView{750bddc VFE...... .F...... 0,0-540,960 #1 aid=1073741824} is not served.
+I/AssistStructure( 4312): Flattened final assist data: 528 bytes, containing 1 windows, 3 views
+D/EGL_emulation( 4312): app_time_stats: avg=245.51ms min=217.17ms max=274.62ms count=5
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:1a117264: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:1a117264: onFailed at PHASE_CLIENT_VIEW_SERVED
+W/InputMethodManager( 4312): Ignoring showSoftInput() as view=io.flutter.embedding.android.FlutterView{750bddc VFE...... .F...... 0,0-540,960 #1 aid=1073741824} is not served.
+D/EGL_emulation( 4312): app_time_stats: avg=277.54ms min=257.07ms max=309.96ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=243.29ms min=56.46ms max=350.53ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=243.93ms min=221.75ms max=261.83ms count=5
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:9a940ffd: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+I/ImeTracker( 4312): fr.tchoupi.streetlift_tracker:9a940ffd: onFailed at PHASE_CLIENT_VIEW_SERVED
+I/eetlift_tracker( 4312): Background concurrent mark compact GC freed 2555KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 2636KB/5272KB, paused 54us,5.645ms total 30.022ms
+W/eetlift_tracker( 4312): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4312): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4312): app_time_stats: avg=252.89ms min=235.06ms max=275.69ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=203.69ms min=56.25ms max=243.79ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=297.33ms min=65.59ms max=490.52ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=182.60ms min=4.00ms max=388.55ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=229.20ms min=224.26ms max=235.31ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=185.00ms min=59.58ms max=347.85ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=199.99ms min=47.09ms max=365.07ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=193.04ms min=171.56ms max=239.42ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=164.93ms min=56.56ms max=220.37ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=246.01ms min=172.04ms max=359.37ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=210.33ms min=57.58ms max=284.74ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=221.95ms min=166.72ms max=356.52ms count=4
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=169.54ms min=69.07ms max=239.50ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=213.67ms min=30.21ms max=396.14ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=199.30ms min=15.46ms max=404.55ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=196.82ms min=176.50ms max=222.10ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=303.92ms min=269.96ms max=373.29ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=207.79ms min=60.60ms max=253.39ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=268.95ms min=66.61ms max=440.34ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=177.23ms min=61.91ms max=345.00ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=174.69ms min=54.45ms max=375.13ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=173.49ms min=152.81ms max=205.41ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=277.29ms min=69.57ms max=445.73ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=158.27ms min=65.22ms max=193.55ms count=6
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=246.61ms min=178.98ms max=429.46ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=174.01ms min=27.90ms max=355.40ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=155.19ms min=12.48ms max=189.93ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=206.45ms min=16.99ms max=446.28ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=254.38ms min=96.65ms max=335.64ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=182.03ms min=58.37ms max=421.34ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=183.49ms min=165.44ms max=199.14ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=187.61ms min=174.25ms max=215.16ms count=5
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=177.66ms min=163.37ms max=184.31ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=154.23ms min=16.83ms max=206.55ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=174.35ms min=146.40ms max=201.30ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=179.45ms min=169.81ms max=185.60ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=232.03ms min=173.25ms max=407.01ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=176.71ms min=55.16ms max=270.57ms count=6
+D/EGL_emulation( 4312): app_time_stats: avg=263.43ms min=198.29ms max=397.21ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=213.99ms min=62.27ms max=389.78ms count=6
+W/WindowOnBackDispatcher( 4312): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4312): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4312): app_time_stats: avg=212.26ms min=64.69ms max=299.93ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=192.82ms min=175.39ms max=210.93ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=201.84ms min=173.44ms max=227.65ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=244.28ms min=12.06ms max=423.78ms count=5
+D/EGL_emulation( 4312): app_time_stats: avg=259.29ms min=230.59ms max=292.90ms count=4
+D/EGL_emulation( 4312): app_time_stats: avg=266.11ms min=101.03ms max=554.84ms count=5
