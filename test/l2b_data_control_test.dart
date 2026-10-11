@@ -688,7 +688,7 @@ void main() {
         // UI5 : texte courant à 15 / 22 (cahier §5.2) ; avec la police de
         // test (un carré par caractère) à 200 %, la page fait plus de
         // 15 000 px : on la fait défiler par sa position jusqu'au champ.
-        final page = tester.state<ScrollableState>(
+        final list = tester.state<ScrollableState>(
           find.byType(Scrollable).first,
         );
         for (
@@ -696,10 +696,10 @@ void main() {
           i < 200 && find.byType(TextField).evaluate().isEmpty;
           i++
         ) {
-          page.position.jumpTo(
-            (page.position.pixels + 300).clamp(
+          list.position.jumpTo(
+            (list.position.pixels + 300).clamp(
               0.0,
-              page.position.maxScrollExtent,
+              list.position.maxScrollExtent,
             ),
           );
           await tester.pump();
