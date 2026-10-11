@@ -24,7 +24,7 @@ def run(job):
                 mu+=self.p['planification']['gain_affutage']
             tot=min(math.exp(mu-norm_ppf(s['tentative_ouverture_proba'])*sd), s['tentative_ouverture_part']*math.exp(mu))
             c_est=plan['grille'].plancher(max(tot-bw,plan['grille'].minimum))
-            rec=[(c,r,j) for (j,c,r) in mem.charges_reussies if self.jour-j<=42]
+            rec=[(c,r,j,f) for (j,c,r,f) in mem.barres if self.jour-j<=42]
             log.append(dict(day=self.jour,ex=ex,est=math.exp(mu),sd=sd,bw=bw,c_est=c_est,c=out['loadKg'],coup=self.coupure,pal=self.palier,zone=bool(plan['cond']['zone']),sh=plan['sans_hausse'],dern=mem.charge_derniere,rec=rec[-60:],ev=bool((self.contexte or {}).get('jour_evenement'))))
         return out
     S.Seances._tentative=tent

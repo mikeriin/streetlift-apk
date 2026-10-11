@@ -1,0 +1,7 @@
+name: aa_km1c2
+description: Outil de mise au point du lot KM1c2 (jamais sur moteurs) - lance les campagnes de la référence Python en CI.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=3.10.0 <4.0.0"

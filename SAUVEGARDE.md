@@ -20,3 +20,11 @@ Base : `moteurs` df28b47c. Session Fable 5.1, lancée le 11/10/2026 ~05:10 UTC. 
 - Local : recherche adversariale 3000 contre l'itération 1 (/tmp/k/adv_it1_b3000.json).
 - Ajouts banc : `--partie i/n`, `couverture_paires` (recalage hors ligne de defaut_modele_sd), `prevu_jour` et `observe` dans les unités de calibration (critère 5).
 - Tests : 181 passent ; à mettre à jour : `test_retour_de_coupure_ni_test_ni_hausse`, `test_documents` (empreinte, SOURCES, CONTRAT), fixtures.
+
+## 11/10 07:50 UTC — points 1 (itération 2), 2 et 3 codés ; campagne finale lancée
+- Point 1, itération 2 (retenue) : palier d'ouverture = plus lourde barre des 42 jours ramenée à 1 rép. × (1 + palier de la note la plus dure des barres à 5 % près) ; `tentative_palier_bande` 0,05. Recherche 3000 contre cette version + témoin Dart (CI) : 7 bis 18/24 (75 %), 5 cas sous − 0,10 (échecs d'ouverture street_07, estimation trop haute sous notes bruitées), pire écart − 0,30 (KM2 : 9/24, − 0,60). Tous les cas powerlifter tenus.
+- Point 2 : `planification.dispersion_echeance` 0,62 (mesuré graines 0,2,4 : 0,623 ; graines 1,3,5 : 0,625). Réplique hors ligne du modèle (/tmp/k/p2model.py) : six graines, pire décile 16,2 → 12,5 points, erreur pondérée 3,3 → 1,6 points. Le seuil de 5 points par décile n'est pas tenu (n ≈ 45 par décile : erreur d'échantillonnage ≈ 7 points ; biais par graine ± 1 % = ± 15 points près du seuil).
+- Point 3 : `defaut_modele_sd` 0,010 + `intervalle_echelle` 0,9 (dans `capacite`) ; six graines sans planificateur : couverture 89,26 %, e1RM 3,69 %, jour J 0,9439 / 0,9324.
+- Sans planificateur, graine 2 : 3 poussées de douleur (street_03, seances_manquees, vérité b) — identiques avec 1.0.1 (préexistant ; la configuration officielle, Koach complet, en a 0).
+- CI : campagne finale (code 1.0.2-ref.1) parties 1/2 (ci-cp-a) et 2/2 (ci-cp-b), ~80 min. Local : recherche adversariale finale (/tmp/k/adv_fin_b3000.json), puis témoin Dart en CI (ci/run_temoin.sh, AVEC_DART=1).
+- Reste : fixtures, SOURCES, CONTRAT (note datée, règles, clés : 321), README, relecture indépendante (Opus), contrôle complet, publication, livraison.

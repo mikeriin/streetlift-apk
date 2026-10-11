@@ -3,7 +3,7 @@
 set -e
 cd /home/claude/moteurs
 cp /tmp/k/SAUVEGARDE.md SAUVEGARDE.md
-mkdir -p km1c2_outils && cp /tmp/k/*.py /tmp/k/*.sh km1c2_outils/ 2>/dev/null || true
+mkdir -p km1c2_outils && cp /tmp/k/*.py /tmp/k/*.sh km1c2_outils/ 2>/dev/null || true; mkdir -p km1c2_outils/ci && cp /tmp/k/ci/*.sh /tmp/k/ci/*.yaml /tmp/k/ci/*.dart /tmp/k/ci/*.txt km1c2_outils/ci/ 2>/dev/null || true
 export GIT_INDEX_FILE=/tmp/k/save.index
 rm -f $GIT_INDEX_FILE
 git read-tree HEAD

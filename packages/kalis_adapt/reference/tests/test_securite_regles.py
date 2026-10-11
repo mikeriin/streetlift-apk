@@ -1052,6 +1052,11 @@ def test_ouverture_paliers_selon_la_note():
     assert _ouverture([(30, 150.0, 5, 3)])[2] == 180.0                 # 5 répétitions faciles : l'estimation
     assert _ouverture([(-10, 150.0, 1, None)])[2] == 180.0             # barre de plus de 42 jours : ignorée
     assert _ouverture([(30, 190.0, 1, None)])[2] == 180.0              # jamais au-dessus de l'estimation
+    # Barres proches de la plus lourde (à 5 % près) : la note la plus dure
+    # décide ; une barre non notée parmi elles interdit le palier.
+    assert _ouverture([(30, 150.0, 1, 3), (33, 147.5, 1, 9)])[2] == 152.5
+    assert _ouverture([(30, 150.0, 1, 3), (33, 147.5, 1, None)])[2] == 150.0
+    assert _ouverture([(30, 150.0, 1, 3), (33, 120.0, 1, None)])[2] == 165.0   # barre légère : hors bande
 
 
 def test_tentative_un_cran_apres_une_barre_dite_facile():

@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "version": "1.0.1-ref.1",
-  "date": "2026-10-10",
-  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour.",
+  "version": "1.0.2-ref.1",
+  "date": "2026-10-11",
+  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour. 1.0.2 (KM1 correction 2, DECISIONS_CP.md C13.12) : reprise par paliers mesurés et ouverture des tentatives selon la note des barres (securite.tentative_palier_par_rir, tentative_palier_bande), dispersion des trajectoires à l'échéance (planification.dispersion_echeance), intervalle recalé sur six graines (mesure.defaut_modele_sd, intervalle_echelle).",
   "qualites": [
     "pousser",
     "tirer",
@@ -162,7 +162,8 @@
     ],
     "noteur_entier_notes_min": 20,
     "noteur_entier_part_max": 0.05,
-    "defaut_modele_sd": 0.015
+    "defaut_modele_sd": 0.01,
+    "intervalle_echelle": 0.9
   },
   "jour": {
     "sigma_seance": 0.022,
@@ -297,7 +298,8 @@
     "erreur_estimation_echeance_sd": 0.03,
     "tentative_sd_jour": 0.046,
     "tentative_manque": 0.018,
-    "tentative_cible_proba": 0.35
+    "tentative_cible_proba": 0.35,
+    "dispersion_echeance": 0.62
   },
   "securite": {
     "hausse_par_niveau": [
@@ -514,7 +516,8 @@
     "retour_seances_avant_mesure": 2,
     "surmenage_seances_min": 6,
     "duree_vitesse_defaut": 2.5,
-    "tentative_palier_par_rir": [[4.0, 0.1], [3.0, 0.075], [2.0, 0.05], [1.0, 0.025]]
+    "tentative_palier_par_rir": [[4.0, 0.1], [3.0, 0.075], [2.0, 0.05], [1.0, 0.025]],
+    "tentative_palier_bande": 0.05
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

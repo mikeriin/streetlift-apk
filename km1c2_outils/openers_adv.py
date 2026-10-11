@@ -22,7 +22,7 @@ def run(arg):
             sem=(self.contexte or {}).get('semaine')
             if sem is not None and (self.genres.get(sem) in ('taper','competition') or self.genres.get(sem-1) in ('taper','competition')):
                 mu+=self.p['planification']['gain_affutage']
-            rec=[(c,r,j) for (j,c,r) in mem.charges_reussies if self.jour-j<=42]
+            rec=[(c,r,j,f) for (j,c,r,f) in mem.barres if self.jour-j<=42]
             log.append(dict(day=self.jour,ex=ex,est=math.exp(mu),sd=sd,bw=bw,c=out['loadKg'],coup=self.coupure,pal=self.palier,zone=bool(plan['cond']['zone']),rec=rec[-40:],pas=plan['grille'].pas if hasattr(plan['grille'],'pas') else None,ev=bool((self.contexte or {}).get('jour_evenement')),seances=t.seances))
         return out
     S.Seances._tentative=tent

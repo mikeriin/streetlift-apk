@@ -2323,25 +2323,32 @@ class Seances(object):
                 charge = grille.plancher(max(min(recente, plafond), charge))
             # 1.0.2 — paliers mesurés (C13.12). L'ouverture suit la capacité
             # estimée, sans dépasser le palier que les barres réussies des
-            # 42 derniers jours autorisent : la barre ramenée à une
+            # 42 derniers jours autorisent. Chaque barre est ramenée à une
             # répétition (+2,5 % par répétition faite au-delà de la première,
-            # 4 au plus : règle du premier passage à un schéma, A7.2), plus
-            # un palier qui dépend de ce que l'athlète en a dit
-            # (`tentative_palier_par_rir` : réserve dite de 4 ou plus, 3, 2,
-            # 1 ; aucune hausse pour une barre non notée ou dite à moins
-            # d'une répétition de l'échec). Une estimation plus haute que
-            # tout ce qui a été soulevé ne fait donc ouvrir plus lourd que si
-            # les barres ont été dites faciles. (1.0 et 1.0.1 : +10 % sur
-            # toute barre réussie, notée ou non, et jamais plus que le
-            # dernier passage en semaine de retour de coupure — ancrage sur
-            # des séries légères mesuré sur le banc adversarial.)
+            # 4 au plus : règle du premier passage à un schéma, A7.2). Le
+            # palier part de la plus lourde ; il ne monte au-dessus d'elle
+            # que si toutes les barres proches (à `tentative_palier_bande`
+            # près) ont été dites faciles : la hausse est celle de la note
+            # la plus dure parmi elles (`tentative_palier_par_rir` : réserve
+            # dite de 4 ou plus, 3, 2, 1), nulle dès qu'une de ces barres
+            # n'est pas notée ou est dite à moins d'une répétition de
+            # l'échec (une note isolée peut tromper). Une estimation plus
+            # haute que tout ce qui a été soulevé ne fait donc ouvrir plus
+            # lourd que si les barres les plus lourdes ont été dites
+            # faciles. (1.0 et 1.0.1 : +10 % sur toute barre réussie, notée
+            # ou non, et jamais plus que le dernier passage en semaine de
+            # retour de coupure — ancrage sur des séries légères mesuré sur
+            # le banc adversarial.)
             autorise = None
+            plus_haute = None
+            ramenees = []
             for (j, c, r, f) in mem.barres:
                 if self.jour - j > s['barre_recente_j']:
                     continue
                 plus = r - 1
                 if plus > s['schema_change_reps_max']:
                     plus = s['schema_change_reps_max']
+                total = (c + bw) * (1 + s['schema_change_part'] * plus)
                 dit = rir_de_flammes(f)
                 pas = 0.0
                 if dit is not None:
@@ -2349,9 +2356,15 @@ class Seances(object):
                         if dit >= seuil - 1e-9:
                             pas = p_
                             break
-                borne = (c + bw) * (1 + pas) * (1 + s['schema_change_part'] * plus) - bw
-                if autorise is None or borne > autorise:
-                    autorise = borne
+                ramenees.append((total, pas))
+                if plus_haute is None or total > plus_haute:
+                    plus_haute = total
+            if plus_haute is not None:
+                pas = None
+                for (total, p_) in ramenees:
+                    if total >= plus_haute * (1 - s['tentative_palier_bande']) - 1e-9 and (pas is None or p_ < pas):
+                        pas = p_
+                autorise = plus_haute * (1 + pas) - bw
             if autorise is not None and charge > autorise:
                 charge = grille.plancher(max(autorise, grille.minimum))
             return {'repsLow': 1, 'repsHigh': 1, 'loadKg': charge, 'flames': flammes, 'role': 'attempt'}
