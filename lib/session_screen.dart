@@ -570,10 +570,7 @@ class _SessionScreenState extends State<SessionScreen> {
         : '${groups[exerciseIndex].length > 1 ? 'Enchaînement' : 'Exercice'} '
               '${exerciseIndex + 1} sur $nPages';
     return Padding(
-      padding: const EdgeInsets.only(
-        left: KSpacing.s12,
-        right: KSpacing.page,
-      ),
+      padding: const EdgeInsets.only(left: KSpacing.s12, right: KSpacing.page),
       child: KPageStrip(
         label: where,
         count: bilanPage + 1,
@@ -1102,10 +1099,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      style: KType.detail.copyWith(color: t.texte),
-                    ),
+                    Text(title, style: KType.detail.copyWith(color: t.texte)),
                     if (detail != null)
                       Text(
                         detail,
@@ -1653,6 +1647,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // RIR 2 ») : badge à droite de la charge ; autre intensité : repère.
     final rirMatch = RegExp(r'RIR\s*(\S+)').firstMatch(ex.intensity);
     final levelMatch = RegExp(r'(\d+)\s*/\s*10').firstMatch(ex.intensity);
+    final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.3;
     final target = !readOnly && showIntensity && rirMatch != null
         ? (rirMatch.group(1)!, levelMatch?.group(1))
         : null;
@@ -1755,6 +1750,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                                 ? KType.corpsFort.copyWith(color: t.texte)
                                 : KType.chiffre.copyWith(color: t.encre),
                           ),
+                          // Grand texte : la cible passe sous la charge.
+                          if (target case (final rir, final level)
+                              when largeText)
+                            _TargetBadge(
+                              key: ValueKey('target-${ex.id}'),
+                              rir: rir,
+                              level: level,
+                            ),
                           // État (C5) : texte et icône en `validation`.
                           if (readOnly)
                             Row(
@@ -1779,7 +1782,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         ],
                       ),
                     ),
-                    if (target case (final rir, final level))
+                    if (target case (final rir, final level)
+                        when !largeText)
                       Padding(
                         padding: const EdgeInsetsDirectional.only(
                           start: KSpacing.s8,
@@ -2405,7 +2409,10 @@ class _SetFieldState extends State<_SetField> {
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
-    final shape = StadiumBorder(
+    // Correctifs UI (11/10/2026) : champ au rayon des groupes (12), plus
+    // une grande pilule.
+    final shape = RoundedRectangleBorder(
+      borderRadius: KRadius.menuRadius,
       side: widget.error
           ? BorderSide(color: k.danger, width: KSize.current)
           : widget.current

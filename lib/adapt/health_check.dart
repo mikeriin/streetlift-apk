@@ -740,62 +740,64 @@ class _FeelTile extends StatelessWidget {
           // Koach posé sur la tuile prend sa couleur pour papier.
           child: KoachSurface(
             color: k.haute,
-            child: marked(horizontal
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: KSpacing.s12,
-                      vertical: KSpacing.s8,
-                    ),
-                    child: Row(
-                      children: [
-                        KoachView(
-                          pose: kFeelPoses[level]!,
-                          height: 44,
-                          width: 40,
-                        ),
-                        const SizedBox(width: KSpacing.s12),
-                        Expanded(
-                          child: Text(
-                            label,
-                            style: KType.libelle.copyWith(color: k.texte),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minHeight: _feelTileHeight,
-                    ),
-                    child: Padding(
+            child: marked(
+              horizontal
+                  ? Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: KSpacing.s4,
+                        horizontal: KSpacing.s12,
                         vertical: KSpacing.s8,
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Row(
                         children: [
                           KoachView(
                             pose: kFeelPoses[level]!,
-                            height: 48,
-                            width: 44,
+                            height: 44,
+                            width: 40,
                           ),
-                          const SizedBox(height: KSpacing.s4),
-                          // Même taille pour les cinq libellés ; un libellé
-                          // trop large se réduit, il n'est jamais coupé.
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
+                          const SizedBox(width: KSpacing.s12),
+                          Expanded(
                             child: Text(
                               label,
-                              maxLines: 1,
-                              style: KType.micro.copyWith(color: k.texte),
+                              style: KType.libelle.copyWith(color: k.texte),
                             ),
                           ),
                         ],
                       ),
+                    )
+                  : ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minHeight: _feelTileHeight,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: KSpacing.s4,
+                          vertical: KSpacing.s8,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            KoachView(
+                              pose: kFeelPoses[level]!,
+                              height: 48,
+                              width: 44,
+                            ),
+                            const SizedBox(height: KSpacing.s4),
+                            // Même taille pour les cinq libellés ; un libellé
+                            // trop large se réduit, il n'est jamais coupé.
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                label,
+                                maxLines: 1,
+                                style: KType.micro.copyWith(color: k.texte),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  )),
+            ),
           ),
         ),
       ),

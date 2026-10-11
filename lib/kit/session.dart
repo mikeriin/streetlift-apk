@@ -1,9 +1,9 @@
 // UI0 (refonte UI) : composants de la séance (cahier §5.4, C8, C13) —
 // tableau des séries, barre de repos flottante, message court. UI5 : en-tête
 // de séance, points de progression et réserve basse de UI2 promus ici.
-import 'package:flutter/gestures.dart' show DeviceGestureSettings;
+import 'package:flutter/gestures.dart'
+    show DeviceGestureSettings, DragStartBehavior;
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart' show SpringDescription;
 
 import 'buttons.dart';
 import 'page.dart' show KFitTitle;
@@ -217,16 +217,19 @@ class KPageStrip extends StatelessWidget {
     final dots = KProgressDots(count: count, index: index);
     // Grand texte : les points passent sous le repère.
     if (MediaQuery.textScalerOf(context).scale(1) > 1.3) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [where, dots],
+      return SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [where, dots],
+        ),
       );
     }
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(child: where),
         const SizedBox(width: KSpacing.s8),
-        const Spacer(),
         dots,
       ],
     );
@@ -277,6 +280,9 @@ class KSessionPager extends StatelessWidget {
       child: PageView.builder(
         controller: controller,
         physics: const KPagePhysics(),
+        // Le chemin parcouru avant que le glissement soit reconnu compte :
+        // la page suit le doigt depuis le premier contact.
+        dragStartBehavior: DragStartBehavior.down,
         onPageChanged: onPageChanged,
         itemCount: itemCount,
         itemBuilder: (context, i) =>

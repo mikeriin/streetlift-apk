@@ -207,7 +207,7 @@ void main() {
       expect((actions, closes), (1, 1));
     });
 
-    testWidgets('titre de section : 14, 600, texte2, sans capitales (C6)', (
+    testWidgets('titre de section : 14, 600, encre, sans capitales (C6)', (
       tester,
     ) async {
       await tester.pumpWidget(host(const KSectionTitle('Chronomètres')));
@@ -215,7 +215,8 @@ void main() {
       final k = KTokens.of(tester.element(find.text('Chronomètres')));
       expect(t.style!.fontSize, 14);
       expect(t.style!.fontWeight, FontWeight.w600);
-      expect(t.style!.color, k.texte2);
+      // Correctifs UI (11/10/2026) : titres de section en `encre`.
+      expect(t.style!.color, k.encre);
       expect(find.text('CHRONOMÈTRES'), findsNothing);
     });
   });
