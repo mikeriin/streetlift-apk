@@ -22,10 +22,25 @@ void main() {
           ).copyWith(textScaler: const TextScaler.linear(2)),
           child: inner!,
         ),
-        home: const EraseDataDialog(),
+        home: Scaffold(
+          body: Builder(
+            builder: (context) => Center(
+              child: TextButton(
+                onPressed: () => eraseAppData(context, appVersion: 'test'),
+                child: const Text('Lancer'),
+              ),
+            ),
+          ),
+        ),
       ),
     );
+    await tester.tap(find.text('Lancer'));
     await tester.pumpAndSettle();
+    debugPrint('DIAG scrollables ${find.byType(Scrollable).evaluate().length}');
+    for (final e in find.byType(Scrollable).evaluate()) {
+      final b = e.renderObject as RenderBox;
+      debugPrint('DIAG sc ${b.localToGlobal(Offset.zero) & b.size}');
+    }
     final list = tester.state<ScrollableState>(find.byType(Scrollable).first);
     for (var i = 0; i < 200 && find.byType(TextField).evaluate().isEmpty; i++) {
       list.position.jumpTo(
@@ -44,6 +59,8 @@ void main() {
     );
     final sr = tester.getRect(find.byType(Scrollable).first);
     debugPrint('DIAG scrollable $sr');
+    debugPrint('DIAG champs ${find.byType(TextField).evaluate().length}');
+    debugPrint('DIAG hittable ${find.byType(TextField).hitTestable().evaluate().length}');
     final hit = tester.hitTestOnBinding(r.center);
     for (final e in hit.path.take(12)) {
       debugPrint('DIAG hit ${e.target.runtimeType}');
