@@ -152,8 +152,14 @@ void main() {
       await tester.tap(find.byKey(ValueKey('${first.id}-note-toggle')));
       await tester.pumpAndSettle();
       expect(find.text('Première note'), findsOneWidget);
+      // DIAG
+      final pv = find.byType(PageView);
+      final c = tester.getCenter(pv);
+      final hits = tester.hitTestOnBinding(c).path.take(25).map((e) => e.target.runtimeType).join(' > ');
+      debugPrint('DIAG center=$c hits=$hits');
       await swipePage(tester);
       final second = day.exercises.last;
+      debugPrint('DIAG after swipe page=${tester.widget<PageView>(pv).controller?.page} card2=${find.byKey(ValueKey('exercise-card-${second.id}')).evaluate().length} card1=${find.byKey(ValueKey('exercise-card-${first.id}')).evaluate().length}');
       await tester.tap(find.byKey(ValueKey('${second.id}-note-toggle')));
       await tester.pumpAndSettle();
       await tester.enterText(
