@@ -494,6 +494,42 @@ Passe livrée : référence Koach 1.0.1 (`moteurs` 17df8ca). **7 critères sur 1
 - **KM1c1.7 Rejeu du journal réel non refait** : les trois fichiers d'accompagnement construits en KM1 sous `/tmp` (programme, programme annoté, correspondance des noms) n'avaient pas été sauvegardés, et leur reconstruction a été refusée par le contrôle d'autorisations de la session (données personnelles). L'archive déchiffrée a été supprimée. **Demande au pilotage** : déposer ces trois fichiers chiffrés sur `cp-references` avant le rejeu de bascule (C13.10.2.d).
 - **KM1c1.8 Accès** : `add_repo` absent de la session ; accès en écriture vérifié par les push (`pipeline`, `cp-sauvegardes/KM1`, `moteurs`).
 
+### KM2
+
+Lot livré le 11/10/2026 (session Opus 5.5, effort maximal, C13.9), validation automatique par le pilotage sur les
+critères du cahier (C13.3) : `kalis_adapt` 1.0.0 (Koach 1.0 en Dart) et `kalis_bench` 0.4.0 (`moteurs` df28b47c,
+`etiquettes/kalis_adapt-v1.0.0`, `etiquettes/kalis_bench-v0.4.0`, contrôle complet run 38102672254). Détail :
+`pipeline/cp/livraisons/LIVRAISON_KM2.md`, `packages/kalis_bench/docs/CRITERES_KM2.md`.
+
+- **KM2.1 Lancement** : message sans ligne « Lot : » ; seul lot moteur « à faire ». `add_repo` absent de la session ;
+  accès en écriture vérifié par le push de la ligne « en cours ». Base `moteurs` 17df8ca. Pas de SDK Dart dans la
+  session (storage.googleapis.com et pub.dev refusés par le proxy) : compilation, tests et campagnes en CI, par
+  des commits « KM2 contrôle (dev) » à arbre réduit sur `claude/ci-cp-a` et, pour les campagnes, `claude/ci-cp-b`
+  (aucun lot de la voie B ne tournait).
+- **KM2.2 Portage à l'identique** : parité des 13 fixtures (traces comprises) ; le banc Dart redonne exactement
+  les critères de KM1 sur 1 440 saisons (graines 0-1) et le pire cas adversarial publié. Aucune méthode changée.
+- **KM2.3 Façade (M6, M7)** : crochets appliqués par `plan` (planification, semaine allégée, bras d'essai,
+  `koachCible`, forme d'adhérence), événements `reference` et `cibles` (rejeu exact de la planification),
+  `contexte.jour_index`. Sans extension, aucun changement. Validateur de sécurité dans `kalis_adapt`
+  (`validateur.dart`, identique au banc), paramètres en asset versionné, textes des raisons, `INTEGRATION_KM3.md`.
+- **KM2.4 Critères (graines 0-5, 4 320 saisons ; mesure du critère 5 selon C13.11.2)** : 7 sur 11 — 2 (0,95 %),
+  3 (5,25 séances contre 11,98), 6 (0,9459 contre 0,9324), 7 (pire cas ≥ témoin), 8 (0 violation), 9 (parité),
+  11 (0,21 s ; 21,5 ms sur la VM Dart). Non tenus : 1 (3,95 %, écart documenté C13.11.1, ne recule pas), 4 (93,2 %
+  sur six graines ; 90,4 % sur les graines de KM1), 5 (15,3 points). 10 : à la bascule (C13.11.3).
+- **KM2.5 Signalements de méthode (pour le pilotage, C8)** : (a) critère 5 au-dessus de 5 points : C13.11.2 prévoit
+  « KM1 correction 2 » limitée au modèle de réussite du jumeau ; (b) `mesure.defaut_modele_sd` calé sur deux graines,
+  couverture 93,2 % sur six ; (c) une recherche adversariale de 3 000 saisons trouve des athlètes sur lesquels Koach
+  fait nettement moins bien que 0.3.1 sur le même athlète (9 sur 24 appariés ; pire 0,226 contre 0,823 :
+  coupure et douleur avant l'échéance, charges et tentatives bloquées par les bornes « dernier passage » et
+  « barres réussies des 42 jours » de KM1.4). **Recommandation** : une passe « KM1 correction 2 » (méthode, Fable,
+  C13.9) couvrant (a), (b) et (c), avec un critère adversarial apparié en plus du pire cas global, puis un portage
+  court (fixtures régénérées, mêmes tests) ; KM3 peut avancer en parallèle sur l'API 1.0.0 (inchangée par ces
+  corrections, qui touchent des paramètres et des règles internes).
+- **KM2.6 Relecture indépendante** (sous-agent Opus) : 0 bloquant, 7 majeurs traités (forme d'adhérence, sémantique
+  des échéances, validateur à lecture tardive, rejeu avec extensions testé, journal robuste, contexte d'essai, bras
+  de volume idempotent), mineurs traités ou déclarés (livraison, § 4).
+- **KM2.7 Budget** (§ 9) : sous-agents sur Opus ; sauvegardes sur `cp-sauvegardes/KM2`.
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
