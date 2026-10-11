@@ -1037,15 +1037,11 @@ extension SessionAdaptStore on AppStore {
   // ------------------------------------------------------- prescription
 
   /// Entrées du moteur pour la journée [place] (sans la séance
-  /// [excludeKey]), au jour [day] (aujourd'hui par défaut).
-  kc.AdaptInput? _adaptInput(
-    AdaptPlace place,
-    String excludeKey, {
-    kc.CivilDate? day,
-  }) {
+  /// [excludeKey]), au jour réel (CI1h correction 1, C15.9).
+  kc.AdaptInput? _adaptInput(AdaptPlace place, String excludeKey) {
     final profile = adaptProfile;
     if (profile == null) return null;
-    final at = day ?? _adaptToday;
+    final at = _adaptToday;
     return kc.AdaptInput(
       profile: profile,
       block: place.block,
@@ -1055,29 +1051,21 @@ extension SessionAdaptStore on AppStore {
     );
   }
 
-  /// CI1h (C15.4) : jour où se prescrit une séance non commencée de
-  /// S[week]·J[j] sans bilan du jour : sa date prévue quand elle est encore
-  /// à venir (la fatigue du jour retombe d'ici là), sinon aujourd'hui.
-  kc.CivilDate adaptPlanDay(int week, int j) {
-    final today = _adaptToday;
-    if (program.start == null) return today;
-    final planned = civilOf(program.dateFor(week, j));
-    return planned.compareTo(today) > 0 ? planned : today;
-  }
-
   /// CI1h (C15.4) : **un seul calcul** pour la séance non commencée de
   /// S[week]·J[j] — celui de l'ouverture et de la prévision de fin de
   /// séance : bloc avec les ajustements de Koach en place, journal, profil,
-  /// saison, réglages, au jour [adaptPlanDay], sans bilan ni lieu du jour,
-  /// avec la contrainte de charge fixe. Null : hors moteur.
+  /// saison, réglages, sans bilan ni lieu du jour, avec la contrainte de
+  /// charge fixe. Null : hors moteur.
+  ///
+  /// CI1h correction 1 (C15.9) : prescrite **au jour réel**, même pour une
+  /// séance future ouverte en avance (la date prévue faisait voir comme
+  /// passées et manquées les journées d'avant, et le moteur y reportait
+  /// leur test) ; la séance est recalculée à chaque ouverture (CI1c) et
+  /// suit l'état réel le jour venu.
   kc.SessionPlan? adaptPlannedSession(int week, int j, {AdaptPlace? place}) {
     final p = place ?? adaptPlaceOf(week, j);
     if (p == null || !adaptAvailable) return null;
-    final input = _adaptInput(
-      p,
-      sessionKey(week, j),
-      day: adaptPlanDay(week, j),
-    );
+    final input = _adaptInput(p, sessionKey(week, j));
     if (input == null) return null;
     return _adaptPrescribe(p, input, null, null);
   }
@@ -1106,24 +1094,50 @@ extension SessionAdaptStore on AppStore {
   }
 
   /// CI1h (C15.2) : contrainte de charge fixe appliquée à la séance [plan]
-  /// prescrite par le moteur pour la journée [place].
+  /// prescrite par le moteur pour la journée [place] ; CI1h correction 1
+  /// (C15.9) : volume écrit tenu aussi, sauf douleur, bilan bas ou reprise
+  /// après coupure ([fixedLoadItem]).
   kc.SessionPlan _fixedConstrain(AdaptPlace place, kc.SessionPlan plan) {
     if (!place.imported || debugDisableFixedLoad) return plan;
     final written = {
       for (final it in place.day?.items ?? const <kc.ExercisePrescription>[])
         it.slotId: it,
     };
+    final lowered = plan.reasons.any(fixedVolumeLowered);
     var changed = false;
+    final restored = <String>{};
     final items = <kc.ExercisePrescription>[];
     for (final it in plan.items) {
       final kg = _fixedLoadAt(place, it.slotId, it.exerciseId);
-      var next = kg == null ? it : fixedLoadItem(it, kg, written[it.slotId]);
-      if (!identical(next, it) && next.validate().isNotEmpty) next = it;
+      var next = it;
+      if (kg != null) {
+        next = fixedLoadItem(
+          it,
+          kg,
+          written[it.slotId],
+          sessionLowered: lowered,
+        );
+        // Hors contrat avec le volume écrit : charge seule (CI1h).
+        if (!identical(next, it) && next.validate().isNotEmpty) {
+          next = fixedLoadItem(it, kg, written[it.slotId], holdVolume: false);
+        }
+        if (!identical(next, it) && next.validate().isNotEmpty) next = it;
+      }
       if (!identical(next, it)) changed = true;
+      if (next.sets > it.sets) restored.add(it.exerciseId);
       items.add(next);
     }
     if (!changed) return plan;
-    final next = plan.copyWith(items: items);
+    // Séries écrites rétablies : « une série de moins » n'est plus vrai.
+    final next = plan.copyWith(
+      items: items,
+      adjustments: [
+        for (final a in plan.adjustments)
+          if (!(a.kind == kc.AdjustmentKind.setsReduced &&
+              restored.contains(a.exerciseId)))
+            a,
+      ],
+    );
     return next.validate().isEmpty ? next : plan;
   }
 
@@ -1387,20 +1401,9 @@ extension SessionAdaptStore on AppStore {
     if (place == null || place.blockId != a.blockId) return null;
     try {
       final useCheck = _answered(check) ? check : null;
-      // CI1h (C15.4) : sans bilan du jour, une séance pas commencée se
-      // prescrit comme à l'ouverture (date prévue si elle est à venir) ;
-      // avec un bilan, au jour réel. La séance sans l'effet du bilan reste
-      // celle de l'ouverture.
-      final log = logs[key];
-      final started =
-          log != null &&
-          (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)));
-      final planned = started ? null : adaptPlanDay(week, base.j);
-      final input = _adaptInput(
-        place,
-        key,
-        day: useCheck == null ? planned : null,
-      );
+      // CI1h correction 1 (C15.9) : au jour réel, avec ou sans bilan, comme
+      // à l'ouverture ; la séance sans l'effet du bilan aussi.
+      final input = _adaptInput(place, key);
       if (input == null) return null;
       final plan = _adaptPrescribe(place, input, useCheck, where);
       kc.SessionPlan? without;
@@ -1408,10 +1411,7 @@ extension SessionAdaptStore on AppStore {
         // « Garder ma séance » / « Annuler » retire l'effet de la forme du
         // jour, pas les faits donnés : temps disponible et douleurs restent.
         final facts = factsOf(useCheck);
-        final quietInput = planned == null
-            ? input
-            : _adaptInput(place, key, day: planned) ?? input;
-        final b = _adaptPrescribe(place, quietInput, facts, where);
+        final b = _adaptPrescribe(place, input, facts, where);
         if (!jsonDeepEquals(b.toJson(), plan.toJson())) without = b;
       }
       final mode = adaptMode;
@@ -2497,8 +2497,8 @@ extension SessionAdaptStore on AppStore {
   ///
   /// CI1h (C15.4) : prescrite par le même calcul que l'ouverture de cette
   /// séance ([adaptPlannedSession] : même journal, même saison, mêmes
-  /// réglages, date prévue, charge fixe) ; une journée déjà commencée ou
-  /// faite n'est pas « la prochaine fois ».
+  /// réglages, même jour — aujourd'hui, C15.9 —, charge fixe) ; une journée
+  /// déjà commencée ou faite n'est pas « la prochaine fois ».
   ({SetGoal goal, int week, int j, DateTime? date})? _adaptNextGoal(
     int week,
     int j,

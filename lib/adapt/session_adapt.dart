@@ -523,19 +523,47 @@ kc.Reason? fixedLoadReason(kc.ExercisePrescription it, double kg) {
   );
 }
 
+/// CI1h correction 1 (C15.9) : raisons qui laissent le moteur baisser le
+/// volume écrit (répétitions, secondes, séries) d'une ligne à charge fixe :
+/// bilan du jour bas (forme, sommeil, temps disponible), reprise après une
+/// coupure. (La douleur : [_isPainReason].)
+bool fixedVolumeLowered(kc.Reason r) =>
+    r.code == 'adapt.health_low' ||
+    r.code == 'adapt.sleep_low' ||
+    r.code == 'adapt.time_short' ||
+    r.code == 'adapt.resume_after_break' ||
+    (r.code == 'adapt.load_held' &&
+        '${r.params['cause']}'.startsWith('health'));
+
 /// CI1h (C15.2) : prescription [it] du moteur pour une ligne du programme
 /// à charge écrite fixe [kg] (0 : sans lest) : charge écrite à chaque
-/// série, répétitions (ou secondes) jamais au-delà de la ligne écrite
-/// [written] ; seule une douleur signalée peut alléger la charge
-/// (conduite sous douleur). Le reste (séries, repos, rôle, technique) reste
-/// celui du moteur. Renvoie [it] s'il n'y a rien à changer.
+/// série ; seule une douleur signalée peut alléger la charge (conduite sous
+/// douleur).
+///
+/// CI1h correction 1 (C15.9) : le volume écrit est tenu aussi — séries,
+/// répétitions (ou secondes) de la ligne écrite [written] — sauf douleur,
+/// bilan du jour bas ou reprise après coupure ([fixedVolumeLowered], dans
+/// la prescription ou, [sessionLowered], dans la séance) : le moteur peut
+/// alors baisser le volume, jamais au-delà de la ligne écrite. Le reste
+/// (repos, rôle, technique) reste celui du moteur ; les conseils entre
+/// séries restent possibles ([fixedLoadAdvice]). [holdVolume] faux : seule
+/// la charge est tenue (repli de CI1h). Renvoie [it] s'il n'y a rien à
+/// changer.
 kc.ExercisePrescription fixedLoadItem(
   kc.ExercisePrescription it,
   double kg,
-  kc.ExercisePrescription? written,
-) {
+  kc.ExercisePrescription? written, {
+  bool sessionLowered = false,
+  bool holdVolume = true,
+}) {
   final loaded = fixedLoadApplies(it, kg);
   final pain = it.reasons.any(_isPainReason);
+  final hold =
+      holdVolume &&
+      written != null &&
+      !pain &&
+      !sessionLowered &&
+      !it.reasons.any(fixedVolumeLowered);
   double? load(double? v) {
     if (!loaded) return v;
     // Sans lest : la prescription sans charge reste sans charge.
@@ -548,26 +576,48 @@ kc.ExercisePrescription fixedLoadItem(
   int? cap(int? v, int? max) => v == null || max == null || v <= max ? v : max;
   int? under(int? low, int? high) =>
       low == null || high == null || low <= high ? low : high;
-  final rh = cap(it.repsHigh, written?.repsHigh);
-  final rl = under(cap(it.repsLow, written?.repsHigh), rh);
-  final sh = cap(it.secondsHigh, written?.secondsHigh);
-  final sl = under(cap(it.secondsLow, written?.secondsHigh), sh);
-  final targets = it.setTargets == null
+  final rh = hold ? written!.repsHigh : cap(it.repsHigh, written?.repsHigh);
+  final rl = hold
+      ? written!.repsLow
+      : under(cap(it.repsLow, written?.repsHigh), rh);
+  final sh = hold
+      ? written!.secondsHigh
+      : cap(it.secondsHigh, written?.secondsHigh);
+  final sl = hold
+      ? written!.secondsLow
+      : under(cap(it.secondsLow, written?.secondsHigh), sh);
+  final sets = hold ? written!.sets : it.sets;
+  // Séries écrites rétablies : cibles par série de la ligne écrite.
+  final source = hold && sets != it.sets ? written!.setTargets : it.setTargets;
+  final wt = written?.setTargets;
+  final targets = source == null
       ? null
       : [
-          for (final t in it.setTargets!)
+          for (var i = 0; i < source.length; i++)
             () {
-              final h = cap(t.repsHigh, written?.repsHigh);
-              final s = cap(t.secondsHigh, written?.secondsHigh);
-              final v = t.loadKg;
+              final t = source[i];
               // Montée d'échauffement : jamais au-dessus de la charge écrite.
               final warm = t.role == kc.SetRole.warmup;
+              final w = wt != null && i < wt.length ? wt[i] : null;
+              final v = t.loadKg;
+              final load2 = !loaded
+                  ? v
+                  : warm
+                  ? (v == null || v <= kg ? v : kg)
+                  : load(v);
+              if (hold && !warm) {
+                return t.copyWith(
+                  loadKg: load2,
+                  repsLow: w != null ? w.repsLow : written!.repsLow,
+                  repsHigh: w != null ? w.repsHigh : written!.repsHigh,
+                  secondsLow: w != null ? w.secondsLow : written!.secondsLow,
+                  secondsHigh: w != null ? w.secondsHigh : written!.secondsHigh,
+                );
+              }
+              final h = cap(t.repsHigh, written?.repsHigh);
+              final s = cap(t.secondsHigh, written?.secondsHigh);
               return t.copyWith(
-                loadKg: !loaded
-                    ? v
-                    : warm
-                    ? (v == null || v <= kg ? v : kg)
-                    : load(v),
+                loadKg: load2,
                 repsHigh: h,
                 repsLow: under(cap(t.repsLow, written?.repsHigh), h),
                 secondsHigh: s,
@@ -577,6 +627,7 @@ kc.ExercisePrescription fixedLoadItem(
         ];
   final start = loaded ? load(it.startLoadKg) : it.startLoadKg;
   var next = it.copyWith(
+    sets: sets,
     startLoadKg: start,
     repsLow: rl,
     repsHigh: rh,
@@ -596,9 +647,21 @@ kc.ExercisePrescription fixedLoadItem(
       'adapt.calibration',
       'adapt.low_confidence',
     };
+    // Volume écrit tenu (C15.9) : plus de hausse ni de baisse du volume à
+    // annoncer.
+    const dropVolume = {
+      'adapt.reps_up',
+      'adapt.reps_down',
+      'adapt.volume_up',
+      'adapt.volume_down',
+      'adapt.flames_above_target',
+      'adapt.flames_below_target',
+      'adapt.set_failed',
+    };
     // Une charge gardée pour une douleur ou un bilan bas garde sa raison.
     bool dropped(kc.Reason r) =>
         drop.contains(r.code) ||
+        (hold && dropVolume.contains(r.code)) ||
         (r.code == 'adapt.load_held' &&
             !'${r.params['cause']}'.startsWith('pain') &&
             !'${r.params['cause']}'.startsWith('health'));
