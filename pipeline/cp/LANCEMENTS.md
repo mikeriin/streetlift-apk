@@ -265,7 +265,7 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 ## CI1h correction 1 — séance future au jour réel, répétitions écrites des lignes à charge fixe (C15.9)
 
-- **Report (C15.10)** : à lancer seulement après UI5 et KM3 publiés sur `main`. Base : `main` avec Koach 1.0 (KM3), version suivante. Rétablir d'abord les causes sur le moteur 1.0 (les mentions de `kalis_adapt` 0.3.1 ci-dessous décrivent dev6.11.2) ; le but et les tests restent ceux de cette section.
+- **Lancée le 11/10/2026 vers 05:30 UTC (C15.11, remplace le report C15.10)** : base `main` dev6.11.2 (9ef40dad, `kalis_adapt` 0.3.1) ou dev6.12.0 si UI5 publie avant toi. UI5 et KM1c2 tournent en parallèle : ne touche ni `refonte-ui` ni `packages/`.
 
 - Lot : **CI1h** (ligne de l'état « à faire (correction 1, C15.9) »). Délégation (C8) ; consigne du propriétaire toujours valable : **au plus pragmatique** (C15.7). Validation par le pilotage.
 - Base : pointe de `main` (dev6.11.2, 9ef40dad ; ou dev6.12.0 si UI5 a publié : alors dev6.12.1). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/CI1h`. Paquets inchangés, rien dans `packages/`. Écrans : aucune mise en page ; texte seulement si nécessaire (liste pour UI5, U0.21).
