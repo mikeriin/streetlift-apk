@@ -93,10 +93,8 @@ final _unitAfterNumber = RegExp(
 /// Texte dont les unités suivent leur nombre après une espace (normale ou
 /// insécable) : l'espace devient l'espace fine insécable (« 40 à 60 kg »,
 /// « 30 s à 1 min »). Le reste du texte est gardé.
-String unitSpacesText(String text) => text.replaceAllMapped(
-  _unitAfterNumber,
-  (m) => '${m[1]}$kUnitSpace${m[2]}',
-);
+String unitSpacesText(String text) =>
+    text.replaceAllMapped(_unitAfterNumber, (m) => '${m[1]}$kUnitSpace${m[2]}');
 
 final _decimalPoint = RegExp(r'(\d)\.(\d)');
 

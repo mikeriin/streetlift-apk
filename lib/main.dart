@@ -15,7 +15,6 @@ import 'session_prefs.dart';
 import 'startup.dart';
 import 'app_theme.dart';
 import 'kit/kit.dart';
-import 'motion.dart';
 import 'nav_bar.dart';
 export 'nav_bar.dart' show AppTab, AppTabs, HeroNavBar, openTab;
 export 'app_theme.dart' show SL, buildTheme;
@@ -452,10 +451,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
       ),
       bottomNavigationBar: keyboard
           ? null
-          : HeroNavBar(
-              index: _tabIndex,
-              onTap: _selectTab,
-            ),
+          : HeroNavBar(index: _tabIndex, onTap: _selectTab),
     );
   }
 }

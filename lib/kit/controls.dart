@@ -411,8 +411,9 @@ class _Slot extends StatelessWidget {
   const _Slot({required this.width, required this.child});
 
   @override
-  Widget build(BuildContext context) =>
-      width == null ? Expanded(child: child) : SizedBox(width: width, child: child);
+  Widget build(BuildContext context) => width == null
+      ? Expanded(child: child)
+      : SizedBox(width: width, child: child);
 }
 
 /// Puce neutre (C5) : information ou filtre, jamais colorée sans état. Une

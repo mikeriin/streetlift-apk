@@ -303,9 +303,7 @@ class KSwitchRow extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, c) {
       final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
-      final lead = icon != null && !large
-          ? KSize.menuIcon + KSpacing.s14
-          : 0.0;
+      final lead = icon != null && !large ? KSize.menuIcon + KSpacing.s14 : 0.0;
       final room =
           c.maxWidth -
           2 * KSpacing.s16 -

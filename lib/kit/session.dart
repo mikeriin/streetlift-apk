@@ -14,8 +14,7 @@ class KBottomInset extends InheritedWidget {
   const KBottomInset({super.key, required this.height, required super.child});
 
   static double of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<KBottomInset>()?.height() ??
-      0;
+      context.dependOnInheritedWidgetOfExactType<KBottomInset>()?.height() ?? 0;
 
   @override
   bool updateShouldNotify(KBottomInset oldWidget) => false;

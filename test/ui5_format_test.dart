@@ -13,6 +13,7 @@ import 'package:streetlift_tracker/adapt/flame_track.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/athlete_profile.dart' show durationText;
 import 'package:streetlift_tracker/estimate_view.dart';
+import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/kit/format.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/set_validation.dart' show parseLoadKg;
@@ -218,18 +219,46 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      final week = store.program.week(8);
-      final day = week.day(1)!;
-      store.clearSession(8, 1);
-      final exercise = day.exercises.first;
-      final log = store.exLog(8, 1, exercise)..showKg = true;
-      log.sets.first.kg = '62.5';
+      // Jour du programme par défaut ouvert sur un exercice en répétitions
+      // (colonne de charge possible : ni tenue, ni durée…), hors moteur
+      // (pas de page « Bilan du jour » avant l'exercice).
+      late WeekPlan week;
+      late DayPlan day;
+      late Exercise exercise;
+      var found = false;
+      for (final w in store.program.weeks) {
+        for (final d in w.days) {
+          if (found || d.exercises.isEmpty) continue;
+          if (d.exercises.any((e) => e.engine)) continue;
+          final first = store.groups(d, week: w.n).first.first;
+          if (store.logSpec(first).kind != 'reps') continue;
+          week = w;
+          day = d;
+          exercise = first;
+          found = true;
+        }
+      }
+      expect(found, isTrue);
+      store.clearSession(week.n, day.j);
+      final log = store.exLog(week.n, day.j, exercise)..showKg = true;
+      // Saisie de l'utilisateur (gardée à l'ouverture : les séries
+      // pré-remplies d'une séance pas commencée sont refaites).
+      log.sets.first
+        ..kg = '62.5'
+        ..edited = true;
       await tester.pumpWidget(_page(SessionScreen(week: week, day: day)));
       await tester.pumpAndSettle();
       final row = find.byKey(ValueKey('${exercise.id}-0-0'));
-      final load = find
-          .descendant(of: row, matching: find.byType(TextField))
-          .first;
+      expect(row, findsOneWidget);
+      // Le champ de charge est le seul de la ligne à convertir la saisie
+      // (point tapé → virgule).
+      final load = find.descendant(
+        of: row,
+        matching: find.byWidgetPredicate(
+          (w) => w is TextField && (w.inputFormatters?.isNotEmpty ?? false),
+        ),
+      );
+      expect(load, findsOneWidget);
       String shown() => tester.widget<TextField>(load).controller!.text;
       // Texte enregistré avec le point, montré avec la virgule.
       expect(shown(), '62,5');
@@ -247,7 +276,7 @@ void main() {
       expect(parseLoadKg(log.sets.first.kg), 72.5);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
-      store.clearSession(8, 1);
+      store.clearSession(week.n, day.j);
       await tester.runAsync(() => store.flush());
     });
   });

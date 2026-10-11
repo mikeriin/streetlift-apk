@@ -436,11 +436,7 @@ ThemeData kitTheme({
 /// se comporte comme un champ rempli de Material 3 tout en gardant le
 /// contour entier.
 class KFieldBorder extends OutlineInputBorder {
-  const KFieldBorder({
-    super.borderSide,
-    super.borderRadius,
-    super.gapPadding,
-  });
+  const KFieldBorder({super.borderSide, super.borderRadius, super.gapPadding});
 
   /// Faux : l'étiquette se pose dans le conteneur, sans couper le contour.
   @override
