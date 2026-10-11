@@ -1,0 +1,1 @@
+lot=CX1 rapide=true
