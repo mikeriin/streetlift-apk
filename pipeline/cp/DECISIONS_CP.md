@@ -537,6 +537,59 @@ critères du cahier (C13.3) : `kalis_adapt` 1.0.0 (Koach 1.0 en Dart) et `kalis_
   de volume idempotent), mineurs traités ou déclarés (livraison, § 4).
 - **KM2.7 Budget** (§ 9) : sous-agents sur Opus ; sauvegardes sur `cp-sauvegardes/KM2`.
 
+### KM1c2
+
+Lot livré le 11/10/2026 (session Fable 5.1, effort maximal, C13.12), validation automatique par le pilotage sur les
+critères du cahier (C13.3) : référence Python de Koach 1.0.2 (`moteurs` 9ac79e40, paramètres `1.0.2-ref.1`,
+14 fixtures), `kalis_bench` 0.4.1 (`etiquettes/kalis_bench-v0.4.1`, chemins de tests seulement), contrôle complet
+run 38129459466 vert. Détail : `pipeline/cp/livraisons/LIVRAISON_KM1c2.md`,
+`packages/kalis_adapt/reference/CHANGEMENTS_1_0_2.md`.
+
+- **KM1c2.1 Lancement** : message sans ligne « Lot : » ; seul lot moteur « à faire ». `add_repo` absent de la
+  session ; accès en écriture vérifié par `git push --dry-run` puis par le push de la ligne « en cours ». Pas de SDK
+  Dart dans la session : campagnes Python (deux moitiés de graines) et témoin Dart exécutés sur la CI par des commits
+  « KM1c2 contrôle (dev) » à arbre réduit sur `claude/ci-cp-a` et `claude/ci-cp-b` (aucun lot de la voie B ne
+  tournait). La clé des références n'a pas été lue (aucune référence privée nécessaire).
+- **KM1c2.2 Reprise par paliers mesurés (point 1)** : en semaine de retour, première série bornée par la dernière
+  séance du même schéma, hausse d'une série à l'autre seulement après un palier franchi (réussi, noté, dit au plus
+  aussi dur que visé), jamais au-delà de la borne de séance A7.2 ; l'ancre « dernier passage de l'exercice » ne vaut
+  plus que sous douleur (invariant de 0.3.1) ; ouverture des tentatives plafonnée par un palier selon la note de la
+  plus lourde barre récente (+10 / 7,5 / 5 / 2,5 / 0 %), note la plus dure des barres à 5 % près ; un cran permis
+  après une barre dite facile quand le saut en pourcentage vaut zéro sur la grille. Deux itérations.
+- **KM1c2.3 P(réussite) (point 2)** : `planification.dispersion_echeance` = 0,62 (mesuré sur les graines 0, 2, 4 :
+  0,623 ; vérifié sur 1, 3, 5 : 0,625), cibles chargées seulement, montée en 4 semaines de journal. Deux itérations.
+- **KM1c2.4 Intervalle (point 3)** : `mesure.defaut_modele_sd` 0,015 → 0,010 et `mesure.intervalle_echelle` = 0,9
+  (le défaut de modèle seul laissait 92,3 % même à zéro) ; le contrôle dual lit la variance brute.
+- **KM1c2.5 Critères (graines 0-5, 4 320 saisons, Koach complet)** : tenus 2 (0,91 %), 3 (5,28 contre 11,98),
+  4 (89,96 %, était 93,2 %), 6 (0,9450 contre 0,9324), 7 (pire cas 0,499 sur une recherche neuve de 3 000 saisons,
+  était 0,226), 8 (0 violation), 11 (0,44 s ; 2,8 ms en Python). Non tenus : 1 (3,92 %, était 3,95 % : ne recule
+  pas), 5 (16,8 points, était 15,3), 7 bis. 9 : au portage KM2c1 ; 10 : à la bascule. Aucun critère tenu ne recule.
+- **KM1c2.6 Critère 7 bis** : tenu sur les adversaires de KM1 (24/24), de KM2 b300 (23/24) et de KM2 complet b600
+  (22/24, aucun sous le plancher) ; non tenu sur KM2 b3000 (20/24, 2 sous le plancher ; était 10/24 et 13) ni sur
+  une recherche neuve contre 1.0.2 (17/24, 6 sous le plancher, pire écart −0,30). L'adversaire de C13.12
+  (`adv-31c45cfb`) passe de 0,226 à 0,854 (témoin 0,823). Les cas restants ne sont plus des charges bloquées : un
+  mouvement du jour J à zéro, ouverture au-dessus du maximum du jour quand l'estimation est de 10 à 12 % trop haute
+  sous notes non fiables, barre gardée après l'échec (A8.2).
+- **KM1c2.7 Critère 5, limite de la mesure** : les 1 758 cas viennent de 96 grappes (graine, profil, exercice), 80 à
+  issue unique ; les cas à 10 % et plus, de 42 grappes. Un modèle parfaitement calibré aux issues liées dans la
+  grappe donne un écart maximal médian de 21 points et jamais 5 points (2 000 tirages) : le seuil de 5 points n'est
+  pas mesurable sur ce banc. Biais global des cas à 10 % et plus : +0,2 point (était +3,8).
+- **KM1c2.8 Demandes au pilotage (C8)** : (a) critère 7 bis : accepter la tenue sur les jeux connus pour le portage
+  KM2c1 et ouvrir, avant la bascule, une passe « estimation sous notes non fiables » (ouverture plus basse quand les
+  notes de l'athlète se sont montrées peu fiables), ou trancher autrement ; (b) critère 5 : remplacer le seuil par
+  une mesure qui respecte la dépendance des cas (biais global dans ± 5 points et écart par décile jugé contre un
+  modèle parfait aux issues liées), ou financer environ 30 graines ; (c) règle préexistante signalée par la
+  relecture : après un échec non prévu, 0.3.1 interdit toute hausse par rapport à la dernière séance de l'exercice,
+  Koach seulement sur le même schéma — à ajouter ou non ; (d) sans la planification (configuration non officielle),
+  3 poussées de douleur sur une saison, identiques en 1.0.1.
+- **KM1c2.9 Tests Dart et copies figées** : les tests Dart de `kalis_adapt` 1.0.0 et de `kalis_bench` lisaient les
+  fixtures et le fichier de paramètres de la référence ; pour garder le contrôle vert sans toucher `lib/`, ils lisent
+  des copies figées de 1.0.1 (`reference/fix_dart/`, `reference/params/koach_params_d1.json`). KM2c1 les repointe
+  et supprime les copies. `kalis_bench` 0.4.1 ne contient que ce changement de chemins.
+- **KM1c2.10 Relecture indépendante** (sous-agent Opus) : 2 bloquants et 4 majeurs corrigés et testés, 10 mineurs
+  traités ou déclarés ; campagne et recherche adversariale refaites après corrections.
+- **KM1c2.11 Budget** (§ 9) : sous-agents sur Opus ; sauvegardes sur `cp-sauvegardes/KM1c2`.
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
