@@ -463,10 +463,10 @@ void main() {
   });
 
   test(
-    'version affichée : « 6.14.0 » hors build de développement (couleurs, espacements)',
+    'version affichée : « 6.15.0 » hors build de développement (lift principal, clusters)',
     () {
-      expect(kVersion, '6.14.0');
-      expect(kAppVersion, '6.14.0');
+      expect(kVersion, '6.15.0');
+      expect(kAppVersion, '6.15.0');
     },
   );
 }

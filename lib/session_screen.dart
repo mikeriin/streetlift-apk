@@ -1668,8 +1668,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         _Meta(Icons.timer_outlined, 'Repos final ${fmt(finalRest)}'),
     ];
 
+    // 6.15.0 : le lift principal se distingue — contour et surtitre en
+    // `encre`, charge et cible en `encre` ; les autres exercices gardent
+    // une carte neutre (charge en `texte`, cible sur `haute`).
+    final lead = ex.main && !readOnly;
+    final ink = lead ? t.encre : t.texte;
     return KCard(
       key: ValueKey('exercise-card-${ex.id}'),
+      outline: lead ? t.encre.withValues(alpha: .55) : null,
       padding: const EdgeInsets.fromLTRB(
         KSpacing.s16,
         KSpacing.s8,
@@ -1699,6 +1705,19 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            if (lead)
+                              Padding(
+                                key: ValueKey('main-lift-${ex.id}'),
+                                padding: const EdgeInsets.only(
+                                  bottom: KSpacing.s4,
+                                ),
+                                child: Text(
+                                  t.title('Lift principal'),
+                                  style: t.titleStyle(
+                                    KType.micro.copyWith(color: t.encre),
+                                  ),
+                                ),
+                              ),
                             // C3 : jamais coupé ; C4 : capitales du titre
                             // par le jeton (U3).
                             KFitTitle(
@@ -1740,7 +1759,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                           if (showBigLoad)
                             Text(
                               frenchNumbersText(loadLabel),
-                              style: KType.chiffre.copyWith(color: t.encre),
+                              style: KType.chiffre.copyWith(color: ink),
                             ),
                           Text(
                             readOnly
@@ -1748,7 +1767,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                                 : nbsp(store.setsLabel(ex)),
                             style: showBigLoad || readOnly
                                 ? KType.corpsFort.copyWith(color: t.texte)
-                                : KType.chiffre.copyWith(color: t.encre),
+                                : KType.chiffre.copyWith(color: ink),
                           ),
                           // Grand texte : la cible passe sous la charge.
                           if (target case (
@@ -1759,6 +1778,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                               key: ValueKey('target-${ex.id}'),
                               rir: rir,
                               level: level,
+                              lead: lead,
                             ),
                           // État (C5) : texte et icône en `validation`.
                           if (readOnly)
@@ -1794,6 +1814,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                           key: ValueKey('target-${ex.id}'),
                           rir: rir,
                           level: level,
+                          lead: lead,
                         ),
                       ),
                   ],
@@ -2037,6 +2058,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                     id: '${ex.id}-$i',
                     plan: plan,
                     entry: log.sets[i],
+                    target: store
+                        .adaptGoal(widget.week.n, widget.day.j, ex, i)
+                        ?.prefill,
                     onChanged: () {
                       log.sets[i].edited = true;
                       store.saveLogs(affectsProgression: false);
@@ -2217,9 +2241,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       fillColor: t.haute,
       labelStyle: KType.detail.copyWith(color: t.texte2),
       hintStyle: KType.corps.copyWith(color: t.texte3),
-      contentPadding: const EdgeInsets.symmetric(
+      contentPadding: EdgeInsets.symmetric(
         horizontal: KSpacing.s16,
-        vertical: KSpacing.s12,
+        vertical: KDensity.of(KSpacing.s12),
       ),
       border: border,
       enabledBorder: border,
@@ -2441,7 +2465,10 @@ class _SetFieldState extends State<_SetField> {
           color: color,
           shape: shape,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: KSize.target),
+            // 6.15.0 : hauteur selon les espacements choisis.
+            constraints: BoxConstraints(
+              minHeight: KDensity.field(KSize.target),
+            ),
             // Champ sans focus : les gestes vont à la pilule (un appui
             // sélectionne tout, un glissement horizontal change de page) ;
             // avec le focus, au champ (curseur, sélection).
@@ -2691,7 +2718,10 @@ class _SetRowState extends State<_SetRow> {
                   ? k.validation.withValues(alpha: .14)
                   : Colors.transparent,
               foregroundColor: done ? k.validation : k.texte2,
-              minimumSize: const Size(KSize.target, KSize.target),
+              minimumSize: Size(KSize.target, KDensity.field(KSize.target)),
+              tapTargetSize: KDensity.factor < 1
+                  ? MaterialTapTargetSize.shrinkWrap
+                  : null,
               shape: KRadius.pill,
             ),
             isSelected: done,
@@ -2744,7 +2774,10 @@ class _SetRowState extends State<_SetRow> {
                 style: IconButton.styleFrom(
                   backgroundColor: widget.current ? k.surface : k.haute,
                   foregroundColor: k.texte,
-                  minimumSize: const Size(KSize.target, KSize.target),
+                  minimumSize: Size(KSize.target, KDensity.field(KSize.target)),
+                  tapTargetSize: KDensity.factor < 1
+                      ? MaterialTapTargetSize.shrinkWrap
+                      : null,
                   shape: KRadius.pill,
                 ),
                 icon: Icon(
@@ -3324,7 +3357,16 @@ class _Meta extends StatelessWidget {
 class _TargetBadge extends StatelessWidget {
   final String rir;
   final String? level;
-  const _TargetBadge({super.key, required this.rir, this.level});
+
+  /// Lift principal : pastille tonale `encre` ; sinon `haute`, chiffre en
+  /// `texte` (6.15.0).
+  final bool lead;
+  const _TargetBadge({
+    super.key,
+    required this.rir,
+    this.level,
+    this.lead = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -3335,10 +3377,12 @@ class _TargetBadge extends StatelessWidget {
           'réserve${level == null ? '' : ', difficulté $level sur 10'}',
       excludeSemantics: true,
       child: Material(
-        color: k.encre.withValues(alpha: .14),
+        color: lead ? k.encre.withValues(alpha: .14) : k.haute,
         shape: RoundedRectangleBorder(
           borderRadius: KRadius.menuRadius,
-          side: BorderSide(color: k.encre.withValues(alpha: .5)),
+          side: lead
+              ? BorderSide(color: k.encre.withValues(alpha: .5))
+              : BorderSide.none,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -3351,7 +3395,9 @@ class _TargetBadge extends StatelessWidget {
               Text(
                 'RIR $rir',
                 maxLines: 1,
-                style: KType.chiffreMoyen.copyWith(color: k.encre),
+                style: KType.chiffreMoyen.copyWith(
+                  color: lead ? k.encre : k.texte,
+                ),
               ),
               if (level != null)
                 Row(
@@ -3360,7 +3406,7 @@ class _TargetBadge extends StatelessWidget {
                     Icon(
                       Icons.local_fire_department_rounded,
                       size: KSpacing.s14,
-                      color: k.encre,
+                      color: lead ? k.encre : k.texte2,
                     ),
                     const SizedBox(width: KSpacing.s4 / 2),
                     Text(
@@ -3381,6 +3427,10 @@ class _MiniSetStrip extends StatefulWidget {
   final String id;
   final MiniSetPlan plan;
   final SetEntry entry;
+
+  /// Répétitions (ou secondes) visées pour la série entière (cible de la
+  /// ligne) : un cluster les répartit en blocs. Null : cible inconnue.
+  final int? target;
   final VoidCallback onChanged;
   final void Function(int seconds) onIntra;
   const _MiniSetStrip({
@@ -3390,10 +3440,21 @@ class _MiniSetStrip extends StatefulWidget {
     required this.entry,
     required this.onChanged,
     required this.onIntra,
+    this.target,
   });
 
   @override
   State<_MiniSetStrip> createState() => _MiniSetStripState();
+}
+
+/// Répartition d'un cluster (6.15.0) : la cible de la série en [blocks]
+/// blocs aussi égaux que possible, les plus gros d'abord (3 en 2 : 2 + 1).
+/// Cible plus petite que le nombre de blocs : un par bloc.
+List<int> clusterSplit(int target, int blocks) {
+  final n = blocks < 1 ? 1 : blocks;
+  if (target < n) return List.filled(n, 1);
+  final base = target ~/ n, extra = target % n;
+  return [for (var b = 0; b < n; b++) base + (b < extra ? 1 : 0)];
 }
 
 class _MiniSetStripState extends State<_MiniSetStrip> {
@@ -3401,10 +3462,26 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
 
   List<SetPartEntry> get _parts => widget.entry.parts ?? const [];
 
+  /// Valeur prévue de chaque bloc (cluster : cible de la série répartie ;
+  /// myo-reps, rest-pause : activation puis mini-séries).
+  List<int> get _planned {
+    final p = widget.plan;
+    final slots = p.cap + 1;
+    if (p.kind == kc.SetTechniqueKind.cluster) {
+      return clusterSplit(widget.target ?? slots * p.next, slots);
+    }
+    return [for (var b = 0; b < slots; b++) b == 0 ? p.first : p.next];
+  }
+
+  int _suggested(int done) {
+    final planned = _planned;
+    return done < planned.length ? planned[done] : widget.plan.next;
+  }
+
   @override
   void initState() {
     super.initState();
-    value = widget.plan.suggested(_parts.length);
+    value = _suggested(_parts.length);
   }
 
   void _add() {
@@ -3432,24 +3509,26 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
     widget.onChanged();
   }
 
-  /// Titre court : technique, mini-séries et mini-repos (correctifs UI,
-  /// 11/10/2026 : une ligne au lieu d'une consigne).
+  /// Titre court, dans les mots de la ligne (6.15.0) : un cluster dit la
+  /// cible de la série et sa répartition (« 3 reps en 2 blocs »).
   String get _title {
     final p = widget.plan;
-    final unit = p.seconds ? ' s' : '';
+    final unit = p.seconds ? ' s' : ' reps';
+    final planned = _planned;
+    final total = planned.fold<int>(0, (a, b) => a + b);
     return switch (p.kind) {
-      kc.SetTechniqueKind.myoReps =>
-        'Myo-reps · ${p.first}$unit puis ${p.next}$unit · ${p.intra} s',
       kc.SetTechniqueKind.cluster =>
-        'Cluster · ${p.cap + 1} × ${p.next}$unit · ${p.intra} s',
-      _ => 'Rest-pause · relances après ${p.intra} s',
+        'Cluster · $total$unit en ${planned.length} blocs, ${p.intra} s entre',
+      kc.SetTechniqueKind.myoReps =>
+        'Myo-reps · activation puis mini-séries, ${p.intra} s entre',
+      _ => 'Rest-pause · série puis relances, ${p.intra} s entre',
     };
   }
 
   String _partLabel(int i) => switch (widget.plan.kind) {
-    kc.SetTechniqueKind.myoReps => i == 0 ? 'Act.' : 'M$i',
-    kc.SetTechniqueKind.restPause => i == 0 ? 'Série' : 'R$i',
-    _ => 'M${i + 1}',
+    kc.SetTechniqueKind.myoReps => i == 0 ? 'Activation' : 'Mini-série $i',
+    kc.SetTechniqueKind.restPause => i == 0 ? 'Série' : 'Relance $i',
+    _ => 'Bloc ${i + 1}',
   };
 
   @override
@@ -3458,91 +3537,107 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
     final plan = widget.plan;
     final parts = _parts;
     final left = plan.left(parts.length);
-    final unit = plan.seconds ? ' s' : '';
-    final dim = KType.detail.copyWith(color: k.texte2);
-    // Consigne complète en mode guidé ; sinon seulement ce qui demande une
-    // action (« valide la série »).
+    final unit = plan.seconds ? ' s' : '';
+    final planned = _planned;
+    final slots = plan.cap + 1;
+    // Consigne en mode guidé ; sinon seulement ce qui demande une action.
     final advice = left == 0
         ? (plan.exact
-              ? 'Toutes les mini-séries sont faites : valide la série.'
+              ? 'Tous les blocs sont faits : valide la série.'
               : 'Plafond atteint : valide la série.')
         : !koachGuided
         ? null
-        : parts.isEmpty
-        ? (plan.kind == kc.SetTechniqueKind.myoReps
-              ? 'Note l’activation, puis chaque mini-série.'
-              : 'Note chaque mini-série à la fin de son effort.')
-        : plan.exact
-        ? 'Encore $left mini-série${left > 1 ? 's' : ''} '
-              '(${plan.intra} s entre deux).'
-        : 'Encore $left mini-série${left > 1 ? 's' : ''} au plus '
-              '(${plan.intra} s entre deux) ; arrête dès qu’une '
-              'mini-série n’atteint plus ${plan.next}$unit.';
-    final noteLabel = parts.isEmpty
-        ? (plan.kind == kc.SetTechniqueKind.myoReps
-              ? 'Noter l’activation'
-              : 'Noter la première mini-série')
-        : 'Noter la mini-série';
-    // Cases des mini-séries : faites (valeur, `encre`), à venir (contour).
-    final slots = plan.cap + 1;
+        : plan.kind == kc.SetTechniqueKind.cluster
+        ? 'Fais chaque bloc, souffle ${plan.intra} s, puis le suivant ; '
+              'touche ✓ à la fin de chaque bloc.'
+        : 'Note chaque mini-série à la fin de son effort ; arrête dès '
+              'qu’une mini-série n’atteint plus ${plan.next}$unit.';
+    final noteLabel =
+        'Noter ${_partLabel(parts.length).toLowerCase()} : $value$unit';
+    // Bloc fait (valeur réelle, aplat `encre`), suivant (contour `encre`),
+    // à venir (contour `filet`) ; chaque case porte sa valeur prévue.
     Widget slot(int i) {
       final done = i < parts.length;
       final next = i == parts.length;
-      return Container(
+      final shown = done
+          ? parts[i].value
+          : (i < planned.length ? planned[i] : plan.next);
+      return Semantics(
         key: done ? ValueKey('miniset-part-${widget.id}-$i') : null,
-        constraints: const BoxConstraints(
-          minWidth: KSpacing.s32,
-          minHeight: KSpacing.s24,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
-        alignment: Alignment.center,
-        decoration: ShapeDecoration(
-          color: done ? k.encre : null,
-          shape: StadiumBorder(
-            side: done
-                ? BorderSide.none
-                : BorderSide(
-                    color: next ? k.encre : k.filet,
-                    width: next ? KSize.current : 1,
-                  ),
+        label: done
+            ? '${_partLabel(i)} : $shown$unit'
+            : '${_partLabel(i)} à faire : $shown$unit',
+        excludeSemantics: true,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minWidth: KSpacing.s32,
+            minHeight: KSpacing.s32,
           ),
-        ),
-        child: Semantics(
-          label: done
-              ? '${_partLabel(i)} : ${parts[i].value}$unit'
-              : '${_partLabel(i)} à faire',
-          excludeSemantics: true,
-          child: Text(
-            done ? '${parts[i].value}' : _partLabel(i),
-            style: KType.micro.copyWith(
-              color: done ? k.roles.surEncre : (next ? k.encre : k.texte3),
-              fontFeatures: KFont.tabular,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: done ? k.encre : null,
+              shape: RoundedRectangleBorder(
+                borderRadius: KRadius.menuRadius,
+                side: done
+                    ? BorderSide.none
+                    : BorderSide(
+                        color: next ? k.encre : k.filet,
+                        width: next ? KSize.current : 1,
+                      ),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
+              child: Center(
+                widthFactor: 1,
+                child: Text(
+                  '$shown$unit',
+                  style: KType.libelle.copyWith(
+                    color: done
+                        ? k.roles.surEncre
+                        : (next ? k.encre : k.texte3),
+                    fontFeatures: KFont.tabular,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
       );
     }
 
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(
-        start: KSize.target - KSpacing.s4,
-        top: KSpacing.s4,
-        bottom: KSpacing.s4,
+    Widget small(IconData icon, String tip, VoidCallback? onTap) => Tooltip(
+      message: tip,
+      child: InkWell(
+        customBorder: KRadius.pill,
+        onTap: onTap,
+        child: SizedBox(
+          width: KSize.target,
+          height: KDensity.field(KSize.target),
+          child: Icon(
+            icon,
+            size: KSize.iconSmall,
+            color: onTap == null ? k.texte3 : k.texte,
+          ),
+        ),
       ),
+    );
+
+    // 6.15.0 : deux lignes au plus — titre, puis blocs et saisie du bloc
+    // suivant côte à côte (− valeur + ✓).
+    return Padding(
+      padding: const EdgeInsets.only(top: KSpacing.s4, bottom: KSpacing.s4),
       child: Semantics(
         container: true,
         child: Material(
           color: k.haute,
-          shape: RoundedRectangleBorder(
-            borderRadius: KRadius.menuRadius,
-            side: BorderSide(color: k.encre.withValues(alpha: .4)),
-          ),
+          shape: KRadius.menuShape,
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(
               KSpacing.s12,
               KSpacing.s8,
               KSpacing.s4,
-              KSpacing.s8,
+              KSpacing.s4,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -3552,90 +3647,102 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                     Expanded(
                       child: Text(
                         _title,
-                        style: KType.libelle.copyWith(color: k.encre),
+                        style: KType.detail.copyWith(color: k.texte2),
                       ),
                     ),
                     if (parts.isNotEmpty)
-                      KIconButton(
-                        key: ValueKey('miniset-undo-${widget.id}'),
-                        icon: Icons.undo_rounded,
-                        tooltip: 'Retirer la dernière mini-série',
-                        color: k.texte2,
-                        onPressed: _removeLast,
+                      small(
+                        Icons.undo_rounded,
+                        'Retirer le dernier bloc',
+                        _removeLast,
                       ),
                   ],
                 ),
-                const SizedBox(height: KSpacing.s4),
                 Wrap(
                   spacing: KSpacing.s4,
                   runSpacing: KSpacing.s4,
-                  children: [for (var i = 0; i < slots; i++) slot(i)],
-                ),
-                if (advice != null)
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: KSpacing.s8,
-                      right: KSpacing.s8,
-                    ),
-                    child: Text(
-                      advice,
-                      key: ValueKey('miniset-advice-${widget.id}'),
-                      style: dim,
-                    ),
-                  ),
-                if (left > 0)
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: KSpacing.s8,
-                      right: KSpacing.s8,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: KeyedSubtree(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    for (var i = 0; i < slots; i++) slot(i),
+                    if (left > 0)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(width: KSpacing.s8),
+                          KeyedSubtree(
                             key: ValueKey('miniset-value-${widget.id}'),
-                            child: KStepper(
-                              value: '$value$unit',
-                              semanticLabel: 'Mini-série',
-                              decrementLabel: 'Une de moins',
-                              incrementLabel: 'Une de plus',
-                              onDecrement: value > 0
-                                  ? () => setState(() => value--)
-                                  : null,
-                              onIncrement: value < 1000
-                                  ? () => setState(() => value++)
-                                  : null,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                small(
+                                  Icons.remove_rounded,
+                                  'Une de moins',
+                                  value > 0
+                                      ? () => setState(() => value--)
+                                      : null,
+                                ),
+                                Semantics(
+                                  label: 'Bloc suivant',
+                                  value: '$value$unit',
+                                  child: Text(
+                                    '$value$unit',
+                                    style: KType.chiffreMoyen.copyWith(
+                                      color: k.texte,
+                                    ),
+                                  ),
+                                ),
+                                small(
+                                  Icons.add_rounded,
+                                  'Une de plus',
+                                  value < 1000
+                                      ? () => setState(() => value++)
+                                      : null,
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                        const SizedBox(width: KSpacing.s8),
-                        Semantics(
-                          button: true,
-                          label: noteLabel,
-                          excludeSemantics: true,
-                          onTap: _add,
-                          child: Tooltip(
-                            message: noteLabel,
-                            child: Material(
-                              color: k.encre,
-                              shape: KRadius.pill,
-                              child: InkWell(
-                                key: ValueKey('miniset-add-${widget.id}'),
-                                customBorder: KRadius.pill,
-                                onTap: _add,
-                                child: SizedBox.square(
-                                  dimension: KSize.target,
-                                  child: Icon(
-                                    Icons.check_rounded,
-                                    size: KSize.icon,
-                                    color: k.roles.surEncre,
+                          Semantics(
+                            button: true,
+                            label: noteLabel,
+                            excludeSemantics: true,
+                            onTap: _add,
+                            child: Tooltip(
+                              message: noteLabel,
+                              child: Material(
+                                color: k.encre,
+                                shape: KRadius.pill,
+                                child: InkWell(
+                                  key: ValueKey('miniset-add-${widget.id}'),
+                                  customBorder: KRadius.pill,
+                                  onTap: _add,
+                                  child: SizedBox(
+                                    width: KSize.target,
+                                    height: KDensity.field(KSize.target),
+                                    child: Icon(
+                                      Icons.check_rounded,
+                                      size: KSize.icon,
+                                      color: k.roles.surEncre,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                  ],
+                ),
+                if (advice != null)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: KSpacing.s4,
+                      bottom: KSpacing.s4,
+                      right: KSpacing.s8,
+                    ),
+                    child: Text(
+                      advice,
+                      key: ValueKey('miniset-advice-${widget.id}'),
+                      style: KType.detail.copyWith(color: k.texte2),
                     ),
                   ),
               ],

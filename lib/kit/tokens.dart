@@ -43,6 +43,11 @@ abstract final class KDensity {
   /// Longueur à la densité choisie (marge, écart).
   static double of(double v) => v * factor;
 
+  /// 6.15.0 : hauteur d'une zone de saisie (champs de série, pas à pas,
+  /// validation) à la densité choisie, 36 dp au moins.
+  static double field(double h) =>
+      factor == 1 ? h : math.max(KSpacing.s32 + KSpacing.s4, h * factor);
+
   /// Hauteur minimale d'une ligne : à la densité choisie, 48 dp au moins.
   static double row(double h) =>
       factor == 1 ? h : math.max(KSize.target, h * factor);

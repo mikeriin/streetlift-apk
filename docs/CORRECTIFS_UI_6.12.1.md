@@ -25,3 +25,9 @@ Réglages › Apparence › « Taille d’affichage » : 85, 90, 100, 110 ou 120
 ## 6.14.0 — couleurs et espacements
 
 Réglages › Apparence : « Couleurs » (Sobres = dérivation de 6.12.0, Normales par défaut, Vives = 6.12.1 ; `kColorIntensity`, `kColorIntensities` dans `lib/kit/palette.dart`) et « Espacements » (Compacts 70 %, Normaux 85 % par défaut, Aérés 100 % ; `KDensity` dans `lib/kit/tokens.dart`, appliqué aux marges intérieures des cartes, des lignes de menu et de jour et aux titres de section, lignes jamais sous 48 dp). Titres de section revenus en `texte2`, pastilles d'icône des menus sur `haute` (icône `encre`). Bordeaux sombre : encre #D56964 en « Normales ».
+
+## 6.15.0 — lift principal et clusters
+
+- Carte du lift principal (`Exercise.main`) : contour et surtitre « Lift principal » en `encre`, charge et cible RIR en `encre` ; les autres exercices : carte neutre, charge en `texte`, cible sur `haute`.
+- Cluster : la cible de la ligne est répartie en blocs (`clusterSplit` : 3 reps en 2 blocs → 2 + 1) au lieu de « 2 × 1 » qui contredisait la ligne ; titre « Cluster · 3 reps en 2 blocs, 30 s entre » ; deux lignes au plus : titre, puis cases des blocs (valeur prévue, faite, suivante) et saisie du bloc suivant (− valeur + ✓) côte à côte.
+- Zones de saisie (champs de série, validation, chrono de série, bandeau des blocs, note, champs des formulaires) à la hauteur des espacements choisis (`KDensity.field` : 48 dp × facteur, 36 dp au moins ; 48 dp en « Aérés »).

@@ -356,7 +356,9 @@ class KSetField extends StatelessWidget {
           customBorder: KRadius.pill,
           onTap: onTap,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: KSize.target),
+            constraints: BoxConstraints(
+              minHeight: KDensity.field(KSize.target),
+            ),
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
