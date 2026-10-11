@@ -84,7 +84,9 @@ class KDayRow extends StatelessWidget {
     };
     final written = stateText(state);
     final writtenKey = ValueKey(
-      state == KDayState.inProgress ? 'day-in-progress-$day' : 'day-resume-$day',
+      state == KDayState.inProgress
+          ? 'day-in-progress-$day'
+          : 'day-resume-$day',
     );
     final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
     final statusLabel = stateLabel(state);
