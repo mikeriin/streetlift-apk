@@ -273,11 +273,12 @@ class KSessionPager extends StatelessWidget {
     final media = MediaQuery.of(context);
     // 18 : seuil de glissement par défaut de Flutter (`kTouchSlop`).
     final slop = media.gestureSettings.touchSlop ?? 18.0;
+    final wide = DeviceGestureSettings(touchSlop: slop * 2);
     return MediaQuery(
-      data: media.copyWith(
-        gestureSettings: DeviceGestureSettings(touchSlop: slop * 2),
-      ),
-      child: PageView.builder(
+      data: media.copyWith(gestureSettings: wide),
+      child: _KPagerSlop(
+        settings: wide,
+        child: PageView.builder(
         controller: controller,
         physics: const KPagePhysics(),
         // Le chemin parcouru avant que le glissement soit reconnu compte :
@@ -285,9 +286,38 @@ class KSessionPager extends StatelessWidget {
         dragStartBehavior: DragStartBehavior.down,
         onPageChanged: onPageChanged,
         itemCount: itemCount,
-        itemBuilder: (context, i) =>
-            MediaQuery(data: media, child: itemBuilder(context, i)),
+          itemBuilder: (context, i) =>
+              MediaQuery(data: media, child: itemBuilder(context, i)),
+        ),
       ),
+    );
+  }
+}
+
+/// Seuil de glissement de la vue paginée, transmis aux pages.
+class _KPagerSlop extends InheritedWidget {
+  final DeviceGestureSettings settings;
+  const _KPagerSlop({required this.settings, required super.child});
+
+  @override
+  bool updateShouldNotify(_KPagerSlop oldWidget) =>
+      oldWidget.settings != settings;
+}
+
+/// Champ de saisie posé dans une page de [KSessionPager] : il reprend le
+/// seuil de glissement de la vue paginée, pour qu'un glissement horizontal
+/// commencé sur le champ change de page au lieu d'être pris par le champ.
+class KPagerSlop extends StatelessWidget {
+  final Widget child;
+  const KPagerSlop({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final pager = context.dependOnInheritedWidgetOfExactType<_KPagerSlop>();
+    if (pager == null) return child;
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(gestureSettings: pager.settings),
+      child: child,
     );
   }
 }

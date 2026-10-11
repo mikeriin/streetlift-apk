@@ -698,7 +698,7 @@ class _FeelTile extends StatelessWidget {
     final label = kFeelLabels[level]!;
     // Correctifs UI (11/10/2026) : tuile au rayon des groupes (12) au lieu
     // d'une grande pilule, repère de couleur de l'échelle en bas (de
-    // `danger` à `validation`, en passant par l'encre de la palette).
+    // `danger` à `validation`).
     final shape = RoundedRectangleBorder(
       borderRadius: KRadius.menuRadius,
       side: k.controlSide,
@@ -707,7 +707,7 @@ class _FeelTile extends StatelessWidget {
       1 => k.danger,
       2 => k.avertissement,
       3 => k.texte3,
-      4 => k.encre,
+      4 => k.validation.withValues(alpha: .55),
       _ => k.validation,
     };
     Widget marked(Widget child) => Stack(

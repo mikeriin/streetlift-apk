@@ -2178,7 +2178,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 ),
               )
             else
-              TextFormField(
+              KPagerSlop(
+                child: TextFormField(
                 key: ValueKey('${ex.id}-note'),
                 initialValue: log.note,
                 minLines: 1,
@@ -2194,6 +2195,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   log.note = value;
                   store.saveLogs(affectsProgression: false);
                 },
+              ),
               ),
             const SizedBox(height: KSpacing.s8),
           ],
@@ -2450,6 +2452,9 @@ class _SetFieldState extends State<_SetField> {
             child: Center(
               child: IgnorePointer(
                 ignoring: !_focus.hasFocus,
+                // Même seuil de glissement que la vue paginée : un
+                // glissement commencé sur un champ actif change de page.
+                child: KPagerSlop(
                 child: TextField(
                   controller: widget.controller,
                   focusNode: _focus,
@@ -2480,6 +2485,7 @@ class _SetFieldState extends State<_SetField> {
                   ),
                   onTap: _selectAll,
                   onChanged: widget.onChanged,
+                ),
                 ),
               ),
             ),
