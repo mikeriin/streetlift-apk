@@ -463,10 +463,10 @@ void main() {
   });
 
   test(
-    'version affichée : « 6.13.0 » hors build de développement (taille d’affichage)',
+    'version affichée : « 6.14.0 » hors build de développement (couleurs, espacements)',
     () {
-      expect(kVersion, '6.13.0');
-      expect(kAppVersion, '6.13.0');
+      expect(kVersion, '6.14.0');
+      expect(kAppVersion, '6.14.0');
     },
   );
 }

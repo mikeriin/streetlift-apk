@@ -67,7 +67,7 @@ class KCard extends StatelessWidget {
           ? BorderSide.none
           : BorderSide(color: outline!, width: KSize.current),
     );
-    Widget body = Padding(padding: padding, child: child);
+    Widget body = Padding(padding: KDensity.pad(padding), child: child);
     if (_day) {
       body = DefaultTextStyle.merge(
         style: TextStyle(color: k.surPleine),
@@ -98,7 +98,7 @@ class KCard extends StatelessWidget {
   }
 }
 
-/// Titre de section (C6) : 14, graisse 600, `encre`, sans capitales, au-dessus
+/// Titre de section (C6) : 14, graisse 600, `texte2`, sans capitales, au-dessus
 /// des groupes. [action] : un lien texte à droite (« Modifier », « Tout voir »).
 class KSectionTitle extends StatelessWidget {
   final String text;
@@ -117,15 +117,19 @@ class KSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     return Padding(
-      padding: EdgeInsets.fromLTRB(KSpacing.s4, top, KSpacing.s4, KSpacing.s4),
+      padding: EdgeInsets.fromLTRB(
+        KSpacing.s4,
+        KDensity.of(top),
+        KSpacing.s4,
+        KSpacing.s4,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Semantics(
               header: true,
-              // Correctifs UI (11/10/2026) : titres de section en `encre`.
-              child: Text(text, style: KType.section.copyWith(color: k.encre)),
+              child: Text(text, style: KType.section.copyWith(color: k.texte2)),
             ),
           ),
           if (actionLabel != null)

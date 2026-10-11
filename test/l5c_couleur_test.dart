@@ -69,7 +69,7 @@ void main() {
         expect(p.bordeaux, const Color(0xFF551515));
         expect(
           p.accent,
-          dark ? const Color(0xFFDF615C) : const Color(0xFF551515),
+          dark ? const Color(0xFFD56964) : const Color(0xFF551515),
         );
         expect(p.onBrand, Colors.white);
         expect(p.onBrandSoft, Colors.white);

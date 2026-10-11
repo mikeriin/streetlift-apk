@@ -22,7 +22,8 @@ export 'palette.dart'
         normalizePaletteId,
         paletteSource,
         kContrast,
-        kHex;
+        kHex,
+        kColorIntensity;
 export 'palette_picker.dart';
 export 'program.dart';
 export 'search_field.dart';

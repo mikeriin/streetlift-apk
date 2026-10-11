@@ -29,6 +29,25 @@ abstract final class KSpacing {
   static const double maxWidth = 840;
 }
 
+/// 6.14.0 : espacements intérieurs (Réglages › Apparence) : facteur appliqué
+/// aux marges intérieures des cartes, des lignes de menu et de jour et aux
+/// titres de section ; jamais sous la cible tactile de 48 dp. L'application
+/// le règle avant de construire l'interface (1 hors application : tests).
+abstract final class KDensity {
+  static double factor = 1;
+
+  /// Marges intérieures à la densité choisie.
+  static EdgeInsetsGeometry pad(EdgeInsetsGeometry p) =>
+      factor == 1 ? p : p * factor;
+
+  /// Longueur à la densité choisie (marge, écart).
+  static double of(double v) => v * factor;
+
+  /// Hauteur minimale d'une ligne : à la densité choisie, 48 dp au moins.
+  static double row(double h) =>
+      factor == 1 ? h : math.max(KSize.target, h * factor);
+}
+
 /// Rayons (cahier §5.3, U13) : trois familles, seules valeurs.
 abstract final class KRadius {
   /// Cartes de contenu, carte du jour, barre de repos, haut des feuilles.

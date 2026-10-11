@@ -116,11 +116,13 @@ class KDayRow extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: KSize.target),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(
-              KSpacing.s14,
-              KSpacing.s8,
-              onInfo == null ? KSpacing.s14 : KSpacing.s4,
-              KSpacing.s8,
+            padding: KDensity.pad(
+              EdgeInsetsDirectional.fromSTEB(
+                KSpacing.s14,
+                KSpacing.s8,
+                onInfo == null ? KSpacing.s14 : KSpacing.s4,
+                KSpacing.s8,
+              ),
             ),
             child: Row(
               children: [

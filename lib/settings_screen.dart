@@ -27,7 +27,7 @@ import 'kit/kit.dart';
 import 'wellbeing_screens.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.13.0';
+const kVersion = '6.14.0';
 
 /// Version affichée (D0.9) : « dev6.8.0 » dans le build de développement
 /// (APK du propriétaire), « 6.8.0 » dans l’AAB du Play Store.
@@ -38,8 +38,8 @@ const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;
 enum SettingsPage {
   appearance(
     'Apparence',
-    'Thème, palette, taille, contraste, anatomie 3D',
-    'Thème, palette, taille, contraste, anatomie 3D.',
+    'Thème, palette, taille, couleurs, espacements, contraste, 3D',
+    'Thème, palette, taille, couleurs, espacements, contraste, 3D.',
     Icons.palette_outlined,
   ),
   session(
@@ -427,6 +427,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
               selected: s.displaySize,
               onChanged: (v) {
                 s.displaySize = v;
+                store.saveSettings();
+              },
+            ),
+          ),
+          // 6.14.0 : intensité des couleurs et espacements intérieurs.
+          _mark(
+            'color-intensity',
+            (lit) => KSegmentedRow<int>(
+              key: const ValueKey('settings-color-intensity'),
+              title: 'Couleurs',
+              subtitle: switch (s.colorIntensity) {
+                0 => 'Sobres : la couleur de la palette en retrait',
+                2 => 'Vives : la couleur de la palette ravivée',
+                _ => 'Normales',
+              },
+              highlight: lit,
+              segments: const [
+                KSegment(0, 'Sobres'),
+                KSegment(1, 'Normales'),
+                KSegment(2, 'Vives'),
+              ],
+              selected: s.colorIntensity,
+              onChanged: (v) {
+                s.colorIntensity = v;
+                store.saveSettings();
+              },
+            ),
+          ),
+          _mark(
+            'spacing',
+            (lit) => KSegmentedRow<int>(
+              key: const ValueKey('settings-spacing'),
+              title: 'Espacements',
+              subtitle: 'Marges à l’intérieur des cartes et des lignes',
+              highlight: lit,
+              segments: const [
+                KSegment(70, 'Compacts'),
+                KSegment(85, 'Normaux'),
+                KSegment(100, 'Aérés'),
+              ],
+              selected: s.spacing,
+              onChanged: (v) {
+                s.spacing = v;
                 store.saveSettings();
               },
             ),

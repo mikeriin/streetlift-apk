@@ -220,6 +220,8 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
     store.accentMode,
     store.contrastMode,
     store.displaySizeMode,
+    store.colorIntensityMode,
+    store.spacingMode,
   ]);
 
   @override
@@ -237,6 +239,9 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
   }
 
   void _sync() {
+    // 6.14.0 : intensité des couleurs et espacements, avant le thème.
+    kColorIntensity = store.colorIntensityMode.value;
+    KDensity.factor = store.spacingMode.value / 100;
     SL.accentSpec = KAccentSpec.byId(store.accentMode.value);
     SL.contrast = store.contrastMode.value;
     SL.dark = effectiveDark(store.themeMode.value);

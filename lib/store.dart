@@ -356,6 +356,10 @@ const kDisplaySizes = [85, 90, 100, 110, 120];
 int normalizeDisplaySize(Object? value) =>
     value is int && kDisplaySizes.contains(value) ? value : 100;
 
+/// 6.14.0 : espacements intérieurs proposés (pour cent) : compacts,
+/// normaux, aérés.
+const kSpacingLevels = [70, 85, 100];
+
 class AppSettings {
   int defaultRest; // s, appliqué quand l'exercice n'a pas de repos
   bool autoTimer; // lancer le repos à la validation d'une série
@@ -393,6 +397,12 @@ class AppSettings {
   /// elle diffère de 100 (export identique sinon).
   int displaySize;
 
+  /// 6.14.0 : intensité des couleurs (0 sobres, 1 normales, 2 vives) et
+  /// espacements intérieurs en pour cent ([kSpacingLevels]). Écrits
+  /// seulement s'ils diffèrent du défaut (1 ; 85).
+  int colorIntensity;
+  int spacing;
+
   /// CI1g (`kalis_plan` 0.3.1, note `clearance_first`) : blocs pour
   /// lesquels l'avis d'un médecin ou d'un kiné est confirmé (« identifiant
   /// du bloc#valeur de la note » → date civile de la confirmation). Écrit seulement s'il n'est pas
@@ -423,6 +433,8 @@ class AppSettings {
     this.contrast = false,
     this.koachGuided = false,
     this.displaySize = 100,
+    this.colorIntensity = 1,
+    this.spacing = 85,
     Map<String, String>? medicalClearance,
   }) : medicalClearance = medicalClearance ?? <String, String>{};
 
@@ -450,6 +462,8 @@ class AppSettings {
     if (contrast) 'contrast': true,
     if (koachGuided) 'koachGuided': true,
     if (displaySize != 100) 'displaySize': displaySize,
+    if (colorIntensity != 1) 'colorIntensity': colorIntensity,
+    if (spacing != 85) 'spacing': spacing,
     if (medicalClearance.isNotEmpty) 'medicalClearance': medicalClearance,
   };
   AppSettings.fromJson(Map<String, dynamic> j)
@@ -478,6 +492,15 @@ class AppSettings {
       contrast = j['contrast'] == true,
       koachGuided = j['koachGuided'] == true,
       displaySize = normalizeDisplaySize(j['displaySize']),
+      colorIntensity =
+          j['colorIntensity'] is int &&
+              (j['colorIntensity'] as int) >= 0 &&
+              (j['colorIntensity'] as int) <= 2
+          ? j['colorIntensity'] as int
+          : 1,
+      spacing = j['spacing'] is int && kSpacingLevels.contains(j['spacing'])
+          ? j['spacing'] as int
+          : 85,
       medicalClearance = <String, String>{
         if (j['medicalClearance'] case final Map<String, dynamic> m)
           for (final e in m.entries)
@@ -687,6 +710,10 @@ class AppStore extends ChangeNotifier {
 
   /// 6.13.0 : taille d'affichage (pour cent), même principe.
   final ValueNotifier<int> displaySizeMode = ValueNotifier<int>(100);
+
+  /// 6.14.0 : intensité des couleurs et espacements, même principe.
+  final ValueNotifier<int> colorIntensityMode = ValueNotifier<int>(1);
+  final ValueNotifier<int> spacingMode = ValueNotifier<int>(85);
   final List<Map<String, dynamic>> dbExercises = []; // base embarquée
   final List<Map<String, dynamic>> userExercises =
       []; // ajoutés par l'utilisateur
@@ -926,6 +953,8 @@ class AppStore extends ChangeNotifier {
     accentMode.value = settings.accent;
     contrastMode.value = settings.contrast;
     displaySizeMode.value = settings.displaySize;
+    colorIntensityMode.value = settings.colorIntensity;
+    spacingMode.value = settings.spacing;
     // G2 : séances manuelles et WOD de ces anciennes clés ignorés ; les clés
     // restent en place, intactes (aucune donnée effacée).
     logs.removeWhere((k, _) => isManualSessionKey(k));
@@ -1097,6 +1126,12 @@ class AppStore extends ChangeNotifier {
     }
     if (displaySizeMode.value != settings.displaySize) {
       displaySizeMode.value = settings.displaySize;
+    }
+    if (colorIntensityMode.value != settings.colorIntensity) {
+      colorIntensityMode.value = settings.colorIntensity;
+    }
+    if (spacingMode.value != settings.spacing) {
+      spacingMode.value = settings.spacing;
     }
     notifyListeners();
   }
@@ -1772,6 +1807,8 @@ class AppStore extends ChangeNotifier {
     accentMode.value = settings.accent;
     contrastMode.value = settings.contrast;
     displaySizeMode.value = settings.displaySize;
+    colorIntensityMode.value = settings.colorIntensity;
+    spacingMode.value = settings.spacing;
     _lastLevel = data.lastLevel ?? level;
     // G2 : un état remplacé (import, effacement) n'a plus de données
     // retirées en attente ; l'ancien reste dans la copie de récupération.
@@ -3442,6 +3479,8 @@ class AppStore extends ChangeNotifier {
     accentMode.dispose();
     contrastMode.dispose();
     displaySizeMode.dispose();
+    colorIntensityMode.dispose();
+    spacingMode.dispose();
     persistenceError.dispose();
     super.dispose();
   }
