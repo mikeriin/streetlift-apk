@@ -1,176 +1,27 @@
-diff --git a/integration_test/seance_g9_test.dart b/integration_test/seance_g9_test.dart
-index e4f5cb7..8014e04 100644
---- a/integration_test/seance_g9_test.dart
-+++ b/integration_test/seance_g9_test.dart
-@@ -158,7 +158,11 @@ void main() {
- 
-   /// Fin de séance : page « Bilan de séance », « Terminer la séance ».
-   Future<bool> finish(WidgetTester tester, String shotName) async {
--    await tapF(tester, find.byKey(const ValueKey('session-exercises')), ms: 900);
-+    await tapF(
-+      tester,
-+      find.byKey(const ValueKey('session-exercises')),
-+      ms: 900,
-+    );
-     await tapF(tester, find.text('Bilan de séance'), ms: 1200);
-     await tap(tester, 'finish-session', ms: 2500);
-     final ok = await until(
-diff --git a/lib/adapt/health_check.dart b/lib/adapt/health_check.dart
-index 885ad70..2d70e99 100644
---- a/lib/adapt/health_check.dart
-+++ b/lib/adapt/health_check.dart
-@@ -740,62 +740,64 @@ class _FeelTile extends StatelessWidget {
-           // Koach posé sur la tuile prend sa couleur pour papier.
-           child: KoachSurface(
-             color: k.haute,
--            child: marked(horizontal
--                ? Padding(
--                    padding: const EdgeInsets.symmetric(
--                      horizontal: KSpacing.s12,
--                      vertical: KSpacing.s8,
--                    ),
--                    child: Row(
--                      children: [
--                        KoachView(
--                          pose: kFeelPoses[level]!,
--                          height: 44,
--                          width: 40,
--                        ),
--                        const SizedBox(width: KSpacing.s12),
--                        Expanded(
--                          child: Text(
--                            label,
--                            style: KType.libelle.copyWith(color: k.texte),
--                          ),
--                        ),
--                      ],
--                    ),
--                  )
--                : ConstrainedBox(
--                    constraints: const BoxConstraints(
--                      minHeight: _feelTileHeight,
--                    ),
--                    child: Padding(
-+            child: marked(
-+              horizontal
-+                  ? Padding(
-                       padding: const EdgeInsets.symmetric(
--                        horizontal: KSpacing.s4,
-+                        horizontal: KSpacing.s12,
-                         vertical: KSpacing.s8,
-                       ),
--                      child: Column(
--                        mainAxisSize: MainAxisSize.min,
--                        mainAxisAlignment: MainAxisAlignment.center,
-+                      child: Row(
-                         children: [
-                           KoachView(
-                             pose: kFeelPoses[level]!,
--                            height: 48,
--                            width: 44,
-+                            height: 44,
-+                            width: 40,
-                           ),
--                          const SizedBox(height: KSpacing.s4),
--                          // Même taille pour les cinq libellés ; un libellé
--                          // trop large se réduit, il n'est jamais coupé.
--                          FittedBox(
--                            fit: BoxFit.scaleDown,
-+                          const SizedBox(width: KSpacing.s12),
-+                          Expanded(
-                             child: Text(
-                               label,
--                              maxLines: 1,
--                              style: KType.micro.copyWith(color: k.texte),
-+                              style: KType.libelle.copyWith(color: k.texte),
-                             ),
-                           ),
-                         ],
-                       ),
-+                    )
-+                  : ConstrainedBox(
-+                      constraints: const BoxConstraints(
-+                        minHeight: _feelTileHeight,
-+                      ),
-+                      child: Padding(
-+                        padding: const EdgeInsets.symmetric(
-+                          horizontal: KSpacing.s4,
-+                          vertical: KSpacing.s8,
-+                        ),
-+                        child: Column(
-+                          mainAxisSize: MainAxisSize.min,
-+                          mainAxisAlignment: MainAxisAlignment.center,
-+                          children: [
-+                            KoachView(
-+                              pose: kFeelPoses[level]!,
-+                              height: 48,
-+                              width: 44,
-+                            ),
-+                            const SizedBox(height: KSpacing.s4),
-+                            // Même taille pour les cinq libellés ; un libellé
-+                            // trop large se réduit, il n'est jamais coupé.
-+                            FittedBox(
-+                              fit: BoxFit.scaleDown,
-+                              child: Text(
-+                                label,
-+                                maxLines: 1,
-+                                style: KType.micro.copyWith(color: k.texte),
-+                              ),
-+                            ),
-+                          ],
-+                        ),
-+                      ),
-                     ),
--                  )),
-+            ),
-           ),
-         ),
-       ),
 diff --git a/lib/session_screen.dart b/lib/session_screen.dart
-index fa91106..9bc47d3 100644
+index 30c1b64..1afdd3a 100644
 --- a/lib/session_screen.dart
 +++ b/lib/session_screen.dart
-@@ -570,10 +570,7 @@ class _SessionScreenState extends State<SessionScreen> {
-         : '${groups[exerciseIndex].length > 1 ? 'Enchaînement' : 'Exercice'} '
-               '${exerciseIndex + 1} sur $nPages';
-     return Padding(
--      padding: const EdgeInsets.only(
--        left: KSpacing.s12,
--        right: KSpacing.page,
--      ),
-+      padding: const EdgeInsets.only(left: KSpacing.s12, right: KSpacing.page),
-       child: KPageStrip(
-         label: where,
-         count: bilanPage + 1,
-@@ -1102,10 +1099,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
--                    Text(
--                      title,
--                      style: KType.detail.copyWith(color: t.texte),
--                    ),
-+                    Text(title, style: KType.detail.copyWith(color: t.texte)),
-                     if (detail != null)
-                       Text(
-                         detail,
-diff --git a/test/g2_retrait_test.dart b/test/g2_retrait_test.dart
-index f6590c6..41b81b6 100644
---- a/test/g2_retrait_test.dart
-+++ b/test/g2_retrait_test.dart
-@@ -462,8 +462,11 @@ void main() {
-     });
-   });
- 
--  test('version affichée : « 6.12.1 » hors build de développement (correctifs UI)', () {
--    expect(kVersion, '6.12.1');
--    expect(kAppVersion, '6.12.1');
--  });
-+  test(
-+    'version affichée : « 6.12.1 » hors build de développement (correctifs UI)',
-+    () {
-+      expect(kVersion, '6.12.1');
-+      expect(kAppVersion, '6.12.1');
-+    },
-+  );
- }
+@@ -1751,8 +1751,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
+                                 : KType.chiffre.copyWith(color: t.encre),
+                           ),
+                           // Grand texte : la cible passe sous la charge.
+-                          if (target case (final rir, final level)
+-                              when largeText)
++                          if (target case (
++                            final rir,
++                            final level,
++                          ) when largeText)
+                             _TargetBadge(
+                               key: ValueKey('target-${ex.id}'),
+                               rir: rir,
+@@ -1782,8 +1784,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
+                         ],
+                       ),
+                     ),
+-                    if (target case (final rir, final level)
+-                        when !largeText)
++                    if (target case (final rir, final level) when !largeText)
+                       Padding(
+                         padding: const EdgeInsetsDirectional.only(
+                           start: KSpacing.s8,
