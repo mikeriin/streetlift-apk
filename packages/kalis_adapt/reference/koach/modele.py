@@ -1369,9 +1369,11 @@ class Modele(object):
     # ------------------------------------------------------------------
     # Lecture de l'a posteriori
     # ------------------------------------------------------------------
-    def capacite(self, ex_id):
+    def capacite(self, ex_id, brut=False):
         """(moyenne, écart-type) de ln capacité à frais de l'exercice (hors
-        effet de jour et fatigue), ou None."""
+        effet de jour et fatigue), ou None. [brut] : écart-type du filtre
+        sans le recalage `intervalle_echelle` (mises à jour bayésiennes du
+        contrôle dual, qui lisent une variance a posteriori)."""
         t = self.piste(ex_id)
         if t is None:
             return None
@@ -1386,7 +1388,7 @@ class Modele(object):
         # filtre est trop large aux premiers rangs de séance ; baisser le
         # seul défaut de modèle jusqu'à 0 laissait la couverture au-dessus
         # de 92 %).
-        k = self.p['mesure'].get('intervalle_echelle', 1.0)
+        k = 1.0 if brut else self.p['mesure'].get('intervalle_echelle', 1.0)
         return t.base + mu, math.sqrt((v if v > 0 else 0.0) * k * k + d * d)
 
     def capacite_du_jour(self, ex_id, avec_bruit_jour=True):

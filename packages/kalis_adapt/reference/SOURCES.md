@@ -1,6 +1,6 @@
 # Sources des paramètres de Koach 1.0
 
-Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026, puis mis à jour le 10/10/2026 pour la version 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10 ; liste des changements : `CHANGEMENTS_1_0_1.md`, sections A à G ; la section G corrige `modele.elargir` et remesure trois clés de `planification`). Fichier décrit : `params/koach_params_v1.json` version `1.0.1-ref.1`, SHA-256 `c8aa09ebc7fb337bf93500b2fda695e95df611d4e5181fa615886faf6092157f`, 317 clés (6 à la racine, 311 dans les onze sections). Version 1.0 : `1.0.0-ref.1`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 300 dans les sections ; 299 écrit par erreur en 1.0).
+Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026, puis mis à jour le 10/10/2026 pour la version 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10 ; liste des changements : `CHANGEMENTS_1_0_1.md`, sections A à G ; la section G corrige `modele.elargir` et remesure trois clés de `planification`). Mis à jour le 11/10/2026 pour la version 1.0.2 (KM1 correction 2, DECISIONS_CP.md C13.12 ; `CHANGEMENTS_1_0_2.md`). Fichier décrit : `params/koach_params_v1.json` version `1.0.2-ref.1`, SHA-256 `211c936136cc22027d85ed9bfb42ef6398bf45b272bd3a8f0900ef235846f5da`, 322 clés (6 à la racine, 316 dans les onze sections). Version 1.0.1 : `1.0.1-ref.1`, SHA-256 `c8aa09ebc7fb337bf93500b2fda695e95df611d4e5181fa615886faf6092157f`, 317 clés. Version 1.0 : `1.0.0-ref.1`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 300 dans les sections ; 299 écrit par erreur en 1.0).
 Compagnon de `CONTRAT_1_0.md` (§ 7 : rôle de chaque clé et module lecteur).
 
 ## Comment lire ce document
@@ -42,6 +42,11 @@ Toutes figurent dans `SOURCES_RECHERCHE.md` avec leur statut, sauf mention contr
 | Zourdos MC, Klemp A, Dolan C, Quiles JM, Schau KA, Jo E, Helms E, Esgro B, Duncan S, Garcia Merino S, Blanco R. *Novel resistance training-specific rating of perceived exertion scale measuring repetitions in reserve.* J Strength Cond Res 2016;30(1):267–275. DOI 10.1519/JSC.0000000000001049 | référence vérifiée (dépôt AUT, consulté pour ce document) ; le contenu de l'échelle (« RPE 5–6 = 4–6 RIR ») n'a été lu qu'en **seconde main** (topendsports.com), donc pas utilisé comme source d'une valeur |
 | Škarabot J, Cronin N, Strojnik V, Avela J. *Bilateral deficit in maximal force production.* Eur J Appl Physiol 2016;116(11-12):2057–2084. DOI 10.1007/s00421-016-3458-z | référence vérifiée pour ce document (portail Northumbria) ; le résumé ne donne **aucune ampleur chiffrée** du déficit bilatéral, donc pas utilisé comme source du facteur 0,55 |
 | Robinson ZP, Pelland JC, Remmert JF, Refalo MC, Jukic I, Steele J, Zourdos MC. Sports Med 2024;54(9):2209–2231. DOI 10.1007/s40279-024-02069-2 | vérifié (résumé : sens) |
+| Travis SK, Zourdos MC, Bazyler CD. *Weight selection attempts of elite classic powerlifters.* Percept Mot Skills 2021;128(1):507–521. DOI 10.1177/0031512520967608 — ouverture ≈ 91 % du 3e essai, sauts ≈ 5 % puis 3 % (109 athlètes sans essai manqué, Mondiaux IPF Classic 2012-2019). Appuie `tentative_ouverture_part`, `tentative_saut_2`, `tentative_saut_3` (repris de 0.3.1) ; cité en 1.0.2 pour l'ouverture | vérifié (résumé, 11/10/2026) |
+| Howells RJ, Spathis JG, Pearson J, et al. *Impacts of squat attempt weight selection and success on powerlifting performance.* J Sports Med Phys Fitness 2022;62(4):476–484. DOI 10.23736/S0022-4707.21.12140-1 — ouverture ≈ 92 % de la meilleure barre du jour (10 672 participations) | vérifié (résumé, 11/10/2026) |
+| NSCA, fiche « Training Load Chart » (2012), adaptée de Landers J, NSCA Journal 1984;6(6):60–61 ; Sheppard JM, Triplett NT, *Program design for resistance training*, in Haff GG, Triplett NT (dir.), *Essentials of Strength Training and Conditioning*, 4e éd., Human Kinetics 2016 — 1RM 100 %, 2RM 95 %, 3RM 93 %, 4RM 90 %, 5RM 87 %. Sert à `tentative_palier_par_rir` (1.0.2) | vérifié (fiche NSCA, 11/10/2026 ; numéro du tableau du manuel non vérifié) |
+| Caterisano A, Decker D, Snyder B, et al. *CSCCa and NSCA Joint Consensus Guidelines for Transition Periods: Safe Return to Training Following Inactivity.* Strength Cond J 2019;41(3):1–18 — après une coupure de 2 semaines ou plus : volume réduit de 50 % puis 30 % (règle 50/30/20/10), charges de test réduites de 20 % puis 10 %. Contexte de la reprise par paliers (1.0.2) : la réduction des séries est `coupure_series` (reprise de 0.3.1) ; la remontée des charges par paliers est un choix de Koach, non une recommandation chiffrée de ce texte (consensus de sécurité pour athlètes universitaires) | vérifié (texte, 11/10/2026) |
+| Bosquet L, Berryman N, Dupuy O, et al. *Effect of training cessation on muscular performance: a meta-analysis.* Scand J Med Sci Sports 2013;23(3). DOI 10.1111/sms.12047 ; McMaster DT et al., Sports Med 2013;43(5):367–384 (force maintenue jusqu'à 3 semaines d'arrêt chez des athlètes de sports collectifs) — contexte de la reprise (1.0.2) : peu de perte de force maximale en 2 à 3 semaines ; aucun pourcentage par semaine vérifié | vérifié (résumés, 11/10/2026) |
 | Contexte seulement, statuts dans `SOURCES_RECHERCHE.md` : Busso 1991 (seconde main), Bosquet 2013, Gabbett 2016 (chiffres en seconde main), Impellizzeri 2020, Sperandei 2016 (seconde main), Perri 2002, Remmert 2023 (chiffres en seconde main) | jamais utilisés comme source d'une valeur |
 | Méthodes (sans valeur de paramètre) : Adams & MacKay 2007 (BOCPD), de Boer et al. 2005 (entropie croisée), Abadie et al. 2010 (contrôle synthétique), Lillie et al. 2011, Duan et al. 2013 (N-of-1), Russo et al. 2018 (Thompson) | voir `SOURCES_RECHERCHE.md` § 13 |
 
@@ -134,7 +139,8 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `note_erreur_grossiere` | [0.08, 2.0] | mesure sur le banc | Modèle de vérité B : 8 % d'erreurs de ±2 (SAUVEGARDE). |
 | `noteur_entier_notes_min` | 20 | choix raisonné | SAUVEGARDE 19:50 ; aucune source. |
 | `noteur_entier_part_max` | 0.05 | choix raisonné | SAUVEGARDE 19:50 ; aucune source. |
-| `defaut_modele_sd` | 0.015 | choix raisonné | Erreur que le filtre gaussien ne voit pas (forme de courbe, densité supposée). Mesure : sans ce terme, couverture de l'intervalle à 90 % de 87 % au rang 6 (SET9, 4 graines, SAUVEGARDE 09/10 ~22:50), sous les 88 à 92 % du cahier. 0,015 est provisoire : à caler sur la campagne de mesure. Elle relève aussi le plancher de la demi-largeur à 2,5 % (CONTRAT, annexe A.1). |
+| `defaut_modele_sd` | 0.01 | mesure sur le banc | Erreur que le filtre gaussien ne voit pas (forme de courbe, densité supposée). 1.0 et 1.0.1 : 0,015, calé sur deux graines (couverture 90,4 %), 93,2 % sur six graines (KM2). 1.0.2 (C13.12) : recalé avec `intervalle_echelle` sur les graines 0, 2 et 4 de la campagne (34 775 estimations des principaux chargés, rangs ≥ 3, paires |erreur|, écart-type gardées par saison) : hors ligne 93,6 % avec (0,015 ; 1), 92,3 % avec (0 ; 1), 90,2 % avec (0,010 ; 0,9) ; mesuré ensuite sur six graines (livraison KM1c2). Plancher de la demi-largeur : 1,6 %. |
+| `intervalle_echelle` | 0.9 | mesure sur le banc | 1.0.2. Échelle de l'écart-type du filtre dans `capacite`. Le défaut de modèle seul ne suffit pas (92,3 % de couverture même à 0) : l'intervalle du filtre est trop large aux premiers rangs de séance (rang 3 : 98,5 % ; rang 6 : 95,8 % ; rangs 10 à 15 : 92 à 93 %, graines 0, 2, 4). Couples équivalents hors ligne : (0 ; 0,925), (0,010 ; 0,90), (0,015 ; 0,85) ; le couple retenu garde un défaut de modèle non nul et la couverture la plus égale selon la largeur de l'intervalle. |
 
 ### Section `jour`
 
@@ -245,6 +251,8 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `tentative_sd_jour` | 0.046 | mesure sur le banc | 1.0.1. Écart-type du jour médian au premier essai de l'échelle des tentatives : 4,6 % (45 saisons à cibles × 3 vérités × graines 0 à 5, 1 758 unités chargées ; `calib.py`, `ana_cal.py`). Inchangé après la correction de `elargir` (CHANGEMENTS_1_0_1.md § G). |
 | `tentative_manque` | 0.018 | mesure sur le banc | 1.0.1. Manque moyen de l'échelle des tentatives à sa barre la plus haute possible : 1,8 % (graines 2 à 5, après la correction de `elargir`, 1 188 unités chargées ; CHANGEMENTS_1_0_1.md § G). Première mesure, avant cette correction : 2,8 % (graines 0 à 5, 1 758 unités chargées). |
 | `tentative_cible_proba` | 0.35 | repris de 0.3.1 | `attemptRecordProbability` = 0,35 (inventaire A8.2), la règle de `seance._tentative` pour tenter la cible, portée dans l'échelle simulée de la planification. |
+| `dispersion_echeance` | 0.62 | mesure sur le banc | 1.0.2 (C13.12, critère 5). Rapport entre la dispersion mesurée de ln(maximum du jour J) − prévision, effet de jour retiré, et l'écart-type des trajectoires du jumeau, pour les cibles chargées, 4 semaines avant l'échéance : κ² = (Σ(e − ē)² − n(σ_séance² + σ_exercice²))/Σs². Graines 0, 2, 4 (717 cibles) : écart-type de e 4,06 %, s moyen 4,57 %, κ = 0,623. Vérification sur les graines 1, 3, 5, jamais vues (681 cibles) : 0,625. Six graines : 0,632. |
+| `dispersion_echeance_semaines` | 4 | choix raisonné | 1.0.2. κ mesuré par date de prévision (six graines, cibles chargées) : 0,89 à la semaine 0 (aucun journal), 0,57 à mi-saison (semaines 4 à 6), 0,63 quatre semaines avant l'échéance. L'échelle descend donc de 1 à `dispersion_echeance` avec les premières semaines de journal ; la durée de 4 semaines est un choix entre ces mesures (aucune mesure entre les semaines 1 et 3). |
 
 ### Section `securite`
 
@@ -320,6 +328,8 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `seance_tolerance` | 1.15 | repris de 0.3.1 | 1 + `SafetyLimits.sessionTolerance` (kalis_bench/lib/src/safety.dart:148, l. 776 ; inventaire B10). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par `seance._duree_permet_test` et `seance._duree_bornee`. |
 | `seance_tolerance_min` | 3.0 | repris de 0.3.1 | + 3 min de `seance_trop_longue` (kalis_bench/lib/src/safety.dart:776 ; inventaire B10). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par `seance._duree_permet_test` et `seance._duree_bornee`. |
 | `duree_vitesse_defaut` | 2.5 | repris de 0.3.1 | `runSpeedOf` du banc (`kalis_bench/lib/src/analysis.dart`) : 2,5 m/s sans chrono ; avec chrono, le profil fournit `allure_course` = meilleure allure × 0,9. La durée d'une course est estimée à la plus lente des vitesses (journal, profil). |
+| `tentative_palier_par_rir` | [[4.0, 0.1], [3.0, 0.075], [2.0, 0.05], [1.0, 0.025]] | choix raisonné | 1.0.2 (C13.12). Hausse permise au-dessus de la plus lourde barre récente selon la réserve dite. Construction : une barre dite à R répétitions de l'échec vaut un (R + 1)RM ; table charge-répétitions de la NSCA (1RM 100 %, 2RM 95 %, 3RM 93 %, 4RM 90 %, 5RM 87 % : fiche « Training Load Chart » de la NSCA, adaptée de Landers 1984 ; Sheppard et Triplett, *Essentials of Strength Training and Conditioning*, 4e éd., 2016) ; une répétition de prudence parce que la réserve annoncée se trompe d'environ une répétition (Halperin et al. 2022 : sous-estimation moyenne de 0,95 répétition, IC à 95 % 0,17 à 1,73, 12 études). Réserve dite 2 → 2RM → +5 % ; 3 → +7,5 % ; 4 ou plus → +10 % (la table donnerait +11 %) ; 1 → +2,5 % (un cran) ; moins, ou barre non notée → 0. Mesure : § A.4 de `CHANGEMENTS_1_0_2.md`. |
+| `tentative_palier_bande` | 0.05 | choix raisonné | 1.0.2. Les barres à 5 % ou moins de la plus lourde (ramenées à une répétition) décident ensemble du palier, par la note la plus dure : une note isolée peut tromper (bruit des notes ; Halperin et al. 2022, hétérogénéité I² = 97,9 %). Mesure (simulation de l'échelle sur 409 ouvertures d'adversaires et 570 ouvertures du banc) : échecs d'ouverture 11 → 6 par rapport au palier barre par barre, pour 0,11 point de performance du jour J sur le banc ; bandes de 2,5 % et 0 % : 8 échecs. |
 | `couloir_haut_max` | 0.15 | repris de 0.3.1 | `coachCorridorUpMax` (inventaire A7.2). |
 | `couloir_part_lourde` | 0.85 | repris de 0.3.1 | `coachCorridorHeavyShare` (inventaire A7.2). |
 | `schema_change_part` | 0.025 | repris de 0.3.1 | `coachRepLoadShare` (inventaire A7.2 règle 4). |
@@ -622,15 +632,15 @@ Toutes ces constantes ont été écrites lors de la génération par règles, pu
 
 ## 3. Synthèse
 
-**Clés du fichier de paramètres** (section 1, 317 clés depuis 1.0.1, une ligne chacune ; 306 en 1.0) :
+**Clés du fichier de paramètres** (section 1, 322 clés depuis 1.0.2, une ligne chacune ; 317 en 1.0.1, 306 en 1.0) :
 
 | Catégorie | Clés |
 | --- | --- |
 | référence publiée vérifiée | 1 |
-| mesure sur le banc | 31 (27 en 1.0) |
+| mesure sur le banc | 34 (31 en 1.0.1, 27 en 1.0) |
 | repris de 0.3.1 | 117 (116 en 1.0) |
-| choix raisonné | 168 (dont 23 valeurs fixées par le cahier ; 162 en 1.0) |
-| **Total** | **317** |
+| choix raisonné | 170 (dont 23 valeurs fixées par le cahier ; 168 en 1.0.1, 162 en 1.0) |
+| **Total** | **322** |
 
 Clés non lues par le moteur : 17 depuis 1.0.1 (18 en 1.0 ; `planification.gain_affutage` est désormais lue ; liste dans `CONTRAT_1_0.md` § 7.5), dont 3 règles de volume de 0.3.1 portées par le validateur injecté et 2 clés lues par le banc seulement (`qualites`, `mesure.cardio_poids_qualite`).
 
@@ -660,7 +670,7 @@ Ces clés sont classées, mais leur classement doit être confirmé par l'auteur
 
 Ce sont les choix raisonnés qui ont le plus d'effet sur les critères de bascule :
 
-1. `mesure.defaut_modele_sd` : critère « couverture 88 à 92 % » ; valeur provisoire, à caler sur la campagne.
+1. `mesure.defaut_modele_sd` et `mesure.intervalle_echelle` : critère « couverture 88 à 92 % » ; recalés sur six graines en 1.0.2. La couverture varie de 88 à 96 % d'une graine à l'autre et baisse avec le rang de séance : la cause (bruits de mesure et de processus du filtre) reste à traiter si le critère 10 (journal réel) le demande.
 2. `planification.lambda_transport` : le cahier demande un calage sur le banc.
 3. `a_priori.biais_rir_proportionnel` (écart-type) et `mesure.porte_note_ouverte` : dérive de l'e1RM sur un plateau (reste +4 à +7 % sur l'essai synthétique).
 4. `a_priori.tenue_base_s` et `a_priori.niveau_echelle_charge` : biais mesurés par `diag_prior.py`.

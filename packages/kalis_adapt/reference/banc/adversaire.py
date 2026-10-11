@@ -1084,7 +1084,8 @@ def critere_apparie(lignes):
     témoin, moyenne des graines), Koach >= témoin − 0,03 dans au moins 90 %
     des cas, et aucun cas sous témoin − 0,10 sauf si le témoin y commet une
     violation de sécurité (aggravation, poussée de douleur ou constat du
-    validateur ; les cas excusés sont listés). [lignes] : lignes de
+    validateur, sur les graines de l'adversaire ; les cas excusés sont
+    listés). [lignes] : lignes de
     `comparer`. La variante `temoin_avec_barre` ne garde que les adversaires
     où le témoin a réussi au moins une barre (performance > 0)."""
     def juger(sel):
@@ -1114,6 +1115,15 @@ def critere_apparie(lignes):
                       '%d %% des cas, aucun cas sous témoin − %.2f sauf violation de sécurité du témoin'
                       % (TOLERANCE_APPARIEE, int(round(PART_APPARIEE * 100)), PLANCHER_APPARIE))
     out['temoin_avec_barre'] = juger([l for l in apparies if l['temoin']['perf_a'] > 0])
+    # Adversaires hors du critère (publiés pour qu'aucun cas ne disparaisse) :
+    # jour J défini pour un seul moteur, ou pour aucun (saison sans échéance).
+    kk = lambda l: l['koach'].get('perf_a') is not None
+    tt = lambda l: l['temoin'].get('perf_a') is not None
+    out['hors_critere'] = {
+        'koach_sans_jour_j': [l['id'] for l in lignes if not kk(l) and tt(l)],
+        'temoin_sans_jour_j': [l['id'] for l in lignes if kk(l) and not tt(l)],
+        'aucun_jour_j': sum(1 for l in lignes if not kk(l) and not tt(l)),
+    }
     return out
 
 

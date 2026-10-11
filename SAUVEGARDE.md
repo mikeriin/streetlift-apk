@@ -28,3 +28,9 @@ Base : `moteurs` df28b47c. Session Fable 5.1, lancée le 11/10/2026 ~05:10 UTC. 
 - Sans planificateur, graine 2 : 3 poussées de douleur (street_03, seances_manquees, vérité b) — identiques avec 1.0.1 (préexistant ; la configuration officielle, Koach complet, en a 0).
 - CI : campagne finale (code 1.0.2-ref.1) parties 1/2 (ci-cp-a) et 2/2 (ci-cp-b), ~80 min. Local : recherche adversariale finale (/tmp/k/adv_fin_b3000.json), puis témoin Dart en CI (ci/run_temoin.sh, AVEC_DART=1).
 - Reste : fixtures, SOURCES, CONTRAT (note datée, règles, clés : 321), README, relecture indépendante (Opus), contrôle complet, publication, livraison.
+
+## 11/10 08:10 UTC — relecture indépendante traitée, campagne finale relancée
+- Relecture Opus : 2 bloquants (B1 schéma nouveau sans barre récente un jour gelé ; B2 paliers au-dessus de la borne de séance), 4 majeurs (M1 série demandée avant la première, M2 test xRM le jour d'épreuve, M3 dispersion par horizon et type de cible, M4 bornes d'import), mineurs : tous traités ou déclarés (CHANGEMENTS_1_0_2.md § F).
+- Code final 1.0.2-ref.1 (322 clés, SHA 211c9361…). Tests : 190+ passent hors fixtures. Docs faits : CHANGEMENTS_1_0_2.md, CONTRAT (note datée du 11/10, règles, clés), SOURCES, README, PORTAGE_DART (delta).
+- CI : campagne finale relancée à 08:00 UTC (ci-cp-a 41669a56 partie 1/2, ci-cp-b 97be396b partie 2/2). Local : recherche adversariale finale relancée à 08:00.
+- Reste : fixtures (`python3 fixtures/generer.py`), assemblage de la campagne (`/tmp/k/recup.sh` puis `python3 -m banc.campagne --graines 6 --sortie donnees/criteres_km1c2.json`), témoin Dart sur les adversaires finaux (ci/run_temoin.sh, AVEC_DART=1, après la campagne), comparaison 7 bis, données publiées, contrôle complet (arbre de moteurs sur ci-cp-a), push moteurs, livraison, ETAT, page de suivi, notification.

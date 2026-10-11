@@ -128,3 +128,15 @@ corrigé par la CI, ne pas s'en soucier) : aucun cast implicite depuis `dynamic`
   (préfixer si collision : `adherenceTypes`, `adherenceMoments`), `defautsAdherence`.
 - `dual.dart` : `ControleDual(Json params, List<String> liftsPrincipaux)`, `Reponse`,
   `EssaiN1`, fonctions `calibre`, `facteurBorne`, constante `z90`, `defautsDual`.
+
+## Delta 1.0.1 → 1.0.2 (lot KM2c1)
+
+Liste exacte : `CHANGEMENTS_1_0_2.md`. Points d'attention pour la parité :
+
+- `seance.dart` : `Memoire.barres` (jour, charge, répétitions, flammes ou nul) et `barres_ratees` (jour, charge), remplies par `fermer` dans l'ordre des séries du groupe ; `plan['reprise']`, `plan['reprise_plafond']` (calculé une seule fois par ligne, à la première série demandée, avec le `repsHigh` de la série d'index 0 et `gel = faux` ; les raisons émises par ce calcul sont retirées), `plan['palier_franchi']` ; `_bornes_hausse` reçoit `gel` (nul = `sans_hausse ou reprise`) ; `_palier_barres` : mêmes parcours de listes, mêmes comparaisons à 1e-9 (`dit >= seuil - 1e-9`, bande `total >= plus_haute*(1 - bande) - 1e-9`, barre ratée `> plus_haute + 1e-9`).
+- `planification.dart` : la contraction se fait exercice par exercice, dans l'ordre de `suivis`, sur les seules cibles de type `charge` ; `centre` = moyenne numpy de la tranche `(candidats, trajectoires)` le long des trajectoires (sommation par paires, comme `prevu_jour`) ; `kd` est calculé une fois par appel d'`evaluer` ; `frais` est modifié avant `prevu_jour`, `jour` et l'échelle des tentatives.
+- `modele.dart` : `capacite(id, brut)` ; `dual.dart` passe `brut = vrai` aux deux lectures de variance (mise à jour des hypothèses, `cap_seance`) et pas à `calibre`.
+- `rupture.dart` : quatre bornes d'import de plus.
+- Paramètres : cinq clés nouvelles placées à la fin de leur section (`mesure.intervalle_echelle` après `defaut_modele_sd`), SHA-256 dans l'en-tête du contrat ; les clés `securite` nouvelles sont des listes de listes et un flottant.
+- Banc : `critere_apparie` (`banc/adversaire.py`) est à porter dans `kalis_bench` (`kmComparerAdversaires`, clé `critere_7_bis`) ; `--partie` existe déjà côté Dart.
+

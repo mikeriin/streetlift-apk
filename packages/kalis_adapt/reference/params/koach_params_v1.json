@@ -299,7 +299,8 @@
     "tentative_sd_jour": 0.046,
     "tentative_manque": 0.018,
     "tentative_cible_proba": 0.35,
-    "dispersion_echeance": 0.62
+    "dispersion_echeance": 0.62,
+    "dispersion_echeance_semaines": 4
   },
   "securite": {
     "hausse_par_niveau": [

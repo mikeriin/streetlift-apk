@@ -516,9 +516,21 @@ class Planification(Extension):
                 # le bruit de processus prévoyaient une dispersion trop
                 # large : P(réussite) trop haute pour les cibles hors de
                 # portée, trop basse pour les cibles à portée).
-                kd = pl['dispersion_echeance']
-                centre = frais.mean(axis=2)
-                frais = centre[:, :, None] + kd * (frais - centre[:, :, None])
+                # Mesuré pour les cibles chargées seulement, et après
+                # quelques semaines de journal : au départ (semaine 0) la
+                # dispersion de l'a priori est à peu près juste (0,89) ;
+                # l'échelle descend donc de 1 à `dispersion_echeance` sur les
+                # `dispersion_echeance_semaines` premières semaines de
+                # journal. Cibles en répétitions ou en tenue : inchangées
+                # (mesure non concluante).
+                part = tirage['semaines'] / float(pl['dispersion_echeance_semaines'])
+                if part > 1.0:
+                    part = 1.0
+                kd = 1.0 - (1.0 - pl['dispersion_echeance']) * part
+                for e, ex in enumerate(self.suivis):
+                    if ex in self.cibles and self.fiches[ex]['type'] == 'charge':
+                        centre = frais[:, e, :].mean(axis=1)
+                        frais[:, e, :] = centre[:, None] + kd * (frais[:, e, :] - centre[:, None])
                 self._prevu_jour = (frais[0].mean(axis=1), frais[0].std(axis=1))
                 jour = frais + j['sigma_seance'] * tirage['bruit_seance'][None, None, :] \
                     + j['sigma_exercice'] * tirage['bruit_jour'].T[None, :, :]

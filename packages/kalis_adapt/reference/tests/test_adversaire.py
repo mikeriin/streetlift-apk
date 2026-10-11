@@ -220,3 +220,31 @@ def test_comparer_rejoue_koach(recherche):
     ligne = c['adversaires'][0]
     assert ligne['koach']['perf_a'] == adv[0]['koach']['perf_a']
     assert abs(ligne['temoin']['perf_a'] - ligne['koach']['perf_a']) < 1e-5
+
+
+def test_critere_apparie_7_bis():
+    """Critère 7 bis (C13.12) : part des adversaires appariés où Koach >=
+    témoin − 0,03 (seuil 90 %), aucun cas sous témoin − 0,10 sauf violation
+    de sécurité du témoin."""
+    def ligne(i, k, t, viol=0):
+        return {'id': 'a%d' % i, 'koach': {'perf_a': k},
+                'temoin': {'perf_a': t, 'violations': viol, 'aggravations': 0, 'poussees': 0}}
+    lignes = [ligne(i, 0.90, 0.90) for i in range(9)] + [ligne(9, 0.86, 0.90)]
+    c = A.critere_apparie(lignes)
+    assert c['n'] == 10 and c['tenus'] == 9 and c['respecte'] is True and c['sous_plancher'] == []
+    # Un cas sous témoin − 0,10 sans violation du témoin : non respecté.
+    c = A.critere_apparie(lignes[:9] + [ligne(9, 0.70, 0.90)])
+    assert c['respecte'] is False and c['sous_plancher_non_excuses'] == 1
+    # Le même cas avec une violation de sécurité du témoin : excusé (la part reste à 90 %).
+    c = A.critere_apparie(lignes[:9] + [ligne(9, 0.70, 0.90, viol=2)])
+    assert c['respecte'] is True and c['sous_plancher'][0]['excuse'] is True
+    # Moins de 90 % des cas tenus : non respecté.
+    c = A.critere_apparie(lignes[:8] + [ligne(8, 0.85, 0.90), ligne(9, 0.85, 0.90)])
+    assert c['respecte'] is False and c['part'] == 0.8
+    # Jour J pour un seul moteur : hors critère, mais publié.
+    c = A.critere_apparie(lignes + [ligne(10, None, 0.9), ligne(11, 0.9, None), ligne(12, None, None)])
+    assert c['n'] == 10 and c['hors_critere'] == {'koach_sans_jour_j': ['a10'], 'temoin_sans_jour_j': ['a11'],
+                                                  'aucun_jour_j': 1}
+    # Variante : témoin avec au moins une barre réussie.
+    c = A.critere_apparie(lignes + [ligne(10, 0.5, 0.0)])
+    assert c['n'] == 11 and c['temoin_avec_barre']['n'] == 10

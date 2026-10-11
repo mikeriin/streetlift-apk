@@ -1429,7 +1429,10 @@ def main(argv=None):
         return 0
     t0 = time.time()
     if opts.get('partie'):
-        i, n = (int(x) for x in opts['partie'].split('/'))
+        try:
+            i, n = (int(x) for x in opts['partie'].split('/'))
+        except ValueError:
+            raise SystemExit('--partie i/n : deux entiers attendus')
         if not 1 <= i <= n:
             raise SystemExit('--partie i/n : 1 <= i <= n')
         profils = lire_profils(opts['profils'])
