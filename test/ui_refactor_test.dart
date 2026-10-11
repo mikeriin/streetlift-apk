@@ -152,6 +152,12 @@ void main() {
       await tester.tap(find.byKey(ValueKey('${first.id}-note-toggle')));
       await tester.pumpAndSettle();
       expect(find.text('Première note'), findsOneWidget);
+      // Correctifs UI (11/10/2026) : la carte plus compacte place le champ
+      // de charge, encore actif, au centre de la page ; un glissement qui
+      // part d'un champ actif reste au champ (curseur). On quitte le champ
+      // avant de glisser, comme au doigt.
+      FocusManager.instance.primaryFocus?.unfocus();
+      await tester.pumpAndSettle();
       await swipePage(tester);
       final second = day.exercises.last;
       await tester.tap(find.byKey(ValueKey('${second.id}-note-toggle')));
@@ -163,7 +169,7 @@ void main() {
       await swipePage(tester, back: true);
       expect(find.text('14'), findsOneWidget);
       expect(find.text('Première note'), findsOneWidget);
-      await tester.tap(find.text('Exercices'));
+      await tester.tap(find.byKey(const ValueKey('session-exercises')));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Bilan de séance').last);
       await tester.pumpAndSettle();

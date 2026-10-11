@@ -522,7 +522,7 @@ void main() {
         check: find.text('Douleur ou malaise ?'),
       );
       await sheetClose();
-      final list = find.text('Exercices');
+      final list = find.byKey(const ValueKey('session-exercises'));
       if (list.evaluate().isNotEmpty) await tester.tap(list.first);
       await wait(tester, 1200);
       await screen(

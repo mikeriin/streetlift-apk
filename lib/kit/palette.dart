@@ -173,6 +173,14 @@ int _tone(int argb, double tone, [double? chroma]) {
   return Hct.from(h.hue, chroma ?? h.chroma, tone).toInt();
 }
 
+/// Couleur ravivée : chroma HCT portée à min(chroma × [factor], [cap]),
+/// jamais baissée ; teinte et tonalité gardées (correctifs UI, 11/10/2026).
+int kVivid(int argb, double factor, {double cap = 72}) {
+  final x = Hct.fromInt(argb);
+  final c = math.max(x.chroma, math.min(x.chroma * factor, cap));
+  return c == x.chroma ? argb : Hct.from(x.hue, c, x.tone).toInt();
+}
+
 /// Garde [argb] s'il atteint [need] contre [against] ; sinon déplace sa seule
 /// tonalité HCT par pas de 0,5 ([direction] +1 éclaircit, −1 assombrit). Si
 /// la direction demandée n'y suffit pas, l'autre direction est essayée
@@ -323,8 +331,17 @@ class KRoles {
     int texte2;
     if (dark) {
       final f = Hct.fromInt(p.fondSombre);
-      int sd(double dt) =>
-          Hct.from(f.hue, math.min(f.chroma, 16), f.tone + dt).toInt();
+      // Correctifs UI (11/10/2026, « couleurs trop fades ») : un fond neutre
+      // (chroma < 6) teinte ses surfaces de la dominante (chroma 7 au plus) ;
+      // un fond déjà teinté par le propriétaire garde sa teinte. Le fond
+      // reste la valeur exacte du propriétaire.
+      final d = Hct.fromInt(p.dominante);
+      final neutral = f.chroma < 6;
+      final tintHue = neutral ? d.hue : f.hue;
+      final tintChroma = neutral
+          ? math.min(d.chroma, 7.0)
+          : math.min(f.chroma, 16.0);
+      int sd(double dt) => Hct.from(tintHue, tintChroma, f.tone + dt).toInt();
       fond = p.fondSombre;
       surface = sd(5);
       haute = sd(10);
@@ -332,8 +349,10 @@ class KRoles {
       texte = Hct.from(f.hue, 2, 95).toInt();
       texte2 = Hct.from(f.hue, 4, 70).toInt();
       texte3 = Hct.from(f.hue, 4, 50).toInt();
-      encre = kAdjustTone(p.dominante, surface, strong, 1);
-      second = kAdjustTone(p.secondaire, surface, weak, 1);
+      // Encre et secondaire ravivées (chroma portée vers 72, teinte gardée)
+      // avant l'ajustement de tonalité : la couleur de marque reste vive.
+      encre = kAdjustTone(kVivid(p.dominante, 1.75), surface, strong, 1);
+      second = kAdjustTone(kVivid(p.secondaire, 1.4), surface, weak, 1);
       accent = kAdjustTone(p.accent, surface, strong, 1);
       if (contrast) texte2 = kAdjustTone(texte2, surface, 7, 1);
     } else {

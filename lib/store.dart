@@ -374,6 +374,12 @@ class AppSettings {
   /// activé (export identique à 6.11.1 sinon).
   bool contrast;
 
+  /// Correctifs UI (11/10/2026) : mode guidé de Koach. Désactivé, les
+  /// explications de Koach (« Pourquoi ? », consignes détaillées) restent
+  /// dans Réglages › Séance › Koach ; activé, Koach les donne pendant la
+  /// séance. Écrit seulement s'il est activé (export identique sinon).
+  bool koachGuided;
+
   /// CI1g (`kalis_plan` 0.3.1, note `clearance_first`) : blocs pour
   /// lesquels l'avis d'un médecin ou d'un kiné est confirmé (« identifiant
   /// du bloc#valeur de la note » → date civile de la confirmation). Écrit seulement s'il n'est pas
@@ -402,6 +408,7 @@ class AppSettings {
     this.title = '',
     this.accent = 'bordeaux',
     this.contrast = false,
+    this.koachGuided = false,
     Map<String, String>? medicalClearance,
   }) : medicalClearance = medicalClearance ?? <String, String>{};
 
@@ -427,6 +434,7 @@ class AppSettings {
     'title': title,
     'accent': accent,
     if (contrast) 'contrast': true,
+    if (koachGuided) 'koachGuided': true,
     if (medicalClearance.isNotEmpty) 'medicalClearance': medicalClearance,
   };
   AppSettings.fromJson(Map<String, dynamic> j)
@@ -453,6 +461,7 @@ class AppSettings {
       title = j['title'] as String? ?? '',
       accent = normalizeAccent(j['accent']),
       contrast = j['contrast'] == true,
+      koachGuided = j['koachGuided'] == true,
       medicalClearance = <String, String>{
         if (j['medicalClearance'] case final Map<String, dynamic> m)
           for (final e in m.entries)

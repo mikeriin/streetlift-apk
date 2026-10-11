@@ -754,7 +754,8 @@ void main() {
           await tester.tap(find.byTooltip('Valider la série 1').first);
           await tester.pump();
           expect(find.textContaining('pour valider la série'), findsOneWidget);
-          expect(tester.takeException(), isNull);
+          // Message complet en cas d'échec (débordement : widget en cause).
+          expect(tester.takeException()?.toString(), isNull);
           store.settings.prefill = true;
           log.sets[0].reps = '5';
           store.toggleSet(log, 0, store.logSpec(ex));

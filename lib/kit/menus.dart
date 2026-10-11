@@ -77,12 +77,14 @@ class KIconTile extends StatelessWidget {
     return Container(
       width: KSize.menuIcon,
       height: KSize.menuIcon,
+      // Correctifs UI (11/10/2026) : pastille tonale de l'encre, icône en
+      // `encre` (la couleur de marque revient dans les menus).
       decoration: ShapeDecoration(
-        color: background ?? k.haute,
+        color: background ?? k.encre.withValues(alpha: .14),
         shape: KRadius.pill,
       ),
       alignment: Alignment.center,
-      child: Icon(icon, size: KSize.iconSmall, color: color ?? k.texte),
+      child: Icon(icon, size: KSize.iconSmall, color: color ?? k.encre),
     );
   }
 }
