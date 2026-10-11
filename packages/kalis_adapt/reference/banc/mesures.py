@@ -91,6 +91,32 @@ class Estimations(object):
         return None
 
 
+def paires_couverture(tour, keep, rang_min):
+    """Paires (|ln(vérité / estimation)|, écart-type relatif de Koach) des
+    estimations gardées par [keep] à partir du rang [rang_min] (mêmes rangs
+    que `Estimations.add` : dernière estimation de chaque jour de
+    l'exercice). Sert au recalage hors ligne de `defaut_modele_sd`."""
+    par_jour = {}
+    ordre = []
+    for e in tour.estimates:
+        if not keep(e) or e['truth'] <= 0:
+            continue
+        cle = (e['exerciseId'], e['simDay'])
+        if cle not in par_jour:
+            ordre.append(cle)
+        par_jour[cle] = e
+    rang = {}
+    out = []
+    for cle in ordre:
+        e = par_jour[cle]
+        rang[e['exerciseId']] = rang.get(e['exerciseId'], 0) + 1
+        k = rang[e['exerciseId']]
+        if k < rang_min or k > K_MAX or e['capacity'] <= 0:
+            continue
+        out.append([round(abs(math.log(e['truth'] / e['capacity'])), 5), round(e['relSd'], 5)])
+    return out
+
+
 def evenements(tour):
     """Jour de l'échéance : (exercice, mode, meilleure valeur, max du jour,
     capacité de départ) par exercice testé (règles de

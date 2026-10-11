@@ -513,7 +513,8 @@
     "wod_fenetre_j": 7,
     "retour_seances_avant_mesure": 2,
     "surmenage_seances_min": 6,
-    "duree_vitesse_defaut": 2.5
+    "duree_vitesse_defaut": 2.5,
+    "tentative_palier_par_rir": [[4.0, 0.1], [3.0, 0.075], [2.0, 0.05], [1.0, 0.025]]
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

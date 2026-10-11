@@ -72,7 +72,8 @@ class PlanificationBanc(Planification):
         ligne = self.historique[-1] if self.historique else None
         if ligne and ligne.get('p_cibles'):
             self.previsions.append({'semaine': semaine, 'echeance': self.echeance_jour,
-                                    'p': dict(ligne['p_cibles']), 'p_tout': ligne.get('objectif')})
+                                    'p': dict(ligne['p_cibles']), 'p_tout': ligne.get('objectif'),
+                                    'prevu_jour': dict(ligne.get('prevu_jour') or {})})
 
     def changement_profil(self, koach, semaine, profil):
         self.profil = profil

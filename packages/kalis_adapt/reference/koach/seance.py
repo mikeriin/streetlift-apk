@@ -214,7 +214,7 @@ class Memoire(object):
                  'jours', 'cran_jour', 'haut_de_plage', 'facile', 'bas_manque', 'meilleur_sec',
                  'charge_seance', 'reps_seance', 'sec_seance', 'echec_seance', 'total_seance',
                  'faciles_seance', 'charges_reussies', 'flammes_seance', 'charge_derniere',
-                 'marques', 'sec_slot', 'forme', 'alerte_jour', 'alerte_part')
+                 'marques', 'sec_slot', 'forme', 'alerte_jour', 'alerte_part', 'reprise_jour', 'barres')
 
     def __init__(self):
         self.jour = None
@@ -247,6 +247,8 @@ class Memoire(object):
         self.forme = []               # (jour, ln capacité + effet de séance), trois au plus (A6.2)
         self.alerte_jour = None       # jour de la dernière alerte de surmenage (A6.2)
         self.alerte_part = None
+        self.reprise_jour = None      # jour du dernier palier de reprise franchi jusqu'à la cible (1.0.2)
+        self.barres = []              # (jour, charge, répétitions, flammes dites) des barres réussies (1.0.2)
 
 
 class Seances(object):
@@ -635,11 +637,21 @@ class Seances(object):
                 'baisse': 1.0, 'verrou': self.verrouillee(), 'ecrit': item, 'tete': None,
                 'repere': False, 'dose_plafonnee': cond['dose_plafonnee'], 'fragile': cond['fragile'],
                 'servi': servi}
-        if self.coupure > 0 and typ in ('charge', 'reps', 'tenue'):
-            # Semaine du retour après une coupure : aucune hausse au-dessus du
-            # dernier passage (plus prudent que 0.3.1, qui réduit seulement
-            # les séries, A6.1) ; pas de mesure ni de test (`_mesure_utile`).
+        if self.coupure > 0 and typ in ('reps', 'tenue'):
+            # Semaine du retour après une coupure : répétitions et tenues
+            # jamais au-dessus de la dernière séance (plus prudent que 0.3.1,
+            # qui réduit seulement les séries, A6.1) ; pas de mesure ni de
+            # test (`_mesure_utile`).
             plan['sans_hausse'] = True
+        if self.coupure > 0 and typ == 'charge':
+            # 1.0.2 — reprise par paliers mesurés (C13.12) : la première
+            # série ne dépasse pas la dernière séance du même schéma (ou les
+            # barres récentes) ; chaque série faite, dite au plus aussi dure
+            # que visé, autorise le palier suivant (+5 % ou un cran), jusqu'à
+            # la charge que l'estimation demande. (1.0 et 1.0.1 : aucune
+            # hausse au-dessus du dernier passage de l'exercice, souvent une
+            # série légère — ancrage mesuré sur le banc adversarial.)
+            plan['reprise'] = True
         if cond['appui_neutre'] is not None:
             self._raison('koach.poignet_appui_neutre', exercice=ex_id, intensite=cond['appui_neutre'])
         if cond['poignet_sensible'] and not echauffement:
@@ -1739,7 +1751,8 @@ class Seances(object):
         # Test adaptatif : parmi les charges de la zone prescrite (réserve à
         # moins de la tolérance de la cible), la plus informative.
         ta = self.p['test_adaptatif']
-        if index == 0 and not plan['sans_hausse'] and not plan['verrou'] and t.seances >= 1:
+        if index == 0 and not plan['sans_hausse'] and not plan.get('reprise') and not plan['verrou'] \
+                and t.seances >= 1:
             meilleur = charge
             info0 = self.information(ex_id, charge, reps)
             for cand in (grille.precedent(charge), grille.suivant(charge)):
@@ -1753,6 +1766,12 @@ class Seances(object):
                         meilleur, info0 = cand, inf
             charge = meilleur
         avant_bornes = charge
+        if plan.get('reprise'):
+            # Reprise par paliers : la charge que l'estimation demande
+            # aujourd'hui (avant les bornes de hausse) est la cible des
+            # paliers ; un palier franchi jusqu'à elle termine la reprise de
+            # l'exercice (`serie_faite`).
+            plan['reprise_cible'] = charge
         charge = self._bornes_hausse(ex_id, item, charge, plan, t, grille, hi, index)
         if charge != avant_bornes:
             trace.append('hausse bornee %.2f -> %.2f' % (avant_bornes, charge))
@@ -1766,6 +1785,15 @@ class Seances(object):
                 (plan['sans_hausse'] or plan['echecs'] > 0 or plan.get('dose_plafonnee')):
             if charge > plan['charge_item']:
                 charge = plan['charge_item']
+        if index >= 1 and plan.get('reprise') and not plan.get('palier_franchi'):
+            # Reprise par paliers mesurés : le palier suivant n'est permis
+            # qu'après une série faite en entier, sans échec, notée, et dite
+            # au plus aussi dure que visé (`serie_faite`). Sans série versée
+            # au journal, la charge de la première série fait foi.
+            palier = plan.get('charge_item') if plan.get('charge_item') is not None else plan.get('tete')
+            if palier is not None and charge > palier:
+                charge = palier
+                trace.append('palier de reprise non franchi -> %.2f' % charge)
         if index >= 1 and plan.get('charge_item') is not None and tech.get('kind') != 'top_set_backoff':
             # D'une série à l'autre : -15 % / +5 % au plus, un cran permis.
             haut = (plan['charge_item'] + bw) * 1.05 - bw
@@ -1779,12 +1807,16 @@ class Seances(object):
         # mesurée puis écartée : le dernier passage peut être un autre schéma
         # (plus de répétitions, plus léger), elle sous-charge la décharge
         # (écart d'effort 3,2 -> 3,6 ; fausses alertes de rupture 1,4 -> 4,4 %).
-        if (plan['sans_hausse'] or plan['cond']['raison']) and mem.charge_derniere is not None \
+        if (plan['cond']['sans_hausse'] or plan['cond']['raison']) and mem.charge_derniere is not None \
                 and charge > mem.charge_derniere:
-            # Zone douloureuse ou en reprise, bilan bas : jamais plus lourd
-            # que le dernier passage de l'exercice (invariant I3 de 0.3.1).
+            # Zone douloureuse ou en reprise : jamais plus lourd que le
+            # dernier passage de l'exercice (invariant I3 de 0.3.1). Depuis
+            # 1.0.2, un jour de bilan bas sans douleur n'est borné, comme en
+            # 0.3.1, que par la dernière séance du même schéma
+            # (`_bornes_hausse`), et la semaine du retour d'une coupure par
+            # les paliers de reprise.
             charge = mem.charge_derniere
-            trace.append('pas de hausse (douleur ou bilan) -> %.2f' % charge)
+            trace.append('pas de hausse (douleur) -> %.2f' % charge)
         if charge < grille.minimum:
             charge = grille.minimum
         if index == 0:
@@ -1840,8 +1872,9 @@ class Seances(object):
         # ne sert qu'à la règle générale de 0.1).
         h = self.g.hausse_max(fragile)
         avant_bornes = charge
+        gel = plan['sans_hausse'] or plan.get('reprise')
         if avant is not None:
-            if plan['sans_hausse'] or avant[1]:
+            if gel or avant[1]:
                 if charge > avant[0]:
                     charge = avant[0]
             else:
@@ -1864,7 +1897,7 @@ class Seances(object):
                     moins = 0
                 if moins > s['schema_change_reps_max']:
                     moins = s['schema_change_reps_max']
-                if plan['sans_hausse'] or douleur:
+                if gel or douleur:
                     borne = c
                 else:
                     hp = s['premiere_hausse'] * (s['hausse_fragile_facteur'] if profil else 1.0)
@@ -1907,7 +1940,8 @@ class Seances(object):
         if plan is None or plan['type'] != 'charge' or plan['test']:
             return None
         cond = plan['cond']
-        if plan['sans_hausse'] or plan['verrou'] or plan['part_max'] is not None or plan.get('dose_plafonnee') \
+        if plan['sans_hausse'] or plan.get('reprise') or plan['verrou'] or plan['part_max'] is not None \
+                or plan.get('dose_plafonnee') \
                 or cond['zone'] or cond['raison'] or plan.get('fragile') or plan['echecs'] > 0 \
                 or plan['baisse'] < 1.0 or item.get('koachFragile'):
             return None
@@ -2091,9 +2125,13 @@ class Seances(object):
                 # A6.5 : semaine allégée ou de test, jamais plus lourd que la
                 # charge écrite (A/coach.dart:2144-2152).
                 charge = ecrite if grille.plancher(ecrite) > ecrite else grille.plancher(ecrite)
-            if (plan['sans_hausse'] or mem.echec) and mem.charge_derniere is not None and charge > mem.charge_derniere:
+            evenement = bool((self.contexte or {}).get('jour_evenement'))
+            if (plan['sans_hausse'] or mem.echec or (plan.get('reprise') and not evenement)) \
+                    and mem.charge_derniere is not None and charge > mem.charge_derniere:
                 # Après un échec non prévu à la dernière séance aussi (`noUp`,
-                # A/coach.dart:2086, 2154-2160).
+                # A/coach.dart:2086, 2154-2160) ; la semaine du retour d'une
+                # coupure, hors jour d'épreuve (1.0.2 : le jour d'épreuve, le
+                # test suit l'estimation, comme les tentatives).
                 charge = mem.charge_derniere
             if index >= 1 and mem.charge_seance is not None:
                 # Deuxième essai : un cran de plus si le premier a laissé
@@ -2283,31 +2321,39 @@ class Seances(object):
                     and not plan['sans_hausse'] and self.coupure == 0 and not mem.echec:
                 plafond = s['tentative_ouverture_part'] * math.exp(mu) - bw
                 charge = grille.plancher(max(min(recente, plafond), charge))
-            # Jour d'épreuve en semaine de retour après une coupure (test
-            # gardé) : l'ouverture ne dépasse pas le dernier passage. (Un
-            # jour de bilan bas ou de zone douloureuse, c'est la baisse
-            # `tentative_bilan_bas_part` de 0.3.1 qui joue : borner par le
-            # dernier passage, souvent une série légère d'affûtage, ferait
-            # ouvrir à la moitié du maximum — mesuré sur le banc adversarial.)
-            if self.coupure > 0 and mem.charge_derniere is not None and charge > mem.charge_derniere:
-                charge = mem.charge_derniere
-            # Plus prudent que 0.3.1 : l'ouverture ne dépasse jamais ce que
-            # les barres réussies des 42 derniers jours justifient (+10 %,
-            # +2,5 % par répétition faite au-delà de la première, 4 au plus :
-            # la règle du premier passage à un schéma, A7.2). Une estimation
-            # trop haute ne peut pas, seule, faire ouvrir trop lourd.
-            justifie = None
-            for (j, c, r) in mem.charges_reussies:
+            # 1.0.2 — paliers mesurés (C13.12). L'ouverture suit la capacité
+            # estimée, sans dépasser le palier que les barres réussies des
+            # 42 derniers jours autorisent : la barre ramenée à une
+            # répétition (+2,5 % par répétition faite au-delà de la première,
+            # 4 au plus : règle du premier passage à un schéma, A7.2), plus
+            # un palier qui dépend de ce que l'athlète en a dit
+            # (`tentative_palier_par_rir` : réserve dite de 4 ou plus, 3, 2,
+            # 1 ; aucune hausse pour une barre non notée ou dite à moins
+            # d'une répétition de l'échec). Une estimation plus haute que
+            # tout ce qui a été soulevé ne fait donc ouvrir plus lourd que si
+            # les barres ont été dites faciles. (1.0 et 1.0.1 : +10 % sur
+            # toute barre réussie, notée ou non, et jamais plus que le
+            # dernier passage en semaine de retour de coupure — ancrage sur
+            # des séries légères mesuré sur le banc adversarial.)
+            autorise = None
+            for (j, c, r, f) in mem.barres:
                 if self.jour - j > s['barre_recente_j']:
                     continue
                 plus = r - 1
                 if plus > s['schema_change_reps_max']:
                     plus = s['schema_change_reps_max']
-                borne = (c + bw) * (1 + s['premiere_hausse']) * (1 + s['schema_change_part'] * plus) - bw
-                if justifie is None or borne > justifie:
-                    justifie = borne
-            if justifie is not None and charge > justifie:
-                charge = grille.plancher(max(justifie, grille.minimum))
+                dit = rir_de_flammes(f)
+                pas = 0.0
+                if dit is not None:
+                    for (seuil, p_) in s['tentative_palier_par_rir']:
+                        if dit >= seuil - 1e-9:
+                            pas = p_
+                            break
+                borne = (c + bw) * (1 + pas) * (1 + s['schema_change_part'] * plus) - bw
+                if autorise is None or borne > autorise:
+                    autorise = borne
+            if autorise is not None and charge > autorise:
+                charge = grille.plancher(max(autorise, grille.minimum))
             return {'repsLow': 1, 'repsHigh': 1, 'loadKg': charge, 'flames': flammes, 'role': 'attempt'}
         derniere = mem.charge_seance
         if plan['echecs'] > 0 and mem.echec_seance:
@@ -2328,6 +2374,15 @@ class Seances(object):
             charge = derniere
         if charge <= derniere + 1e-9:
             charge = min(grille.suivant(derniere), max(grille.plancher(haut), derniere))
+            f = mem.flammes_seance
+            if charge <= derniere + 1e-9 and f is not None and f <= [7, 9, 10][min(index - 1, 2)] \
+                    and grille.suivant(derniere) - derniere <= s['tentative_saut_kg'] + 1e-9:
+                # 1.0.2 : saut en pourcentage plus petit qu'un cran de la
+                # grille (barre légère) — un cran reste permis (« un cran
+                # toujours permis », A7.2) quand la barre précédente a été
+                # dite au plus aussi dure que visé, dans la limite du saut en
+                # kilos.
+                charge = grille.suivant(derniere)
             p = self.proba_reussite(ex_id, charge, 1)
             if p is not None and p < 0.2:
                 charge = derniere
@@ -2356,6 +2411,19 @@ class Seances(object):
             plan['flammes_item'] = s.get('flames')
             plan['reps_item'] = s.get('reps')
             plan['echec_item'] = echec
+            if plan.get('reprise'):
+                # Palier de reprise franchi : série faite en entier, sans
+                # échec, notée, dite au plus aussi dure que visé.
+                cible = s.get('target') or {}
+                f = s.get('flames')
+                fc = cible.get('flames')
+                bas = cible.get('repsLow')
+                franchi = (not echec and f is not None and fc is not None and f <= fc
+                           and bas is not None and (s.get('reps') or 0) >= bas)
+                plan['palier_franchi'] = franchi
+                if franchi and charge is not None and plan.get('reprise_cible') is not None \
+                        and charge >= plan['reprise_cible'] - 1e-9 and cible.get('role') is None:
+                    mem.reprise_jour = self.jour
             if echec and not plan['test']:
                 plan['echecs'] += 1
                 plan['baisse'] = 1.0 - self.s['echec_baisse']
@@ -2422,6 +2490,7 @@ class Seances(object):
                     mem.echec = True
                 if c is not None and r and not s.get('failed'):
                     mem.charges_reussies.append((jour, c, r))
+                    mem.barres.append((jour, c, r, s.get('flames')))
             premier = None
             for s in series:
                 if s.get('kind') != 'warmup' and s.get('externalLoadKg') is not None and (s.get('target') or {}).get('role') is None:

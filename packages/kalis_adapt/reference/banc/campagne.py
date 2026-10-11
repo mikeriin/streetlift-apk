@@ -284,8 +284,12 @@ def unites_calibration(saison, tour, previsions):
             'reussite': all(reussi.values()), 'reussite_capacite': all(capable.values()),
             'reussite_par_cible': reussi, 'capacite_par_cible': capable,
             'previsions': {k: (None if p is None else {'semaine': p['semaine'], 'p_tout': p.get('p_tout'),
-                                                         'p': p.get('p')})
+                                                         'p': p.get('p'), 'prevu_jour': p.get('prevu_jour')})
                            for k, p in dates.items()},
+            # 1.0.2 (mise au point du modèle de réussite, critère 5) : ce que
+            # le jour J a donné par cible — [meilleure valeur réussie,
+            # maximum vrai du jour, mode].
+            'observe': {ex: list(obs[ex]) for ex in cibles},
         })
     return unites, exclus
 
@@ -490,6 +494,10 @@ def mesurer_saison(cle, scenario, verite, graine, opts):
         E = mesures.Estimations()
         E.add(tour, filtres[m])
         est[m] = {'rows': E.rows, 'first_under': E.first_under}
+    # 1.0.2 (recalage de `mesure.defaut_modele_sd`, critère 4) : paires
+    # (|ln(capacité vraie / estimée)|, écart-type relatif) des principaux
+    # chargés aux rangs >= RANG_COUVERTURE, une par séance de l'exercice.
+    est['couverture_paires'] = mesures.paires_couverture(tour, filtres['loadedMain'], RANG_COUVERTURE)
     previsions = []
     alertes = None
     for x in pol.koach.extensions:
@@ -1394,13 +1402,17 @@ def options_de(argv=None):
                     help='critère 8 lu dans donnees/criteres_moteur.json au lieu d\'être remesuré')
     ap.add_argument('--semaines', type=int, default=None, help='tronque les saisons (essais)')
     ap.add_argument('--travail', default=DOSSIER_TRAVAIL)
+    ap.add_argument('--partie', default=None,
+                    help="i/n : calcule seulement la part i (1..n) des saisons, les écrit dans le dossier de "
+                         "travail et s'arrête (campagne répartie sur plusieurs machines ; l'assemblage est la "
+                         "commande sans --partie, dossiers de travail réunis)")
     a = ap.parse_args(argv)
     traj = a.trajectoires if a.trajectoires is not None else (100 if a.rapide else 1000)
     return {'profils': a.profils, 'scenarios': a.scenarios, 'verites': a.verites, 'graines': a.graines,
             'trajectoires': traj, 'coeurs': a.coeurs, 'sortie': a.sortie,
             'sans_planificateur': a.sans_planificateur, 'defaut_modele': a.defaut_modele,
             'caler_couverture': a.caler_couverture, 'rapide': a.rapide, 'temps_existants': a.temps_existants,
-            'semaines': a.semaines, 'travail': a.travail}
+            'semaines': a.semaines, 'travail': a.travail, 'partie': a.partie}
 
 
 def main(argv=None):
@@ -1416,6 +1428,19 @@ def main(argv=None):
             print('  %.5f -> %.4f' % (k, essais[k]))
         return 0
     t0 = time.time()
+    if opts.get('partie'):
+        i, n = (int(x) for x in opts['partie'].split('/'))
+        if not 1 <= i <= n:
+            raise SystemExit('--partie i/n : 1 <= i <= n')
+        profils = lire_profils(opts['profils'])
+        scenarios = ['tous'] if opts['scenarios'] in (None, 'tous') else opts['scenarios'].split(',')
+        jobs = matrice(profils, scenarios, opts['verites'], opts['graines'])
+        jobs = [j for k, j in enumerate(jobs) if k % n == i - 1]
+        res, info = executer(jobs, opts)
+        plantees = sum(1 for r in res.values() if 'plantage' in r)
+        print('partie %d/%d : %d saisons, %d plantée(s), %.0f s ; dossier %s'
+              % (i, n, len(jobs), plantees, time.time() - t0, info['dossier']))
+        return 0
     s, info = campagne(opts)
     d = os.path.dirname(os.path.abspath(opts['sortie']))
     if d and not os.path.isdir(d):
