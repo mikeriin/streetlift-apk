@@ -348,6 +348,14 @@ String normalizeAccent(Object? value) {
   return kLegacyAccentIds[value] ?? 'bordeaux';
 }
 
+/// 6.13.0 : tailles d'affichage proposées (pour cent), du plus compact au
+/// plus grand.
+const kDisplaySizes = [85, 90, 100, 110, 120];
+
+/// Taille d'affichage enregistrable : valeur connue gardée, sinon 100.
+int normalizeDisplaySize(Object? value) =>
+    value is int && kDisplaySizes.contains(value) ? value : 100;
+
 class AppSettings {
   int defaultRest; // s, appliqué quand l'exercice n'a pas de repos
   bool autoTimer; // lancer le repos à la validation d'une série
@@ -380,6 +388,11 @@ class AppSettings {
   /// séance. Écrit seulement s'il est activé (export identique sinon).
   bool koachGuided;
 
+  /// 6.13.0 : taille d'affichage de l'application (textes et cadres),
+  /// en pour cent : une des valeurs de [kDisplaySizes]. Écrite seulement si
+  /// elle diffère de 100 (export identique sinon).
+  int displaySize;
+
   /// CI1g (`kalis_plan` 0.3.1, note `clearance_first`) : blocs pour
   /// lesquels l'avis d'un médecin ou d'un kiné est confirmé (« identifiant
   /// du bloc#valeur de la note » → date civile de la confirmation). Écrit seulement s'il n'est pas
@@ -409,6 +422,7 @@ class AppSettings {
     this.accent = 'bordeaux',
     this.contrast = false,
     this.koachGuided = false,
+    this.displaySize = 100,
     Map<String, String>? medicalClearance,
   }) : medicalClearance = medicalClearance ?? <String, String>{};
 
@@ -435,6 +449,7 @@ class AppSettings {
     'accent': accent,
     if (contrast) 'contrast': true,
     if (koachGuided) 'koachGuided': true,
+    if (displaySize != 100) 'displaySize': displaySize,
     if (medicalClearance.isNotEmpty) 'medicalClearance': medicalClearance,
   };
   AppSettings.fromJson(Map<String, dynamic> j)
@@ -462,6 +477,7 @@ class AppSettings {
       accent = normalizeAccent(j['accent']),
       contrast = j['contrast'] == true,
       koachGuided = j['koachGuided'] == true,
+      displaySize = normalizeDisplaySize(j['displaySize']),
       medicalClearance = <String, String>{
         if (j['medicalClearance'] case final Map<String, dynamic> m)
           for (final e in m.entries)
@@ -668,6 +684,9 @@ class AppStore extends ChangeNotifier {
 
   /// UI0 (U6) : contraste renforcé, même principe.
   final ValueNotifier<bool> contrastMode = ValueNotifier<bool>(false);
+
+  /// 6.13.0 : taille d'affichage (pour cent), même principe.
+  final ValueNotifier<int> displaySizeMode = ValueNotifier<int>(100);
   final List<Map<String, dynamic>> dbExercises = []; // base embarquée
   final List<Map<String, dynamic>> userExercises =
       []; // ajoutés par l'utilisateur
@@ -906,6 +925,7 @@ class AppStore extends ChangeNotifier {
     themeMode.value = settings.theme;
     accentMode.value = settings.accent;
     contrastMode.value = settings.contrast;
+    displaySizeMode.value = settings.displaySize;
     // G2 : séances manuelles et WOD de ces anciennes clés ignorés ; les clés
     // restent en place, intactes (aucune donnée effacée).
     logs.removeWhere((k, _) => isManualSessionKey(k));
@@ -1074,6 +1094,9 @@ class AppStore extends ChangeNotifier {
     }
     if (contrastMode.value != settings.contrast) {
       contrastMode.value = settings.contrast;
+    }
+    if (displaySizeMode.value != settings.displaySize) {
+      displaySizeMode.value = settings.displaySize;
     }
     notifyListeners();
   }
@@ -1748,6 +1771,7 @@ class AppStore extends ChangeNotifier {
     themeMode.value = settings.theme;
     accentMode.value = settings.accent;
     contrastMode.value = settings.contrast;
+    displaySizeMode.value = settings.displaySize;
     _lastLevel = data.lastLevel ?? level;
     // G2 : un état remplacé (import, effacement) n'a plus de données
     // retirées en attente ; l'ancien reste dans la copie de récupération.
@@ -3417,6 +3441,7 @@ class AppStore extends ChangeNotifier {
     themeMode.dispose();
     accentMode.dispose();
     contrastMode.dispose();
+    displaySizeMode.dispose();
     persistenceError.dispose();
     super.dispose();
   }

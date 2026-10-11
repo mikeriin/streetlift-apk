@@ -8,6 +8,7 @@
 // `tools/check_ui_tokens.py --zone UI5`, tout `lib/`).
 export 'buttons.dart';
 export 'controls.dart';
+export 'display_scale.dart';
 export 'dock.dart';
 export 'format.dart';
 export 'menus.dart';

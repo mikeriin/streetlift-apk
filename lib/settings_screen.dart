@@ -27,7 +27,7 @@ import 'kit/kit.dart';
 import 'wellbeing_screens.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.12.1';
+const kVersion = '6.13.0';
 
 /// Version affichée (D0.9) : « dev6.8.0 » dans le build de développement
 /// (APK du propriétaire), « 6.8.0 » dans l’AAB du Play Store.
@@ -38,8 +38,8 @@ const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;
 enum SettingsPage {
   appearance(
     'Apparence',
-    'Thème, palette, contraste, anatomie 3D',
-    'Thème, palette, contraste, anatomie 3D.',
+    'Thème, palette, taille, contraste, anatomie 3D',
+    'Thème, palette, taille, contraste, anatomie 3D.',
     Icons.palette_outlined,
   ),
   session(
@@ -407,6 +407,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onSelected: (id) {
                 if (s.accent == id) return;
                 s.accent = id;
+                store.saveSettings();
+              },
+            ),
+          ),
+          // 6.13.0 : taille d'affichage (textes et cadres), appliquée tout
+          // de suite.
+          _mark(
+            'display-size',
+            (lit) => KSegmentedRow<int>(
+              key: const ValueKey('settings-display-size'),
+              title: 'Taille d’affichage',
+              subtitle: 'Textes, cartes et boutons',
+              highlight: lit,
+              segments: [
+                for (final v in kDisplaySizes)
+                  KSegment(v, '$v\u202F%', semanticLabel: '$v pour cent'),
+              ],
+              selected: s.displaySize,
+              onChanged: (v) {
+                s.displaySize = v;
                 store.saveSettings();
               },
             ),
