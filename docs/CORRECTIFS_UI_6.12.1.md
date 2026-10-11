@@ -17,3 +17,7 @@ Passe unique demandée par le propriétaire après essai de dev6.12.0 sur télé
 | Boutons et espaces trop larges | Repère et points sur une ligne, marges de la carte d'exercice et des lignes de Koach resserrées. |
 
 Réglage ajouté : `AppSettings.koachGuided` (écrit seulement s'il est activé ; export identique sinon).
+
+## 6.13.0 — taille d'affichage
+
+Réglages › Apparence › « Taille d’affichage » : 85, 90, 100, 110 ou 120 %. Toute l'interface (textes, cartes, boutons, feuilles, boîtes de dialogue) est dessinée sur un écran virtuel mis à l'échelle (`KDisplayScale`, `lib/kit/display_scale.dart`), comme la taille d'affichage d'Android ; s'ajoute au réglage du téléphone. `AppSettings.displaySize`, écrit seulement s'il diffère de 100.

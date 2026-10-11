@@ -154,6 +154,15 @@ final List<SettingsSearchEntry> settingsSearchIndex = [
     value: () => KAccentSpec.byId(store.settings.accent).label,
   ),
   SettingsSearchEntry.setting(
+    id: 'display-size',
+    label: 'Taille d’affichage',
+    description: 'Textes, cartes et boutons',
+    words: ['taille', 'police', 'texte', 'zoom', 'affichage', 'agrandir'],
+    path: _appearance,
+    page: SettingsPage.appearance,
+    value: () => '${store.settings.displaySize}\u202F%',
+  ),
+  SettingsSearchEntry.setting(
     id: 'contrast',
     label: 'Contraste renforcé',
     description: 'Textes et repères plus marqués',

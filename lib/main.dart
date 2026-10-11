@@ -219,6 +219,7 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
     store.themeMode,
     store.accentMode,
     store.contrastMode,
+    store.displaySizeMode,
   ]);
 
   @override
@@ -290,7 +291,12 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
         SL.dark = Theme.of(context).brightness == Brightness.dark;
         SL.accentSpec = accent;
         SL.contrast = contrast;
-        return child ?? const SizedBox.shrink();
+        // 6.13.0 : taille d'affichage choisie dans les Réglages (textes et
+        // cadres), par-dessus le réglage du téléphone.
+        return KDisplayScale(
+          scale: store.displaySizeMode.value / 100,
+          child: child ?? const SizedBox.shrink(),
+        );
       },
       home: widget.profileGate
           ? const ProfileGate(child: RootNav())
