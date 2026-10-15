@@ -70,4 +70,4 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 | KM1c3 | A | KM2c1 (C13.13) | — | — (lot sans panel, C13.3) | — | inscrit (C13.13.2) — estimation sous notes non fiables, avant la bascule ; après KM2c1 (C17) |
 | KM3 | App | KM2 (API 1.0.0) ; refonte UI (UI5) ; lot CI final ; base v1.1 ; bascule : KM2c1 | — | — | — | en attente du lot CI final (CIF) et de la base v1.1 (n'attend pas KM2c1, C13.12) |
 | KS1 | A (contrôle `claude/ci-cp-b`, C17) | — (cahier tranché le 11/10) | — | — (lot sans panel, comme C13.3) | — | à faire — lancé par le pilotage le 15/10/2026 vers 15:25 UTC (C17), en parallèle de KM2c1 |
-| CIF | App | CI1h validé (C15.12) ; UI5 validé (U0.27) | — | — | — | à faire — lancé par le pilotage le 15/10/2026 vers 15:25 UTC (C17) ; base v1.1 ensuite, puis KM3 |
+| CIF | App | CI1h validé (C15.12) ; UI5 validé (U0.27) | — | — | — | en cours depuis 2026-10-15 15:29 UTC (lancé par le pilotage, C17) ; base v1.1 ensuite, puis KM3 |
