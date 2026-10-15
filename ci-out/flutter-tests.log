@@ -1,0 +1,74 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart
+test/cif_points_test.dart:374:14: Error: Method not found: 'isCoachBlock'.
+      expect(isCoachBlock(app.planProgram!.blocks.single.block), isTrue);
+             ^^^^^^^^^^^^
+test/cif_points_test.dart:385:14: Error: Method not found: 'isCoachBlock'.
+      expect(isCoachBlock(next.proposal.block), isTrue);
+             ^^^^^^^^^^^^
+test/cif_points_test.dart:396:14: Error: Method not found: 'isCoachBlock'.
+      expect(isCoachBlock(app.planProgram!.blocks.single.block), isFalse);
+             ^^^^^^^^^^^^
+test/cif_points_test.dart:407:14: Error: Method not found: 'isCoachBlock'.
+      expect(isCoachBlock(PlanStore(app).proposeNextBlock()!.proposal.block),
+             ^^^^^^^^^^^^
+test/cif_points_test.dart:414:14: Error: Method not found: 'isCoachBlock'.
+      expect(isCoachBlock(PlanStore(app).proposeNextBlock()!.proposal.block),
+             ^^^^^^^^^^^^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart: test/cif_points_test.dart:374:14: Error: Method not found: 'isCoachBlock'.
+        expect(isCoachBlock(app.planProgram!.blocks.single.block), isTrue);
+               ^^^^^^^^^^^^
+  test/cif_points_test.dart:385:14: Error: Method not found: 'isCoachBlock'.
+        expect(isCoachBlock(next.proposal.block), isTrue);
+               ^^^^^^^^^^^^
+  test/cif_points_test.dart:396:14: Error: Method not found: 'isCoachBlock'.
+        expect(isCoachBlock(app.planProgram!.blocks.single.block), isFalse);
+               ^^^^^^^^^^^^
+  test/cif_points_test.dart:407:14: Error: Method not found: 'isCoachBlock'.
+        expect(isCoachBlock(PlanStore(app).proposeNextBlock()!.proposal.block),
+               ^^^^^^^^^^^^
+  test/cif_points_test.dart:414:14: Error: Method not found: 'isCoachBlock'.
+        expect(isCoachBlock(PlanStore(app).proposeNextBlock()!.proposal.block),
+               ^^^^^^^^^^^^
+  .
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:00 +0 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cif_report_test.dart: 6 : test retiré un jour de bilan bas, servi 48 h après au moins dans la même semaine (profil à 5-6 séances), journalisé à son emplacement
+CIF6|street_workout|jours 1,2,3,4,5,6|départ 1|S4·J4 → J6|sw-traction-pronation|Test de la semaine reporté ici (prévu jeudi).
+00:08 +1 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cif_seance_test.dart: 8 : carte « Pas encore » (setUpAll)
+00:09 +1 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cif_seance_test.dart: 8 : carte « Pas encore » gêne à 6/10 : « En attendant » dit une fois (sombre)
+CIF8|Avis médical pas encore confirmé / Gêne déclarée à 6/10 : avant la première semaine, prends l'avis d'un médecin ou d'un kinésithérapeute et montre-lui ce programme. En attendant, seuls les mouvements qui ne réveillent pas la douleur se font. / J’ai l’avis
+00:10 +2 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cif_seance_test.dart: 8 : carte « Pas encore » gêne à 6/10 : « En attendant » dit une fois (clair)
+CIF8|Avis médical pas encore confirmé / Gêne déclarée à 6/10 : avant la première semaine, prends l'avis d'un médecin ou d'un kinésithérapeute et montre-lui ce programme. En attendant, seuls les mouvements qui ne réveillent pas la douleur se font. / J’ai l’avis
+00:10 +3 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cif_seance_test.dart: 8 : carte « Pas encore » (tearDownAll)
+00:10 +3 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cif_seance_test.dart: 12 : bandeau des mini-séries à hauteur stable (setUpAll)
+00:10 +3 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cif_seance_test.dart: 12 : bandeau des mini-séries à hauteur stable (setUpAll) [E]
+  LateInitializationError: Field '_prefs@30130591' has already been initialized.
+  dart:_internal                               LateError._throwFieldAlreadyInitialized
+  package:streetlift_tracker/store.dart        AppStore._prefs=
+  package:streetlift_tracker/store.dart 889:5  AppStore.init
+  
+00:10 +3 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cif_seance_test.dart: 12 : bandeau des mini-séries à hauteur stable (tearDownAll)
+00:10 +3 -2: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart
+  /home/runner/work/streetlift-apk/streetlift-apk/test/cif_seance_test.dart: 12 : bandeau des mini-séries à hauteur stable (setUpAll)

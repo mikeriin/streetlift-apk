@@ -1,0 +1,10 @@
+Analyzing streetlift-apk...                                     
+
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/session_adapt_store.dart:2421:21 • unnecessary_non_null_assertion
+  error • The function 'isCoachBlock' isn't defined. Try importing the library that defines 'isCoachBlock', correcting the name to the name of an existing function, or defining a function named 'isCoachBlock' • test/cif_points_test.dart:374:14 • undefined_function
+  error • The function 'isCoachBlock' isn't defined. Try importing the library that defines 'isCoachBlock', correcting the name to the name of an existing function, or defining a function named 'isCoachBlock' • test/cif_points_test.dart:385:14 • undefined_function
+  error • The function 'isCoachBlock' isn't defined. Try importing the library that defines 'isCoachBlock', correcting the name to the name of an existing function, or defining a function named 'isCoachBlock' • test/cif_points_test.dart:396:14 • undefined_function
+  error • The function 'isCoachBlock' isn't defined. Try importing the library that defines 'isCoachBlock', correcting the name to the name of an existing function, or defining a function named 'isCoachBlock' • test/cif_points_test.dart:407:14 • undefined_function
+  error • The function 'isCoachBlock' isn't defined. Try importing the library that defines 'isCoachBlock', correcting the name to the name of an existing function, or defining a function named 'isCoachBlock' • test/cif_points_test.dart:414:14 • undefined_function
+
+6 issues found. (ran in 19.3s)
