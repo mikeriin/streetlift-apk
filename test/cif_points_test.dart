@@ -245,7 +245,7 @@ void main() {
         _save(app, _street('streetlifting'));
         _create(app);
         final e1 = app.athlete!.profile.events!.firstWhere((e) => e.id == 'e1');
-        app.setEventAttempts('e1', const [
+        const attempts = [
           kc.AttemptResult(
             exerciseId: 'sl-dips-leste',
             index: 0,
@@ -264,17 +264,27 @@ void main() {
             loadKg: 72.5,
             success: true,
           ),
-        ]);
+        ];
+        // Avant le jour J : l'écran s'essaie, rien n'est gardé.
+        expect(app.setEventAttempts(e1, attempts), isFalse);
+        expect(app.settings.eventAttempts, isEmpty);
+        // Le jour J.
+        clock = DateTime(e1.date.year, e1.date.month, e1.date.day, 15);
+        expect(app.setEventAttempts(e1, attempts), isTrue);
         await app.flush();
         // Relecture après redémarrage.
         final again = AppStore()..storeClock = () => clock;
         await again.init();
-        expect(again.eventAttemptsOf('e1'), hasLength(3));
+        expect(again.eventAttemptsOf('e1', on: e1.date), hasLength(3));
+        expect(again.eventAttemptsOf('e1', on: e1.date.addDays(1)), isEmpty);
         expect(again.eventAttemptsOf('e2'), isEmpty);
         again.dispose();
-        // Avant le jour J : rien au journal.
+        // Veille du jour J : rien au journal.
         expect(
-          app.adaptTrainingLog().sessions.where((s) => s.eventId != null),
+          app
+              .adaptTrainingLog(today: e1.date.addDays(-1))
+              .sessions
+              .where((s) => s.eventId != null),
           isEmpty,
         );
         final log = app.adaptTrainingLog(today: e1.date.addDays(1));
@@ -293,7 +303,7 @@ void main() {
         expect(ev.sets.every((x) => x.kind == kc.SetKind.test), isTrue);
         expect(log.validate(), isEmpty);
         // Effacées : plus rien.
-        app.setEventAttempts('e1', const []);
+        expect(app.setEventAttempts(e1, const []), isTrue);
         expect(
           app
               .adaptTrainingLog(today: e1.date.addDays(1))
@@ -435,6 +445,17 @@ void main() {
                 setIndex: 0,
                 kind: kc.SetKind.test,
                 seconds: 1500,
+                distanceMeters: 5000,
+                success: true,
+                excluded: false,
+              ),
+              // Allure impossible (« 25 » pour 25 minutes) : jamais écrite.
+              kc.SetRecord(
+                exerciseId: 'ca-course',
+                exerciseOrder: 0,
+                setIndex: 2,
+                kind: kc.SetKind.test,
+                seconds: 25,
                 distanceMeters: 5000,
                 success: true,
                 excluded: false,

@@ -335,11 +335,22 @@ void main() {
       await home(tester);
     }
 
-    // 3. Jour J (point 1) : compétiteur de streetlifting.
+    // 3. Jour J (point 1) : compétiteur de streetlifting, épreuve de force
+    // ramenée à deux semaines ; tentatives notées le jour même.
     clock = DateTime(2026, 10, 1, 9);
+    final comp = sampleStreetProfile(on: civilOf(clock), beginner: false);
+    final soon = kc.CivilDate(2026, 10, 15);
     store.saveAthleteProfile(
-      ProfileDraft.of(sampleStreetProfile(on: civilOf(clock), beginner: false))
-        ..consent = 'refused',
+      ProfileDraft.of(
+        comp.copyWith(
+          events: [
+            for (final e in comp.events ?? const <kc.SeasonEvent>[])
+              e.kind == kc.EventKind.strengthCompetition
+                  ? e.copyWith(date: soon)
+                  : e,
+          ],
+        ),
+      )..consent = 'refused',
     );
     final c2 = PlanStore(store).newPlanCreation(journal: false);
     if (c2 != null) {
@@ -347,6 +358,7 @@ void main() {
       c2.createPass2();
       PlanStore(store).applyPlanCreation(c2);
     }
+    clock = DateTime(2026, 10, 15, 9);
     final event = store.athlete?.profile.events
         ?.where((e) => e.kind == kc.EventKind.strengthCompetition)
         .firstOrNull;

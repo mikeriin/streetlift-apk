@@ -382,7 +382,7 @@ bool _session(
 /// (cible répartie) ; rest-pause et myo-reps, première mini-série puis
 /// relances jusqu'au plafond, arrêt au total visé, à l'échec ou dès qu'une
 /// relance n'atteint plus sa cible. Rend les parties et les flammes de la
-/// première mini-série.
+/// série (première mini-série ; dernier bloc d'un cluster).
 (List<SetPartEntry>, int?) _miniSets(
   sim.SimAthlete athlete,
   sim.TruthExercise truth,
@@ -417,7 +417,9 @@ bool _session(
     if (out.amount < 1) break;
     parts.add(SetPartEntry(out.amount, restBefore: b == 0 ? null : plan.intra));
     total += out.amount;
-    if (b == 0) first = out.flames;
+    // Note de la série : première mini-série (myo-reps, rest-pause) ;
+    // dernier bloc d'un cluster (le plus dur).
+    if (b == 0 || cluster) first = out.flames;
     if (out.failed || (b > 0 && out.amount < planned[b])) break;
   }
   return (parts, first);
