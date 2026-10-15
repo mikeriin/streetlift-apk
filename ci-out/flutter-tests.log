@@ -1,0 +1,13 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/bv11_base_test.dart
+00:00 +0: retrait du pack 2.0.0 plus aucune lecture de assets/content (assets, pubspec, code)
+00:00 +1: retrait du pack 2.0.0 groupes historiques : copie exacte du champ g du pack
+00:00 +2: migration depuis dev6.18.0 (S1 à S14, programme de 40 semaines) mêmes séances, séries, records et statistiques ; ids v1.1 ; sauvegarde d'origine intacte
+BV11|journal|noms=68|sans-id=[BILAN — report des résultats]
+BV11|programme|lignes=1812|reliees=1806
+00:01 +3: migration depuis dev6.18.0 (S1 à S14, programme de 40 semaines) ancienne sauvegarde exportée (pack 2.0.0) : importable, exercice personnel et anciens identifiants gardés
+00:01 +4: bibliothèque v1.1 (setUpAll)
+00:01 +4: bibliothèque v1.1 catégorie et muscle principal (vocabulaires fermés)
+00:01 +5: bibliothèque v1.1 filtres catégorie et muscle, puis fiche (sombre)
+00:04 +6: bibliothèque v1.1 filtres catégorie et muscle, puis fiche (clair)
+00:06 +7: bibliothèque v1.1 (tearDownAll)
+00:06 +7: All tests passed!
