@@ -26,7 +26,9 @@ Session Fable 5.1, effort maximal, démarrée le 15/10/2026 à 19:09 UTC. Base `
 ## En cours
 
 - CI `claude/ci-cp-a` run du commit 35bf1503 (le run 38809271354 de 0267da6c, avant relecture, est annulé par ce push) : campagne 1.0.3 six graines partie 1/2 (`/tmp/ci-km1c3`, `pousser_ci.sh`). Puis : témoin Dart des nouveaux adversaires (run_temoin.sh), contrôle complet final.
-- Local (relancée 22:00 UTC après relecture, 1 500/3 000 à 22:14) : recherche adversariale neuve 3 000 saisons contre 1.0.3 (`recherche.log`, sortie `donnees/adversaires_km1c3.json`, entrée Dart `adversaires_km1c3_entree.json`). Ensuite : X2 (prudence lourde 1,0, 13 min), campagne partie 2/2 locale (~2,8 h), comparaisons 7 bis des six jeux, assemblage, livraison.
+- Recherche adversariale neuve contre 1.0.3 terminée 22:27 UTC (3 000 saisons, pire d = 0,445, perf 0,555 : `donnees/adversaires_km1c3.json`, entrée Dart copiée dans `/tmp/ci-km1c3/packages/aa_km1c3/entree/`) ; témoin Dart à pousser (`pousser_ci.sh temoin`) dès que le run 38814063895 est fini (un push annule le run en cours).
+- Comparaisons 7 bis des cinq jeux connus refaites avec le code final (`donnees/comparaison_adversaires_km1c3_*.json`) : km1 24/24 (0,8914), b300 22/24 1 sous −0,143 (0,8825), b600 22/24 1 sous −0,103 (0,8838), b3000 21/24 1 sous −0,234 (0,8943), km1c2 22/24 1 sous −0,145 (0,8759) ; moyenne des cinq 0,8665 → 0,8856. Seule régression nouvelle : adv-051f1dee g2 (zéro isolé au squat) ; a0dd8069 (−0,099 → −0,103), 29523095 (−0,226 → −0,234, sous-estimation d'un powerlifter b) et 5e2b8ac3 (−0,154 → −0,145) préexistants.
+- Local : campagne partie 2/2 (`campagne_p2.log`, dossier `/tmp/km1-campagne/746e9268d927d350`, fin vers 02:00 UTC) et X2 (`var_X2.log`, prudence lourde 1,0) en cours.
 
 ## Reste à faire
 
