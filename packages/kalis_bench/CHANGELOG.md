@@ -2,7 +2,8 @@
 
 ## 0.5.0 — 15/10/2026 (lot KS1)
 
-Banc de la structure de la semaine (`pipeline/cp/CAHIER_KS.md` § 9) pour `kalis_plan` 0.4.0 × `kalis_core` 0.4.4.
+Banc de la structure de la semaine (`pipeline/cp/CAHIER_KS.md` § 9) pour `kalis_plan` 0.4.0 × `kalis_core` 0.4.4, sur 0.4.2
+(lot KM2c1, `kalis_adapt` 1.0.1).
 Critères de sécurité, profils types (`profiles/`, 27), attentes de coach et grilles du panel inchangés.
 
 - **Profils ajoutés** (`profiles_ks/`, 7) : streetlifting 50 / sets & reps 50 à 4, 5 et 6 séances ; sets & reps
@@ -21,6 +22,18 @@ Critères de sécurité, profils types (`profiles/`, 27), attentes de coach et g
   Koach.
 - Export des programmes : en-tête de séance au type du jour quand le moteur le donne (« tirage, endurance de
   force »).
+## 0.4.2 — 15/10/2026 (lot KM2c1)
+
+Banc de Koach 1.0.2 (`kalis_adapt` 1.0.1). Aucun changement des critères de sécurité, des profils, des grilles ni des
+attentes de coach.
+
+- **Critère 7 bis** (adversaires appariés, C13.12) porté de la référence (`critere_apparie`) : `kmCritereApparie`,
+  clé `critere_7_bis` de `kmComparerAdversaires` (variante `temoin_avec_barre`, `hors_critere`) ; test contre la
+  sortie Python sur les mêmes lignes.
+- Les tests `km2_*` et les outils `bin/km2.dart`, `bin/km2_adversaire.dart` relisent le fichier vivant
+  `kalis_adapt/reference/params/koach_params_v1.json` (`1.0.2-ref.1`) ; fixtures `test/fixtures/km2/` régénérées
+  par `fixtures/generer_banc_km2.py` (référence 1.0.2, prévisions avec `prevu_jour`) ; évaluation de référence de
+  `adv-7ee0da71` mise à jour.
 
 ## 0.4.1 — 11/10/2026 (lot KM1c2)
 

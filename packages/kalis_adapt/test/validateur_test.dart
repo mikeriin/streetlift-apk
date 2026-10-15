@@ -168,7 +168,7 @@ void main() {
   });
 
   test('branché sur Planification : blocs modulés validés', () {
-    final params = readJsonObject('reference/params/koach_params_d1.json');
+    final params = readJsonObject('reference/params/koach_params_v1.json');
     final vecteurs = readJsonObject(
       'reference/qualites/vecteurs_qualites_v1.json',
     );

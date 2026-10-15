@@ -1,5 +1,33 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.1
+
+Lot KM2c1 (KM2 correction 1, DECISIONS_CP.md C13.12, C13.13, C17) : **portage Dart de la référence Koach 1.0.2**
+(KM1 correction 2, `reference/CHANGEMENTS_1_0_2.md`), à l'identique. API, schéma du journal et façade inchangés
+(une application intégrée sur 1.0.0 monte de version et remplace l'asset de paramètres).
+
+- **Reprise par paliers mesurés** (`seance.dart`) : la semaine du retour d'une coupure, une ligne chargée part de la
+  dernière séance du même schéma (ou des barres réussies des 42 jours ; repli sur le dernier passage sans barre
+  récente) et ne monte d'une série à l'autre qu'après un palier franchi (série réussie, notée, dite au plus aussi
+  dure que visé), jamais au-delà de la borne de séance A7.2 (`reprise_plafond`) ; l'ancre « dernier passage de
+  l'exercice » ne vaut plus que sous douleur ; un jour de bilan bas sans douleur est borné par la dernière séance
+  du même schéma, comme en 0.3.1.
+- **Tentatives** : ouverture plafonnée par le palier des barres récentes selon la note (`_palierBarres`,
+  `securite.tentative_palier_par_rir`, `tentative_palier_bande`) au lieu de « +10 % sur toute barre » et du
+  dernier passage en semaine de retour ; un cran permis après une barre dite facile quand le saut en pourcentage
+  vaut zéro sur la grille ; test xRM du jour d'épreuve en reprise sous le même palier.
+- **P(réussite) du jour J** (`planification.dart`) : dispersion des trajectoires des cibles chargées ramenée à
+  `planification.dispersion_echeance` (0,62) sur les `dispersion_echeance_semaines` (4) premières semaines de
+  journal ; `Planification.previsions` porte aussi `prevu_jour`.
+- **Intervalle à 90 %** (`modele.dart`) : `capacite(…, brut:)`, variance du filtre recalée par
+  `mesure.intervalle_echelle` (0,9), `mesure.defaut_modele_sd` 0,015 → 0,010 ; le contrôle dual lit la variance
+  brute (`dual.dart`). Quatre bornes d'import de plus (`rupture.dart`).
+- **Paramètres** : asset `assets/koach/koach_params_1_0_2.json` (`1.0.2-ref.1`, 322 clés, SHA-256
+  `211c9361…f5da`) à la place de `koach_params_1_0_1.json`.
+- **Tests** : parité sur les 14 fixtures de la référence 1.0.2 (`moteur_11` : reprise et tentatives après 12 jours
+  de coupure), traces comprises ; tests repointés vers `reference/fixtures/` et `reference/params/koach_params_v1.json`,
+  copies figées de 1.0.1 (`reference/fix_dart/`, `koach_params_d1.json`) supprimées.
+
 ## 1.0.0
 
 Lot KM2 (méthode Koach, `pipeline/cp/CAHIER_KM.md`, décisions C13) : **Koach 1.0**, portage Dart à l'identique

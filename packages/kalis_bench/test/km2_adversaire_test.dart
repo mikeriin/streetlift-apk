@@ -142,18 +142,18 @@ _decodages = <(String, String, String, String)>[
   ),
 ];
 
-/// Sortie de `evaluer_saison` de la référence (Koach 1.0.1 Python, sans
+/// Sortie de `evaluer_saison` de la référence (Koach 1.0.2 Python, sans
 /// extension) pour l'adversaire `adv-7ee0da71`, graine 0.
 const String _evaluationPython =
-    '{"aggravations": 0, "codes_violations": {"volume_trop_vite": 3}, '
-    '"e1rm6": 0.036998, "e1rm_famille": "loadedMain", "e1rm_n": 4, '
-    '"echeance": true, "echecs": 0.004274, "evenements": '
-    '[["sl-muscle-up-leste", "loaded", 98.85, 115.944758, 0.852561], '
-    '["sl-traction-lestee", "loaded", 121.35, 157.11285, 0.772375], '
-    '["sl-dips-leste", "loaded", 145.55, 178.463155, 0.815575]], '
-    '"faites": 57, "gain": -0.000558, "perf_a": 0.813503, "plantage": null, '
-    '"poussees": 0, "present": true, "prevues": 80, "seed": 0, '
-    '"violations": 3}';
+    '{"aggravations": 0, "codes_violations": {"volume_trop_vite": 2}, '
+    '"e1rm6": 0.036435, "e1rm_famille": "loadedMain", "e1rm_n": 4, '
+    '"echeance": true, "echecs": 0.00569, "evenements": '
+    '[["sl-muscle-up-leste", "loaded", 112.6, 115.905441, 0.971482], '
+    '["sl-traction-lestee", "loaded", 155.1, 156.310625, 0.992255], '
+    '["sl-dips-leste", "loaded", 156.8, 177.023766, 0.885757]], '
+    '"faites": 57, "gain": -0.000572, "perf_a": 0.949831, "plantage": '
+    'null, "poussees": 0, "present": true, "prevues": 80, "seed": 0, '
+    '"violations": 2}';
 
 void main() {
   final advFichier = '$_reference/donnees/adversaires_v1.json';
@@ -477,6 +477,41 @@ void main() {
       '"e1rm6": 0.097789, "manquants": [], "perf_a": 0.893672, '
       '"perf_a_min": 0.887516, "poussees": 0, "violations": 0}}',
     );
+    // Critère 7 bis (C13.12, `critere_apparie`) : même sortie que la
+    // référence Python sur les mêmes lignes.
+    final c7 = kc.jm(cmp['critere_7_bis']);
+    expect(c7['n'], 24);
+    expect(c7['tenus'], 22);
+    expect(c7['part'], 0.916667);
+    expect(c7['sous_plancher_non_excuses'], 2);
+    expect(c7['pire_ecart'], -0.139835);
+    expect(c7['ecart_moyen'], 0.273041);
+    expect(c7['respecte'], isFalse);
+    expect(
+      kmJsonPython(c7['sous_plancher'], ensureAscii: false),
+      '[{"id": "adv-7ee0da71", "ecart": -0.105156, "koach": 0.788516, '
+      '"temoin": 0.893672, "violations_temoin": 0, "excuse": false}, '
+      '{"id": "adv-f3afdf8d", "ecart": -0.139835, "koach": 0.824402, '
+      '"temoin": 0.964237, "violations_temoin": 0, "excuse": false}]',
+    );
+    expect(
+      c7['libelle'],
+      'adversaires appariés (jour J pour les deux moteurs) : Koach >= témoin '
+      '− 0.03 dans au moins 90 % des cas, aucun cas sous témoin − 0.10 sauf '
+      'violation de sécurité du témoin',
+    );
+    final c7b = kc.jm(c7['temoin_avec_barre']);
+    expect(c7b['n'], 18);
+    expect(c7b['tenus'], 16);
+    expect(c7b['part'], 0.888889);
+    expect(c7b['ecart_moyen'], 0.064819);
+    expect(c7b['respecte'], isFalse);
+    expect(
+      kmJsonPython(c7['hors_critere'], ensureAscii: false),
+      '{"koach_sans_jour_j": [], "temoin_sans_jour_j": [], '
+      '"aucun_jour_j": 16}',
+    );
+    expect(kc.jm(cmp).keys.last, 'critere_7_bis');
     expect(kmResumeTexteComparaison(cmp).split('\n').sublist(0, 3), <String>[
       'tous     n=40  jour J koach moy 0.872389 pire 0.788516 | témoin moy '
           '0.599347 pire 0.0',
@@ -497,7 +532,7 @@ void main() {
       banc = KmBanc(
         catalog: loadCatalog(),
         plan: KalisPlan(),
-        parametres: readJsonObject('$_reference/params/koach_params_d1.json'),
+        parametres: readJsonObject('$_reference/params/koach_params_v1.json'),
         fiches: <String, kc.Json>{
           for (final e in kc.jm(v['exercices']).entries) e.key: kc.jm(e.value),
         },

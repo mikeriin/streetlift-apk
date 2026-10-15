@@ -12,7 +12,7 @@ import 'package:test/test.dart';
 
 import 'koach_parite_test.dart' show comparer, diagnosticDe, lireFixture;
 
-const String _referenceParametres = 'reference/params/koach_params_d1.json';
+const String _referenceParametres = 'reference/params/koach_params_v1.json';
 const String _referenceFiches = 'reference/qualites/vecteurs_qualites_v1.json';
 
 List<int> _octets(String chemin) => File(chemin).readAsBytesSync();
@@ -68,10 +68,10 @@ void main() {
         sha256.convert(_octets(koachFichierFiches)).toString(),
         koachFichesSha256,
       );
-      // En-tête du contrat 1.0.1 (CONTRAT_1_0.md).
+      // En-tête du contrat 1.0.2 (CONTRAT_1_0.md).
       expect(
         koachParametresSha256,
-        'c8aa09ebc7fb337bf93500b2fda695e95df611d4e5181fa615886faf6092157f',
+        '211c936136cc22027d85ed9bfb42ef6398bf45b272bd3a8f0900ef235846f5da',
       );
     });
 
@@ -87,11 +87,11 @@ void main() {
   group('lireParametresKoach', () {
     final p = lireParametresKoach(_texte(koachFichierParametres));
 
-    test('version, schéma, nombre de clés (317 : 6 + 311)', () {
+    test('version, schéma, nombre de clés (322 : 6 + 316)', () {
       expect(p['schema'], koachParametresSchema);
       expect(p['version'], koachParametresVersion);
       expect(koachParametresVersion, koachVersion);
-      expect(koachVersion, '1.0.1-ref.1');
+      expect(koachVersion, '1.0.2-ref.1');
       final racine = [
         for (final e in p.entries)
           if (e.value is! Map<String, Object?>) e.key,
@@ -107,9 +107,9 @@ void main() {
         cles += jm(p[s]).length;
       }
       expect(racine.length, 6);
-      expect(cles - racine.length, 311);
+      expect(cles - racine.length, 316);
       expect(cles, koachParametresCles);
-      expect(cles, 317);
+      expect(cles, 322);
     });
 
     test('identique au fichier de référence décodé', () {

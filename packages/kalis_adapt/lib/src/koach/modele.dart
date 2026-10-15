@@ -1913,7 +1913,11 @@ class Modele {
   // ------------------------------------------------------------------
   // Lecture de l'a posteriori
   // ------------------------------------------------------------------
-  (double, double)? capacite(String exId) {
+  /// (moyenne, écart-type) de ln capacité à frais de l'exercice (hors effet
+  /// de jour et fatigue), ou null. [brut] : écart-type du filtre sans le recalage `intervalle_echelle`
+  /// (mises à jour bayésiennes du contrôle dual, qui lisent une variance a
+  /// posteriori).
+  (double, double)? capacite(String exId, {bool brut = false}) {
     final t = piste(exId);
     if (t == null) {
       return null;
@@ -1922,7 +1926,10 @@ class Modele {
     final (mu0, v, _) = stats(m, pm, cap, idx, co);
     final me = jm(p['mesure']);
     final d = dbl(me['defaut_modele_sd'] ?? 0.0);
-    return (t.base + mu0, math.sqrt((v > 0 ? v : 0.0) + d * d));
+    // 1.0.2 (C13.12) : la variance du filtre est recalée par
+    // `intervalle_echelle`² (mesure sur six graines).
+    final k = brut ? 1.0 : dbl(me['intervalle_echelle'] ?? 1.0);
+    return (t.base + mu0, math.sqrt((v > 0 ? v : 0.0) * k * k + d * d));
   }
 
   (double, double)? capaciteDuJour(String exId) {

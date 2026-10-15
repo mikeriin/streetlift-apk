@@ -57,7 +57,7 @@ class _Releve {
 }
 
 Json _lireFixture(String nom) =>
-    jm(jsonDecode(File('reference/fix_dart/$nom').readAsStringSync()));
+    jm(jsonDecode(File('reference/fixtures/$nom').readAsStringSync()));
 
 Map<String, Json> _fiches(Object? v) => <String, Json>{
   for (final e in jm(v).entries) e.key: jm(e.value),
@@ -523,6 +523,12 @@ void _seance(_Releve rel, int nf, int rep, Json d, Map<String, Json> fiches) {
   var sansHausse = <String, bool>{};
   var grilles = <String, Object?>{};
   final chargeDerniere = <String, double>{};
+  // (emplacement, haut de plage) -> charge de la première série de la
+  // dernière séance (`Memoire.schemas`).
+  final premieres = <String, double>{};
+  // Emplacement -> charge de la dernière série versée au journal dans la
+  // séance en cours (`plan['charge_item']`).
+  var chargeItem = <String, double>{};
   String ctx(String quoi) => 'fixture $nf graine $rep : $quoi';
 
   for (final e0 in jl(d['journal'])) {
@@ -556,6 +562,7 @@ void _seance(_Releve rel, int nf, int rep, Json d, Map<String, Json> fiches) {
       }
       bas = b != null && b['overall'] != null && dbl(b['overall']) <= 2;
       evenement = vrai(dictOuVide(e['contexte'])['jour_evenement']);
+      chargeItem = <String, double>{};
       k.observe(e);
       verrou = k.seances.verrouillee();
       continue;
@@ -588,8 +595,25 @@ void _seance(_Releve rel, int nf, int rep, Json d, Map<String, Json> fiches) {
         if (der != null) {
           chargeDerniere[g.key.$1] = der;
         }
+        for (final x in g.value) {
+          if (x['kind'] != 'warmup' &&
+              x['externalLoadKg'] != null &&
+              dictOuVide(x['target'])['role'] == null) {
+            final hiP = dictOuVide(x['target'])['repsHigh'];
+            premieres['${g.key.$1}|${g.key.$2}|${hiP == null ? null : dbl(hiP)}'] =
+                dbl(x['externalLoadKg']);
+            break;
+          }
+        }
       }
       continue;
+    }
+    if (typ == 'serie') {
+      final se = jm(e['serie']);
+      final cs = dblOu(se['externalLoadKg']);
+      if (cs != null && cs >= 0 && se['slotId'] != null) {
+        chargeItem[se['slotId']! as String] = cs;
+      }
     }
     if (typ != 'plan') {
       k.observe(e);
@@ -672,7 +696,7 @@ void _seance(_Releve rel, int nf, int rep, Json d, Map<String, Json> fiches) {
             );
           }
         }
-        sh[w['slotId']! as String] = bas || douloureux;
+        sh[w['slotId']! as String] = douloureux;
       }
       sansHausse = sh;
     } else if (c['horizon'] == 'serie') {
@@ -694,14 +718,36 @@ void _seance(_Releve rel, int nf, int rep, Json d, Map<String, Json> fiches) {
       final g = jmOu(grilles[ex]);
       final mini = g == null ? 0.0 : dbl(g['minimum']);
       rel.entree();
-      // Sous douleur ou bilan bas : jamais plus lourd que le dernier
-      // passage de l'exercice (A1.2, invariant I3 de 0.3.1).
+      // Sous douleur : jamais plus lourd que le dernier passage de
+      // l'exercice (A1.2, invariant I3 de 0.3.1).
       final cd = chargeDerniere[ex];
       if ((sansHausse[sl] ?? false) && cd != null) {
         rel.verifier(
           charge <= math.max(cd, mini) + 1e-9,
           () => ctx('hausse $sl : $charge > $cd'),
         );
+      }
+      // Bilan bas sans douleur (1.0.2, comme 0.3.1) : la première série ne
+      // dépasse pas celle de la dernière séance du même schéma (emplacement,
+      // haut de plage).
+      // D'une série à l'autre, la charge reste gelée (au plus celle de la
+      // dernière série faite).
+      final hiI = it['repsHigh'] ?? it['repsLow'];
+      final avant = premieres['$ex|$sl|${hiI == null ? null : dbl(hiI)}'];
+      final ci = chargeItem[sl];
+      if (bas && !(sansHausse[sl] ?? false)) {
+        if (ent(c['index']) == 0 && avant != null) {
+          rel.verifier(
+            charge <= math.max(avant, mini) + 1e-9,
+            () => ctx('hausse (bilan bas) $sl : $charge > $avant'),
+          );
+        }
+        if (ent(c['index']) >= 1 && ci != null) {
+          rel.verifier(
+            charge <= math.max(ci, mini) + 1e-9,
+            () => ctx('hausse (bilan bas, série) $sl : $charge > $ci'),
+          );
+        }
       }
       // Semaine verrouillée : la part écrite du 1RM borne la charge (A6.5),
       // au cran le plus proche de la grille.

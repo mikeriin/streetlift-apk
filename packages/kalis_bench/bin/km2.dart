@@ -33,6 +33,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:math' as math;
 
+import 'package:kalis_adapt/kalis_adapt.dart' show kalisAdaptVersion;
 import 'package:kalis_adapt/koach.dart' as kc;
 import 'package:kalis_bench/kalis_bench.dart';
 import 'package:kalis_bench/src/km/campagne.dart';
@@ -45,7 +46,7 @@ import 'common.dart';
 import 'km2_adversaire.dart' show km2Adversaires;
 
 const String _reference = '../kalis_adapt/reference';
-const String _parametresDefaut = '$_reference/params/koach_params_d1.json';
+const String _parametresDefaut = '$_reference/params/koach_params_v1.json';
 const String _fichesDefaut = '$_reference/qualites/vecteurs_qualites_v1.json';
 const String _adversairesDefaut =
     '$_reference/donnees/comparaison_adversaires.json';
@@ -738,7 +739,7 @@ Map<String, Object?> _configuration(
   'temoin': o.temoinDossier == null
       ? 'kmWitnessSeason (calculé)'
       : 'lu dans ${o.temoinDossier}',
-  'moteur': 'kalis_adapt 1.0.0 (Dart)',
+  'moteur': 'kalis_adapt $kalisAdaptVersion (Dart)',
 };
 
 // ----------------------------------------------------------------------

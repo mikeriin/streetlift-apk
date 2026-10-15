@@ -1,6 +1,6 @@
 // Textes de Koach (lot KM2, pour KM3 ; `docs/INTEGRATION_KM3.md`, § 4) :
 // chaque code émis par Koach a une phrase française lisible, jamais un code
-// brut. Sources : les raisons attendues des 10 fixtures de parité
+// brut. Sources : les raisons attendues des 11 fixtures de parité
 // (`reference/fixtures/moteur_*.json`), le tableau du contrat (§ 3.5), les
 // causes relevées dans le code, la surveillance (questions, choix, actions
 // rendues par `Surveillance.repondre`) et les raisons du contrôle dual.
@@ -29,15 +29,15 @@ void _lisible(String texte, String quoi) {
 }
 
 Json _fixture(int i) {
-  final f = File('reference/fix_dart/moteur_$i.json');
+  final f = File('reference/fixtures/moteur_$i.json');
   return jm(jsonDecode(f.readAsStringSync()));
 }
 
-/// Raisons `koach.*` attendues des 10 fixtures : `plans[].raisons`,
+/// Raisons `koach.*` attendues des 11 fixtures : `plans[].raisons`,
 /// `final.raisons` et les `reasons` des items servis.
 List<Json> _raisonsDesFixtures() {
   final out = <Json>[];
-  for (var i = 1; i <= 10; i++) {
+  for (var i = 1; i <= 11; i++) {
     final attendu = jm(_fixture(i)['attendu']);
     for (final p0 in jl(attendu['plans'])) {
       final p = jm(p0);

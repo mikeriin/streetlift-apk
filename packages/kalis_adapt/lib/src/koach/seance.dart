@@ -369,6 +369,12 @@ class Memoire {
   /// Plus lourde charge du dernier passage de l'exercice.
   num? chargeDerniere;
 
+  /// (jour, charge, répétitions, flammes dites) des barres réussies (1.0.2).
+  final List<(int, num, num, Object?)> barres = [];
+
+  /// (jour, charge) des barres ratées sans une répétition faite (1.0.2).
+  final List<(int, num)> barresRatees = [];
+
   /// slotId -> (charge de base d'une semaine de charge, charge de base,
   /// répétitions du schéma) de la dernière séance de l'emplacement.
   final Map<String?, (num?, num?, num?)> marques = {};
@@ -1022,10 +1028,18 @@ class Seances {
       'fragile': cond['fragile'],
       'servi': servi,
     };
-    if (coupure > 0 && const ['charge', 'reps', 'tenue'].contains(typ)) {
-      // Semaine du retour après une coupure : aucune hausse au-dessus du
-      // dernier passage ; pas de mesure ni de test.
+    if (coupure > 0 && const ['reps', 'tenue'].contains(typ)) {
+      // Semaine du retour après une coupure : répétitions et tenues
+      // jamais au-dessus de la dernière séance ; pas de mesure ni de test.
       plan['sans_hausse'] = true;
+    }
+    if (coupure > 0 && typ == 'charge') {
+      // 1.0.2 — reprise par paliers mesurés (C13.12) : la première série ne
+      // dépasse pas la dernière séance du même schéma (ou les barres
+      // récentes) ; chaque série faite, dite au plus aussi dure que visé,
+      // autorise le palier suivant (+5 % ou un cran), jusqu'à la charge que
+      // l'estimation demande.
+      plan['reprise'] = true;
     }
     if (cond['appui_neutre'] != null) {
       _raison('koach.poignet_appui_neutre', {
@@ -2611,6 +2625,7 @@ class Seances {
     final ta = jm(p['test_adaptatif']);
     if (index == 0 &&
         !vrai(plan['sans_hausse']) &&
+        !vrai(plan['reprise']) &&
         !vrai(plan['verrou']) &&
         t.seances >= 1) {
       var meilleur = charge;
@@ -2636,6 +2651,33 @@ class Seances {
       charge = meilleur;
     }
     final avantBornes = charge;
+    if (vrai(plan['reprise']) && plan['reprise_plafond'] == null) {
+      // Reprise par paliers : les paliers ne dépassent jamais ce que la
+      // première série d'une séance ordinaire aurait pu atteindre (bornes de
+      // hausse A7.2 sans le gel de la reprise). Calculé une fois par ligne,
+      // quelle que soit la première série demandée.
+      final nR = raisons.length;
+      plan['reprise_plafond'] = _bornesHausse(
+        exId,
+        item,
+        charge,
+        plan,
+        t,
+        grille,
+        _plages(item, 0).$2,
+        0,
+        gel: false,
+      );
+      raisons.removeRange(nR, raisons.length);
+    }
+    if (vrai(plan['reprise']) &&
+        index >= 1 &&
+        plan['charge_item'] == null &&
+        plan['tete'] == null) {
+      // Série demandée avant la première (aperçu des séries à venir) :
+      // bornée comme une première série de reprise.
+      charge = _bornesHausse(exId, item, charge, plan, t, grille, hi, 0);
+    }
     charge = _bornesHausse(exId, item, charge, plan, t, grille, hi, index);
     if (charge != avantBornes) {
       trace.add(
@@ -2661,6 +2703,29 @@ class Seances {
         charge = plan['charge_item'] as num;
       }
     }
+    if (index >= 1 && vrai(plan['reprise']) && !vrai(plan['palier_franchi'])) {
+      // Reprise par paliers mesurés : le palier suivant n'est permis
+      // qu'après une série faite en entier, sans échec, notée, et dite au
+      // plus aussi dure que visé (`serieFaite`). Sans série versée au
+      // journal, la charge de la première série fait foi.
+      final palierR = plan['charge_item'] != null
+          ? plan['charge_item'] as num
+          : plan['tete'] as num?;
+      if (palierR != null && charge > palierR) {
+        charge = palierR;
+        trace.add('palier de reprise non franchi -> ${fixe(charge, 2)}');
+      }
+    }
+    if (index >= 1 &&
+        vrai(plan['reprise']) &&
+        plan['reprise_plafond'] != null &&
+        charge > (plan['reprise_plafond'] as num)) {
+      // Paliers franchis : jamais au-dessus de la borne de hausse d'une
+      // séance ordinaire (A7.2 : même schéma + hausse du niveau, ou barre
+      // récente + `premiere_hausse`).
+      charge = plan['reprise_plafond'] as num;
+      trace.add('plafond de reprise -> ${fixe(charge, 2)}');
+    }
     if (index >= 1 &&
         plan['charge_item'] != null &&
         tech['kind'] != 'top_set_backoff') {
@@ -2678,13 +2743,17 @@ class Seances {
         charge = grille.proche(bas);
       }
     }
-    // Zone douloureuse ou en reprise, bilan bas : jamais plus lourd que le
-    // dernier passage de l'exercice (invariant I3 de 0.3.1).
-    if ((vrai(plan['sans_hausse']) || vrai(jm(plan['cond'])['raison'])) &&
+    // Zone douloureuse ou en reprise : jamais plus lourd que le dernier
+    // passage de l'exercice (invariant I3 de 0.3.1). Depuis 1.0.2, un jour
+    // de bilan bas sans douleur n'est borné, comme en 0.3.1, que par la
+    // dernière séance du même schéma (`_bornesHausse`), et la semaine du
+    // retour d'une coupure par les paliers de reprise.
+    if ((vrai(jm(plan['cond'])['sans_hausse']) ||
+            vrai(jm(plan['cond'])['raison'])) &&
         mem.chargeDerniere != null &&
         charge > mem.chargeDerniere!) {
       charge = mem.chargeDerniere!;
-      trace.add('pas de hausse (douleur ou bilan) -> ${fixe(charge, 2)}');
+      trace.add('pas de hausse (douleur) -> ${fixe(charge, 2)}');
     }
     if (charge < grille.minimum) {
       charge = grille.minimum;
@@ -2760,8 +2829,9 @@ class Seances {
     Piste t,
     Grille grille,
     num? hi,
-    int index,
-  ) {
+    int index, {
+    bool? gel,
+  }) {
     var charge = charge0;
     if (index > 0) {
       return charge;
@@ -2779,8 +2849,9 @@ class Seances {
     // chargée.
     final h = g.hausseMax(fragile);
     final avantBornes = charge;
+    final gele = gel ?? (vrai(plan['sans_hausse']) || vrai(plan['reprise']));
     if (avant != null) {
-      if (vrai(plan['sans_hausse']) || avant.$2) {
+      if (gele || avant.$2) {
         if (charge > avant.$1) {
           charge = avant.$1;
         }
@@ -2811,7 +2882,7 @@ class Seances {
           moins = _n('schema_change_reps_max');
         }
         num borne;
-        if (vrai(plan['sans_hausse']) || douleur) {
+        if (gele || douleur) {
           borne = c;
         } else {
           final hp =
@@ -2825,6 +2896,13 @@ class Seances {
         if (haut == null || borne > haut) {
           haut = borne;
         }
+      }
+      if (haut == null && mem.chargeDerniere != null && (gele || douleur)) {
+        // 1.0.2 — schéma nouveau et aucune barre réussie depuis
+        // `barre_recente_j` jours (retour d'une longue coupure, bloc
+        // nouveau) : repli de 0.3.1 sur la dernière charge de l'exercice,
+        // sans hausse un jour gelé (reprise, bilan bas, douleur).
+        haut = mem.chargeDerniere;
       }
       if (haut != null && charge > haut) {
         charge = haut;
@@ -2871,6 +2949,7 @@ class Seances {
     }
     final cond = jm(plan['cond']);
     if (vrai(plan['sans_hausse']) ||
+        vrai(plan['reprise']) ||
         vrai(plan['verrou']) ||
         plan['part_max'] != null ||
         vrai(plan['dose_plafonnee']) ||
@@ -3185,11 +3264,36 @@ class Seances {
             ? ecrite
             : grille.plancher(ecrite.toDouble());
       }
-      if ((vrai(plan['sans_hausse']) || mem.echec) &&
+      final evenement = vrai(dictOuVide(contexte)['jour_evenement']);
+      if ((vrai(plan['sans_hausse']) ||
+              mem.echec ||
+              (vrai(plan['reprise']) && !evenement)) &&
           mem.chargeDerniere != null &&
           charge > mem.chargeDerniere!) {
-        // Après un échec non prévu à la dernière séance aussi.
+        // Après un échec non prévu à la dernière séance aussi ; la semaine
+        // du retour d'une coupure, hors jour d'épreuve (1.0.2 : le jour
+        // d'épreuve, le test suit l'estimation, comme les tentatives).
         charge = mem.chargeDerniere!;
+      }
+      if (vrai(plan['reprise']) && evenement) {
+        // Jour d'épreuve en semaine de retour : le test suit l'estimation,
+        // sous le palier des barres récentes ramené aux répétitions du test
+        // (`_palierBarres`, comme l'ouverture des tentatives).
+        final bw = t.fraction * m.poidsKg;
+        final autorise = _palierBarres(mem, bw);
+        if (autorise != null) {
+          num moins = hiC - 1;
+          if (moins > _n('schema_change_reps_max')) {
+            moins = _n('schema_change_reps_max');
+          }
+          final borne =
+              (autorise + bw) /
+                  (1 + dbl(s['schema_change_part']) * (moins > 0 ? moins : 0)) -
+              bw;
+          if (charge > borne) {
+            charge = grille.plancher(_seMax(borne, grille.minimum));
+          }
+        }
       }
       if (index >= 1 && mem.chargeSeance != null) {
         // Deuxième essai : un cran de plus si le premier a laissé plus que
@@ -3405,6 +3509,75 @@ class Seances {
     };
   }
 
+  /// Palier (charge externe pour UNE répétition) que les barres des
+  /// `barre_recente_j` derniers jours autorisent, ou null sans barre
+  /// récente (1.0.2, C13.12). Chaque barre réussie est ramenée à une
+  /// répétition (+`schema_change_part` par répétition faite au-delà de la
+  /// première, `schema_change_reps_max` au plus). Le palier part de la plus
+  /// lourde ; il ne monte au-dessus d'elle que si toutes les barres proches
+  /// (à `tentative_palier_bande` près) ont été dites faciles : la hausse est
+  /// celle de la note la plus dure parmi elles (`tentative_palier_par_rir`),
+  /// nulle dès qu'une de ces barres n'est pas notée ou est dite à moins
+  /// d'une répétition de l'échec. Il reste sous la plus légère barre ratée
+  /// sans une répétition faite pendant la même période, quand elle est plus
+  /// lourde que la plus lourde barre réussie.
+  double? _palierBarres(Memoire mem, double bw) {
+    double? plusHaute;
+    final ramenees = <(double, double)>[];
+    for (final (j, c, r, f) in mem.barres) {
+      if (jour - j > _n('barre_recente_j')) {
+        continue;
+      }
+      var plus = r - 1;
+      if (plus > _n('schema_change_reps_max')) {
+        plus = _n('schema_change_reps_max');
+      }
+      final total = (c + bw) * (1 + dbl(s['schema_change_part']) * plus);
+      final dit = rirDeFlammes(f);
+      var pas = 0.0;
+      if (dit != null) {
+        for (final ligne in jl(s['tentative_palier_par_rir'])) {
+          final sp = jl(ligne);
+          if (dit >= dbl(sp[0]) - 1e-9) {
+            pas = dbl(sp[1]);
+            break;
+          }
+        }
+      }
+      ramenees.add((total, pas));
+      if (plusHaute == null || total > plusHaute) {
+        plusHaute = total;
+      }
+    }
+    if (plusHaute == null) {
+      return null;
+    }
+    double? pas;
+    for (final (total, p_) in ramenees) {
+      if (total >= plusHaute * (1 - dbl(s['tentative_palier_bande'])) - 1e-9 &&
+          (pas == null || p_ < pas)) {
+        pas = p_;
+      }
+    }
+    var autorise = plusHaute * (1 + pas!);
+    for (final (j, c) in mem.barresRatees) {
+      if (jour - j > _n('barre_recente_j')) {
+        continue;
+      }
+      final ratee = c + bw;
+      if (ratee > plusHaute + 1e-9 &&
+          autorise > ratee * (1 - dbl(s['schema_change_part']))) {
+        // Barre ratée récemment, plus lourde que tout ce qui a été
+        // réussi : on reste un palier dessous.
+        autorise = _seMax(
+          plusHaute,
+          (ratee * (1 - dbl(s['schema_change_part']))).toDouble(),
+        );
+      }
+    }
+    return autorise - bw;
+  }
+
   /// Échelle des tentatives (règles A8.2 de 0.3.1, probabilités de
   /// Koach) : ouverture sûre, puis la barre la plus lourde qui garde la
   /// probabilité voulue.
@@ -3475,35 +3648,13 @@ class Seances {
           _seMax<num>(_seMin<num>(recente, plafondT), ouverture).toDouble(),
         );
       }
-      // Jour d'épreuve en semaine de retour après une coupure :
-      // l'ouverture ne dépasse pas le dernier passage.
-      if (coupure > 0 &&
-          mem.chargeDerniere != null &&
-          ouverture > mem.chargeDerniere!) {
-        ouverture = mem.chargeDerniere!;
-      }
-      // Plus prudent que 0.3.1 : l'ouverture ne dépasse jamais ce que les
-      // barres réussies des 42 derniers jours justifient.
-      double? justifie;
-      for (final (j, c, r) in mem.chargesReussies) {
-        if (jour - j > _n('barre_recente_j')) {
-          continue;
-        }
-        var plus = r - 1;
-        if (plus > _n('schema_change_reps_max')) {
-          plus = _n('schema_change_reps_max');
-        }
-        final borne =
-            (c + bw) *
-                (1 + dbl(s['premiere_hausse'])) *
-                (1 + dbl(s['schema_change_part']) * plus) -
-            bw;
-        if (justifie == null || borne > justifie) {
-          justifie = borne;
-        }
-      }
-      if (justifie != null && ouverture > justifie) {
-        ouverture = grille!.plancher(_seMax(justifie, grille.minimum));
+      // 1.0.2 — paliers mesurés (C13.12). L'ouverture suit la capacité
+      // estimée, sans dépasser le palier que les barres réussies des 42
+      // derniers jours autorisent selon ce que l'athlète en a dit
+      // (`_palierBarres`).
+      final autorise = _palierBarres(mem, bw);
+      if (autorise != null && ouverture > autorise) {
+        ouverture = grille!.plancher(_seMax(autorise, grille.minimum));
       }
       return <String, Object?>{
         'repsLow': 1,
@@ -3556,6 +3707,18 @@ class Seances {
         grille!.suivant(derniere.toDouble()),
         _seMax<num>(grille.plancher(haut), derniere),
       );
+      final f = mem.flammesSeance;
+      if (charge <= derniere + 1e-9 &&
+          f != null &&
+          (f as num) <= (index == 1 ? 7 : 9) &&
+          grille.suivant(derniere.toDouble()) - derniere <=
+              dbl(s['tentative_saut_kg']) + 1e-9) {
+        // 1.0.2 : saut en pourcentage plus petit qu'un cran de la grille
+        // (barre légère) — un cran reste permis quand la barre précédente a
+        // été dite au plus aussi dure que visé, dans la limite du saut en
+        // kilos.
+        charge = grille.suivant(derniere.toDouble());
+      }
       final pr = probaReussite(exId, charge.toDouble(), 1);
       if (pr != null && pr < 0.2) {
         charge = derniere;
@@ -3597,6 +3760,22 @@ class Seances {
       plan['flammes_item'] = serie['flames'];
       plan['reps_item'] = serie['reps'];
       plan['echec_item'] = echec;
+      if (vrai(plan['reprise'])) {
+        // Palier de reprise franchi : série faite en entier, sans échec,
+        // notée, dite au plus aussi dure que visé.
+        final cible = dictOuVide(serie['target']);
+        final f = serie['flames'];
+        final fc = cible['flames'];
+        final bas = cible['repsLow'];
+        final franchi =
+            !echec &&
+            f != null &&
+            fc != null &&
+            (f as num) <= (fc as num) &&
+            bas != null &&
+            (ou(serie['reps'], 0) as num) >= (bas as num);
+        plan['palier_franchi'] = franchi;
+      }
       if (echec && !vrai(plan['test'])) {
         plan['echecs'] = (plan['echecs'] as int) + 1;
         plan['baisse'] = 1.0 - dbl(s['echec_baisse']);
@@ -3696,6 +3875,10 @@ class Seances {
         }
         if (c != null && r != null && vrai(r) && !vrai(x['failed'])) {
           mem.chargesReussies.add((jour, c, r));
+          mem.barres.add((jour, c, r, x['flames']));
+        }
+        if (c != null && c >= 0 && vrai(x['failed']) && !vrai(r)) {
+          mem.barresRatees.add((jour, c));
         }
       }
       Json? premier;

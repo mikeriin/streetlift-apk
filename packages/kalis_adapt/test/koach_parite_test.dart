@@ -1,4 +1,4 @@
-// Parité Python ↔ Dart de Koach 1.0.1 (lot KM2) : chaque fixture de
+// Parité Python ↔ Dart de Koach 1.0.2 (lots KM2, KM2c1) : chaque fixture de
 // `reference/fixtures/` (générée par la référence Python, `generer.py`) est
 // rejouée par le moteur Dart. Comparaison : nombres à
 // |a − b| ≤ 1e-9 · max(1, |a|, |b|), le reste à l'identique.
@@ -11,7 +11,7 @@ import 'package:test/test.dart';
 const double tolerance = 1e-9;
 
 Json lireFixture(String nom) =>
-    jsonDecode(File('reference/fix_dart/$nom').readAsStringSync()) as Json;
+    jsonDecode(File('reference/fixtures/$nom').readAsStringSync()) as Json;
 
 /// Valeur JSON pure (comme `propre` de la référence).
 Object? propre(Object? x) {
@@ -455,7 +455,7 @@ void main() {
   });
 
   group('moteur', () {
-    for (var n = 1; n <= 10; n++) {
+    for (var n = 1; n <= 11; n++) {
       testerMoteur('moteur_$n.json');
     }
   });

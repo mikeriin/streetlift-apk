@@ -2017,7 +2017,110 @@ Map<String, Object?> kmComparerAdversaires(
         for (final l in lignes) kc.jl(te(l)['manquants']).length,
       ]),
     },
+    'critere_7_bis': kmCritereApparie(lignes),
   };
+}
+
+/// Koach >= témoin − 0,03 ...
+const double kmToleranceAppariee = 0.03;
+
+/// ... dans au moins 90 % des cas appariés.
+const double kmPartAppariee = 0.90;
+
+/// Aucun cas sous témoin − 0,10 (sauf violation de sécurité du témoin).
+const double kmPlancherApparie = 0.10;
+
+/// Critère 7 bis (DECISIONS_CP.md C13.12, `critere_apparie`) : sur les
+/// adversaires où les deux moteurs ont un jour J (performance définie pour
+/// Koach et pour le témoin, moyenne des graines), Koach >= témoin − 0,03
+/// dans au moins 90 % des cas, et aucun cas sous témoin − 0,10 sauf si le
+/// témoin y commet une violation de sécurité (aggravation, poussée de
+/// douleur ou constat du validateur ; les cas excusés sont listés).
+/// [lignes] : lignes de [kmComparerAdversaires]. La variante
+/// `temoin_avec_barre` ne garde que les adversaires où le témoin a réussi au
+/// moins une barre (performance > 0).
+Map<String, Object?> kmCritereApparie(List<kc.Json> lignes) {
+  Object? perf(kc.Json l, String qui) => kc.jm(l[qui])['perf_a'];
+  Map<String, Object?> juger(List<kc.Json> sel) {
+    final cas = <(kc.Json, double)>[
+      for (final l in sel)
+        (l, kmR6(kc.dbl(perf(l, 'koach')) - kc.dbl(perf(l, 'temoin')))!),
+    ];
+    final n = cas.length;
+    var tenus = 0;
+    for (final (_, e) in cas) {
+      if (e >= -kmToleranceAppariee - 1e-12) {
+        tenus++;
+      }
+    }
+    final sous = <kc.Json>[];
+    for (final (l, e) in cas) {
+      if (e < -kmPlancherApparie - 1e-12) {
+        final tm = kc.jm(l['temoin']);
+        final viol =
+            kc.ent(tm['violations'] ?? 0) +
+            kc.ent(tm['aggravations'] ?? 0) +
+            kc.ent(tm['poussees'] ?? 0);
+        sous.add(<String, Object?>{
+          'id': l['id'],
+          'ecart': e,
+          'koach': perf(l, 'koach'),
+          'temoin': tm['perf_a'],
+          'violations_temoin': viol,
+          'excuse': viol > 0,
+        });
+      }
+    }
+    final part = n != 0 ? tenus / n : null;
+    final nonExcuses = sous.where((x) => x['excuse'] != true).length;
+    final ecarts = <double>[for (final (_, e) in cas) e];
+    return <String, Object?>{
+      'n': n,
+      'tenus': tenus,
+      'part': kmR6(part),
+      'sous_plancher': sous,
+      'sous_plancher_non_excuses': nonExcuses,
+      'pire_ecart': ecarts.isNotEmpty
+          ? kmR6(ecarts.reduce((a, b) => b < a ? b : a))
+          : null,
+      'ecart_moyen': n != 0 ? kmR6(kmSommePy(ecarts) / n) : null,
+      'respecte': n == 0
+          ? null
+          : (part! >= kmPartAppariee - 1e-12 && nonExcuses == 0),
+    };
+  }
+
+  final apparies = <kc.Json>[
+    for (final l in lignes)
+      if (perf(l, 'koach') != null && perf(l, 'temoin') != null) l,
+  ];
+  final out = juger(apparies);
+  out['libelle'] =
+      'adversaires appariés (jour J pour les deux moteurs) : Koach >= '
+      'témoin − ${kmToleranceAppariee.toStringAsFixed(2)} dans au moins '
+      '${(kmPartAppariee * 100).round()} % des cas, aucun cas sous témoin − '
+      '${kmPlancherApparie.toStringAsFixed(2)} sauf violation de sécurité '
+      'du témoin';
+  out['temoin_avec_barre'] = juger(<kc.Json>[
+    for (final l in apparies)
+      if (kc.dbl(perf(l, 'temoin')) > 0) l,
+  ]);
+  // Adversaires hors du critère (publiés pour qu'aucun cas ne
+  // disparaisse) : jour J défini pour un seul moteur, ou pour aucun.
+  bool kk(kc.Json l) => perf(l, 'koach') != null;
+  bool tt(kc.Json l) => perf(l, 'temoin') != null;
+  out['hors_critere'] = <String, Object?>{
+    'koach_sans_jour_j': <Object?>[
+      for (final l in lignes)
+        if (!kk(l) && tt(l)) l['id'],
+    ],
+    'temoin_sans_jour_j': <Object?>[
+      for (final l in lignes)
+        if (kk(l) && !tt(l)) l['id'],
+    ],
+    'aucun_jour_j': lignes.where((l) => !kk(l) && !tt(l)).length,
+  };
+  return out;
 }
 
 // ---------------------------------------------------------------------------
