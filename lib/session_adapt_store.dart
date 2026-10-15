@@ -318,14 +318,15 @@ extension SessionAdaptStore on AppStore {
 
   /// CIF (point 1) : tentatives notées le jour J de l'épreuve [eventId]
   /// (illisibles ignorées) ; [on] : seulement celles notées ce jour-là.
-  List<kc.AttemptResult> eventAttemptsOf(String eventId, {kc.CivilDate? on}) =>
-      [
-        for (final a
-            in settings.eventAttempts[eventId] ??
-                const <Map<String, dynamic>>[])
-          if (on == null || a['on'] == on.iso)
-            if (_attemptOf(a) case final x?) x,
-      ];
+  List<kc.AttemptResult> eventAttemptsOf(
+    String eventId, {
+    kc.CivilDate? on,
+  }) => [
+    for (final a
+        in settings.eventAttempts[eventId] ?? const <Map<String, dynamic>>[])
+      if (on == null || a['on'] == on.iso)
+        if (_attemptOf(a) case final x?) x,
+  ];
 
   static kc.AttemptResult? _attemptOf(Map<String, dynamic> j) {
     try {
