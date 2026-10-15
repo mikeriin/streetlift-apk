@@ -13,9 +13,11 @@ Session Fable 5.1, effort maximal, démarrée le 15/10/2026 à 19:09 UTC. Base `
 - Point 5 : journal déchiffré sous `/tmp/cp-references/journal` (clé par `/tmp/cle_cp.txt` 600) ; correspondance noms → ids reconstruite (`index.json.gz` programme_v33/base_v1 → `correspondance.json` G3 → fiches : 78/79) ; `rejeu/walk_forward.py` tourne (1.0.2 : 38 séries, erreur 4,6 %, couverture 97,4 %, 167 notes : ouvertes prévues 43,7 % / observées 20,4 %).
 - Mesures : harnais `variante.py` (5 jeux d'adversaires + banc graine 0 sans extension) ; base = KM1c2 reproduit (24/24, 23/24, 22/24, 20/24, 17/24). **V1 (κ² = 1 + 1,0·(E[φ]−E₀)⁺ + 12·(ρ−0,2)⁺², σ élargi seul)** : b3000 18/24 (4 sous), km1c2 18/24, b300 22/24 : l'élargissement seul abaisse l'ouverture de 5 à 9 % chez tout athlète bruité (coût −0,033 en moyenne sur b3000) sans sauver les cas à +7 % d'erreur. Banc : κ > 1,05 pour 4 % des saisons seulement, jour J 0,9577 → 0,9603 (bruit).
 
+- Évaluation hors ligne des règles d'ouverture sur 543 ouvertures d'adversaires + 341 du banc (`ouvertures.py`, `eval_ouv.py` ; la règle de base reproduit exactement les 543 ouvertures) : σ·κ au quantile (V1) coûte 0,004 sans sauver de zéro ; part 0,91/κ coûte 0,10 ; **palier des barres réduit avec κ (c = 3) + barres dites à la limite ou non notées comptées à 97,5 % quand κ > 1** : +0,007 sur les adversaires, zéros d'ouverture 17 → 12, banc −0,0005 ; **barre suivante après un échec (test 1RM hors compétition) = estimation mise à jour, au plus 5 % sous la barre ratée** : +0,027 (km1c2 0,807 → 0,888), banc +0,0004, sans effet sur km1 et b300. Code écrit : `capacite_du_jour(brut)`, `_tentative` sur σ brut, `_palier_barres` (tentative_palier_fiabilite 3, tentative_limite_fiabilite 0,025), `tentative_echec_baisse_part` 0,05 (0 en semaine de compétition), `prudence_charge_fiabilite` (à mesurer), `echec_sans_hausse_tout_schema` (0/1/2, à mesurer). Tests : 12 (`test_fiabilite.py`), suite complète verte hors documents et fixtures (à régénérer).
+
 ## En cours
 
-- Capture des ouvertures (`ouvertures.py`) sur les cinq jeux et le banc pour évaluer hors ligne des règles d'ouverture (palier des barres conditionné à κ, barre dite à la limite non reprise comme ouverture, quantile) avant de remesurer.
+- Chaîne 2 (`chaine2.sh`) : harnais complet (5 jeux + banc graine 0) sur W0 (baisse seule), W1 (a=1, c=12, palier, limite, baisse), W2 (+ prudence séries lourdes 1,0), W3 (+ règle 0.3.1 « aucune hausse après échec » tout schéma), W4 (conditionnée κ > 1), W5 (a=0,5, c=8). Résultats dans `var_W*.log`.
 
 ## Reste à faire
 

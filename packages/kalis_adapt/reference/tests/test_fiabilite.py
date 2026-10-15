@@ -172,37 +172,83 @@ def test_posterior_expose_la_fiabilite():
     assert r['elargissement'] >= 1.0 and 'lourd' in r['par_schema']
 
 
-def _ouverture(kappa, e_ouv=0.0, estimation=200.0, sd=0.03):
+def _ouverture(kappa, barres=(), ratees=(), estimation=200.0, sd=0.03, apres_echec=False, genre='test'):
     k = koach()
     s = k.seances
-    s.s = dict(s.s, tentative_prudence_elargie=e_ouv)
     k.garde.avancer(40)
-    s.ouvrir(40, None, {'semaine': 5, 'genre': 'accumulation', 'jour_evenement': True})
+    s.ouvrir(40, None, {'semaine': 5, 'genre': genre, 'jour_evenement': True})
     t = k.modele.piste(EX)
     t.mesures = 5
     t.seances = 8
     mem = s.mem(EX)
     mem.charge_derniere = 60.0
-    k.modele.capacite_du_jour = lambda ex_id: (math.log(estimation), sd * kappa)
+    mem.charges_reussies = [(j, c, r) for (j, c, r, f) in barres]
+    mem.barres = list(barres)
+    mem.barres_ratees = list(ratees)
+    est = [estimation]
+    k.modele.capacite_du_jour = lambda ex_id, avec_bruit_jour=True, brut=False: (math.log(est[0]), sd * (1.0 if brut else kappa))
     k.modele.elargissement = lambda: kappa
     item = {'slotId': 's1', 'exerciseId': EX, 'kind': 'test', 'sets': 3, 'repsLow': 1, 'repsHigh': 1,
             'targetFlames': 10, 'test': {'kind': 'one_rm'}}
     out = s.prescrire([item], {EX: Grille(2.5, 20.0)}, {EX: ({}, set())}, {'s1': 'main'})
-    return s.cible(out[0], 0, [])['loadKg']
+    c0 = s.cible(out[0], 0, [])['loadKg']
+    if not apres_echec:
+        return c0
+    s.serie_faite({'exerciseId': EX, 'slotId': 's1', 'externalLoadKg': c0, 'reps': 0, 'flames': 10, 'failed': True,
+                   'target': {'repsLow': 1, 'repsHigh': 1, 'flames': 7, 'role': 'attempt'}})
+    est[0] = c0 * 0.97          # la barre manquée a abaissé l'estimation (filtre)
+    return c0, s.cible(out[0], 1, [])['loadKg']
 
 
-def test_prudence_ciblee_a_l_ouverture():
-    """κ = 1 : ouverture de 1.0.2 (91 % de 200 kg → 180). κ > 1 : l'écart-type
-    élargi abaisse le quantile, et la probabilité visée monte avec κ quand
-    `tentative_prudence_elargie` > 0 ; jamais au-dessus de 1.0.2."""
+def test_ouverture_quantile_brut_et_palier_selon_la_fiabilite():
+    """L'ouverture suit le quantile sur l'écart-type BRUT (κ ne l'abaisse
+    pas : mesuré en KM1c3, coût sans gain) ; chez un athlète aux notes peu
+    fiables, le palier accordé par la note des barres est réduit (nul dès
+    κ ≥ 1,33 avec c = 3) et une barre dite à la limite ou non notée ne vaut
+    que 97,5 % de sa charge."""
     assert _ouverture(1.0) == 180.0
-    assert _ouverture(1.0, e_ouv=2.0) == 180.0
-    # σ = 0,03 : P ≥ 0,95 donne e^{−1,645·σ} ; avec κ = 2, σ_eff = 0,06 → 0,906 → 180 ; κ = 2,5 → 0,884 → 175
-    assert _ouverture(2.5) == 175.0
-    assert _ouverture(2.5, e_ouv=2.0) < 175.0
-    assert _ouverture(2.0, e_ouv=2.0) < _ouverture(2.0)
-    for kappa in (1.2, 1.5, 2.0, 3.0):
-        assert _ouverture(kappa, e_ouv=2.0) <= _ouverture(kappa) <= 180.0
+    assert _ouverture(2.0) == 180.0                                    # σ brut : identique
+    assert _ouverture(1.0, [(30, 150.0, 1, 3)]) == 165.0               # 4 en réserve : +10 % (1.0.2)
+    assert _ouverture(1.2, [(30, 150.0, 1, 3)]) == 155.0               # +10 % × (1 − 3·0,2) = +4 %
+    assert _ouverture(1.4, [(30, 150.0, 1, 3)]) == 150.0               # palier nul
+    assert _ouverture(1.0, [(30, 150.0, 1, 10)]) == 150.0              # à la limite, notes fiables : la barre
+    assert _ouverture(1.4, [(30, 150.0, 1, 10)]) == 145.0              # peu fiables : 97,5 % → 146,25 → 145
+    assert _ouverture(1.4, [(30, 150.0, 1, None)]) == 145.0            # non notée : idem
+    assert _ouverture(1.4, [(30, 150.0, 1, 7)]) == 150.0               # dite à 2 en réserve : la barre, sans palier
+
+
+def test_barre_suivante_apres_un_echec_hors_competition():
+    """Test 1RM à l'entraînement : après un échec, la barre suivante suit
+    l'estimation mise à jour, au plus 5 % sous la barre ratée, jamais
+    au-dessus ; en semaine de compétition, la même barre (A8.2)."""
+    c0, c1 = _ouverture(1.0, [(30, 150.0, 1, 3)], apres_echec=True)
+    assert c0 == 165.0 and c1 == 157.5      # 160 × e^{−0,84·0,03} = 156 → plancher 155 ; ≥ 165 × 0,95 = 156,75 → 157,5
+    c0, c1 = _ouverture(1.0, [(30, 150.0, 1, 3)], apres_echec=True, genre='competition')
+    assert c0 == 165.0 and c1 == 165.0
+
+
+def test_prudence_des_series_lourdes():
+    """Séries ≤ 5 répétitions, κ > 1 : charge au quantile plus prudent de
+    `prudence_charge_fiabilite`·(κ − 1) écarts-types ; κ = 1 ou série
+    longue : inchangée."""
+    p = copy.deepcopy(PARAMS)
+    p['planification']['prudence_charge_fiabilite'] = 1.0
+
+    def charge(kappa, reps, prm):
+        k = koach(prm)
+        _journal(k, [3, 5, 5, 3])
+        k.modele.elargissement = lambda: kappa
+        s = k.seances
+        k.garde.avancer(40)
+        s.ouvrir(40, None, {'semaine': 5, 'genre': 'accumulation'})
+        item = {'slotId': 's1', 'exerciseId': EX, 'kind': 'work', 'sets': 3, 'repsLow': reps, 'repsHigh': reps,
+                'targetFlames': 7}
+        out = s.prescrire([item], {EX: Grille(2.5, 20.0)}, {EX: ({}, set())}, {'s1': 'main'})
+        return s.cible(out[0], 0, [])['loadKg']
+    assert charge(1.0, 3, p) == charge(1.0, 3, PARAMS)
+    assert charge(1.5, 3, p) < charge(1.0, 3, p)
+    assert charge(1.5, 3, PARAMS) == charge(1.0, 3, PARAMS)      # coefficient 0 : rien
+    assert charge(1.5, 8, p) == charge(1.0, 8, p)                # série longue : rien
 
 
 def test_jumeau_tire_avec_l_elargissement():

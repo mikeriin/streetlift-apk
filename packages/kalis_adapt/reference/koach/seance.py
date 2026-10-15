@@ -366,12 +366,13 @@ class Seances(object):
             f = 0.15
         return math.exp(mu) * self._garde_serie(t) * f
 
-    def proba_reussite(self, ex_id, externe, reps=1):
-        """P(réussir [reps] répétitions avec la charge [externe] aujourd'hui)."""
+    def proba_reussite(self, ex_id, externe, reps=1, brut=False):
+        """P(réussir [reps] répétitions avec la charge [externe] aujourd'hui) ;
+        [brut] : écart-type sans l'élargissement de la fiabilité (tentatives)."""
         t = self.m.piste(ex_id)
         if t is None or t.type != 'charge':
             return None
-        mu, sd = self.m.capacite_du_jour(ex_id)
+        mu, sd = self.m.capacite_du_jour(ex_id, brut=brut)
         lam, k = self.m.courbe(t)
         besoin = math.log(self.m.masse(t, externe)) + self.m._g(lam, k, reps / self._garde_serie(t))
         return norm_cdf((mu - besoin) / max(sd, 0.005))
@@ -1705,6 +1706,13 @@ class Seances(object):
         reps = hi if hi == lo else (lo + hi) / 2.0
         pr = self.p['planification']['prudence_charge']
         prudence = pr[1] if t.seances > 3 else pr[0]
+        # 1.0.3 : séries lourdes (répétitions ≤ `fiabilite_schema_reps`) d'un
+        # athlète aux notes peu fiables (κ > 1) : quantile plus prudent de
+        # `prudence_charge_fiabilite`·(κ − 1) écarts-types (l'écart-type lui-même
+        # est déjà élargi par κ) ; 0 pour κ = 1.
+        kappa = m.elargissement()
+        if kappa > 1.0 and hi <= self.p['mesure'].get('fiabilite_schema_reps', 5):
+            prudence += self.p['planification'].get('prudence_charge_fiabilite', 0.0) * (kappa - 1.0)
         voulu = self.charge_pour(ex_id, reps, rir, prudence)
         trace = ['modele %.1f (rir %.1f)' % (voulu, rir)]
         if tech.get('kind') == 'top_set_backoff' and index >= 1 and plan['tete'] is not None:
@@ -2331,6 +2339,22 @@ class Seances(object):
         même période, quand elle est plus lourde que la plus lourde barre
         réussie."""
         s = self.s
+        # 1.0.3 (contrat § 5.13, § 6.5 ; mesuré en KM1c3) : notes peu fiables
+        # (κ > 1) : le palier accordé par la note d'une barre est réduit
+        # (× max(0 ; 1 − tentative_palier_fiabilite·(κ − 1)) : nul dès que κ
+        # ≥ 1 + 1/c), et une barre dite à la limite (une répétition de
+        # réserve au plus) ou non notée ne vaut que (1 −
+        # tentative_limite_fiabilite) de sa charge : chez un athlète dont les
+        # notes se sont montrées peu fiables, « réussie de justesse » ne
+        # prouve pas qu'elle passe aujourd'hui. κ = 1 : règle de 1.0.2.
+        kappa = self.m.elargissement()
+        g_pas = 1.0
+        marge = 0.0
+        if kappa > 1.0:
+            g_pas = 1.0 - s.get('tentative_palier_fiabilite', 0.0) * (kappa - 1.0)
+            if g_pas < 0.0:
+                g_pas = 0.0
+            marge = s.get('tentative_limite_fiabilite', 0.0)
         plus_haute = None
         ramenees = []
         for (j, c, r, f) in mem.barres:
@@ -2347,6 +2371,9 @@ class Seances(object):
                     if dit >= seuil - 1e-9:
                         pas = p_
                         break
+            pas *= g_pas
+            if marge > 0.0 and (f is None or f >= 9):
+                total *= 1.0 - marge
             ramenees.append((total, pas))
             if plus_haute is None or total > plus_haute:
                 plus_haute = total
@@ -2376,7 +2403,12 @@ class Seances(object):
         ex_id = item['exerciseId']
         grille = plan['grille']
         mem = self.mem(ex_id)
-        mu, sd = self.m.capacite_du_jour(ex_id)
+        # 1.0.3 : écart-type brut (sans l'élargissement κ de la fiabilité des
+        # notes) : l'ouverture au quantile élargi a été mesurée en KM1c3
+        # (coût sans gain, CHANGEMENTS_1_0_3.md § B) ; la prudence envers des
+        # notes peu fiables passe par le palier des barres prouvées
+        # (`_palier_barres`) et la barre suivante après un échec.
+        mu, sd = self.m.capacite_du_jour(ex_id, brut=True)
         bw = t.fraction * self.m.poids_kg
         baisse = 1.0 - s['tentative_bilan_bas_part'] * self.palier
         if plan['cond']['zone']:
@@ -2402,17 +2434,7 @@ class Seances(object):
             if sem is not None and (self.genres.get(sem) in ('taper', 'competition')
                                     or self.genres.get(sem - 1) in ('taper', 'competition')):
                 mu += self.p['planification']['gain_affutage']
-            # 1.0.3 (contrat § 5.13) : prudence ciblée. L'écart-type du jour
-            # porte déjà l'élargissement κ de la fiabilité des notes ; la
-            # probabilité visée monte en plus avec κ : p = 1 − (1 − p0)/κ^e,
-            # e = `tentative_prudence_elargie` (0 : p0 seule). κ = 1 pour un
-            # athlète aux notes fiables : ouverture identique à 1.0.2.
-            p_ouv = s['tentative_ouverture_proba']
-            kappa = self.m.elargissement()
-            e_ouv = s.get('tentative_prudence_elargie', 0.0)
-            if kappa > 1.0 and e_ouv > 0.0:
-                p_ouv = 1.0 - (1.0 - p_ouv) / (kappa ** e_ouv)
-            charge = plus_lourde(p_ouv, s['tentative_ouverture_part'] * math.exp(mu))
+            charge = plus_lourde(s['tentative_ouverture_proba'], s['tentative_ouverture_part'] * math.exp(mu))
             # Règle A8.2 de 0.3.1 : une barre réussie dans les 42 derniers
             # jours, plus légère que l'ouverture calculée et à 85 % au moins
             # de l'estimation, sert d'ouverture (barre déjà connue).
@@ -2451,18 +2473,19 @@ class Seances(object):
         if plan['echecs'] > 0 and mem.echec_seance:
             # Règle A8.2 de 0.3.1 : la même barre après un échec (en
             # compétition, le règlement interdit de redescendre). 1.0.3
-            # (contrat § 6.5, mesuré en KM1c3) : hors semaine de compétition,
-            # `tentative_echec_baisse` 1 (toujours) ou 2 (seulement quand les
-            # notes de l'athlète ne sont pas fiables, κ > 1) : la barre
-            # suivante suit l'estimation mise à jour par l'échec, au plus
-            # `tentative_echec_baisse_part` sous la barre ratée, jamais
-            # au-dessus.
-            mode = s.get('tentative_echec_baisse', 0)
+            # (contrat § 6.5, mesuré en KM1c3) : hors semaine de compétition
+            # (test 1RM à l'entraînement), la barre suivante suit
+            # l'estimation mise à jour par l'échec, au plus
+            # `tentative_echec_baisse_part` sous la barre ratée (0 : règle
+            # A8.2 partout), jamais au-dessus.
+            part_baisse = s.get('tentative_echec_baisse_part', 0.0)
             sem = (self.contexte or {}).get('semaine')
             competition = sem is not None and self.genres.get(sem) == 'competition'
-            if mode and not competition and (mode == 1 or self.m.elargissement() > 1.0):
-                plancher_ = grille.plancher(max((derniere + bw) * (1 - s.get('tentative_echec_baisse_part', 0.05)) - bw,
-                                                grille.minimum))
+            if part_baisse > 0.0 and not competition:
+                bas = max((derniere + bw) * (1 - part_baisse) - bw, grille.minimum)
+                plancher_ = grille.plancher(bas)
+                if plancher_ < bas - 1e-9:
+                    plancher_ = grille.suivant(plancher_)      # au plus `part` sous la barre ratée : cran au-dessus
                 c = plus_lourde(proba)
                 if c < plancher_:
                     c = plancher_
@@ -2475,7 +2498,7 @@ class Seances(object):
         haut = min((derniere + bw) * (1 + saut) - bw, derniere + s['tentative_saut_kg'])
         cible = item.get('koachCible')
         if dernier_essai and cible is not None and derniere < cible <= haut + 1e-9:
-            p = self.proba_reussite(ex_id, cible, 1)
+            p = self.proba_reussite(ex_id, cible, 1, brut=True)
             if p is not None and p >= 0.35:
                 charge = max(charge, cible)
         if charge > haut:
@@ -2493,7 +2516,7 @@ class Seances(object):
                 # dite au plus aussi dure que visé, dans la limite du saut en
                 # kilos.
                 charge = grille.suivant(derniere)
-            p = self.proba_reussite(ex_id, charge, 1)
+            p = self.proba_reussite(ex_id, charge, 1, brut=True)
             if p is not None and p < 0.2:
                 charge = derniere
         return {'repsLow': 1, 'repsHigh': 1, 'loadKg': charge, 'flames': flammes, 'role': 'attempt'}

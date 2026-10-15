@@ -1075,7 +1075,7 @@ def _ouverture(barres, estimation=200.0, ratees=()):
     mem.barres = list(barres)
     mem.barres_ratees = list(ratees)
     import math as _m
-    k.modele.capacite_du_jour = lambda ex_id: (_m.log(estimation), 0.03)
+    k.modele.capacite_du_jour = lambda ex_id, **kw: (_m.log(estimation), 0.03)
     item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'test', 'sets': 3, 'repsLow': 1, 'repsHigh': 1,
             'targetFlames': 10, 'test': {'kind': 'one_rm'}}
     out = s.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {'s1': 'main'})

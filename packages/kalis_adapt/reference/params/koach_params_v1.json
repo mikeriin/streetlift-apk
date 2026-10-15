@@ -309,7 +309,8 @@
     "tentative_manque": 0.018,
     "tentative_cible_proba": 0.35,
     "dispersion_echeance": 0.62,
-    "dispersion_echeance_semaines": 4
+    "dispersion_echeance_semaines": 4,
+    "prudence_charge_fiabilite": 0.0
   },
   "securite": {
     "hausse_par_niveau": [
@@ -528,7 +529,10 @@
     "duree_vitesse_defaut": 2.5,
     "tentative_palier_par_rir": [[4.0, 0.1], [3.0, 0.075], [2.0, 0.05], [1.0, 0.025]],
     "tentative_palier_bande": 0.05,
-    "tentative_prudence_elargie": 0.0
+    "tentative_palier_fiabilite": 3.0,
+    "tentative_limite_fiabilite": 0.025,
+    "tentative_echec_baisse_part": 0.05,
+    "echec_sans_hausse_tout_schema": 0
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

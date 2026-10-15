@@ -1590,10 +1590,12 @@ class Modele(object):
         tirages du jumeau ; 1 pour un athlète aux notes fiables."""
         return self.fiabilite.elargissement()
 
-    def capacite_du_jour(self, ex_id, avec_bruit_jour=True):
+    def capacite_du_jour(self, ex_id, avec_bruit_jour=True, brut=False):
         """(moyenne, écart-type) de ln capacité du moment (effets de jour et
         fatigue compris), mélange des deux branches ; écart-type élargi par
-        la fiabilité des notes (1.0.3)."""
+        la fiabilité des notes (1.0.3), sauf avec [brut] (échelle des
+        tentatives : la prudence envers des notes peu fiables y passe par le
+        palier des barres prouvées, § 6.5, mesuré en KM1c3)."""
         t = self.piste(ex_id)
         if t is None:
             return None
@@ -1605,7 +1607,7 @@ class Modele(object):
             mean = (1 - w) * mu + w * mu1
             v = (1 - w) * (v + (mu - mean) ** 2) + w * (v1 + (mu1 - mean) ** 2)
             mu = mean
-        k = self.elargissement()
+        k = 1.0 if brut else self.elargissement()
         return t.base + mu, math.sqrt(v if v > 0 else 0.0) * k
 
     def intervalle(self, ex_id, niveau=0.90):
