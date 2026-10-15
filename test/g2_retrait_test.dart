@@ -377,7 +377,7 @@ void main() {
       testWidgets(
         'contenu, partage, « Compris » (${dark ? 'sombre' : 'clair'})',
         (tester) async {
-          // G3 : le magasin (base d'exercices v1.1) s'initialise hors du
+          // G3 : le magasin (base v1.1) s'initialise hors du
           // temps simulé, comme plus bas.
           final old = withRetiredData(
             (await tester.runAsync(_programDocument))!,
@@ -463,7 +463,7 @@ void main() {
   });
 
   test(
-    'version affichée : « 6.19.0 » hors build de développement (base d'exercices v1.1)',
+    'version affichée : « 6.19.0 » hors build de développement (base v1.1)',
     () {
       expect(kVersion, '6.19.0');
       expect(kAppVersion, '6.19.0');

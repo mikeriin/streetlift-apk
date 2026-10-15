@@ -25,7 +25,6 @@ import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/game.dart';
-import 'package:streetlift_tracker/search.dart';
 import 'package:streetlift_tracker/stats_data.dart';
 import 'package:streetlift_tracker/store.dart';
 
@@ -37,9 +36,7 @@ Map<String, dynamic> _archivedIndex() =>
     jsonDecode(
           utf8.decode(
             gzip.decode(
-              File(
-                'tools/archives/pack_2.0.0/index.json.gz',
-              ).readAsBytesSync(),
+              File('tools/archives/pack_2.0.0/index.json.gz').readAsBytesSync(),
             ),
           ),
         )
@@ -50,9 +47,7 @@ Map<String, dynamic> _archivedIndex() =>
 Future<void> _owner(AppStore app) async {
   final b = filledBackup(app);
   final logs = (b['logs'] as Map).cast<String, dynamic>();
-  logs.removeWhere(
-    (k, _) => int.parse(k.substring(1, k.indexOf('-'))) > 14,
-  );
+  logs.removeWhere((k, _) => int.parse(k.substring(1, k.indexOf('-'))) > 14);
   b['programStart'] = {
     'status': 'set',
     'date': '2026-07-13',
@@ -93,11 +88,17 @@ Map<String, Object?> _releve(AppStore app) {
     'semaines': [
       for (var w = 0; w < 14; w++)
         {
-          for (final e in app
-              .weeklyMuscles(
-                DateTime(start.year, start.month, start.day + 7 * w + 6, 22),
-              )
-              .entries)
+          for (final e
+              in app
+                  .weeklyMuscles(
+                    DateTime(
+                      start.year,
+                      start.month,
+                      start.day + 7 * w + 6,
+                      22,
+                    ),
+                  )
+                  .entries)
             if (e.value > 0) e.key: _r(e.value),
         },
     ],

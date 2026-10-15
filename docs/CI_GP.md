@@ -356,6 +356,28 @@ vide ou absent.
 - Tests Dart : `test/ci1h_correction1_test.dart` (relevés `CI1H1|…`). Mise au
   point sur `claude/ci-ci1h-c1-rapide` (`rapide.yml` seul).
 
+### BV11 (dev6.19.0, pipeline CP, voie App, base d'exercices v1.1)
+
+- Pack 2.0.0 retiré de l'application (`assets/content/` archivé dans
+  `tools/archives/pack_2.0.0/`, lu seulement par les outils et deux tests) ;
+  `tools/verify_project.py` contrôle la base v1.1, la correspondance, les
+  groupes historiques et l'absence du pack. Paquets inchangés.
+- Cible émulateur `integration_test/base_bv11_test.dart` (a sombre, rouge ;
+  b clair, violet), jouée avant les cibles des lots précédents (gardées) :
+  session personnelle (programme de 40 semaines, journal S1 à S14 jusqu'à
+  la veille) : relevé du journal identique au lancement, sauvegarde
+  d'origine, STATS, historique, filtres Catégorie et Muscle principal,
+  fiche ; même parcours dans la session de test ; session personnelle
+  intacte. Relevés `emulateur/bv11_releve_<partie>.json`, captures
+  `emulateur/bv11_*_<thème>.png`. APK de test précompilé sur la cible BV11 ;
+  délai du job émulateur porté à 110 min.
+- Tests Dart du lot : `test/bv11_base_test.dart` (relevés `BV11|…`). Tests
+  des démonstrations 2D de l'ancien pack retirés avec leur code
+  (`test/l9b_pose_test.dart`, `test/refonte_ma_capture_test.dart`, groupe
+  « démonstrations découpées » de `test/refonte_ma_test.dart`, mesure des
+  démonstrations de `test/l9b_perf_test.dart`). Mise au point sur
+  `claude/ci-ui-bv11-rapide`.
+
 ### CIF (dev6.18.0, pipeline CP, voie App, lot CI final)
 
 - Paquets inchangés (`kalis_core` 0.4.3, `kalis_plan` / `kalis_adapt`

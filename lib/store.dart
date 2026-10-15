@@ -907,7 +907,10 @@ class AppStore extends ChangeNotifier {
     final historic =
         (jsonDecode(
                   utf8.decode(
-                    raw.buffer.asUint8List(raw.offsetInBytes, raw.lengthInBytes),
+                    raw.buffer.asUint8List(
+                      raw.offsetInBytes,
+                      raw.lengthInBytes,
+                    ),
                   ),
                 )
                 as Map<String, dynamic>)['groupes']

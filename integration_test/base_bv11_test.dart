@@ -61,11 +61,17 @@ Map<String, Object?> _journal(AppStore app, int weeks) {
     'groupes': [
       for (var w = 0; w < weeks; w++)
         {
-          for (final e in app
-              .weeklyMuscles(
-                DateTime(start.year, start.month, start.day + 7 * w + 6, 22),
-              )
-              .entries)
+          for (final e
+              in app
+                  .weeklyMuscles(
+                    DateTime(
+                      start.year,
+                      start.month,
+                      start.day + 7 * w + 6,
+                      22,
+                    ),
+                  )
+                  .entries)
             if (e.value > 0) e.key: (e.value * 1000).round(),
         },
     ],
@@ -328,9 +334,7 @@ void main() {
     expect(releve['origine_presente'], isTrue);
     expect(releve['catalogue_exercices'], 1039);
     expect(
-      (releve['noms_sans_id'] as List).every(
-        (n) => '$n'.startsWith('BILAN'),
-      ),
+      (releve['noms_sans_id'] as List).every((n) => '$n'.startsWith('BILAN')),
       isTrue,
     );
     expect(releve['historique_nom_lisible'], isTrue);
