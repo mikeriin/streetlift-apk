@@ -112,6 +112,7 @@ class Koach(object):
             'biais_rir': [m.m[BA], m.m[BP]], 'bruit_rir': m.bruit_rir,
             'courbe': [m.m[LAM], m.m[KU]], 'fatigue_intra': m.m[FI], 'part_tenue': m.m[HH],
             'note_paresseuse': m.paresse[0] / (m.paresse[0] + m.paresse[1]),
+            'fiabilite': m.fiabilite.resume(),
             'hypotheses_reponse': list(m.poids_hyp),
             'exercices': exercices,
         }

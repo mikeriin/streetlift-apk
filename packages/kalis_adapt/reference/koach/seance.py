@@ -1888,6 +1888,17 @@ class Seances(object):
         avant_bornes = charge
         if gel is None:
             gel = plan['sans_hausse'] or plan.get('reprise')
+        # 1.0.3 (contrat § 6.3, mesuré en KM1c3) : après un échec non prévu à
+        # la dernière séance de l'exercice, 0.3.1 interdit toute hausse par
+        # rapport à cette séance, quel que soit le schéma (`track.noUp` →
+        # `lastAny`) ; Koach 1.0.2 ne l'interdisait que sur le même schéma
+        # (`avant[1]`). `echec_sans_hausse_tout_schema` : 1 = règle de 0.3.1 ;
+        # 2 = seulement quand les notes ne sont pas fiables (κ > 1) ; 0 = 1.0.2.
+        mode_echec = s.get('echec_sans_hausse_tout_schema', 0)
+        if index == 0 and mem.echec and mem.charge_derniere is not None and mode_echec \
+                and (mode_echec == 1 or self.m.elargissement() > 1.0):
+            if charge > mem.charge_derniere:
+                charge = mem.charge_derniere
         if avant is not None:
             if gel or avant[1]:
                 if charge > avant[0]:
@@ -2391,7 +2402,17 @@ class Seances(object):
             if sem is not None and (self.genres.get(sem) in ('taper', 'competition')
                                     or self.genres.get(sem - 1) in ('taper', 'competition')):
                 mu += self.p['planification']['gain_affutage']
-            charge = plus_lourde(s['tentative_ouverture_proba'], s['tentative_ouverture_part'] * math.exp(mu))
+            # 1.0.3 (contrat § 5.13) : prudence ciblée. L'écart-type du jour
+            # porte déjà l'élargissement κ de la fiabilité des notes ; la
+            # probabilité visée monte en plus avec κ : p = 1 − (1 − p0)/κ^e,
+            # e = `tentative_prudence_elargie` (0 : p0 seule). κ = 1 pour un
+            # athlète aux notes fiables : ouverture identique à 1.0.2.
+            p_ouv = s['tentative_ouverture_proba']
+            kappa = self.m.elargissement()
+            e_ouv = s.get('tentative_prudence_elargie', 0.0)
+            if kappa > 1.0 and e_ouv > 0.0:
+                p_ouv = 1.0 - (1.0 - p_ouv) / (kappa ** e_ouv)
+            charge = plus_lourde(p_ouv, s['tentative_ouverture_part'] * math.exp(mu))
             # Règle A8.2 de 0.3.1 : une barre réussie dans les 42 derniers
             # jours, plus légère que l'ouverture calculée et à 85 % au moins
             # de l'estimation, sert d'ouverture (barre déjà connue).
@@ -2425,10 +2446,30 @@ class Seances(object):
                 charge = grille.plancher(max(autorise, grille.minimum))
             return {'repsLow': 1, 'repsHigh': 1, 'loadKg': charge, 'flames': flammes, 'role': 'attempt'}
         derniere = mem.charge_seance
-        if plan['echecs'] > 0 and mem.echec_seance:
-            return {'repsLow': 1, 'repsHigh': 1, 'loadKg': derniere, 'flames': flammes, 'role': 'attempt'}
         dernier_essai = index >= n - 1
         proba = s['tentative_troisieme_proba'] if dernier_essai else s['tentative_deuxieme_proba']
+        if plan['echecs'] > 0 and mem.echec_seance:
+            # Règle A8.2 de 0.3.1 : la même barre après un échec (en
+            # compétition, le règlement interdit de redescendre). 1.0.3
+            # (contrat § 6.5, mesuré en KM1c3) : hors semaine de compétition,
+            # `tentative_echec_baisse` 1 (toujours) ou 2 (seulement quand les
+            # notes de l'athlète ne sont pas fiables, κ > 1) : la barre
+            # suivante suit l'estimation mise à jour par l'échec, au plus
+            # `tentative_echec_baisse_part` sous la barre ratée, jamais
+            # au-dessus.
+            mode = s.get('tentative_echec_baisse', 0)
+            sem = (self.contexte or {}).get('semaine')
+            competition = sem is not None and self.genres.get(sem) == 'competition'
+            if mode and not competition and (mode == 1 or self.m.elargissement() > 1.0):
+                plancher_ = grille.plancher(max((derniere + bw) * (1 - s.get('tentative_echec_baisse_part', 0.05)) - bw,
+                                                grille.minimum))
+                c = plus_lourde(proba)
+                if c < plancher_:
+                    c = plancher_
+                if c > derniere:
+                    c = derniere
+                return {'repsLow': 1, 'repsHigh': 1, 'loadKg': c, 'flames': flammes, 'role': 'attempt'}
+            return {'repsLow': 1, 'repsHigh': 1, 'loadKg': derniere, 'flames': flammes, 'role': 'attempt'}
         saut = s['tentative_saut_3'] if dernier_essai else s['tentative_saut_2']
         charge = plus_lourde(proba)
         haut = min((derniere + bw) * (1 + saut) - bw, derniere + s['tentative_saut_kg'])

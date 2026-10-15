@@ -20,7 +20,7 @@ import math
 
 import numpy as np
 
-from .numerique import interval_moments, point_moments, category_moments, clamp, norm_ppf
+from .numerique import interval_moments, point_moments, category_moments, clamp, norm_ppf, norm_cdf
 
 INF = math.inf
 NQ = 10
@@ -66,6 +66,175 @@ def _phi1(x):
     return (math.exp(x) * (x - 1.0) + 1.0) / (x * x)
 CLASSES = ['charge', 'reps', 'tenue', 'cardio', 'wod']
 ZONES_TENDON = ['epaule', 'coude', 'poignet', 'lombaires', 'genou', 'hanche', 'cheville']
+
+
+class Fiabilite(object):
+    """Fiabilité des notes de l'athlète (1.0.3, DECISIONS_CP.md C17.9 ;
+    CONTRAT_1_0.md § 5.13). Indicateur tiré de ce que le filtre observe déjà,
+    qui n'entre que dans l'INCERTITUDE des capacités (`Modele.elargissement`),
+    jamais dans leur moyenne.
+
+    - **φ** : facteur de variance du bruit des notes de CET athlète par rapport
+      au bruit de population de son niveau (`bruit_rir_par_niveau`, avant le
+      multiplicateur appris `bruit_rir`). Grille a posteriori sur ln φ
+      (`fiabilite_phi_points` points de `fiabilite_phi_min` à
+      `fiabilite_phi_max`), a priori ln φ ~ N(0, `fiabilite_ln_phi_sd`²).
+      Chaque note perçue d'une série de force (fermée, ouverte ou 10) apporte
+      la vraisemblance de sa catégorie [a, b] sous la prévision
+      N(μ, v + φ·s0² + extra), mélangée comme dans le filtre à la note sans
+      information (aberrante : 1/10 ; paresseuse : 1 si la note est la
+      préremplie). Une note ouverte contredite (« 4 en réserve ou plus »
+      quand la prévision est près de l'échec) compte donc, alors qu'elle
+      n'alimente pas `bruit_rir` (§ 5.2).
+    - **non notée** : part des séries de force faites sans note, Beta(a, b),
+      a priori `fiabilite_non_notee_a_priori`.
+    - **régularité** : oubli λ = `fiabilite_oubli` (a priori en puissance) :
+      log-postérieur ← lp0 + λ·(lp − lp0) + ln L ; comptes ← a0 + λ·(a − a0) + x.
+      Les notes récentes pèsent plus : un athlète qui apprend à noter est
+      réhabilité en quelques semaines.
+    - **par schéma** : mêmes grilles pour les séries lourdes (répétitions
+      prévues ≤ `fiabilite_schema_reps`) et les séries légères, rapportées
+      dans `posterior()` seulement (sur le banc, le bruit d'un athlète ne
+      dépend pas du schéma : rien ne permettrait d'en vérifier l'usage).
+    """
+
+    __slots__ = ('p', 'phi', 'lphi', 'lp0', 'lp', 'lp_s', 'nn0', 'nn', 'nn_s', 'notes', 'notes_s', 'phi0')
+
+    def __init__(self, params):
+        me = params['mesure']
+        self.p = me
+        n = int(me.get('fiabilite_phi_points', 13))
+        lo = math.log(me.get('fiabilite_phi_min', 0.125))
+        hi = math.log(me.get('fiabilite_phi_max', 8.0))
+        self.lphi = [lo + (hi - lo) * k / (n - 1) for k in range(n)]
+        self.phi = [math.exp(x) for x in self.lphi]
+        sd = me.get('fiabilite_ln_phi_sd', 0.5)
+        lp0 = [-0.5 * (x / sd) ** 2 for x in self.lphi]
+        self.lp0 = self._normaliser(lp0)
+        self.phi0 = self._moyenne(self.lp0, self.phi)    # E[φ] a priori
+        self.lp = list(self.lp0)
+        self.lp_s = [list(self.lp0), list(self.lp0)]      # 0 : séries lourdes ; 1 : légères
+        nn0 = me.get('fiabilite_non_notee_a_priori', [1.0, 4.0])
+        self.nn0 = [float(nn0[0]), float(nn0[1])]
+        self.nn = list(self.nn0)
+        self.nn_s = [list(self.nn0), list(self.nn0)]
+        self.notes = 0
+        self.notes_s = [0, 0]
+
+    @property
+    def oubli(self):
+        """Oubli λ, lu à chaque usage (un import de paramètres le change ; la
+        grille et les a priori sont fixés à la création)."""
+        return self.p.get('fiabilite_oubli', 0.98)
+
+    @staticmethod
+    def _normaliser(lp):
+        mx = lp[0]
+        for x in lp:
+            if x > mx:
+                mx = x
+        s = 0.0
+        for x in lp:
+            s += math.exp(x - mx)
+        c = mx + math.log(s)
+        return [x - c for x in lp]
+
+    def _ajouter(self, lp, logl):
+        lam = self.oubli
+        out = [self.lp0[k] + lam * (lp[k] - self.lp0[k]) + logl[k] for k in range(len(lp))]
+        return self._normaliser(out)
+
+    def noter(self, mu, v, a, b, s0_2, extra, w_main, w_nul, lourd):
+        """Note perçue : [a, b] intervalle de réserve perçue, [mu, v]
+        prévision du filtre, [s0_2] variance du bruit de population à la
+        réserve prévue, [extra] bruit de la fatigue de séance, poids du
+        mélange comme dans `_serie_force`."""
+        logl = []
+        for k in range(len(self.phi)):
+            sd = math.sqrt(v + self.phi[k] * s0_2 + extra)
+            if sd < 1e-9:
+                sd = 1e-9
+            pb = 1.0 if b == INF else norm_cdf((b - mu) / sd)
+            pa = 0.0 if a == -INF else norm_cdf((a - mu) / sd)
+            L = pb - pa
+            if L < 0.0:
+                L = 0.0
+            L = w_main * L + w_nul
+            logl.append(math.log(L if L > 1e-300 else 1e-300))
+        self.lp = self._ajouter(self.lp, logl)
+        i = 0 if lourd else 1
+        self.lp_s[i] = self._ajouter(self.lp_s[i], logl)
+        self.notes += 1
+        self.notes_s[i] += 1
+
+    def _compter(self, nn, x):
+        lam = self.oubli
+        return [self.nn0[0] + lam * (nn[0] - self.nn0[0]) + (1.0 if x else 0.0),
+                self.nn0[1] + lam * (nn[1] - self.nn0[1]) + (0.0 if x else 1.0)]
+
+    def serie(self, notee, lourd):
+        """Série de force faite (hors échec) : notée ou non."""
+        self.nn = self._compter(self.nn, not notee)
+        i = 0 if lourd else 1
+        self.nn_s[i] = self._compter(self.nn_s[i], not notee)
+
+    @staticmethod
+    def _moyenne(lp, valeurs):
+        s = 0.0
+        for k in range(len(lp)):
+            s += math.exp(lp[k]) * valeurs[k]
+        return s
+
+    def phi_moyen(self, schema=None):
+        lp = self.lp if schema is None else self.lp_s[schema]
+        return self._moyenne(lp, self.phi)
+
+    def ln_phi_moyen(self, schema=None):
+        lp = self.lp if schema is None else self.lp_s[schema]
+        return self._moyenne(lp, self.lphi)
+
+    def proba_phi_sup(self, seuil, schema=None):
+        lp = self.lp if schema is None else self.lp_s[schema]
+        s = 0.0
+        for k in range(len(lp)):
+            if self.phi[k] > seuil:
+                s += math.exp(lp[k])
+        return s
+
+    def part_non_notee(self, schema=None):
+        nn = self.nn if schema is None else self.nn_s[schema]
+        return nn[0] / (nn[0] + nn[1])
+
+    def elargissement(self):
+        """Facteur κ ≥ 1 appliqué à l'écart-type des capacités :
+        κ² = 1 + a·max(E[φ] − E₀[φ], 0) + c·max(ρ − ρ₀, 0)², avec E[φ] la
+        moyenne a posteriori du facteur de bruit, ρ la part non notée a
+        posteriori, E₀ et ρ₀ leurs moyennes A PRIORI, a =
+        `fiabilite_elargissement_phi` et c = `fiabilite_elargissement_non_notee`
+        (mesurés sur le banc adversarial, SOURCES.md). Seule l'évidence
+        au-delà de l'a priori élargit : κ vaut exactement 1 au départ et pour
+        tout athlète au moins aussi fiable que l'a priori (notes cohérentes
+        avec la prévision, au plus ρ₀ de séries non notées)."""
+        a = self.p.get('fiabilite_elargissement_phi', 0.0)
+        c = self.p.get('fiabilite_elargissement_non_notee', 0.0)
+        ex = self.phi_moyen() - self.phi0
+        if ex < 0.0:
+            ex = 0.0
+        nn = self.part_non_notee() - self.nn0[0] / (self.nn0[0] + self.nn0[1])
+        if nn < 0.0:
+            nn = 0.0
+        k2 = 1.0 + a * ex + c * nn * nn
+        return math.sqrt(k2) if k2 > 1.0 else 1.0
+
+    def resume(self):
+        return {
+            'phi': self.phi_moyen(), 'ln_phi': self.ln_phi_moyen(), 'p_phi_sup_2': self.proba_phi_sup(2.0),
+            'notes': self.notes, 'part_non_notee': self.part_non_notee(), 'elargissement': self.elargissement(),
+            'par_schema': {
+                'lourd': {'phi': self.phi_moyen(0), 'notes': self.notes_s[0], 'part_non_notee': self.part_non_notee(0)},
+                'leger': {'phi': self.phi_moyen(1), 'notes': self.notes_s[1], 'part_non_notee': self.part_non_notee(1)},
+            },
+        }
 
 
 class Piste(object):
@@ -165,6 +334,9 @@ class Modele(object):
         self.paresse = list(params['mesure']['note_paresseuse_a_priori'])
         self.notes_demi = 0
         self.notes_entieres = 0
+        # 1.0.3 : fiabilité des notes (φ, part non notée), lue par
+        # `elargissement` ; sans effet sur la moyenne des capacités.
+        self.fiabilite = Fiabilite(params)
         # Séance en cours : branche « mauvais jour ».
         self.alt = None           # (m, P, logw) de la branche mauvais jour
         self.logw = 0.0
@@ -953,6 +1125,22 @@ class Modele(object):
             if self.sonde is not None:
                 _, var_p, _ = self._stats(self.m, self.P, idx, co)
                 self.sonde.append((t.id, t.type, pred, var_p, s2, a, b, reps, R, sj, len(t.series_seance), t.seances))
+            if reps > 0 and not echec:
+                # 1.0.3 : fiabilité des notes (§ 5.13). Série lourde si les
+                # répétitions prévues (à défaut faites) sont ≤
+                # `fiabilite_schema_reps`. Une note perçue apporte la
+                # vraisemblance de sa catégorie sous la prévision du filtre
+                # avec le bruit de population (sans `bruit_rir`) ; une série
+                # sans note compte comme non notée.
+                hi_ = cible.get('repsHigh')
+                lourd = (hi_ if hi_ else reps) <= me.get('fiabilite_schema_reps', 5)
+                self.fiabilite.serie(percu, lourd)
+                if percu:
+                    _, var_p, _ = self._stats(self.m, self.P, idx, co)
+                    extra_ = (me['dispersion_fatigue_intra'] * sj * R) ** 2
+                    s_pop2 = (s2 - extra_) / (self.bruit_rir * self.bruit_rir)
+                    self.fiabilite.noter(pred, var_p if var_p > 0 else 0.0, a, b, s_pop2, extra_,
+                                         melange[0], melange[1], lourd)
             if flammes is None and not echec and pred >= a:
                 # Série faite SANS note et déjà prévue faisable : elle ne dit
                 # rien. La borne « au moins n répétitions » ne peut déplacer
@@ -1389,11 +1577,23 @@ class Modele(object):
         # seul défaut de modèle jusqu'à 0 laissait la couverture au-dessus
         # de 92 %).
         k = 1.0 if brut else self.p['mesure'].get('intervalle_echelle', 1.0)
+        # 1.0.3 : fiabilité des notes (§ 5.13) : la variance du filtre est
+        # élargie par κ² (1 pour un athlète aux notes fiables) ; pas avec
+        # `brut` (mises à jour bayésiennes du contrôle dual).
+        if not brut:
+            k *= self.elargissement()
         return t.base + mu, math.sqrt((v if v > 0 else 0.0) * k * k + d * d)
+
+    def elargissement(self):
+        """Facteur κ ≥ 1 de la fiabilité des notes (`Fiabilite.elargissement`)
+        appliqué à l'écart-type des capacités (à frais et du jour) et aux
+        tirages du jumeau ; 1 pour un athlète aux notes fiables."""
+        return self.fiabilite.elargissement()
 
     def capacite_du_jour(self, ex_id, avec_bruit_jour=True):
         """(moyenne, écart-type) de ln capacité du moment (effets de jour et
-        fatigue compris), mélange des deux branches."""
+        fatigue compris), mélange des deux branches ; écart-type élargi par
+        la fiabilité des notes (1.0.3)."""
         t = self.piste(ex_id)
         if t is None:
             return None
@@ -1405,7 +1605,8 @@ class Modele(object):
             mean = (1 - w) * mu + w * mu1
             v = (1 - w) * (v + (mu - mean) ** 2) + w * (v1 + (mu1 - mean) ** 2)
             mu = mean
-        return t.base + mu, math.sqrt(v if v > 0 else 0.0)
+        k = self.elargissement()
+        return t.base + mu, math.sqrt(v if v > 0 else 0.0) * k
 
     def intervalle(self, ex_id, niveau=0.90):
         c = self.capacite(ex_id)

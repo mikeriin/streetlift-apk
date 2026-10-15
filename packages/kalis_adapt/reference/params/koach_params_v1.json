@@ -163,7 +163,16 @@
     "noteur_entier_notes_min": 20,
     "noteur_entier_part_max": 0.05,
     "defaut_modele_sd": 0.01,
-    "intervalle_echelle": 0.9
+    "intervalle_echelle": 0.9,
+    "fiabilite_phi_min": 0.125,
+    "fiabilite_phi_max": 8.0,
+    "fiabilite_phi_points": 13,
+    "fiabilite_ln_phi_sd": 0.5,
+    "fiabilite_oubli": 0.98,
+    "fiabilite_non_notee_a_priori": [1.0, 4.0],
+    "fiabilite_schema_reps": 5,
+    "fiabilite_elargissement_phi": 0.0,
+    "fiabilite_elargissement_non_notee": 0.0
   },
   "jour": {
     "sigma_seance": 0.022,
@@ -518,7 +527,8 @@
     "surmenage_seances_min": 6,
     "duree_vitesse_defaut": 2.5,
     "tentative_palier_par_rir": [[4.0, 0.1], [3.0, 0.075], [2.0, 0.05], [1.0, 0.025]],
-    "tentative_palier_bande": 0.05
+    "tentative_palier_bande": 0.05,
+    "tentative_prudence_elargie": 0.0
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

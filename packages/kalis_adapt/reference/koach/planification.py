@@ -298,6 +298,14 @@ class Planification(Extension):
         H = np.array(lignes)
         S = H @ m.P[:m.n, :m.n] @ H.T
         S = 0.5 * (S + S.T)
+        # 1.0.3 : fiabilité des notes (contrat § 5.13) : les lignes et
+        # colonnes des capacités sont multipliées par κ (S ← D S D, comme
+        # `Modele.elargir`), pas celles de la réponse ni des classes.
+        kappa = m.elargissement()
+        if kappa != 1.0:
+            for i in range(E):
+                S[i, :] *= kappa
+                S[:, i] *= kappa
         # Racine de Cholesky en boucles explicites (portable à l'identique,
         # robuste à une covariance semi-définie).
         L = np.array(cholesky_semi(S.tolist()))

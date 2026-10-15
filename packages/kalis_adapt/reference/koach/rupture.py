@@ -774,6 +774,7 @@ def appliquer_parametres(koach, nouveau):
     # Les modules lisent leurs paramètres dans ce dictionnaire.
     koach.params = fusion
     koach.modele.p = fusion
+    koach.modele.fiabilite.p = fusion['mesure']
     koach.garde.s = fusion['securite']
     koach.seances.p = fusion
     koach.seances.s = fusion['securite']
@@ -809,7 +810,15 @@ BORNES = {
     ('mesure', 'note_aberrante'): (1e-6, 0.5),
     ('mesure', 'porte_note_ouverte'): (0.0, 3.0),
     ('mesure', 'intervalle_echelle'): (0.5, 1.5),
-    ('mesure', 'defaut_modele_sd'): (0.0, 0.1),
+    # 1.0.3 (KM2c1 m3) : borne basse strictement positive, cohérente avec la
+    # règle générale des clés `_sd` (> 0) ; 0,001 (0,1 % de la capacité) est
+    # sans effet sur un intervalle.
+    ('mesure', 'defaut_modele_sd'): (0.001, 0.1),
+    ('mesure', 'fiabilite_ln_phi_sd'): (0.1, 2.0),
+    ('mesure', 'fiabilite_oubli'): (0.5, 0.9999),
+    ('mesure', 'fiabilite_elargissement_phi'): (0.0, 10.0),
+    ('mesure', 'fiabilite_elargissement_non_notee'): (0.0, 100.0),
+    ('mesure', 'fiabilite_schema_reps'): (1, 30),
     ('planification', 'dispersion_echeance'): (0.3, 1.5),
     ('planification', 'dispersion_echeance_semaines'): (1, 52),
     ('dynamique', 'recuperation_seuil'): (1e-6, 1e6),
