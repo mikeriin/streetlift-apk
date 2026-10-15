@@ -17,12 +17,26 @@ import 'package:streetlift_tracker/atlas_data.dart';
 import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/store.dart';
 
+/// CIF (point 11) : étiquettes des trois vues lues une fois, dans la zone
+/// réelle, avant tout test d'écran. Avant, la lecture partait d'un test
+/// d'écran (zone simulée) et le test « étiquettes » attendait ensuite le
+/// même `Future` en cache dans `tester.runAsync` : sa suite restait dans
+/// la zone simulée d'un test fini et le test se bloquait jusqu'au délai,
+/// selon la vitesse de la machine.
+final _realLabels = <MapView, MapLabels>{};
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
     await store.init();
+    for (final v in MapView.values) {
+      debugSetMapLabels(v, null);
+      _realLabels[v] = await loadMapLabels(
+        v,
+      ).timeout(const Duration(seconds: 30));
+    }
   });
 
   group('régions et groupes', () {
@@ -294,12 +308,8 @@ void main() {
     testWidgets('étiquettes : régions attendues aux bons endroits', (
       tester,
     ) async {
-      final labels = <MapView, MapLabels>{};
-      await tester.runAsync(() async {
-        for (final v in MapView.values) {
-          labels[v] = await loadMapLabels(v);
-        }
-      });
+      final labels = _realLabels;
+      expect(labels.keys, containsAll(MapView.values));
       Set<String> regions(MapView v) {
         final l = labels[v]!;
         return {

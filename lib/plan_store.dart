@@ -616,6 +616,19 @@ extension PlanStore on AppStore {
         kp.coachEligible(p)) {
       return p.copyWith(trainingAge: null);
     }
+    // CIF (point 7) : passage choisi d'un bloc 0.1 au chemin calibré pour
+    // un débutant sans ancienneté : `kalis_plan` ne quitte le chemin 0.1
+    // que si l'ancienneté est connue ; « débutant » veut dire « moins de
+    // 6 mois » dans le parcours (donnée du moteur seulement, le profil
+    // enregistré n'est pas modifié).
+    if (plan != null &&
+        !plan.keepLegacyEngine &&
+        planOnLegacyEngine &&
+        p.isSchema3 &&
+        p.experience == kc.ExperienceLevel.beginner &&
+        p.trainingAge == null) {
+      return p.copyWith(trainingAge: kc.TrainingAge.under6Months);
+    }
     return p;
   }
 

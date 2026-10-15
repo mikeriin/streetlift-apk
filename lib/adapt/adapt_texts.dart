@@ -80,6 +80,22 @@ bool prescriptionInMeters(kc.ExercisePrescription p) =>
     p.secondsLow == null &&
     p.secondsHigh == null;
 
+/// CIF (point 9) : test chronométré de course (contre-la-montre) : ligne de
+/// test en distance, sans répétitions ni durée écrites ; se note au chrono
+/// montant (temps réalisé en secondes, distance écrite).
+bool prescriptionTimeTrial(kc.ExercisePrescription p) =>
+    p.kind == kc.SetKind.test &&
+    p.distanceMeters != null &&
+    p.repsLow == null &&
+    p.repsHigh == null &&
+    p.secondsLow == null &&
+    p.secondsHigh == null;
+
+/// CIF (point 9) : test de course servi en course bornée (`adapt.run_capped`).
+const String kRunTestCappedText =
+    'Test reporté : cette distance n’a pas été approchée ce mois-ci ; '
+    'aujourd’hui, course bornée, sans chrono à fond.';
+
 /// Libellé de la séance prescrite pour un exercice (« 3 × 8-10 »,
 /// « 3 × 30 s », « 1 × max », « 1 × 10 min ») ; l'application le relit
 /// (LogSpec).
@@ -88,6 +104,10 @@ String adaptSetsText(kc.ExercisePrescription p) {
   final n = p.sets;
   if (prescriptionInMeters(p)) {
     return '$n × ${p.distanceMeters!.round()} m';
+  }
+  // CIF (point 9) : contre-la-montre (relu « holdMax » : chrono montant).
+  if (prescriptionTimeTrial(p)) {
+    return '$n × ${p.distanceMeters!.round()} m chrono';
   }
   if (prescriptionInMinutes(p)) {
     final lo = (p.secondsLow ?? p.secondsHigh!) ~/ 60;
@@ -422,6 +442,15 @@ bool wristBarPushUp(String? exerciseId, Iterable<kc.Reason> reasons) =>
           r.code == 'adapt.pain_reported' &&
           r.params['zone'] == kc.BodyZone.wristHand.code,
     );
+
+/// CIF (point 9, « non déterminé » de `kalis_adapt`) : pompe sur barre
+/// basse écrite telle quelle par le bloc pour un profil qui déclare une
+/// gêne du poignet : le moteur la garde sans raison ; la consigne est dite
+/// aussi (même geste, mêmes poignets).
+bool wristBarPushUpWritten(String? exerciseId, kc.AthleteProfile? profile) =>
+    exerciseId == kWristBarPushUpId &&
+    (profile?.limitations.any((l) => l.zone == kc.BodyZone.wristHand) ??
+        false);
 
 /// Ajustement d'une séance (bilan, douleur, temps, lieu), en français.
 String adjustmentText(

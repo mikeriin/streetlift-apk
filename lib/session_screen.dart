@@ -1180,7 +1180,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     }
     // CI1g (`kalis_adapt` 0.3.1, point imposé par CY) : pompe sur barre
     // basse servie pour une gêne du poignet : la consigne est dite.
-    if (wristBarPushUp(it.exerciseId, it.reasons) &&
+    if ((wristBarPushUp(it.exerciseId, it.reasons) ||
+            wristBarPushUpWritten(it.exerciseId, store.adaptProfile)) &&
         !pain.contains(kWristBarPushUpCue)) {
       pain.add(kWristBarPushUpCue);
     }
@@ -1326,6 +1327,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       } else {
         lines.add(t);
       }
+    }
+    // CIF (point 9) : test de course borné : le report est dit.
+    if (store.adaptRunTestCapped(widget.week.n, widget.day.j, ex)) {
+      lines.insert(0, kRunTestCappedText);
     }
     if (it.toCalibrate && !lines.any((l) => l.startsWith('Calibrage'))) {
       lines.insert(

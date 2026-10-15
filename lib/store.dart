@@ -409,6 +409,12 @@ class AppSettings {
   /// vide (export identique à 6.11.0 sinon).
   Map<String, String> medicalClearance;
 
+  /// CIF (point 1) : tentatives notées le jour J d'une compétition
+  /// (identifiant de l'épreuve → tentatives `kalis_core` `AttemptResult`
+  /// en JSON), écrites au journal des moteurs (rôle `attempt`,
+  /// `eventId`). Écrit seulement s'il n'est pas vide.
+  Map<String, List<Map<String, dynamic>>> eventAttempts;
+
   AppSettings({
     this.defaultRest = 90,
     this.autoTimer = true,
@@ -436,7 +442,9 @@ class AppSettings {
     this.colorIntensity = 1,
     this.spacing = 85,
     Map<String, String>? medicalClearance,
-  }) : medicalClearance = medicalClearance ?? <String, String>{};
+    Map<String, List<Map<String, dynamic>>>? eventAttempts,
+  }) : medicalClearance = medicalClearance ?? <String, String>{},
+       eventAttempts = eventAttempts ?? <String, List<Map<String, dynamic>>>{};
 
   Map<String, dynamic> toJson() => {
     'defaultRest': defaultRest,
@@ -465,6 +473,7 @@ class AppSettings {
     if (colorIntensity != 1) 'colorIntensity': colorIntensity,
     if (spacing != 85) 'spacing': spacing,
     if (medicalClearance.isNotEmpty) 'medicalClearance': medicalClearance,
+    if (eventAttempts.isNotEmpty) 'eventAttempts': eventAttempts,
   };
   AppSettings.fromJson(Map<String, dynamic> j)
     : defaultRest = j['defaultRest'] as int? ?? 90,
@@ -505,6 +514,15 @@ class AppSettings {
         if (j['medicalClearance'] case final Map<String, dynamic> m)
           for (final e in m.entries)
             if (e.value is String) e.key: e.value as String,
+      },
+      eventAttempts = <String, List<Map<String, dynamic>>>{
+        if (j['eventAttempts'] case final Map<String, dynamic> m)
+          for (final e in m.entries)
+            if (e.value is List)
+              e.key: [
+                for (final a in e.value as List)
+                  if (a is Map<String, dynamic>) a,
+              ],
       };
 }
 
@@ -2771,6 +2789,11 @@ class AppStore extends ChangeNotifier {
       final h = RegExp(r'^\d+\s*×\s*(\d+)(?:-(\d+))?\s*s$').firstMatch(t);
       if (h != null) {
         return LogSpec('hold', seconds: int.parse(h.group(2) ?? h.group(1)!));
+      }
+      // CIF (point 9) : contre-la-montre : chrono montant, temps en
+      // secondes.
+      if (RegExp(r'^\d+\s*×\s*\d+\s*m chrono$').hasMatch(t)) {
+        return const LogSpec('holdMax');
       }
       // CI1f : distance (course, rameur), en mètres.
       if (RegExp(r'^\d+\s*×\s*\d+\s*m$').hasMatch(t)) {

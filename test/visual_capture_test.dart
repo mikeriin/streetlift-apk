@@ -95,7 +95,9 @@ void main() {
               const AssetImage('assets/icon/logo_mark.png'),
               context,
             ),
-          ]);
+            // CIF (point 11) : attente bornée (une lecture partie dans la
+            // zone simulée d'un rendu précédent ne finit jamais ici).
+          ]).timeout(const Duration(seconds: 20), onTimeout: () => const []);
         });
         await tester.pumpAndSettle();
         expect(
@@ -110,8 +112,12 @@ void main() {
             boundaryKey.currentContext!.findRenderObject()!
                 as RenderRepaintBoundary;
         await tester.runAsync(() async {
-          final image = await render.toImage(pixelRatio: 2);
-          final png = await image.toByteData(format: ui.ImageByteFormat.png);
+          final image = await render
+              .toImage(pixelRatio: 2)
+              .timeout(const Duration(seconds: 30));
+          final png = await image
+              .toByteData(format: ui.ImageByteFormat.png)
+              .timeout(const Duration(seconds: 30));
           final file = File('validation/2.5.0/$name.png');
           await file.parent.create(recursive: true);
           await file.writeAsBytes(png!.buffer.asUint8List());
@@ -171,12 +177,20 @@ void main() {
             await tester.scrollUntilVisible(
               find.byKey(const ValueKey('stats-activity')),
               300,
+              // CIF (point 11) : depuis la refonte UI, la rangée des
+              // rubriques (défilement horizontal) est aussi un
+              // `Scrollable` : seule la liste verticale de la rubrique
+              // ouverte défile jusqu'à l'activité.
               scrollable: find
                   .descendant(
                     of: find.byType(StatsScreen),
-                    matching: find.byType(Scrollable),
+                    matching: find.byWidgetPredicate(
+                      (w) =>
+                          w is Scrollable &&
+                          w.axisDirection == AxisDirection.down,
+                    ),
                   )
-                  .last,
+                  .first,
             );
             await tester.pumpAndSettle();
             await save('stats_activite_$mode');
