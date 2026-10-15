@@ -472,6 +472,12 @@ Lot livré le 09/10/2026, à valider par la conversation de pilotage (C8.1) : de
 
 ### CI
 
+### CIF
+
+- **CIF.1 (15/10/2026, lot)** : 11 des 12 points traités sur `main` (dev6.18.0, 6e32cdf6 ; contrôle complet run 38778273227) ; détail : `livraisons/LIVRAISON_CIF.md`. Paquets inchangés.
+- **CIF.2 Choix pragmatiques du lot (à confirmer par le pilotage)** : tentatives du jour J gardées seulement le jour même de l'épreuve (sinon l'écran s'essaie sans rien garder) ; une séance faite le jour d'une épreuve porte son `eventId`, sauf « test personnel » et date approximative ; repère `time_trial` écrit au profil seulement pour une allure de 2 à 20 min/km ; consigne de la pompe sur barre basse aussi quand le bloc l'écrit pour un profil à gêne du poignet déclarée ; pas d'écran de jour J pour une course (`kalis_adapt` n'en fournit pas de plan : la séance du jour porte l'épreuve) ; règle CI1.4 retirée, sauf pour le passage choisi d'un bloc 0.1 au chemin calibré (débutant sans ancienneté donné « moins de 6 mois » au moteur à ce seul moment, profil enregistré inchangé).
+- **CIF.3 Point 10 reporté (décision requise)** : la revue réelle sur le journal du propriétaire demande d'exécuter les moteurs Dart sur le journal déchiffré ; la session n'a pas de SDK Dart (téléchargement bloqué par le proxy) et la clé ne va jamais en CI (C7.8). Recommandation : soit un lot court dans une session où le SDK Dart s'installe, soit (décision du propriétaire, C7.8 à amender) un job CI dédié qui reçoit la clé par un secret GitHub et ne publie que des statistiques agrégées.
+
 ### KM1
 
 Lot livré le 10/10/2026, à valider par la conversation de pilotage (C8.1, C13.5) : référence Python de Koach 1.0 dans `packages/kalis_adapt/reference/` (`moteurs` f3801e36), `kalis_bench` 0.3.1 (ajouts seulement ; `etiquettes/kalis_bench-v0.3.1` ; contrôle complet run 38032852629 sur `claude/ci-cp-a`). Aucune étiquette `kalis_adapt` (elle viendra de KM2). Critères du cahier : **6 atteints sur 11**, 0 violation de sécurité. Détail : `pipeline/cp/livraisons/LIVRAISON_KM1.md`, `packages/kalis_adapt/reference/CONTRAT_1_0.md` (annexe A : écarts), `donnees/criteres_km1.json`.
