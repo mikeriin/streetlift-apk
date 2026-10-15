@@ -1,4 +1,11 @@
-# Kalis Track dev6.18.0 — Lot CI final (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.19.0 — Base d'exercices v1.1 (pipeline « Calibrage des programmes », voie App)
+
+## dev6.19.0 — Base d'exercices v1.1, seule source d'exercices (lot BV11)
+
+- **Une seule base** : Arsenal, la recherche, les filtres, les fiches, l'ajout et le remplacement d'exercice utilisent la base v1.1 du propriétaire (1 039 exercices, 8 disciplines). L'ancien pack 2.0.0 (625 exercices) n'est plus embarqué dans l'application (archivé dans `tools/archives/pack_2.0.0/` pour les outils).
+- **Filtres** : en plus de la discipline, du type de mouvement, du niveau, du lieu, du matériel et de la difficulté, la **catégorie** (56) et le **muscle principal** de la base.
+- **Historique intact** : aucune séance faite n'est réécrite ; les noms enregistrés restent affichés tels quels et sont reliés à la base v1.1 par la table de correspondance ; mêmes séances, séries, records et statistiques (groupes musculaires historiques gardés par une copie figée) ; une ancienne sauvegarde exportée reste importable.
+- Mentions « Sources et licences » réécrites pour la base v1.1. Démonstrations 2D de l'ancien pack (jamais affichées depuis M8) retirées avec lui.
 
 ## dev6.18.0 — Lot CI final : limites restantes de l'intégration (lot CIF)
 

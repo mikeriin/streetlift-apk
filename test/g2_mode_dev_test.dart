@@ -47,7 +47,7 @@ void main() {
   group('build de développement (G2)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test('version affichée : « dev6.19.0 » (base d'exercices v1.1)', () {
+    test('version affichée : « dev6.19.0 » (base v1.1)', () {
       expect(kAppVersion, 'dev$kVersion');
       expect(kAppVersion, 'dev6.19.0');
     });
