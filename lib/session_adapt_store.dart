@@ -316,6 +316,130 @@ extension SessionAdaptStore on AppStore {
     saveSettings();
   }
 
+  /// CIF (point 1) : tentatives notées le jour J de l'épreuve [eventId]
+  /// (illisibles ignorées).
+  List<kc.AttemptResult> eventAttemptsOf(String eventId) => [
+    for (final a
+        in settings.eventAttempts[eventId] ??
+            const <Map<String, dynamic>>[])
+      if (_attemptOf(a) case final x?) x,
+  ];
+
+  static kc.AttemptResult? _attemptOf(Map<String, dynamic> j) {
+    try {
+      return kc.AttemptResult.fromJson(j);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// CIF (point 1) : tentatives du jour J de [eventId] gardées (vide :
+  /// effacées) ; le journal des moteurs les lit (rôle `attempt`).
+  void setEventAttempts(String eventId, List<kc.AttemptResult> done) {
+    if (done.isEmpty) {
+      settings.eventAttempts.remove(eventId);
+    } else {
+      settings.eventAttempts[eventId] = [for (final a in done) a.toJson()];
+    }
+    saveSettings();
+    notifyListeners();
+  }
+
+  /// CIF (point 1) : journal des moteurs complété pour les jours J :
+  /// une séance faite le jour d'une épreuve porte son `eventId` ; ses
+  /// lignes de tentative leur rang (`attemptIndex`, 0 = ouverture, 3 au
+  /// plus) ; les tentatives notées sur l'écran du jour J (et pas déjà
+  /// journalisées par la séance) forment une séance de l'épreuve.
+  List<kc.SessionRecord> _withEventDays(List<kc.SessionRecord> sessions) {
+    final events = athlete?.profile.events ?? const <kc.SeasonEvent>[];
+    if (events.isEmpty) return sessions;
+    final out = <kc.SessionRecord>[];
+    for (final s in sessions) {
+      final e = events.where((e) => e.date == s.date).firstOrNull;
+      if (e == null) {
+        out.add(s);
+        continue;
+      }
+      final rank = <String, int>{};
+      out.add(
+        s.copyWith(
+          eventId: s.eventId ?? e.id,
+          sets: [
+            for (final x in s.sets)
+              x.role == kc.SetRole.attempt && x.attemptIndex == null
+                  ? x.copyWith(
+                      attemptIndex: math.min(
+                        3,
+                        rank.update(
+                          x.exerciseId,
+                          (v) => v + 1,
+                          ifAbsent: () => 0,
+                        ),
+                      ),
+                    )
+                  : x,
+          ],
+        ),
+      );
+    }
+    for (final e in events) {
+      final done = eventAttemptsOf(e.id);
+      if (done.isEmpty) continue;
+      final logged = {
+        for (final s in out)
+          if (s.date == e.date)
+            for (final x in s.sets)
+              if (x.role == kc.SetRole.attempt) x.exerciseId,
+      };
+      final order = <String>[];
+      final sets = <kc.SetRecord>[];
+      final byEx = <String, int>{};
+      for (final a in [...done]..sort((x, y) => x.index.compareTo(y.index))) {
+        if (logged.contains(a.exerciseId)) continue;
+        if (!order.contains(a.exerciseId)) order.add(a.exerciseId);
+        final i = byEx.update(a.exerciseId, (v) => v + 1, ifAbsent: () => 0);
+        sets.add(
+          kc.SetRecord(
+            exerciseId: a.exerciseId,
+            exerciseOrder: order.indexOf(a.exerciseId),
+            setIndex: i,
+            kind: kc.SetKind.test,
+            role: kc.SetRole.attempt,
+            attemptIndex: math.min(3, a.index),
+            externalLoadKg: a.loadKg,
+            reps: 1,
+            success: a.success,
+            excluded: false,
+          ),
+        );
+      }
+      if (sets.isEmpty) continue;
+      sets.sort((x, y) {
+        final c = x.exerciseOrder.compareTo(y.exerciseOrder);
+        return c != 0 ? c : x.setIndex.compareTo(y.setIndex);
+      });
+      out.add(
+        kc.SessionRecord(
+          id: 'event-${e.id}',
+          date: e.date,
+          origin: kc.SessionOrigin.program,
+          resume: false,
+          completed: true,
+          eventId: e.id,
+          sets: sets,
+          pains: const [],
+        ),
+      );
+    }
+    // Ordre chronologique (contrat) : tri stable par date.
+    final indexed = [for (var i = 0; i < out.length; i++) (i, out[i])];
+    indexed.sort((a, b) {
+      final c = a.$2.date.compareTo(b.$2.date);
+      return c != 0 ? c : a.$1.compareTo(b.$1);
+    });
+    return [for (final x in indexed) x.$2];
+  }
+
   /// Bloc importé [seg] avec les propositions de Koach en place.
   kc.ProgramBlock _importedEvolved(ImportedSegment seg) => _g9Memo(
     'evolved|${identityHashCode(seg.block)}|$_evoRevision',
@@ -951,6 +1075,11 @@ extension SessionAdaptStore on AppStore {
                       // CI1f : mini-séries.
                       s.parts?.length,
                       s.partsTotal,
+                      // CIF (point 2) : ordre des mini-séries (3 puis 2
+                      // ≠ 2 puis 3).
+                      Object.hashAll(
+                        s.parts?.map((p) => p.value) ?? const <int>[],
+                      ),
                     )) &
                 0x3fffffff;
           }
@@ -963,6 +1092,11 @@ extension SessionAdaptStore on AppStore {
       );
     }
     sig.write('|${programResume?.keys.length}|${koach.answers.length}');
+    // CIF (point 1) : jours J (épreuves, tentatives notées).
+    sig.write(
+      '|${jsonEncode(settings.eventAttempts)}|'
+      '${identityHashCode(athlete?.profile)}',
+    );
     return _g9Memo(sig.toString(), () => _adaptBuildLog(excludeKey, day));
   }
 
@@ -1026,9 +1160,20 @@ extension SessionAdaptStore on AppStore {
       // CI1f : mini-séries, exercice du bloc, mesure, formats en tours.
       lineOf: journalLineOf,
       myoOf: legacyMyoRest,
+      // CIF (point 9) : distance écrite d'un contre-la-montre.
+      distanceOf: (w, j, key) {
+        final a = sessionAdaptOf(sessionKey(w, j));
+        if (a == null || adaptAsWritten(w, adaptSlotOf(w, j, key))) {
+          return null;
+        }
+        final it = _adaptItem(a, adaptSlotOf(w, j, key));
+        return it != null && prescriptionTimeTrial(it)
+            ? it.distanceMeters
+            : null;
+      },
     );
     final sessions = [
-      for (final s in converted.log.sessions)
+      for (final s in _withEventDays(converted.log.sessions))
         if (s.date.compareTo(today) <= 0) s,
     ];
     return kc.TrainingLog(sessions: sessions, breaks: converted.log.breaks);
@@ -1862,7 +2007,10 @@ extension SessionAdaptStore on AppStore {
       final kind = _servedMiniKind(week, j, slot, served, 0);
       return (
         exerciseId: exerciseId,
-        seconds: prescriptionInSeconds(served) ? true : null,
+        seconds:
+            prescriptionInSeconds(served) || prescriptionTimeTrial(served)
+            ? true
+            : null,
         // Minutes : seulement les lignes marquées à la saisie (`unit`).
         scale: 1,
         technique:
@@ -1899,6 +2047,17 @@ extension SessionAdaptStore on AppStore {
           : null,
       meters: false,
     );
+  }
+
+  /// CIF (point 9) : test de course écrit par le bloc et servi en course
+  /// bornée par le moteur (`adapt.run_capped`) : le test est reporté.
+  bool adaptRunTestCapped(int week, int j, Exercise e) {
+    final it = adaptItemFor(week, j, e);
+    if (it == null || !it.reasons.any((r) => r.code == 'adapt.run_capped')) {
+      return false;
+    }
+    return _blockItemAt(week, j, e.slotId)?.kind == kc.SetKind.test &&
+        it.kind != kc.SetKind.test;
   }
 
   /// Prescription du bloc à l'emplacement [slot] (S[week]·J[j]).
@@ -1999,6 +2158,9 @@ extension SessionAdaptStore on AppStore {
   /// suivantes, plafond de mini-séries après la première, mini-repos.
   /// Null : série d'une traite.
   MiniSetPlan? miniSetPlanFor(int week, int j, Exercise e, int i) {
+    // CIF (point 2) : ligne servie telle qu'écrite : le journal du moteur
+    // n'en garde pas les mini-séries (série d'une traite).
+    if (adaptAsWritten(week, e.slotId)) return null;
     final it = adaptItemFor(week, j, e);
     if (it == null) return null;
     final kind = _servedMiniKind(week, j, e.slotId, it, i);
@@ -2201,7 +2363,10 @@ extension SessionAdaptStore on AppStore {
       if (id == null) continue;
       // CI1f : mesure de la ligne servie (secondes, minutes) avant l'unité
       // du catalogue (intervalles au temps d'un exercice en répétitions).
-      final seconds = it != null && prescriptionInSeconds(it)
+      // CIF (point 9) : contre-la-montre : temps réalisé (secondes) et
+      // distance écrite.
+      final trial = it != null && prescriptionTimeTrial(it);
+      final seconds = it != null && (prescriptionInSeconds(it) || trial)
           ? true
           : content.byId[id]?.ex.unit.code == 'secondes';
       final meters = it != null && prescriptionInMeters(it);
@@ -2250,7 +2415,11 @@ extension SessionAdaptStore on AppStore {
             externalLoadKg: parseLoadKg(s.kg),
             reps: seconds || meters ? null : v,
             seconds: seconds && !meters ? v : null,
-            distanceMeters: meters ? v.toDouble() : null,
+            distanceMeters: meters
+                ? v.toDouble()
+                : trial
+                ? it!.distanceMeters
+                : null,
             flames: s.flames,
             success: v > 0 && (low == null || v >= low),
             excluded: s.excluded,
@@ -2349,6 +2518,11 @@ extension SessionAdaptStore on AppStore {
           next: next < 0 ? null : adviceGoal(it, next, steps),
           planned: next < 0 ? null : planGoal(it, next),
         );
+      }
+      // CIF (point 3) : plus de série à faire : aucune mini-série à
+      // conseiller pour « la série suivante ».
+      if (next < 0 && advice.miniSetsLeft != null) {
+        advice = advice.copyWith(miniSetsLeft: null);
       }
       if (advice.action == kc.IntraSessionAction.keep ||
           advice.action == kc.IntraSessionAction.restMore ||

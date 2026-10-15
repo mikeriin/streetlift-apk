@@ -121,23 +121,13 @@ extension AthleteProfileStore on AppStore {
 
   /// Profil v2 pour les moteurs : référence santé recalculée.
   ///
-  /// CI1 : le parcours v3 ne demande pas l'ancienneté à un débutant (la
-  /// question ne s'affiche qu'à partir d'« intermédiaire ») ; le chemin
-  /// calibré de `kalis_plan` 0.2 en a besoin pour servir un profil street.
-  /// Pour un débutant sans ancienneté, les moteurs reçoivent « moins de
-  /// 6 mois » (ce que « débutant » veut dire dans le parcours) ; le profil
-  /// enregistré n'est pas modifié. Le niveau du moteur vient de
-  /// l'expérience déclarée, pas de l'ancienneté.
-  kc.AthleteProfile? get athleteProfileForEngines {
-    final p = athlete?.profile.copyWith(healthScreening: athleteHealthRef);
-    if (p != null &&
-        p.isSchema3 &&
-        p.experience == kc.ExperienceLevel.beginner &&
-        p.trainingAge == null) {
-      return p.copyWith(trainingAge: kc.TrainingAge.under6Months);
-    }
-    return p;
-  }
+  /// CIF (point 7) : la règle de CI1 (débutant sans ancienneté présenté
+  /// « moins de 6 mois ») est retirée : `kalis_plan` 0.3 accepte ce
+  /// débutant au chemin calibré (niveau tiré de l'expérience déclarée).
+  /// Seul le passage d'un bloc 0.1 au chemin calibré a encore besoin d'une
+  /// ancienneté (`planNextBlockProfile`).
+  kc.AthleteProfile? get athleteProfileForEngines =>
+      athlete?.profile.copyWith(healthScreening: athleteHealthRef);
 
   /// Mode prudent avec le profil v2 : âge et gênes du profil v2.
   CautionStatus _cautionWith(UserProfile? legacy, AthleteRecord? a) {

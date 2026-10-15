@@ -34,7 +34,8 @@ const kKoachExplanations = <(String, String)>[
   (
     'Dernière série ouverte',
     'La dernière série d’un exercice est ouverte : autant de répétitions '
-        'que possible en gardant la réserve indiquée.',
+        'que possible (ou aussi longtemps que possible sur un maintien) en '
+        'gardant la réserve indiquée.',
   ),
   (
     'Clusters, myo-reps, rest-pause',

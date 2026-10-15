@@ -13,7 +13,10 @@
 // Déterministe : même session de départ, même athlète, même graine, même
 // nombre de semaines → même session de test, octet pour octet. Une séance
 // suit la prescription du jour, sans conseil série par série (choix du
-// lot, pour tenir le temps de calcul sur téléphone).
+// lot, pour tenir le temps de calcul sur téléphone). CIF (point 5) : les
+// techniques sont jouées comme en séance — mini-séries d'un cluster, d'un
+// rest-pause ou d'un myo-rep notées une à une (`SetEntry.parts`), groupes
+// enchaînés notés par leur résultat (`SessionLog.groups`).
 //
 // Code du mode dev seulement (build de développement, session de test).
 import 'dart:async';
@@ -30,6 +33,7 @@ import '../kalis_clock.dart';
 import '../koach/koach_bubble.dart';
 import '../models.dart';
 import '../program_start.dart' show longCivilDate;
+import '../session_screen.dart' show clusterSplit;
 import '../session_host.dart';
 import '../session_prefs.dart' show SessionSpace;
 import '../store.dart';
@@ -255,6 +259,8 @@ bool _session(
       final s = log.sets[i];
       if (s.done) continue;
       final g = it == null ? null : app.adaptGoal(week, j, e, i);
+      // CIF (point 5) : mini-séries servies sur cette ligne.
+      final mini = it == null ? null : app.miniSetPlanFor(week, j, e, i);
       if (modeled && g != null) {
         final flames = g.flames ?? it.targetFlames ?? 6;
         var low = g.low ?? g.high;
@@ -271,6 +277,32 @@ bool _session(
         }
         // Test « au maximum » : plage ouverte, l'athlète va au bout.
         if (high > 300 && !hold) high = 300;
+        // CIF (point 5) : technique à mini-séries, jouée mini-série par
+        // mini-série (même enchaînement que le simulateur du paquet).
+        if (mini != null) {
+          final parts = _miniSets(
+            athlete,
+            truth,
+            mini,
+            loadKg: loaded ? load : null,
+            low: low,
+            high: high,
+            flames: flames,
+            rest: it.restSeconds ?? 90,
+            noiseKey: '$day|${it.slotId}|$i',
+          );
+          if (loaded && load != null) s.kg = adaptKgField(load);
+          s.parts = parts.$1.isEmpty ? null : parts.$1;
+          s.reps = '${s.partsTotal ?? 0}';
+          s.flames = parts.$2;
+          s.flamesUnknown = parts.$2 == null;
+          s.effort = parts.$2 == null ? null : kc.Flames.toRir(parts.$2!);
+          tick();
+          s.done = true;
+          s.completedAt = app.storeClock().toIso8601String();
+          n++;
+          continue;
+        }
         final out = athlete.perform(
           truth,
           loadKg: loaded ? load : null,
@@ -287,8 +319,28 @@ bool _session(
         s.effort = out.flames == null ? null : kc.Flames.toRir(out.flames!);
       } else {
         // Exercice que le moteur ne modélise pas (mobilité, cardio…) :
-        // fait comme prescrit.
-        if (s.reps.isEmpty) {
+        // fait comme prescrit ; CIF (point 5) : mini-séries prévues notées
+        // une à une.
+        if (mini != null) {
+          final planned = mini.kind == kc.SetTechniqueKind.cluster
+              ? clusterSplit(
+                  g?.high ?? g?.low ?? mini.first * (mini.cap + 1),
+                  mini.cap + 1,
+                )
+              : [mini.first, for (var b = 0; b < mini.cap; b++) mini.next];
+          final parts = <SetPartEntry>[];
+          var total = 0;
+          for (var b = 0; b < planned.length; b++) {
+            final target = mini.totalTarget;
+            if (target != null && total >= target) break;
+            parts.add(
+              SetPartEntry(planned[b], restBefore: b == 0 ? null : mini.intra),
+            );
+            total += planned[b];
+          }
+          s.parts = parts;
+          s.reps = '$total';
+        } else if (s.reps.isEmpty) {
           final planned =
               g?.prefill ??
               app.plannedReps(e, spec2, log.sets.length)[i] ??
@@ -308,10 +360,89 @@ bool _session(
     }
     if (modeled) athlete.endExercise(truth);
   }
+  // CIF (point 5) : groupes enchaînés (superset, circuit, AMRAP, EMOM…)
+  // notés par leur résultat, comme la carte du groupe en séance : tours
+  // prévus faits, chrono sous la limite.
+  final glog = app.sessionLog(week, j);
+  var groups = false;
+  for (final e in served.exercises) {
+    final g = app.exerciseGroupOf(week, j, e);
+    if (g == null || glog.groups.containsKey(g.groupId)) continue;
+    glog.groups[g.groupId] = _groupResult(g);
+    groups = true;
+  }
+  if (groups) tick();
   countSets(n);
   app.saveLogs(affectsProgression: false);
   app.markSessionDone(week, j, true);
   return true;
+}
+
+/// CIF (point 5) : mini-séries d'une série ([plan]) : cluster, blocs prévus
+/// (cible répartie) ; rest-pause et myo-reps, première mini-série puis
+/// relances jusqu'au plafond, arrêt au total visé, à l'échec ou dès qu'une
+/// relance n'atteint plus sa cible. Rend les parties et les flammes de la
+/// première mini-série.
+(List<SetPartEntry>, int?) _miniSets(
+  sim.SimAthlete athlete,
+  sim.TruthExercise truth,
+  MiniSetPlan plan, {
+  required double? loadKg,
+  required int low,
+  required int high,
+  required int flames,
+  required int rest,
+  required String noiseKey,
+}) {
+  final cluster = plan.kind == kc.SetTechniqueKind.cluster;
+  final planned = cluster
+      ? clusterSplit(high, plan.cap + 1)
+      : [plan.first, for (var b = 0; b < plan.cap; b++) plan.next];
+  final parts = <SetPartEntry>[];
+  int? first;
+  var total = 0;
+  for (var b = 0; b < planned.length; b++) {
+    final target = plan.totalTarget;
+    if (target != null && total >= target) break;
+    final last = b == planned.length - 1;
+    final out = athlete.perform(
+      truth,
+      loadKg: loadKg,
+      low: b == 0 && !cluster ? low : planned[b],
+      high: b == 0 && !cluster ? high : planned[b],
+      flamesTarget: b == 0 ? flames : 9,
+      restSeconds: last ? rest : plan.intra,
+      noiseKey: '$noiseKey|$b',
+    );
+    if (out.amount < 1) break;
+    parts.add(SetPartEntry(out.amount, restBefore: b == 0 ? null : plan.intra));
+    total += out.amount;
+    if (b == 0) first = out.flames;
+    if (out.failed || (b > 0 && out.amount < planned[b])) break;
+  }
+  return (parts, first);
+}
+
+/// CIF (point 5) : résultat d'un groupe enchaîné joué comme prévu (mêmes
+/// clés que la carte du groupe en séance).
+Map<String, dynamic> _groupResult(kc.GroupSpec g) {
+  final planned = switch (g.format) {
+    kc.GroupFormat.amrap || kc.GroupFormat.chipper => null,
+    kc.GroupFormat.emom =>
+      ((g.durationSeconds ?? 60) / (g.intervalSeconds ?? 60)).round(),
+    _ => g.rounds ?? 1,
+  };
+  final timed =
+      g.format == kc.GroupFormat.roundsForTime ||
+      g.format == kc.GroupFormat.chipper;
+  final cap = g.timeCapSeconds;
+  return {
+    if (g.format != kc.GroupFormat.chipper)
+      'rounds': planned ?? (g.rounds ?? 3),
+    if (g.format == kc.GroupFormat.amrap) 'extraReps': 0,
+    if (timed) 'elapsed': cap == null ? 600 : cap * 9 ~/ 10,
+    'completed': true,
+  };
 }
 
 // ------------------------------------------------------------------ écran

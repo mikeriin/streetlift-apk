@@ -28,6 +28,11 @@ const String kClearanceWaiting =
     'En attendant l’avis, fais seulement les mouvements qui ne réveillent '
     'pas la douleur, sans forcer ; arrête un mouvement qui fait mal.';
 
+/// CIF (point 8) : vrai si le texte de la note dit déjà la consigne
+/// d'attente (gêne ≥ 5/10 : « …En attendant, seuls les mouvements… ») :
+/// la carte ne la répète pas.
+bool clearanceSaysWaiting(String text) => text.contains('En attendant');
+
 /// Texte de la note du bloc (rédigé par `kalis_plan`).
 String clearanceText(kc.Reason reason) =>
     coachText(reason, store.content.catalog) ??
@@ -85,6 +90,7 @@ List<Widget> clearanceCard(int week, int j) {
     Builder(
       builder: (context) {
         final k = KTokens.of(context);
+        final text = clearanceText(pending.reason);
         return KCard(
           key: const ValueKey('clearance-card'),
           accent: k.avertissement,
@@ -113,17 +119,19 @@ List<Widget> clearanceCard(int week, int j) {
                 Padding(
                   padding: const EdgeInsets.only(top: KSpacing.s8),
                   child: Text(
-                    clearanceText(pending.reason),
+                    text,
                     style: KType.corps.copyWith(color: k.texte),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: KSpacing.s8),
-                  child: Text(
-                    kClearanceWaiting,
-                    style: KType.corps.copyWith(color: k.texte),
+                if (!clearanceSaysWaiting(text))
+                  Padding(
+                    padding: const EdgeInsets.only(top: KSpacing.s8),
+                    child: Text(
+                      kClearanceWaiting,
+                      key: const ValueKey('clearance-card-waiting'),
+                      style: KType.corps.copyWith(color: k.texte),
+                    ),
                   ),
-                ),
                 const SizedBox(height: KSpacing.s12),
                 KTonalButton(
                   key: const ValueKey('clearance-card-confirm'),

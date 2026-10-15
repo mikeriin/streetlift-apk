@@ -80,6 +80,22 @@ bool prescriptionInMeters(kc.ExercisePrescription p) =>
     p.secondsLow == null &&
     p.secondsHigh == null;
 
+/// CIF (point 9) : test chronométré de course (contre-la-montre) : ligne de
+/// test en distance, sans répétitions ni durée écrites ; se note au chrono
+/// montant (temps réalisé en secondes, distance écrite).
+bool prescriptionTimeTrial(kc.ExercisePrescription p) =>
+    p.kind == kc.SetKind.test &&
+    p.distanceMeters != null &&
+    p.repsLow == null &&
+    p.repsHigh == null &&
+    p.secondsLow == null &&
+    p.secondsHigh == null;
+
+/// CIF (point 9) : test de course servi en course bornée (`adapt.run_capped`).
+const String kRunTestCappedText =
+    'Test reporté : cette distance n’a pas été approchée ce mois-ci ; '
+    'aujourd’hui, course bornée, sans chrono à fond.';
+
 /// Libellé de la séance prescrite pour un exercice (« 3 × 8-10 »,
 /// « 3 × 30 s », « 1 × max », « 1 × 10 min ») ; l'application le relit
 /// (LogSpec).
@@ -88,6 +104,10 @@ String adaptSetsText(kc.ExercisePrescription p) {
   final n = p.sets;
   if (prescriptionInMeters(p)) {
     return '$n × ${p.distanceMeters!.round()} m';
+  }
+  // CIF (point 9) : contre-la-montre (relu « holdMax » : chrono montant).
+  if (prescriptionTimeTrial(p)) {
+    return '$n × ${p.distanceMeters!.round()} m chrono';
   }
   if (prescriptionInMinutes(p)) {
     final lo = (p.secondsLow ?? p.secondsHigh!) ~/ 60;
@@ -286,9 +306,13 @@ String _dec(double v) =>
 
 /// Raison `adapt.*` d'une décision du moteur, en français (null : raison
 /// interne, rien à dire à l'utilisateur).
+///
+/// CIF (point 4) : [seconds] vrai sur un maintien (prescription en
+/// secondes) : la série repère se dit en secondes.
 String? adaptReasonText(
   kc.Reason r, {
   String Function(String exerciseId)? exerciseName,
+  bool seconds = false,
 }) {
   final p = r.params;
   String name(Object? id) =>
@@ -378,8 +402,11 @@ String? adaptReasonText(
     case 'adapt.benchmark_set':
       final rir = _num(p['rir'])?.toDouble();
       final margin = rir == null ? 'une marge' : '${_dec(rir)} en réserve';
-      return 'Dernière série ouverte : autant de répétitions que possible en '
-          'gardant $margin.';
+      return seconds
+          ? 'Dernière série ouverte : tiens aussi longtemps que possible en '
+                'gardant $margin.'
+          : 'Dernière série ouverte : autant de répétitions que possible en '
+                'gardant $margin.';
     case 'adapt.fatigue_high':
       return 'Fatigue accumulée : je reste prudent.';
     case 'adapt.resume_after_break':
@@ -415,6 +442,15 @@ bool wristBarPushUp(String? exerciseId, Iterable<kc.Reason> reasons) =>
           r.code == 'adapt.pain_reported' &&
           r.params['zone'] == kc.BodyZone.wristHand.code,
     );
+
+/// CIF (point 9, « non déterminé » de `kalis_adapt`) : pompe sur barre
+/// basse écrite telle quelle par le bloc pour un profil qui déclare une
+/// gêne du poignet : le moteur la garde sans raison ; la consigne est dite
+/// aussi (même geste, mêmes poignets).
+bool wristBarPushUpWritten(String? exerciseId, kc.AthleteProfile? profile) =>
+    exerciseId == kWristBarPushUpId &&
+    (profile?.limitations.any((l) => l.zone == kc.BodyZone.wristHand) ??
+        false);
 
 /// Ajustement d'une séance (bilan, douleur, temps, lieu), en français.
 String adjustmentText(
@@ -569,10 +605,16 @@ List<String> sessionDiffLines(
 }
 
 /// Conseil pour la série suivante, en une phrase (null : rien à dire).
+///
+/// CIF (point 3) : l'étape plus facile conseillée (`stepExerciseId`) et
+/// les mini-séries conseillées encore à faire (`miniSetsLeft`) sont dites ;
+/// un arrêt des mini-séries (propreté, chute des répétitions) n'est plus dit
+/// « deux séries manquées ».
 String? adviceText(
   kc.IntraSessionAdvice a, {
   required bool seconds,
   double? previousKg,
+  String Function(String exerciseId)? exerciseName,
 }) {
   final kg = a.nextLoadKg;
   final amount = seconds
@@ -590,10 +632,28 @@ String? adviceText(
       ? 'la série était plus facile que prévu'
       : null;
   final tail = why == null ? '' : ' ($why)';
+  final left = a.miniSetsLeft;
+  final minis = left == null || left <= 0
+      ? null
+      : left == 1
+      ? 'encore 1 mini-série conseillée'
+      : 'encore $left mini-séries conseillées';
   switch (a.action) {
     case kc.IntraSessionAction.keep:
-      return null;
+      return minis == null ? null : 'Série suivante : $minis.';
     case kc.IntraSessionAction.stopExercise:
+      if (a.stepExerciseId case final id?) {
+        return 'Exécution moins propre : passe à '
+            '${exerciseName?.call(id) ?? 'l’étape plus facile'} pour la '
+            'suite.';
+      }
+      if (a.reasons.any((r) => r.code == 'adapt.mini_set_stop')) {
+        return a.reasons.any((r) => r.params['cause'] == 'quality')
+            ? 'Exécution moins propre : on arrête les mini-séries ici, '
+                  'valide la série.'
+            : 'Les répétitions chutent : on arrête les mini-séries ici, '
+                  'valide la série.';
+      }
       return 'Deux séries manquées : on s’arrête là pour cet exercice '
           'aujourd’hui.';
     case kc.IntraSessionAction.restMore:
@@ -607,7 +667,7 @@ String? adviceText(
     case kc.IntraSessionAction.repsDown:
       return target.isEmpty
           ? 'Un cran de moins pour la série suivante$tail.'
-          : 'Série suivante : $target$tail.';
+          : 'Série suivante : $target$tail${minis == null ? '' : ', $minis'}.';
   }
 }
 
