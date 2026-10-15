@@ -10,8 +10,8 @@ Flutter, aucun stockage, aucune horloge, aucun hasard.
 | Profil d'athlète (schémas 2 et 3), journal de séances, échelle des flammes | `AthleteProfile`, `TrainingLog`, `Flames` |
 | Parcours de questions du profil v3 (31 questions, dont des questions reportées), 10 tests guidés et leurs conversions | `data/parcours_v3.json`, `ProfileQuestionnaire`, `estimateOneRm`, `riegelSeconds` |
 | Prescriptions avancées (17 techniques de série, groupes d'exercices enchaînés), saison, compétition, figures, spécialisation | `SetTechnique`, `IntensityTarget`, `AutoregulationRule`, `GroupSpec`, `SeasonPlan`, `SeasonEvent`, `SkillLadder`, `Specialization` |
-| Interfaces et types d'échange des moteurs (109 types, 92 énumérations) | `PlanEngine`, `AdaptEngine`, `QuestEngine`, `SeasonPlanner`, `EventDayAdvisor` |
-| Registre des codes de raison (138 codes, dont 38 ajoutés en 0.4.0, 3 en 0.4.1 et 5 en 0.4.3) | `reasonRegistry`, `ReasonCodes` |
+| Interfaces et types d'échange des moteurs (111 types, 94 énumérations) | `PlanEngine`, `AdaptEngine`, `QuestEngine`, `SeasonPlanner`, `EventDayAdvisor` |
+| Registre des codes de raison (144 codes, dont 38 ajoutés en 0.4.0, 3 en 0.4.1, 5 en 0.4.3 et 6 en 0.4.4) | `reasonRegistry`, `ReasonCodes` |
 | Jeux de données communs (40 profils types au schéma 2, 5 au schéma 3, règles des 7 types à variantes, 12 journaux), valeurs aléatoires seedées | `test/fixtures/`, `package:kalis_core/testing.dart` |
 
 Documents : [`CONTRAT.md`](CONTRAT.md) (règles, invariants, justifications, références),

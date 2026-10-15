@@ -231,6 +231,7 @@ final class PlanDay {
     required this.minutesBudget,
     required this.focus,
     required this.slots,
+    this.type,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -246,6 +247,7 @@ final class PlanDay {
         'slots',
         (v) => PlanSlot.fromJson(jsonAsObject(v, 'slots')),
       ),
+      type: jsonObjOrNull(json, 'type', DayType.fromJson),
     );
   }
 
@@ -264,6 +266,10 @@ final class PlanDay {
   /// Exercices, dans l'ordre.
   final List<PlanSlot> slots;
 
+  /// Type du jour : schémas, qualité, charge (0.4.4) ; absent : programme
+  /// d'avant 0.4.4.
+  final DayType? type;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -272,6 +278,7 @@ final class PlanDay {
       'minutesBudget': minutesBudget,
       'focus': focus,
       'slots': [for (final e in slots) e.toJson()],
+      if (type case final v?) 'type': v.toJson(),
     };
   }
 
@@ -282,6 +289,7 @@ final class PlanDay {
     int? minutesBudget,
     String? focus,
     List<PlanSlot>? slots,
+    Object? type = unset,
   }) {
     return PlanDay(
       dayIndex: dayIndex ?? this.dayIndex,
@@ -289,6 +297,7 @@ final class PlanDay {
       minutesBudget: minutesBudget ?? this.minutesBudget,
       focus: focus ?? this.focus,
       slots: slots ?? this.slots,
+      type: identical(type, unset) ? this.type : type as DayType?,
     );
   }
 
@@ -307,6 +316,9 @@ final class PlanDay {
     for (var i = 0; i < slots.length; i++) {
       slots[i].collectViolations('$path.slots[$i]', out);
     }
+    if (type case final v?) {
+      v.collectViolations('$path.type', out);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -314,6 +326,7 @@ final class PlanDay {
     for (final e in slots) {
       e.collectExerciseIds(out);
     }
+    type?.collectExerciseIds(out);
   }
 
   @override
@@ -324,7 +337,8 @@ final class PlanDay {
             weekday == other.weekday &&
             minutesBudget == other.minutesBudget &&
             focus == other.focus &&
-            jsonListEquals(slots, other.slots);
+            jsonListEquals(slots, other.slots) &&
+            type == other.type;
   }
 
   @override
@@ -334,6 +348,7 @@ final class PlanDay {
     minutesBudget,
     focus,
     Object.hashAll(slots),
+    type,
   ]);
 
   @override
@@ -510,6 +525,7 @@ final class Pass1Plan {
     required this.reasons,
     this.intent,
     this.skillLadders,
+    this.split,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -540,6 +556,7 @@ final class Pass1Plan {
         'skillLadders',
         (v) => SkillLadder.fromJson(jsonAsObject(v, 'skillLadders')),
       ),
+      split: jsonObjOrNull(json, 'split', SplitChoice.fromJson),
     );
   }
 
@@ -584,6 +601,9 @@ final class Pass1Plan {
   /// Échelles de progression des figures travaillées dans le bloc (0.4.0).
   final List<SkillLadder>? skillLadders;
 
+  /// Gabarit de semaine retenu (0.4.4) ; absent : programme d'avant 0.4.4.
+  final SplitChoice? split;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -600,6 +620,7 @@ final class Pass1Plan {
       if (intent case final v?) 'intent': v.toJson(),
       if (skillLadders case final v?)
         'skillLadders': [for (final e in v) e.toJson()],
+      if (split case final v?) 'split': v.toJson(),
     };
   }
 
@@ -617,6 +638,7 @@ final class Pass1Plan {
     List<Reason>? reasons,
     Object? intent = unset,
     Object? skillLadders = unset,
+    Object? split = unset,
   }) {
     return Pass1Plan(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -633,6 +655,7 @@ final class Pass1Plan {
       skillLadders: identical(skillLadders, unset)
           ? this.skillLadders
           : skillLadders as List<SkillLadder>?,
+      split: identical(split, unset) ? this.split : split as SplitChoice?,
     );
   }
 
@@ -672,6 +695,9 @@ final class Pass1Plan {
         v[i].collectViolations('$path.skillLadders[$i]', out);
       }
     }
+    if (split case final v?) {
+      v.collectViolations('$path.split', out);
+    }
     _validatePass1Plan(this, path, out);
   }
 
@@ -688,6 +714,7 @@ final class Pass1Plan {
     for (final e in skillLadders ?? const <SkillLadder>[]) {
       e.collectExerciseIds(out);
     }
+    split?.collectExerciseIds(out);
   }
 
   @override
@@ -705,7 +732,8 @@ final class Pass1Plan {
             score == other.score &&
             jsonListEquals(reasons, other.reasons) &&
             intent == other.intent &&
-            jsonDeepEquals(skillLadders, other.skillLadders);
+            jsonDeepEquals(skillLadders, other.skillLadders) &&
+            split == other.split;
   }
 
   @override
@@ -722,6 +750,7 @@ final class Pass1Plan {
     Object.hashAll(reasons),
     intent,
     jsonDeepHash(skillLadders),
+    split,
   ]);
 
   @override
@@ -4970,4 +4999,164 @@ final class TestSpec {
 
   @override
   String toString() => 'TestSpec(${toJson()})';
+}
+
+/// Type d'un jour d'entraînement (0.4.4) : schémas de mouvement, qualité
+/// visée, charge de la séance.
+final class DayType {
+  const DayType({required this.patterns, required this.quality, this.stress});
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory DayType.fromJson(Map<String, Object?> json) {
+    return DayType(
+      patterns: jsonList(
+        json,
+        'patterns',
+        (v) => DayPattern.fromCode(jsonAsString(v, 'patterns')),
+      ),
+      quality: jsonEnum(json, 'quality', DayQuality.fromCode),
+      stress: jsonEnumOrNull(json, 'stress', DayStress.fromCode),
+    );
+  }
+
+  /// Schémas du jour, du principal au secondaire.
+  final List<DayPattern> patterns;
+
+  /// Qualité visée par le jour.
+  final DayQuality quality;
+
+  /// Charge de la séance (lourde, moyenne, légère).
+  final DayStress? stress;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'patterns': [for (final e in patterns) e.code],
+      'quality': quality.code,
+      if (stress case final v?) 'stress': v.code,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  DayType copyWith({
+    List<DayPattern>? patterns,
+    DayQuality? quality,
+    Object? stress = unset,
+  }) {
+    return DayType(
+      patterns: patterns ?? this.patterns,
+      quality: quality ?? this.quality,
+      stress: identical(stress, unset) ? this.stress : stress as DayStress?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.patterns', patterns.length, 1, 7);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {}
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is DayType &&
+            jsonListEquals(patterns, other.patterns) &&
+            quality == other.quality &&
+            stress == other.stress;
+  }
+
+  @override
+  int get hashCode =>
+      Object.hashAll(<Object?>[Object.hashAll(patterns), quality, stress]);
+
+  @override
+  String toString() => 'DayType(${toJson()})';
+}
+
+/// Gabarit de semaine retenu pour le bloc (0.4.4) : code de la bibliothèque
+/// de `kalis_plan` et raisons du choix.
+final class SplitChoice {
+  const SplitChoice({required this.templateId, required this.reasons});
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory SplitChoice.fromJson(Map<String, Object?> json) {
+    return SplitChoice(
+      templateId: jsonString(json, 'templateId'),
+      reasons: jsonList(
+        json,
+        'reasons',
+        (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
+      ),
+    );
+  }
+
+  /// Code stable du gabarit (`ppl6_q`, `ul4`, `lift_dup`…).
+  final String templateId;
+
+  /// Pourquoi ce gabarit (règle de choix, critère décisif).
+  final List<Reason> reasons;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'templateId': templateId,
+      'reasons': [for (final e in reasons) e.toJson()],
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  SplitChoice copyWith({String? templateId, List<Reason>? reasons}) {
+    return SplitChoice(
+      templateId: templateId ?? this.templateId,
+      reasons: reasons ?? this.reasons,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.templateId', templateId.length, 1, null);
+    for (var i = 0; i < reasons.length; i++) {
+      reasons[i].collectViolations('$path.reasons[$i]', out);
+    }
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    for (final e in reasons) {
+      e.collectExerciseIds(out);
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is SplitChoice &&
+            templateId == other.templateId &&
+            jsonListEquals(reasons, other.reasons);
+  }
+
+  @override
+  int get hashCode =>
+      Object.hashAll(<Object?>[templateId, Object.hashAll(reasons)]);
+
+  @override
+  String toString() => 'SplitChoice(${toJson()})';
 }

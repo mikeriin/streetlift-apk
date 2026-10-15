@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "0.4.3",
+ "version": "0.4.4",
  "texts": [
   {
    "code": "plan.season_phase",
@@ -393,6 +393,57 @@
     "cause"
    ],
    "meaning": "Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille."
+  },
+  {
+   "code": "plan.split_chosen",
+   "fr": "Semaine construite en {templateId} pour tes {sessions} séances.",
+   "params": [
+    "templateId",
+    "sessions"
+   ],
+   "meaning": "Gabarit de semaine retenu pour tant de séances : le plus sûr, puis celui qui porte tous les objectifs, récupère, expose les mouvements visés, tient dans le temps, suit les préférences."
+  },
+  {
+   "code": "plan.day_type",
+   "fr": "Séance {patterns} — {quality}.",
+   "params": [
+    "patterns",
+    "quality"
+   ],
+   "meaning": "Type du jour : schémas de mouvement et qualité visée."
+  },
+  {
+   "code": "plan.goal_uncovered",
+   "fr": "Un de tes objectifs n'a pas de séance qui le travaille cette semaine : je le signale.",
+   "params": [
+    "goalId"
+   ],
+   "meaning": "Audit : objectif sans emplacement porteur dans une semaine de charge du bloc."
+  },
+  {
+   "code": "plan.milestone",
+   "fr": "Jalon le {date} : on teste tes {goals} objectifs, puis on repart vers l'échéance.",
+   "params": [
+    "date",
+    "goals"
+   ],
+   "meaning": "Jalon : semaine de test à la date d'objectifs datés plus tôt que l'échéance retenue, puis reprise de la saison."
+  },
+  {
+   "code": "plan.replaced_disliked",
+   "fr": "À la place de {exerciseId}, que tu n'aimes pas.",
+   "params": [
+    "exerciseId"
+   ],
+   "meaning": "Remplace un exercice que l'utilisateur n'aime pas (`exerciseId` : l'exercice remplacé)."
+  },
+  {
+   "code": "plan.replaced_cannot_do",
+   "fr": "À la place de {exerciseId}, que tu ne sais pas encore faire.",
+   "params": [
+    "exerciseId"
+   ],
+   "meaning": "Remplace un exercice que l'utilisateur ne sait pas faire (`exerciseId` : l'exercice remplacé)."
   }
  ]
 }
