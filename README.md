@@ -1,4 +1,13 @@
-# Kalis Track dev6.12.0 — Refonte UI et UX (pipeline « Refonte UI et UX », lots UI0 à UI5)
+# Kalis Track dev6.18.0 — Lot CI final (pipeline « Calibrage des programmes », voie App)
+
+## dev6.18.0 — Lot CI final : limites restantes de l'intégration (lot CIF)
+
+- **Jour J** : les tentatives notées le jour même de l'épreuve sont gardées et écrites au journal des moteurs (rôle « tentative », rang, épreuve) ; une séance faite le jour d'une compétition porte l'épreuve.
+- **Mini-séries** : une ligne servie telle qu'écrite n'a plus de bandeau ; une correction de l'ordre des mini-séries est relue par le moteur ; le bandeau garde sa hauteur jusqu'au dernier bloc ; « Mini-repos » ne réapparaît plus au-dessus du tableau après la dernière série.
+- **Conseils de Koach entre les séries** : mini-séries conseillées, étape plus facile, arrêt des mini-séries (propreté, chute des répétitions) dits en clair.
+- **Maintien** : la série repère se dit en secondes (« tiens aussi longtemps que possible »).
+- **Course** : test chronométré noté au chrono (temps et distance au journal), repère d'allure écrit au profil (allure plausible seulement) ; test de course borné dit « reporté » ; consigne de la pompe sur barre basse aussi quand le bloc l'écrit pour un poignet gêné.
+- **Carte « Pas encore »** sans consigne répétée ; débutant sans ancienneté donné tel quel aux moteurs (règle CI1.4 retirée) ; simulateur du mode dev qui joue mini-séries et groupes ; tests de la carte 2D et des rendus rendus robustes.
 
 ## dev6.12.0 — Refonte UI et UX : finition, cohérence et menus (lot UI5)
 

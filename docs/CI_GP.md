@@ -356,6 +356,30 @@ vide ou absent.
 - Tests Dart : `test/ci1h_correction1_test.dart` (relevés `CI1H1|…`). Mise au
   point sur `claude/ci-ci1h-c1-rapide` (`rapide.yml` seul).
 
+### CIF (dev6.18.0, pipeline CP, voie App, lot CI final)
+
+- Paquets inchangés (`kalis_core` 0.4.3, `kalis_plan` / `kalis_adapt`
+  0.3.1) ; limites restantes des lots CI1 à CI1h (DECISIONS_CP.md C17).
+- Cible émulateur `integration_test/lot_cif_test.dart` (a sombre, rouge ;
+  b clair, violet), jouée avant les cibles CI1g, CI1f, CI1e, CI1c et CI1
+  (gardées) : session personnelle (programme de 40 semaines, S20·J1) :
+  myo-reps notés mini-série par mini-série, hauteur du bandeau relevée à
+  chaque bloc, série validée, parties au journal du moteur ; session de
+  test : profil street des fixtures recopié (6 jours, départ un lundi,
+  horloge fixée), bilan bas en S4·J4, test reporté servi en S4·J6 ; jour J
+  d'un compétiteur de streetlifting, tentative notée gardée et journalisée
+  (`eventId`, rôle `attempt`) ; session personnelle intacte. Relevés
+  `emulateur/cif_releve_<partie>.json`, captures `emulateur/cif_*_<thème>.png`.
+  APK de test précompilé sur la cible CIF ; délai du job émulateur porté à
+  95 min.
+- Tests Dart du lot : `test/cif_points_test.dart`, `test/cif_report_test.dart`
+  (relevé `CIF6|…`), `test/cif_seance_test.dart` (relevés `CIF8|…`,
+  `CIF12|…`). Tests rendus robustes : `test/m8_carte_2d_test.dart`
+  (étiquettes lues une fois en `setUpAll`, zone réelle) et
+  `test/visual_capture_test.dart` (liste verticale des statistiques,
+  attentes bornées). Mise au point sur `claude/ci-ui-cif-rapide`
+  (`ci-ui.yml` seul, sans `build-apk.yml` ni `ci-3d.yml`).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

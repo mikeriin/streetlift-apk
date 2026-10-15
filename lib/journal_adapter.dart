@@ -193,6 +193,9 @@ String _civil(DateTime d) =>
   Function(int week, int day, String exerciseKey, bool withParts)?
   lineOf,
   int? Function(int week, int day, String exerciseKey)? myoOf,
+  // CIF (point 9) : distance écrite d'une ligne notée en temps
+  // (contre-la-montre : `seconds` et `distanceMeters`).
+  double? Function(int week, int day, String exerciseKey)? distanceOf,
 }) {
   final report = JournalConversionReport();
   final logs = (doc['logs'] as Map?)?.cast<String, dynamic>() ?? const {};
@@ -327,6 +330,9 @@ String _civil(DateTime d) =>
           rec['distanceMeters'] = measure.toDouble(); // CI1f : mètres
         } else {
           rec[seconds ? 'seconds' : 'reps'] = measure; // C8
+          if (distanceOf?.call(w, j, k) case final d?) {
+            rec['distanceMeters'] = d; // CIF : contre-la-montre
+          }
         }
         final flames = x['flames'];
         if (flames is int && flames >= Flames.min && flames <= Flames.max) {

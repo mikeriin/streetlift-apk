@@ -116,8 +116,19 @@ extension EvolutionStore on AppStore {
     final place = evolutionPlace;
     final catalog = content.catalog;
     if (place == null || catalog == null) return null;
-    final input = _evoInput(place);
-    if (input == null) return null;
+    final raw = _evoInput(place);
+    if (raw == null) return null;
+    // CIF (point 1) : les tentatives notées sur l'écran du jour J sont au
+    // journal (séance « event-<id> ») ; le moteur les reçoit ici par
+    // [done] : pas deux fois.
+    final input = raw.copyWith(
+      log: raw.log.copyWith(
+        sessions: [
+          for (final s in raw.log.sessions)
+            if (s.id != 'event-$eventId') s,
+        ],
+      ),
+    );
     if (!(input.profile.events ?? const <kc.SeasonEvent>[]).any(
       (e) => e.id == eventId,
     )) {
@@ -198,13 +209,53 @@ extension EvolutionStore on AppStore {
     );
     // CI1 : tests et figures d'un bloc du chemin calibré reportés au
     // profil ; CI1e (C11) : programme importé annoté compris.
+    // CIF (point 9) : contre-la-montre du journal (rôle de test, temps et
+    // distance de 1 000 m au moins) écrits au profil par l'application :
+    // `testResults` ne les rend pas (document d'intégration de
+    // `kalis_plan`, § 2.5) ; le bloc suivant recale les allures.
+    final trials = timeTrialBenchmarks(input.log);
     final reported =
         ct.isCoachBlock(place.block) &&
-        AthleteProfileStore(
-          this,
-        ).reportEngineResults(review, since: place.block.pass1.startDate);
+        AthleteProfileStore(this).reportEngineResults(
+          trials.isEmpty
+              ? review
+              : review.copyWith(
+                  testResults: [...?review.testResults, ...trials],
+                ),
+          since: place.block.pass1.startDate,
+        );
     return evolutionReceive(place, review.proposals) || reported;
   }
+
+  /// CIF (point 9) : allure plausible d'une course (s/km) : de 2 min/km
+  /// (record du monde ≈ 2 min 11) à 20 min/km (marche lente). Une saisie
+  /// fausse (« 25 » pour 25 minutes, ancienne saisie en répétitions relue
+  /// en secondes) n'écrit jamais d'allure au profil.
+  static bool _plausiblePace(double secondsPerKm) =>
+      secondsPerKm >= 120 && secondsPerKm <= 1200;
+
+  /// CIF (point 9) : repères `time_trial` des tests chronométrés de course
+  /// du journal [log] (source `competition` le jour d'une épreuve,
+  /// `guided_test` sinon).
+  List<kc.Benchmark> timeTrialBenchmarks(kc.TrainingLog log) => [
+    for (final s in log.sessions)
+      for (final x in s.sets)
+        if (x.kind == kc.SetKind.test &&
+            !x.excluded &&
+            (x.distanceMeters ?? 0) >= 1000 &&
+            (x.seconds ?? 0) > 0 &&
+            _plausiblePace(x.seconds! / (x.distanceMeters! / 1000)))
+          kc.Benchmark(
+            exerciseId: x.exerciseId,
+            kind: kc.BenchmarkKind.timeTrial,
+            source: s.eventId != null
+                ? kc.BenchmarkSource.competition
+                : kc.BenchmarkSource.guidedTest,
+            date: s.date,
+            seconds: x.seconds,
+            distanceMeters: x.distanceMeters,
+          ),
+  ];
 
   /// Propositions [proposals] du moteur pour le bloc de [place] : nouvelles
   /// propositions appliquées (mode assisté) ou en attente (mode libre) ;

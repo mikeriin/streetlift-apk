@@ -955,7 +955,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         : store.adaptAfterSet(widget.week.n, widget.day, ex, i);
     if (r == null) return null;
     final seconds = specs[k].kind == 'hold' || specs[k].kind == 'holdMax';
-    final text = adviceText(r.advice, seconds: seconds);
+    final text = adviceText(
+      r.advice,
+      seconds: seconds,
+      exerciseName: store.adaptExerciseName,
+    );
     final step = r.step;
     final changedRest =
         r.advice.action == kc.IntraSessionAction.restMore ||
@@ -1041,7 +1045,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   style: KType.corpsFort.copyWith(color: t.texte),
                 ),
                 for (final r in step.reasons)
-                  if (adaptReasonText(r, exerciseName: store.adaptExerciseName)
+                  if (adaptReasonText(
+                        r,
+                        exerciseName: store.adaptExerciseName,
+                        seconds: seconds,
+                      )
                       case final x?)
                     Text(x, style: KType.detail.copyWith(color: t.texte2)),
                 const SizedBox(height: KSpacing.s8),
@@ -1172,7 +1180,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     }
     // CI1g (`kalis_adapt` 0.3.1, point imposé par CY) : pompe sur barre
     // basse servie pour une gêne du poignet : la consigne est dite.
-    if (wristBarPushUp(it.exerciseId, it.reasons) &&
+    if ((wristBarPushUp(it.exerciseId, it.reasons) ||
+            wristBarPushUpWritten(it.exerciseId, store.adaptProfile)) &&
         !pain.contains(kWristBarPushUpCue)) {
       pain.add(kWristBarPushUpCue);
     }
@@ -1306,7 +1315,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     if (it == null) return null;
     final lines = <String>[];
     for (final r in it.reasons) {
-      final t = adaptReasonText(r, exerciseName: store.adaptExerciseName);
+      final t = adaptReasonText(
+        r,
+        exerciseName: store.adaptExerciseName,
+        seconds: prescriptionInSeconds(it),
+      );
       if (t == null || lines.contains(t)) continue;
       // Calibrage d'abord : c'est ce qui explique la charge du jour.
       if (r.code == 'adapt.calibration') {
@@ -1314,6 +1327,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       } else {
         lines.add(t);
       }
+    }
+    // CIF (point 9) : test de course borné : le report est dit.
+    if (store.adaptRunTestCapped(widget.week.n, widget.day.j, ex)) {
+      lines.insert(0, kRunTestCappedText);
     }
     if (it.toCalibrate && !lines.any((l) => l.startsWith('Calibrage'))) {
       lines.insert(
@@ -1617,14 +1634,18 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final missing = _missingReference(ex, readOnly);
     // Bandeau des mini-séries présent (cluster, myo-reps, rest-pause servis
     // par le moteur) : il porte le mini-repos.
-    final firstOpen = log.sets.indexWhere((s) => !s.done);
+    // CIF (point 12) : décidé sur toutes les lignes de l'exercice, pas
+    // seulement la première ouverte : le bouton du mini-repos n'apparaît
+    // plus au-dessus du tableau une fois la dernière série validée (saut de
+    // hauteur de la carte).
     final miniSets =
         !readOnly &&
         widget.adapt &&
         ex.engine &&
-        firstOpen >= 0 &&
-        store.miniSetPlanFor(widget.week.n, widget.day.j, ex, firstOpen) !=
-            null;
+        [
+          for (var i = 0; i < log.sets.length; i++)
+            store.miniSetPlanFor(widget.week.n, widget.day.j, ex, i),
+        ].any((p) => p != null);
     final (coach, coachRow) = !readOnly && widget.adapt && ex.engine
         ? _coachPanel(ex, intraButton: !miniSets)
         : (const <Widget>[], null);
@@ -3542,11 +3563,13 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
     final planned = _planned;
     final slots = plan.cap + 1;
     // Consigne en mode guidé ; sinon seulement ce qui demande une action.
-    final advice = left == 0
-        ? (plan.exact
-              ? 'Tous les blocs sont faits : valide la série.'
-              : 'Plafond atteint : valide la série.')
-        : !koachGuided
+    // CIF (point 12) : les deux textes gardent leur place (pile, le texte
+    // caché garde sa taille) : la ligne du bas ne naît plus au dernier
+    // bloc et ne change plus de hauteur en mode guidé.
+    final doneText = plan.exact
+        ? 'Tous les blocs sont faits : valide la série.'
+        : 'Plafond atteint : valide la série.';
+    final guide = !koachGuided
         ? null
         : plan.kind == kc.SetTechniqueKind.cluster
         ? 'Fais chaque bloc, souffle ${plan.intra} s, puis le suivant ; '
@@ -3672,9 +3695,37 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     for (var i = 0; i < slots; i++) slot(i),
-                    // Tous les blocs notés : même hauteur de ligne.
+                    // Tous les blocs notés : même hauteur de ligne. CIF
+                    // (point 12) : la saisie garde aussi sa largeur (place
+                    // gardée, invisible) : le retour à la ligne des blocs
+                    // ne change pas au dernier bloc.
                     if (left == 0)
-                      SizedBox(height: KDensity.field(KSize.target)),
+                      ExcludeSemantics(
+                        child: Visibility(
+                          visible: false,
+                          maintainSize: true,
+                          maintainAnimation: true,
+                          maintainState: true,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(width: KSpacing.s8),
+                              small(Icons.remove_rounded, 'Une de moins', null),
+                              Text(
+                                '$value$unit',
+                                style: KType.chiffreMoyen.copyWith(
+                                  color: k.texte,
+                                ),
+                              ),
+                              small(Icons.add_rounded, 'Une de plus', null),
+                              SizedBox(
+                                width: KSize.target,
+                                height: KDensity.field(KSize.target),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     if (left > 0)
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -3743,19 +3794,45 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                       ),
                   ],
                 ),
-                if (advice != null)
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: KSpacing.s4,
-                      bottom: KSpacing.s4,
-                      right: KSpacing.s8,
-                    ),
-                    child: Text(
-                      advice,
-                      key: ValueKey('miniset-advice-${widget.id}'),
-                      style: KType.detail.copyWith(color: k.texte2),
-                    ),
+                Padding(
+                  key: ValueKey('miniset-note-slot-${widget.id}'),
+                  padding: const EdgeInsets.only(
+                    top: KSpacing.s4,
+                    bottom: KSpacing.s4,
+                    right: KSpacing.s8,
                   ),
+                  child: Stack(
+                    children: [
+                      if (guide != null)
+                        Visibility(
+                          visible: left > 0,
+                          maintainSize: true,
+                          maintainAnimation: true,
+                          maintainState: true,
+                          child: Text(
+                            guide,
+                            key: left > 0
+                                ? ValueKey('miniset-advice-${widget.id}')
+                                : null,
+                            style: KType.detail.copyWith(color: k.texte2),
+                          ),
+                        ),
+                      Visibility(
+                        visible: left == 0,
+                        maintainSize: true,
+                        maintainAnimation: true,
+                        maintainState: true,
+                        child: Text(
+                          doneText,
+                          key: left == 0
+                              ? ValueKey('miniset-advice-${widget.id}')
+                              : null,
+                          style: KType.detail.copyWith(color: k.texte2),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
