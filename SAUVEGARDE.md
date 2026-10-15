@@ -18,8 +18,6 @@ Pas de SDK Dart dans la session : compilation, formatage et tests via `claude/ci
 
 - 20:00 : contrôle complet 38781393271 (arbre ba8724d4) : kalis_core, kalis_plan, kalis_adapt, kalis_quest verts ; kalis_bench rouge : (1) km2_banc_test (parité Koach) compare la saison vivante de kalis_plan à la saison figée 0.3.1 des données de référence Koach → la parité rejoue maintenant la saison figée, et le test vérifie squelette et calendrier (hors changement de discipline) ; (2) banc KS1 : 6 violations charge_trop_vite (échéance avancée, ks_01 à ks_03 : squat +9,3 %, traction lestée +9 %) → diagnostic en cours (aa_ks1 réécrit) ; (3) fatigue_balance à 0 quand un jour n'a pas de travail dur → corrigé (jours sans travail dur exclus).
 
-## En cours
-- Diagnostic des violations « échéance avancée » (run de mise au point).
+- 23:00 : contrôle complet 38804692527 vert (arbre b35a5f6d rebasé sur KM2c1 e502e963) ; publié sur moteurs b35a5f6d ; étiquettes kalis_core-v0.4.4 (08603867), kalis_plan-v0.4.0, kalis_bench-v0.5.0 (b35a5f6d) ; cp-references 336f07de (analyse_KS1 chiffrée) ; livraison pipeline fc998e2b + projet claude/LIVRAISON_KS1.md ; ETAT_CP « livré » ; page de suivi version 48.
 
-## Reste
-Correction, nouveau contrôle complet, publication moteurs (commits à refaire : amender ba8724d4 localement), étiquettes, Jaccard des saisons, livraison, ETAT_CP, suivi, notification.
+## Lot terminé (livré). Rien en cours.
