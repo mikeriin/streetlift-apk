@@ -25,10 +25,13 @@ Session Fable 5.1, effort maximal, démarrée le 15/10/2026 à 19:09 UTC. Base `
 
 ## En cours
 
-- CI `claude/ci-cp-a` run du commit 35bf1503 (le run 38809271354 de 0267da6c, avant relecture, est annulé par ce push) : campagne 1.0.3 six graines partie 1/2 (`/tmp/ci-km1c3`, `pousser_ci.sh`). Puis : témoin Dart des nouveaux adversaires (run_temoin.sh), contrôle complet final.
-- Recherche adversariale neuve contre 1.0.3 terminée 22:27 UTC (3 000 saisons, pire d = 0,445, perf 0,555 : `donnees/adversaires_km1c3.json`, entrée Dart copiée dans `/tmp/ci-km1c3/packages/aa_km1c3/entree/`) ; témoin Dart à pousser (`pousser_ci.sh temoin`) dès que le run 38814063895 est fini (un push annule le run en cours).
+- Reste sur la CI : contrôle complet final (arbre complet sur `claude/ci-cp-a`).
+- Recherche adversariale neuve contre 1.0.3 terminée 22:27 UTC (3 000 saisons, pire perf 0,555) ; témoin Dart fait sur la CI (run 38822376614, b84ca187, 14 s) → `donnees/adversaires_km1c3_temoin.json.gz` ; comparaison `donnees/comparaison_adversaires_km1c3.json` : 19/24, 2 sous le plancher non excusés (adv-5e2b8ac3 −0,145 connu, adv-7c601acb −0,134) + 1 excusé (adv-449d92ef), moyenne 0,817 (témoin 0,621) ; critère 7 : 0,555 ≥ 0,499.
+- Campagne partie 1/2 CI : run 38814063895 fini 23:07 (2 160 saisons, 0 plantée, 3 927 s ; « failure » du paquet = absence de dev_dependency test, comme prévu) ; fichiers extraits et copiés dans `/tmp/km1-campagne/746e9268d927d350/` (même config.json que la partie 2 locale).
+- X2 (prudence lourde 1,0) mesuré : cinq jeux 0,884 contre 0,886 (b3000 +0,010, b300 −0,007, km1c2 −0,009), banc graine 0 0,9580 : laissée à 0. `var_final.log` (code final, banc) en cours.
+- Livraison (scratchpad `LIVRAISON_KM1c3.md`) : § 4 et § 5 remplis (remesure hors ligne sur la capture finale : retenue +0,015, 17 → 6 ; baisse après échec +0,027) ; restent les critères de la campagne, SHA, run final, commit.
 - Comparaisons 7 bis des cinq jeux connus refaites avec le code final (`donnees/comparaison_adversaires_km1c3_*.json`) : km1 24/24 (0,8914), b300 22/24 1 sous −0,143 (0,8825), b600 22/24 1 sous −0,103 (0,8838), b3000 21/24 1 sous −0,234 (0,8943), km1c2 22/24 1 sous −0,145 (0,8759) ; moyenne des cinq 0,8665 → 0,8856. Seule régression nouvelle : adv-051f1dee g2 (zéro isolé au squat) ; a0dd8069 (−0,099 → −0,103), 29523095 (−0,226 → −0,234, sous-estimation d'un powerlifter b) et 5e2b8ac3 (−0,154 → −0,145) préexistants.
-- Local : campagne partie 2/2 (`campagne_p2.log`, dossier `/tmp/km1-campagne/746e9268d927d350`, fin vers 02:00 UTC) et X2 (`var_X2.log`, prudence lourde 1,0) en cours.
+- Local : campagne partie 2/2 (`campagne_p2.log`, dossier `/tmp/km1-campagne/746e9268d927d350`, 600/2 160 à 23:20, fin vers 01:20 UTC). Puis assemblage : `python3 -m banc.campagne --profils tous --scenarios tous --graines 6 --coeurs 2 --sortie donnees/criteres_km1c3.json`.
 
 ## Reste à faire
 
