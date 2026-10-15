@@ -20,7 +20,7 @@ import 'package:streetlift_tracker/adapt/clearance.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/dev/dev_simulator.dart';
 import 'package:streetlift_tracker/journal_adapter.dart';
-import 'package:streetlift_tracker/plan/plan_program.dart';
+import 'package:streetlift_tracker/plan/coach_texts.dart' show isCoachBlock;
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
@@ -156,10 +156,7 @@ void main() {
         confidence: 1,
         action: kc.IntraSessionAction.stopExercise,
         reasons: [
-          kc.Reason(
-            code: 'adapt.mini_set_stop',
-            params: {'cause': 'rep_drop'},
-          ),
+          kc.Reason(code: 'adapt.mini_set_stop', params: {'cause': 'rep_drop'}),
         ],
       );
       expect(adviceText(drop, seconds: false), contains('mini-séries'));
@@ -241,68 +238,71 @@ void main() {
       app.dispose();
     });
 
-    test('1 : tentatives du jour J gardées et écrites au journal (rôle '
-        '`attempt`, rang, `eventId`), une seule fois au moteur du jour J', () async {
-      _save(app, _street('streetlifting'));
-      _create(app);
-      final e1 = app.athlete!.profile.events!.firstWhere((e) => e.id == 'e1');
-      app.setEventAttempts('e1', const [
-        kc.AttemptResult(
-          exerciseId: 'sl-dips-leste',
-          index: 0,
-          loadKg: 100,
-          success: true,
-        ),
-        kc.AttemptResult(
-          exerciseId: 'sl-dips-leste',
-          index: 1,
-          loadKg: 107.5,
-          success: false,
-        ),
-        kc.AttemptResult(
-          exerciseId: 'sl-traction-lestee',
-          index: 0,
-          loadKg: 72.5,
-          success: true,
-        ),
-      ]);
-      await app.flush();
-      // Relecture après redémarrage.
-      final again = AppStore()..storeClock = () => clock;
-      await again.init();
-      expect(again.eventAttemptsOf('e1'), hasLength(3));
-      expect(again.eventAttemptsOf('e2'), isEmpty);
-      again.dispose();
-      // Avant le jour J : rien au journal.
-      expect(
-        app.adaptTrainingLog().sessions.where((s) => s.eventId != null),
-        isEmpty,
-      );
-      final log = app.adaptTrainingLog(today: e1.date.addDays(1));
-      final ev = log.sessions.singleWhere((s) => s.id == 'event-e1');
-      expect(ev.eventId, 'e1');
-      expect(ev.date, e1.date);
-      expect(
-        [for (final x in ev.sets) (x.exerciseId, x.role, x.attemptIndex)],
-        [
-          ('sl-dips-leste', kc.SetRole.attempt, 0),
-          ('sl-dips-leste', kc.SetRole.attempt, 1),
-          ('sl-traction-lestee', kc.SetRole.attempt, 0),
-        ],
-      );
-      expect(ev.sets.map((x) => x.success), [true, false, true]);
-      expect(ev.sets.every((x) => x.kind == kc.SetKind.test), isTrue);
-      expect(log.validate(), isEmpty);
-      // Effacées : plus rien.
-      app.setEventAttempts('e1', const []);
-      expect(
-        app
-            .adaptTrainingLog(today: e1.date.addDays(1))
-            .sessions
-            .where((s) => s.id == 'event-e1'),
-        isEmpty,
-      );
-    });
+    test(
+      '1 : tentatives du jour J gardées et écrites au journal (rôle '
+      '`attempt`, rang, `eventId`), une seule fois au moteur du jour J',
+      () async {
+        _save(app, _street('streetlifting'));
+        _create(app);
+        final e1 = app.athlete!.profile.events!.firstWhere((e) => e.id == 'e1');
+        app.setEventAttempts('e1', const [
+          kc.AttemptResult(
+            exerciseId: 'sl-dips-leste',
+            index: 0,
+            loadKg: 100,
+            success: true,
+          ),
+          kc.AttemptResult(
+            exerciseId: 'sl-dips-leste',
+            index: 1,
+            loadKg: 107.5,
+            success: false,
+          ),
+          kc.AttemptResult(
+            exerciseId: 'sl-traction-lestee',
+            index: 0,
+            loadKg: 72.5,
+            success: true,
+          ),
+        ]);
+        await app.flush();
+        // Relecture après redémarrage.
+        final again = AppStore()..storeClock = () => clock;
+        await again.init();
+        expect(again.eventAttemptsOf('e1'), hasLength(3));
+        expect(again.eventAttemptsOf('e2'), isEmpty);
+        again.dispose();
+        // Avant le jour J : rien au journal.
+        expect(
+          app.adaptTrainingLog().sessions.where((s) => s.eventId != null),
+          isEmpty,
+        );
+        final log = app.adaptTrainingLog(today: e1.date.addDays(1));
+        final ev = log.sessions.singleWhere((s) => s.id == 'event-e1');
+        expect(ev.eventId, 'e1');
+        expect(ev.date, e1.date);
+        expect(
+          [for (final x in ev.sets) (x.exerciseId, x.role, x.attemptIndex)],
+          [
+            ('sl-dips-leste', kc.SetRole.attempt, 0),
+            ('sl-dips-leste', kc.SetRole.attempt, 1),
+            ('sl-traction-lestee', kc.SetRole.attempt, 0),
+          ],
+        );
+        expect(ev.sets.map((x) => x.success), [true, false, true]);
+        expect(ev.sets.every((x) => x.kind == kc.SetKind.test), isTrue);
+        expect(log.validate(), isEmpty);
+        // Effacées : plus rien.
+        app.setEventAttempts('e1', const []);
+        expect(
+          app
+              .adaptTrainingLog(today: e1.date.addDays(1))
+              .sessions
+              .where((s) => s.id == 'event-e1'),
+          isEmpty,
+        );
+      },
+    );
 
     test('1 : séance faite le jour d’une épreuve : `eventId` posé', () async {
       _save(app, _street('streetlifting'));
@@ -339,10 +339,7 @@ void main() {
       expect(logged, isTrue);
       app.saveLogs();
       final today = kc.CivilDate(clock.year, clock.month, clock.day);
-      expect(
-        app.adaptTrainingLog(today: today).sessions.last.eventId,
-        isNull,
-      );
+      expect(app.adaptTrainingLog(today: today).sessions.last.eventId, isNull);
       // Épreuve ce jour-là (préparation) : la séance la porte.
       final p = app.athlete!.profile;
       _save(
@@ -396,23 +393,26 @@ void main() {
       expect(isCoachBlock(app.planProgram!.blocks.single.block), isFalse);
       _save(
         app,
-        _street('streetlifting').copyWith(
-          trainingAge: null,
-          experience: kc.ExperienceLevel.beginner,
-        ),
+        _street(
+          'streetlifting',
+        ).copyWith(trainingAge: null, experience: kc.ExperienceLevel.beginner),
       );
       expect(PlanStore(app).planCoachEligible, isTrue);
       expect(PlanStore(app).planOnLegacyEngine, isTrue);
       PlanStore(app).setPlanKeepLegacyEngine(true);
-      expect(isCoachBlock(PlanStore(app).proposeNextBlock()!.proposal.block),
-          isFalse);
+      expect(
+        isCoachBlock(PlanStore(app).proposeNextBlock()!.proposal.block),
+        isFalse,
+      );
       PlanStore(app).setPlanKeepLegacyEngine(false);
       expect(
         PlanStore(app).planNextBlockProfile!.trainingAge,
         kc.TrainingAge.under6Months,
       );
-      expect(isCoachBlock(PlanStore(app).proposeNextBlock()!.proposal.block),
-          isTrue);
+      expect(
+        isCoachBlock(PlanStore(app).proposeNextBlock()!.proposal.block),
+        isTrue,
+      );
       // Le profil enregistré n’est pas modifié.
       expect(app.athlete!.profile.trainingAge, isNull);
       expect(kp.coachEligible(app.athleteProfileForEngines!), isTrue);
@@ -521,12 +521,10 @@ void main() {
         distanceOf: (_, _, _) => 5000,
       );
       final r = out.log.sessions.single.sets.single;
-      expect((r.kind, r.seconds, r.distanceMeters, r.reps), (
-        kc.SetKind.test,
-        1520,
-        5000.0,
-        null,
-      ));
+      expect(
+        (r.kind, r.seconds, r.distanceMeters, r.reps),
+        (kc.SetKind.test, 1520, 5000.0, null),
+      );
     });
   });
 
@@ -586,24 +584,27 @@ void main() {
       expect(parts(), [plan.suggested(0), 3, 4]);
     });
 
-    test('2 : ligne servie telle qu’écrite : pas de bandeau de mini-séries', () async {
-      await _ownerAt(app, lastWeek: 20, lastJ: 0);
-      _advanced(app, kc.GuidanceMode.assisted);
-      var written = 0;
-      for (var w = 13; w <= 26; w++) {
-        for (var j = 1; j <= 7; j++) {
-          final base = app.program.week(w).day(j);
-          if (base == null) continue;
-          for (final e in base.exercises) {
-            if (!app.adaptAsWritten(w, e.slotId)) continue;
-            written++;
-            expect(app.miniSetPlanFor(w, j, e, 0), isNull, reason: e.id);
+    test(
+      '2 : ligne servie telle qu’écrite : pas de bandeau de mini-séries',
+      () async {
+        await _ownerAt(app, lastWeek: 20, lastJ: 0);
+        _advanced(app, kc.GuidanceMode.assisted);
+        var written = 0;
+        for (var w = 13; w <= 26; w++) {
+          for (var j = 1; j <= 7; j++) {
+            final base = app.program.week(w).day(j);
+            if (base == null) continue;
+            for (final e in base.exercises) {
+              if (!app.adaptAsWritten(w, e.slotId)) continue;
+              written++;
+              expect(app.miniSetPlanFor(w, j, e, 0), isNull, reason: e.id);
+            }
           }
         }
-      }
-      // ignore: avoid_print
-      print('CIF2|lignes telles qu’écrites $written');
-    });
+        // ignore: avoid_print
+        print('CIF2|lignes telles qu’écrites $written');
+      },
+    );
 
     test('5 : simulateur du mode dev : mini-séries notées une à une, '
         'groupes notés par leur résultat', () async {
@@ -629,15 +630,19 @@ void main() {
         }
       }
       // ignore: avoid_print
-      print('CIF5|séances ${r.sessionsDone}|séries à mini-séries $parts|'
-          'groupes $groups');
+      print(
+        'CIF5|séances ${r.sessionsDone}|séries à mini-séries $parts|'
+        'groupes $groups',
+      );
       expect(r.sessionsDone, greaterThan(0));
       expect(parts, greaterThan(0));
       expect(groups, greaterThan(0));
       final tl = app.adaptTrainingLog();
       expect(tl.validate(), isEmpty);
-      expect(tl.sessions.expand((s) => s.sets).any((x) => x.parts != null),
-          isTrue);
+      expect(
+        tl.sessions.expand((s) => s.sets).any((x) => x.parts != null),
+        isTrue,
+      );
     });
 
     test('migration depuis dev6.17.3 : séances faites et sauvegarde '

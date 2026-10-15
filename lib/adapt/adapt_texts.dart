@@ -449,8 +449,7 @@ bool wristBarPushUp(String? exerciseId, Iterable<kc.Reason> reasons) =>
 /// aussi (même geste, mêmes poignets).
 bool wristBarPushUpWritten(String? exerciseId, kc.AthleteProfile? profile) =>
     exerciseId == kWristBarPushUpId &&
-    (profile?.limitations.any((l) => l.zone == kc.BodyZone.wristHand) ??
-        false);
+    (profile?.limitations.any((l) => l.zone == kc.BodyZone.wristHand) ?? false);
 
 /// Ajustement d'une séance (bilan, douleur, temps, lieu), en français.
 String adjustmentText(
