@@ -57,7 +57,11 @@ ils départageraient ; les gabarits typés de la musculation (force + hypertroph
 ## 3. Règle de choix (§ 3.4)
 
 Les gabarits qui réalisent la répartition des séances — le gabarit typé quand la bibliothèque en a un, toujours le
-gabarit composite — sont construits en entier (réglages communs compris), puis comparés dans cet ordre, le suivant ne
+gabarit composite — sont construits en entier (réglages communs compris), pour la répartition de la phase et, quand
+elle en diffère, pour celle des disciplines (une répartition déplacée qu'aucun gabarit ne réalise sans laisser un
+objectif sans emplacement ou sans casser la récupération ne passe pas devant : profil de test en intensification
+vers l'échéance de force, 4 + 2 ne porte pas les neuf objectifs en six jours typés, le composite 4 + 2 les porte à
+une récupération de 0,30, le `ppl6_q` 3 + 3 les porte à 1,0). Ils sont comparés dans cet ordre, le suivant ne
 départageant qu'à égalité (sans compensation) :
 
 1. **Sécurité** : règles actuelles (douleur, poignet, coude, reprise), identiques pour tous les candidats.
@@ -68,7 +72,7 @@ départageant qu'à égalité (sans compensation) :
 5. **Temps** : séances hors de ± 15 % du temps disponible et séances sans principal (moins).
 6. **Préférences** : exercices aimés présents (plus).
 
-À égalité, le gabarit typé. Cet ordre remplace, pour la structure, la moyenne pondérée de la note, où une composante
+À égalité, l'ordre d'essai : la répartition de la phase d'abord, le gabarit typé avant le composite. Cet ordre remplace, pour la structure, la moyenne pondérée de la note, où une composante
 à 1,0 rachetait une récupération à 0,48 (constat K6).
 
 ## 4. Placement (§ 3.5)

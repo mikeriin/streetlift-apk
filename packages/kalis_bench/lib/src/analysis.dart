@@ -304,7 +304,11 @@ final class DayView {
     required this.items,
     this.groupFormats = const <String>[],
     this.stress,
+    this.type,
   });
+
+  /// Type du jour (`kalis_core` 0.4.4 : schémas et qualité), sinon `null`.
+  final DayType? type;
 
   /// Charge de la séance (lourde, moyenne, légère) quand le moteur la
   /// donne (`kalis_core` 0.4.0), sinon `null`.
@@ -526,6 +530,7 @@ final class ProgramView {
               weekday: base.weekday,
               minutesBudget: base.minutesBudget,
               focus: base.focus,
+              type: base.type,
               items: <ItemView>[
                 for (final item in day.items)
                   ItemView(

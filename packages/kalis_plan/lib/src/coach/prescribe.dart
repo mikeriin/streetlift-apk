@@ -1466,6 +1466,14 @@ final class Prescriber {
           _muscleUp(e) ? 3 : 8,
         );
         final shown = _round3(share > 1 ? 1 : share);
+        // (Variante réglée sur une autre référence, § 8.2 : la part
+        // annoncée est celle de cette référence.)
+        final mapped = a.totalOneRm(e.id) == null
+            ? coachLoadReferences[e.id]
+            : null;
+        final referenced = mapped != null && a.totalOneRm(mapped.$1) != null
+            ? mapped
+            : null;
         x
           ..load = step
           ..repsLow = reps
@@ -1473,7 +1481,10 @@ final class Prescriber {
           ..share = share
           ..intensity = IntensityTarget(
             basis: IntensityBasis.percentOneRm,
-            value: shown,
+            value: referenced == null
+                ? shown
+                : _round3(shown * referenced.$2),
+            referenceExerciseId: referenced?.$1,
           )
           ..reasons.add(_note(CoachNotes.minimumLoad, step));
         if (a.totalOneRm(e.id) != null) {
@@ -1524,7 +1535,7 @@ final class Prescriber {
     if (served != null &&
         served <= 0 &&
         floor > 0 &&
-        p > floor + 1e-9 &&
+        p >= floor - 1e-9 &&
         a.aimsAt(e.id) &&
         e.loadType == LoadType.addedWeight &&
         !x.fixed) {

@@ -3629,24 +3629,35 @@ Skeleton buildSkeleton(
       (b, runDays) => _buildStyle(b, runDays, style),
     );
   } else {
-    final (force, endurance) = _phaseShares(a, shape, shares);
+    final shifted = _phaseShares(a, shape, shares);
     final forceFirst =
         a.profile.disciplines.primary == TrainingDiscipline.streetlifting;
     final candidates = <(String, _Builder, Set<int>)>[];
-    // Gabarit typé de la bibliothèque, quand l'un réalise la répartition.
-    {
-      final probe = _Builder(a, shape, blockIndex, rotation);
-      final runs = _buildRuns(probe);
-      final free = <int>[
-        for (var d = 0; d < a.dayCount; d++)
-          if (!runs.contains(d)) d,
-      ];
+    final probe = _Builder(a, shape, blockIndex, rotation);
+    final runs = _buildRuns(probe);
+    final free = <int>[
+      for (var d = 0; d < a.dayCount; d++)
+        if (!runs.contains(d)) d,
+    ];
+    // Répartition de la phase d'abord ; quand elle diffère de la
+    // répartition des disciplines, celle-ci reste candidate : une
+    // répartition déplacée qu'aucun gabarit ne réalise sans laisser un
+    // objectif sans emplacement ou sans casser la récupération ne passe pas
+    // devant (CAHIER_KS.md § 3.4 : couverture, puis récupération ; à
+    // égalité, l'ordre d'essai — la phase d'abord, le gabarit typé avant le
+    // composite).
+    final tried = <(int, int)>{};
+    for (final (force, endurance) in <(int, int)>[shifted, shares]) {
       final (nf, ne) = coachQualitySessions(
         free.length,
         force,
         endurance,
         forceFirst: forceFirst,
       );
+      if (!tried.add((nf, ne))) {
+        continue;
+      }
+      // Gabarit typé de la bibliothèque, quand l'un réalise la répartition.
       final typed = _typedTemplate(nf, ne);
       if (typed != null) {
         final (id, kinds) = typed;

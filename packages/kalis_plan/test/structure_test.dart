@@ -365,7 +365,11 @@ void main() {
             if (i.exerciseId == 'sl-traction-haute-lestee' &&
                 i.intensity != null) {
               high++;
-              expect(i.intensity!.referenceExerciseId, Ids.weightedPull);
+              expect(
+                i.intensity!.referenceExerciseId,
+                Ids.weightedPull,
+                reason: '$i',
+              );
             }
           }
         }
