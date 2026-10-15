@@ -70,7 +70,7 @@ void main() {
   group('8 : carte « Pas encore »', () {
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
-      store.storeClock = () => DateTime(2026, 10, 9, 9);
+      store = AppStore()..storeClock = () => DateTime(2026, 10, 9, 9);
       await store.init();
       final json = Map<String, Object?>.of(_streetJson());
       json['limitations'] = [
@@ -126,9 +126,10 @@ void main() {
         final card = find.byKey(const ValueKey('clearance-card'));
         expect(card, findsOneWidget);
         final texts = [
-          for (final t in find
-              .descendant(of: card, matching: find.byType(Text))
-              .evaluate())
+          for (final t
+              in find
+                  .descendant(of: card, matching: find.byType(Text))
+                  .evaluate())
             (t.widget as Text).data ?? '',
         ];
         // ignore: avoid_print
@@ -151,7 +152,7 @@ void main() {
   group('12 : bandeau des mini-séries à hauteur stable', () {
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
-      store.storeClock = () => DateTime(2026, 10, 9, 9); // S13·J5
+      store = AppStore()..storeClock = () => DateTime(2026, 10, 9, 9); // S13
       await store.init();
       final filled = filledBackup(store);
       final logs = (filled['logs'] as Map).cast<String, dynamic>();
@@ -241,8 +242,10 @@ void main() {
           heights.add(tester.getSize(strip).height);
         }
         // ignore: avoid_print
-        print('CIF12|${dark ? 'sombre' : 'clair'}|bandeau $heights|'
-            'ligne $s0 → ${tester.getSize(slot).height}');
+        print(
+          'CIF12|${dark ? 'sombre' : 'clair'}|bandeau $heights|'
+          'ligne $s0 → ${tester.getSize(slot).height}',
+        );
         expect(add, findsNothing, reason: 'tous les blocs notés');
         expect(_keyStarts('miniset-advice-'), findsOneWidget);
         expect(heights.toSet(), hasLength(1));

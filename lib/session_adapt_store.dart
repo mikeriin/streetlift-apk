@@ -320,8 +320,7 @@ extension SessionAdaptStore on AppStore {
   /// (illisibles ignorées).
   List<kc.AttemptResult> eventAttemptsOf(String eventId) => [
     for (final a
-        in settings.eventAttempts[eventId] ??
-            const <Map<String, dynamic>>[])
+        in settings.eventAttempts[eventId] ?? const <Map<String, dynamic>>[])
       if (_attemptOf(a) case final x?) x,
   ];
 
@@ -2007,8 +2006,7 @@ extension SessionAdaptStore on AppStore {
       final kind = _servedMiniKind(week, j, slot, served, 0);
       return (
         exerciseId: exerciseId,
-        seconds:
-            prescriptionInSeconds(served) || prescriptionTimeTrial(served)
+        seconds: prescriptionInSeconds(served) || prescriptionTimeTrial(served)
             ? true
             : null,
         // Minutes : seulement les lignes marquées à la saisie (`unit`).
@@ -2418,7 +2416,7 @@ extension SessionAdaptStore on AppStore {
             distanceMeters: meters
                 ? v.toDouble()
                 : trial
-                ? it!.distanceMeters
+                ? it.distanceMeters
                 : null,
             flames: s.flames,
             success: v > 0 && (low == null || v >= low),
