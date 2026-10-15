@@ -273,3 +273,19 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - **Défaut B** : squat endurance S14·J6 servi à **11** répétitions au lieu des **14** écrites (round(1,3 × B20 ÷ 3)). D'abord établir la cause par un test (journal synthétique proche du propriétaire : S13·J6 faite à 77,5 kg, séries dures ; prescription au jour réel et à la date prévue) et l'écrire dans la livraison. **Correction (C15.9)** : sur une ligne à charge fixe, la prescription sert la charge **et** les répétitions (ou secondes) écrites ; exceptions gardées : douleur (conduite sous douleur, reprise graduée), bilan du jour bas, reprise après coupure, conseils entre séries (CI1h). Le nombre de séries reste celui du moteur seulement pour ces mêmes raisons.
 - **Tests** (en plus de ceux de CI1h, qui restent verts) : S14·J6 ouverte le dimanche avant, avec un journal où S14·J1 à J5 ne sont pas faites → ordre et exercices de J6 tels qu'écrits (pas de dead-hang), squat 70 kg × 14 ; même séance ouverte le samedi avec J4 réellement manquée → le report du test reste possible (comportement du moteur inchangé le jour même) ; prévision de fin de séance = séance ouverte juste après (même jour) ; ligne PdC à charge fixe aux répétitions écrites ; douleur et bilan bas baissent toujours.
 - **Fin de passe** : dev6.11.3 (ou suivante), contrôle `claude/ci-3d` vert, build signé, `LIVRAISON_CI1h_correction1.md` (pipeline et projet claude.ai) avec la cause de chaque défaut et un « À tester » court (S14·J6 ouverte en avance : ordre écrit, squat 70 kg × 14), ligne de l'état « à valider », notification « Kalis Track <version> prêt à tester — correction CI1h ». Push sur `main` refusé : `cp-sauvegardes/CI1h-candidat`, arrêt.
+
+## KM2c1 — portage court de Koach 1.0.2 (lancé le 15/10/2026 vers 15:25 UTC, tâche « Opus 5.5, effort maximal, moteurs » ; C17)
+
+- Lot : **KM2c1**, prompt `prompts/KM2c1.txt` inchangé (C13.13). Base `moteurs` à la pointe (9ac79e40 ou suivant). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM2c1`.
+- **En parallèle sur `moteurs` : KS1** (`kalis_core` 0.4.4, `kalis_plan` 0.4.0, `kalis_bench`, contrôle `claude/ci-cp-b`, C17.3). Ne touche que `packages/kalis_adapt` (et `kalis_bench` si nécessaire au banc de parité) ; rebase avant chaque push ; si KS1 a publié `kalis_core` 0.4.4 entre-temps, relance les tests de `kalis_adapt` dessus (l'ajout est additif). Troisième session : CIF sur `main`.
+
+## KS1 — structure de la semaine (lancé le 15/10/2026 vers 15:25 UTC, tâche « Opus 5.5, effort maximal, moteurs » ; C17)
+
+- Lot : **KS1**, prompt `prompts/KS1.txt`, cahier `pipeline/cp/CAHIER_KS.md` (fait foi ; décisions du propriétaire au § 11). Lot sans panel (comme C13.3).
+- Base `moteurs` à la pointe. **Contrôle `claude/ci-cp-b`** (KM2c1 occupe `claude/ci-cp-a`), sauvegardes `cp-sauvegardes/KS1`.
+- Ne touche ni `packages/kalis_adapt` (KM2c1) ni l'application (CIF). Profil de test : § 7.1 du cahier (C17.4).
+
+## CIF — lot CI final (lancé le 15/10/2026 vers 15:25 UTC, tâche « Opus 5.5, effort élevé, application » ; C17)
+
+- Lot : **CIF**, prompt `prompts/CIF.txt`. Délégation (C8) ; validation par le pilotage. Consigne : au plus pragmatique (C15.7).
+- Base : pointe de `main` (dev6.17.3, 8d1ef051) → dev6.18.0. Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/CIF`. Rien dans `packages/` (KM2c1 et KS1 tournent sur `moteurs`).

@@ -1,0 +1,36 @@
+LOT CIF — LOT CI FINAL : LIMITES RESTANTES DE L'INTÉGRATION (dev6.18.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : CI1h validé (C15.12) ; refonte UI validée (UI5, U0.27). C14.2 : ce lot passe **avant** la base v1.1 et KM3 (qui l'attend).
+Base : pointe de `main` (dev6.17.3, 8d1ef051 au 15/10/2026 : refonte UI puis correctifs 6.12.1 à 6.17.3). Contrôle `claude/ci-3d` (et la voie rapide `claude/ci-ui-*-rapide` pour itérer). Sauvegardes `cp-sauvegardes/CIF`.
+Décisions : C8, C11, C14.2, C15, C17. Règles : PIPELINE_CP.md, et pour `main` PIPELINE_GP.md comme pour la piste A (ni signature, ni identifiant Android, ni secrets ; jamais de réécriture de l'historique de `main`).
+
+OBJECTIF
+Fermer la voie CI : traiter les limites encore ouvertes des livraisons CI1 à CI1h, sans changer de paquet moteur, pour que KM3 parte d'une application propre. Consigne du propriétaire toujours valable : **au plus pragmatique** (C15.7). Chaque point est d'abord vérifié sur `main` : s'il est déjà réglé (refonte UI, correctifs 6.12.1-6.17.3), le dire dans la livraison avec la preuve (test ou capture) et passer au suivant.
+
+POINTS À TRAITER (sources : `livraisons/LIVRAISON_CI1*.md`, parties « Limites »)
+1. **Tentatives du jour J écrites au journal** (rôle `attempt`, `eventId`) — CI1.4, CI1b.
+2. **Mini-séries d'un cluster / repos-pause saisies une par une** — CI1, CI1b. CI1f a introduit `parts` et 6.13-6.17 ont refait l'interface des mini-séries (`clusterSplit`) : vérifier que chaque partie est saisie et journalisée, compléter sinon.
+3. **Conseils du moteur entre les séries** (`miniSetsLeft`, `stepExerciseId`) affichés — CI1.
+4. **« Dernière série ouverte »** dite en secondes sur un maintien — CI1.
+5. **Simulateur du mode dev** qui joue les techniques (mini-séries, groupes) au lieu d'« une ligne = une série » — CI1.
+6. **Test reporté** exercé par un cas réel : profil à 5-6 séances où un test est suivi d'une séance 48 h après (test Dart et cible émulateur) — CI1b.
+7. **Règle CI1.4 retirée** (débutant sans ancienneté présenté « moins de 6 mois ») avec un **test de migration** — CI1d.
+8. **Carte « Pas encore »** qui répète « En attendant… » quand la note le dit déjà — CI1g.
+9. **Points « non déterminés » des notes d'intégration** — CI1g : résultat d'un contre-la-montre écrit au profil ; jour J d'une course ; pompe inclinée écrite par le bloc (consigne à déclencher) ; test de course borné ; temps d'un test de course saisi (et pas seulement des répétitions) — CI1f.
+10. **Revue réelle sur le journal du propriétaire** : rejouer la revue de `kalis_plan` sur son journal réel (branche `cp-references`, chiffré ; clé dans le document privé du projet claude.ai `claude/CLE_REFERENCES_CP.md`, passée à gpg par un fichier /tmp en mode 600, C7.8 ; **rien de déchiffré n'est committé**, seules des statistiques agrégées vont dans la livraison) : la restructuration réelle sur le bloc importé est-elle montrée et acceptable ? — CI1c, CI1e.
+11. **Tests fragiles du build signé** : `test/m8_carte_2d_test.dart` (blocage de `ui.instantiateImageCodec` dans `tester.runAsync` ; piste : étiquettes chargées une fois en `setUpAll` hors widget, ou délai borné) et `test/visual_capture_test.dart` s'il est encore rouge. Aucun test sauté ni désactivé : on le rend robuste.
+12. **Sauts de hauteur de ligne** quand un bouton apparaît ou disparaît (cas corrigé en 6.15 pour l'annulation d'une mini-série) : audit de tous les cas semblables dans la séance (boutons conditionnels dans une ligne, badges, panneaux de mini-séries), même correction (place réservée).
+
+NE PAS FAIRE
+- Rien dans `packages/` (KM2c1 et KS1 y travaillent en même temps sur `moteurs`) ; aucune montée de paquet.
+- Ne pas toucher au comportement C15 (séance future au jour réel, lignes à charge fixe) ni à la séance future commencée en avance (C15.7, gardée).
+- Pas de refonte d'écran : mise en page seulement là où un point l'exige ; jetons et composants du kit UI (CAHIER_UI.md).
+
+TESTS
+- Un test Dart par point traité (qui échoue avant, passe après) ; cibles émulateur pour 1, 2, 6 ; tous les tests et cibles émulateur des lots précédents restent verts ; sessions perso et dev ; thèmes clair et sombre.
+- Programme de 40 semaines du propriétaire : rien de fait n'est réécrit, sauvegarde d'origine intacte (C11.2) ; test de migration depuis dev6.17.3.
+
+FIN DE LOT
+- dev6.18.0 sur `main`, contrôle complet `claude/ci-3d` vert, build signé réussi (si la publication sur `main` t'est refusée : commit prêt sur `cp-sauvegardes/CIF-candidat` et arrête-toi, le pilotage publie).
+- `LIVRAISON_CIF.md` (pipeline et projet claude.ai) : tableau des 12 points (fait / déjà réglé / reporté, avec preuve), limites restantes, « À tester » court pour le propriétaire.
+- Ligne CIF de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev6.18.0 prêt à tester — lot CI final » ; arrête-toi (aucun fire_trigger).

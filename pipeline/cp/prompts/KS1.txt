@@ -1,0 +1,24 @@
+LOT KS1 — STRUCTURE DE LA SEMAINE : TYPES DE JOUR ET GABARITS (`kalis_core` 0.4.4, `kalis_plan` 0.4.0)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs », C13.9). Validation : automatique, par le pilotage (critères du § 9 du cahier ; pas de panel, pas de relecture documentée, comme C13.3).
+Prérequis : aucun (KM1c2 validé ; cahier tranché le 11/10/2026).
+Base : `moteurs` à la pointe. Contrôle **`claude/ci-cp-b`** (C17 : KM2c1 tourne en même temps sur `moteurs` avec `claude/ci-cp-a`). Sauvegardes `cp-sauvegardes/KS1`.
+Cahier des charges : `pipeline/cp/CAHIER_KS.md` (fait foi). Décisions : C13.3, C15.2, C17.
+
+OBJECTIF
+Que le créateur de programme pense en structure : besoins → fréquence → gabarit de semaine → type de chaque jour → exercices → charges. Bibliothèque de gabarits, choix lexicographique sans compensation, placement, remplissage par les constructeurs existants, couverture des objectifs en contrainte dure, jalons aux objectifs datés, et les cinq corrections de charge du § 8.
+
+CONTENU (dans l'ordre du § 10 du cahier)
+1. `kalis_core` 0.4.4, commit séparé « kalis_core 0.4.4 (KS1) : … » (PIPELINE_CP.md §0), additif : `DaySpec.type`, `Pass1Plan.split`, codes de raison du § 6. Un JSON 0.4.3 se relit et se réécrit à l'identique (test).
+2. `kalis_plan` 0.4.0 : bibliothèque (§ 3.2), proportion des qualités (§ 3.3), choix (§ 3.4), placement (§ 3.5, ordre par exigence du § 11.2), remplissage (§ 3.6), audit de couverture (§ 4), jalons (§ 5), recalage des composantes saturées du score (§ 3.4), corrections du § 8. API inchangée.
+3. Banc (`kalis_bench`) : profils ajoutés du § 9 et profil de test (§ 7.1 : `testdebug.json.gpg` s'il existe dans `pipeline/cp/inputs/ks1/`, sinon `ks_test_ppl6` construit d'après le cahier, valeurs écrites dans la livraison). Mesure avant (0.3.1) / après sur les 27 profils et les nouveaux.
+4. Relecture indépendante du code et du contrat par un sous-agent Opus ; 0 bloquant ouvert.
+
+RÈGLES PROPRES À CE LOT
+- **Ne touche ni `packages/kalis_adapt` ni l'application** (`lib/`, `main`) : KM2c1 travaille sur `kalis_adapt` en même temps. Rebase avant chaque push sur `moteurs` (fetch, rebase, tests des paquets touchés et de leurs dépendants si le rebase a apporté des changements, push en avance rapide, jusqu'à 5 essais). En cas de conflit sur un fichier partagé (`kalis_bench`, CI), garde les deux changements.
+- Profils mono-discipline : squelette identique à 0.3.1 octet pour octet, sauf si un gabarit nouveau le bat à la règle du § 3.4 (chaque écart listé et justifié).
+- Ce qui n'a pas de source est un **choix raisonné**, dit comme tel ; aucun chiffre inventé présenté comme mesuré.
+
+FIN DE LOT
+- `kalis_core` 0.4.4 et `kalis_plan` 0.4.0 (et `kalis_bench` si changé) publiés sur `moteurs`, étiquettes `etiquettes/<paquet>-v<version>`, contrôle complet vert sur `claude/ci-cp-b`.
+- `LIVRAISON_KS1.md` (pipeline et projet claude.ai) : tableau des critères du § 9 (seuil, mesuré, tenu), avant / après, programme généré pour le profil de test (semaine type et saison), écarts mono-discipline justifiés, limites, et ce que le lot court d'application devra faire (§ 6).
+- Ligne KS1 de `ETAT_CP.md` « livré » ; notification ; arrête-toi (aucun fire_trigger).
