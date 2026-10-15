@@ -600,9 +600,8 @@ void _seance(_Releve rel, int nf, int rep, Json d, Map<String, Json> fiches) {
               x['externalLoadKg'] != null &&
               dictOuVide(x['target'])['role'] == null) {
             final hiP = dictOuVide(x['target'])['repsHigh'];
-            premieres['${g.key.$1}|${g.key.$2}|${hiP == null ? null : dbl(hiP)}'] = dbl(
-              x['externalLoadKg'],
-            );
+            premieres['${g.key.$1}|${g.key.$2}|${hiP == null ? null : dbl(hiP)}'] =
+                dbl(x['externalLoadKg']);
             break;
           }
         }
