@@ -1,0 +1,21 @@
+LOT KS1c1 — KS1 CORRECTION 1 : 0 VIOLATION SUR LES SAISONS DES PROFILS AJOUTÉS (`kalis_plan` 0.4.1)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs »). Validation : automatique, par le pilotage (C17.12).
+Prérequis : KS1 livré (`kalis_plan` 0.4.0, `kalis_core` 0.4.4, `kalis_bench` 0.5.0 ; `moteurs` b35a5f6d).
+Base : `moteurs` à la pointe. Contrôle `claude/ci-cp-b` (KM1c3 occupe `claude/ci-cp-a`), sauvegardes `cp-sauvegardes/KS1c1`.
+Cahier : `pipeline/cp/CAHIER_KS.md`. Livraison à lire : `livraisons/LIVRAISON_KS1.md` (§ 2, § 3 points 2 et 4, § 7). Décision : C17.12.
+
+OBJECTIF
+« 0 violation de sécurité » est un critère dur : `kalis_plan` 0.4.x n'entre pas dans l'application tant que les saisons des sept profils ajoutés par KS1 n'y sont pas. Corriger les deux causes établies par KS1, sur tous les profils, sans rien changer d'autre.
+
+CONTENU
+1. **Hausse de charge après une échéance avancée** (4 violations `charge_trop_vite`, `ks_01` à `ks_03`, défaut déjà présent en 0.3.1) : quand le bloc est réécrit après un changement d'échéance en cours de saison, le garde-fou de hausse de charge doit comparer à la **semaine réellement servie** d'avant (et non au bloc réécrit). Test qui échoue avant, passe après ; mêmes cas rejoués sur 0.3.1 pour mémoire.
+2. **Rampe de volume par groupe sous douleur** (2 violations `volume_trop_vite`, `ks_test_ppl6`, scénario « douleur à l'épaule » : lombaires 7,5 pour 7,0 ; fessiers 17,0 pour 16,8) : quand le haut du corps baisse, les jours de jambes ne doivent pas dépasser la rampe admise par groupe ; arrondi des séries dures compris.
+3. **Banc complet** : 0 violation sur les 34 profils (27 du banc × 100 graines × 3 modèles × 10 scénarios, et les 7 ajoutés sur toutes leurs graines et scénarios, pas seulement la graine 0) ; aucun recul sur les critères tenus par KS1 (couverture 100 %, récupération des profils mixtes, rotation, ordre par exigence, 27 squelettes mono identiques à 0.3.1, non-ressemblance ≤ 0,30).
+
+NE PAS FAIRE
+- Ni gabarits à une qualité (lot KS2, plus tard), ni relèvement des plafonds de volume, ni remplissage du créneau (durée des séances : décision C17.12.2) ; ni `kalis_adapt`, ni l'application. KM1c3 travaille en même temps sur `kalis_adapt/reference/` : rebase avant chaque push.
+
+FIN DE LOT
+- `kalis_plan` 0.4.1 (et `kalis_bench` si le banc change), push `moteurs`, étiquettes, contrôle complet vert sur `claude/ci-cp-b`.
+- `LIVRAISON_KS1c1.md` (pipeline et projet claude.ai) : cause de chaque violation, correction, tableau des critères du § 9 avant / après.
+- Ligne KS1c1 « livré » ; notification ; arrête-toi (aucun fire_trigger).

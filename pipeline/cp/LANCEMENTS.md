@@ -300,3 +300,8 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Lot : **BV11**, prompt `prompts/BV11.txt`. Délégation (C8) ; validation par le pilotage. Au plus pragmatique (C15.7).
 - Base : pointe de `main` (dev6.18.0, 6e32cdf6) → dev6.19.0. Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/BV11`. Rien dans `packages/` ni `tools/catalog/` (KS1 et KM1c3 sur `moteurs`).
+
+## KS1c1 — 0 violation sur les saisons des profils ajoutés (lancé le 15/10/2026 vers 23:45 UTC, tâche « Opus 5.5, effort maximal, moteurs » ; C17.12)
+
+- Lot : **KS1c1**, prompt `prompts/KS1c1.txt`. Base `moteurs` à la pointe (b35a5f6d ou suivant). Contrôle `claude/ci-cp-b`, sauvegardes `cp-sauvegardes/KS1c1`.
+- En parallèle sur `moteurs` : KM1c3 (référence Python de `kalis_adapt`, contrôle `claude/ci-cp-a`). Rebase avant chaque push.
