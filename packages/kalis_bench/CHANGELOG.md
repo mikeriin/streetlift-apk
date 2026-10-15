@@ -15,6 +15,12 @@ Critères de sécurité, profils types (`profiles/`, 27), attentes de coach et g
   mono-discipline contre 0.3.1 (`docs/data/ks1/`), contrôles du profil de test (§ 7) ; rapport `STRUCTURE.md` et
   `structure.json` (rapport du banc, `runStructureBench`), programmes et saisons des profils ajoutés.
 - `generateProgram` accepte un horizon (`horizonWeeks`, 40 semaines pour le profil de test).
+- **Parité de Koach** (`test/km2_banc_test.dart`) : Koach rejoue la saison figée que lit la référence Python
+  (données de référence sur `kalis_plan` 0.3.1) ; la saison vivante de `kmReferenceSeason` doit en garder le squelette
+  et le calendrier (hors changement de discipline). Régénérer ces données sur `kalis_plan` 0.4.0 revient au pipeline
+  Koach.
+- Export des programmes : en-tête de séance au type du jour quand le moteur le donne (« tirage, endurance de
+  force »).
 
 ## 0.4.1 — 11/10/2026 (lot KM1c2)
 

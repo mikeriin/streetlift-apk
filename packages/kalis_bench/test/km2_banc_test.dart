@@ -344,12 +344,13 @@ void main() {
           final p1 =
               (bloc! as Map<String, Object?>)['pass1']! as Map<String, Object?>;
           return <Object?>[
-            for (final d in (p1['days']! as List<Object?>)
-                .cast<Map<String, Object?>>())
+            for (final d
+                in (p1['days']! as List<Object?>).cast<Map<String, Object?>>())
               <Object?>[
                 d['weekday'],
-                for (final s in (d['slots']! as List<Object?>)
-                    .cast<Map<String, Object?>>())
+                for (final s
+                    in (d['slots']! as List<Object?>)
+                        .cast<Map<String, Object?>>())
                   '${s['slotId']}|${s['exerciseId']}',
               ],
           ];
