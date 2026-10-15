@@ -16,7 +16,6 @@ Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal r�
 | `banc/` | Port Python des modèles de vérité et des critères de sécurité de `kalis_bench`, meneur de saison, banc adversarial, campagne de mesure des critères. |
 | `rejeu/` | Rejeu walk-forward d'un export de l'application (agrégats seulement). |
 | `fixtures/` | Fixtures de parité Python/Dart (`generer.py`, format décrit dans `fixtures/README.md`). |
-| `fix_dart/`, `params/koach_params_d1.json` | Copies figées des 13 fixtures et du fichier de paramètres de la référence **1.0.1** (`moteurs` df28b47c), lues par les tests Dart de `kalis_adapt` 1.0.0 et de `kalis_bench` tant que le delta 1.0.2 n'est pas porté. Le lot KM2c1 repointe ces tests vers `fixtures/` et `params/koach_params_v1.json`, puis supprime ces copies. |
 | `donnees/` | Saisons de référence, témoin `kalis_adapt` 0.3.1 exporté par `kalis_bench` (Dart), résultats publiés. |
 | `tests/` | Tests (pytest). |
 

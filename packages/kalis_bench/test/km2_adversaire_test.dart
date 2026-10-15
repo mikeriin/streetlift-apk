@@ -511,10 +511,7 @@ void main() {
       '{"koach_sans_jour_j": [], "temoin_sans_jour_j": [], '
       '"aucun_jour_j": 16}',
     );
-    expect(
-      kc.jm(cmp).keys.last,
-      'critere_7_bis',
-    );
+    expect(kc.jm(cmp).keys.last, 'critere_7_bis');
     expect(kmResumeTexteComparaison(cmp).split('\n').sublist(0, 3), <String>[
       'tous     n=40  jour J koach moy 0.872389 pire 0.788516 | témoin moy '
           '0.599347 pire 0.0',

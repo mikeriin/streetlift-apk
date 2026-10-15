@@ -9,8 +9,11 @@ Base : `moteurs` 9ac79e40. Session Opus 5.5 lancée le 15/10/2026 ~15:29 UTC.
 - kalis_bench : `kmCritereApparie` (critère 7 bis) dans `kmComparerAdversaires` + test ; fixtures km2 régénérées (generer_banc_km2.py) ; _evaluationPython (1.0.2) mis à jour.
 - Versions : kalis_adapt 1.0.1, kalis_bench 0.4.2.
 
+- Premier contrôle dev (run 38762512163) : compilation OK, analyse OK, parité 14 fixtures OK, banc km2 OK ; 2 échecs corrigés (invariant « bilan bas » du test de propriétés réécrit pour A.2 de 1.0.2 ; `_min` typé).
+- Relecture indépendante (Opus) traitée : B1 (moyenne séquentielle quand E=1, C>1 — vérifié bit à bit sur numpy), M1 (campagne : prevu_jour, observe, couverture_paires), m1 (test), m2 (commentaire). m3 (borne defaut_modele_sd 0 refusée par la règle _sd) : signalé au pilotage, non modifié (référence).
+
 ## En cours
-- Contrôle (dev) sur claude/ci-cp-a (outil packages/aa_km2c1, arbre réduit).
+- Contrôle dev fb0e0ec6 sur claude/ci-cp-a : tests + 5 jeux d'adversaires (7 bis, sans extension, témoin relu) + campagne g0-5 en 4 parties + assemblage (outil `aa_km2c1`, `extra.sh` dans /home/claude/aa).
 
 ## Reste
 - Corriger la compilation / parité ; formatage.

@@ -1036,8 +1036,7 @@ class Planification extends Extension implements AvecItemsDuJour {
         // l'échelle descend de 1 à `dispersion_echeance` sur les
         // `dispersion_echeance_semaines` premières semaines de journal.
         var part =
-            ent(tirage['semaines']) /
-            dbl(pl['dispersion_echeance_semaines']);
+            ent(tirage['semaines']) / dbl(pl['dispersion_echeance_semaines']);
         if (part > 1.0) {
           part = 1.0;
         }
@@ -1046,10 +1045,22 @@ class Planification extends Extension implements AvecItemsDuJour {
           final ex = suivis[e];
           if (cibles.containsKey(ex) && fiches[ex]!['type'] == 'charge') {
             for (var c = 0; c < cc; c++) {
-              // numpy : `frais[:, e, :].mean(axis=1)` → somme par paires
-              // sur N.
+              // numpy : `frais[:, e, :].mean(axis=1)`. Quand un seul
+              // exercice est suivi et qu'il y a plusieurs plans candidats,
+              // numpy range `frais` avec l'axe des plans le plus rapide : la
+              // réduction sur N est séquentielle (comme `_plProgression`) ;
+              // sinon somme par paires.
               final row = frais[c][e];
-              final centre = _plSommePaires(row) / nn;
+              double sc;
+              if (ne == 1 && cc > 1) {
+                sc = 0.0;
+                for (final v in row) {
+                  sc += v;
+                }
+              } else {
+                sc = _plSommePaires(row);
+              }
+              final centre = sc / nn;
               for (var n = 0; n < nn; n++) {
                 row[n] = centre + kd * (row[n] - centre);
               }

@@ -659,6 +659,48 @@ Map<int, Map<String, List<Object?>>> kmEpreuvesParJour(KmTour tour) {
   return out;
 }
 
+/// Paires (|ln(vérité / estimation)|, écart-type relatif de Koach) des
+/// estimations gardées par [keep] à partir du rang [rangMin] (mêmes rangs
+/// que [KmEstimations.add] : dernière estimation de chaque jour de
+/// l'exercice), arrondies à 5 décimales (`mesures.paires_couverture`).
+List<List<double>> kmPairesCouverture(
+  KmTour tour,
+  bool Function(kc.Json e) keep,
+  int rangMin,
+) {
+  final parJour = <(String, int), kc.Json>{};
+  final ordre = <(String, int)>[];
+  for (final e in tour.estimates) {
+    if (!keep(e) || kc.dbl(e['truth']) <= 0) {
+      continue;
+    }
+    final cle = (e['exerciseId']! as String, kc.ent(e['simDay']));
+    if (!parJour.containsKey(cle)) {
+      ordre.add(cle);
+    }
+    parJour[cle] = e;
+  }
+  final rang = <String, int>{};
+  final out = <List<double>>[];
+  for (final cle in ordre) {
+    final e = parJour[cle]!;
+    final ex = e['exerciseId']! as String;
+    rang[ex] = (rang[ex] ?? 0) + 1;
+    final k = rang[ex]!;
+    if (k < rangMin || k > kmKMax || kc.dbl(e['capacity']) <= 0) {
+      continue;
+    }
+    out.add(<double>[
+      kmArrondiPy(
+        math.log(kc.dbl(e['truth']) / kc.dbl(e['capacity'])).abs(),
+        5,
+      ),
+      kmArrondiPy(kc.dbl(e['relSd']), 5),
+    ]);
+  }
+  return out;
+}
+
 /// Une unité par (saison, échéance) : prévisions de P(réussite) faites
 /// pour cette échéance et réussite observée le jour J ; (unités,
 /// exclusions {raison: n}) (`campagne.unites_calibration`).
@@ -751,7 +793,13 @@ Map<int, Map<String, List<Object?>>> kmEpreuvesParJour(KmTour tour) {
                   'semaine': d.value!['semaine'],
                   'p_tout': d.value!['p_tout'],
                   'p': d.value!['p'],
+                  'prevu_jour': d.value!['prevu_jour'],
                 },
+      },
+      // 1.0.2 (critère 5) : ce que le jour J a donné par cible —
+      // [meilleure valeur réussie, maximum vrai du jour, mode].
+      'observe': <String, Object?>{
+        for (final ex in cibles.keys) ex: List<Object?>.of(obs[ex]!),
       },
     });
   }
@@ -1127,6 +1175,14 @@ Map<String, Object?> kmMesureDeSaison(
     final e = KmEstimations()..add(tour, (x) => _filtre(m, x));
     est[m] = <String, Object?>{'rows': e.rows, 'first_under': e.firstUnder};
   }
+  // 1.0.2 (recalage de `mesure.defaut_modele_sd`, critère 4) : paires
+  // (|ln(capacité vraie / estimée)|, écart-type relatif) des principaux
+  // chargés aux rangs >= [kmRangCouverture], une par séance de l'exercice.
+  est['couverture_paires'] = kmPairesCouverture(
+    tour,
+    (x) => _filtre('loadedMain', x),
+    kmRangCouverture,
+  );
   final (unites, exclus) = sansPlanificateur
       ? (<kc.Json>[], <String, int>{})
       : kmUnitesCalibration(saison, tour, previsions);

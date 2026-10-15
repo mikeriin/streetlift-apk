@@ -2044,10 +2044,7 @@ Map<String, Object?> kmCritereApparie(List<kc.Json> lignes) {
   Map<String, Object?> juger(List<kc.Json> sel) {
     final cas = <(kc.Json, double)>[
       for (final l in sel)
-        (
-          l,
-          kmR6(kc.dbl(perf(l, 'koach')) - kc.dbl(perf(l, 'temoin')))!,
-        ),
+        (l, kmR6(kc.dbl(perf(l, 'koach')) - kc.dbl(perf(l, 'temoin')))!),
     ];
     final n = cas.length;
     var tenus = 0;
@@ -2083,7 +2080,9 @@ Map<String, Object?> kmCritereApparie(List<kc.Json> lignes) {
       'part': kmR6(part),
       'sous_plancher': sous,
       'sous_plancher_non_excuses': nonExcuses,
-      'pire_ecart': ecarts.isNotEmpty ? kmR6(_min(ecarts)) : null,
+      'pire_ecart': ecarts.isNotEmpty
+          ? kmR6(ecarts.reduce((a, b) => b < a ? b : a))
+          : null,
       'ecart_moyen': n != 0 ? kmR6(kmSommePy(ecarts) / n) : null,
       'respecte': n == 0
           ? null

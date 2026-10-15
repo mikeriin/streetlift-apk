@@ -2703,9 +2703,7 @@ class Seances {
         charge = plan['charge_item'] as num;
       }
     }
-    if (index >= 1 &&
-        vrai(plan['reprise']) &&
-        !vrai(plan['palier_franchi'])) {
+    if (index >= 1 && vrai(plan['reprise']) && !vrai(plan['palier_franchi'])) {
       // Reprise par paliers mesurés : le palier suivant n'est permis
       // qu'après une série faite en entier, sans échec, notée, et dite au
       // plus aussi dure que visé (`serieFaite`). Sans série versée au
@@ -3290,8 +3288,7 @@ class Seances {
           }
           final borne =
               (autorise + bw) /
-                  (1 +
-                      dbl(s['schema_change_part']) * (moins > 0 ? moins : 0)) -
+                  (1 + dbl(s['schema_change_part']) * (moins > 0 ? moins : 0)) -
               bw;
           if (charge > borne) {
             charge = grille.plancher(_seMax(borne, grille.minimum));
@@ -3512,9 +3509,6 @@ class Seances {
     };
   }
 
-  /// Échelle des tentatives (règles A8.2 de 0.3.1, probabilités de
-  /// Koach) : ouverture sûre, puis la barre la plus lourde qui garde la
-  /// probabilité voulue.
   /// Palier (charge externe pour UNE répétition) que les barres des
   /// `barre_recente_j` derniers jours autorisent, ou null sans barre
   /// récente (1.0.2, C13.12). Chaque barre réussie est ramenée à une
@@ -3560,8 +3554,7 @@ class Seances {
     }
     double? pas;
     for (final (total, p_) in ramenees) {
-      if (total >=
-              plusHaute * (1 - dbl(s['tentative_palier_bande'])) - 1e-9 &&
+      if (total >= plusHaute * (1 - dbl(s['tentative_palier_bande'])) - 1e-9 &&
           (pas == null || p_ < pas)) {
         pas = p_;
       }
@@ -3585,6 +3578,9 @@ class Seances {
     return autorise - bw;
   }
 
+  /// Échelle des tentatives (règles A8.2 de 0.3.1, probabilités de
+  /// Koach) : ouverture sûre, puis la barre la plus lourde qui garde la
+  /// probabilité voulue.
   Json _tentative(Json item, int index, Json plan, Piste t) {
     final exId = item['exerciseId'] as String;
     final grille = plan['grille'] as Grille?;
