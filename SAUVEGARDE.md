@@ -16,8 +16,12 @@ Base : `moteurs` 9ac79e40. Session Opus 5.5 lancée le 15/10/2026 ~15:29 UTC.
 - Adversaires (run 38764346154, Koach sans extension, témoin relu) : Dart = Python à l'identique sur les 5 jeux (koach, groupes, critere_7_bis) — 7 bis : KM1 24/24, b300 23/24, complet b600 22/24, b3000 20/24 (2 sous plancher), recherche km1c2 17/24 (6).
 - Run 38766161412 : kalis_bench 109 tests verts ; kalis_adapt 1 échec (docs/PROPRIETAIRE.md, version) corrigé ; campagne g0-5 : 4 parts (~10 min chacune) dans /home/claude/aa/parts (copie dans ci-out du commit ca79b38c).
 
+- Assemblage fait : critères Dart = Python (1-4, 6, 7) ; critère 5 C13.13.1 identique ; données dans kalis_bench/docs/data/km2c1, doc CRITERES_KM2C1.md.
+- Commit final local e502e963 (worktree /home/claude/mot), brouillon /home/claude/LIVRAISON_KM2c1.md.
+
 ## En cours
-- Assemblage (dev c18f4702).
+- Contrôle complet 01d46b69 sur claude/ci-cp-a (arbre de e502e963).
+- Incident : cp-sauvegardes/KM2c1-candidat poussée avec .github → build APK run 38777553043 annulé ; suppression de branche refusée (403).
 - Contrôle dev fb0e0ec6 sur claude/ci-cp-a : tests + 5 jeux d'adversaires (7 bis, sans extension, témoin relu) + campagne g0-5 en 4 parties + assemblage (outil `aa_km2c1`, `extra.sh` dans /home/claude/aa).
 
 ## Reste
