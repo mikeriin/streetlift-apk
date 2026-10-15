@@ -273,14 +273,12 @@ final class StructureMeasure {
   final Map<String, bool> testChecks;
 
   /// Plus petite récupération (composante de la note) des blocs.
-  double get recoveryMin => recoveryScore.isEmpty
-      ? 1
-      : recoveryScore.reduce((x, y) => x < y ? x : y);
+  double get recoveryMin =>
+      recoveryScore.isEmpty ? 1 : recoveryScore.reduce((x, y) => x < y ? x : y);
 
   /// Vrai si le profil garde un gabarit d'avant 0.4.0.
-  bool get mono => templates.every(
-    (t) => t == '?' || structureLegacyTemplates.contains(t),
-  );
+  bool get mono =>
+      templates.every((t) => t == '?' || structureLegacyTemplates.contains(t));
 
   /// Objet JSON.
   Map<String, Object?> toJson() => <String, Object?>{
@@ -600,7 +598,8 @@ StructureMeasure structureMeasureOf(
   );
 }
 
-String _pct(double v) => '${(v * 100).toStringAsFixed(1).replaceAll('.', ',')} %';
+String _pct(double v) =>
+    '${(v * 100).toStringAsFixed(1).replaceAll('.', ',')} %';
 
 String _num(double v) => v.toStringAsFixed(3).replaceAll('.', ',');
 
@@ -703,7 +702,9 @@ Map<String, String> structureReport(
     }
     rotation += m.rotationChecked;
     for (final b in m.rotationOff) {
-      rotationOff.add('`${m.key}` bloc $b${m.mono ? ' (gabarit inchangé)' : ''}');
+      rotationOff.add(
+        '`${m.key}` bloc $b${m.mono ? ' (gabarit inchangé)' : ''}',
+      );
     }
   }
   final changed = <String>[
@@ -774,8 +775,10 @@ Map<String, String> structureReport(
     );
   if (test != null) {
     for (final e in test.testChecks.entries) {
-      b.writeln('| Profil de test : ${e.key} | oui | ${e.value ? 'oui' : 'non'} | '
-          '${held(e.value)} |');
+      b.writeln(
+        '| Profil de test : ${e.key} | oui | ${e.value ? 'oui' : 'non'} | '
+        '${held(e.value)} |',
+      );
     }
   }
   void list(String title, List<String> items) {
@@ -794,7 +797,10 @@ Map<String, String> structureReport(
   list('Blocs sous le seuil de récupération', recoveryLow);
   list('Séances sans principal', noMain);
   list('Séances où le plus exigeant ne vient pas en tête', orderOff);
-  list('Blocs où le jour le plus exigeant n\'ouvre pas la rotation', rotationOff);
+  list(
+    'Blocs où le jour le plus exigeant n\'ouvre pas la rotation',
+    rotationOff,
+  );
   list('Squelettes mono-discipline différents de 0.3.1', <String>[
     for (final k in changed) '`$k` : ${identity[k]!.join(' ; ')}',
   ]);
@@ -817,8 +823,8 @@ Map<String, String> structureReport(
       final low = rec.isEmpty
           ? 1.0
           : rec.map((v) => v.toDouble()).reduce((x, y) => x < y ? x : y);
-      final unc = (old['uncovered'] as List<Object?>? ?? const <Object?>[])
-          .length;
+      final unc =
+          (old['uncovered'] as List<Object?>? ?? const <Object?>[]).length;
       was =
           '${_num(low)} (0.1) ; $unc ; ${old['timeOff']} sur '
           '${old['daysCounted']}';
@@ -833,10 +839,11 @@ Map<String, String> structureReport(
   }
   return <String, String>{
     'STRUCTURE.md': b.toString(),
-    'structure.json': '${jsonEncode(<String, Object?>{
-      'measures': <Object?>[for (final m in measures) m.toJson()],
-      'identity': identity,
-      'seasonViolations': seasonViolations,
-    })}\n',
+    'structure.json':
+        '${jsonEncode(<String, Object?>{
+          'measures': <Object?>[for (final m in measures) m.toJson()],
+          'identity': identity,
+          'seasonViolations': seasonViolations,
+        })}\n',
   };
 }

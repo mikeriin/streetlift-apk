@@ -221,10 +221,7 @@ void main() {
     test('gabarit, types et placement', () {
       final plan = block.pass1;
       expect(plan.split!.templateId, SplitTemplates.pushPullLegs6);
-      expect(
-        plan.split!.reasons.first.code,
-        ReasonCodes.planSplitChosen,
-      );
+      expect(plan.split!.reasons.first.code, ReasonCodes.planSplitChosen);
       final types = <String>[
         for (final d in plan.days)
           '${d.type!.patterns.map((p) => p.code).join('+')}/'

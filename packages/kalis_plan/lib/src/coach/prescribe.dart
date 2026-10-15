@@ -1490,9 +1490,7 @@ final class Prescriber {
           ..share = share
           ..intensity = IntensityTarget(
             basis: IntensityBasis.percentOneRm,
-            value: referenced == null
-                ? shown
-                : _round3(shown * referenced.$2),
+            value: referenced == null ? shown : _round3(shown * referenced.$2),
             referenceExerciseId: referenced?.$1,
           )
           ..reasons.add(_note(CoachNotes.minimumLoad, step));
@@ -1560,8 +1558,7 @@ final class Prescriber {
       final possible = share >= 1
           ? 0.0
           : (share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1));
-      if (step > 0 &&
-          possible - (x.rir ?? 3) >= (x.repsHigh ?? 1) - 1e-9) {
+      if (step > 0 && possible - (x.rir ?? 3) >= (x.repsHigh ?? 1) - 1e-9) {
         served = step;
         x.reasons.add(_note(CoachNotes.minimumLoad, step));
       }
@@ -2156,9 +2153,7 @@ final class Prescriber {
     // 1RM — au moins cinq répétitions à la réserve —, hors reprise après
     // une douleur et hors mode prudent : sinon la séance de volume
     // ordinaire, sous ses garde-fous.)
-    if (share > 0.80 ||
-        a.cautious ||
-        a.returnShareOf(e, _returnWeek) != null) {
+    if (share > 0.80 || a.cautious || a.returnShareOf(e, _returnWeek) != null) {
       return _liftVolume(s, ws, week, role);
     }
     final x = _new(s);

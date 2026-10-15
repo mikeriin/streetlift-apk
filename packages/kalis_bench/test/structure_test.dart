@@ -64,11 +64,11 @@ void main() {
     });
 
     test('rapport : tableau des critères et JSON lisible', () {
-      final files = structureReport(
-        <StructureMeasure>[m],
-        seasonViolations: 0,
+      final files = structureReport(<StructureMeasure>[m], seasonViolations: 0);
+      expect(
+        files.keys,
+        containsAll(<String>['STRUCTURE.md', 'structure.json']),
       );
-      expect(files.keys, containsAll(<String>['STRUCTURE.md', 'structure.json']));
       expect(files['STRUCTURE.md'], contains('ks_test_ppl6'));
       expect(jsonDecode(files['structure.json']!), isA<Map<String, Object?>>());
     });

@@ -990,7 +990,13 @@ SeasonPlan seasonPlanOf(Athlete a, CivilDate start, CivilDate createdOn) {
   return SeasonPlan(
     createdOn: createdOn,
     engineVersion: kalisPlanVersion,
-    eventIds: <String>[if (target?.eventId != null) target!.eventId!],
+    // (Toutes les échéances que visent les phases : depuis le lot KS1, un
+    // objectif daté peut précéder l'échéance dans la saison.)
+    eventIds: <String>{
+      if (target?.eventId != null) target!.eventId!,
+      for (final p in phases)
+        if (p.eventId != null) p.eventId!,
+    }.toList(),
     phases: phases,
     reasons: <Reason>[
       if (target?.eventId != null)

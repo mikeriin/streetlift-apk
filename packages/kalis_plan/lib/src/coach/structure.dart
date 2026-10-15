@@ -540,7 +540,8 @@ DayType coachDerivedType(Athlete a, DaySpec day) {
   };
   List<_Kind> typed(List<String> schemas, int forceCount) {
     final kinds = <_Kind>[
-      for (var i = 0; i < schemas.length; i++) kindOf(schemas[i], i < forceCount),
+      for (var i = 0; i < schemas.length; i++)
+        kindOf(schemas[i], i < forceCount),
     ];
     // Force d'abord (ordre d'exigence), puis endurance, chaque groupe dans
     // l'ordre de la suite.
@@ -561,10 +562,12 @@ DayType coachDerivedType(Athlete a, DaySpec day) {
   }
   if (n == 5) {
     final legsForce = nf > ne;
-    final upper = typed(
-      const <String>['pull', 'push', 'pull', 'push'],
-      nf - (legsForce ? 1 : 0),
-    );
+    final upper = typed(const <String>[
+      'pull',
+      'push',
+      'pull',
+      'push',
+    ], nf - (legsForce ? 1 : 0));
     final legs = legsForce ? _Kind.legsForce : _Kind.legsEndurance;
     return (
       SplitTemplates.pushPullLegs5,

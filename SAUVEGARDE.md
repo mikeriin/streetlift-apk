@@ -13,8 +13,11 @@ Pas de SDK Dart dans la session : compilation, formatage et tests via `claude/ci
 - CI 38767820359 : compilation et banc structure (aa_ks1) ; corrections : note relue = note rendue (scoreOf recalé), plafond d'allègement sur l'intention deload, jambes E avec principal, méthodes douces, test structure_test.dart de kalis_plan, CONTRAT § 12.15, docs/STRUCTURE_SEMAINE.md, banc structure_criteria + runStructureBench.
 - 16:45 : gabarits typés généralisés (qualités au plus fort reste sur la suite des schémas : ppl6_q 4+2, ul4 1+3…), pas minimal quand la part visée s'arrondit à +0 kg, CHANGELOG 0.4.0.
 
+- 17:55 : relecture indépendante (Opus) : 3 bloquants corrigés (pas minimal borné : semaine de charge, hors reprise et prudent, ≥ 3 répétitions à la réserve ; charge fixe seulement sous 80 % du 1RM, hors prudent et reprise, +1 rép. / 2 semaines, jamais à moins d'une en réserve) ; objectif daté à moins de 4 semaines ne remplace pas l'échéance ; eventIds de la saison = toutes les échéances des phases ; répartition de base candidate (profil de test : ppl6_q à chaque bloc). Run 38779114208 : analyse, tests kalis_plan, test structure du banc, formatage : verts. Jaccard max exact 0,188, tolérant 0,250.
+- Commits locaux ks1 : 141e52a6 (kalis_core 0.4.4), ba8724d4 (kalis_plan 0.4.0, kalis_bench 0.5.0) sur moteurs 9ac79e40.
+
 ## En cours
-- Run de contrôle avec mesure avant (AVANT=1, aa_ks0) : fichiers de référence docs/data/ks1/ du banc à produire.
+- Contrôle complet claude/ci-cp-b (commit 33343f2c, arbre de ba8724d4).
 
 ## Reste
-Docs régénérées (PROFILS_TYPES, COMPARAISON_L10), kalis_bench 0.5.0, Jaccard, relecture indépendante, CI complète, publication moteurs + étiquettes, livraison, ETAT_CP, suivi, notification.
+Publication moteurs (rebase si KM2c1 publié) + étiquettes kalis_core-v0.4.4, kalis_plan-v0.4.0 ; Jaccard des saisons ; livraison (pipeline + projet), ETAT_CP « livré », page de suivi, notification.
