@@ -19,13 +19,5 @@ Base : `moteurs` 9ac79e40. Session Opus 5.5 lancée le 15/10/2026 ~15:29 UTC.
 - Assemblage fait : critères Dart = Python (1-4, 6, 7) ; critère 5 C13.13.1 identique ; données dans kalis_bench/docs/data/km2c1, doc CRITERES_KM2C1.md.
 - Commit final local e502e963 (worktree /home/claude/mot), brouillon /home/claude/LIVRAISON_KM2c1.md.
 
-## En cours
-- Contrôle complet 01d46b69 sur claude/ci-cp-a (arbre de e502e963).
-- Incident : cp-sauvegardes/KM2c1-candidat poussée avec .github → build APK run 38777553043 annulé ; suppression de branche refusée (403).
-- Contrôle dev fb0e0ec6 sur claude/ci-cp-a : tests + 5 jeux d'adversaires (7 bis, sans extension, témoin relu) + campagne g0-5 en 4 parties + assemblage (outil `aa_km2c1`, `extra.sh` dans /home/claude/aa).
-
-## Reste
-- Corriger la compilation / parité ; formatage.
-- Campagne Dart six graines (4 parties) + assemblage ; adversaires (7 bis) ; temps.
-- Relecture indépendante (sous-agent Opus).
-- Docs (CHANGELOG, CONTRAT.md, INTEGRATION_KM3.md, PORTAGE_DART.md, README référence), contrôle complet, push moteurs, étiquettes, livraison, état, page de suivi, notification.
+## Terminé (15/10/2026 ~19:05 UTC)
+- Contrôle complet run 38777545635 vert ; `moteurs` e502e963 ; étiquettes kalis_adapt-v1.0.1, kalis_bench-v0.4.2 ; livraison, DECISIONS (### KM2c1), ETAT (livré) poussés sur pipeline ; projet claude/LIVRAISON_KM2c1.md ; page de suivi (version 47) ; notification.
