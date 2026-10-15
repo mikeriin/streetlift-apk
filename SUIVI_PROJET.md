@@ -1,8 +1,13 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : CIF — lot CI final (pipeline CP), version dev6.18.0 ; précédent : dev6.17.3 (correctifs UI)**  
-**Date : 15 octobre 2026, Europe/Paris — version : 6.18.0+127, affichée « dev6.18.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : BV11 — base d'exercices v1.1 (pipeline CP), version dev6.19.0 ; précédent : dev6.18.0 (CIF)**  
+**Date : 15 octobre 2026, Europe/Paris — version : 6.19.0+128, affichée « dev6.19.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le pilotage (C8).**
+
+## BV11 — Base d'exercices v1.1 (version dev6.19.0, pipeline CP, DECISIONS_CP.md C12.1, C17.9)
+
+- Une seule source d'exercices : la base v1.1 (1 039 exercices, 8 disciplines). Pack 2.0.0 retiré de l'application (archivé dans `tools/archives/pack_2.0.0/` pour les outils) ; groupes musculaires historiques des anciens noms gardés par une copie figée (`assets/catalog/groupes_historiques.json`) : historique, records et STATS identiques ; mentions réécrites (`assets/legal/licences.md`) ; code mort retiré (index de l'ancien pack, démonstrations 2D jamais affichées).
+- Filtres Catégorie et Muscle principal (vocabulaires fermés). Paquets inchangés. Tests : `test/bv11_base_test.dart` ; cible émulateur `integration_test/base_bv11_test.dart`. Inventaire et exercices sans correspondance : `pipeline/cp/livraisons/LIVRAISON_BV11.md`.
 
 ## CIF — Lot CI final (version dev6.18.0, pipeline CP, DECISIONS_CP.md C17)
 
