@@ -596,6 +596,34 @@ run 38129459466 vert. Détail : `pipeline/cp/livraisons/LIVRAISON_KM1c2.md`,
   traités ou déclarés ; campagne et recherche adversariale refaites après corrections.
 - **KM1c2.11 Budget** (§ 9) : sous-agents sur Opus ; sauvegardes sur `cp-sauvegardes/KM1c2`.
 
+### KM2c1
+
+Lot livré le 15/10/2026 (session Opus 5.5, effort maximal, C17), validation automatique par le pilotage sur les
+critères du cahier (C13.3) : `kalis_adapt` 1.0.1 (Koach 1.0.2 en Dart) et `kalis_bench` 0.4.2, `moteurs` e502e963,
+étiquettes publiées, contrôle complet `claude/ci-cp-a` run 38777545635 vert. Détail :
+`pipeline/cp/livraisons/LIVRAISON_KM2c1.md`, `kalis_bench` `docs/CRITERES_KM2C1.md`.
+
+- **KM2c1.1 Lancement** : message sans ligne « Lot : » et deux lots moteurs « à faire » lancés ensemble (KM2c1, KS1,
+  C17.2) : la session a pris le premier de l'ordre de l'état non encore « en cours » (KM2c1), réservé par le push de
+  la ligne « en cours ». `add_repo` absent de la session ; accès en écriture vérifié par `git push --dry-run` puis par
+  ce push. Pas de SDK Dart (proxy) : mise au point et campagnes sur la CI (`claude/ci-cp-a`, commits « KM2c1 contrôle
+  (dev) » à arbre réduit). Clé des références non lue (aucune référence privée nécessaire).
+- **KM2c1.2 Portage** : delta de `CHANGEMENTS_1_0_2.md` (A à C) porté ligne à ligne ; asset
+  `koach_params_1_0_2.json` (remplace `koach_params_1_0_1.json`) ; tests repointés, copies figées de 1.0.1 supprimées ;
+  `Planification.previsions` porte `prevu_jour` (ajout additif, API inchangée).
+- **KM2c1.3 Mesures** : campagne Dart graines 0-5 identique à la référence Python (critères 1 à 4, 6, 7 à la décimale ;
+  critère 5 de C13.13.1 identique champ pour champ : biais +0,2 point, 16,8 contre 21,2) ; cinq jeux d'adversaires
+  identiques à la référence (7 bis : 24/24, 23/24, 22/24, 20/24 ; recherche neuve 17/24) ; temps 0,127 s et 12,7 ms.
+- **KM2c1.4 Relecture indépendante** (sous-agent Opus) : B1 (somme séquentielle de numpy quand un seul exercice est
+  suivi avec plusieurs plans, écart d'un ulp) et M1 (sorties de campagne de 1.0.2) corrigés, mineurs traités.
+- **KM2c1.5 Signalé au pilotage** : (a) `mesure.defaut_modele_sd` = 0 admis par `BORNES` mais refusé à l'import par la
+  règle des clés `_sd` (référence et Dart, inchangé) : à trancher dans KM1c3 ; (b) test de propriétés : l'invariant
+  « bilan bas → dernier passage » de 1.0.1 remplacé par la règle A.2 de 1.0.2 (même schéma, charge gelée) ;
+  (c) incident : `cp-sauvegardes/KM2c1-candidat` poussée avec `.github/` a déclenché un build APK (run 38777553043,
+  annulé, rien publié) ; suppression de la branche refusée (403).
+- **KM2c1.6 Recommandation (C8)** : valider KM2c1 comme portage de Koach 1.0.2 ; lancer KM1c3 (C17.5) ; KM3 pourra
+  monter de 1.0.0 à 1.0.1 par simple montée de paquet.
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
