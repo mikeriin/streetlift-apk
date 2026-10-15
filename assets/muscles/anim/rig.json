@@ -1,0 +1,2390 @@
+{
+ "version": 1,
+ "unite": "px",
+ "echelle_px": 748.0,
+ "vues": {
+  "face": {
+   "image": "assets/muscles/anim/face.png",
+   "calques": "assets/muscles/anim/face_calques.png",
+   "articulations": {
+    "tete": [
+     142.0,
+     46.0
+    ],
+    "cou": [
+     141.0,
+     142.0
+    ],
+    "bassin": [
+     140.0,
+     358.0
+    ],
+    "nuque": [
+     141.0,
+     100.0
+    ],
+    "taille": [
+     140.0,
+     300.0
+    ],
+    "epaule_g": [
+     227.0,
+     140.0
+    ],
+    "coude_g": [
+     238.0,
+     252.0
+    ],
+    "poignet_g": [
+     254.0,
+     358.0
+    ],
+    "main_g": [
+     256.0,
+     414.0
+    ],
+    "epaule_d": [
+     55.0,
+     140.0
+    ],
+    "coude_d": [
+     42.0,
+     252.0
+    ],
+    "poignet_d": [
+     27.0,
+     358.0
+    ],
+    "main_d": [
+     26.0,
+     414.0
+    ],
+    "hanche_g": [
+     181.0,
+     358.0
+    ],
+    "genou_g": [
+     181.0,
+     526.0
+    ],
+    "cheville_g": [
+     184.0,
+     710.0
+    ],
+    "hanche_d": [
+     100.0,
+     358.0
+    ],
+    "genou_d": [
+     100.0,
+     526.0
+    ],
+    "cheville_d": [
+     97.0,
+     710.0
+    ]
+   },
+   "segments": [
+    {
+     "nom": "pied_g",
+     "rect": [
+      150,
+      513,
+      45,
+      67
+     ],
+     "origine": [
+      165,
+      686
+     ],
+     "calques": [
+      {
+       "groupe": "mollets",
+       "rect": [
+        486,
+        479,
+        12,
+        9
+       ],
+       "decalage": [
+        11,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "jambe_g",
+     "rect": [
+      398,
+      0,
+      59,
+      234
+     ],
+     "origine": [
+      158,
+      496
+     ],
+     "calques": [
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        42,
+        419,
+        40,
+        55
+       ],
+       "decalage": [
+        1,
+        0
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        213,
+        0,
+        57,
+        172
+       ],
+       "decalage": [
+        1,
+        27
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "cuisse_g",
+     "rect": [
+      228,
+      0,
+      83,
+      238
+     ],
+     "origine": [
+      137,
+      314
+     ],
+     "calques": [
+      {
+       "groupe": "gainage",
+       "rect": [
+        114,
+        336,
+        79,
+        67
+       ],
+       "decalage": [
+        0,
+        0
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        76,
+        0,
+        75,
+        208
+       ],
+       "decalage": [
+        8,
+        29
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        195,
+        479,
+        39,
+        29
+       ],
+       "decalage": [
+        28,
+        209
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "pied_d",
+     "rect": [
+      197,
+      513,
+      46,
+      67
+     ],
+     "origine": [
+      71,
+      686
+     ],
+     "calques": [
+      {
+       "groupe": "mollets",
+       "rect": [
+        0,
+        516,
+        12,
+        9
+       ],
+       "decalage": [
+        22,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "jambe_d",
+     "rect": [
+      0,
+      277,
+      58,
+      234
+     ],
+     "origine": [
+      65,
+      496
+     ],
+     "calques": [
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        0,
+        419,
+        40,
+        58
+       ],
+       "decalage": [
+        18,
+        0
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        153,
+        0,
+        58,
+        173
+       ],
+       "decalage": [
+        0,
+        26
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "cuisse_d",
+     "rect": [
+      313,
+      0,
+      83,
+      238
+     ],
+     "origine": [
+      62,
+      314
+     ],
+     "calques": [
+      {
+       "groupe": "gainage",
+       "rect": [
+        195,
+        336,
+        79,
+        67
+       ],
+       "decalage": [
+        4,
+        0
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        0,
+        0,
+        74,
+        209
+       ],
+       "decalage": [
+        0,
+        29
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        44,
+        479,
+        39,
+        30
+       ],
+       "decalage": [
+        16,
+        208
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "tronc",
+     "rect": [
+      0,
+      0,
+      226,
+      275
+     ],
+     "origine": [
+      28,
+      96
+     ],
+     "calques": [
+      {
+       "groupe": "pectoraux",
+       "rect": [
+        0,
+        211,
+        147,
+        123
+       ],
+       "decalage": [
+        40,
+        23
+       ]
+      },
+      {
+       "groupe": "épaules",
+       "rect": [
+        276,
+        336,
+        225,
+        62
+       ],
+       "decalage": [
+        0,
+        23
+       ]
+      },
+      {
+       "groupe": "biceps",
+       "rect": [
+        14,
+        516,
+        169,
+        9
+       ],
+       "decalage": [
+        29,
+        76
+       ]
+      },
+      {
+       "groupe": "gainage",
+       "rect": [
+        272,
+        0,
+        133,
+        166
+       ],
+       "decalage": [
+        46,
+        109
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        285,
+        419,
+        150,
+        36
+       ],
+       "decalage": [
+        38,
+        0
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        264,
+        479,
+        91,
+        27
+       ],
+       "decalage": [
+        67,
+        247
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "bassin",
+     "rect": [
+      321,
+      277,
+      146,
+      99
+     ],
+     "origine": [
+      68,
+      292
+     ],
+     "calques": [
+      {
+       "groupe": "gainage",
+       "rect": [
+        201,
+        211,
+        146,
+        89
+       ],
+       "decalage": [
+        0,
+        0
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        153,
+        419,
+        130,
+        47
+       ],
+       "decalage": [
+        8,
+        51
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "cou",
+     "rect": [
+      245,
+      513,
+      67,
+      54
+     ],
+     "origine": [
+      107,
+      78
+     ],
+     "calques": [
+      {
+       "groupe": "pectoraux",
+       "rect": [
+        185,
+        516,
+        67,
+        9
+       ],
+       "decalage": [
+        0,
+        45
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        84,
+        419,
+        67,
+        49
+       ],
+       "decalage": [
+        0,
+        5
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "tete",
+     "rect": [
+      0,
+      513,
+      72,
+      96
+     ],
+     "origine": [
+      106,
+      8
+     ],
+     "calques": [
+      {
+       "groupe": "dos",
+       "rect": [
+        357,
+        479,
+        61,
+        25
+       ],
+       "decalage": [
+        5,
+        71
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "main_g",
+     "rect": [
+      74,
+      513,
+      36,
+      84
+     ],
+     "origine": [
+      238,
+      338
+     ],
+     "calques": [
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        236,
+        479,
+        26,
+        29
+       ],
+       "decalage": [
+        2,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "avant_bras_g",
+     "rect": [
+      209,
+      277,
+      54,
+      150
+     ],
+     "origine": [
+      216,
+      226
+     ],
+     "calques": [
+      {
+       "groupe": "biceps",
+       "rect": [
+        437,
+        419,
+        41,
+        35
+       ],
+       "decalage": [
+        0,
+        0
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        149,
+        211,
+        50,
+        123
+       ],
+       "decalage": [
+        3,
+        18
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "bras_g",
+     "rect": [
+      60,
+      277,
+      72,
+      165
+     ],
+     "origine": [
+      188,
+      109
+     ],
+     "calques": [
+      {
+       "groupe": "pectoraux",
+       "rect": [
+        454,
+        211,
+        27,
+        88
+       ],
+       "decalage": [
+        0,
+        10
+       ]
+      },
+      {
+       "groupe": "épaules",
+       "rect": [
+        0,
+        336,
+        54,
+        81
+       ],
+       "decalage": [
+        11,
+        10
+       ]
+      },
+      {
+       "groupe": "biceps",
+       "rect": [
+        349,
+        211,
+        50,
+        89
+       ],
+       "decalage": [
+        21,
+        63
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        85,
+        479,
+        38,
+        30
+       ],
+       "decalage": [
+        33,
+        135
+       ]
+      },
+      {
+       "groupe": "gainage",
+       "rect": [
+        420,
+        479,
+        4,
+        17
+       ],
+       "decalage": [
+        16,
+        96
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        426,
+        479,
+        28,
+        16
+       ],
+       "decalage": [
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "main_d",
+     "rect": [
+      112,
+      513,
+      36,
+      84
+     ],
+     "origine": [
+      8,
+      338
+     ],
+     "calques": [
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        125,
+        479,
+        27,
+        30
+       ],
+       "decalage": [
+        7,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "avant_bras_d",
+     "rect": [
+      265,
+      277,
+      54,
+      150
+     ],
+     "origine": [
+      12,
+      226
+     ],
+     "calques": [
+      {
+       "groupe": "biceps",
+       "rect": [
+        0,
+        479,
+        42,
+        35
+       ],
+       "decalage": [
+        12,
+        0
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        407,
+        0,
+        51,
+        124
+       ],
+       "decalage": [
+        0,
+        18
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "bras_d",
+     "rect": [
+      134,
+      277,
+      73,
+      165
+     ],
+     "origine": [
+      21,
+      109
+     ],
+     "calques": [
+      {
+       "groupe": "pectoraux",
+       "rect": [
+        483,
+        211,
+        25,
+        85
+       ],
+       "decalage": [
+        47,
+        11
+       ]
+      },
+      {
+       "groupe": "épaules",
+       "rect": [
+        56,
+        336,
+        56,
+        81
+       ],
+       "decalage": [
+        7,
+        10
+       ]
+      },
+      {
+       "groupe": "biceps",
+       "rect": [
+        401,
+        211,
+        51,
+        89
+       ],
+       "decalage": [
+        1,
+        63
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        154,
+        479,
+        39,
+        30
+       ],
+       "decalage": [
+        1,
+        135
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        456,
+        479,
+        28,
+        16
+       ],
+       "decalage": [
+        45,
+        0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "dos": {
+   "image": "assets/muscles/anim/dos.png",
+   "calques": "assets/muscles/anim/dos_calques.png",
+   "articulations": {
+    "tete": [
+     139.0,
+     46.0
+    ],
+    "cou": [
+     140.0,
+     142.0
+    ],
+    "bassin": [
+     141.0,
+     358.0
+    ],
+    "nuque": [
+     140.0,
+     100.0
+    ],
+    "taille": [
+     141.0,
+     300.0
+    ],
+    "epaule_g": [
+     225.0,
+     140.0
+    ],
+    "coude_g": [
+     238.0,
+     252.0
+    ],
+    "poignet_g": [
+     256.0,
+     358.0
+    ],
+    "main_g": [
+     257.0,
+     414.0
+    ],
+    "epaule_d": [
+     55.0,
+     140.0
+    ],
+    "coude_d": [
+     42.0,
+     252.0
+    ],
+    "poignet_d": [
+     25.0,
+     358.0
+    ],
+    "main_d": [
+     24.0,
+     414.0
+    ],
+    "hanche_g": [
+     184.0,
+     358.0
+    ],
+    "genou_g": [
+     184.0,
+     526.0
+    ],
+    "cheville_g": [
+     184.0,
+     710.0
+    ],
+    "hanche_d": [
+     98.0,
+     358.0
+    ],
+    "genou_d": [
+     98.0,
+     526.0
+    ],
+    "cheville_d": [
+     98.0,
+     710.0
+    ]
+   },
+   "segments": [
+    {
+     "nom": "pied_g",
+     "rect": [
+      149,
+      513,
+      47,
+      67
+     ],
+     "origine": [
+      163,
+      686
+     ],
+     "calques": [
+      {
+       "groupe": "mollets",
+       "rect": [
+        379,
+        499,
+        19,
+        19
+       ],
+       "decalage": [
+        12,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "jambe_g",
+     "rect": [
+      396,
+      0,
+      62,
+      234
+     ],
+     "origine": [
+      157,
+      496
+     ],
+     "calques": [
+      {
+       "groupe": "ischios",
+       "rect": [
+        210,
+        440,
+        52,
+        51
+       ],
+       "decalage": [
+        1,
+        0
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        155,
+        0,
+        61,
+        164
+       ],
+       "decalage": [
+        1,
+        45
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "cuisse_g",
+     "rect": [
+      228,
+      0,
+      82,
+      238
+     ],
+     "origine": [
+      140,
+      314
+     ],
+     "calques": [
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        383,
+        375,
+        16,
+        57
+       ],
+       "decalage": [
+        66,
+        58
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        45,
+        499,
+        68,
+        35
+       ],
+       "decalage": [
+        2,
+        0
+       ]
+      },
+      {
+       "groupe": "ischios",
+       "rect": [
+        358,
+        0,
+        74,
+        140
+       ],
+       "decalage": [
+        8,
+        91
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        176,
+        253,
+        72,
+        99
+       ],
+       "decalage": [
+        0,
+        15
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        422,
+        499,
+        34,
+        11
+       ],
+       "decalage": [
+        27,
+        227
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "pied_d",
+     "rect": [
+      198,
+      513,
+      48,
+      67
+     ],
+     "origine": [
+      73,
+      686
+     ],
+     "calques": [
+      {
+       "groupe": "mollets",
+       "rect": [
+        400,
+        499,
+        20,
+        19
+       ],
+       "decalage": [
+        15,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "jambe_d",
+     "rect": [
+      0,
+      277,
+      62,
+      234
+     ],
+     "origine": [
+      63,
+      496
+     ],
+     "calques": [
+      {
+       "groupe": "ischios",
+       "rect": [
+        264,
+        440,
+        52,
+        51
+       ],
+       "decalage": [
+        10,
+        0
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        218,
+        0,
+        62,
+        164
+       ],
+       "decalage": [
+        0,
+        45
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "cuisse_d",
+     "rect": [
+      312,
+      0,
+      82,
+      238
+     ],
+     "origine": [
+      61,
+      314
+     ],
+     "calques": [
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        137,
+        375,
+        16,
+        60
+       ],
+       "decalage": [
+        0,
+        55
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        172,
+        499,
+        70,
+        34
+       ],
+       "decalage": [
+        10,
+        0
+       ]
+      },
+      {
+       "groupe": "ischios",
+       "rect": [
+        282,
+        0,
+        74,
+        141
+       ],
+       "decalage": [
+        0,
+        91
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        102,
+        253,
+        72,
+        100
+       ],
+       "decalage": [
+        10,
+        15
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        458,
+        499,
+        33,
+        11
+       ],
+       "decalage": [
+        21,
+        227
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "tronc",
+     "rect": [
+      0,
+      0,
+      226,
+      275
+     ],
+     "origine": [
+      28,
+      96
+     ],
+     "calques": [
+      {
+       "groupe": "épaules",
+       "rect": [
+        155,
+        375,
+        226,
+        58
+       ],
+       "decalage": [
+        0,
+        26
+       ]
+      },
+      {
+       "groupe": "triceps",
+       "rect": [
+        0,
+        537,
+        187,
+        6
+       ],
+       "decalage": [
+        19,
+        79
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        0,
+        0,
+        153,
+        251
+       ],
+       "decalage": [
+        36,
+        0
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        318,
+        440,
+        110,
+        42
+       ],
+       "decalage": [
+        58,
+        233
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "bassin",
+     "rect": [
+      330,
+      277,
+      150,
+      100
+     ],
+     "origine": [
+      66,
+      292
+     ],
+     "calques": [
+      {
+       "groupe": "dos",
+       "rect": [
+        0,
+        440,
+        139,
+        57
+       ],
+       "decalage": [
+        5,
+        0
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        0,
+        375,
+        135,
+        63
+       ],
+       "decalage": [
+        8,
+        37
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "cou",
+     "rect": [
+      248,
+      513,
+      67,
+      54
+     ],
+     "origine": [
+      108,
+      78
+     ],
+     "calques": [
+      {
+       "groupe": "dos",
+       "rect": [
+        141,
+        440,
+        67,
+        54
+       ],
+       "decalage": [
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "tete",
+     "rect": [
+      0,
+      513,
+      71,
+      96
+     ],
+     "origine": [
+      104,
+      8
+     ],
+     "calques": [
+      {
+       "groupe": "dos",
+       "rect": [
+        244,
+        499,
+        61,
+        30
+       ],
+       "decalage": [
+        6,
+        66
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "main_g",
+     "rect": [
+      73,
+      513,
+      36,
+      86
+     ],
+     "origine": [
+      239,
+      338
+     ],
+     "calques": [
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        115,
+        499,
+        27,
+        35
+       ],
+       "decalage": [
+        2,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "avant_bras_g",
+     "rect": [
+      213,
+      277,
+      57,
+      150
+     ],
+     "origine": [
+      214,
+      226
+     ],
+     "calques": [
+      {
+       "groupe": "triceps",
+       "rect": [
+        430,
+        440,
+        44,
+        36
+       ],
+       "decalage": [
+        1,
+        0
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        0,
+        253,
+        49,
+        120
+       ],
+       "decalage": [
+        8,
+        27
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "bras_g",
+     "rect": [
+      64,
+      277,
+      73,
+      164
+     ],
+     "origine": [
+      188,
+      110
+     ],
+     "calques": [
+      {
+       "groupe": "épaules",
+       "rect": [
+        353,
+        253,
+        59,
+        67
+       ],
+       "decalage": [
+        7,
+        12
+       ]
+      },
+      {
+       "groupe": "triceps",
+       "rect": [
+        250,
+        253,
+        50,
+        87
+       ],
+       "decalage": [
+        23,
+        65
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        307,
+        499,
+        34,
+        21
+       ],
+       "decalage": [
+        36,
+        143
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        467,
+        0,
+        30,
+        134
+       ],
+       "decalage": [
+        0,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "main_d",
+     "rect": [
+      111,
+      513,
+      36,
+      86
+     ],
+     "origine": [
+      7,
+      338
+     ],
+     "calques": [
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        144,
+        499,
+        26,
+        35
+       ],
+       "decalage": [
+        8,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "avant_bras_d",
+     "rect": [
+      272,
+      277,
+      56,
+      150
+     ],
+     "origine": [
+      12,
+      226
+     ],
+     "calques": [
+      {
+       "groupe": "triceps",
+       "rect": [
+        0,
+        499,
+        43,
+        36
+       ],
+       "decalage": [
+        12,
+        0
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        51,
+        253,
+        49,
+        120
+       ],
+       "decalage": [
+        0,
+        27
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "bras_d",
+     "rect": [
+      139,
+      277,
+      72,
+      164
+     ],
+     "origine": [
+      23,
+      110
+     ],
+     "calques": [
+      {
+       "groupe": "épaules",
+       "rect": [
+        414,
+        253,
+        58,
+        67
+       ],
+       "decalage": [
+        5,
+        12
+       ]
+      },
+      {
+       "groupe": "triceps",
+       "rect": [
+        302,
+        253,
+        49,
+        85
+       ],
+       "decalage": [
+        0,
+        67
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        343,
+        499,
+        34,
+        21
+       ],
+       "decalage": [
+        1,
+        143
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        434,
+        0,
+        31,
+        137
+       ],
+       "decalage": [
+        41,
+        0
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "profil": {
+   "image": "assets/muscles/anim/profil.png",
+   "calques": "assets/muscles/anim/profil_calques.png",
+   "articulations": {
+    "tete": [
+     86.0,
+     46.0
+    ],
+    "cou": [
+     61.0,
+     150.0
+    ],
+    "bassin": [
+     67.0,
+     366.0
+    ],
+    "nuque": [
+     65.0,
+     104.0
+    ],
+    "taille": [
+     69.0,
+     309.0
+    ],
+    "epaule": [
+     53.0,
+     158.0
+    ],
+    "coude": [
+     48.0,
+     268.0
+    ],
+    "poignet": [
+     65.0,
+     380.0
+    ],
+    "main": [
+     69.0,
+     436.0
+    ],
+    "hanche": [
+     67.0,
+     366.0
+    ],
+    "genou": [
+     65.0,
+     526.0
+    ],
+    "cheville": [
+     49.0,
+     710.0
+    ],
+    "talon": [
+     25.0,
+     736.0
+    ],
+    "pointe": [
+     127.0,
+     738.0
+    ]
+   },
+   "segments": [
+    {
+     "nom": "pied",
+     "rect": [
+      253,
+      258,
+      107,
+      66
+     ],
+     "origine": [
+      25,
+      686
+     ],
+     "calques": [
+      {
+       "groupe": "mollets",
+       "rect": [
+        115,
+        387,
+        27,
+        24
+       ],
+       "decalage": [
+        11,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "jambe",
+     "rect": [
+      128,
+      0,
+      77,
+      234
+     ],
+     "origine": [
+      17,
+      496
+     ],
+     "calques": [
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        78,
+        311,
+        19,
+        69
+       ],
+       "decalage": [
+        55,
+        0
+       ]
+      },
+      {
+       "groupe": "ischios",
+       "rect": [
+        352,
+        311,
+        32,
+        39
+       ],
+       "decalage": [
+        26,
+        0
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        159,
+        0,
+        61,
+        175
+       ],
+       "decalage": [
+        1,
+        39
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "cuisse",
+     "rect": [
+      207,
+      0,
+      96,
+      230
+     ],
+     "origine": [
+      23,
+      322
+     ],
+     "calques": [
+      {
+       "groupe": "gainage",
+       "rect": [
+        124,
+        311,
+        78,
+        58
+       ],
+       "decalage": [
+        15,
+        0
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        0,
+        0,
+        74,
+        215
+       ],
+       "decalage": [
+        20,
+        11
+       ]
+      },
+      {
+       "groupe": "ischios",
+       "rect": [
+        399,
+        0,
+        46,
+        113
+       ],
+       "decalage": [
+        6,
+        100
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        99,
+        311,
+        23,
+        66
+       ],
+       "decalage": [
+        0,
+        15
+       ]
+      },
+      {
+       "groupe": "mollets",
+       "rect": [
+        214,
+        387,
+        29,
+        17
+       ],
+       "decalage": [
+        21,
+        213
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "tronc",
+     "rect": [
+      0,
+      0,
+      126,
+      256
+     ],
+     "origine": [
+      8,
+      114
+     ],
+     "calques": [
+      {
+       "groupe": "pectoraux",
+       "rect": [
+        0,
+        217,
+        93,
+        92
+       ],
+       "decalage": [
+        31,
+        12
+       ]
+      },
+      {
+       "groupe": "épaules",
+       "rect": [
+        245,
+        387,
+        52,
+        14
+       ],
+       "decalage": [
+        15,
+        10
+       ]
+      },
+      {
+       "groupe": "gainage",
+       "rect": [
+        222,
+        0,
+        101,
+        168
+       ],
+       "decalage": [
+        20,
+        76
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        76,
+        0,
+        81,
+        189
+       ],
+       "decalage": [
+        2,
+        0
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        431,
+        311,
+        61,
+        37
+       ],
+       "decalage": [
+        36,
+        219
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        322,
+        311,
+        28,
+        42
+       ],
+       "decalage": [
+        8,
+        209
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "bassin",
+     "rect": [
+      0,
+      258,
+      115,
+      129
+     ],
+     "origine": [
+      10,
+      295
+     ],
+     "calques": [
+      {
+       "groupe": "gainage",
+       "rect": [
+        234,
+        217,
+        96,
+        85
+       ],
+       "decalage": [
+        18,
+        0
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        131,
+        217,
+        72,
+        87
+       ],
+       "decalage": [
+        31,
+        38
+       ]
+      },
+      {
+       "groupe": "ischios",
+       "rect": [
+        200,
+        387,
+        12,
+        18
+       ],
+       "decalage": [
+        20,
+        111
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        95,
+        217,
+        34,
+        89
+       ],
+       "decalage": [
+        2,
+        28
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "cou",
+     "rect": [
+      362,
+      258,
+      95,
+      58
+     ],
+     "origine": [
+      24,
+      82
+     ],
+     "calques": [
+      {
+       "groupe": "pectoraux",
+       "rect": [
+        299,
+        387,
+        25,
+        14
+       ],
+       "decalage": [
+        50,
+        44
+       ]
+      },
+      {
+       "groupe": "épaules",
+       "rect": [
+        326,
+        387,
+        51,
+        13
+       ],
+       "decalage": [
+        0,
+        42
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        204,
+        311,
+        66,
+        58
+       ],
+       "decalage": [
+        2,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "tete",
+     "rect": [
+      117,
+      258,
+      85,
+      101
+     ],
+     "origine": [
+      45,
+      8
+     ],
+     "calques": [
+      {
+       "groupe": "dos",
+       "rect": [
+        386,
+        311,
+        43,
+        39
+       ],
+       "decalage": [
+        3,
+        62
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "main",
+     "rect": [
+      204,
+      258,
+      47,
+      83
+     ],
+     "origine": [
+      41,
+      360
+     ],
+     "calques": [
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        164,
+        387,
+        34,
+        19
+       ],
+       "decalage": [
+        7,
+        0
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        403,
+        217,
+        32,
+        74
+       ],
+       "decalage": [
+        15,
+        8
+       ]
+      },
+      {
+       "groupe": "ischios",
+       "rect": [
+        62,
+        387,
+        15,
+        26
+       ],
+       "decalage": [
+        0,
+        55
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        312,
+        311,
+        8,
+        47
+       ],
+       "decalage": [
+        0,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "avant_bras",
+     "rect": [
+      389,
+      0,
+      75,
+      156
+     ],
+     "origine": [
+      25,
+      242
+     ],
+     "calques": [
+      {
+       "groupe": "biceps",
+       "rect": [
+        79,
+        387,
+        34,
+        25
+       ],
+       "decalage": [
+        14,
+        0
+       ]
+      },
+      {
+       "groupe": "triceps",
+       "rect": [
+        144,
+        387,
+        14,
+        22
+       ],
+       "decalage": [
+        3,
+        0
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        325,
+        0,
+        72,
+        125
+       ],
+       "decalage": [
+        2,
+        12
+       ]
+      },
+      {
+       "groupe": "quadriceps",
+       "rect": [
+        42,
+        387,
+        18,
+        32
+       ],
+       "decalage": [
+        49,
+        117
+       ]
+      },
+      {
+       "groupe": "fessiers",
+       "rect": [
+        272,
+        311,
+        18,
+        57
+       ],
+       "decalage": [
+        6,
+        85
+       ]
+      }
+     ]
+    },
+    {
+     "nom": "bras",
+     "rect": [
+      305,
+      0,
+      82,
+      163
+     ],
+     "origine": [
+      10,
+      127
+     ],
+     "calques": [
+      {
+       "groupe": "pectoraux",
+       "rect": [
+        292,
+        311,
+        18,
+        52
+       ],
+       "decalage": [
+        64,
+        0
+       ]
+      },
+      {
+       "groupe": "épaules",
+       "rect": [
+        0,
+        311,
+        76,
+        74
+       ],
+       "decalage": [
+        3,
+        0
+       ]
+      },
+      {
+       "groupe": "biceps",
+       "rect": [
+        360,
+        217,
+        41,
+        82
+       ],
+       "decalage": [
+        29,
+        58
+       ]
+      },
+      {
+       "groupe": "triceps",
+       "rect": [
+        332,
+        217,
+        26,
+        83
+       ],
+       "decalage": [
+        12,
+        54
+       ]
+      },
+      {
+       "groupe": "avant-bras",
+       "rect": [
+        0,
+        387,
+        40,
+        36
+       ],
+       "decalage": [
+        18,
+        127
+       ]
+      },
+      {
+       "groupe": "gainage",
+       "rect": [
+        160,
+        387,
+        2,
+        22
+       ],
+       "decalage": [
+        69,
+        90
+       ]
+      },
+      {
+       "groupe": "dos",
+       "rect": [
+        205,
+        217,
+        27,
+        87
+       ],
+       "decalage": [
+        2,
+        0
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
