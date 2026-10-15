@@ -317,12 +317,15 @@ extension SessionAdaptStore on AppStore {
   }
 
   /// CIF (point 1) : tentatives notées le jour J de l'épreuve [eventId]
-  /// (illisibles ignorées).
-  List<kc.AttemptResult> eventAttemptsOf(String eventId) => [
-    for (final a
-        in settings.eventAttempts[eventId] ?? const <Map<String, dynamic>>[])
-      if (_attemptOf(a) case final x?) x,
-  ];
+  /// (illisibles ignorées) ; [on] : seulement celles notées ce jour-là.
+  List<kc.AttemptResult> eventAttemptsOf(String eventId, {kc.CivilDate? on}) =>
+      [
+        for (final a
+            in settings.eventAttempts[eventId] ??
+                const <Map<String, dynamic>>[])
+          if (on == null || a['on'] == on.iso)
+            if (_attemptOf(a) case final x?) x,
+      ];
 
   static kc.AttemptResult? _attemptOf(Map<String, dynamic> j) {
     try {
@@ -332,17 +335,31 @@ extension SessionAdaptStore on AppStore {
     }
   }
 
-  /// CIF (point 1) : tentatives du jour J de [eventId] gardées (vide :
-  /// effacées) ; le journal des moteurs les lit (rôle `attempt`).
-  void setEventAttempts(String eventId, List<kc.AttemptResult> done) {
+  /// CIF (point 1) : tentatives du jour J de [event] gardées (vide :
+  /// effacées), avec le jour où elles sont notées ; le journal des moteurs
+  /// les lit (rôle `attempt`). Seulement le jour même de l'épreuve : des
+  /// tentatives essayées sur l'écran avant le jour J ne sont jamais
+  /// gardées (faux résultats de compétition). Faux si rien n'est gardé.
+  bool setEventAttempts(kc.SeasonEvent event, List<kc.AttemptResult> done) {
+    final today = _adaptToday;
+    if (today != event.date) return false;
     if (done.isEmpty) {
-      settings.eventAttempts.remove(eventId);
+      settings.eventAttempts.remove(event.id);
     } else {
-      settings.eventAttempts[eventId] = [for (final a in done) a.toJson()];
+      settings.eventAttempts[event.id] = [
+        for (final a in done) {...a.toJson(), 'on': today.iso},
+      ];
     }
     saveSettings();
     notifyListeners();
+    return true;
   }
+
+  /// CIF (point 1) : épreuve dont la date marque les séances du journal
+  /// (`eventId`) : ni un test personnel (test guidé, filtre des jours bas
+  /// gardé), ni une date approximative.
+  static bool _marksJournal(kc.SeasonEvent e) =>
+      e.kind != kc.EventKind.personalTest && e.dateApproximate != true;
 
   /// CIF (point 1) : journal des moteurs complété pour les jours J :
   /// une séance faite le jour d'une épreuve porte son `eventId` ; ses
@@ -350,7 +367,10 @@ extension SessionAdaptStore on AppStore {
   /// plus) ; les tentatives notées sur l'écran du jour J (et pas déjà
   /// journalisées par la séance) forment une séance de l'épreuve.
   List<kc.SessionRecord> _withEventDays(List<kc.SessionRecord> sessions) {
-    final events = athlete?.profile.events ?? const <kc.SeasonEvent>[];
+    final events = [
+      for (final e in athlete?.profile.events ?? const <kc.SeasonEvent>[])
+        if (_marksJournal(e)) e,
+    ];
     if (events.isEmpty) return sessions;
     final out = <kc.SessionRecord>[];
     for (final s in sessions) {
@@ -382,7 +402,7 @@ extension SessionAdaptStore on AppStore {
       );
     }
     for (final e in events) {
-      final done = eventAttemptsOf(e.id);
+      final done = eventAttemptsOf(e.id, on: e.date);
       if (done.isEmpty) continue;
       final logged = {
         for (final s in out)
@@ -2517,9 +2537,12 @@ extension SessionAdaptStore on AppStore {
           planned: next < 0 ? null : planGoal(it, next),
         );
       }
-      // CIF (point 3) : plus de série à faire : aucune mini-série à
-      // conseiller pour « la série suivante ».
-      if (next < 0 && advice.miniSetsLeft != null) {
+      // CIF (point 3) : mini-séries conseillées seulement pour une série
+      // suivante qui en a (bandeau) : rien après la dernière série, ni
+      // avant une série d'une traite (rest-pause sur la dernière série
+      // seulement, échauffement, ligne telle qu'écrite).
+      if (advice.miniSetsLeft != null &&
+          (next < 0 || miniSetPlanFor(week, day.j, e, next) == null)) {
         advice = advice.copyWith(miniSetsLeft: null);
       }
       if (advice.action == kc.IntraSessionAction.keep ||

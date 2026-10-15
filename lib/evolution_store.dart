@@ -227,6 +227,13 @@ extension EvolutionStore on AppStore {
     return evolutionReceive(place, review.proposals) || reported;
   }
 
+  /// CIF (point 9) : allure plausible d'une course (s/km) : de 2 min/km
+  /// (record du monde ≈ 2 min 11) à 20 min/km (marche lente). Une saisie
+  /// fausse (« 25 » pour 25 minutes, ancienne saisie en répétitions relue
+  /// en secondes) n'écrit jamais d'allure au profil.
+  static bool _plausiblePace(double secondsPerKm) =>
+      secondsPerKm >= 120 && secondsPerKm <= 1200;
+
   /// CIF (point 9) : repères `time_trial` des tests chronométrés de course
   /// du journal [log] (source `competition` le jour d'une épreuve,
   /// `guided_test` sinon).
@@ -236,7 +243,8 @@ extension EvolutionStore on AppStore {
         if (x.kind == kc.SetKind.test &&
             !x.excluded &&
             (x.distanceMeters ?? 0) >= 1000 &&
-            (x.seconds ?? 0) > 0)
+            (x.seconds ?? 0) > 0 &&
+            _plausiblePace(x.seconds! / (x.distanceMeters! / 1000)))
           kc.Benchmark(
             exerciseId: x.exerciseId,
             kind: kc.BenchmarkKind.timeTrial,

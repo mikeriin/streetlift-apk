@@ -2,7 +2,7 @@
 // de force, `kalis_adapt` propose pour chaque mouvement l'échauffement et
 // les tentatives (avec leur chance de réussite), recalculées après chaque
 // tentative notée ici ; pour une épreuve de répétitions, l'objectif et le
-// rythme. CIF (point 1) : les tentatives notées sont gardées
+// rythme. CIF (point 1) : les tentatives notées le jour J sont gardées
 // (`AppStore.setEventAttempts`) et écrites au journal des moteurs (rôle
 // `attempt`, rang, `eventId`) ; aucune règle ici, seulement l'affichage.
 import 'package:flutter/material.dart';
@@ -65,7 +65,13 @@ class _EventDayScreenState extends State<EventDayScreen> {
   @override
   void initState() {
     super.initState();
-    _done.addAll(store.eventAttemptsOf(widget.event.id));
+    final n = store.storeClock();
+    _done.addAll(
+      store.eventAttemptsOf(
+        widget.event.id,
+        on: kc.CivilDate(n.year, n.month, n.day),
+      ),
+    );
   }
 
   void _mark(String exerciseId, int index, double kg, bool ok) {
@@ -80,7 +86,8 @@ class _EventDayScreenState extends State<EventDayScreen> {
         ),
       );
     });
-    store.setEventAttempts(widget.event.id, List.of(_done));
+    // Gardées le jour même de l'épreuve seulement (avant : essai d'écran).
+    store.setEventAttempts(widget.event, List.of(_done));
   }
 
   @override
