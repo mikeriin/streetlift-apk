@@ -1,4 +1,5 @@
-"""L9b (KT-079/080) : contrôles des données du pack intégrées à l'application."""
+"""L9b (KT-079/080) : contrôles des données du pack 2.0.0 ; BV11 (dev6.19.0) :
+pack retiré de l'application, archivé dans tools/archives/pack_2.0.0/."""
 import gzip
 import json
 import re
@@ -15,9 +16,20 @@ def gz(rel):
 class ContentPackTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.index = gz('assets/content/index.json.gz')
+        cls.index = gz('tools/archives/pack_2.0.0/index.json.gz')
         cls.v1 = gz('test/fixtures/l9b/exercises_db_v1.json.gz')
-        cls.meta = json.loads((ROOT / 'assets/content/pack.json').read_text())
+        cls.meta = json.loads((ROOT / 'tools/archives/pack_2.0.0/pack.json').read_text())
+
+    def test_bv11_pack_retire_de_l_application(self):
+        self.assertFalse((ROOT / 'assets/content').exists())
+        pubspec = (ROOT / 'pubspec.yaml').read_text(encoding='utf-8')
+        self.assertNotIn('assets/content/', pubspec)
+        self.assertIn('assets/catalog/groupes_historiques.json', pubspec)
+        lib = '\n'.join(p.read_text(encoding='utf-8') for p in (ROOT / 'lib').rglob('*.dart'))
+        self.assertNotIn('assets/content/', lib)
+        # Groupes historiques : copie figée du champ g du pack (STATS).
+        frozen = json.loads((ROOT / 'assets/catalog/groupes_historiques.json').read_text(encoding='utf-8'))
+        self.assertEqual(frozen['groupes'], {e['n']: e['g'] for e in self.index['exercices']})
 
     def test_pack_version_and_fingerprint(self):
         self.assertEqual(self.meta['pack'], '2.0.0')
@@ -57,7 +69,7 @@ class ContentPackTest(unittest.TestCase):
         self.assertEqual(views, {'profil', 'face'})
 
     def test_demo_status_consistent(self):
-        poses = gz('assets/content/poses.json.gz')
+        poses = gz('tools/archives/pack_2.0.0/poses.json.gz')
         for e in self.index['exercices']:
             p = poses['exercices'][e['id']]
             self.assertEqual(p['statut'], e['demo'], e['id'])

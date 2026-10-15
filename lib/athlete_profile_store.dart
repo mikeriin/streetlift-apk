@@ -595,13 +595,4 @@ extension AthleteProfileStore on AppStore {
     ProfileDraft.of(sampleAthleteProfile(on: civilOf(storeClock())))
       ..consent = 'refused',
   );
-
-  // ------------------------------------------------- moteurs L10/L11 (G10)
-
-  /// Exercices détestés du profil v2, en identifiants de l'ancien pack
-  /// (L11 jusqu'à son retrait en G10).
-  Set<String> get athleteDislikedLegacyIds => {
-    for (final id in athlete?.profile.dislikedExerciseIds ?? const <String>[])
-      ...content.legacyIdsOf(id),
-  };
 }

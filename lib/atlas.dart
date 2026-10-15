@@ -1,6 +1,8 @@
 // Atlas musculaire du pack de contenu (L9b, KT-080) : 51 muscles superficiels
 // dessinés (face et dos), une région par muscle et par côté ; les muscles
 // profonds sont donnés en texte. Couleurs par rôles, jamais en dur.
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'atlas_data.dart';
@@ -8,7 +10,6 @@ import 'engine3d.dart' show kMuscleGray;
 import 'kit/tokens.dart';
 import 'muscle_body.dart';
 import 'muscle_map_2d.dart' show kMuscleRegions, mapRegion;
-import 'pose_painter.dart' show dashPath;
 
 /// Remplissage d'une région : couleur, opacité, contour pointillé éventuel.
 @immutable
@@ -348,6 +349,20 @@ List<String> mapGroupsOfAtlasMuscles(Iterable<String> muscles) {
   for (final m in muscles) {
     final g = mapGroupOfAtlasMuscle(m);
     if (g != null && !out.contains(g)) out.add(g);
+  }
+  return out;
+}
+
+/// Contour pointillé d'un chemin (régions profondes de l'atlas). BV11 : repris
+/// du rendu des démonstrations 2D de l'ancien pack, retiré.
+Path dashPath(Path source, double dash, double gap) {
+  final out = Path();
+  for (final m in source.computeMetrics()) {
+    var d = 0.0;
+    while (d < m.length) {
+      out.addPath(m.extractPath(d, math.min(d + dash, m.length)), Offset.zero);
+      d += dash + gap;
+    }
   }
   return out;
 }

@@ -62,23 +62,20 @@ def verify(root=ROOT, signing=False):
                 ids.add(ex['id'])
     # LC1 (KT-037) : 1 954 − 202 lignes retirées + 66 nouvelles en S12-S19.
     assert len(ids) == 1812, 'Programme incomplet'  # LC1b : 1 818 − 7 + 1
-    # L9b (KT-079) : base v2 du pack de contenu (index + fiches + poses).
-    index = json.loads(gzip.decompress((root / 'assets/content/index.json.gz').read_bytes()))
-    exercises = index['exercices']
-    assert all(isinstance(e[k], str) for e in exercises for k in ('id', 'n', 'g', 'eq'))
-    assert len({e['id'] for e in exercises}) == len(exercises), 'Identifiants v2 dupliqués'
-    assert len({e['n'] for e in exercises}) == len(exercises), 'Noms dupliqués'
-    assert sum(1 for e in exercises if e['v1']) == 505, 'Exercices v1 manquants'
-    v2_ids = {e['id'] for e in exercises}
-    assert len(index['base_v1']) == 505 and all(
-        v['id'] in v2_ids and v['canonique'] in v2_ids for v in index['base_v1'].values()), 'Correspondance v1 incomplète'
-    assert all(v['id'] in v2_ids for v in index['programme_v33'].values()), 'Programme non rattaché'
-    details = json.loads(gzip.decompress((root / 'assets/content/details.json.gz').read_bytes()))
-    assert set(details['exercices']) == v2_ids, 'Fiches manquantes'
-    poses = json.loads(gzip.decompress((root / 'assets/content/poses.json.gz').read_bytes()))
-    for i, e in poses['exercices'].items():
-        assert i in v2_ids and (e['statut'] == 'indisponible' or e['gabarit'] in poses['gabarits']), i
-    assert (root / 'assets/content/licences.md').is_file(), 'Mentions absentes'
+    # BV11 (dev6.19.0) : base d'exercices v1.1 seule source de l'application ;
+    # le pack 2.0.0 (L9b) est retiré, archivé dans tools/archives/pack_2.0.0/.
+    catalog = json.loads(gzip.decompress((root / 'assets/catalog/catalog_v1.json.gz').read_bytes()))
+    exercises = catalog['exercices']
+    assert len({e['id'] for e in exercises}) == len(exercises) == 1039, 'Base v1.1 incomplète'
+    v11_ids = {e['id'] for e in exercises}
+    table = json.loads((root / 'assets/catalog/correspondance.json').read_text(encoding='utf-8'))
+    assert all(v is None or v in v11_ids for v in table['ids'].values()), 'Correspondance des identifiants invalide'
+    assert all(v in v11_ids for v in table['noms'].values()), 'Correspondance des noms invalide'
+    groups = json.loads((root / 'assets/catalog/groupes_historiques.json').read_text(encoding='utf-8'))['groupes']
+    assert len(groups) == 625, 'Groupes historiques incomplets'
+    pubspec = (root / 'pubspec.yaml').read_text(encoding='utf-8')
+    assert not (root / 'assets/content').exists() and 'assets/content/' not in pubspec, 'Pack 2.0.0 encore embarqué'
+    assert (root / 'assets/legal/licences.md').is_file() and 'assets/legal/licences.md' in pubspec, 'Mentions absentes'
     # G7 : générateur L10 et ses modèles retirés (kalis_plan les remplace).
     assert not (root / 'assets/program_models.json').exists(), 'Modèles L10 encore présents'
     assert 'program_models.json' not in (root / 'pubspec.yaml').read_text(encoding='utf-8'), 'Modèles L10 encore déclarés'

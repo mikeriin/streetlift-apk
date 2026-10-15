@@ -23,7 +23,6 @@ import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/muscle_body.dart';
 import 'package:streetlift_tracker/muscle_map_2d.dart';
-import 'package:streetlift_tracker/pose_painter.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
@@ -65,15 +64,16 @@ void main() {
   };
 
   group('base v1.1 et migration', () {
-    test('les 505 exercices v1 gardent nom, groupes et matériel', () {
+    // BV11 : le pack 2.0.0 est retiré ; seule sa table nom → groupes reste
+    // (`assets/catalog/groupes_historiques.json`), sans matériel ni ancien
+    // identifiant.
+    test('les 505 exercices v1 gardent nom et groupes', () {
       expect(v1.length, 505);
       final byName = {for (final e in store.dbExercises) e['n']: e};
       for (final e in v1) {
         final now = byName[e['n']];
         expect(now, isNotNull, reason: e['n'] as String);
         expect(now!['g'], e['g'], reason: e['n'] as String);
-        expect(now['eq'], e['eq'], reason: e['n'] as String);
-        expect(now['id'], isA<String>());
       }
       expect(store.dbExercises.length, 625);
       expect(
@@ -118,9 +118,7 @@ void main() {
       final pack =
           jsonDecode(
                 utf8.decode(
-                  gzip.decode(
-                    File('assets/content/index.json.gz').readAsBytesSync(),
-                  ),
+                  gzip.decode(File(_archivedIndex).readAsBytesSync()),
                 ),
               )
               as Map<String, dynamic>;
@@ -364,15 +362,22 @@ void main() {
       expect(menu.materiels, {'barre fixe', 'anneaux'});
       expect(menu.difficultes, {2});
       final cats = ExerciseFilters.categories(index());
+      // BV11 : catégorie et muscle principal (vocabulaires fermés).
       expect(cats.map((c) => c.label), [
         'Discipline',
+        'Catégorie',
         'Type de mouvement',
         'Niveau',
+        'Muscle principal',
         'Lieu',
         'Matériel',
         'Difficulté',
       ]);
       expect(cats.first.options.length, 8);
+      expect(cats[1].options.length, 56);
+      // 54 des 56 muscles sont principaux d'au moins un exercice.
+      expect(cats[4].options.length, 54);
+      expect(cats[6].options.length, 68);
       final keys = [
         for (final c in cats)
           for (final o in c.options) o.key,
@@ -457,7 +462,6 @@ void main() {
               expect(tester.takeException(), null);
               // M8 (5.9.0) : sans animation, rien en tête de fiche ; carte
               // 2D des groupes dans la section Muscles.
-              expect(find.byType(PoseDemo), findsNothing);
               expect(find.byType(ExerciseMannequin), findsNothing);
               expect(find.text('MUSCLE-UP BARRE STRICT'), findsOneWidget);
               // Défilement réel : liste des muscles, puis variantes en bas
@@ -487,7 +491,6 @@ void main() {
         host(ExerciseSheetScreen(id: id), dark: true, scale: 2),
       );
       await tester.pumpAndSettle();
-      expect(find.byType(PoseDemo), findsNothing);
       // 5.5.3 : plus de mention « Démonstration indisponible ». M8 : rien en
       // tête sans animation.
       expect(find.textContaining('Démonstration indisponible'), findsNothing);
@@ -557,3 +560,7 @@ void main() {
 }
 
 String normalize(String s) => s.toLowerCase().trim();
+
+/// BV11 : index du pack 2.0.0, retiré de l'application, archivé pour les
+/// outils et ce contrôle des doublons v1.
+const _archivedIndex = 'tools/archives/pack_2.0.0/index.json.gz';

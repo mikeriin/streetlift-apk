@@ -31,8 +31,12 @@ Future<void> openExerciseSheet(BuildContext context, String id) => Navigator.of(
 /// M4c : plusieurs choix par catégorie (union), catégories combinées
 /// (intersection), dans le menu « Filtres » commun. G3 : discipline, type de
 /// mouvement (famille), niveau, lieu, matériel et difficulté de la base v1.1.
+/// BV11 : catégorie et muscle principal (vocabulaires fermés de la base).
 class ExerciseFilters {
   final Set<String> disciplines, familles, niveaux, lieux, materiels;
+
+  /// BV11 : catégories (56) et muscles principaux (56) de la base v1.1.
+  final Set<String> categoryNames, primaryMuscles;
 
   /// Tranches de difficulté : 1 (1-3), 2 (4-6), 3 (7-10).
   final Set<int> difficultes;
@@ -43,6 +47,8 @@ class ExerciseFilters {
     this.lieux = const {},
     this.materiels = const {},
     this.difficultes = const {},
+    this.categoryNames = const {},
+    this.primaryMuscles = const {},
   });
 
   bool accepts(ExerciseEntry e) =>
@@ -52,7 +58,10 @@ class ExerciseFilters {
       (lieux.isEmpty || lieux.any(e.lieux.contains)) &&
       (materiels.isEmpty || materiels.any(e.materiel.contains)) &&
       (difficultes.isEmpty ||
-          difficultes.contains(difficultyBand(e.difficulte)));
+          difficultes.contains(difficultyBand(e.difficulte))) &&
+      (categoryNames.isEmpty || categoryNames.contains(e.categorie)) &&
+      (primaryMuscles.isEmpty ||
+          primaryMuscles.any(e.ex.primaryMuscles.contains));
 
   /// Catégories du menu « Filtres » (clés préfixées : uniques dans le menu).
   static List<FilterCategory> categories(ContentIndex index) {
@@ -77,6 +86,15 @@ class ExerciseFilters {
         options: [for (final d in disciplines) FilterOption('disc:$d', d)],
       ),
       FilterCategory(
+        id: 'categorie',
+        label: 'Catégorie',
+        options: [
+          for (final c in index.categoryVocabulary)
+            if (index.entries.any((e) => e.categorie == c))
+              FilterOption('cat:$c', c),
+        ],
+      ),
+      FilterCategory(
         id: 'famille',
         label: 'Type de mouvement',
         options: [
@@ -88,6 +106,15 @@ class ExerciseFilters {
         id: 'niveau',
         label: 'Niveau',
         options: [for (final n in niveaux) FilterOption('lvl:$n', n)],
+      ),
+      FilterCategory(
+        id: 'muscle',
+        label: 'Muscle principal',
+        options: [
+          for (final m in index.muscleVocabulary)
+            if (index.entries.any((e) => e.ex.primaryMuscles.contains(m)))
+              FilterOption('mus:$m', baseMuscleLabel(m)),
+        ],
       ),
       FilterCategory(
         id: 'lieu',
@@ -131,6 +158,8 @@ class ExerciseFilters {
       for (final n in _strip(s.of('difficulte'), 'dif:'))
         if (int.tryParse(n) != null) int.parse(n),
     },
+    categoryNames: _strip(s.of('categorie'), 'cat:'),
+    primaryMuscles: _strip(s.of('muscle'), 'mus:'),
   );
 }
 
@@ -660,11 +689,12 @@ class _Sheet extends StatelessWidget {
 
 // -------------------------------- mentions ---------------------------------
 
-/// Sources et licences du pack de contenu (assets/content/licences.md).
+/// Sources et licences des contenus (assets/legal/licences.md ; BV11 : base
+/// v1.1 seule, pack 2.0.0 retiré).
 class MentionsScreen extends StatelessWidget {
   const MentionsScreen({super.key});
 
-  static const asset = 'assets/content/licences.md';
+  static const asset = 'assets/legal/licences.md';
 
   /// M2 : crédits du modèle anatomique 3D (CC BY-SA 4.0), texte exact.
   static const anatomyAsset = 'assets/anatomy/ATTRIBUTION.md';

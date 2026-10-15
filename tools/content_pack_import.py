@@ -240,7 +240,7 @@ def main(pack, root=ROOT, pack_sha=None, with_parity=True):
     progressions = json.loads((pack / 'progressions.json').read_text())
     muscles = {m['id']: m for m in muscles_doc['muscles']}
     order = muscles_doc['groupes_app']
-    content = root / 'assets/content'
+    content = root / 'tools/archives/pack_2.0.0'  # BV11 : pack retiré de l'application
     report = {}
     report['index'] = gz(content / 'index.json.gz', build_index(ex, muscles, order, mapping))
     report['details'] = gz(content / 'details.json.gz', build_details(ex))
