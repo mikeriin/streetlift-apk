@@ -289,3 +289,14 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Lot : **CIF**, prompt `prompts/CIF.txt`. Délégation (C8) ; validation par le pilotage. Consigne : au plus pragmatique (C15.7).
 - Base : pointe de `main` (dev6.17.3, 8d1ef051) → dev6.18.0. Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/CIF`. Rien dans `packages/` (KM2c1 et KS1 tournent sur `moteurs`).
+
+## KM1c3 — estimation sous notes non fiables, référence 1.0.3 (lancé le 15/10/2026 vers 19:08 UTC, tâche « Fable 5.1, effort maximal, moteurs » ; C17.9, C17.10)
+
+- Lot : **KM1c3**, prompt `prompts/KM1c3.txt`. Décisions : C13.13.2, C17.7 (m3), C17.8.2 (rejeu du journal réel). Lot sans panel (C13.3).
+- Base `moteurs` à la pointe (e502e963 ou suivant). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM1c3`.
+- **En parallèle sur `moteurs` : KS1** (`kalis_core`, `kalis_plan`, `kalis_bench`, contrôle `claude/ci-cp-b`). Référence Python seulement (`packages/kalis_adapt/reference/`) ; rebase avant chaque push. Troisième session : BV11 sur `main`.
+
+## BV11 — base d'exercices v1.1 dans l'application (lancé le 15/10/2026 vers 19:08 UTC, tâche « Opus 5.5, effort élevé, application » ; C17.9, C17.10)
+
+- Lot : **BV11**, prompt `prompts/BV11.txt`. Délégation (C8) ; validation par le pilotage. Au plus pragmatique (C15.7).
+- Base : pointe de `main` (dev6.18.0, 6e32cdf6) → dev6.19.0. Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/BV11`. Rien dans `packages/` ni `tools/catalog/` (KS1 et KM1c3 sur `moteurs`).
