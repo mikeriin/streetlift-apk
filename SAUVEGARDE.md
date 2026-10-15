@@ -31,7 +31,7 @@ Session Fable 5.1, effort maximal, démarrée le 15/10/2026 à 19:09 UTC. Base `
 - X2 (prudence lourde 1,0) mesuré : cinq jeux 0,884 contre 0,886 (b3000 +0,010, b300 −0,007, km1c2 −0,009), banc graine 0 0,9580 : laissée à 0. `var_final.log` (code final, banc) en cours.
 - Livraison (scratchpad `LIVRAISON_KM1c3.md`) : § 4 et § 5 remplis (remesure hors ligne sur la capture finale : retenue +0,015, 17 → 6 ; baisse après échec +0,027) ; restent les critères de la campagne, SHA, run final, commit.
 - Comparaisons 7 bis des cinq jeux connus refaites avec le code final (`donnees/comparaison_adversaires_km1c3_*.json`) : km1 24/24 (0,8914), b300 22/24 1 sous −0,143 (0,8825), b600 22/24 1 sous −0,103 (0,8838), b3000 21/24 1 sous −0,234 (0,8943), km1c2 22/24 1 sous −0,145 (0,8759) ; moyenne des cinq 0,8665 → 0,8856. Seule régression nouvelle : adv-051f1dee g2 (zéro isolé au squat) ; a0dd8069 (−0,099 → −0,103), 29523095 (−0,226 → −0,234, sous-estimation d'un powerlifter b) et 5e2b8ac3 (−0,154 → −0,145) préexistants.
-- Local : campagne partie 2/2 (`campagne_p2.log`, dossier `/tmp/km1-campagne/746e9268d927d350`, 600/2 160 à 23:20, fin vers 01:20 UTC). Puis assemblage : `python3 -m banc.campagne --profils tous --scenarios tous --graines 6 --coeurs 2 --sortie donnees/criteres_km1c3.json`.
+- Session interrompue vers 23:20 UTC (processus tués, fichiers intacts) ; campagne partie 2/2 relancée 23:25 sur le cache (681 faites, 1 479 restantes, `campagne_p2b.log`, fin vers 01:30 UTC) et `var_final` (banc graine 0 du code final) relancé. Puis assemblage : `python3 -m banc.campagne --profils tous --scenarios tous --graines 6 --coeurs 2 --sortie donnees/criteres_km1c3.json`.
 
 ## Reste à faire
 
