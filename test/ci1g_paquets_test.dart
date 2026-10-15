@@ -380,7 +380,15 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('clearance-dialog')), findsNothing);
       expect(find.byKey(const ValueKey('clearance-card')), findsOneWidget);
-      expect(find.text(kClearanceWaiting), findsWidgets);
+      // CIF (point 8) : la note à 6/10 dit déjà « En attendant… » : la
+      // carte ne répète plus `kClearanceWaiting`.
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('clearance-card')),
+          matching: find.textContaining('En attendant'),
+        ),
+        findsOneWidget,
+      );
       // Même séance rouverte : pas redemandé ; rappel gardé.
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump(const Duration(seconds: 1));

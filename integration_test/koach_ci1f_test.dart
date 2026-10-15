@@ -228,9 +228,12 @@ void main() {
         await wait(tester, 700);
       }
       releve['myo_parties'] = keyStarts('miniset-part-').evaluate().length;
-      releve['myo_conseil'] = (tester.widget<Text>(
-        keyStarts('miniset-advice-').first,
-      )).data;
+      // 6.15 : la consigne du bandeau n'est dite qu'en mode guidé ou au
+      // dernier bloc (CIF : relevé facultatif).
+      final advice = keyStarts('miniset-advice-');
+      releve['myo_conseil'] = advice.evaluate().isEmpty
+          ? null
+          : (tester.widget<Text>(advice.first)).data;
       releve['chrono_intra'] = store.settings.autoTimer;
       await scrollTo(tester, keyStarts('miniset-advice-'));
       await shot('03_myo_mini_series');

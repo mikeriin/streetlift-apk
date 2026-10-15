@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : UI5 (pipeline UI), version dev6.12.0 ; précédent : dev6.11.3 (CI1h correction 1)**  
-**Date : 11 octobre 2026, Europe/Paris — version : 6.12.0+117, affichée « dev6.12.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : publié sur `main` (UI5) après contrôle complet en CI (branche `claude/ci-ui-ui5`, run 38127114476 : tests, builds, tour sur émulateur après et avant, 16 cibles émulateur) ; à valider par le propriétaire sur téléphone.**
+**Passe actuelle : CIF — lot CI final (pipeline CP), version dev6.18.0 ; précédent : dev6.17.3 (correctifs UI)**  
+**Date : 15 octobre 2026, Europe/Paris — version : 6.18.0+127, affichée « dev6.18.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le pilotage (C8).**
+
+## CIF — Lot CI final (version dev6.18.0, pipeline CP, DECISIONS_CP.md C17)
+
+- 12 limites des livraisons CI1 à CI1h vérifiées sur `main` (tableau dans `pipeline/cp/livraisons/LIVRAISON_CIF.md`) : tentatives du jour J au journal (`eventId`, rôle `attempt`, rang ; gardées le jour même seulement) ; mini-séries au journal (ligne telle qu'écrite, ordre des parties) ; `miniSetsLeft` / `stepExerciseId` dits ; série repère d'un maintien en secondes ; simulateur du mode dev (mini-séries, groupes) ; test reporté exercé par un cas réel ; règle CI1.4 retirée ; carte « Pas encore » ; contre-la-montre (temps et distance, repère `time_trial` au profil), test de course borné, pompe sur barre basse écrite ; tests `m8_carte_2d` et `visual_capture` robustes ; hauteur du bandeau des mini-séries.
+- Paquets inchangés. Tests : `test/cif_points_test.dart`, `test/cif_report_test.dart`, `test/cif_seance_test.dart` ; cible émulateur `integration_test/lot_cif_test.dart`.
+
 
 ## UI5 — Refonte UI et UX : intégration et publication (version dev6.12.0, pipeline UI)
 
