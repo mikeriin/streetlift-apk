@@ -20,10 +20,13 @@ Session Fable 5.1, effort maximal, démarrée le 15/10/2026 à 19:09 UTC. Base `
 - Docs : CHANGEMENTS_1_0_3.md (G à compléter), CONTRAT (note, § 3.4, 4.3, 5.13, 6.3, 6.5, 7.x, 9.6, A8.2 ; SHA à compléter), SOURCES (15 clés ; SHA et MESURE_PRUDENCE_LOURDE à compléter), PORTAGE_DART, README, VERSION 1.0.3-ref.1, paramètres `1.0.3-ref.1` (a=1, c=12, palier 3, marge 0,1/0,05, échec 0,05, règle échec 1, prudence lourde 0).
 - Rejeu du journal réel (1.0.3, a=c=0 puis à refaire avec le fichier final) : E[φ] 0,91, part non notée 18,6 % en fin de journal (69 % avant S12), κ = 1 : prescriptions du propriétaire inchangées.
 
+- Relecture indépendante (Opus) reçue et traitée : B1, B2 (section D du rejeu), M1 (queue lourde `note_erreur_grossiere` dans la vraisemblance de φ), M2 (échauffements exclus), M3 (plafond κ = 2, `fiabilite_elargissement_max`), m4 (`_rampe` sur σ brut), m5 (FIGEES grille/a priori, borne prudence), m6 (P(φ ≥ 2)), m7, m8, m10 ; tests ajoutés (16 dans test_fiabilite, test_rejeu sans principal) ; suite complète verte (260) hors SHA du contrat. Fixtures régénérées après corrections. Fichier de paramètres : 338 clés (16 nouvelles).
+- Hors ligne, indicateur corrigé (543 ouvertures) : a = 1, c = 12 gardés (a = 0,5, c = 8 : +0,002, dans le bruit).
+
 ## En cours
 
-- CI `claude/ci-cp-a` run 38809271354 (commit 0267da6c) : campagne 1.0.3 six graines partie 1/2 (`/tmp/ci-km1c3`, `pousser_ci.sh`). Puis : témoin Dart des nouveaux adversaires (run_temoin.sh), contrôle complet final.
-- Local : recherche adversariale neuve 3 000 saisons contre 1.0.3 (`recherche.log`, sortie `donnees/adversaires_km1c3.json`, entrée Dart `adversaires_km1c3_entree.json`). Ensuite : X2 (prudence lourde 1,0, 13 min), campagne partie 2/2 locale (~2,8 h), comparaisons 7 bis des six jeux, assemblage, livraison.
+- CI `claude/ci-cp-a` run du commit 35bf1503 (le run 38809271354 de 0267da6c, avant relecture, est annulé par ce push) : campagne 1.0.3 six graines partie 1/2 (`/tmp/ci-km1c3`, `pousser_ci.sh`). Puis : témoin Dart des nouveaux adversaires (run_temoin.sh), contrôle complet final.
+- Local (relancée 22:00 UTC après relecture) : recherche adversariale neuve 3 000 saisons contre 1.0.3 (`recherche.log`, sortie `donnees/adversaires_km1c3.json`, entrée Dart `adversaires_km1c3_entree.json`). Ensuite : X2 (prudence lourde 1,0, 13 min), campagne partie 2/2 locale (~2,8 h), comparaisons 7 bis des six jeux, assemblage, livraison.
 
 ## Reste à faire
 

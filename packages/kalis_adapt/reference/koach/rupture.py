@@ -801,6 +801,10 @@ FIGEES = (
     ('test_adaptatif', 'jours_min_entre_rampes'), ('test_adaptatif', 'rampe_pas_cran'),
     ('test_adaptatif', 'rampe_cran_rir_marge'),
     ('rupture', 'douleur_secours'),
+    # 1.0.3 : grille et a priori de la fiabilité des notes, fixés à la
+    # création du modèle (un import ne les relirait pas).
+    ('mesure', 'fiabilite_phi_min'), ('mesure', 'fiabilite_phi_max'), ('mesure', 'fiabilite_phi_points'),
+    ('mesure', 'fiabilite_ln_phi_sd'), ('mesure', 'fiabilite_non_notee_a_priori'),
 )
 
 # Bornes simples : (section, clé) -> (min, max) inclus.
@@ -814,11 +818,12 @@ BORNES = {
     # règle générale des clés `_sd` (> 0) ; 0,001 (0,1 % de la capacité) est
     # sans effet sur un intervalle.
     ('mesure', 'defaut_modele_sd'): (0.001, 0.1),
-    ('mesure', 'fiabilite_ln_phi_sd'): (0.1, 2.0),
     ('mesure', 'fiabilite_oubli'): (0.5, 0.9999),
     ('mesure', 'fiabilite_elargissement_phi'): (0.0, 10.0),
     ('mesure', 'fiabilite_elargissement_non_notee'): (0.0, 100.0),
+    ('mesure', 'fiabilite_elargissement_max'): (1.0, 5.0),
     ('mesure', 'fiabilite_schema_reps'): (1, 30),
+    ('planification', 'prudence_charge_fiabilite'): (0.0, 5.0),
     ('planification', 'dispersion_echeance'): (0.3, 1.5),
     ('planification', 'dispersion_echeance_semaines'): (1, 52),
     ('dynamique', 'recuperation_seuil'): (1e-6, 1e6),

@@ -164,6 +164,78 @@ def test_moyenne_intacte_incertitude_elargie():
             assert abs(m1.capacite(EX, brut=True)[1] - m0.capacite(EX, brut=True)[1]) < 1e-12
 
 
+def test_echauffements_echecs_et_bruit_appris_sans_effet_sur_l_indicateur():
+    """Les échauffements et les séries ratées ne comptent ni comme notées ni
+    comme non notées ; φ est mesuré contre le bruit de population : forcer
+    `bruit_rir` ne change pas la mise à jour d'une note."""
+    k = koach()
+    k.observe({'type': 'seance_debut', 'jour': 7, 'contexte': {'semaine': 1, 'genre': 'accumulation'}})
+    chauffe = serie(60.0, 5, None)
+    chauffe['kind'] = 'warmup'
+    k.observe({'type': 'serie', 'serie': chauffe})
+    k.observe({'type': 'serie', 'serie': serie(110.0, 0, 10, failed=True)})
+    k.observe({'type': 'serie', 'serie': serie(110.0, 3, 10, failed=True)})
+    f = k.modele.fiabilite
+    assert f.notes == 0 and f.nn == f.nn0 and f.notes_s == [0, 0]
+    k.observe({'type': 'serie', 'serie': serie(110.0, 5, None)})
+    assert f.notes == 0 and f.nn[0] > f.nn0[0]
+    # bruit_rir forcé : même grille après la même note
+    k1 = koach()
+    k2 = koach()
+    for kk in (k1, k2):
+        kk.observe({'type': 'seance_debut', 'jour': 7, 'contexte': {'semaine': 1, 'genre': 'accumulation'}})
+    k2.modele.bruit_rir = 2.0
+    for kk in (k1, k2):
+        kk.observe({'type': 'serie', 'serie': serie(110.0, 5, 7)})
+    assert max(abs(a - b) for a, b in zip(k1.modele.fiabilite.lp, k2.modele.fiabilite.lp)) < 1e-12
+    # série lourde selon repsHigh
+    k3 = koach()
+    k3.observe({'type': 'seance_debut', 'jour': 7, 'contexte': {'semaine': 1, 'genre': 'accumulation'}})
+    k3.observe({'type': 'serie', 'serie': serie(110.0, 5, 7, hi=8)})
+    assert k3.modele.fiabilite.notes_s == [0, 1]
+
+
+def test_proba_phi_sup_inclut_le_point_de_grille():
+    f = Fiabilite(PARAMS)
+    assert abs(f.proba_phi_sup(2.0) - sum(math.exp(x) for x, ph in zip(f.lp, f.phi) if ph >= 2.0 - 1e-9)) < 1e-12
+    assert f.proba_phi_sup(2.0) > f.proba_phi_sup(2.83)
+
+
+def test_elargissement_plafonne():
+    p = copy.deepcopy(PARAMS)
+    p['mesure']['fiabilite_elargissement_non_notee'] = 1000.0
+    f = Fiabilite(p)
+    for _ in range(100):
+        f.serie(False, False)
+    assert f.elargissement() == p['mesure']['fiabilite_elargissement_max'] == 2.0
+
+
+def test_echec_non_prevu_sans_hausse_tout_schema():
+    """Après un échec non prévu à la dernière séance de l'exercice : mode 1,
+    aucune hausse par rapport au dernier passage quel que soit le schéma ;
+    mode 0, seule la règle du même schéma ; mode 2, seulement si κ > 1."""
+    def premiere_serie(mode, kappa):
+        prm = copy.deepcopy(PARAMS)
+        prm['securite']['echec_sans_hausse_tout_schema'] = mode
+        k = koach(prm)
+        _journal(k, [3, 5, 5, 3])
+        k.modele.elargissement = lambda: kappa
+        s = k.seances
+        mem = s.mem(EX)
+        mem.echec = True
+        mem.charge_derniere = 100.0
+        k.garde.avancer(40)
+        s.ouvrir(40, None, {'semaine': 5, 'genre': 'accumulation'})
+        item = {'slotId': 's9', 'exerciseId': EX, 'kind': 'work', 'sets': 3, 'repsLow': 3, 'repsHigh': 3,
+                'targetFlames': 7}
+        out = s.prescrire([item], {EX: Grille(2.5, 20.0)}, {EX: ({}, set())}, {'s9': 'main'})
+        return s.cible(out[0], 0, [])['loadKg']
+    assert premiere_serie(0, 1.0) > 100.0
+    assert premiere_serie(1, 1.0) <= 100.0
+    assert premiere_serie(2, 1.0) > 100.0
+    assert premiere_serie(2, 1.3) <= 100.0
+
+
 def test_posterior_expose_la_fiabilite():
     k = koach()
     _journal(k, [10, None, 3, None])
@@ -245,10 +317,15 @@ def test_prudence_des_series_lourdes():
                 'targetFlames': 7}
         out = s.prescrire([item], {EX: Grille(2.5, 20.0)}, {EX: ({}, set())}, {'s1': 'main'})
         return s.cible(out[0], 0, [])['loadKg']
-    assert charge(1.0, 3, p) == charge(1.0, 3, PARAMS)
-    assert charge(1.5, 3, p) < charge(1.0, 3, p)
-    assert charge(1.5, 3, PARAMS) == charge(1.0, 3, PARAMS)      # coefficient 0 : rien
-    assert charge(1.5, 8, p) == charge(1.0, 8, p)                # série longue : rien
+    p0 = copy.deepcopy(PARAMS)
+    p0['planification']['prudence_charge'] = [0.0, 0.0]          # isole la prudence de fiabilité de prudence_charge·σ·κ
+    p1 = copy.deepcopy(p0)
+    p1['planification']['prudence_charge_fiabilite'] = 1.0
+    assert charge(1.0, 3, p1) == charge(1.0, 3, p0)
+    assert charge(1.5, 3, p1) < charge(1.0, 3, p1)
+    assert charge(1.5, 3, p0) == charge(1.0, 3, p0)              # coefficient 0 : rien
+    assert charge(1.5, 8, p1) == charge(1.0, 8, p1)              # série longue : rien
+    assert charge(1.5, 3, p) <= charge(1.0, 3, p)
 
 
 def test_jumeau_tire_avec_l_elargissement():

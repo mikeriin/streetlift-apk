@@ -144,21 +144,32 @@ class Fiabilite(object):
         out = [self.lp0[k] + lam * (lp[k] - self.lp0[k]) + logl[k] for k in range(len(lp))]
         return self._normaliser(out)
 
+    @staticmethod
+    def _masse(mu, sd, a, b):
+        if sd < 1e-9:
+            sd = 1e-9
+        pb = 1.0 if b == INF else norm_cdf((b - mu) / sd)
+        pa = 0.0 if a == -INF else norm_cdf((a - mu) / sd)
+        L = pb - pa
+        return L if L > 0.0 else 0.0
+
     def noter(self, mu, v, a, b, s0_2, extra, w_main, w_nul, lourd):
         """Note perçue : [a, b] intervalle de réserve perçue, [mu, v]
         prévision du filtre, [s0_2] variance du bruit de population à la
         réserve prévue, [extra] bruit de la fatigue de séance, poids du
-        mélange comme dans `_serie_force`."""
+        mélange comme dans `_serie_force`. La vraisemblance reprend aussi
+        la queue lourde du filtre (`note_erreur_grossiere` : avec la
+        probabilité g, l'erreur a un écart-type augmenté de gross_sd,
+        § 5.6) : une erreur grossière au taux que le filtre admet n'est pas
+        imputée à φ."""
+        ge = self.p.get('note_erreur_grossiere', [0.0, 0.0])
+        g, gsd = ge[0], ge[1]
         logl = []
         for k in range(len(self.phi)):
-            sd = math.sqrt(v + self.phi[k] * s0_2 + extra)
-            if sd < 1e-9:
-                sd = 1e-9
-            pb = 1.0 if b == INF else norm_cdf((b - mu) / sd)
-            pa = 0.0 if a == -INF else norm_cdf((a - mu) / sd)
-            L = pb - pa
-            if L < 0.0:
-                L = 0.0
+            var = v + self.phi[k] * s0_2 + extra
+            L = self._masse(mu, math.sqrt(var), a, b)
+            if g > 0.0:
+                L = (1.0 - g) * L + g * self._masse(mu, math.sqrt(var + gsd * gsd), a, b)
             L = w_main * L + w_nul
             logl.append(math.log(L if L > 1e-300 else 1e-300))
         self.lp = self._ajouter(self.lp, logl)
@@ -194,10 +205,13 @@ class Fiabilite(object):
         return self._moyenne(lp, self.lphi)
 
     def proba_phi_sup(self, seuil, schema=None):
+        """P(φ ≥ seuil) sur la grille (comparaison en ln, à 1e-9 près : un
+        point de grille égal au seuil compte)."""
         lp = self.lp if schema is None else self.lp_s[schema]
+        ls = math.log(seuil)
         s = 0.0
         for k in range(len(lp)):
-            if self.phi[k] > seuil:
+            if self.lphi[k] >= ls - 1e-9:
                 s += math.exp(lp[k])
         return s
 
@@ -206,7 +220,8 @@ class Fiabilite(object):
         return nn[0] / (nn[0] + nn[1])
 
     def elargissement(self):
-        """Facteur κ ≥ 1 appliqué à l'écart-type des capacités :
+        """Facteur κ ≥ 1 appliqué à l'écart-type des capacités, plafonné à
+        `fiabilite_elargissement_max` :
         κ² = 1 + a·max(E[φ] − E₀[φ], 0) + c·max(ρ − ρ₀, 0)², avec E[φ] la
         moyenne a posteriori du facteur de bruit, ρ la part non notée a
         posteriori, E₀ et ρ₀ leurs moyennes A PRIORI, a =
@@ -224,7 +239,11 @@ class Fiabilite(object):
         if nn < 0.0:
             nn = 0.0
         k2 = 1.0 + a * ex + c * nn * nn
-        return math.sqrt(k2) if k2 > 1.0 else 1.0
+        if k2 <= 1.0:
+            return 1.0
+        kappa = math.sqrt(k2)
+        mx = self.p.get('fiabilite_elargissement_max', 2.0)
+        return kappa if kappa < mx else mx
 
     def resume(self):
         return {
@@ -1125,8 +1144,9 @@ class Modele(object):
             if self.sonde is not None:
                 _, var_p, _ = self._stats(self.m, self.P, idx, co)
                 self.sonde.append((t.id, t.type, pred, var_p, s2, a, b, reps, R, sj, len(t.series_seance), t.seances))
-            if reps > 0 and not echec:
-                # 1.0.3 : fiabilité des notes (§ 5.13). Série lourde si les
+            if reps > 0 and not echec and s.get('kind') != 'warmup':
+                # 1.0.3 : fiabilité des notes (§ 5.13 ; échauffements exclus :
+                # ils ne sont presque jamais notés). Série lourde si les
                 # répétitions prévues (à défaut faites) sont ≤
                 # `fiabilite_schema_reps`. Une note perçue apporte la
                 # vraisemblance de sa catégorie sous la prévision du filtre

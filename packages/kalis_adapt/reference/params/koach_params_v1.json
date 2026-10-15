@@ -170,9 +170,10 @@
     "fiabilite_ln_phi_sd": 0.5,
     "fiabilite_oubli": 0.98,
     "fiabilite_non_notee_a_priori": [1.0, 4.0],
-    "fiabilite_schema_reps": 5,
     "fiabilite_elargissement_phi": 1.0,
-    "fiabilite_elargissement_non_notee": 12.0
+    "fiabilite_elargissement_non_notee": 12.0,
+    "fiabilite_elargissement_max": 2.0,
+    "fiabilite_schema_reps": 5
   },
   "jour": {
     "sigma_seance": 0.022,

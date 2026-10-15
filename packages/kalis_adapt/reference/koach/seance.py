@@ -1903,7 +1903,7 @@ class Seances(object):
         # (`avant[1]`). `echec_sans_hausse_tout_schema` : 1 = règle de 0.3.1 ;
         # 2 = seulement quand les notes ne sont pas fiables (κ > 1) ; 0 = 1.0.2.
         mode_echec = s.get('echec_sans_hausse_tout_schema', 0)
-        if index == 0 and mem.echec and mem.charge_derniere is not None and mode_echec \
+        if mem.echec and mem.charge_derniere is not None and mode_echec \
                 and (mode_echec == 1 or self.m.elargissement() > 1.0):
             if charge > mem.charge_derniere:
                 charge = mem.charge_derniere
@@ -2220,7 +2220,10 @@ class Seances(object):
         grille = plan['grille']
         n_t, rir_t = plan['rampe']
         bw = t.fraction * self.m.poids_kg
-        mu, sd = self.m.capacite_du_jour(ex_id)
+        # 1.0.3 : écart-type brut (la borne large `mu + 2,5·σ` ne doit pas
+        # monter avec l'élargissement de la fiabilité : il irait dans le
+        # sens moins prudent).
+        mu, sd = self.m.capacite_du_jour(ex_id, brut=True)
         lam, k = self.m.courbe(t)
         if index == 0:
             voulu = self.charge_pour(ex_id, n_t, rir_t + 2.0, 0.5)
