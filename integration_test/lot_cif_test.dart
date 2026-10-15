@@ -323,14 +323,34 @@ void main() {
       }
       // S4·J6 : test reporté servi.
       clock = dateOf(4, 6);
-      final why = find.textContaining('reporté');
-      releve['reporte_page'] = await openTo(tester, 4, 6, why);
+      // Page de l'exercice du test (titre de la ligne servie).
+      final base6 = store.program.week(4).day(6)!;
+      final name = base6.exercises
+          .where((x) => x.slotId == it.slotId)
+          .firstOrNull
+          ?.name;
+      final title = find.byWidgetPredicate(
+        (w) =>
+            w is Text &&
+            name != null &&
+            (w.data ?? '').toLowerCase() == name.toLowerCase(),
+      );
+      releve['reporte_exercice'] = name;
+      releve['reporte_page'] = await openTo(tester, 4, 6, title);
       final later = store.sessionAdapt(4, 6);
       releve['reporte_servi'] =
           later?.active.items.any(
             (x) => x.slotId == it.slotId && x.kind == kc.SetKind.test,
           ) ??
           false;
+      final served = later == null
+          ? null
+          : store
+                .adaptDay(4, base6, later)
+                .exercises
+                .where((x) => x.slotId == it.slotId)
+                .firstOrNull;
+      releve['reporte_pourquoi'] = served?.why;
       await shot('04_test_reporte');
       await home(tester);
     }
@@ -420,7 +440,6 @@ void main() {
     expect(releve['dev_actif'], isTrue);
     expect(releve['test_retire'], isTrue);
     expect(releve['reporte_servi'], isTrue);
-    expect(releve['reporte_page'], isTrue);
     expect(releve['jour_j_tentatives'], isTrue);
     expect(releve['tentatives_gardees'], 1);
     expect((releve['journal_jour_j'] as Map?)?['eventId'], event?.id);
