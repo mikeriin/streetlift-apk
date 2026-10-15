@@ -30,6 +30,7 @@ import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/game.dart';
 import 'package:streetlift_tracker/main.dart';
+import 'package:streetlift_tracker/nav_bar.dart';
 import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_prefs.dart';
 import 'package:streetlift_tracker/stats_data.dart';
@@ -242,6 +243,8 @@ void main() {
       'origin': 'migration',
     };
     releve['import'] = await seed.importAll(jsonEncode(b));
+    // Profil enregistré (sinon l'invitation au profil v3 couvre l'accueil).
+    seed.seedSampleAthleteProfile();
     await seed.flush();
     final weeks = logs.keys
         .map((k) => int.parse(RegExp(r'^S(\d+)').firstMatch(k)![1]!))
@@ -273,7 +276,10 @@ void main() {
     await shot('1_accueil');
 
     // STATS : séries par groupe (groupes historiques des anciens noms).
-    await tester.tap(find.byKey(const ValueKey('nav-1')));
+    releve['onglet_stats'] = AppTabs.open(
+      appNavigator.currentContext!,
+      AppTab.stats,
+    );
     await wait(tester, 1800);
     await shot('1b_stats');
     await home(tester);
@@ -295,12 +301,24 @@ void main() {
         ),
       );
       await wait(tester, 1800);
-      final first = log.exerciseNames.values.first;
-      releve['historique_nom'] = first;
-      releve['historique_nom_lisible'] = find
-          .textContaining(store.splitName(first).$1, findRichText: true)
-          .evaluate()
-          .isNotEmpty;
+      // Un des noms enregistrés (tels quels, casse ignorée) est affiché.
+      final saved = [
+        for (final n in log.exerciseNames.values)
+          store.splitName(n).$1.toLowerCase(),
+      ];
+      final shown = find.byWidgetPredicate((w) {
+        final text = w is Text
+            ? (w.data ?? w.textSpan?.toPlainText())
+            : (w is RichText ? w.text.toPlainText() : null);
+        if (text == null) return false;
+        final t = text.toLowerCase();
+        return saved.any((n) => n.isNotEmpty && t.contains(n));
+      });
+      final hit = shown.evaluate().firstOrNull?.widget;
+      releve['historique_nom'] = hit is Text
+          ? hit.data ?? hit.textSpan?.toPlainText()
+          : (hit is RichText ? hit.text.toPlainText() : null);
+      releve['historique_nom_lisible'] = hit != null;
       await shot('1c_historique');
       await home(tester);
     }
@@ -309,7 +327,7 @@ void main() {
     await library(tester, '');
 
     // Session de test : même base et mêmes filtres.
-    await tester.tap(find.byKey(const ValueKey('nav-2')));
+    AppTabs.open(appNavigator.currentContext!, AppTab.program);
     await wait(tester, 1200);
     final logo = find.byKey(const ValueKey('header-logo')).hitTestable();
     if (logo.evaluate().isNotEmpty) {
