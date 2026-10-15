@@ -195,10 +195,8 @@ enum _Kind {
     legsEndurance ||
     lowerForce ||
     lowerEndurance => const <DayPattern>{DayPattern.legs},
-    upperForce || upperEndurance => const <DayPattern>{
-      DayPattern.pull,
-      DayPattern.push,
-    },
+    upperForce ||
+    upperEndurance => const <DayPattern>{DayPattern.pull, DayPattern.push},
     fullForce || fullEndurance => const <DayPattern>{
       DayPattern.pull,
       DayPattern.push,
@@ -214,10 +212,8 @@ enum _Kind {
     legsEndurance ||
     lowerForce ||
     lowerEndurance => const <DayPattern>[DayPattern.legs],
-    upperForce || upperEndurance => const <DayPattern>[
-      DayPattern.pull,
-      DayPattern.push,
-    ],
+    upperForce ||
+    upperEndurance => const <DayPattern>[DayPattern.pull, DayPattern.push],
     fullForce || fullEndurance => const <DayPattern>[DayPattern.full],
   };
 
@@ -300,8 +296,11 @@ DayPattern? coachSchemaOf(CatalogExercise e) => switch (e.pattern) {
   _ => null,
 };
 
-/// Méthodes dont le travail ne compte pas comme une séance dure du schéma
-/// (préparation, prévention, mobilité, course facile, tenues faciles).
+/// Méthodes dont le travail ne compte pas comme une séance dure du schéma :
+/// préparation, prévention, mobilité, course facile, tenues faciles, et la
+/// pratique technique dosée loin de l'échec (répétitions techniques du
+/// muscle-up, travail dynamique d'une figure : 2 à 4 répétitions à 3 en
+/// réserve ; R4-F1, R5-P27).
 const Set<String> _softMethods = <String>{
   Method.warmupPrep,
   Method.accessoryPrehab,
@@ -311,6 +310,8 @@ const Set<String> _softMethods = <String>{
   Method.beginnerHold,
   Method.skillEasyHold,
   Method.skillBalance,
+  Method.skillDynamic,
+  Method.repsTechnique,
 };
 
 /// Charge d'un emplacement sur son schéma, pour la récupération : 2 pour
@@ -463,6 +464,10 @@ DayType coachDerivedType(Athlete a, DaySpec day) {
       Method.repsTechnique => DayQuality.skill,
       Method.wod => DayQuality.conditioning,
       Method.mobility => DayQuality.recovery,
+      // (Musculation : le travail principal est dosé en volume.)
+      Method.accessoryCompound ||
+      Method.accessoryLegs ||
+      Method.accessoryIsolation => DayQuality.volume,
       _ => null,
     };
     if (q != null && s.role != SlotRole.accessory) {
@@ -516,50 +521,81 @@ DayType coachDerivedType(Athlete a, DaySpec day) {
 
 // --------------------------------------------------------- gabarits typés
 
-/// Gabarit typé pour [nf] séances de force et [ne] séances d'endurance, ou
-/// `null` (aucun gabarit de la bibliothèque ne réalise cette répartition :
-/// seul le gabarit composite reste).
+/// Gabarit typé de la bibliothèque pour [nf] séances de force et [ne]
+/// d'endurance (CAHIER_KS.md § 3.2, § 3.3) : le gabarit fixe la suite des
+/// schémas, la répartition au plus fort reste fixe les qualités — les
+/// [nf] premières positions de la suite (dans l'ordre d'exigence) sont de
+/// force, les autres d'endurance. `pp_l5` : les jambes prennent la qualité
+/// dominante. Rend `null` quand la bibliothèque n'a pas de gabarit typé
+/// pour ce nombre de séances (le gabarit composite reste seul).
 (String, List<_Kind>)? _typedTemplate(int nf, int ne) {
   final n = nf + ne;
-  if (n == 6 && nf == 3) {
-    return (SplitTemplates.pushPullLegs6, const <_Kind>[
-      _Kind.pullForce,
-      _Kind.pushForce,
-      _Kind.legsForce,
-      _Kind.pullEndurance,
-      _Kind.pushEndurance,
-      _Kind.legsEndurance,
-    ]);
+  _Kind kindOf(String schema, bool force) => switch (schema) {
+    'pull' => force ? _Kind.pullForce : _Kind.pullEndurance,
+    'push' => force ? _Kind.pushForce : _Kind.pushEndurance,
+    'legs' => force ? _Kind.legsForce : _Kind.legsEndurance,
+    'upper' => force ? _Kind.upperForce : _Kind.upperEndurance,
+    'lower' => force ? _Kind.lowerForce : _Kind.lowerEndurance,
+    _ => force ? _Kind.fullForce : _Kind.fullEndurance,
+  };
+  List<_Kind> typed(List<String> schemas, int forceCount) {
+    final kinds = <_Kind>[
+      for (var i = 0; i < schemas.length; i++) kindOf(schemas[i], i < forceCount),
+    ];
+    // Force d'abord (ordre d'exigence), puis endurance, chaque groupe dans
+    // l'ordre de la suite.
+    return <_Kind>[
+      ...kinds.where((k) => k.force),
+      ...kinds.where((k) => !k.force),
+    ];
   }
-  if (n == 5 && (nf == 3 || nf == 2)) {
-    return (SplitTemplates.pushPullLegs5, <_Kind>[
-      _Kind.pullForce,
-      _Kind.pushForce,
-      if (nf == 3) _Kind.legsForce,
-      _Kind.pullEndurance,
-      _Kind.pushEndurance,
-      if (nf == 2) _Kind.legsEndurance,
-    ]);
+
+  if (nf < 1 || ne < 1) {
+    return null;
   }
-  if (n == 4 && nf == 2) {
-    return (SplitTemplates.upperLower4, const <_Kind>[
-      _Kind.upperForce,
-      _Kind.lowerForce,
-      _Kind.upperEndurance,
-      _Kind.lowerEndurance,
-    ]);
+  if (n == 6) {
+    return (
+      SplitTemplates.pushPullLegs6,
+      typed(const <String>['pull', 'push', 'legs', 'pull', 'push', 'legs'], nf),
+    );
+  }
+  if (n == 5) {
+    final legsForce = nf > ne;
+    final upper = typed(
+      const <String>['pull', 'push', 'pull', 'push'],
+      nf - (legsForce ? 1 : 0),
+    );
+    final legs = legsForce ? _Kind.legsForce : _Kind.legsEndurance;
+    return (
+      SplitTemplates.pushPullLegs5,
+      <_Kind>[
+        ...upper.where((k) => k.force),
+        if (legsForce) legs,
+        ...upper.where((k) => !k.force),
+        if (!legsForce) legs,
+      ],
+    );
+  }
+  if (n == 4) {
+    return (
+      SplitTemplates.upperLower4,
+      typed(const <String>['upper', 'lower', 'upper', 'lower'], nf),
+    );
   }
   if (n == 3) {
-    return (SplitTemplates.fullBody3, <_Kind>[
-      for (var i = 0; i < nf; i++) _Kind.fullForce,
-      for (var i = 0; i < ne; i++) _Kind.fullEndurance,
-    ]);
+    return (
+      SplitTemplates.fullBody3,
+      <_Kind>[
+        for (var i = 0; i < nf; i++) _Kind.fullForce,
+        for (var i = 0; i < ne; i++) _Kind.fullEndurance,
+      ],
+    );
   }
   if (n == 2) {
-    return (SplitTemplates.fullBody2, const <_Kind>[
-      _Kind.fullForce,
-      _Kind.fullEndurance,
-    ]);
+    return (
+      SplitTemplates.fullBody2,
+      const <_Kind>[_Kind.fullForce, _Kind.fullEndurance],
+    );
   }
   return null;
 }
@@ -850,7 +886,15 @@ void _buildTyped(_Builder b, List<int> days, List<_Kind> kinds) {
         stress: DayStress.medium,
       );
     } else if (squat) {
-      lift(d, Ids.squat, Method.liftVolume, DayStress.medium);
+      // (Le squat de volume est le travail principal du jour.)
+      b.add(
+        d,
+        <String>[Ids.squat],
+        SlotRole.main,
+        Method.liftVolume,
+        sets: a.level >= 3 ? 5 : 4,
+        stress: DayStress.medium,
+      );
     } else {
       _addLegs(b, d, main: true);
     }
@@ -886,7 +930,13 @@ void _buildTyped(_Builder b, List<int> days, List<_Kind> kinds) {
   }
 
   void prehab(int d) {
-    b.add(d, Picks.rearDelt, SlotRole.accessory, Method.accessoryPrehab, sets: 2);
+    b.add(
+      d,
+      Picks.rearDelt,
+      SlotRole.accessory,
+      Method.accessoryPrehab,
+      sets: 2,
+    );
     b.add(d, Picks.cuff, SlotRole.accessory, Method.accessoryPrehab, sets: 2);
   }
 
@@ -955,7 +1005,13 @@ void _buildTyped(_Builder b, List<int> days, List<_Kind> kinds) {
           Method.accessoryIsolation,
           sets: 2,
         );
-        b.add(d, Picks.cuff, SlotRole.accessory, Method.accessoryPrehab, sets: 2);
+        b.add(
+          d,
+          Picks.cuff,
+          SlotRole.accessory,
+          Method.accessoryPrehab,
+          sets: 2,
+        );
       case _Kind.legsEndurance:
         legsEndurance(d);
         b.add(
@@ -1219,7 +1275,8 @@ SplitMeasure _measure(_Builder b, Set<int> runDays) {
   var timeOff = 0;
   var noMain = 0;
   for (final d in days) {
-    final ratio = _skeletonSeconds(b, d.dayIndex) / (a.days[d.dayIndex].minutes * 60);
+    final ratio =
+        _skeletonSeconds(b, d.dayIndex) / (a.days[d.dayIndex].minutes * 60);
     if (ratio < 0.85 || ratio > 1.15) {
       timeOff++;
     }

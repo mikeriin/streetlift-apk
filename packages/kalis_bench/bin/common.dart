@@ -266,11 +266,15 @@ Future<void> runStreetCampaign({
   );
 }
 
-/// Profils bruts (JSON) du dossier `profiles`, triés par nom de fichier :
-/// tous (saisons croisées, depuis 0.3.0), ou ceux du groupe [group].
-List<Map<String, Object?>> readSeasonJson({String? group}) {
+/// Profils bruts (JSON) du dossier [dir] (`profiles` par défaut), triés
+/// par nom de fichier : tous (saisons croisées, depuis 0.3.0), ou ceux du
+/// groupe [group].
+List<Map<String, Object?>> readSeasonJson({
+  String? group,
+  String dir = 'profiles',
+}) {
   final paths = <String>[
-    for (final f in Directory('profiles').listSync())
+    for (final f in Directory(dir).listSync())
       if (f is File && f.path.endsWith('.json')) f.path,
   ]..sort();
   return <Map<String, Object?>>[
@@ -288,7 +292,15 @@ List<Map<String, Object?>> readSeasonJson({String? group}) {
 /// tel que les blocs l'ont réalisé, lu par `tool/panel_export.py`),
 /// `scenarios/<profil>_<scénario>.md`, et `SECURITE.md` (violations de
 /// sécurité des programmes réalisés).
-void writeSeasonExports(String outPath) {
+///
+/// [dir] : dossier des profils (`profiles_ks` pour les profils du lot KS1,
+/// écrits dans [outPath]/[sub]). Rend le nombre total de violations.
+int writeSeasonExports(
+  String outPath, {
+  String dir = 'profiles',
+  String sub = 'saisons',
+}) {
+  var total = 0;
   final inputs = loadInputs('tous');
   final catalog = inputs.catalog;
   final plan = KalisPlan();
@@ -304,7 +316,7 @@ void writeSeasonExports(String outPath) {
     ..writeln('| Profil | Scénario | Violations |')
     ..writeln('| --- | --- | --- |');
   final details = StringBuffer();
-  for (final json in readSeasonJson()) {
+  for (final json in readSeasonJson(dir: dir)) {
     for (final scenario in SeasonScenario.values) {
       if (!seasonScenarioApplies(json, scenario)) {
         continue;
@@ -347,6 +359,7 @@ void writeSeasonExports(String outPath) {
         ),
       );
       final found = safetyFindings(view, bench);
+      total += found.length;
       safety.writeln(
         '| ${bench.key} | ${scenario.code} | ${found.length}'
         '${found.isEmpty ? '' : ' (${found.map((f) => f.code).toSet().join(', ')})'} |',
@@ -359,16 +372,16 @@ void writeSeasonExports(String outPath) {
       if (scenario == SeasonScenario.base) {
         final others = <Trajectory>[sim(TruthKind.a), sim(TruthKind.c)];
         _write(
-          '$outPath/saisons/${bench.key}.md',
+          '$outPath/$sub/${bench.key}.md',
           seasonMarkdown(main, catalog, others: others),
         );
         _write(
-          '$outPath/saisons/${bench.key}.json',
+          '$outPath/$sub/${bench.key}.json',
           '${jsonEncode(programJson(view))}\n',
         );
       } else {
         _write(
-          '$outPath/saisons/scenarios/${bench.key}_${scenario.code}.md',
+          '$outPath/$sub/scenarios/${bench.key}_${scenario.code}.md',
           seasonMarkdown(main, catalog, scenario: scenario),
         );
       }
@@ -381,7 +394,67 @@ void writeSeasonExports(String outPath) {
       ..writeln()
       ..write(details.toString());
   }
-  _write('$outPath/saisons/SECURITE.md', safety.toString());
+  _write('$outPath/$sub/SECURITE.md', safety.toString());
+  return total;
+}
+
+/// Banc du lot KS1 (structure de la semaine, `pipeline/cp/CAHIER_KS.md`
+/// § 9) : les profils du banc et ceux de `profiles_ks` (le profil de test
+/// sur quarante semaines, pour son jalon), mesures de `structureMeasureOf`,
+/// saisons racontées des profils ajoutés (sécurité), exports des
+/// programmes ajoutés. Écrit `structure.json`, `STRUCTURE.md`,
+/// `programmes_ks/` et `saisons_ks/` dans [outPath].
+void runStructureBench(String outPath) {
+  final watch = Stopwatch()..start();
+  final inputs = loadInputs('tous');
+  final catalog = inputs.catalog;
+  final engine = KalisPlan();
+  final profiles = <BenchProfile>[
+    ...inputs.profiles,
+    ...readProfiles('profiles_ks'),
+  ];
+  final measures = <StructureMeasure>[];
+  for (final p in profiles) {
+    final program = generateProgram(
+      catalog,
+      engine,
+      p,
+      horizonWeeks: p.key == structureTestProfile ? 40 : null,
+    );
+    measures.add(structureMeasureOf(catalog, program, p));
+    if (p.key.startsWith('ks_')) {
+      final view = ProgramView(catalog, program);
+      _write('$outPath/programmes_ks/${p.key}.md', programMarkdown(view));
+      _write(
+        '$outPath/programmes_ks/${p.key}.json',
+        '${jsonEncode(programJson(view))}\n',
+      );
+    }
+  }
+  final seasons = writeSeasonExports(
+    outPath,
+    dir: 'profiles_ks',
+    sub: 'saisons_ks',
+  );
+  final before = File('docs/data/ks1/mesure_0_3_1.json');
+  final reference = File('docs/data/ks1/squelettes_0_3_1.json');
+  final files = structureReport(
+    measures,
+    seasonViolations: seasons,
+    before: before.existsSync()
+        ? readJsonObject(before.path)
+        : const <String, Object?>{},
+    reference: reference.existsSync()
+        ? readJsonObject(reference.path)
+        : const <String, Object?>{},
+  );
+  for (final entry in files.entries) {
+    _write('$outPath/${entry.key}', entry.value);
+  }
+  stdout.writeln(
+    'banc KS1 : ${measures.length} profils, $seasons violation(s) dans les '
+    'saisons des profils ajoutés (${watch.elapsed.inSeconds} s).',
+  );
 }
 
 void _write(String path, String text) {

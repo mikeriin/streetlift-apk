@@ -5,7 +5,8 @@
 // Tous les profils, croisement kalis_plan × kalis_adapt, graine 0. Écrit
 // dans <dossier> : rapport.json, RAPPORT.md, programmes/<profil>.md et
 // .json, trajectoires/<profil>.md, saisons/ et SAISONS.md (saisons croisées,
-// lot CX). Le code de sortie est 0 même s'il y a
+// lot CX), STRUCTURE.md, structure.json, programmes_ks/ et saisons_ks/ (lot
+// KS1). Le code de sortie est 0 même s'il y a
 // des violations de sécurité : le banc mesure, il ne bloque pas la CI des
 // moteurs qu'il n'a pas le droit de modifier.
 import 'dart:io';
@@ -32,4 +33,5 @@ Future<void> main(List<String> args) async {
   await runStreetCampaign(outPath: outPath);
   writeSeasonExports(outPath);
   await runSeasonCampaign(outPath: outPath);
+  runStructureBench(outPath);
 }

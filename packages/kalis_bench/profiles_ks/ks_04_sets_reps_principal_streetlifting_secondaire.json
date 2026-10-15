@@ -12,7 +12,7 @@
   "heightCm": 178,
   "bodyWeightKg": 75.0,
   "streetMode": {
-   "primary": "street_workout",
+   "primary": "sets_reps",
    "streetliftingPct": 30,
    "setsRepsPct": 70,
    "calisthenicsPct": 0

@@ -381,39 +381,42 @@ final class CoachEngine {
           ? null
           : SplitChoice(templateId: sk.templateId, reasons: sk.splitReasons),
     );
-    return _scored(catalog, request, draft, athlete: a, skeleton: sk);
+    return _scored(catalog, request, draft);
   }
 
-  /// Programme [plan] noté : la note de 0.1 (`PlanInspector.scoreOf`), dont
-  /// quatre composantes sont recalées sur le squelette du chemin street
-  /// (lot KS1, CAHIER_KS.md § 3.4) : récupération (schémas chargés lourds
-  /// deux jours de suite, 48 h entre deux séances dures d'un schéma),
-  /// répartition de la charge dure, charge des schémas (R4-F10) et
-  /// préférences ; la note globale est recalculée avec les mêmes poids.
-  Pass1Plan _scored(
+  /// Programme [plan] noté (`PlanInspector.scoreOf`, dont quatre
+  /// composantes sont recalées sur le squelette du chemin street : voir
+  /// [coachScoreOf]).
+  Pass1Plan _scored(Catalog catalog, PlanRequest request, Pass1Plan plan) {
+    final score = PlanInspector(catalog, params: params).scoreOf(request, plan);
+    return plan.copyWith(score: score);
+  }
+
+  /// Note [base] (`PlanInspector`, 0.1) du programme [plan] du chemin
+  /// street, dont quatre composantes sont recalées sur son squelette (lot
+  /// KS1, CAHIER_KS.md § 3.4) : récupération (schémas chargés lourds deux
+  /// jours de suite, 48 h entre deux séances dures d'un schéma), répartition
+  /// de la charge dure, charge des schémas (R4-F10) et préférences ; la note
+  /// globale est recalculée avec les mêmes poids. Le squelette est relu du
+  /// programme (`reconcileSkeleton`) : la note relue est la note rendue.
+  PlanScore coachScoreOf(
     Catalog catalog,
     PlanRequest request,
-    Pass1Plan plan, {
-    Athlete? athlete,
-    Skeleton? skeleton,
-  }) {
-    final base = PlanInspector(catalog, params: params).scoreOf(request, plan);
-    final a =
-        athlete ??
-        Athlete.read(
-          catalog,
-          request.profile,
-          plan.startDate,
-          extraExcluded: _excludedBy(request.locks),
-        );
-    final sk =
-        skeleton ??
-        reconcileSkeleton(
-          a,
-          _skeleton(a, plan.blockIndex, plan.seed, blockWeeks: plan.weeks),
-          plan,
-        );
-    return plan.copyWith(score: _recalibrated(a, sk, base));
+    Pass1Plan plan,
+    PlanScore base,
+  ) {
+    final a = Athlete.read(
+      catalog,
+      request.profile,
+      plan.startDate,
+      extraExcluded: _excludedBy(request.locks),
+    );
+    final sk = reconcileSkeleton(
+      a,
+      _skeleton(a, plan.blockIndex, plan.seed, blockWeeks: plan.weeks),
+      plan,
+    );
+    return _recalibrated(a, sk, base);
   }
 
   PlanScore _recalibrated(Athlete a, Skeleton sk, PlanScore base) {

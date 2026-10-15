@@ -264,7 +264,12 @@ final class PlanInspector {
     final ctx = contextFor(request, plan);
     final scorer = Scorer(ctx);
     scorer.evaluate(stateFromPlan(ctx, plan));
-    return planScoreOf(scorer);
+    final base = planScoreOf(scorer);
+    // Chemin street : composantes recalées sur le squelette (lot KS1).
+    if (coachEligible(request.profile) && isCoachPlan(plan)) {
+      return CoachEngine(params).coachScoreOf(catalog, request, plan, base);
+    }
+    return base;
   }
 
   /// Nombre d'emplacements de [plan] qui diffèrent de [reference]

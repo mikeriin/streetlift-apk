@@ -1476,11 +1476,7 @@ Map<int, String> _assignPillar(
   return out;
 }
 
-void _buildReps(
-  _Builder b,
-  Set<int> runDays, {
-  Set<int> skip = const <int>{},
-}) {
+void _buildReps(_Builder b, Set<int> runDays, {Set<int> skip = const <int>{}}) {
   final a = b.a;
   final days = <int>[
     for (var d = 0; d < a.dayCount; d++)
@@ -3778,7 +3774,9 @@ Skeleton buildSkeleton(
     }),
     for (final day in b.days)
       reason(ReasonCodes.planDayType, <String, Object?>{
-        'patterns': <String>[for (final p in day.type!.patterns) p.code].join('+'),
+        'patterns': <String>[
+          for (final p in day.type!.patterns) p.code,
+        ].join('+'),
         'quality': day.type!.quality.code,
       }),
   ];

@@ -1520,8 +1520,24 @@ final class Prescriber {
       x.load = _external(e, total, p);
       return;
     }
+    var served = _external(e, total, p);
+    if (served != null &&
+        served <= 0 &&
+        floor > 0 &&
+        p > floor + 1e-9 &&
+        a.aimsAt(e.id) &&
+        e.loadType == LoadType.addedWeight &&
+        !x.fixed) {
+      // Mouvement lesté visé dont la part, au-dessus du poids du corps,
+      // s'arrondit à +0 kg (§ 8.1) : le plus petit pas de lest.
+      final step = _minimumStep(e);
+      if (step > 0) {
+        served = step;
+        x.reasons.add(_note(CoachNotes.minimumLoad, step));
+      }
+    }
     x
-      ..load = _external(e, total, p)
+      ..load = served
       ..reasons.add(
         reason(ReasonCodes.planPercentBased, <String, Object?>{
           'pct': _round3(p),
@@ -1564,7 +1580,9 @@ final class Prescriber {
           : referenceId;
       x.intensity = IntensityTarget(
         basis: IntensityBasis.percentOneRm,
-        value: _round3(mapped != null && reference == mapped.$1 ? p * mapped.$2 : p),
+        value: _round3(
+          mapped != null && reference == mapped.$1 ? p * mapped.$2 : p,
+        ),
         referenceExerciseId: reference,
       );
     }
@@ -2103,8 +2121,8 @@ final class Prescriber {
     }
     final x = _new(s);
     final load = goal.loadKg!;
-    final share = (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) /
-        total;
+    final share =
+        (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) / total;
     final possible = share >= 1
         ? 1.0
         : (share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1));
@@ -7084,8 +7102,9 @@ final class Prescriber {
           );
         }
         // Allègement : jamais plus lourd que la dernière semaine de
-        // construction (lot KS1, CAHIER_KS.md § 8.3).
-        if (ws.light && x.kind != SetKind.test) {
+        // construction (lot KS1, CAHIER_KS.md § 8.3). (L'affûtage garde son
+        // intensité par dessein, R3-P12 : il n'est pas concerné.)
+        if (ws.intent == WeekIntent.deload && x.kind != SetKind.test) {
           for (var k = _history.length - 1; k >= 0; k--) {
             if (k < _history.length - 3) {
               break;

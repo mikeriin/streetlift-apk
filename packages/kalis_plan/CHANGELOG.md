@@ -1,5 +1,34 @@
 # Journal des versions de kalis_plan
 
+## 0.4.0
+
+Lot KS1 (« structure de la semaine », `pipeline/cp/CAHIER_KS.md`). `kalis_core` 0.4.4 (`PlanDay.type`,
+`Pass1Plan.split`, six codes de raison, tous additifs). API inchangée (`createProgram`, `nextBlock`, revue).
+Détail : `docs/STRUCTURE_SEMAINE.md`, contrat § 12.15.
+
+- **Gabarit de semaine** : bibliothèque (`ppl6_q`, `pp_l5`, `ul4`, `fb3`, `fb2`, composite `mix_q`, chemins
+  d'avant pour les profils mono-discipline) ; un profil street qui déclare streetlifting et sets & reps à 25 % ou
+  plus chacun reçoit des jours de force et des jours d'endurance de force, séances par qualité au plus fort reste,
+  vingt points de plus à la qualité de l'échéance en intensification et en réalisation.
+- **Choix du gabarit** par ordre lexicographique (couverture, récupération ≥ 0,9, spécificité, temps,
+  préférences) au lieu de la moyenne pondérée de la note ; raisons `plan.split_chosen` et `plan.day_type`.
+- **Placement** exhaustif sur les jours réels (aucun schéma chargé deux jours de suite, le jour le plus exigeant
+  après le plus long repos, force et endurance d'un schéma à 72 h) ; **remplissage** par type, le mouvement le plus
+  exigeant en tête (muscle-up lesté, traction lestée, dips lesté, squat).
+- **Couverture** : `plan.goal_uncovered` quand un objectif n'a pas d'emplacement porteur ; squat à charge fixe
+  pour un objectif « répétitions × charge » (méthode `lift.fixed`, note `fixed_load`).
+- **Échéances** : un objectif daté plus tôt qu'une échéance secondaire devient la cible (`plan.milestone`), sa
+  semaine de charge devient une semaine de test dans une saison d'échéance principale ; pas plus de trois blocs
+  d'accumulation de suite.
+- **Note recalée** : `recovery` (schémas chargés), `fatigue_balance` (séries dures par séance), `joint_load`
+  (séances dures par schéma, R4-F10) et `preferences` (exercices aimés et sus placés) recalculées pour les plans
+  du coach ; la note relue (`PlanInspector.scoreOf`) est la note rendue.
+- **Charges** : muscle-up lesté visé au plus petit pas de lest plutôt qu'à +0 kg (note `minimum_load`) ;
+  traction haute et dips à la barre fixe réglés sur la traction et le dips lestés ; squat pause bas sur le squat ;
+  une semaine allégée jamais plus lourde que la dernière semaine de construction.
+- **Revue** : le remplaçant d'un exercice non aimé ou impossible porte `plan.replaced_disliked` ou
+  `plan.replaced_cannot_do`.
+
 ## 0.3.1
 
 Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contrat inchangé (notes de coach

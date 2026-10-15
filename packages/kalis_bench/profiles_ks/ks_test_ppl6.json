@@ -189,7 +189,28 @@
    "weeksOut": 63,
    "priority": "B",
    "format": "streetlifting",
-   "targets": []
+   "targets": [
+    {
+     "exerciseId": "sl-muscle-up-leste",
+     "metric": "one_rm_kg",
+     "targetValue": 15
+    },
+    {
+     "exerciseId": "sl-traction-lestee",
+     "metric": "one_rm_kg",
+     "targetValue": 60
+    },
+    {
+     "exerciseId": "sl-dips-leste",
+     "metric": "one_rm_kg",
+     "targetValue": 85
+    },
+    {
+     "exerciseId": "sl-squat-competition",
+     "metric": "one_rm_kg",
+     "targetValue": 145
+    }
+   ]
   }
  ],
  "goals": [

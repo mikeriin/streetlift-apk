@@ -14,9 +14,7 @@ void main() {
       final json = basePass1().toJson();
       expect(json.containsKey('split'), isFalse);
       final text = jsonEncode(json);
-      final back = Pass1Plan.fromJson(
-        jsonDecode(text) as Map<String, Object?>,
-      );
+      final back = Pass1Plan.fromJson(jsonDecode(text) as Map<String, Object?>);
       expect(jsonEncode(back.toJson()), text);
       expect(back.split, isNull);
       expect(back.days.single.type, isNull);
@@ -47,9 +45,7 @@ void main() {
       );
       expect(plan.validate(), isEmpty);
       final text = jsonEncode(plan.toJson());
-      final back = Pass1Plan.fromJson(
-        jsonDecode(text) as Map<String, Object?>,
-      );
+      final back = Pass1Plan.fromJson(jsonDecode(text) as Map<String, Object?>);
       expect(jsonEncode(back.toJson()), text);
       expect(back.split!.templateId, 'ppl6_q');
       expect(back.days.single.type!.patterns, <DayPattern>[DayPattern.pull]);
@@ -76,16 +72,19 @@ void main() {
         <String>[for (final p in DayPattern.values) p.code],
         <String>['pull', 'push', 'legs', 'full', 'skill', 'run', 'recovery'],
       );
-      expect(<String>[for (final q in DayQuality.values) q.code], <String>[
-        'force',
-        'volume',
-        'endurance',
-        'power',
-        'skill',
-        'conditioning',
-        'run',
-        'recovery',
-      ]);
+      expect(
+        <String>[for (final q in DayQuality.values) q.code],
+        <String>[
+          'force',
+          'volume',
+          'endurance',
+          'power',
+          'skill',
+          'conditioning',
+          'run',
+          'recovery',
+        ],
+      );
     });
 
     test('six codes de raison et leurs paramètres', () {
