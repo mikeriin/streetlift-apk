@@ -214,7 +214,7 @@ Map<String, Object?> _saisonPython(String cle, String scenario) {
 
 /// Paramètres de Koach (fichier décodé).
 Map<String, Object?> _parametres() =>
-    readJsonObject('$_reference/params/koach_params_d1.json');
+    readJsonObject('$_reference/params/koach_params_v1.json');
 
 /// Fiches de Koach (`vecteurs_qualites_v1.json`, champ `exercices`).
 Map<String, Map<String, Object?>> _fiches() {

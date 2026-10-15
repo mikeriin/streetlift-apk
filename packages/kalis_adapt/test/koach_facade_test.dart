@@ -10,13 +10,13 @@ import 'package:kalis_adapt/koach.dart';
 import 'package:test/test.dart';
 
 Json _lire(String nom) =>
-    jsonDecode(File('reference/fix_dart/$nom').readAsStringSync()) as Json;
+    jsonDecode(File('reference/fixtures/$nom').readAsStringSync()) as Json;
 
 void main() {
   test('proposition : charges inchangées, travail seulement, pas de baisse '
       'de sécurité', () {
     var propositions = 0;
-    for (var n = 1; n <= 10; n++) {
+    for (var n = 1; n <= 11; n++) {
       final f = _lire('moteur_$n.json');
       final e = jm(f['entrees']);
       final fiches = <String, Json>{

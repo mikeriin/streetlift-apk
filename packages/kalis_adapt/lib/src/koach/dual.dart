@@ -1046,7 +1046,7 @@ class ControleDual extends Extension
     final nSuivi = <String, (double, double, List<double>)>{};
     final preEx = <String, Object?>{};
     for (final ex in ids) {
-      final c = m.capacite(ex);
+      final c = m.capacite(ex, brut: true);
       if (c == null) {
         continue;
       }
@@ -1100,7 +1100,7 @@ class ControleDual extends Extension
   void finSeance(Koach koach, ResumeSeance? resume, Json e) {
     final m = koach.modele;
     for (final ex in _suivables(koach)) {
-      final c = m.capacite(ex);
+      final c = m.capacite(ex, brut: true);
       if (c != null) {
         capSeance[ex] = (c.$1, c.$2 * c.$2);
       }

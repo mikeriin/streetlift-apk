@@ -1,5 +1,18 @@
 # Journal
 
+## 0.4.2 — 15/10/2026 (lot KM2c1)
+
+Banc de Koach 1.0.2 (`kalis_adapt` 1.0.1). Aucun changement des critères de sécurité, des profils, des grilles ni des
+attentes de coach.
+
+- **Critère 7 bis** (adversaires appariés, C13.12) porté de la référence (`critere_apparie`) : `kmCritereApparie`,
+  clé `critere_7_bis` de `kmComparerAdversaires` (variante `temoin_avec_barre`, `hors_critere`) ; test contre la
+  sortie Python sur les mêmes lignes.
+- Les tests `km2_*` et les outils `bin/km2.dart`, `bin/km2_adversaire.dart` relisent le fichier vivant
+  `kalis_adapt/reference/params/koach_params_v1.json` (`1.0.2-ref.1`) ; fixtures `test/fixtures/km2/` régénérées
+  par `fixtures/generer_banc_km2.py` (référence 1.0.2, prévisions avec `prevu_jour`) ; évaluation de référence de
+  `adv-7ee0da71` mise à jour.
+
 ## 0.4.1 — 11/10/2026 (lot KM1c2)
 
 Aucun changement de code du banc, des critères, des profils ni des grilles. La référence Python de Koach passe en

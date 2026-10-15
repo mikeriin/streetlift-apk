@@ -1030,6 +1030,43 @@ class Planification extends Extension implements AvecItemsDuJour {
                 ],
             ],
         ];
+        // 1.0.2 (C13.12, critère 5) : la dispersion des trajectoires autour
+        // de leur moyenne est ramenée à celle mesurée sur le banc
+        // (`dispersion_echeance`), pour les cibles chargées seulement ;
+        // l'échelle descend de 1 à `dispersion_echeance` sur les
+        // `dispersion_echeance_semaines` premières semaines de journal.
+        var part =
+            ent(tirage['semaines']) / dbl(pl['dispersion_echeance_semaines']);
+        if (part > 1.0) {
+          part = 1.0;
+        }
+        final kd = 1.0 - (1.0 - dbl(pl['dispersion_echeance'])) * part;
+        for (var e = 0; e < ne; e++) {
+          final ex = suivis[e];
+          if (cibles.containsKey(ex) && fiches[ex]!['type'] == 'charge') {
+            for (var c = 0; c < cc; c++) {
+              // numpy : `frais[:, e, :].mean(axis=1)`. Quand un seul
+              // exercice est suivi et qu'il y a plusieurs plans candidats,
+              // numpy range `frais` avec l'axe des plans le plus rapide : la
+              // réduction sur N est séquentielle (comme `_plProgression`) ;
+              // sinon somme par paires.
+              final row = frais[c][e];
+              double sc;
+              if (ne == 1 && cc > 1) {
+                sc = 0.0;
+                for (final v in row) {
+                  sc += v;
+                }
+              } else {
+                sc = _plSommePaires(row);
+              }
+              final centre = sc / nn;
+              for (var n = 0; n < nn; n++) {
+                row[n] = centre + kd * (row[n] - centre);
+              }
+            }
+          }
+        }
         // numpy : `frais[0].mean(axis=1)`, `frais[0].std(axis=1)` → sommes
         // par paires sur N (vérifié pour toutes les formes rencontrées).
         final moyP = <double>[];
@@ -1810,6 +1847,7 @@ class Planification extends Extension implements AvecItemsDuJour {
         'echeance': echeanceJour,
         'p': Map<String, Object?>.of(jm(ligne['p_cibles'])),
         'p_tout': ligne['objectif'],
+        'prevu_jour': Map<String, Object?>.of(dictOuVide(ligne['prevu_jour'])),
         'cibles': Map<String, Object?>.of(cibles),
       });
     }
