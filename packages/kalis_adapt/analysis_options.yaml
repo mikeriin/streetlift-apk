@@ -1,0 +1,12 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  exclude:
+    # Copie figée de l'ancien moteur Koach L7 (lib/koach_engine.dart de
+    # l'application 6.0.1), lue seulement par le simulateur pour la
+    # comparaison : elle n'est ni modifiée ni analysée ici.
+    - tool/l7/koach_engine.dart

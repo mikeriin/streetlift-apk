@@ -1,0 +1,30 @@
+# M4c (5.3.2) : fins de ligne LF pour tout le texte du dépôt.
+* text=auto eol=lf
+
+# Gardés octet pour octet (fins de ligne CRLF d'origine).
+*.bat -text
+/validation/** -text
+
+# Binaires.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.glb binary
+*.fsceneb binary
+*.gz binary
+*.zip binary
+*.jar binary
+*.ttf binary
+*.otf binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.apk binary
+*.aab binary
+*.p12 binary
+*.jks binary
+*.keystore binary
