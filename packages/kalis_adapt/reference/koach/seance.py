@@ -2342,11 +2342,12 @@ class Seances(object):
         # 1.0.3 (contrat § 5.13, § 6.5 ; mesuré en KM1c3) : notes peu fiables
         # (κ > 1) : le palier accordé par la note d'une barre est réduit
         # (× max(0 ; 1 − tentative_palier_fiabilite·(κ − 1)) : nul dès que κ
-        # ≥ 1 + 1/c), et une barre dite à la limite (une répétition de
-        # réserve au plus) ou non notée ne vaut que (1 −
-        # tentative_limite_fiabilite) de sa charge : chez un athlète dont les
-        # notes se sont montrées peu fiables, « réussie de justesse » ne
-        # prouve pas qu'elle passe aujourd'hui. κ = 1 : règle de 1.0.2.
+        # ≥ 1 + 1/c), et chaque barre réussie ne vaut que (1 − marge) de sa
+        # charge, marge = min(tentative_marge_fiabilite_max ;
+        # tentative_marge_fiabilite·(κ − 1)) : chez un athlète dont les notes
+        # se sont montrées peu fiables, l'estimation n'est pas une preuve, et
+        # une barre réussie dans les 42 jours ne prouve le maximum
+        # d'aujourd'hui qu'à la variation de jour près. κ = 1 : règle de 1.0.2.
         kappa = self.m.elargissement()
         g_pas = 1.0
         marge = 0.0
@@ -2354,7 +2355,10 @@ class Seances(object):
             g_pas = 1.0 - s.get('tentative_palier_fiabilite', 0.0) * (kappa - 1.0)
             if g_pas < 0.0:
                 g_pas = 0.0
-            marge = s.get('tentative_limite_fiabilite', 0.0)
+            marge = s.get('tentative_marge_fiabilite', 0.0) * (kappa - 1.0)
+            mx = s.get('tentative_marge_fiabilite_max', 0.0)
+            if marge > mx:
+                marge = mx
         plus_haute = None
         ramenees = []
         for (j, c, r, f) in mem.barres:
@@ -2372,7 +2376,7 @@ class Seances(object):
                         pas = p_
                         break
             pas *= g_pas
-            if marge > 0.0 and (f is None or f >= 9):
+            if marge > 0.0:
                 total *= 1.0 - marge
             ramenees.append((total, pas))
             if plus_haute is None or total > plus_haute:

@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "version": "1.0.2-ref.1",
-  "date": "2026-10-11",
-  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour. 1.0.2 (KM1 correction 2, DECISIONS_CP.md C13.12) : reprise par paliers mesurés et ouverture des tentatives selon la note des barres (securite.tentative_palier_par_rir, tentative_palier_bande), dispersion des trajectoires à l'échéance (planification.dispersion_echeance), intervalle recalé sur six graines (mesure.defaut_modele_sd, intervalle_echelle).",
+  "version": "1.0.3-ref.1",
+  "date": "2026-10-15",
+  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour. 1.0.2 (KM1 correction 2, DECISIONS_CP.md C13.12) : reprise par paliers mesurés et ouverture des tentatives selon la note des barres (securite.tentative_palier_par_rir, tentative_palier_bande), dispersion des trajectoires à l'échéance (planification.dispersion_echeance), intervalle recalé sur six graines (mesure.defaut_modele_sd, intervalle_echelle). 1.0.3 (KM1 correction 3, DECISIONS_CP.md C17.9) : fiabilité des notes (mesure.fiabilite_*) élargissant l'incertitude des capacités, prudence ciblée à l'ouverture des tentatives (securite.tentative_palier_fiabilite, tentative_marge_fiabilite, tentative_marge_fiabilite_max), barre suivante après un échec hors compétition (securite.tentative_echec_baisse_part), règle d'échec non prévu (securite.echec_sans_hausse_tout_schema), prudence des séries lourdes (planification.prudence_charge_fiabilite).",
   "qualites": [
     "pousser",
     "tirer",
@@ -171,8 +171,8 @@
     "fiabilite_oubli": 0.98,
     "fiabilite_non_notee_a_priori": [1.0, 4.0],
     "fiabilite_schema_reps": 5,
-    "fiabilite_elargissement_phi": 0.0,
-    "fiabilite_elargissement_non_notee": 0.0
+    "fiabilite_elargissement_phi": 1.0,
+    "fiabilite_elargissement_non_notee": 12.0
   },
   "jour": {
     "sigma_seance": 0.022,
@@ -530,9 +530,10 @@
     "tentative_palier_par_rir": [[4.0, 0.1], [3.0, 0.075], [2.0, 0.05], [1.0, 0.025]],
     "tentative_palier_bande": 0.05,
     "tentative_palier_fiabilite": 3.0,
-    "tentative_limite_fiabilite": 0.025,
+    "tentative_marge_fiabilite": 0.1,
+    "tentative_marge_fiabilite_max": 0.05,
     "tentative_echec_baisse_part": 0.05,
-    "echec_sans_hausse_tout_schema": 0
+    "echec_sans_hausse_tout_schema": 1
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

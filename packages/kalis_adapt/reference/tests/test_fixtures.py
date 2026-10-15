@@ -130,7 +130,7 @@ def test_taille_codage_entete():
             assert d['sha256_fichier_parametres'] == generer.empreinte_fichier(generer.FICHIER_PARAMS)
             # Entrées du moteur : JSON pur (aucun non-fini codé).
             assert '"inf"' not in generer.texte(d['entrees']) and '"nan"' not in generer.texte(d['entrees'])
-    assert total < 8 * 1000 * 1000, total   # 7,3 Mo depuis moteur_11 (1.0.2 : saison de 10 semaines avec jour J)
+    assert total < 10 * 1000 * 1000, total  # 9,6 Mo depuis moteur_12 (1.0.3 : 12 semaines à notes peu fiables) ; 7,3 Mo en 1.0.2
 
 
 # ----------------------------------------------------------------------

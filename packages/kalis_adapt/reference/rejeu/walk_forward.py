@@ -214,11 +214,15 @@ def rejouer(conversion, params, fiches, depuis):
             raise ErreurRejeu('le moteur a échoué sur un événement %r : %s\n%s'
                               % (e.get('type'), type(exc).__name__, traceback.format_exc()))
 
+    out['fiabilite_avant'] = None
     for s in conversion['seances']:
         for e in s['avant']:
             verser(e)
         verser(s['debut'])
         evalue = s['semaine'] >= depuis
+        if evalue and out['fiabilite_avant'] is None:
+            # 1.0.3 : fiabilité des notes à l'entrée de la période évaluée.
+            out['fiabilite_avant'] = m.fiabilite.resume()
         info = {'cle': s['cle'], 'semaine': s['semaine'], 'evaluee': evalue}
         if evalue:
             a, b = prevoir_seance(copie_modele(m), s, conversion['principaux'], out['causes'])
@@ -244,7 +248,64 @@ def rejouer(conversion, params, fiches, depuis):
         verser(s['fin'])
         out['seances'].append(info)
     out['modele'] = m
+    out['koach'] = k
     return out
+
+
+def fiabilite_et_prescriptions(res, principaux):
+    """1.0.3 : fiabilité des notes mesurée (agrégats) et effet de
+    l'élargissement sur les prescriptions des mouvements principaux chargés :
+    écart-type élargi (κ), palier des barres prouvées pour l'ouverture d'une
+    tentative avec et sans la réserve de fiabilité, charge d'une série
+    lourde avec et sans la prudence de fiabilité. Aucune valeur par
+    exercice : moyennes et extrêmes sur les principaux seulement."""
+    k = res['koach']
+    m = res['modele']
+    fin = m.fiabilite.resume()
+    kappa = m.elargissement()
+    s = k.seances
+    ex_ids = [e for e in principaux if m.piste(e) is not None and m.piste(e).type == 'charge']
+    paliers = []
+    lourdes = []
+    sds = []
+    for ex in ex_ids:
+        t = m.piste(ex)
+        mem = s.mem(ex)
+        bw = t.fraction * m.poids_kg
+        cap = m.capacite(ex)
+        sds.append(cap[1])
+        avec = s._palier_barres(mem, bw)
+        m.elargissement = lambda: 1.0
+        sans = s._palier_barres(mem, bw)
+        m.elargissement = lambda: kappa
+        if avec is not None and sans is not None and sans + bw > 0:
+            paliers.append((avec + bw) / (sans + bw) - 1.0)
+        pr = k.params['planification']
+        extra = pr.get('prudence_charge_fiabilite', 0.0) * (kappa - 1.0) if kappa > 1.0 else 0.0
+        lourdes.append(math.exp(-extra * cap[1]) - 1.0)
+    del m.elargissement   # retire la surcharge d'instance
+    def stat(xs):
+        if not xs:
+            return None
+        return {'n': len(xs), 'moyenne': _r(sum(xs) / len(xs), 4), 'min': _r(min(xs), 4), 'max': _r(max(xs), 4)}
+    return {
+        'methode': ('Indicateur `Fiabilite` du moteur (contrat § 5.13) après rejeu de tout le journal, avec oubli '
+                    '(les notes récentes pèsent plus) ; « avant » = à l\'entrée de la première séance évaluée. '
+                    'Effet sur les prescriptions : mouvements principaux chargés, état de fin de journal ; '
+                    'palier = plafond d\'ouverture d\'une tentative que les barres réussies des 42 derniers '
+                    'jours autorisent, avec et sans la réserve de fiabilité ; série lourde = écart relatif de '
+                    'charge dû à la prudence de fiabilité.'),
+        'avant_periode_evaluee': res.get('fiabilite_avant'),
+        'fin_de_journal': fin,
+        'elargissement_kappa': _r(kappa, 4),
+        'principaux_charges': {
+            'n': len(ex_ids),
+            'ecart_type_brut_moyen': _r(sum(sds) / len(sds) / kappa, 4) if sds else None,
+            'ecart_type_elargi_moyen': _r(sum(sds) / len(sds), 4) if sds else None,
+            'palier_ouverture_ecart_relatif': stat(paliers),
+            'serie_lourde_ecart_relatif': stat(lourdes),
+        },
+    }
 
 
 # ----------------------------------------------------------------------
@@ -388,6 +449,7 @@ def agreger(conversion, res, depuis):
         'A_series_fiables_1_5_en_reserve_ou_moins': tables_a(fiables),
         'B_tests_reels': tables_b(res['B']),
         'C_calibration_des_notes': tables_c(res['C']),
+        'D_fiabilite_des_notes': fiabilite_et_prescriptions(res, conversion['principaux']),
         'objectif_brique_8': {'erreur_moyenne_sous_3_pct': ok_err, 'couverture_dans_88_92_pct': ok_cov},
     }
 
@@ -416,6 +478,16 @@ def texte_court(ag):
         lignes.append('C (notes) : n=%d, notes ouvertes prévues %s / observées %s, écart moyen note - prévision %+.2f rép.'
                       % (c['n'], pc(c['part_ouvertes_prevue']), pc(c['part_ouvertes_observee']),
                          c['ecart_moyen_note_moins_prevision']))
+    d = ag.get('D_fiabilite_des_notes')
+    if d:
+        f = d['fin_de_journal']
+        lignes.append('D (fiabilité des notes, 1.0.3) : E[φ] %.2f (P(φ > 2) %.2f), %d notes, part non notée %.1f %%, '
+                      'κ = %.3f ; principaux : palier d\'ouverture %s, série lourde %s.'
+                      % (f['phi'], f['p_phi_sup_2'], f['notes'], 100 * f['part_non_notee'], d['elargissement_kappa'],
+                         pc(d['principaux_charges']['palier_ouverture_ecart_relatif']['moyenne'])
+                         if d['principaux_charges']['palier_ouverture_ecart_relatif'] else 'n/d',
+                         pc(d['principaux_charges']['serie_lourde_ecart_relatif']['moyenne'])
+                         if d['principaux_charges']['serie_lourde_ecart_relatif'] else 'n/d'))
     o = ag['objectif_brique_8']
     lignes.append('Objectif brique 8 : erreur < 3 %% %s ; couverture 88-92 %% %s.'
                   % ('atteint' if o['erreur_moyenne_sous_3_pct'] else 'non atteint',

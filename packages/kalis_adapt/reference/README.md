@@ -1,6 +1,6 @@
-# Koach 1.0.2 — référence Python (lot KM1, correction 2)
+# Koach 1.0.3 — référence Python (lot KM1, correction 3)
 
-Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.2 : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10) et « KM1 correction 2 » (C13.12 ; paramètres `1.0.2-ref.1`). Ce qui change est dans les notes datées du 10/10/2026 et du 11/10/2026 en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md` et `CHANGEMENTS_1_0_2.md`. `kalis_adapt` 1.0.0 (lot KM2) porte la version 1.0.1 ; le portage du delta 1.0.2 est le lot KM2c1 (`kalis_adapt` 1.0.1) : mêmes entrées, mêmes sorties à 1e-9 sur les fixtures. Elle n'est pas embarquée dans l'application.
+Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.3 : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10), « KM1 correction 2 » (C13.12) et « KM1 correction 3 » (C17.9 : estimation sous notes non fiables ; paramètres `1.0.3-ref.1`). Ce qui change est dans les notes datées du 10/10, du 11/10 et du 15/10/2026 en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md`, `CHANGEMENTS_1_0_2.md` et `CHANGEMENTS_1_0_3.md`. `kalis_adapt` 1.0.1 (lot KM2c1) porte la version 1.0.2 ; le portage du delta 1.0.3 est le lot KM2c2 : mêmes entrées, mêmes sorties à 1e-9 sur les fixtures. Elle n'est pas embarquée dans l'application.
 
 Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal réel ne publie que des agrégats.
 
@@ -10,7 +10,7 @@ Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal r�
 | --- | --- |
 | `CONTRAT_1_0.md` | Contrat gelé 1.0, modifié pour 1.0.1 et 1.0.2 par des notes datées (10/10 et 11/10/2026) : API `observe` / `posterior` / `plan` / `explain`, schéma du journal, modèles, règles de sécurité, paramètres, portage, écarts connus (annexe A). |
 | `SOURCES.md` | Origine de chaque paramètre de `params/koach_params_v1.json` (une ligne par clé). |
-| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.2-ref.1`, 322 clés). |
+| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.3-ref.1`, 337 clés). `params/koach_params_d2.json` et `fix_dart/` : copies figées de 1.0.2 pour les tests Dart de `kalis_adapt` 1.0.1 jusqu'au portage KM2c2. |
 | `qualites/` | Vecteurs de qualités des 1 039 exercices (`regles.py` → `vecteurs_qualites_v1.json`). |
 | `koach/` | Le moteur : `modele.py` (estimation), `seance.py` et `securite.py` (séance, garde-fous), `planification.py`, `rupture.py`, `adherence.py`, `dual.py`, `moteur.py` (façade), `numerique.py`. |
 | `banc/` | Port Python des modèles de vérité et des critères de sécurité de `kalis_bench`, meneur de saison, banc adversarial, campagne de mesure des critères. |
@@ -36,6 +36,12 @@ python3 -I rejeu/walk_forward.py <export.json> --programme <prog.json.gz> --koac
 
 Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `packages/kalis_bench/bin/km1.dart`
 (export des modèles de vérité, des saisons de référence et des mesures de `kalis_adapt` 0.3.1).
+
+## Résultats publiés (1.0.3, lot KM1c3)
+
+- `donnees/criteres_km1c3.json` : critères du cahier sur six graines (4 320 saisons, Koach 1.0.3 complet contre 0.3.1).
+- `donnees/adversaires_km1c3.json` : recherche adversariale de 3 000 saisons contre Koach 1.0.3 ; `donnees/adversaires_km1c3_temoin.json.gz` : témoin 0.3.1 (Dart) ; `donnees/comparaison_adversaires_km1c3.json` : comparaison et critère 7 bis ; `donnees/comparaison_adversaires_km1c3_*.json` : Koach 1.0.3 rejoué sur les cinq jeux connus.
+- `donnees/rejeu_journal_agregats_km1c3.json` : rejeu du journal réel (agrégats seulement), avec la section `D_fiabilite_des_notes`.
 
 ## Résultats publiés (1.0.2, lot KM1c2)
 
