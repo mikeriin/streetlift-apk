@@ -8,6 +8,8 @@
 ///   calculables et attentes de coach ;
 /// - [simulateTrajectory] : trajectoire sous `kalis_adapt` ;
 /// - [seasonCampaignOf], [seasonMarkdown] : saisons croisées (0.2.0) ;
+/// - [structureMeasureOf], [structureReport] : critères de la structure de
+///   la semaine (lot KS1, 0.5.0) ;
 /// - [programMarkdown], [trajectoryMarkdown] : exports lisibles ;
 /// - [evaluateProfile], [renderReport] : rapport.
 ///
@@ -28,6 +30,7 @@ export 'src/report.dart';
 export 'src/safety.dart';
 export 'src/season.dart';
 export 'src/season_export.dart';
+export 'src/structure_criteria.dart';
 export 'src/trajectory.dart';
 export 'src/trajectory_export.dart';
 export 'src/version.dart';

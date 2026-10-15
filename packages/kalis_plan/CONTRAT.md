@@ -1736,3 +1736,59 @@ variable qui monte en phase spécifique ; en reprise après douleur, la charge d
 corps est calculée avant la réserve de reprise ; le test d'un mouvement en reprise attend le bloc suivant.
 Le plancher des tenues du débutant (55 % du test) l'emporte sur la hausse de 15 % par semaine. Le garde-fou des départs au
 chrono (`_fitMinutes`) est plus strict que le texte : un départ de plus en deux semaines.
+
+### 12.15 Structure de la semaine (0.4.0, lot KS1)
+
+Cahier des charges : `pipeline/cp/CAHIER_KS.md` (décisions du propriétaire au § 11). Le créateur décide de haut en
+bas : besoins → fréquence → gabarit de semaine → type de chaque jour → exercices → charges. Contrat de `kalis_core`
+0.4.4 : `PlanDay.type` (`DayType` : schémas, qualité, charge) et `Pass1Plan.split` (`SplitChoice` : gabarit, raisons) ;
+API inchangée. Détail et justifications : [`docs/STRUCTURE_SEMAINE.md`](docs/STRUCTURE_SEMAINE.md).
+
+- **Bibliothèque** (`SplitTemplates`) : les chemins d'avant 0.4.0 sont des gabarits (`lift_dup`, `reps_pillars`,
+  `figures`, `fb_beginner`, `gym_split`, `power_dup`, `run_week`, `wod_week`, `health_week`) ; gabarits typés à deux
+  qualités `ppl6_q`, `pp_l5`, `ul4`, `fb3`, `fb2` ; gabarit composite `mix_q` (jours de force du chemin streetlifting,
+  jours d'endurance du chemin sets & reps). `ppl3` n'est pas construit (aucun profil où il départagerait).
+- **Qualités** (`mixedStreetShares`) : un profil street (intermédiaire et plus, lest possible, sans spécialisation)
+  qui déclare le streetlifting et le sets & reps à 25 % ou plus chacun (§ 11.1) reçoit des jours de force et des
+  jours d'endurance de force, répartis au plus fort reste (`coachQualitySessions`), une séance au moins par qualité ;
+  en intensification et en réalisation, la qualité de l'échéance prend 20 points (`coachTargetShareRise`). Sinon le
+  profil garde le gabarit de son chemin, à l'identique (contrôle d'identité au banc). La calisthénie secondaire reste
+  servie par les jours de pratique de figure du chemin sets & reps (choix raisonné : R4-F1, R4-F8).
+- **Choix** (`SplitMeasure.before`) : le gabarit typé qui réalise la répartition (la suite des schémas est celle du
+  gabarit, les qualités suivent la répartition) et le gabarit composite sont construits, pour la répartition de la
+  phase puis, quand elle en diffère, pour celle des disciplines, et comparés sans compensation — sécurité, couverture
+  des objectifs, récupération (≥ 0,9 puis paires en défaut), spécificité (mouvements visés exposés deux jours par
+  semaine), temps (séances hors de ± 15 % et sans principal), préférences ; à égalité, l'ordre d'essai (la phase
+  d'abord, le typé avant le composite).
+- **Placement** (`_place`) : recherche exhaustive des ordres (720 au plus) — paires de jours consécutifs qui chargent
+  le même schéma, le jour le plus exigeant ouvre la rotation après le plus long repos (§ 11.2), force et endurance
+  d'un même schéma à 72 h, types longs sur les jours longs, puis l'ordre du gabarit.
+- **Remplissage** (`_buildTyped`) : chaque type appelle le travail de sa qualité sur ses schémas, le mouvement le plus
+  exigeant en tête (`coachLiftDemand` : muscle-up lesté, traction lestée, dips lesté, squat). Objectif de répétitions
+  à charge donnée : ligne à charge fixe (`Method.liftFixed`, note `fixed_load`) ; point faible « prise » : suspension
+  longue le jour tirage endurance ; puissance (tirage explosif) le jour jambes endurance quand le muscle-up est visé.
+- **Type du jour** : celui du gabarit, sinon déduit des emplacements (`coachDerivedType`) ; raisons
+  `plan.split_chosen` et `plan.day_type` dans `Pass1Plan.split`.
+- **Couverture** (`coachUncoveredGoals`) : un objectif sans emplacement porteur est dit au bloc
+  (`plan.goal_uncovered`) ; le banc contrôle chaque semaine de charge.
+- **Échéances et jalons** (`targetOf`, `coachMilestones`) : une échéance principale prime ; une échéance secondaire
+  ne prime plus sur des objectifs datés plus tôt, qui deviennent la cible (raison `plan.milestone`), puis la saison
+  repart vers l'échéance ; dans une saison d'échéance principale, la semaine de charge qui contient un objectif daté
+  plus tôt devient une semaine de test. Le quatrième bloc d'une suite passe en intensification (pas plus de trois
+  blocs d'accumulation de suite).
+- **Note recalée** (`CoachEngine._scored`) : récupération par schéma (`coachRecoveryOf` : un jour est dur sur un
+  schéma à partir d'un travail lourd ou de deux moyens ; la pratique technique, les tenues faciles, la prévention et
+  la mobilité ne comptent pas), répartition de la charge dure (`coachHardBalanceOf`), séances dures par schéma
+  (`coachSchemaLoadOf`, R4-F10) et préférences du programme (`coachPreferencesOf`) ; même formule globale.
+- **Charges** (§ 8 du cahier) : muscle-up lesté relevé d'après son maximum au poids du corps, comme la traction et le
+  dips ; mouvement lesté visé dont la part tombe sous le poids du corps : plus petit pas de lest et répétitions à la
+  réserve (note `minimum_load`) ; traction haute et dips à la barre fixe réglés sur la traction et le dips lestés
+  (`coachLoadReferences`, coefficients 0,85 et 0,9, choix raisonnés) ; part annoncée d'une variante recalculée quand
+  le garde-fou baisse sa charge ; semaine allégée jamais plus lourde que la dernière semaine de construction ; squat
+  pause bas réglé sur le 1RM du squat ; le remplaçant porte `plan.replaced_disliked` ou `plan.replaced_cannot_do`.
+
+Limites : les profils mono-discipline gardent leur squelette de 0.3.1, avec ses séances sans principal et ses jours
+de figure ou de musculation consécutifs (mesurés au banc, `STRUCTURE.md`) ; les gabarits à une seule qualité (`ppl3`,
+`ul4` mono-qualité) et les gabarits typés de la musculation (force + hypertrophie) ne sont pas construits ; un test de
+répétitions à charge donnée n'est pas écrit (la ligne à charge fixe progresse, le test de fin de bloc porte sur le
+1RM du mouvement).

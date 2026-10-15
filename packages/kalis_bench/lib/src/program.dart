@@ -102,11 +102,15 @@ AdaptationSummary neutralAdaptation(CivilDate asOf, int weeks, int sessions) =>
 /// Programme du profil [bench] créé par le moteur [engine] (graine
 /// [seed]) : premier bloc, puis blocs suivants sans donnée de séance,
 /// jusqu'à couvrir l'horizon.
+///
+/// [horizonWeeks] remplace l'horizon du profil (lot KS1 : le profil de test
+/// sur quarante semaines, pour son jalon).
 BenchProgram generateProgram(
   Catalog catalog,
   PlanEngine engine,
   BenchProfile bench, {
   int seed = 0,
+  int? horizonWeeks,
 }) {
   final adapted = adaptProfile(bench, catalog: catalog);
   final problems = catalog.checkProfile(adapted.profile);
@@ -117,7 +121,7 @@ BenchProgram generateProgram(
       'inconnu du catalogue : ${problems.join(' ; ')}',
     );
   }
-  final horizon = horizonOf(bench);
+  final horizon = horizonWeeks ?? horizonOf(bench);
   final request = PlanRequest(
     profile: adapted.profile,
     seed: seed,

@@ -404,7 +404,13 @@ AdaptedProfile adaptProfile(
       continue;
     }
     final note = w.note.toLowerCase();
-    final kind = note.contains('départ') || note.contains('bras tendus')
+    // (Lot KS1 : la prise et la fatigue de fin de série — profil de test
+    // du cahier KS, § 7.1.)
+    final kind = note.contains('prise')
+        ? WeakPointKind.grip
+        : note.contains('fin de série')
+        ? WeakPointKind.lateSetFatigue
+        : note.contains('départ') || note.contains('bras tendus')
         ? WeakPointKind.deadStart
         : (note.contains('verrouillage')
               ? WeakPointKind.lockout
