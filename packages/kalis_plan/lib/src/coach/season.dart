@@ -38,8 +38,12 @@ final class CoachTarget {
 }
 
 /// Échéance visée par [profile] à partir du [start] : la première
-/// échéance principale à venir, sinon la première échéance, sinon le
-/// premier objectif daté.
+/// échéance principale à venir ; sinon le premier objectif daté s'il tombe
+/// avant la première échéance (secondaire ou de préparation) ; sinon cette
+/// échéance ; sinon le premier objectif daté. Lot KS1 (CAHIER_KS.md § 5,
+/// constat K5) : une échéance secondaire plus lointaine ne prime plus sur
+/// des objectifs datés plus tôt — ils deviennent un jalon (semaine de test à
+/// leur date), puis la saison repart vers l'échéance.
 CoachTarget? targetOf(AthleteProfile profile, CivilDate start) {
   SeasonEvent? best;
   for (final e in profile.events ?? const <SeasonEvent>[]) {
@@ -61,25 +65,17 @@ CoachTarget? targetOf(AthleteProfile profile, CivilDate start) {
       best = e;
     }
   }
-  if (best != null) {
+  final first = _firstGoalDate(profile, start);
+  if (best != null &&
+      (best.priority == EventPriority.main ||
+          first == null ||
+          first.compareTo(best.date) >= 0)) {
     return CoachTarget(
       date: best.date,
       event: best,
       goals: const <Goal>[],
       peak: best.priority == EventPriority.main,
     );
-  }
-  CivilDate? first;
-  for (final g in profile.goals) {
-    final date = g.targetDate;
-    if (g.kind != GoalKind.performance ||
-        date == null ||
-        start.daysUntil(date) < 0) {
-      continue;
-    }
-    if (first == null || date.compareTo(first) < 0) {
-      first = date;
-    }
   }
   if (first == null) {
     return null;
@@ -93,6 +89,85 @@ CoachTarget? targetOf(AthleteProfile profile, CivilDate start) {
     ],
     peak: false,
   );
+}
+
+/// Premier jour d'objectif de performance daté à partir du [start], ou
+/// `null`.
+CivilDate? _firstGoalDate(AthleteProfile profile, CivilDate start) {
+  CivilDate? first;
+  for (final g in profile.goals) {
+    final date = g.targetDate;
+    if (g.kind != GoalKind.performance ||
+        date == null ||
+        start.daysUntil(date) < 0) {
+      continue;
+    }
+    if (first == null || date.compareTo(first) < 0) {
+      first = date;
+    }
+  }
+  return first;
+}
+
+/// Jours d'objectifs datés qui tombent avant l'échéance [target] (ni le
+/// jour de l'échéance, ni après), à partir du [start] : les jalons de la
+/// saison (CAHIER_KS.md § 5).
+List<CivilDate> coachMilestones(
+  AthleteProfile profile,
+  CivilDate start,
+  CoachTarget? target,
+) {
+  if (target == null || target.event == null) {
+    return const <CivilDate>[];
+  }
+  final out = <CivilDate>{};
+  for (final g in profile.goals) {
+    final date = g.targetDate;
+    if (g.kind == GoalKind.performance &&
+        date != null &&
+        start.daysUntil(date) >= 0 &&
+        date.compareTo(target.date) < 0) {
+      out.add(date);
+    }
+  }
+  return out.toList()..sort((x, y) => x.compareTo(y));
+}
+
+/// Raison `plan.milestone` du bloc de forme [shape] de l'athlète [a] : les
+/// objectifs datés que vise le bloc quand une échéance plus lointaine les
+/// suit (le bloc finit sur leur test, puis la saison repart vers
+/// l'échéance), ou le jalon qui tombe dans le bloc d'une saison d'échéance
+/// principale ; `null` sinon.
+Reason? coachMilestoneOf(Athlete a, BlockShape shape) {
+  final target = shape.target;
+  if (target == null) {
+    return null;
+  }
+  if (target.event == null) {
+    final later = (a.profile.events ?? const <SeasonEvent>[]).any(
+      (e) => e.date.compareTo(target.date) > 0,
+    );
+    if (!later) {
+      return null;
+    }
+    return reason(ReasonCodes.planMilestone, <String, Object?>{
+      'date': target.date.iso,
+      'goals': target.goals.length,
+    });
+  }
+  final end = a.start.addDays(7 * shape.weeks.length - 1);
+  for (final date in coachMilestones(a.profile, a.start, target)) {
+    if (date.compareTo(end) <= 0) {
+      return reason(ReasonCodes.planMilestone, <String, Object?>{
+        'date': date.iso,
+        'goals': <Goal>[
+          for (final g in a.profile.goals)
+            if (g.targetDate == date) g,
+        ].length,
+      });
+    }
+  }
+  return null;
 }
 
 /// Vrai si une échéance principale du profil a eu lieu dans les dix jours
@@ -281,6 +356,13 @@ int blockLengthFor(int? weeksToEvent, List<int> preferences) {
   }
   return preferences.first;
 }
+
+/// Vrai pour le quatrième bloc d'une suite (rangs 3, 7, 11…) hors premier
+/// bloc : la saison n'enchaîne pas plus de trois blocs d'accumulation sans
+/// changement de stimulus — le quatrième passe en intensification
+/// (CAHIER_KS.md § 5, constat K5 : quatorze cycles 3 + 1 identiques ; D4.8,
+/// blocs de 4 à 6 semaines ; R3-P3, R3-P9).
+bool _fourth(int blockIndex, bool first) => !first && blockIndex % 4 == 3;
 
 /// Semaines entre le [start] et le jour [date], celui-ci compris (1 : le
 /// jour tombe dans la première semaine).
@@ -513,7 +595,9 @@ BlockShape shapeBlock(
                 // sans base.)
                 : (after != null && after <= 6 && !first
                       ? SeasonPhaseKind.intensification
-                      : SeasonPhaseKind.accumulation));
+                      : (_fourth(blockIndex, first)
+                            ? SeasonPhaseKind.intensification
+                            : SeasonPhaseKind.accumulation)));
       final intent = switch (phase) {
         SeasonPhaseKind.realization => WeekIntent.realization,
         SeasonPhaseKind.intensification => WeekIntent.intensification,
@@ -655,7 +739,7 @@ BlockShape shapeBlock(
         }
       } else {
         final after = (toEvent ?? 99) - length;
-        phase = after >= 5
+        phase = after >= 5 && !_fourth(blockIndex, first)
             ? SeasonPhaseKind.accumulation
             : SeasonPhaseKind.intensification;
         final intent = phase == SeasonPhaseKind.accumulation
@@ -733,7 +817,7 @@ BlockShape shapeBlock(
         }
       } else {
         final after = (toEvent ?? 99) - length;
-        phase = after >= 8
+        phase = after >= 8 && !_fourth(blockIndex, first)
             ? SeasonPhaseKind.accumulation
             : SeasonPhaseKind.intensification;
         final intent = phase == SeasonPhaseKind.accumulation
@@ -764,6 +848,29 @@ BlockShape shapeBlock(
           }
         }
       }
+  }
+  // Jalons d'une saison d'échéance (CAHIER_KS.md § 5) : la semaine de
+  // charge qui contient un objectif daté plus tôt que l'échéance devient une
+  // semaine de test (mini-pic sans affûtage complet), puis la saison
+  // reprend vers l'échéance.
+  for (final date in coachMilestones(a.profile, start, target)) {
+    final i = weeksUntil(start, date) - 1;
+    if (i < 0 || i >= weeks.length) {
+      continue;
+    }
+    final w = weeks[i];
+    if (w.kind != WeekKind.build || w.eventWeek || w.testWeek) {
+      continue;
+    }
+    weeks[i] = WeekSpec(
+      kind: WeekKind.test,
+      intent: WeekIntent.test,
+      phase: SeasonPhaseKind.test,
+      volume: 0.7,
+      stage: w.stage,
+      testWeek: true,
+      weeksToEvent: w.weeksToEvent,
+    );
   }
   if (recovering && weeks.length >= 3 && !weeks.first.eventWeek) {
     final w0 = weeks.first;

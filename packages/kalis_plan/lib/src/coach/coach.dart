@@ -177,7 +177,9 @@ Skeleton reconcileSkeleton(Athlete a, Skeleton canonical, Pass1Plan pass1) {
     final out = DaySpec(d);
     final base = d < canonical.days.length ? canonical.days[d] : DaySpec(d);
     final day = d < pass1.days.length ? pass1.days[d] : null;
-    out.focus = day?.focus ?? base.focus;
+    out
+      ..focus = day?.focus ?? base.focus
+      ..type = day?.type ?? base.type;
     final used = <SlotSpec>{};
     for (final slot in day?.slots ?? const <PlanSlot>[]) {
       final e = a.catalog.find(slot.exerciseId);
@@ -251,6 +253,8 @@ Skeleton reconcileSkeleton(Athlete a, Skeleton canonical, Pass1Plan pass1) {
     ladders: canonical.ladders,
     reasons: canonical.reasons,
     intent: canonical.intent,
+    templateId: canonical.templateId,
+    splitReasons: canonical.splitReasons,
   );
 }
 
@@ -356,6 +360,7 @@ final class CoachEngine {
                 ? 300
                 : a.days[d.dayIndex].minutes,
             focus: d.focus,
+            type: d.type,
             slots: <PlanSlot>[
               for (final s in d.slots)
                 PlanSlot(
@@ -372,13 +377,86 @@ final class CoachEngine {
       reasons: blockReasonsOf(a, sk),
       intent: sk.intent,
       skillLadders: sk.ladders.isEmpty ? null : sk.ladders,
+      split: sk.templateId.isEmpty
+          ? null
+          : SplitChoice(templateId: sk.templateId, reasons: sk.splitReasons),
     );
-    return _scored(catalog, request, draft);
+    return _scored(catalog, request, draft, athlete: a, skeleton: sk);
   }
 
-  Pass1Plan _scored(Catalog catalog, PlanRequest request, Pass1Plan plan) {
-    final score = PlanInspector(catalog, params: params).scoreOf(request, plan);
-    return plan.copyWith(score: score);
+  /// Programme [plan] noté : la note de 0.1 (`PlanInspector.scoreOf`), dont
+  /// quatre composantes sont recalées sur le squelette du chemin street
+  /// (lot KS1, CAHIER_KS.md § 3.4) : récupération (schémas chargés lourds
+  /// deux jours de suite, 48 h entre deux séances dures d'un schéma),
+  /// répartition de la charge dure, charge des schémas (R4-F10) et
+  /// préférences ; la note globale est recalculée avec les mêmes poids.
+  Pass1Plan _scored(
+    Catalog catalog,
+    PlanRequest request,
+    Pass1Plan plan, {
+    Athlete? athlete,
+    Skeleton? skeleton,
+  }) {
+    final base = PlanInspector(catalog, params: params).scoreOf(request, plan);
+    final a =
+        athlete ??
+        Athlete.read(
+          catalog,
+          request.profile,
+          plan.startDate,
+          extraExcluded: _excludedBy(request.locks),
+        );
+    final sk =
+        skeleton ??
+        reconcileSkeleton(
+          a,
+          _skeleton(a, plan.blockIndex, plan.seed, blockWeeks: plan.weeks),
+          plan,
+        );
+    return plan.copyWith(score: _recalibrated(a, sk, base));
+  }
+
+  PlanScore _recalibrated(Athlete a, Skeleton sk, PlanScore base) {
+    final values = <String, double>{
+      for (final c in base.components) c.code: c.value,
+    };
+    final (recovery, _) = coachRecoveryOf(a, sk.days);
+    values['recovery'] = recovery;
+    values['fatigue_balance'] = coachHardBalanceOf(sk.days);
+    final joint = values['joint_load'] ?? 1;
+    final schema = coachSchemaLoadOf(a, sk.days);
+    values['joint_load'] = schema < joint ? schema : joint;
+    values['preferences'] = coachPreferencesOf(a, sk.days);
+    final w = params.weights.values;
+    var safety = 0.0;
+    var safetyWeight = 0.0;
+    var quality = 0.0;
+    var qualityWeight = 0.0;
+    for (var i = 0; i < ScoreWeights.codes.length; i++) {
+      final v = values[ScoreWeights.codes[i]] ?? 0;
+      if (i < ScoreWeights.safetyCount) {
+        safety += w[i] * v;
+        safetyWeight += w[i];
+      } else {
+        quality += w[i] * v;
+        qualityWeight += w[i];
+      }
+    }
+    final s = safetyWeight <= 0 ? 0.0 : safety / safetyWeight;
+    final q = qualityWeight <= 0 ? 0.0 : quality / qualityWeight;
+    var total = params.safetyShare * s + (1 - params.safetyShare) * q;
+    total = total < 0 ? 0 : (total > 1 ? 1 : total);
+    return PlanScore(
+      total: total,
+      components: <ScoreComponent>[
+        for (var i = 0; i < ScoreWeights.codes.length; i++)
+          ScoreComponent(
+            code: ScoreWeights.codes[i],
+            value: values[ScoreWeights.codes[i]] ?? 0,
+            weight: w[i],
+          ),
+      ],
+    );
   }
 
   /// Applique au squelette [sk] les verrous `keep_slot` et
@@ -700,6 +778,14 @@ final class CoachEngine {
     final acted = <Reason>[];
     final touched = <String>{};
 
+    // Raison portée par le remplaçant (lot KS1, CAHIER_KS.md § 8.5) :
+    // `plan.replaced_disliked` ou `plan.replaced_cannot_do`, avec
+    // l'exercice remplacé — jamais la raison du remplacé.
+    var replacedCode = ReasonCodes.planReplacedDisliked;
+    List<Reason> replacedOf(String exerciseId) => <Reason>[
+      reason(replacedCode, <String, Object?>{'exerciseId': exerciseId}),
+    ];
+
     void replaceEverywhere(String exerciseId, {required bool easier}) {
       final a = Athlete.read(
         catalog,
@@ -726,7 +812,7 @@ final class CoachEngine {
             days[d][i] = s.copyWith(
               exerciseId: other,
               locked: false,
-              reasons: <Reason>[...acted],
+              reasons: replacedOf(exerciseId),
             );
           }
         }
@@ -754,6 +840,7 @@ final class CoachEngine {
         );
         delta = delta.copyWith(unknownExerciseIds: <String>[slot.exerciseId]);
         acted.add(reason(ReasonCodes.planUserCannotDo));
+        replacedCode = ReasonCodes.planReplacedCannotDo;
         replaceEverywhere(slot.exerciseId, easier: true);
       case ReviewKind.dislike:
         final slot = target!;
@@ -885,7 +972,7 @@ final class CoachEngine {
           } else {
             days[d][i] = s.copyWith(
               exerciseId: other,
-              reasons: <Reason>[...acted],
+              reasons: replacedOf(s.exerciseId),
             );
           }
         }

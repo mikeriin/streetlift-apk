@@ -54,11 +54,30 @@ export 'src/coach/season.dart';
 export 'src/coach/skeleton.dart'
     show
         SkillTrack,
+        SplitMeasure,
+        SplitTemplates,
         buildSkeleton,
+        coachDayShareMin,
+        coachDerivedType,
+        coachHardBalanceOf,
+        coachHardSessionsPerSchema,
+        coachLiftDemand,
+        coachLiftFamily,
+        coachPreferencesOf,
+        coachQualitySessions,
+        coachRecoveryFloor,
+        coachRecoveryOf,
+        coachSchemaLoadOf,
+        coachSchemaOf,
+        coachSlotLoad,
+        coachTargetShareRise,
+        coachUncoveredGoals,
         hasBelt,
+        mixedStreetShares,
         skillTargetsOf,
         spreadDays,
-        styleOf;
+        styleOf,
+        templateOfStyle;
 export 'src/coach/tables.dart';
 export 'src/coach/texts.dart';
 export 'src/context.dart'

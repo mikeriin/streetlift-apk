@@ -299,6 +299,14 @@ abstract final class CoachNotes {
   /// poids du corps (`value` : lest en kg).
   static const String smallLoad = 'small_load';
 
+  /// Plus petit pas de lest quand la part visée d'un mouvement lesté visé
+  /// tombe sous le poids du corps (lot KS1 ; `value` : lest en kg).
+  static const String minimumLoad = 'minimum_load';
+
+  /// Ligne à charge fixe : objectif de répétitions à une charge donnée
+  /// (lot KS1 ; `value` : charge en kg).
+  static const String fixedLoad = 'fixed_load';
+
   /// Série d'entrée de reprise, écrite sur la ligne (`value` : réserve).
   static const String entrySet = 'entry_set';
 
@@ -426,6 +434,8 @@ abstract final class CoachNotes {
     holdRamp,
     tracking,
     smallLoad,
+    minimumLoad,
+    fixedLoad,
     pushLadder,
     dressRehearsal,
     primer,
@@ -1011,14 +1021,47 @@ final class Prescriber {
     if (own != null) {
       return own;
     }
-    if (referenceId == null || e.loadType != LoadType.addedWeight) {
+    // Variante rangée sous un autre mouvement : sa vraie référence, avec
+    // le coefficient de transfert (lot KS1, CAHIER_KS.md § 8.2).
+    final mapped = coachLoadReferences[e.id];
+    if (mapped != null) {
+      final total = a.totalOneRm(mapped.$1);
+      if (total != null) {
+        return total * mapped.$2;
+      }
+    }
+    if (referenceId == null) {
       return null;
     }
     final ref = a.catalog.find(referenceId);
-    if (ref == null || ref.loadType != LoadType.addedWeight) {
+    if (ref == null) {
       return null;
     }
-    return a.totalOneRm(referenceId);
+    if (e.loadType == LoadType.addedWeight &&
+        ref.loadType == LoadType.addedWeight) {
+      return a.totalOneRm(referenceId);
+    }
+    // Variante à la barre d'un mouvement à la barre de la même chaîne
+    // (squat pause bas : dérivé du 1RM du squat comme les dips pause bas du
+    // 1RM du dips ; lot KS1, CAHIER_KS.md § 8.4).
+    if (e.loadType == LoadType.barbell &&
+        ref.loadType == LoadType.barbell &&
+        e.rootId == ref.rootId) {
+      return a.totalOneRm(referenceId);
+    }
+    return null;
+  }
+
+  /// Plus petit pas de charge de l'exercice [e] pour le profil.
+  double _minimumStep(CatalogExercise e) {
+    final (defaultStep, _) = defaultIncrement(e.loadType);
+    var step = defaultStep;
+    for (final i in a.profile.loadIncrements) {
+      if (i.loadType == e.loadType && i.stepKg > 0) {
+        step = i.stepKg;
+      }
+    }
+    return step;
   }
 
   /// Vrai pour la séance facile à deux jours d'un test daté sans pic de
@@ -1402,6 +1445,42 @@ final class Prescriber {
           }
         }
       }
+      // Mouvement lesté visé par un objectif (lot KS1, CAHIER_KS.md § 8.1,
+      // constat K8 : muscle-up lesté bloqué à +0 kg tout le bloc, les
+      // répétitions baissant d'une semaine à l'autre) : le plus petit pas
+      // de lest du profil, et les répétitions que cette charge laisse à la
+      // réserve visée (table R2-P2 ; formule d'Epley au-delà de 12).
+      final step = _minimumStep(e);
+      if (a.aimsAt(e.id) &&
+          e.loadType == LoadType.addedWeight &&
+          step > 0 &&
+          !x.fixed) {
+        final share = (floor * total + step) / total;
+        final possible = share >= 1
+            ? 1.0
+            : (share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1));
+        final reserve = (x.rir ?? 3).ceil();
+        final reps = _clampInt(
+          possible.floor() - reserve,
+          1,
+          _muscleUp(e) ? 3 : 8,
+        );
+        final shown = _round3(share > 1 ? 1 : share);
+        x
+          ..load = step
+          ..repsLow = reps
+          ..repsHigh = reps
+          ..share = share
+          ..intensity = IntensityTarget(
+            basis: IntensityBasis.percentOneRm,
+            value: shown,
+          )
+          ..reasons.add(_note(CoachNotes.minimumLoad, step));
+        if (a.totalOneRm(e.id) != null) {
+          x.percent = shown;
+        }
+        return;
+      }
       // Lest sous le plus petit pas : la série s'écrit au poids du corps,
       // avec les répétitions que sa vraie part du 1RM laisse à la réserve
       // visée (CX, correction 6 : une charge chiffrée dès que le 1RM est
@@ -1477,18 +1556,29 @@ final class Prescriber {
           value: _round3(shown),
         );
     } else {
+      // Variante rangée sous un autre mouvement : la part affichée est
+      // celle de sa vraie référence (lot KS1, § 8.2).
+      final mapped = coachLoadReferences[e.id];
+      final reference = mapped != null && a.totalOneRm(mapped.$1) != null
+          ? mapped.$1
+          : referenceId;
       x.intensity = IntensityTarget(
         basis: IntensityBasis.percentOneRm,
-        value: _round3(p),
-        referenceExerciseId: referenceId,
+        value: _round3(mapped != null && reference == mapped.$1 ? p * mapped.$2 : p),
+        referenceExerciseId: reference,
       );
     }
   }
 
-  /// Mouvement au poids du corps d'un mouvement lesté.
+  /// Mouvement au poids du corps d'un mouvement lesté (le 1RM de travail
+  /// est relevé d'après son maximum ; le muscle-up lesté depuis le lot KS1,
+  /// CAHIER_KS.md § 8.1 : dix muscle-ups stricts et un 1RM déclaré de 88 kg
+  /// pour 80 kg de poids de corps mettaient la séance lourde au poids du
+  /// corps).
   static const Map<String, String> _bodyweightOf = <String, String>{
     Ids.weightedPull: Ids.pull,
     Ids.weightedDip: Ids.dip,
+    Ids.weightedMuscleUp: Ids.muscleUp,
   };
 
   /// Vrai quand l'échéance du bloc vise des maxima de répétitions (objectifs
@@ -1978,6 +2068,68 @@ final class Prescriber {
     if (!x.calibrate && ws.kind == WeekKind.build) {
       x.reasons.add(_rule(CoachRules.loadStep, 1.5, 'pct'));
     }
+    return x;
+  }
+
+  /// Ligne à charge fixe (lot KS1, CAHIER_KS.md § 4 ; règle C15.2 de
+  /// l'application) : objectif de répétitions à une charge donnée (« 35
+  /// répétitions à 70 kg »). La charge écrite est celle de l'objectif ; les
+  /// répétitions sont celles que cette charge laisse à la réserve de la
+  /// phase (table R2-P2 jusqu'à 12 répétitions, formule d'Epley au-delà),
+  /// une de plus toutes les deux semaines de charge (double progression,
+  /// ACSM 2009), jamais au-delà de l'objectif. Sans 1RM connu : la séance de
+  /// volume ordinaire.
+  _Draft? _liftFixed(SlotSpec s, WeekSpec ws, int week, _DayRole role) {
+    if (role != _DayRole.normal ||
+        ws.intent == WeekIntent.taper ||
+        ws.intent == WeekIntent.competition ||
+        ws.intent == WeekIntent.transition) {
+      return null;
+    }
+    final e = a.catalog.exercise(s.exerciseId);
+    Goal? goal;
+    for (final g in a.profile.goals) {
+      if (g.exerciseId == e.id &&
+          g.metric == GoalMetric.maxReps &&
+          g.loadKg != null &&
+          g.targetValue != null) {
+        goal = g;
+        break;
+      }
+    }
+    final total = a.totalOneRm(e.id);
+    if (goal == null || total == null || total <= 0) {
+      return _liftVolume(s, ws, week, role);
+    }
+    final x = _new(s);
+    final load = goal.loadKg!;
+    final share = (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) /
+        total;
+    final possible = share >= 1
+        ? 1.0
+        : (share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1));
+    final rir =
+        ws.intent == WeekIntent.intensification ||
+            ws.intent == WeekIntent.realization
+        ? 2.0
+        : 3.0;
+    var reps = possible.floor() - rir.round() + _shift(ws);
+    final wanted = goal.targetValue!.round();
+    if (reps > wanted) {
+      reps = wanted;
+    }
+    reps = _clampInt(reps, 3, 60);
+    x
+      ..sets = ws.light ? 2 : _scaled(s.sets, ws, min: 2)
+      ..minSets = 2
+      ..repsLow = reps
+      ..repsHigh = reps
+      ..rir = _rirOf(e, rir, ws, week)
+      ..rest = 180
+      ..load = load
+      ..fixed = true
+      ..ramped = true
+      ..reasons.add(_note(CoachNotes.fixedLoad, load));
     return x;
   }
 
@@ -4971,6 +5123,8 @@ final class Prescriber {
         return _liftHeavy(s, ws, week, role);
       case Method.liftVolume:
         return _liftVolume(s, ws, week, role);
+      case Method.liftFixed:
+        return _liftFixed(s, ws, week, role);
       case Method.liftLight:
         return _liftLight(s, ws, week, role);
       case Method.liftVariant:
@@ -6929,6 +7083,22 @@ final class Prescriber {
             top.$1 * factorOf(top.$2, reps, restart: src.restart),
           );
         }
+        // Allègement : jamais plus lourd que la dernière semaine de
+        // construction (lot KS1, CAHIER_KS.md § 8.3).
+        if (ws.light && x.kind != SetKind.test) {
+          for (var k = _history.length - 1; k >= 0; k--) {
+            if (k < _history.length - 3) {
+              break;
+            }
+            if (!_history[k].light) {
+              final built = _history[k].loads[key];
+              if (built != null && built.$1 > 0) {
+                allowed = capped(allowed, built.$1);
+              }
+              break;
+            }
+          }
+        }
         if (elbow &&
             x.e.stressOn(Joint.elbow) != JointStress.low &&
             x.e.loadType == LoadType.addedWeight) {
@@ -6981,12 +7151,33 @@ final class Prescriber {
             x.load = capped;
             total = capped + fraction * a.bodyWeight;
             final oneRm = a.totalOneRm(x.e.id);
+            final intensity = x.intensity;
             if (oneRm != null && x.percent != null) {
               final pct = _round3(total / oneRm > 1 ? 1 : total / oneRm);
               x.percent = pct;
-              final intensity = x.intensity;
               if (intensity != null) {
                 x.intensity = intensity.copyWith(value: pct);
+              }
+            } else if (intensity != null &&
+                intensity.basis == IntensityBasis.percentOneRm &&
+                intensity.referenceExerciseId != null) {
+              // Variante réglée sur sa référence : la part annoncée suit la
+              // charge servie (lot KS1, CAHIER_KS.md § 8.3).
+              final reference = a.totalOneRm(intensity.referenceExerciseId!);
+              if (reference != null && reference > 0) {
+                final pct = _round3(
+                  total / reference > 1.5 ? 1.5 : total / reference,
+                );
+                x
+                  ..intensity = intensity.copyWith(value: pct)
+                  ..reasons.removeWhere(
+                    (r) => r.code == ReasonCodes.planPercentBased,
+                  )
+                  ..reasons.add(
+                    reason(ReasonCodes.planPercentBased, <String, Object?>{
+                      'pct': pct,
+                    }),
+                  );
               }
             }
           }

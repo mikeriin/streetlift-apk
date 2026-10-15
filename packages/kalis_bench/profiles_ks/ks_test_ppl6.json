@@ -1,0 +1,297 @@
+{
+ "schemaVersion": 1,
+ "key": "ks_test_ppl6",
+ "group": "street",
+ "title": "Profil de test du créateur : streetlifting 50 / sets & reps 50, six séances",
+ "summary": "Profil équivalent au profil de test du propriétaire (CAHIER_KS.md § 7.1) : homme avancé, 80 kg (choix raisonné), six séances de 120 minutes en salle. Traction 1RM système 128 kg, squat 120 kg à 2 en réserve, muscle-up 1RM système 88 kg, 10 muscle-ups stricts, dips lesté vers +70 kg. Neuf objectifs datés au 1er mai 2027, échéance secondaire en décembre 2027.",
+ "level": "advanced",
+ "trainingAgeMonths": 48,
+ "core": {
+  "sex": "male",
+  "birthYear": 1996,
+  "heightCm": 178,
+  "bodyWeightKg": 80.0,
+  "streetMode": {
+   "primary": "streetlifting",
+   "streetliftingPct": 50,
+   "setsRepsPct": 50,
+   "calisthenicsPct": 0
+  },
+  "disciplines": {
+   "primary": "streetlifting",
+   "primaryPct": 50,
+   "secondaries": [
+    {
+     "discipline": "street_workout",
+     "pct": 50
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 120
+   },
+   {
+    "weekday": 2,
+    "minutes": 120
+   },
+   {
+    "weekday": 3,
+    "minutes": 120
+   },
+   {
+    "weekday": 4,
+    "minutes": 120
+   },
+   {
+    "weekday": 5,
+    "minutes": 120
+   },
+   {
+    "weekday": 6,
+    "minutes": 120
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "ceinture de lest",
+   "disques",
+   "barre olympique",
+   "cage / rack",
+   "magnésie",
+   "banc plat",
+   "haltères",
+   "poulie",
+   "anneaux",
+   "tapis",
+   "box / plinth"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [
+   "sl-traction-lestee",
+   "sl-dips-leste",
+   "sl-muscle-up-leste",
+   "sl-squat-competition",
+   "sw-traction-pronation",
+   "sw-dips-barres-paralleles",
+   "sw-pompe",
+   "cd-muscle-up-barre-strict",
+   "mu-curl-marteau-halteres",
+   "mu-face-pull-corde",
+   "mu-rowing-barre-pronation",
+   "sw-dead-hang"
+  ],
+  "dislikedExerciseIds": [
+   "mo-rotation-thoracique-quatre-pattes"
+  ],
+  "experience": "advanced",
+  "guidanceMode": "free",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  },
+  "knownExerciseIds": [
+   "cd-muscle-up-barre-strict"
+  ],
+  "cannotDoExerciseIds": [
+   "mu-oiseau-halteres"
+  ]
+ },
+ "records": [
+  {
+   "exerciseId": "sl-traction-lestee",
+   "measure": "one_rm_kg",
+   "value": 48,
+   "testedWeeksAgo": 2
+  },
+  {
+   "exerciseId": "sl-muscle-up-leste",
+   "measure": "one_rm_kg",
+   "value": 8,
+   "testedWeeksAgo": 2
+  },
+  {
+   "exerciseId": "sl-squat-competition",
+   "measure": "one_rm_kg",
+   "value": 127,
+   "testedWeeksAgo": 2
+  },
+  {
+   "exerciseId": "sl-dips-leste",
+   "measure": "one_rm_kg",
+   "value": 70,
+   "testedWeeksAgo": 2
+  },
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 22
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 35
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 60
+  },
+  {
+   "exerciseId": "cd-muscle-up-barre-strict",
+   "measure": "max_reps",
+   "value": 10
+  }
+ ],
+ "events": [
+  {
+   "id": "e1",
+   "kind": "competition",
+   "label": "compétition de streetlifting (secondaire)",
+   "weeksOut": 63,
+   "priority": "B",
+   "format": "streetlifting",
+   "targets": []
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sl-muscle-up-leste",
+   "metric": "one_rm_kg",
+   "targetValue": 13,
+   "weeksOut": 30
+  },
+  {
+   "id": "g2",
+   "exerciseId": "sl-traction-lestee",
+   "metric": "one_rm_kg",
+   "targetValue": 55,
+   "weeksOut": 30
+  },
+  {
+   "id": "g3",
+   "exerciseId": "sl-dips-leste",
+   "metric": "one_rm_kg",
+   "targetValue": 77.5,
+   "weeksOut": 30
+  },
+  {
+   "id": "g4",
+   "exerciseId": "sl-squat-competition",
+   "metric": "one_rm_kg",
+   "targetValue": 135,
+   "weeksOut": 30
+  },
+  {
+   "id": "g5",
+   "exerciseId": "sw-traction-pronation",
+   "metric": "max_reps",
+   "targetValue": 26,
+   "weeksOut": 30
+  },
+  {
+   "id": "g6",
+   "exerciseId": "sw-pompe",
+   "metric": "max_reps",
+   "targetValue": 70,
+   "weeksOut": 30
+  },
+  {
+   "id": "g7",
+   "exerciseId": "sw-dips-barres-paralleles",
+   "metric": "max_reps",
+   "targetValue": 42,
+   "weeksOut": 30
+  },
+  {
+   "id": "g8",
+   "exerciseId": "cd-muscle-up-barre-strict",
+   "metric": "max_reps",
+   "targetValue": 13,
+   "weeksOut": 30
+  },
+  {
+   "id": "g9",
+   "exerciseId": "sl-squat-competition",
+   "metric": "max_reps",
+   "targetValue": 35,
+   "loadKg": 70,
+   "weeksOut": 30
+  }
+ ],
+ "weakPoints": [
+  {
+   "kind": "movement",
+   "exerciseId": "sl-traction-lestee",
+   "note": "verrouillage du tirage en haut"
+  },
+  {
+   "kind": "movement",
+   "exerciseId": "sl-dips-leste",
+   "note": "bas du dips"
+  },
+  {
+   "kind": "movement",
+   "exerciseId": "sl-squat-competition",
+   "note": "bas du squat"
+  },
+  {
+   "kind": "movement",
+   "exerciseId": "sw-traction-pronation",
+   "note": "prise qui lâche"
+  },
+  {
+   "kind": "movement",
+   "exerciseId": "sw-dips-barres-paralleles",
+   "note": "fatigue de fin de série"
+  }
+ ],
+ "recovery": {
+  "stress": 2
+ },
+ "expectations": {
+  "text": [
+   "Profil de test du lot KS1 (CAHIER_KS.md § 7) : gabarit ppl6_q, muscle-up lesté en tête du lundi, 9 objectifs sur 9 portés chaque semaine de charge, chaque schéma deux fois par semaine à 72 h, aucun schéma lourd deux jours de suite, séances de 100 à 125 minutes, aucune séance sans principal."
+  ],
+  "checks": []
+ }
+}
