@@ -1,0 +1,54 @@
+  <section class="lot" id="ks1">
+    <div class="lot-head">
+      <h2><b>KS1</b> · Structure de la semaine : des jours de force et des jours d'endurance</h2>
+      <span class="pill wait">À trancher</span>
+      <span class="pill wait">7 critères sur 13</span>
+    </div>
+    <dl class="facts">
+      <div><dt>Livré</dt><dd>kalis_plan 0.4.0 · kalis_core 0.4.4 · kalis_bench 0.5.0</dd></div>
+      <div><dt>Sécurité</dt><dd>0 violation (34 programmes, saisons des 27 profils)</dd></div>
+      <div><dt>Commit moteurs</dt><dd>COMMIT_PLAN</dd></div>
+      <div><dt>Livré le</dt><dd>15/10/2026</dd></div>
+    </dl>
+    <p class="lede">Le créateur de programme choisit maintenant la forme de la semaine avant les exercices. Quand tu fais à la fois du streetlifting et du sets &amp; reps, tu as des jours de force et des jours d'endurance de force, chacun avec son type affiché (« tirage, force », « jambes, endurance de force »). Sur ton profil de test : tirage, poussée et jambes en force du lundi au mercredi, puis les mêmes en endurance du jeudi au samedi, le muscle-up lesté en tête du lundi, chaque schéma deux fois par semaine à 72 h, et tes neuf objectifs travaillés chaque semaine. Les profils d'une seule discipline gardent exactement leur programme d'avant.</p>
+    <div class="callout">
+      <p><b>À trancher : la durée des séances.</b> Tes séances de 120 min sont estimées entre 35 et 53 min (en 0.3.1 aussi). Les plafonds de volume par muscle limitent les séries dures avant le temps : remplir 2 h demanderait environ le double de séries. Trois voies : garder les plafonds et afficher la durée estimée, relever le volume pour les avancés (lot de calibrage), ou remplir avec de la technique et de la mobilité.</p>
+    </div>
+    <div>
+      <h3>Critères du cahier, avant et après</h3>
+      <div class="scroll"><table class="checks"><thead><tr><th>Critère (seuil)</th><th>0.4.0</th><th>0.3.1</th></tr></thead><tbody>
+        <tr><td>Violations de sécurité, programmes et saisons des 27 profils (0)</td><td class="good num">0</td><td class="num">0</td></tr>
+        <tr><td>Saisons des 7 profils ajoutés (0)</td><td class="note num">6 (échéance avancée, défaut antérieur)</td><td class="num">4 sur 2 profils</td></tr>
+        <tr><td>Objectifs portés chaque semaine de charge (100 %)</td><td class="good num">100 %</td><td class="num">78 %</td></tr>
+        <tr><td>Récupération ≥ 0,9 par bloc (0 bloc dessous)</td><td class="note num">2 sur 68 (un profil mono figé)</td><td class="num">64 sur 68</td></tr>
+        <tr><td>Séances dans ± 15 % du temps disponible</td><td class="note num">1175 hors bande sur 1329</td><td class="num">1176</td></tr>
+        <tr><td>Séances sans principal (0)</td><td class="note num">51 (profils mono figés)</td><td class="num">112</td></tr>
+        <tr><td>Profils d'une seule discipline identiques à 0.3.1</td><td class="good num">27 sur 27</td><td class="num">—</td></tr>
+        <tr><td>Mouvement le plus exigeant en tête de séance</td><td class="good num">0 écart</td><td class="num">0</td></tr>
+        <tr><td>Son jour en tête de la rotation</td><td class="note num">12 sur 44 (mono figés) · mixtes 0</td><td class="num">42</td></tr>
+        <tr><td>Profil de test : ppl6_q et contrôles du § 7</td><td class="note num">7 sur 8 (durée)</td><td class="num">lift_dup</td></tr>
+        <tr><td>Non-ressemblance aux références (≤ 0,30)</td><td class="good num">0,19 · 0,23</td><td class="num">0,25</td></tr>
+        <tr><td>Relecture indépendante du code (0 bloquant)</td><td class="good num">3 trouvés, 3 corrigés</td><td class="num">—</td></tr>
+        <tr><td>Contrôle complet</td><td class="good num">RUN_COURT</td><td class="num">—</td></tr>
+      </tbody></table></div>
+    </div>
+    <div>
+      <h3>Ta semaine type (profil de test, bloc 1)</h3>
+      <div class="scroll"><table class="checks"><thead><tr><th>Jour</th><th>Type</th><th>En tête</th></tr></thead><tbody>
+        <tr><td>Lundi</td><td>tirage · force</td><td>muscle-up lesté 4 × 3, traction lestée 4 × 5</td></tr>
+        <tr><td>Mardi</td><td>poussée · force</td><td>dips lesté 4 × 5, dips pause en bas</td></tr>
+        <tr><td>Mercredi</td><td>jambes · force</td><td>squat 3 × 5 à 97,5 kg, squat pause en bas</td></tr>
+        <tr><td>Jeudi</td><td>tirage · endurance</td><td>tractions 19 puis 2 × 14, muscle-up strict 5 × 3</td></tr>
+        <tr><td>Vendredi</td><td>poussée · endurance</td><td>dips 31 puis 2 × 23, pompes au chrono</td></tr>
+        <tr><td>Samedi</td><td>jambes · endurance</td><td>squat 3 × 21 à 70 kg (charge fixe), traction explosive</td></tr>
+      </tbody></table></div>
+    </div>
+    <div>
+      <h3>Pour toi</h3>
+      <ul class="plain">
+        <li>Rien à tester sur le téléphone : le lot court de l'application affichera le type du jour dans Mon programme et en tête de séance.</li>
+        <li>Décision attendue : la durée des séances (ci-dessus) et un lot de gabarits pour les profils d'une seule discipline (récupération, principal, rotation encore figés).</li>
+      </ul>
+    </div>
+    <p class="lede">Détail : <span class="path">pipeline/cp/livraisons/LIVRAISON_KS1.md</span> ; règles : <span class="path">packages/kalis_plan/docs/STRUCTURE_SEMAINE.md</span> (branche moteurs).</p>
+  </section>
