@@ -7,8 +7,12 @@
 // relatif (`|a - b| <= 1e-9 · max(1, |a|, |b|)`), les entiers des lignes
 // `tour.sets` / `tour.estimates` devant rester des entiers.
 //
-// La saison de `kmReferenceSeason` est d'abord comparée, à l'identique, à
-// celle que Python a lue (`kalis_adapt/reference/donnees/reference/`).
+// Koach rejoue la saison que Python a lue
+// (`kalis_adapt/reference/donnees/reference/`, figée sur `kalis_plan`
+// 0.3.1) ; la saison vivante de `kmReferenceSeason` doit en garder le
+// squelette (jours, emplacements, exercices) et le calendrier — depuis
+// `kalis_plan` 0.4.0 (lot KS1), elle en diffère par le type du jour, le
+// gabarit, la note et les charges du § 8 du cahier KS.
 import 'dart:convert';
 import 'dart:io';
 
@@ -269,7 +273,12 @@ void main() {
                 )
                 as Map<String, Object?>;
         saisonPython = _saisonPython(cle, scenario);
-        saison = Map<String, Object?>.of(saisonDart);
+        // (Koach rejoue la saison que Python a lue : la parité porte sur
+        // Koach à entrée identique. Les données de référence de Koach sont
+        // figées sur `kalis_plan` 0.3.1 ; depuis 0.4.0 (lot KS1 : type du
+        // jour, gabarit, note recalée, charges du § 8), la saison vivante
+        // en diffère et leur régénération revient au pipeline Koach.)
+        saison = Map<String, Object?>.of(saisonPython);
         final semaines = config['semaines'];
         if (semaines != null && (semaines as int) < (saison['weeks']! as int)) {
           saison['weeks'] = semaines;
@@ -325,17 +334,37 @@ void main() {
       Map<String, Object?> tourObtenu() =>
           obtenu['tour']! as Map<String, Object?>;
 
-      test('kmReferenceSeason redonne la saison lue par Python', () {
-        _pareil(
-          kmEcarts(
-            saisonPython,
-            saisonDart,
-            tolerance: 0,
-            typesStricts: true,
-            typesSouples: const <String>{},
-          ),
-          'saison de référence',
-        );
+      test('kmReferenceSeason garde le squelette et le calendrier de la saison '
+          'lue par Python (données figées sur kalis_plan 0.3.1)', () {
+        expect(saisonDart['weeks'], saisonPython['weeks']);
+        final blocsDart = saisonDart['blocks']! as List<Object?>;
+        final blocsPython = saisonPython['blocks']! as List<Object?>;
+        expect(blocsDart.length, blocsPython.length);
+        List<Object?> squelette(Object? bloc) {
+          final p1 =
+              (bloc! as Map<String, Object?>)['pass1']! as Map<String, Object?>;
+          return <Object?>[
+            for (final d in (p1['days']! as List<Object?>)
+                .cast<Map<String, Object?>>())
+              <Object?>[
+                d['weekday'],
+                for (final s in (d['slots']! as List<Object?>)
+                    .cast<Map<String, Object?>>())
+                  '${s['slotId']}|${s['exerciseId']}',
+              ],
+          ];
+        }
+
+        // (Changement de discipline : le profil peut devenir mixte en cours
+        // de saison, et son gabarit change par construction — lot KS1.)
+        final change = config['scenario'] == 'changement_discipline';
+        for (var b = 0; b < blocsDart.length && !change; b++) {
+          expect(
+            jsonEncode(squelette(blocsDart[b])),
+            jsonEncode(squelette(blocsPython[b])),
+            reason: 'bloc $b',
+          );
+        }
         final s = attendu['saison']! as Map<String, Object?>;
         expect(saison['weeks'], s['weeks']);
         expect((saison['sessions']! as List<Object?>).length, s['sessions']);

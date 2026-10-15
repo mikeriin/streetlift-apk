@@ -133,7 +133,7 @@ La note de 0.1 reste calculée et affichée ; quatre composantes sont recalculé
 | Composante | 0.1 | 0.4.0 |
 | --- | --- | --- |
 | `recovery` | tout renforcement d'un même groupe deux jours voisins (prévention et assistance comprises) | schémas chargés : un jour est dur sur un schéma à partir d'un travail lourd ou de deux moyens ; la pratique technique, les tenues faciles, la prévention et la mobilité ne comptent pas (§ 3.4.3 du cahier) |
-| `fatigue_balance` | fatigue systémique par minute, tolérance 30 % (à 1,0 presque toujours) | séries dures par séance : une séance légère à la moitié de la plus lourde est une ondulation voulue, en dessous la note baisse (choix raisonné ; R2-P7, R3-P3) |
+| `fatigue_balance` | fatigue systémique par minute, tolérance 30 % (à 1,0 presque toujours) | séries dures par séance : une séance légère à la moitié de la plus lourde est une ondulation voulue, en dessous la note baisse ; les jours sans travail dur (récupération, technique) ne comptent pas (choix raisonné ; R2-P7, R3-P3) |
 | `joint_load` | articulations limitées seulement (à 1,0 sans gêne, même à 23 séries de tirage vertical) | le plus bas de 0.1 et de la part des séances dures d'un schéma au-delà de R4-F10 (2, 3, 3, 4 du débutant à l'élite) |
 | `preferences` | exercices aimés du vivier de recherche | exercices aimés (quatre au plus attendus) et sus (six au plus) placés dans le programme |
 

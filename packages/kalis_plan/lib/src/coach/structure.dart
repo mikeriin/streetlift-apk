@@ -1368,7 +1368,11 @@ double coachHardBalanceOf(List<DaySpec> days) {
         n += s.sets;
       }
     }
-    work.add(n);
+    // (Un jour sans travail dur — récupération, technique, prévention — ne
+    // fait pas partie de la répartition de la charge dure.)
+    if (n > 0) {
+      work.add(n);
+    }
   }
   if (work.length < 2) {
     return 1;

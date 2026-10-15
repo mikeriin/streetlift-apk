@@ -16,8 +16,10 @@ Pas de SDK Dart dans la session : compilation, formatage et tests via `claude/ci
 - 17:55 : relecture indépendante (Opus) : 3 bloquants corrigés (pas minimal borné : semaine de charge, hors reprise et prudent, ≥ 3 répétitions à la réserve ; charge fixe seulement sous 80 % du 1RM, hors prudent et reprise, +1 rép. / 2 semaines, jamais à moins d'une en réserve) ; objectif daté à moins de 4 semaines ne remplace pas l'échéance ; eventIds de la saison = toutes les échéances des phases ; répartition de base candidate (profil de test : ppl6_q à chaque bloc). Run 38779114208 : analyse, tests kalis_plan, test structure du banc, formatage : verts. Jaccard max exact 0,188, tolérant 0,250.
 - Commits locaux ks1 : 141e52a6 (kalis_core 0.4.4), ba8724d4 (kalis_plan 0.4.0, kalis_bench 0.5.0) sur moteurs 9ac79e40.
 
+- 20:00 : contrôle complet 38781393271 (arbre ba8724d4) : kalis_core, kalis_plan, kalis_adapt, kalis_quest verts ; kalis_bench rouge : (1) km2_banc_test (parité Koach) compare la saison vivante de kalis_plan à la saison figée 0.3.1 des données de référence Koach → la parité rejoue maintenant la saison figée, et le test vérifie squelette et calendrier (hors changement de discipline) ; (2) banc KS1 : 6 violations charge_trop_vite (échéance avancée, ks_01 à ks_03 : squat +9,3 %, traction lestée +9 %) → diagnostic en cours (aa_ks1 réécrit) ; (3) fatigue_balance à 0 quand un jour n'a pas de travail dur → corrigé (jours sans travail dur exclus).
+
 ## En cours
-- Contrôle complet claude/ci-cp-b (commit 33343f2c, arbre de ba8724d4).
+- Diagnostic des violations « échéance avancée » (run de mise au point).
 
 ## Reste
-Publication moteurs (rebase si KM2c1 publié) + étiquettes kalis_core-v0.4.4, kalis_plan-v0.4.0 ; Jaccard des saisons ; livraison (pipeline + projet), ETAT_CP « livré », page de suivi, notification.
+Correction, nouveau contrôle complet, publication moteurs (commits à refaire : amender ba8724d4 localement), étiquettes, Jaccard des saisons, livraison, ETAT_CP, suivi, notification.
