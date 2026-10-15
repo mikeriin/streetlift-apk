@@ -312,10 +312,13 @@ void main() {
               expect(i.repsHigh!, inInclusiveRange(3, 35));
             }
             if (i.exerciseId == Ids.weightedMuscleUp &&
+                w.kind == WeekKind.build &&
                 i.kind != SetKind.test &&
                 i.kind != SetKind.warmup) {
               mu++;
-              // (Plus jamais +0 kg sur le mouvement visé : § 8.1.)
+              // (Plus jamais +0 kg sur le mouvement visé en semaine de
+              // charge : § 8.1 ; une semaine légère reste au poids du
+              // corps.)
               expect(i.startLoadKg ?? 0, greaterThan(0), reason: '$i');
             }
           }

@@ -1754,10 +1754,12 @@ API inchangée. Détail et justifications : [`docs/STRUCTURE_SEMAINE.md`](docs/S
   en intensification et en réalisation, la qualité de l'échéance prend 20 points (`coachTargetShareRise`). Sinon le
   profil garde le gabarit de son chemin, à l'identique (contrôle d'identité au banc). La calisthénie secondaire reste
   servie par les jours de pratique de figure du chemin sets & reps (choix raisonné : R4-F1, R4-F8).
-- **Choix** (`SplitMeasure.before`) : le gabarit typé qui réalise la répartition et le gabarit composite sont
-  construits puis comparés sans compensation — sécurité, couverture des objectifs, récupération (≥ 0,9 puis paires
-  en défaut), spécificité (mouvements visés exposés deux jours par semaine), temps (séances hors de ± 15 % et sans
-  principal), préférences ; à égalité, le gabarit typé.
+- **Choix** (`SplitMeasure.before`) : le gabarit typé qui réalise la répartition (la suite des schémas est celle du
+  gabarit, les qualités suivent la répartition) et le gabarit composite sont construits, pour la répartition de la
+  phase puis, quand elle en diffère, pour celle des disciplines, et comparés sans compensation — sécurité, couverture
+  des objectifs, récupération (≥ 0,9 puis paires en défaut), spécificité (mouvements visés exposés deux jours par
+  semaine), temps (séances hors de ± 15 % et sans principal), préférences ; à égalité, l'ordre d'essai (la phase
+  d'abord, le typé avant le composite).
 - **Placement** (`_place`) : recherche exhaustive des ordres (720 au plus) — paires de jours consécutifs qui chargent
   le même schéma, le jour le plus exigeant ouvre la rotation après le plus long repos (§ 11.2), force et endurance
   d'un même schéma à 72 h, types longs sur les jours longs, puis l'ordre du gabarit.

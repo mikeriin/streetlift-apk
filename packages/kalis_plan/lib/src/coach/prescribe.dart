@@ -1450,16 +1450,25 @@ final class Prescriber {
       // répétitions baissant d'une semaine à l'autre) : le plus petit pas
       // de lest du profil, et les répétitions que cette charge laisse à la
       // réserve visée (table R2-P2 ; formule d'Epley au-delà de 12).
+      // (Semaine de charge seulement, hors reprise après une douleur et
+      // hors mode prudent plafonné — une semaine légère, une reprise et le
+      // mode prudent restent au poids du corps — et seulement quand ce pas
+      // laisse au moins trois répétitions à la réserve visée : sinon la
+      // série resterait au-dessus de ce que l'athlète peut faire.)
       final step = _minimumStep(e);
+      final share = step > 0 ? (floor * total + step) / total : 2.0;
+      final possible = share >= 1
+          ? 0.0
+          : (share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1));
+      final reserve = (x.rir ?? 3).ceil();
       if (a.aimsAt(e.id) &&
           e.loadType == LoadType.addedWeight &&
           step > 0 &&
-          !x.fixed) {
-        final share = (floor * total + step) / total;
-        final possible = share >= 1
-            ? 1.0
-            : (share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1));
-        final reserve = (x.rir ?? 3).ceil();
+          !x.fixed &&
+          _loadedWeek &&
+          back == null &&
+          !(a.cautious && share > 0.85) &&
+          possible.floor() - reserve >= 3) {
         final reps = _clampInt(
           possible.floor() - reserve,
           1,
@@ -1538,11 +1547,21 @@ final class Prescriber {
         p >= floor - 1e-9 &&
         a.aimsAt(e.id) &&
         e.loadType == LoadType.addedWeight &&
-        !x.fixed) {
+        !x.fixed &&
+        _loadedWeek &&
+        back == null &&
+        !a.cautious) {
       // Mouvement lesté visé dont la part, au-dessus du poids du corps,
-      // s'arrondit à +0 kg (§ 8.1) : le plus petit pas de lest.
+      // s'arrondit à +0 kg (§ 8.1) : le plus petit pas de lest, quand il
+      // laisse les répétitions écrites à la réserve visée (sinon le poids
+      // du corps reste).
       final step = _minimumStep(e);
-      if (step > 0) {
+      final share = (floor * total + step) / total;
+      final possible = share >= 1
+          ? 0.0
+          : (share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1));
+      if (step > 0 &&
+          possible - (x.rir ?? 3) >= (x.repsHigh ?? 1) - 1e-9) {
         served = step;
         x.reasons.add(_note(CoachNotes.minimumLoad, step));
       }
@@ -2130,19 +2149,32 @@ final class Prescriber {
     if (goal == null || total == null || total <= 0) {
       return _liftVolume(s, ws, week, role);
     }
-    final x = _new(s);
     final load = goal.loadKg!;
     final share =
         (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) / total;
-    final possible = share >= 1
-        ? 1.0
-        : (share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1));
+    // (La charge de l'objectif n'est servie telle quelle que sous 80 % du
+    // 1RM — au moins cinq répétitions à la réserve —, hors reprise après
+    // une douleur et hors mode prudent : sinon la séance de volume
+    // ordinaire, sous ses garde-fous.)
+    if (share > 0.80 ||
+        a.cautious ||
+        a.returnShareOf(e, _returnWeek) != null) {
+      return _liftVolume(s, ws, week, role);
+    }
+    final x = _new(s);
+    final possible = share >= 0.71 ? _rmAt(share) : 30 * (1 / share - 1);
     final rir =
         ws.intent == WeekIntent.intensification ||
             ws.intent == WeekIntent.realization
         ? 2.0
         : 3.0;
-    var reps = possible.floor() - rir.round() + _shift(ws);
+    // Une répétition de plus toutes les deux semaines de charge, jamais à
+    // moins d'une répétition de réserve.
+    final step = ws.kind == WeekKind.build ? _stage(ws) ~/ 2 : 0;
+    var reps = possible.floor() - rir.round() + step;
+    if (reps > possible.floor() - 1) {
+      reps = possible.floor() - 1;
+    }
     final wanted = goal.targetValue!.round();
     if (reps > wanted) {
       reps = wanted;
@@ -5372,6 +5404,10 @@ final class Prescriber {
   /// charge (une restriction n'est jamais levée sur un allègement).
   int _returnWeek = 0;
 
+  /// Vrai dans une semaine de charge (construction ou introduction) : le
+  /// pas minimal de lest du § 8.1 n'y joue que là.
+  bool _loadedWeek = false;
+
   /// Exercice en reprise graduée après une douleur qui dure (CX,
   /// correction 1, sécurité) : la moitié du volume habituel la première
   /// semaine de charge, +10 % par semaine de charge (Soligard et al. 2016 :
@@ -7973,6 +8009,7 @@ final class Prescriber {
       if (w == 0) {
         _loadedBefore = 0;
       }
+      _loadedWeek = ws.kind == WeekKind.build && !ws.light;
       _returnWeek = ws.kind == WeekKind.build || ws.kind == WeekKind.intro
           ? _loadedBefore
           : (_loadedBefore > 0 ? _loadedBefore - 1 : 0);

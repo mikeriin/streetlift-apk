@@ -43,7 +43,8 @@ final class CoachTarget {
 /// échéance ; sinon le premier objectif daté. Lot KS1 (CAHIER_KS.md § 5,
 /// constat K5) : une échéance secondaire plus lointaine ne prime plus sur
 /// des objectifs datés plus tôt — ils deviennent un jalon (semaine de test à
-/// leur date), puis la saison repart vers l'échéance.
+/// leur date), puis la saison repart vers l'échéance ; un objectif daté à
+/// moins de quatre semaines du début du bloc ne la remplace pas.
 CoachTarget? targetOf(AthleteProfile profile, CivilDate start) {
   SeasonEvent? best;
   for (final e in profile.events ?? const <SeasonEvent>[]) {
@@ -66,10 +67,14 @@ CoachTarget? targetOf(AthleteProfile profile, CivilDate start) {
     }
   }
   final first = _firstGoalDate(profile, start);
+  // (Un objectif daté à moins de quatre semaines ne prend pas la place de
+  // l'échéance : trop près pour qu'un bloc s'y prépare — il reste dit au
+  // bloc, `plan.milestone` ; la saison garde l'échéance, comme en 0.3.1.)
   if (best != null &&
       (best.priority == EventPriority.main ||
           first == null ||
-          first.compareTo(best.date) >= 0)) {
+          first.compareTo(best.date) >= 0 ||
+          start.daysUntil(first) < 28)) {
     return CoachTarget(
       date: best.date,
       event: best,
@@ -859,7 +864,15 @@ BlockShape shapeBlock(
       continue;
     }
     final w = weeks[i];
-    if (w.kind != WeekKind.build || w.eventWeek || w.testWeek) {
+    // (Pas de jalon testé dans les deux premières semaines du bloc ni dans
+    // une phase de reprise : un test se prépare par des semaines de charge,
+    // R3-P14 ; la reprise après une coupure monte d'abord le volume,
+    // R5-P22. Le jalon reste dit au bloc, `plan.milestone`.)
+    if (w.kind != WeekKind.build ||
+        w.eventWeek ||
+        w.testWeek ||
+        i < 2 ||
+        w.phase == SeasonPhaseKind.reintroduction) {
       continue;
     }
     weeks[i] = WeekSpec(

@@ -503,7 +503,9 @@ StructureMeasure structureMeasureOf(
     }
   }
   final checks = <String, bool>{};
-  if (bench.key == structureTestProfile) {
+  if (bench.key == structureTestProfile &&
+      program.blocks.isNotEmpty &&
+      program.blocks.first.pass1.days.isNotEmpty) {
     final plan = program.blocks.first.pass1;
     checks['gabarit ppl6_q à chaque bloc'] = program.blocks.every(
       (b) => structureTemplateOf(b.pass1) == 'ppl6_q',
@@ -518,21 +520,27 @@ StructureMeasure structureMeasureOf(
     }
     checks['muscle-up lesté en tête du premier jour, qui ouvre la rotation'] =
         lead == 'sl-muscle-up-leste' && rotationOff.isEmpty;
-    checks['9 objectifs sur 9 portés chaque semaine de charge'] =
-        goals.length == 9 && uncovered.isEmpty;
+    checks['neuf objectifs et quatre cibles de l\'échéance portés chaque '
+            'semaine de charge'] =
+        goals.length == 13 && uncovered.isEmpty;
     var schemas = true;
     for (final b in program.blocks) {
       for (final schema in const <String>['pull', 'push', 'legs']) {
         final days = <int>[];
         for (final d in b.pass1.days) {
           var load = 0;
+          // (Travail porteur seulement : principal et secondaire ; la
+          // pratique technique, la puissance légère et les compléments ne
+          // font pas un jour du schéma.)
           for (final s in d.slots) {
             final e = catalog.find(s.exerciseId);
-            if (e != null && structureSchemaOf(e) == schema) {
-              load += structureSlotLoad(s);
+            if (e != null &&
+                structureSchemaOf(e) == schema &&
+                (s.role == SlotRole.main || s.role == SlotRole.secondary)) {
+              load++;
             }
           }
-          if (load >= 2) {
+          if (load >= 1) {
             days.add(d.weekday);
           }
         }
@@ -556,9 +564,11 @@ StructureMeasure structureMeasureOf(
         daysCounted > 0 && low * 120 >= 100 - 1e-9 && high * 120 <= 125 + 1e-9;
     checks['aucune séance sans principal'] = noMain.isEmpty;
     // (La première passe 1 suffit à lire le jour de tête.)
+    final firstType = plan.days.first.type;
     checks['premier jour : tirage, force'] =
-        (plan.days.first.toJson()['type'] as Map<String, Object?>?)?['quality'] ==
-        'force';
+        firstType != null &&
+        firstType.quality == DayQuality.force &&
+        firstType.patterns.contains(DayPattern.pull);
   }
   return StructureMeasure(
     key: bench.key,

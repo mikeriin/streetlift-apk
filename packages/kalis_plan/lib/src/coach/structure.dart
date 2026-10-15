@@ -376,8 +376,8 @@ int coachSlotLoad(SlotSpec s) {
     for (var j = i + 1; j < days.length; j++) {
       final x = a.days[days[i].dayIndex].weekday;
       final y = a.days[days[j].dayIndex].weekday;
-      final gap = y - x;
-      if (gap != 1 && 7 - gap != 1) {
+      final gap = ((y - x) % 7 + 7) % 7;
+      if (gap != 1 && gap != 6) {
         continue;
       }
       var bad = false;
