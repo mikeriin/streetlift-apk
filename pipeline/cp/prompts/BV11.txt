@@ -1,0 +1,32 @@
+LOT BV11 — BASE D'EXERCICES v1.1 DANS L'APPLICATION (remplace le pack 2.0.0 ; dev6.19.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : CIF validé (C17.8). C12.1, C14.2 : base v1.1 après le lot CI final, avant KM3 (qui l'attend).
+Base : pointe de `main` (dev6.18.0, 6e32cdf6). Contrôle `claude/ci-3d` (voie rapide `claude/ci-ui-*-rapide` pour itérer). Sauvegardes `cp-sauvegardes/BV11`.
+Décisions : C8, C11, C12.1, C15, C17. Pour `main` : PIPELINE_GP.md comme pour la piste A (ni signature, ni identifiant Android, ni secrets ; jamais de réécriture de l'historique de `main`).
+
+ÉTAT DE DÉPART
+- La base v1.1.0 (1 039 exercices, 8 disciplines, vocabulaires fermés : 56 muscles, 68 matériels, 56 catégories, 4 niveaux) est déjà compilée par `tools/catalog/` (lot GC/G3) : `packages/kalis_core/data/source/base_exercices_v1.1.0.json` → `assets/catalog/catalog_v1.json.gz`, champs du générateur calculés par règles (`tools/catalog/rules.py`, relecture `docs/RELECTURE_CATALOGUE.md`), table `assets/catalog/correspondance.json` (pack 2.0.0 → id v1.1, règles et relecture de G3).
+- L'application lit encore le pack 2.0.0 (`assets/content/pack.json`, 625 exercices) à plusieurs endroits (au moins `lib/store.dart`, `lib/program_origin.dart`).
+
+OBJECTIF
+Une seule source d'exercices dans l'application : le catalogue v1.1. Plus aucune lecture du pack 2.0.0, sans perdre une ligne d'historique ni changer une séance faite.
+
+CONTENU
+1. **Inventaire** (dans la livraison) : chaque lecture du pack 2.0.0 et chaque endroit où un exercice est désigné par son ancien nom ou son ancien id (séance, programme importé de 40 semaines, journal, statistiques, records, recherche et ajout, remplacement, fiches, Koach, animations M8, sauvegardes et exports).
+2. **Bascule** : fiches sur les champs v1.1 (points clés, erreurs fréquentes « erreur → conséquence », respiration par phase, muscles principaux / secondaires / stabilisateurs / étirés, matériel, variantes reliées par `variante_de`) ; recherche et filtres sur les 8 disciplines et les vocabulaires fermés ; ajout et remplacement d'exercice depuis le catalogue ; ids v1.1 partout.
+3. **Historique** : migration par `correspondance.json` (ids stables), sans réécrire une séance faite (C11.2) : l'ancien nom reste lisible là où il était affiché ; un exercice sans correspondance est gardé tel quel et listé dans la livraison (aucun ne doit disparaître). Programme de 40 semaines : chaque ligne reliée à son id v1.1, contenu inchangé.
+4. **Retrait** du pack 2.0.0 (assets et code) ; une ancienne sauvegarde exportée (pack 2.0.0) reste importable par la correspondance.
+5. Animations M8 (89 exercices prioritaires) : reliées aux ids v1.1, aucune perdue.
+
+NE PAS FAIRE
+- Rien dans `packages/` ni `tools/catalog/` (KS1 et KM1c3 travaillent sur `moteurs`) ; si une règle du catalogue est fausse, la noter dans la livraison pour un lot moteur.
+- Aucun changement de moteur ni de comportement C15 ; pas de refonte d'écran : composants et jetons du kit UI (CAHIER_UI.md).
+
+TESTS
+- Migration depuis dev6.18.0 sur un journal proche de celui du propriétaire (S1 à S14, programme de 40 semaines) : même nombre de séances, de séries, de records ; statistiques identiques ; sauvegarde d'origine intacte.
+- Recherche, filtres, fiche, ajout, remplacement : tests Dart et cible émulateur, sombre et clair, sessions perso et dev. Tous les tests et cibles des lots précédents restent verts.
+
+FIN DE LOT
+- dev6.19.0 sur `main`, contrôle complet `claude/ci-3d` vert, build signé réussi (push sur `main` refusé : commit prêt sur `cp-sauvegardes/BV11-candidat` et arrête-toi).
+- `LIVRAISON_BV11.md` (pipeline et projet claude.ai) : inventaire, exercices sans correspondance, limites, « À tester » court.
+- Ligne BV11 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev6.19.0 prêt à tester — base d'exercices v1.1 » ; arrête-toi (aucun fire_trigger).

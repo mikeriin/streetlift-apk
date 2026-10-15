@@ -1,0 +1,25 @@
+LOT KM1c3 — KM1 CORRECTION 3 : ESTIMATION SOUS NOTES NON FIABLES (référence Koach 1.0.3)
+Modèle : Fable 5.1, effort maximal (tâche « Fable 5.1, effort maximal, moteurs » ; lot de méthode comme KM1 et KM1c2). Repli : tâche « Opus 5.5, effort maximal, moteurs » si la part Fable est épuisée (le consigner, C13.4). Validation : automatique, par le pilotage (critères de `CAHIER_KM.md`, pas de panel, C13.3).
+Prérequis : KM2c1 validé (C17.7). Avant la bascule (C13.13.2).
+Base : `moteurs` à la pointe (Koach 1.0.2 en Python et en Dart, `kalis_adapt` 1.0.1). Contrôle `claude/ci-cp-a` (KS1 occupe `claude/ci-cp-b`, C17.3), sauvegardes `cp-sauvegardes/KM1c3`.
+Décisions : C13.3, C13.12, C13.13, C17. Livraisons à lire : `LIVRAISON_KM1c2.md` (§ 3 « Ce qui reste », § 6 point 1), `LIVRAISON_KM2c1.md` (§ 2, § 3 m3).
+
+OBJECTIF
+Les 6 cas de la recherche neuve sous le plancher du critère 7 bis (5 streetlifters avancés, 1 powerlifter) ont une même cause : sous des notes bruitées (1 à 2,5 flammes d'erreur, réserve dite décalée, séries non notées, 19 à 32 % de séances manquées), l'estimation est 10 à 12 % trop haute, l'ouverture du jour J tombe au-dessus du maximum du jour et la barre, gardée après un échec (règle A8.2 de 0.3.1), est ratée trois fois. Koach doit **mesurer la fiabilité des notes de chaque athlète** et en tenir compte, sans pénaliser l'athlète dont les notes sont fiables. Le cas concerne directement le propriétaire, qui apprend à noter son RIR.
+
+CONTENU (référence Python seulement : `packages/kalis_adapt/reference/`)
+1. **Fiabilité des notes** : un indicateur par athlète (et par schéma si les données le permettent) tiré de ce que le moteur observe déjà — dispersion des résidus des notes contre la prévision, biais de la réserve dite, part de séries non notées, régularité ; mise à jour bayésienne, prior raisonné et écrit. Elle élargit l'incertitude de la capacité (pas sa moyenne) ; aucun nouvel écran ni nouvelle saisie.
+2. **Charges et ouverture** : la prudence (quantile visé de la capacité) dépend de cette incertitude élargie ; ouverture du jour J et charges des séances lourdes comprises. Coût sur le jour J **mesuré** sur tout le banc (KM1c2 a mesuré une prudence uniforme : P ≥ 0,975 à l'ouverture coûte 0,9412 → 0,9387) : la prudence ciblée doit coûter moins qu'une prudence uniforme pour le même gain sur les adversaires.
+3. **Règle A8.2** (barre gardée après un échec au jour J) et règle de 0.3.1 « aucune hausse après un échec non prévu » (KM1c2.8 point 3) : mesurées (avec, sans, variante conditionnée à la fiabilité) et tranchées, raison écrite.
+4. **m3 de KM2c1** : `mesure.defaut_modele_sd` — borne basse > 0 ou exception à la règle des clés `_sd`, dans la référence (le portage suivra).
+5. **Rejeu du journal réel du propriétaire** (branche `cp-references`, chiffré, C7.8 ; clé dans le document privé du projet claude.ai `claude/CLE_REFERENCES_CP.md`, par un fichier /tmp en mode 600) : fiabilité mesurée de ses notes depuis S12 et effet de 1.0.3 sur ses prescriptions, en statistiques agrégées seulement (rien de déchiffré n'est committé). C'est aussi la part « rejeu » du critère 10 (avant la bascule).
+
+CRITÈRES (sur six graines, contre 1.0.2 et le témoin 0.3.1)
+- 7 bis : ≥ 90 % des appariés à témoin − 0,03 et aucun sous témoin − 0,10, sur **les cinq jeux connus et une nouvelle recherche neuve contre 1.0.3** ;
+- critères 1 à 6 et 11 : aucun recul au-delà du bruit mesuré de 1.0.2 (critère 5 selon C13.13.1) ; jour J moyen ≥ 0,9324 ;
+- 8 : 0 violation de sécurité ; athlètes à notes fiables : prescriptions identiques ou écart mesuré et justifié.
+
+FIN DE LOT
+- Référence Koach 1.0.3 (paramètres `1.0.3-ref.1`, fixtures régénérées, `CHANGEMENTS_1_0_3.md`, note datée au contrat), `kalis_bench` seulement si le banc l'exige ; contrôle complet vert sur `claude/ci-cp-a` ; push `moteurs` (rebase avant chaque push : KS1 travaille en même temps sur `kalis_core`, `kalis_plan`, `kalis_bench`) ; ne touche pas `packages/kalis_adapt/lib/` (le portage Dart sera KM2c2).
+- `LIVRAISON_KM1c3.md` (pipeline et projet claude.ai) : tableau des critères avant / après, les mesures du point 2 et du point 3, ce que KM2c2 doit porter.
+- Ligne KM1c3 « livré » ; notification ; arrête-toi (aucun fire_trigger).
