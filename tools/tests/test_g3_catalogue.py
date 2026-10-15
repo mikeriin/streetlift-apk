@@ -40,7 +40,7 @@ class CatalogueG3Test(unittest.TestCase):
         self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
 
     def test_every_old_exercise_is_reviewed_once(self):
-        old = json.loads(gzip.decompress((ROOT / 'assets/content/index.json.gz').read_bytes()))
+        old = json.loads(gzip.decompress((ROOT / 'tools/archives/pack_2.0.0/index.json.gz').read_bytes()))
         review = json.loads((ROOT / 'tools/correspondance/relecture_g3.json').read_text('utf-8'))['entrees']
         reviewed = [r['old_id'] for r in review]
         self.assertEqual(len(reviewed), len(set(reviewed)))

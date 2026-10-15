@@ -19,7 +19,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DETAILS = ROOT / 'assets/content/details.json.gz'
+DETAILS = ROOT / 'tools/archives/pack_2.0.0/details.json.gz'  # BV11 : archive
 CORRECTIONS = ROOT / 'tools/sources/corrections_muscles.json'
 ROLES = ('primaires', 'secondaires', 'stabilisateurs')
 

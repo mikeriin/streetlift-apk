@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 6.18.0+127
+version: 6.19.0+128
 
 environment:
   # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
@@ -76,12 +76,11 @@ flutter:
     # CU : parcours de création du profil v3 (copie de l'asset de
     # kalis_core 0.4.0).
     - assets/catalog/parcours_v3.json
-    - assets/content/index.json.gz
-    - assets/content/details.json.gz
-    - assets/content/sources.json.gz
-    - assets/content/poses.json.gz
-    - assets/content/progressions.json.gz
-    - assets/content/licences.md
+    # BV11 : pack 2.0.0 retiré (archivé dans tools/archives/pack_2.0.0/) ;
+    # restent les groupes musculaires historiques des anciens noms (STATS)
+    # et les mentions.
+    - assets/catalog/groupes_historiques.json
+    - assets/legal/licences.md
     - assets/legal/confidentialite.md
     - assets/sounds/beep.wav
     - assets/sounds/alarm.wav

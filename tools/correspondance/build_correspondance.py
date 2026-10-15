@@ -36,7 +36,7 @@ APP_CATALOG = ROOT / 'assets/catalog/catalog_v1.json.gz'
 OUT = ROOT / 'assets/catalog/correspondance.json'
 REPORT = ROOT / 'docs/G3_CORRESPONDANCE.md'
 REVIEW = ROOT / 'tools/correspondance/relecture_g3.json'
-OLD_INDEX = ROOT / 'assets/content/index.json.gz'
+OLD_INDEX = ROOT / 'tools/archives/pack_2.0.0/index.json.gz'  # BV11 : pack retiré de l'application
 PROGRAM = ROOT / 'assets/programme_v33.json.gz'
 
 CONFIDENCES = ('auto', 'sur', 'proche', 'aucun')

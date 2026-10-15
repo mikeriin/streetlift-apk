@@ -463,10 +463,10 @@ void main() {
   });
 
   test(
-    'version affichée : « 6.18.0 » hors build de développement (lot CI final)',
+    'version affichée : « 6.19.0 » hors build de développement (base d'exercices v1.1)',
     () {
-      expect(kVersion, '6.18.0');
-      expect(kAppVersion, '6.18.0');
+      expect(kVersion, '6.19.0');
+      expect(kAppVersion, '6.19.0');
     },
   );
 }

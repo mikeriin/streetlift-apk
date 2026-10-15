@@ -732,7 +732,8 @@ class AppStore extends ChangeNotifier {
   /// 6.14.0 : intensité des couleurs et espacements, même principe.
   final ValueNotifier<int> colorIntensityMode = ValueNotifier<int>(1);
   final ValueNotifier<int> spacingMode = ValueNotifier<int>(85);
-  final List<Map<String, dynamic>> dbExercises = []; // base embarquée
+  final List<Map<String, dynamic>> dbExercises =
+      []; // BV11 : anciens noms → groupes historiques (`n`, `g`)
   final List<Map<String, dynamic>> userExercises =
       []; // ajoutés par l'utilisateur
 
@@ -900,14 +901,21 @@ class AppStore extends ChangeNotifier {
     // Groupes musculaires des noms enregistrés : ceux de l'ancienne base
     // (pack 2.0.0, noms v1 compris), inchangés, pour que l'historique et
     // STATS restent identiques ; un nom de la base v1.1 qui n'y figure pas
-    // prend les groupes de ses muscles principaux (`groupsFor`).
-    final legacy =
-        jsonDecode(await _loadGz(_legacyIndexAsset)) as Map<String, dynamic>;
-    legacyPack = LegacyPackIndex.fromJson(legacy);
-    for (final e in legacy['exercices'] as List) {
-      final m = e as Map<String, dynamic>;
-      dbExercises.add({'n': m['n'], 'g': m['g'], 'eq': m['eq'], 'id': m['id']});
-    }
+    // prend les groupes de ses muscles principaux (`groupsFor`). BV11 : le
+    // pack est retiré, seule sa table nom → groupes reste (copie figée).
+    final raw = await rootBundle.load(_historicGroupsAsset);
+    final historic =
+        (jsonDecode(
+                  utf8.decode(
+                    raw.buffer.asUint8List(raw.offsetInBytes, raw.lengthInBytes),
+                  ),
+                )
+                as Map<String, dynamic>)['groupes']
+            as Map<String, dynamic>;
+    dbExercises.clear();
+    historic.forEach((n, g) => dbExercises.add({'n': n, 'g': g as String}));
+    _allEx = null;
+    _muscleIndex = null;
     final saved = _prefs.getString(_kState);
     if (saved != null) {
       Map<String, dynamic>? raw;
@@ -1160,12 +1168,9 @@ class AppStore extends ChangeNotifier {
   /// Base d'exercices v1.1 (G3) ; vide avant [init].
   ContentIndex content = ContentIndex.empty();
 
-  /// Noms enregistrés → anciens identifiants (moteurs L10 et L11).
-  LegacyPackIndex legacyPack = LegacyPackIndex.empty();
-
-  /// Ancienne base (pack 2.0.0) : groupes musculaires des noms enregistrés
-  /// (STATS) ; données internes de L10 et L11 jusqu'à leur retrait (G10).
-  static const _legacyIndexAsset = 'assets/content/index.json.gz';
+  /// BV11 : groupes musculaires des noms de l'ancienne base (pack 2.0.0,
+  /// retiré), copie figée du champ `g` : STATS et historique inchangés.
+  static const _historicGroupsAsset = 'assets/catalog/groupes_historiques.json';
 
   /// Identifiant v1.1 d'un nom d'exercice enregistré ou d'un intitulé du
   /// programme ; null pour un exercice personnel ou sans équivalent.

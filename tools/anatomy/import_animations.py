@@ -65,7 +65,7 @@ INDEX = CLIPS_DIR / 'index.json'
 CONFIG = HERE / 'animations.json'
 SECURE_ANIM = 'assets_secure/animations'
 CLEAR_ANIM = 'assets_secure/clair/animations'
-CONTENT_INDEX = ROOT / 'assets/content/index.json.gz'
+CONTENT_INDEX = ROOT / 'tools/archives/pack_2.0.0/index.json.gz'  # BV11 : pack retiré de l'application
 
 FPS = 30
 CLIP_BUDGET = 5 * 1024          # octets, visé

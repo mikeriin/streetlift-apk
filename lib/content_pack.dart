@@ -1,7 +1,10 @@
 // Base d'exercices v1.1 du propriétaire (G3, D4.10) : le catalogue compilé
 // de `kalis_core` (1 039 exercices, 8 disciplines) remplace le pack 2.0.0
 // dans Arsenal, les fiches, la recherche, les filtres, la carte des muscles
-// et la démonstration.
+// et la démonstration. BV11 (dev6.19.0) : seule source d'exercices de
+// l'application ; le pack 2.0.0 n'est plus embarqué (archivé dans
+// `tools/archives/pack_2.0.0/` pour les outils), ses anciens identifiants
+// et noms restent lisibles par la correspondance.
 //
 // - Catalogue : `assets/catalog/catalog_v1.json.gz`, copie octet pour octet
 //   de l'asset du paquet étiqueté (tools/correspondance), lu par
@@ -259,14 +262,6 @@ class ExerciseEntry {
 
   /// Document de recherche (calculé une fois).
   late final SearchDoc searchDoc = exerciseSearchDoc(this);
-
-  /// Format historique de la base (`n`, `g`, `eq`) + identifiant.
-  Map<String, dynamic> toLegacy() => {
-    'n': nom,
-    'g': groupes.join(', '),
-    'eq': materiel.isEmpty ? 'poids de corps' : materiel.join(', '),
-    'id': id,
-  };
 }
 
 /// Fiche d'un exercice (tout vient du catalogue, déjà chargé).
@@ -450,11 +445,6 @@ class ContentIndex {
     return legacyIds[name];
   }
 
-  ExerciseEntry? entryFor(String name) {
-    final id = idFor(name);
-    return id == null ? null : byId[id];
-  }
-
   /// Fiche d'un exercice v1.1 (null si inconnu).
   ExerciseDetail? detail(String id) {
     final e = byId[id];
@@ -471,6 +461,12 @@ class ContentIndex {
   /// Matériel de la base, dans l'ordre du vocabulaire.
   List<String> get equipmentVocabulary =>
       catalog?.equipmentVocabulary ?? const [];
+
+  /// BV11 : catégories de la base (vocabulaire fermé, 56), dans l'ordre.
+  List<String> get categoryVocabulary => catalog?.categories ?? const [];
+
+  /// BV11 : muscles de la base (vocabulaire fermé, 56), dans l'ordre.
+  List<String> get muscleVocabulary => catalog?.muscles ?? const [];
 }
 
 /// Document de recherche d'un exercice : nom et alias, discipline,
@@ -492,52 +488,3 @@ SearchDoc exerciseSearchDoc(ExerciseEntry e) => SearchDoc(
     ...e.ex.secondaryMuscles,
   ].join(' '),
 );
-
-/// Ancienne base (pack 2.0.0), conservée pour les moteurs L10 et L11
-/// jusqu'à leur retrait (G10) : nom enregistré → ancien identifiant, même
-/// règle que la résolution d'avant G3 (base v1 canonique, intitulé du
-/// programme v33, nom ou alias).
-class LegacyPackIndex {
-  final Map<String, String> _baseV1, _programme, _byNormalizedName;
-  LegacyPackIndex._(this._baseV1, this._programme, this._byNormalizedName);
-
-  factory LegacyPackIndex.empty() => LegacyPackIndex._({}, {}, {});
-
-  /// [index] : `assets/content/index.json.gz` décodé.
-  factory LegacyPackIndex.fromJson(Map<String, dynamic> index) {
-    final names = <String, String>{};
-    for (final e in index['exercices'] as List) {
-      final m = e as Map<String, dynamic>;
-      final id = m['id'] as String;
-      for (final a in (m['alias'] as List? ?? const [])) {
-        names[normalizeText('$a')] = id;
-      }
-      names[normalizeText(m['nom'] as String)] = id;
-      names[normalizeText(m['n'] as String)] = id;
-    }
-    return LegacyPackIndex._(
-      {
-        for (final e in (index['base_v1'] as Map<String, dynamic>).entries)
-          e.key:
-              ((e.value as Map)['canonique'] ?? (e.value as Map)['id'])
-                  as String,
-      },
-      {
-        for (final e
-            in (index['programme_v33'] as Map<String, dynamic>).entries)
-          e.key: (e.value as Map)['id'] as String,
-      },
-      names,
-    );
-  }
-
-  String? idFor(String name) {
-    final exact = _baseV1[name] ?? _programme[name];
-    if (exact != null) return exact;
-    final base = name.split(' — ').first.split(' [').first.trim();
-    return _baseV1[base] ??
-        _programme[base] ??
-        _byNormalizedName[normalizeText(name)] ??
-        _byNormalizedName[normalizeText(base)];
-  }
-}

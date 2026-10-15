@@ -1,34 +1,14 @@
-// Ancien pack d'exercices 2.0.0 vu par les moteurs L10 et L11 : G10 (D1.4)
-// retire le catalogue du pack des moteurs (`GenCatalog`) avec L11. Restent
-// le vocabulaire du matériel et la lecture stricte des entrées d'une
-// instance « generated » L10 (`GenInputs`), restée lisible et affichée
-// telle quelle après le retrait du générateur L10 par G7.
-//
-// Le générateur L10 (`program_generator.dart`, `assets/program_models.json`)
-// est retiré par G7 : `kalis_plan` le remplace.
+// Entrées d'une instance « generated » L10 (moteur retiré par G7), restée
+// lisible et affichée telle quelle : lecture stricte des entrées
+// (`GenInputs`). BV11 (dev6.19.0) : le pack 2.0.0 est retiré de
+// l'application ; ses vocabulaires (matériel, familles, zones) ne sont plus
+// utilisés. Les identifiants d'exercices aimés ou évités d'une ancienne
+// instance (`disliked`, `liked`) restent tels quels (lus, jamais résolus).
 import 'dart:convert';
 
 // ------------------------------------------------------------------ outils
 
-/// Hachage FNV-1a 32 bits : départage déterministe, indépendant de l'ordre
-/// des appels (une sélection ne décale pas les suivantes).
-int genHash(String s) {
-  var h = 0x811C9DC5;
-  for (final c in utf8.encode(s)) {
-    h ^= c;
-    h = (h * 0x01000193) & 0xFFFFFFFF;
-  }
-  return h;
-}
-
 List<String> _strings(Object? v) => [for (final x in (v as List? ?? [])) '$x'];
-
-/// Médiane basse (prudence : entre deux niveaux, le plus bas).
-int lowerMedian(List<int> values) {
-  if (values.isEmpty) return 0;
-  final s = [...values]..sort();
-  return s[(s.length - 1) ~/ 2];
-}
 
 String civilIsoDate(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
@@ -44,136 +24,14 @@ int civilDayIndex(DateTime d) =>
 
 // ---------------------------------------------------------- vocabulaires
 
-/// Mouvements de référence du niveau (KT-051).
-const kRefMovements = ['push', 'pull', 'squat', 'hinge', 'core'];
-const kRefMovementLabels = {
-  'push': 'Poussée',
-  'pull': 'Tirage',
-  'squat': 'Squat',
-  'hinge': 'Charnière de hanche',
-  'core': 'Gainage',
-};
-
-/// Familles de mouvement (règle des 48 h, couverture hebdomadaire).
-const kFamilies = [
-  'push',
-  'pull',
-  'squat',
-  'hinge',
-  'lunge',
-  'core',
-  'mobility',
-];
-const kFamilyLabels = {
-  'push': 'poussée',
-  'pull': 'tirage',
-  'squat': 'squat',
-  'hinge': 'charnière de hanche',
-  'lunge': 'fente',
-  'core': 'gainage',
-  'mobility': 'mobilité',
-};
-
-/// Famille d'un type de mouvement du pack (null : sans famille).
-String? familyOfType(String type) => switch (type) {
-  'poussee_horizontale' || 'poussee_verticale' => 'push',
-  'tirage_horizontal' || 'tirage_vertical' => 'pull',
-  'squat' => 'squat',
-  'fente' => 'lunge',
-  'charniere_hanche' => 'hinge',
-  'gainage_anti_extension' ||
-  'gainage_anti_rotation' ||
-  'gainage_anti_flexion_laterale' ||
-  'flexion_tronc' => 'core',
-  'mobilite' => 'mobility',
-  _ => null,
-};
-
-/// Mouvement de référence (niveau) d'un exercice.
-String refMovementOf(String type, List<String> groups) {
-  switch (familyOfType(type)) {
-    case 'push':
-      return 'push';
-    case 'pull':
-      return 'pull';
-    case 'squat' || 'lunge':
-      return 'squat';
-    case 'hinge':
-      return 'hinge';
-    case 'core':
-      return 'core';
-  }
-  final g = groups.isEmpty ? '' : groups.first;
-  return switch (g) {
-    'pectoraux' || 'épaules' || 'triceps' => 'push',
-    'dos' || 'biceps' || 'avant-bras' => 'pull',
-    'quadriceps' || 'mollets' => 'squat',
-    'ischios' || 'fessiers' => 'hinge',
-    'gainage' => 'core',
-    _ => 'core',
-  };
-}
-
-/// Lieux du profil (L8) → lieux du pack (L9).
+/// Lieux du profil (L8) acceptés par les entrées d'une instance L10 (BV11 :
+/// seul vocabulaire de l'ancien pack encore lu, pour la lecture stricte).
 const kPlaceToPack = {
   'home_none': 'maison_sans_materiel',
   'home_equipped': 'maison_equipee',
   'park': 'parc_street_workout',
   'gym': 'salle',
 };
-
-/// Matériel normalisé du profil (L8) → vocabulaire `materiel` du pack.
-const kEquipmentToPack = <String, List<String>>{
-  'pullup_bar': ['barre_fixe', 'poteau'],
-  'dip_bars': ['barres_paralleles'],
-  'rings': ['anneaux', 'sangles'],
-  'bands': ['elastique'],
-  'dumbbells': ['halteres'],
-  'kettlebell': ['kettlebell'],
-  'barbell': ['barre', 'disques'],
-  'rack': ['rack'],
-  'bench': ['banc'],
-  'weight_belt': ['lest'],
-  'machines': ['machine', 'poulie'],
-  'box': ['box'],
-  'jump_rope': ['corde_a_sauter'],
-  'erg': ['ergometre'],
-  'mat': ['sol_degage'],
-};
-
-/// Toujours disponibles : le corps, le sol, un mur, un support stable
-/// (chaise, marche, banc public).
-const kAlwaysPack = ['aucun', 'mur', 'support_stable', 'sol_degage'];
-
-/// Matériel déduit du lieu (à valider, registre §8).
-const kPlaceImpliedPack = <String, List<String>>{
-  'home_none': ['serviette', 'baton'],
-  'home_equipped': ['serviette', 'baton'],
-  'park': ['barre_basse', 'espace_exterieur'],
-  'gym': ['serviette'],
-};
-
-/// Zones de gêne du profil → articulations du pack.
-const kZoneToJoint = {
-  'shoulder': 'epaule',
-  'elbow': 'coude',
-  'wrist': 'poignet',
-  'lower_back': 'rachis_lombaire',
-  'neck': 'rachis_cervical',
-  'hip': 'hanche',
-  'knee': 'genou',
-  'ankle': 'cheville',
-};
-
-/// Matériel pack disponible dans un lieu.
-Set<String> packEquipment(String place, List<String> equipment) {
-  final out = <String>{...kAlwaysPack, ...?kPlaceImpliedPack[place]};
-  for (final e in equipment) {
-    out.addAll(kEquipmentToPack[e] ?? const []);
-  }
-  if (place == 'gym' && equipment.contains('rack')) out.add('barre_basse');
-  return out;
-}
 
 // ----------------------------------------------------------------- entrées
 
