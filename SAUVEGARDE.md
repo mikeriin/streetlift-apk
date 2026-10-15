@@ -26,7 +26,7 @@ Session Fable 5.1, effort maximal, démarrée le 15/10/2026 à 19:09 UTC. Base `
 ## En cours
 
 - CI `claude/ci-cp-a` run du commit 35bf1503 (le run 38809271354 de 0267da6c, avant relecture, est annulé par ce push) : campagne 1.0.3 six graines partie 1/2 (`/tmp/ci-km1c3`, `pousser_ci.sh`). Puis : témoin Dart des nouveaux adversaires (run_temoin.sh), contrôle complet final.
-- Local (relancée 22:00 UTC après relecture) : recherche adversariale neuve 3 000 saisons contre 1.0.3 (`recherche.log`, sortie `donnees/adversaires_km1c3.json`, entrée Dart `adversaires_km1c3_entree.json`). Ensuite : X2 (prudence lourde 1,0, 13 min), campagne partie 2/2 locale (~2,8 h), comparaisons 7 bis des six jeux, assemblage, livraison.
+- Local (relancée 22:00 UTC après relecture, 1 500/3 000 à 22:14) : recherche adversariale neuve 3 000 saisons contre 1.0.3 (`recherche.log`, sortie `donnees/adversaires_km1c3.json`, entrée Dart `adversaires_km1c3_entree.json`). Ensuite : X2 (prudence lourde 1,0, 13 min), campagne partie 2/2 locale (~2,8 h), comparaisons 7 bis des six jeux, assemblage, livraison.
 
 ## Reste à faire
 
