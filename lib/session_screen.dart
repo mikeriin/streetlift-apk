@@ -3695,9 +3695,41 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     for (var i = 0; i < slots; i++) slot(i),
-                    // Tous les blocs notés : même hauteur de ligne.
+                    // Tous les blocs notés : même hauteur de ligne. CIF
+                    // (point 12) : la saisie garde aussi sa largeur (place
+                    // gardée, invisible) : le retour à la ligne des blocs
+                    // ne change pas au dernier bloc.
                     if (left == 0)
-                      SizedBox(height: KDensity.field(KSize.target)),
+                      ExcludeSemantics(
+                        child: Visibility(
+                          visible: false,
+                          maintainSize: true,
+                          maintainAnimation: true,
+                          maintainState: true,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(width: KSpacing.s8),
+                              small(
+                                Icons.remove_rounded,
+                                'Une de moins',
+                                null,
+                              ),
+                              Text(
+                                '$value$unit',
+                                style: KType.chiffreMoyen.copyWith(
+                                  color: k.texte,
+                                ),
+                              ),
+                              small(Icons.add_rounded, 'Une de plus', null),
+                              SizedBox(
+                                width: KSize.target,
+                                height: KDensity.field(KSize.target),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     if (left > 0)
                       Row(
                         mainAxisSize: MainAxisSize.min,
