@@ -8,11 +8,10 @@
 // `tour.sets` / `tour.estimates` devant rester des entiers.
 //
 // Koach rejoue la saison que Python a lue
-// (`kalis_adapt/reference/donnees/reference/`, figée sur `kalis_plan`
-// 0.3.1) ; la saison vivante de `kmReferenceSeason` doit en garder le
-// squelette (jours, emplacements, exercices) et le calendrier — depuis
-// `kalis_plan` 0.4.0 (lot KS1), elle en diffère par le type du jour, le
-// gabarit, la note et les charges du § 8 du cahier KS.
+// (`kalis_adapt/reference/donnees/reference/`) ; depuis le lot KR1, ces
+// données sont régénérées sur le `kalis_plan` courant (0.4.1, 34 profils) :
+// la saison vivante de `kmReferenceSeason` doit leur être identique (les
+// saisons figées sur 0.3.1 restent dans `donnees/reference_0_3_1/`).
 import 'dart:convert';
 import 'dart:io';
 
@@ -218,6 +217,11 @@ Map<String, Object?> _saisonPython(String cle, String scenario) {
   return out;
 }
 
+/// Profil du banc ou ajouté par le lot KS1 (`profiles_ks`).
+Map<String, Object?> _profil(String cle) => File('profiles/$cle.json').existsSync()
+    ? readJsonObject('profiles/$cle.json')
+    : readJsonObject('profiles_ks/$cle.json');
+
 /// Paramètres de Koach (fichier décodé).
 Map<String, Object?> _parametres() =>
     readJsonObject('$_reference/params/koach_params_v1.json');
@@ -268,18 +272,15 @@ void main() {
                     kmReferenceSeason(
                       catalog,
                       KalisPlan(),
-                      readJsonObject('profiles/$cle.json'),
+                      _profil(cle),
                       kmScenarioOf(scenario),
                     ),
                   ),
                 )
                 as Map<String, Object?>;
         saisonPython = _saisonPython(cle, scenario);
-        // (Koach rejoue la saison que Python a lue : la parité porte sur
-        // Koach à entrée identique. Les données de référence de Koach sont
-        // figées sur `kalis_plan` 0.3.1 ; depuis 0.4.0 (lot KS1 : type du
-        // jour, gabarit, note recalée, charges du § 8), la saison vivante
-        // en diffère et leur régénération revient au pipeline Koach.)
+        // (Koach rejoue la saison que Python a lue ; le premier test
+        // vérifie qu'elle est celle de `kmReferenceSeason`, lot KR1.)
         saison = Map<String, Object?>.of(saisonPython);
         final semaines = config['semaines'];
         if (semaines != null && (semaines as int) < (saison['weeks']! as int)) {
@@ -336,38 +337,9 @@ void main() {
       Map<String, Object?> tourObtenu() =>
           obtenu['tour']! as Map<String, Object?>;
 
-      test('kmReferenceSeason garde le squelette et le calendrier de la saison '
-          'lue par Python (données figées sur kalis_plan 0.3.1)', () {
-        expect(saisonDart['weeks'], saisonPython['weeks']);
-        final blocsDart = saisonDart['blocks']! as List<Object?>;
-        final blocsPython = saisonPython['blocks']! as List<Object?>;
-        expect(blocsDart.length, blocsPython.length);
-        List<Object?> squelette(Object? bloc) {
-          final p1 =
-              (bloc! as Map<String, Object?>)['pass1']! as Map<String, Object?>;
-          return <Object?>[
-            for (final d
-                in (p1['days']! as List<Object?>).cast<Map<String, Object?>>())
-              <Object?>[
-                d['weekday'],
-                for (final s
-                    in (d['slots']! as List<Object?>)
-                        .cast<Map<String, Object?>>())
-                  '${s['slotId']}|${s['exerciseId']}',
-              ],
-          ];
-        }
-
-        // (Changement de discipline : le profil peut devenir mixte en cours
-        // de saison, et son gabarit change par construction — lot KS1.)
-        final change = config['scenario'] == 'changement_discipline';
-        for (var b = 0; b < blocsDart.length && !change; b++) {
-          expect(
-            jsonEncode(squelette(blocsDart[b])),
-            jsonEncode(squelette(blocsPython[b])),
-            reason: 'bloc $b',
-          );
-        }
+      test('kmReferenceSeason = saison lue par Python (données régénérées '
+          'sur le kalis_plan courant, lot KR1)', () {
+        expect(jsonEncode(saisonDart), jsonEncode(saisonPython));
         final s = attendu['saison']! as Map<String, Object?>;
         expect(saison['weeks'], s['weeks']);
         expect((saison['sessions']! as List<Object?>).length, s['sessions']);

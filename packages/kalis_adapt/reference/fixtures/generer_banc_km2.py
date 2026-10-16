@@ -71,6 +71,9 @@ SAISONS = [
     ('autres_06_semi_marathon_intermediaire', 'reference', 'c', 0),
     ('street_16_specialisation_traction_lestee', 'reference', 'a', 1),
     ('street_07_avance_streetlifting_competition', 'changement_discipline', 'c', 1),
+    # Lot KR1 : profil ajouté par KS1 (40 semaines, `kalis_plan` 0.4.1),
+    # réponses « rien de spécial » répétées (élargissement plafonné, 1.0.4).
+    ('ks_test_ppl6', 'seances_manquees', 'a', 1),
 ]
 
 

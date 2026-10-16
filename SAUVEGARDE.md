@@ -13,3 +13,10 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 
 ## Décisions
 - Critère dur KR1 = violations réalisées hors « retour_ecrit » (C13.10.1) : servi_tests_faits {deja_initial, aggrave, introduit} + plan_module {aggrave, introduit} + douleurs + hausses ; retour_ecrit publié à part.
+
+## 13:10 UTC
+- Run A lu (run 38898708985) : export 34 profils OK (937 s) ; campagne vivante 6 graines : 8 saisons plantées (ks_test_ppl6, séances manquées : élargissement « rien » répété sans borne → sd 20, NaN/Overflow, Python aussi) ; critère 7 = 0 ; retour_ecrit 2 242 ; plan initial 0.4.1 : 0.
+- Correction Koach 1.0.4 (Python + Dart) : `elargir` plafonné à l'a priori (`variances_a_priori`) ; tests Python (test_rupture), Dart (koach_elargir_test.dart) ; params version 1.0.4-ref.1 (SHA 2d023854…), asset koach_params_1_0_4.json ; CONTRAT note 16/10, SOURCES.
+- Données : donnees/reference et temoin régénérés (34), anciens → reference_0_3_1, temoin_0_3_1 ; securite_dart régénéré ; EXCEPTIONS_CONNUES vidé ; fixtures Python + km2c2 + banc km2 (avec ks_test_ppl6 séances manquées) régénérées ; pytest local 263 OK.
+- km2_banc_test : égalité stricte saison vivante = saison Python.
+- Run B poussé : P0 tests, P1-17 campagne Dart 100 graines (groupes de 6), P21-24 campagne Python 0-5.

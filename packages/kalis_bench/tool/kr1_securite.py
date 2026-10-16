@@ -7,6 +7,9 @@ vérité, sans charger les critères (les parts de cent graines ne tiennent pas
 en mémoire d'un seul `assembler`).
 
     python3 -I tool/kr1_securite.py --sortie securite.json [--md SECURITE.md] <parts…|dossiers…>
+    python3 -I tool/kr1_securite.py --extraire <dossier> <parts…>   # une saison par fichier
+        (`<cle>__<scenario>__<verite>__<graine>.json` : saison, calibration ; lu
+        par `reference/banc/calibration_grappes.py`, critère 5)
 
 Définitions (lues dans `securite` de chaque saison, `kmSecuriteSaison`) :
 
@@ -170,12 +173,36 @@ def markdown(r):
     return '\n'.join(L) + '\n'
 
 
+def extraire(dossier, chemins):
+    os.makedirs(dossier, exist_ok=True)
+    n = 0
+    for p in _parts(chemins):
+        with gzip.open(p, 'rt', encoding='utf-8') as f:
+            d = json.load(f)
+        for nom, r in d.get('saisons', {}).items():
+            x = {'saison': r['saison']}
+            if 'plantage' in r:
+                x['plantage'] = r['plantage']
+            else:
+                x['calibration'] = r['calibration']
+            with open(os.path.join(dossier, nom + '.json'), 'w', encoding='utf-8') as f:
+                json.dump(x, f)
+            n += 1
+    return n
+
+
 def main(argv):
     ap = argparse.ArgumentParser()
-    ap.add_argument('--sortie', required=True)
+    ap.add_argument('--sortie')
     ap.add_argument('--md')
+    ap.add_argument('--extraire')
     ap.add_argument('entrees', nargs='+')
     a = ap.parse_args(argv)
+    if a.extraire:
+        print('%d saisons extraites dans %s' % (extraire(a.extraire, a.entrees), a.extraire))
+        return 0
+    if not a.sortie:
+        ap.error('--sortie attendu')
     r = agreger(a.entrees)
     with open(a.sortie, 'w', encoding='utf-8') as f:
         json.dump(r, f, ensure_ascii=False, indent=1, sort_keys=True)

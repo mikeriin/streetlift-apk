@@ -53,9 +53,10 @@ def _catalogue_complet_ou_skip():
 #: 1 est interrompu après deux semaines et le bloc suivant de `kalis_plan`
 #: (planifié contre le bloc 1 entier) monte les pectoraux de 12 à 14,5
 #: séries dures (limite 14,4).
-EXCEPTIONS_CONNUES = {
-    ('street_06_inter_sets_reps', 'changement_discipline'): {'volume_trop_vite': 1},
-}
+# Données de référence régénérées sur `kalis_plan` 0.4.1 (lot KR1) : plus
+# aucune exception (0.3.1 : street_06, changement de discipline, une hausse
+# de volume trop rapide, corrigée par la troncature du bloc de KS1c1).
+EXCEPTIONS_CONNUES = {}
 
 
 def test_saisons_de_reference_sans_constat():

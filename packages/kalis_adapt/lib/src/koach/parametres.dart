@@ -15,17 +15,17 @@ part of 'koach.dart';
 // lisent avec `dart:io` depuis la racine du paquet (`koachFichierParametres`).
 
 /// Version du moteur porté (`koach.VERSION` de la référence Python).
-const String koachVersion = '1.0.3-ref.1';
+const String koachVersion = '1.0.4-ref.1';
 
 /// Version du fichier de paramètres livré (champ `version`, contrat § 7.2).
-const String koachParametresVersion = '1.0.3-ref.1';
+const String koachParametresVersion = '1.0.4-ref.1';
 
 /// Schéma du fichier de paramètres (champ `schema`, contrat § 7.1).
 const int koachParametresSchema = 1;
 
 /// SHA-256 des octets du fichier de paramètres livré (en-tête du contrat).
 const String koachParametresSha256 =
-    'd129a4e9422b90bfa0aa9034770c57ea698b49ab92c0e8dc0df703bd37231aa0';
+    '2d023854612110d0c3a925c79efeab6a34ac886f3be05089fac228845a2a9016';
 
 /// Nombre de clés du fichier de paramètres : 6 à la racine, 332 dans les
 /// onze sections (contrat § 7.4).
@@ -59,10 +59,10 @@ const List<String> koachParametresSections = [
 
 /// Clé Flutter de l'asset de paramètres (asset déclaré par le paquet).
 const String koachAssetParametres =
-    'packages/kalis_adapt/assets/koach/koach_params_1_0_3.json';
+    'packages/kalis_adapt/assets/koach/koach_params_1_0_4.json';
 
 /// Chemin du fichier de paramètres, relatif à la racine du paquet.
-const String koachFichierParametres = 'assets/koach/koach_params_1_0_3.json';
+const String koachFichierParametres = 'assets/koach/koach_params_1_0_4.json';
 
 /// Version des fiches d'exercices livrées (champ `version`).
 const String koachFichesVersion = '1.0.0';

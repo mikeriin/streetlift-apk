@@ -1566,13 +1566,47 @@ class Modele(object):
         capacité multipliées par √facteur (P ← D P D). Multiplier les seules
         diagonales défaisait les covariances négatives entre qualités et
         écarts d'exercice et multipliait l'écart-type d'une capacité par
-        bien plus que √facteur (mesuré : × 7 au lieu de × 2)."""
+        bien plus que √facteur (mesuré : × 7 au lieu de × 2).
+
+        1.0.4 (lot KR1) : l'élargissement ne rend jamais une composante plus
+        incertaine que son a priori de population (`variance_a_priori`) :
+        variance nouvelle = min(facteur · v ; max(v ; v0)). Sans ce plafond,
+        des réponses « rien de spécial » répétées (saison de quarante
+        semaines aux séances manquées) multipliaient la variance par
+        facteur à chaque diagnostic, jusqu'à un écart-type de 20 en ln et
+        un dépassement de capacité des flottants (8 saisons plantées sur
+        5 436, `ks_test_ppl6`, scénario « séances manquées »). Les facteurs
+        sont lus sur la diagonale d'avant (P ← D P D, D diagonale positive :
+        P reste semi-définie positive)."""
         r = math.sqrt(facteur)
-        idx = [TH + q for q in range(NQ)] + [self.pistes[ex_id].idx for ex_id in self.ordre]
-        for i in idx:
-            self.P[i, :] *= r
-            self.P[:, i] *= r
+        fac = []
+        for i, v0 in self.variances_a_priori():
+            v = self.P[i, i]
+            ri = r if not v > 0 else min(r, max(1.0, math.sqrt(v0 / v)))
+            fac.append((i, ri))
+        for i, ri in fac:
+            self.P[i, :] *= ri
+            self.P[:, i] *= ri
         self.elargi += 1
+
+    def variances_a_priori(self):
+        """[(indice, variance a priori)] des composantes de capacité que
+        `elargir` élargit (1.0.4) : qualités (theta_sd²) puis écart propre de
+        chaque exercice suivi, a priori total de son type moins la part
+        portée par les qualités a priori, au moins (0,5 sd)² (règle de
+        `piste` à l'état initial)."""
+        ap = self.p['a_priori']
+        vth = ap['theta_sd'] ** 2
+        out = [(TH + q, vth) for q in range(NQ)]
+        for ex_id in self.ordre:
+            t = self.pistes[ex_id]
+            sd = {'charge': ap['delta_sd'], 'reps': ap['reps_sd'], 'tenue': ap['reps_sd'],
+                  'cardio': ap['cardio_sd'], 'wod': ap['wod_sd']}[t.type]
+            vq = 0.0
+            for q in range(NQ):
+                vq += t.vecteur[q] * t.vecteur[q] * vth
+            out.append((t.idx, max(sd * sd - vq, (0.5 * sd) ** 2)))
+        return out
 
     # ------------------------------------------------------------------
     # Lecture de l'a posteriori

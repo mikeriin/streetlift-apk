@@ -2140,22 +2140,61 @@ class Modele {
   }
 
   /// « Rien de spécial » : variance de toute capacité × [facteur].
+  ///
+  /// 1.0.4 (lot KR1) : jamais au-delà de l'a priori de population de la
+  /// composante ([variancesAPriori]) : variance nouvelle =
+  /// min(facteur · v ; max(v ; v0)), facteurs lus sur la diagonale d'avant
+  /// (P ← D P D). Sans ce plafond, des réponses « rien de spécial »
+  /// répétées faisaient diverger l'écart-type (saisons plantées de
+  /// `ks_test_ppl6`, séances manquées).
   void elargir(double facteur) {
     final r = math.sqrt(facteur);
-    final idx = [
-      for (var q = 0; q < nq; q++) th + q,
-      for (final e in ordre) pistes[e]!.idx,
-    ];
     final c = cap;
-    for (final i in idx) {
+    final fac = <(int, double)>[];
+    for (final (i, v0) in variancesAPriori()) {
+      final v = pm[i * c + i];
+      final ri = !(v > 0)
+          ? r
+          : math.min(r, math.max(1.0, math.sqrt(v0 / v)));
+      fac.add((i, ri));
+    }
+    for (final (i, ri) in fac) {
       for (var j = 0; j < c; j++) {
-        pm[i * c + j] *= r;
+        pm[i * c + j] *= ri;
       }
       for (var j = 0; j < c; j++) {
-        pm[j * c + i] *= r;
+        pm[j * c + i] *= ri;
       }
     }
     elargi += 1;
+  }
+
+  /// [(indice, variance a priori)] des composantes que [elargir] élargit
+  /// (1.0.4) : qualités (theta_sd²), puis écart propre de chaque exercice
+  /// suivi (a priori total de son type moins la part des qualités a priori,
+  /// au moins (0,5 sd)², règle de [piste] à l'état initial).
+  List<(int, double)> variancesAPriori() {
+    final ap = jm(p['a_priori']);
+    final vth = pw(dbl(ap['theta_sd']), 2);
+    final out = <(int, double)>[for (var q = 0; q < nq; q++) (th + q, vth)];
+    for (final e in ordre) {
+      final t = pistes[e]!;
+      final sd = dbl(
+        ap[const {
+          'charge': 'delta_sd',
+          'reps': 'reps_sd',
+          'tenue': 'reps_sd',
+          'cardio': 'cardio_sd',
+          'wod': 'wod_sd',
+        }[t.type]!],
+      );
+      var vq = 0.0;
+      for (var q = 0; q < nq; q++) {
+        vq += t.vecteur[q] * t.vecteur[q] * vth;
+      }
+      out.add((t.idx, math.max(sd * sd - vq, pw(0.5 * sd, 2))));
+    }
+    return out;
   }
 
   // ------------------------------------------------------------------
