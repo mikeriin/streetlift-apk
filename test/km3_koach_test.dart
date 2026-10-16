@@ -137,12 +137,15 @@ void main() {
         'vecteurs_qualites_v1.json',
       ]) {
         final a = File('assets/koach/$name').readAsBytesSync();
-        final p = File('packages/kalis_adapt/assets/koach/$name')
-            .readAsBytesSync();
+        final p = File(
+          'packages/kalis_adapt/assets/koach/$name',
+        ).readAsBytesSync();
         expect(a, p, reason: name);
       }
       expect(
-        sha256Hex(File('assets/koach/koach_params_1_0_2.json').readAsBytesSync()),
+        sha256Hex(
+          File('assets/koach/koach_params_1_0_2.json').readAsBytesSync(),
+        ),
         ko.koachParametresSha256,
       );
       expect(
@@ -169,16 +172,19 @@ void main() {
   });
 
   group('bascule', () {
-    test('fermée dans ce build : le moteur d’avant sert le bloc en cours', () async {
-      await _owner(app);
-      await app.koachRefresh();
-      expect(app.koachEngine.snap, isNull);
-      expect(app.koachTakeoverWeek(), isNull);
-      final j = _dayWithWork(app, 15);
-      final a = app.adaptOpen(15, app.program.week(15).day(j)!);
-      expect(a, isNotNull);
-      expect(a!.koach, isNull);
-    });
+    test(
+      'fermée dans ce build : le moteur d’avant sert le bloc en cours',
+      () async {
+        await _owner(app);
+        await app.koachRefresh();
+        expect(app.koachEngine.snap, isNull);
+        expect(app.koachTakeoverWeek(), isNull);
+        final j = _dayWithWork(app, 15);
+        final a = app.adaptOpen(15, app.program.week(15).day(j)!);
+        expect(a, isNotNull);
+        expect(a!.koach, isNull);
+      },
+    );
 
     test('date : 23/11/2026 si installé au plus tard le 16/11, sinon '
         '04/01/2027 ; prise de main au début du bloc (S20)', () async {
@@ -203,147 +209,168 @@ void main() {
       await _owner(app, lastWeek: 14, lastJ: 7);
       app.koachForceBascule(civilOf(clock));
       await app.koachRefresh();
-      expect(app.koachEngine.snap, isNotNull, reason: '${app.koachEngine.blocked}');
+      expect(
+        app.koachEngine.snap,
+        isNotNull,
+        reason: '${app.koachEngine.blocked}',
+      );
     }
 
-    test('prise de main : historique versé sans plan, référence, rejeu exact',
-        () async {
-      await activate();
-      final e = app.koachEngine;
-      expect(e.fromWeek, 15);
-      expect(e.closed, 14);
-      expect(e.versed, isNotEmpty);
-      final types = [for (final x in e.journal) x['type']];
-      expect(types.where((t) => t == 'reference').length, 1);
-      expect(types, isNot(contains('plan')));
-      expect(types.lastIndexOf('seance_fin'), lessThan(types.indexOf('reference')));
-      expect(types.where((t) => t == 'semaine_fin').length, 14);
-      // Rejeu exact : même journal (aller-retour JSON) = même état.
-      final live = app.koachLive!;
-      final res = KoachRessources.lire(
-        File('assets/koach/koach_params_1_0_2.json').readAsStringSync(),
-        File('assets/koach/vecteurs_qualites_v1.json').readAsStringSync(),
-      );
-      final fab = KoachFabrique(res, e.snap!, app.content.catalog!);
-      final again = fab.rejouer(koachJournalDe(jsonDecode(jsonEncode(e.journal))));
-      expect(jsonEncode(again.posterior()), jsonEncode(live.posterior()));
-      expect(
-        jsonEncode(again.planification!.etat()),
-        jsonEncode(live.planification!.etat()),
-      );
-      expect(
-        jsonEncode(again.surveillance!.etatComplet()),
-        jsonEncode(live.surveillance!.etatComplet()),
-      );
-      expect(jsonEncode(again.dual!.etat()), jsonEncode(live.dual!.etat()));
-      expect(
-        jsonEncode(again.adherence!.etat()),
-        jsonEncode(live.adherence!.etat()),
-      );
-      // ignore: avoid_print
-      print('KM3|prise_de_main|evenements=${e.journal.length}|'
+    test(
+      'prise de main : historique versé sans plan, référence, rejeu exact',
+      () async {
+        await activate();
+        final e = app.koachEngine;
+        expect(e.fromWeek, 15);
+        expect(e.closed, 14);
+        expect(e.versed, isNotEmpty);
+        final types = [for (final x in e.journal) x['type']];
+        expect(types.where((t) => t == 'reference').length, 1);
+        expect(types, isNot(contains('plan')));
+        expect(
+          types.lastIndexOf('seance_fin'),
+          lessThan(types.indexOf('reference')),
+        );
+        expect(types.where((t) => t == 'semaine_fin').length, 14);
+        // Rejeu exact : même journal (aller-retour JSON) = même état.
+        final live = app.koachLive!;
+        final res = KoachRessources.lire(
+          File('assets/koach/koach_params_1_0_2.json').readAsStringSync(),
+          File('assets/koach/vecteurs_qualites_v1.json').readAsStringSync(),
+        );
+        final fab = KoachFabrique(res, e.snap!, app.content.catalog!);
+        final again = fab.rejouer(
+          koachJournalDe(jsonDecode(jsonEncode(e.journal))),
+        );
+        expect(jsonEncode(again.posterior()), jsonEncode(live.posterior()));
+        expect(
+          jsonEncode(again.planification!.etat()),
+          jsonEncode(live.planification!.etat()),
+        );
+        expect(
+          jsonEncode(again.surveillance!.etatComplet()),
+          jsonEncode(live.surveillance!.etatComplet()),
+        );
+        expect(jsonEncode(again.dual!.etat()), jsonEncode(live.dual!.etat()));
+        expect(
+          jsonEncode(again.adherence!.etat()),
+          jsonEncode(live.adherence!.etat()),
+        );
+        // ignore: avoid_print
+        print(
+          'KM3|prise_de_main|evenements=${e.journal.length}|'
           'seances=${e.versed.length}|'
-          'temps=${app.koachTemps.toJson()}');
-    });
+          'temps=${app.koachTemps.toJson()}',
+        );
+      },
+    );
 
-    test('séance servie : aperçu, début réel, cible par série, fin versée',
-        () async {
-      await activate();
-      final j = _dayWithWork(app, 15);
-      final base = app.program.week(15).day(j)!;
-      final a = app.adaptOpen(15, base)!;
-      expect(a.koach?['state'], 'preview');
-      expect(app.koachPending(15, j), isTrue);
-      expect(await app.koachStart(15, base), isTrue);
-      final open = app.sessionAdapt(15, j)!;
-      expect(open.koach?['state'], 'open');
-      final n0 = app.koachEngine.journal.length;
-      // Première série de chaque exercice servi : cible de Koach, puis
-      // séries validées.
-      var done = 0;
-      for (final e in _served(app, 15, j).take(2)) {
+    test(
+      'séance servie : aperçu, début réel, cible par série, fin versée',
+      () async {
+        await activate();
+        final j = _dayWithWork(app, 15);
+        final base = app.program.week(15).day(j)!;
+        final a = app.adaptOpen(15, base)!;
+        expect(a.koach?['state'], 'preview');
+        expect(app.koachPending(15, j), isTrue);
+        expect(await app.koachStart(15, base), isTrue);
+        final open = app.sessionAdapt(15, j)!;
+        expect(open.koach?['state'], 'open');
+        final n0 = app.koachEngine.journal.length;
+        // Première série de chaque exercice servi : cible de Koach, puis
+        // séries validées.
+        var done = 0;
+        for (final e in _served(app, 15, j).take(2)) {
+          final log = app.exLog(15, j, e);
+          app.adaptPrefill(15, j, e, log);
+          final g = app.adaptGoal(15, j, e, 0);
+          expect(g, isNotNull, reason: e.name);
+          for (var i = 0; i < log.sets.length && i < 2; i++) {
+            final goal = app.adaptGoal(15, j, e, i)!;
+            _validate(app, 15, j, e, i, '${goal.prefill ?? 5}', 8);
+            done++;
+          }
+        }
+        expect(done, greaterThan(0));
+        final types = [
+          for (final x in app.koachEngine.journal.sublist(n0)) x['type'],
+        ];
+        expect(types, contains('plan'));
+        expect(types, contains('serie'));
+        app.markSessionDone(15, j, true);
+        expect(app.koachEngine.versed, contains(app.sessionKey(15, j)));
+        final last = app.koachEngine.journal.lastWhere(
+          (x) => x['type'] == 'seance_fin',
+        );
+        expect(((last['seance'] as Map)['sets'] as List), isNotEmpty);
+        expect(app.sessionAdapt(15, j)!.koach?['state'], 'closed');
+        // ignore: avoid_print
+        print('KM3|seance|temps=${app.koachTemps.toJson()}');
+      },
+    );
+
+    test(
+      'suggestion refusée « trop lourd » : décision versée après la fin',
+      () async {
+        await activate();
+        final j = _dayWithWork(app, 15);
+        final base = app.program.week(15).day(j)!;
+        app.adaptOpen(15, base);
+        expect(await app.koachStart(15, base), isTrue);
+        final e = _served(app, 15, j).firstWhere(
+          (x) => x.engine && x.slotId != null && !x.slotId!.endsWith('.t'),
+        );
         final log = app.exLog(15, j, e);
         app.adaptPrefill(15, j, e, log);
-        final g = app.adaptGoal(15, j, e, 0);
-        expect(g, isNotNull, reason: e.name);
-        for (var i = 0; i < log.sets.length && i < 2; i++) {
-          final goal = app.adaptGoal(15, j, e, i)!;
-          _validate(app, 15, j, e, i, '${goal.prefill ?? 5}', 8);
-          done++;
-        }
-      }
-      expect(done, greaterThan(0));
-      final types = [
-        for (final x in app.koachEngine.journal.sublist(n0)) x['type'],
-      ];
-      expect(types, contains('plan'));
-      expect(types, contains('serie'));
-      app.markSessionDone(15, j, true);
-      expect(app.koachEngine.versed, contains(app.sessionKey(15, j)));
-      final last = app.koachEngine.journal.lastWhere(
-        (x) => x['type'] == 'seance_fin',
+        // Proposition posée sur la cible de la première série (forme du
+        // moteur), comme après une hausse de charge.
+        final a = app.sessionAdapt(15, j)!;
+        final st = Map<String, Object?>.of(a.koach!);
+        final cibles = Map<String, Object?>.of(
+        (st['cibles'] as Map).cast<String, Object?>(),
       );
-      expect(((last['seance'] as Map)['sets'] as List), isNotEmpty);
-      expect(app.sessionAdapt(15, j)!.koach?['state'], 'closed');
-      // ignore: avoid_print
-      print('KM3|seance|temps=${app.koachTemps.toJson()}');
-    });
-
-    test('suggestion refusée « trop lourd » : décision versée après la fin',
-        () async {
-      await activate();
-      final j = _dayWithWork(app, 15);
-      final base = app.program.week(15).day(j)!;
-      app.adaptOpen(15, base);
-      expect(await app.koachStart(15, base), isTrue);
-      final e = _served(app, 15, j).firstWhere(
-        (x) => x.engine && x.slotId != null && !x.slotId!.endsWith('.t'),
-      );
-      final log = app.exLog(15, j, e);
-      app.adaptPrefill(15, j, e, log);
-      // Proposition posée sur la cible de la première série (forme du
-      // moteur), comme après une hausse de charge.
-      final a = app.sessionAdapt(15, j)!;
-      final st = Map<String, Object?>.of(a.koach!);
-      final cibles = Map<String, Object?>.of(st['cibles'] as Map);
-      final m = Map<String, Object?>.of(
-        (cibles[e.slotId] as Map? ?? const {}).cast<String, Object?>(),
-      );
-      m['0'] = {
-        ...((m['0'] as Map?) ?? const {}).cast<String, Object?>(),
-        'loadKg': 40.0,
-        'proposition': {
-          'type': 'charge_plus',
-          'depart': 37.5,
-          'cible': 40.0,
-          'pas': 2.5,
-          'ampleur': 1.0,
-          'paliers': [40.0],
-          'moment': 'debut_de_seance',
-        },
-      };
-      cibles[e.slotId!] = m;
-      st['cibles'] = cibles;
-      app.sessionLog(15, j).adapt =
-          a.copyWith(koach: st).toJson().cast<String, dynamic>();
-      final s = app.koachSuggestion(15, j, e);
-      expect(s?.type, 'charge_plus');
-      app.koachDecide(15, base, e, false, reason: 'too_heavy');
-      expect(app.koachSuggestion(15, j, e)?.decided, 'non');
-      // Charge d'avant pré-remplie.
-      expect(log.sets.first.kg, '37,5');
-      app.markSessionDone(15, j, true);
-      final d = app.koachEngine.journal.lastWhere(
-        (x) => x['type'] == 'decision' && x['proposition'] != null,
-      );
-      expect(d['accepte'], isFalse);
-      expect(d['raison'], 'too_heavy');
-      final i = app.koachEngine.journal.indexOf(d);
-      final fin = app.koachEngine.journal.lastIndexWhere(
-        (x) => x['type'] == 'seance_fin',
-      );
-      expect(i, greaterThan(fin));
-    });
+        final m = Map<String, Object?>.of(
+          (cibles[e.slotId] as Map? ?? const {}).cast<String, Object?>(),
+        );
+        m['0'] = {
+          ...((m['0'] as Map?) ?? const {}).cast<String, Object?>(),
+          'loadKg': 40.0,
+          'proposition': {
+            'type': 'charge_plus',
+            'depart': 37.5,
+            'cible': 40.0,
+            'pas': 2.5,
+            'ampleur': 1.0,
+            'paliers': [40.0],
+            'moment': 'debut_de_seance',
+          },
+        };
+        cibles[e.slotId!] = m;
+        st['cibles'] = cibles;
+        app.sessionLog(15, j).adapt = a
+            .copyWith(koach: st)
+            .toJson()
+            .cast<String, dynamic>();
+        final s = app.koachSuggestion(15, j, e);
+        expect(s?.type, 'charge_plus');
+        app.koachDecide(15, base, e, false, reason: 'too_heavy');
+        expect(app.koachSuggestion(15, j, e)?.decided, 'non');
+        // Charge d'avant pré-remplie.
+        expect(log.sets.first.kg, '37,5');
+        app.markSessionDone(15, j, true);
+        final d = app.koachEngine.journal.lastWhere(
+          (x) => x['type'] == 'decision' && x['proposition'] != null,
+        );
+        expect(d['accepte'], isFalse);
+        expect(d['raison'], 'too_heavy');
+        final i = app.koachEngine.journal.indexOf(d);
+        final fin = app.koachEngine.journal.lastIndexWhere(
+          (x) => x['type'] == 'seance_fin',
+        );
+        expect(i, greaterThan(fin));
+      },
+    );
 
     test('arrêt d’urgence : écrit servi, rien perdu ; réactivation par '
         'rejeu et rattrapage', () async {
@@ -380,8 +407,10 @@ void main() {
       expect(t, isNotNull);
       expect(t!.max, lessThan(10000));
       // ignore: avoid_print
-      print('KM3|replanification|${app.koachTemps.toJson()}|'
-          'hors_modele=${app.koachNeedsDiagnostic}|${app.koachAlertCauses}');
+      print(
+        'KM3|replanification|${app.koachTemps.toJson()}|'
+        'hors_modele=${app.koachNeedsDiagnostic}|${app.koachAlertCauses}',
+      );
       if (app.koachNeedsDiagnostic) {
         final qs = app.koachQuestions(const {});
         expect(qs, isNotEmpty);
@@ -411,7 +440,16 @@ void main() {
       final seances = exp['seances'] as List;
       expect(seances, isNotEmpty);
       final s0 = seances.first as Map;
-      for (final k in const ['cle', 'semaine', 'jour', 'avant', 'debut', 'series', 'meta', 'fin']) {
+      for (final k in const [
+        'cle',
+        'semaine',
+        'jour',
+        'avant',
+        'debut',
+        'series',
+        'meta',
+        'fin',
+      ]) {
         expect(s0.containsKey(k), isTrue, reason: k);
       }
       expect((s0['series'] as List).length, (s0['meta'] as List).length);

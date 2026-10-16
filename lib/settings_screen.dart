@@ -21,6 +21,7 @@ import 'program_explainer.dart' show showProgramExplainer;
 import 'retired_notice_screen.dart';
 import 'search.dart' show normalizeText;
 import 'settings_search.dart';
+import 'koach1/koach1_widgets.dart' show KoachEngineCard;
 import 'store.dart';
 import 'store_widget.dart';
 import 'kit/kit.dart';
@@ -610,6 +611,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
               subtitle: 'Bilan du jour, difficulté, charges, clusters',
               highlight: lit,
               onTap: () => showKoachExplanations(context),
+            ),
+          ),
+          // KM3 : Koach 1.0 (état, arrêt d'urgence et réactivation).
+          _mark(
+            'koach-engine',
+            (lit) => KMenuRow(
+              key: const ValueKey('settings-koach-engine'),
+              icon: Icons.power_settings_new_rounded,
+              title: 'Koach 1.0',
+              subtitle: 'État, arrêt d’urgence et réactivation',
+              highlight: lit,
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const KPage.sub(
+                    key: ValueKey('koach-engine-page'),
+                    title: 'Koach 1.0',
+                    children: [KoachEngineCard()],
+                  ),
+                ),
+              ),
             ),
           ),
         ],

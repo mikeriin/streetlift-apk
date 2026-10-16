@@ -234,6 +234,14 @@ final List<SettingsSearchEntry> settingsSearchIndex = [
     page: SettingsPage.session,
   ),
   SettingsSearchEntry.setting(
+    id: 'koach-engine',
+    label: 'Koach 1.0',
+    description: 'État, arrêt d’urgence et réactivation',
+    words: ['koach', 'moteur', 'arret', 'urgence', 'stop', 'reactiver'],
+    path: _koach,
+    page: SettingsPage.session,
+  ),
+  SettingsSearchEntry.setting(
     id: 'rest',
     label: 'Repos par défaut',
     description: 'Quand l’exercice n’en précise pas',

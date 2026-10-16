@@ -9,6 +9,7 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import '../athlete_profile_screen.dart' show ProfileScreen;
 import '../koach/koach_bubble.dart';
+import '../koach1/koach1_widgets.dart';
 import '../store.dart';
 import '../kit/kit.dart';
 import 'evolution_texts.dart';
@@ -440,6 +441,9 @@ class EvolutionScreen extends StatefulWidget {
 }
 
 class _EvolutionScreenState extends State<EvolutionScreen> {
+  /// KM3 : Koach 1.0 a pris les commandes (ou est arrêté d'urgence).
+  bool get _koach => store.koachEngine.snap != null;
+
   @override
   void initState() {
     super.initState();
@@ -476,7 +480,14 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
                 MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
               ),
             )
-          else
+          // KM3 : Koach 1.0 (état, arrêt d'urgence) ; un seul comportement
+          // une fois qu'il conduit le programme (plus de mode ni de
+          // déblocage, propositions de 0.x en lecture seule).
+          else ...[
+            const KoachEngineCard(),
+            const KoachRecapCard(),
+          ],
+          if (store.athlete != null && !_koach)
             KCard(
               key: const ValueKey('evo-mode'),
               child: Column(
@@ -512,8 +523,8 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
                 ],
               ),
             ),
-          const EvolutionUnlockCard(),
-          if (pending.isNotEmpty) ...[
+          if (!_koach) const EvolutionUnlockCard(),
+          if (pending.isNotEmpty && !_koach) ...[
             const KSectionTitle('Propositions en attente'),
             for (final e in pending)
               KCard(

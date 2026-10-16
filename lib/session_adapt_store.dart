@@ -1802,7 +1802,8 @@ extension SessionAdaptStore on AppStore {
             name: e.name,
             setsText: adaptSetsText(t),
             setCount: t.sets,
-            intensity: 'Test court : montée jusqu’à la dernière série '
+            intensity:
+                'Test court : montée jusqu’à la dernière série '
                 'proprement faite',
             kg: null,
             rest: pt.restLabel(t.restSeconds),

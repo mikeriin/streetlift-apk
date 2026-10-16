@@ -30,6 +30,7 @@ import 'koach/koach_view.dart' show KoachColors, KoachView;
 import 'timers.dart';
 export 'timers.dart' show TimerCtl;
 import 'kit/kit.dart';
+import 'koach1/koach1_widgets.dart';
 import 'wellbeing_screens.dart' show SafetyScreen;
 import 'models.dart';
 import 'rewards.dart' show checkLevelUp;
@@ -318,6 +319,36 @@ class _SessionScreenState extends State<SessionScreen> {
     _restore(from);
   }
 
+  bool _koachStarting = false;
+
+  /// KM3 : début réel de la séance servie par Koach 1.0 : diagnostic hors
+  /// modèle s'il le faut (trois questions au plus), puis `seance_debut` et
+  /// `plan(seance)` ; les pages suivent la séance servie.
+  Future<void> _koachBegin() async {
+    if (_koachStarting) return;
+    _koachStarting = true;
+    try {
+      await store.koachRefresh();
+      if (!mounted) return;
+      Map<String, Object?>? diagnostic;
+      if (store.koachNeedsDiagnostic) {
+        diagnostic = await showKoachDiagnostic(context);
+        if (!mounted) return;
+      }
+      final from = _currentKey();
+      final ok = await store.koachStart(
+        widget.week.n,
+        widget.day,
+        diagnostic: diagnostic,
+      );
+      if (!mounted || !ok) return;
+      _adapted(true);
+      _restore(from);
+    } finally {
+      _koachStarting = false;
+    }
+  }
+
   /// Repère de la page courante, qui survit à un recalcul de la séance :
   /// page du bilan, page de fin, ou identifiant du premier exercice.
   Object _currentKey() {
@@ -509,6 +540,13 @@ class _SessionScreenState extends State<SessionScreen> {
                         onPageChanged: (i) {
                           store.saveLogs(affectsProgression: false);
                           setState(() => page = i);
+                          // KM3 : début réel de la séance de Koach (bilan
+                          // réglé, premier exercice).
+                          if (i >= koachPages &&
+                              adaptOn &&
+                              store.koachPending(w.n, d.j)) {
+                            unawaited(_koachBegin());
+                          }
                         },
                         itemCount: bilanPage + 1,
                         itemBuilder: (_, i) => i < koachPages
@@ -922,7 +960,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         widget.day.j,
         ex,
       );
-      adviceRest = _adaptAdvice(k, i);
+      // KM3 : séance servie par Koach 1.0 : cible de la série suivante.
+      if (store.koachOpen(widget.week.n, widget.day.j)) {
+        _koachNews(k, i);
+      } else {
+        adviceRest = _adaptAdvice(k, i);
+      }
     }
     if (s.done) _celebrateRecord(ex, s);
     if (!s.done || !store.settings.autoTimer) return;
@@ -1002,6 +1045,41 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             },
     );
     return rest;
+  }
+
+  /// KM3 : après une série validée, Koach donne la cible de la suivante
+  /// (et peut arrêter l'exercice) : message au-dessus de la barre de repos.
+  void _koachNews(int k, int i) {
+    final ex = widget.exs[k];
+    final news = store.koachAfterSet(
+      widget.week.n,
+      widget.baseDay ?? widget.day,
+      ex,
+      i,
+    );
+    if (news == null) return;
+    setState(() => epoch++);
+    final kt = KTokens.of(context);
+    final large = koachLargeText(context);
+    showKSnack(
+      context,
+      message: 'Koach : ${news.text}',
+      bottom: KBottomInset.of(context),
+      duration: const Duration(seconds: 5),
+      leading: KeyedSubtree(
+        key: const ValueKey('koach-set-news'),
+        child: large
+            ? const SizedBox.shrink()
+            : KoachView(
+                pose: koachPose(
+                  news.stop ? KoachUsage.care : KoachUsage.adjustment,
+                ),
+                height: KSpacing.s32,
+                width: KSpacing.s24 + KSpacing.s4,
+                colors: KoachColors.onColor(kt.texte),
+              ),
+      ),
+    );
   }
 
   /// Proposition en attente du moteur (mode libre) pour l'exercice [k].
@@ -1327,6 +1405,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       } else {
         lines.add(t);
       }
+    }
+    // KM3 : raison de Koach pour cet exercice (une ligne, texte lisible).
+    if (store.koachReasonLine(widget.week.n, widget.day.j, ex)
+        case final line?) {
+      if (!lines.contains(line)) lines.insert(0, line);
     }
     // CIF (point 9) : test de course borné : le report est dit.
     if (store.adaptRunTestCapped(widget.week.n, widget.day.j, ex)) {
@@ -2002,6 +2085,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               Icons.av_timer_rounded,
               'Mini-repos du cluster, ${sp.intra} s',
               () => widget.timer.single('INTRA', sp.intra!, prepare: false),
+            ),
+          // KM3 : suggestion de Koach (charge de la première série, test
+          // court), validée d'un tap ou refusée avec une raison.
+          if (!readOnly && widget.adapt && ex.engine)
+            KoachSuggestionCard(
+              key: ValueKey('koach-card-${ex.id}-$epoch'),
+              week: widget.week.n,
+              day: widget.baseDay ?? widget.day,
+              exercise: ex,
+              onChanged: () => setState(() => epoch++),
             ),
           // ----- Tableau des séries : en-tête de colonnes + lignes -----
           // G9 correction 1 : sans ligne de saisie visible (toutes les
