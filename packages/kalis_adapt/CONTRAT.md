@@ -19,15 +19,17 @@ de `kalis_core` (programme importé du propriétaire compris). Le § 11 décrit 
 sert jusqu'à KM3 et que le banc garde comme témoin, et **Koach 1.0** (`package:kalis_adapt/koach.dart`), qui le
 remplacera (cahier `pipeline/cp/CAHIER_KM.md`, décision C13 : un seul moteur, un seul comportement, à KM3).
 
-**K.1 Contrat de référence.** Koach Dart est le portage à l'identique de la référence Python **1.0.3** depuis
-`kalis_adapt` 1.0.2 (lot KM2c2 ; 1.0.2 en 1.0.1, lot KM2c1 ; 1.0.1 en 1.0.0 ; deltas : `reference/CHANGEMENTS_1_0_2.md`,
-`reference/CHANGEMENTS_1_0_3.md`, sans changement d'API ni de schéma du journal ; `posterior()` gagne `fiabilite`) (`reference/koach/`) : son contrat est `reference/CONTRAT_1_0.md` (API § 3, journal § 2, modèles § 4 et 5,
+**K.1 Contrat de référence.** Koach Dart est le portage à l'identique de la référence Python **1.0.4** depuis
+`kalis_adapt` 1.0.3 (lot KR1 ; 1.0.3 en 1.0.2, lot KM2c2 ; 1.0.2 en 1.0.1, lot KM2c1 ; 1.0.1 en 1.0.0 ; deltas :
+`reference/CHANGEMENTS_1_0_2.md`, `reference/CHANGEMENTS_1_0_3.md`, `reference/CHANGEMENTS_1_0_4.md`, sans changement
+d'API ni de schéma du journal ; `posterior()` gagne `fiabilite` en 1.0.3 ; en 1.0.4, l'élargissement « rien de
+spécial » est plafonné à l'a priori) (`reference/koach/`) : son contrat est `reference/CONTRAT_1_0.md` (API § 3, journal § 2, modèles § 4 et 5,
 séance § 6, paramètres § 7, garde-fous § 8, déterminisme § 9, limites § 10 et annexe A). Noms Dart : ceux du
 Python en `lowerCamelCase` (`observer_serie` → `observerSerie`), mêmes classes (`Koach`, `Modele`, `Seances`,
 `Gardefous`, `Planification`, `Surveillance`, `Adherence`, `ControleDual`), mêmes clés JSON partout
 (événements, sorties, états). Conventions du portage : `reference/PORTAGE_DART.md`.
 
-**K.2 Parité.** Les 15 fixtures de la référence 1.0.3 (`reference/fixtures/`, dont `moteur_11.json` : reprise par
+**K.2 Parité.** Les 15 fixtures de la référence 1.0.4 (`reference/fixtures/`, dont `moteur_11.json` : reprise par
 paliers et tentatives après une coupure de 12 jours ; `moteur_12.json` : notes peu fiables, κ jusqu'à 1,4) et trois
 fixtures complémentaires produites par la référence sans la modifier (`test/fixtures/km2c2/` : tentative ratée hors
 compétition et en compétition, tirages du jumeau avec κ > 1) sont rejouées par `test/koach_parite_test.dart` :
@@ -35,7 +37,9 @@ sortie et raisons de chaque `plan`, `posterior()` après chaque fin de séance, 
 `moteur_1`), vecteur d'état et diagonale de la covariance, état final, rejeu par `rejouer`, tirages du jumeau,
 tables, évaluation de la référence, replanification, plan et items modulés. Tolérance 1e-9 relative ; les traces
 (hors contrat) sont aussi identiques (`fixe` reproduit `'%.nf'` de Python). Le banc vérifie en plus 5 saisons
-complètes avec toutes les extensions contre la référence (`kalis_bench`, `test/km2_banc_test.dart`).
+complètes avec toutes les extensions contre la référence (`kalis_bench`, `test/km2_banc_test.dart` ; 7 depuis le
+lot KR1, dont `ks_test_ppl6` sur quarante semaines et quinze élargissements, sur les données de référence régénérées
+sur `kalis_plan` 0.4.1, sécurité de la saison comprise).
 
 **K.3 Ce que la façade fait de plus que la référence (KM2, constats M6 et M7).** Sans extension, rien ne change
 (les fixtures le vérifient). Avec des extensions :
@@ -57,8 +61,9 @@ chaque replanification).
 des critères calculables du banc (`kalis_bench` `safetyFindings`) ; un plan modulé n'est retenu que s'il n'ajoute
 aucun constat à ceux de la référence (`_sur`, référence § 3.7.1).
 
-**K.5 Paramètres.** Le fichier de paramètres est un asset versionné (`assets/koach/koach_params_1_0_3.json`,
-version `1.0.3-ref.1`, 338 clés, SHA-256 `koachParametresSha256` ; 1.0.1 : `koach_params_1_0_2.json`, 322 clés ;
+**K.5 Paramètres.** Le fichier de paramètres est un asset versionné (`assets/koach/koach_params_1_0_4.json`,
+version `1.0.4-ref.1`, 338 clés, SHA-256 `koachParametresSha256` ; 1.0.2 : `koach_params_1_0_3.json`, mêmes valeurs ;
+1.0.1 : `koach_params_1_0_2.json`, 322 clés ;
 1.0.0 : `koach_params_1_0_1.json`, 317 clés) avec les fiches d'exercices
 (`assets/koach/vecteurs_qualites_v1.json`) ; `lireParametresKoach` et `lireFichesKoach` les décodent et les
 contrôlent. Un import ultérieur passe par `importerParametres` (événement `parametres`, référence § 7.3).

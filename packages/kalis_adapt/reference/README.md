@@ -1,6 +1,8 @@
-# Koach 1.0.3 — référence Python (lot KM1, correction 3)
+# Koach 1.0.4 — référence Python (lot KM1, corrections 1 à 3 ; lot KR1)
 
-Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.3 : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10), « KM1 correction 2 » (C13.12) et « KM1 correction 3 » (C17.9 : estimation sous notes non fiables ; paramètres `1.0.3-ref.1`). Ce qui change est dans les notes datées du 10/10, du 11/10 et du 15/10/2026 en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md`, `CHANGEMENTS_1_0_2.md` et `CHANGEMENTS_1_0_3.md`. `kalis_adapt` 1.0.1 (lot KM2c1) porte la version 1.0.2 ; le portage du delta 1.0.3 est le lot KM2c2 : mêmes entrées, mêmes sorties à 1e-9 sur les fixtures. Elle n'est pas embarquée dans l'application.
+Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.4 : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10), « KM1 correction 2 » (C13.12), « KM1 correction 3 » (C17.9 : estimation sous notes non fiables) et le lot KR1 (C17.18 : Koach sur `kalis_plan` 0.4.1 ; élargissement « rien de spécial » plafonné à l'a priori ; paramètres `1.0.4-ref.1`, mêmes valeurs). Ce qui change est dans les notes datées du 10/10, du 11/10, du 15/10 et du 16/10/2026 en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md` à `CHANGEMENTS_1_0_4.md`. `kalis_adapt` 1.0.3 (lot KR1) porte la version 1.0.4 : mêmes entrées, mêmes sorties à 1e-9 sur les fixtures. Elle n'est pas embarquée dans l'application.
+
+Données de référence (`donnees/reference/`, `donnees/temoin/`) : saisons de `kalis_plan` 0.4.1, 34 profils (lot KR1) ; les saisons figées sur `kalis_plan` 0.3.1 (27 profils), lues par les mesures de KM1 à KM2c2, sont dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/` (`reference/`, `temoin/` ; hors de `kalis_adapt`, que l'application copie, C17.19.3).
 
 Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal réel ne publie que des agrégats.
 
@@ -10,7 +12,7 @@ Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal r�
 | --- | --- |
 | `CONTRAT_1_0.md` | Contrat gelé 1.0, modifié pour 1.0.1 et 1.0.2 par des notes datées (10/10 et 11/10/2026) : API `observe` / `posterior` / `plan` / `explain`, schéma du journal, modèles, règles de sécurité, paramètres, portage, écarts connus (annexe A). |
 | `SOURCES.md` | Origine de chaque paramètre de `params/koach_params_v1.json` (une ligne par clé). |
-| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.3-ref.1`, 338 clés), lu tel quel par les tests Dart de `kalis_adapt` 1.0.2 (asset `assets/koach/koach_params_1_0_3.json`, copie à l'octet près). |
+| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.4-ref.1`, 338 clés), lu tel quel par les tests Dart de `kalis_adapt` 1.0.3 (asset `assets/koach/koach_params_1_0_4.json`, copie à l'octet près). |
 | `qualites/` | Vecteurs de qualités des 1 039 exercices (`regles.py` → `vecteurs_qualites_v1.json`). |
 | `koach/` | Le moteur : `modele.py` (estimation), `seance.py` et `securite.py` (séance, garde-fous), `planification.py`, `rupture.py`, `adherence.py`, `dual.py`, `moteur.py` (façade), `numerique.py`. |
 | `banc/` | Port Python des modèles de vérité et des critères de sécurité de `kalis_bench`, meneur de saison, banc adversarial, campagne de mesure des critères. |
@@ -36,6 +38,11 @@ python3 -I rejeu/walk_forward.py <export.json> --programme <prog.json.gz> --koac
 
 Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `packages/kalis_bench/bin/km1.dart`
 (export des modèles de vérité, des saisons de référence et des mesures de `kalis_adapt` 0.3.1).
+
+## Résultats publiés (1.0.4, lot KR1)
+
+- Couple `kalis_plan` 0.4.1 × Koach 1.0.4 (34 profils, 100 graines, 90 600 saisons, campagne Dart) : `kalis_bench` `docs/CRITERES_KR1.md` et `docs/data/kr1/` (sécurité, critères par groupe de graines, adversaires). La campagne Python des graines 0 à 5 sur les données régénérées donne les mêmes critères (`kalis_bench/docs/data/kr1/criteres/criteres_kr1_python_34p_g0_5.json`).
+- Violations restantes et leurs mécanismes : `tests/test_kr1_violations.py` ; liste des changements : `CHANGEMENTS_1_0_4.md`.
 
 ## Résultats publiés (1.0.3, lot KM1c3)
 

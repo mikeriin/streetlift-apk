@@ -468,6 +468,13 @@ void _write(String path, String text) {
 /// « 0 violation » mesuré sur les 34 profils et toutes les graines).
 const List<String> seasonProfileDirs = <String>['profiles', 'profiles_ks'];
 
+/// Profils des saisons (banc et profils ajoutés, `seasonProfileDirs`), en
+/// JSON brut : lus par les exports et les campagnes de Koach depuis 0.5.3
+/// (lot KR1 : couple `kalis_plan` 0.4.1 × Koach sur les 34 profils).
+List<Map<String, Object?>> readSeasonJsonAll() => <Map<String, Object?>>[
+  for (final dir in seasonProfileDirs) ...readSeasonJson(dir: dir),
+];
+
 Map<String, Object?> _seasonOf(String key, int seeds) {
   final inputs = loadInputs('tous');
   final json = <Map<String, Object?>>[

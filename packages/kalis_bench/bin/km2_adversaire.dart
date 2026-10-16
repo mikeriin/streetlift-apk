@@ -231,7 +231,7 @@ KmBanc _banc(Map<String, Object?> config) {
       for (final e in vecteurs.entries) e.key: kc.jm(e.value),
     },
     profils: <String, Map<String, Object?>>{
-      for (final j in readSeasonJson()) j['key']! as String: j,
+      for (final j in readSeasonJsonAll()) j['key']! as String: j,
     },
     saisonsFigees: _lecteurSaisonsFigees(config['saisons_figees'] as String?),
   );

@@ -36,7 +36,8 @@ Python, non-finis codés "inf", "-inf", "nan") :
 * `journaux` : journaux des extensions du banc (`extensions_koach.journaux`,
   par nom de classe Python) ;
 * `etats` : `extensions_koach.etats` (Surveillance : `etat_complet`,
-  ControleDual, Adherence : `etat`) et `Planification` (`etat`).
+  ControleDual, Adherence : `etat`) et `Planification` (`etat`) ;
+* `securite` (lot KR1) : `campagne.securite_saison` de la saison simulée.
 """
 import argparse
 import gzip
@@ -71,6 +72,12 @@ SAISONS = [
     ('autres_06_semi_marathon_intermediaire', 'reference', 'c', 0),
     ('street_16_specialisation_traction_lestee', 'reference', 'a', 1),
     ('street_07_avance_streetlifting_competition', 'changement_discipline', 'c', 1),
+    # Lot KR1 : profil ajouté par KS1 (40 semaines, `kalis_plan` 0.4.1),
+    # réponses « rien de spécial » répétées (élargissement plafonné, 1.0.4).
+    ('ks_test_ppl6', 'seances_manquees', 'a', 1),
+    # Lot KR1 : bloc interrompu (changement de discipline) suivi d'un « retour
+    # à l'écrit » en semaine 11 (indice de semaine servie, `blockWeeks`).
+    ('autres_08_crossfit_intermediaire', 'changement_discipline', 'a', 87),
 ]
 
 
@@ -154,6 +161,10 @@ def fixture(cle, scenario, verite, graine, trajectoires=TRAJECTOIRES, semaines=S
         'posterior': pol.koach.posterior(),
         'journaux': journaux,
         'etats': etats,
+        # Lot KR1 : sécurité de la saison (`campagne.securite_saison` : plan
+        # initial, plan modulé, vues servies, réalisée et réalisée appariée),
+        # comparée à `kmSecuriteSaison` par le test du banc.
+        'securite': campagne.securite_saison(saison, infos, tour, pol),
     })
 
 

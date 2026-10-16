@@ -22,7 +22,7 @@ void _writeGz(String path, Object? value) {
 }
 
 Map<String, Object?> _profileJson(String key) =>
-    readSeasonJson().firstWhere((j) => j['key'] == key);
+    readSeasonJsonAll().firstWhere((j) => j['key'] == key);
 
 List<Object?> _referenceOf(String key) {
   final inputs = loadInputs('tous');
@@ -313,7 +313,9 @@ Future<void> runKm1({
     '$outPath/traces_endurance.json.gz',
     await Isolate.run(_enduranceTraces),
   );
-  final keys = <String>[for (final j in readSeasonJson()) j['key']! as String];
+  final keys = <String>[
+    for (final j in readSeasonJsonAll()) j['key']! as String,
+  ];
   var next = 0;
   Future<void> worker() async {
     while (next < keys.length) {
