@@ -588,13 +588,19 @@ class Seances {
     return math.exp(mu) * _gardeSerie(t) * f;
   }
 
-  /// P(réussir [reps] répétitions avec la charge [externe] aujourd'hui).
-  double? probaReussite(String exId, double externe, [num reps = 1]) {
+  /// P(réussir [reps] répétitions avec la charge [externe] aujourd'hui) ;
+  /// [brut] : écart-type sans l'élargissement de la fiabilité (tentatives).
+  double? probaReussite(
+    String exId,
+    double externe, [
+    num reps = 1,
+    bool brut = false,
+  ]) {
     final t = m.piste(exId);
     if (t == null || t.type != 'charge') {
       return null;
     }
-    final (mu, sd) = m.capaciteDuJour(exId)!;
+    final (mu, sd) = m.capaciteDuJour(exId, brut: brut)!;
     final (lamb, k) = m.courbe(t);
     final besoin =
         math.log(m.masse(t, externe)) +
@@ -2553,7 +2559,18 @@ class Seances {
     final hiN = hi!;
     final double reps = egalJson(hiN, lo) ? hiN.toDouble() : (lo + hiN) / 2.0;
     final pr = jld(jm(p['planification'])['prudence_charge']);
-    final prudence = t.seances > 3 ? pr[1] : pr[0];
+    var prudence = t.seances > 3 ? pr[1] : pr[0];
+    // 1.0.3 : séries lourdes (répétitions ≤ `fiabilite_schema_reps`) d'un
+    // athlète aux notes peu fiables (κ > 1) : quantile plus prudent de
+    // `prudence_charge_fiabilite`·(κ − 1) écarts-types (l'écart-type lui-même
+    // est déjà élargi par κ) ; 0 pour κ = 1.
+    final kappa = m.elargissement();
+    if (kappa > 1.0 &&
+        hiN <= dbl(jm(p['mesure'])['fiabilite_schema_reps'] ?? 5)) {
+      prudence +=
+          dbl(jm(p['planification'])['prudence_charge_fiabilite'] ?? 0.0) *
+          (kappa - 1.0);
+    }
     var voulu = chargePour(exId, reps, rir, prudence)!;
     final trace = <Object?>['modele ${fixe(voulu, 1)} (rir ${fixe(rir, 1)})'];
     if (tech['kind'] == 'top_set_backoff' &&
@@ -2850,6 +2867,22 @@ class Seances {
     final h = g.hausseMax(fragile);
     final avantBornes = charge;
     final gele = gel ?? (vrai(plan['sans_hausse']) || vrai(plan['reprise']));
+    // 1.0.3 (contrat § 6.3, mesuré en KM1c3) : après un échec non prévu à
+    // la dernière séance de l'exercice, 0.3.1 interdit toute hausse par
+    // rapport à cette séance, quel que soit le schéma (`track.noUp` →
+    // `lastAny`) ; Koach 1.0.2 ne l'interdisait que sur le même schéma
+    // (`avant.$2`). `echec_sans_hausse_tout_schema` : 1 = règle de 0.3.1 ;
+    // 2 = seulement quand les notes ne sont pas fiables (κ > 1) ; 0 = 1.0.2.
+    final modeEchec = (s['echec_sans_hausse_tout_schema'] ?? 0) as num;
+    final derniere = mem.chargeDerniere;
+    if (mem.echec &&
+        derniere != null &&
+        modeEchec != 0 &&
+        (modeEchec == 1 || m.elargissement() > 1.0)) {
+      if (charge > derniere) {
+        charge = derniere;
+      }
+    }
     if (avant != null) {
       if (gele || avant.$2) {
         if (charge > avant.$1) {
@@ -3347,7 +3380,10 @@ class Seances {
     final grille = plan['grille'] as Grille?;
     final (nT, rirT) = plan['rampe'] as (num, num);
     final bw = t.fraction * m.poidsKg;
-    final (mu, sd) = m.capaciteDuJour(exId)!;
+    // 1.0.3 : écart-type brut (la borne large `mu + 2,5·σ` ne doit pas
+    // monter avec l'élargissement de la fiabilité : il irait dans le sens
+    // moins prudent).
+    final (mu, sd) = m.capaciteDuJour(exId, brut: true)!;
     final (lamb, k) = m.courbe(t);
     double voulu;
     var dit = 0.0;
@@ -3522,6 +3558,26 @@ class Seances {
   /// sans une répétition faite pendant la même période, quand elle est plus
   /// lourde que la plus lourde barre réussie.
   double? _palierBarres(Memoire mem, double bw) {
+    // 1.0.3 (contrat § 5.13, § 6.5 ; mesuré en KM1c3) : notes peu fiables
+    // (κ > 1) : le palier accordé par la note d'une barre est réduit
+    // (× max(0 ; 1 − tentative_palier_fiabilite·(κ − 1))), et chaque barre
+    // réussie ne vaut que (1 − marge) de sa charge, marge =
+    // min(tentative_marge_fiabilite_max ; tentative_marge_fiabilite·(κ − 1)).
+    // κ = 1 : règle de 1.0.2.
+    final kappa = m.elargissement();
+    var gPas = 1.0;
+    var marge = 0.0;
+    if (kappa > 1.0) {
+      gPas = 1.0 - dbl(s['tentative_palier_fiabilite'] ?? 0.0) * (kappa - 1.0);
+      if (gPas < 0.0) {
+        gPas = 0.0;
+      }
+      marge = dbl(s['tentative_marge_fiabilite'] ?? 0.0) * (kappa - 1.0);
+      final mx = dbl(s['tentative_marge_fiabilite_max'] ?? 0.0);
+      if (marge > mx) {
+        marge = mx;
+      }
+    }
     double? plusHaute;
     final ramenees = <(double, double)>[];
     for (final (j, c, r, f) in mem.barres) {
@@ -3532,7 +3588,7 @@ class Seances {
       if (plus > _n('schema_change_reps_max')) {
         plus = _n('schema_change_reps_max');
       }
-      final total = (c + bw) * (1 + dbl(s['schema_change_part']) * plus);
+      var total = (c + bw) * (1 + dbl(s['schema_change_part']) * plus);
       final dit = rirDeFlammes(f);
       var pas = 0.0;
       if (dit != null) {
@@ -3543,6 +3599,10 @@ class Seances {
             break;
           }
         }
+      }
+      pas *= gPas;
+      if (marge > 0.0) {
+        total *= 1.0 - marge;
       }
       ramenees.add((total, pas));
       if (plusHaute == null || total > plusHaute) {
@@ -3585,7 +3645,12 @@ class Seances {
     final exId = item['exerciseId'] as String;
     final grille = plan['grille'] as Grille?;
     final mem = this.mem(exId);
-    var (mu, sd) = m.capaciteDuJour(exId)!;
+    // 1.0.3 : écart-type brut (sans l'élargissement κ de la fiabilité des
+    // notes) : l'ouverture au quantile élargi a été mesurée en KM1c3 (coût
+    // sans gain, CHANGEMENTS_1_0_3.md § B) ; la prudence envers des notes
+    // peu fiables passe par le palier des barres prouvées (`_palierBarres`)
+    // et la barre suivante après un échec.
+    var (mu, sd) = m.capaciteDuJour(exId, brut: true)!;
     final bw = t.fraction * m.poidsKg;
     var baisse = 1.0 - dbl(s['tentative_bilan_bas_part']) * palier;
     if (vrai(jm(plan['cond'])['zone'])) {
@@ -3665,7 +3730,46 @@ class Seances {
       };
     }
     final derniere = mem.chargeSeance!;
+    final dernierEssai = index >= n - 1;
+    final proba = dernierEssai
+        ? dbl(s['tentative_troisieme_proba'])
+        : dbl(s['tentative_deuxieme_proba']);
     if ((plan['echecs'] as int) > 0 && vrai(mem.echecSeance)) {
+      // Règle A8.2 de 0.3.1 : la même barre après un échec (en
+      // compétition, le règlement interdit de redescendre). 1.0.3 (contrat
+      // § 6.5, mesuré en KM1c3) : hors semaine de compétition (test 1RM à
+      // l'entraînement), la barre suivante suit l'estimation mise à jour
+      // par l'échec, au plus `tentative_echec_baisse_part` sous la barre
+      // ratée (0 : règle A8.2 partout), jamais au-dessus.
+      final partBaisse = dbl(s['tentative_echec_baisse_part'] ?? 0.0);
+      final semC = dictOuVide(contexte)['semaine'];
+      final competition = semC != null && genres[ent(semC)] == 'competition';
+      if (partBaisse > 0.0 && !competition) {
+        final g0 = grille!;
+        final bas = _seMax<double>(
+          ((derniere + bw) * (1 - partBaisse) - bw).toDouble(),
+          g0.minimum,
+        );
+        var plancherB = g0.plancher(bas);
+        if (plancherB < bas - 1e-9) {
+          // au plus `part` sous la barre ratée : cran au-dessus
+          plancherB = g0.suivant(plancherB);
+        }
+        num c = plusLourde(proba);
+        if (c < plancherB) {
+          c = plancherB;
+        }
+        if (c > derniere) {
+          c = derniere;
+        }
+        return <String, Object?>{
+          'repsLow': 1,
+          'repsHigh': 1,
+          'loadKg': c,
+          'flames': flammes,
+          'role': 'attempt',
+        };
+      }
       return <String, Object?>{
         'repsLow': 1,
         'repsHigh': 1,
@@ -3674,10 +3778,6 @@ class Seances {
         'role': 'attempt',
       };
     }
-    final dernierEssai = index >= n - 1;
-    final proba = dernierEssai
-        ? dbl(s['tentative_troisieme_proba'])
-        : dbl(s['tentative_deuxieme_proba']);
     final saut = dernierEssai
         ? dbl(s['tentative_saut_3'])
         : dbl(s['tentative_saut_2']);
@@ -3691,7 +3791,7 @@ class Seances {
         cibleK != null &&
         derniere < (cibleK as num) &&
         cibleK <= haut + 1e-9) {
-      final pr = probaReussite(exId, cibleK.toDouble(), 1);
+      final pr = probaReussite(exId, cibleK.toDouble(), 1, true);
       if (pr != null && pr >= 0.35) {
         charge = _seMax<num>(charge, cibleK);
       }
@@ -3719,7 +3819,7 @@ class Seances {
         // kilos.
         charge = grille.suivant(derniere.toDouble());
       }
-      final pr = probaReussite(exId, charge.toDouble(), 1);
+      final pr = probaReussite(exId, charge.toDouble(), 1, true);
       if (pr != null && pr < 0.2) {
         charge = derniere;
       }

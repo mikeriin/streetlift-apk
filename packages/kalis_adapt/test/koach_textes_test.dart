@@ -33,11 +33,11 @@ Json _fixture(int i) {
   return jm(jsonDecode(f.readAsStringSync()));
 }
 
-/// Raisons `koach.*` attendues des 11 fixtures : `plans[].raisons`,
+/// Raisons `koach.*` attendues des 12 fixtures : `plans[].raisons`,
 /// `final.raisons` et les `reasons` des items servis.
 List<Json> _raisonsDesFixtures() {
   final out = <Json>[];
-  for (var i = 1; i <= 11; i++) {
+  for (var i = 1; i <= 12; i++) {
     final attendu = jm(_fixture(i)['attendu']);
     for (final p0 in jl(attendu['plans'])) {
       final p = jm(p0);

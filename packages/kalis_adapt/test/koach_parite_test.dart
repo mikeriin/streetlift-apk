@@ -1,4 +1,4 @@
-// Parité Python ↔ Dart de Koach 1.0.2 (lots KM2, KM2c1) : chaque fixture de
+// Parité Python ↔ Dart de Koach 1.0.3 (lots KM2, KM2c1, KM2c2) : chaque fixture de
 // `reference/fixtures/` (générée par la référence Python, `generer.py`) est
 // rejouée par le moteur Dart. Comparaison : nombres à
 // |a − b| ≤ 1e-9 · max(1, |a|, |b|), le reste à l'identique.
@@ -10,8 +10,16 @@ import 'package:test/test.dart';
 
 const double tolerance = 1e-9;
 
+/// Fixture de la référence (`reference/fixtures/<nom>`), ou chemin relatif
+/// au paquet quand [nom] contient un `/` (fixtures complémentaires de
+/// `test/fixtures/km2c2/`, produites par la référence sans la modifier).
 Json lireFixture(String nom) =>
-    jsonDecode(File('reference/fixtures/$nom').readAsStringSync()) as Json;
+    jsonDecode(
+          File(
+            nom.contains('/') ? nom : 'reference/fixtures/$nom',
+          ).readAsStringSync(),
+        )
+        as Json;
 
 /// Valeur JSON pure (comme `propre` de la référence).
 Object? propre(Object? x) {
@@ -455,7 +463,7 @@ void main() {
   });
 
   group('moteur', () {
-    for (var n = 1; n <= 11; n++) {
+    for (var n = 1; n <= 12; n++) {
       testerMoteur('moteur_$n.json');
     }
   });
@@ -463,5 +471,15 @@ void main() {
   group('planification', () {
     testerPlanification('planification_1.json');
     testerPlanification('planification_2.json');
+  });
+
+  // Branches du delta 1.0.3 que les fixtures de la référence n'exécutent
+  // pas (relecture de KM2c2, M1) : barre suivante après une tentative
+  // ratée hors compétition, même barre en compétition, tirages du jumeau
+  // avec κ > 1 (`test/fixtures/km2c2/generer_km2c2.py`).
+  group('KM2c2', () {
+    testerMoteur('test/fixtures/km2c2/moteur_12_echec.json');
+    testerMoteur('test/fixtures/km2c2/moteur_12_echec_competition.json');
+    testerPlanification('test/fixtures/km2c2/planification_kappa.json');
   });
 }

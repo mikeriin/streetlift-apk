@@ -263,6 +263,7 @@ class Koach {
       'fatigue_intra': m.m[fi],
       'part_tenue': m.m[hh],
       'note_paresseuse': m.paresse[0] / (m.paresse[0] + m.paresse[1]),
+      'fiabilite': m.fiabilite.resume(),
       'hypotheses_reponse': List<double>.of(m.poidsHyp),
       'exercices': exercices,
     };

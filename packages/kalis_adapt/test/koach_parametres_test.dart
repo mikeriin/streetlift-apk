@@ -68,10 +68,10 @@ void main() {
         sha256.convert(_octets(koachFichierFiches)).toString(),
         koachFichesSha256,
       );
-      // En-tête du contrat 1.0.2 (CONTRAT_1_0.md).
+      // En-tête du contrat 1.0.3 (CONTRAT_1_0.md).
       expect(
         koachParametresSha256,
-        '211c936136cc22027d85ed9bfb42ef6398bf45b272bd3a8f0900ef235846f5da',
+        'd129a4e9422b90bfa0aa9034770c57ea698b49ab92c0e8dc0df703bd37231aa0',
       );
     });
 
@@ -87,11 +87,11 @@ void main() {
   group('lireParametresKoach', () {
     final p = lireParametresKoach(_texte(koachFichierParametres));
 
-    test('version, schéma, nombre de clés (322 : 6 + 316)', () {
+    test('version, schéma, nombre de clés (338 : 6 + 332)', () {
       expect(p['schema'], koachParametresSchema);
       expect(p['version'], koachParametresVersion);
       expect(koachParametresVersion, koachVersion);
-      expect(koachVersion, '1.0.2-ref.1');
+      expect(koachVersion, '1.0.3-ref.1');
       final racine = [
         for (final e in p.entries)
           if (e.value is! Map<String, Object?>) e.key,
@@ -107,9 +107,9 @@ void main() {
         cles += jm(p[s]).length;
       }
       expect(racine.length, 6);
-      expect(cles - racine.length, 316);
+      expect(cles - racine.length, 332);
       expect(cles, koachParametresCles);
-      expect(cles, 322);
+      expect(cles, 338);
     });
 
     test('identique au fichier de référence décodé', () {
@@ -179,6 +179,52 @@ void main() {
         'borne: a_priori.$sd',
       );
     });
+
+    test(
+      'refus : bornes et garde-fous de 1.0.3 (CHANGEMENTS_1_0_3.md § D)',
+      () {
+        refuse(
+          modifie((q) => jm(q['mesure'])['defaut_modele_sd'] = 0.0),
+          'borne: mesure.defaut_modele_sd',
+        );
+        refuse(
+          modifie((q) => jm(q['mesure'])['fiabilite_oubli'] = 1.0),
+          'borne: mesure.fiabilite_oubli',
+        );
+        refuse(
+          modifie((q) => jm(q['mesure'])['fiabilite_elargissement_max'] = 0.5),
+          'borne: mesure.fiabilite_elargissement_max',
+        );
+        refuse(
+          modifie((q) => jm(q['mesure'])['fiabilite_schema_reps'] = 31),
+          'borne: mesure.fiabilite_schema_reps',
+        );
+        refuse(
+          modifie(
+            (q) => jm(q['planification'])['prudence_charge_fiabilite'] = 6.0,
+          ),
+          'borne: planification.prudence_charge_fiabilite',
+        );
+        // Grille et a priori de la fiabilité : figés à l'import (validation
+        // contre les paramètres en cours).
+        for (final (cle, v) in <(String, Object?)>[
+          ('fiabilite_phi_min', 0.25),
+          ('fiabilite_phi_max', 4.0),
+          ('fiabilite_phi_points', 15),
+          ('fiabilite_ln_phi_sd', 0.6),
+          ('fiabilite_non_notee_a_priori', <Object?>[2.0, 4.0]),
+        ]) {
+          final q = modifie((x) => jm(x['mesure'])[cle] = v);
+          expect(
+            validerParametres(p, q),
+            contains('fige: mesure.$cle (garde-fou, modification interdite)'),
+            reason: cle,
+          );
+        }
+        final q = modifie((x) => jm(x['mesure'])['fiabilite_oubli'] = 0.95);
+        expect(validerParametres(p, q), isEmpty);
+      },
+    );
 
     test('une version mineure différente est admise', () {
       final q = modifie((x) => x['version'] = '1.7.0-ref.3');

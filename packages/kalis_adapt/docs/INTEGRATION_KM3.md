@@ -13,6 +13,14 @@ paliers mesurés, ouverture des tentatives selon la note des barres, dispersion 
 `koach_params_1_0_2.json`, nouvelles empreintes au § 3). Seul ajout visible : la clé `prevu_jour` dans les entrées
 de `Planification.previsions` (moyenne et écart-type de ln capacité prévue le jour J, par cible).
 
+**Mise à jour du 16/10/2026 (`kalis_adapt` 1.0.2, lot KM2c2)** : portage de la référence Koach 1.0.3 (fiabilité des
+notes : l'incertitude des capacités est élargie par κ ≥ 1 chez un athlète aux notes peu fiables, jamais leur
+moyenne ; prudence ciblée à l'ouverture des tentatives ; barre suivante après un échec hors compétition ; règle de
+0.3.1 « aucune hausse après un échec non prévu, tout schéma » ; `reference/CHANGEMENTS_1_0_3.md`). L'API et le
+schéma du journal ne changent pas : monter le paquet et remplacer l'asset de paramètres (`koach_params_1_0_2.json`
+→ `koach_params_1_0_3.json`, nouvelles empreintes au § 3). Seul ajout visible : la clé `fiabilite` de `posterior()`
+(`phi`, `ln_phi`, `p_phi_sup_2`, `notes`, `part_non_notee`, `elargissement`, `par_schema`), lisible par le mode dev.
+
 Sources lues : `CONTRAT.md` § K ; `reference/CONTRAT_1_0.md` (§ 2, 3, 3.7, 7, 9.5, 10, annexe A) ;
 `reference/rejeu/journal_app.py` et `walk_forward.py` ; `lib/src/koach/moteur.dart`, `planification.dart`,
 `rupture.dart`, `adherence.dart`, `dual.dart`, `parametres.dart`, `seance.dart`, `securite.dart` ;
@@ -68,7 +76,7 @@ Textes des raisons : `package:kalis_adapt/koach_textes.dart` (§ 4), testé par 
 ### 1.2 Construction
 
 ```dart
-final params = lireParametresKoach(await rootBundle.loadString('assets/koach/koach_params_1_0_2.json'));
+final params = lireParametresKoach(await rootBundle.loadString('assets/koach/koach_params_1_0_3.json'));
 final fiches = lireFichesKoach(await rootBundle.loadString('assets/koach/vecteurs_qualites_v1.json'));
 final koach = Koach(params, fiches, profilKoach);           // profilKoach : § 2.6, figé (instantané)
 final validation = ProfilValidation.depuisProfil(athleteProfile, debut: lundiS1);
@@ -329,15 +337,15 @@ fiche sont ignorés par la planification (`chargerReference`, d'après le code).
 
 ## 3. Paramètres
 
-- **Assets.** Copier dans l'application, octet pour octet, `packages/kalis_adapt/assets/koach/koach_params_1_0_2.json`
+- **Assets.** Copier dans l'application, octet pour octet, `packages/kalis_adapt/assets/koach/koach_params_1_0_3.json`
   et `vecteurs_qualites_v1.json` dans `assets/koach/`, déclarés dans `pubspec.yaml` de l'application comme
   `assets/catalog/catalog_v1.json.gz` (copie de l'asset de `kalis_core`). Le paquet est du Dart pur et ne déclare
   aucun asset Flutter (son `pubspec.yaml` n'a pas de section `flutter`) : ne pas utiliser `koachAssetParametres` /
   `koachAssetFiches` (clés `packages/kalis_adapt/…`), qui supposent un asset déclaré par le paquet. Lecture :
   `rootBundle.loadString('assets/koach/…')`, puis `lireParametresKoach` / `lireFichesKoach` (`parametres.dart`),
   qui contrôlent schéma, version, types, bornes et positivité et lèvent `FormatException`.
-- **Empreintes.** Paramètres : version `1.0.2-ref.1`, 322 clés, SHA-256
-  `211c936136cc22027d85ed9bfb42ef6398bf45b272bd3a8f0900ef235846f5da` (`koachParametresSha256`). Fiches : version
+- **Empreintes.** Paramètres : version `1.0.3-ref.1`, 338 clés, SHA-256
+  `d129a4e9422b90bfa0aa9034770c57ea698b49ab92c0e8dc0df703bd37231aa0` (`koachParametresSha256`). Fiches : version
   `1.0.0`, 1 039 fiches, SHA-256 `71454d2d6fcc6df8823b23cb640eec5293f40e91822bda9afa75f5ca0098ba6c`
   (`koachFichesSha256`). Un test de l'application compare les octets de `assets/koach/` à ceux du paquet et leur
   SHA-256 aux constantes (comme `test/koach_parametres_test.dart` du paquet).
@@ -663,9 +671,9 @@ Koach n'en a pas (contrat § 10.2) : c'est un état de l'application, hors du jo
 
 ## 9. Liste de contrôle KM3
 
-- [ ] `packages/kalis_adapt` = `etiquettes/kalis_adapt-v1.0.0` à l'octet ; `kalis_bench` absent ; `kalis_core`
+- [ ] `packages/kalis_adapt` = `etiquettes/kalis_adapt-v1.0.2` (dernière étiquette validée de Koach) à l'octet ; `kalis_bench` absent ; `kalis_core`
       0.4.3, `kalis_plan` 0.3.1 inchangés.
-- [ ] Assets `assets/koach/koach_params_1_0_2.json` et `vecteurs_qualites_v1.json` copiés, déclarés, SHA-256
+- [ ] Assets `assets/koach/koach_params_1_0_3.json` et `vecteurs_qualites_v1.json` copiés, déclarés, SHA-256
       vérifiés par un test ; lus par `lireParametresKoach` / `lireFichesKoach`.
 - [ ] Construction : `Koach` + `Planification` (validateur `validateurSecurite` + `ProfilValidation.depuisProfil`),
       `Surveillance`, `ControleDual`, `Adherence`, dans cet ordre ; même ordre pour `rejouer`.
