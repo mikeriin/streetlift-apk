@@ -24,6 +24,7 @@ import '../program_screens.dart' show ProgramScreen;
 import '../session_prefs.dart' show SessionSpace;
 import '../store.dart';
 import '../kit/kit.dart';
+import 'day_type.dart' show dayTypeLabel;
 import 'plan_creation.dart';
 import 'plan_inspector.dart';
 import 'plan_program.dart';
@@ -636,8 +637,11 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
             '${weekdayLabel(d.weekday)} · ${d.minutesBudget} min',
             style: KType.titreCarte.copyWith(color: k.texte),
           ),
+          // KS1A : type du jour écrit par `kalis_plan` 0.4 (« Tirage —
+          // force ») ; le thème pour un bloc écrit avant.
           Text(
-            focusLabel(d.focus),
+            dayTypeLabel(d.type) ?? focusLabel(d.focus),
+            key: ValueKey('plan-day-type-${d.dayIndex}'),
             style: KType.detail.copyWith(color: k.texte2),
           ),
           const SizedBox(height: KSpacing.s8),
@@ -822,6 +826,40 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     ];
   }
 
+  /// KS1A (`kalis_plan` 0.4) : gabarit de semaine retenu (« Semaine
+  /// construite en tirage, poussée, jambes, deux fois, pour tes 6
+  /// séances ») et raisons de structure du bloc (objectif sans séance,
+  /// jalon) ; null pour un bloc écrit avant 0.4.
+  Widget? _structureNotice(BuildContext context, kc.Pass1Plan plan) {
+    final lines = <String>[
+      for (final r in plan.split?.reasons ?? const <kc.Reason>[])
+        if (r.code == 'plan.split_chosen') planReason(r),
+      for (final r in plan.reasons)
+        if (r.code == 'plan.goal_uncovered' || r.code == 'plan.milestone')
+          planReason(r),
+    ];
+    if (lines.isEmpty) return null;
+    final k = KTokens.of(context);
+    return KCard(
+      key: const ValueKey('plan-structure'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Structure de la semaine',
+            style: KType.titreCarte.copyWith(color: k.texte),
+          ),
+          const SizedBox(height: KSpacing.s4),
+          for (final l in lines.toSet())
+            Padding(
+              padding: const EdgeInsets.only(top: KSpacing.s4),
+              child: Text(l, style: KType.corps.copyWith(color: k.texte)),
+            ),
+        ],
+      ),
+    );
+  }
+
   Widget _pass1(BuildContext context, PlanCreation creation) {
     final plan = creation.plan;
     final n = creation.proposals.length;
@@ -829,6 +867,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
       final fresh = _slots.length;
       return _list('plan-pass1', [
         ..._nextIntro(context, creation),
+        if (_structureNotice(context, plan) case final notice?) notice,
         if (_error != null) _errorBubble(),
         for (final d in plan.days) _dayCard(context, d),
         _weekOverview(context, creation),
@@ -867,6 +906,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
               'Programme prudent, d’après ton questionnaire santé : pas '
               'd’impact, pas de course, une marche plus bas.',
         ),
+      if (_structureNotice(context, plan) case final notice?) notice,
       if (_error != null) _errorBubble(),
       for (final d in plan.days) _dayCard(context, d),
       _weekOverview(context, creation),

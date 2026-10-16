@@ -24,6 +24,11 @@ abstract final class Method {
   /// Force lestée en entretien (spécialisation d'un autre mouvement).
   static const String liftMaintain = 'lift.maintain';
 
+  /// Charge fixe (lot KS1) : objectif de répétitions à une charge donnée
+  /// (« 35 répétitions à 70 kg ») — la charge de l'objectif, les
+  /// répétitions montent.
+  static const String liftFixed = 'lift.fixed';
+
   /// Répétitions : série longue puis séries allégées.
   static const String repsTop = 'reps.top';
 
@@ -123,6 +128,7 @@ abstract final class Method {
     repsTechnique,
     liftMaintain,
     liftVolume,
+    liftFixed,
     skillAttempt,
     repsEvent,
     repsTop,
@@ -320,6 +326,10 @@ final class DaySpec {
   /// Thème (code de `FocusCodes`).
   String focus = '';
 
+  /// Type du jour (schémas, qualité, charge ; lot KS1) quand le gabarit le
+  /// fixe ; sinon il est déduit des emplacements à l'assemblage.
+  DayType? type;
+
   /// Emplacements, dans l'ordre de la séance.
   final List<SlotSpec> slots = <SlotSpec>[];
 
@@ -376,7 +386,15 @@ final class Skeleton {
     required this.ladders,
     required this.reasons,
     required this.intent,
+    this.templateId = '',
+    this.splitReasons = const <Reason>[],
   });
+
+  /// Code du gabarit de semaine retenu (lot KS1, `SplitTemplates`).
+  final String templateId;
+
+  /// Raisons du choix du gabarit.
+  final List<Reason> splitReasons;
 
   /// Style.
   final CoachStyle style;

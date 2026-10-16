@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.0.0 : Koach 1.0 (dev7.0.0, KM3).
-        self.assertEqual(version, '7.0.0')
+        # 7.1.0 : types de jour (dev7.1.0, KS1A).
+        self.assertEqual(version, '7.1.0')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)

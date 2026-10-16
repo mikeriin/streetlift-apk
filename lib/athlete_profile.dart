@@ -2206,6 +2206,31 @@ AthleteProfile sampleAthleteProfile({
   );
 }
 
+/// KS1A (`kalis_plan` 0.4, structure de la semaine) : compétiteur street
+/// de [sampleStreetProfile] qui partage son temps à parts égales entre
+/// streetlifting et sets & reps, six séances de 120 min (lundi à samedi) :
+/// jours de force et jours d'endurance de force (tests et cible émulateur).
+AthleteProfile sampleStreet5050Profile({CivilDate? on}) {
+  const mode = StreetMode(
+    primary: StreetStyle.streetlifting,
+    streetliftingPct: 50,
+    setsRepsPct: 50,
+    calisthenicsPct: 0,
+  );
+  return sampleStreetProfile(on: on).copyWith(
+    disciplines: mode.toDisciplineMix(),
+    streetMode: mode,
+    availability: const [
+      DaySlot(weekday: 1, minutes: 120),
+      DaySlot(weekday: 2, minutes: 120),
+      DaySlot(weekday: 3, minutes: 120),
+      DaySlot(weekday: 4, minutes: 120),
+      DaySlot(weekday: 5, minutes: 120),
+      DaySlot(weekday: 6, minutes: 120),
+    ],
+  );
+}
+
 /// CI1 : profils street au profil v3 complet (chemin calibré des moteurs)
 /// pour les tests et la session de test : compétiteur de streetlifting
 /// avancé avec une compétition dans 12 semaines, ou débutant de

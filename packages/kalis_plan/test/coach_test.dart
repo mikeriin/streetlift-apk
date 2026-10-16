@@ -2323,4 +2323,180 @@ void main() {
       }
     });
   });
+
+  group('KS1c1 — échéance avancée en cours de bloc', () {
+    // Deux blocs de quatre semaines ; l'échéance est avancée de deux
+    // semaines au milieu du deuxième bloc : le bloc suivant commence après
+    // deux semaines servies, les deux dernières semaines écrites du bloc
+    // n'ont jamais eu lieu.
+    final profile = _lifter(weeksOut: 20);
+    final blocks = _program(catalog, profile, 8);
+    final previous = blocks[1];
+    final at = previous.pass1.startDate.addDays(14);
+    final advanced = profile.copyWith(
+      events: <SeasonEvent>[
+        for (final e in profile.events!) e.copyWith(date: e.date.addDays(-14)),
+      ],
+    );
+    AdaptationSummary summary() => AdaptationSummary(
+      asOf: at.addDays(-1),
+      weeksObserved: 6,
+      sessionsPlanned: 6 * previous.pass1.days.length,
+      sessionsCompleted: 6 * previous.pass1.days.length,
+      unlockLevel: UnlockLevel.loadsReps,
+      confidence: 0,
+      estimates: const <ExerciseEstimate>[],
+      pains: const <PainTrend>[],
+      avoidedExerciseIds: const <String>[],
+      reasons: const <Reason>[],
+    );
+    NextBlockRequest request(ProgramBlock block) => NextBlockRequest(
+      profile: advanced,
+      seed: 0,
+      startDate: at,
+      previous: block,
+      adaptation: summary(),
+      locks: const <PlanLock>[],
+    );
+    Map<String, (double, int)> loadsOf(WeekPrescription w) {
+      final out = <String, (double, int)>{};
+      for (final d in w.days) {
+        for (final i in d.items) {
+          final load = i.startLoadKg;
+          final reps = i.repsHigh;
+          if (i.kind != SetKind.work || load == null || reps == null) {
+            continue;
+          }
+          final fraction =
+              catalog.exercise(i.exerciseId).bodyweightFraction?.value ?? 0;
+          final total = load + fraction * 78;
+          final key = '${d.dayIndex}|${i.slotId}|${i.exerciseId}';
+          final before = out[key];
+          if (before == null || total > before.$1) {
+            out[key] = (total, reps);
+          }
+        }
+      }
+      return out;
+    }
+
+    test('le bloc précédent est tronqué aux semaines servies', () {
+      final n = previous.pass2.weeks.length;
+      expect(n, greaterThanOrEqualTo(3));
+      expect(servedWeeksOf(previous, at), 2);
+      expect(
+        servedWeeksOf(previous, previous.pass1.startDate.addDays(7 * n)),
+        n,
+      );
+      expect(servedWeeksOf(previous, previous.pass1.startDate.addDays(3)), 1);
+      expect(servedWeeksOf(previous, previous.pass1.startDate.addDays(90)), n);
+      final served = servedBlockRequest(request(previous));
+      expect(served.previous.pass1.weeks, 2);
+      expect(served.previous.pass2.weeks.length, 2);
+      expect(served.previous.pass2.weeks.last.weekIndex, 1);
+      expect(
+        servedBlockRequest(request(served.previous)).previous.toJson(),
+        served.previous.toJson(),
+      );
+      // Date antérieure au début du bloc : une semaine ; bloc d'une
+      // semaine : jamais tronqué.
+      expect(servedWeeksOf(previous, previous.pass1.startDate.addDays(-7)), 1);
+      final one = ProgramBlock(
+        pass1: previous.pass1.copyWith(weeks: 1),
+        pass2: previous.pass2.copyWith(
+          weeks: <WeekPrescription>[previous.pass2.weeks.first],
+        ),
+      );
+      expect(servedWeeksOf(one, at), 1);
+      expect(identical(servedBlockOf(one, at), one), isTrue);
+      expect(
+        identical(
+          servedBlockOf(previous, previous.pass1.startDate.addDays(7 * n)),
+          previous,
+        ),
+        isTrue,
+      );
+    });
+
+    test('la note de reprise après douleur est recalculée sur les semaines '
+        'de charge servies', () {
+      // Bloc dont la passe 2 porte une reprise de l'épaule partie au
+      // palier 0 et arrivée au palier (semaines de charge − 1).
+      final kinds = <WeekKind>[for (final w in previous.pass2.weeks) w.kind];
+      var loaded = 0;
+      for (final k in kinds) {
+        if (k == WeekKind.build || k == WeekKind.intro) {
+          loaded++;
+        }
+      }
+      final zone = BodyZone.shoulder.index;
+      final end = loaded - 1;
+      final noted = ProgramBlock(
+        pass1: previous.pass1,
+        pass2: previous.pass2.copyWith(
+          reasons: <Reason>[
+            ...previous.pass2.reasons,
+            Reason(
+              code: ReasonCodes.planCoachNote,
+              params: <String, Object?>{
+                'note': CoachNotes.painReturn,
+                'value': (zone * 100 + end) * 1.0,
+              },
+            ),
+          ],
+        ),
+      );
+      // Deux semaines servies : le palier atteint est (charge servies − 1).
+      final served = servedBlockOf(noted, at);
+      var loadedServed = 0;
+      for (final k in kinds.sublist(0, 2)) {
+        if (k == WeekKind.build || k == WeekKind.intro) {
+          loadedServed++;
+        }
+      }
+      final expected = loadedServed > 0 ? loadedServed - 1 : 0;
+      final values = <num>[
+        for (final r in served.pass2.reasons)
+          if (r.code == ReasonCodes.planCoachNote &&
+              r.params['note'] == CoachNotes.painReturn)
+            r.params['value']! as num,
+      ];
+      expect(values, <num>[(zone * 100 + expected) * 1.0]);
+      // Le bloc suivant repart du palier suivant celui atteint.
+      expect(coachReturnStepsOf(served)[BodyZone.shoulder], expected + 1);
+      expect(coachReturnStepsOf(noted)[BodyZone.shoulder], end + 1);
+      // Les autres raisons sont gardées.
+      expect(served.pass2.reasons.length, noted.pass2.reasons.length);
+    });
+
+    test('le bloc suivant ne dépend que des semaines servies et borne sa '
+        'première semaine sur la dernière semaine faite', () {
+      final engine = KalisPlan();
+      final next = engine.nextBlock(catalog, request(previous)).block;
+      final truncated = servedBlockRequest(request(previous)).previous;
+      final same = engine.nextBlock(catalog, request(truncated)).block;
+      expect(next.toJson(), same.toJson());
+      expect(next.validate(), isEmpty);
+      // Garde-fou : à répétitions égales, au plus `coachLoadRise` au-dessus
+      // de la dernière semaine servie (semaine 2), jamais de la semaine 4
+      // écrite puis abandonnée.
+      final level = profile.experience!.index;
+      final lastServed = loadsOf(previous.pass2.weeks[1]);
+      final first = loadsOf(next.pass2.weeks.first);
+      var compared = 0;
+      for (final entry in first.entries) {
+        final before = lastServed[entry.key];
+        if (before == null || before.$2 != entry.value.$2) {
+          continue;
+        }
+        compared++;
+        expect(
+          entry.value.$1,
+          lessThanOrEqualTo(before.$1 * (1 + coachLoadRise[level]) + 1e-9),
+          reason: entry.key,
+        );
+      }
+      expect(compared, greaterThan(0));
+    });
+  });
 }

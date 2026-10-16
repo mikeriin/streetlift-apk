@@ -178,6 +178,22 @@ const Map<String, Map<WeakPointKind, List<String>>> weakPointVariants =
       },
     };
 
+/// Référence de charge d'une variante lestée que le catalogue range sous un
+/// autre mouvement (lot KS1, CAHIER_KS.md § 8.2, constat K8 : la traction
+/// haute et le dips à la barre fixe, rangés sous le muscle-up lesté, se
+/// réglaient sur son 1RM) : mouvement de référence et coefficient de
+/// transfert (1RM de charge totale de la variante rapporté à celui de la
+/// référence). Choix raisonnés, aucune source ne chiffre ces transferts :
+/// 0,85 pour la traction haute (tirage jusqu'au bas de la poitrine,
+/// amplitude plus longue que la traction de compétition), 0,9 pour le dips
+/// à la barre fixe (appui sur une barre unique, moins stable, épaule plus
+/// en extension que sur barres parallèles).
+const Map<String, (String, double)> coachLoadReferences =
+    <String, (String, double)>{
+      'sl-traction-haute-lestee': (Ids.weightedPull, 0.85),
+      'sl-dips-barre-fixe-leste': (Ids.weightedDip, 0.9),
+    };
+
 /// Candidats d'assistance, par besoin, du plus souhaité au repli.
 abstract final class Picks {
   /// Tirage horizontal.

@@ -341,6 +341,7 @@ PlanDay arbitraryPlanDay(Random r) {
     minutesBudget: arbInt(r, 0, 300),
     focus: arbString(r, 0, 12),
     slots: arbList(r, 0, 3, () => arbitraryPlanSlot(r)),
+    type: r.nextBool() ? null : arbitraryDayType(r),
   );
 }
 
@@ -378,6 +379,7 @@ Pass1Plan arbitraryPass1Plan(Random r) {
     skillLadders: r.nextBool()
         ? null
         : arbList(r, 0, 4, () => arbitrarySkillLadder(r)),
+    split: r.nextBool() ? null : arbitrarySplitChoice(r),
   );
 }
 
@@ -1483,6 +1485,23 @@ TestSpec arbitraryTestSpec(Random r) {
   );
 }
 
+/// Valeur aléatoire de [DayType].
+DayType arbitraryDayType(Random r) {
+  return DayType(
+    patterns: arbList(r, 1, 7, () => arbEnum(r, DayPattern.values)),
+    quality: arbEnum(r, DayQuality.values),
+    stress: r.nextBool() ? null : arbEnum(r, DayStress.values),
+  );
+}
+
+/// Valeur aléatoire de [SplitChoice].
+SplitChoice arbitrarySplitChoice(Random r) {
+  return SplitChoice(
+    templateId: arbString(r, 1, 12),
+    reasons: arbList(r, 0, 3, () => arbitraryReason(r)),
+  );
+}
+
 /// Générateur, encodeur et décodeur de chaque type, pour les tests génériques.
 final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
   ContractCodec<Reason>(
@@ -2246,6 +2265,20 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
     arbitraryTestSpec,
     (v) => v.toJson(),
     TestSpec.fromJson,
+    (v) => v.validate(),
+  ),
+  ContractCodec<DayType>(
+    'DayType',
+    arbitraryDayType,
+    (v) => v.toJson(),
+    DayType.fromJson,
+    (v) => v.validate(),
+  ),
+  ContractCodec<SplitChoice>(
+    'SplitChoice',
+    arbitrarySplitChoice,
+    (v) => v.toJson(),
+    SplitChoice.fromJson,
     (v) => v.validate(),
   ),
 ];

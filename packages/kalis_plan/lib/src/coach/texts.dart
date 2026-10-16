@@ -256,6 +256,17 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'ensuite ajoute '
               'le plus petit pas quand toutes les séries passent ; si la '
               "réserve n'est pas tenue, retire 2,5 kg dans la séance.",
+        CoachNotes.minimumLoad =>
+          'Charge visée sous ton poids du corps : la série se fait avec le '
+              'plus petit lest (${_plain(v)} kg) plutôt qu\'au poids du '
+              'corps, et les répétitions se règlent sur la réserve écrite '
+              '(elles montent quand la réserve baisse). Quand toutes les '
+              'séries passent avec la réserve, ajoute le plus petit pas.',
+        CoachNotes.fixedLoad =>
+          'Ligne à charge fixe : ${_plain(v)} kg, la charge de ton '
+              'objectif. Fais les répétitions écrites avec la réserve '
+              'indiquée ; le nombre de répétitions monte de semaine en '
+              'semaine, la charge ne bouge pas.',
         CoachNotes.pushLadder =>
           'Échelle de poussée : pompe au mur → mains surélevées (barre '
               'basse ou barres parallèles, de plus en plus bas) → genoux '
