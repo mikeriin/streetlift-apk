@@ -23,7 +23,11 @@ Session Fable 5.1, effort maximal, démarrée le 15/10/2026 à 19:09 UTC. Base `
 - Relecture indépendante (Opus) reçue et traitée : B1, B2 (section D du rejeu), M1 (queue lourde `note_erreur_grossiere` dans la vraisemblance de φ), M2 (échauffements exclus), M3 (plafond κ = 2, `fiabilite_elargissement_max`), m4 (`_rampe` sur σ brut), m5 (FIGEES grille/a priori, borne prudence), m6 (P(φ ≥ 2)), m7, m8, m10 ; tests ajoutés (16 dans test_fiabilite, test_rejeu sans principal) ; suite complète verte (260) hors SHA du contrat. Fixtures régénérées après corrections. Fichier de paramètres : 338 clés (16 nouvelles).
 - Hors ligne, indicateur corrigé (543 ouvertures) : a = 1, c = 12 gardés (a = 0,5, c = 8 : +0,002, dans le bruit).
 
-## En cours
+## Fin de lot (16/10/2026 02:45 UTC)
+
+- Contrôle complet run 38831793524 vert ; `moteurs` 2d3a5766 poussé ; `pipeline` d11cd767 (LIVRAISON_KM1c3.md, DECISIONS_CP.md section KM1c3, ETAT « livré ») ; projet claude.ai (`claude/LIVRAISON_KM1c3.md`, `claude/DECISIONS_CP.md`) ; page de suivi (version 50) ; notification envoyée. Lot terminé.
+
+## En cours (historique)
 
 - 00:50 UTC : campagne assemblée (`donnees/criteres_km1c3.json` : 1 3,94 %, 2 0,87 %, 4 90,21 %, 5 biais −0,6 / écart max 24,4 contre 21,3 (recul formel, d5 29/37), 6 0,9449, 8 0, 11 0,56 s / 7,3 ms), `calibration_grappes_km1c3.json`, SHA d129a4e9… dans CONTRAT et SOURCES, suite 261 verte, fixtures à jour ; commit `moteurs` 2d3a5766 (rebasé sur KS1 b35a5f6d) poussé sur `claude/ci-cp-a` : **run 38831793524 (contrôle complet) en cours**, ~1 h 25. Ensuite : push `moteurs` (rebase sur origin/moteurs, KS1c1 tourne), livraison (scratchpad `LIVRAISON_KM1c3.md` : reste [[FIN]]), DECISIONS (scratchpad `DECISIONS_KM1c3.md`), ETAT « livré », page de suivi (scratchpad `page_km1c3.html`), projet claude.ai, notification.
 
