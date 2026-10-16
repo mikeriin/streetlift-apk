@@ -363,6 +363,9 @@ extension KoachStore on AppStore {
   /// Moteur vivant (lecture : inspecteur, exports, tests).
   ko.Koach? get koachLive => _koachRt.live;
 
+  /// Dernière erreur du moteur (rejeu, rattrapage, ressources), ou null.
+  String? get koachRuntimeError => _koachRt.error;
+
   /// Dernier rejeu complet.
   ({int ms, int events})? get koachLastReplay => _koachRt.lastReplay;
 
@@ -429,6 +432,7 @@ extension KoachStore on AppStore {
       final k = await KoachCalcul.rejouer(fab, journal);
       if (gen != rt.gen) return;
       rt.live = k;
+      rt.error = null;
       // Le journal gardé est celui du moteur (même contenu).
       koachEngine.journal = k.journal;
       rt.lastReplay = (ms: sw.elapsedMilliseconds, events: journal.length);
@@ -1029,7 +1033,7 @@ extension KoachStore on AppStore {
     final sw = Stopwatch()..start();
     ko.Koach next;
     try {
-      next = await KoachCalcul.appliquer(k, (x) => koachRattraper(x, steps));
+      next = await KoachCalcul.rattraper(k, steps);
     } catch (_) {
       // Instance d'avant gardée ; rejeu au prochain démarrage.
       rt.live = null;
@@ -1039,6 +1043,7 @@ extension KoachStore on AppStore {
     if (gen != rt.gen) return;
     rt.temps.noter('replanification', sw.elapsed);
     rt.live = next;
+    rt.error = null;
     e
       ..journal = next.journal
       ..closed = math.max(e.closed, gNow)
@@ -2226,7 +2231,7 @@ extension KoachStore on AppStore {
     final ev = _koachReferenceEvent(snap, g);
     final sw = Stopwatch()..start();
     try {
-      final next = await KoachCalcul.appliquer(k, (x) => x.observe(ev));
+      final next = await KoachCalcul.observer(k, ev);
       _koachRt.live = next;
       e
         ..journal = next.journal

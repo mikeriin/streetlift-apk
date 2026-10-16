@@ -411,6 +411,50 @@ void main() {
       expect(app.koachEngine.journal.length, greaterThan(before));
     });
 
+    test('calculs dans un isolat, comme sur le téléphone : prise de main, '
+        'rattrapage, début de séance, nouvelle référence, prévision, arrêt '
+        'et réactivation (rien d’inenvoyable dans les messages)', () async {
+      KoachCalcul.isolat = true;
+      addTearDown(() => KoachCalcul.isolat = false);
+      await activate();
+      expect(app.koachLive, isNotNull);
+      expect(app.koachRuntimeError, isNull);
+      // Lundi suivant : rattrapage (semaine_fin, séances manquées).
+      clock = DateTime(2026, 10, 26, 9); // lundi, S16·J1
+      await app.koachRefresh();
+      expect(app.koachRuntimeError, isNull);
+      expect(app.koachLive, isNotNull);
+      expect(app.koachEngine.closed, 15);
+      final j = _dayWithWork(app, 16);
+      final base = app.program.week(16).day(j)!;
+      app.adaptOpen(16, base);
+      expect(await app.koachStart(16, base), isTrue);
+      expect(app.koachOpen(16, j), isTrue);
+      final e = _served(app, 16, j).firstWhere((x) => x.engine);
+      _validate(app, 16, j, e, 0, '5', 8);
+      app.markSessionDone(16, j, true);
+      await app.koachRefresh();
+      expect(app.koachEngine.versed, contains(app.sessionKey(16, j)));
+      // Nouvelle référence (retour au programme d'origine, bloc réécrit).
+      final refs = app.koachEngine.journal
+          .where((x) => x['type'] == 'reference')
+          .length;
+      await app.koachNewReference();
+      expect(app.koachRuntimeError, isNull);
+      expect(
+        app.koachEngine.journal.where((x) => x['type'] == 'reference').length,
+        refs + 1,
+      );
+      // Arrêt puis réactivation : rejeu et rattrapage dans l'isolat.
+      app.koachStop();
+      await app.koachResume();
+      expect(app.koachEngine.stop, isNull);
+      expect(app.koachLive, isNotNull);
+      expect(app.koachRuntimeError, isNull);
+      // ignore: avoid_print
+      print('KM3|isolat|${app.koachTemps.toJson()}');
+    });
+
     test('lundi suivant : séances manquées, fin de semaine, replanification '
         '(≤ 10 s) ; hors modèle après deux semaines sans séance', () async {
       await activate();
