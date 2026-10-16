@@ -366,8 +366,9 @@ class _HomeScreenState extends State<HomeScreen> {
           key: ValueKey('programme-day-${d.j}'),
           day: d.j,
           title: d.title,
-          // KS1A : type du jour (« Tirage — force »).
-          detail: store.dayTypeLabelOf(d),
+          // (KS1A : le type du jour est dans la carte du jour, la feuille
+          // de la semaine et le résumé ; les lignes restent sur une ligne
+          // pour que la semaine entière tienne à l'écran, L5.)
           state: _status(w, d),
           onTap: () => _open(w, d),
           onLongPress: () => _summary(w, d),

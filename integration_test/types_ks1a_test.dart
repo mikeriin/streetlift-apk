@@ -235,20 +235,24 @@ void main() {
     final todayDay = week.day(j)!;
     releve['type_du_jour'] = store.dayTypeLabelOf(todayDay);
     releve['carte_type'] = textOf('today-day-type-$j');
-    // Une ligne de jour (autre que celle du jour) montre son type.
+    await shot('1_accueil');
+    // Feuille de la semaine : chaque journée montre son type.
+    await tester.tap(find.byKey(const ValueKey('selected-week')));
+    await wait(tester, 1500);
     String? rowType;
     for (final d in week.days) {
       final l = store.dayTypeLabelOf(d);
-      if (d.j == j || l == null) continue;
-      final row = find.byKey(ValueKey('programme-day-${d.j}'));
-      final hit = find.descendant(of: row, matching: find.text(l));
+      if (l == null) continue;
+      final row = find.byKey(ValueKey('week-sheet-day-${d.j}'));
+      final hit = find.descendant(of: row, matching: find.textContaining(l));
       if (hit.evaluate().isNotEmpty) {
         rowType = 'J${d.j} $l';
         break;
       }
     }
-    releve['ligne_type'] = rowType;
-    await shot('1_accueil');
+    releve['feuille_semaine_type'] = rowType;
+    await shot('1c_feuille_semaine');
+    await home(tester);
     await scrollTo(tester, find.byKey(const ValueKey('home-my-program')));
     await shot('1b_accueil_jours');
     // Tête de séance d'une journée d'entraînement de la semaine.
@@ -397,7 +401,7 @@ void main() {
       expect(releve['type_du_jour'], isNotNull);
       expect(releve['carte_type'], releve['type_du_jour']);
     }
-    expect(releve['ligne_type'], isNotNull);
+    expect(releve['feuille_semaine_type'], isNotNull);
     expect(releve['entete_perso'], contains(' · S'));
     expect(releve['dev_actif'], isTrue);
     expect(releve['profil'], isTrue);
