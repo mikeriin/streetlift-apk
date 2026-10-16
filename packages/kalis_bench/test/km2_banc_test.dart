@@ -16,6 +16,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:kalis_bench/src/km/criteres_moteur.dart'
+    show KmBanc, kmNormaliserJson;
 import 'package:kalis_bench/src/km/km_export.dart';
 import 'package:kalis_bench/src/km/meneur.dart';
 import 'package:kalis_bench/src/km/politique_koach.dart';
@@ -505,5 +507,34 @@ void main() {
       ),
       hasLength(2),
     );
+  });
+
+  // Lot KM2c2 : la campagne et le banc adversarial comparés à la référence
+  // lisent les saisons figées (`--saisons-figees`), celles de Python.
+  test('KmBanc : saisons figées = saisons que lit la référence Python', () {
+    const cle = 'street_07_avance_streetlifting_competition';
+    final banc = KmBanc(
+      catalog: loadCatalog(),
+      plan: KalisPlan(),
+      parametres: _parametres(),
+      fiches: _fiches(),
+      profils: <String, Map<String, Object?>>{
+        cle: readJsonObject('profiles/$cle.json'),
+      },
+      saisonsFigees: (c) =>
+          _lireJson('$_reference/donnees/reference/$c.json.gz')!
+              as List<Object?>,
+    );
+    final scenarios = <String>[
+      for (final s in banc.saisonsReference(cle)) s['scenario']! as String,
+    ];
+    expect(scenarios, contains('changement_discipline'));
+    for (final scen in scenarios) {
+      expect(
+        jsonEncode(banc.saison(cle, scen)),
+        jsonEncode(kmNormaliserJson(_saisonPython(cle, scen))),
+        reason: scen,
+      );
+    }
   });
 }

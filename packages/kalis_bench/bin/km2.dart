@@ -245,6 +245,23 @@ List<String> _scenariosDe(Map<String, Object?> json) => <String>[
     if (seasonScenarioApplies(json, s)) s.code,
 ];
 
+/// Scénarios d'un profil dans la matrice : ceux du fichier de saisons figées
+/// avec [saisonsFigees] (dans son ordre, comme `campagne.matrice` de la
+/// référence), sinon ceux qui s'appliquent à la saison vivante.
+List<String> _scenariosCampagne(
+  Map<String, Object?> json,
+  String cle,
+  String? saisonsFigees,
+) {
+  final lire = _lecteurSaisonsFigees(saisonsFigees);
+  if (lire == null) {
+    return _scenariosDe(json);
+  }
+  return <String>[
+    for (final x in lire(cle)) kc.jm(x)['scenario']! as String,
+  ];
+}
+
 /// Lecteur des saisons figées de [dossier] (`<cle>.json.gz`), ou null.
 List<Object?> Function(String)? _lecteurSaisonsFigees(String? dossier) =>
     dossier == null
@@ -717,8 +734,9 @@ _Matrice _matrice(
   List<String> scenarios,
   String verites,
   List<int> graines,
-  bool rapide,
-) {
+  bool rapide, {
+  String? saisonsFigees,
+}) {
   for (final p in profils) {
     if (!bruts.containsKey(p)) {
       throw FormatException('profil inconnu', p);
@@ -726,7 +744,7 @@ _Matrice _matrice(
   }
   final jobs = kmMatrice(
     profils,
-    (cle) => _scenariosDe(bruts[cle]!),
+    (cle) => _scenariosCampagne(bruts[cle]!, cle, saisonsFigees),
     scenarios,
     verites,
     graines,
@@ -783,7 +801,15 @@ Future<void> _campagne(List<String> args) async {
   final scenarios = o.scenarios == 'tous'
       ? <String>['tous']
       : o.scenarios.split(',');
-  final m = _matrice(bruts, profils, scenarios, o.verites, o.graines, o.rapide);
+  final m = _matrice(
+    bruts,
+    profils,
+    scenarios,
+    o.verites,
+    o.graines,
+    o.rapide,
+    saisonsFigees: o.saisonsFigees,
+  );
   final (ip, np) = o.partie;
   final sources = _empreinteSources(o.parametres);
   final config = _config(o);
@@ -1106,7 +1132,15 @@ Map<String, Object?> _assemblerParties(
   final scenarios = <String>[
     for (final x in kc.jl(config0['scenarios'])) x! as String,
   ];
-  final m = _matrice(bruts, profils, scenarios, o.verites, o.graines, o.rapide);
+  final m = _matrice(
+    bruts,
+    profils,
+    scenarios,
+    o.verites,
+    o.graines,
+    o.rapide,
+    saisonsFigees: o.saisonsFigees,
+  );
   final resultats = <String, kc.Json>{};
   final temoinsParPaire = <String, kc.Json>{};
   final mjA = <int, kc.Json>{};
@@ -1257,7 +1291,7 @@ Future<void> _calerCouverture(
   );
   final jobs = kmMatrice(
     profils,
-    (cle) => _scenariosDe(bruts[cle]!),
+    (cle) => _scenariosCampagne(bruts[cle]!, cle, o.saisonsFigees),
     const <String>['reference'],
     o.verites,
     const <int>[0, 1, 2, 3],

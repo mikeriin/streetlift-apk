@@ -1,13 +1,14 @@
 # Sauvegarde KM2c2 (portage Dart de Koach 1.0.3, kalis_adapt 1.0.2)
 
-Base : `moteurs` 2d3a5766. Session Opus 5.5 lancée le 16/10/2026 (message sans « Lot : », KM2c2 seul lot moteur « à faire »).
-Pas de SDK Dart (proxy) : mise au point sur la CI `claude/ci-cp-a` (commits de contrôle « KM2c2 contrôle (dev) »).
+Base : `moteurs` 2d3a5766. Session Opus 5.5 lancée le 16/10/2026 ~04:12 UTC (message sans « Lot : »).
+Pas de SDK Dart : mise au point sur `claude/ci-cp-a` (commits « KM2c2 contrôle (dev) », workflow de mise au point à matrice : formatage rendu en patch, tests, campagne en 4 parts parallèles, adversaires).
 
 ## Fait
-- Delta porté (non compilé) : modele.dart (classe Fiabilite, appels dans _serieForce, capacite/capaciteDuJour(brut), elargissement), planification.dart (tirer : S ← DSD), seance.dart (probaReussite(brut), _cibleCharge, _bornesHausse, _rampe, _palierBarres, _tentative), rupture.dart (bornes, figées, fiabilite.p), moteur.dart (posterior.fiabilite).
-- Asset koach_params_1_0_3.json, parametres.dart (1.0.3-ref.1, 338 clés, SHA d129a4e9…), version 1.0.2.
-- Tests repointés (fixtures/, koach_params_v1.json), 12 fixtures moteur, test koach_fiabilite_test.dart, test des bornes 1.0.3 ; fix_dart et d2 supprimés.
-- kalis_bench : fixtures km2 régénérées (generer_banc_km2.py, 1.0.3) ; _evaluationPython 1.0.3.
+- Delta 1.0.3 porté (modele, planification, seance, rupture, moteur), asset koach_params_1_0_3.json, versions kalis_adapt 1.0.2 / kalis_bench 0.5.1.
+- Tests : parité 15 fixtures + 3 complémentaires (test/fixtures/km2c2, generer_km2c2.py) ; koach_fiabilite_test ; bornes 1.0.3. 343 tests kalis_adapt verts (run 38855046973), 104 kalis_bench km2.
+- kalis_bench : --saisons-figees (KmBanc.saisonsFigees) ; fixtures km2 régénérées ; _evaluationPython 1.0.3.
+- Mesures (run 38853167917, saisons figées, témoin relu) : campagne 6 graines = Python (critères identiques, calibration_grappes identique) ; 6 jeux d'adversaires identiques. Données : kalis_bench/docs/data/km2c2, doc CRITERES_KM2C2.md. Temps 0,335 s ; 9,7 ms.
+- Relecture Opus : 0 bloquant/majeur ; mineurs traités (docs, types resume, fixtures complémentaires, journal muté cohérent, scénarios de la matrice depuis le fichier figé).
 
 ## Reste
-- Contrôle dev (format, analyse, tests), corrections ; campagne Dart 6 graines ; 6 jeux d'adversaires ; relecture Opus ; docs (CHANGELOG, CONTRAT, INTEGRATION_KM3, PORTAGE) ; kalis_bench version/doc ; push moteurs, étiquettes, contrôle complet ; livraison.
+- Vérifier 2 échecs pytest de la référence en CI dev (arbre réduit ?) ; contrôle court (format km2.dart) ; commit moteurs, rebase, contrôle complet ci-cp-a, push moteurs, étiquettes kalis_adapt-v1.0.2 et kalis_bench-v0.5.1 ; LIVRAISON_KM2c2.md (pipeline + projet) ; DECISIONS ### KM2c2 ; ETAT ; page de suivi ; notification.

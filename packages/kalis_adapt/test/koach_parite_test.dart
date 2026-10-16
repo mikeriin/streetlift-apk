@@ -13,9 +13,13 @@ const double tolerance = 1e-9;
 /// Fixture de la référence (`reference/fixtures/<nom>`), ou chemin relatif
 /// au paquet quand [nom] contient un `/` (fixtures complémentaires de
 /// `test/fixtures/km2c2/`, produites par la référence sans la modifier).
-Json lireFixture(String nom) => jsonDecode(
-  File(nom.contains('/') ? nom : 'reference/fixtures/$nom').readAsStringSync(),
-) as Json;
+Json lireFixture(String nom) =>
+    jsonDecode(
+          File(
+            nom.contains('/') ? nom : 'reference/fixtures/$nom',
+          ).readAsStringSync(),
+        )
+        as Json;
 
 /// Valeur JSON pure (comme `propre` de la référence).
 Object? propre(Object? x) {

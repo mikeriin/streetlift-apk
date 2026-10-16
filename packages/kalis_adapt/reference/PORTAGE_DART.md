@@ -156,3 +156,10 @@ Liste exacte : `CHANGEMENTS_1_0_3.md` (section H : fichiers Dart concernés). Po
 - `rupture.dart` : `bornes` : `defaut_modele_sd` (0,001 ; 0,1) et six bornes nouvelles ; `figees` : les cinq clés de grille et d'a priori de la fiabilité ; `appliquerParametres` : `modele.fiabilite.p = fusion['mesure']`. `moteur.dart` : `posterior()['fiabilite'] = fiabilite.resume()`. Défauts du code quand une clé manque (fichiers 1.0.2) : les valeurs du fichier 1.0.3, sauf `echec_sans_hausse_tout_schema` (défaut 0 dans le code, 1 dans le fichier) et les coefficients d'élargissement (0 dans le code).
 - Paramètres : 16 clés nouvelles à la fin de leur section (`mesure`, `securite`, `planification`), aucune valeur existante changée ; asset `koach_params_1_0_3.json`, SHA-256 et 338 clés (6 + 332) dans `koach_parametres_test.dart`.
 - Tests Dart : depuis KM1c3 ils lisent les copies figées de 1.0.2 (`reference/fix_dart/`, `reference/params/koach_params_d2.json`). KM2c2 les repointe vers `reference/fixtures/` et `reference/params/koach_params_v1.json`, régénère `kalis_bench/test/fixtures/km2/` si le banc Dart change et supprime les copies. `kalis_bench` n'a pas été touché par KM1c3.
+- **Fait en KM2c2** (`kalis_adapt` 1.0.2, 16/10/2026) : delta porté, tests repointés, copies supprimées, asset
+  `koach_params_1_0_3.json`. Branches du delta que les 15 fixtures n'exécutent pas (tentative ratée hors compétition,
+  tirages du jumeau avec κ > 1) : fixtures complémentaires `kalis_adapt/test/fixtures/km2c2/` produites par la
+  référence sans la modifier (`generer_km2c2.py`). Note : `fixtures/generer.py`, `tirage_intermediaire` (aide au
+  portage, non lue par les tests Dart) n'applique pas κ ; le générateur de KM2c2 en a une variante qui l'applique.
+  Le banc Dart compare la référence sur les saisons figées (`--saisons-figees`, `kalis_bench` : la saison vivante de
+  `kalis_plan` 0.4.x n'est plus celle que lit Python).

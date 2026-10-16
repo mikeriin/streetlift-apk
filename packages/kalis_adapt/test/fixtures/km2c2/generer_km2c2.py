@@ -49,12 +49,31 @@ def _variante_echec(competition):
         ctx = journal[j]['contexte']
         ctx['genre'] = 'competition'
         ctx['intention'] = 'competition'
+    i3 = tentatives[2]
+    fin = min(i for i in range(i3, len(journal)) if journal[i]['type'] == 'seance_fin')
     k = G.KoachEnregistre(copy.deepcopy(e['params']), e['fiches'], copy.deepcopy(e['profil']), {})
-    for x in journal:
+    servi = None
+    for i, x in enumerate(journal):
         if x['type'] == 'plan':
-            k.plan(copy.deepcopy(x['contraintes']))
-        else:
-            k.observe(copy.deepcopy(x))
+            out = k.plan(copy.deepcopy(x['contraintes']))
+            if i < i3 and isinstance(out, dict) and out.get('role') == 'attempt':
+                servi = out.get('loadKg')
+            continue
+        if i == i3:
+            # Troisième tentative faite à la barre que Koach vient de servir.
+            x['serie']['externalLoadKg'] = servi
+            x['serie']['target']['loadKg'] = servi
+        if i == fin:
+            # Récapitulatif de la séance cohérent avec les séries versées.
+            for st in x['seance']['sets']:
+                if (st.get('target') or {}).get('role') != 'attempt' or st.get('exerciseId') != s['exerciseId']:
+                    continue
+                if st.get('setIndex') == s['setIndex']:
+                    st.update({'reps': 0, 'failed': True, 'flames': 10, 'success': False})
+                elif st.get('setIndex') == journal[i3]['serie']['setIndex']:
+                    st['externalLoadKg'] = servi
+                    st['target']['loadKg'] = servi
+        k.observe(copy.deepcopy(x))
     if G.copie_json(k.journal) != k.entrees:
         raise RuntimeError('journal modifié après coup')
     titre = ('moteur_12, deuxième tentative ratée %s' %
@@ -62,7 +81,8 @@ def _variante_echec(competition):
               'hors compétition (barre suivante sur l\'estimation)'))
     out = G.entete('moteur', titre, e['params'])
     out.update({
-        'source': {'base': 'moteur_12.json', 'tentative_ratee': i2, 'competition': competition},
+        'source': {'base': 'moteur_12.json', 'tentative_ratee': i2, 'troisieme_barre': servi,
+                   'competition': competition},
         'entrees': {'params': e['params'], 'fiches': e['fiches'], 'profil': k.profil, 'journal': k.entrees},
         'attendu': {
             'plans': k.plans,
