@@ -1,0 +1,26 @@
+LOT KS1A — TYPES DE JOUR DANS L'APPLICATION (`kalis_core` 0.4.4, `kalis_plan` 0.4.x ; dev7.1.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : KM3 validé (C17.19) ; KS1c1 validé (C17.17).
+Base : pointe de `main` (dev7.0.0, dc9cbc55). Contrôle `claude/ci-3d` (voie rapide `claude/ci-ui-*-rapide` pour itérer), sauvegardes `cp-sauvegardes/KS1A`.
+Décisions : C8, C11, C15, C17.12, C17.15, C17.17, C17.19. Livraisons à lire : `LIVRAISON_KS1.md` § 6 (fait foi pour le contenu), `LIVRAISON_KS1c1.md` § 7 point 3, `LIVRAISON_KM3.md`.
+
+OBJECTIF
+Faire entrer la structure de la semaine de KS1 dans l'application : le créateur de programme choisit un gabarit et des types de jour, l'application les montre, et le programme de 40 semaines du propriétaire porte les siens.
+
+CONTENU (LIVRAISON_KS1.md § 6)
+1. **Paquets** : `kalis_core` 0.4.4 et la **dernière étiquette validée de `kalis_plan`** (0.4.1 aujourd'hui ; si KR1 publie 0.4.2 et qu'elle est validée avant ton intégration, prends-la), copiés à l'octet comme KM3 l'a fait pour `kalis_adapt`. `kalis_adapt` 1.0.2 inchangé.
+2. **Affichage** de `PlanDay.type` (facultatif) dans MON PROGRAMME et en tête de séance (« Tirage — force », « Jambes — endurance de force ») ; libellés du § 6.1 ; textes des six nouveaux codes de raison (`reason_texts_fr_0_4.json` de 0.4.4) ; notes de coach `minimum_load`, `fixed_load`.
+3. **Programme de 40 semaines** (`lib/imported_program.dart`) : jours annotés avec le même `DayType` (J1 à J3 force, J4 et J5 volume/endurance, J6 puissance et endurance) ; aucune séance faite réécrite, sauvegarde d'origine intacte (C11.2) ; la référence versée à Koach garde ses blocs (si `type` change ce que Koach lit, le dire et le tester).
+4. **Changement d'échéance** (contrat § 12.9, KS1c1) : quand l'athlète change une échéance, `startDate` du bloc suivant = début du bloc précédent + semaines entières servies ; test.
+5. **Durée des séances** (C17.15 : option (a)) : durée estimée affichée là où le créneau disponible est plus long que la séance (« ≈ 50 min sur 120 disponibles »), sans rien remplir.
+
+NE PAS FAIRE
+- Pas de bascule de Koach (`kKoachBasculeAutorisee` reste `false`, C17.19) ; rien dans `packages/` hors la copie des étiquettes ; pas de refonte d'écran (kit UI).
+- Surveiller la limite de l'arbre (59 Mo, LIVRAISON_KM3 § 3) : dire la taille avant / après.
+
+TESTS
+- Programme généré pour un profil street 50 / 50 à 6 séances : gabarit et types affichés ; programme de 40 semaines : types affichés, rien d'autre changé (migration depuis dev7.0.0) ; changement d'échéance : `startDate` correct ; cibles émulateur des lots précédents vertes (KM3 compris) ; sombre et clair, sessions perso et dev.
+
+FIN DE LOT
+- dev7.1.0 sur `main`, contrôle complet `claude/ci-3d` vert, build signé réussi (push refusé : `cp-sauvegardes/KS1A-candidat` et arrête-toi).
+- `LIVRAISON_KS1A.md` (pipeline et projet claude.ai), « À tester » court ; ligne KS1A « à valider » ; notification ; arrête-toi (aucun fire_trigger).
