@@ -1,8 +1,8 @@
 # Journal
 
-## 0.5.1 — 16/10/2026 (lot KS1c1)
+## 0.5.2 — 16/10/2026 (lot KS1c1)
 
-Mesure du critère « 0 violation » du lot KS1c1 sur les 34 profils (`pipeline/cp/prompts/KS1c1.txt`), pour `kalis_plan` 0.4.1.
+Mesure du critère « 0 violation » du lot KS1c1 sur les 34 profils (`pipeline/cp/prompts/KS1c1.txt`), pour `kalis_plan` 0.4.1 ; sur 0.5.1 (lot KM2c2, `kalis_adapt` 1.0.2).
 Critères, profils, attentes et grilles inchangés.
 
 - **Saisons croisées** (`runSeasonCampaign`, `saisons.json`, `SAISONS.md`) : les sept profils ajoutés par KS1
@@ -12,6 +12,22 @@ Critères, profils, attentes et grilles inchangés.
   avancée de `ks_01` à `ks_03` et changement de discipline de `street_12` sans violation ; les violations de
   volume qui restent sur le profil de test sous douleur à l'épaule suivent toutes une proposition « volume »
   appliquée par le moteur d'évolution dans le même bloc (cause hors de `kalis_plan`, `LIVRAISON_KS1c1.md`).
+## 0.5.1 — 16/10/2026 (lot KM2c2)
+
+Banc de Koach 1.0.3 (`kalis_adapt` 1.0.2). Aucun changement des critères de sécurité, des profils, des grilles ni des
+attentes de coach.
+
+- **Saisons figées** (`KmBanc.saisonsFigees`, option `--saisons-figees <dossier>` de `bin/km2.dart` et
+  `bin/km2_adversaire.dart`) : la campagne et le banc adversarial peuvent lire les saisons que lit la référence Python
+  (`kalis_adapt/reference/donnees/reference/`, figées sur `kalis_plan` 0.3.1 ; un scénario `blocksAs` reprend les
+  blocs de la saison de base, comme `donnees.saisons_reference`) au lieu de `kmReferenceSeason` sur le `kalis_plan`
+  courant. Depuis `kalis_plan` 0.4.0 (KS1) la saison vivante n'est plus celle de Python (charges du § 8 du cahier
+  KS : 12 adversaires de `autres_03_powerlifter_competition` et les prévisions de la planification divergent) ; la
+  parité Dart = Python se mesure sur les saisons figées, témoin relu (`--temoin`). Sans l'option, rien ne change.
+  Test : `km2_banc_test.dart` (saisons figées = saisons de la référence, tous les scénarios de `street_07`).
+- Fixtures `test/fixtures/km2/` régénérées par `fixtures/generer_banc_km2.py` (référence 1.0.3 : `posterior` avec
+  `fiabilite`) ; évaluation de référence de `adv-7ee0da71` (1.0.3) mise à jour.
+- Mesures de KM2c2 : `docs/CRITERES_KM2C2.md`, données `docs/data/km2c2/`.
 
 ## 0.5.0 — 15/10/2026 (lot KS1)
 

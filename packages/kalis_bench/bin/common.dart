@@ -464,7 +464,7 @@ void _write(String path, String text) {
 }
 
 /// Dossiers des profils suivis sur une saison : le banc (27) et les
-/// profils ajoutés par le lot KS1 (7), depuis 0.5.1 (lot KS1c1 : critère
+/// profils ajoutés par le lot KS1 (7), depuis 0.5.2 (lot KS1c1 : critère
 /// « 0 violation » mesuré sur les 34 profils et toutes les graines).
 const List<String> seasonProfileDirs = <String>['profiles', 'profiles_ks'];
 

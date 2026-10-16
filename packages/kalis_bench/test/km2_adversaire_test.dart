@@ -142,18 +142,18 @@ _decodages = <(String, String, String, String)>[
   ),
 ];
 
-/// Sortie de `evaluer_saison` de la référence (Koach 1.0.2 Python, sans
+/// Sortie de `evaluer_saison` de la référence (Koach 1.0.3 Python, sans
 /// extension) pour l'adversaire `adv-7ee0da71`, graine 0.
 const String _evaluationPython =
-    '{"aggravations": 0, "codes_violations": {"volume_trop_vite": 2}, '
-    '"e1rm6": 0.036435, "e1rm_famille": "loadedMain", "e1rm_n": 4, '
-    '"echeance": true, "echecs": 0.00569, "evenements": '
-    '[["sl-muscle-up-leste", "loaded", 112.6, 115.905441, 0.971482], '
-    '["sl-traction-lestee", "loaded", 155.1, 156.310625, 0.992255], '
-    '["sl-dips-leste", "loaded", 156.8, 177.023766, 0.885757]], '
-    '"faites": 57, "gain": -0.000572, "perf_a": 0.949831, "plantage": '
+    '{"aggravations": 0, "codes_violations": {"volume_trop_vite": 3}, '
+    '"e1rm6": 0.034142, "e1rm_famille": "loadedMain", "e1rm_n": 4, '
+    '"echeance": true, "echecs": 0.00428, "evenements": '
+    '[["sl-muscle-up-leste", "loaded", 111.35, 115.900709, 0.960736], '
+    '["sl-traction-lestee", "loaded", 152.6, 156.39159, 0.975756], '
+    '["sl-dips-leste", "loaded", 160.55, 177.181342, 0.906134]], '
+    '"faites": 57, "gain": -0.000574, "perf_a": 0.947542, "plantage": '
     'null, "poussees": 0, "present": true, "prevues": 80, "seed": 0, '
-    '"violations": 2}';
+    '"violations": 3}';
 
 void main() {
   final advFichier = '$_reference/donnees/adversaires_v1.json';

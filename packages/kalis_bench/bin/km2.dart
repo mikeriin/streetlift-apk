@@ -60,7 +60,8 @@ const String _usage =
     '[--trajectoires N] [--coeurs N] [--sortie fichier] '
     '[--sans-planificateur] [--defaut-modele x] [--rapide] '
     '[--temps-existants [fichier]] [--semaines N] [--travail dossier] '
-    '[--temoin dossier] [--graines-temoin N] [--sans-determinisme] '
+    '[--temoin dossier] [--saisons-figees dossier] [--graines-temoin N] '
+    '[--sans-determinisme] '
     '[--caler-couverture] [--partie i/n] [--parametres fichier] '
     '[--fiches fichier] [--adversaires fichier] [--rejeu fichier]\n'
     '        dart run bin/km2.dart assembler --sortie fichier '
@@ -108,6 +109,7 @@ final class _Options {
           : int.parse(option(args, '--semaines')!),
       travail = option(args, '--travail'),
       temoinDossier = option(args, '--temoin'),
+      saisonsFigees = option(args, '--saisons-figees'),
       grainesTemoin = int.parse(option(args, '--graines-temoin') ?? '16'),
       determinisme = !args.contains('--sans-determinisme'),
       parametres = option(args, '--parametres') ?? _parametresDefaut,
@@ -140,6 +142,11 @@ final class _Options {
   final int? semaines;
   final String? travail;
   final String? temoinDossier;
+
+  /// Dossier des saisons figées que lit la référence Python (lot KM2c2 :
+  /// `../kalis_adapt/reference/donnees/reference`), ou null (saisons
+  /// vivantes, `kmReferenceSeason`).
+  final String? saisonsFigees;
   final int grainesTemoin;
   final bool determinisme;
   final String parametres;
@@ -237,6 +244,33 @@ List<String> _scenariosDe(Map<String, Object?> json) => <String>[
   for (final s in SeasonScenario.values)
     if (seasonScenarioApplies(json, s)) s.code,
 ];
+
+/// Scénarios d'un profil dans la matrice : ceux du fichier de saisons figées
+/// avec [saisonsFigees] (dans son ordre, comme `campagne.matrice` de la
+/// référence), sinon ceux qui s'appliquent à la saison vivante.
+List<String> _scenariosCampagne(
+  Map<String, Object?> json,
+  String cle,
+  String? saisonsFigees,
+) {
+  final lire = _lecteurSaisonsFigees(saisonsFigees);
+  if (lire == null) {
+    return _scenariosDe(json);
+  }
+  return <String>[for (final x in lire(cle)) kc.jm(x)['scenario']! as String];
+}
+
+/// Lecteur des saisons figées de [dossier] (`<cle>.json.gz`), ou null.
+List<Object?> Function(String)? _lecteurSaisonsFigees(String? dossier) =>
+    dossier == null
+    ? null
+    : (String cle) {
+        final v = _lireJson('$dossier/$cle.json.gz');
+        if (v is! List<Object?>) {
+          throw FormatException('saisons figées absentes', '$dossier/$cle');
+        }
+        return v;
+      };
 
 Object? _lireJson(String chemin) {
   final f = File(chemin);
@@ -464,6 +498,7 @@ final class _Contexte {
         for (final e in vecteurs.entries) e.key: kc.jm(e.value),
       },
       profils: _profilsBruts(),
+      saisonsFigees: _lecteurSaisonsFigees(config['saisons_figees'] as String?),
     );
   }
 
@@ -674,6 +709,7 @@ Map<String, Object?> _config(_Options o) => <String, Object?>{
   'graines_temoin': o.grainesTemoin,
   'parametres': o.parametres,
   'fiches': o.fiches,
+  'saisons_figees': o.saisonsFigees,
 };
 
 // ----------------------------------------------------------------------
@@ -696,8 +732,9 @@ _Matrice _matrice(
   List<String> scenarios,
   String verites,
   List<int> graines,
-  bool rapide,
-) {
+  bool rapide, {
+  String? saisonsFigees,
+}) {
   for (final p in profils) {
     if (!bruts.containsKey(p)) {
       throw FormatException('profil inconnu', p);
@@ -705,7 +742,7 @@ _Matrice _matrice(
   }
   final jobs = kmMatrice(
     profils,
-    (cle) => _scenariosDe(bruts[cle]!),
+    (cle) => _scenariosCampagne(bruts[cle]!, cle, saisonsFigees),
     scenarios,
     verites,
     graines,
@@ -739,6 +776,9 @@ Map<String, Object?> _configuration(
   'temoin': o.temoinDossier == null
       ? 'kmWitnessSeason (calculé)'
       : 'lu dans ${o.temoinDossier}',
+  'saisons': o.saisonsFigees == null
+      ? 'kmReferenceSeason (kalis_plan courant)'
+      : 'figées, lues dans ${o.saisonsFigees}',
   'moteur': 'kalis_adapt $kalisAdaptVersion (Dart)',
 };
 
@@ -759,7 +799,15 @@ Future<void> _campagne(List<String> args) async {
   final scenarios = o.scenarios == 'tous'
       ? <String>['tous']
       : o.scenarios.split(',');
-  final m = _matrice(bruts, profils, scenarios, o.verites, o.graines, o.rapide);
+  final m = _matrice(
+    bruts,
+    profils,
+    scenarios,
+    o.verites,
+    o.graines,
+    o.rapide,
+    saisonsFigees: o.saisonsFigees,
+  );
   final (ip, np) = o.partie;
   final sources = _empreinteSources(o.parametres);
   final config = _config(o);
@@ -1082,7 +1130,15 @@ Map<String, Object?> _assemblerParties(
   final scenarios = <String>[
     for (final x in kc.jl(config0['scenarios'])) x! as String,
   ];
-  final m = _matrice(bruts, profils, scenarios, o.verites, o.graines, o.rapide);
+  final m = _matrice(
+    bruts,
+    profils,
+    scenarios,
+    o.verites,
+    o.graines,
+    o.rapide,
+    saisonsFigees: o.saisonsFigees,
+  );
   final resultats = <String, kc.Json>{};
   final temoinsParPaire = <String, kc.Json>{};
   final mjA = <int, kc.Json>{};
@@ -1233,7 +1289,7 @@ Future<void> _calerCouverture(
   );
   final jobs = kmMatrice(
     profils,
-    (cle) => _scenariosDe(bruts[cle]!),
+    (cle) => _scenariosCampagne(bruts[cle]!, cle, o.saisonsFigees),
     const <String>['reference'],
     o.verites,
     const <int>[0, 1, 2, 3],
