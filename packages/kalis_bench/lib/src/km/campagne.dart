@@ -970,15 +970,11 @@ Map<String, Object?> kmComptes(List<kc.Json> found) {
   return out;
 }
 
-/// {code: n} des constats de [serv] absents du plan initial qui
-/// disparaissent quand chaque séance manquée de [blocsS] est vidée
-/// (diagnostic, `campagne.constats_dus_aux_manquees`).
-Map<String, Object?> kmConstatsDusAuxManquees(
+/// Copie de [blocsS] où chaque séance manquée (non servie) est vidée
+/// (`campagne.vider_manquees`).
+List<Object?> kmViderManquees(
   kc.Json saison,
-  KmConstats constats,
   KmTour tour,
-  List<kc.Json> initial,
-  List<kc.Json> serv,
   List<Object?> blocsS,
 ) {
   final faites = <(int, int, int, int)>{
@@ -1006,6 +1002,21 @@ Map<String, Object?> kmConstatsDusAuxManquees(
       }
     }
   }
+  return vide;
+}
+
+/// {code: n} des constats de [serv] absents du plan initial qui
+/// disparaissent quand chaque séance manquée de [blocsS] est vidée
+/// (diagnostic, `campagne.constats_dus_aux_manquees`).
+Map<String, Object?> kmConstatsDusAuxManquees(
+  kc.Json saison,
+  KmConstats constats,
+  KmTour tour,
+  List<kc.Json> initial,
+  List<kc.Json> serv,
+  List<Object?> blocsS,
+) {
+  final vide = kmViderManquees(saison, tour, blocsS);
   final clesIni = <(Object?, Object?, Object?, Object?)>{
     for (final c in initial) kmCleConstat(c),
   };
@@ -1138,6 +1149,18 @@ Map<String, Object?> kmSecuriteSaison(
     out[vue] = cl;
     out['${vue}_exemples'] = ex;
   }
+  // Lot KR1 (rapporté, hors critère 7) : saison réalisée — séances faites
+  // telles que servies (tests comptés pour leurs tentatives faites), séances
+  // manquées vidées ; constats classés contre le plan initial, sans
+  // reclassement « retour à l'écrit » (ce que l'athlète a fait).
+  final blocsR = kmViderManquees(
+    saison,
+    tour,
+    kmBlocsServisPrescrits(saison, tour, testsFaits: true),
+  );
+  final (clR, exR) = kmClasserConstats(initial, constats(blocsR));
+  out['realise'] = clR;
+  out['realise_exemples'] = exR;
   return out;
 }
 

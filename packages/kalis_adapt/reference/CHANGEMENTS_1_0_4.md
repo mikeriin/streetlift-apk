@@ -1,0 +1,30 @@
+# Lot KR1 — liste exacte des changements de la référence (1.0.3 → 1.0.4)
+
+Base : `moteurs` eae158b8 (référence 1.0.3, `kalis_adapt` 1.0.2, `kalis_plan` 0.4.1, `kalis_bench` 0.5.2). Décisions : DECISIONS_CP.md C17.16.1 (saisons figées), C17.17.3 (critère dur de la bascule : 0 violation du couple `kalis_plan` 0.4.1 × Koach), C17.18 (lancement de KR1, prompt `KR1.txt`). Paramètres : `params/koach_params_v1.json` version `1.0.4-ref.1` (338 clés, **aucune clé nouvelle, aucune valeur changée** : version, date et note seulement). L'API et le schéma du journal du contrat 1.0 ne changent pas. Le portage Dart est fait dans le même lot (`kalis_adapt` 1.0.3, section D).
+
+Mesures : `pipeline/cp/livraisons/LIVRAISON_KR1.md`, `kalis_bench` `docs/CRITERES_KR1.md` et `docs/data/kr1/`.
+
+## A. Élargissement plafonné à l'a priori (koach/modele.py, `Modele.elargir`, `Modele.variances_a_priori`)
+
+Cause mesurée : la campagne du couple `kalis_plan` 0.4.1 × Koach 1.0.3 sur les 34 profils (graines 0 à 5, 5 436 saisons) a planté 8 saisons, toutes `ks_test_ppl6` (profil du lot KS1, quarante semaines), scénario « séances manquées » (graines 1, 3, 4, 5 ; trois modèles de vérité). Trace Dart : `double.floor` sur `NaN` ou l'infini dans `Seances._cibleTenue` (`(tenue_part_max · e^μ).floor()`) ; Python : `OverflowError` dans `PolitiqueKoach.estimer` (`math.exp(μ + 1,645·σ)`). Sur la saison (`a`, graine 1), l'écart-type de ln capacité de `cd-traction-explosive-poitrine-barre` passe de 0,36 à 0,70, 1,39, 2,52, 9,13, 10,87 puis 20,09 : l'utilisateur simulé répond « rien de spécial » à 15 diagnostics de la surveillance en quarante semaines, et chaque réponse multipliait la variance de toute capacité par `elargissement_rien_de_special` (4), sans borne. Le défaut n'est pas propre au banc : un utilisateur réel qui répond « rien » à chaque alerte le déclenche de la même façon.
+
+Règle (contrat § 4.4, note du 16/10/2026) : `elargir(facteur)` garde `P ← D P D` (D diagonale positive : P reste semi-définie positive), avec, pour chaque composante de capacité i (qualités, écart propre de chaque exercice suivi), `d_i = min(√facteur ; max(1 ; √(v0_i / v_i)))`, `v_i` lu sur la diagonale d'avant : variance nouvelle = min(facteur·v ; max(v ; v0)). `v0` (`variances_a_priori`) est l'a priori de population de la composante : `theta_sd²` pour une qualité ; pour un exercice, `max(sd² − Σ_q v_q²·theta_sd² ; (0,5·sd)²)`, sd = a priori total de son type (`delta_sd`, `reps_sd`, `cardio_sd`, `wod_sd`), la règle de `piste` appliquée à l'état initial. « Réapprentissage rapide » (cahier § 9) : revenir au plus à l'incertitude d'un athlète inconnu, jamais au-delà ; loin sous l'a priori (cas d'un exercice déjà bien mesuré), le comportement de 1.0.3 est inchangé.
+
+Ce que la règle change : seules les réponses « rien » qui portent une composante au-delà de son a priori (exercices jamais ou peu observés, réponses répétées). Effet sur la saison qui plantait : écart-type maximal 0,41 (au lieu de 20), 0 constat de sécurité.
+
+Tests : `tests/test_rupture.py` (`test_reponse_rien_elargit_et_reinitialise` mis à jour ; `test_elargir_multiplie_sous_l_a_priori` ; `test_elargir_repete_plafonne_a_l_a_priori` : trente réponses, chaque composante ≤ son a priori, P semi-définie positive, écart-type borné) ; Dart `test/koach_elargir_test.dart` (mêmes cas) ; fixture du banc `ks_test_ppl6__seances_manquees__a__1` (15 réponses « rien », élargissement plafonné exercé par la parité).
+
+## B. Données de référence régénérées sur `kalis_plan` 0.4.1 (point 1 du prompt)
+
+- `donnees/reference/` et `donnees/temoin/` : saisons de référence de `kalis_plan` (blocs, calendrier, échéances, athlètes) et mesures du témoin `kalis_adapt` 0.3.1, exportées par `kalis_bench` 0.5.3 (`bin/km1.dart`) sur `kalis_plan` 0.4.1, **34 profils** (27 du banc et 7 du lot KS1, `profiles_ks`). Les saisons figées sur 0.3.1 (27 profils) restent dans `donnees/reference_0_3_1/` et `donnees/temoin_0_3_1/` (historique des mesures de KM1 à KM2c2 ; `--saisons-figees` les relit).
+- `donnees/securite_dart.json.gz` : constats Dart des 302 saisons de référence (parité du port Python des critères de sécurité, `tests/test_securite_banc.py`).
+- `catalogue_infos.json.gz`, `traces_verite.json.gz`, `traces_endurance.json.gz` : identiques à l'octet près (vérifié).
+- `tests/test_securite_banc.py` : plus aucune exception connue — la saison `street_06`, changement de discipline (une hausse de volume trop rapide en 0.3.1), n'a plus de constat avec la troncature du bloc de KS1c1.
+
+## C. Fixtures
+
+`fixtures/generer.py` (15 fixtures), `test/fixtures/km2c2/generer_km2c2.py` (3) et `fixtures/generer_banc_km2.py` (6 : une de plus, `ks_test_ppl6`, séances manquées, vérité a, graine 1) régénérés avec le moteur 1.0.4 et les données neuves ; `koach.VERSION` vaut `1.0.4-ref.1`.
+
+## D. Portage Dart (`kalis_adapt` 1.0.3)
+
+`Modele.elargir` et `Modele.variancesAPriori` (`lib/src/koach/modele.dart`) portés ligne à ligne (mêmes opérations, même ordre) ; asset `assets/koach/koach_params_1_0_4.json` (copie à l'octet près, SHA-256 `2d023854612110d0c3a925c79efeab6a34ac886f3be05089fac228845a2a9016`) à la place de `koach_params_1_0_3.json` ; `koachVersion` et `koachParametresVersion` = `1.0.4-ref.1`. Parité 1e-9 sur les fixtures régénérées, traces comprises.

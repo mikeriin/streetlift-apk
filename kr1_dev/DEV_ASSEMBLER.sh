@@ -19,6 +19,7 @@ mkdir -p /tmp/py_travail
 cp -r $O/py_travail/. /tmp/py_travail/ 2>/dev/null
 (cd $R && python3 -m banc.campagne --graines 6 --coeurs 2 --temps-existants --travail /tmp/py_travail --sortie $O/criteres/criteres_kr1_python_g05.json > $O/criteres/py_assemblage.log 2>&1; tail -25 $O/criteres/py_assemblage.log)
 (cd $R && python3 -m banc.calibration_grappes /tmp/py_travail $O/criteres/calibration_grappes_kr1_python_g05.json | tail -3)
+python3 -I tool/kr1_comparer.py --sortie $O/criteres/parite_saisons_g05.json /tmp/py_travail $O/parts/kr1_g0_5_partie_1_sur_1.json.gz
 # Les parts restent dans les artefacts ; ci-out ne garde que le groupe 0-5.
 find $O/parts -name 'kr1_g*' ! -name 'kr1_g0_5_*' -delete
 rm -rf $O/py_travail

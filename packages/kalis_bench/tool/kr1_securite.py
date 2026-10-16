@@ -14,13 +14,14 @@ en mémoire d'un seul `assembler`).
 Définitions (lues dans `securite` de chaque saison, `kmSecuriteSaison`) :
 
 * **réalisées** : constats du validateur de sécurité du banc (`safetyFindings`)
-  sur la saison servie (`servi_tests_faits` : chaque séance faite remplacée par
+  sur la saison réalisée (vue `realise` : chaque séance faite remplacée par
   les items servis par Koach, tests ajoutés comptés pour leurs tentatives
-  faites), toutes catégories : `deja_initial` (constat déjà dans le plan
-  initial de `kalis_plan`), `aggrave`, `introduit` (par Koach) et
-  `retour_ecrit` (semaine servie telle qu'écrite après des semaines servies
-  plus légères) ; plus les aggravations et poussées de douleur de l'athlète
-  simulé et les hausses de charge de plus de 10 % sur plusieurs crans ;
+  faites, séances manquées vidées), toutes catégories : `deja_initial`
+  (constat déjà dans le plan initial de `kalis_plan`), `aggrave`, `introduit` ;
+  plus les aggravations et poussées de douleur de l'athlète simulé et les
+  hausses de charge de plus de 10 % sur plusieurs crans (parts sans vue
+  `realise` : vue `servi_tests_faits`, séances manquées comptées à leur
+  volume écrit, toutes catégories dont `retour_ecrit`) ;
 * **critère 7 du cahier** (inchangé, `kmCritereSecurite`) : `introduit` +
   `aggrave` de `plan_module` et de `servi_tests_faits`, plus les douleurs et
   les hausses ;
@@ -36,7 +37,7 @@ import os
 import sys
 
 CATS = ('deja_initial', 'aggrave', 'introduit', 'retour_ecrit')
-VUES = ('plan_module', 'servi', 'servi_tests_faits')
+VUES = ('plan_module', 'servi', 'servi_tests_faits', 'realise')
 
 
 def _parts(chemins):
@@ -69,6 +70,8 @@ def agreger(chemins):
     douleur = collections.Counter()
     touchees = 0
     saisons = 0
+    vues_lues = collections.Counter()
+    servi_tf = collections.Counter()
     plantages = []
     exemples = []
     vus = set()
@@ -94,8 +97,17 @@ def agreger(chemins):
                 for c in CATS:
                     _ajouter(par_vue[vue][c], (s.get(vue) or {}).get(c))
             real = collections.Counter()
+            # Saison réalisée (vue `realise`, lot KR1 : séances faites telles
+            # que servies, séances manquées vidées) ; à défaut (parts
+            # antérieures), la vue servie toutes catégories.
+            vue_r = 'realise' if 'realise' in s else 'servi_tests_faits'
+            vues_lues[vue_r] += 1
             for c in CATS:
-                _ajouter(real, (s.get('servi_tests_faits') or {}).get(c))
+                _ajouter(real, (s.get(vue_r) or {}).get(c))
+            stf = collections.Counter()
+            for c in CATS:
+                _ajouter(stf, (s.get('servi_tests_faits') or {}).get(c))
+            servi_tf.update(stf)
             agg = int(r.get('aggravations') or 0)
             fl = int(r.get('poussees') or 0)
             ha = int((r.get('effort') or {}).get('hausses_trop_fortes') or 0)
@@ -125,7 +137,7 @@ def agreger(chemins):
                     par_graine0.update(real)
                 if len(exemples) < 40:
                     exemples.append({'saison': r['saison'], 'constats': dict(real),
-                                     'exemples': (s.get('servi_tests_faits_exemples') or [])[:6]})
+                                     'exemples': (s.get(vue_r + '_exemples') or [])[:6]})
     return {
         'schema': 'kalis_bench/kr1_securite/1',
         'parts': len(_parts(chemins)),
@@ -136,6 +148,8 @@ def agreger(chemins):
         'plantages_exemples': plantages[:10],
         'realisees': {'total': sum(total.values()), 'par_code': dict(sorted(total.items())),
                       'saisons_touchees': touchees},
+        'vue_des_realisees': dict(vues_lues),
+        'servi_tests_faits_toutes_categories': {'total': sum(servi_tf.values()), 'par_code': dict(sorted(servi_tf.items()))},
         'realisees_graine_0': {'total': sum(par_graine0.values()), 'par_code': dict(sorted(par_graine0.items()))},
         'critere_7_cahier': critere7['total'],
         'douleur_et_hausses': dict(douleur),

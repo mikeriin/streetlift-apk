@@ -20,3 +20,9 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Données : donnees/reference et temoin régénérés (34), anciens → reference_0_3_1, temoin_0_3_1 ; securite_dart régénéré ; EXCEPTIONS_CONNUES vidé ; fixtures Python + km2c2 + banc km2 (avec ks_test_ppl6 séances manquées) régénérées ; pytest local 263 OK.
 - km2_banc_test : égalité stricte saison vivante = saison Python.
 - Run B poussé : P0 tests, P1-17 campagne Dart 100 graines (groupes de 6), P21-24 campagne Python 0-5.
+
+## 13:20 UTC
+- Vue « réalisée » (séances manquées vidées) ajoutée Python (`vider_manquees`, `securite_saison`) + Dart (`kmViderManquees`, `kmSecuriteSaison`) ; outils kr1_securite (vue realise), kr1_comparer (parité saison par saison).
+- Run B annulé ; run C poussé (1536d03f) : P0 tests, P1-17 campagne 100 graines, P21-24 Python 0-5, assemblage + parité.
+- Versions : kalis_adapt 1.0.3, kalis_bench 0.5.3 ; CHANGELOG des deux ; CONTRAT K ; INTEGRATION_KM3 ; CHANGEMENTS_1_0_4.md.
+- Reste : lire run C ; adversaires (6 jeux) sur Koach 1.0.4 ; critères 27 profils (parts filtrées) ; README référence ; contrôle complet ; relecture ; publication.

@@ -400,14 +400,20 @@ def securite_saison(saison, infos, tour, pol):
                                                                         blocs_s)
         out[vue] = cl
         out[vue + '_exemples'] = ex
+    # Lot KR1 (rapporté, hors critère 7) : saison RÉALISÉE — séances faites
+    # telles que servies (tests comptés pour leurs tentatives faites),
+    # séances manquées vidées ; constats classés contre le plan initial,
+    # sans reclassement « retour à l'écrit » (ce que l'athlète a fait).
+    blocs_r = vider_manquees(saison, tour, blocs_servis_prescrits(saison, tour, True))
+    real = sb.constats_saison(saison, infos, blocs=blocs_r)
+    cl, ex = classer_constats(initial, real)
+    out['realise'] = cl
+    out['realise_exemples'] = ex
     return out
 
 
-def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
-    """{code: n} des constats de [serv] absents du plan initial (même clé)
-    qui disparaissent quand chaque séance manquée de [blocs_s] est vidée
-    (diagnostic : le volume écrit d'une séance manquée compte dans la vue
-    servie ; Koach ne le sert pas et ne peut que le réserver)."""
+def vider_manquees(saison, tour, blocs_s):
+    """Copie de [blocs_s] où chaque séance manquée (non servie) est vidée."""
     faites = set((g, bi, wb, di) for (g, bi, wb, di, items) in tour.servi)
     vide = copy.deepcopy(blocs_s)
     for (g, bi, wb, di, sim_day) in saison['sessions']:
@@ -418,6 +424,15 @@ def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
                 for d in w['days']:
                     if d['dayIndex'] == di:
                         d['items'] = []
+    return vide
+
+
+def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
+    """{code: n} des constats de [serv] absents du plan initial (même clé)
+    qui disparaissent quand chaque séance manquée de [blocs_s] est vidée
+    (diagnostic : le volume écrit d'une séance manquée compte dans la vue
+    servie ; Koach ne le sert pas et ne peut que le réserver)."""
+    vide = vider_manquees(saison, tour, blocs_s)
     cles_ini = set(_cle_constat(c) for c in initial)
     restent = set(_cle_constat(c) for c in sb.constats_saison(saison, infos, blocs=vide))
     out = {}
