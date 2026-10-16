@@ -2393,8 +2393,8 @@ void main() {
   });
 
   group('codes de raison 0.4.0', () {
-    test('138 codes, les 92 premiers inchangés en tête', () {
-      expect(reasonRegistry, hasLength(138));
+    test('144 codes, les 92 premiers inchangés en tête', () {
+      expect(reasonRegistry, hasLength(144));
       expect(reasonRegistry[91].code, 'quest.start_bonus');
       expect(reasonRegistry[92].code, 'plan.season_phase');
       expect(reasonRegistry[129].code, 'adapt.mini_set_stop');
@@ -2404,13 +2404,16 @@ void main() {
       expect(reasonRegistry[132].code, 'plan.pain_rule');
       // 0.4.3 (lot CA2) : cinq codes d'endurance, en fin de registre.
       expect(reasonRegistry[133].code, 'adapt.run_capped');
-      expect(reasonRegistry.last.code, 'adapt.cross_fatigue');
+      expect(reasonRegistry[137].code, 'adapt.cross_fatigue');
+      // 0.4.4 (lot KS1) : six codes de structure de la semaine.
+      expect(reasonRegistry[138].code, 'plan.split_chosen');
+      expect(reasonRegistry.last.code, 'plan.replaced_cannot_do');
       expect(reasonRegistry.first.code, 'plan.discipline_share');
-      // 46 codes nouveaux (38 en 0.4.0, 3 en 0.4.1, 5 en 0.4.3), tous après
-      // les 92 de 0.3.0, sans doublon.
+      // 52 codes nouveaux (38 en 0.4.0, 3 en 0.4.1, 5 en 0.4.3, 6 en
+      // 0.4.4), tous après les 92 de 0.3.0, sans doublon.
       final added = <String>[for (final s in reasonRegistry.skip(92)) s.code];
-      expect(added, hasLength(46));
-      expect(added.toSet(), hasLength(46));
+      expect(added, hasLength(52));
+      expect(added.toSet(), hasLength(52));
       expect(
         added.where((c) => c.startsWith('quest.')),
         isEmpty,

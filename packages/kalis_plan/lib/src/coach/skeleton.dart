@@ -14,6 +14,7 @@ import 'season.dart';
 import 'tables.dart';
 
 part 'general.dart';
+part 'structure.dart';
 
 /// Style de programme de l'athlète [a].
 CoachStyle styleOf(Athlete a) {
@@ -1475,11 +1476,11 @@ Map<int, String> _assignPillar(
   return out;
 }
 
-void _buildReps(_Builder b, Set<int> runDays) {
+void _buildReps(_Builder b, Set<int> runDays, {Set<int> skip = const <int>{}}) {
   final a = b.a;
   final days = <int>[
     for (var d = 0; d < a.dayCount; d++)
-      if (!runDays.contains(d)) d,
+      if (!runDays.contains(d) && !skip.contains(d)) d,
   ];
   if (days.isEmpty) {
     return;
@@ -2004,11 +2005,15 @@ void _buildReps(_Builder b, Set<int> runDays) {
   return null;
 }
 
-void _buildLifting(_Builder b, Set<int> runDays) {
+void _buildLifting(
+  _Builder b,
+  Set<int> runDays, {
+  Set<int> skip = const <int>{},
+}) {
   final a = b.a;
   final days = <int>[
     for (var d = 0; d < a.dayCount; d++)
-      if (!runDays.contains(d)) d,
+      if (!runDays.contains(d) && !skip.contains(d)) d,
   ];
   final n = days.length;
   if (n == 0) {
@@ -3008,6 +3013,10 @@ double _slotSeconds(Athlete a, SlotSpec s) {
       effort = 18;
       rest = 180;
       extra = 180;
+    case Method.liftFixed:
+      effort = 60;
+      rest = 180;
+      extra = 180;
     case Method.liftLight:
       effort = 9;
       rest = 120;
@@ -3493,15 +3502,16 @@ void _limitStraightArmDays(_Builder b) {
   }
 }
 
-/// Squelette du bloc de rang [blockIndex] qui commence le jour lu par
-/// [a] ; [rotation] décale les choix d'assistance (« Autre proposition »).
-Skeleton buildSkeleton(
+/// Construit un candidat : jours de course, chemin [build], puis les
+/// réglages communs (bras tendus, interférence, plafonds, compléments).
+(_Builder, Set<int>) _construct(
   Athlete a,
   BlockShape shape,
-  int blockIndex, {
-  int rotation = 0,
-}) {
-  final style = styleOf(a);
+  int blockIndex,
+  int rotation,
+  CoachStyle style,
+  void Function(_Builder b, Set<int> runDays) build,
+) {
   final b = _Builder(a, shape, blockIndex, rotation);
   final runDays = switch (style) {
     CoachStyle.beginner ||
@@ -3510,6 +3520,31 @@ Skeleton buildSkeleton(
     CoachStyle.endurance => _buildEndurance(b),
     _ => _buildRuns(b),
   };
+  build(b, runDays);
+  if (b.extraRunDay >= 0) {
+    b.add(
+      b.extraRunDay,
+      <String>[Ids.easyRun],
+      SlotRole.accessory,
+      Method.runEasy,
+      sets: 1,
+      note: 'run_extra',
+    );
+  }
+  _limitStraightArmDays(b);
+  if (!isStreetStyle(style)) {
+    _limitInterference(b);
+  }
+  _fitBudget(b);
+  if (isStreetStyle(style)) {
+    _fillTime(b, runDays, style);
+    _fitBudget(b);
+  }
+  return (b, runDays);
+}
+
+/// Chemin d'avant 0.4.0 du style [style] (un gabarit de la bibliothèque).
+void _buildStyle(_Builder b, Set<int> runDays, CoachStyle style) {
   switch (style) {
     case CoachStyle.hypertrophy:
       _buildHypertrophy(b, runDays);
@@ -3530,24 +3565,148 @@ Skeleton buildSkeleton(
     case CoachStyle.figures:
       _buildFigures(b, runDays);
   }
-  if (b.extraRunDay >= 0) {
-    b.add(
-      b.extraRunDay,
-      <String>[Ids.easyRun],
-      SlotRole.accessory,
-      Method.runEasy,
-      sets: 1,
-      note: 'run_extra',
+}
+
+/// Parts de force et d'endurance du bloc de forme [shape] : la qualité de
+/// l'échéance monte de [coachTargetShareRise] points en intensification et
+/// en réalisation (CAHIER_KS.md § 3.3.2), sans faire passer l'autre sous
+/// [coachDayShareMin] %.
+(int, int) _phaseShares(Athlete a, BlockShape shape, (int, int) shares) {
+  final (force, endurance) = shares;
+  final target = shape.target;
+  if (target == null ||
+      (shape.phase != SeasonPhaseKind.intensification &&
+          shape.phase != SeasonPhaseKind.realization)) {
+    return shares;
+  }
+  final reps = target.event != null
+      ? isRepsTarget(target)
+      : target.goals.isNotEmpty &&
+            target.goals.every((g) => g.metric == GoalMetric.maxReps);
+  final strength = isStrengthTarget(a, target);
+  if (reps == strength) {
+    return shares;
+  }
+  int move(int from) => from - coachTargetShareRise < coachDayShareMin
+      ? from - coachDayShareMin
+      : coachTargetShareRise;
+  if (reps) {
+    final m = move(force);
+    return (force - m, endurance + m);
+  }
+  final m = move(endurance);
+  return (force + m, endurance - m);
+}
+
+/// Squelette du bloc de rang [blockIndex] qui commence le jour lu par
+/// [a] ; [rotation] décale les choix d'assistance (« Autre proposition »).
+///
+/// Lot KS1 : le gabarit de semaine est choisi avant les exercices. Un profil
+/// qui déclare deux qualités à [coachDayShareMin] % au moins (force lestée
+/// et endurance de force) reçoit la répartition de ses séances par qualité
+/// (plus fort reste), puis le meilleur gabarit qui la réalise — le gabarit
+/// typé de la bibliothèque et le gabarit composite sont construits et
+/// comparés dans l'ordre lexicographique du § 3.4 ; un profil
+/// mono-discipline garde le gabarit de son chemin, à l'identique.
+Skeleton buildSkeleton(
+  Athlete a,
+  BlockShape shape,
+  int blockIndex, {
+  int rotation = 0,
+}) {
+  final style = styleOf(a);
+  final shares = mixedStreetShares(a, style);
+  _Builder b;
+  Set<int> runDays;
+  var templateId = templateOfStyle(style);
+  if (shares == null) {
+    (b, runDays) = _construct(
+      a,
+      shape,
+      blockIndex,
+      rotation,
+      style,
+      (b, runDays) => _buildStyle(b, runDays, style),
     );
-  }
-  _limitStraightArmDays(b);
-  if (!isStreetStyle(style)) {
-    _limitInterference(b);
-  }
-  _fitBudget(b);
-  if (isStreetStyle(style)) {
-    _fillTime(b, runDays, style);
-    _fitBudget(b);
+  } else {
+    final shifted = _phaseShares(a, shape, shares);
+    final forceFirst =
+        a.profile.disciplines.primary == TrainingDiscipline.streetlifting;
+    final candidates = <(String, _Builder, Set<int>)>[];
+    final probe = _Builder(a, shape, blockIndex, rotation);
+    final runs = _buildRuns(probe);
+    final free = <int>[
+      for (var d = 0; d < a.dayCount; d++)
+        if (!runs.contains(d)) d,
+    ];
+    // Répartition de la phase d'abord ; quand elle diffère de la
+    // répartition des disciplines, celle-ci reste candidate : une
+    // répartition déplacée qu'aucun gabarit ne réalise sans laisser un
+    // objectif sans emplacement ou sans casser la récupération ne passe pas
+    // devant (CAHIER_KS.md § 3.4 : couverture, puis récupération ; à
+    // égalité, l'ordre d'essai — la phase d'abord, le gabarit typé avant le
+    // composite).
+    final tried = <(int, int)>{};
+    for (final (force, endurance) in <(int, int)>[shifted, shares]) {
+      final (nf, ne) = coachQualitySessions(
+        free.length,
+        force,
+        endurance,
+        forceFirst: forceFirst,
+      );
+      if (!tried.add((nf, ne))) {
+        continue;
+      }
+      // Gabarit typé de la bibliothèque, quand l'un réalise la répartition.
+      final typed = _typedTemplate(nf, ne);
+      if (typed != null) {
+        final (id, kinds) = typed;
+        final placed = _place(a, free, kinds);
+        final built = _construct(
+          a,
+          shape,
+          blockIndex,
+          rotation,
+          style,
+          (b, runDays) => _buildTyped(b, free, placed),
+        );
+        candidates.add((id, built.$1, built.$2));
+      }
+      if (free.length >= 2) {
+        final built = _construct(
+          a,
+          shape,
+          blockIndex,
+          rotation,
+          style,
+          (b, runDays) => _buildMixed(b, runDays, nf),
+        );
+        candidates.add((SplitTemplates.mixed, built.$1, built.$2));
+      }
+    }
+    if (candidates.isEmpty) {
+      (b, runDays) = _construct(
+        a,
+        shape,
+        blockIndex,
+        rotation,
+        style,
+        (b, runDays) => _buildStyle(b, runDays, style),
+      );
+    } else {
+      var best = 0;
+      var bestMeasure = _measure(candidates.first.$2, candidates.first.$3);
+      for (var k = 1; k < candidates.length; k++) {
+        final m = _measure(candidates[k].$2, candidates[k].$3);
+        if (m.before(bestMeasure)) {
+          best = k;
+          bestMeasure = m;
+        }
+      }
+      templateId = candidates[best].$1;
+      b = candidates[best].$2;
+      runDays = candidates[best].$3;
+    }
   }
   // Mobilité en fin de séance quand le profil la demande.
   var mobility = 0;
@@ -3604,7 +3763,34 @@ Skeleton buildSkeleton(
     for (var i = 0; i < slots.length; i++) {
       slots[i].slotId = slotIdFor(d, i + 1);
     }
+    // Type du jour : celui du gabarit, sinon déduit des emplacements.
+    b.days[d].type ??= coachDerivedType(a, b.days[d]);
   }
+  // Audit de couverture (CAHIER_KS.md § 4) : un objectif sans emplacement
+  // porteur est dit au bloc.
+  for (final g in coachUncoveredGoals(a, b.days)) {
+    b.reasons.add(
+      reason(ReasonCodes.planGoalUncovered, <String, Object?>{'goalId': g.id}),
+    );
+  }
+  final milestone = coachMilestoneOf(a, shape);
+  if (milestone != null) {
+    b.reasons.add(milestone);
+  }
+  final sessions = a.dayCount - runDays.length;
+  final splitReasons = <Reason>[
+    reason(ReasonCodes.planSplitChosen, <String, Object?>{
+      'templateId': templateId,
+      'sessions': sessions,
+    }),
+    for (final day in b.days)
+      reason(ReasonCodes.planDayType, <String, Object?>{
+        'patterns': <String>[
+          for (final p in day.type!.patterns) p.code,
+        ].join('+'),
+        'quality': day.type!.quality.code,
+      }),
+  ];
 
   final target = shape.target;
   final toEvent = shape.weeksToEvent;
@@ -3627,5 +3813,7 @@ Skeleton buildSkeleton(
     ladders: b.ladders,
     reasons: b.reasons,
     intent: intent,
+    templateId: templateId,
+    splitReasons: splitReasons,
   );
 }

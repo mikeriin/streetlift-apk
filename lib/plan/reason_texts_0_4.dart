@@ -8,6 +8,7 @@
 import 'package:kalis_core/kalis_core.dart' as kc;
 
 import 'coach_texts.dart' show phaseLabel, techniqueLabel;
+import 'day_type.dart' show dayPatternsText, dayQualityText, splitTemplateText;
 
 /// Code de raison → modèle de phrase ({paramètre}).
 const kReasonTexts04 = <String, String>{
@@ -79,6 +80,19 @@ const kReasonTexts04 = <String, String>{
       "WOD mis à l'échelle : {percent} % de ce qui était prévu ({cause}).",
   'adapt.cross_fatigue':
       "Un peu plus de marge sur les jambes : ta course d'hier était dure.",
+  // KS1A : codes de structure de la semaine de `kalis_core` 0.4.4
+  // (`kalis_plan` 0.4) ; textes de `data/reason_texts_fr_0_4.json`, rendus
+  // avec les libellés de l'application (gabarit, schémas, qualité, date).
+  'plan.split_chosen':
+      'Semaine construite en {templateId}, pour tes {sessions} séances.',
+  'plan.day_type': 'Séance {patterns} — {quality}.',
+  'plan.goal_uncovered':
+      "Un de tes objectifs n'a pas de séance qui le travaille cette semaine : je le signale.",
+  'plan.milestone':
+      "Jalon le {date} : on teste tes {goals} objectifs, puis on repart vers l'échéance.",
+  'plan.replaced_disliked': 'À la place de {exerciseId}, que tu n’aimes pas.',
+  'plan.replaced_cannot_do':
+      'À la place de {exerciseId}, que tu ne sais pas encore faire.',
 };
 
 /// Phrase d'un code de 0.4.0 ([params] : paramètres de la raison ;
@@ -88,8 +102,12 @@ String? reasonText04(
   Map<String, Object?> params,
   String Function(String id) exerciseName,
 ) {
-  final t = kReasonTexts04[code];
+  var t = kReasonTexts04[code];
   if (t == null) return null;
+  // KS1A : un seul objectif au jalon.
+  if (code == 'plan.milestone' && params['goals'] == 1) {
+    t = t.replaceFirst('tes {goals} objectifs', 'ton objectif');
+  }
   return t.replaceAllMapped(RegExp(r'\{(\w+)\}'), (m) {
     final k = m.group(1)!;
     final v = params[k];
@@ -117,6 +135,15 @@ String? reasonText04(
           };
         case 'cause' || 'factor':
           return _causeLabel(v);
+        // KS1A : structure de la semaine (`kalis_plan` 0.4).
+        case 'templateId':
+          return splitTemplateText(v);
+        case 'patterns':
+          return dayPatternsText(v);
+        case 'quality':
+          return dayQualityText(v);
+        case 'date':
+          return _dateLabel(v);
       }
     }
     if (v is num) {
@@ -155,3 +182,28 @@ String _causeLabel(String code) => switch (code) {
   'resume_14' => 'reprise après deux semaines sans séance',
   _ => code.replaceAll('_', ' '),
 };
+
+const _kMonths = [
+  'janvier',
+  'février',
+  'mars',
+  'avril',
+  'mai',
+  'juin',
+  'juillet',
+  'août',
+  'septembre',
+  'octobre',
+  'novembre',
+  'décembre',
+];
+
+/// KS1A : date « AAAA-MM-JJ » d'une raison en clair (« 12 décembre ») ;
+/// le texte tel quel s'il n'est pas une date.
+String _dateLabel(String iso) {
+  final m = RegExp(r'^(\d{4})-(\d{2})-(\d{2})$').firstMatch(iso);
+  if (m == null) return iso;
+  final month = int.parse(m[2]!), day = int.parse(m[3]!);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return iso;
+  return '${day == 1 ? '1er' : day} ${_kMonths[month - 1]}';
+}

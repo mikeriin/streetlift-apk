@@ -198,6 +198,7 @@ extension PlanStore on AppStore {
       blocks: [c.entry(at)],
       previous: previous,
       season: _planSeasonFor(c.entry(at).block, c.profile),
+      eventsKey: planEventsKey(c.profile.events),
     );
     _planProfileLearned(c.profile);
     planProgram = next;
@@ -288,6 +289,46 @@ extension PlanStore on AppStore {
     if (plan == null || start == null) return false;
     final o = Program.civilIndex(_planToday) - Program.civilIndex(start);
     return o >= (plan.totalWeeks - 1) * 7;
+  }
+
+  /// KS1A (contrat `kalis_plan` § 12.9) : une échéance du profil a changé
+  /// (ajoutée, retirée, déplacée, priorité) depuis la validation du
+  /// dernier bloc d'un programme créé, avant sa dernière semaine : le bloc
+  /// suivant peut être préparé tout de suite (jamais imposé). Faux pour un
+  /// programme validé avant 7.1.0 (empreinte absente).
+  bool get planDeadlineChanged {
+    final plan = planProgram;
+    final key = plan?.eventsKey;
+    if (plan == null || key == null || planBlockEnding) return false;
+    final p = AthleteProfileStore(this).athleteProfileForEngines;
+    if (p == null) return false;
+    return planEventsKey(p.events) != key;
+  }
+
+  /// KS1A : semaine (S) où commence le bloc suivant d'un programme créé :
+  /// après le dernier bloc ; après une échéance changée, la prochaine
+  /// semaine du programme (aujourd'hui s'il en est le premier jour), après
+  /// toute séance déjà saisie, une semaine du bloc en cours au moins. Le
+  /// début du bloc suivant est ainsi le début du bloc en cours plus ses
+  /// semaines entières servies (contrat § 12.9).
+  int get planNextFirstWeek {
+    final plan = planProgram;
+    if (plan == null) return 1;
+    final end = plan.totalWeeks + 1;
+    final start = program.start;
+    if (!planDeadlineChanged || start == null) return end;
+    final first = plan.blockFirstWeek(plan.blocks.length - 1);
+    final o = Program.civilIndex(_planToday) - Program.civilIndex(start);
+    if (o < 0) return end;
+    var next = o % 7 == 0 ? o ~/ 7 + 1 : o ~/ 7 + 2;
+    if (next < first + 1) next = first + 1;
+    for (final k in logs.keys) {
+      final m = RegExp(r'^S(\d+)-J(\d)$').firstMatch(k);
+      if (m == null) continue;
+      final w = int.parse(m[1]!), j = int.parse(m[2]!);
+      if (w >= next && _loggedAt(w, j)) next = w + 1;
+    }
+    return next > end ? end : next;
   }
 
   /// Résumé d'adaptation du bloc en cours : celui de `kalis_adapt` (G9,
@@ -416,12 +457,21 @@ extension PlanStore on AppStore {
       return null;
     }
     final last = plan.blocks.last;
-    final n = plan.totalWeeks + 1;
-    final d = DateTime(start.year, start.month, start.day + (n - 1) * 7);
+    // KS1A : après une échéance changée, le bloc suivant commence à la
+    // prochaine semaine du programme (semaines entières servies, contrat
+    // § 12.9) ; sinon après la dernière semaine du bloc.
+    final n = planNextFirstWeek;
+    final first = plan.blockFirstWeek(plan.blocks.length - 1);
+    // Bloc avancé : début du bloc en cours + semaines entières servies,
+    // compté sur le bloc lui-même (« Où j'en suis » peut avoir déplacé le
+    // départ du programme sans toucher aux dates des blocs).
+    final startDate = n <= plan.totalWeeks
+        ? last.block.pass1.startDate.addDays(7 * (n - first))
+        : civilOf(DateTime(start.year, start.month, start.day + (n - 1) * 7));
     final req = kc.NextBlockRequest(
       profile: profile,
       seed: last.seed,
-      startDate: civilOf(d),
+      startDate: startDate,
       // G10 : le bloc tel qu'il a été fait (ajustements de la passe 2 et
       // propositions du moteur dynamique en place).
       previous: SessionAdaptStore(this)._adaptPlanBlock(plan.blocks.length - 1),
@@ -557,12 +607,31 @@ extension PlanStore on AppStore {
     final at = _planAt;
     _planProfileLearned(c.profile);
     final entry = c.entry(at);
+    // KS1A (contrat § 12.9, KS1c1) : bloc suivant avancé (échéance
+    // changée) : le bloc en cours s'arrête à ses semaines entières servies
+    // (début du bloc + semaines servies = début du bloc suivant), comme
+    // `kalis_plan` 0.4.1 l'a lu pour écrire la suite.
+    final blocks = [...plan.blocks];
+    final cur = blocks.last;
+    // (Seulement après une échéance changée : en fin de bloc, le bloc en
+    // cours reste entier, quel que soit le départ du programme.)
+    final served = kp.servedWeeksOf(cur.block, c.startDate);
+    if (planDeadlineChanged && served < cur.weeks) {
+      blocks[blocks.length - 1] = PlanBlockEntry(
+        block: kp.servedBlockOf(cur.block, c.startDate),
+        seed: cur.seed,
+        locks: cur.locks,
+        adjust: cur.adjust,
+        validatedAt: cur.validatedAt,
+      );
+    }
     planProgram = plan.copyWith(
       updatedAt: at,
-      blocks: [...plan.blocks, entry],
+      blocks: [...blocks, entry],
       clearPrevious: true,
       season: _planSeasonFor(entry.block, c.profile),
       clearSeason: true,
+      eventsKey: planEventsKey(c.profile.events),
     );
     _materializeProgram(program.start);
     if (c.journalOn) unawaited(savePlanJournal(c));
@@ -649,6 +718,46 @@ extension PlanStore on AppStore {
     if (plan == null || plan.keepLegacyEngine == keep) return;
     planProgram = plan.copyWith(updatedAt: _planAt, keepLegacyEngine: keep);
     _planChanged();
+  }
+
+  // ------------------------------------- KS1A : types de jour, durée
+
+  /// KS1A (`kalis_core` 0.4.4) : type d'une journée affichée — celui que
+  /// `kalis_plan` 0.4 a écrit pour un programme créé, sinon, pour une
+  /// journée importée (programme de 40 semaines, semaines d'avant un
+  /// programme créé), celui de son titre écrit (`importedDayType`) ; null :
+  /// récupération, programme créé avant 0.4.4, titre sans schéma reconnu.
+  kc.DayType? dayTypeOf(DayPlan d) {
+    final o = d.original;
+    if (o.exercises.isEmpty) return null;
+    final own = o.type;
+    if (own != null) return own;
+    // Journée d'un programme créé (temps disponible écrit) : pas de
+    // déduction depuis son titre de thème.
+    if (o.minutes != null) return null;
+    return importedDayType(o.title, o.j);
+  }
+
+  /// Libellé du type d'une journée (« Tirage — force »), ou null.
+  String? dayTypeLabelOf(DayPlan d) => dayTypeLabel(dayTypeOf(d));
+
+  /// KS1A (C17.15, option a) : temps disponible d'une journée de programme
+  /// créé quand il dépasse d'au moins [kAvailableMargin] minutes la durée
+  /// estimée de la séance [e] (rien n'est ajouté à la séance) ; null sinon.
+  int? dayAvailableMinutes(DayPlan d, TrainingEstimate e) {
+    final m = d.original.minutes;
+    if (m == null || e.partial || e.elapsed.high <= 0) return null;
+    final est = (e.elapsed.high / 60).ceil();
+    return m >= est + kAvailableMargin ? m : null;
+  }
+
+  /// « ≈ 50 min sur 120 disponibles » (C17.15) ; la durée seule quand le
+  /// créneau n'est pas plus long que la séance.
+  String dayDurationText(DayPlan d, [TrainingEstimate? e]) {
+    final est = e ?? dayEstimate(d);
+    final duration = estimateLabelText(est.durationLabel);
+    final m = dayAvailableMinutes(d, est);
+    return m == null ? duration : '$duration sur $m disponibles';
   }
 
   // ------------------------------------------------------- Où j'en suis

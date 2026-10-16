@@ -1,5 +1,22 @@
 # Journal des versions de kalis_core
 
+## 0.4.4 — 15/10/2026 (lot KS1 du pipeline « Calibrage des programmes », évolution additive)
+
+Rien n'est retiré, renommé ni déplacé ; aucune valeur n'est ajoutée à une énumération existante, aucune borne ne change.
+Un JSON de 0.4.3 se relit et se réécrit à l'identique (`test/structure_test.dart`). Origine : cahier des charges
+« Structure de la semaine » (`pipeline/cp/CAHIER_KS.md`, § 6).
+
+- **Type du jour** : `PlanDay.type` facultatif (`DayType` : `patterns`, liste de `DayPattern` — `pull`, `push`, `legs`,
+  `full`, `skill`, `run`, `recovery` — ; `quality`, `DayQuality` — `force`, `volume`, `endurance`, `power`, `skill`,
+  `conditioning`, `run`, `recovery` — ; `stress`, `DayStress` facultatif). Les deux énumérations sont **ouvertes**
+  (règle des énumérations introduites depuis 0.4.0).
+- **Gabarit de semaine retenu** : `Pass1Plan.split` facultatif (`SplitChoice` : `templateId`, `reasons`).
+- **Six codes de raison** en fin de registre (144 codes ; rang des 138 premiers inchangé) : `plan.split_chosen`
+  (`templateId`, `sessions`), `plan.day_type` (`patterns`, `quality`), `plan.goal_uncovered` (`goalId`),
+  `plan.milestone` (`date`, `goals`), `plan.replaced_disliked` et `plan.replaced_cannot_do` (`exerciseId` : l'exercice
+  remplacé). Textes courts de Koach : `docs/RAISONS_0_4.md` (`data/reason_texts_fr_0_4.json`).
+- `data/parcours_v3.json` : seul le numéro de version change (0.4.4).
+
 ## 0.4.3 — 08/10/2026 (lot CA2 du pipeline « Calibrage des programmes », évolution additive)
 
 Rien n'est retiré, renommé ni déplacé ; aucun type, aucune énumération, aucune borne ne change. Un JSON de 0.4.2 se

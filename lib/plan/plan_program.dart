@@ -240,6 +240,12 @@ class PlanProgram {
   /// fin d'un bloc 0.1 ; jamais imposé, réversible.
   final bool keepLegacyEngine;
 
+  /// KS1A (contrat `kalis_plan` § 12.9) : empreinte des échéances du
+  /// profil quand le dernier bloc a été validé (`planEventsKey`) ; une
+  /// échéance changée depuis permet de préparer le bloc suivant tout de
+  /// suite. Null : programme validé avant 7.1.0.
+  final String? eventsKey;
+
   const PlanProgram({
     this.version = kPlanProgramVersion,
     required this.origin,
@@ -252,6 +258,7 @@ class PlanProgram {
     this.previous,
     this.season,
     this.keepLegacyEngine = false,
+    this.eventsKey,
   });
 
   int get totalWeeks => firstWeek - 1 + blocks.fold(0, (a, b) => a + b.weeks);
@@ -286,6 +293,7 @@ class PlanProgram {
     kc.SeasonPlan? season,
     bool clearSeason = false,
     bool? keepLegacyEngine,
+    String? eventsKey,
   }) => PlanProgram(
     version: version,
     origin: origin,
@@ -300,6 +308,7 @@ class PlanProgram {
     // saison, bloc du chemin 0.1).
     season: clearSeason ? season : (season ?? this.season),
     keepLegacyEngine: keepLegacyEngine ?? this.keepLegacyEngine,
+    eventsKey: eventsKey ?? this.eventsKey,
   );
 
   Map<String, Object?> toJson() => {
@@ -314,6 +323,7 @@ class PlanProgram {
     if (previous != null) 'previous': previous!.toJson(),
     if (season != null) 'season': season!.toJson(),
     if (keepLegacyEngine) 'keepLegacyEngine': true,
+    if (eventsKey != null) 'eventsKey': eventsKey,
   };
 
   /// Lecture ; [FormatException] hors contrat.
@@ -396,6 +406,10 @@ class PlanProgram {
       previous: prev == null ? null : PlanPrevious.fromJson(prev),
       season: season,
       keepLegacyEngine: m['keepLegacyEngine'] == true,
+      eventsKey:
+          m['eventsKey'] is String && (m['eventsKey'] as String).length <= 4000
+          ? m['eventsKey'] as String
+          : null,
     );
   }
 }
@@ -408,6 +422,16 @@ class PlanLabels {
   final String Function(String exerciseId) cue;
   final String Function(String goalId)? goal;
   const PlanLabels({required this.name, required this.cue, this.goal});
+}
+
+/// KS1A : empreinte des échéances d'un profil (identifiant, date,
+/// priorité), dans l'ordre des identifiants.
+String planEventsKey(List<kc.SeasonEvent>? events) {
+  final parts = [
+    for (final e in events ?? const <kc.SeasonEvent>[])
+      '${e.id}|${e.date.iso}|${e.priority.code}',
+  ]..sort();
+  return parts.join(';');
 }
 
 /// Identifiant d'un exercice de la semaine S, jour J (clé du journal).
@@ -543,6 +567,9 @@ Map<String, dynamic> planWeekJson({
       'why': kWeekKindHints[week.kind]!,
       'kind': hit.day.focus,
       'minutes': hit.day.minutesBudget,
+      // KS1A (`kalis_core` 0.4.4) : type du jour écrit par `kalis_plan`
+      // 0.4 (schémas, qualité) ; absent pour un bloc écrit avant.
+      if (hit.day.type case final t?) 'type': t.toJson(),
     });
   }
   return {

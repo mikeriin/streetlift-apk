@@ -59,6 +59,25 @@ double? importedFixedLoadKg(Exercise e) {
   return kg;
 }
 
+/// KS1A : type d'une journée J d'un bloc importé : le plus fréquent des
+/// types de ses semaines (à égalité, le premier rencontré) ; null sans
+/// type.
+kc.DayType? _segmentDayType(List<kc.DayType>? types) {
+  if (types == null || types.isEmpty) return null;
+  final count = <String, int>{};
+  final byKey = <String, kc.DayType>{};
+  for (final t in types) {
+    final k = jsonEncode(t.toJson());
+    count[k] = (count[k] ?? 0) + 1;
+    byKey.putIfAbsent(k, () => t);
+  }
+  var best = jsonEncode(types.first.toJson());
+  for (final k in byKey.keys) {
+    if (count[k]! > count[best]!) best = k;
+  }
+  return byKey[best];
+}
+
 /// Bloc du moteur tiré du programme importé.
 class ImportedSegment {
   /// Rang du bloc (0 = premier).
@@ -635,12 +654,21 @@ extension ImportedProgramStore on AppStore {
     final js = <int>{};
     final slotExercise = <String, String>{};
     final slotRole = <String, kc.SlotRole>{};
+    // KS1A : types de jour des semaines du bloc, par journée J (titres
+    // écrits, plan/day_type.dart), dans l'ordre des semaines.
+    final dayTypes = <int, List<kc.DayType>>{};
     for (var n = first; n <= last; n++) {
       final w = program.week(n);
       final days = <int, List<kc.ExercisePrescription>>{};
       final dayGroups = <int, List<kc.GroupSpec>>{};
       // Toujours le programme d'origine (sans la couche de Koach).
       for (final d in [for (final x in w.days) x.original]) {
+        final type = importedDayType(
+          d.title,
+          d.j,
+          training: d.exercises.isNotEmpty,
+        );
+        if (type != null) (dayTypes[d.j] ??= []).add(type);
         final items = <kc.ExercisePrescription>[];
         final groups = <kc.GroupSpec>[];
         final seen = <String, int>{};
@@ -745,6 +773,9 @@ extension ImportedProgramStore on AppStore {
             weekday: SessionAdaptStore(this)._adaptWeekday(j),
             minutesBudget: 90,
             focus: 'imported',
+            // KS1A : type de la journée dans le bloc (le plus fréquent de
+            // ses semaines ; à égalité, celui de la première).
+            type: _segmentDayType(dayTypes[j]),
             slots: [
               for (final s in slotList)
                 if (s.startsWith('j$j-'))
