@@ -723,6 +723,45 @@ les critères du cahier (C13.3) : `kalis_adapt` 1.0.2 (Koach 1.0.3 en Dart) et `
   régénère les données de référence (`reference/donnees/reference/`, témoin, fixtures du banc) sur `kalis_plan` 0.4.x
   après KS1c1, comme le prévoit le prompt ; d'ici là, toute comparaison Dart ↔ Python passe par `--saisons-figees`.
 
+### KS1c1
+
+Lot livré le 16/10/2026 (session Fable 5.1, effort maximal, C17.12), validation automatique par le pilotage sur les
+critères du prompt : `kalis_plan` 0.4.1 et `kalis_bench` 0.5.2 (`moteurs` eae158b8, étiquettes publiées), contrôle
+complet `claude/ci-cp-b` run 38873043566 vert. Détail : `pipeline/cp/livraisons/LIVRAISON_KS1c1.md`,
+`packages/kalis_plan/CHANGELOG.md` (0.4.1), `packages/kalis_bench/CHANGELOG.md` (0.5.2).
+
+- **KS1c1.1 Lancement** : message de la tâche Fable moteurs sans ligne « Lot : » ; KS1c1 seul lot moteur « à faire »
+  (la session Opus lancée le 15/10 vers 23:45 n'avait pas réservé la ligne 2 h 40 plus tard) ; ligne « en cours »
+  poussée à 02:30 UTC. Pas de SDK Dart (proxy) : mise au point sur la CI (`claude/ci-cp-b`, commits « KS1c1 contrôle
+  (dev) » à arbre réduit). Clé des références non lue.
+- **KS1c1.2 Cause 1 corrigée (hausse de charge après une échéance avancée)** : à la réécriture d'un bloc en cours
+  (`nextBlock`, `previous` = bloc entier), le prescripteur était amorcé par des semaines écrites puis abandonnées ; la
+  borne de hausse de charge lisait la semaine 4 jamais faite. `kalis_plan` 0.4.1 tronque le bloc précédent aux
+  semaines servies (dates de la requête, au moins une), recalcule la note `pain_return`, même règle dans
+  `createPass1` / `createPass2` ; API étendue (additif). 0 `charge_trop_vite` sur `ks_01` à `ks_03` et sur `street_12`
+  (changement de discipline : 2 violations introduites par KS1 à la graine 0 et 467 sur toutes les graines, non vues
+  par sa livraison). Tests `ks1c1_test.dart` et `coach_test.dart` (KS1c1).
+- **KS1c1.3 Cause 2 établie, hors périmètre (hausse de volume sous douleur à l'épaule)** : les deux `volume_trop_vite`
+  de `ks_test_ppl6` suivent des propositions « volume » (+1 série sur le soulevé de terre roumain) appliquées par
+  `kalis_adapt` aux revues des semaines 16 et 17 ; `_upFits` (`review.dart`) ne vérifie que le plafond hebdomadaire du
+  groupe, pas la rampe (R5-P22). `kalis_plan` ne voit pas ces prescriptions. Preuve par test ; correction d'une
+  fonction proposée (prompt : ni `kalis_adapt`).
+- **KS1c1.4 Constat : le critère « 0 sur toutes les graines » n'a jamais été tenu** : `saisons.json` des contrôles
+  complets, couple cx, 72 000 saisons : 854 violations réalisées en 0.3.1 (830 de volume), 1 262 en 0.4.0 (+467 de
+  charge sur `street_12`, régression de KS1), **628 en 0.4.1** (0 de charge, 609 de volume : moins qu'en 0.3.1) ; les 7
+  profils ajoutés en portent 703 sur 18 600 saisons (toutes de volume, 572 sur le profil de test sous douleur :
+  mécanisme de KS1c1.3) ; la livraison KS1 (§ 2, « 0 → 0 ») lisait les programmes créés, pas ce
+  fichier. Les livraisons CX à KS1 n'ont lu que les saisons racontées (graine 0).
+- **KS1c1.5 Critères du prompt** : 1 tenu ; 2 non (hors périmètre) ; 3 non à la graine 0 (2 cas de KS1c1.3 sur
+  302 (240 des 27 profils, 62 des 7 ajoutés) saisons) et non sur toutes les graines (jamais tenu) ; aucun recul : programmes créés identiques
+  à 0.4.0, squelettes mono identiques à 0.3.1, critères du § 9 de KS1 inchangés (STRUCTURE.md identique hors la ligne des saisons, 6 → 2).
+- **KS1c1.6 Relecture indépendante** (sous-agent Opus) : 0 bloquant, 2 majeurs corrigés (note `pain_return` du bloc
+  tronqué ; test des propositions volume durci), 8 mineurs traités, 1 déclaré.
+- **KS1c1.7 Recommandations (C8)** : (a) valider `kalis_plan` 0.4.1 ; (b) corriger `_upFits` dans `kalis_adapt`
+  (KM2c2 ou lot court « KA1 », mesuré avec la campagne 0.5.2 sur 34 profils), puis trancher si « 0 violation sur toutes
+  les graines » est un critère dur de la bascule KM3 ou un indicateur suivi ; (c) lot court d'application de KS1 :
+  `startDate` du bloc suivant = début du bloc précédent + semaines entières servies (contrat § 12.9).
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
