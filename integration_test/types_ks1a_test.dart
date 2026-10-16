@@ -269,7 +269,19 @@ void main() {
     final persoBefore = jsonEncode(KalisPrefs(raw, dev: false).snapshot());
 
     // 2. Session de test : programme créé pour un profil street 50 / 50.
+    // (Accueil remonté en haut : le logo est dans l'en-tête de la liste.)
     final logo = find.byKey(const ValueKey('header-logo')).hitTestable();
+    for (var i = 0; i < 30 && logo.evaluate().isEmpty; i++) {
+      final lists = find
+          .byWidgetPredicate(
+            (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+          )
+          .hitTestable();
+      if (lists.evaluate().isEmpty) break;
+      await tester.drag(lists.first, const Offset(0, 300));
+      await wait(tester, 300);
+    }
+    releve['logo_visible'] = logo.evaluate().isNotEmpty;
     for (var i = 0; i < 5; i++) {
       await tester.tap(logo.first);
       await tester.pump(Duration(milliseconds: i < 4 ? 300 : 16));
