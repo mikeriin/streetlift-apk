@@ -1,0 +1,159 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             91.9s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        2,830ms
+D/FlutterRenderer( 4235): Width is zero. 0,0
+W/HWUI    ( 4235): Unknown dataspace 0
+I/WindowExtensionsImpl( 4235): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4235): Width is zero. 0,0
+W/HWUI    ( 4235): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4235): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+D/FlutterJNI( 4235): Sending viewport metrics to the engine.
+I/Gralloc4( 4235): mapper 4.x is not supported
+I/Choreographer( 4235): Skipped 111 frames!  The application may be doing too much work on its main thread.
+D/ProfileInstaller( 4235): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4235): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4235): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:37539/6DJwW8W5VFk=/
+VMServiceFlutterDriver: Isolate found with number: 393673758841535
+VMServiceFlutterDriver: Isolate 393673758841535 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4235): 00:00 +0: KS1A a (sombre, rouge) : types de jour, durée, échéance ; sessions perso et de test
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4235): Skipped 45 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 4235): app_time_stats: avg=653.89ms min=317.43ms max=990.35ms count=2
+D/EGL_emulation( 4235): app_time_stats: avg=319.78ms min=137.95ms max=588.01ms count=4
+D/EGL_emulation( 4235): app_time_stats: avg=230.59ms min=4.16ms max=727.58ms count=5
+D/EGL_emulation( 4235): app_time_stats: avg=252.46ms min=166.68ms max=367.50ms count=4
+D/EGL_emulation( 4235): app_time_stats: avg=2699.81ms min=2699.81ms max=2699.81ms count=1
+I/eetlift_tracker( 4235): Background concurrent mark compact GC freed 2119KB AllocSpace bytes, 27(1128KB) LOS objects, 49% free, 2640KB/5281KB, paused 78us,2.256ms total 345.874ms
+D/EGL_emulation( 4235): app_time_stats: avg=1141.81ms min=1141.81ms max=1141.81ms count=1
+D/EGL_emulation( 4235): app_time_stats: avg=1272.43ms min=1272.43ms max=1272.43ms count=1
+D/EGL_emulation( 4235): app_time_stats: avg=8252.22ms min=255.84ms max=16248.61ms count=2
+D/EGL_emulation( 4235): app_time_stats: avg=155.49ms min=94.01ms max=268.51ms count=6
+D/EGL_emulation( 4235): app_time_stats: avg=147.90ms min=64.52ms max=190.34ms count=6
+D/EGL_emulation( 4235): app_time_stats: avg=150.22ms min=58.92ms max=230.32ms count=6
+D/EGL_emulation( 4235): app_time_stats: avg=190.52ms min=169.60ms max=215.15ms count=6
+D/EGL_emulation( 4235): app_time_stats: avg=180.14ms min=52.87ms max=292.57ms count=6
+I/flutter ( 4235): 
+I/flutter ( 4235): Warning: A call to tap() with finder "Found 1 widget with key [<'selected-week'>]: [
+I/flutter ( 4235):   KeyedSubtree-[<'selected-week'>],
+I/flutter ( 4235): ]" derived an Offset (Offset(180.0, 132.0)) that would not hit test on the specified widget.
+I/flutter ( 4235): Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+I/flutter ( 4235): The finder corresponds to this RenderBox: RenderSemanticsAnnotations#623d3 relayoutBoundary=up13
+I/flutter ( 4235): The hit test result at that offset is: HitTestResult(RenderDecoratedBox#e8297@Offset(160.0, 24.0), RenderPointerListener#4818b@Offset(160.0, 24.0), RenderSemanticsGestureHandler#07b5a@Offset(160.0, 24.0), RenderSemanticsAnnotations#4ce81@Offset(160.0, 24.0), RenderSemanticsAnnotations#8ca39@Offset(160.0, 24.0), _RenderLayoutBuilder#9c37b@Offset(160.0, 24.0), RenderRepaintBoundary#4273b@Offset(160.0, 24.0), RenderIndexedSemantics#68160@Offset(160.0, 24.0), RenderSliverList@(mainAxis: 88.0, crossAxis: 160.0), RenderSliverPadding@(mainAxis: 96.0, crossAxis: 180.0), RenderViewport#98a51@Offset(180.0, 96.0), RenderIgnorePointer#0b218@Offset(180.0, 96.0), RenderSemanticsAnnotations#050c1@Offset(180.0, 96.0), RenderPointerListener#c5ca7@Offset(180.0, 96.0), RenderSemanticsGestureHandler#095a6@Offset(180.0, 96.0), RenderPointerListener#a6092@Offset(180.0, 96.0), _RenderScrollSemantics#42f90@Offset(180.0, 96.0), RenderCustomPaint#12c65@Offset(180.0, 96.0), _ImageFilterRenderObject#efd42@Offset(180.0, 96.0), RenderCli
+I/flutter ( 4235): #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+I/flutter ( 4235): #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+I/flutter ( 4235): #2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+I/flutter ( 4235): #3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/types_ks1a_test.dart:240:18)
+I/flutter ( 4235): <asynchronous suspension>
+I/flutter ( 4235): #4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4235): <asynchronous suspension>
+I/flutter ( 4235): #5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4235): <asynchronous suspension>
+I/flutter ( 4235): #6      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4235): <asynchronous suspension>
+I/flutter ( 4235): To silence this warning, pass "warnIfMissed: false" to "tap()".
+I/flutter ( 4235): To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+I/flutter ( 4235): 
+W/WindowOnBackDispatcher( 4235): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4235): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4235): app_time_stats: avg=277.32ms min=73.66ms max=664.34ms count=4
+D/EGL_emulation( 4235): app_time_stats: avg=185.99ms min=84.43ms max=290.62ms count=6
+D/EGL_emulation( 4235): app_time_stats: avg=108.42ms min=74.61ms max=168.29ms count=7
+D/EGL_emulation( 4235): app_time_stats: avg=164.90ms min=98.35ms max=395.97ms count=5
+D/EGL_emulation( 4235): app_time_stats: avg=196.10ms min=99.23ms max=254.70ms count=5
+D/EGL_emulation( 4235): app_time_stats: avg=157.28ms min=76.26ms max=211.61ms count=6
+D/EGL_emulation( 4235): app_time_stats: avg=204.37ms min=180.33ms max=221.92ms count=5
+D/EGL_emulation( 4235): app_time_stats: avg=126.54ms min=57.19ms max=235.55ms count=7
+D/EGL_emulation( 4235): app_time_stats: avg=159.24ms min=94.48ms max=312.13ms count=5
+D/EGL_emulation( 4235): app_time_stats: avg=135.92ms min=81.01ms max=176.84ms count=7
+D/EGL_emulation( 4235): app_time_stats: avg=142.19ms min=96.07ms max=243.20ms count=6
+W/WindowOnBackDispatcher( 4235): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4235): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4235): app_time_stats: avg=289.03ms min=167.58ms max=485.15ms count=4
+D/EGL_emulation( 4235): app_time_stats: avg=154.31ms min=17.01ms max=281.78ms count=7
+D/EGL_emulation( 4235): app_time_stats: avg=107.80ms min=5.44ms max=219.78ms count=9
+D/EGL_emulation( 4235): app_time_stats: avg=130.16ms min=114.85ms max=160.28ms count=8
+D/EGL_emulation( 4235): app_time_stats: avg=143.89ms min=53.63ms max=296.02ms count=7
+D/EGL_emulation( 4235): app_time_stats: avg=149.63ms min=43.76ms max=227.32ms count=7
+D/EGL_emulation( 4235): app_time_stats: avg=148.82ms min=48.80ms max=218.56ms count=7
+D/EGL_emulation( 4235): app_time_stats: avg=99.55ms min=47.92ms max=121.73ms count=8
+I/flutter ( 4235): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4235): The following StateError was thrown running a test:
+I/flutter ( 4235): Bad state: No element
+I/flutter ( 4235): 
+I/flutter ( 4235): When the exception was thrown, this was the stack:
+I/flutter ( 4235): #0      Iterable.first (dart:core/iterable.dart:663:7)
+I/flutter ( 4235): #1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1383:28)
+I/flutter ( 4235): #3      _AncestorFinderMixin.allCandidates (package:flutter_test/src/finders.dart:1857:49)
+I/flutter ( 4235): #4      FinderBase.evaluate (package:flutter_test/src/finders.dart:1030:76)
+I/flutter ( 4235): #5      WidgetController.widgetList (package:flutter_test/src/controller.dart:848:19)
+I/flutter ( 4235): #6      WidgetController._maybeViewOf (package:flutter_test/src/controller.dart:795:34)
+I/flutter ( 4235): #7      WidgetController.tap (package:flutter_test/src/controller.dart:1078:31)
+I/flutter ( 4235): #8      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/types_ks1a_test.dart:274:20)
+I/flutter ( 4235): <asynchronous suspension>
+I/flutter ( 4235): #9      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4235): <asynchronous suspension>
+I/flutter ( 4235): #10     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4235): <asynchronous suspension>
+I/flutter ( 4235): #11     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4235): <asynchronous suspension>
+I/flutter ( 4235): (elided one frame from dart:async-patch)
+I/flutter ( 4235): 
+I/flutter ( 4235): The test description was:
+I/flutter ( 4235):   KS1A a (sombre, rouge) : types de jour, durée, échéance ; sessions perso et de test
+I/flutter ( 4235): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4235): 00:55 +0: KS1A a (sombre, rouge) : types de jour, durée, échéance ; sessions perso et de test [E]
+I/flutter ( 4235):   Test failed. See exception logs above.
+I/flutter ( 4235):   The test description was: KS1A a (sombre, rouge) : types de jour, durée, échéance ; sessions perso et de test
+I/flutter ( 4235):   
+I/flutter ( 4235): 00:55 +0 -1: (tearDownAll)
+I/flutter ( 4235): 00:55 +1 -1: Some tests failed.
+D/EGL_emulation( 4235): app_time_stats: avg=252.42ms min=109.74ms max=719.42ms count=5
+Failure Details:
+Failure in method: KS1A a (sombre, rouge) : types de jour, durée, échéance ; sessions perso et de test
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:663:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1383:28)
+#3      _AncestorFinderMixin.allCandidates (package:flutter_test/src/finders.dart:1857:49)
+#4      FinderBase.evaluate (package:flutter_test/src/finders.dart:1030:76)
+#5      WidgetController.widgetList (package:flutter_test/src/controller.dart:848:19)
+#6      WidgetController._maybeViewOf (package:flutter_test/src/controller.dart:795:34)
+#7      WidgetController.tap (package:flutter_test/src/controller.dart:1078:31)
+#8      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/types_ks1a_test.dart:274:20)
+<asynchronous suspension>
+#9      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#10     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#11     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+(elided one frame from dart:async-patch)
+
+The test description was:
+  KS1A a (sombre, rouge) : types de jour, durée, échéance ;
+  sessions perso et de test
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+

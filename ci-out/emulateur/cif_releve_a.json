@@ -1,0 +1,53 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "accueil": true,
+  "jour": "S20-J1",
+  "myo_page": true,
+  "myo_ligne": "B3-10-0",
+  "bandeau_hauteurs": [
+    155.6,
+    155.6,
+    155.6,
+    155.6,
+    155.6,
+    155.6
+  ],
+  "bandeau_stable": true,
+  "myo_parties": 5,
+  "journal_parties": {
+    "technique": "myo_reps",
+    "reps": 28,
+    "parts": [
+      12,
+      4,
+      4,
+      4,
+      4
+    ]
+  },
+  "journal_valide": true,
+  "dev_actif": true,
+  "test_ecrit": "sw-traction-pronation",
+  "test_retire": true,
+  "reporte_exercice": null,
+  "reporte_page": false,
+  "reporte_servi": true,
+  "reporte_pourquoi": "Test de la semaine reporté ici (prévu jeudi).",
+  "epreuve": "ci1-competition",
+  "jour_j_tentatives": true,
+  "tentatives_gardees": 1,
+  "journal_jour_j": {
+    "eventId": "ci1-competition",
+    "roles": [
+      "attempt"
+    ],
+    "rangs": [
+      0
+    ]
+  },
+  "journal_jour_j_valide": true,
+  "retour_perso": true,
+  "perso_intacte": true
+}
