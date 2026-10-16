@@ -630,6 +630,66 @@ critères du cahier (C13.3) : `kalis_adapt` 1.0.1 (Koach 1.0.2 en Dart) et `kali
 - **KM2c1.6 Recommandation (C8)** : valider KM2c1 comme portage de Koach 1.0.2 ; lancer KM1c3 (C17.5) ; KM3 pourra
   monter de 1.0.0 à 1.0.1 par simple montée de paquet.
 
+### KM1c3
+
+Lot livré le 16/10/2026 (session Fable 5.1, effort maximal, C17.5), validation automatique par le pilotage sur les
+critères du cahier (C13.3) : référence Python de Koach 1.0.3 (`moteurs` 2d3a5766, paramètres `1.0.3-ref.1`,
+338 clés dont 16 nouvelles, 15 fixtures), `kalis_adapt` 1.0.1 et `kalis_bench` 0.5.0 non touchés, contrôle complet
+run 38831793524 vert. Détail : `pipeline/cp/livraisons/LIVRAISON_KM1c3.md`,
+`packages/kalis_adapt/reference/CHANGEMENTS_1_0_3.md`.
+
+- **KM1c3.1 Lancement** : message sans ligne « Lot : » ; seul lot moteur « à faire » (KS1 déjà en cours sur la voie
+  B). `add_repo` absent de la session ; accès en écriture vérifié par `git push --dry-run` puis par le push de la
+  ligne « en cours ». Pas de SDK Dart : campagne partie 1/2 et témoin Dart sur la CI (`claude/ci-cp-a`, commits
+  « KM1c3 contrôle (dev) » à arbre réduit), partie 2/2, recherche adversariale et comparaisons en local. Clé des
+  références lue (journal réel du propriétaire, point 5), déchiffrement sous `/tmp`, agrégats seuls publiés.
+- **KM1c3.2 Fiabilité des notes (point 1)** : indicateur bayésien par athlète (grille a posteriori sur ln φ, part des
+  séries de force non notées en Beta, oubli λ = 0,98, grilles par schéma rapportées), κ² = 1 + 1,0·(E[φ] − 1,133)⁺
+  + 12·(ρ − 0,2)⁺², κ ≤ 2, zone morte aux moyennes a priori ; κ n'élargit que l'écart-type (`capacite`,
+  `capacite_du_jour`, tirages du jumeau), jamais la moyenne (testé) ; `posterior()['fiabilite']`. Cause mesurée des
+  zéros du jour J : estimation à plus de 4 % au-dessus de la vérité avant l'échéance, part de 7 % chez les athlètes
+  fiables à 16-18 % chez les bruités ou non noteurs.
+- **KM1c3.3 Prudence ciblée (point 2)** : l'ouverture au quantile élargi n'est pas retenue (mesurée : −0,009 hors
+  ligne, −0,033 sur b3000 en simulation complète, aucun échec d'ouverture évité) ; retenu, quand κ > 1 : palier
+  d'ouverture × max(0 ; 1 − 3(κ − 1)) et marge min(5 % ; 10 %(κ − 1)) sur les barres prouvées (hors ligne +0,015,
+  échecs d'ouverture 17 → 6, banc −0,0001) ; prudence des séries lourdes mesurée à 1,0 écart-type par unité de
+  κ − 1 et laissée à 0 (sans gain net). Coût de la prudence ciblée sur le banc complet : critère 6 0,9450 → 0,9449
+  (prudence uniforme P ≥ 0,975 en KM1c2 : −0,0025).
+- **KM1c3.4 Règles après un échec (point 3)** : A8.2 mesurée avec, sans et conditionnée (hors ligne : sans =
+  conditionnée, +0,027) ; tranché : même barre en semaine de compétition (barre montante, règles fondées sur l'IPF,
+  vérifiées), barre suivante sur l'estimation mise à jour hors compétition, au plus 5 % sous la barre ratée. Règle de
+  0.3.1 « aucune hausse après un échec non prévu, tout schéma » (KM1c2.8 c) mesurée avec, sans et conditionnée :
+  coût nul (0,002) ; tranché : rétablie pour tous.
+- **KM1c3.5 Import (point 4, KM2c1.5 a)** : `mesure.defaut_modele_sd` ∈ [0,001 ; 0,1] dans `BORNES`, bornes des 16
+  clés nouvelles, grille et a priori de la fiabilité figés.
+- **KM1c3.6 Critères (graines 0-5, 4 320 saisons, Koach complet)** : tenus 2 (0,87 %, était 0,91), 3 (5,28), 4 (90,21 %, était 89,96), 6 (0,9449 contre 0,9450 : coût nul de la prudence ciblée), 7 (0,555, était 0,499), 8 (0 violation), 11 (0,56 s ; 7,3 ms). Critère 1 : 3,94 % (3,92 : +0,02 point, sous l'erreur type de 0,07 ; écart accepté C13.11). **Critère 5 (C13.13.1) : biais −0,6 point tenu ; écart maximal par décile 24,4 points contre une médiane de 21,3 du modèle parfait, non tenu à la lettre alors qu'il l'était (16,8)** : même décile d5 (37 cas, 29 réussites contre 27 sur 38), un modèle parfaitement calibré fait au moins autant dans 35 % des tirages, les autres déciles et l'erreur pondérée s'améliorent (2,14 → 2,05 points) ; recul formel signalé, dans le bruit de la mesure. Aucun autre critère tenu ne recule.
+- **KM1c3.7 Critère 7 bis** : cinq jeux connus : KM1 24/24 (tenu), b300 22/24 (1 sous le plancher, nouveau :
+  adv-051f1dee, zéro isolé d'ouverture), b600 22/24 (1 : adv-a0dd8069, −0,099 → −0,103), b3000 21/24 (1 :
+  adv-29523095, sous-estimation préexistante), recherche neuve de KM1c2 22/24 (1 : adv-5e2b8ac3, préexistant ;
+  était 17/24 et 6) ; jour J moyen des cinq jeux 0,866 → 0,886, cas sous le plancher 8 → 4. Recherche neuve de 3 000
+  saisons contre 1.0.3 : 19/24, 2 sous le plancher non excusés (adv-5e2b8ac3, adv-7c601acb) + 1 excusé, 0,817 contre
+  témoin 0,621, pire cas 0,555 (KM1c2 : 0,499). Le critère reste non tenu hors KM1 : les cas restants sont des zéros
+  isolés d'ouverture en semaine de compétition (estimation +2 à 3 %, mauvais jour −2 %, barre gardée par A8.2) et
+  des sous-estimations d'athlètes à progression rapide aux notes très bruitées que le témoin sous-estime aussi.
+- **KM1c3.8 Rejeu du journal réel (point 5)** : export du 09/10/2026, 38 séries notées depuis S12 : erreur 4,6 %,
+  couverture 97,4 %, identiques à 1.0.2 (κ = 1 : E[φ] 0,91, part non notée 18,6 %) ; à l'entrée de S12 (69 % de
+  séries non notées) κ valait 1,97. Critère 10 (bascule) : à refaire sur un export neuf d'au moins 100 séries
+  notées, juste avant KM3 (C13.11.3).
+- **KM1c3.9 Relecture indépendante** (sous-agent Opus) : 2 bloquants et 4 majeurs corrigés (dont la queue lourde du
+  filtre dans la vraisemblance de φ : κ > 1 chez un athlète au bruit de population dans 40 % des cas avant, 20 %
+  après ; plafond κ = 2 ; échauffements exclus), 10 mineurs traités ou déclarés ; campagne, recherche et
+  comparaisons refaites après corrections.
+- **KM1c3.10 Recommandations (C8)** : (a) valider 1.0.3 comme passe « estimation sous notes non fiables »
+  (C13.13.2) et lancer KM2c2 (portage Dart du delta, `PORTAGE_DART.md`) ; (b) critère 7 bis : accepter la tenue sur
+  KM1 et l'amélioration mesurée sur les autres jeux comme état de la méthode pour la bascule, ou financer une passe
+  sur les zéros isolés d'ouverture en compétition (seul levier restant : l'ouverture, dont les variantes uniformes
+  mesurées coûtent plus qu'elles ne rapportent) ; (b bis) critère 5 : trancher si la lecture de C13.13.1 garde la
+  médiane du modèle parfait ou passe à son quantile 90 % (32,8 points), la mesure bougeant de 8 points pour 2 cas, ou
+  le remesurer tel quel à KM2c2 ; (c) critère 10 : export neuf du journal avant KM3 ; (d) critère 1
+  (3,9 %) et critère 5 (mesure C13.13.1) : inchangés, voir KM1c2.8.
+- **KM1c3.11 Budget** (§ 9) : sous-agents sur Opus ; sauvegardes sur `cp-sauvegardes/KM1c3` ; session interrompue
+  une fois (processus relancés sur le cache de la campagne).
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
