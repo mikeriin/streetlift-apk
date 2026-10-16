@@ -50,3 +50,5 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - F en cours (sans realise_apparie) → il faudra un run G (100 graines) avec la vue appariée + contrôle complet.
 
 ## 18:58 UTC — G (6f8ce32) et contrôle préalable (6d1e71d, workflow standard) poussés ; F en cours. Scripts : /tmp/kr1/ctrlcommit.sh (kr1_dev/).
+
+## 19:54 UTC — GitHub Actions bloqué ~19:00-19:45 (tout en file). Saisons figées 0.3.1 déplacées dans kalis_bench/docs/data/kr1/saisons_figees_0_3_1 (C17.19.3 : arbre de kalis_adapt +1,4 Mo seulement) ; docs mises à jour.

@@ -11,7 +11,7 @@ grilles inchangés.
 - **Données de référence de Koach régénérées** sur `kalis_plan` 0.4.1 (`kalis_adapt/reference/donnees/reference/`,
   `temoin/`) : la saison vivante (`kmReferenceSeason`) leur est identique ; `test/km2_banc_test.dart` le vérifie à
   l'égalité stricte (avant : squelette et calendrier seulement) ; fixture `ks_test_ppl6`, séances manquées
-  (`test/fixtures/km2/`). `--saisons-figees` relit les saisons figées sur 0.3.1 (`reference_0_3_1/`).
+  (`test/fixtures/km2/`). `--saisons-figees` relit les saisons figées sur 0.3.1 (`docs/data/kr1/saisons_figees_0_3_1/`, sortis de `kalis_adapt` que l'application copie).
 - **Sécurité de la saison réalisée** (`kmSecuriteSaison`, `kmViderManquees`) : vues `realise` (séances faites
   telles que servies, tests comptés pour leurs tentatives faites, séances manquées vidées ; constats classés contre
   le plan initial) et `realise_apparie` (même saison classée contre le plan écrit aux mêmes séances manquées

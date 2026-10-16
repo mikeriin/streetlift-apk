@@ -15,7 +15,7 @@ paramètres).
 - **Paramètres** : asset `assets/koach/koach_params_1_0_4.json` (`1.0.4-ref.1`, 338 clés, mêmes valeurs, SHA-256
   `2d023854…9016`) à la place de `koach_params_1_0_3.json`.
 - **Référence** (`reference/`) : moteur 1.0.4 ; données de référence régénérées sur `kalis_plan` 0.4.1 et étendues
-  aux 34 profils (saisons figées sur 0.3.1 gardées dans `donnees/reference_0_3_1/`, `donnees/temoin_0_3_1/`) ;
+  aux 34 profils (saisons figées sur 0.3.1 gardées dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/`) ;
   campagne : vue « réalisée » de la sécurité (séances manquées vidées, rapportée) ; fixtures régénérées.
 - **Tests** : parité sur les 15 fixtures régénérées et les 3 complémentaires (`test/fixtures/km2c2/`, régénérées),
   traces comprises ; `test/koach_elargir_test.dart` (plafond, comportement inchangé sous l'a priori).

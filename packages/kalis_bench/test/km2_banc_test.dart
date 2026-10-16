@@ -11,7 +11,7 @@
 // (`kalis_adapt/reference/donnees/reference/`) ; depuis le lot KR1, ces
 // données sont régénérées sur le `kalis_plan` courant (0.4.1, 34 profils) :
 // la saison vivante de `kmReferenceSeason` doit leur être identique (les
-// saisons figées sur 0.3.1 restent dans `donnees/reference_0_3_1/`).
+// saisons figées sur 0.3.1 restent dans `kalis_bench/docs/data/kr1/`).
 import 'dart:convert';
 import 'dart:io';
 

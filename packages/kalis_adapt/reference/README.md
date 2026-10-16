@@ -2,7 +2,7 @@
 
 Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.4 : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10), « KM1 correction 2 » (C13.12), « KM1 correction 3 » (C17.9 : estimation sous notes non fiables) et le lot KR1 (C17.18 : Koach sur `kalis_plan` 0.4.1 ; élargissement « rien de spécial » plafonné à l'a priori ; paramètres `1.0.4-ref.1`, mêmes valeurs). Ce qui change est dans les notes datées du 10/10, du 11/10, du 15/10 et du 16/10/2026 en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md` à `CHANGEMENTS_1_0_4.md`. `kalis_adapt` 1.0.3 (lot KR1) porte la version 1.0.4 : mêmes entrées, mêmes sorties à 1e-9 sur les fixtures. Elle n'est pas embarquée dans l'application.
 
-Données de référence (`donnees/reference/`, `donnees/temoin/`) : saisons de `kalis_plan` 0.4.1, 34 profils (lot KR1) ; les saisons figées sur `kalis_plan` 0.3.1 (27 profils), lues par les mesures de KM1 à KM2c2, sont dans `donnees/reference_0_3_1/` et `donnees/temoin_0_3_1/`.
+Données de référence (`donnees/reference/`, `donnees/temoin/`) : saisons de `kalis_plan` 0.4.1, 34 profils (lot KR1) ; les saisons figées sur `kalis_plan` 0.3.1 (27 profils), lues par les mesures de KM1 à KM2c2, sont dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/` (`reference/`, `temoin/` ; hors de `kalis_adapt`, que l'application copie, C17.19.3).
 
 Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal réel ne publie que des agrégats.
 

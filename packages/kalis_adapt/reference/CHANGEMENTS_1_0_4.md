@@ -16,7 +16,7 @@ Tests : `tests/test_rupture.py` (`test_reponse_rien_elargit_et_reinitialise` mis
 
 ## B. Données de référence régénérées sur `kalis_plan` 0.4.1 (point 1 du prompt)
 
-- `donnees/reference/` et `donnees/temoin/` : saisons de référence de `kalis_plan` (blocs, calendrier, échéances, athlètes) et mesures du témoin `kalis_adapt` 0.3.1, exportées par `kalis_bench` 0.5.3 (`bin/km1.dart`) sur `kalis_plan` 0.4.1, **34 profils** (27 du banc et 7 du lot KS1, `profiles_ks`). Les saisons figées sur 0.3.1 (27 profils) restent dans `donnees/reference_0_3_1/` et `donnees/temoin_0_3_1/` (historique des mesures de KM1 à KM2c2 ; `--saisons-figees` les relit).
+- `donnees/reference/` et `donnees/temoin/` : saisons de référence de `kalis_plan` (blocs, calendrier, échéances, athlètes) et mesures du témoin `kalis_adapt` 0.3.1, exportées par `kalis_bench` 0.5.3 (`bin/km1.dart`) sur `kalis_plan` 0.4.1, **34 profils** (27 du banc et 7 du lot KS1, `profiles_ks`). Les saisons figées sur 0.3.1 (27 profils) restent dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/` (`reference/`, `temoin/` ; hors de `kalis_adapt`, que l'application copie, C17.19.3) (historique des mesures de KM1 à KM2c2 ; `--saisons-figees` les relit).
 - `donnees/securite_dart.json.gz` : constats Dart des 302 saisons de référence (parité du port Python des critères de sécurité, `tests/test_securite_banc.py`).
 - `catalogue_infos.json.gz`, `traces_verite.json.gz`, `traces_endurance.json.gz` : identiques à l'octet près (vérifié).
 - `tests/test_securite_banc.py` : plus aucune exception connue — la saison `street_06`, changement de discipline (une hausse de volume trop rapide en 0.3.1), n'a plus de constat avec la troncature du bloc de KS1c1.

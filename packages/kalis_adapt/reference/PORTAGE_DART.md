@@ -173,4 +173,4 @@ Liste exacte : `CHANGEMENTS_1_0_3.md` (section H : fichiers Dart concernés). Po
   pw(0,5·sd, 2))`, `sd` lu comme dans `piste` (`tenue` sur `reps_sd`). La branche `alt` n'est pas touchée.
 - Paramètres : aucune valeur changée ; version `1.0.4-ref.1`, asset `koach_params_1_0_4.json`.
 - Données de référence régénérées sur `kalis_plan` 0.4.1 (34 profils) : la saison vivante du banc est de nouveau celle
-  que lit Python (`km2_banc_test.dart`, égalité stricte) ; `--saisons-figees` relit `donnees/reference_0_3_1/`.
+  que lit Python (`km2_banc_test.dart`, égalité stricte) ; `--saisons-figees` relit `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/reference/`.
