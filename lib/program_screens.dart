@@ -372,13 +372,13 @@ class _EvolutionCard extends StatelessWidget {
                         style: KType.corps.copyWith(color: k.texte),
                       )
                     else
-                    Text(
-                      store.adaptMode == 'free'
-                          ? 'Mode libre : je te propose, tu décides.'
-                          : 'Mode assisté : je l’applique moi-même et je te '
-                                'dis pourquoi.',
-                      style: KType.corps.copyWith(color: k.texte),
-                    ),
+                      Text(
+                        store.adaptMode == 'free'
+                            ? 'Mode libre : je te propose, tu décides.'
+                            : 'Mode assisté : je l’applique moi-même et je te '
+                                  'dis pourquoi.',
+                        style: KType.corps.copyWith(color: k.texte),
+                      ),
                     Text(
                       unlockNextText(
                             next: u.next,

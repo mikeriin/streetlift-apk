@@ -5,7 +5,7 @@
 // (jamais un code brut à l'écran).
 import 'package:flutter/material.dart';
 import 'package:kalis_adapt/koach_textes.dart';
-import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose, KoachUsage;
 
 import '../adapt/adapt_texts.dart' show adaptKgLabel;
 import '../athlete_profile.dart' show civilOf;
@@ -69,7 +69,8 @@ class KoachSuggestionCard extends StatelessWidget {
     final String okLabel;
     final String noLabel;
     if (s.type == 'test') {
-      text = 'Je te propose un test court avant le travail : une montée '
+      text =
+          'Je te propose un test court avant le travail : une montée '
           'jusqu’à la dernière série propre.';
       detail = 'Il me dit où tu en es aujourd’hui. Tu peux le passer.';
       okLabel = 'Faire le test';
@@ -167,7 +168,7 @@ Future<Json?> showKoachDiagnostic(BuildContext context) async {
   ].join(' ');
   final go = await showKoachSheet<bool>(
     context,
-    pose: KoachPose.thinking,
+    pose: KoachPose.think,
     title: 'Avant de commencer',
     text: intro,
     actions: [
@@ -195,9 +196,7 @@ Future<Json?> showKoachDiagnostic(BuildContext context) async {
     final i = await showKListSheet(
       context,
       title: texteQuestionKoach(code),
-      items: [
-        for (final c in choix) KListItem(texteChoixKoach(code, c)),
-      ],
+      items: [for (final c in choix) KListItem(texteChoixKoach(code, c))],
     );
     if (i == null || !context.mounted) return null;
     reponses[code] = choix[i];
@@ -275,8 +274,7 @@ class KoachEngineCard extends StatelessWidget {
             key: const ValueKey('koach-engine-active'),
             style: body,
           ),
-          if (store.koachBusy)
-            Text('Koach prépare ta semaine…', style: detail),
+          if (store.koachBusy) Text('Koach prépare ta semaine…', style: detail),
           if (store.koachNeedsDiagnostic)
             Text(
               'Quelque chose sort de mon modèle : je te poserai trois '
@@ -308,10 +306,7 @@ class KoachEngineCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Koach 1.0',
-              style: KType.titreCarte.copyWith(color: k.texte),
-            ),
+            Text('Koach 1.0', style: KType.titreCarte.copyWith(color: k.texte)),
             const SizedBox(height: KSpacing.s8),
             ...rows,
           ],
@@ -333,9 +328,9 @@ class KoachRecapCard extends StatelessWidget {
     final k = KTokens.of(context);
     return KCard(
       key: const ValueKey('koach-recap-card'),
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute<void>(builder: (_) => const KoachRecapScreen()),
-      ),
+      onTap: () => Navigator.of(
+        context,
+      ).push(MaterialPageRoute<void>(builder: (_) => const KoachRecapScreen())),
       child: KoachSays(
         pose: koachPose(KoachUsage.analysis),
         child: Text(
@@ -392,7 +387,8 @@ class KoachRecapScreen extends StatelessWidget {
       for (final e in r.volume.entries)
         if ((e.value - 1).abs() >= 0.01)
           'Volume ${_qualite(e.key)} : ${pct(e.value - 1)}.',
-      if (r.intensity.abs() >= 0.005) 'Charges : ${pct(r.intensity)} en moyenne.',
+      if (r.intensity.abs() >= 0.005)
+        'Charges : ${pct(r.intensity)} en moyenne.',
     ];
     return KPage.sub(
       key: const ValueKey('koach-recap'),

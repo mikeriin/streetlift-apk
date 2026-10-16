@@ -14,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kalis_adapt/koach.dart' as ko;
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streetlift_tracker/adapt/adapt_texts.dart' show adaptKgField;
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
 import 'package:streetlift_tracker/models.dart';
@@ -328,8 +329,8 @@ void main() {
         final a = app.sessionAdapt(15, j)!;
         final st = Map<String, Object?>.of(a.koach!);
         final cibles = Map<String, Object?>.of(
-        (st['cibles'] as Map).cast<String, Object?>(),
-      );
+          (st['cibles'] as Map).cast<String, Object?>(),
+        );
         final m = Map<String, Object?>.of(
           (cibles[e.slotId] as Map? ?? const {}).cast<String, Object?>(),
         );
@@ -357,7 +358,7 @@ void main() {
         app.koachDecide(15, base, e, false, reason: 'too_heavy');
         expect(app.koachSuggestion(15, j, e)?.decided, 'non');
         // Charge d'avant pré-remplie.
-        expect(log.sets.first.kg, '37,5');
+        expect(log.sets.first.kg, adaptKgField(37.5));
         app.markSessionDone(15, j, true);
         final d = app.koachEngine.journal.lastWhere(
           (x) => x['type'] == 'decision' && x['proposition'] != null,

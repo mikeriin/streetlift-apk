@@ -1406,6 +1406,8 @@ extension SessionAdaptStore on AppStore {
     if (week < 1 || base.exercises.isEmpty) return null;
     // KM3 : journée servie par Koach 1.0.
     if (koachServesDay(week, base.j)) return _koachOpenSession(week, base);
+    // KM3 : arrêt d'urgence : séance telle qu'écrite (hors moteur).
+    if (koachStoppedWeek(week)) return null;
     final key = sessionKey(week, base.j);
     final log = logs[key];
     final started =

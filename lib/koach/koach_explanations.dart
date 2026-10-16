@@ -40,6 +40,7 @@ const kKoachExplanations = <(String, String)>[
   (
     'Clusters, myo-reps, rest-pause',
     'Cluster : la série est coupée en mini-séries séparées d’un mini-repos. '
+        'RIR visé sur chaque bloc · note la série au bloc le plus dur. '
         'Note chaque mini-série à la fin de son effort et arrête dès qu’une '
         'mini-série n’atteint plus la cible. Myo-reps : une série '
         'd’activation, puis de courtes mini-séries. Rest-pause : une série, '

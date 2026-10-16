@@ -299,6 +299,16 @@ extension KoachStore on AppStore {
     return e.active && e.fromWeek != null && week >= e.fromWeek!;
   }
 
+  /// Arrêt d'urgence en cours sur une semaine que Koach conduisait : la
+  /// séance est servie telle qu'écrite (ni Koach, ni le moteur d'avant).
+  bool koachStoppedWeek(int week) {
+    final e = koachEngine;
+    return e.snap != null &&
+        e.stop != null &&
+        e.fromWeek != null &&
+        week >= e.fromWeek!;
+  }
+
   /// Koach sert la journée S[week]·J[j] du programme.
   bool koachServesDay(int week, int j) =>
       koachServesWeek(week) && adaptPlaceOf(week, j) != null;
@@ -1108,7 +1118,7 @@ extension KoachStore on AppStore {
     int j,
     String slot,
   ) {
-    if (!koachServesWeek(week)) return null;
+    if (!koachServesWeek(week) && !koachStoppedWeek(week)) return null;
     final place = _koachPlace(week, j);
     if (place == null) return null;
     final m = _koachModules(week - 1)?['${place.dayIndex}|$slot'];
@@ -2117,7 +2127,10 @@ extension KoachStore on AppStore {
     final lundi = koachLundi;
     if (lundi == null || planProgram != null) return;
     final week = koachJour(lundi, _kToday) ~/ 7 + 1;
-    if (!koachServesWeek(week) || week > program.weeks.length) return;
+    if (!(koachServesWeek(week) || koachStoppedWeek(week)) ||
+        week > program.weeks.length) {
+      return;
+    }
     final imp = importedProgram;
     if (imp == null) return;
     final w = program.week(week);

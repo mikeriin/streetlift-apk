@@ -3632,8 +3632,11 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
     final planned = _planned;
     final total = planned.fold<int>(0, (a, b) => a + b);
     return switch (p.kind) {
+      // KM3 (aide des clusters, question du propriétaire du 12/10) : la
+      // cible de RIR vaut pour chaque bloc, la série reçoit une note.
       kc.SetTechniqueKind.cluster =>
-        'Cluster · $total$unit en ${planned.length} blocs, ${p.intra} s entre',
+        'Cluster · $total$unit en ${planned.length} blocs, ${p.intra} s entre'
+            ' · RIR visé sur chaque bloc · note la série au bloc le plus dur',
       kc.SetTechniqueKind.myoReps =>
         'Myo-reps · activation puis mini-séries, ${p.intra} s entre',
       _ => 'Rest-pause · série puis relances, ${p.intra} s entre',
