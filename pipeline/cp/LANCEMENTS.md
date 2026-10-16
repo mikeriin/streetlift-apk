@@ -319,3 +319,5 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - **`kalis_plan` reste 0.3.1** : KS1 (`kalis_plan` 0.4.x, types de jour) n'entre qu'après KS1c1, par un lot court séparé. `kalis_core` reste 0.4.3 (0.4.4 est additif et viendra avec KS1).
 - **Bascule** (prompt § Bascule) : exige la version de Koach validée la plus récente (1.0.3 après KM2c2) et le rejeu du journal réel sur un export neuf du propriétaire (C17.13.3) ; KM3 livre le mécanisme et ses tests, la date reste celle du cahier.
 - En parallèle : KS1c1 et KM2c2 sur `moteurs` ; rien dans `packages/` hors la copie de l'étiquette.
+
+- **Note pour KS1c1 (pilotage, 16/10/2026 08:25 UTC, C17.16.2)** : `etiquettes/kalis_bench-v0.5.1` est prise par KM2c2 (`moteurs` 4910ec13) ; rebase sur cette pointe et publie `kalis_bench` **0.5.2** (ne réécris jamais une étiquette existante).
