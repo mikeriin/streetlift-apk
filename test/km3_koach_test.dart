@@ -590,5 +590,27 @@ void main() {
         print('KM3|semaine|S$w·J$j|${served.length}');
       }
     });
+
+    test('reprise après quatre semaines sans séance : ce que Koach sert '
+        '(relevé)', () async {
+      await activate();
+      clock = DateTime(2026, 11, 16, 9); // lundi, S19·J1
+      await app.koachRefresh();
+      final j = _dayWithWork(app, 19);
+      clock = DateTime(2026, 11, 16 + j - 1, 9);
+      await app.koachRefresh();
+      final base = app.program.week(19).day(j)!;
+      app.adaptOpen(19, base);
+      expect(
+        await app.koachStart(19, base, diagnostic: {'cause': 'rien'}),
+        isTrue,
+      );
+      final served = _served(app, 19, j).where((e) => e.engine).toList();
+      final raisons = app.sessionAdapt(19, j)!.koach?['raisons'] as List?;
+      // ignore: avoid_print
+      print('KM3|reprise|S19·J$j|servis=${served.length}|'
+          'ecrits=${base.exercises.length}|'
+          'raisons=${jsonEncode([for (final r in raisons ?? const []) (r as Map)['code']])}');
+    });
   });
 }
