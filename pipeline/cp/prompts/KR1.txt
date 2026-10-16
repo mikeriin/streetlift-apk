@@ -1,0 +1,22 @@
+LOT KR1 — KOACH SUR LA NOUVELLE STRUCTURE : DONNÉES DE RÉFÉRENCE SUR `kalis_plan` 0.4.1 ET CAMPAGNE DU COUPLE (critère dur de la bascule)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs »). Validation : automatique, par le pilotage.
+Prérequis : KS1c1 validé (C17.17), KM2c2 validé (C17.16).
+Base : `moteurs` à la pointe (eae158b8 ou suivant : `kalis_plan` 0.4.1, `kalis_adapt` 1.0.2 = Koach 1.0.3, `kalis_bench` 0.5.2). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KR1`.
+Décisions : C13.3, C17.12, C17.13, C17.16, C17.17. Livraisons à lire : `LIVRAISON_KS1.md` § 7, `LIVRAISON_KS1c1.md` § 4 et § 7, `LIVRAISON_KM2c2.md` § 2.
+
+OBJECTIF
+Depuis KS1, Koach est mesuré sur des saisons figées sur `kalis_plan` 0.3.1 ; l'application servira `kalis_plan` 0.4.1 × Koach 1.0.3. Mesurer ce couple tel qu'il sera servi, et en faire le critère dur de la bascule : **0 violation de sécurité** sur les saisons racontées et sur toutes les graines.
+
+CONTENU
+1. **Données de référence** : régénérer sur `kalis_plan` 0.4.1 les saisons que lit la référence Python de Koach (`kalis_adapt/reference/donnees/reference/`) et les fixtures qui en dépendent ; parité Dart / Python 1e-9 maintenue (les saisons figées 0.3.1 restent disponibles pour l'historique des mesures).
+2. **Campagne du couple** `kalis_plan` 0.4.1 × Koach 1.0.3 (Koach complet : planification, surveillance, contrôle dual, adhérence), **34 profils** (27 du banc + 7 de KS1), toutes graines, modèles et scénarios du banc des saisons (`runSeasonCampaign`, 0.5.2) : violations réalisées par type, par profil et par scénario ; critères du cahier KM (1 à 8, 11) recalculés sur ces saisons, comparés à ceux des saisons figées.
+3. **Si des violations restent** : cause établie pour chacune (test qui la reproduit), correction à la source dans le paquet responsable — `kalis_plan` (0.4.2) ou Koach (référence 1.0.4 puis portage Dart à l'identique, parité 1e-9) —, puis nouvelle campagne. Les propositions « volume » de `kalis_adapt` 0.3.x (`review.dart`, `_upFits`, cause des 2 violations restantes de KS1c1) ne comptent pas : KM3 les retire de l'application (C17.17.2) ; les dire à part.
+4. Relecture indépendante (sous-agent Opus).
+
+CRITÈRES
+- 0 violation de sécurité, couple 0.4.1 × Koach, 34 profils, toutes graines et scénarios ;
+- critères KM 1 à 8 et 11 : aucun recul au-delà du bruit mesuré par rapport aux saisons figées ;
+- parité 1e-9 (fixtures régénérées) ; temps dans les budgets.
+
+FIN DE LOT
+- Paquets publiés si changés (étiquettes nouvelles, jamais réécrites), contrôle complet vert sur `claude/ci-cp-a`, `LIVRAISON_KR1.md` (pipeline et projet claude.ai) avec le tableau des violations et des critères, ligne KR1 « livré », notification, arrête-toi (aucun fire_trigger).
