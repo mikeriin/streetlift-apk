@@ -1,0 +1,19 @@
+LOT KS1c2 — KS1 CORRECTION 2 : AUCUN JOUR SANS SON PRINCIPAL (`kalis_plan` 0.4.2)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs »). Validation : automatique, par le pilotage (C17.21).
+Prérequis : KS1c1 validé (C17.17).
+Base : `moteurs` à la pointe. Contrôle **`claude/ci-cp-b`** (KR1 occupe `claude/ci-cp-a`), sauvegardes `cp-sauvegardes/KS1c2`.
+Cahier : `pipeline/cp/CAHIER_KS.md` (§ 3.6, § 4, § 9). Livraisons à lire : `LIVRAISON_KS1A.md` § 1.5, `LIVRAISON_KS1.md`, `LIVRAISON_KS1c1.md`.
+
+OBJECTIF
+Constat de KS1A (application, `kalis_plan` 0.4.1) : profil street 50 / 50 à six séances de 120 min, questionnaire de santé non rempli (« programme prudent »), aucun repère de dips ni de pompes déclaré : le jour « Poussée — endurance de force » (J5) ne contient **aucun exercice de poussée** (suspension active, relevés de jambes, cat-cow, étirement du poignet) ; séances estimées de 5 à 33 min. Un jour typé doit porter son schéma et sa qualité ; « 0 séance sans principal » (§ 9) doit tenir **sur tous les états de profil**, pas seulement sur les profils complets du banc.
+
+CONTENU
+1. **Cause** établie par un test qui échoue avant : profil de KS1A reproduit au banc (`ks_test_ppl6` sans repères de poussée, questionnaire de santé non rempli, mode prudent), puis variantes (chaque schéma sans repère ; prudent / non prudent ; débutant à élite).
+2. **Correction à la source** (`coach/skeleton.dart`, remplissage § 3.6, prudence) : un jour typé reçoit toujours au moins un emplacement principal de son schéma ; sans repère, charge prudente par les règles existantes (poids du corps, réserve visée, test guidé proposé) ; en mode prudent, volume réduit mais schéma tenu. Si aucun exercice du schéma n'est possible (douleur, matériel), le jour change de type et le dit (raison).
+3. **Banc** : nouveau critère au rapport de structure — 0 jour typé sans exercice principal de son schéma, sur les 34 profils **et** sur une grille de profils incomplets (repères absents par schéma, questionnaire non rempli, prudent) ; aucun recul sur les critères tenus par KS1 et KS1c1 ; 0 nouvelle violation de sécurité.
+
+NE PAS FAIRE
+- Ni `kalis_adapt` (KR1 y travaille), ni l'application ; pas de remplissage du créneau par technique et mobilité (option (c), lot ultérieur, C17.15) ; rebase avant chaque push sur `moteurs` ; étiquettes nouvelles seulement.
+
+FIN DE LOT
+- `kalis_plan` 0.4.2 (et `kalis_bench` en version libre suivante si changé), push `moteurs`, étiquettes, contrôle complet vert sur `claude/ci-cp-b` ; `LIVRAISON_KS1c2.md` (pipeline et projet claude.ai) ; ligne KS1c2 « livré » ; notification ; arrête-toi (aucun fire_trigger).
