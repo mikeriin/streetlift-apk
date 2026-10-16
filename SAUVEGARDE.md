@@ -12,7 +12,7 @@
 - Mesure CI : claude/ci-ui-ks1a0-rapide (paquets seuls + version, suite Dart complète).
 
 ## En cours
-- Contrôle complet claude/ci-3d poussé 15:15 UTC (b3fde1d9) après relecture indépendante (correctifs : bloc avancé compté sur le bloc, troncature seulement après échéance changée, Mon programme défilé).
+- Contrôle complet claude/ci-3d run 38923187864 (4c238816) : tests Dart verts ; émulateur en cours. Brouillon de livraison dans le message de sauvegarde suivant.
 
 ## Reste
 - Tests test/ks1a_*_test.dart, cible émulateur integration_test/types_ks1a_test.dart, ci3d_drive.sh, docs/CI_GP.md.
