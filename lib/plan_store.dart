@@ -461,11 +461,17 @@ extension PlanStore on AppStore {
     // prochaine semaine du programme (semaines entières servies, contrat
     // § 12.9) ; sinon après la dernière semaine du bloc.
     final n = planNextFirstWeek;
-    final d = DateTime(start.year, start.month, start.day + (n - 1) * 7);
+    final first = plan.blockFirstWeek(plan.blocks.length - 1);
+    // Bloc avancé : début du bloc en cours + semaines entières servies,
+    // compté sur le bloc lui-même (« Où j'en suis » peut avoir déplacé le
+    // départ du programme sans toucher aux dates des blocs).
+    final startDate = n <= plan.totalWeeks
+        ? last.block.pass1.startDate.addDays(7 * (n - first))
+        : civilOf(DateTime(start.year, start.month, start.day + (n - 1) * 7));
     final req = kc.NextBlockRequest(
       profile: profile,
       seed: last.seed,
-      startDate: civilOf(d),
+      startDate: startDate,
       // G10 : le bloc tel qu'il a été fait (ajustements de la passe 2 et
       // propositions du moteur dynamique en place).
       previous: SessionAdaptStore(this)._adaptPlanBlock(plan.blocks.length - 1),
@@ -607,8 +613,10 @@ extension PlanStore on AppStore {
     // `kalis_plan` 0.4.1 l'a lu pour écrire la suite.
     final blocks = [...plan.blocks];
     final cur = blocks.last;
+    // (Seulement après une échéance changée : en fin de bloc, le bloc en
+    // cours reste entier, quel que soit le départ du programme.)
     final served = kp.servedWeeksOf(cur.block, c.startDate);
-    if (served < cur.weeks) {
+    if (planDeadlineChanged && served < cur.weeks) {
       blocks[blocks.length - 1] = PlanBlockEntry(
         block: kp.servedBlockOf(cur.block, c.startDate),
         seed: cur.seed,

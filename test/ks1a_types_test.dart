@@ -390,6 +390,11 @@ void main() {
         expect(l, dayTypeLabel(d.type));
         labels.add('J${d.j} ${d.title} : $l');
         durations.add(app.dayDurationText(d));
+        // ignore: avoid_print
+        print(
+          'KS1A|seance|J${d.j}|${app.dayDurationText(d)}|'
+          '${[for (final e in d.exercises) '${e.name} ${e.sets.value ?? ''}'].join(' ; ')}',
+        );
       }
       expect(labels, hasLength(6));
       // C17.15 (a) : la séance tient sous les 120 min disponibles ;
@@ -451,9 +456,7 @@ void main() {
       final ev = p0.events!.single;
       _save(
         app,
-        p0.copyWith(
-          events: [ev.copyWith(date: ev.date.addDays(-42))],
-        ),
+        p0.copyWith(events: [ev.copyWith(date: ev.date.addDays(-42))]),
       );
       expect(PlanStore(app).planDeadlineChanged, isTrue);
       expect(PlanStore(app).planNextFirstWeek, 3);

@@ -321,15 +321,15 @@ class SessionLog {
 
 // ===================== RÉGLAGES =====================
 
-/// Palettes enregistrables (UI0, refonte UI : les 8 palettes du
-/// propriétaire remplacent les six couleurs de L5-C), dans l'ordre du
-/// sélecteur. Mêmes identifiants que `KAccentSpec.all` (vérifié par les
-/// tests).
 /// KS1A (C17.15, option a) : écart minimal, en minutes, entre le temps
 /// disponible et la durée estimée d'une séance pour afficher « sur N
 /// disponibles ».
 const kAvailableMargin = 10;
 
+/// Palettes enregistrables (UI0, refonte UI : les 8 palettes du
+/// propriétaire remplacent les six couleurs de L5-C), dans l'ordre du
+/// sélecteur. Mêmes identifiants que `KAccentSpec.all` (vérifié par les
+/// tests).
 const kAccentIds = [
   'bordeaux',
   'obsidian',

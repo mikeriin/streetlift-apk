@@ -11,6 +11,9 @@
 - Échéance changée : PlanProgram.eventsKey, planDeadlineChanged, planNextFirstWeek, troncature servedBlockOf à l'application.
 - Mesure CI : claude/ci-ui-ks1a0-rapide (paquets seuls + version, suite Dart complète).
 
+## En cours
+- Contrôle complet claude/ci-3d poussé 15:15 UTC (b3fde1d9) après relecture indépendante (correctifs : bloc avancé compté sur le bloc, troncature seulement après échéance changée, Mon programme défilé).
+
 ## Reste
 - Tests test/ks1a_*_test.dart, cible émulateur integration_test/types_ks1a_test.dart, ci3d_drive.sh, docs/CI_GP.md.
 - Contrôle complet claude/ci-3d, main, build signé, livraison, ETAT, page de suivi, notification.
