@@ -803,6 +803,37 @@ contrôle complet `claude/ci-3d` run 38894487551 (arbre identique). Détail : `p
   prochaine montée de `kalis_adapt`, décider si l'application garde la copie complète (référence et fixtures) ou
   seulement `lib/`, `assets/`, `docs/` et `pubspec.yaml` (marge de 3,5 Mo sous la limite).
 
+### KS1A
+
+Lot livré le 16/10/2026 (session Opus 5.5, effort élevé, C17.20), validation par le pilotage (C8) : types de jour dans
+l'application, dev7.1.0 (7.1.0+130) sur `main` ee2b2078 (code bee07fee, suivi cdba4283, `pubspec.lock` régénéré par le contrôle),
+build signé run 38975466269, contrôle complet `claude/ci-3d` run 38954350551 (essai 2). Premier build signé (run 38974569019)
+arrêté sur le verrou périmé (`flutter pub get --enforce-lockfile`) : verrou du contrôle complet commité. Détail : `pipeline/cp/livraisons/LIVRAISON_KS1A.md`.
+
+- **KS1A.1 Lancement** : message sans ligne « Lot : » ; seul lot App « à faire ». `add_repo` absent de la session ;
+  accès en écriture vérifié par `git push --dry-run` puis par le push de la ligne « en cours ». Pas de SDK Flutter :
+  mise au point sur `claude/ci-ui-ks1a-rapide` et `claude/ci-ui-ks1a0-rapide` / `claude/ci-ui-ks1ax-rapide` (suite
+  Dart complète), contrôle complet sur `claude/ci-3d`. Sauvegardes `cp-sauvegardes/KS1A`.
+- **KS1A.2 Paquets** : `kalis_core` 0.4.4 et `kalis_plan` 0.4.1 à l'octet (KR1 n'avait pas de 0.4.2 validée) ;
+  `kalis_adapt` 1.0.2 inchangé (même arbre que `moteurs` eae158b8). Montée seule : un seul test en échec (textes des six
+  codes). Arbre du dépôt 55,50 → 55,71 Mo (limite 59).
+- **KS1A.3 Affichage** : type sur la carte du jour (ligne de détail), la feuille de la semaine, le résumé, en tête de
+  séance et à la création (« Structure de la semaine ») ; pas sur les lignes de jour de l'accueil (L5 : la semaine
+  entière doit tenir au-dessus du dock, `test/programme_test.dart`).
+- **KS1A.4 Programme de 40 semaines** : types déduits des titres à la lecture (J1 à J3 force, J4 et J5 endurance de
+  force, J6 puissance ; tests et récupération d'après le titre ; une seule qualité par jour : le J6 « puissance et
+  endurance » est servi en puissance) ; blocs importés annotés ; `type` retiré de la référence de Koach et de sa
+  signature (identiques à dev7.0.0, aucune nouvelle référence).
+- **KS1A.5 Échéance changée** : empreinte des échéances au programme (`eventsKey`), bloc suivant proposé dès la semaine
+  suivante, début = début du bloc + semaines entières servies (compté sur le bloc), bloc en cours tronqué
+  (`servedBlockOf`). Programmes validés avant 7.1.0 : à partir de leur bloc suivant.
+- **KS1A.6 Durée** (C17.15 a) : « ≈ … sur 120 disponibles » (écart d'au moins 10 min), programme créé seulement.
+- **KS1A.7 Constat moteur** : profil street 50 / 50 à six séances (`sampleStreet5050Profile`, questionnaire de santé
+  non rempli) : `ppl6_q`, semaine 1 de 5 à 33 min sur 120, et le J5 « Poussée — endurance de force » sans exercice de
+  poussée. À confier au lot moteur suivant (KR1 ou KS2).
+- **KS1A.8 Recommandations (C8)** : valider dev7.1.0 ; corriger le remplissage du jour d'endurance de poussée dans
+  `kalis_plan` (KS1A.7) avant l'option (c) de C17.15 ; bascule de Koach inchangée (lot KB1).
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
