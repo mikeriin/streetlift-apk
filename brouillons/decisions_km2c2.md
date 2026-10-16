@@ -1,8 +1,8 @@
 ### KM2c2
 
 Lot livré le 16/10/2026 (session Opus 5.5, effort maximal, C17.13.4), validation automatique par le pilotage sur
-les critères du cahier (C13.3) : `kalis_adapt` 1.0.2 (Koach 1.0.3 en Dart) et `kalis_bench` 0.5.1, `moteurs` @COMMIT@,
-étiquettes publiées, contrôle complet `claude/ci-cp-a` run @RUN@ vert. Détail :
+les critères du cahier (C13.3) : `kalis_adapt` 1.0.2 (Koach 1.0.3 en Dart) et `kalis_bench` 0.5.1, `moteurs` 4910ec13,
+étiquettes publiées, contrôle complet `claude/ci-cp-a` run 38858101198 vert. Détail :
 `pipeline/cp/livraisons/LIVRAISON_KM2c2.md`, `kalis_bench` `docs/CRITERES_KM2C2.md`.
 
 - **KM2c2.1 Lancement** : message sans ligne « Lot : » ; seul lot moteur « à faire » (KS1c1 « en cours » sur la voie

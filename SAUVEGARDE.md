@@ -10,5 +10,8 @@ Pas de SDK Dart : mise au point sur `claude/ci-cp-a` (commits « KM2c2 contrôle
 - Mesures (run 38853167917, saisons figées, témoin relu) : campagne 6 graines = Python (critères identiques, calibration_grappes identique) ; 6 jeux d'adversaires identiques. Données : kalis_bench/docs/data/km2c2, doc CRITERES_KM2C2.md. Temps 0,335 s ; 9,7 ms.
 - Relecture Opus : 0 bloquant/majeur ; mineurs traités (docs, types resume, fixtures complémentaires, journal muté cohérent, scénarios de la matrice depuis le fichier figé).
 
-## Reste
+## Terminé (16/10/2026)
+- moteurs 4910ec13 ; étiquettes kalis_adapt-v1.0.2, kalis_bench-v0.5.1 ; contrôle complet run 38858101198 vert ; pipeline 425fb4e (livraison, DECISIONS ### KM2c2, ETAT livré) ; projet claude/LIVRAISON_KM2c2.md ; page de suivi version 51.
+
+## Reste (historique)
 - Vérifier 2 échecs pytest de la référence en CI dev (arbre réduit ?) ; contrôle court (format km2.dart) ; commit moteurs, rebase, contrôle complet ci-cp-a, push moteurs, étiquettes kalis_adapt-v1.0.2 et kalis_bench-v0.5.1 ; LIVRAISON_KM2c2.md (pipeline + projet) ; DECISIONS ### KM2c2 ; ETAT ; page de suivi ; notification.

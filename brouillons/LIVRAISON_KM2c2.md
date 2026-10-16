@@ -1,7 +1,7 @@
 # Livraison KM2c2 — KM2 correction 2 : Koach 1.0.3 en Dart (`kalis_adapt` 1.0.2)
 
 Lot KM2c2 du pipeline CP (méthode Koach, `CAHIER_KM.md`, décisions C13.13.2, C17.13), voie A, session Opus 5.5
-effort maximal, le 16/10/2026 (04:12 → @FIN@ UTC). Prompt : `prompts/KM2c2.txt` ; contexte : `LANCEMENTS.md`,
+effort maximal, le 16/10/2026 (04:12 → 07:15 UTC). Prompt : `prompts/KM2c2.txt` ; contexte : `LANCEMENTS.md`,
 section KM2c2. Lot sans panel ni relecture documentée (C13.3) ; validation automatique par le pilotage.
 
 **En une phrase** : le delta de méthode de la référence Koach 1.0.3 (KM1c3 : fiabilité des notes, prudence ciblée
@@ -18,7 +18,7 @@ les six jeux d'adversaires redonnent exactement les chiffres de la référence P
 | `kalis_adapt` | 1.0.2 | `etiquettes/kalis_adapt-v1.0.2` | Koach 1.0.3 (`lib/src/koach/`), asset `assets/koach/koach_params_1_0_3.json` (`1.0.3-ref.1`, 338 clés, SHA-256 `d129a4e9…1aa0`), `CONTRAT.md` § K, `CHANGELOG.md`, `docs/INTEGRATION_KM3.md` (mise à jour du 16/10, § 3, § 9) |
 | `kalis_bench` | 0.5.1 | `etiquettes/kalis_bench-v0.5.1` | saisons figées (`--saisons-figees`, `KmBanc.saisonsFigees`) pour mesurer la parité sur les saisons que lit Python ; fixtures `test/fixtures/km2/` régénérées (1.0.3) ; `docs/CRITERES_KM2C2.md`, données `docs/data/km2c2/` |
 
-`kalis_core` et `kalis_plan` inchangés ; rien dans l'application. `moteurs` : @COMMIT@. Référence Python
+`kalis_core` et `kalis_plan` inchangés ; rien dans l'application. `moteurs` : 4910ec13. Référence Python
 (`kalis_adapt/reference/koach/`, paramètres, fixtures) non modifiée ; seuls `reference/README.md` et
 `reference/PORTAGE_DART.md` (note « fait en KM2c2 ») changent, et les copies figées de 1.0.2 (`reference/fix_dart/`,
 `reference/params/koach_params_d2.json`) sont supprimées.
@@ -106,9 +106,9 @@ plancher) ; complet b600 22/24 (1) ; b3000 21/24 (1) ; recherche de KM1c2 22/24 
 
 ## 4. Contrôle
 
-Contrôle complet sur `claude/ci-cp-a`, run @RUN@ (commit @CTRL@, arbre identique à `moteurs` @COMMIT@) : @RESULTAT@.
+Contrôle complet sur `claude/ci-cp-a`, run 38858101198 (commit fc11c150, arbre identique à `moteurs` 4910ec13) : vert — kalis_core 335 tests, kalis_plan 314, kalis_adapt 343, kalis_bench 187 (banc complet compris), kalis_quest 162, outils Python.
 Mise au point : commits « KM2c2 contrôle (dev) » à arbre réduit (runs 38850637325, 38851049094, 38853167917,
-38855046973, @DEVRUN@) ; workflow de mise au point propre à ces commits (formatage rendu en patch, campagne en quatre
+38855046973, 38857596405) ; workflow de mise au point propre à ces commits (formatage rendu en patch, campagne en quatre
 parts parallèles), jamais sur `moteurs`.
 
 ## 5. Limites et suites
