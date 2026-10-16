@@ -28,7 +28,12 @@ export 'src/coach/athlete.dart'
         coachWristLoadedPrep;
 export 'src/coach/audit.dart';
 export 'src/coach/coach.dart'
-    show CoachEngine, coachMethodFor, isCoachPlan, reconcileSkeleton;
+    show
+        CoachEngine,
+        coachMethodFor,
+        coachReturnStepsOf,
+        isCoachPlan,
+        reconcileSkeleton;
 export 'src/coach/model.dart';
 export 'src/coach/prescribe.dart'
     show
@@ -89,7 +94,15 @@ export 'src/context.dart'
         levelOfAbility,
         volumeBandsByLevel;
 export 'src/engine.dart'
-    show KalisPlan, ReviewTrace, applyProfileDelta, blockIdFor;
+    show
+        KalisPlan,
+        ReviewTrace,
+        applyProfileDelta,
+        blockIdFor,
+        servedBlockOf,
+        servedBlockRequest,
+        servedPlanRequest,
+        servedWeeksOf;
 export 'src/hash.dart' show SeededRandom, fnv1a32, fnvMix, stableExp, stableLn;
 export 'src/inspect.dart' show PlanInspector, PlanMetrics;
 export 'src/params.dart' show PlanParams, ScoreWeights;

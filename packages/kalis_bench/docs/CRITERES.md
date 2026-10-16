@@ -75,7 +75,7 @@ La campagne street (`CAMPAGNE_STREET.md` du rapport) donne ces mesures sur plusi
 
 ### 4.1 Saisons croisées (0.2.0, lot CX)
 
-Chaque profil street sur sa saison entière (`saisons.json`, `SAISONS.md`), sous le couple `kalis_plan` 0.2 ×
+Chaque profil street, et depuis 0.5.2 (lot KS1c1) chaque profil ajouté de `profiles_ks/`, sur sa saison entière (`saisons.json`, `SAISONS.md`), sous le couple `kalis_plan` 0.2 ×
 `kalis_adapt` 0.2 et, pour la saison de référence, sous les moteurs 0.1. Mesures ajoutées aux mesures de
 trajectoire :
 

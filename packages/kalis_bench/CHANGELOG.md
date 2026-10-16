@@ -1,5 +1,17 @@
 # Journal
 
+## 0.5.2 — 16/10/2026 (lot KS1c1)
+
+Mesure du critère « 0 violation » du lot KS1c1 sur les 34 profils (`pipeline/cp/prompts/KS1c1.txt`), pour `kalis_plan` 0.4.1 ; sur 0.5.1 (lot KM2c2, `kalis_adapt` 1.0.2).
+Critères, profils, attentes et grilles inchangés.
+
+- **Saisons croisées** (`runSeasonCampaign`, `saisons.json`, `SAISONS.md`) : les sept profils ajoutés par KS1
+  (`profiles_ks/`) sont suivis comme les 27 du banc (toutes les graines, trois modèles de vérité, tous les
+  scénarios) ; `seasonProfileDirs`.
+- **Test** `test/ks1c1_test.dart` : saisons réalisées (vérité B, graine 0) des cas relevés par KS1 — échéance
+  avancée de `ks_01` à `ks_03` et changement de discipline de `street_12` sans violation ; les violations de
+  volume qui restent sur le profil de test sous douleur à l'épaule suivent toutes une proposition « volume »
+  appliquée par le moteur d'évolution dans le même bloc (cause hors de `kalis_plan`, `LIVRAISON_KS1c1.md`).
 ## 0.5.1 — 16/10/2026 (lot KM2c2)
 
 Banc de Koach 1.0.3 (`kalis_adapt` 1.0.2). Aucun changement des critères de sécurité, des profils, des grilles ni des
