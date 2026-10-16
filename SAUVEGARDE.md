@@ -37,3 +37,7 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Campagne en cours.
 
 ## 16:07 UTC — run E encore en cours (groupes 5 et 17 partis à 14:09).
+
+## 16:35 UTC
+- Run E : --partie 1/1 = campagne entière → pas de parts (seulement critères par groupe). Témoin lu limité à 16 graines (critère 6 apparié seulement graines 0-15).
+- Run F poussé (eff6083c) : 17 groupes × 2 parts (saisons gardées), adversaires (P40), Python 1/8 et 2/8 (P41-42), critères 34 et 27 profils (DEV_FILTRE.py), parité saison par saison.

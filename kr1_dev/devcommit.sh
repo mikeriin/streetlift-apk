@@ -16,7 +16,7 @@ unset GIT_INDEX_FILE
 cd /home/claude/streetlift-apk
 export GIT_INDEX_FILE=/tmp/kr1/devindex2; rm -f $GIT_INDEX_FILE
 git read-tree --prefix=packages/ $treeP
-for f in DEV_KR1.sh DEV_ASSEMBLER.sh DEV_PARTS; do
+for f in DEV_KR1.sh DEV_ASSEMBLER.sh DEV_PARTS DEV_FILTRE.py; do
   h=$(git hash-object -w ${DEVDIR:-/tmp/kr1/dev}/$f); git update-index --add --cacheinfo 100644,$h,$f
 done
 h=$(git hash-object -w ${DEVDIR:-/tmp/kr1/dev}/ci-paquets.yml); git update-index --add --cacheinfo 100644,$h,.github/workflows/ci-paquets.yml
