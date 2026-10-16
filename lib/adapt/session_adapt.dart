@@ -164,6 +164,12 @@ class SessionAdapt {
   /// qui reste à faire. Null : séance prescrite avant CI1c.
   final String? source;
 
+  /// KM3 : séance servie par Koach 1.0 (`state` : `preview` avant le début
+  /// réel, `open` pendant, `closed` versée ; jour du moteur, items servis,
+  /// cibles par série, séries versées, suggestions et décisions). Null :
+  /// séance du moteur 0.x.
+  final Map<String, Object?>? koach;
+
   const SessionAdapt({
     required this.blockId,
     required this.weekIndex,
@@ -178,6 +184,7 @@ class SessionAdapt {
     this.choice,
     this.advice = const {},
     this.source,
+    this.koach,
   });
 
   bool get assisted => mode == 'assisted';
@@ -210,6 +217,7 @@ class SessionAdapt {
     String? date,
     String? mode,
     String? source,
+    Map<String, Object?>? koach,
   }) => SessionAdapt(
     blockId: blockId,
     weekIndex: weekIndex,
@@ -224,6 +232,7 @@ class SessionAdapt {
     choice: clearChoice ? null : (choice ?? this.choice),
     advice: advice ?? this.advice,
     source: source ?? this.source,
+    koach: koach ?? this.koach,
   );
 
   /// Conseils d'un exercice, avec [step] ajouté.
@@ -279,6 +288,7 @@ class SessionAdapt {
           e.key: [for (final s in e.value) s.toJson()],
       },
     if (source != null) 'src': source,
+    if (koach != null) 'koach': koach,
   };
 
   /// Lecture ; [FormatException] hors contrat (toute autre erreur de
@@ -378,6 +388,9 @@ class SessionAdapt {
       choice: choice as String?,
       advice: advice,
       source: src as String?,
+      koach: m['koach'] is Map
+          ? (m['koach'] as Map).cast<String, Object?>()
+          : null,
     );
   }
 }

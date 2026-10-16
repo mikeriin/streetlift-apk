@@ -259,6 +259,9 @@ extension SessionAdaptStore on AppStore {
   /// de tout bloc, ou semaine sans prescription portable).
   AdaptPlace? adaptPlaceOf(int week, int j) {
     if (week < 1 || week > program.weeks.length) return null;
+    // KM3 : semaine servie par Koach 1.0 : bloc de référence écrit (sans
+    // les propositions de 0.x, D2).
+    if (koachServesWeek(week)) return _koachPlace(week, j);
     final plan = planProgram;
     if (plan != null && week >= plan.firstWeek) {
       final loc = plan.locate(week);
@@ -527,6 +530,7 @@ extension SessionAdaptStore on AppStore {
     }
     final key = StringBuffer()
       ..write(identityHashCode(program))
+      ..write('|${koachOverlaySignature()}')
       ..write('|$_overlayGen|$_evoRevision|')
       ..write(identityHashCode(imp))
       ..write('|')
@@ -561,6 +565,9 @@ extension SessionAdaptStore on AppStore {
       for (final seg in segs) {
         _overlaySegment(imp!, seg);
       }
+      // KM3 : semaine à venir modulée par Koach (séries servies, écart de
+      // charge), l'écrit en dessous.
+      koachOverlayWeek();
     } catch (_) {
       // Couche impossible à poser : le programme d'origine reste affiché
       // (la séance servie garde les ajustements).
@@ -574,6 +581,8 @@ extension SessionAdaptStore on AppStore {
     final entries = planEvolution.inEffect(seg.blockId);
     for (var n = seg.first; n <= seg.last; n++) {
       if (n > program.weeks.length) break;
+      // KM3 : semaines servies par Koach : plus de couche de 0.x (D2).
+      if (koachServesWeek(n)) break;
       final weekIndex = n - seg.first;
       final week = program.week(n);
       // Exercices d'origine de la semaine, par emplacement (un exercice
@@ -815,6 +824,15 @@ extension SessionAdaptStore on AppStore {
 
   /// Emplacement d'un exercice du journal (clé) dans le bloc de la journée.
   String? adaptSlotOf(int week, int j, String key) {
+    // KM3 : vrai test inséré par Koach avant l'exercice de travail.
+    if (key.endsWith(kKoachTestSuffix)) {
+      final s = adaptSlotOf(
+        week,
+        j,
+        key.substring(0, key.length - kKoachTestSuffix.length),
+      );
+      return s == null ? null : '$s.t';
+    }
     final base = key.split('~').first;
     final plan = planProgram;
     if (plan != null && week >= plan.firstWeek) {
@@ -1386,6 +1404,8 @@ extension SessionAdaptStore on AppStore {
   /// séance commencée ou faite avant G9, erreur du moteur).
   SessionAdapt? adaptOpen(int week, DayPlan base) {
     if (week < 1 || base.exercises.isEmpty) return null;
+    // KM3 : journée servie par Koach 1.0.
+    if (koachServesDay(week, base.j)) return _koachOpenSession(week, base);
     final key = sessionKey(week, base.j);
     final log = logs[key];
     final started =
@@ -1582,6 +1602,11 @@ extension SessionAdaptStore on AppStore {
     required bool asked,
     bool quiet = false,
   }) {
+    // KM3 : séance de Koach : bilan, lieu et temps gardés ; l'aperçu suit,
+    // la séance commencée ne se recalcule pas (Koach la sert une fois).
+    if (a.koach != null) {
+      return _koachSetCheck(week, base, a, check, where, asked);
+    }
     final key = sessionKey(week, base.j);
     final place = adaptPlaceOf(week, base.j);
     if (place == null || place.blockId != a.blockId) return null;
@@ -1766,6 +1791,31 @@ extension SessionAdaptStore on AppStore {
           blockSlots[slot]?.exerciseId != it.exerciseId;
       final id = swapped ? '${e.id}~${it.exerciseId}' : e.id;
       final g = adviceGoal(it, 0, a.advice[id] ?? const []);
+      // KM3 : vrai test inséré par Koach avant le travail (montée courte,
+      // refusable).
+      final t = a.koach == null ? null : _adaptItem(a, '$slot.t');
+      if (t != null) {
+        out.add(
+          Exercise.engine(
+            e,
+            id: '${e.id}$kKoachTestSuffix',
+            name: e.name,
+            setsText: adaptSetsText(t),
+            setCount: t.sets,
+            intensity: 'Test court : montée jusqu’à la dernière série '
+                'proprement faite',
+            kg: null,
+            rest: pt.restLabel(t.restSeconds),
+            restSec: t.restSeconds,
+            cue: e.cue,
+            why: 'Koach mesure ton niveau du jour : test court, refusable.',
+            catalogId: t.exerciseId,
+            slotId: t.slotId,
+            tempo: ct.coachTempoText(t),
+            timer: null,
+          ),
+        );
+      }
       out.add(
         Exercise.engine(
           e,
@@ -2280,8 +2330,20 @@ extension SessionAdaptStore on AppStore {
 
   /// Pré-remplit les séries non validées encore vides d'un exercice servi.
   void adaptPrefill(int week, int j, Exercise e, ExerciseLog log) {
-    final a = sessionAdapt(week, j);
+    var a = sessionAdapt(week, j);
     if (a == null || !e.engine) return;
+    // KM3 : cible de Koach de la prochaine série, demandée juste avant de
+    // la proposer.
+    if (a.koach?['state'] == 'open') {
+      final next = log.sets.indexWhere((s) => !s.done);
+      final base = week >= 1 && week <= program.weeks.length
+          ? program.week(week).day(j)
+          : null;
+      if (next >= 0 && base != null) {
+        koachEnsureTarget(week, base, e, next);
+        a = sessionAdapt(week, j) ?? a;
+      }
+    }
     final it = _adaptItem(a, e.slotId);
     if (it == null) return;
     final loaded =
@@ -2482,6 +2544,8 @@ extension SessionAdaptStore on AppStore {
   ) {
     final a = sessionAdapt(week, day.j);
     if (a == null || !e.engine || e.slotId == null) return null;
+    // KM3 : Koach donne la cible de chaque série (koachAfterSet).
+    if (a.koach != null) return null;
     final it = _adaptItem(a, e.slotId);
     final placeOf = adaptPlaceOf(week, day.j);
     if (it == null || placeOf == null || placeOf.blockId != a.blockId) {
@@ -2637,6 +2701,8 @@ extension SessionAdaptStore on AppStore {
   /// et après la séance, première série de la prochaine fois.
   AdaptSessionSummary? adaptSummary(int week, DayPlan base) {
     final a = sessionAdapt(week, base.j);
+    // KM3 : séance servie par Koach 1.0.
+    if (a?.koach != null) return koachSummary(week, base);
     final place = adaptPlaceOf(week, base.j);
     final profile = adaptProfile;
     final catalog = content.catalog;

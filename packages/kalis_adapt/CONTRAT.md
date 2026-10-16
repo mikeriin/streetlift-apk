@@ -1,4 +1,4 @@
-# Contrat de kalis_adapt 0.2.3
+# Contrat de kalis_adapt 1.0.0
 
 Moteur dynamique de Kalis Track (D5) : il suit l'utilisateur et adapte son programme séance après séance.
 Dart pur, sans Flutter, sans stockage, sans horloge ; tout ce qu'il rend est une valeur du contrat de
@@ -12,6 +12,63 @@ qui (§ 9). Les mesures citées viennent de `docs/MESURES.md` (relevé du simula
 Les § 1 à 10 décrivent le moteur de 0.1.0, toujours servi tel quel aux blocs sans champ du contrat 0.4.0
 de `kalis_core` (programme importé du propriétaire compris). Le § 11 décrit le **mode coach** de 0.2.0
 (blocs au contrat 0.4.0), son calibrage au panel (`docs/CALIBRAGE_CA1.md`, puis `docs/CALIBRAGE_CA2.md`) et ses limites.
+
+## K. Koach 1.0 (`kalis_adapt` 1.0.0, lot KM2 ; 1.0.1, lot KM2c1)
+
+`kalis_adapt` 1.0.0 contient deux moteurs : celui de 0.3.1 (§ 1 à 13, inchangé : `KalisAdapt`), que l'application
+sert jusqu'à KM3 et que le banc garde comme témoin, et **Koach 1.0** (`package:kalis_adapt/koach.dart`), qui le
+remplacera (cahier `pipeline/cp/CAHIER_KM.md`, décision C13 : un seul moteur, un seul comportement, à KM3).
+
+**K.1 Contrat de référence.** Koach Dart est le portage à l'identique de la référence Python **1.0.2** depuis
+`kalis_adapt` 1.0.1 (lot KM2c1 ; 1.0.1 en 1.0.0 ; delta : `reference/CHANGEMENTS_1_0_2.md`, sans changement d'API
+ni de schéma du journal) (`reference/koach/`) : son contrat est `reference/CONTRAT_1_0.md` (API § 3, journal § 2, modèles § 4 et 5,
+séance § 6, paramètres § 7, garde-fous § 8, déterminisme § 9, limites § 10 et annexe A). Noms Dart : ceux du
+Python en `lowerCamelCase` (`observer_serie` → `observerSerie`), mêmes classes (`Koach`, `Modele`, `Seances`,
+`Gardefous`, `Planification`, `Surveillance`, `Adherence`, `ControleDual`), mêmes clés JSON partout
+(événements, sorties, états). Conventions du portage : `reference/PORTAGE_DART.md`.
+
+**K.2 Parité.** Les 14 fixtures de la référence 1.0.2 (`reference/fixtures/`, dont `moteur_11.json` : reprise par
+paliers et tentatives après une coupure de 12 jours) sont rejouées par `test/koach_parite_test.dart` :
+sortie et raisons de chaque `plan`, `posterior()` après chaque fin de séance, de semaine (et de série pour
+`moteur_1`), vecteur d'état et diagonale de la covariance, état final, rejeu par `rejouer`, tirages du jumeau,
+tables, évaluation de la référence, replanification, plan et items modulés. Tolérance 1e-9 relative ; les traces
+(hors contrat) sont aussi identiques (`fixe` reproduit `'%.nf'` de Python). Le banc vérifie en plus 5 saisons
+complètes avec toutes les extensions contre la référence (`kalis_bench`, `test/km2_banc_test.dart`).
+
+**K.3 Ce que la façade fait de plus que la référence (KM2, constats M6 et M7).** Sans extension, rien ne change
+(les fixtures le vérifient). Avec des extensions :
+
+| Point | Référence 1.0.1 | 1.0.0 |
+| --- | --- | --- |
+| Modulation de la semaine (`Planification.appliquer`), semaine allégée (`Surveillance.appliquerAllegement`), bras de volume d'un essai | appliqués par l'appelant avant `plan` | appliqués par `plan({'horizon': 'seance'})`, dans l'ordre des extensions (interface `AvecItemsDuJour`) : l'appelant passe les items **écrits** |
+| Bras d'intensité d'un essai (`ControleDual`) | appliqué par l'appelant après `plan` de la série | appliqué par `plan({'horizon': 'serie'})` (interface `AvecCibleSerie`), sous `Seances.borneExterne` |
+| Charge visée d'une tentative (`koachCible`) | posée par l'appelant | posée par `plan` sur les items de test des exercices de `cibles_tentatives` |
+| Forme d'adhérence (`Adherence.forme`) | appelée par l'appelant | quand la charge de la première série d'un exercice change, la cible porte `proposition` : `{type, depart, cible, paliers, moment, proba_min}` ; la charge servie ne change pas (anti-complaisance, cahier § 8) |
+| Référence de la planification | `charger_reference` hors journal (M7) | événement **`reference`** : `{blocs, block_weeks, horizon, cibles (charges TOTALES), echeance_jour, echeances_par_semaine, principaux, poids_corps, cibles_tentatives (charges externes), semaine}` → `chargerReference`, replanification de `semaine` ; chaque lundi l'échéance est relue dans `echeances_par_semaine` ; événement **`cibles`** `{semaine, cibles, cibles_tentatives}` quand les buts changent. Le rejeu reconstruit la planification. |
+| Contexte de séance | — | `seance_debut.contexte.jour_index` (indice du jour dans la semaine du plan) : lu par la modulation |
+
+Les sorties de la planification sont aussi gardées dans `Planification.previsions` (P(réussite) par cible après
+chaque replanification).
+
+**K.4 Validateur.** `Planification` exige un validateur de sécurité (`Validateur` : blocs → constats).
+`package:kalis_adapt/validateur.dart` (`validateurSecurite`, `ProfilValidation.depuisProfil`) est la copie fidèle
+des critères calculables du banc (`kalis_bench` `safetyFindings`) ; un plan modulé n'est retenu que s'il n'ajoute
+aucun constat à ceux de la référence (`_sur`, référence § 3.7.1).
+
+**K.5 Paramètres.** Le fichier de paramètres est un asset versionné (`assets/koach/koach_params_1_0_2.json`,
+version `1.0.2-ref.1`, 322 clés, SHA-256 `koachParametresSha256` ; 1.0.0 : `koach_params_1_0_1.json`, 317 clés) avec les fiches d'exercices
+(`assets/koach/vecteurs_qualites_v1.json`) ; `lireParametresKoach` et `lireFichesKoach` les décodent et les
+contrôlent. Un import ultérieur passe par `importerParametres` (événement `parametres`, référence § 7.3).
+
+**K.6 Garanties.** Dart pur (aucun `dart:io`, aucune horloge, hasard mulberry32 seedé). Même journal = même
+état (rejeu exact, extensions et planification comprises). Règles de sécurité de 0.3.1 en contraintes dures
+(référence § 8 ; 0 violation sur le banc, `kalis_bench` `bin/km2.dart`, critère 7). Temps (VM Dart de la CI,
+après chauffe JIT) : replanification 0,21 s au plus, mise à jour après une série 21,5 ms au plus
+(`kalis_bench` `docs/CRITERES_KM2.md` ; livraison `pipeline/cp/livraisons/LIVRAISON_KM2.md`).
+
+**K.7 Limites.** Celles de la référence (§ 10, annexe A), sauf M6 et M7 (traitées par K.3). Restent notamment :
+structure du programme jamais modifiée, contrôle dual rarement calibré (M5), « résidu d'e1RM » du secours qui
+n'est pas un résidu (M8), critère 1 du cahier en écart documenté (C13.11.1). Intégration : `docs/INTEGRATION_KM3.md`.
 
 ## 1. Vocabulaire
 

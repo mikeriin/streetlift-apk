@@ -334,6 +334,8 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     store.accentMode.addListener(_onTheme);
     store.contrastMode.addListener(_onTheme);
     store.persistenceError.addListener(_onPersistenceError);
+    // KM3 : Koach 1.0 (prise de main, rejeu, rattrapage) en arrière-plan.
+    unawaited(store.koachRefresh());
     // G2 (D1.1) : annonce de la suppression des WOD et des séances perso,
     // une fois, dès que l'accueil est affiché.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -410,6 +412,9 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       store.notifyListeners();
       Notif.reschedule();
+      // KM3 : Koach 1.0 rattrape les semaines finies (replanification du
+      // lundi, hors du fil d'interface).
+      unawaited(store.koachRefresh());
     }
   }
 
