@@ -76,10 +76,29 @@ class AdaptSummaryScreen extends StatefulWidget {
 }
 
 class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
-  late final AdaptSessionSummary? _s = store.adaptSummary(
-    widget.week.n,
-    widget.base,
-  );
+  late AdaptSessionSummary? _s = store.adaptSummary(widget.week.n, widget.base);
+
+  /// KM3 : séance de Koach : la prévision de la prochaine fois arrive après
+  /// la fin de séance (calcul sur une copie du moteur, en arrière-plan).
+  bool get _koach =>
+      store.sessionAdapt(widget.week.n, widget.base.j)?.koach != null;
+
+  void _onStore() {
+    if (!_koach || !mounted) return;
+    setState(() => _s = store.adaptSummary(widget.week.n, widget.base));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    store.addListener(_onStore);
+  }
+
+  @override
+  void dispose() {
+    store.removeListener(_onStore);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -84,6 +84,11 @@ class KoachEngineData {
   /// Raison d'une activation refusée (`poids` : aucun poids connu).
   String? blocked;
 
+  /// Empreinte des blocs de la dernière référence versée (une référence
+  /// nouvelle est versée quand les blocs changent : bloc suivant écrit,
+  /// retour au programme d'origine).
+  String? refSig;
+
   bool get active => snap != null && stop == null;
 
   bool get pristine => snap == null && journal.isEmpty && forced == null;
@@ -103,6 +108,7 @@ class KoachEngineData {
     if (manquees.isNotEmpty) 'manquees': manquees,
     if (forced != null) 'forced': forced,
     if (blocked != null) 'blocked': blocked,
+    if (refSig != null) 'refSig': refSig,
   };
 
   /// Lecture tolérante (une section illisible donne un état neuf : le
@@ -151,6 +157,8 @@ class KoachEngineData {
     }
     final b = m['blocked'];
     if (b is String && b.length < 40) out.blocked = b;
+    final rs = m['refSig'];
+    if (rs is String && rs.length < 40) out.refSig = rs;
     if (out.snap == null) {
       out.fromWeek = null;
       out.closed = 0;
@@ -387,6 +395,20 @@ extension KoachStore on AppStore {
     await _koachEnsureLive(gen);
     if (gen != _koachRt.gen) return;
     await _koachCatchUp(gen);
+    if (gen != _koachRt.gen) return;
+    if (koachEngine.refSig != _koachRefSig()) await koachNewReference();
+  }
+
+  /// Empreinte des blocs de référence en place.
+  String _koachRefSig() {
+    final r = _koachReferenceBlocks();
+    return fnv1a32(
+      jsonEncode([
+        r.starts,
+        r.horizon,
+        [for (final b in r.blocks) b.toJson()],
+      ]),
+    ).toString();
   }
 
   /// Moteur vivant reconstruit depuis le journal (démarrage à froid).
@@ -480,7 +502,8 @@ extension KoachStore on AppStore {
       ..fromWeek = fromWeek
       ..activatedOn = _kToday.iso
       ..closed = g0
-      ..stop = null;
+      ..stop = null
+      ..refSig = _koachRefSig();
     koachEngine.versed
       ..clear()
       ..addAll(hist.keys);
@@ -1193,44 +1216,18 @@ extension KoachStore on AppStore {
     final today = _kToday;
     final jour = koachJour(lundi, today);
     final check = a.check?.toJson().cast<String, Object?>();
-    final reste = <Object?>[];
-    final w = program.weeks.any((x) => x.n == week) ? program.week(week) : null;
-    for (final d in w?.days ?? const <DayPlan>[]) {
-      if (d.j <= base.j || d.exercises.isEmpty) continue;
-      final i = koachJourInfo(week, d.j);
-      if (i == null || i.items.isEmpty) continue;
-      reste.add([for (final it in i.items) koachItemVolume(it)]);
-    }
-    final budget =
-        a.check?.minutesAvailable ??
-        (koachEngine.dispo?['duree_max_min'] as num?)?.toInt();
-    final contexte = <String, Object?>{
-      ...koachContexteDe(info),
-      'jour_evenement': _koachEventDay(today),
-      'budget': budget,
-      'lieu': a.place?.code,
-      'manquees': koachEngine.manquees,
-      'reste_semaine': reste,
-    };
-    final grilles = <String, Object?>{};
-    final zones = <String, Object?>{};
-    for (final it in info.items) {
-      final id = '${it['exerciseId']}';
-      final x = book.find(id);
-      if (x == null) continue;
-      grilles[id] = {
-        'pas': x.grid.step,
-        'minimum': x.grid.minimum,
-        'halteres': x.grid.dumbbellRule,
-      };
-      zones[id] = [
-        {for (final z in kc.BodyZone.values) z.code: x.zoneLevel(z)},
-        [
-          for (final z in kc.BodyZone.values)
-            if (kp.coachPainStopHits(x.exercise, z)) z.code,
-        ],
-      ];
-    }
+    final inputs = _koachSeanceInputs(
+      week,
+      base.j,
+      info,
+      book,
+      check: check,
+      place: a.place,
+      minutes: a.check?.minutesAvailable,
+    );
+    final contexte = inputs.contexte;
+    final grilles = inputs.grilles;
+    final zones = inputs.zones;
     final sw = Stopwatch()..start();
     Json r;
     try {
@@ -1274,14 +1271,8 @@ extension KoachStore on AppStore {
     ];
     final items = <kc.ExercisePrescription>[];
     for (final it in served) {
-      final clean = <String, Object?>{
-        for (final e in it.entries)
-          if (!e.key.startsWith('koach') && e.key != 'test') e.key: e.value,
-      }..['reasons'] = const <Object?>[];
-      try {
-        final p = kc.ExercisePrescription.fromJson(clean);
-        items.add(p.copyWith(setTargets: null));
-      } catch (_) {}
+      final p = _koachItemOf(it, info);
+      if (p != null) items.add(p);
     }
     var plan = kc.SessionPlan(
       date: today,
@@ -1334,6 +1325,205 @@ extension KoachStore on AppStore {
     saveLogs();
     _persist();
     return true;
+  }
+
+  /// Item servi par Koach au format du contrat de l'application : champs
+  /// `koach*` retirés, nombres entiers ramenés à l'entier ; à défaut,
+  /// l'item écrit avec les séries servies. Null : item illisible.
+  kc.ExercisePrescription? _koachItemOf(Json it, KoachJourInfo info) {
+    const ints = {
+      'sets',
+      'repsLow',
+      'repsHigh',
+      'secondsLow',
+      'secondsHigh',
+      'targetFlames',
+      'restSeconds',
+    };
+    Json clean({required bool test}) => <String, Object?>{
+      for (final e in it.entries)
+        if (!e.key.startsWith('koach') && (test || e.key != 'test'))
+          e.key: ints.contains(e.key) && e.value is num
+              ? (e.value as num).round()
+              : e.value,
+    }..['reasons'] = const <Object?>[];
+    for (final test in const [true, false]) {
+      try {
+        final p = kc.ExercisePrescription.fromJson(clean(test: test));
+        final q = p.copyWith(setTargets: null);
+        if (q.validate().isEmpty) return q;
+      } catch (_) {}
+    }
+    for (final w in info.items) {
+      if (w['slotId'] != it['slotId']) continue;
+      try {
+        final p = kc.ExercisePrescription.fromJson(w);
+        final n = (it['sets'] as num?)?.round() ?? p.sets;
+        return p.copyWith(sets: n < 1 ? 1 : n, setTargets: null);
+      } catch (_) {}
+    }
+    return null;
+  }
+
+  /// Contexte, grilles et zones d'une séance de la journée S[week]·J[j]
+  /// (INTEGRATION_KM3.md § 2.4, § 1.4).
+  ({Json contexte, Json grilles, Json zones}) _koachSeanceInputs(
+    int week,
+    int j,
+    KoachJourInfo info,
+    ka.ExerciseBook book, {
+    Json? check,
+    kc.Place? place,
+    int? minutes,
+  }) {
+    final today = _kToday;
+    final reste = <Object?>[];
+    final w = program.weeks.any((x) => x.n == week) ? program.week(week) : null;
+    for (final d in w?.days ?? const <DayPlan>[]) {
+      if (d.j <= j || d.exercises.isEmpty) continue;
+      final i = koachJourInfo(week, d.j);
+      if (i == null || i.items.isEmpty) continue;
+      reste.add([for (final it in i.items) koachItemVolume(it)]);
+    }
+    final budget =
+        minutes ?? (koachEngine.dispo?['duree_max_min'] as num?)?.toInt();
+    final contexte = <String, Object?>{
+      ...koachContexteDe(info),
+      'jour_evenement': _koachEventDay(today),
+      'budget': budget,
+      'lieu': place?.code,
+      'manquees': koachEngine.manquees,
+      'reste_semaine': reste,
+    };
+    final grilles = <String, Object?>{};
+    final zones = <String, Object?>{};
+    for (final it in info.items) {
+      final id = '${it['exerciseId']}';
+      final x = book.find(id);
+      if (x == null) continue;
+      grilles[id] = {
+        'pas': x.grid.step,
+        'minimum': x.grid.minimum,
+        'halteres': x.grid.dumbbellRule,
+      };
+      zones[id] = [
+        {for (final z in kc.BodyZone.values) z.code: x.zoneLevel(z)},
+        [
+          for (final z in kc.BodyZone.values)
+            if (kp.coachPainStopHits(x.exercise, z)) z.code,
+        ],
+      ];
+    }
+    return (contexte: contexte, grilles: grilles, zones: zones);
+  }
+
+  /// Prévision de la prochaine fois (C15.4) des exercices faits dans la
+  /// séance S[week]·J[j] : prochaine journée (6 semaines au plus) où
+  /// l'exercice revient, pas encore commencée ; même calcul que la séance
+  /// (copie du moteur, jour réel, charge fixe). Gardée dans la séance.
+  Future<void> _koachForecasts(int week, int j) async {
+    final k = _koachRt.live;
+    final fab = _koachFab();
+    final lundi = koachLundi;
+    final book = _adaptBook();
+    final key = sessionKey(week, j);
+    final a = sessionAdaptOf(key);
+    if (k == null ||
+        fab == null ||
+        lundi == null ||
+        book == null ||
+        a == null) {
+      return;
+    }
+    final gen = _koachRt.gen;
+    final base = program.week(week).day(j);
+    if (base == null) return;
+    final ids = <String>{
+      for (final r in _adaptDone(week, _koachDisplayDay(week, base, a), a))
+        r.exerciseId,
+    };
+    final byDay = <(int, int), List<(String, String)>>{};
+    for (final id in ids) {
+      found:
+      for (var n = week; n <= math.min(week + 6, program.weeks.length); n++) {
+        if (!koachServesWeek(n)) continue;
+        for (final d in program.week(n).days) {
+          if (n == week && d.j <= j) continue;
+          if (d.exercises.isEmpty) continue;
+          final l = logs[sessionKey(n, d.j)];
+          if (l != null &&
+              (l.done || l.ex.values.any((x) => x.sets.any((s) => s.done)))) {
+            continue;
+          }
+          final info = koachJourInfo(n, d.j);
+          for (final it in info?.items ?? const <Json>[]) {
+            if (it['exerciseId'] == id) {
+              byDay.putIfAbsent((n, d.j), () => []).add((
+                id,
+                '${it['slotId']}',
+              ));
+              break found;
+            }
+          }
+        }
+      }
+    }
+    final out = <String, Object?>{};
+    for (final e in byDay.entries) {
+      final (n, d) = e.key;
+      final info = koachJourInfo(n, d)!;
+      final inputs = _koachSeanceInputs(n, d, info, book);
+      final p = KoachPrevision(
+        {
+          'type': 'seance_debut',
+          'jour': koachJour(lundi, _kToday),
+          'bilan': null,
+          'poids_kg': _koachPeseeAu(_kToday),
+          'contexte': inputs.contexte,
+        },
+        {
+          'horizon': 'seance',
+          'items': info.items,
+          'grilles': inputs.grilles,
+          'zones': inputs.zones,
+          'roles': info.roles,
+        },
+        [for (final x in e.value) x.$2],
+      );
+      Map<String, Json?> r;
+      try {
+        final sw = Stopwatch()..start();
+        r = await koachPrevoirCopie(k, fab, p);
+        _koachRt.temps.noter('prevision', sw.elapsed);
+      } catch (_) {
+        continue;
+      }
+      final place = _koachPlace(n, d);
+      for (final (id, slot) in e.value) {
+        var c = r[slot];
+        if (c == null) continue;
+        kc.ExercisePrescription? it;
+        for (final x
+            in place?.day?.items ?? const <kc.ExercisePrescription>[]) {
+          if (x.slotId == slot) it = x;
+        }
+        final kg = place == null || it == null || debugDisableFixedLoad
+            ? null
+            : _fixedLoadAt(place, slot, it.exerciseId);
+        if (kg != null && it != null) c = _koachFixed(c, kg, it, place!, k);
+        out[id] = {'week': n, 'j': d, 'cible': c};
+      }
+    }
+    if (gen != _koachRt.gen || out.isEmpty) return;
+    final now = sessionAdaptOf(key);
+    if (now == null || now.koach == null) return;
+    final st = Map<String, Object?>.of(now.koach!)..['prevision'] = out;
+    sessionLog(week, j).adapt = now
+        .copyWith(koach: st)
+        .toJson()
+        .cast<String, dynamic>();
+    saveLogs(affectsProgression: false);
+    notifyListeners();
   }
 
   /// Jour d'épreuve (événement principal du profil, jour de test de
@@ -1392,8 +1582,9 @@ extension KoachStore on AppStore {
       }
       // Note préremplie affichée = flammes visées de la cible.
       final t = (s['target'] as Map?)?.cast<String, Object?>() ?? {};
-      if (cible is Map && cible['flames'] != null)
+      if (cible is Map && cible['flames'] != null) {
         t['flames'] = cible['flames'];
+      }
       s['target'] = t;
       final sw = Stopwatch()..start();
       k.observe({'type': 'serie', 'serie': s});
@@ -1642,8 +1833,9 @@ extension KoachStore on AppStore {
     }
     final g = adaptGoal(week, day.j, e, next);
     if (g == null || prev == null) return null;
-    if (g.kg == prev.kg && g.low == prev.low && g.high == prev.high)
+    if (g.kg == prev.kg && g.low == prev.low && g.high == prev.high) {
       return null;
+    }
     final parts = <String>[
       if (g.kg != null && g.kg! > 0) adaptKgLabel(g.kg!),
       adaptAmount(g.low, g.high, seconds: g.seconds),
@@ -1854,6 +2046,7 @@ extension KoachStore on AppStore {
       sessionLog(week, j).adapt = next.toJson().cast<String, dynamic>();
       koachEngine.versed.add(key);
       koachEngine.journal = k.journal;
+      if (!fixed) unawaited(_koachForecasts(week, j));
       if (fixed) {
         // Journal corrigé : l'état se reconstruit par rejeu (arrière-plan).
         koachEngine.journal = koachJournalDe(k.journal);
@@ -2022,7 +2215,9 @@ extension KoachStore on AppStore {
     try {
       final next = await KoachCalcul.appliquer(k, (x) => x.observe(ev));
       _koachRt.live = next;
-      e.journal = next.journal;
+      e
+        ..journal = next.journal
+        ..refSig = _koachRefSig();
       _koachRt.temps.noter('replanification', sw.elapsed);
       _persist();
       notifyListeners();
@@ -2208,15 +2403,41 @@ extension KoachStore on AppStore {
           calibrating: false,
           before: _koachEstimate(id, avant[id]),
           after: _koachEstimate(id, post[id]),
-          next: null,
-          nextWeek: null,
-          nextJ: null,
-          nextDate: null,
+          next: _koachNextGoal(st, id, e),
+          nextWeek: _koachNextAt(st, id)?.$1,
+          nextJ: _koachNextAt(st, id)?.$2,
+          nextDate: _koachNextAt(st, id) == null || program.start == null
+              ? null
+              : program.dateFor(
+                  _koachNextAt(st, id)!.$1,
+                  _koachNextAt(st, id)!.$2,
+                ),
           today: adaptGoal(week, base.j, e, 0),
         ),
       );
     }
     return AdaptSessionSummary(out, adaptPainReferralZones);
+  }
+
+  (int, int)? _koachNextAt(Map<String, Object?> st, String id) {
+    final p = (st['prevision'] as Map?)?[id];
+    if (p is! Map) return null;
+    final w = p['week'], j = p['j'];
+    return w is int && j is int ? (w, j) : null;
+  }
+
+  SetGoal? _koachNextGoal(Map<String, Object?> st, String id, Exercise e) {
+    final p = (st['prevision'] as Map?)?[id];
+    final c = p is Map ? p['cible'] : null;
+    if (c is! Map) return null;
+    final seconds = c['secondsLow'] != null || c['secondsHigh'] != null;
+    return SetGoal(
+      kg: (c['loadKg'] as num?)?.toDouble(),
+      low: (seconds ? c['secondsLow'] : c['repsLow']) as int?,
+      high: (seconds ? c['secondsHigh'] : c['repsHigh']) as int?,
+      flames: c['flames'] as int?,
+      seconds: seconds,
+    );
   }
 
   /// Estimation lisible d'une entrée de `posterior().exercices` (charge
@@ -2250,6 +2471,45 @@ extension KoachStore on AppStore {
       weeklyTrend: 0,
       observations: (raw['mesures'] as num?)?.toInt() ?? 0,
     );
+  }
+
+  /// Résumé d'adaptation demandé par `kalis_plan` pour écrire le bloc
+  /// suivant d'un programme créé (INTEGRATION_KM3.md § 5.3) : estimations
+  /// tirées de `posterior()` (capacité = charge totale, erreur type depuis
+  /// l'intervalle à 90 %, observations = mesures) ; assiduité de
+  /// l'application ([base]). Null : Koach ne conduit pas le programme.
+  kc.AdaptationSummary? koachAdaptationSummary(kc.AdaptationSummary base) {
+    final k = _koachRt.live;
+    if (k == null || !koachEngine.active) return null;
+    final ex = (k.posterior()['exercices'] as Map?) ?? const {};
+    final estimates = <kc.ExerciseEstimate>[];
+    for (final e in ex.entries) {
+      final v = e.value;
+      if (v is! Map) continue;
+      final unit = switch (v['type']) {
+        'charge' => kc.CapacityUnit.oneRmKg,
+        'reps' => kc.CapacityUnit.maxReps,
+        'tenue' => kc.CapacityUnit.maxHoldSeconds,
+        _ => null,
+      };
+      final val = (v['valeur'] as num?)?.toDouble();
+      final iv = v['intervalle_90'] as List?;
+      if (unit == null || val == null || iv == null || iv.length < 3) continue;
+      estimates.add(
+        kc.ExerciseEstimate(
+          exerciseId: '${e.key}',
+          unit: unit,
+          capacity: val,
+          standardError:
+              (((iv[2] as num) - (iv[0] as num)) / (2 * 1.6448536269514722))
+                  .abs()
+                  .toDouble(),
+          weeklyTrend: 0,
+          observations: (v['mesures'] as num?)?.toInt() ?? 0,
+        ),
+      );
+    }
+    return base.copyWith(estimates: estimates);
   }
 
   // --------------------------------------------- récapitulatif de bloc
