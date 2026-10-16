@@ -3,4 +3,4 @@ commit=a7f19bc88489541186ba39842106eca0cc47a4a9
 checks=success
 packages=success
 before=success
-emulator=failure
+emulator=success

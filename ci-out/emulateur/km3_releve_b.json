@@ -15,7 +15,7 @@
   "dev_actif": true,
   "dev_espace": true,
   "dev_import": true,
-  "dev_prise_de_main_ms": 13563,
+  "dev_prise_de_main_ms": 12814,
   "dev_koach_actif": true,
   "dev_depuis": 14,
   "dev_evenements": 1986,
@@ -25,24 +25,24 @@
   "dev_debut_appuis": [],
   "dev_temps_debut": {
     "prise_de_main": {
-      "dernier_ms": 12052.095,
-      "max_ms": 12052.095
+      "dernier_ms": 12154.143,
+      "max_ms": 12154.143
     },
     "replanification": {
-      "dernier_ms": 402.104,
-      "max_ms": 402.104
+      "dernier_ms": 119.733,
+      "max_ms": 119.733
     },
     "plan_seance": {
-      "dernier_ms": 17.346,
-      "max_ms": 17.346
+      "dernier_ms": 13.844,
+      "max_ms": 13.844
     },
     "debut_seance": {
-      "dernier_ms": 51.097,
-      "max_ms": 51.097
+      "dernier_ms": 35.956,
+      "max_ms": 35.956
     },
     "plan_serie": {
-      "dernier_ms": 3.476,
-      "max_ms": 3.476
+      "dernier_ms": 2.795,
+      "max_ms": 2.795
     }
   },
   "dev_seance_ouverte": true,
@@ -54,7 +54,7 @@
     "flammes": 8
   },
   "dev_serie_validee": true,
-  "dev_serie_ms": 3.93,
+  "dev_serie_ms": 3.329,
   "dev_suggestion_visible": true,
   "dev_suggestion_refusee": "non",
   "dev_versee": true,
@@ -62,32 +62,32 @@
   "dev_evolution_actif": true,
   "dev_temps": {
     "prise_de_main": {
-      "dernier_ms": 12052.095,
-      "max_ms": 12052.095
+      "dernier_ms": 12154.143,
+      "max_ms": 12154.143
     },
     "replanification": {
-      "dernier_ms": 402.104,
-      "max_ms": 402.104
+      "dernier_ms": 119.733,
+      "max_ms": 119.733
     },
     "plan_seance": {
-      "dernier_ms": 17.346,
-      "max_ms": 17.346
+      "dernier_ms": 13.844,
+      "max_ms": 13.844
     },
     "debut_seance": {
-      "dernier_ms": 51.097,
-      "max_ms": 51.097
+      "dernier_ms": 35.956,
+      "max_ms": 35.956
     },
     "plan_serie": {
-      "dernier_ms": 0.152,
-      "max_ms": 3.476
+      "dernier_ms": 0.163,
+      "max_ms": 2.795
     },
     "observe_serie": {
-      "dernier_ms": 1.484,
-      "max_ms": 1.484
+      "dernier_ms": 1.341,
+      "max_ms": 1.341
     },
     "prevision": {
-      "dernier_ms": 89.056,
-      "max_ms": 89.056
+      "dernier_ms": 81.9,
+      "max_ms": 81.9
     }
   },
   "dev_arret": true,
