@@ -762,6 +762,47 @@ complet `claude/ci-cp-b` run 38873043566 vert. Détail : `pipeline/cp/livraisons
   les graines » est un critère dur de la bascule KM3 ou un indicateur suivi ; (c) lot court d'application de KS1 :
   `startDate` du bloc suivant = début du bloc précédent + semaines entières servies (contrat § 12.9).
 
+### KM3
+
+Lot livré le 16/10/2026 (session Opus 5.5, effort élevé, C17.14), validation par le pilotage sur les critères du
+cahier (C8) : Koach 1.0 dans l'application, dev7.0.0 (7.0.0+129) sur `main` dc9cbc55, build signé run 38904862533,
+contrôle complet `claude/ci-3d` run 38894487551 (arbre identique). Détail : `pipeline/cp/livraisons/LIVRAISON_KM3.md`.
+
+- **KM3.1 Lancement** : message sans ligne « Lot : » ; seul lot App « à faire ». `add_repo` absent de la session ;
+  accès en écriture vérifié par `git push --dry-run` puis par le push de la ligne « en cours ». Pas de SDK Flutter
+  (proxy) : mise au point sur `claude/ci-ui-km3-rapide` (formatage rendu en patch, tests `km3_*`, rendus) et
+  `claude/ci-3d` (contrôle complet et cible émulateur `integration_test/koach_km3_test.dart`). Sauvegardes sur
+  `cp-sauvegardes/KM3`.
+- **KM3.2 Paquet** : `kalis_adapt` 1.0.2 (`etiquettes/kalis_adapt-v1.0.2`, Koach 1.0.3, publiée pendant le lot et
+  validée en C17.16) copié à l'octet ; `kalis_bench` absent ; `kalis_core` 0.4.3 et `kalis_plan` 0.3.1 inchangés ;
+  assets `koach_params_1_0_3.json` et `vecteurs_qualites_v1.json` copiés à l'octet (SHA-256 testés).
+- **KM3.3 Bascule fermée dans ce build** (INTEGRATION_KM3 § 10 question 1, réponse (a)) : tout Koach 1.0 est intégré
+  (prise de main, séance servie, charge fixe C15, prévision C15.4, suggestions et refus, récapitulatif de bloc,
+  hors modèle et diagnostic, arrêt d'urgence et réactivation, mode dev), mais `kKoachBasculeAutorisee = false` :
+  le moteur de dev6.19.0 sert le bloc en cours (aucun garde-fou de séance perdu). Date notée à la première
+  ouverture (23/11/2026 si installé au plus tard le 16/11/2026, sinon 04/01/2027). La session de test du mode
+  dev force la bascule. Raison : la bascule exige le critère 10 sur un export neuf (C17.13.3), non mesuré.
+- **KM3.4 Décisions sous délégation (§ 10)** : refus du récapitulatif noté, plan modulé gardé ; « moins de
+  temps » en `contexte.budget` ; arrêt d'urgence = écrit servi, avis de consulter rappelé ; corrections a
+  posteriori par remplacement de l'événement et rejeu ; séances libres ignorées ; échéance = jour de test de S40,
+  cibles = objectifs du propriétaire d'abord ; données 0.x gardées, jamais versées à Koach ; profil de Koach figé
+  (instantané, rejeu exact) ; pas de champ de crans d'élastique ; `jours_avant_echeance` non passé.
+- **KM3.5 Arbre du dépôt** : la copie complète de `kalis_adapt` 1.0.2 pèse 29,6 Mo (référence Python et
+  fixtures) ; limite de l'arbre hors ressources chiffrées portée de 30 à 59 Mo (`tools/release_security.py`,
+  sous le budget chiffré de 60 Mo) ; l'APK n'embarque que le Dart et les deux assets.
+- **KM3.6 Mesures** : 18 tests `km3_*` (dont un en isolat réel et un parcours à l'écran), cible émulateur KM3 verte
+  en sessions perso et de test, thèmes sombre et clair. Temps sur l'émulateur de la CI : prise de main 16 à 18 s
+  (14 semaines d'historique), rattrapage 0,3 s, `plan(serie)` ≤ 4,4 ms, `plan(seance)` 16 ms, début de séance
+  42 ms, prévision 0,12 s, rejeu au démarrage 6,7 à 10 s (isolat). Défaut trouvé par l'émulateur et corrigé avant
+  publication : fermetures créées dans le magasin envoyées à l'isolat (rattrapage impossible, séance jamais
+  commencée sur le téléphone) ; test en isolat ajouté. Walk-forward (mesure A) sur la sauvegarde de test : 380
+  prévisions, erreur médiane 2,2 %, couverture 90,5 %.
+- **KM3.7 Recommandations (C8)** : (a) valider dev7.0.0 avec la bascule fermée ; (b) demander au propriétaire un
+  export neuf, mesurer le critère 10, puis lancer **avant le 16/11/2026** un lot court qui passe
+  `kKoachBasculeAutorisee` à `true` (une ligne et la version) pour garder la bascule au 23/11/2026 ; (c) avant la
+  prochaine montée de `kalis_adapt`, décider si l'application garde la copie complète (référence et fixtures) ou
+  seulement `lib/`, `assets/`, `docs/` et `pubspec.yaml` (marge de 3,5 Mo sous la limite).
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
