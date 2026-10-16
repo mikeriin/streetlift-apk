@@ -1,8 +1,16 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : BV11 — base d'exercices v1.1 (pipeline CP), version dev6.19.0 ; précédent : dev6.18.0 (CIF)**  
-**Date : 15 octobre 2026, Europe/Paris — version : 6.19.0+128, affichée « dev6.19.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : KS1A — types de jour (pipeline CP), version dev7.1.0 ; précédent : dev7.0.0 (KM3, Koach 1.0)**  
+**Date : 16 octobre 2026, Europe/Paris — version : 7.1.0+130, affichée « dev7.1.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le pilotage (C8).**
+
+## KS1A — Types de jour dans l'application (version dev7.1.0, pipeline CP, DECISIONS_CP.md C17.20)
+
+- Paquets `kalis_core` 0.4.4 et `kalis_plan` 0.4.1 copiés à l'octet (structure de la semaine de KS1 et KS1c1) ; `kalis_adapt` 1.0.2 inchangé ; bascule de Koach toujours fermée.
+- Type du jour (« Tirage — force », « Jambes — endurance de force ») : carte du jour, feuille de la semaine, résumé, tête de séance, création du programme (carte « Structure de la semaine ») ; programme de 40 semaines : types déduits des titres à la lecture (rien d'enregistré), blocs importés annotés, référence de Koach inchangée (`type` retiré).
+- Textes des six nouveaux codes de raison ; notes de coach `minimum_load` et `fixed_load`.
+- Échéance changée en cours de bloc : bloc suivant proposé dès la semaine suivante, début = début du bloc + semaines entières servies, bloc en cours tronqué (contrat `kalis_plan` § 12.9).
+- Durée : « ≈ 50 min sur 120 disponibles » quand le créneau dépasse la séance (C17.15, option a). Tests : `test/ks1a_types_test.dart` ; cible émulateur `integration_test/types_ks1a_test.dart`. Livraison : `pipeline/cp/livraisons/LIVRAISON_KS1A.md`.
 
 ## BV11 — Base d'exercices v1.1 (version dev6.19.0, pipeline CP, DECISIONS_CP.md C12.1, C17.9)
 
