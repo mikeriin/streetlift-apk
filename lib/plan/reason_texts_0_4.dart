@@ -8,8 +8,7 @@
 import 'package:kalis_core/kalis_core.dart' as kc;
 
 import 'coach_texts.dart' show phaseLabel, techniqueLabel;
-import 'day_type.dart'
-    show dayPatternsText, dayQualityText, splitTemplateText;
+import 'day_type.dart' show dayPatternsText, dayQualityText, splitTemplateText;
 
 /// Code de raison → modèle de phrase ({paramètre}).
 const kReasonTexts04 = <String, String>{

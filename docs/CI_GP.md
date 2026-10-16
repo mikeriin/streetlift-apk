@@ -402,6 +402,29 @@ vide ou absent.
   attentes bornées). Mise au point sur `claude/ci-ui-cif-rapide`
   (`ci-ui.yml` seul, sans `build-apk.yml` ni `ci-3d.yml`).
 
+### KS1A (dev7.1.0, pipeline CP, voie App, types de jour)
+
+- Paquets : `kalis_core` 0.4.4 (`etiquettes/kalis_core-v0.4.4`) et
+  `kalis_plan` 0.4.1 (`etiquettes/kalis_plan-v0.4.1`) copiés à l'octet
+  (arbres identiques à `moteurs` eae158b8, où `kalis_adapt` 1.0.2 a été
+  contrôlé avec eux) ; `kalis_adapt` 1.0.2 inchangé ;
+  `assets/catalog/parcours_v3.json` recopié (version 0.4.4).
+- Cible émulateur `integration_test/types_ks1a_test.dart` (a sombre,
+  rouge ; b clair, violet), jouée avant les cibles des lots précédents
+  (gardées) et précompilée : session personnelle (programme de 40
+  semaines, journal S1 à S14 au format de dev7.0.0) : journal identique,
+  Koach pas actif, types de jour à l'accueil et en tête de séance ; session
+  de test : profil street 50 / 50 à six séances de 120 min, création
+  (structure de la semaine), accueil (type, « sur 120 min disponibles »),
+  tête de séance, échéance avancée en semaine 2 (bloc suivant en semaine 3,
+  bloc en cours tronqué à deux semaines) ; session personnelle intacte.
+  Relevés `emulateur/ks1a_releve_<partie>.json`, captures
+  `emulateur/ks1a_*_<thème>.png`.
+- Tests Dart du lot : `test/ks1a_types_test.dart` (relevés `KS1A|…`). Mise
+  au point sur `claude/ci-ui-ks1a-rapide` ; mesure de la montée de paquets
+  seule sur `claude/ci-ui-ks1a0-rapide` (suite Dart complète : un seul
+  échec, les textes des six nouveaux codes).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

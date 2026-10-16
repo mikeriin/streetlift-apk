@@ -71,9 +71,8 @@ Future<void> _owner(AppStore app, {int lastWeek = 14}) async {
   };
   expect(await app.importAll(jsonEncode(b)), isTrue);
   app.saveAthleteProfile(
-    ProfileDraft.of(
-      sampleAthleteProfile(on: civilOf(app.storeClock())),
-    )..consent = 'refused',
+    ProfileDraft.of(sampleAthleteProfile(on: civilOf(app.storeClock())))
+      ..consent = 'refused',
   );
 }
 
@@ -139,7 +138,8 @@ void main() {
         'brut', () {
       String t(String code, Map<String, Object?> params) => reasonText(
         kc.Reason(code: code, params: params),
-        exerciseName: (id) => id == 'sl-traction-lestee' ? 'Traction lestée' : id,
+        exerciseName: (id) =>
+            id == 'sl-traction-lestee' ? 'Traction lestée' : id,
       );
       expect(
         t('plan.split_chosen', {'templateId': 'ppl6_q', 'sessions': 6}),
@@ -364,16 +364,16 @@ void main() {
       expect(isCoachBlock(block), isTrue);
       final split = block.pass1.split;
       expect(split, isNotNull);
-      expect(
-        split!.reasons.map((r) => r.code),
-        contains('plan.split_chosen'),
-      );
+      expect(split!.reasons.map((r) => r.code), contains('plan.split_chosen'));
       final qualities = <kc.DayQuality>{};
       for (final d in block.pass1.days) {
         expect(d.type, isNotNull, reason: 'jour ${d.dayIndex}');
         qualities.add(d.type!.quality);
       }
-      expect(qualities, containsAll([kc.DayQuality.force, kc.DayQuality.endurance]));
+      expect(
+        qualities,
+        containsAll([kc.DayQuality.force, kc.DayQuality.endurance]),
+      );
       expect(plan.eventsKey, planEventsKey(app.athlete!.profile.events));
       // Affichage : chaque journée d'entraînement de la semaine 1 porte
       // son type (JSON de la semaine), sans déduction depuis son titre.
@@ -448,14 +448,11 @@ void main() {
       expect(PlanStore(app).planDeadlineChanged, isFalse);
       expect(PlanStore(app).planNextFirstWeek, weeks0 + 1);
       // L'athlète avance son échéance de six semaines.
+      final ev = p0.events!.single;
       _save(
         app,
         p0.copyWith(
-          events: [
-            p0.events.single.copyWith(
-              date: p0.events.single.date.addDays(-42),
-            ),
-          ],
+          events: [ev.copyWith(date: ev.date.addDays(-42))],
         ),
       );
       expect(PlanStore(app).planDeadlineChanged, isTrue);
@@ -480,9 +477,7 @@ void main() {
       expect(PlanStore(app).planDeadlineChanged, isFalse);
       expect(plan.eventsKey, planEventsKey(app.athlete!.profile.events));
       // Relu à l'identique.
-      final again = PlanProgram.fromJson(
-        jsonDecode(jsonEncode(plan.toJson())),
-      );
+      final again = PlanProgram.fromJson(jsonDecode(jsonEncode(plan.toJson())));
       expect(again.eventsKey, plan.eventsKey);
       expect(again.blocks.first.weeks, 2);
       // ignore: avoid_print

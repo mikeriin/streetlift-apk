@@ -406,8 +406,8 @@ class PlanProgram {
       previous: prev == null ? null : PlanPrevious.fromJson(prev),
       season: season,
       keepLegacyEngine: m['keepLegacyEngine'] == true,
-      eventsKey: m['eventsKey'] is String &&
-              (m['eventsKey'] as String).length <= 4000
+      eventsKey:
+          m['eventsKey'] is String && (m['eventsKey'] as String).length <= 4000
           ? m['eventsKey'] as String
           : null,
     );
@@ -426,9 +426,10 @@ class PlanLabels {
 
 /// KS1A : empreinte des échéances d'un profil (identifiant, date,
 /// priorité), dans l'ordre des identifiants.
-String planEventsKey(List<kc.SeasonEvent> events) {
+String planEventsKey(List<kc.SeasonEvent>? events) {
   final parts = [
-    for (final e in events) '${e.id}|${e.date.iso}|${e.priority.code}',
+    for (final e in events ?? const <kc.SeasonEvent>[])
+      '${e.id}|${e.date.iso}|${e.priority.code}',
   ]..sort();
   return parts.join(';');
 }
