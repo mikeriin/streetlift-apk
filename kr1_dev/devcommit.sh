@@ -17,9 +17,9 @@ cd /home/claude/streetlift-apk
 export GIT_INDEX_FILE=/tmp/kr1/devindex2; rm -f $GIT_INDEX_FILE
 git read-tree --prefix=packages/ $treeP
 for f in DEV_KR1.sh DEV_ASSEMBLER.sh DEV_PARTS; do
-  h=$(git hash-object -w /tmp/kr1/dev/$f); git update-index --add --cacheinfo 100644,$h,$f
+  h=$(git hash-object -w ${DEVDIR:-/tmp/kr1/dev}/$f); git update-index --add --cacheinfo 100644,$h,$f
 done
-h=$(git hash-object -w /tmp/kr1/dev/ci-paquets.yml); git update-index --add --cacheinfo 100644,$h,.github/workflows/ci-paquets.yml
+h=$(git hash-object -w ${DEVDIR:-/tmp/kr1/dev}/ci-paquets.yml); git update-index --add --cacheinfo 100644,$h,.github/workflows/ci-paquets.yml
 tree=$(git write-tree)
 unset GIT_INDEX_FILE
 c=$(git commit-tree $tree -p origin/claude/ci-cp-a -m "$msg")

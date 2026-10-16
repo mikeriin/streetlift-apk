@@ -26,3 +26,8 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Run B annulé ; run C poussé (1536d03f) : P0 tests, P1-17 campagne 100 graines, P21-24 Python 0-5, assemblage + parité.
 - Versions : kalis_adapt 1.0.3, kalis_bench 0.5.3 ; CHANGELOG des deux ; CONTRAT K ; INTEGRATION_KM3 ; CHANGEMENTS_1_0_4.md.
 - Reste : lire run C ; adversaires (6 jeux) sur Koach 1.0.4 ; critères 27 profils (parts filtrées) ; README référence ; contrôle complet ; relecture ; publication.
+
+## 13:25 UTC
+- Publication du run B bloquée (assemblage Python sans parts, jusqu'à 120 min) : run C annulé par un run vide D (même groupe) ; run E (38906984200, groupe de concurrence propre `ci-kr1-<sha>`) lancé avec tout le travail. DEV_ASSEMBLER gardé (Python seulement si ≥ 5 400 saisons, timeouts).
+- Au contrôle complet final : remettre ci-paquets.yml de moteurs (groupe ci-paquets-ref : attendra D).
+- Docs : README référence (1.0.4), note dans CRITERES_KM2C2.md.

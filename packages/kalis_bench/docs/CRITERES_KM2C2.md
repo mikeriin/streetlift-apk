@@ -1,5 +1,7 @@
 # Critères du cahier KM sur Koach 1.0.3 en Dart (lot KM2c2, `kalis_adapt` 1.0.2)
 
+**Note (lot KR1, 16/10/2026)** : `kalis_adapt/reference/donnees/reference/` et `temoin/` contiennent désormais les saisons régénérées sur `kalis_plan` 0.4.1 (34 profils) ; les saisons figées sur 0.3.1 lues par les commandes ci-dessous sont dans `reference_0_3_1/` et `temoin_0_3_1/` (remplacer les chemins pour refaire ces mesures).
+
 Mesures du 16/10/2026, CI `claude/ci-cp-a` (run 38853167917, VM Dart de la CI, 4 cœurs), code de `kalis_adapt` 1.0.2
 et `kalis_bench` 0.5.1. Données : `docs/data/km2c2/`. Avant : `kalis_adapt` 1.0.1 (Koach 1.0.2,
 `docs/data/km2c1/criteres_km2c1_g05.json`) ; référence : Koach 1.0.3 Python (`kalis_adapt/reference/donnees/criteres_km1c3.json`,

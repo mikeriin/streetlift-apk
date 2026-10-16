@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: ci-paquets-${{ github.ref }}
+  group: ci-kr1-${{ github.sha }}
   cancel-in-progress: true
 
 env:
