@@ -35,3 +35,5 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 ## 14:17 UTC
 - Run E : P0 → parité Dart OK (kalis_adapt 345 tests dont parité, seule docs PROPRIETAIRE.md (version) en échec → corrigé) ; kalis_bench km 126 OK (égalité stricte saison vivante, fixture ks_test_ppl6). Patches de formatage : 31 lignes adapt, 14 bench (à appliquer depuis ci-out).
 - Campagne en cours.
+
+## 16:07 UTC — run E encore en cours (groupes 5 et 17 partis à 14:09).
