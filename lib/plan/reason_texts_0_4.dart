@@ -8,8 +8,7 @@
 import 'package:kalis_core/kalis_core.dart' as kc;
 
 import 'coach_texts.dart' show phaseLabel, techniqueLabel;
-import 'day_type.dart'
-    show dayPatternsText, dayQualityText, splitTemplateText;
+import 'day_type.dart' show dayPatternsText, dayQualityText, splitTemplateText;
 
 /// Code de raison → modèle de phrase ({paramètre}).
 const kReasonTexts04 = <String, String>{
@@ -85,7 +84,7 @@ const kReasonTexts04 = <String, String>{
   // (`kalis_plan` 0.4) ; textes de `data/reason_texts_fr_0_4.json`, rendus
   // avec les libellés de l'application (gabarit, schémas, qualité, date).
   'plan.split_chosen':
-      'Semaine construite en {templateId} pour tes {sessions} séances.',
+      'Semaine construite en {templateId}, pour tes {sessions} séances.',
   'plan.day_type': 'Séance {patterns} — {quality}.',
   'plan.goal_uncovered':
       "Un de tes objectifs n'a pas de séance qui le travaille cette semaine : je le signale.",
