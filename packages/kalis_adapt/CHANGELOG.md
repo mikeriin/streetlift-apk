@@ -16,7 +16,10 @@ paramètres).
   `2d023854…9016`) à la place de `koach_params_1_0_3.json`.
 - **Référence** (`reference/`) : moteur 1.0.4 ; données de référence régénérées sur `kalis_plan` 0.4.1 et étendues
   aux 34 profils (saisons figées sur 0.3.1 gardées dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/`) ;
-  campagne : vue « réalisée » de la sécurité (séances manquées vidées, rapportée) ; fixtures régénérées.
+  campagne : vues « réalisée » et « réalisée appariée » de la sécurité (séances manquées vidées, rapportées), classement
+  « retour à l'écrit » corrigé après un bloc interrompu ; fixtures régénérées ; `tests/test_kr1_violations.py` :
+  mécanismes des violations restantes du couple sur cent graines (59 poussées, 4 aggravations : conduite sous
+  douleur, non corrigée ici, `pipeline/cp/livraisons/LIVRAISON_KR1.md`).
 - **Tests** : parité sur les 15 fixtures régénérées et les 3 complémentaires (`test/fixtures/km2c2/`, régénérées),
   traces comprises ; `test/koach_elargir_test.dart` (plafond, comportement inchangé sous l'a priori).
 

@@ -65,3 +65,9 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Fixture banc 7 (autres_08 changement a 87) ; pytest 270 OK.
 
 ## 21:23 UTC — docs CRITERES_KR1.md + docs/data/kr1/ ; README référence ; attente du contrôle préalable avant le contrôle final.
+
+## 21:52 UTC
+- Contrôle préalable : paquets verts (1 h 53).
+- Commit local moteurs 597c10b (arbre 11de449e) ; contrôle complet final poussé (ba88acd5, workflow standard).
+- Brouillon de livraison : kr1_dev/LIVRAISON_KR1_brouillon.md.
+- Reste : attendre le contrôle ; rebase/push moteurs ; étiquettes kalis_adapt-v1.0.3, kalis_bench-v0.5.3 ; livraison (pipeline + projet), DECISIONS (section KR1), ETAT (livré — critère dur non tenu), page de suivi, notification.
