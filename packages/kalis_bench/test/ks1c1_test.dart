@@ -96,6 +96,11 @@ void main() {
       SeasonScenario.shoulder,
     );
     final starts = main.run.blockWeeks;
+    // Résidu documenté : tant que le moteur d'évolution ne borne pas ses
+    // propositions « volume » par la rampe du groupe, ces violations
+    // restent ; quand il le fera, ce test est à mettre à jour (plus de
+    // violation attendue).
+    expect(found, isNotEmpty);
     for (final f in found) {
       expect(f.code, 'volume_trop_vite', reason: f.message);
       final week = f.week!;
@@ -105,9 +110,12 @@ void main() {
           blockStart = s;
         }
       }
+      // Propositions « volume » appliquées dans le bloc avant la semaine
+      // en cause, qui ont changé au moins une prescription.
       final applied = main.run.proposals.where(
         (p) =>
             p.kind == ProposalKind.volume &&
+            p.changes > 0 &&
             p.week >= blockStart &&
             p.week < week,
       );
@@ -135,7 +143,9 @@ void main() {
       }
     }
     expect(
-      left.where((l) => !l.startsWith('ks_test_ppl6 douleur_epaule volume_trop_vite')),
+      left.where(
+        (l) => !l.startsWith('ks_test_ppl6 douleur_epaule volume_trop_vite'),
+      ),
       isEmpty,
     );
   }, timeout: const Timeout(Duration(minutes: 10)));

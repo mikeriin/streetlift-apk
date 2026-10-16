@@ -17,6 +17,9 @@ Session Fable 5.1, effort maximal, démarrée le 16/10/2026 à 02:25 UTC (messag
 - `kalis_plan` 0.4.1 (version, CHANGELOG, CONTRAT § 12.9 et § 12.16), `kalis_bench` 0.5.1 (campagne `runSeasonCampaign` sur `profiles` + `profiles_ks`, `seasonProfileDirs`, test `ks1c1_test.dart`, CHANGELOG).
 - Push dev f7f1ab50 : analyse, format (fichiers formatés rendus dans `ci-out/packages/aa_ks1c1/formatted/`), coach_test, ks1c1_test, diag sur les 34 profils.
 
+- Relecture indépendante (Opus) : 0 bloquant, 2 majeurs (M1 note `pain_return` du bloc tronqué → recalculée dans `servedBlockOf` ; M2 test des propositions volume → `changes > 0`, `found` non vide), 9 mineurs (m1 doc chemin 0.1, m2 « API étendue », m3 `createPass1/2` tronquent aussi (`servedPlanRequest`), m4 règle de `startDate` documentée § 12.9, m5 `weeks.length`, m6 cas limites testés, m8 unicité des clés + docs du banc, m9 source des 2 violations `street_12` citée ; m7 laissé). Run dev 7c6a87b4 vert (analyse, format, coach_test 58, ks1c1_test 4, diag 2 violations restantes sur 34 profils).
+- Commit `moteurs` 76605c2b (sur 2d3a5766) poussé en arbre complet sur `claude/ci-cp-b` : **contrôle complet en cours** (~1 h 40 avec la campagne des 34 profils).
+
 ## En cours
 
 - Attente du run de 47778f7c : vérifier la correction 1 (plus de `charge_trop_vite`), lire le diag de `ks_test_ppl6` douleur_epaule (lombaires S18 7,5/7,0 ; fessiers S19 17,0/16,8) pour établir la cause 2 (hypothèses : `restructure` amorcé sans le bloc précédent (`previous: []`), reprise progressive et `_fitReturn`, arrondi des demi-séries des muscles secondaires).

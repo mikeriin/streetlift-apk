@@ -3,14 +3,18 @@
 ## 0.4.1
 
 Lot KS1c1 (« 0 violation sur les saisons des profils ajoutés », `pipeline/cp/prompts/KS1c1.txt`, C17.12). API
-inchangée ; `servedWeeksOf` et `servedBlockRequest` exportées. Contrat § 12.9 et § 12.16.
+étendue (additif) : `servedWeeksOf`, `servedBlockOf`, `servedBlockRequest`, `servedPlanRequest` et `coachReturnStepsOf`
+exportées. Contrat § 12.9 et § 12.16.
 
 - **Bloc suivant après un bloc arrêté avant son terme** : `nextBlock` tronque le bloc précédent aux semaines entières
   servies entre son début et la date du nouveau bloc (au moins une) avant d'amorcer la passe 2 ; les garde-fous
   (hausse de charge à schéma égal, rampe de volume, tests passés) lisent la dernière semaine faite et non les semaines
   écrites puis abandonnées. Cause des 4 hausses de charge de KS1 (échéance avancée, `ks_01` à `ks_03`, +9,0 à +9,3 %
-  au squat et à la traction lestée) et des 2 de `street_12` (changement de discipline, +7,1 % et +9,4 %), toutes au
-  premier bloc réécrit. Chemins street et 0.1.
+  au squat et à la traction lestée) et des 2 de `street_12` (changement de discipline, +7,1 % et +9,4 % ; contrôle
+  complet de KS1, run 38804692527, `saisons/SECURITE.md`, vérité B, graine 0), toutes au premier bloc réécrit. La
+  note `pain_return` du bloc tronqué est recalculée sur ses semaines de charge servies (le bloc suivant repart du
+  palier de reprise atteint). Même troncature dans `createPass1` et `createPass2` (`PlanRequest.previousBlock`,
+  date de la requête) ; sans effet sur le chemin 0.1, dont la passe 2 ne lit pas l'historique.
 
 ## 0.4.0
 

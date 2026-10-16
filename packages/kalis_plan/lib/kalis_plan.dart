@@ -28,7 +28,12 @@ export 'src/coach/athlete.dart'
         coachWristLoadedPrep;
 export 'src/coach/audit.dart';
 export 'src/coach/coach.dart'
-    show CoachEngine, coachMethodFor, isCoachPlan, reconcileSkeleton;
+    show
+        CoachEngine,
+        coachMethodFor,
+        coachReturnStepsOf,
+        isCoachPlan,
+        reconcileSkeleton;
 export 'src/coach/model.dart';
 export 'src/coach/prescribe.dart'
     show
@@ -94,7 +99,9 @@ export 'src/engine.dart'
         ReviewTrace,
         applyProfileDelta,
         blockIdFor,
+        servedBlockOf,
         servedBlockRequest,
+        servedPlanRequest,
         servedWeeksOf;
 export 'src/hash.dart' show SeededRandom, fnv1a32, fnvMix, stableExp, stableLn;
 export 'src/inspect.dart' show PlanInspector, PlanMetrics;

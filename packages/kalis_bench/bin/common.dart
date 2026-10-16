@@ -498,6 +498,9 @@ Future<void> runSeasonCampaign({
     for (final dir in seasonProfileDirs)
       for (final j in readSeasonJson(dir: dir)) j['key']! as String,
   ];
+  if (keys.toSet().length != keys.length) {
+    throw StateError('clé de profil en double entre $seasonProfileDirs');
+  }
   final results = <String, Map<String, Object?>>{};
   var next = 0;
   Future<void> worker() async {

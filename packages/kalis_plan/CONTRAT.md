@@ -1284,10 +1284,16 @@ des semaines du bloc précédent (montée du volume, dates des tests). Le diff d
 exercices remplacés, `plan.season_phase` aux ajouts et retraits ; la proposition porte le plan de
 saison. **Semaines servies (0.4.1, lot KS1c1)** : le bloc précédent est d'abord tronqué aux semaines
 entières écoulées entre son début (`previous.pass1.startDate`) et `startDate` du bloc suivant, au moins
-une, au plus ses semaines (`servedWeeksOf`, `servedBlockRequest`, chemins street et 0.1). Un bloc arrêté
-avant son terme (échéance avancée ou ajoutée, changement de discipline en cours de bloc) n'amorce les
-garde-fous du bloc suivant (hausse de charge d'une semaine à l'autre, rampe de volume, tests passés) que
-par ses semaines faites, jamais par les semaines écrites puis abandonnées.
+une, au plus ses semaines (`servedWeeksOf`, `servedBlockOf`, `servedBlockRequest` ; même règle dans
+`createPass1` et `createPass2` par `servedPlanRequest` ; sans effet sur le chemin 0.1, dont la passe 2 ne
+lit pas l'historique). Un bloc arrêté avant son terme (échéance avancée ou ajoutée, changement de
+discipline en cours de bloc) n'amorce les garde-fous du bloc suivant (hausse de charge d'une semaine à
+l'autre, rampe de volume, tests passés, palier de reprise après une douleur : la note `pain_return` est
+recalculée sur les semaines de charge servies) que par ses semaines faites, jamais par les semaines
+écrites puis abandonnées. Règle de la date : `startDate` est le début du bloc précédent plus un nombre
+entier de semaines (c'est ce que font le simulateur et le banc) ; une date en cours de semaine arrondit par
+défaut (la semaine entamée ne compte pas : prudent pour la charge et le volume, un test entamé n'est pas
+compté) ; une date au plus tard au début du bloc compte une semaine servie (choix prudent).
 
 **Restructuration.** Motifs lus : douleur (zone, intensité → zone à ménager), exercice sauté ou en
 stagnation (écarté), temps réduit (minutes du jour visé, 5 au moins), fatigue ou bilan bas (volume ×
@@ -1803,7 +1809,9 @@ répétitions à charge donnée n'est pas écrit (la ligne à charge fixe progre
 - **Bloc précédent tronqué aux semaines servies** (§ 12.9, « Bloc suivant ») : après une échéance avancée en cours de
   bloc, le bloc de réalisation ouvrait 9 % au-dessus de la dernière semaine servie, dans la continuité d'une semaine
   d'intensification écrite mais jamais faite (`ks_01` à `ks_03`, scénario « échéance avancée » ; `street_12`,
-  changement de discipline). Test `coach_test.dart`, groupe « KS1c1 ».
+  changement de discipline). La note `pain_return` du bloc tronqué est recalculée sur ses semaines de charge servies
+  (relecture indépendante : sans cela, un bloc arrêté pendant une reprise graduée faisait repartir le suivant un ou
+  deux paliers trop haut). Même règle dans `createPass1` et `createPass2`. Test `coach_test.dart`, groupe « KS1c1 ».
 - **Hors de `kalis_plan`** : les hausses de volume par groupe au-delà de la rampe admise observées sur le profil de
   test sous douleur à l'épaule suivent des propositions « volume » (une série de plus) du moteur d'évolution
   (`kalis_adapt`, `_upFits` : plafond hebdomadaire du groupe vérifié, pas la rampe par rapport aux trois semaines
