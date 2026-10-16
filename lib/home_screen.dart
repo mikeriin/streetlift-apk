@@ -857,11 +857,13 @@ class _TodayCard extends StatelessWidget {
         k.title(day.title),
         style: k.titleStyle(KType.titreSeance.copyWith(color: ink)),
       ),
+      // (Ligne de détail, sans écart de plus : la semaine entière reste
+      // visible au-dessus du dock, L5.)
       if (type != null)
         Text(
           type,
           key: ValueKey('today-day-type-${day.j}'),
-          style: KType.corps.copyWith(color: ink),
+          style: KType.detail.copyWith(color: ink),
         ),
       if (recovery) ...[
         const SizedBox(height: KSpacing.s12),
@@ -876,7 +878,7 @@ class _TodayCard extends StatelessWidget {
         ),
       ],
       if (estimate != null) ...[
-        const SizedBox(height: KSpacing.s4),
+        if (type == null) const SizedBox(height: KSpacing.s4),
         // Un chiffre ne se coupe jamais : sa taille baisse s'il le faut.
         KFitTitle(
           estimateLabelText(estimate.durationLabel),
