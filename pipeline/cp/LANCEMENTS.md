@@ -325,3 +325,9 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 ## KR1 — Koach sur `kalis_plan` 0.4.1, campagne du couple (lancé le 16/10/2026 vers 12:00 UTC, tâche « Opus 5.5, effort maximal, moteurs » ; C17.17, C17.18)
 
 - Lot : **KR1**, prompt `prompts/KR1.txt`. Base `moteurs` à la pointe (eae158b8 ou suivant). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KR1`. Seul lot moteur en cours ; KM3 tourne sur `main` (rien dans l'application).
+
+## KS1A — types de jour dans l'application, dev7.1.0 (lancé le 16/10/2026 vers 14:37 UTC, tâche « Opus 5.5, effort élevé, application » ; C17.20)
+
+- Lot : **KS1A**, prompt `prompts/KS1A.txt`. Base : pointe de `main` (dev7.0.0, dc9cbc55). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KS1A`.
+- Paquets : `etiquettes/kalis_core-v0.4.4` (08603867), `etiquettes/kalis_plan-v0.4.1` (eae158b8) ; KR1 tourne sur `moteurs` et peut publier `kalis_plan` 0.4.2 : ne la prends que si sa ligne KR1 est « validé » dans `ETAT_CP.md` au moment de l'intégration.
+- Bascule de Koach fermée (C17.19) : n'y touche pas.
