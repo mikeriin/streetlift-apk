@@ -310,3 +310,12 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Lot : **KM2c2**, prompt `prompts/KM2c2.txt`. Base `moteurs` à la pointe (2d3a5766 ou suivant). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM2c2`.
 - En parallèle sur `moteurs` : KS1c1 (`kalis_plan`, `kalis_bench`, contrôle `claude/ci-cp-b`). Ne touche que `kalis_adapt` (et `kalis_bench` si le banc de parité l'exige) ; rebase avant chaque push.
+
+## KM3 — Koach 1.0 dans l'application, dev7.0.0 (lancé le 16/10/2026 vers 06:45 UTC, tâche « Opus 5.5, effort élevé, application » ; C17.14)
+
+- Lot : **KM3**, prompt `prompts/KM3.txt` (fait foi pour le contenu ; cette section prime pour les versions). Validation par le pilotage (C8.1).
+- **Base** : pointe de `main` (dev6.19.0, 72596f38 : refonte UI, correctifs 6.12-6.17, lot CI final CIF, base d'exercices v1.1 BV11). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KM3`.
+- **Paquet** : intègre la **dernière étiquette publiée de `kalis_adapt`** au moment de l'intégration — `etiquettes/kalis_adapt-v1.0.1` (Koach 1.0.2) aujourd'hui ; si `etiquettes/kalis_adapt-v1.0.2` (Koach 1.0.3, KM2c2 en cours) existe avant ton intégration, prends-la. API identique depuis 1.0.0 ; en 1.0.2, `posterior()` gagne `fiabilite` (facultatif : un texte « tes notes sont fiables / peu fiables » peut s'appuyer dessus, sans nouvel écran).
+- **`kalis_plan` reste 0.3.1** : KS1 (`kalis_plan` 0.4.x, types de jour) n'entre qu'après KS1c1, par un lot court séparé. `kalis_core` reste 0.4.3 (0.4.4 est additif et viendra avec KS1).
+- **Bascule** (prompt § Bascule) : exige la version de Koach validée la plus récente (1.0.3 après KM2c2) et le rejeu du journal réel sur un export neuf du propriétaire (C17.13.3) ; KM3 livre le mécanisme et ses tests, la date reste celle du cahier.
+- En parallèle : KS1c1 et KM2c2 sur `moteurs` ; rien dans `packages/` hors la copie de l'étiquette.
