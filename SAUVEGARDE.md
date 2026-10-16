@@ -31,3 +31,7 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Publication du run B bloquée (assemblage Python sans parts, jusqu'à 120 min) : run C annulé par un run vide D (même groupe) ; run E (38906984200, groupe de concurrence propre `ci-kr1-<sha>`) lancé avec tout le travail. DEV_ASSEMBLER gardé (Python seulement si ≥ 5 400 saisons, timeouts).
 - Au contrôle complet final : remettre ci-paquets.yml de moteurs (groupe ci-paquets-ref : attendra D).
 - Docs : README référence (1.0.4), note dans CRITERES_KM2C2.md.
+
+## 14:17 UTC
+- Run E : P0 → parité Dart OK (kalis_adapt 345 tests dont parité, seule docs PROPRIETAIRE.md (version) en échec → corrigé) ; kalis_bench km 126 OK (égalité stricte saison vivante, fixture ks_test_ppl6). Patches de formatage : 31 lignes adapt, 14 bench (à appliquer depuis ci-out).
+- Campagne en cours.
