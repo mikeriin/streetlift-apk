@@ -369,3 +369,48 @@ void _koachProposerEssai(ko.Koach k, int semaine, List<int> echeances) {
     },
   });
 }
+
+/// Prévision de la première série d'une séance future (C15.4,
+/// INTEGRATION_KM3.md § 7.3) : sur une COPIE du moteur (jamais l'instance
+/// vive : `plan` n'est pas un aperçu), `seance_debut` au jour réel,
+/// `plan(seance)` sur les items écrits, puis `plan(serie)` index 0 pour
+/// chaque emplacement demandé. Rend {slotId : cible}.
+class KoachPrevision {
+  final Json debut;
+  final Json seance;
+  final List<String> slots;
+  const KoachPrevision(this.debut, this.seance, this.slots);
+}
+
+Map<String, Json?> koachPrevoir(ko.Koach k, KoachPrevision p) {
+  k.observe(p.debut);
+  final r = k.plan(p.seance)! as Map;
+  final out = <String, Json?>{};
+  for (final slot in p.slots) {
+    Json? item;
+    for (final it in (r['items'] as List? ?? const [])) {
+      if (it is Map && it['slotId'] == slot) item = it.cast<String, Object?>();
+    }
+    if (item == null) {
+      out[slot] = null;
+      continue;
+    }
+    final c = k.plan({'horizon': 'serie', 'item': item, 'index': 0});
+    out[slot] = c is Map ? c.cast<String, Object?>() : null;
+  }
+  return out;
+}
+
+/// Prévisions sur une copie : dans un isolat (la copie est celle du
+/// passage de message), sinon par rejeu (tests).
+Future<Map<String, Json?>> koachPrevoirCopie(
+  ko.Koach live,
+  KoachFabrique fab,
+  KoachPrevision p,
+) async {
+  if (KoachCalcul.isolat) {
+    return Isolate.run(() => koachPrevoir(live, p));
+  }
+  final copie = fab.rejouer(koachJournalDe(live.journal));
+  return koachPrevoir(copie, p);
+}

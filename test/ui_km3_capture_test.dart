@@ -108,7 +108,10 @@ void main() {
   testWidgets('carte de Koach : en attente de la bascule', (tester) async {
     for (final (dark, p) in variants) {
       await show(tester, page, dark: dark, palette: p);
-      expect(find.byKey(const ValueKey('koach-engine-waiting')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('koach-engine-waiting')),
+        findsOneWidget,
+      );
       await shot(tester, 'km3_attente_${suffix(dark, p)}');
     }
   });
@@ -136,10 +139,15 @@ void main() {
     store.adaptOpen(19, base);
     await tester.runAsync(() => store.koachStart(19, base));
     final a = store.sessionAdapt(19, j)!;
-    final e = store
-        .adaptDay(19, base, a)
-        .exercises
-        .firstWhere((x) => x.engine && x.slotId != null);
+    final served = store.adaptDay(19, base, a).exercises;
+    expect(
+      served.any((x) => x.engine && x.slotId != null),
+      isTrue,
+      reason:
+          'S19·J$j : ${a.koach?['state']} · ${store.koachPending(19, j)} · '
+          '${store.koachOpen(19, j)} · ${[for (final x in served) '${x.engine}/${x.slotId}']}',
+    );
+    final e = served.firstWhere((x) => x.engine && x.slotId != null);
     final st = Map<String, Object?>.of(a.koach!);
     st['cibles'] = {
       e.slotId!: {
@@ -188,14 +196,22 @@ void main() {
     for (final (dark, p) in variants) {
       await show(tester, const KoachRecapScreen(), dark: dark, palette: p);
       await shot(tester, 'km3_recap_${suffix(dark, p)}');
-      await show(tester, const KoachInspectorScreen(), dark: dark, palette: p,
-          height: 3000);
+      await show(
+        tester,
+        const KoachInspectorScreen(),
+        dark: dark,
+        palette: p,
+        height: 3000,
+      );
       await shot(tester, 'km3_inspecteur_${suffix(dark, p)}');
     }
     store.koachStop();
     for (final (dark, p) in variants) {
       await show(tester, page, dark: dark, palette: p);
-      expect(find.byKey(const ValueKey('koach-engine-stopped')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('koach-engine-stopped')),
+        findsOneWidget,
+      );
       await shot(tester, 'km3_arret_${suffix(dark, p)}');
     }
   });

@@ -306,6 +306,17 @@ void main() {
         );
         expect(((last['seance'] as Map)['sets'] as List), isNotEmpty);
         expect(app.sessionAdapt(15, j)!.koach?['state'], 'closed');
+      // Prévision de la prochaine fois (C15.4) : copie du moteur.
+      for (var i = 0;
+          i < 200 && app.sessionAdapt(15, j)!.koach?['prevision'] == null;
+          i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 50));
+      }
+      expect(app.sessionAdapt(15, j)!.koach?['prevision'], isA<Map>());
+      final sum = app.adaptSummary(15, base)!;
+      expect(sum.exercises.any((e) => e.next != null), isTrue);
+      // ignore: avoid_print
+      print('KM3|prevision|${jsonEncode(app.sessionAdapt(15, j)!.koach?['prevision'])}');
         // ignore: avoid_print
         print('KM3|seance|temps=${app.koachTemps.toJson()}');
       },

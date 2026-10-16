@@ -234,8 +234,9 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
             ? 0
             : (today.dayNumber - e.snap!.lundiDate.dayNumber) ~/ 7;
         final mod = pl.plan[g];
-        if (mod != null)
+        if (mod != null) {
           plan.add('Modulation de la semaine : ${jsonEncode(mod)}');
+        }
         plan.add('Prévisions : ${pl.previsions.length}');
       }
       final sv = live?.surveillance;
