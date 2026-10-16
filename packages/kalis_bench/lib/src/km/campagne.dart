@@ -1053,8 +1053,21 @@ Map<String, Object?> kmConstatsDusAuxManquees(
   final position = <int, (int, Object?)>{};
   var g = 0;
   final blocsSaison = kc.jl(saison['blocks']);
+  // Lot KR1 : semaines servies de chaque bloc (bloc interrompu tronqué par
+  // `blockWeeks`, comme le validateur et `securite_banc.blocs_servis`).
+  final bw = saison['blockWeeks'] == null
+      ? null
+      : <int>[for (final x in kc.jl(saison['blockWeeks'])) kc.ent(x)];
   for (var bi = 0; bi < blocsSaison.length; bi++) {
-    for (final w in kc.jl(kc.jm(kc.jm(blocsSaison[bi])['pass2'])['weeks'])) {
+    final semaines = kc.jl(kc.jm(kc.jm(blocsSaison[bi])['pass2'])['weeks']);
+    var n = semaines.length;
+    if (bw != null && bw.isNotEmpty && bi + 1 < bw.length) {
+      final servi = bw[bi + 1] - bw[bi];
+      if (servi >= 1 && servi < n) {
+        n = servi;
+      }
+    }
+    for (final w in semaines.take(n)) {
       position[g] = (bi, kc.jm(w)['weekIndex']);
       g += 1;
     }

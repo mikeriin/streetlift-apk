@@ -116,3 +116,26 @@ def test_vider_manquees_et_vues_realisees():
     for vue in ('realise', 'realise_apparie'):
         assert set(s[vue]) == {'deja_initial', 'aggrave', 'introduit'}
         assert isinstance(s[vue + '_exemples'], list)
+
+
+def test_retour_a_l_ecrit_apres_un_bloc_interrompu():
+    """Lot KR1 (cause des 9 constats « introduits » du critère 7 sur les
+    90 600 saisons du couple) : après un bloc interrompu par une
+    re-planification (changement de discipline), l'indice de semaine de la
+    saison doit pointer sur la semaine SERVIE ; la hausse de volume des
+    ischios de la semaine 11 (4 séries pour 3,5 admises, séance manquée de la
+    même semaine comptée à son volume écrit) est un « retour à l'écrit »,
+    pas un constat introduit par Koach. Avant : classée « introduit »."""
+    from banc import donnees, meneur
+    from banc import criteres_moteur as cm
+    opts = ca.options_de([])
+    ca.appliquer_parametres(opts)
+    saison = cm._saison('autres_08_crossfit_intermediaire', 'changement_discipline', None)
+    assert saison['blockWeeks'][:3] == [0, 5, 8]
+    infos = donnees.catalogue_infos()
+    pol = ca.politique(opts, 87)
+    tour = meneur.simuler(saison, infos, pol, 'a', 87)
+    s = ca.securite_saison(saison, infos, tour, pol)
+    assert s['servi_tests_faits']['introduit'] == {} and s['servi_tests_faits']['aggrave'] == {}
+    assert s['servi_tests_faits']['retour_ecrit'] == {'volume_trop_vite': 1}
+    assert s['realise_apparie']['introduit'] == {} and s['realise_apparie']['aggrave'] == {}

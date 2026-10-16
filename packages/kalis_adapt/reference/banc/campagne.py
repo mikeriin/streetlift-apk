@@ -466,7 +466,13 @@ def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s):
     semaines = sorted({c.get('week') for c in serv if c.get('week') is not None})
     position = {}
     g = 0
-    for bi, b in enumerate(saison['blocks']):
+    # Lot KR1 : semaines SERVIES de chaque bloc (un bloc interrompu par une
+    # re-planification — échéance avancée, changement de discipline — est
+    # tronqué par `blockWeeks`, comme le validateur) ; sans cela, l'indice de
+    # semaine de la saison pointait sur une semaine écrite non servie après
+    # le premier bloc interrompu, et un « retour à l'écrit » restait classé
+    # « introduit » (9 constats sur 90 600 saisons, mesuré au lot KR1).
+    for bi, b in enumerate(sb.blocs_servis(saison['blocks'], saison.get('blockWeeks'))):
         for w in b['pass2']['weeks']:
             position[g] = (bi, w['weekIndex'])
             g += 1
