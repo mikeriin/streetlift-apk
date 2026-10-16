@@ -1158,9 +1158,18 @@ Map<String, Object?> kmSecuriteSaison(
     tour,
     kmBlocsServisPrescrits(saison, tour, testsFaits: true),
   );
-  final (clR, exR) = kmClasserConstats(initial, constats(blocsR));
+  final reel = constats(blocsR);
+  final (clR, exR) = kmClasserConstats(initial, reel);
   out['realise'] = clR;
   out['realise_exemples'] = exR;
+  // Contrefactuel apparié (relecture KR1, M2) : le plan écrit de
+  // `kalis_plan` seul avec les mêmes séances manquées vidées ; ce qui reste
+  // « introduit » ou « aggravé » vient de ce que Koach a servi, pas de la
+  // règle de rampe appliquée à une semaine incomplète.
+  final cf = constats(kmViderManquees(saison, tour, kc.jl(saison['blocks'])));
+  final (clA, exA) = kmClasserConstats(cf, reel);
+  out['realise_apparie'] = clA;
+  out['realise_apparie_exemples'] = exA;
   return out;
 }
 

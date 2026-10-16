@@ -501,3 +501,38 @@ def test_import_rejoue_depuis_le_journal():
     assert k.journal[-1]['type'] == 'parametres'
     k2 = rejouer(params(), k.fiches, k.profil, json.loads(json.dumps(k.journal)))
     assert k2.params['mesure']['bruit_test'] == k.params['mesure']['bruit_test']
+
+
+def test_elargir_sur_un_a_posteriori_reel():
+    """1.0.4 (relecture KR1, M1) : sur un a posteriori réel (six semaines
+    simulées, covariances croisées entre qualités et écarts), une réponse
+    « rien de spécial » ne rend aucune composante plus incertaine que
+    max(v ; v0), garde P symétrique semi-définie positive et toute capacité
+    finie ; le facteur sur la variance d'une capacité n'est plus exactement
+    le facteur (élargissement par composante) : il reste ≥ 0,95 (mesuré :
+    0,987 au plus bas sur les saisons de quarante semaines) et il est publié
+    dans CHANGEMENTS_1_0_4.md § A."""
+    import numpy as np
+    from banc import campagne as ca, donnees, meneur
+    from banc import criteres_moteur as cm
+    opts = dict(ca.options_de([]), sans_planificateur=False, trajectoires=40)
+    ca.appliquer_parametres(opts)
+    saison = cm._saison('street_07_avance_streetlifting_competition', 'reference', 6)
+    pol = ca.politique(opts, 0)
+    meneur.simuler(saison, donnees.catalogue_infos(), pol, 'a', 0)
+    m = pol.koach.modele
+    avant = {e: m.capacite(e)[1] ** 2 for e in m.ordre}
+    diag = {i: float(m.P[i, i]) for i, _ in m.variances_a_priori()}
+    v0 = dict(m.variances_a_priori())
+    m.elargir(params()['rupture']['elargissement_rien_de_special'])
+    for i, v in diag.items():
+        assert float(m.P[i, i]) <= max(v, v0[i]) * (1 + 1e-12)
+    n = m.n
+    assert float(abs(m.P[:n, :n] - m.P[:n, :n].T).max()) == 0.0
+    assert float(np.linalg.eigvalsh(m.P[:n, :n]).min()) > -1e-12
+    rapports = []
+    for e in m.ordre:
+        mu, sd = m.capacite(e)
+        assert math.isfinite(mu) and math.isfinite(sd)
+        rapports.append(sd ** 2 / avant[e])
+    assert len(rapports) > 5 and min(rapports) >= 0.95

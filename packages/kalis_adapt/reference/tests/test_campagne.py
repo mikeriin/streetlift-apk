@@ -75,3 +75,44 @@ def test_campagne_rapide_structure_et_determinisme(tmp_path):
     # Reprise : une saison = un fichier dans le dossier de travail.
     dossier = next((tmp_path / 'w1').rglob('config.json')).parent
     assert sum(1 for f in os.listdir(str(dossier)) if f.startswith(PROFIL)) == 2
+
+
+def test_vider_manquees_et_vues_realisees():
+    """Lot KR1 : `vider_manquees` vide les seules séances non servies, sans
+    toucher les blocs d'entrée ; `securite_saison` publie la saison réalisée
+    classée contre le plan initial (`realise`) et contre le plan écrit aux
+    mêmes séances manquées (`realise_apparie`)."""
+    from banc import donnees, meneur
+    from banc import criteres_moteur as cm
+    saison = cm._saison(PROFIL, 'reference', 6)
+    sessions = saison['sessions']
+    faites = sessions[::2]
+    items = [{'slotId': 'x', 'exerciseId': 'y', 'sets': 1}]
+
+    class Tour(object):
+        servi = [(g, bi, wb, di, items) for (g, bi, wb, di, _) in faites]
+
+    blocs = saison['blocks']
+    avant = json.dumps(blocs, sort_keys=True)
+    vide = ca.vider_manquees(saison, Tour(), blocs)
+    assert json.dumps(blocs, sort_keys=True) == avant
+    faits = set((g, bi, wb, di) for (g, bi, wb, di, _) in faites)
+    for (g, bi, wb, di, _) in sessions:
+        for w in vide[bi]['pass2']['weeks']:
+            if w['weekIndex'] == wb:
+                for d in w['days']:
+                    if d['dayIndex'] == di:
+                        ecrit = [x for x in blocs[bi]['pass2']['weeks'] if x['weekIndex'] == wb][0]
+                        ecrit = [x for x in ecrit['days'] if x['dayIndex'] == di][0]
+                        attendu = ecrit['items'] if (g, bi, wb, di) in faits else []
+                        assert d['items'] == attendu
+    # Vues de la saison réalisée sur une vraie saison courte.
+    opts = {'sans_planificateur': False, 'trajectoires': 40, 'defaut_modele': None}
+    ca.appliquer_parametres(dict(ca.options_de([]), **opts))
+    infos = donnees.catalogue_infos()
+    pol = ca.politique(dict(ca.options_de([]), **opts), 0)
+    tour = meneur.simuler(saison, infos, pol, 'a', 0)
+    s = ca.securite_saison(saison, infos, tour, pol)
+    for vue in ('realise', 'realise_apparie'):
+        assert set(s[vue]) == {'deja_initial', 'aggrave', 'introduit'}
+        assert isinstance(s[vue + '_exemples'], list)

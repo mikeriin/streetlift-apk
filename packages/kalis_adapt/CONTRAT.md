@@ -61,8 +61,9 @@ chaque replanification).
 des critères calculables du banc (`kalis_bench` `safetyFindings`) ; un plan modulé n'est retenu que s'il n'ajoute
 aucun constat à ceux de la référence (`_sur`, référence § 3.7.1).
 
-**K.5 Paramètres.** Le fichier de paramètres est un asset versionné (`assets/koach/koach_params_1_0_3.json`,
-version `1.0.3-ref.1`, 338 clés, SHA-256 `koachParametresSha256` ; 1.0.1 : `koach_params_1_0_2.json`, 322 clés ;
+**K.5 Paramètres.** Le fichier de paramètres est un asset versionné (`assets/koach/koach_params_1_0_4.json`,
+version `1.0.4-ref.1`, 338 clés, SHA-256 `koachParametresSha256` ; 1.0.2 : `koach_params_1_0_3.json`, mêmes valeurs ;
+1.0.1 : `koach_params_1_0_2.json`, 322 clés ;
 1.0.0 : `koach_params_1_0_1.json`, 317 clés) avec les fiches d'exercices
 (`assets/koach/vecteurs_qualites_v1.json`) ; `lireParametresKoach` et `lireFichesKoach` les décodent et les
 contrôlent. Un import ultérieur passe par `importerParametres` (événement `parametres`, référence § 7.3).

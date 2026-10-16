@@ -32,9 +32,12 @@ def _egal(a, b, chemin, ecarts):
         return
     if isinstance(a, (int, float)) and isinstance(b, (int, float)):
         if isinstance(a, float) or isinstance(b, float):
-            if math.isnan(a) and math.isnan(b):
+            fa, fb = float(a), float(b)
+            if math.isnan(fa) or math.isnan(fb) or math.isinf(fa) or math.isinf(fb):
+                if not (fa == fb or (math.isnan(fa) and math.isnan(fb))):
+                    ecarts.append((chemin, a, b))
                 return
-            if abs(a - b) > TOL * max(1.0, abs(a), abs(b)):
+            if abs(fa - fb) > TOL * max(1.0, abs(fa), abs(fb)):
                 ecarts.append((chemin, a, b))
         elif a != b:
             ecarts.append((chemin, a, b))
@@ -67,11 +70,17 @@ def main(argv):
     ap.add_argument('parts', nargs='+')
     a = ap.parse_args(argv)
     py = {}
-    for f in glob.glob(os.path.join(a.python, '**', '*__*__*__*.json'), recursive=True):
+    doublons = []
+    for f in sorted(glob.glob(os.path.join(a.python, '**', '*__*__*__*.json'), recursive=True)):
         n = os.path.basename(f)[:-5]
         if n.startswith('mauvais_jour'):
             continue
+        if n in py:
+            doublons.append(n)
         py[n] = f
+    if doublons:
+        raise SystemExit('saisons Python en double (plusieurs dossiers de travail) : %s' % doublons[:5])
+    vues_dart = set()
     comparees = egales = 0
     absentes = []
     ecarts_saisons = []
@@ -79,6 +88,7 @@ def main(argv):
         with gzip.open(p, 'rt', encoding='utf-8') as fh:
             d = json.load(fh)
         for nom, r in d['saisons'].items():
+            vues_dart.add(nom)
             if nom not in py:
                 absentes.append(nom)
                 continue
@@ -94,7 +104,8 @@ def main(argv):
     out = {'schema': 'kalis_bench/kr1_parite_saisons/1', 'tolerance': TOL, 'python': len(py),
            'comparees': comparees, 'egales': egales, 'absentes_python': len(absentes),
            'absentes_exemples': absentes[:10], 'ecarts': len(ecarts_saisons),
-           'ecarts_exemples': ecarts_saisons[:20]}
+           'ecarts_exemples': ecarts_saisons[:20],
+           'python_absentes_dart': sorted(set(py) - vues_dart)[:20]}
     with open(a.sortie, 'w', encoding='utf-8') as fh:
         json.dump(out, fh, ensure_ascii=False, indent=1)
         fh.write('\n')

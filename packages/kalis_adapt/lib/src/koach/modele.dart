@@ -2153,9 +2153,7 @@ class Modele {
     final fac = <(int, double)>[];
     for (final (i, v0) in variancesAPriori()) {
       final v = pm[i * c + i];
-      final ri = !(v > 0)
-          ? r
-          : math.min(r, math.max(1.0, math.sqrt(v0 / v)));
+      final ri = !(v > 0) ? r : math.min(r, math.max(1.0, math.sqrt(v0 / v)));
       fac.add((i, ri));
     }
     for (final (i, ri) in fac) {

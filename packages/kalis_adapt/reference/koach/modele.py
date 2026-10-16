@@ -1569,7 +1569,7 @@ class Modele(object):
         bien plus que √facteur (mesuré : × 7 au lieu de × 2).
 
         1.0.4 (lot KR1) : l'élargissement ne rend jamais une composante plus
-        incertaine que son a priori de population (`variance_a_priori`) :
+        incertaine que son a priori de population (`variances_a_priori`) :
         variance nouvelle = min(facteur · v ; max(v ; v0)). Sans ce plafond,
         des réponses « rien de spécial » répétées (saison de quarante
         semaines aux séances manquées) multipliaient la variance par

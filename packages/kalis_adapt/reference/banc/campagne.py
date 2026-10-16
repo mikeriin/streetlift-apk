@@ -409,6 +409,14 @@ def securite_saison(saison, infos, tour, pol):
     cl, ex = classer_constats(initial, real)
     out['realise'] = cl
     out['realise_exemples'] = ex
+    # Contrefactuel apparié (relecture KR1, M2) : le plan écrit de
+    # `kalis_plan` seul avec les MÊMES séances manquées vidées ; ce qui reste
+    # « introduit » ou « aggravé » vient de ce que Koach a servi, pas de la
+    # règle de rampe appliquée à une semaine incomplète.
+    cf = sb.constats_saison(saison, infos, blocs=vider_manquees(saison, tour, saison['blocks']))
+    cl, ex = classer_constats(cf, real)
+    out['realise_apparie'] = cl
+    out['realise_apparie_exemples'] = ex
     return out
 
 

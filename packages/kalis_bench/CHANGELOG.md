@@ -12,9 +12,13 @@ grilles inchangés.
   `temoin/`) : la saison vivante (`kmReferenceSeason`) leur est identique ; `test/km2_banc_test.dart` le vérifie à
   l'égalité stricte (avant : squelette et calendrier seulement) ; fixture `ks_test_ppl6`, séances manquées
   (`test/fixtures/km2/`). `--saisons-figees` relit les saisons figées sur 0.3.1 (`reference_0_3_1/`).
-- **Sécurité de la saison réalisée** (`kmSecuriteSaison`, `kmViderManquees`) : vue `realise` (séances faites
+- **Sécurité de la saison réalisée** (`kmSecuriteSaison`, `kmViderManquees`) : vues `realise` (séances faites
   telles que servies, tests comptés pour leurs tentatives faites, séances manquées vidées ; constats classés contre
-  le plan initial, sans reclassement « retour à l'écrit »), rapportée à côté du critère 7 (inchangé).
+  le plan initial) et `realise_apparie` (même saison classée contre le plan écrit aux mêmes séances manquées
+  vidées : ce que Koach a servi au-delà du plan). Publiées par saison dans les parts de campagne et lues par
+  `tool/kr1_securite.py` ; le critère 7 (`kmCritereSecurite`) est inchangé et ne les agrège pas. Parité Python
+  (`campagne.securite_saison`) vérifiée par `test/km2_banc_test.dart` sur les six saisons du banc (clé `securite`
+  des fixtures).
 - **Outils** : `tool/kr1_securite.py` (violations par type, profil, scénario et modèle de vérité sur les parts de
   campagne, cent graines ; extraction saison par saison pour le critère 5) ; `tool/kr1_comparer.py` (parité saison
   par saison Dart / Python d'une campagne).

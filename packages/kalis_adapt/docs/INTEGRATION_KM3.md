@@ -678,8 +678,9 @@ Koach n'en a pas (contrat § 10.2) : c'est un état de l'application, hors du jo
 
 ## 9. Liste de contrôle KM3
 
-- [ ] `packages/kalis_adapt` = `etiquettes/kalis_adapt-v1.0.3` (dernière étiquette validée de Koach) à l'octet ; `kalis_bench` absent ; `kalis_core`
-      0.4.3, `kalis_plan` 0.3.1 inchangés.
+- [ ] `packages/kalis_adapt` = la dernière étiquette **validée** de `kalis_adapt` (1.0.3 si le lot KR1 est validé, sinon 1.0.2) à l'octet ;
+      `kalis_bench` absent ; `kalis_core` 0.4.3, `kalis_plan` 0.3.1 inchangés (`kalis_plan` 0.4.1 entre par le lot court
+      de KS1 ; le couple `kalis_plan` 0.4.1 × Koach est celui que mesure KR1).
 - [ ] Assets `assets/koach/koach_params_1_0_4.json` et `vecteurs_qualites_v1.json` copiés, déclarés, SHA-256
       vérifiés par un test ; lus par `lireParametresKoach` / `lireFichesKoach`.
 - [ ] Construction : `Koach` + `Planification` (validateur `validateurSecurite` + `ProfilValidation.depuisProfil`),

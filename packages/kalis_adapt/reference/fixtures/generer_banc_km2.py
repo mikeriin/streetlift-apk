@@ -36,7 +36,8 @@ Python, non-finis codés "inf", "-inf", "nan") :
 * `journaux` : journaux des extensions du banc (`extensions_koach.journaux`,
   par nom de classe Python) ;
 * `etats` : `extensions_koach.etats` (Surveillance : `etat_complet`,
-  ControleDual, Adherence : `etat`) et `Planification` (`etat`).
+  ControleDual, Adherence : `etat`) et `Planification` (`etat`) ;
+* `securite` (lot KR1) : `campagne.securite_saison` de la saison simulée.
 """
 import argparse
 import gzip
@@ -157,6 +158,10 @@ def fixture(cle, scenario, verite, graine, trajectoires=TRAJECTOIRES, semaines=S
         'posterior': pol.koach.posterior(),
         'journaux': journaux,
         'etats': etats,
+        # Lot KR1 : sécurité de la saison (`campagne.securite_saison` : plan
+        # initial, plan modulé, vues servies, réalisée et réalisée appariée),
+        # comparée à `kmSecuriteSaison` par le test du banc.
+        'securite': campagne.securite_saison(saison, infos, tour, pol),
     })
 
 

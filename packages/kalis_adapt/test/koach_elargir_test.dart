@@ -46,9 +46,8 @@ Koach _koach() => Koach(copieJson(_params), _fiches, <String, Object?>{
   return (m, t.idx);
 }
 
-double _v0(Modele m, int i) => {
-  for (final (j, v) in m.variancesAPriori()) j: v,
-}[i]!;
+double _v0(Modele m, int i) =>
+    {for (final (j, v) in m.variancesAPriori()) j: v}[i]!;
 
 void main() {
   test('sous l\'a priori : variance multipliée par le facteur', () {

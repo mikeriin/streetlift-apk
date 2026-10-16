@@ -15,8 +15,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:kalis_bench/src/km/campagne.dart' show kmSecuriteSaison;
 import 'package:kalis_bench/src/km/criteres_moteur.dart'
-    show KmBanc, kmNormaliserJson;
+    show KmBanc, KmConstatsSaison, kmNormaliserJson;
 import 'package:kalis_bench/src/km/km_export.dart';
 import 'package:kalis_bench/src/km/meneur.dart';
 import 'package:kalis_bench/src/km/politique_koach.dart';
@@ -218,7 +219,8 @@ Map<String, Object?> _saisonPython(String cle, String scenario) {
 }
 
 /// Profil du banc ou ajouté par le lot KS1 (`profiles_ks`).
-Map<String, Object?> _profil(String cle) => File('profiles/$cle.json').existsSync()
+Map<String, Object?> _profil(String cle) =>
+    File('profiles/$cle.json').existsSync()
     ? readJsonObject('profiles/$cle.json')
     : readJsonObject('profiles_ks/$cle.json');
 
@@ -446,6 +448,24 @@ void main() {
 
       test('états des extensions', () {
         _pareil(kmEcarts(attendu['etats'], obtenu['etats']), 'etats');
+      });
+
+      // Lot KR1 : vues de sécurité de la saison (plan initial, plan modulé,
+      // servies, réalisée, réalisée appariée) = `campagne.securite_saison`.
+      test('sécurité de la saison (kmSecuriteSaison)', () {
+        final cs = KmConstatsSaison(
+          catalog,
+          _profil(config['cle']! as String),
+          saison,
+        );
+        final sec = kmSecuriteSaison(
+          saison,
+          cs.constats,
+          tour,
+          blocsModules: politique.planification?.blocsModules(),
+        );
+        expect(attendu['securite'], isNotNull);
+        _pareil(kmEcarts(attendu['securite'], _pur(sec)), 'securite');
       });
     }, timeout: const Timeout(Duration(minutes: 10)));
   }

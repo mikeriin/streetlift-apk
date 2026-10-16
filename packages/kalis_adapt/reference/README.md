@@ -12,7 +12,7 @@ Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal r�
 | --- | --- |
 | `CONTRAT_1_0.md` | Contrat gelé 1.0, modifié pour 1.0.1 et 1.0.2 par des notes datées (10/10 et 11/10/2026) : API `observe` / `posterior` / `plan` / `explain`, schéma du journal, modèles, règles de sécurité, paramètres, portage, écarts connus (annexe A). |
 | `SOURCES.md` | Origine de chaque paramètre de `params/koach_params_v1.json` (une ligne par clé). |
-| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.3-ref.1`, 338 clés), lu tel quel par les tests Dart de `kalis_adapt` 1.0.2 (asset `assets/koach/koach_params_1_0_3.json`, copie à l'octet près). |
+| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.4-ref.1`, 338 clés), lu tel quel par les tests Dart de `kalis_adapt` 1.0.3 (asset `assets/koach/koach_params_1_0_4.json`, copie à l'octet près). |
 | `qualites/` | Vecteurs de qualités des 1 039 exercices (`regles.py` → `vecteurs_qualites_v1.json`). |
 | `koach/` | Le moteur : `modele.py` (estimation), `seance.py` et `securite.py` (séance, garde-fous), `planification.py`, `rupture.py`, `adherence.py`, `dual.py`, `moteur.py` (façade), `numerique.py`. |
 | `banc/` | Port Python des modèles de vérité et des critères de sécurité de `kalis_bench`, meneur de saison, banc adversarial, campagne de mesure des critères. |
