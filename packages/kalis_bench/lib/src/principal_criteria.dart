@@ -36,16 +36,20 @@ Set<String> principalSchemasOf(DayType type) {
 }
 
 /// Écarts d'un jour typé [day] à la règle « aucun jour sans son principal »
-/// (liste vide si le jour la tient) :
+/// (liste vide si le jour la tient). Exercice porteur : un emplacement
+/// principal, secondaire ou de figure (le contrat ne porte pas la méthode ;
+/// la préparation, l'assistance, le tronc et la mobilité ne portent pas un
+/// schéma). Écarts :
 ///
-/// - `principal` : aucun emplacement principal (`SlotRole.main`) dont
-///   l'exercice est d'un schéma du type ;
 /// - `schéma <s>` : un schéma écrit au type (tirage, poussée ou jambes, hors
-///   `full`) sans aucun exercice porteur (principal ou secondaire) ;
+///   `full`) sans aucun exercice porteur — le constat de KS1A ;
 /// - `corps entier` : un jour `full` dont moins de deux des trois schémas
 ///   ont un exercice porteur ;
 /// - `figure` : un jour de figures seules sans emplacement de figure ni
-///   principal.
+///   principal ;
+/// - `principal` : aucun emplacement principal ni de figure d'un schéma du
+///   type (les chemins d'avant 0.4.0, figés par le critère d'identité,
+///   écrivent des jours de volume en secondaires : lot KS1, 51 séances).
 ///
 /// Jours sans attente : type absent (bloc écrit avant 0.4.4), course,
 /// récupération, conditionnement (le travail principal y est la pièce, pas
@@ -77,10 +81,12 @@ List<String> principalGapsOfDay(Catalog catalog, PlanDay day) {
     if (schema == null || !schemas.contains(schema)) {
       continue;
     }
-    if (s.role == SlotRole.main) {
+    if (s.role == SlotRole.main || s.role == SlotRole.skill) {
       main = true;
     }
-    if (s.role == SlotRole.main || s.role == SlotRole.secondary) {
+    if (s.role == SlotRole.main ||
+        s.role == SlotRole.secondary ||
+        s.role == SlotRole.skill) {
       carried.add(schema);
     }
   }
@@ -105,6 +111,10 @@ List<String> principalGapsOfDay(Catalog catalog, PlanDay day) {
   }
   return out;
 }
+
+/// Vrai pour un écart de schéma (`schéma …`, `corps entier`, `figure`) :
+/// le jour ne porte pas ce que son type annonce.
+bool principalSchemaGap(String gap) => gap != 'principal';
 
 /// Écarts d'une passe 1 : `jour : écart` pour chaque jour typé en défaut.
 List<String> principalGapsOf(Catalog catalog, Pass1Plan plan) => <String>[
@@ -260,3 +270,78 @@ List<BenchProfile> principalGrid(List<Map<String, Object?>> bases) =>
             for (final l in GridLevel.values)
               BenchProfile.fromJson(gridVariantJson(base, m, h, l)),
     ];
+
+/// Mesure du critère KS1c2 sur un ensemble de programmes.
+final class PrincipalMeasure {
+  /// Mesure vide.
+  PrincipalMeasure(this.label);
+
+  /// Ensemble mesuré (« 34 profils », « grille »).
+  final String label;
+
+  /// Profils mesurés.
+  int profiles = 0;
+
+  /// Jours typés mesurés (tous les blocs).
+  int days = 0;
+
+  /// Jours dont le type annonce un schéma qu'aucun exercice ne porte :
+  /// `profil bloc/jour : écarts`.
+  final List<String> schemaGaps = <String>[];
+
+  /// Jours d'un gabarit typé (0.4.0 et suivants) sans emplacement
+  /// principal ni de figure d'un de ses schémas.
+  final List<String> typedNoMain = <String>[];
+
+  /// Jours d'un gabarit d'avant 0.4.0 (figé par le critère d'identité) sans
+  /// emplacement principal, leurs schémas portés par des secondaires.
+  final List<String> legacyNoMain = <String>[];
+
+  /// Violations de sécurité des programmes créés (critères calculables du
+  /// banc) : `profil : codes`.
+  final List<String> safety = <String>[];
+
+  /// Ajoute le programme du profil [key] (blocs [plans]) et ses violations
+  /// de sécurité [safetyCodes].
+  void add(
+    Catalog catalog,
+    String key,
+    List<Pass1Plan> plans, {
+    List<String> safetyCodes = const <String>[],
+  }) {
+    profiles++;
+    if (safetyCodes.isNotEmpty) {
+      safety.add('`$key` : ${safetyCodes.join(', ')}');
+    }
+    for (var b = 0; b < plans.length; b++) {
+      final plan = plans[b];
+      final legacy = structureLegacyTemplates.contains(plan.split?.templateId);
+      for (final d in plan.days) {
+        if (d.type == null) {
+          continue;
+        }
+        days++;
+        final gaps = principalGapsOfDay(catalog, d);
+        final schema = gaps.where(principalSchemaGap).toList();
+        final where = '`$key` $b/${d.dayIndex}';
+        if (schema.isNotEmpty) {
+          schemaGaps.add('$where : ${schema.join(', ')}');
+        }
+        if (gaps.contains('principal')) {
+          (legacy ? legacyNoMain : typedNoMain).add(where);
+        }
+      }
+    }
+  }
+
+  /// Objet JSON.
+  Map<String, Object?> toJson() => <String, Object?>{
+    'label': label,
+    'profiles': profiles,
+    'days': days,
+    'schemaGaps': schemaGaps,
+    'typedNoMain': typedNoMain,
+    'legacyNoMain': legacyNoMain.length,
+    'safety': safety,
+  };
+}

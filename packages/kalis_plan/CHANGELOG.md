@@ -1,5 +1,21 @@
 # Journal des versions de kalis_plan
 
+## 0.4.2
+
+Lot KS1c2 (« aucun jour sans son principal », `pipeline/cp/prompts/KS1c2.txt`, C17.21, C17.22). API inchangée ;
+contrat § 12.17 ; `docs/STRUCTURE_SEMAINE.md` § 5.
+
+- **Principal garanti** (`coach/structure.dart`, `_ensurePrincipal`) : chaque jour d'un gabarit typé porte un
+  emplacement principal d'un de ses schémas et chacun de ses schémas (deux des trois pour un corps entier). Cause du
+  constat de KS1A : les briques d'endurance (`pushEndurance`, `pullEndurance`) et le repli de force n'ajoutaient
+  rien sans repère (`dipMax`, `pushMax`, `pullMax` à 0) ; au banc, 489 jours en défaut sur la grille de 576 profils
+  incomplets avant, 0 après ; les 34 profils du banc gardent leur squelette de 0.4.1 à l'identique.
+- **Repli sans repère** : traction, dips ou pompes au poids du corps (unilatéral pour les jambes), plage à réserve
+  visée de la passe 2, trois séries en mode prudent et chez le débutant, note `reps_calibrate` (première série de
+  mesure) en semaine 1 du premier bloc ; sinon un porteur secondaire devient principal.
+- **Changement de type dit** : si aucun exercice du schéma n'est possible, type déduit des emplacements et raison
+  `plan.joint_limitation` ou `plan.equipment_missing` après son `plan.day_type`.
+
 ## 0.4.1
 
 Lot KS1c1 (« 0 violation sur les saisons des profils ajoutés », `pipeline/cp/prompts/KS1c1.txt`, C17.12). API

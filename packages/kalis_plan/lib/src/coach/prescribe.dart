@@ -307,6 +307,11 @@ abstract final class CoachNotes {
   /// (lot KS1 ; `value` : charge en kg).
   static const String fixedLoad = 'fixed_load';
 
+  /// Mouvement sans repère porté comme principal d'un jour typé (lot
+  /// KS1c2) : une première série de mesure à la réserve écrite en semaine
+  /// 1 du premier bloc (`value` : réserve).
+  static const String repsCalibrate = 'reps_calibrate';
+
   /// Série d'entrée de reprise, écrite sur la ligne (`value` : réserve).
   static const String entrySet = 'entry_set';
 
@@ -436,6 +441,7 @@ abstract final class CoachNotes {
     smallLoad,
     minimumLoad,
     fixedLoad,
+    repsCalibrate,
     pushLadder,
     dressRehearsal,
     primer,
@@ -2743,6 +2749,9 @@ final class Prescriber {
       if (s.note == 'pull_return') {
         x.reasons.add(_note(CoachNotes.pullReturn, 2.5));
       }
+      if (s.note == 'reps_calibrate' && blockIndex == 0 && week == 0) {
+        x.reasons.add(_note(CoachNotes.repsCalibrate, x.rir ?? 3));
+      }
       return x;
     }
     // R4-G4 : volume sous-maximal à 50 à 70 % du maximum, 3 répétitions en
@@ -3104,6 +3113,12 @@ final class Prescriber {
       ..repsHigh = high + _shift(ws)
       ..rir = _rirOf(e, 2, ws, week)
       ..reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
+    if (s.note == 'reps_calibrate' &&
+        base <= 0 &&
+        blockIndex == 0 &&
+        week == 0) {
+      x.reasons.add(_note(CoachNotes.repsCalibrate, x.rir ?? 2));
+    }
     return x;
   }
 

@@ -108,6 +108,30 @@ en fin d'amplitude, R5-P20, R5-P27) :
 Les réglages communs suivent (bras tendus, plafonds de volume par groupe, compléments de fin de séance). Un jour sans
 principal est une erreur d'audit, pas un jour à remplir.
 
+**Aucun jour sans son principal (0.4.2, lot KS1c2).** Les briques ci-dessus supposaient un repère : sans maximum
+déclaré de dips, de pompes ou de tractions, le jour « poussée E » (ou « tirage E ») ne recevait aucun exercice de son
+schéma (constat de KS1A : préparation, tronc et mobilité seulement). Après les briques, chaque jour typé est contrôlé
+(`_ensurePrincipal`) : un emplacement principal d'un de ses schémas, et chacun de ses schémas porté par un travail
+principal ou secondaire (deux des trois pour un corps entier). Un jour qui tient la règle n'est pas touché (les
+34 profils du banc gardent leur squelette de 0.4.1 à l'identique). Sinon, dans l'ordre :
+
+1. chaque schéma non porté reçoit son **principal de repli**, le travail que le jour aurait reçu avec un repère,
+   dosé sans repère par les règles existantes de la passe 2 — tirage : traction (prise neutre et note `pull_return`
+   quand le coude est à ménager), sinon traction assistée ou tirage horizontal au poids du corps ; poussée : dips,
+   sinon pompes (variantes dures pour un jour de force) ; jambes : unilatéral ou poids du corps ; force : 4 à 6
+   répétitions à 2 en réserve (`_repsStrength`), endurance : 5 à 8 à 3 en réserve (`_repsVolume`), double
+   progression ; trois séries en mode prudent et chez le débutant, quatre sinon (ACSM 2009 : une à trois séries au
+   début) ; en semaine 1 du premier bloc, une première série de mesure est proposée (note `reps_calibrate`) ;
+2. sans principal, le premier travail porteur secondaire d'un de ses schémas (séries de répétitions, séries
+   chargées, polyarticulaire d'assistance : pompe lestée, jambes d'un jour sans squat) devient le principal ;
+3. sinon un principal de repli s'ajoute.
+
+Le principal ainsi servi ouvre la séance, après la préparation. Si aucun exercice du schéma n'est possible (douleur,
+matériel), le jour prend le type de ce qu'il porte (`coachDerivedType`) et la raison suit son type dans les raisons
+du gabarit : `plan.joint_limitation` (la zone la plus gênante) ou `plan.equipment_missing` (le matériel qui manque
+au mouvement de base du schéma). Le créneau n'est pas rempli par de la technique ou de la mobilité (option (c) de
+C17.15, lot ultérieur).
+
 ## 6. Type du jour
 
 `PlanDay.type` : schémas (`pull`, `push`, `legs`, `full`, `skill`, `run`, `recovery`), qualité (`force`, `volume`,
