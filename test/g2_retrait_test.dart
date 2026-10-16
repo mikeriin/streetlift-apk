@@ -463,10 +463,10 @@ void main() {
   });
 
   test(
-    'version affichée : « 6.19.0 » hors build de développement (base v1.1)',
+    'version affichée : « 7.0.0 » hors build de développement (Koach 1.0)',
     () {
-      expect(kVersion, '6.19.0');
-      expect(kAppVersion, '6.19.0');
+      expect(kVersion, '7.0.0');
+      expect(kAppVersion, '7.0.0');
     },
   );
 }

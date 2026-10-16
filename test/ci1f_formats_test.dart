@@ -95,7 +95,8 @@ void main() {
       'On raccourcit : 50 % de ce qui était prévu (reprise après deux '
       'semaines sans séance).',
     );
-    expect(ka.kalisAdaptVersion, '0.3.1');
+    // KM3 : kalis_adapt 1.0.x embarque le code de 0.3.1 à l'identique.
+    expect(ka.kalisAdaptVersion, '1.0.2');
   });
 
   test('journal : une série avec ses mini-séries est une ligne (total et '

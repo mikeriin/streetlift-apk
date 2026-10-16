@@ -236,6 +236,9 @@ extension ProgramOriginStore on AppStore {
     pilotageEpoch++;
     _persist();
     notifyListeners();
+    // KM3 : Koach repart du programme d'origine (nouvelle référence) ; son
+    // journal n'est pas effacé.
+    if (koachEngine.active) unawaited(koachNewReference());
     return true;
   }
 

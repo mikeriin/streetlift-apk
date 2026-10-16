@@ -1,5 +1,96 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.2
+
+Lot KM2c2 (KM2 correction 2, DECISIONS_CP.md C13.13.2, C17.13) : **portage Dart de la référence Koach 1.0.3**
+(KM1 correction 3, `reference/CHANGEMENTS_1_0_3.md`), à l'identique. API, schéma du journal et façade inchangés ;
+`posterior()` gagne la clé `fiabilite` (une application intégrée sur 1.0.0 ou 1.0.1 monte de version et remplace
+l'asset de paramètres).
+
+- **Fiabilité des notes** (`modele.dart`, classe `Fiabilite`, contrat § 5.13) : grille a posteriori sur ln φ, part
+  des séries de force non notées (Beta), oubli λ, grilles par schéma rapportées ; mise à jour dans `_serieForce`
+  (séries de force faites, hors échauffement et échec, après la sonde et avant la porte des séries sans note) ;
+  `elargissement()` = κ ≥ 1 (plafonné à 2), appliqué à l'écart-type de `capacite` et `capaciteDuJour` (sauf
+  `brut`) et aux tirages du jumeau (`Planification.tirer` : S ← D S D sur les capacités) ; la moyenne des capacités
+  ne change jamais.
+- **Tentatives** (`seance.dart`) : échelle sur l'écart-type brut (`capaciteDuJour(brut: true)`,
+  `probaReussite(…, brut)`) ; palier des barres prouvées réduit et marge sur les barres réussies quand κ > 1
+  (`_palierBarres`) ; après un échec hors semaine de compétition, barre suivante sur l'estimation mise à jour, au plus
+  `tentative_echec_baisse_part` sous la barre ratée (en compétition : la même barre, A8.2).
+- **Règles** : `_bornesHausse` applique `securite.echec_sans_hausse_tout_schema` (1 : aucune hausse après un échec
+  non prévu, quel que soit le schéma, règle de 0.3.1) ; `_cibleCharge` : prudence des séries lourdes
+  (`planification.prudence_charge_fiabilite`, 0 dans le fichier livré) ; `_rampe` : borne large sur σ brut.
+- **Import** (`rupture.dart`) : `mesure.defaut_modele_sd` ∈ [0,001 ; 0,1] (relecture KM2c1, m3), six bornes
+  nouvelles, cinq clés de grille et d'a priori de la fiabilité figées ; `appliquerParametres` repointe
+  `modele.fiabilite.p`.
+- **Paramètres** : asset `assets/koach/koach_params_1_0_3.json` (`1.0.3-ref.1`, 338 clés, SHA-256
+  `d129a4e9…1aa0`) à la place de `koach_params_1_0_2.json`.
+- **Tests** : parité sur les 15 fixtures de la référence 1.0.3 (`moteur_12` : notes peu fiables) et trois fixtures
+  complémentaires produites par la référence sans la modifier (`test/fixtures/km2c2/`, `generer_km2c2.py` :
+  tentative ratée hors compétition et en compétition, jumeau avec κ > 1), traces comprises ;
+  `test/koach_fiabilite_test.dart` (indicateur, moyenne intacte, élargissement, import) ; bornes et clés figées de
+  1.0.3 dans `koach_parametres_test.dart` ; copies figées de 1.0.2 (`reference/fix_dart/`, `koach_params_d2.json`)
+  supprimées.
+
+## 1.0.1
+
+Lot KM2c1 (KM2 correction 1, DECISIONS_CP.md C13.12, C13.13, C17) : **portage Dart de la référence Koach 1.0.2**
+(KM1 correction 2, `reference/CHANGEMENTS_1_0_2.md`), à l'identique. API, schéma du journal et façade inchangés
+(une application intégrée sur 1.0.0 monte de version et remplace l'asset de paramètres).
+
+- **Reprise par paliers mesurés** (`seance.dart`) : la semaine du retour d'une coupure, une ligne chargée part de la
+  dernière séance du même schéma (ou des barres réussies des 42 jours ; repli sur le dernier passage sans barre
+  récente) et ne monte d'une série à l'autre qu'après un palier franchi (série réussie, notée, dite au plus aussi
+  dure que visé), jamais au-delà de la borne de séance A7.2 (`reprise_plafond`) ; l'ancre « dernier passage de
+  l'exercice » ne vaut plus que sous douleur ; un jour de bilan bas sans douleur est borné par la dernière séance
+  du même schéma, comme en 0.3.1.
+- **Tentatives** : ouverture plafonnée par le palier des barres récentes selon la note (`_palierBarres`,
+  `securite.tentative_palier_par_rir`, `tentative_palier_bande`) au lieu de « +10 % sur toute barre » et du
+  dernier passage en semaine de retour ; un cran permis après une barre dite facile quand le saut en pourcentage
+  vaut zéro sur la grille ; test xRM du jour d'épreuve en reprise sous le même palier.
+- **P(réussite) du jour J** (`planification.dart`) : dispersion des trajectoires des cibles chargées ramenée à
+  `planification.dispersion_echeance` (0,62) sur les `dispersion_echeance_semaines` (4) premières semaines de
+  journal ; `Planification.previsions` porte aussi `prevu_jour`.
+- **Intervalle à 90 %** (`modele.dart`) : `capacite(…, brut:)`, variance du filtre recalée par
+  `mesure.intervalle_echelle` (0,9), `mesure.defaut_modele_sd` 0,015 → 0,010 ; le contrôle dual lit la variance
+  brute (`dual.dart`). Quatre bornes d'import de plus (`rupture.dart`).
+- **Paramètres** : asset `assets/koach/koach_params_1_0_2.json` (`1.0.2-ref.1`, 322 clés, SHA-256
+  `211c9361…f5da`) à la place de `koach_params_1_0_1.json`.
+- **Tests** : parité sur les 14 fixtures de la référence 1.0.2 (`moteur_11` : reprise et tentatives après 12 jours
+  de coupure), traces comprises ; tests repointés vers `reference/fixtures/` et `reference/params/koach_params_v1.json`,
+  copies figées de 1.0.1 (`reference/fix_dart/`, `koach_params_d1.json`) supprimées.
+
+## 1.0.0
+
+Lot KM2 (méthode Koach, `pipeline/cp/CAHIER_KM.md`, décisions C13) : **Koach 1.0**, portage Dart à l'identique
+de la référence Python validée par KM1 (`reference/koach/`, version 1.0.1, contrat `reference/CONTRAT_1_0.md`).
+Contrat **non additif** (seul écart permis à « contrats additifs », C13.5) : l'API de Koach est nouvelle ; le code
+de 0.3.1 reste dans le paquet, inchangé, pour l'application jusqu'à KM3 et comme témoin du banc.
+
+- **`package:kalis_adapt/koach.dart`** : `Koach(params, fiches, profil)` avec `observe`, `posterior`, `plan`
+  (horizons `seance`, `serie`, `semaine`), `explain`, `rejouer` ; estimation (IRT multidimensionnelle sur 10
+  qualités, mesure du RIR, courbe de Box-Cox, fatigue, branche « mauvais jour »), prescription, garde-fous de
+  0.3.1 en contraintes dures, extensions `Planification` (jumeau numérique, entropie croisée, plafonds ±15 % /
+  ±5 %), `Surveillance` (BOCPD, secours, diagnostic), `Adherence` (probit), `ControleDual` (Thompson, N-of-1,
+  contrôle synthétique). Parité avec la référence : les 13 fixtures de KM1 (`test/koach_parite_test.dart`),
+  traces comprises, écart nul en pratique (tolérance 1e-9).
+- **Façade (constats M6, M7 de KM1)** : les crochets d'extension sont appliqués par `plan` lui-même — modulation
+  de la planification, semaine allégée, bras de volume et d'intensité d'un essai, forme d'adhérence (clé
+  `proposition` d'une cible de série) ; la référence de planification est un événement du journal
+  (`reference`, `cibles`) : le rejeu reconstruit aussi la planification. `CONTRAT.md`, § K.
+- **Paramètres en asset versionné** : `assets/koach/koach_params_1_0_1.json` (`1.0.1-ref.1`, 317 clés) et
+  `assets/koach/vecteurs_qualites_v1.json` (1 039 fiches), lus par `lireParametresKoach`, `lireFichesKoach`.
+- **Validateur de sécurité** (`package:kalis_adapt/validateur.dart`) : copie fidèle des critères de sécurité du
+  banc (`kalis_bench` `safetyFindings`), obligatoire pour `Planification` ; `ProfilValidation.depuisProfil`
+  pour l'application. Parité avec le banc testée dans `kalis_bench` (`test/km2_validateur_test.dart`).
+- Tests de propriétés seedés (`test/koach_proprietes_test.dart`, plus de 20 000 entrées).
+- **Textes de Koach** (`package:kalis_adapt/koach_textes.dart`) : une phrase française par code de raison
+  (`texteRaisonKoach` : les 22 codes `koach.*` et leurs causes, causes et actions de la surveillance, raisons du
+  contrôle dual ; `texteQuestionKoach`, `texteChoixKoach` pour le diagnostic), jamais un code brut
+  (`test/koach_textes_test.dart`).
+- Intégration : `docs/INTEGRATION_KM3.md`. Mesures des critères du cahier : `kalis_bench` 0.4.0
+  (`bin/km2.dart`).
+
 ## 0.3.1
 
 Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contrat additif (cinq paramètres, un argument du constructeur).

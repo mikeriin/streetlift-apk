@@ -361,13 +361,24 @@ class _EvolutionCard extends StatelessWidget {
                       style: KType.titreCarte.copyWith(color: k.texte),
                     ),
                     const SizedBox(height: KSpacing.s4),
-                    Text(
-                      store.adaptMode == 'free'
-                          ? 'Mode libre : je te propose, tu décides.'
-                          : 'Mode assisté : je l’applique moi-même et je te '
-                                'dis pourquoi.',
-                      style: KType.corps.copyWith(color: k.texte),
-                    ),
+                    if (store.koachEngine.snap != null)
+                      Text(
+                        store.koachEngine.stop != null
+                            ? 'Koach 1.0 est arrêté : séances servies '
+                                  'telles qu’écrites.'
+                            : 'Koach 1.0 conduit ton programme : il '
+                                  'propose, tu valides d’un tap.',
+                        key: const ValueKey('program-evolution-koach'),
+                        style: KType.corps.copyWith(color: k.texte),
+                      )
+                    else
+                      Text(
+                        store.adaptMode == 'free'
+                            ? 'Mode libre : je te propose, tu décides.'
+                            : 'Mode assisté : je l’applique moi-même et je te '
+                                  'dis pourquoi.',
+                        style: KType.corps.copyWith(color: k.texte),
+                      ),
                     Text(
                       unlockNextText(
                             next: u.next,

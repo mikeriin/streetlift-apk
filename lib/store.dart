@@ -10,6 +10,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:kalis_core/kalis_core.dart' show TrainingLog;
 import 'package:kalis_adapt/kalis_adapt.dart' as ka;
+import 'package:kalis_adapt/koach.dart' as ko;
+import 'package:kalis_adapt/koach_textes.dart' show texteRaisonKoach;
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_plan/kalis_plan.dart' as kp;
 
@@ -24,6 +26,9 @@ import 'session_prefs.dart';
 import 'game.dart';
 import 'journal_adapter.dart';
 import 'koach_data.dart';
+import 'koach1/koach_journal.dart';
+import 'koach1/koach_moteur.dart';
+import 'koach1/koach_rejeu.dart';
 import 'legacy_adapt_data.dart';
 import 'legacy_week_kinds.dart';
 import 'mannequin_clip.dart' show ClipRegistry;
@@ -63,6 +68,7 @@ part 'profile_store.dart';
 part 'program_store.dart';
 part 'safety_store.dart';
 part 'session_adapt_store.dart';
+part 'koach1_store.dart';
 
 /// Charge à la grille du matériel : deux décimales au plus (« 2,5 » ;
 /// « 35 » ; « 36,25 »). Charges du moteur dynamique (et, avant G10, de
@@ -613,6 +619,13 @@ class AppStore extends ChangeNotifier {
   /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
   /// présenté au moteur), clés de signature ; jamais sauvegardés.
   final Map<String, Object?> _g9Cache = {};
+
+  /// KM3 : Koach 1.0 (section `koachEngine` : journal du moteur,
+  /// instantanés, bascule, arrêt d'urgence).
+  KoachEngineData koachEngine = KoachEngineData();
+
+  /// KM3 : moteur vivant, ressources et temps mesurés (jamais sauvegardés).
+  final KoachRuntime _koachRt = KoachRuntime();
 
   /// Programme à afficher selon l'instance ; le départ est conservé.
   void _materializeProgram(DateTime? start) {
@@ -1227,6 +1240,7 @@ class AppStore extends ChangeNotifier {
     evolutionRaw: _evoRaw,
     adapt: adapt,
     programOrigin: programOrigin,
+    koachEngine: koachEngine,
   );
 
   /// Format 3 sans les sections retirées par G2 (`custom`, `catalog`,
@@ -1292,6 +1306,9 @@ class AppStore extends ChangeNotifier {
       // migration (programme et journal d'avant 6.10.0), écrit seulement
       // s'il existe ; ignoré par les versions antérieures.
       if (data.programOrigin != null) 'programOrigin': data.programOrigin,
+      // KM3 : Koach 1.0 (journal du moteur, instantanés, bascule), écrit
+      // seulement s'il sert ; ignoré par les versions antérieures.
+      if (!data.koachEngine.pristine) 'koachEngine': data.koachEngine.toJson(),
     };
   }
 
@@ -1728,6 +1745,7 @@ class AppStore extends ChangeNotifier {
       adaptIssues: adaptIssues.length,
       retired: RetiredData.of(m).summary,
       programOrigin: _readProgramOrigin(m['programOrigin']),
+      koachEngine: KoachEngineData.fromJson(m['koachEngine']),
     );
   }
 
@@ -1788,6 +1806,13 @@ class AppStore extends ChangeNotifier {
     // CI1e (C11.2) : programme d'origine de la sauvegarde (un import
     // d'avant 6.10.0 garde celui de cet appareil : _commitImport).
     programOrigin = data.programOrigin;
+    // KM3 : journal de Koach de la sauvegarde ; moteur vivant reconstruit.
+    koachEngine = data.koachEngine;
+    _koachRt
+      ..gen += 1
+      ..live = null
+      ..fab = null
+      ..busy = null;
     values
       ..clear()
       ..addAll(data.values);
@@ -3316,6 +3341,9 @@ class AppStore extends ChangeNotifier {
     final finishedAt = s.finishedAt ?? storeClock().toIso8601String();
     s.finishedAt = done ? finishedAt : null;
     if (title != null) s.title = title;
+    // KM3 : séance servie par Koach versée à sa fin (séries restantes,
+    // douleurs, décisions).
+    if (done && !wasDone) KoachStore(this).koachOnSessionDone(week, j);
     saveLogs(immediate: true);
     if (!done || wasDone) return;
     final training =
@@ -3642,6 +3670,9 @@ class _BackupData {
   /// CI1e (C11.2) : programme d'origine sauvegardé avant la première
   /// migration (null si absent).
   final Map<String, dynamic>? programOrigin;
+
+  /// KM3 : Koach 1.0 (neuf si la section est absente).
+  final KoachEngineData koachEngine;
   _BackupData({
     required this.values,
     required this.refStatus,
@@ -3671,8 +3702,10 @@ class _BackupData {
     this.adaptIssues = 0,
     this.retired = const RetiredSummary(),
     this.programOrigin,
+    KoachEngineData? koachEngine,
   }) : koach = koach ?? KoachData(),
-       adapt = adapt ?? AdaptData();
+       adapt = adapt ?? AdaptData(),
+       koachEngine = koachEngine ?? KoachEngineData();
 }
 
 /// Séance à reprendre (bandeau de l'accueil).
