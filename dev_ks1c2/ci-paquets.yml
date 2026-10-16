@@ -1,0 +1,90 @@
+# Contrôle de MISE AU POINT du lot KS1c2 (branche claude/ci-cp-b seulement,
+# jamais sur moteurs) : commandes de DEV_KS1C2.sh.
+name: CI paquets (pistes GP)
+
+on:
+  push:
+    branches: ["claude/ci-cp-b"]
+    paths-ignore:
+      - "ci-out/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-ks1c2-${{ github.sha }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+
+jobs:
+  packages:
+    name: Paquets Dart et outils Python
+    runs-on: ubuntu-24.04
+    # (180 min depuis le lot CY : saisons croisées de tous les profils, dix
+    # scénarios ; la passe complète dépassait 90 min avec kalis_quest.)
+    timeout-minutes: 180
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Mise au point KS1c2
+        run: |
+          mkdir -p out-packages
+          bash DEV_KS1C2.sh 2>&1 | tee out-packages/dev.log
+          exit ${PIPESTATUS[0]}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: packages
+          path: out-packages/
+          if-no-files-found: warn
+
+  publish:
+    name: Publier les résultats dans ci-out/
+    needs: [packages]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Assembler ci-out
+        run: |
+          rm -rf ci-out && mkdir -p ci-out/packages
+          cp -r artifacts/packages/. ci-out/packages/ 2>/dev/null || true
+          {
+            echo "run=${{ github.run_id }}"
+            echo "commit=${{ github.sha }}"
+            echo "branche=${{ github.ref_name }}"
+            echo "packages=${{ needs.packages.result }}"
+          } > ci-out/resultat.txt
+          cat ci-out/resultat.txt
+      - name: Recommiter ci-out sur la branche
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          branch="${{ github.ref_name }}"
+          for i in 1 2 3; do
+            git fetch -q origin "$branch"
+            git reset -q FETCH_HEAD
+            git add -A -f ci-out
+            git commit -qm "CI paquets : résultats du run ${{ github.run_id }}" || exit 0
+            git push -q origin "HEAD:$branch" && break
+            sleep 5
+          done

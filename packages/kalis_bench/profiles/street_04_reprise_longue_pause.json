@@ -1,0 +1,137 @@
+{
+ "schemaVersion": 1,
+ "key": "street_04_reprise_longue_pause",
+ "group": "street",
+ "title": "Reprise après neuf mois d'arrêt",
+ "summary": "Homme de 34 ans, trois ans de street workout, arrêté neuf mois (déménagement, naissance). Faisait 12 tractions et 20 dips. Reprend à quatre séances d'une heure au parc.",
+ "level": "intermediate",
+ "trainingAgeMonths": 36,
+ "core": {
+  "sex": "male",
+  "birthYear": 1992,
+  "heightCm": 178,
+  "bodyWeightKg": 80.0,
+  "streetMode": {
+   "primary": "sets_reps",
+   "streetliftingPct": 10,
+   "setsRepsPct": 60,
+   "calisthenicsPct": 30
+  },
+  "disciplines": {
+   "primary": "street_workout",
+   "primaryPct": 60,
+   "secondaries": [
+    {
+     "discipline": "streetlifting",
+     "pct": 10
+    },
+    {
+     "discipline": "calisthenics",
+     "pct": 30
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 60
+   },
+   {
+    "weekday": 2,
+    "minutes": 60
+   },
+   {
+    "weekday": 4,
+    "minutes": 60
+   },
+   {
+    "weekday": 6,
+    "minutes": 60
+   }
+  ],
+  "places": [
+   "exterieur"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 12,
+   "testedWeeksAgo": 40
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 20,
+   "testedWeeksAgo": 40
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 35,
+   "testedWeeksAgo": 40
+  }
+ ],
+ "break": {
+  "weeksOff": 36
+ },
+ "expectations": {
+  "text": [
+   "Plus de seize semaines d'arrêt : réévaluation, reprise à 1 ou 2 séries par exercice, 4 répétitions en réserve la première semaine, retour au niveau antérieur en 6 à 10 semaines (R5-P7).",
+   "Ni excentrique accentué, ni échec, ni séance de test les deux premières semaines (R5-P7) ; les anciens records ne sont pas des charges de travail.",
+   "Ensuite progression 1,5 à 2 fois plus rapide que celle d'un débutant jusqu'à 90 % des anciens repères (R5-P6)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "min_rir_first_weeks",
+    "label": "Au moins 3 répétitions en réserve les deux premières semaines",
+    "weeks": 2,
+    "rir": 3
+   },
+   {
+    "id": "c2",
+    "type": "max_group_sets",
+    "label": "Grand dorsal : pas plus de 16 séries dures par semaine",
+    "group": "lats",
+    "sets": 16
+   },
+   {
+    "id": "c3",
+    "type": "forbid_exercises",
+    "label": "Pas de négatives ni d'excentriques accentués",
+    "exerciseIds": [
+     "sw-traction-negative",
+     "sw-dips-negatifs",
+     "sw-traction-tempo-excentrique"
+    ]
+   },
+   {
+    "id": "c4",
+    "type": "min_frequency",
+    "label": "Tractions (ou un palier) au moins deux fois par semaine",
+    "exerciseIds": [
+     "sw-traction-pronation"
+    ],
+    "perWeek": 2
+   }
+  ]
+ }
+}
