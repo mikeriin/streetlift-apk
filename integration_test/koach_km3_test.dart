@@ -251,7 +251,11 @@ void main() {
       final appuis = <String>[];
       while (!store.koachOpen(w, jd) && debut.elapsedMilliseconds < 60000) {
         await wait(tester, 250);
-        for (final k in const ['koach-diag-later', 'adjust-go', 'bilan-start']) {
+        for (final k in const [
+          'koach-diag-later',
+          'adjust-go',
+          'bilan-start',
+        ]) {
           final f = find.byKey(ValueKey(k)).hitTestable();
           if (f.evaluate().isNotEmpty) {
             appuis.add(k);
