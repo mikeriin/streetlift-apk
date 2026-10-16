@@ -1,0 +1,603 @@
+{
+ "adapt/adapt_summary_screen.dart": {
+  "EdgeInsets": 2,
+  "fontWeight": 2,
+  "total": 4,
+  "zone": "UI2"
+ },
+ "adapt/adapt_texts.dart": {
+  "total": 0,
+  "zone": "UI2"
+ },
+ "adapt/clearance.dart": {
+  "EdgeInsets": 2,
+  "fontWeight": 2,
+  "showDialog": 1,
+  "total": 5,
+  "zone": "UI2"
+ },
+ "adapt/flame_track.dart": {
+  "BoxDecoration": 2,
+  "EdgeInsets": 4,
+  "PopupMenuButton": 1,
+  "fontSize": 8,
+  "fontWeight": 3,
+  "rayon": 2,
+  "total": 20,
+  "zone": "UI2"
+ },
+ "adapt/health_check.dart": {
+  "EdgeInsets": 10,
+  "fontSize": 2,
+  "fontWeight": 5,
+  "rayon": 2,
+  "showModalBottomSheet": 3,
+  "total": 22,
+  "zone": "UI2"
+ },
+ "adapt/session_adapt.dart": {
+  "total": 0,
+  "zone": "UI2"
+ },
+ "alerts.dart": {
+  "total": 0,
+  "zone": "UI0"
+ },
+ "anatomy_screen.dart": {
+  "BoxDecoration": 1,
+  "total": 1,
+  "zone": "UI4"
+ },
+ "app_theme.dart": {
+  "EdgeInsets": 11,
+  "couleur": 44,
+  "fontSize": 22,
+  "fontWeight": 15,
+  "letterSpacing": 5,
+  "rayon": 10,
+  "total": 107,
+  "zone": "UI0"
+ },
+ "arsenal_screen.dart": {
+  "total": 0,
+  "zone": "UI4"
+ },
+ "athlete_profile.dart": {
+  "toUpperCase": 1,
+  "total": 1,
+  "zone": "UI4"
+ },
+ "athlete_profile_flow.dart": {
+  "EdgeInsets": 7,
+  "showDialog": 1,
+  "showModalBottomSheet": 4,
+  "toUpperCase": 2,
+  "total": 14,
+  "zone": "UI4"
+ },
+ "athlete_profile_flow_v3.dart": {
+  "BoxDecoration": 1,
+  "EdgeInsets": 24,
+  "rayon": 2,
+  "showModalBottomSheet": 5,
+  "total": 32,
+  "zone": "UI4"
+ },
+ "athlete_profile_screen.dart": {
+  "showDialog": 2,
+  "total": 2,
+  "zone": "UI4"
+ },
+ "athlete_profile_store.dart": {
+  "total": 0,
+  "zone": "UI4"
+ },
+ "atlas.dart": {
+  "BoxDecoration": 2,
+  "couleur": 1,
+  "fontSize": 1,
+  "rayon": 2,
+  "total": 6,
+  "zone": "UI4"
+ },
+ "atlas_data.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "backup_files.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "content_pack.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "data_control.dart": {
+  "EdgeInsets": 2,
+  "fontWeight": 2,
+  "showDialog": 4,
+  "toUpperCase": 1,
+  "total": 9,
+  "zone": "UI4"
+ },
+ "device.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "estimate_view.dart": {
+  "EdgeInsets": 6,
+  "fontSize": 10,
+  "fontWeight": 3,
+  "letterSpacing": 1,
+  "showModalBottomSheet": 1,
+  "total": 21,
+  "zone": "UI2"
+ },
+ "evolution_store.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "exercise_screens.dart": {
+  "EdgeInsets": 5,
+  "fontSize": 6,
+  "fontWeight": 3,
+  "toUpperCase": 2,
+  "total": 16,
+  "zone": "UI4"
+ },
+ "filter_menu.dart": {
+  "EdgeInsets": 5,
+  "fontSize": 1,
+  "fontWeight": 2,
+  "total": 8,
+  "zone": "UI0"
+ },
+ "game.dart": {
+  "toUpperCase": 2,
+  "total": 2,
+  "zone": "UI5"
+ },
+ "game_widgets.dart": {
+  "EdgeInsets": 14,
+  "fontSize": 17,
+  "fontWeight": 19,
+  "letterSpacing": 2,
+  "total": 52,
+  "zone": "UI3"
+ },
+ "goal_suggestions_g6.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "guided_tests.dart": {
+  "EdgeInsets": 3,
+  "total": 3,
+  "zone": "UI4"
+ },
+ "home_screen.dart": {
+  "BoxDecoration": 2,
+  "EdgeInsets": 7,
+  "fontSize": 17,
+  "fontWeight": 11,
+  "letterSpacing": 4,
+  "rayon": 2,
+  "showModalBottomSheet": 3,
+  "total": 46,
+  "zone": "UI1"
+ },
+ "imported_program.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "journal_adapter.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "kalis_clock.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "koach/koach_bubble.dart": {
+  "BoxDecoration": 1,
+  "EdgeInsets": 6,
+  "couleur": 1,
+  "fontSize": 1,
+  "fontWeight": 1,
+  "letterSpacing": 1,
+  "rayon": 2,
+  "showModalBottomSheet": 1,
+  "toUpperCase": 1,
+  "total": 15,
+  "zone": "UI1"
+ },
+ "koach/koach_gallery_screen.dart": {
+  "BoxDecoration": 1,
+  "EdgeInsets": 1,
+  "fontSize": 2,
+  "rayon": 2,
+  "total": 6,
+  "zone": "UI4"
+ },
+ "koach/koach_home_card.dart": {
+  "total": 0,
+  "zone": "UI1"
+ },
+ "koach_data.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "legacy_adapt_data.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "legacy_pack.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "legacy_week_kinds.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "levelup.dart": {
+  "fontSize": 2,
+  "fontWeight": 2,
+  "letterSpacing": 2,
+  "rayon": 1,
+  "total": 7,
+  "zone": "UI1"
+ },
+ "main.dart": {
+  "EdgeInsets": 1,
+  "fontSize": 1,
+  "total": 2,
+  "zone": "UI0"
+ },
+ "models.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "motion.dart": {
+  "total": 0,
+  "zone": "UI0"
+ },
+ "nav_bar.dart": {
+  "BoxDecoration": 2,
+  "EdgeInsets": 2,
+  "fontSize": 1,
+  "fontWeight": 1,
+  "letterSpacing": 1,
+  "toUpperCase": 1,
+  "total": 8,
+  "zone": "UI0"
+ },
+ "notification_settings.dart": {
+  "BoxDecoration": 1,
+  "EdgeInsets": 4,
+  "fontWeight": 2,
+  "rayon": 1,
+  "total": 8,
+  "zone": "UI4"
+ },
+ "notifications.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "persistence.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "pilotage_screen.dart": {
+  "fontSize": 1,
+  "fontWeight": 1,
+  "showDialog": 1,
+  "total": 3,
+  "zone": "UI4"
+ },
+ "plan/coach_texts.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "plan/event_day_screen.dart": {
+  "EdgeInsets": 1,
+  "toUpperCase": 1,
+  "total": 2,
+  "zone": "UI1"
+ },
+ "plan/evolution_texts.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "plan/evolution_widgets.dart": {
+  "EdgeInsets": 3,
+  "fontWeight": 1,
+  "showModalBottomSheet": 1,
+  "total": 5,
+  "zone": "UI1"
+ },
+ "plan/plan_creation.dart": {
+  "total": 0,
+  "zone": "UI4"
+ },
+ "plan/plan_evolution.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "plan/plan_program.dart": {
+  "toUpperCase": 1,
+  "total": 1,
+  "zone": "UI5"
+ },
+ "plan/plan_screens.dart": {
+  "EdgeInsets": 10,
+  "fontWeight": 1,
+  "rayon": 1,
+  "total": 12,
+  "zone": "UI4"
+ },
+ "plan/plan_sheets.dart": {
+  "EdgeInsets": 6,
+  "showModalBottomSheet": 1,
+  "total": 7,
+  "zone": "UI1"
+ },
+ "plan/plan_texts.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "plan/program_position.dart": {
+  "total": 0,
+  "zone": "UI1"
+ },
+ "plan/reason_texts_0_4.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "plan/season_view.dart": {
+  "EdgeInsets": 4,
+  "total": 4,
+  "zone": "UI1"
+ },
+ "plan_store.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "profile.dart": {
+  "toUpperCase": 1,
+  "total": 1,
+  "zone": "UI5"
+ },
+ "profile_completion.dart": {
+  "total": 0,
+  "zone": "UI4"
+ },
+ "profile_store.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "profile_v3.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "program_explainer.dart": {
+  "EdgeInsets": 1,
+  "showModalBottomSheet": 1,
+  "total": 2,
+  "zone": "UI1"
+ },
+ "program_instance.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "program_origin.dart": {
+  "total": 0,
+  "zone": "UI1"
+ },
+ "program_screens.dart": {
+  "showDialog": 1,
+  "total": 1,
+  "zone": "UI1"
+ },
+ "program_start.dart": {
+  "EdgeInsets": 3,
+  "total": 3,
+  "zone": "UI4"
+ },
+ "program_store.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "progression.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "progression_screen.dart": {
+  "total": 0,
+  "zone": "UI3"
+ },
+ "records_screen.dart": {
+  "total": 0,
+  "zone": "UI3"
+ },
+ "resume_banner.dart": {
+  "EdgeInsets": 3,
+  "total": 3,
+  "zone": "UI1"
+ },
+ "retired_data.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "retired_notice_screen.dart": {
+  "EdgeInsets": 1,
+  "total": 1,
+  "zone": "UI4"
+ },
+ "rewards.dart": {
+  "EdgeInsets": 3,
+  "fontSize": 8,
+  "fontWeight": 9,
+  "letterSpacing": 3,
+  "showDialog": 1,
+  "toUpperCase": 1,
+  "total": 25,
+  "zone": "UI2"
+ },
+ "safety_store.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "search.dart": {
+  "total": 0,
+  "zone": "UI0"
+ },
+ "session_adapt_store.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "session_history.dart": {
+  "EdgeInsets": 2,
+  "PopupMenuButton": 1,
+  "fontSize": 1,
+  "fontWeight": 3,
+  "showDialog": 2,
+  "showModalBottomSheet": 1,
+  "total": 10,
+  "zone": "UI2"
+ },
+ "session_host.dart": {
+  "total": 0,
+  "zone": "UI2"
+ },
+ "session_prefs.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "session_screen.dart": {
+  "BoxDecoration": 6,
+  "EdgeInsets": 43,
+  "PopupMenuButton": 2,
+  "fontSize": 31,
+  "fontWeight": 23,
+  "letterSpacing": 5,
+  "rayon": 10,
+  "showDialog": 1,
+  "showModalBottomSheet": 3,
+  "toUpperCase": 3,
+  "total": 127,
+  "zone": "UI2"
+ },
+ "set_validation.dart": {
+  "total": 0,
+  "zone": "UI2"
+ },
+ "settings_screen.dart": {
+  "BoxDecoration": 1,
+  "EdgeInsets": 3,
+  "fontSize": 4,
+  "fontWeight": 1,
+  "letterSpacing": 2,
+  "rayon": 1,
+  "showDialog": 2,
+  "total": 14,
+  "zone": "UI4"
+ },
+ "startup.dart": {
+  "fontSize": 1,
+  "fontWeight": 1,
+  "letterSpacing": 1,
+  "total": 3,
+  "zone": "UI4"
+ },
+ "stats_data.dart": {
+  "total": 0,
+  "zone": "UI3"
+ },
+ "stats_history.dart": {
+  "EdgeInsets": 1,
+  "total": 1,
+  "zone": "UI3"
+ },
+ "stats_mannequin.dart": {
+  "total": 0,
+  "zone": "UI3"
+ },
+ "stats_navigation.dart": {
+  "total": 0,
+  "zone": "UI3"
+ },
+ "stats_overview.dart": {
+  "BoxDecoration": 1,
+  "EdgeInsets": 2,
+  "fontSize": 2,
+  "rayon": 1,
+  "total": 6,
+  "zone": "UI3"
+ },
+ "stats_performance.dart": {
+  "total": 0,
+  "zone": "UI3"
+ },
+ "stats_progression.dart": {
+  "EdgeInsets": 8,
+  "fontSize": 12,
+  "fontWeight": 8,
+  "letterSpacing": 2,
+  "showModalBottomSheet": 1,
+  "toUpperCase": 1,
+  "total": 32,
+  "zone": "UI3"
+ },
+ "stats_screen.dart": {
+  "EdgeInsets": 2,
+  "fontSize": 1,
+  "fontWeight": 1,
+  "letterSpacing": 1,
+  "total": 5,
+  "zone": "UI3"
+ },
+ "stats_widgets.dart": {
+  "EdgeInsets": 1,
+  "fontSize": 2,
+  "fontWeight": 1,
+  "showModalBottomSheet": 1,
+  "total": 5,
+  "zone": "UI3"
+ },
+ "store.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "store_widget.dart": {
+  "total": 0,
+  "zone": "UI0"
+ },
+ "timers.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "training_estimate.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "ui.dart": {
+  "BoxDecoration": 5,
+  "EdgeInsets": 9,
+  "fontSize": 5,
+  "fontWeight": 4,
+  "letterSpacing": 2,
+  "rayon": 3,
+  "toUpperCase": 2,
+  "total": 30,
+  "zone": "UI0"
+ },
+ "wellbeing.dart": {
+  "total": 0,
+  "zone": "UI5"
+ },
+ "wellbeing_screens.dart": {
+  "EdgeInsets": 1,
+  "fontWeight": 2,
+  "total": 3,
+  "zone": "UI4"
+ }
+}
