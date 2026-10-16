@@ -97,7 +97,7 @@ void main() {
   test('paquets 0.2.3 (CI1f : 0.3.0) dans l’application', () {
     expect(kp.kalisPlanVersion, '0.3.1');
     // KM3 : kalis_adapt 1.0.x embarque le code de 0.3.1 à l'identique.
-    expect(ka.kalisAdaptVersion, '1.0.1');
+    expect(ka.kalisAdaptVersion, '1.0.2');
   });
 
   group('textes des nouvelles raisons (0.2.3)', () {

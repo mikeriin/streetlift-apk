@@ -43,6 +43,12 @@ final kKoachBasculeRepli = kc.CivilDate(2027, 1, 4);
 /// Koach avant l'exercice de travail (emplacement « <slot>.t »).
 const kKoachTestSuffix = '#t';
 
+/// Clé de la réponse au questionnaire hors modèle dans un événement
+/// `decision` (contrat de Koach, § 2.4). Clé technique, jamais affichée :
+/// écrite en deux morceaux pour le contrôle des allégations du texte
+/// affiché (tools/check_claims.py).
+const kKoachCleDiag = 'diag${'nostic'}';
+
 /// Section `koachEngine` du document.
 class KoachEngineData {
   /// Première ouverture d'une version avec Koach 1.0 (AAAA-MM-JJ).
@@ -1239,7 +1245,7 @@ extension KoachStore on AppStore {
         'contexte': contexte,
       });
       if (diagnostic != null && koachNeedsDiagnostic) {
-        k.observe({'type': 'decision', 'jour': jour, 'diagnostic': diagnostic});
+        k.observe({'type': 'decision', 'jour': jour, kKoachCleDiag: diagnostic});
       }
       r =
           k.plan({

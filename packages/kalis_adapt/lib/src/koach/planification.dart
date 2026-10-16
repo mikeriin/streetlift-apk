@@ -530,6 +530,20 @@ class Planification extends Extension implements AvecItemsDuJour {
       for (var a = 0; a < k; a++)
         [for (var b = 0; b < k; b++) 0.5 * (s0[a][b] + s0[b][a])],
     ];
+    // 1.0.3 : fiabilité des notes (contrat § 5.13) : les lignes et
+    // colonnes des capacités sont multipliées par κ (S ← D S D), pas celles
+    // de la réponse ni des classes.
+    final kappa = m.elargissement();
+    if (kappa != 1.0) {
+      for (var i = 0; i < ne; i++) {
+        for (var j = 0; j < k; j++) {
+          s[i][j] *= kappa;
+        }
+        for (var j = 0; j < k; j++) {
+          s[j][i] *= kappa;
+        }
+      }
+    }
     // Racine de Cholesky en boucles explicites (portable à l'identique,
     // robuste à une covariance semi-définie).
     final l = choleskySemi(s);

@@ -134,7 +134,7 @@ void main() {
   group('assets et paquet', () {
     test('assets de Koach = copies à l’octet du paquet, SHA-256 attendus', () {
       for (final name in const [
-        'koach_params_1_0_2.json',
+        'koach_params_1_0_3.json',
         'vecteurs_qualites_v1.json',
       ]) {
         final a = File('assets/koach/$name').readAsBytesSync();
@@ -145,7 +145,7 @@ void main() {
       }
       expect(
         sha256Hex(
-          File('assets/koach/koach_params_1_0_2.json').readAsBytesSync(),
+          File('assets/koach/koach_params_1_0_3.json').readAsBytesSync(),
         ),
         ko.koachParametresSha256,
       );
@@ -156,7 +156,7 @@ void main() {
         ko.koachFichesSha256,
       );
       final res = KoachRessources.lire(
-        File('assets/koach/koach_params_1_0_2.json').readAsStringSync(),
+        File('assets/koach/koach_params_1_0_3.json').readAsStringSync(),
         File('assets/koach/vecteurs_qualites_v1.json').readAsStringSync(),
       );
       expect(res.fiches.length, 1039);
@@ -166,7 +166,7 @@ void main() {
 
     test('pubspec : assets de Koach déclarés, version 7.0.0', () {
       final p = File('pubspec.yaml').readAsStringSync();
-      expect(p, contains('- assets/koach/koach_params_1_0_2.json'));
+      expect(p, contains('- assets/koach/koach_params_1_0_3.json'));
       expect(p, contains('- assets/koach/vecteurs_qualites_v1.json'));
       expect(p, contains('version: 7.0.0+'));
     });
@@ -236,7 +236,7 @@ void main() {
         // Rejeu exact : même journal (aller-retour JSON) = même état.
         final live = app.koachLive!;
         final res = KoachRessources.lire(
-          File('assets/koach/koach_params_1_0_2.json').readAsStringSync(),
+          File('assets/koach/koach_params_1_0_3.json').readAsStringSync(),
           File('assets/koach/vecteurs_qualites_v1.json').readAsStringSync(),
         );
         final fab = KoachFabrique(res, e.snap!, app.content.catalog!);
@@ -589,6 +589,30 @@ void main() {
         // ignore: avoid_print
         print('KM3|semaine|S$w·J$j|${served.length}');
       }
+    });
+
+    test('reprise après quatre semaines sans séance : ce que Koach sert '
+        '(relevé)', () async {
+      await activate();
+      clock = DateTime(2026, 11, 16, 9); // lundi, S19·J1
+      await app.koachRefresh();
+      final j = _dayWithWork(app, 19);
+      clock = DateTime(2026, 11, 16 + j - 1, 9);
+      await app.koachRefresh();
+      final base = app.program.week(19).day(j)!;
+      app.adaptOpen(19, base);
+      expect(
+        await app.koachStart(19, base, diagnostic: {'cause': 'rien'}),
+        isTrue,
+      );
+      final served = _served(app, 19, j).where((e) => e.engine).toList();
+      final raisons = app.sessionAdapt(19, j)!.koach?['raisons'] as List?;
+      // ignore: avoid_print
+      print(
+        'KM3|reprise|S19·J$j|servis=${served.length}|'
+        'ecrits=${base.exercises.length}|'
+        'raisons=${jsonEncode([for (final r in raisons ?? const []) (r as Map)['code']])}',
+      );
     });
   });
 }

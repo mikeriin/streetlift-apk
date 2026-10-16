@@ -26,7 +26,7 @@ import 'support/ui_capture.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final root = GlobalKey();
-  var clock = DateTime(2026, 11, 17, 9); // mardi, S19·J2
+  var clock = DateTime(2026, 10, 20, 9); // mardi, S15·J2
 
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
@@ -130,22 +130,22 @@ void main() {
     }
     // Séance du jour servie par Koach, suggestion posée sur la première
     // série du premier exercice.
-    final week = store.program.week(19);
+    final week = store.program.week(15);
     var j = 2;
     while (week.day(j)?.exercises.isEmpty ?? true) {
       j++;
     }
     final base = week.day(j)!;
-    store.adaptOpen(19, base);
-    await tester.runAsync(() => store.koachStart(19, base));
-    final a = store.sessionAdapt(19, j)!;
-    final served = store.adaptDay(19, base, a).exercises;
+    store.adaptOpen(15, base);
+    await tester.runAsync(() => store.koachStart(15, base));
+    final a = store.sessionAdapt(15, j)!;
+    final served = store.adaptDay(15, base, a).exercises;
     expect(
       served.any((x) => x.engine && x.slotId != null),
       isTrue,
       reason:
-          'S19·J$j : ${a.koach?['state']} · ${store.koachPending(19, j)} · '
-          '${store.koachOpen(19, j)} · ${[for (final x in served) '${x.engine}/${x.slotId}']}',
+          'S15·J$j : ${a.koach?['state']} · ${store.koachPending(15, j)} · '
+          '${store.koachOpen(15, j)} · ${[for (final x in served) '${x.engine}/${x.slotId}']}',
     );
     final e = served.firstWhere((x) => x.engine && x.slotId != null);
     final st = Map<String, Object?>.of(a.koach!);
@@ -168,7 +168,7 @@ void main() {
         },
       },
     };
-    store.sessionLog(19, j).adapt = a
+    store.sessionLog(15, j).adapt = a
         .copyWith(koach: st)
         .toJson()
         .cast<String, dynamic>();
@@ -177,7 +177,7 @@ void main() {
         padding: const EdgeInsets.all(16),
         children: [
           KoachSuggestionCard(
-            week: 19,
+            week: 15,
             day: base,
             exercise: e,
             onChanged: () {},
@@ -193,6 +193,16 @@ void main() {
       await shot(tester, 'km3_refus_${suffix(dark, p)}');
       expect(find.text('Trop lourd'), findsOneWidget);
     }
+    // Récapitulatif : semaine qui précède le bloc de S20, séance de S15
+    // faite ; les semaines sans séance de S16 à S18 sont manquées.
+    store.markSessionDone(15, j, true);
+    clock = DateTime(2026, 11, 17, 9);
+    await tester.runAsync(() => store.koachRefresh());
+    // ignore: avoid_print
+    print(
+      'KM3|capture|recap=${store.koachRecap()?.week}|'
+      'hors_modele=${store.koachNeedsDiagnostic}',
+    );
     for (final (dark, p) in variants) {
       await show(tester, const KoachRecapScreen(), dark: dark, palette: p);
       await shot(tester, 'km3_recap_${suffix(dark, p)}');

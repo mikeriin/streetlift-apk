@@ -19,7 +19,7 @@ typedef Json = Map<String, Object?>;
 
 /// Chemins des deux assets de Koach (copies à l'octet de
 /// `packages/kalis_adapt/assets/koach/`, INTEGRATION_KM3.md § 3).
-const kKoachParamsAsset = 'assets/koach/koach_params_1_0_2.json';
+const kKoachParamsAsset = 'assets/koach/koach_params_1_0_3.json';
 const kKoachFichesAsset = 'assets/koach/vecteurs_qualites_v1.json';
 
 /// Ordre des extensions (celui du banc, `PolitiqueKoach.debut`) : c'est

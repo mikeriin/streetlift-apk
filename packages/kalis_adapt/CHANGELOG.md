@@ -1,5 +1,37 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.2
+
+Lot KM2c2 (KM2 correction 2, DECISIONS_CP.md C13.13.2, C17.13) : **portage Dart de la référence Koach 1.0.3**
+(KM1 correction 3, `reference/CHANGEMENTS_1_0_3.md`), à l'identique. API, schéma du journal et façade inchangés ;
+`posterior()` gagne la clé `fiabilite` (une application intégrée sur 1.0.0 ou 1.0.1 monte de version et remplace
+l'asset de paramètres).
+
+- **Fiabilité des notes** (`modele.dart`, classe `Fiabilite`, contrat § 5.13) : grille a posteriori sur ln φ, part
+  des séries de force non notées (Beta), oubli λ, grilles par schéma rapportées ; mise à jour dans `_serieForce`
+  (séries de force faites, hors échauffement et échec, après la sonde et avant la porte des séries sans note) ;
+  `elargissement()` = κ ≥ 1 (plafonné à 2), appliqué à l'écart-type de `capacite` et `capaciteDuJour` (sauf
+  `brut`) et aux tirages du jumeau (`Planification.tirer` : S ← D S D sur les capacités) ; la moyenne des capacités
+  ne change jamais.
+- **Tentatives** (`seance.dart`) : échelle sur l'écart-type brut (`capaciteDuJour(brut: true)`,
+  `probaReussite(…, brut)`) ; palier des barres prouvées réduit et marge sur les barres réussies quand κ > 1
+  (`_palierBarres`) ; après un échec hors semaine de compétition, barre suivante sur l'estimation mise à jour, au plus
+  `tentative_echec_baisse_part` sous la barre ratée (en compétition : la même barre, A8.2).
+- **Règles** : `_bornesHausse` applique `securite.echec_sans_hausse_tout_schema` (1 : aucune hausse après un échec
+  non prévu, quel que soit le schéma, règle de 0.3.1) ; `_cibleCharge` : prudence des séries lourdes
+  (`planification.prudence_charge_fiabilite`, 0 dans le fichier livré) ; `_rampe` : borne large sur σ brut.
+- **Import** (`rupture.dart`) : `mesure.defaut_modele_sd` ∈ [0,001 ; 0,1] (relecture KM2c1, m3), six bornes
+  nouvelles, cinq clés de grille et d'a priori de la fiabilité figées ; `appliquerParametres` repointe
+  `modele.fiabilite.p`.
+- **Paramètres** : asset `assets/koach/koach_params_1_0_3.json` (`1.0.3-ref.1`, 338 clés, SHA-256
+  `d129a4e9…1aa0`) à la place de `koach_params_1_0_2.json`.
+- **Tests** : parité sur les 15 fixtures de la référence 1.0.3 (`moteur_12` : notes peu fiables) et trois fixtures
+  complémentaires produites par la référence sans la modifier (`test/fixtures/km2c2/`, `generer_km2c2.py` :
+  tentative ratée hors compétition et en compétition, jumeau avec κ > 1), traces comprises ;
+  `test/koach_fiabilite_test.dart` (indicateur, moyenne intacte, élargissement, import) ; bornes et clés figées de
+  1.0.3 dans `koach_parametres_test.dart` ; copies figées de 1.0.2 (`reference/fix_dart/`, `koach_params_d2.json`)
+  supprimées.
+
 ## 1.0.1
 
 Lot KM2c1 (KM2 correction 1, DECISIONS_CP.md C13.12, C13.13, C17) : **portage Dart de la référence Koach 1.0.2**

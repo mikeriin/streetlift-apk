@@ -14,7 +14,11 @@ import zipfile
 # ressources chiffrées à environ 25,1 Mo. Limite de taille, pas de contenu :
 # les contrôles de secrets, de fichiers exclus et de modèles en clair sont
 # inchangés.
-LIMIT = 30_000_000
+# KM3 (dev7.0.0) : 50 Mo — `kalis_adapt` 1.0.x (Koach 1.0) est copié à
+# l'octet de son étiquette (prompt KM3), avec sa référence Python, ses
+# fixtures de parité et ses données de banc (≈ 21,7 Mo) ; l'APK n'en
+# embarque que le code Dart et les deux assets de `assets/koach/`.
+LIMIT = 50_000_000
 # M6c : ressources sous licence chiffrées (`assets_secure/*.enc` : personnage
 # Mixamo, mannequin d'exécution, écorché acheté) comptées à part, dans leur
 # propre budget ; le reste de l'arbre garde sa limite (30 Mo depuis CI1).
@@ -121,7 +125,7 @@ def check_archive(path):
                 continue
             total += entry.file_size
             if total > LIMIT:
-                raise PackagingError('Contenu extrait supérieur à 30 000 000 octets.')
+                raise PackagingError('Contenu extrait supérieur à 50 000 000 octets.')
             check_content(relative, archive.read(entry))
         if archive.testzip() is not None:
             raise PackagingError('CRC du ZIP invalide.')
@@ -174,6 +178,6 @@ def check_tree(root, files=None):
             continue
         total += len(data)
         if total > LIMIT:
-            raise PackagingError('Arbre du dépôt supérieur à 30 000 000 octets.')
+            raise PackagingError('Arbre du dépôt supérieur à 50 000 000 octets.')
         check_content(PurePosixPath(relative.as_posix()), data)
     return len(files), total + secure

@@ -45,7 +45,7 @@ dependencies:
   # G9 (D5) : moteur dynamique (séance du jour, conseils, revue), récupéré
   # par étiquette (branche fixe etiquettes/kalis_adapt-v0.1.0), avec
   # kalis_core 0.3.0 (etiquettes/kalis_core-v0.3.0, évolution additive).
-  # KM3 : kalis_adapt 1.0.1 (Koach 1.0, etiquettes/kalis_adapt-v1.0.1).
+  # KM3 : kalis_adapt 1.0.2 (Koach 1.0.3, etiquettes/kalis_adapt-v1.0.2).
   kalis_adapt:
     path: packages/kalis_adapt
 
@@ -78,7 +78,7 @@ flutter:
     # d'exercices, copies à l'octet de packages/kalis_adapt/assets/koach/
     # (SHA-256 vérifiés par test/km3_koach_test.dart ; INTEGRATION_KM3.md
     # § 3).
-    - assets/koach/koach_params_1_0_2.json
+    - assets/koach/koach_params_1_0_3.json
     - assets/koach/vecteurs_qualites_v1.json
     # CU : parcours de création du profil v3 (copie de l'asset de
     # kalis_core 0.4.0).
