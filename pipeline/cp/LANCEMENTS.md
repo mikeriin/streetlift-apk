@@ -331,3 +331,8 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Lot : **KS1A**, prompt `prompts/KS1A.txt`. Base : pointe de `main` (dev7.0.0, dc9cbc55). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KS1A`.
 - Paquets : `etiquettes/kalis_core-v0.4.4` (08603867), `etiquettes/kalis_plan-v0.4.1` (eae158b8) ; KR1 tourne sur `moteurs` et peut publier `kalis_plan` 0.4.2 : ne la prends que si sa ligne KR1 est « validé » dans `ETAT_CP.md` au moment de l'intégration.
 - Bascule de Koach fermée (C17.19) : n'y touche pas.
+
+## KS1c2 — aucun jour sans son principal (lancé le 16/10/2026 vers 23:25 UTC, tâche « Opus 5.5, effort maximal, moteurs » ; C17.21, C17.22)
+
+- Lot : **KS1c2**, prompt `prompts/KS1c2.txt`. Base `moteurs` à la pointe. Contrôle `claude/ci-cp-b`, sauvegardes `cp-sauvegardes/KS1c2`.
+- En parallèle sur `moteurs` : **KR1** (`kalis_adapt`, `kalis_bench`, contrôle `claude/ci-cp-a`), qui publiera `kalis_adapt` 1.0.3 et `kalis_bench` 0.5.3. Ne touche pas `kalis_adapt` ; rebase avant chaque push ; versions et étiquettes libres au moment de publier, jamais réécrites.
