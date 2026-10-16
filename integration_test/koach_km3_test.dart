@@ -244,10 +244,26 @@ void main() {
       await wait(tester, 800);
       releve['dev_apercu'] = store.koachPending(w, jd);
       await shot('2_bilan');
-      await tapKey(tester, 'feel-4', ms: 2500);
-      // Diagnostic hors modèle éventuel : « Plus tard ».
-      await tapKey(tester, 'koach-diag-later', ms: 1500);
-      await wait(tester, 2000);
+      await tapKey(tester, 'feel-4', ms: 300);
+      // Début réel (rattrapage, `seance_debut`, `plan(seance)`) : attendu
+      // jusqu'à 60 s, diagnostic hors modèle éventuel passé (« Plus tard »).
+      final debut = Stopwatch()..start();
+      final appuis = <String>[];
+      while (!store.koachOpen(w, jd) && debut.elapsedMilliseconds < 60000) {
+        await wait(tester, 250);
+        for (final k in const ['koach-diag-later', 'adjust-go', 'bilan-start']) {
+          final f = find.byKey(ValueKey(k)).hitTestable();
+          if (f.evaluate().isNotEmpty) {
+            appuis.add(k);
+            await tester.tap(f.first);
+            await wait(tester, 300);
+          }
+        }
+      }
+      releve['dev_debut_ms'] = debut.elapsedMilliseconds;
+      releve['dev_debut_appuis'] = appuis;
+      releve['dev_temps_debut'] = store.koachTemps.toJson();
+      await wait(tester, 1000);
       releve['dev_seance_ouverte'] = store.koachOpen(w, jd);
       final a = store.sessionAdapt(w, jd);
       releve['dev_items_servis'] = (a?.koach?['items'] as List?)?.length;
@@ -284,7 +300,7 @@ void main() {
           final a2 = store.sessionAdapt(w, jd)!;
           final st = Map<String, Object?>.of(a2.koach!);
           final cibles = Map<String, Object?>.of(
-            (st['cibles'] as Map).cast<String, Object?>(),
+            ((st['cibles'] as Map?) ?? const {}).cast<String, Object?>(),
           );
           final m = Map<String, Object?>.of(
             ((cibles[e2.slotId] as Map?) ?? const {}).cast<String, Object?>(),
