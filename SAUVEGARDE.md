@@ -52,3 +52,5 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 ## 18:58 UTC — G (6f8ce32) et contrôle préalable (6d1e71d, workflow standard) poussés ; F en cours. Scripts : /tmp/kr1/ctrlcommit.sh (kr1_dev/).
 
 ## 19:54 UTC — GitHub Actions bloqué ~19:00-19:45 (tout en file). Saisons figées 0.3.1 déplacées dans kalis_bench/docs/data/kr1/saisons_figees_0_3_1 (C17.19.3 : arbre de kalis_adapt +1,4 Mo seulement) ; docs mises à jour.
+
+## 20:14 UTC — Run F publié (136793c) : 90 600 saisons, 0 plantée ; critère 7 = 72 sur 100 graines (4 aggravations, 59 poussées de douleur, 9 volume_trop_vite introduits) — 0 sur graines 0-5 ; adversaires 7 tenu partout, 7 bis 24/22/22/21/22/20 (≥ figé) ; critères par groupe (bruit) calculés ; parité saison par saison : seuls écarts first_under (ordre d'un set Python) → comparer corrigé (multiensemble). À faire : causes des 72 (run G liste les saisons).

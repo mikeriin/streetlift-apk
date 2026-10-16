@@ -53,6 +53,11 @@ def _egal(a, b, chemin, ecarts):
             _egal(a[k], b[k], chemin + '/' + k, ecarts)
         return
     if isinstance(a, list) and isinstance(b, list):
+        if chemin.endswith('/first_under'):
+            # Premiers passages par exercice : multiensemble (la référence
+            # parcourt un `set` Python, d'ordre arbitraire ; seule la moyenne
+            # est lue par les critères).
+            a, b = sorted(a), sorted(b)
         if len(a) != len(b):
             ecarts.append((chemin + '#len', len(a), len(b)))
             return
