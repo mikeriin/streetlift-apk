@@ -88,6 +88,220 @@ typedef Residu = (double, double, bool);
 /// moyen, nombre, poids du mauvais jour, résidu d'e1RM ou null).
 typedef ResumeSeance = (int, double, double, int, double, double?);
 
+/// Fiabilité des notes de l'athlète (1.0.3, DECISIONS_CP.md C17.9 ;
+/// CONTRAT_1_0.md § 5.13 ; référence `koach/modele.py`, classe
+/// `Fiabilite`). Indicateur tiré de ce que le filtre observe déjà, qui
+/// n'entre que dans l'INCERTITUDE des capacités ([Modele.elargissement]),
+/// jamais dans leur moyenne : grille a posteriori sur ln φ (facteur de
+/// variance du bruit des notes de l'athlète par rapport au bruit de
+/// population de son niveau), comptes Beta de la part des séries de force
+/// faites sans note, oubli λ en puissance, mêmes grilles par schéma
+/// (séries lourdes, légères) rapportées seulement.
+class Fiabilite {
+  Fiabilite(Json params) : p = jm(params['mesure']) {
+    final me = p;
+    final n = ent(me['fiabilite_phi_points'] ?? 13);
+    final lo = math.log(dbl(me['fiabilite_phi_min'] ?? 0.125));
+    final hi = math.log(dbl(me['fiabilite_phi_max'] ?? 8.0));
+    lphi = [for (var k = 0; k < n; k++) lo + (hi - lo) * k / (n - 1)];
+    phi = [for (final x in lphi) math.exp(x)];
+    final sd = dbl(me['fiabilite_ln_phi_sd'] ?? 0.5);
+    final lp0b = [for (final x in lphi) -0.5 * pw(x / sd, 2)];
+    lp0 = _normaliser(lp0b);
+    phi0 = _moyenne(lp0, phi);
+    lp = List<double>.of(lp0);
+    lpS = [List<double>.of(lp0), List<double>.of(lp0)];
+    final nn0b = jl(me['fiabilite_non_notee_a_priori'] ?? const [1.0, 4.0]);
+    nn0 = [dbl(nn0b[0]), dbl(nn0b[1])];
+    nn = List<double>.of(nn0);
+    nnS = [List<double>.of(nn0), List<double>.of(nn0)];
+  }
+
+  /// Section `mesure` des paramètres (repointée par un import).
+  Json p;
+  late final List<double> phi;
+  late final List<double> lphi;
+  late final List<double> lp0;
+  late List<double> lp;
+  late List<List<double>> lpS;
+  late final List<double> nn0;
+  late List<double> nn;
+  late List<List<double>> nnS;
+  int notes = 0;
+  final List<int> notesS = [0, 0];
+
+  /// E[φ] a priori.
+  late final double phi0;
+
+  /// Oubli λ, lu à chaque usage (un import de paramètres le change ; la
+  /// grille et les a priori sont fixés à la création).
+  double get oubli => dbl(p['fiabilite_oubli'] ?? 0.98);
+
+  static List<double> _normaliser(List<double> lp) {
+    var mx = lp[0];
+    for (final x in lp) {
+      if (x > mx) {
+        mx = x;
+      }
+    }
+    var s = 0.0;
+    for (final x in lp) {
+      s += math.exp(x - mx);
+    }
+    final c = mx + math.log(s);
+    return [for (final x in lp) x - c];
+  }
+
+  List<double> _ajouter(List<double> lpx, List<double> logl) {
+    final lamb = oubli;
+    final out = [
+      for (var k = 0; k < lpx.length; k++)
+        lp0[k] + lamb * (lpx[k] - lp0[k]) + logl[k],
+    ];
+    return _normaliser(out);
+  }
+
+  static double _masse(double mu, double sd0, double a, double b) {
+    var sd = sd0;
+    if (sd < 1e-9) {
+      sd = 1e-9;
+    }
+    final pb = b == inf ? 1.0 : normCdfK((b - mu) / sd);
+    final pa = a == -inf ? 0.0 : normCdfK((a - mu) / sd);
+    final l = pb - pa;
+    return l > 0.0 ? l : 0.0;
+  }
+
+  /// Note perçue : [a, b] intervalle de réserve perçue, [mu, v] prévision
+  /// du filtre, [s02] variance du bruit de population à la réserve prévue,
+  /// [extra] bruit de la fatigue de séance, poids du mélange comme dans
+  /// `_serieForce` ; queue lourde du filtre (`note_erreur_grossiere`).
+  void noter(
+    double mu,
+    double v,
+    double a,
+    double b,
+    double s02,
+    double extra,
+    double wMain,
+    double wNul,
+    bool lourd,
+  ) {
+    final ge = jld(p['note_erreur_grossiere'] ?? const [0.0, 0.0]);
+    final g = ge[0];
+    final gsd = ge[1];
+    final logl = <double>[];
+    for (var k = 0; k < phi.length; k++) {
+      final variance = v + phi[k] * s02 + extra;
+      var l = _masse(mu, math.sqrt(variance), a, b);
+      if (g > 0.0) {
+        l =
+            (1.0 - g) * l +
+            g * _masse(mu, math.sqrt(variance + gsd * gsd), a, b);
+      }
+      l = wMain * l + wNul;
+      logl.add(math.log(l > 1e-300 ? l : 1e-300));
+    }
+    lp = _ajouter(lp, logl);
+    final i = lourd ? 0 : 1;
+    lpS[i] = _ajouter(lpS[i], logl);
+    notes += 1;
+    notesS[i] += 1;
+  }
+
+  List<double> _compter(List<double> c, bool x) {
+    final lamb = oubli;
+    return [
+      nn0[0] + lamb * (c[0] - nn0[0]) + (x ? 1.0 : 0.0),
+      nn0[1] + lamb * (c[1] - nn0[1]) + (x ? 0.0 : 1.0),
+    ];
+  }
+
+  /// Série de force faite (hors échec) : notée ou non.
+  void serie(bool notee, bool lourd) {
+    nn = _compter(nn, !notee);
+    final i = lourd ? 0 : 1;
+    nnS[i] = _compter(nnS[i], !notee);
+  }
+
+  static double _moyenne(List<double> lpx, List<double> valeurs) {
+    var s = 0.0;
+    for (var k = 0; k < lpx.length; k++) {
+      s += math.exp(lpx[k]) * valeurs[k];
+    }
+    return s;
+  }
+
+  double phiMoyen([int? schema]) =>
+      _moyenne(schema == null ? lp : lpS[schema], phi);
+
+  double lnPhiMoyen([int? schema]) =>
+      _moyenne(schema == null ? lp : lpS[schema], lphi);
+
+  /// P(φ ≥ seuil) sur la grille (comparaison en ln, à 1e-9 près : un point
+  /// de grille égal au seuil compte).
+  double probaPhiSup(double seuil, [int? schema]) {
+    final lpx = schema == null ? lp : lpS[schema];
+    final ls = math.log(seuil);
+    var s = 0.0;
+    for (var k = 0; k < lpx.length; k++) {
+      if (lphi[k] >= ls - 1e-9) {
+        s += math.exp(lpx[k]);
+      }
+    }
+    return s;
+  }
+
+  double partNonNotee([int? schema]) {
+    final c = schema == null ? nn : nnS[schema];
+    return c[0] / (c[0] + c[1]);
+  }
+
+  /// Facteur κ ≥ 1 appliqué à l'écart-type des capacités, plafonné à
+  /// `fiabilite_elargissement_max` :
+  /// κ² = 1 + a·max(E[φ] − E₀[φ], 0) + c·max(ρ − ρ₀, 0)².
+  double elargissement() {
+    final a = dbl(p['fiabilite_elargissement_phi'] ?? 0.0);
+    final c = dbl(p['fiabilite_elargissement_non_notee'] ?? 0.0);
+    var ex = phiMoyen() - phi0;
+    if (ex < 0.0) {
+      ex = 0.0;
+    }
+    var nnx = partNonNotee() - nn0[0] / (nn0[0] + nn0[1]);
+    if (nnx < 0.0) {
+      nnx = 0.0;
+    }
+    final k2 = 1.0 + a * ex + c * nnx * nnx;
+    if (k2 <= 1.0) {
+      return 1.0;
+    }
+    final kappa = math.sqrt(k2);
+    final mx = dbl(p['fiabilite_elargissement_max'] ?? 2.0);
+    return kappa < mx ? kappa : mx;
+  }
+
+  Json resume() => {
+    'phi': phiMoyen(),
+    'ln_phi': lnPhiMoyen(),
+    'p_phi_sup_2': probaPhiSup(2.0),
+    'notes': notes,
+    'part_non_notee': partNonNotee(),
+    'elargissement': elargissement(),
+    'par_schema': <String, Object?>{
+      'lourd': <String, Object?>{
+        'phi': phiMoyen(0),
+        'notes': notesS[0],
+        'part_non_notee': partNonNotee(0),
+      },
+      'leger': <String, Object?>{
+        'phi': phiMoyen(1),
+        'notes': notesS[1],
+        'part_non_notee': partNonNotee(1),
+      },
+    },
+  };
+}
+
 /// Suivi d'un exercice (hors de l'état gaussien).
 class Piste {
   Piste(
@@ -213,6 +427,7 @@ class Modele {
       }
     }
     poidsHyp = List<double>.filled(hypotheses.length, 1.0 / hypotheses.length);
+    fiabilite = Fiabilite(p);
   }
 
   Json p;
@@ -238,6 +453,9 @@ class Modele {
   late List<double> paresse;
   int notesDemi = 0;
   int notesEntieres = 0;
+  // 1.0.3 : fiabilité des notes (φ, part non notée), lue par
+  // [elargissement] ; sans effet sur la moyenne des capacités.
+  late final Fiabilite fiabilite;
   // Branche « mauvais jour » : moyenne, covariance, log-poids.
   _Branche? _alt;
   double altLw = 0.0;
@@ -1351,6 +1569,36 @@ class Modele {
         }
         melange = ((1.0 - e) * (1.0 - par), e * 0.1 + (1.0 - e) * par);
       }
+      if (reps > 0 && !echec && s['kind'] != 'warmup') {
+        // 1.0.3 : fiabilité des notes (§ 5.13 ; échauffements exclus : ils
+        // ne sont presque jamais notés). Série lourde si les répétitions
+        // prévues (à défaut faites) sont ≤ `fiabilite_schema_reps`. Une
+        // note perçue apporte la vraisemblance de sa catégorie sous la
+        // prévision du filtre avec le bruit de population (sans
+        // `bruit_rir`) ; une série sans note compte comme non notée.
+        final hiR = cible['repsHigh'];
+        final lourd =
+            (vrai(hiR) ? dbl(hiR) : reps) <=
+            dbl(me['fiabilite_schema_reps'] ?? 5);
+        fiabilite.serie(percu, lourd);
+        if (percu) {
+          final varP = stats(m, pm, cap, idx, co).$2;
+          final extraP = pw(dbl(me['dispersion_fatigue_intra']) * sj * rr, 2);
+          final sPop2 = (s2 - extraP) / (bruitRir * bruitRir);
+          final mel = melange!;
+          fiabilite.noter(
+            pred,
+            varP > 0 ? varP : 0.0,
+            a,
+            b,
+            sPop2,
+            extraP,
+            mel.$1,
+            mel.$2,
+            lourd,
+          );
+        }
+      }
       if (flammes == null && !echec && pred >= a) {
         resid = null;
       } else if (b == inf &&
@@ -1928,11 +2176,27 @@ class Modele {
     final d = dbl(me['defaut_modele_sd'] ?? 0.0);
     // 1.0.2 (C13.12) : la variance du filtre est recalée par
     // `intervalle_echelle`² (mesure sur six graines).
-    final k = brut ? 1.0 : dbl(me['intervalle_echelle'] ?? 1.0);
+    var k = brut ? 1.0 : dbl(me['intervalle_echelle'] ?? 1.0);
+    // 1.0.3 : fiabilité des notes (§ 5.13) : la variance du filtre est
+    // élargie par κ² (1 pour un athlète aux notes fiables) ; pas avec
+    // [brut] (mises à jour bayésiennes du contrôle dual).
+    if (!brut) {
+      k *= elargissement();
+    }
     return (t.base + mu0, math.sqrt((v > 0 ? v : 0.0) * k * k + d * d));
   }
 
-  (double, double)? capaciteDuJour(String exId) {
+  /// Facteur κ ≥ 1 de la fiabilité des notes ([Fiabilite.elargissement])
+  /// appliqué à l'écart-type des capacités (à frais et du jour) et aux
+  /// tirages du jumeau ; 1 pour un athlète aux notes fiables.
+  double elargissement() => fiabilite.elargissement();
+
+  /// (moyenne, écart-type) de ln capacité du moment (effets de jour et
+  /// fatigue compris), mélange des deux branches ; écart-type élargi par
+  /// la fiabilité des notes (1.0.3), sauf avec [brut] (échelle des
+  /// tentatives : la prudence envers des notes peu fiables y passe par le
+  /// palier des barres prouvées, § 6.5).
+  (double, double)? capaciteDuJour(String exId, {bool brut = false}) {
     final t = piste(exId);
     if (t == null) {
       return null;
@@ -1946,7 +2210,8 @@ class Modele {
       v = (1 - w) * (v + pw(mu0 - mean, 2)) + w * (v1 + pw(mu1 - mean, 2));
       mu0 = mean;
     }
-    return (t.base + mu0, math.sqrt(v > 0 ? v : 0.0));
+    final k = brut ? 1.0 : elargissement();
+    return (t.base + mu0, math.sqrt(v > 0 ? v : 0.0) * k);
   }
 
   (double, double, double)? intervalle(String exId, [double niv = 0.90]) {

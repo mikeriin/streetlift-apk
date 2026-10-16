@@ -7,7 +7,7 @@
 //       [--sortie comparaison_adversaires_km2.json] [--coeurs 2]
 //       [--briques aucune|toutes|liste] [--trajectoires N]
 //       [--reference comparaison_adversaires.json]
-//       [--parametres fichier] [--fiches fichier]
+//       [--parametres fichier] [--fiches fichier] [--saisons-figees dossier]
 //   dart run bin/km2_adversaire.dart --chercher [--budget 300] [--graines 2]
 //       [--objectif a|b] [--n-pires 32] [--temoins 8] [--profils a,b,…]
 //       [--scenario reference] [--modeles abc] [--graine 20261009]
@@ -150,6 +150,7 @@ List<String> _briques(List<String> args) {
 Map<String, Object?> _config(List<String> args) => <String, Object?>{
   'parametres': option(args, '--parametres') ?? _parametresDefaut,
   'fiches': option(args, '--fiches') ?? _fichesDefaut,
+  'saisons_figees': option(args, '--saisons-figees'),
 };
 
 Map<String, Object?> _moteur(
@@ -232,8 +233,22 @@ KmBanc _banc(Map<String, Object?> config) {
     profils: <String, Map<String, Object?>>{
       for (final j in readSeasonJson()) j['key']! as String: j,
     },
+    saisonsFigees: _lecteurSaisonsFigees(config['saisons_figees'] as String?),
   );
 }
+
+/// Lecteur des saisons figées de [dossier] (`<cle>.json.gz`, lot KM2c2),
+/// ou null (saisons vivantes).
+List<Object?> Function(String)? _lecteurSaisonsFigees(String? dossier) =>
+    dossier == null
+    ? null
+    : (String cle) {
+        final v = _lireJson('$dossier/$cle.json.gz');
+        if (v is! List<Object?>) {
+          throw FormatException('saisons figées absentes', '$dossier/$cle');
+        }
+        return v;
+      };
 
 // ----------------------------------------------------------------------
 // Isolats de travail (équipe persistante : les entrées sont chargées une
