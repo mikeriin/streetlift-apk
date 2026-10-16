@@ -71,3 +71,5 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Commit local moteurs 597c10b (arbre 11de449e) ; contrôle complet final poussé (ba88acd5, workflow standard).
 - Brouillon de livraison : kr1_dev/LIVRAISON_KR1_brouillon.md.
 - Reste : attendre le contrôle ; rebase/push moteurs ; étiquettes kalis_adapt-v1.0.3, kalis_bench-v0.5.3 ; livraison (pipeline + projet), DECISIONS (section KR1), ETAT (livré — critère dur non tenu), page de suivi, notification.
+
+- 21:58 UTC : contrôle final run 38972216385 (ba88acd5) en cours ; brouillons DECISIONS (decisions_kr1.md) et section de page (page_section.html) prêts.
