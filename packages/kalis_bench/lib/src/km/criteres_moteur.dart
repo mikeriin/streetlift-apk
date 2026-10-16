@@ -305,7 +305,16 @@ final class KmBanc {
     required this.parametres,
     required this.fiches,
     required this.profils,
+    this.saisonsFigees,
   });
+
+  /// Saisons de référence figées (lot KM2c2) : lecteur des saisons que lit
+  /// la référence Python (`kalis_adapt/reference/donnees/reference/<cle>`,
+  /// figées sur `kalis_plan` 0.3.1, liste d'une saison par scénario), à la
+  /// place de `kmReferenceSeason` sur le `kalis_plan` courant. Comme
+  /// `donnees.saisons_reference` : un scénario qui renvoie à la saison de
+  /// base (`blocksAs`) en reprend les blocs. Null : saisons vivantes.
+  final List<Object?> Function(String cle)? saisonsFigees;
 
   /// Catalogue.
   final Catalog catalog;
@@ -337,6 +346,29 @@ final class KmBanc {
     final json = profils[cle];
     if (json == null) {
       throw ArgumentError('profil inconnu : $cle');
+    }
+    final figees = saisonsFigees;
+    if (figees != null) {
+      final brutes = <kc.Json>[for (final x in figees(cle)) kc.jm(x)];
+      kc.Json? base;
+      for (final x in brutes) {
+        if (x['scenario'] == 'reference') {
+          base = x;
+        }
+      }
+      final lues = <kc.Json>[
+        for (final x in brutes)
+          kc.jm(
+            kmNormaliserJson(<String, Object?>{
+              for (final e in x.entries)
+                if (e.key != 'blocksAs') e.key: e.value,
+              if (x['blocks'] == null && kc.vrai(x['blocksAs']))
+                'blocks': base!['blocks'],
+            }),
+          ),
+      ];
+      _saisons[cle] = lues;
+      return lues;
     }
     final out = <kc.Json>[
       for (final s in SeasonScenario.values)

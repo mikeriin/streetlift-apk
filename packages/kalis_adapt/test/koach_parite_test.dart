@@ -10,8 +10,12 @@ import 'package:test/test.dart';
 
 const double tolerance = 1e-9;
 
-Json lireFixture(String nom) =>
-    jsonDecode(File('reference/fixtures/$nom').readAsStringSync()) as Json;
+/// Fixture de la référence (`reference/fixtures/<nom>`), ou chemin relatif
+/// au paquet quand [nom] contient un `/` (fixtures complémentaires de
+/// `test/fixtures/km2c2/`, produites par la référence sans la modifier).
+Json lireFixture(String nom) => jsonDecode(
+  File(nom.contains('/') ? nom : 'reference/fixtures/$nom').readAsStringSync(),
+) as Json;
 
 /// Valeur JSON pure (comme `propre` de la référence).
 Object? propre(Object? x) {
@@ -463,5 +467,15 @@ void main() {
   group('planification', () {
     testerPlanification('planification_1.json');
     testerPlanification('planification_2.json');
+  });
+
+  // Branches du delta 1.0.3 que les fixtures de la référence n'exécutent
+  // pas (relecture de KM2c2, M1) : barre suivante après une tentative
+  // ratée hors compétition, même barre en compétition, tirages du jumeau
+  // avec κ > 1 (`test/fixtures/km2c2/generer_km2c2.py`).
+  group('KM2c2', () {
+    testerMoteur('test/fixtures/km2c2/moteur_12_echec.json');
+    testerMoteur('test/fixtures/km2c2/moteur_12_echec_competition.json');
+    testerPlanification('test/fixtures/km2c2/planification_kappa.json');
   });
 }

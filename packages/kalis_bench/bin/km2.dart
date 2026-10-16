@@ -60,7 +60,8 @@ const String _usage =
     '[--trajectoires N] [--coeurs N] [--sortie fichier] '
     '[--sans-planificateur] [--defaut-modele x] [--rapide] '
     '[--temps-existants [fichier]] [--semaines N] [--travail dossier] '
-    '[--temoin dossier] [--graines-temoin N] [--sans-determinisme] '
+    '[--temoin dossier] [--saisons-figees dossier] [--graines-temoin N] '
+    '[--sans-determinisme] '
     '[--caler-couverture] [--partie i/n] [--parametres fichier] '
     '[--fiches fichier] [--adversaires fichier] [--rejeu fichier]\n'
     '        dart run bin/km2.dart assembler --sortie fichier '
@@ -108,6 +109,7 @@ final class _Options {
           : int.parse(option(args, '--semaines')!),
       travail = option(args, '--travail'),
       temoinDossier = option(args, '--temoin'),
+      saisonsFigees = option(args, '--saisons-figees'),
       grainesTemoin = int.parse(option(args, '--graines-temoin') ?? '16'),
       determinisme = !args.contains('--sans-determinisme'),
       parametres = option(args, '--parametres') ?? _parametresDefaut,
@@ -140,6 +142,11 @@ final class _Options {
   final int? semaines;
   final String? travail;
   final String? temoinDossier;
+
+  /// Dossier des saisons figées que lit la référence Python (lot KM2c2 :
+  /// `../kalis_adapt/reference/donnees/reference`), ou null (saisons
+  /// vivantes, `kmReferenceSeason`).
+  final String? saisonsFigees;
   final int grainesTemoin;
   final bool determinisme;
   final String parametres;
@@ -237,6 +244,18 @@ List<String> _scenariosDe(Map<String, Object?> json) => <String>[
   for (final s in SeasonScenario.values)
     if (seasonScenarioApplies(json, s)) s.code,
 ];
+
+/// Lecteur des saisons figées de [dossier] (`<cle>.json.gz`), ou null.
+List<Object?> Function(String)? _lecteurSaisonsFigees(String? dossier) =>
+    dossier == null
+    ? null
+    : (String cle) {
+        final v = _lireJson('$dossier/$cle.json.gz');
+        if (v is! List<Object?>) {
+          throw FormatException('saisons figées absentes', '$dossier/$cle');
+        }
+        return v;
+      };
 
 Object? _lireJson(String chemin) {
   final f = File(chemin);
@@ -464,6 +483,7 @@ final class _Contexte {
         for (final e in vecteurs.entries) e.key: kc.jm(e.value),
       },
       profils: _profilsBruts(),
+      saisonsFigees: _lecteurSaisonsFigees(config['saisons_figees'] as String?),
     );
   }
 
@@ -674,6 +694,7 @@ Map<String, Object?> _config(_Options o) => <String, Object?>{
   'graines_temoin': o.grainesTemoin,
   'parametres': o.parametres,
   'fiches': o.fiches,
+  'saisons_figees': o.saisonsFigees,
 };
 
 // ----------------------------------------------------------------------
@@ -739,6 +760,9 @@ Map<String, Object?> _configuration(
   'temoin': o.temoinDossier == null
       ? 'kmWitnessSeason (calculé)'
       : 'lu dans ${o.temoinDossier}',
+  'saisons': o.saisonsFigees == null
+      ? 'kmReferenceSeason (kalis_plan courant)'
+      : 'figées, lues dans ${o.saisonsFigees}',
   'moteur': 'kalis_adapt $kalisAdaptVersion (Dart)',
 };
 

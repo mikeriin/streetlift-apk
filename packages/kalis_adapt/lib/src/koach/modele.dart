@@ -287,13 +287,13 @@ class Fiabilite {
     'notes': notes,
     'part_non_notee': partNonNotee(),
     'elargissement': elargissement(),
-    'par_schema': {
-      'lourd': {
+    'par_schema': <String, Object?>{
+      'lourd': <String, Object?>{
         'phi': phiMoyen(0),
         'notes': notesS[0],
         'part_non_notee': partNonNotee(0),
       },
-      'leger': {
+      'leger': <String, Object?>{
         'phi': phiMoyen(1),
         'notes': notesS[1],
         'part_non_notee': partNonNotee(1),
