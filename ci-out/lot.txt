@@ -1,0 +1,1 @@
+lot=KS1A0 rapide=true
