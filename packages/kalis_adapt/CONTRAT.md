@@ -37,9 +37,9 @@ sortie et raisons de chaque `plan`, `posterior()` après chaque fin de séance, 
 `moteur_1`), vecteur d'état et diagonale de la covariance, état final, rejeu par `rejouer`, tirages du jumeau,
 tables, évaluation de la référence, replanification, plan et items modulés. Tolérance 1e-9 relative ; les traces
 (hors contrat) sont aussi identiques (`fixe` reproduit `'%.nf'` de Python). Le banc vérifie en plus 5 saisons
-complètes avec toutes les extensions contre la référence (`kalis_bench`, `test/km2_banc_test.dart` ; 6 depuis le
+complètes avec toutes les extensions contre la référence (`kalis_bench`, `test/km2_banc_test.dart` ; 7 depuis le
 lot KR1, dont `ks_test_ppl6` sur quarante semaines et quinze élargissements, sur les données de référence régénérées
-sur `kalis_plan` 0.4.1).
+sur `kalis_plan` 0.4.1, sécurité de la saison comprise).
 
 **K.3 Ce que la façade fait de plus que la référence (KM2, constats M6 et M7).** Sans extension, rien ne change
 (les fixtures le vérifient). Avec des extensions :

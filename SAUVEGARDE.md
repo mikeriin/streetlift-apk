@@ -56,3 +56,10 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 ## 20:14 UTC — Run F publié (136793c) : 90 600 saisons, 0 plantée ; critère 7 = 72 sur 100 graines (4 aggravations, 59 poussées de douleur, 9 volume_trop_vite introduits) — 0 sur graines 0-5 ; adversaires 7 tenu partout, 7 bis 24/22/22/21/22/20 (≥ figé) ; critères par groupe (bruit) calculés ; parité saison par saison : seuls écarts first_under (ordre d'un set Python) → comparer corrigé (multiensemble). À faire : causes des 72 (run G liste les saisons).
 
 ## 20:28 UTC — Cause des 9 volume_trop_vite introduits (100 graines) : retirer_retours_a_l_ecrit indexait les semaines sans tronquer les blocs interrompus (blockWeeks) → corrigé Python+Dart (bench), test test_retour_a_l_ecrit_apres_un_bloc_interrompu ; les 9 deviennent retour_ecrit (vérifié en Python sur les 9). Restent : 59 poussées, 4 aggravations (saisons à identifier par G).
+
+## 21:21 UTC
+- Run G lu (f8abee6) : critère 7 = 72 (= 63 après reclassement des 9 volumes) ; réalisée appariée 259 646 (fluctuations du volume servi) ; P0 : 346 + 132 tests verts.
+- Causes établies (tests reference/tests/test_kr1_violations.py : 4 mécanismes) : poussées (tendon réactif, gêne 2-3 < douleur_seuil 3, exposition remontée : fin de reprise 84 j, retour après manquées, pas de reprise sans arrêt) ; aggravations (hausse de charge des dips sous douleur 5 au poignet, contrainte seulement à 5).
+- Décision : pas de correction de méthode de la conduite sous douleur dans KR1 (remesure + méthode → lot Koach) ; livrer « critère dur non tenu » + recommandation.
+- Parité saison par saison (échantillon 20 saisons Python local vs parts Dart G) : 20/20 identiques.
+- Fixture banc 7 (autres_08 changement a 87) ; pytest 270 OK.

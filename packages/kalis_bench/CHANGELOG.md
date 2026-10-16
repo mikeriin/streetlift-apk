@@ -17,8 +17,12 @@ grilles inchangés.
   le plan initial) et `realise_apparie` (même saison classée contre le plan écrit aux mêmes séances manquées
   vidées : ce que Koach a servi au-delà du plan). Publiées par saison dans les parts de campagne et lues par
   `tool/kr1_securite.py` ; le critère 7 (`kmCritereSecurite`) est inchangé et ne les agrège pas. Parité Python
-  (`campagne.securite_saison`) vérifiée par `test/km2_banc_test.dart` sur les six saisons du banc (clé `securite`
+  (`campagne.securite_saison`) vérifiée par `test/km2_banc_test.dart` sur les sept saisons du banc (clé `securite`
   des fixtures).
+- **Retour à l'écrit après un bloc interrompu** (`kmRetirerRetoursALEcrit`, `campagne.retirer_retours_a_l_ecrit`) : l'indice
+  de semaine de la saison suit les semaines SERVIES (bloc interrompu tronqué par `blockWeeks`) ; avant, 9 hausses de
+  volume « retour à l'écrit » sur 90 600 saisons restaient classées « introduites » (critère 7). Fixture du banc
+  `autres_08`, changement de discipline, graine 87 ; test Python `test_retour_a_l_ecrit_apres_un_bloc_interrompu`.
 - **Outils** : `tool/kr1_securite.py` (violations par type, profil, scénario et modèle de vérité sur les parts de
   campagne, cent graines ; extraction saison par saison pour le critère 5) ; `tool/kr1_comparer.py` (parité saison
   par saison Dart / Python d'une campagne).

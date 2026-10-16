@@ -23,7 +23,7 @@ Tests : `tests/test_rupture.py` (`test_reponse_rien_elargit_et_reinitialise` mis
 
 ## C. Fixtures
 
-`fixtures/generer.py` (15 fixtures), `test/fixtures/km2c2/generer_km2c2.py` (3) et `fixtures/generer_banc_km2.py` (6 : une de plus, `ks_test_ppl6`, séances manquées, vérité a, graine 1) régénérés avec le moteur 1.0.4 et les données neuves ; `koach.VERSION` vaut `1.0.4-ref.1`.
+`fixtures/generer.py` (15 fixtures), `test/fixtures/km2c2/generer_km2c2.py` (3) et `fixtures/generer_banc_km2.py` (7 : deux de plus, `ks_test_ppl6`, séances manquées, vérité a, graine 1, et `autres_08`, changement de discipline, vérité a, graine 87 ; clé `securite` nouvelle : `campagne.securite_saison`) régénérés avec le moteur 1.0.4 et les données neuves ; `koach.VERSION` vaut `1.0.4-ref.1`.
 
 ## D. Portage Dart (`kalis_adapt` 1.0.3)
 

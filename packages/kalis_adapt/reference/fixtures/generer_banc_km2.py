@@ -75,6 +75,9 @@ SAISONS = [
     # Lot KR1 : profil ajouté par KS1 (40 semaines, `kalis_plan` 0.4.1),
     # réponses « rien de spécial » répétées (élargissement plafonné, 1.0.4).
     ('ks_test_ppl6', 'seances_manquees', 'a', 1),
+    # Lot KR1 : bloc interrompu (changement de discipline) suivi d'un « retour
+    # à l'écrit » en semaine 11 (indice de semaine servie, `blockWeeks`).
+    ('autres_08_crossfit_intermediaire', 'changement_discipline', 'a', 87),
 ]
 
 
