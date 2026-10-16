@@ -1,0 +1,182 @@
+{
+ "schemaVersion": 1,
+ "key": "autres_02_hypertrophie_intermediaire",
+ "group": "autres",
+ "title": "Hypertrophie esthétique, intermédiaire",
+ "summary": "Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couché 45 kg, hip thrust 110 kg. Veut développer fessiers et épaules. Cinq séances de 75 minutes, en salle.",
+ "level": "intermediate",
+ "trainingAgeMonths": 36,
+ "core": {
+  "sex": "female",
+  "birthYear": 1999,
+  "heightCm": 166,
+  "bodyWeightKg": 61.0,
+  "disciplines": {
+   "primary": "musculation",
+   "primaryPct": 100,
+   "secondaries": []
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 75
+   },
+   {
+    "weekday": 2,
+    "minutes": 75
+   },
+   {
+    "weekday": 4,
+    "minutes": 75
+   },
+   {
+    "weekday": 5,
+    "minutes": 75
+   },
+   {
+    "weekday": 6,
+    "minutes": 75
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "barre olympique",
+   "disques",
+   "cage / rack",
+   "banc plat",
+   "banc inclinable",
+   "haltères",
+   "poulie",
+   "machine guidée",
+   "presse à cuisses",
+   "machine à mollets",
+   "barre EZ",
+   "kettlebell",
+   "barre fixe",
+   "barres parallèles",
+   "tapis",
+   "rameur",
+   "vélo / home-trainer",
+   "tapis de course",
+   "élastique",
+   "box / plinth"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "mu-back-squat-barre-haute",
+   "measure": "one_rm_kg",
+   "value": 80
+  },
+  {
+   "exerciseId": "mu-developpe-couche-barre",
+   "measure": "one_rm_kg",
+   "value": 45
+  },
+  {
+   "exerciseId": "mu-hip-thrust-barre",
+   "measure": "one_rm_kg",
+   "value": 110
+  }
+ ],
+ "weakPoints": [
+  {
+   "kind": "muscle",
+   "muscleGroup": "glutes",
+   "note": "fessiers à développer en priorité"
+  },
+  {
+   "kind": "muscle",
+   "muscleGroup": "delt_middle",
+   "note": "épaules (faisceau moyen) en retard"
+  }
+ ],
+ "expectations": {
+  "text": [
+   "10 à 16 séries dures par groupe et par semaine ; points faibles à +30 à 50 % de séries, en début de séance, deux à trois fois par semaine ; le reste en entretien (R6-P1, R6-P6).",
+   "Polyarticulaires en 6 à 10 répétitions à 1-3 en réserve, isolations en 10 à 20 à 0-2 ; un exercice en position étirée par muscle (R6-P2, R6-P4).",
+   "Répartition déduite des cinq jours : haut / bas ou poussée / tirage / jambes, pas plus de 10 séries par muscle et par séance (R6-P3).",
+   "Décharge toutes les 4 à 8 semaines (R6-P1)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "min_group_sets",
+    "label": "Fessiers : au moins 14 séries dures par semaine",
+    "group": "glutes",
+    "sets": 14
+   },
+   {
+    "id": "c2",
+    "type": "min_group_sets",
+    "label": "Deltoïde moyen : au moins 10 séries dures par semaine",
+    "group": "delt_middle",
+    "sets": 10
+   },
+   {
+    "id": "c3",
+    "type": "max_group_sets",
+    "label": "Fessiers : pas plus de 25 séries dures par semaine",
+    "group": "glutes",
+    "sets": 25
+   },
+   {
+    "id": "c4",
+    "type": "relief_every",
+    "label": "Pas plus de 7 semaines de charge sans allègement",
+    "weeks": 7
+   },
+   {
+    "id": "c5",
+    "type": "pattern_present",
+    "label": "Isolation des épaules au moins deux fois par semaine",
+    "patterns": [
+     "isolation_epaules"
+    ],
+    "perWeek": 2
+   }
+  ]
+ }
+}

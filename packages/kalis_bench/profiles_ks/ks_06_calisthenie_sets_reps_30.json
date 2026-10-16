@@ -1,0 +1,121 @@
+{
+ "schemaVersion": 1,
+ "key": "ks_06_calisthenie_sets_reps_30",
+ "group": "street",
+ "title": "Calisthénie principale, sets & reps à 30 %",
+ "summary": "Femme de 27 ans, 60 kg, intermédiaire, au parc et à la maison. Calisthénie à 70 % (front lever tuck avancé), sets & reps à 30 % (12 tractions, 20 dips). Quatre séances de 75 minutes ; front lever une jambe dans 16 semaines, 15 tractions.",
+ "level": "intermediate",
+ "trainingAgeMonths": 30,
+ "core": {
+  "sex": "female",
+  "birthYear": 1999,
+  "heightCm": 165,
+  "bodyWeightKg": 60.0,
+  "streetMode": {
+   "primary": "calisthenics",
+   "streetliftingPct": 0,
+   "setsRepsPct": 30,
+   "calisthenicsPct": 70
+  },
+  "disciplines": {
+   "primary": "calisthenics",
+   "primaryPct": 70,
+   "secondaries": [
+    {
+     "discipline": "street_workout",
+     "pct": 30
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 75
+   },
+   {
+    "weekday": 3,
+    "minutes": 75
+   },
+   {
+    "weekday": 5,
+    "minutes": 75
+   },
+   {
+    "weekday": 6,
+    "minutes": 75
+   }
+  ],
+  "places": [
+   "exterieur",
+   "maison"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "anneaux",
+   "parallettes",
+   "tapis"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  },
+  "knownExerciseIds": []
+ },
+ "records": [
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 12
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 20
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 30
+  },
+  {
+   "exerciseId": "cs-front-lever-tuck-avance",
+   "measure": "max_hold_seconds",
+   "value": 10
+  },
+  {
+   "exerciseId": "cs-l-sit",
+   "measure": "max_hold_seconds",
+   "value": 15
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Profil ajouté par le lot KS1 (structure de la semaine, CAHIER_KS.md § 9) : mesuré sur les critères automatiques du cahier, sans attentes de coach propres."
+  ],
+  "checks": []
+ },
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "cs-front-lever-une-jambe",
+   "metric": "skill_unlocked",
+   "weeksOut": 16
+  },
+  {
+   "id": "g2",
+   "exerciseId": "sw-traction-pronation",
+   "metric": "max_reps",
+   "targetValue": 15,
+   "weeksOut": 16
+  }
+ ]
+}
