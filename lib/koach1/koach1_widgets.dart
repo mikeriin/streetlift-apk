@@ -251,6 +251,7 @@ class KoachEngineCard extends StatelessWidget {
             key: const ValueKey('koach-engine-stopped'),
             style: body,
           ),
+          const SizedBox(height: KSpacing.s4),
           Text(
             'Sans Koach, pas de conduite sous douleur ni d’ajustement au '
             'bilan : si une douleur dure, consulte un professionnel.',
@@ -426,7 +427,7 @@ class KoachRecapScreen extends StatelessWidget {
                   Text(
                     '${store.content.byId[e.key]?.nom ?? 'Objectif'} : '
                     '${(e.value.$1 * 100).round()} % de chances'
-                    '${e.value.$2 == null ? '' : ' (plan écrit : ${(e.value.$2! * 100).round()} %)'}.',
+                    '${e.value.$2 == null || (e.value.$2! * 100).round() == (e.value.$1 * 100).round() ? '' : ' (plan écrit : ${(e.value.$2! * 100).round()} %)'}.',
                     style: body,
                   ),
               ],

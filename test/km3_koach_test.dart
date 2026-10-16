@@ -608,9 +608,11 @@ void main() {
       final served = _served(app, 19, j).where((e) => e.engine).toList();
       final raisons = app.sessionAdapt(19, j)!.koach?['raisons'] as List?;
       // ignore: avoid_print
-      print('KM3|reprise|S19·J$j|servis=${served.length}|'
-          'ecrits=${base.exercises.length}|'
-          'raisons=${jsonEncode([for (final r in raisons ?? const []) (r as Map)['code']])}');
+      print(
+        'KM3|reprise|S19·J$j|servis=${served.length}|'
+        'ecrits=${base.exercises.length}|'
+        'raisons=${jsonEncode([for (final r in raisons ?? const []) (r as Map)['code']])}',
+      );
     });
   });
 }

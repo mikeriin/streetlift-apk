@@ -199,8 +199,10 @@ void main() {
     clock = DateTime(2026, 11, 17, 9);
     await tester.runAsync(() => store.koachRefresh());
     // ignore: avoid_print
-    print('KM3|capture|recap=${store.koachRecap()?.week}|'
-        'hors_modele=${store.koachNeedsDiagnostic}');
+    print(
+      'KM3|capture|recap=${store.koachRecap()?.week}|'
+      'hors_modele=${store.koachNeedsDiagnostic}',
+    );
     for (final (dark, p) in variants) {
       await show(tester, const KoachRecapScreen(), dark: dark, palette: p);
       await shot(tester, 'km3_recap_${suffix(dark, p)}');
