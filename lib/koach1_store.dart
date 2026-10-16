@@ -1271,14 +1271,8 @@ extension KoachStore on AppStore {
     ];
     final items = <kc.ExercisePrescription>[];
     for (final it in served) {
-      final clean = <String, Object?>{
-        for (final e in it.entries)
-          if (!e.key.startsWith('koach') && e.key != 'test') e.key: e.value,
-      }..['reasons'] = const <Object?>[];
-      try {
-        final p = kc.ExercisePrescription.fromJson(clean);
-        items.add(p.copyWith(setTargets: null));
-      } catch (_) {}
+      final p = _koachItemOf(it, info);
+      if (p != null) items.add(p);
     }
     var plan = kc.SessionPlan(
       date: today,
@@ -1331,6 +1325,44 @@ extension KoachStore on AppStore {
     saveLogs();
     _persist();
     return true;
+  }
+
+  /// Item servi par Koach au format du contrat de l'application : champs
+  /// `koach*` retirés, nombres entiers ramenés à l'entier ; à défaut,
+  /// l'item écrit avec les séries servies. Null : item illisible.
+  kc.ExercisePrescription? _koachItemOf(Json it, KoachJourInfo info) {
+    const ints = {
+      'sets',
+      'repsLow',
+      'repsHigh',
+      'secondsLow',
+      'secondsHigh',
+      'targetFlames',
+      'restSeconds',
+    };
+    Json clean({required bool test}) => <String, Object?>{
+      for (final e in it.entries)
+        if (!e.key.startsWith('koach') && (test || e.key != 'test'))
+          e.key: ints.contains(e.key) && e.value is num
+              ? (e.value as num).round()
+              : e.value,
+    }..['reasons'] = const <Object?>[];
+    for (final test in const [true, false]) {
+      try {
+        final p = kc.ExercisePrescription.fromJson(clean(test: test));
+        final q = p.copyWith(setTargets: null);
+        if (q.validate().isEmpty) return q;
+      } catch (_) {}
+    }
+    for (final w in info.items) {
+      if (w['slotId'] != it['slotId']) continue;
+      try {
+        final p = kc.ExercisePrescription.fromJson(w);
+        final n = (it['sets'] as num?)?.round() ?? p.sets;
+        return p.copyWith(sets: n < 1 ? 1 : n, setTargets: null);
+      } catch (_) {}
+    }
+    return null;
   }
 
   /// Contexte, grilles et zones d'une séance de la journée S[week]·J[j]
@@ -1396,7 +1428,11 @@ extension KoachStore on AppStore {
     final book = _adaptBook();
     final key = sessionKey(week, j);
     final a = sessionAdaptOf(key);
-    if (k == null || fab == null || lundi == null || book == null || a == null) {
+    if (k == null ||
+        fab == null ||
+        lundi == null ||
+        book == null ||
+        a == null) {
       return;
     }
     final gen = _koachRt.gen;
@@ -1422,7 +1458,10 @@ extension KoachStore on AppStore {
           final info = koachJourInfo(n, d.j);
           for (final it in info?.items ?? const <Json>[]) {
             if (it['exerciseId'] == id) {
-              byDay.putIfAbsent((n, d.j), () => []).add((id, '${it['slotId']}'));
+              byDay.putIfAbsent((n, d.j), () => []).add((
+                id,
+                '${it['slotId']}',
+              ));
               break found;
             }
           }
@@ -1464,7 +1503,8 @@ extension KoachStore on AppStore {
         var c = r[slot];
         if (c == null) continue;
         kc.ExercisePrescription? it;
-        for (final x in place?.day?.items ?? const <kc.ExercisePrescription>[]) {
+        for (final x
+            in place?.day?.items ?? const <kc.ExercisePrescription>[]) {
           if (x.slotId == slot) it = x;
         }
         final kg = place == null || it == null || debugDisableFixedLoad
@@ -1478,7 +1518,10 @@ extension KoachStore on AppStore {
     final now = sessionAdaptOf(key);
     if (now == null || now.koach == null) return;
     final st = Map<String, Object?>.of(now.koach!)..['prevision'] = out;
-    sessionLog(week, j).adapt = now.copyWith(koach: st).toJson().cast<String, dynamic>();
+    sessionLog(week, j).adapt = now
+        .copyWith(koach: st)
+        .toJson()
+        .cast<String, dynamic>();
     saveLogs(affectsProgression: false);
     notifyListeners();
   }

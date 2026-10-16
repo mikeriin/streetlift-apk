@@ -76,10 +76,7 @@ class AdaptSummaryScreen extends StatefulWidget {
 }
 
 class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
-  late AdaptSessionSummary? _s = store.adaptSummary(
-    widget.week.n,
-    widget.base,
-  );
+  late AdaptSessionSummary? _s = store.adaptSummary(widget.week.n, widget.base);
 
   /// KM3 : séance de Koach : la prévision de la prochaine fois arrive après
   /// la fin de séance (calcul sur une copie du moteur, en arrière-plan).

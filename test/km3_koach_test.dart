@@ -306,17 +306,21 @@ void main() {
         );
         expect(((last['seance'] as Map)['sets'] as List), isNotEmpty);
         expect(app.sessionAdapt(15, j)!.koach?['state'], 'closed');
-      // Prévision de la prochaine fois (C15.4) : copie du moteur.
-      for (var i = 0;
+        // Prévision de la prochaine fois (C15.4) : copie du moteur.
+        for (
+          var i = 0;
           i < 200 && app.sessionAdapt(15, j)!.koach?['prevision'] == null;
-          i++) {
-        await Future<void>.delayed(const Duration(milliseconds: 50));
-      }
-      expect(app.sessionAdapt(15, j)!.koach?['prevision'], isA<Map>());
-      final sum = app.adaptSummary(15, base)!;
-      expect(sum.exercises.any((e) => e.next != null), isTrue);
-      // ignore: avoid_print
-      print('KM3|prevision|${jsonEncode(app.sessionAdapt(15, j)!.koach?['prevision'])}');
+          i++
+        ) {
+          await Future<void>.delayed(const Duration(milliseconds: 50));
+        }
+        expect(app.sessionAdapt(15, j)!.koach?['prevision'], isA<Map>());
+        final sum = app.adaptSummary(15, base)!;
+        expect(sum.exercises.any((e) => e.next != null), isTrue);
+        // ignore: avoid_print
+        print(
+          'KM3|prevision|${jsonEncode(app.sessionAdapt(15, j)!.koach?['prevision'])}',
+        );
         // ignore: avoid_print
         print('KM3|seance|temps=${app.koachTemps.toJson()}');
       },
@@ -565,6 +569,26 @@ void main() {
       // Journal gardé, nouvelle référence seulement si les blocs changent.
       expect(app.koachEngine.journal.length, greaterThanOrEqualTo(n));
       expect(app.koachEngine.snap, isNotNull);
+    });
+
+    test('chaque semaine de S15 à S20 : séance servie par Koach avec ses '
+        'exercices', () async {
+      await activate();
+      for (var w = 15; w <= 20; w++) {
+        clock = DateTime(2026, 10, 19 + 7 * (w - 15), 9);
+        await app.koachRefresh();
+        final j = _dayWithWork(app, w);
+        clock = DateTime(2026, 10, 19 + 7 * (w - 15) + j - 1, 9);
+        await app.koachRefresh();
+        final base = app.program.week(w).day(j)!;
+        app.adaptOpen(w, base);
+        expect(await app.koachStart(w, base), isTrue, reason: 'S$w·J$j');
+        final served = _served(app, w, j).where((e) => e.engine).toList();
+        expect(served, isNotEmpty, reason: 'S$w·J$j');
+        app.markSessionDone(w, j, true);
+        // ignore: avoid_print
+        print('KM3|semaine|S$w·J$j|${served.length}');
+      }
     });
   });
 }
