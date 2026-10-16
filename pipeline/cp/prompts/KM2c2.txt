@@ -1,0 +1,16 @@
+LOT KM2c2 — KM2 CORRECTION 2 : PORTAGE DE KOACH 1.0.3 (`kalis_adapt` 1.0.2)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs », C13.9). Validation : automatique, par le pilotage.
+Prérequis : KM1c3 validé (C17.13).
+Base : `moteurs` à la pointe (référence 1.0.3, 2d3a5766 ou suivant). Contrôle `claude/ci-cp-a` (KS1c1 occupe `claude/ci-cp-b`), sauvegardes `cp-sauvegardes/KM2c2`.
+
+OBJECTIF
+Porter en Dart le delta de méthode 1.0.2 → 1.0.3 (`reference/CHANGEMENTS_1_0_3.md` § H, `reference/PORTAGE_DART.md` section « Delta 1.0.2 → 1.0.3 (lot KM2c2) », `livraisons/LIVRAISON_KM1c3.md` § 9), à l'identique : parité 1e-9 sur les 15 fixtures, traces comprises ; asset `koach_params_1_0_3.json` (`1.0.3-ref.1`) ; aucune autre modification. API inchangée (`posterior()` gagne `fiabilite`).
+
+CONTENU
+- Delta porté dans `packages/kalis_adapt/lib/src/koach/` (`modele` : `Fiabilite`, `capacite`, `capacite_du_jour` ; `planification` ; `seance` ; `rupture` ; `moteur`) ; tests repointés sur `reference/fixtures/` et `reference/params/koach_params_v1.json` ; copies figées (`reference/fix_dart/`, `koach_params_d2.json`) supprimées.
+- Banc Dart : campagne six graines et six jeux d'adversaires, chiffres identiques à la référence Python (`donnees/criteres_km1c3.json`, `donnees/comparaison_adversaires_km1c3*.json`) ; critère 5 lu selon C17.13.2 ; temps sur la VM Dart (vraisemblance de φ par note comprise).
+- Relecture indépendante du portage (sous-agent Opus).
+- KS1c1 travaille en même temps sur `kalis_plan` / `kalis_bench` : rebase avant chaque push ; les données de référence de Koach restent sur la saison figée (régénération sur `kalis_plan` 0.4.x : lot suivant, après KS1c1).
+
+FIN DE LOT
+- `kalis_adapt` 1.0.2 (et `kalis_bench` si changé), push `moteurs`, étiquettes, contrôle complet vert sur `claude/ci-cp-a` ; `LIVRAISON_KM2c2.md` (pipeline et projet claude.ai) ; ligne KM2c2 « livré » ; notification ; arrête-toi (aucun fire_trigger).

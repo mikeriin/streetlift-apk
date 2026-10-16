@@ -305,3 +305,8 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Lot : **KS1c1**, prompt `prompts/KS1c1.txt`. Base `moteurs` à la pointe (b35a5f6d ou suivant). Contrôle `claude/ci-cp-b`, sauvegardes `cp-sauvegardes/KS1c1`.
 - En parallèle sur `moteurs` : KM1c3 (référence Python de `kalis_adapt`, contrôle `claude/ci-cp-a`). Rebase avant chaque push.
+
+## KM2c2 — portage de Koach 1.0.3 (lancé le 16/10/2026 vers 04:12 UTC, tâche « Opus 5.5, effort maximal, moteurs » ; C17.13)
+
+- Lot : **KM2c2**, prompt `prompts/KM2c2.txt`. Base `moteurs` à la pointe (2d3a5766 ou suivant). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM2c2`.
+- En parallèle sur `moteurs` : KS1c1 (`kalis_plan`, `kalis_bench`, contrôle `claude/ci-cp-b`). Ne touche que `kalis_adapt` (et `kalis_bench` si le banc de parité l'exige) ; rebase avant chaque push.
