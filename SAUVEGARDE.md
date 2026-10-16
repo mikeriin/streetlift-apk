@@ -63,3 +63,5 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Décision : pas de correction de méthode de la conduite sous douleur dans KR1 (remesure + méthode → lot Koach) ; livrer « critère dur non tenu » + recommandation.
 - Parité saison par saison (échantillon 20 saisons Python local vs parts Dart G) : 20/20 identiques.
 - Fixture banc 7 (autres_08 changement a 87) ; pytest 270 OK.
+
+## 21:23 UTC — docs CRITERES_KR1.md + docs/data/kr1/ ; README référence ; attente du contrôle préalable avant le contrôle final.

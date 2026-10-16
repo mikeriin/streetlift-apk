@@ -39,6 +39,11 @@ python3 -I rejeu/walk_forward.py <export.json> --programme <prog.json.gz> --koac
 Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `packages/kalis_bench/bin/km1.dart`
 (export des modèles de vérité, des saisons de référence et des mesures de `kalis_adapt` 0.3.1).
 
+## Résultats publiés (1.0.4, lot KR1)
+
+- Couple `kalis_plan` 0.4.1 × Koach 1.0.4 (34 profils, 100 graines, 90 600 saisons, campagne Dart) : `kalis_bench` `docs/CRITERES_KR1.md` et `docs/data/kr1/` (sécurité, critères par groupe de graines, adversaires). La campagne Python des graines 0 à 5 sur les données régénérées donne les mêmes critères (`kalis_bench/docs/data/kr1/criteres/criteres_kr1_python_34p_g0_5.json`).
+- Violations restantes et leurs mécanismes : `tests/test_kr1_violations.py` ; liste des changements : `CHANGEMENTS_1_0_4.md`.
+
 ## Résultats publiés (1.0.3, lot KM1c3)
 
 - `donnees/criteres_km1c3.json` : critères du cahier sur six graines (4 320 saisons, Koach 1.0.3 complet contre 0.3.1).
