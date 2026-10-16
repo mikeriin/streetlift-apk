@@ -357,6 +357,18 @@ def test_importer_parametres():
     assert params() == original   # le fichier de base n'est pas touché
 
 
+def test_importer_parametres_1_0_3_bornes():
+    """1.0.3 (KM2c1 m3) : `defaut_modele_sd` admis à sa borne basse 0,001 ;
+    les clés de fiabilité sont importables dans leurs bornes."""
+    k, s = koach_minimal()
+    nouveau = {'schema': 1, 'version': '1.0.3-ref.2',
+               'mesure': {'defaut_modele_sd': 0.001, 'fiabilite_elargissement_phi': 2.0,
+                          'fiabilite_elargissement_non_notee': 20.0, 'fiabilite_oubli': 0.95}}
+    r = importer_parametres(k, json.dumps(nouveau))
+    assert r['ok'], r
+    assert k.modele.fiabilite.oubli == 0.95 and k.params['mesure']['defaut_modele_sd'] == 0.001
+
+
 @pytest.mark.parametrize('mauvais', [
     {'schema': 99, 'version': '1.0.0'},
     {'schema': 1, 'version': '2.0.0'},
@@ -367,6 +379,10 @@ def test_importer_parametres():
     {'schema': 1, 'version': '1.0.1', 'sorcellerie': {}},
     {'schema': 1, 'version': '1.0.1', 'mesure': {'bruit_raison_refus': -1.0}},
     {'schema': 1, 'version': '1.0.1', 'fatigue': {'tau_nerveux_j': float('nan')}},
+    # 1.0.3 (KM2c1 m3) : `defaut_modele_sd` = 0 refusé par la borne ET par la règle des clés `_sd`
+    {'schema': 1, 'version': '1.0.3', 'mesure': {'defaut_modele_sd': 0.0}},
+    {'schema': 1, 'version': '1.0.3', 'mesure': {'fiabilite_oubli': 1.0}},
+    {'schema': 1, 'version': '1.0.3', 'mesure': {'fiabilite_elargissement_phi': -0.1}},
 ])
 def test_importer_parametres_refuse(mauvais):
     k, s = koach_minimal()

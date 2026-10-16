@@ -296,3 +296,15 @@ def test_details_refuses_dans_le_depot(tmp_path):
     assert not os.path.exists(os.path.join(wf.RACINE, 'donnees', 'interdit'))
     wf.ecrire_details(str(tmp_path / 'prive'), conv, res)
     assert os.path.exists(str(tmp_path / 'prive' / 'details_A.jsonl'))
+
+
+def test_fiabilite_et_prescriptions_sans_principal_charge():
+    """1.0.3 : section D sur un modèle sans mouvement principal chargé :
+    effectif seul, aucune erreur, surcharge d'instance retirée."""
+    from koach.moteur import Koach
+    k = Koach(wf.charger_params(), wf.charger_fiches(), {'niveau': 2, 'sexe': 'male', 'poids_kg': 75.0,
+                                                          'declares': {}, 'zones_fragiles': []})
+    d = wf.fiabilite_et_prescriptions({'koach': k, 'modele': k.modele, 'fiabilite_avant': None}, ['inconnu'])
+    assert d['principaux_charges'] == {'n': 0} and d['elargissement_kappa'] == 1.0
+    assert 'elargissement' not in k.modele.__dict__
+    json.dumps(d)

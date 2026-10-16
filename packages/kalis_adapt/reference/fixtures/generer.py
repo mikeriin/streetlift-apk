@@ -119,6 +119,16 @@ SCENARIOS = [
      'cle': 'autres_03_powerlifter_competition', 'scenario': 'reference',
      'verite': 'b', 'graine': 0, 'semaines': 10,
      'spec': {'missRate': 0.0, 'breakFromDay': 49, 'breakDays': 12}},
+    # 1.0.3 (KM1 correction 3) : notes peu fiables (bruit × 2,3, une série
+    # sur trois sans note, notes paresseuses) jusqu'au test 1RM de la
+    # semaine 12 (hors compétition) — fiabilité des notes (κ > 1), palier et
+    # marge des barres prouvées, barre suivante après un échec, règle
+    # d'échec non prévu tout schéma.
+    {'n': 12, 'titre': 'Streetlifting (antécédent au coude) : notes peu fiables jusqu\'au test 1RM, '
+                       'fiabilité, palier et marge des barres, tentatives',
+     'cle': 'street_12_antecedent_coude', 'scenario': 'reference',
+     'verite': 'b', 'graine': 1, 'semaines': 12,
+     'spec': {'missRate': 0.0, 'ratingNoise': 2.3, 'skipRating': 0.35, 'lazy': 0.3}},
 ]
 
 PLANIFICATIONS = [
