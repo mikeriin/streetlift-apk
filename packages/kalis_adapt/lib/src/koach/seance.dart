@@ -3568,8 +3568,7 @@ class Seances {
     var gPas = 1.0;
     var marge = 0.0;
     if (kappa > 1.0) {
-      gPas =
-          1.0 - dbl(s['tentative_palier_fiabilite'] ?? 0.0) * (kappa - 1.0);
+      gPas = 1.0 - dbl(s['tentative_palier_fiabilite'] ?? 0.0) * (kappa - 1.0);
       if (gPas < 0.0) {
         gPas = 0.0;
       }
@@ -3744,8 +3743,7 @@ class Seances {
       // ratée (0 : règle A8.2 partout), jamais au-dessus.
       final partBaisse = dbl(s['tentative_echec_baisse_part'] ?? 0.0);
       final semC = dictOuVide(contexte)['semaine'];
-      final competition =
-          semC != null && genres[ent(semC)] == 'competition';
+      final competition = semC != null && genres[ent(semC)] == 'competition';
       if (partBaisse > 0.0 && !competition) {
         final g0 = grille!;
         final bas = _seMax<double>(

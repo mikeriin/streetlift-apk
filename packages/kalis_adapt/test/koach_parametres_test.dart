@@ -180,48 +180,51 @@ void main() {
       );
     });
 
-    test('refus : bornes et garde-fous de 1.0.3 (CHANGEMENTS_1_0_3.md § D)', () {
-      refuse(
-        modifie((q) => jm(q['mesure'])['defaut_modele_sd'] = 0.0),
-        'borne: mesure.defaut_modele_sd',
-      );
-      refuse(
-        modifie((q) => jm(q['mesure'])['fiabilite_oubli'] = 1.0),
-        'borne: mesure.fiabilite_oubli',
-      );
-      refuse(
-        modifie((q) => jm(q['mesure'])['fiabilite_elargissement_max'] = 0.5),
-        'borne: mesure.fiabilite_elargissement_max',
-      );
-      refuse(
-        modifie((q) => jm(q['mesure'])['fiabilite_schema_reps'] = 31),
-        'borne: mesure.fiabilite_schema_reps',
-      );
-      refuse(
-        modifie(
-          (q) => jm(q['planification'])['prudence_charge_fiabilite'] = 6.0,
-        ),
-        'borne: planification.prudence_charge_fiabilite',
-      );
-      // Grille et a priori de la fiabilité : figés à l'import (validation
-      // contre les paramètres en cours).
-      for (final (cle, v) in <(String, Object?)>[
-        ('fiabilite_phi_min', 0.25),
-        ('fiabilite_phi_max', 4.0),
-        ('fiabilite_phi_points', 15),
-        ('fiabilite_ln_phi_sd', 0.6),
-        ('fiabilite_non_notee_a_priori', <Object?>[2.0, 4.0]),
-      ]) {
-        final q = modifie((x) => jm(x['mesure'])[cle] = v);
-        expect(
-          validerParametres(p, q),
-          contains('fige: mesure.$cle (garde-fou, modification interdite)'),
-          reason: cle,
+    test(
+      'refus : bornes et garde-fous de 1.0.3 (CHANGEMENTS_1_0_3.md § D)',
+      () {
+        refuse(
+          modifie((q) => jm(q['mesure'])['defaut_modele_sd'] = 0.0),
+          'borne: mesure.defaut_modele_sd',
         );
-      }
-      final q = modifie((x) => jm(x['mesure'])['fiabilite_oubli'] = 0.95);
-      expect(validerParametres(p, q), isEmpty);
-    });
+        refuse(
+          modifie((q) => jm(q['mesure'])['fiabilite_oubli'] = 1.0),
+          'borne: mesure.fiabilite_oubli',
+        );
+        refuse(
+          modifie((q) => jm(q['mesure'])['fiabilite_elargissement_max'] = 0.5),
+          'borne: mesure.fiabilite_elargissement_max',
+        );
+        refuse(
+          modifie((q) => jm(q['mesure'])['fiabilite_schema_reps'] = 31),
+          'borne: mesure.fiabilite_schema_reps',
+        );
+        refuse(
+          modifie(
+            (q) => jm(q['planification'])['prudence_charge_fiabilite'] = 6.0,
+          ),
+          'borne: planification.prudence_charge_fiabilite',
+        );
+        // Grille et a priori de la fiabilité : figés à l'import (validation
+        // contre les paramètres en cours).
+        for (final (cle, v) in <(String, Object?)>[
+          ('fiabilite_phi_min', 0.25),
+          ('fiabilite_phi_max', 4.0),
+          ('fiabilite_phi_points', 15),
+          ('fiabilite_ln_phi_sd', 0.6),
+          ('fiabilite_non_notee_a_priori', <Object?>[2.0, 4.0]),
+        ]) {
+          final q = modifie((x) => jm(x['mesure'])[cle] = v);
+          expect(
+            validerParametres(p, q),
+            contains('fige: mesure.$cle (garde-fou, modification interdite)'),
+            reason: cle,
+          );
+        }
+        final q = modifie((x) => jm(x['mesure'])['fiabilite_oubli'] = 0.95);
+        expect(validerParametres(p, q), isEmpty);
+      },
+    );
 
     test('une version mineure différente est admise', () {
       final q = modifie((x) => x['version'] = '1.7.0-ref.3');

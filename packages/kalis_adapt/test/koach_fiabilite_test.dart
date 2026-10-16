@@ -21,19 +21,16 @@ final Map<String, Json> _fiches = lireFichesKoach(
   File(koachFichierFiches).readAsStringSync(),
 );
 
-Koach _koach([Json? params]) => Koach(
-  copieJson(params ?? _params),
-  _fiches,
-  <String, Object?>{
-    'niveau': 2,
-    'sexe': 'male',
-    'poids_kg': 80.0,
-    'declares': <String, Object?>{
-      _ex: <Object?>['one_rm_kg', 150.0],
-    },
-    'zones_fragiles': <Object?>[],
-  },
-);
+Koach _koach([Json? params]) =>
+    Koach(copieJson(params ?? _params), _fiches, <String, Object?>{
+      'niveau': 2,
+      'sexe': 'male',
+      'poids_kg': 80.0,
+      'declares': <String, Object?>{
+        _ex: <Object?>['one_rm_kg', 150.0],
+      },
+      'zones_fragiles': <Object?>[],
+    });
 
 Json _serie(
   double charge,
@@ -60,10 +57,7 @@ Json _serie(
 Json _debut(int jour) => <String, Object?>{
   'type': 'seance_debut',
   'jour': jour,
-  'contexte': <String, Object?>{
-    'semaine': jour ~/ 7,
-    'genre': 'accumulation',
-  },
+  'contexte': <String, Object?>{'semaine': jour ~/ 7, 'genre': 'accumulation'},
 };
 
 /// Huit séances de 4 × 5 à 110 kg ; [notes] : flammes par série (null :
@@ -105,7 +99,10 @@ void main() {
       final f = Fiabilite(_params);
       final me = jm(_params['mesure']);
       expect(f.phi.length, me['fiabilite_phi_points']);
-      expect((f.phi.first - dbl(me['fiabilite_phi_min'])).abs(), lessThan(1e-12));
+      expect(
+        (f.phi.first - dbl(me['fiabilite_phi_min'])).abs(),
+        lessThan(1e-12),
+      );
       expect((f.phi.last - dbl(me['fiabilite_phi_max'])).abs(), lessThan(1e-9));
       expect((_sommeExp(f.lp) - 1.0).abs(), lessThan(1e-12));
       expect(f.lnPhiMoyen().abs(), lessThan(1e-9));
@@ -122,7 +119,17 @@ void main() {
       for (var i = 0; i < 40; i++) {
         juste.noter(2.0, 0.2, 1.75, 2.25, 1.0, 0.0, 0.95, 0.005, false);
         faux.noter(2.0, 0.2, 4.75, 5.25, 1.0, 0.0, 0.95, 0.005, false);
-        ouverte.noter(0.3, 0.2, 3.75, double.infinity, 1.0, 0.0, 0.95, 0.005, true);
+        ouverte.noter(
+          0.3,
+          0.2,
+          3.75,
+          double.infinity,
+          1.0,
+          0.0,
+          0.95,
+          0.005,
+          true,
+        );
       }
       expect(juste.phiMoyen(), lessThan(1.0));
       expect(faux.phiMoyen(), greaterThan(2.0));
@@ -255,7 +262,8 @@ void main() {
           expect(c1.$2, greaterThan(c0.$2));
           expect((j1.$2 / j0.$2 - k1).abs(), lessThan(1e-9));
           expect(
-            (m1.capacite(_ex, brut: true)!.$2 - m0.capacite(_ex, brut: true)!.$2)
+            (m1.capacite(_ex, brut: true)!.$2 -
+                    m0.capacite(_ex, brut: true)!.$2)
                 .abs(),
             lessThan(1e-12),
           );
@@ -331,19 +339,21 @@ void main() {
       expect(jm(r['par_schema']).containsKey('lourd'), isTrue);
     });
 
-    test('import : l\'oubli et les coefficients sont relus, la grille reste',
-        () {
-      final k = _koach();
-      _journal(k, const [10, null, 3, null]);
-      final avant = k.modele.elargissement();
-      final q = copieJson(_params);
-      jm(q['mesure'])['fiabilite_elargissement_non_notee'] = 0.0;
-      jm(q['mesure'])['fiabilite_elargissement_phi'] = 0.0;
-      expect(validerParametres(k.params, q), isEmpty);
-      appliquerParametres(k, q);
-      expect(identical(k.modele.fiabilite.p, jm(k.params['mesure'])), isTrue);
-      expect(avant, greaterThan(1.0));
-      expect(k.modele.elargissement(), 1.0);
-    });
+    test(
+      'import : l\'oubli et les coefficients sont relus, la grille reste',
+      () {
+        final k = _koach();
+        _journal(k, const [10, null, 3, null]);
+        final avant = k.modele.elargissement();
+        final q = copieJson(_params);
+        jm(q['mesure'])['fiabilite_elargissement_non_notee'] = 0.0;
+        jm(q['mesure'])['fiabilite_elargissement_phi'] = 0.0;
+        expect(validerParametres(k.params, q), isEmpty);
+        appliquerParametres(k, q);
+        expect(identical(k.modele.fiabilite.p, jm(k.params['mesure'])), isTrue);
+        expect(avant, greaterThan(1.0));
+        expect(k.modele.elargissement(), 1.0);
+      },
+    );
   });
 }
