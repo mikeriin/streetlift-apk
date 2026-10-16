@@ -463,16 +463,24 @@ void _write(String path, String text) {
   file.writeAsStringSync(text);
 }
 
+/// Dossiers des profils suivis sur une saison : le banc (27) et les
+/// profils ajoutés par le lot KS1 (7), depuis 0.5.1 (lot KS1c1 : critère
+/// « 0 violation » mesuré sur les 34 profils et toutes les graines).
+const List<String> seasonProfileDirs = <String>['profiles', 'profiles_ks'];
+
 Map<String, Object?> _seasonOf(String key, int seeds) {
   final inputs = loadInputs('tous');
-  final json = readSeasonJson().firstWhere((j) => j['key'] == key);
+  final json = <Map<String, Object?>>[
+    for (final dir in seasonProfileDirs) ...readSeasonJson(dir: dir),
+  ].firstWhere((j) => j['key'] == key);
   return seasonCampaignOf(inputs.catalog, KalisPlan(), json, seeds: seeds);
 }
 
-/// Saisons croisées (voir `seasonCampaignOf`) : un isolat par profil, au
-/// plus [parallel] à la fois ; écrit `saisons.json` et `SAISONS.md` dans
-/// [outPath]. Le fichier `season_seeds.txt` à la racine du paquet, s'il
-/// existe, remplace [seeds] (essais rapides).
+/// Saisons croisées (voir `seasonCampaignOf`) : un isolat par profil (banc
+/// et profils ajoutés, `seasonProfileDirs`), au plus [parallel] à la fois ;
+/// écrit `saisons.json` et `SAISONS.md` dans [outPath]. Le fichier
+/// `season_seeds.txt` à la racine du paquet, s'il existe, remplace [seeds]
+/// (essais rapides).
 Future<void> runSeasonCampaign({
   required String outPath,
   int seeds = 100,
@@ -486,7 +494,10 @@ Future<void> runSeasonCampaign({
       file.readAsStringSync().trim().split(RegExp(r'\s+')).first,
     );
   }
-  final keys = <String>[for (final j in readSeasonJson()) j['key']! as String];
+  final keys = <String>[
+    for (final dir in seasonProfileDirs)
+      for (final j in readSeasonJson(dir: dir)) j['key']! as String,
+  ];
   final results = <String, Map<String, Object?>>{};
   var next = 0;
   Future<void> worker() async {

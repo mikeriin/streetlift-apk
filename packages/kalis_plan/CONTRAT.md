@@ -1282,7 +1282,12 @@ rang dans la séance concordent, sinon il reçoit la méthode de sa nature (`coa
 **Bloc suivant.** Rang + 1, squelette reconstruit à la date du bloc ; la passe 2 part de l'historique
 des semaines du bloc précédent (montée du volume, dates des tests). Le diff donne `plan.variety` aux
 exercices remplacés, `plan.season_phase` aux ajouts et retraits ; la proposition porte le plan de
-saison.
+saison. **Semaines servies (0.4.1, lot KS1c1)** : le bloc précédent est d'abord tronqué aux semaines
+entières écoulées entre son début (`previous.pass1.startDate`) et `startDate` du bloc suivant, au moins
+une, au plus ses semaines (`servedWeeksOf`, `servedBlockRequest`, chemins street et 0.1). Un bloc arrêté
+avant son terme (échéance avancée ou ajoutée, changement de discipline en cours de bloc) n'amorce les
+garde-fous du bloc suivant (hausse de charge d'une semaine à l'autre, rampe de volume, tests passés) que
+par ses semaines faites, jamais par les semaines écrites puis abandonnées.
 
 **Restructuration.** Motifs lus : douleur (zone, intensité → zone à ménager), exercice sauté ou en
 stagnation (écarté), temps réduit (minutes du jour visé, 5 au moins), fatigue ou bilan bas (volume ×
@@ -1792,3 +1797,14 @@ de figure ou de musculation consécutifs (mesurés au banc, `STRUCTURE.md`) ; le
 `ul4` mono-qualité) et les gabarits typés de la musculation (force + hypertrophie) ne sont pas construits ; un test de
 répétitions à charge donnée n'est pas écrit (la ligne à charge fixe progresse, le test de fin de bloc porte sur le
 1RM du mouvement).
+
+### 12.16 Correction 1 de la structure de la semaine (0.4.1, lot KS1c1)
+
+- **Bloc précédent tronqué aux semaines servies** (§ 12.9, « Bloc suivant ») : après une échéance avancée en cours de
+  bloc, le bloc de réalisation ouvrait 9 % au-dessus de la dernière semaine servie, dans la continuité d'une semaine
+  d'intensification écrite mais jamais faite (`ks_01` à `ks_03`, scénario « échéance avancée » ; `street_12`,
+  changement de discipline). Test `coach_test.dart`, groupe « KS1c1 ».
+- **Hors de `kalis_plan`** : les hausses de volume par groupe au-delà de la rampe admise observées sur le profil de
+  test sous douleur à l'épaule suivent des propositions « volume » (une série de plus) du moteur d'évolution
+  (`kalis_adapt`, `_upFits` : plafond hebdomadaire du groupe vérifié, pas la rampe par rapport aux trois semaines
+  précédentes) ; `kalis_plan` ne voit pas ces prescriptions. `LIVRAISON_KS1c1.md` § 3.

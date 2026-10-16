@@ -826,8 +826,9 @@ String seasonCampaignMarkdown(List<Map<String, Object?>> profiles) {
     ..writeln()
     ..writeln(
       'Document généré par `dart run bin/kalis_bench_cli.dart --rapport '
-      '<dossier>` (fichier `saisons.json`). Chaque profil street du banc '
-      'est suivi sur une saison entière : `kalis_plan` écrit le plan de '
+      '<dossier>` (fichier `saisons.json`). Chaque profil du banc et chaque '
+      'profil ajouté par le lot KS1 (`profiles_ks`, depuis 0.5.1) est '
+      'suivi sur une saison entière : `kalis_plan` écrit le plan de '
       'saison et chaque bloc, `kalis_adapt` conduit chaque séance, les '
       'résumés d\'adaptation et les résultats de test nourrissent le bloc '
       'suivant (`nextBlock`), jusqu\'à l\'échéance et au moins une semaine '

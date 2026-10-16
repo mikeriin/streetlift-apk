@@ -1,5 +1,17 @@
 # Journal des versions de kalis_plan
 
+## 0.4.1
+
+Lot KS1c1 (« 0 violation sur les saisons des profils ajoutés », `pipeline/cp/prompts/KS1c1.txt`, C17.12). API
+inchangée ; `servedWeeksOf` et `servedBlockRequest` exportées. Contrat § 12.9 et § 12.16.
+
+- **Bloc suivant après un bloc arrêté avant son terme** : `nextBlock` tronque le bloc précédent aux semaines entières
+  servies entre son début et la date du nouveau bloc (au moins une) avant d'amorcer la passe 2 ; les garde-fous
+  (hausse de charge à schéma égal, rampe de volume, tests passés) lisent la dernière semaine faite et non les semaines
+  écrites puis abandonnées. Cause des 4 hausses de charge de KS1 (échéance avancée, `ks_01` à `ks_03`, +9,0 à +9,3 %
+  au squat et à la traction lestée) et des 2 de `street_12` (changement de discipline, +7,1 % et +9,4 %), toutes au
+  premier bloc réécrit. Chemins street et 0.1.
+
 ## 0.4.0
 
 Lot KS1 (« structure de la semaine », `pipeline/cp/CAHIER_KS.md`). `kalis_core` 0.4.4 (`PlanDay.type`,

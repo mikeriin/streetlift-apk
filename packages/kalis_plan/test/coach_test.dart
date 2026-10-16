@@ -2370,7 +2370,7 @@ void main() {
           }
           final fraction =
               catalog.exercise(i.exerciseId).bodyweightFraction?.value ?? 0;
-          final total = load + fraction * profile.bodyWeightKg;
+          final total = load + fraction * 78;
           final key = '${d.dayIndex}|${i.slotId}|${i.exerciseId}';
           final before = out[key];
           if (before == null || total > before.$1) {
