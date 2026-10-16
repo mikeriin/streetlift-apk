@@ -25,6 +25,7 @@ import 'kalis_clock.dart';
 import 'session_prefs.dart';
 import 'game.dart';
 import 'journal_adapter.dart';
+import 'kit/format.dart' show estimateLabelText;
 import 'koach_data.dart';
 import 'koach1/koach_journal.dart';
 import 'koach1/koach_moteur.dart';
@@ -39,6 +40,7 @@ import 'plan/plan_evolution.dart';
 import 'plan/evolution_texts.dart' as et;
 import 'plan/plan_program.dart';
 import 'plan/coach_texts.dart' as ct;
+import 'plan/day_type.dart';
 import 'plan/plan_texts.dart' as pt;
 import 'profile.dart';
 import 'program_instance.dart';
@@ -323,6 +325,11 @@ class SessionLog {
 /// propriétaire remplacent les six couleurs de L5-C), dans l'ordre du
 /// sélecteur. Mêmes identifiants que `KAccentSpec.all` (vérifié par les
 /// tests).
+/// KS1A (C17.15, option a) : écart minimal, en minutes, entre le temps
+/// disponible et la durée estimée d'une séance pour afficher « sur N
+/// disponibles ».
+const kAvailableMargin = 10;
+
 const kAccentIds = [
   'bordeaux',
   'obsidian',

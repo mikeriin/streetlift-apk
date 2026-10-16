@@ -204,10 +204,15 @@ class _HomeScreenState extends State<HomeScreen> {
             day: d.j,
             title: d.title,
             color: k.haute,
+            // KS1A : type du jour (« Tirage — force ») ; durée sur le
+            // temps disponible quand il est plus long (C17.15).
             detail: d.exercises.isEmpty
                 ? 'Récupération'
-                : '${d.exercises.length} exercices, '
-                      '${estimateLabelText(store.dayEstimate(d).durationLabel)}',
+                : [
+                    if (store.dayTypeLabelOf(d) case final type?) type,
+                    '${d.exercises.length} exercices, '
+                        '${store.dayDurationText(d)}',
+                  ].join(' · '),
             state: _status(w, d),
             onTap: () {
               Navigator.pop(sheetContext);
@@ -275,6 +280,13 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(d.title, style: KType.corpsFort.copyWith(color: k.texte)),
+          // KS1A : type du jour.
+          if (store.dayTypeLabelOf(d) case final type?)
+            Text(
+              type,
+              key: const ValueKey('summary-day-type'),
+              style: KType.corps.copyWith(color: k.texte),
+            ),
           const SizedBox(height: KSpacing.s4),
           Text(
             done ? 'Séance effectuée' : 'Séance à faire',
@@ -354,6 +366,8 @@ class _HomeScreenState extends State<HomeScreen> {
           key: ValueKey('programme-day-${d.j}'),
           day: d.j,
           title: d.title,
+          // KS1A : type du jour (« Tirage — force »).
+          detail: store.dayTypeLabelOf(d),
           state: _status(w, d),
           onTap: () => _open(w, d),
           onLongPress: () => _summary(w, d),
@@ -767,6 +781,12 @@ class _TodayCard extends StatelessWidget {
     final compact = MediaQuery.sizeOf(context).height < 800;
     final recovery = day.exercises.isEmpty;
     final estimate = recovery ? null : store.dayEstimate(day);
+    // KS1A : type du jour ; temps disponible quand il dépasse la séance
+    // (C17.15, option a).
+    final type = recovery ? null : store.dayTypeLabelOf(day);
+    final available = estimate == null
+        ? null
+        : store.dayAvailableMinutes(day, estimate);
     final done = status == KDayState.done;
     final inProgress = status == KDayState.inProgress;
     final statusLabel = switch (status) {
@@ -836,6 +856,12 @@ class _TodayCard extends StatelessWidget {
         k.title(day.title),
         style: k.titleStyle(KType.titreSeance.copyWith(color: ink)),
       ),
+      if (type != null)
+        Text(
+          type,
+          key: ValueKey('today-day-type-${day.j}'),
+          style: KType.corps.copyWith(color: ink),
+        ),
       if (recovery) ...[
         const SizedBox(height: KSpacing.s12),
         Text(
@@ -855,7 +881,13 @@ class _TodayCard extends StatelessWidget {
           estimateLabelText(estimate.durationLabel),
           style: KType.chiffre.copyWith(color: ink),
         ),
-        Text('Estimé, repos inclus', style: KType.detail.copyWith(color: ink)),
+        Text(
+          available == null
+              ? 'Estimé, repos inclus'
+              : 'Estimé, repos inclus, sur $available min disponibles',
+          key: ValueKey('today-duration-${day.j}'),
+          style: KType.detail.copyWith(color: ink),
+        ),
         const SizedBox(height: KSpacing.s4),
         // Volume au format de C9 (« 6 exercices, 19 séries, 136 rép. »).
         Text(
@@ -946,10 +978,13 @@ class _TodayCard extends StatelessWidget {
     return Semantics(
       button: true,
       selected: true,
-      label: 'Jour ${day.j} · ${day.title}. $statusLabel. Aujourd’hui',
+      label:
+          'Jour ${day.j} · ${day.title}${type == null ? '' : ' · $type'}. '
+          '$statusLabel. Aujourd’hui',
       value: estimate == null
           ? 'Repos et récupération. GtG suspendu.'
-          : '${estimateLabelText(estimate.durationLabel)}, '
+          : '${estimateLabelText(estimate.durationLabel)}'
+                '${available == null ? '' : ' sur $available minutes disponibles'}, '
                 '${day.exercises.length} exercices, '
                 '${estimate.sets.round()} séries, '
                 '${estimateLabelText(estimate.volumeLabel)}',

@@ -502,9 +502,14 @@ class _SessionScreenState extends State<SessionScreen> {
     final w = widget.week;
     final d = widget.day;
     final restDay = d.exercises.isEmpty;
+    // KS1A : type du jour en tête de séance (« Tirage — force »).
+    final type = restDay ? null : store.dayTypeLabelOf(d);
     final header = KSessionHeader(
+      key: const ValueKey('session-header'),
       title: restDay ? 'Récupération' : d.title,
-      subtitle: sessionPlace(w, d),
+      subtitle: type == null
+          ? sessionPlace(w, d)
+          : '$type · ${sessionPlace(w, d)}',
       // Correctifs UI (11/10/2026) : le titre ouvre la liste des exercices
       // (appui ou appui long), à la place du bouton « Exercices ».
       onTitleTap: restDay ? null : _chooseExercise,

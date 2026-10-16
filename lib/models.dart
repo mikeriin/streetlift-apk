@@ -1,5 +1,6 @@
 // Modèles du programme v3.3 — miroir du JSON généré depuis le classeur Excel.
 import 'package:flutter/material.dart';
+import 'package:kalis_core/kalis_core.dart' as kc;
 
 double _d(dynamic v) => (v as num).toDouble();
 
@@ -285,6 +286,17 @@ class DayPlan {
   /// lecture) ; null pour une journée d'origine.
   final DayPlan? source;
 
+  /// KS1A (`kalis_core` 0.4.4) : type du jour écrit par `kalis_plan`
+  /// (`PlanDay.type` : schémas, qualité) ; null : programme importé (type
+  /// déduit du titre à l'affichage, plan/day_type.dart) ou programme écrit
+  /// avant 0.4.4.
+  final kc.DayType? type;
+
+  /// KS1A (C17.15, option a) : temps disponible ce jour-là, en minutes
+  /// (`PlanDay.minutesBudget` d'un programme créé) ; null : programme
+  /// importé.
+  final int? minutes;
+
   DayPlan.manual({
     required this.j,
     required this.title,
@@ -292,7 +304,9 @@ class DayPlan {
     this.conduite = '',
     required this.exercises,
   }) : why = '',
-       source = null;
+       source = null,
+       type = null,
+       minutes = null;
 
   /// L11 : même journée avec une liste d'exercices adaptée.
   DayPlan.adapted(DayPlan base, this.exercises)
@@ -301,6 +315,8 @@ class DayPlan {
       cycle = base.cycle,
       conduite = base.conduite,
       why = base.why,
+      type = base.type,
+      minutes = base.minutes,
       source = null;
 
   /// CI1c : journée d'origine [base] avec les ajustements de Koach en
@@ -311,6 +327,8 @@ class DayPlan {
       cycle = base.cycle,
       conduite = base.conduite,
       why = base.why,
+      type = base.type,
+      minutes = base.minutes,
       source = base.original;
 
   /// Journée telle qu'écrite dans le programme, sans couche d'ajustements.
@@ -323,10 +341,28 @@ class DayPlan {
       conduite = j0['conduite'] as String? ?? '',
       why = j0['why'] as String? ?? '',
       source = null,
+      type = _dayType(j0['type']),
+      minutes = _dayMinutes(j0['minutes']),
       exercises = (j0['exercises'] as List)
           .map((e) => Exercise.fromJson(e as Map<String, dynamic>))
           .toList();
 }
+
+/// KS1A : type du jour lu dans le JSON d'une journée (null : absent ou
+/// hors contrat, jamais d'erreur).
+kc.DayType? _dayType(Object? raw) {
+  if (raw is! Map) return null;
+  try {
+    final t = kc.DayType.fromJson(raw.cast<String, Object?>());
+    return t.validate().isEmpty ? t : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+/// KS1A : temps disponible d'une journée de programme créé (1 à 300 min).
+int? _dayMinutes(Object? raw) =>
+    raw is int && raw > 0 && raw <= 300 ? raw : null;
 
 class WeekPlan {
   final int n;

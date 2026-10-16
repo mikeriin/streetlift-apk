@@ -415,7 +415,7 @@ extension KoachStore on AppStore {
       jsonEncode([
         r.starts,
         r.horizon,
-        [for (final b in r.blocks) b.toJson()],
+        [for (final b in r.blocks) koachBlocJson(b)],
       ]),
     ).toString();
   }
@@ -775,6 +775,35 @@ extension KoachStore on AppStore {
     return (cibles: cibles, tentatives: tent);
   }
 
+  /// KS1A : bloc de référence tel que Koach le lit : JSON du bloc sans le
+  /// type des journées (`PlanDay.type`, `kalis_core` 0.4.4). Koach 1.0
+  /// (`kalis_adapt` 1.0.2) ne lit pas ce champ ; il est retiré pour que la
+  /// référence versée et sa signature restent celles de dev7.0.0 (aucune
+  /// nouvelle référence à la mise à jour, programme de 40 semaines
+  /// compris).
+  Json koachBlocJson(kc.ProgramBlock b) {
+    final j = b.toJson();
+    final p1 = j['pass1'];
+    if (p1 is! Map) return j;
+    final days = p1['days'];
+    if (days is! List || !days.any((d) => d is Map && d.containsKey('type'))) {
+      return j;
+    }
+    return {
+      ...j,
+      'pass1': {
+        ...p1.cast<String, Object?>(),
+        'days': [
+          for (final d in days)
+            d is Map
+                ? (Map<String, Object?>.of(d.cast<String, Object?>())
+                    ..remove('type'))
+                : d,
+        ],
+      },
+    };
+  }
+
   /// Événement `reference` (INTEGRATION_KM3.md § 2.6).
   Json _koachReferenceEvent(KoachInstantane snap, int g) {
     final res = _koachRt.res!;
@@ -793,7 +822,7 @@ extension KoachStore on AppStore {
     final c = _koachCibles(res);
     return {
       'type': 'reference',
-      'blocs': [for (final b in ref.blocks) b.toJson()],
+      'blocs': [for (final b in ref.blocks) koachBlocJson(b)],
       'block_weeks': ref.starts,
       'horizon': ref.horizon,
       'cibles': c.cibles,

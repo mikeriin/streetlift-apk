@@ -1635,5 +1635,51 @@ REASONS += [
     ("adapt.cross_fatigue", {"cause": "string"}, "Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille."),
 ]
 
+# ===========================================================================
+# 0.4.4 (lot KS1 du pipeline « Calibrage des programmes », 15/10/2026) :
+# structure de la semaine — type de chaque jour et gabarit de semaine
+# retenu (`pipeline/cp/CAHIER_KS.md`, § 6). Évolution additive : deux
+# énumérations nouvelles (ouvertes), deux types nouveaux, deux champs
+# optionnels en fin de type, six codes de raison en fin de registre. Un JSON
+# de 0.4.3 se relit et se réécrit à l'identique.
+# ===========================================================================
+
+ENUMS += [
+    E("DayPattern", ["pull", "push", "legs", "full", "skill", "run", "recovery"],
+      "Schéma de mouvement porté par un jour (0.4.4, énumération ouverte) : tirage (vertical et horizontal, muscle-up compris), poussée (dips, pompes, poussée verticale), jambes (squat, charnière, unilatéral), corps entier (deux des trois au moins), figures, course, récupération."),
+    E("DayQuality", ["force", "volume", "endurance", "power", "skill", "conditioning", "run", "recovery"],
+      "Qualité visée par un jour (0.4.4, énumération ouverte) : force (1 à 6 répétitions, 80 % du 1RM et plus), volume (6 à 12 répétitions, 65 à 80 %), endurance de force (séries longues, densité), puissance (vitesse maximale, loin de l'échec), figures, conditionnement, course, récupération."),
+]
+
+TYPES += [
+    Type("DayType", "plan", "Type d'un jour d'entraînement (0.4.4) : schémas de mouvement, qualité visée, charge de la séance.", [
+        F("patterns", "list:enum:DayPattern", "Schémas du jour, du principal au secondaire.", min_len=1, max_len=7),
+        F("quality", "enum:DayQuality", "Qualité visée par le jour."),
+        F("stress", "enum:DayStress?", "Charge de la séance (lourde, moyenne, légère)."),
+    ]),
+    Type("SplitChoice", "plan", "Gabarit de semaine retenu pour le bloc (0.4.4) : code de la bibliothèque de `kalis_plan` et raisons du choix.", [
+        F("templateId", "string", "Code stable du gabarit (`ppl6_q`, `ul4`, `lift_dup`…).", min_len=1),
+        F("reasons", "list:obj:Reason", "Pourquoi ce gabarit (règle de choix, critère décisif)."),
+    ]),
+]
+_TYPE_BY_NAME.update({t.name: t for t in TYPES[-2:]})
+
+_add("PlanDay", [
+    F("type", "obj:DayType?", "Type du jour : schémas, qualité, charge (0.4.4) ; absent : programme d'avant 0.4.4."),
+])
+_add("Pass1Plan", [
+    F("split", "obj:SplitChoice?", "Gabarit de semaine retenu (0.4.4) ; absent : programme d'avant 0.4.4."),
+])
+
+REASONS += [
+    # ---- plan, ajoutés en 0.4.4 (lot KS1, évolution additive) : structure de la semaine ----
+    ("plan.split_chosen", {"templateId": "string", "sessions": "int"}, "Gabarit de semaine retenu pour tant de séances : le plus sûr, puis celui qui porte tous les objectifs, récupère, expose les mouvements visés, tient dans le temps, suit les préférences."),
+    ("plan.day_type", {"patterns": "string", "quality": "string"}, "Type du jour : schémas de mouvement et qualité visée."),
+    ("plan.goal_uncovered", {"goalId": "string"}, "Audit : objectif sans emplacement porteur dans une semaine de charge du bloc."),
+    ("plan.milestone", {"date": "string", "goals": "int"}, "Jalon : semaine de test à la date d'objectifs datés plus tôt que l'échéance retenue, puis reprise de la saison."),
+    ("plan.replaced_disliked", {"exerciseId": "exercise"}, "Remplace un exercice que l'utilisateur n'aime pas (`exerciseId` : l'exercice remplacé)."),
+    ("plan.replaced_cannot_do", {"exerciseId": "exercise"}, "Remplace un exercice que l'utilisateur ne sait pas faire (`exerciseId` : l'exercice remplacé)."),
+]
+
 SCHEMA_VERSIONS = {t.name: t.schema_version for t in TYPES if t.schema_version is not None}
 MODULES = ["common", "profile", "journal", "plan", "adapt", "quest", "season"]

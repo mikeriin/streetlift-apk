@@ -28,7 +28,12 @@ export 'src/coach/athlete.dart'
         coachWristLoadedPrep;
 export 'src/coach/audit.dart';
 export 'src/coach/coach.dart'
-    show CoachEngine, coachMethodFor, isCoachPlan, reconcileSkeleton;
+    show
+        CoachEngine,
+        coachMethodFor,
+        coachReturnStepsOf,
+        isCoachPlan,
+        reconcileSkeleton;
 export 'src/coach/model.dart';
 export 'src/coach/prescribe.dart'
     show
@@ -54,11 +59,30 @@ export 'src/coach/season.dart';
 export 'src/coach/skeleton.dart'
     show
         SkillTrack,
+        SplitMeasure,
+        SplitTemplates,
         buildSkeleton,
+        coachDayShareMin,
+        coachDerivedType,
+        coachHardBalanceOf,
+        coachHardSessionsPerSchema,
+        coachLiftDemand,
+        coachLiftFamily,
+        coachPreferencesOf,
+        coachQualitySessions,
+        coachRecoveryFloor,
+        coachRecoveryOf,
+        coachSchemaLoadOf,
+        coachSchemaOf,
+        coachSlotLoad,
+        coachTargetShareRise,
+        coachUncoveredGoals,
         hasBelt,
+        mixedStreetShares,
         skillTargetsOf,
         spreadDays,
-        styleOf;
+        styleOf,
+        templateOfStyle;
 export 'src/coach/tables.dart';
 export 'src/coach/texts.dart';
 export 'src/context.dart'
@@ -70,7 +94,15 @@ export 'src/context.dart'
         levelOfAbility,
         volumeBandsByLevel;
 export 'src/engine.dart'
-    show KalisPlan, ReviewTrace, applyProfileDelta, blockIdFor;
+    show
+        KalisPlan,
+        ReviewTrace,
+        applyProfileDelta,
+        blockIdFor,
+        servedBlockOf,
+        servedBlockRequest,
+        servedPlanRequest,
+        servedWeeksOf;
 export 'src/hash.dart' show SeededRandom, fnv1a32, fnvMix, stableExp, stableLn;
 export 'src/inspect.dart' show PlanInspector, PlanMetrics;
 export 'src/params.dart' show PlanParams, ScoreWeights;
