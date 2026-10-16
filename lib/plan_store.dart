@@ -295,8 +295,18 @@ extension PlanStore on AppStore {
   /// absents, erreur du moteur), d'après le journal seul : séances prévues
   /// et faites.
   kc.AdaptationSummary _planSummary() {
+    // KM3 : Koach 1.0 conduit le programme : estimations de Koach.
+    if (koachEngine.active) {
+      final k = koachAdaptationSummary(_planJournalSummary());
+      if (k != null) return k;
+    }
     final engine = _planEngineSummary();
     if (engine != null) return engine;
+    return _planJournalSummary();
+  }
+
+  /// Résumé d'après le journal seul : séances prévues et faites.
+  kc.AdaptationSummary _planJournalSummary() {
     final plan = planProgram!;
     var planned = 0, completed = 0;
     final first = plan.blockFirstWeek(plan.blocks.length - 1);

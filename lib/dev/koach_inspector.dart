@@ -22,9 +22,9 @@ import 'dev_session.dart' show DevShare;
 /// Ouvre l'inspecteur (build de développement, session de test).
 Future<void> openKoachInspector(BuildContext context) {
   if (!kDevBuild || !SessionSpace.isDev) return Future.value();
-  return Navigator.of(context).push(
-    MaterialPageRoute<void>(builder: (_) => const KoachInspectorScreen()),
-  );
+  return Navigator.of(
+    context,
+  ).push(MaterialPageRoute<void>(builder: (_) => const KoachInspectorScreen()));
 }
 
 String _n(Object? v, [int d = 2]) =>
@@ -46,7 +46,9 @@ Future<void> _share(BuildContext context, String name, Object? json) async {
   messenger?.showSnackBar(
     SnackBar(
       content: Text(
-        r == 'shared' ? 'Fichier prêt : choisis où l’envoyer.' : 'Export impossible ($r).',
+        r == 'shared'
+            ? 'Fichier prêt : choisis où l’envoyer.'
+            : 'Export impossible ($r).',
       ),
     ),
   );
@@ -232,7 +234,8 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
             ? 0
             : (today.dayNumber - e.snap!.lundiDate.dayNumber) ~/ 7;
         final mod = pl.plan[g];
-        if (mod != null) plan.add('Modulation de la semaine : ${jsonEncode(mod)}');
+        if (mod != null)
+          plan.add('Modulation de la semaine : ${jsonEncode(mod)}');
         plan.add('Prévisions : ${pl.previsions.length}');
       }
       final sv = live?.surveillance;
@@ -252,7 +255,10 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
               'Calibré : ${ko.calibre(live!, dual.lifts).$1} · essai : '
                   '${dual.essai == null ? 'aucun' : 'en cours'}',
               for (final r in dual.raisons.reversed.take(5))
-                texteRaisonDual(r, nomExercice: (x) => store.content.byId[x]?.nom),
+                texteRaisonDual(
+                  r,
+                  nomExercice: (x) => store.content.byId[x]?.nom,
+                ),
             ];
       final ad = live?.adherence;
       final adLines = ad == null
@@ -267,8 +273,12 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
         children: [
           _section(k, 'État', etat, key: const ValueKey('ki-etat')),
           _section(k, 'Versions', versions),
-          _section(k, 'Temps de calcul (téléphone)', tempsLines,
-              key: const ValueKey('ki-temps')),
+          _section(
+            k,
+            'Temps de calcul (téléphone)',
+            tempsLines,
+            key: const ValueKey('ki-temps'),
+          ),
           if (seance.isNotEmpty) _section(k, 'Séance', seance),
           if (caps.isNotEmpty) _section(k, 'Capacités', caps),
           if (quals.isNotEmpty) _section(k, 'Qualités et fatigue', quals),
@@ -281,11 +291,11 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
             key: const ValueKey('ki-export-journal'),
             icon: Icons.ios_share,
             label: 'Exporter le journal moteur',
-            onPressed: () async => _share(
-              context,
-              'koach_journal_moteur.json',
-              await store.koachJournalExport(),
-            ),
+            onPressed: () async {
+              final j = await store.koachJournalExport();
+              if (!context.mounted) return;
+              await _share(context, 'koach_journal_moteur.json', j);
+            },
           ),
           KTonalButton(
             key: const ValueKey('ki-export-dossier'),
@@ -316,7 +326,9 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
           KTonalButton(
             key: const ValueKey('ki-walk-forward'),
             icon: Icons.replay_rounded,
-            label: _busy ? 'Rejeu en cours…' : 'Rejeu walk-forward (depuis S12)',
+            label: _busy
+                ? 'Rejeu en cours…'
+                : 'Rejeu walk-forward (depuis S12)',
             onPressed: _busy ? null : _walkForward,
           ),
           if (_wf != null)

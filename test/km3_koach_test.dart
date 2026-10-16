@@ -474,5 +474,86 @@ void main() {
       expect(await app.importAll(jsonEncode(m)), isTrue);
       expect(app.koachEngine.snap, isNull);
     });
+
+    test('charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa '
+        'charge', () async {
+      await activate();
+      final imp = app.importedProgram!;
+      String? key;
+      for (final k in imp.fixedLoad.keys) {
+        final w = int.parse(k.split('|').first);
+        if (w == 15) {
+          key = k;
+          break;
+        }
+      }
+      expect(key, isNotNull);
+      final slot = key!.substring(key.indexOf('|') + 1);
+      final kg = imp.fixedLoad[key]!.$2;
+      int? j;
+      for (final d in app.program.week(15).days) {
+        for (final e in d.original.exercises) {
+          if (imp.slotOf(15, d.j, e.id) == slot) j = d.j;
+        }
+      }
+      expect(j, isNotNull);
+      clock = DateTime(2026, 10, 19 + j! - 1, 9);
+      await app.koachRefresh();
+      final base = app.program.week(15).day(j)!;
+      app.adaptOpen(15, base);
+      expect(await app.koachStart(15, base), isTrue);
+      final e = _served(app, 15, j).firstWhere((x) => x.slotId == slot);
+      final log = app.exLog(15, j, e);
+      app.adaptPrefill(15, j, e, log);
+      final g = app.adaptGoal(15, j, e, 0)!;
+      expect(g.kg, kg);
+      // ignore: avoid_print
+      print('KM3|charge_fixe|$slot|$kg|${g.low}-${g.high}');
+    });
+
+    test('textes : aucune raison affichée en code brut', () async {
+      await activate();
+      clock = DateTime(2026, 11, 2, 9);
+      await app.koachRefresh();
+      final j = _dayWithWork(app, 17);
+      final base = app.program.week(17).day(j)!;
+      app.adaptOpen(17, base);
+      await app.koachStart(17, base, diagnostic: {'cause': 'rien'});
+      final lines = [
+        ...app.koachSessionReasons(17, j, max: 50),
+        for (final e in _served(app, 17, j))
+          if (app.koachReasonLine(17, j, e) case final l?) l,
+      ];
+      for (final l in lines) {
+        expect(l, isNot(contains('koach.')));
+        expect(l, isNot(contains('{')));
+        expect(l.trim(), isNotEmpty);
+      }
+      // ignore: avoid_print
+      print('KM3|raisons|${lines.length}|${lines.take(3).join(' / ')}');
+    });
+
+    test('migration : la prise de main ne réécrit aucune séance ni série ; '
+        'sauvegarde d’origine ; retour au programme d’origine', () async {
+      await _owner(app, lastWeek: 14, lastJ: 7);
+      final before = jsonEncode(
+        (jsonDecode(app.exportAll()) as Map<String, dynamic>)['logs'],
+      );
+      app.koachForceBascule(civilOf(clock));
+      await app.koachRefresh();
+      expect(app.koachEngine.snap, isNotNull);
+      final after = jsonEncode(
+        (jsonDecode(app.exportAll()) as Map<String, dynamic>)['logs'],
+      );
+      expect(after, before);
+      expect(app.programOrigin, isNotNull);
+      expect(app.canRestoreProgramOrigin, isTrue);
+      final n = app.koachEngine.journal.length;
+      app.restoreProgramOrigin();
+      await app.koachRefresh();
+      // Journal gardé, nouvelle référence seulement si les blocs changent.
+      expect(app.koachEngine.journal.length, greaterThanOrEqualTo(n));
+      expect(app.koachEngine.snap, isNotNull);
+    });
   });
 }

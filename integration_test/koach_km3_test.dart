@@ -303,8 +303,10 @@ void main() {
           };
           cibles[e2.slotId!] = m;
           st['cibles'] = cibles;
-          store.sessionLog(w, jd).adapt =
-              a2.copyWith(koach: st).toJson().cast<String, dynamic>();
+          store.sessionLog(w, jd).adapt = a2
+              .copyWith(koach: st)
+              .toJson()
+              .cast<String, dynamic>();
           store.notifyListeners();
           final pages = find.byType(PageView);
           if (pages.evaluate().isNotEmpty) {
@@ -333,8 +335,9 @@ void main() {
             await tester.tap(heavy.first);
             await wait(tester, 1200);
           }
-          releve['dev_suggestion_refusee'] =
-              store.koachSuggestion(w, jd, e2)?.decided;
+          releve['dev_suggestion_refusee'] = store
+              .koachSuggestion(w, jd, e2)
+              ?.decided;
           await shot('6_refuse');
         }
       }

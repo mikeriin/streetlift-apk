@@ -84,6 +84,11 @@ class KoachEngineData {
   /// Raison d'une activation refusée (`poids` : aucun poids connu).
   String? blocked;
 
+  /// Empreinte des blocs de la dernière référence versée (une référence
+  /// nouvelle est versée quand les blocs changent : bloc suivant écrit,
+  /// retour au programme d'origine).
+  String? refSig;
+
   bool get active => snap != null && stop == null;
 
   bool get pristine => snap == null && journal.isEmpty && forced == null;
@@ -103,6 +108,7 @@ class KoachEngineData {
     if (manquees.isNotEmpty) 'manquees': manquees,
     if (forced != null) 'forced': forced,
     if (blocked != null) 'blocked': blocked,
+    if (refSig != null) 'refSig': refSig,
   };
 
   /// Lecture tolérante (une section illisible donne un état neuf : le
@@ -151,6 +157,8 @@ class KoachEngineData {
     }
     final b = m['blocked'];
     if (b is String && b.length < 40) out.blocked = b;
+    final rs = m['refSig'];
+    if (rs is String && rs.length < 40) out.refSig = rs;
     if (out.snap == null) {
       out.fromWeek = null;
       out.closed = 0;
@@ -387,6 +395,20 @@ extension KoachStore on AppStore {
     await _koachEnsureLive(gen);
     if (gen != _koachRt.gen) return;
     await _koachCatchUp(gen);
+    if (gen != _koachRt.gen) return;
+    if (koachEngine.refSig != _koachRefSig()) await koachNewReference();
+  }
+
+  /// Empreinte des blocs de référence en place.
+  String _koachRefSig() {
+    final r = _koachReferenceBlocks();
+    return fnv1a32(
+      jsonEncode([
+        r.starts,
+        r.horizon,
+        [for (final b in r.blocks) b.toJson()],
+      ]),
+    ).toString();
   }
 
   /// Moteur vivant reconstruit depuis le journal (démarrage à froid).
@@ -480,7 +502,8 @@ extension KoachStore on AppStore {
       ..fromWeek = fromWeek
       ..activatedOn = _kToday.iso
       ..closed = g0
-      ..stop = null;
+      ..stop = null
+      ..refSig = _koachRefSig();
     koachEngine.versed
       ..clear()
       ..addAll(hist.keys);
@@ -2022,7 +2045,9 @@ extension KoachStore on AppStore {
     try {
       final next = await KoachCalcul.appliquer(k, (x) => x.observe(ev));
       _koachRt.live = next;
-      e.journal = next.journal;
+      e
+        ..journal = next.journal
+        ..refSig = _koachRefSig();
       _koachRt.temps.noter('replanification', sw.elapsed);
       _persist();
       notifyListeners();
@@ -2250,6 +2275,45 @@ extension KoachStore on AppStore {
       weeklyTrend: 0,
       observations: (raw['mesures'] as num?)?.toInt() ?? 0,
     );
+  }
+
+  /// Résumé d'adaptation demandé par `kalis_plan` pour écrire le bloc
+  /// suivant d'un programme créé (INTEGRATION_KM3.md § 5.3) : estimations
+  /// tirées de `posterior()` (capacité = charge totale, erreur type depuis
+  /// l'intervalle à 90 %, observations = mesures) ; assiduité de
+  /// l'application ([base]). Null : Koach ne conduit pas le programme.
+  kc.AdaptationSummary? koachAdaptationSummary(kc.AdaptationSummary base) {
+    final k = _koachRt.live;
+    if (k == null || !koachEngine.active) return null;
+    final ex = (k.posterior()['exercices'] as Map?) ?? const {};
+    final estimates = <kc.ExerciseEstimate>[];
+    for (final e in ex.entries) {
+      final v = e.value;
+      if (v is! Map) continue;
+      final unit = switch (v['type']) {
+        'charge' => kc.CapacityUnit.oneRmKg,
+        'reps' => kc.CapacityUnit.maxReps,
+        'tenue' => kc.CapacityUnit.maxHoldSeconds,
+        _ => null,
+      };
+      final val = (v['valeur'] as num?)?.toDouble();
+      final iv = v['intervalle_90'] as List?;
+      if (unit == null || val == null || iv == null || iv.length < 3) continue;
+      estimates.add(
+        kc.ExerciseEstimate(
+          exerciseId: '${e.key}',
+          unit: unit,
+          capacity: val,
+          standardError:
+              (((iv[2] as num) - (iv[0] as num)) / (2 * 1.6448536269514722))
+                  .abs()
+                  .toDouble(),
+          weeklyTrend: 0,
+          observations: (v['mesures'] as num?)?.toInt() ?? 0,
+        ),
+      );
+    }
+    return base.copyWith(estimates: estimates);
   }
 
   // --------------------------------------------- récapitulatif de bloc

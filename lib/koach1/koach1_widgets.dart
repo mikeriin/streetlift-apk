@@ -8,7 +8,6 @@ import 'package:kalis_adapt/koach_textes.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose, KoachUsage;
 
 import '../adapt/adapt_texts.dart' show adaptKgLabel;
-import '../athlete_profile.dart' show civilOf;
 import '../kit/kit.dart';
 import '../models.dart' show DayPlan, Exercise;
 import '../koach/koach_bubble.dart';
