@@ -1,5 +1,27 @@
 # Journal
 
+## 0.5.0 — 15/10/2026 (lot KS1)
+
+Banc de la structure de la semaine (`pipeline/cp/CAHIER_KS.md` § 9) pour `kalis_plan` 0.4.0 × `kalis_core` 0.4.4, sur 0.4.2
+(lot KM2c1, `kalis_adapt` 1.0.1).
+Critères de sécurité, profils types (`profiles/`, 27), attentes de coach et grilles du panel inchangés.
+
+- **Profils ajoutés** (`profiles_ks/`, 7) : streetlifting 50 / sets & reps 50 à 4, 5 et 6 séances ; sets & reps
+  principal avec streetlifting secondaire ; force + hypertrophie ; calisthénie avec 30 % de sets & reps ; profil de
+  test `ks_test_ppl6` (§ 7.1, valeurs dans la livraison KS1). Lecture : « prise » et « fin de série » deviennent
+  des points faibles du profil.
+- **Critères de structure** (`lib/src/structure_criteria.dart`) : couverture des objectifs par semaine de charge,
+  récupération (composante du score et recalcul du banc par schéma chargé), temps par séance (± 15 %), séances sans
+  principal, ordre par exigence (§ 11.2) dans la séance et dans la rotation, contrôle d'identité des squelettes
+  mono-discipline contre 0.3.1 (`docs/data/ks1/`), contrôles du profil de test (§ 7) ; rapport `STRUCTURE.md` et
+  `structure.json` (rapport du banc, `runStructureBench`), programmes et saisons des profils ajoutés.
+- `generateProgram` accepte un horizon (`horizonWeeks`, 40 semaines pour le profil de test).
+- **Parité de Koach** (`test/km2_banc_test.dart`) : Koach rejoue la saison figée que lit la référence Python
+  (données de référence sur `kalis_plan` 0.3.1) ; la saison vivante de `kmReferenceSeason` doit en garder le squelette
+  et le calendrier (hors changement de discipline). Régénérer ces données sur `kalis_plan` 0.4.0 revient au pipeline
+  Koach.
+- Export des programmes : en-tête de séance au type du jour quand le moteur le donne (« tirage, endurance de
+  force »).
 ## 0.4.2 — 15/10/2026 (lot KM2c1)
 
 Banc de Koach 1.0.2 (`kalis_adapt` 1.0.1). Aucun changement des critères de sécurité, des profils, des grilles ni des

@@ -1,0 +1,192 @@
+{
+ "schemaVersion": 1,
+ "key": "ks_02_streetlifting_sets_reps_5_seances",
+ "group": "street",
+ "title": "Streetlifting 50 / sets & reps 50, 5 séances",
+ "summary": "Homme de 30 ans, 80 kg, avancé, en salle. Deux qualités à poids égal : force lestée (traction +40 kg, dips +60 kg, squat 140 kg) et endurance de force (20 tractions, 35 dips, 50 pompes). 5 séances de 90 minutes ; objectifs dans 16 semaines sur les deux qualités.",
+ "level": "advanced",
+ "trainingAgeMonths": 48,
+ "core": {
+  "sex": "male",
+  "birthYear": 1996,
+  "heightCm": 178,
+  "bodyWeightKg": 80.0,
+  "streetMode": {
+   "primary": "streetlifting",
+   "streetliftingPct": 50,
+   "setsRepsPct": 50,
+   "calisthenicsPct": 0
+  },
+  "disciplines": {
+   "primary": "streetlifting",
+   "primaryPct": 50,
+   "secondaries": [
+    {
+     "discipline": "street_workout",
+     "pct": 50
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 90
+   },
+   {
+    "weekday": 2,
+    "minutes": 90
+   },
+   {
+    "weekday": 3,
+    "minutes": 90
+   },
+   {
+    "weekday": 5,
+    "minutes": 90
+   },
+   {
+    "weekday": 6,
+    "minutes": 90
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "ceinture de lest",
+   "disques",
+   "barre olympique",
+   "cage / rack",
+   "magnésie",
+   "banc plat",
+   "haltères",
+   "poulie",
+   "anneaux",
+   "tapis",
+   "box / plinth"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "advanced",
+  "guidanceMode": "free",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  },
+  "knownExerciseIds": [
+   "cd-muscle-up-barre-strict"
+  ]
+ },
+ "records": [
+  {
+   "exerciseId": "sl-traction-lestee",
+   "measure": "one_rm_kg",
+   "value": 40,
+   "testedWeeksAgo": 3
+  },
+  {
+   "exerciseId": "sl-dips-leste",
+   "measure": "one_rm_kg",
+   "value": 60,
+   "testedWeeksAgo": 3
+  },
+  {
+   "exerciseId": "sl-squat-competition",
+   "measure": "one_rm_kg",
+   "value": 140,
+   "testedWeeksAgo": 3
+  },
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 20
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 35
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 50
+  },
+  {
+   "exerciseId": "cd-muscle-up-barre-strict",
+   "measure": "max_reps",
+   "value": 6
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sl-traction-lestee",
+   "metric": "one_rm_kg",
+   "targetValue": 45,
+   "weeksOut": 16
+  },
+  {
+   "id": "g2",
+   "exerciseId": "sl-dips-leste",
+   "metric": "one_rm_kg",
+   "targetValue": 67.5,
+   "weeksOut": 16
+  },
+  {
+   "id": "g3",
+   "exerciseId": "sw-traction-pronation",
+   "metric": "max_reps",
+   "targetValue": 24,
+   "weeksOut": 16
+  },
+  {
+   "id": "g4",
+   "exerciseId": "sw-dips-barres-paralleles",
+   "metric": "max_reps",
+   "targetValue": 42,
+   "weeksOut": 16
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Profil ajouté par le lot KS1 (structure de la semaine, CAHIER_KS.md § 9) : mesuré sur les critères automatiques du cahier, sans attentes de coach propres."
+  ],
+  "checks": []
+ }
+}

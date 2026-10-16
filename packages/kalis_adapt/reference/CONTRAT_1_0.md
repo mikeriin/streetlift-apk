@@ -1,7 +1,7 @@
 # Contrat de Koach 1.0 (`kalis_adapt` 1.0.0)
 
 Rédigé le 09/10/2026, remis en accord avec le code le 10/10/2026 (référence Python `packages/kalis_adapt/reference/`, branche `moteurs`, arbre de travail du lot KM1).
-Fichier de paramètres lu : `params/koach_params_v1.json` version `1.0.3-ref.1`, SHA-256 `SHA_1_0_3`, 338 clés (6 à la racine, 332 dans les onze sections). Version 1.0.2 : `1.0.2-ref.1`, SHA-256 `211c936136cc22027d85ed9bfb42ef6398bf45b272bd3a8f0900ef235846f5da`, 322 clés. Version 1.0.1 : `1.0.1-ref.1`, SHA-256 `c8aa09ebc7fb337bf93500b2fda695e95df611d4e5181fa615886faf6092157f`, 317 clés. Contrat gelé 1.0 : version `1.0.0-ref.1`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 300 dans les sections ; l'en-tête de 1.0 écrivait 299 par erreur).
+Fichier de paramètres lu : `params/koach_params_v1.json` version `1.0.3-ref.1`, SHA-256 `d129a4e9422b90bfa0aa9034770c57ea698b49ab92c0e8dc0df703bd37231aa0`, 338 clés (6 à la racine, 332 dans les onze sections). Version 1.0.2 : `1.0.2-ref.1`, SHA-256 `211c936136cc22027d85ed9bfb42ef6398bf45b272bd3a8f0900ef235846f5da`, 322 clés. Version 1.0.1 : `1.0.1-ref.1`, SHA-256 `c8aa09ebc7fb337bf93500b2fda695e95df611d4e5181fa615886faf6092157f`, 317 clés. Contrat gelé 1.0 : version `1.0.0-ref.1`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 300 dans les sections ; l'en-tête de 1.0 écrivait 299 par erreur).
 
 **Note datée du 15/10/2026 — version 1.0.3 (KM1 correction 3, DECISIONS_CP.md C17.9 : estimation sous notes non fiables).** L'API (`observe`, `posterior`, `plan`, `explain`) et le schéma du journal ne changent pas ; `posterior()` gagne une clé `fiabilite` (§ 3.4). Liste exacte : `CHANGEMENTS_1_0_3.md`.
 

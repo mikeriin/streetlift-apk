@@ -45,6 +45,42 @@ String focusLabel(String focus) => switch (focus) {
   _ => focus.replaceAll('.', ', ').replaceAll('_', ' '),
 };
 
+/// Nom français du type d'un jour (`kalis_core` 0.4.4) : schémas, puis
+/// qualité (« tirage, endurance »).
+String dayTypeLabel(DayType t) {
+  final patterns = <String>[
+    for (final p in t.patterns)
+      switch (p) {
+        DayPattern.pull => 'tirage',
+        DayPattern.push => 'poussée',
+        DayPattern.legs => 'bas du corps',
+        DayPattern.full => 'corps entier',
+        DayPattern.skill => 'figures',
+        DayPattern.run => 'course',
+        DayPattern.recovery => 'récupération',
+      },
+  ];
+  final quality = switch (t.quality) {
+    DayQuality.force => 'force',
+    DayQuality.volume => 'volume',
+    DayQuality.endurance => 'endurance de force',
+    DayQuality.power => 'puissance',
+    DayQuality.skill => 'technique',
+    DayQuality.conditioning => 'conditionnement',
+    DayQuality.run => 'course',
+    DayQuality.recovery => 'récupération',
+  };
+  final head = patterns.join(' et ');
+  return head == quality ? head : '$head, $quality';
+}
+
+/// Thème écrit d'une séance : son type quand le moteur le donne (0.4.4),
+/// sinon son thème.
+String dayLabel(DayView d) {
+  final t = d.type;
+  return t == null ? focusLabel(d.focus) : dayTypeLabel(t);
+}
+
 /// Nom français du rôle d'un exercice.
 String roleLabel(SlotRole? role) => switch (role) {
   SlotRole.main => 'principal',
@@ -871,7 +907,7 @@ String programMarkdown(ProgramView view) {
       b
         ..writeln()
         ..writeln(
-          '### ${weekdayNames[d.weekday - 1]} — ${focusLabel(d.focus)}'
+          '### ${weekdayNames[d.weekday - 1]} — ${dayLabel(d)}'
           '${stress == null ? '' : ', ${dayStressLabel(stress)}'} '
           '(${d.minutesBudget} min disponibles, '
           '${d.estimatedMinutes.round()} min estimées)',
@@ -936,7 +972,7 @@ Map<String, Object?> programJson(ProgramView view) {
               <String, Object?>{
                 'day': weekdayNames[d.weekday - 1],
                 'focus':
-                    '${focusLabel(d.focus)}'
+                    '${dayLabel(d)}'
                     '${d.stress == null ? '' : ', ${dayStressLabel(d.stress!)}'}',
                 'minutes': d.minutesBudget,
                 'estimated': d.estimatedMinutes.round(),

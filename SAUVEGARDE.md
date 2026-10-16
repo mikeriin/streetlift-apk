@@ -25,6 +25,8 @@ Session Fable 5.1, effort maximal, démarrée le 15/10/2026 à 19:09 UTC. Base `
 
 ## En cours
 
+- 00:50 UTC : campagne assemblée (`donnees/criteres_km1c3.json` : 1 3,94 %, 2 0,87 %, 4 90,21 %, 5 biais −0,6 / écart max 24,4 contre 21,3 (recul formel, d5 29/37), 6 0,9449, 8 0, 11 0,56 s / 7,3 ms), `calibration_grappes_km1c3.json`, SHA d129a4e9… dans CONTRAT et SOURCES, suite 261 verte, fixtures à jour ; commit `moteurs` 2d3a5766 (rebasé sur KS1 b35a5f6d) poussé sur `claude/ci-cp-a` : **run 38831793524 (contrôle complet) en cours**, ~1 h 25. Ensuite : push `moteurs` (rebase sur origin/moteurs, KS1c1 tourne), livraison (scratchpad `LIVRAISON_KM1c3.md` : reste [[FIN]]), DECISIONS (scratchpad `DECISIONS_KM1c3.md`), ETAT « livré », page de suivi (scratchpad `page_km1c3.html`), projet claude.ai, notification.
+
 - Reste sur la CI : contrôle complet final (arbre complet sur `claude/ci-cp-a`).
 - Recherche adversariale neuve contre 1.0.3 terminée 22:27 UTC (3 000 saisons, pire perf 0,555) ; témoin Dart fait sur la CI (run 38822376614, b84ca187, 14 s) → `donnees/adversaires_km1c3_temoin.json.gz` ; comparaison `donnees/comparaison_adversaires_km1c3.json` : 19/24, 2 sous le plancher non excusés (adv-5e2b8ac3 −0,145 connu, adv-7c601acb −0,134) + 1 excusé (adv-449d92ef), moyenne 0,817 (témoin 0,621) ; critère 7 : 0,555 ≥ 0,499.
 - Campagne partie 1/2 CI : run 38814063895 fini 23:07 (2 160 saisons, 0 plantée, 3 927 s ; « failure » du paquet = absence de dev_dependency test, comme prévu) ; fichiers extraits et copiés dans `/tmp/km1-campagne/746e9268d927d350/` (même config.json que la partie 2 locale).

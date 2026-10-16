@@ -26,7 +26,7 @@ Cause mesurée (six cas sous le plancher du critère 7 bis sur la recherche neuv
 - `_tentative` lit `capacite_du_jour(id, brut=True)` et `proba_reussite(…, brut=True)` : **l'ouverture au quantile élargi n'est pas retenue**. Mesuré hors ligne sur 543 ouvertures d'adversaires et 341 du banc (états capturés à l'ouverture, règle d'ouverture et échelle rejouées ; la règle de base reproduit les 543 ouvertures exactement et la performance de l'échelle à 0,02 près sur 530) : σ·κ au quantile 0,95 abaisse l'ouverture de 5 à 9 % chez tout athlète bruité (jour J des adversaires −0,004, banc 0) sans éviter un seul échec d'ouverture (17 → 16) ; probabilité 1 − 0,05/κ² en plus : −0,006 ; en simulation complète (V1, jeu b3000) : −0,033 de jour J moyen, 7 bis 20/24 → 18/24. Les échecs d'ouverture sont des biais (estimation trop haute), pas une variance : un quantile plus bas coûte à tous les athlètes bruités dont l'estimation est juste et ne rattrape pas une erreur de +7 %.
 - `_palier_barres` (κ > 1 seulement) : le palier accordé par la note d'une barre est multiplié par `g = max(0 ; 1 − tentative_palier_fiabilite·(κ − 1))` (3 : nul dès κ ≥ 1,33), et chaque barre réussie des 42 jours ne vaut que (1 − marge) de sa charge totale, marge = min(`tentative_marge_fiabilite_max` 0,05 ; `tentative_marge_fiabilite` 0,1·(κ − 1)). Raison : chez un athlète dont les notes se sont montrées peu fiables, l'estimation (qu'elles ont poussée) n'est pas une preuve et une barre réussie ne prouve le maximum d'aujourd'hui qu'à la variation de jour près. Mesure hors ligne (884 ouvertures) : échecs d'ouverture 17 → 7, jour J des adversaires +0,017 (km1c2 0,807 → 0,860, b3000 0,865 → 0,889 ; km1 −0,0035, b300 −0,0067 : le coût chez les athlètes bruités dont l'estimation était juste), banc −0,0001 ; variantes écartées : marge fixe 2,5 % (10 échecs), 5 % (5 échecs, −0,011 et −0,015 sur km1 et b300), pente 0,15 (mêmes échecs, −0,002), part 0,91/κ (4 échecs, −0,10), prudence uniforme P ≥ 0,975 (16 échecs, −0,002) ou 0,99 (16, −0,006), remise des barres dites à la limite seule (13 échecs).
 - Simulation complète (cinq jeux, Koach sans extension, témoin 0.3.1 stocké) : section F.
-- `_cible_charge` : prudence de plus `prudence_charge_fiabilite`·(κ − 1) écarts-types pour les séries ≤ `fiabilite_schema_reps` répétitions ; **0 dans le fichier livré**. Mesuré à 1,0 (variante X2) en simulation complète contre le code et les paramètres livrés : cinq jeux d'adversaires 0,884 contre 0,886 de jour J moyen (b3000 +0,010 et 22/24 sans cas sous le plancher, b300 −0,007 avec un pire écart à −0,312, KM1c2 −0,009 et 21/24 ; KM1 et b600 inchangés), banc graine 0 sans extension 0,9580 contre BANC_FINAL : les cas se déplacent d'un jeu à l'autre sans gain net, et l'écart-type élargi par κ agit déjà sur `prudence_charge`.
+- `_cible_charge` : prudence de plus `prudence_charge_fiabilite`·(κ − 1) écarts-types pour les séries ≤ `fiabilite_schema_reps` répétitions ; **0 dans le fichier livré**. Mesuré à 1,0 (variante X2) en simulation complète contre le code et les paramètres livrés : cinq jeux d'adversaires 0,884 contre 0,886 de jour J moyen (b3000 +0,010 et 22/24 sans cas sous le plancher, b300 −0,007 avec un pire écart à −0,312, KM1c2 −0,009 et 21/24 ; KM1 et b600 inchangés), banc graine 0 sans extension 0,9580 contre 0,9584 : les cas se déplacent d'un jeu à l'autre sans gain net, et l'écart-type élargi par κ agit déjà sur `prudence_charge`.
 
 ## C. Règles après un échec — point 3
 
@@ -47,7 +47,22 @@ Cause mesurée (six cas sous le plancher du critère 7 bis sur la recherche neuv
 
 ## G. Mesures finales (code et paramètres livrés)
 
-MESURES_FINALES
+Campagne six graines (27 profils × scénarios × vérités a, b, c × graines 0-5 : 4 320 saisons, 0 plantée, Koach complet ; partie 1/2 sur la CI run 38814063895, partie 2/2 en local, assemblage `donnees/criteres_km1c3.json`), 1.0.2 (`criteres_km1c2.json`) → 1.0.3 :
+
+| Critère | 1.0.2 | 1.0.3 |
+| --- | --- | --- |
+| 1 erreur d'e1RM au rang 6 (< 3 %, écart accepté) | 3,92 % | 3,94 % (a 2,99, b 5,14, c 3,68 ; +0,02 point, erreur type 0,07) |
+| 2 mauvais jour isolé (< 1 %) | 0,91 % | 0,87 % (pire cas 3,7 %) |
+| 3 convergence sous 3 % (≤ 11,98) | 5,28 | 5,28 |
+| 4 couverture à 90 % (88-92 %) | 89,96 % | 90,21 % |
+| 5 calibration C13.13.1 (biais ± 5 ; écart max < médiane du modèle parfait) | +0,2 ; 16,8 contre 21,2 | −0,6 ; 24,4 contre 21,3 (d5 : 29/37 contre 27/38 ; un modèle parfait fait au moins autant dans 35 % des tirages ; erreur pondérée 2,14 → 2,05 points) |
+| 6 jour J (≥ 0,9324) | 0,9450 | 0,9449 (écart apparié +0,0105 ± 0,0016) |
+| 7 pire cas adversarial | 0,499 | 0,555 (recherche neuve contre 1.0.3) |
+| 7 bis (cinq jeux connus ; recherche neuve) | 24, 23, 22, 20, 17 sur 24 ; 17/24 | 24, 22, 22, 21, 22 sur 24 (sous le plancher 0, 1, 1, 1, 1) ; 19/24 (2 sous le plancher + 1 excusé), 0,817 contre témoin 0,621 |
+| 8 sécurité | 0 | 0 (aggravations, poussées, hausses interdites ; validateur : rien d'introduit) |
+| 11 temps (≤ 10 s ; ≤ 50 ms) | 0,44 s ; 2,8 ms | 0,56 s ; 7,3 ms (médiane 1,4 ms : vraisemblance de φ à chaque note) |
+
+Adversaires (`donnees/comparaison_adversaires_km1c3*.json`, Koach rejoué en Python sans extension, témoin Dart stocké ou calculé sur la CI run 38822376614) : jour J moyen des cinq jeux connus 0,866 → 0,886 ; cas sous le plancher 8 → 4 (nouveau : adv-051f1dee g3, zéro isolé d'ouverture ; préexistants : adv-a0dd8069, adv-29523095, adv-5e2b8ac3) ; cinq des six cas de la recherche neuve de KM1c2 réglés. Banc graine 0 sans extension (harnais de mise au point) : 0,9577 → 0,9584, couverture 0,8716 → 0,8725, erreur 0,0389 → 0,0393. Rejeu du journal réel : `donnees/rejeu_journal_agregats_km1c3.json` (section D : E[φ] 0,91, part non notée 18,6 %, κ = 1, prescriptions inchangées). Détail et lecture : `LIVRAISON_KM1c3.md`.
 
 ## H. Pour KM2c2 (portage Dart du delta)
 - `modele.dart` : classe `Fiabilite` (grille, `_normaliser`, `_ajouter`, `noter`, `serie`, `phi_moyen`, `ln_phi_moyen`, `proba_phi_sup`, `part_non_notee`, `elargissement`, `resume`), champ `fiabilite` du modèle, appels dans `_serie_force` (après la sonde, avant la porte des séries sans note : `serie` puis `noter` avec `s_pop2 = (s2 − extra)/bruit_rir²`, `lourd` sur `repsHigh` à défaut `reps`), `elargissement()`, `capacite` (κ hors `brut`), `capacite_du_jour(brut)`.
