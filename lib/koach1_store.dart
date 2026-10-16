@@ -1245,7 +1245,11 @@ extension KoachStore on AppStore {
         'contexte': contexte,
       });
       if (diagnostic != null && koachNeedsDiagnostic) {
-        k.observe({'type': 'decision', 'jour': jour, kKoachCleDiag: diagnostic});
+        k.observe({
+          'type': 'decision',
+          'jour': jour,
+          kKoachCleDiag: diagnostic,
+        });
       }
       r =
           k.plan({
