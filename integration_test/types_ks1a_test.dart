@@ -28,6 +28,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/dev/dev_session.dart';
+import 'package:streetlift_tracker/home_screen.dart';
 import 'package:streetlift_tracker/kalis_clock.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/nav_bar.dart';
@@ -329,6 +330,14 @@ void main() {
       for (final d in block?.pass1.days ?? const []) dayTypeLabel(d.type),
     ];
     await home(tester);
+    // (Session de test neuve : le parcours de création du profil couvre
+    // l'onglet Programme ; l'accueil du programme est ouvert à part.)
+    unawaited(
+      appNavigator.currentState!.push(
+        MaterialPageRoute<void>(builder: (_) => const HomeScreen()),
+      ),
+    );
+    await wait(tester, 2000);
     final now2 = store.storeClock();
     final w2 = store.program.weekFor(now2);
     final j2 = store.program.offsetOf(now2)! % 7 + 1;
@@ -424,6 +433,7 @@ void main() {
     expect(releve['types_dev'] as List, hasLength(6));
     expect((releve['types_dev'] as List).every((t) => t != null), isTrue);
     expect(releve['carte_type_dev'], isNotNull);
+    expect(releve['carte_duree_dev'], contains('min disponibles'));
     expect(
       (releve['durees_dev'] as List).any(
         (t) => '$t'.endsWith('sur 120 disponibles'),
