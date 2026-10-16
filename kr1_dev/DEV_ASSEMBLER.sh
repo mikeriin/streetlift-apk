@@ -1,4 +1,4 @@
-# Assemblage du run F : critères Dart par groupe de graines (34 profils et 27),
+# Assemblage du run G (critères du groupe 0-5 seulement ; les autres groupes : run F) : critères Dart par groupe de graines (34 profils et 27),
 # sécurité des 100 graines, critère 5 (grappes) du groupe 0-5, parité saison par saison.
 O=$PWD/ci-out/packages
 F=$PWD/DEV_FILTRE.py
@@ -6,8 +6,8 @@ R=$PWD/packages/kalis_adapt/reference
 mkdir -p $O/criteres $O/securite /tmp/p27
 cd packages/kalis_bench && dart pub get > /dev/null 2>&1
 pip install --quiet numpy
-for f1 in $O/parts/kr1_g*_partie_1_sur_2.json.gz; do
-  g=$(basename $f1 | sed 's/kr1_\(g[0-9]*_[0-9]*\)_.*/\1/')
+for f1 in $O/parts/kr1_g0_5_partie_1_sur_2.json.gz; do
+  g=g0_5
   f2=${f1/partie_1_sur_2/partie_2_sur_2}
   timeout 900 dart run bin/km2.dart assembler --sortie $O/criteres/criteres_kr1_$g.json $f1 $f2 > $O/criteres/assembler_$g.log 2>&1 || echo "assembler $g : échec"
   python3 -I $F $f1 /tmp/p27/${g}_1.json.gz > /dev/null; python3 -I $F $f2 /tmp/p27/${g}_2.json.gz > /dev/null

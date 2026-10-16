@@ -1,5 +1,5 @@
 #!/bin/bash
-# Mise au point KR1, run F (Koach 1.0.4, vue réalisée ; parts conservées).
+# Mise au point KR1, run G (vue réalisée appariée, parité de la sécurité ; parts conservées).
 #  PART 0      : formatage (patch), analyse, tests kalis_adapt, tests km de kalis_bench
 #  PART 1-34   : campagne Dart du couple, groupe g = (PART+1)/2 (graines 6(g-1)..6g-1 ; 17 : 96-99),
 #                part h = 1 + (PART+1)%2 sur 2 ; saisons vivantes, témoin lu
