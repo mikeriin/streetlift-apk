@@ -1,0 +1,1 @@
+lot=KM3 rapide=true
