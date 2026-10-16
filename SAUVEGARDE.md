@@ -24,13 +24,11 @@ Session Fable 5.1, effort maximal, démarrée le 16/10/2026 à 02:25 UTC (messag
 
 - Second contrôle complet run 38856060639 (4c11fea0) **vert** (kalis_plan 317 tests, kalis_bench 190, STRUCTURE identique hors saisons 6 → 2). Au push de `moteurs` : KM2c2 livré entre-temps (4910ec13, `kalis_adapt` 1.0.2, `kalis_bench` 0.5.1) → rebase, conflit CHANGELOG résolu (0.5.2 KS1c1 au-dessus de 0.5.1 KM2c2), version 0.5.2 partout ; commit eae158b8 poussé sur `claude/ci-cp-b` : **troisième contrôle complet en cours** (08:20 UTC, fin vers 11:10). Les chiffres de la campagne seront relus sur ce run (kalis_adapt 1.0.2 : a priori sans effet sur le couple cx).
 
-## En cours
+## Fin de lot (16/10/2026, 11:35 UTC)
 
-- Attente du run de 47778f7c : vérifier la correction 1 (plus de `charge_trop_vite`), lire le diag de `ks_test_ppl6` douleur_epaule (lombaires S18 7,5/7,0 ; fessiers S19 17,0/16,8) pour établir la cause 2 (hypothèses : `restructure` amorcé sans le bloc précédent (`previous: []`), reprise progressive et `_fitReturn`, arrondi des demi-séries des muscles secondaires).
-
-## Reste à faire
-
-- Cause 2 et correction ; tests ; banc complet élargi aux 7 profils ajoutés sur toutes les graines (`runSeasonCampaign` : `profiles_ks`, `kalis_bench` 0.5.1) ; aucun recul des critères KS1 ; `kalis_plan` 0.4.1 (CHANGELOG, contrat, version) ; relecture ; contrôle complet `claude/ci-cp-b` ; étiquettes ; LIVRAISON_KS1c1 (pipeline + projet) ; ETAT « livré » ; page de suivi ; notification.
+- Troisième contrôle complet run 38873043566 (eae158b8) **vert**, chiffres de la campagne identiques au run 38856060639 ; `moteurs` eae158b8 poussé ; étiquettes `etiquettes/kalis_plan-v0.4.1` et `etiquettes/kalis_bench-v0.5.2` poussées.
+- `pipeline` 03a485ef : `livraisons/LIVRAISON_KS1c1.md`, section KS1c1 de `DECISIONS_CP.md`, ligne ETAT « livré (11:30 UTC) — à valider par le pilotage ». Docs projet `claude/LIVRAISON_KS1c1.md` et `claude/DECISIONS_CP.md` écrits. Page de suivi mise à jour (section KS1 c1, ligne du tableau). Notification envoyée.
+- Lot terminé : plus rien à faire dans cette session. Reste pour le pilotage (C8) : valider 0.4.1, lot `kalis_adapt` (`_upFits`), trancher le critère « 0 sur toutes les graines ».
 
 ## Décisions prises
 
