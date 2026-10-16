@@ -232,8 +232,10 @@ extension KoachExtensions on ko.Koach {
       extensions.whereType<ko.Planification>().firstOrNull;
   ko.Surveillance? get surveillance =>
       extensions.whereType<ko.Surveillance>().firstOrNull;
-  ko.ControleDual? get dual => extensions.whereType<ko.ControleDual>().firstOrNull;
-  ko.Adherence? get adherence => extensions.whereType<ko.Adherence>().firstOrNull;
+  ko.ControleDual? get dual =>
+      extensions.whereType<ko.ControleDual>().firstOrNull;
+  ko.Adherence? get adherence =>
+      extensions.whereType<ko.Adherence>().firstOrNull;
 }
 
 /// Calcul hors du fil d'interface. Les tests remplacent [enArrierePlan]
@@ -338,9 +340,9 @@ void _koachProposerEssai(ko.Koach k, int semaine, List<int> echeances) {
   final recents = pre.length >= 8 ? pre.sublist(pre.length - 8) : pre;
   final temoins = <String>[];
   if (recents.isNotEmpty) {
-    final cles = ((recents.last['mu'] as Map?)?.keys.map((x) => '$x') ?? [])
-        .toList()
-      ..sort();
+    final cles =
+        ((recents.last['mu'] as Map?)?.keys.map((x) => '$x') ?? []).toList()
+          ..sort();
     for (final ex in cles) {
       if (ex == cible) continue;
       if (recents.every((x) => (x['mu'] as Map).containsKey(ex))) {

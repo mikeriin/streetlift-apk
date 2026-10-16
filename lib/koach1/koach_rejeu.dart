@@ -110,10 +110,7 @@ Json koachRejeuWalkForward(
         final vrai = f >= 10 ? 0.0 : m.rirVrai(dit);
         final reps = (ser['reps'] as num).toDouble();
         final rr = reps + vrai;
-        final charge = m.masse(
-          t,
-          (ser['externalLoadKg'] as num?)?.toDouble(),
-        );
+        final charge = m.masse(t, (ser['externalLoadKg'] as num?)?.toDouble());
         if (charge <= 0) continue;
         final lnReel = math.log(charge) + ko.Modele.gK(lam, kk, rr);
         final pente = ko.Modele.dgK(lam, kk, rr);

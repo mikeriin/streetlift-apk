@@ -178,6 +178,9 @@ extension EvolutionStore on AppStore {
     final w = _evoWeek;
     final place = evolutionPlace;
     if (w == null || place == null) return false;
+    // KM3 : semaine servie par Koach 1.0 : plus de revue ni de proposition
+    // du moteur 0.x (D1, D2).
+    if (KoachStore(this).koachServesWeek(w)) return false;
     final input = _evoInput(place);
     if (input == null) return false;
     final mode = SessionAdaptStore(this).adaptMode;

@@ -25,6 +25,7 @@ import 'resume_banner.dart';
 import 'stats_mannequin.dart';
 import 'guided_tests.dart';
 import 'profile_completion.dart';
+import 'koach1/koach1_widgets.dart' show KoachRecapCard;
 import 'store.dart';
 import 'store_widget.dart';
 import 'kit/kit.dart';
@@ -363,6 +364,8 @@ class _HomeScreenState extends State<HomeScreen> {
       final moments = <Widget>[
         // G10 : propositions de Koach (évolution du programme).
         if (EvolutionHomeCard.visible) const EvolutionHomeCard(),
+        // KM3 : bloc suivant de Koach 1.0, à valider d'un tap.
+        if (store.koachRecap() != null) const KoachRecapCard(),
         // CU : compléter son profil (une fois) ; test guidé proposé à la
         // première séance.
         if (ProfileCompletionCard.visible) const ProfileCompletionCard(),

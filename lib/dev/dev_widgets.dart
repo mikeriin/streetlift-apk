@@ -31,6 +31,7 @@ import 'dev_flags.dart';
 import 'dev_session.dart';
 import 'dev_simulator.dart' show DevSimulatorScreen;
 import 'engine_inspector.dart' show EngineInspectorScreen, shareEngineJournal;
+import 'koach_inspector.dart' show KoachInspectorScreen;
 
 /// Couleur du logo : rose vif pendant la session de test.
 Color devLogoColor(Color normal) =>
@@ -653,6 +654,26 @@ class DevToolsSheet extends StatelessWidget {
                 nav.push(
                   MaterialPageRoute<void>(
                     builder: (_) => const EngineInspectorScreen(),
+                  ),
+                );
+              },
+            ),
+            // KM3 : inspecteur et outils de Koach 1.0.
+            ListTile(
+              key: const ValueKey('dev-koach-inspector'),
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.psychology_outlined),
+              title: const Text('Inspecteur de Koach 1.0'),
+              subtitle: const Text(
+                'Raisons, capacités, planification, surveillance, temps de '
+                'calcul ; exports, import de paramètres, rejeu, bascule',
+              ),
+              onTap: () {
+                final nav = Navigator.of(context);
+                nav.pop();
+                nav.push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const KoachInspectorScreen(),
                   ),
                 );
               },

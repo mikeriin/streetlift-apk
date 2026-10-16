@@ -1406,6 +1406,8 @@ extension SessionAdaptStore on AppStore {
     if (week < 1 || base.exercises.isEmpty) return null;
     // KM3 : journée servie par Koach 1.0.
     if (koachServesDay(week, base.j)) return _koachOpenSession(week, base);
+    // KM3 : arrêt d'urgence : séance telle qu'écrite (hors moteur).
+    if (koachStoppedWeek(week)) return null;
     final key = sessionKey(week, base.j);
     final log = logs[key];
     final started =
@@ -1802,7 +1804,8 @@ extension SessionAdaptStore on AppStore {
             name: e.name,
             setsText: adaptSetsText(t),
             setCount: t.sets,
-            intensity: 'Test court : montée jusqu’à la dernière série '
+            intensity:
+                'Test court : montée jusqu’à la dernière série '
                 'proprement faite',
             kg: null,
             rest: pt.restLabel(t.restSeconds),

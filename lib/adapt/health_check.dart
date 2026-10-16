@@ -325,12 +325,41 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
             EvolutionSessionCard(week: _w, j: widget.base.j),
           // CI1g : avis médical demandé par le bloc, pas encore confirmé.
           ...clearanceCard(_w, widget.base.j),
+          // KM3 : ce que Koach dit de la séance servie (renvois, reprise,
+          // séance bornée…), textes lisibles.
+          ..._koachCard(a),
           ..._painStopCard(a),
           ...(!a.asked || _redo ? _question(a) : _answered(a)),
         ]),
       );
     },
   );
+
+  /// KM3 : raisons générales de la séance servie par Koach (deux au plus).
+  List<Widget> _koachCard(SessionAdapt a) {
+    if (a.koach?['state'] != 'open') return const [];
+    final lines = store.koachSessionReasons(_w, widget.base.j);
+    if (lines.isEmpty) return const [];
+    final k = KTokens.of(context);
+    return [
+      KCard(
+        key: const ValueKey('health-koach'),
+        child: KoachSays(
+          pose: koachPose(KoachUsage.explanation),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (final l in lines)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: KSpacing.s4),
+                  child: Text(l, style: KType.corps.copyWith(color: k.texte)),
+                ),
+            ],
+          ),
+        ),
+      ),
+    ];
+  }
 
   /// CI1b (`kalis_plan` / `kalis_adapt` 0.2.2) : douleur qui dure —
   /// arrêt des mouvements qui chargent la zone (retirés de la séance),

@@ -72,14 +72,19 @@ Json? koachSerie(Json rec, {Json? cible}) {
   final measure = (reps ?? seconds) as num?;
   final target = koachCibleSerie(rec['target']);
   if (cible != null) {
-    for (final k in const ['repsLow', 'repsHigh', 'secondsLow', 'secondsHigh']) {
+    for (final k in const [
+      'repsLow',
+      'repsHigh',
+      'secondsLow',
+      'secondsHigh',
+    ]) {
       if (cible[k] != null) target[k] = cible[k];
     }
     if (cible['role'] != null) target['role'] = cible['role'];
   }
-  final rest = rec['restBeforeSeconds'] ?? (rec['target'] is Map
-      ? (rec['target'] as Map)['restSeconds']
-      : null);
+  final rest =
+      rec['restBeforeSeconds'] ??
+      (rec['target'] is Map ? (rec['target'] as Map)['restSeconds'] : null);
   return {
     'exerciseId': rec['exerciseId'],
     'slotId': rec['slotId'],
@@ -189,7 +194,9 @@ Json? koachSerieEndurance(
     }
     final reussi = faites.every((f) => f['success'] == true);
     first['demand'] = ecrit * poids / 60.0;
-    first['doneShare'] = reussi ? 1.0 : (ecrit > 0 ? math.min(1.0, fait / ecrit) : 1.0);
+    first['doneShare'] = reussi
+        ? 1.0
+        : (ecrit > 0 ? math.min(1.0, fait / ecrit) : 1.0);
     first['dose'] = fait * (qualite ? 1.5 : 1.0) / 3600.0;
     first['fatigueSets'] = math.min(6.0, fait / 600.0);
     first['target'] = {'flames': f0};
@@ -272,15 +279,10 @@ KoachSeanceConvertie? koachSeanceDe(
     if (typ == 'cardio' || typ == 'wod') {
       final cle0 = '$ex|$slot';
       if (!enduranceVue.add(cle0)) continue;
-      s = koachSerieEndurance(
-        fiche,
-        slot == null ? null : items[slot],
-        [
-          for (final r in sets)
-            if (r['exerciseId'] == ex && r['slotId'] == slot) r,
-        ],
-        params,
-      );
+      s = koachSerieEndurance(fiche, slot == null ? null : items[slot], [
+        for (final r in sets)
+          if (r['exerciseId'] == ex && r['slotId'] == slot) r,
+      ], params);
     } else {
       final idx = rec['setIndex'];
       s = koachSerie(
@@ -294,15 +296,15 @@ KoachSeanceConvertie? koachSeanceDe(
   }
   if (series.isEmpty) return null;
   final hc = session['healthCheck'];
-  final bilan = hc is Map && hc.isNotEmpty
-      ? koachCopie(hc) as Json
-      : null;
+  final bilan = hc is Map && hc.isNotEmpty ? koachCopie(hc) as Json : null;
   final debut = <String, Object?>{
     'type': 'seance_debut',
     'jour': jour,
     'bilan': bilan,
     'poids_kg': poidsKg ?? session['bodyWeightKg'],
-    'contexte': info == null ? {'semaine': semaineS - 1} : koachContexteDe(info),
+    'contexte': info == null
+        ? {'semaine': semaineS - 1}
+        : koachContexteDe(info),
   };
   final fin = <String, Object?>{
     'type': 'seance_fin',
