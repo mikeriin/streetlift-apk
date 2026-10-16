@@ -48,3 +48,5 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Relecture (sous-agent Opus) : 0 bloquant, 3 majeurs, 13 mineurs. Traités : M2 (vue realise_apparie = contre le plan écrit aux mêmes manquées, Python+Dart), M3 (securite dans les fixtures du banc + test Dart ; test Python vider_manquees), M1 (docs corrigées + test a posteriori réel ; élargissement uniforme recommandé au pilotage), mineurs docs (CONTRAT K.5, README, koach.dart, PORTAGE_DART, INTEGRATION_KM3, docstring), outils (comparer NaN/inf/doublons ; securite v2 : critère 7, réalisée appariée, retour à l'écrit, réalisée vs initial).
 - Run E (bc06f78) : Dart g0-5 34 profils = Python (critères 1-4, 6, 7, secondaires identiques), 0 plantée ; formatage appliqué.
 - F en cours (sans realise_apparie) → il faudra un run G (100 graines) avec la vue appariée + contrôle complet.
+
+## 18:58 UTC — G (6f8ce32) et contrôle préalable (6d1e71d, workflow standard) poussés ; F en cours. Scripts : /tmp/kr1/ctrlcommit.sh (kr1_dev/).
