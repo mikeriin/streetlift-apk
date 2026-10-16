@@ -246,20 +246,32 @@ class KoachCalcul {
   /// Vrai : calcul dans un isolat (application) ; faux : sur place (tests).
   static bool isolat = true;
 
-  /// Applique [f] à une copie de [k] hors du fil d'interface et rend la
-  /// copie modifiée (INTEGRATION_KM3.md § 1.5 : aucun autre événement n'est
-  /// versé pendant le calcul, puis l'instance rendue remplace l'instance
-  /// vive). Une erreur se propage : l'appelant garde l'instance d'avant.
-  static Future<ko.Koach> appliquer(
-    ko.Koach k,
-    void Function(ko.Koach) f,
-  ) async {
+  /// Rattrapage ([koachRattraper]) sur une copie de [k] hors du fil
+  /// d'interface, rendue modifiée (INTEGRATION_KM3.md § 1.5 : aucun autre
+  /// événement n'est versé pendant le calcul, puis l'instance rendue
+  /// remplace l'instance vive). Une erreur se propage : l'appelant garde
+  /// l'instance d'avant. Les fermetures envoyées à l'isolat sont créées
+  /// ici, jamais dans le magasin : leur contexte ne doit porter que des
+  /// données envoyables (le magasin ne l'est pas).
+  static Future<ko.Koach> rattraper(ko.Koach k, List<KoachEtape> steps) {
     if (!isolat) {
-      f(k);
-      return k;
+      koachRattraper(k, steps);
+      return Future.value(k);
     }
     return Isolate.run(() {
-      f(k);
+      koachRattraper(k, steps);
+      return k;
+    });
+  }
+
+  /// Un événement [ev] versé à une copie de [k] hors du fil d'interface.
+  static Future<ko.Koach> observer(ko.Koach k, Json ev) {
+    if (!isolat) {
+      k.observe(ev);
+      return Future.value(k);
+    }
+    return Isolate.run(() {
+      k.observe(ev);
       return k;
     });
   }
