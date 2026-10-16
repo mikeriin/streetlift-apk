@@ -1,0 +1,17 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ks1a_types_test.dart
+00:00 +0: paquets et textes kalis_core 0.4.4, kalis_plan 0.4.1, kalis_adapt 1.0.2 inchangé ; parcours v3 recopié à l’octet
+00:00 +1: paquets et textes six codes de structure : phrases de l’application, aucun code brut
+00:00 +2: paquets et textes notes de coach minimum_load et fixed_load rédigées
+00:00 +3: paquets et textes libellés des types de jour
+00:00 +4: programme de 40 semaines types déduits des titres : J1 à J3 force, J4 et J5 endurance de force, J6 puissance ; tests et récupération
+KS1A|40s|{Tirage — force: 40, Poussée — force: 37, Jambes — force: 37, Récupération: 12, Tirage — endurance de force: 40, Poussée — endurance de force: 37, Jambes — endurance de force: 3, Figures + tirage — puissance: 25, Corps entier — puissance: 9}
+00:00 +5: programme de 40 semaines blocs importés : chaque journée porte son type ; rien n’est enregistré, aucune séance réécrite
+00:01 +6: programme de 40 semaines Koach (bascule forcée) : référence sans type, signature de dev7.0.0, aucune nouvelle référence
+00:05 +7: programme créé profil street 50 / 50 à 6 séances : gabarit et types écrits par kalis_plan 0.4.1, affichés ; durée sur le temps disponible
+KS1A|gabarit|ppl6_q|Semaine construite en tirage, poussée, jambes, deux fois, pour tes 6 séances.
+KS1A|types|J1 TIRAGE : Tirage — force / J2 POUSSÉE : Poussée — force / J3 BAS DU CORPS : Jambes — force / J4 TIRAGE : Tirage — endurance de force / J5 POUSSÉE : Poussée — endurance de force / J6 BAS DU CORPS : Jambes — endurance de force
+KS1A|durees|25–33 min sur 120 disponibles / 25–32 min sur 120 disponibles / 20–26 min sur 120 disponibles / 21–28 min sur 120 disponibles / 5–9 min sur 120 disponibles / 13–18 min sur 120 disponibles
+00:05 +8: programme créé durée : rien de plus quand le créneau n’est pas plus long que la séance
+00:05 +9: programme créé changement d’échéance : le bloc suivant commence au début du bloc en cours + ses semaines entières servies ; le bloc en cours est tronqué
+KS1A|echeance|bloc1=2026-10-05+4 sem|servies=2|bloc2=2026-10-19
+00:05 +10: All tests passed!

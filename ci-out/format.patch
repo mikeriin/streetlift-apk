@@ -1,0 +1,32 @@
+diff --git a/integration_test/types_ks1a_test.dart b/integration_test/types_ks1a_test.dart
+index fdcb168..8885c3c 100644
+--- a/integration_test/types_ks1a_test.dart
++++ b/integration_test/types_ks1a_test.dart
+@@ -281,9 +281,9 @@ void main() {
+     final monday = (DateTime.monday - real.weekday + 7) % 7;
+     KalisClock.setOffsetDays(monday);
+     final p0 = sampleStreet5050Profile(on: civilOf(KalisClock.now()));
+-    releve['profil'] = store.saveAthleteProfile(
+-      ProfileDraft.of(p0)..consent = 'refused',
+-    ) != null;
++    releve['profil'] =
++        store.saveAthleteProfile(ProfileDraft.of(p0)..consent = 'refused') !=
++        null;
+     // Création à l'écran : structure de la semaine, types des jours.
+     unawaited(
+       appNavigator.currentState!.push(
+diff --git a/test/ks1a_types_test.dart b/test/ks1a_types_test.dart
+index 4f151f6..66f73bd 100644
+--- a/test/ks1a_types_test.dart
++++ b/test/ks1a_types_test.dart
+@@ -451,9 +451,7 @@ void main() {
+       final ev = p0.events!.single;
+       _save(
+         app,
+-        p0.copyWith(
+-          events: [ev.copyWith(date: ev.date.addDays(-42))],
+-        ),
++        p0.copyWith(events: [ev.copyWith(date: ev.date.addDays(-42))]),
+       );
+       expect(PlanStore(app).planDeadlineChanged, isTrue);
+       expect(PlanStore(app).planNextFirstWeek, 3);
