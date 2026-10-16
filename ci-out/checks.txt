@@ -1,0 +1,13 @@
+lot=KS1A
+rapide=true
+pub=success
+format=failure
+analyze=failure
+ui_tokens_zone=failure
+python=skipped
+dart=failure
+dart_dev=skipped
+captures_ui=failure
+captures=skipped
+build_debug=skipped
+build_profile=skipped

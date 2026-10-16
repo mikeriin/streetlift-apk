@@ -1,0 +1,11 @@
+Analyzing streetlift-apk...                                     
+
+  error • The argument type 'List<SeasonEvent>?' can't be assigned to the parameter type 'List<SeasonEvent>'.  • lib/plan_store.dart:201:32 • argument_type_not_assignable
+  error • The argument type 'List<SeasonEvent>?' can't be assigned to the parameter type 'List<SeasonEvent>'.  • lib/plan_store.dart:305:26 • argument_type_not_assignable
+  error • The argument type 'List<SeasonEvent>?' can't be assigned to the parameter type 'List<SeasonEvent>'.  • lib/plan_store.dart:626:32 • argument_type_not_assignable
+  error • The argument type 'List<SeasonEvent>?' can't be assigned to the parameter type 'List<SeasonEvent>'.  • test/ks1a_types_test.dart:377:44 • argument_type_not_assignable
+  error • The property 'single' can't be unconditionally accessed because the receiver can be 'null'. Try making the access conditional (using '?.') or adding a null check to the target ('!') • test/ks1a_types_test.dart:455:23 • unchecked_use_of_nullable_value
+  error • The property 'single' can't be unconditionally accessed because the receiver can be 'null'. Try making the access conditional (using '?.') or adding a null check to the target ('!') • test/ks1a_types_test.dart:456:31 • unchecked_use_of_nullable_value
+  error • The argument type 'List<SeasonEvent>?' can't be assigned to the parameter type 'List<SeasonEvent>'.  • test/ks1a_types_test.dart:481:44 • argument_type_not_assignable
+
+7 issues found. (ran in 20.4s)
