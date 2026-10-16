@@ -451,6 +451,30 @@ abstract final class ReasonCodes {
   /// Fatigue croisée : effort visé abaissé sur le bas du corps après une course
   /// dure la veille.
   static const String adaptCrossFatigue = 'adapt.cross_fatigue';
+
+  /// Gabarit de semaine retenu pour tant de séances : le plus sûr, puis celui
+  /// qui porte tous les objectifs, récupère, expose les mouvements visés, tient
+  /// dans le temps, suit les préférences.
+  static const String planSplitChosen = 'plan.split_chosen';
+
+  /// Type du jour : schémas de mouvement et qualité visée.
+  static const String planDayType = 'plan.day_type';
+
+  /// Audit : objectif sans emplacement porteur dans une semaine de charge du
+  /// bloc.
+  static const String planGoalUncovered = 'plan.goal_uncovered';
+
+  /// Jalon : semaine de test à la date d'objectifs datés plus tôt que
+  /// l'échéance retenue, puis reprise de la saison.
+  static const String planMilestone = 'plan.milestone';
+
+  /// Remplace un exercice que l'utilisateur n'aime pas (`exerciseId` :
+  /// l'exercice remplacé).
+  static const String planReplacedDisliked = 'plan.replaced_disliked';
+
+  /// Remplace un exercice que l'utilisateur ne sait pas faire (`exerciseId` :
+  /// l'exercice remplacé).
+  static const String planReplacedCannotDo = 'plan.replaced_cannot_do';
 }
 
 /// Registre des codes de raison et de leurs paramètres typés.
@@ -901,5 +925,26 @@ const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
   }),
   ReasonSpec(ReasonCodes.adaptCrossFatigue, <String, ReasonParamType>{
     'cause': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planSplitChosen, <String, ReasonParamType>{
+    'templateId': ReasonParamType.text,
+    'sessions': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planDayType, <String, ReasonParamType>{
+    'patterns': ReasonParamType.text,
+    'quality': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planGoalUncovered, <String, ReasonParamType>{
+    'goalId': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planMilestone, <String, ReasonParamType>{
+    'date': ReasonParamType.text,
+    'goals': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planReplacedDisliked, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+  }),
+  ReasonSpec(ReasonCodes.planReplacedCannotDo, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
   }),
 ];

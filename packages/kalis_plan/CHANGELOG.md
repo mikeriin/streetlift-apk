@@ -1,5 +1,50 @@
 # Journal des versions de kalis_plan
 
+## 0.4.1
+
+Lot KS1c1 (« 0 violation sur les saisons des profils ajoutés », `pipeline/cp/prompts/KS1c1.txt`, C17.12). API
+étendue (additif) : `servedWeeksOf`, `servedBlockOf`, `servedBlockRequest`, `servedPlanRequest` et `coachReturnStepsOf`
+exportées. Contrat § 12.9 et § 12.16.
+
+- **Bloc suivant après un bloc arrêté avant son terme** : `nextBlock` tronque le bloc précédent aux semaines entières
+  servies entre son début et la date du nouveau bloc (au moins une) avant d'amorcer la passe 2 ; les garde-fous
+  (hausse de charge à schéma égal, rampe de volume, tests passés) lisent la dernière semaine faite et non les semaines
+  écrites puis abandonnées. Cause des 4 hausses de charge de KS1 (échéance avancée, `ks_01` à `ks_03`, +9,0 à +9,3 %
+  au squat et à la traction lestée) et des 2 de `street_12` (changement de discipline, +7,1 % et +9,4 % ; contrôle
+  complet de KS1, run 38804692527, `saisons/SECURITE.md`, vérité B, graine 0), toutes au premier bloc réécrit. La
+  note `pain_return` du bloc tronqué est recalculée sur ses semaines de charge servies (le bloc suivant repart du
+  palier de reprise atteint). Même troncature dans `createPass1` et `createPass2` (`PlanRequest.previousBlock`,
+  date de la requête) ; sans effet sur le chemin 0.1, dont la passe 2 ne lit pas l'historique.
+
+## 0.4.0
+
+Lot KS1 (« structure de la semaine », `pipeline/cp/CAHIER_KS.md`). `kalis_core` 0.4.4 (`PlanDay.type`,
+`Pass1Plan.split`, six codes de raison, tous additifs). API inchangée (`createProgram`, `nextBlock`, revue).
+Détail : `docs/STRUCTURE_SEMAINE.md`, contrat § 12.15.
+
+- **Gabarit de semaine** : bibliothèque (`ppl6_q`, `pp_l5`, `ul4`, `fb3`, `fb2`, composite `mix_q`, chemins
+  d'avant pour les profils mono-discipline) ; un profil street qui déclare streetlifting et sets & reps à 25 % ou
+  plus chacun reçoit des jours de force et des jours d'endurance de force, séances par qualité au plus fort reste,
+  vingt points de plus à la qualité de l'échéance en intensification et en réalisation.
+- **Choix du gabarit** par ordre lexicographique (couverture, récupération ≥ 0,9, spécificité, temps,
+  préférences) au lieu de la moyenne pondérée de la note ; raisons `plan.split_chosen` et `plan.day_type`.
+- **Placement** exhaustif sur les jours réels (aucun schéma chargé deux jours de suite, le jour le plus exigeant
+  après le plus long repos, force et endurance d'un schéma à 72 h) ; **remplissage** par type, le mouvement le plus
+  exigeant en tête (muscle-up lesté, traction lestée, dips lesté, squat).
+- **Couverture** : `plan.goal_uncovered` quand un objectif n'a pas d'emplacement porteur ; squat à charge fixe
+  pour un objectif « répétitions × charge » (méthode `lift.fixed`, note `fixed_load`).
+- **Échéances** : un objectif daté plus tôt qu'une échéance secondaire devient la cible (`plan.milestone`), sa
+  semaine de charge devient une semaine de test dans une saison d'échéance principale ; pas plus de trois blocs
+  d'accumulation de suite.
+- **Note recalée** : `recovery` (schémas chargés), `fatigue_balance` (séries dures par séance), `joint_load`
+  (séances dures par schéma, R4-F10) et `preferences` (exercices aimés et sus placés) recalculées pour les plans
+  du coach ; la note relue (`PlanInspector.scoreOf`) est la note rendue.
+- **Charges** : muscle-up lesté visé au plus petit pas de lest plutôt qu'à +0 kg (note `minimum_load`) ;
+  traction haute et dips à la barre fixe réglés sur la traction et le dips lestés ; squat pause bas sur le squat ;
+  une semaine allégée jamais plus lourde que la dernière semaine de construction.
+- **Revue** : le remplaçant d'un exercice non aimé ou impossible porte `plan.replaced_disliked` ou
+  `plan.replaced_cannot_do`.
+
 ## 0.3.1
 
 Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contrat inchangé (notes de coach

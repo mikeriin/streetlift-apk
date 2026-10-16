@@ -8,6 +8,7 @@ import 'package:kalis_core/kalis_core.dart';
 import 'assemble.dart';
 import 'coach/athlete.dart';
 import 'coach/coach.dart';
+import 'coach/prescribe.dart' show CoachNotes;
 import 'context.dart';
 import 'diff.dart';
 import 'hash.dart';
@@ -24,6 +25,106 @@ import 'version.dart';
 /// Identifiant du bloc de rang [blockIndex] commençant le [startDate].
 String blockIdFor(int blockIndex, CivilDate startDate) =>
     'kp-b$blockIndex-${startDate.iso}';
+
+/// Nombre de semaines du bloc [previous] réellement servies avant un bloc
+/// qui commence le [startDate] : les semaines entières entre le début du
+/// bloc et cette date (arrondi par défaut), au moins une, au plus les
+/// semaines du bloc. Un bloc que l'athlète arrête avant son terme (échéance
+/// avancée ou ajoutée, changement de discipline en cours de bloc) est
+/// tronqué aux semaines faites ; une date antérieure au début du bloc
+/// compte une semaine (choix prudent, documenté au contrat § 12.9).
+int servedWeeksOf(ProgramBlock previous, CivilDate startDate) {
+  final total = previous.pass2.weeks.length;
+  if (total <= 1) {
+    return total;
+  }
+  final days = startDate.dayNumber - previous.pass1.startDate.dayNumber;
+  final served = days ~/ 7;
+  if (served < 1) {
+    return 1;
+  }
+  return served > total ? total : served;
+}
+
+/// Le bloc [previous] tronqué à ses semaines servies avant [startDate]
+/// (`servedWeeksOf`) ; le bloc lui-même quand il a été servi en entier.
+/// La note `pain_return` de la passe 2 (dernier palier de reprise atteint,
+/// lue par `coachReturnStepsOf`) est recalculée sur les semaines de charge
+/// servies : le bloc suivant repart du palier réellement atteint.
+ProgramBlock servedBlockOf(ProgramBlock previous, CivilDate startDate) {
+  final served = servedWeeksOf(previous, startDate);
+  if (served >= previous.pass2.weeks.length) {
+    return previous;
+  }
+  final weeks = previous.pass2.weeks.sublist(0, served);
+  var loaded = 0;
+  for (final w in weeks) {
+    if (w.kind == WeekKind.build || w.kind == WeekKind.intro) {
+      loaded++;
+    }
+  }
+  final reasons = <Reason>[];
+  for (final r in previous.pass2.reasons) {
+    final value = r.params['value'];
+    if (r.code != ReasonCodes.planCoachNote ||
+        r.params['note'] != CoachNotes.painReturn ||
+        value is! num) {
+      reasons.add(r);
+      continue;
+    }
+    final v = value.round();
+    final zone = v ~/ 100;
+    final start = (v % 100) ~/ 10;
+    var end = start + (loaded > 0 ? loaded - 1 : 0);
+    if (end > 9) {
+      end = 9;
+    }
+    reasons.add(
+      r.copyWith(
+        params: <String, Object?>{
+          ...r.params,
+          'value': (zone * 100 + start * 10 + end) * 1.0,
+        },
+      ),
+    );
+  }
+  return ProgramBlock(
+    pass1: previous.pass1.copyWith(weeks: weeks.length),
+    pass2: previous.pass2.copyWith(weeks: weeks, reasons: reasons),
+  );
+}
+
+/// [request] dont le bloc précédent est tronqué aux semaines réellement
+/// servies (`servedBlockOf`) : les garde-fous du bloc suivant (hausse de
+/// charge d'une semaine à l'autre, rampe de volume, tests passés, palier de
+/// reprise après une douleur) lisent la dernière semaine faite, pas les
+/// semaines écrites puis abandonnées (KS1c1 : après une échéance avancée de
+/// deux semaines, le bloc de réalisation ouvrait 9 % au-dessus de la
+/// dernière semaine servie, dans la continuité d'une semaine
+/// d'intensification jamais faite).
+NextBlockRequest servedBlockRequest(NextBlockRequest request) {
+  final previous = request.previous;
+  final served = servedBlockOf(previous, request.startDate);
+  if (identical(served, previous)) {
+    return request;
+  }
+  return request.copyWith(previous: served);
+}
+
+/// [request] de passe 1 ou 2 dont le bloc précédent, s'il y en a un, est
+/// tronqué comme dans `servedBlockRequest` (même règle pour un intégrateur
+/// qui enchaîne `createPass1` et `createPass2` lui-même).
+PlanRequest servedPlanRequest(PlanRequest request) {
+  final previous = request.previousBlock;
+  if (previous == null) {
+    return request;
+  }
+  final served = servedBlockOf(previous, request.startDate);
+  if (identical(served, previous)) {
+    return request;
+  }
+  return request.copyWith(previousBlock: served);
+}
 
 /// Profil mis à jour par ce qu'une action de revue a appris (à faire par
 /// l'application après chaque `review`, INTEGRATION.md de kalis_core).
@@ -180,8 +281,9 @@ final class KalisPlan implements PlanEngine, SeasonPlanner {
   // ---------------------------------------------------------------- passe 1
 
   @override
-  Pass1Plan createPass1(Catalog catalog, PlanRequest request) {
-    _check(catalog, request.profile);
+  Pass1Plan createPass1(Catalog catalog, PlanRequest raw) {
+    _check(catalog, raw.profile);
+    final request = servedPlanRequest(raw);
     if (coachEligible(request.profile)) {
       return _coach.createPass1(catalog, request);
     }
@@ -915,9 +1017,10 @@ final class KalisPlan implements PlanEngine, SeasonPlanner {
   // ---------------------------------------------------------------- passe 2
 
   @override
-  Pass2Plan createPass2(Catalog catalog, Pass2Request request) {
+  Pass2Plan createPass2(Catalog catalog, Pass2Request raw) {
+    _check(catalog, raw.request.profile);
+    final request = raw.copyWith(request: servedPlanRequest(raw.request));
     final base = request.request;
-    _check(catalog, base.profile);
     final pass1 = request.pass1;
     if (coachEligible(base.profile) && isCoachPlan(pass1)) {
       return _coach.createPass2(catalog, request);
@@ -947,8 +1050,9 @@ final class KalisPlan implements PlanEngine, SeasonPlanner {
   // ------------------------------------------------------- blocs glissants
 
   @override
-  BlockProposal nextBlock(Catalog catalog, NextBlockRequest request) {
-    _check(catalog, request.profile);
+  BlockProposal nextBlock(Catalog catalog, NextBlockRequest raw) {
+    _check(catalog, raw.profile);
+    final request = servedBlockRequest(raw);
     // (Un débutant sans ancienneté n'est éligible que depuis 0.2.3 : un
     // bloc écrit par le chemin 0.1 se poursuit par le chemin 0.1 —
     // relecture indépendante du code de 0.2.3.)
