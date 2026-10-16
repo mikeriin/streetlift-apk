@@ -1197,8 +1197,11 @@ extension KoachStore on AppStore {
   /// par Koach (la séance reste celle de l'aperçu).
   Future<bool> koachStart(int week, DayPlan base, {Json? diagnostic}) async {
     if (!koachPending(week, base.j)) return false;
+    final sw = Stopwatch()..start();
     await koachRefresh();
-    return koachStartNow(week, base, diagnostic: diagnostic);
+    final ok = koachStartNow(week, base, diagnostic: diagnostic);
+    if (ok) _koachRt.temps.noter('debut_seance', sw.elapsed);
+    return ok;
   }
 
   /// [koachStart] sans attendre : le moteur doit être prêt.
