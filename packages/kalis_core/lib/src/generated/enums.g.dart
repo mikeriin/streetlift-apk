@@ -2368,3 +2368,62 @@ enum ProposalDetail {
     throw FormatException('ProposalDetail : code inconnu', code);
   }
 }
+
+/// Schéma de mouvement porté par un jour (0.4.4, énumération ouverte) :
+/// tirage (vertical et horizontal, muscle-up compris), poussée (dips, pompes,
+/// poussée verticale), jambes (squat, charnière, unilatéral), corps entier
+/// (deux des trois au moins), figures, course, récupération.
+enum DayPattern {
+  pull('pull'),
+  push('push'),
+  legs('legs'),
+  full('full'),
+  skill('skill'),
+  run('run'),
+  recovery('recovery');
+
+  const DayPattern(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static DayPattern fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('DayPattern : code inconnu', code);
+  }
+}
+
+/// Qualité visée par un jour (0.4.4, énumération ouverte) : force (1 à 6
+/// répétitions, 80 % du 1RM et plus), volume (6 à 12 répétitions, 65 à 80 %),
+/// endurance de force (séries longues, densité), puissance (vitesse maximale,
+/// loin de l'échec), figures, conditionnement, course, récupération.
+enum DayQuality {
+  force('force'),
+  volume('volume'),
+  endurance('endurance'),
+  power('power'),
+  skill('skill'),
+  conditioning('conditioning'),
+  run('run'),
+  recovery('recovery');
+
+  const DayQuality(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static DayQuality fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('DayQuality : code inconnu', code);
+  }
+}

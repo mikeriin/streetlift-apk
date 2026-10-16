@@ -518,6 +518,7 @@ Séance type d'un jour d'entraînement (passe 1).
 | `minutesBudget` | entier | non | 0 à 300 | Durée prévue, en minutes. |
 | `focus` | texte | non | — | Code du thème de la séance. |
 | `slots` | liste de `PlanSlot` | non | — | Exercices, dans l'ordre. |
+| `type` | `DayType` | oui | — | Type du jour : schémas, qualité, charge (0.4.4) ; absent : programme d'avant 0.4.4. |
 
 ### `ScoreComponent`
 
@@ -556,6 +557,7 @@ Passe 1 : le bloc, ses jours, ses exercices et leurs rôles, sans séries ni ré
 | `reasons` | liste de `Reason` | non | — | Raisons au niveau du bloc. |
 | `intent` | `BlockIntent` | oui | — | Intention du bloc : sa place dans la saison (0.4.0). |
 | `skillLadders` | liste de `SkillLadder` | oui | longueur ≤ 30 | Échelles de progression des figures travaillées dans le bloc (0.4.0). |
+| `split` | `SplitChoice` | oui | — | Gabarit de semaine retenu (0.4.4) ; absent : programme d'avant 0.4.4. |
 
 Invariant : `dayIndex` = rang dans `days` ; `slotId` uniques dans le bloc.
 
@@ -996,6 +998,25 @@ Série ou exercice de test (0.4.0), porté par une prescription dont `kind` vaut
 | `targetRir` | nombre | oui | 0 à 5 | Répétitions en réserve à garder (série d'estimation). |
 | `attempts` | entier | oui | 1 à 6 | Nombre d'essais au plus (maximum, simulation de tentatives). |
 | `benchmarkKind` | `BenchmarkKind` | oui | — | Nature de la valeur à reporter dans le profil (`AdaptReview.testResults`). |
+
+### `DayType`
+
+Type d'un jour d'entraînement (0.4.4) : schémas de mouvement, qualité visée, charge de la séance.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `patterns` | liste de `DayPattern` | non | longueur 1 à 7 | Schémas du jour, du principal au secondaire. |
+| `quality` | `DayQuality` | non | — | Qualité visée par le jour. |
+| `stress` | `DayStress` | oui | — | Charge de la séance (lourde, moyenne, légère). |
+
+### `SplitChoice`
+
+Gabarit de semaine retenu pour le bloc (0.4.4) : code de la bibliothèque de `kalis_plan` et raisons du choix.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `templateId` | texte | non | longueur ≥ 1 | Code stable du gabarit (`ppl6_q`, `ul4`, `lift_dup`…). |
+| `reasons` | liste de `Reason` | non | — | Pourquoi ce gabarit (règle de choix, critère décisif). |
 
 ## Interface `adapt` (kalis_adapt)
 
@@ -1864,6 +1885,8 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `DayStress` | `heavy`, `medium`, `light` | Ondulation dans la semaine (0.4.0) : jour lourd, moyen ou léger, pour une séance ou pour un mouvement. |
 | `UndulationModel` | `none`, `weekly`, `daily` | Modèle d'ondulation d'un bloc (0.4.0) : aucune, d'une semaine à l'autre, d'un jour à l'autre. |
 | `ProposalDetail` | `skill_step_up`, `skill_step_down`, `technique_change`, `test_scheduled`, `taper_adjust`, `specialization`, `season_update` | Précision d'une proposition du moteur dynamique (0.4.0) ; complète `ProposalKind`, qui reste renseigné. |
+| `DayPattern` | `pull`, `push`, `legs`, `full`, `skill`, `run`, `recovery` | Schéma de mouvement porté par un jour (0.4.4, énumération ouverte) : tirage (vertical et horizontal, muscle-up compris), poussée (dips, pompes, poussée verticale), jambes (squat, charnière, unilatéral), corps entier (deux des trois au moins), figures, course, récupération. |
+| `DayQuality` | `force`, `volume`, `endurance`, `power`, `skill`, `conditioning`, `run`, `recovery` | Qualité visée par un jour (0.4.4, énumération ouverte) : force (1 à 6 répétitions, 80 % du 1RM et plus), volume (6 à 12 répétitions, 65 à 80 %), endurance de force (séries longues, densité), puissance (vitesse maximale, loin de l'échec), figures, conditionnement, course, récupération. |
 
 ## Registre des codes de raison
 
@@ -2007,3 +2030,9 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `adapt.endurance_shortened` | `cause` (string), `percent` (int) | Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à `percent` % de l'écrit (bilan bas, reprise après une coupure). |
 | `adapt.wod_scaled` | `cause` (string), `percent` (int) | Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou de la durée écrites (jour sans, jours durs de suite). |
 | `adapt.cross_fatigue` | `cause` (string) | Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille. |
+| `plan.split_chosen` | `templateId` (string), `sessions` (int) | Gabarit de semaine retenu pour tant de séances : le plus sûr, puis celui qui porte tous les objectifs, récupère, expose les mouvements visés, tient dans le temps, suit les préférences. |
+| `plan.day_type` | `patterns` (string), `quality` (string) | Type du jour : schémas de mouvement et qualité visée. |
+| `plan.goal_uncovered` | `goalId` (string) | Audit : objectif sans emplacement porteur dans une semaine de charge du bloc. |
+| `plan.milestone` | `date` (string), `goals` (int) | Jalon : semaine de test à la date d'objectifs datés plus tôt que l'échéance retenue, puis reprise de la saison. |
+| `plan.replaced_disliked` | `exerciseId` (exercise) | Remplace un exercice que l'utilisateur n'aime pas (`exerciseId` : l'exercice remplacé). |
+| `plan.replaced_cannot_do` | `exerciseId` (exercise) | Remplace un exercice que l'utilisateur ne sait pas faire (`exerciseId` : l'exercice remplacé). |

@@ -171,7 +171,8 @@ class ProgramScreen extends StatelessWidget {
           title: 'Changer de programme',
           children: [
             if (PlanStore(store).planBlockEnding ||
-                PlanStore(store).planImportedNextBlockOffered)
+                PlanStore(store).planImportedNextBlockOffered ||
+                PlanStore(store).planDeadlineChanged)
               KMenuRow(
                 key: const ValueKey('program-next-block'),
                 icon: Icons.skip_next_outlined,
@@ -179,6 +180,12 @@ class ProgramScreen extends StatelessWidget {
                 subtitle: PlanStore(store).planBlockEnding
                     ? 'Ton bloc arrive à son terme : Koach prépare le '
                           'suivant avec toi'
+                    // KS1A (contrat § 12.9) : échéance changée en cours de
+                    // bloc ; le bloc en cours s'arrête à ses semaines
+                    // faites.
+                    : PlanStore(store).planDeadlineChanged
+                    ? 'Ton échéance a changé : Koach peut réécrire la suite '
+                          'dès la semaine ${PlanStore(store).planNextFirstWeek}'
                     : 'Fin d’un bloc de ton programme : Koach peut écrire '
                           'le suivant',
                 onTap: () => _openNextBlock(context),
