@@ -1,0 +1,173 @@
+{
+ "schemaVersion": 1,
+ "key": "autres_09_perte_de_poids_debutante",
+ "group": "autres",
+ "title": "Perte de poids, débutante",
+ "summary": "Femme de 42 ans, 92 kg pour 1,68 m, sédentaire. Veut perdre du poids durablement. Trois séances de 45 minutes en salle, et de la marche.",
+ "level": "beginner",
+ "trainingAgeMonths": 0,
+ "core": {
+  "sex": "female",
+  "birthYear": 1984,
+  "heightCm": 168,
+  "bodyWeightKg": 92.0,
+  "disciplines": {
+   "primary": "general_fitness",
+   "primaryPct": 100,
+   "secondaries": []
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 45
+   },
+   {
+    "weekday": 3,
+    "minutes": 45
+   },
+   {
+    "weekday": 6,
+    "minutes": 45
+   }
+  ],
+  "places": [
+   "salle",
+   "exterieur"
+  ],
+  "equipment": [
+   "barre olympique",
+   "disques",
+   "cage / rack",
+   "banc plat",
+   "banc inclinable",
+   "haltères",
+   "poulie",
+   "machine guidée",
+   "presse à cuisses",
+   "machine à mollets",
+   "barre EZ",
+   "kettlebell",
+   "barre fixe",
+   "barres parallèles",
+   "tapis",
+   "rameur",
+   "vélo / home-trainer",
+   "tapis de course",
+   "élastique",
+   "box / plinth",
+   "piste ou terrain extérieur"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "beginner",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [],
+ "habitGoal": {
+  "sessionsPerWeek": 3,
+  "weeks": 12
+ },
+ "recovery": {
+  "sleepHours": 6.5,
+  "stress": 3,
+  "energyDeficit": true
+ },
+ "expectations": {
+  "text": [
+   "Musculation corps entier deux à trois fois par semaine, 6 à 8 exercices, 2 à 3 séries de 8 à 12 répétitions à 2-3 en réserve ; la charge progresse normalement, même en déficit (R6-P31).",
+   "Cardio à faible impact : marche, vélo, rameur ; ni course, ni sauts, ni burpees au début (R6-P32).",
+   "Exercices stables où la personne se sent compétente (machines, appuis stables) (R6-P32).",
+   "Aucune prescription alimentaire (R6-P31)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "forbid_patterns",
+    "label": "Ni saut, ni sprint, ni corde, ni burpees",
+    "patterns": [
+     "pliometrie",
+     "sprint",
+     "corde_a_sauter",
+     "balistique",
+     "conditionnement"
+    ]
+   },
+   {
+    "id": "c2",
+    "type": "forbid_exercises",
+    "label": "Pas de course à pied au début",
+    "exerciseIds": [
+     "ca-footing-endurance-fondamentale",
+     "ca-sortie-longue",
+     "ca-course-tapis-endurance",
+     "ca-course-seuil-tempo",
+     "ca-course-30-30",
+     "ca-fartlek"
+    ]
+   },
+   {
+    "id": "c3",
+    "type": "min_weekly_minutes",
+    "label": "Au moins 30 minutes de cardio à faible impact par semaine",
+    "kind": "cardio",
+    "minutes": 30
+   },
+   {
+    "id": "c4",
+    "type": "min_rir_first_weeks",
+    "label": "Au moins 2 répétitions en réserve les quatre premières semaines",
+    "weeks": 4,
+    "rir": 2
+   },
+   {
+    "id": "c5",
+    "type": "min_group_sets",
+    "label": "Quadriceps : au moins 4 séries dures par semaine",
+    "group": "quads",
+    "sets": 4
+   },
+   {
+    "id": "c6",
+    "type": "max_exercise_level",
+    "label": "Exercices de niveau débutant ou intermédiaire",
+    "level": "Intermédiaire"
+   }
+  ]
+ }
+}
