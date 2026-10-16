@@ -321,3 +321,7 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - En parallèle : KS1c1 et KM2c2 sur `moteurs` ; rien dans `packages/` hors la copie de l'étiquette.
 
 - **Note pour KS1c1 (pilotage, 16/10/2026 08:25 UTC, C17.16.2)** : `etiquettes/kalis_bench-v0.5.1` est prise par KM2c2 (`moteurs` 4910ec13) ; rebase sur cette pointe et publie `kalis_bench` **0.5.2** (ne réécris jamais une étiquette existante).
+
+## KR1 — Koach sur `kalis_plan` 0.4.1, campagne du couple (lancé le 16/10/2026 vers 12:00 UTC, tâche « Opus 5.5, effort maximal, moteurs » ; C17.17, C17.18)
+
+- Lot : **KR1**, prompt `prompts/KR1.txt`. Base `moteurs` à la pointe (eae158b8 ou suivant). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KR1`. Seul lot moteur en cours ; KM3 tourne sur `main` (rien dans l'application).
