@@ -1,0 +1,112 @@
+# Contrôle de MISE AU POINT du lot KR1 (branche claude/ci-cp-a seulement,
+# jamais sur moteurs) : commandes de DEV_KR1.sh réparties en parts
+# parallèles (DEV_PARTS), assemblage par DEV_ASSEMBLER.sh.
+name: CI paquets (pistes GP)
+
+on:
+  push:
+    branches: ["claude/ci-cp-a"]
+    paths-ignore:
+      - "ci-out/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-paquets-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+
+jobs:
+  parts:
+    runs-on: ubuntu-24.04
+    outputs:
+      liste: ${{ steps.p.outputs.liste }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: p
+        run: echo "liste=$(cat DEV_PARTS)" >> "$GITHUB_OUTPUT"
+  packages:
+    name: Mise au point KR1 (${{ matrix.part }})
+    needs: [parts]
+    strategy:
+      fail-fast: false
+      matrix:
+        part: ${{ fromJSON(needs.parts.outputs.liste) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Mise au point
+        run: |
+          mkdir -p out-packages
+          pip install --quiet numpy pytest
+          PART=${{ matrix.part }} bash DEV_KR1.sh 2>&1 | tee out-packages/dev_${{ matrix.part }}.log
+          exit ${PIPESTATUS[0]}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: packages-${{ matrix.part }}
+          path: out-packages/
+          if-no-files-found: warn
+
+  publish:
+    name: Publier les résultats dans ci-out/
+    needs: [packages]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Assembler ci-out
+        run: |
+          rm -rf ci-out && mkdir -p ci-out/packages
+          for d in artifacts/packages-*; do cp -r "$d"/. ci-out/packages/ 2>/dev/null || true; done
+          if [ -f DEV_ASSEMBLER.sh ]; then bash DEV_ASSEMBLER.sh 2>&1 | tee ci-out/packages/assembler.log || true; fi
+          {
+            echo "run=${{ github.run_id }}"
+            echo "commit=${{ github.sha }}"
+            echo "branche=${{ github.ref_name }}"
+            echo "packages=${{ needs.packages.result }}"
+          } > ci-out/resultat.txt
+          cat ci-out/resultat.txt
+      - name: Recommiter ci-out sur la branche
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          branch="${{ github.ref_name }}"
+          for i in 1 2 3; do
+            git fetch -q origin "$branch"
+            git reset -q FETCH_HEAD
+            git add -A -f ci-out
+            git commit -qm "CI paquets : résultats du run ${{ github.run_id }}" || exit 0
+            git push -q origin "HEAD:$branch" && break
+            sleep 5
+          done

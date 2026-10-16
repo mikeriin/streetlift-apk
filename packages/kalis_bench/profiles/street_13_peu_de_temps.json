@@ -1,0 +1,154 @@
+{
+ "schemaVersion": 1,
+ "key": "street_13_peu_de_temps",
+ "group": "street",
+ "title": "Peu de temps : trois séances de 45 minutes",
+ "summary": "Femme de 35 ans, 62 kg, deux ans de pratique. 6 tractions, 10 dips, 20 pompes. Travail prenant, deux enfants : trois séances de 45 minutes au plus, au parc. Veut entretenir et progresser un peu.",
+ "level": "intermediate",
+ "trainingAgeMonths": 24,
+ "core": {
+  "sex": "female",
+  "birthYear": 1991,
+  "heightCm": 167,
+  "bodyWeightKg": 62.0,
+  "streetMode": {
+   "primary": "sets_reps",
+   "streetliftingPct": 10,
+   "setsRepsPct": 70,
+   "calisthenicsPct": 20
+  },
+  "disciplines": {
+   "primary": "street_workout",
+   "primaryPct": 70,
+   "secondaries": [
+    {
+     "discipline": "streetlifting",
+     "pct": 10
+    },
+    {
+     "discipline": "calisthenics",
+     "pct": 20
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 2,
+    "minutes": 45
+   },
+   {
+    "weekday": 4,
+    "minutes": 45
+   },
+   {
+    "weekday": 7,
+    "minutes": 45
+   }
+  ],
+  "places": [
+   "exterieur"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 6
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 10
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 20
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sw-traction-pronation",
+   "metric": "max_reps",
+   "targetValue": 9,
+   "weeksOut": 12
+  }
+ ],
+ "recovery": {
+  "sleepHours": 6.5,
+  "stress": 3
+ },
+ "expectations": {
+  "text": [
+   "Dose minimale efficace : au moins 4 séries dures par groupe et par semaine, un mouvement de jambes, un tirage, une poussée à chaque séance (R5-P1).",
+   "Supersets de mouvements antagonistes pour tenir dans le temps sans raccourcir le repos réel ; si le temps manque, on retire des séries avant de descendre sous 60 s de repos (R1-P15, R2-P15).",
+   "Corps entier trois fois par semaine ; maximum de tractions entre 3 et 12 : priorité mixte force et répétitions (R4-G2)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "max_session_minutes",
+    "label": "Séances de 48 minutes au plus",
+    "minutes": 48
+   },
+   {
+    "id": "c2",
+    "type": "min_frequency",
+    "label": "Tractions au moins deux fois par semaine",
+    "exerciseIds": [
+     "sw-traction-pronation"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c3",
+    "type": "pattern_present",
+    "label": "Jambes au moins deux fois par semaine",
+    "patterns": [
+     "squat",
+     "fente"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c4",
+    "type": "min_group_sets",
+    "label": "Grand dorsal : au moins 6 séries dures par semaine",
+    "group": "lats",
+    "sets": 6
+   },
+   {
+    "id": "c5",
+    "type": "min_group_sets",
+    "label": "Pectoraux : au moins 4 séries dures par semaine",
+    "group": "chest",
+    "sets": 4
+   },
+   {
+    "id": "c6",
+    "type": "format_present",
+    "label": "Supersets pour gagner du temps",
+    "formats": [
+     "superset"
+    ]
+   }
+  ]
+ }
+}
