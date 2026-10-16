@@ -257,9 +257,7 @@ List<String> _scenariosCampagne(
   if (lire == null) {
     return _scenariosDe(json);
   }
-  return <String>[
-    for (final x in lire(cle)) kc.jm(x)['scenario']! as String,
-  ];
+  return <String>[for (final x in lire(cle)) kc.jm(x)['scenario']! as String];
 }
 
 /// Lecteur des saisons figées de [dossier] (`<cle>.json.gz`), ou null.
