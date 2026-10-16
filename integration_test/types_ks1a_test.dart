@@ -342,8 +342,14 @@ void main() {
       ),
     );
     final next = find.byKey(const ValueKey('program-next-block'));
-    releve['mon_programme_bloc_suivant'] = await until(tester, next);
-    if (next.evaluate().isNotEmpty) await scrollTo(tester, next);
+    await until(tester, find.byKey(const ValueKey('program-list')));
+    await wait(tester, 800);
+    await scrollTo(tester, next);
+    releve['mon_programme_bloc_suivant'] = next.evaluate().isNotEmpty;
+    releve['mon_programme_sous_titre'] = find
+        .descendant(of: next, matching: find.textContaining('semaine 3'))
+        .evaluate()
+        .isNotEmpty;
     await shot('6_mon_programme_echeance');
     await home(tester);
     final prev = store.planProgram?.blocks.last.block;
