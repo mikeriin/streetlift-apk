@@ -480,10 +480,11 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
                 MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
               ),
             )
-          // KM3 : Koach 1.0 (état, arrêt d'urgence) ; un seul comportement
-          // une fois qu'il conduit le programme (plus de mode ni de
-          // déblocage, propositions de 0.x en lecture seule).
-          else ...[
+          // KM3 : Koach 1.0 (état, arrêt d'urgence) dès qu'il a pris la main
+          // (avant la bascule, sa carte reste dans Réglages › Koach 1.0) ;
+          // un seul comportement une fois qu'il conduit le programme (plus
+          // de mode ni de déblocage, propositions de 0.x en lecture seule).
+          else if (_koach) ...[
             const KoachEngineCard(),
             const KoachRecapCard(),
           ],
