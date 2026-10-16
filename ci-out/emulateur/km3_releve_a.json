@@ -1,0 +1,96 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "import": true,
+  "perso_koach_actif": false,
+  "perso_bascule": "2026-11-23",
+  "perso_installation": "2026-10-16",
+  "perso_origine": true,
+  "perso_journal_identique": true,
+  "jour": "S14-J5",
+  "perso_export_seances": 82,
+  "perso_export_type": "journal_moteur",
+  "perso_carte_attente": true,
+  "dev_actif": true,
+  "dev_espace": true,
+  "dev_import": true,
+  "dev_prise_de_main_ms": 16269,
+  "dev_koach_actif": true,
+  "dev_depuis": 14,
+  "dev_evenements": 1986,
+  "dev_seance": "S14-J5",
+  "dev_apercu": true,
+  "dev_debut_ms": 0,
+  "dev_debut_appuis": [],
+  "dev_temps_debut": {
+    "prise_de_main": {
+      "dernier_ms": 15414.204,
+      "max_ms": 15414.204
+    },
+    "replanification": {
+      "dernier_ms": 138.917,
+      "max_ms": 138.917
+    },
+    "plan_seance": {
+      "dernier_ms": 16.219,
+      "max_ms": 16.219
+    },
+    "debut_seance": {
+      "dernier_ms": 43.627,
+      "max_ms": 43.627
+    },
+    "plan_serie": {
+      "dernier_ms": 3.353,
+      "max_ms": 3.353
+    }
+  },
+  "dev_seance_ouverte": true,
+  "dev_items_servis": 6,
+  "dev_cible_0": {
+    "kg": 0.0,
+    "bas": 5,
+    "haut": 5,
+    "flammes": 8
+  },
+  "dev_serie_validee": true,
+  "dev_serie_ms": 4.324,
+  "dev_suggestion_visible": true,
+  "dev_suggestion_refusee": "non",
+  "dev_versee": true,
+  "dev_decision_raison": "too_heavy",
+  "dev_evolution_actif": true,
+  "dev_temps": {
+    "prise_de_main": {
+      "dernier_ms": 15414.204,
+      "max_ms": 15414.204
+    },
+    "replanification": {
+      "dernier_ms": 138.917,
+      "max_ms": 138.917
+    },
+    "plan_seance": {
+      "dernier_ms": 16.219,
+      "max_ms": 16.219
+    },
+    "debut_seance": {
+      "dernier_ms": 43.627,
+      "max_ms": 43.627
+    },
+    "plan_serie": {
+      "dernier_ms": 0.21,
+      "max_ms": 3.353
+    },
+    "observe_serie": {
+      "dernier_ms": 1.828,
+      "max_ms": 1.828
+    },
+    "prevision": {
+      "dernier_ms": 88.407,
+      "max_ms": 88.407
+    }
+  },
+  "dev_arret": true,
+  "dev_reactive": true,
+  "perso_intacte": true
+}
