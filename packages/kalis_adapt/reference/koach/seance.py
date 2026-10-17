@@ -561,19 +561,25 @@ class Seances(object):
             return g.semaines.get(w, False) and w in closes
 
         debut = ep[0] // 7 if ep is not None else semaine
-        # Référence : dernière semaine de charge fermée STRICTEMENT après la
-        # semaine du premier signalement de l'épisode (ce qui a été fait
-        # avant ou pendant la semaine du signalement ne dit rien de ce que
-        # la zone tolère après ; après l'arrêt le cas échéant).
+        # Référence : dernière semaine de charge fermée depuis la semaine du
+        # premier signalement de l'épisode. La semaine du signalement
+        # elle-même ne sert que si c'est la semaine précédente, et sans
+        # hausse (ce qui a été fait cette semaine-là l'a été en partie avant
+        # le signalement : on tient, on ne monte pas) ; une semaine fermée
+        # sans exposition renvoie à la dernière semaine exposée parmi les
+        # `rampe_zone_semaines_max` précédentes, STRICTEMENT après la
+        # semaine du signalement (sinon un épisode qui a vidé une ou deux
+        # semaines repartirait de l'exposition d'avant l'épisode) ; après
+        # l'arrêt le cas échéant.
         ref = None
+        tenir = False
         w = semaine - 1
-        while w > debut and w >= 0:
+        while w >= debut and w >= 0:
             if charge_fermee(w):
                 ref = self._dose_semaine(z, w)
-                if ref <= 0:
-                    # Semaine fermée sans exposition : dernière semaine
-                    # exposée parmi les `rampe_zone_semaines_max`
-                    # précédentes (après la semaine du signalement).
+                if w == debut:
+                    tenir = True
+                elif ref <= 0:
                     for k in range(w - 1, max(debut + 1, w - s['rampe_zone_semaines_max']) - 1, -1):
                         if charge_fermee(k) and self._dose_semaine(z, k) > 0:
                             ref = self._dose_semaine(z, k)
@@ -583,7 +589,7 @@ class Seances(object):
         if ref is not None and ref > 0 and g.arret(z):
             ref = None
         if ref is not None and ref > 0:
-            if d.pire_entre(self.jour - 6, self.jour) > s['reprise_douleur_max']:
+            if tenir or d.pire_entre(self.jour - 6, self.jour) > s['reprise_douleur_max']:
                 total = int(ref)
             else:
                 total = max(int(ref) + 1, int(math.floor(ref * (1 + s['reprise_dose_hausse']) + 1e-9)))

@@ -1,4 +1,4 @@
-# Assemblage du run C : sécurité du couple kalis_plan 0.4.2 × Koach 1.0.5 sur les 100 graines (campagne Python,
+# Assemblage du run D : sécurité du couple kalis_plan 0.4.2 × Koach 1.0.5 sur les 100 graines (campagne Python,
 # agrégation en flux), sous-ensembles graine 0 et graines 0-5, liste complète des saisons en violation ; critères
 # Python du groupe 0-5.
 O=$PWD/ci-out/packages
