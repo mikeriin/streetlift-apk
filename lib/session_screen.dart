@@ -706,6 +706,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       curve: motion.curve,
     );
   }
+
   int epoch = 0; // force la recréation des champs (reprise du précédent…)
 
   @override
