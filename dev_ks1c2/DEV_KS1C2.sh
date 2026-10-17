@@ -1,5 +1,5 @@
 #!/bin/bash
-# Mise au point KS1c2, run 6.
+# Mise au point KS1c2, run 8.
 root=$PWD; out=$root/out-packages; status=0
 for n in kalis_plan kalis_bench; do
   (cd packages/$n && dart pub get) > $out/pub_$n.log 2>&1 || { echo "pub get $n échec"; tail -30 $out/pub_$n.log; exit 1; }
@@ -18,7 +18,7 @@ grep -E "\[E\]|Some tests failed|All tests passed|Expected|Actual|Which" $out/te
 cd packages/kalis_bench
 dart run bin/ks1c2_diag.dart $out/diag_apres.md --complet > $out/diag_apres.log 2>&1 || { echo "diag après : échec"; status=1; }
 tail -5 $out/diag_apres.log
-sed -n '/# Douleurs/,$p' $out/diag_apres.md
+grep -c 'joint_limitation\|equipment_missing\|prerequisite' $out/diag_apres.md
 cd $root
 git fetch -q --depth=1 origin eae158b82cc369ffdad76bfd9f8b835a5c762e8b && git checkout FETCH_HEAD -- packages/kalis_plan || echo "checkout 0.4.1 échec"
 cd packages/kalis_bench

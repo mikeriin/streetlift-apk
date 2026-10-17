@@ -1,5 +1,21 @@
 # Journal
 
+## 0.5.4 — 17/10/2026 (lot KS1c2)
+
+Mesure du critère « aucun jour sans son principal » du lot KS1c2 (`pipeline/cp/prompts/KS1c2.txt`), pour `kalis_plan`
+0.4.2 ; sur 0.5.2 (lot KS1c1). La version 0.5.3 est réservée au lot KR1 (C17.22). Critères, profils, attentes et
+grilles d'avant inchangés.
+
+- **Critère** (`lib/src/principal_criteria.dart`) : écarts d'un jour typé (`schéma <s>`, `corps entier`, `figure`,
+  `principal`), grille des profils incomplets (`principalGrid` : 6 états de repères × 3 questionnaires × 4 niveaux par
+  base), `PrincipalMeasure` (écarts de schéma, jours d'un gabarit typé sans principal, jours figés sans principal
+  comptés à part, violations de sécurité des programmes créés).
+- **Profil** `profiles_ks1c2/ks1a_street_5050.json` : équivalent au banc du profil du constat de KS1A (hors des
+  campagnes de saisons).
+- **Rapport de structure** (`runStructureBench`, `structureReport`) : lignes KS1c2 sur les 34 profils et sur la grille
+  (tout l'horizon), liste des écarts, objet `principal` de `structure.json`.
+- **Test** `test/ks1c2_test.dart`.
+
 ## 0.5.2 — 16/10/2026 (lot KS1c1)
 
 Mesure du critère « 0 violation » du lot KS1c1 sur les 34 profils (`pipeline/cp/prompts/KS1c1.txt`), pour `kalis_plan` 0.4.1 ; sur 0.5.1 (lot KM2c2, `kalis_adapt` 1.0.2).

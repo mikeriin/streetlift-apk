@@ -31,13 +31,15 @@ void main() {
 
   group('règle sur des jours écrits à la main', () {
     test('jour poussée sans poussée (constat de KS1A) : deux écarts', () {
-      final d = _day(const <DayPattern>[DayPattern.push], DayQuality.endurance, <
-        PlanSlot
-      >[
-        _slot('sw-active-hang', SlotRole.warmup),
-        _slot('sw-releve-jambes-tendues-suspendu', SlotRole.core),
-        _slot('mo-cat-cow', SlotRole.mobility),
-      ]);
+      final d = _day(
+        const <DayPattern>[DayPattern.push],
+        DayQuality.endurance,
+        <PlanSlot>[
+          _slot('sw-active-hang', SlotRole.warmup),
+          _slot('sw-releve-jambes-tendues-suspendu', SlotRole.core),
+          _slot('mo-cat-cow', SlotRole.mobility),
+        ],
+      );
       expect(principalGapsOfDay(catalog, d), <String>[
         'principal',
         'schéma push',
@@ -45,35 +47,43 @@ void main() {
     });
 
     test('jour poussée avec dips principal : tenu', () {
-      final d = _day(const <DayPattern>[DayPattern.push], DayQuality.endurance, <
-        PlanSlot
-      >[
-        _slot('sw-active-hang', SlotRole.warmup),
-        _slot('sw-dips-barres-paralleles', SlotRole.main),
-      ]);
+      final d = _day(
+        const <DayPattern>[DayPattern.push],
+        DayQuality.endurance,
+        <PlanSlot>[
+          _slot('sw-active-hang', SlotRole.warmup),
+          _slot('sw-dips-barres-paralleles', SlotRole.main),
+        ],
+      );
       expect(principalGapsOfDay(catalog, d), isEmpty);
     });
 
     test('porteur secondaire seul : schéma porté, sans principal', () {
-      final d = _day(const <DayPattern>[DayPattern.push], DayQuality.force, <
-        PlanSlot
-      >[_slot('sl-pompe-lestee-disque-dos', SlotRole.secondary)]);
+      final d = _day(
+        const <DayPattern>[DayPattern.push],
+        DayQuality.force,
+        <PlanSlot>[_slot('sl-pompe-lestee-disque-dos', SlotRole.secondary)],
+      );
       final gaps = principalGapsOfDay(catalog, d);
       expect(gaps, <String>['principal']);
       expect(gaps.where(principalSchemaGap), isEmpty);
     });
 
     test('corps entier : deux schémas sur trois portés', () {
-      final one = _day(const <DayPattern>[DayPattern.full], DayQuality.force, <
-        PlanSlot
-      >[_slot('sl-traction-lestee', SlotRole.main)]);
+      final one = _day(
+        const <DayPattern>[DayPattern.full],
+        DayQuality.force,
+        <PlanSlot>[_slot('sl-traction-lestee', SlotRole.main)],
+      );
       expect(principalGapsOfDay(catalog, one), <String>['corps entier']);
-      final two = _day(const <DayPattern>[DayPattern.full], DayQuality.force, <
-        PlanSlot
-      >[
-        _slot('sl-traction-lestee', SlotRole.main),
-        _slot('sl-squat-competition', SlotRole.main),
-      ]);
+      final two = _day(
+        const <DayPattern>[DayPattern.full],
+        DayQuality.force,
+        <PlanSlot>[
+          _slot('sl-traction-lestee', SlotRole.main),
+          _slot('sl-squat-competition', SlotRole.main),
+        ],
+      );
       expect(principalGapsOfDay(catalog, two), isEmpty);
     });
 

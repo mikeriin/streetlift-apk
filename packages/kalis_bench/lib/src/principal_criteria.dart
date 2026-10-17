@@ -251,7 +251,10 @@ Map<String, Object?> gridVariantJson(
   json['core'] = core;
   json['records'] = <Object?>[
     for (final r in (base['records'] ?? const <Object?>[]) as List<Object?>)
-      if (!_dropped(marks, (r! as Map<String, Object?>)['exerciseId']! as String))
+      if (!_dropped(
+        marks,
+        (r! as Map<String, Object?>)['exerciseId']! as String,
+      ))
         r,
   ];
   if (marks == GridMarks.none) {

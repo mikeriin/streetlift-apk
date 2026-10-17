@@ -816,10 +816,7 @@ Map<String, String> structureReport(
   }
 
   for (final m in principal) {
-    list(
-      'Jours typés sans exercice de leur schéma (${m.label})',
-      m.schemaGaps,
-    );
+    list('Jours typés sans exercice de leur schéma (${m.label})', m.schemaGaps);
     list(
       'Jours d\'un gabarit typé sans emplacement principal (${m.label})',
       m.typedNoMain,
@@ -827,10 +824,7 @@ Map<String, String> structureReport(
     list('Violations de sécurité (${m.label})', m.safety);
   }
   if (principal.isNotEmpty) {
-    final legacy = principal.fold<int>(
-      0,
-      (n, m) => n + m.legacyNoMain.length,
-    );
+    final legacy = principal.fold<int>(0, (n, m) => n + m.legacyNoMain.length);
     b
       ..writeln()
       ..writeln(

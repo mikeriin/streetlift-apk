@@ -1114,7 +1114,7 @@ void _buildTyped(_Builder b, List<int> days, List<_Kind> kinds) {
       // Aucun exercice du schéma possible (douleur, matériel) : le jour
       // prend le type de ce qu'il porte, et la raison est dite.
       b.days[d].type = coachDerivedType(a, b.days[d]);
-      b.dayReasons[d] = _unservedReasons(a, kind);
+      b.dayReasons[d] = _unservedReasons(b, d, kind);
     }
   }
 }
@@ -1122,8 +1122,9 @@ void _buildTyped(_Builder b, List<int> days, List<_Kind> kinds) {
 /// Méthodes d'un travail porteur qu'un emplacement secondaire peut garder en
 /// devenant le principal du jour (KS1c2) : séries de répétitions, séries
 /// chargées, polyarticulaire d'assistance (pompe lestée d'un jour de
-/// poussée sans dips, jambes d'un jour sans squat) ; jamais une isolation,
-/// une préparation, une prévention ou une figure.
+/// poussée sans dips, tirage horizontal d'un jour de tirage sans barre
+/// fixe, jambes d'un jour sans squat) ; jamais une isolation, une
+/// préparation, une prévention ou une figure.
 const Set<String> _promotableMethods = <String>{
   Method.repsTop,
   Method.repsStrength,
@@ -1138,20 +1139,26 @@ const Set<String> _promotableMethods = <String>{
   Method.beginnerMain,
 };
 
+/// Note des emplacements servis comme principal par la règle KS1c2 sans
+/// note propre : la passe 2 ne leur écrit pas de note de rôle
+/// d'assistance.
+const String coachPrincipalNote = 'principal';
+
 /// Schéma chargé de l'emplacement [s], ou `null`.
 DayPattern? _schemaOfSlot(Athlete a, SlotSpec s) {
   final e = a.catalog.find(s.exerciseId);
   return e == null ? null : coachSchemaOf(e);
 }
 
+bool _isFull(_Kind kind) =>
+    kind == _Kind.fullForce || kind == _Kind.fullEndurance;
+
 /// Schémas qu'un jour de nature [kind] doit porter (CAHIER_KS.md § 3.1) :
 /// le sien ; tirage et poussée pour un jour du haut ; les trois pour un
 /// corps entier (dont deux au moins portés).
 List<DayPattern> _requiredSchemas(_Kind kind) => switch (kind) {
-  _Kind.upperForce || _Kind.upperEndurance => const <DayPattern>[
-    DayPattern.pull,
-    DayPattern.push,
-  ],
+  _Kind.upperForce ||
+  _Kind.upperEndurance => const <DayPattern>[DayPattern.pull, DayPattern.push],
   _Kind.fullForce || _Kind.fullEndurance => const <DayPattern>[
     DayPattern.pull,
     DayPattern.push,
@@ -1173,23 +1180,26 @@ bool _hasMain(_Builder b, int d, List<DayPattern> ps) => b.days[d].slots.any(
   (s) => s.role == SlotRole.main && ps.contains(_schemaOfSlot(b.a, s)),
 );
 
+int _carriedCount(_Builder b, int d, _Kind kind) =>
+    _requiredSchemas(kind).where((p) => _carries(b, d, p)).length;
+
 /// Vrai si le jour [d] tient la règle « aucun jour sans son principal »
-/// pour la nature [kind] (même règle que le critère du banc, `kalis_bench`
-/// `principalGapsOfDay`) : un principal d'un de ses schémas, chacun de ses
-/// schémas porté (deux des trois pour un corps entier).
+/// pour la nature [kind] (règle plus stricte que le critère du banc,
+/// `kalis_bench` `principalGapsOfDay`, qui compte aussi les figures) : un
+/// principal d'un de ses schémas, chacun de ses schémas porté (deux des
+/// trois pour un corps entier).
 bool _principalHeld(_Builder b, int d, _Kind kind) {
   final required = _requiredSchemas(kind);
   if (!_hasMain(b, d, required)) {
     return false;
   }
-  final carried = required.where((p) => _carries(b, d, p)).length;
-  final full = kind == _Kind.fullForce || kind == _Kind.fullEndurance;
-  return full ? carried >= 2 : carried == required.length;
+  final carried = _carriedCount(b, d, kind);
+  return _isFull(kind) ? carried >= 2 : carried == required.length;
 }
 
-/// Place l'emplacement [slot] (le dernier du jour [d]) après la
-/// préparation et les principaux déjà écrits : le principal ouvre la
-/// séance (CAHIER_KS.md § 11.2).
+/// Place l'emplacement [slot] (déjà dans le jour [d]) après la préparation
+/// et les principaux déjà écrits : le principal ouvre la séance
+/// (CAHIER_KS.md § 11.2).
 void _moveToHead(_Builder b, int d, SlotSpec slot) {
   final slots = b.days[d].slots;
   slots.remove(slot);
@@ -1202,16 +1212,77 @@ void _moveToHead(_Builder b, int d, SlotSpec slot) {
   slots.insert(at, slot);
 }
 
+/// Candidats du principal de repli du schéma [p] (KS1c2), dans l'ordre :
+/// (exercices, méthode, mouvement de référence).
+List<(List<String>, String, String?)> _fallbackCandidates(
+  Athlete a,
+  DayPattern p,
+  bool force, {
+  required bool spareElbow,
+}) {
+  final method = force ? Method.repsStrength : Method.repsVolume;
+  switch (p) {
+    case DayPattern.pull:
+      return <(List<String>, String, String?)>[
+        if (spareElbow)
+          (
+            const <String>['sw-traction-neutre', 'sw-traction-anneaux'],
+            Method.repsVolume,
+            Ids.pull,
+          )
+        else ...<(List<String>, String, String?)>[
+          (const <String>[Ids.pull], method, null),
+          (
+            const <String>['sw-traction-neutre', 'sw-traction-anneaux'],
+            method,
+            Ids.pull,
+          ),
+        ],
+        (Picks.assistedPull, Method.repsVolume, null),
+        (Picks.bodyweightRow, Method.repsVolume, null),
+        // (Dernier recours : tirage horizontal chargé, sans barre fixe.)
+        (Picks.row, Method.accessoryCompound, null),
+      ];
+    case DayPattern.push:
+      return <(List<String>, String, String?)>[
+        (const <String>[Ids.dip], method, null),
+        if (force) (Picks.hardPushUp, method, Ids.pushUp),
+        (const <String>[Ids.pushUp], method, null),
+        (Picks.easyPushUp, method, Ids.pushUp),
+      ];
+    case DayPattern.legs:
+      return <(List<String>, String, String?)>[
+        (
+          <String>[
+            ...Picks.gymSingleLeg.take(2),
+            ..._bodyweightLegsFor(a),
+            ...Picks.bodyweightLegsSecond,
+            ...Picks.beginnerSquat,
+          ],
+          Method.accessoryLegs,
+          null,
+        ),
+      ];
+    default:
+      return const <(List<String>, String, String?)>[];
+  }
+}
+
 /// Principal de repli du schéma [p] au jour [d] d'une qualité de force
 /// ([force]) ou d'endurance de force (KS1c2) — le travail que le jour aurait
 /// reçu avec un repère, dosé sans repère par les règles existantes de la
 /// passe 2 : au poids du corps, plage de répétitions à réserve visée (force :
 /// 4 à 6 répétitions à 2 en réserve ; endurance : 5 à 8 à 3 en réserve,
-/// double progression ; `_repsStrength`, `_repsVolume`), et une première
-/// série de mesure proposée en semaine 1 (note `reps_calibrate`). Trois
-/// séries en mode prudent et chez le débutant, quatre sinon (ACSM 2009 :
-/// une à trois séries au début, plusieurs ensuite). Rend l'emplacement, ou
-/// `null` si aucun exercice du schéma n'est possible ce jour.
+/// double progression ; `_repsStrength`, `_repsVolume` ; une variante
+/// réglée sur le maximum de son mouvement de référence quand il est connu),
+/// et une première série de mesure proposée en semaine 1 (note
+/// `reps_calibrate`) ; les jambes au poids du corps ou unilatérales suivent
+/// le dosage de l'assistance de jambes. Coude à ménager : prise neutre,
+/// dosage du retour (note `pull_return` ; R5-P20, R5-P24). Trois séries en
+/// mode prudent, quatre sinon (ACSM 2009 : une à trois séries au début,
+/// plusieurs ensuite). Gardé (`keep`) : les plafonds ne le retirent pas.
+/// Rend l'emplacement, ou `null` si aucun exercice du schéma n'est possible
+/// ce jour.
 SlotSpec? _principalFallback(
   _Builder b,
   int d,
@@ -1220,89 +1291,92 @@ SlotSpec? _principalFallback(
   required bool spareElbow,
 }) {
   final a = b.a;
-  final sets = a.cautious || a.level == 0 ? 3 : 4;
-  final method = force ? Method.repsStrength : Method.repsVolume;
-  final stress = force ? DayStress.heavy : DayStress.medium;
-  switch (p) {
-    case DayPattern.pull:
-      if (spareElbow) {
-        // Coude à ménager : prise neutre, dosage du retour (R5-P20, R5-P24).
-        return b.add(
-          d,
-          const <String>[
-            'sw-traction-neutre',
-            'sw-traction-anneaux',
-            Ids.pull,
-          ],
-          SlotRole.main,
-          Method.repsVolume,
-          sets: 3,
-          stress: DayStress.medium,
-          referenceId: Ids.pull,
-          note: 'pull_return',
-        );
-      }
-      return b.add(
-            d,
-            const <String>[Ids.pull, 'sw-traction-neutre', 'sw-traction-anneaux'],
-            SlotRole.main,
-            method,
-            sets: sets,
-            stress: stress,
-            note: 'reps_calibrate',
-          ) ??
-          b.add(
-            d,
-            <String>[...Picks.assistedPull, ...Picks.bodyweightRow],
-            SlotRole.main,
-            Method.repsVolume,
-            sets: sets,
-            stress: DayStress.medium,
-            note: 'reps_calibrate',
-          );
-    case DayPattern.push:
-      return b.add(
-        d,
-        force
-            ? <String>[
-                Ids.dip,
-                ...Picks.hardPushUp,
-                Ids.pushUp,
-                ...Picks.easyPushUp,
-              ]
-            : <String>[Ids.dip, Ids.pushUp, ...Picks.easyPushUp],
-        SlotRole.main,
-        method,
-        sets: sets,
-        stress: stress,
-        note: 'reps_calibrate',
-      );
-    case DayPattern.legs:
-      return b.add(
-        d,
-        <String>[
-          ...Picks.gymSingleLeg.take(2),
-          ..._bodyweightLegsFor(a),
-          ...Picks.bodyweightLegsSecond,
-          ...Picks.beginnerSquat,
-        ],
-        SlotRole.main,
-        Method.accessoryLegs,
-        sets: sets,
-      );
-    default:
-      return null;
+  final sets = a.cautious ? 3 : 4;
+  for (final (ids, method, ref) in _fallbackCandidates(
+    a,
+    p,
+    force,
+    spareElbow: spareElbow,
+  )) {
+    final reps =
+        method != Method.accessoryLegs && method != Method.accessoryCompound;
+    final slot = b.add(
+      d,
+      ids,
+      SlotRole.main,
+      method,
+      sets: spareElbow && p == DayPattern.pull ? 3 : sets,
+      stress: !reps
+          ? DayStress.medium
+          : (method == Method.repsStrength
+                ? DayStress.heavy
+                : DayStress.medium),
+      referenceId: ref,
+      note: spareElbow && p == DayPattern.pull
+          ? 'pull_return'
+          : (reps ? 'reps_calibrate' : coachPrincipalNote),
+      keep: true,
+    );
+    if (slot != null) {
+      return slot;
+    }
   }
+  return null;
+}
+
+/// Promeut en principal le premier travail porteur d'un des schémas
+/// [required] du jour [d] : un secondaire d'abord, sinon un accessoire
+/// polyarticulaire (`accessoryCompound`). Rend `true` s'il y en avait un.
+bool _promote(_Builder b, int d, List<DayPattern> required) {
+  final slots = b.days[d].slots;
+  var at = slots.indexWhere(
+    (s) =>
+        s.role == SlotRole.secondary &&
+        _promotableMethods.contains(s.method) &&
+        required.contains(_schemaOfSlot(b.a, s)),
+  );
+  if (at < 0) {
+    at = slots.indexWhere(
+      (s) =>
+          s.role == SlotRole.accessory &&
+          s.method == Method.accessoryCompound &&
+          required.contains(_schemaOfSlot(b.a, s)),
+    );
+  }
+  if (at < 0) {
+    return false;
+  }
+  final s = slots[at];
+  final promoted = SlotSpec(
+    exerciseId: s.exerciseId,
+    role: SlotRole.main,
+    method: s.method,
+    sets: s.sets,
+    stress: s.stress,
+    referenceId: s.referenceId,
+    skillTargetId: s.skillTargetId,
+    group: s.group,
+    weak: s.weak,
+    fromWeek: s.fromWeek,
+    untilWeek: s.untilWeek,
+    note: s.note ?? coachPrincipalNote,
+    support: false,
+    keep: true,
+  );
+  slots[at] = promoted;
+  _moveToHead(b, d, promoted);
+  return true;
 }
 
 /// Garantit au jour typé [d] de nature [kind] son principal (KS1c2 ;
 /// CAHIER_KS.md § 3.6 : « un jour sans principal est une erreur d'audit,
-/// pas un jour à remplir »). N'agit que si le jour ne tient pas la règle :
-/// un jour qui la tient reste identique à 0.4.1. Dans l'ordre : chaque
-/// schéma non porté reçoit son principal de repli ; sans principal, le
-/// premier travail porteur secondaire d'un de ses schémas devient le
-/// principal ; sinon un principal de repli s'ajoute. Rend `false` si aucun
-/// exercice du schéma n'est possible (le jour change alors de type).
+/// pas un jour à remplir »). N'agit que si le jour ne tient pas la règle.
+/// Dans l'ordre : chaque schéma non porté reçoit son principal de repli
+/// (corps entier : jusqu'à deux schémas portés) ; sans principal, le
+/// premier travail porteur d'un de ses schémas devient le principal ;
+/// sinon un principal de repli s'ajoute. Rend `false` si la règle ne peut
+/// pas être tenue (aucun exercice du schéma possible : le jour change alors
+/// de type).
 bool _ensurePrincipal(
   _Builder b,
   int d,
@@ -1313,14 +1387,26 @@ bool _ensurePrincipal(
     return true;
   }
   final required = _requiredSchemas(kind);
-  final full = kind == _Kind.fullForce || kind == _Kind.fullEndurance;
-  final missing = <DayPattern>[
-    for (final p in required)
-      if (!_carries(b, d, p)) p,
-  ];
-  final carried = required.length - missing.length;
-  if (!full || carried < 2) {
-    for (final p in missing) {
+  for (final p in required) {
+    if (_isFull(kind) && _carriedCount(b, d, kind) >= 2) {
+      break;
+    }
+    if (_carries(b, d, p)) {
+      continue;
+    }
+    final slot = _principalFallback(
+      b,
+      d,
+      p,
+      kind.force,
+      spareElbow: spareElbow,
+    );
+    if (slot != null) {
+      _moveToHead(b, d, slot);
+    }
+  }
+  if (!_hasMain(b, d, required) && !_promote(b, d, required)) {
+    for (final p in required) {
       final slot = _principalFallback(
         b,
         d,
@@ -1330,90 +1416,67 @@ bool _ensurePrincipal(
       );
       if (slot != null) {
         _moveToHead(b, d, slot);
-      }
-    }
-  }
-  if (!_hasMain(b, d, required)) {
-    final slots = b.days[d].slots;
-    final at = slots.indexWhere(
-      (s) =>
-          s.role == SlotRole.secondary &&
-          _promotableMethods.contains(s.method) &&
-          required.contains(_schemaOfSlot(b.a, s)),
-    );
-    if (at >= 0) {
-      final s = slots[at];
-      final promoted = SlotSpec(
-        exerciseId: s.exerciseId,
-        role: SlotRole.main,
-        method: s.method,
-        sets: s.sets,
-        stress: s.stress,
-        referenceId: s.referenceId,
-        skillTargetId: s.skillTargetId,
-        group: s.group,
-        weak: s.weak,
-        fromWeek: s.fromWeek,
-        untilWeek: s.untilWeek,
-        note: s.note,
-        support: s.support,
-        keep: s.keep,
-      );
-      slots[at] = promoted;
-      _moveToHead(b, d, promoted);
-    } else {
-      for (final p in required) {
-        final slot = _principalFallback(
-          b,
-          d,
-          p,
-          kind.force,
-          spareElbow: spareElbow,
-        );
-        if (slot != null) {
-          _moveToHead(b, d, slot);
-          break;
-        }
+        break;
       }
     }
   }
   return _principalHeld(b, d, kind);
 }
 
-/// Raisons d'un jour qui change de type faute d'exercice possible de son
-/// schéma (KS1c2) : la zone à ménager la plus gênante quand le profil en
-/// déclare, sinon le matériel qui manque au mouvement de base du schéma.
-List<Reason> _unservedReasons(Athlete a, _Kind kind) {
-  CoachLimit? worst;
-  for (final l in a.limits) {
-    if (worst == null || l.discomfort > worst.discomfort) {
-      worst = l;
-    }
-  }
-  if (worst != null) {
-    return <Reason>[
-      reason(ReasonCodes.planJointLimitation, <String, Object?>{
-        'joint': worst.joint?.code ?? worst.zone.code,
-        'discomfort': worst.discomfort,
-      }),
-    ];
-  }
-  final base = switch (_requiredSchemas(kind).first) {
+/// Raisons d'un jour [d] de nature [kind] qui change de type faute
+/// d'exercice possible de son schéma (KS1c2) : la cause du refus du
+/// mouvement de base du premier schéma non tenu (`Athlete.rejection`) —
+/// douleur : la limitation la plus gênante parmi celles qui sollicitent ce
+/// mouvement ; matériel : le premier élément absent du matériel du jour ;
+/// niveau ou prérequis : `plan.prerequisite_missing` sur ce mouvement.
+List<Reason> _unservedReasons(_Builder b, int d, _Kind kind) {
+  final a = b.a;
+  final required = _requiredSchemas(kind);
+  final schema = required.firstWhere(
+    (p) => !_carries(b, d, p),
+    orElse: () => required.first,
+  );
+  final base = switch (schema) {
     DayPattern.pull => Ids.pull,
     DayPattern.push => Ids.dip,
     _ => Ids.squat,
   };
+  final why = a.rejection(base, d);
   final e = a.catalog.find(base);
-  var missing = _requiredSchemas(kind).first.code;
-  for (final item in e?.equipment ?? const <String>[]) {
-    if (!a.profile.equipment.contains(item)) {
-      missing = item;
-      break;
+  if (why == 'joint' && e != null) {
+    CoachLimit? worst;
+    for (final l in a.limits) {
+      final joint = l.joint;
+      final hits =
+          a.stopZones.contains(l.zone) ||
+          (joint != null && e.stressOn(joint) != JointStress.low);
+      if (hits && (worst == null || l.discomfort > worst.discomfort)) {
+        worst = l;
+      }
+    }
+    if (worst != null) {
+      return <Reason>[
+        reason(ReasonCodes.planJointLimitation, <String, Object?>{
+          'joint': (worst.joint ?? worst.zone.joint)?.code ?? worst.zone.code,
+          'discomfort': worst.discomfort,
+        }),
+      ];
+    }
+  }
+  if (why == 'equipment' && e != null) {
+    for (final item in e.equipment) {
+      if (!a.days[d].equipment.contains(item)) {
+        return <Reason>[
+          reason(ReasonCodes.planEquipmentMissing, <String, Object?>{
+            'equipment': item,
+          }),
+        ];
+      }
     }
   }
   return <Reason>[
-    reason(ReasonCodes.planEquipmentMissing, <String, Object?>{
-      'equipment': missing,
+    reason(ReasonCodes.planPrerequisiteMissing, <String, Object?>{
+      'exerciseId': base,
     }),
   ];
 }

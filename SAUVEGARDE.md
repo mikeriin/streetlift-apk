@@ -7,5 +7,8 @@
 - Banc : `lib/src/principal_criteria.dart` (critère deux niveaux, grille 6×3×4 par base, PrincipalMeasure), branché dans `runStructureBench` / `structureReport` ; test `test/ks1c2_test.dart`.
 - Runs dev (claude/ci-cp-b) : après correction 0 écart (34 profils, grille 576 profils / 8 928 jours) ; avant 489 jours en défaut ; squelettes des 34 profils identiques à 0.4.1 ; tests kalis_plan (ks1c2, coach, structure, docs, smoke) et banc (ks1c2, structure) verts (run 38983629445).
 
+## État
+- Commit candidat sur ks1c2 (local), contrôle complet lancé sur claude/ci-cp-b ; relecture indépendante traitée (keep, promotion du tirage, raisons, tests).
+
 ## Reste
 - Tests du changement de type (poignet, genou, sans barre fixe) à vérifier ; format (patch CI) ; version kalis_bench (0.5.3 ou suivante libre, KR1) + CHANGELOG/docs banc ; relecture indépendante (sous-agent Opus) ; contrôle complet sur claude/ci-cp-b ; push moteurs, étiquettes ; livraison, état, page de suivi, notification.

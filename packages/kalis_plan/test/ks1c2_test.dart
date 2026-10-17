@@ -189,7 +189,9 @@ List<String> _gaps(Catalog catalog, PlanDay d) {
     if (type.patterns.contains(DayPattern.full) && carried.length < 2)
       'corps entier',
     for (final p in type.patterns)
-      if ((p == DayPattern.pull || p == DayPattern.push || p == DayPattern.legs) &&
+      if ((p == DayPattern.pull ||
+              p == DayPattern.push ||
+              p == DayPattern.legs) &&
           !carried.contains(p.code))
         'schéma ${p.code}',
   ];
@@ -235,11 +237,13 @@ void main() {
       Pass2Request(request: requestFor(profile), pass1: pass1),
     );
 
-    test('gabarit ppl6_q, chaque jour typé porte un principal de son schéma',
-        () {
-      expect(pass1.split?.templateId, SplitTemplates.pushPullLegs6);
-      expect(_planGaps(catalog, pass1), isEmpty);
-    });
+    test(
+      'gabarit ppl6_q, chaque jour typé porte un principal de son schéma',
+      () {
+        expect(pass1.split?.templateId, SplitTemplates.pushPullLegs6);
+        expect(_planGaps(catalog, pass1), isEmpty);
+      },
+    );
 
     test('le jour poussée — endurance de force porte un exercice de poussée '
         'principal, en tête après la préparation', () {
@@ -248,9 +252,7 @@ void main() {
             d.type!.patterns.contains(DayPattern.push) &&
             d.type!.quality == DayQuality.endurance,
       );
-      final work = day.slots
-          .where((s) => s.role != SlotRole.warmup)
-          .toList();
+      final work = day.slots.where((s) => s.role != SlotRole.warmup).toList();
       expect(work.first.role, SlotRole.main);
       expect(_schema(catalog, work.first.exerciseId), 'push');
     });
@@ -270,9 +272,13 @@ void main() {
           .where((i) => i.slotId == main.slotId && i.kind == SetKind.work)
           .toList();
       expect(items, isNotEmpty);
+      // Endurance sans repère : 5 à 8 répétitions (3 en réserve), trois
+      // séries en mode prudent, au poids du corps.
+      expect(main.exerciseId, 'sw-dips-barres-paralleles');
+      expect(items.fold<int>(0, (n, i) => n + i.sets), 3);
       for (final i in items) {
-        expect(i.repsLow, isNotNull);
-        expect(i.repsHigh, lessThanOrEqualTo(12));
+        expect(i.repsLow, 5);
+        expect(i.repsHigh, 8);
         expect(i.startLoadKg ?? 0, 0);
       }
       final reasons = <Reason>[for (final i in items) ...i.reasons];
@@ -282,6 +288,17 @@ void main() {
             r.params['note'] == CoachNotes.repsCalibrate,
       );
       expect(note, isNotEmpty);
+      // (Réserve écrite de la semaine d'introduction : 3, plus 1.)
+      expect(note.first.params['value'], greaterThanOrEqualTo(3.0));
+      // (Aucune note de rôle d'assistance sur un principal.)
+      expect(
+        reasons.where(
+          (r) =>
+              r.code == ReasonCodes.planCoachNote &&
+              (r.params['note'] as String).startsWith('role_'),
+        ),
+        isEmpty,
+      );
       final text = coachReasonText(note.first, catalog);
       expect(text, isNotNull);
       expect(text, contains('repère'));
@@ -311,12 +328,9 @@ void main() {
       (ExperienceLevel.advanced, TrainingAge.years2To5),
       (ExperienceLevel.elite, TrainingAge.over5Years),
     ];
-    for (final sessions in const <int>[4, 5, 6]) {
+    for (final sessions in const <int>[2, 3, 4, 5, 6]) {
       for (final m in marks.entries) {
-        for (final health in const <HealthScreeningOutcome>[
-          HealthScreeningOutcome.standard,
-          HealthScreeningOutcome.notAnswered,
-        ]) {
+        for (final health in HealthScreeningOutcome.values) {
           for (final (experience, age) in levels) {
             final name =
                 '$sessions séances, repères ${m.key}, santé ${health.code}, '
@@ -399,7 +413,8 @@ void main() {
       expect(pass1.validate(), isEmpty);
     });
 
-    test('genou très gêné : les jours de jambes changent de type', () {
+    test('genou très gêné : les jours de jambes gardent leur schéma par un '
+        'principal qui ménage le genou', () {
       final p = _street5050(
         equipment: _fullGym,
         limitations: const <Limitation>[
@@ -414,16 +429,28 @@ void main() {
       );
       final pass1 = pass1Of(p);
       expect(_planGaps(catalog, pass1), isEmpty, reason: show(pass1));
-      final c = changed(pass1);
-      expect(c, isNotEmpty, reason: show(pass1));
-      for (final (d, r) in c) {
+      for (final (_, r) in changed(pass1)) {
         expect(r.params['joint'], Joint.knee.code);
-        expect(pass1.days[d].type!.patterns, isNot(contains(DayPattern.legs)));
+      }
+      for (final d in pass1.days) {
+        if (!d.type!.patterns.contains(DayPattern.legs)) {
+          continue;
+        }
+        final main = d.slots.firstWhere(
+          (s) =>
+              s.role == SlotRole.main &&
+              _schema(catalog, s.exerciseId) == 'legs',
+        );
+        expect(
+          catalog.exercise(main.exerciseId).stressOn(Joint.knee),
+          JointStress.low,
+          reason: show(pass1),
+        );
       }
     });
 
-    test('sans barre fixe : un jour de tirage impossible le dit par le '
-        'matériel', () {
+    test('sans barre fixe : le tirage passe par le tirage horizontal, aucun '
+        'jour ne change de type', () {
       final p = _street5050(
         equipment: const <String>[
           'aucun (sol)',
@@ -436,11 +463,78 @@ void main() {
       );
       final pass1 = pass1Of(p);
       expect(_planGaps(catalog, pass1), isEmpty, reason: show(pass1));
-      for (final (_, r) in changed(pass1)) {
-        expect(r.code, ReasonCodes.planEquipmentMissing);
-        expect(r.params['equipment'], isA<String>());
+      expect(changed(pass1), isEmpty, reason: show(pass1));
+      for (final d in pass1.days) {
+        if (d.type!.patterns.contains(DayPattern.pull)) {
+          expect(
+            d.slots.any(
+              (s) =>
+                  s.role == SlotRole.main &&
+                  _schema(catalog, s.exerciseId) == 'pull',
+            ),
+            isTrue,
+            reason: show(pass1),
+          );
+        }
       }
       expect(pass1.validate(), isEmpty);
+    });
+
+    test('pompes connues, sans barres parallèles : un porteur secondaire '
+        'devient le principal', () {
+      final p = _street5050(
+        health: HealthScreeningOutcome.standard,
+        equipment: <String>[
+          for (final e in _fullGym)
+            if (e != 'barres parallèles' && e != 'anneaux') e,
+        ],
+        levels: <MovementLevel>[
+          _level('sl-traction-lestee', LevelMeasure.oneRmKg, 40, 40),
+          _level('sw-traction-pronation', LevelMeasure.maxReps, 15, 15),
+          _level('sw-pompe', LevelMeasure.maxReps, 40, 40),
+        ],
+      );
+      final pass1 = pass1Of(p);
+      expect(_planGaps(catalog, pass1), isEmpty, reason: show(pass1));
+      final pushE = pass1.days.firstWhere(
+        (d) =>
+            d.type!.patterns.contains(DayPattern.push) &&
+            d.type!.quality == DayQuality.endurance,
+      );
+      final main = pushE.slots.firstWhere((s) => s.role == SlotRole.main);
+      expect(_schema(catalog, main.exerciseId), 'push', reason: show(pass1));
+    });
+
+    test('coude à ménager sans repère de traction : traction en prise neutre, '
+        'dosage du retour', () {
+      final p = _street5050(
+        equipment: _fullGym,
+        levels: const <MovementLevel>[],
+        limitations: const <Limitation>[
+          Limitation(
+            zone: BodyZone.elbow,
+            side: BodySide.both,
+            joint: Joint.elbow,
+            discomfort: 2,
+            since: ConstraintSince.under6Weeks,
+          ),
+        ],
+      );
+      final pass1 = pass1Of(p);
+      expect(_planGaps(catalog, pass1), isEmpty, reason: show(pass1));
+      if (pass1.split?.templateId == SplitTemplates.pushPullLegs6) {
+        for (final d in pass1.days) {
+          if (!d.type!.patterns.contains(DayPattern.pull)) {
+            continue;
+          }
+          final main = d.slots.firstWhere(
+            (s) =>
+                s.role == SlotRole.main &&
+                _schema(catalog, s.exerciseId) == 'pull',
+          );
+          expect(main.exerciseId, isNot('sw-traction-pronation'));
+        }
+      }
     });
   });
 }

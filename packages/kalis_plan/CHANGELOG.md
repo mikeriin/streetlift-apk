@@ -11,10 +11,10 @@ contrat § 12.17 ; `docs/STRUCTURE_SEMAINE.md` § 5.
   rien sans repère (`dipMax`, `pushMax`, `pullMax` à 0) ; au banc, 489 jours en défaut sur la grille de 576 profils
   incomplets avant, 0 après ; les 34 profils du banc gardent leur squelette de 0.4.1 à l'identique.
 - **Repli sans repère** : traction, dips ou pompes au poids du corps (unilatéral pour les jambes), plage à réserve
-  visée de la passe 2, trois séries en mode prudent et chez le débutant, note `reps_calibrate` (première série de
-  mesure) en semaine 1 du premier bloc ; sinon un porteur secondaire devient principal.
+  visée de la passe 2, trois séries en mode prudent, note `reps_calibrate` (première série de mesure) en semaine 1
+  du premier bloc ; sinon un porteur secondaire ou un tirage horizontal devient principal ; gardés par les plafonds.
 - **Changement de type dit** : si aucun exercice du schéma n'est possible, type déduit des emplacements et raison
-  `plan.joint_limitation` ou `plan.equipment_missing` après son `plan.day_type`.
+  (`plan.joint_limitation`, `plan.equipment_missing` ou `plan.prerequisite_missing`) après son `plan.day_type`.
 
 ## 0.4.1
 

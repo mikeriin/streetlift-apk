@@ -14,7 +14,7 @@ import '../version.dart';
 import 'athlete.dart';
 import 'model.dart';
 import 'season.dart';
-import 'skeleton.dart' show coachPushLadder, coachStepHold;
+import 'skeleton.dart' show coachPrincipalNote, coachPushLadder, coachStepHold;
 import 'tables.dart';
 
 /// Codes des notes de coach (`plan.coach_note`, paramètre `note`).
@@ -2749,7 +2749,10 @@ final class Prescriber {
       if (s.note == 'pull_return') {
         x.reasons.add(_note(CoachNotes.pullReturn, 2.5));
       }
-      if (s.note == 'reps_calibrate' && blockIndex == 0 && week == 0) {
+      if (s.note == 'reps_calibrate' &&
+          (a.reps[s.referenceId ?? s.exerciseId] ?? 0) <= 0 &&
+          blockIndex == 0 &&
+          week == 0) {
         x.reasons.add(_note(CoachNotes.repsCalibrate, x.rir ?? 3));
       }
       return x;
@@ -3932,6 +3935,12 @@ final class Prescriber {
 
   /// Note de rôle d'un exercice d'assistance (pourquoi il est là).
   void _roleNote(_Draft x) {
+    // (Principal servi par la règle KS1c2 : pas de note de rôle
+    // d'assistance.)
+    final own = x.slot?.note;
+    if (own == coachPrincipalNote || own == 'reps_calibrate') {
+      return;
+    }
     final e = x.e;
     String? note;
     if (e.id.contains('wrist-curl')) {

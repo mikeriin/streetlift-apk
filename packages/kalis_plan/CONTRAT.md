@@ -1824,13 +1824,15 @@ répétitions à charge donnée n'est pas écrit (la ligne à charge fixe progre
   force » ne portait aucun exercice de poussée. Chaque jour d'un gabarit typé porte désormais un emplacement
   principal d'un de ses schémas et chacun de ses schémas (deux des trois pour `full`) ; sans repère, principal de
   repli au poids du corps dosé par la passe 2 (force : 4 à 6 répétitions à 2 en réserve ; endurance : 5 à 8 à 3 en
-  réserve ; trois séries en mode prudent et chez le débutant), note `reps_calibrate` en semaine 1 du premier bloc ;
-  à défaut de repli, un porteur secondaire devient principal. Un jour qui tenait la règle est inchangé : les
+  réserve ; jambes au dosage de l'assistance de jambes ; trois séries en mode prudent), note `reps_calibrate` en
+  semaine 1 du premier bloc ; à défaut, un porteur secondaire, puis un tirage horizontal d'assistance, devient
+  principal ; ces emplacements sont gardés (`keep`). Un jour qui tenait la règle est inchangé : les
   squelettes des 34 profils du banc sont identiques à 0.4.1. Détail : `docs/STRUCTURE_SEMAINE.md` § 5.
 - **Changement de type dit** : si aucun exercice du schéma n'est possible (douleur, matériel), le jour prend le type
-  déduit de ses emplacements ; `Pass1Plan.split.reasons` porte, juste après le `plan.day_type` de ce jour,
-  `plan.joint_limitation` (`joint`, `discomfort` de la zone la plus gênante) ou `plan.equipment_missing`
-  (`equipment`). Codes existants, aucun ajout au contrat de `kalis_core`.
+  déduit de ses emplacements ; `Pass1Plan.split.reasons` porte, juste après le `plan.day_type` de ce jour, la cause du
+  refus du mouvement de base : `plan.joint_limitation` (`joint`, `discomfort`), `plan.equipment_missing`
+  (`equipment`) ou `plan.prerequisite_missing` (`exerciseId`). Codes existants, aucun ajout au contrat de
+  `kalis_core`.
 - **Note** `reps_calibrate` (`value` : réserve) ajoutée à `CoachNotes` ; texte de `coachReasonText`.
 - Hors périmètre : la durée des séances (créneau de 120 min servi en 20 à 40 min sur le profil du constat) reste
   celle de l'option (a) de C17.15 ; l'option (c) (technique et mobilité dans le créneau) est un lot ultérieur.
