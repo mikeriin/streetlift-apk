@@ -336,3 +336,10 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Lot : **KS1c2**, prompt `prompts/KS1c2.txt`. Base `moteurs` à la pointe. Contrôle `claude/ci-cp-b`, sauvegardes `cp-sauvegardes/KS1c2`.
 - En parallèle sur `moteurs` : **KR1** (`kalis_adapt`, `kalis_bench`, contrôle `claude/ci-cp-a`), qui publiera `kalis_adapt` 1.0.3 et `kalis_bench` 0.5.3. Ne touche pas `kalis_adapt` ; rebase avant chaque push ; versions et étiquettes libres au moment de publier, jamais réécrites.
+
+## KM1c4 — conduite sous douleur et rampe du réalisé, référence 1.0.5 (lancé le 17/10/2026 vers 06:06 UTC, tâche « Fable 5.1, effort maximal, moteurs » ; C17.23, C17.25)
+
+- Lot : **KM1c4**, prompt `prompts/KM1c4.txt`. Lot de méthode sans panel (C13.3). Validation : automatique, par le pilotage.
+- **Base** : `moteurs` bcb8422b (ou suivant) : Koach 1.0.4 (`kalis_adapt` 1.0.3), **`kalis_plan` 0.4.2** (KS1c2, validé C17.24), `kalis_bench` 0.5.4. Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM1c4`.
+- **Couple mesuré** : `kalis_plan` 0.4.2 × Koach (le couple qui sera servi par KB1). Rejoue d'abord la campagne de KR1 sur 0.4.2 (point de départ : 63 violations sur 90 600 avec 0.4.1 ; KS1c2 a changé quatre saisons « douleur à l'épaule ») et donne le nouveau point de départ dans la livraison.
+- Seul lot en cours ; aucune autre session sur `moteurs`. Clé des références : pas nécessaire sauf rejeu du journal réel (C7.8 si besoin).
