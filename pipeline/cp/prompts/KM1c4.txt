@@ -1,0 +1,27 @@
+LOT KM1c4 — KM1 CORRECTION 4 : CONDUITE SOUS DOULEUR ET RAMPE DU RÉALISÉ (référence Koach 1.0.5)
+Modèle : Fable 5.1, effort maximal (tâche « Fable 5.1, effort maximal, moteurs » ; lot de méthode, C13.9). Repli : tâche « Opus 5.5, effort maximal, moteurs » si la part Fable est épuisée (le consigner, C13.4). Validation : automatique, par le pilotage.
+Prérequis : KR1 validé comme mesure (C17.23).
+Base : `moteurs` à la pointe (597c10b7 ou suivant : Koach 1.0.4, `kalis_adapt` 1.0.3, `kalis_bench` 0.5.3). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM1c4`.
+Décisions : C13.3, C13.12, C17.17.3, C17.23. Livraison à lire en entier : `LIVRAISON_KR1.md` (§ 3 limite M1, § 4, § 6, § 7) ; tests `kalis_adapt/reference/tests/test_kr1_violations.py`.
+
+OBJECTIF
+Critère dur de la bascule (C17.17.3, maintenu par C17.23) : **0 violation de sécurité** du couple servi (`kalis_plan` 0.4.x × Koach) sur les 34 profils, **toutes graines** (100), modèles de vérité et scénarios. KR1 en compte 63 (59 poussées de douleur, 4 aggravations, 25 saisons), causes établies et reproduites. Les corriger par la méthode, sans perdre ce que Koach gagne ailleurs.
+
+CONTENU (référence Python ; le portage Dart sera KM2c3)
+1. **Reprise graduée après tout épisode douloureux** au-dessus du seuil, même sans arrêt (cas `autres_08`, graine 47).
+2. **Pas de saut en fin de reprise** : sortie progressive, jamais un retour d'un coup à l'écrit (cas `ks_01`, graine 38).
+3. **Exposition hebdomadaire d'une zone sensible bornée par l'exposition réalisée** des semaines précédentes, retour après séances manquées compris (cas `street_03`, vérité b) ; règle « rampe du réalisé » par groupe et par zone sensible, qui couvre aussi le diagnostic `realise_apparie` (§ 6 de KR1).
+4. **Aucune hausse de charge** sur un exercice qui sollicite une zone douloureuse (sollicitation ≥ 0,5) tant que la gêne dépasse le seuil de suivi (cas `street_10`, poignet, dips lestés).
+5. **Élargissement « rien de spécial » uniforme et borné** (relecture M1 de KR1) au lieu du plafond par composante.
+Chaque règle vient d'une source vérifiée (surveillance de la douleur dans les tendinopathies et le retour progressif à la charge, par exemple les modèles de suivi de la douleur à 24 h, la gestion de la charge en rééducation tendineuse) ou est un choix raisonné dit comme tel ; aucun chiffre sans source ni mesure.
+
+CRITÈRES (mêmes campagnes que KR1 : `kalis_bench` 0.5.3, 90 600 saisons ; graines 0-5 pour les critères du cahier)
+- **0 violation** du critère 7 sur les 90 600 saisons (poussées, aggravations) ; 0 saison plantée ; les tests de `test_kr1_violations.py` passent à « aucune violation » ;
+- critères KM 1 à 8 et 11 : aucun recul au-delà du bruit mesuré par KR1 (§ 5) ; 7 bis sur les six jeux sans recul ; coût sur le jour J mesuré ;
+- « réalisée appariée » : mesurée avant / après (indicateur, pas de seuil) ;
+- athlètes sans douleur : prescriptions identiques à 1.0.4, ou écart mesuré et justifié.
+
+FIN DE LOT
+- Référence Koach 1.0.5 (paramètres `1.0.5-ref.1`, fixtures régénérées, `CHANGEMENTS_1_0_5.md`, note datée au contrat, `SOURCES.md`), `kalis_bench` en version libre suivante si le banc change ; contrôle complet vert sur `claude/ci-cp-a` ; push `moteurs` (rebase avant chaque push : KS1c2 travaille en même temps sur `kalis_plan` / `kalis_bench`) ; ne touche pas `packages/kalis_adapt/lib/` (portage : KM2c2 → KM2c3).
+- `LIVRAISON_KM1c4.md` (pipeline et projet claude.ai) : tableau des violations et des critères avant / après, ce que KM2c3 doit porter.
+- Ligne KM1c4 « livré » ; notification ; arrête-toi (aucun fire_trigger).
