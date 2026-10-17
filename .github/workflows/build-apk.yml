@@ -91,7 +91,17 @@ jobs:
       - name: Installer les dépendances verrouillées
         run: flutter pub get --enforce-lockfile
       - name: Contrôler le formatage
-        run: dart format --output=none --set-exit-if-changed lib test
+        run: |
+          # PR3 : en cas d'écart, le diff est publié en annotation du run,
+          # lisible sans télécharger les journaux.
+          if ! dart format --output=none --set-exit-if-changed lib test; then
+            dart format lib test > /dev/null
+            diff="$(git diff -U0 -- lib test | head -n 200)"
+            diff="${diff//'%'/'%25'}"
+            diff="${diff//$'\n'/'%0A'}"
+            echo "::error title=Formatage::${diff}"
+            exit 1
+          fi
       - name: Analyser le code
         run: flutter analyze --no-pub 2>&1 | tee validation-output/analyze.log
       - name: Exécuter les tests de régression
