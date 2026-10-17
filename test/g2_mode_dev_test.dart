@@ -48,10 +48,10 @@ void main() {
     tearDown(() => SessionSpace.devActive = false);
 
     test(
-      'version affichée : « dev7.1.4 » (carte unique tour par tour, PR4)',
+      'version affichée : « dev7.1.5 » (flamme en popup, PR5)',
       () {
         expect(kAppVersion, 'dev$kVersion');
-        expect(kAppVersion, 'dev7.1.4');
+        expect(kAppVersion, 'dev7.1.5');
       },
     );
 

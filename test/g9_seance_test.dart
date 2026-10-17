@@ -628,8 +628,9 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('adjust-go')));
         await tester.pumpAndSettle();
       }
-      // Premier exercice : la coche valide la série avec la flamme visée,
-      // la ligne des flammes s'ouvre sous la série (G9 correction 1).
+      // Premier exercice : la coche valide la série avec la flamme visée ;
+      // PR5 : la flamme prend la place de la coche, la note se corrige en
+      // popup (validée au lâcher), l'appui long annule la validation.
       final served = store.adaptDay(12, day, store.sessionAdapt(12, 1)!);
       final first = served.exercises.first;
       final button = find.byTooltip('Valider la série 1').first;
@@ -642,49 +643,79 @@ void main() {
       expect(log.sets[0].done, isTrue);
       expect(log.sets[0].flames, isNotNull);
       expect(find.byKey(const ValueKey('flame-sheet')), findsNothing);
+      expect(find.byKey(const ValueKey('flame-track-1')), findsNothing);
+      final flame1 = find.byKey(const ValueKey('set-flame-1')).first;
+      expect(flame1, findsOneWidget);
+      Future<void> openFlames(Finder f) async {
+        await tester.ensureVisible(f);
+        await tester.pumpAndSettle();
+        await tester.tap(f);
+        await tester.pumpAndSettle();
+        expect(find.byKey(const ValueKey('flame-popup')), findsOneWidget);
+      }
+
+      await openFlames(flame1);
       expect(find.byKey(const ValueKey('flame-track-1')), findsOneWidget);
       expect(
         find.byKey(const ValueKey('flame-intro')),
         introBefore ? findsNothing : findsOneWidget,
       );
       expect(store.flamesIntroSeen, isTrue);
-      // Corrigée sur la ligne : 8 flammes ; le conseil de la série est
-      // recalculé (jamais deux conseils pour la même série).
-      await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-8')));
-      await tester.pumpAndSettle();
+      // Corrigée dans la popup : 8 flammes, la popup se ferme ; le conseil
+      // de la série est recalculé (jamais deux conseils pour la même
+      // série).
       await tester.tap(find.byKey(const ValueKey('flame-pos-8')));
       await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('flame-popup')), findsNothing);
       expect(log.sets[0].flames, 8);
       expect(log.sets[0].effort, 1.5);
-      expect(find.byKey(const ValueKey('flame-thumb-8')), findsOneWidget);
+      expect(find.byKey(const ValueKey('set-flame-value-1-8')), findsOneWidget);
       final advice = store.sessionAdapt(12, 1)!.advice[first.id] ?? const [];
       expect(advice.length, lessThanOrEqualTo(1));
+      // La même note au lâcher : validée, la popup se ferme aussi.
+      await openFlames(flame1);
+      await tester.tap(find.byKey(const ValueKey('flame-pos-8')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('flame-popup')), findsNothing);
+      expect(log.sets[0].flames, 8);
       // « Je ne sais pas » puis une flamme de nouveau.
+      await openFlames(flame1);
       await tester.tap(find.byKey(const ValueKey('flame-unknown')));
       await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('flame-popup')), findsNothing);
       expect(log.sets[0].flames, isNull);
       expect(log.sets[0].flamesUnknown, isTrue);
+      await openFlames(flame1);
       expect(find.text('Sans note'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('flame-pos-6')));
       await tester.pumpAndSettle();
       expect(log.sets[0].flames, 6);
       expect(log.sets[0].flamesUnknown, isFalse);
-      // Série 2 validée : la série 1 passe en une ligne, la 2 s'ouvre.
+      // Appui long sur la flamme : la validation est annulée, la coche
+      // revient ; validée de nouveau, la note est gardée.
+      await tester.longPress(flame1);
+      await tester.pumpAndSettle();
+      expect(log.sets[0].done, isFalse);
+      expect(find.byKey(const ValueKey('set-flame-1')), findsNothing);
+      await tester.tap(find.byTooltip('Valider la série 1').first);
+      await tester.pumpAndSettle();
+      expect(log.sets[0].done, isTrue);
+      expect(log.sets[0].flames, 6);
+      // Série 2 validée : chaque série garde sa ligne et sa flamme.
       final b2 = find.byTooltip('Valider la série 2').first;
       await tester.ensureVisible(b2);
       await tester.pumpAndSettle();
       await tester.tap(b2);
       await tester.pumpAndSettle();
       expect(log.sets[1].done, isTrue);
-      expect(find.byKey(const ValueKey('set-summary-1')), findsOneWidget);
-      expect(find.byKey(const ValueKey('flame-track-1')), findsNothing);
+      expect(find.byKey(const ValueKey('set-flame-1')), findsOneWidget);
+      expect(find.byKey(const ValueKey('set-flame-2')), findsOneWidget);
+      await openFlames(find.byKey(const ValueKey('set-flame-2')));
       expect(find.byKey(const ValueKey('flame-track-2')), findsOneWidget);
       expect(find.byKey(const ValueKey('flame-intro')), findsNothing);
-      // Un appui sur la ligne résumée la rouvre.
-      await tester.tap(find.byKey(const ValueKey('set-summary-1')));
+      await tester.tapAt(const Offset(4, 4));
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('flame-track-1')), findsOneWidget);
-      expect(find.byKey(const ValueKey('set-summary-2')), findsOneWidget);
+      expect(find.byKey(const ValueKey('flame-popup')), findsNothing);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       await tester.runAsync(() => store.flush());

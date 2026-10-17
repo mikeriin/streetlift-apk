@@ -278,8 +278,19 @@ String? coachTempoText(kc.ExercisePrescription p) {
   return '${s[0].toUpperCase()}${s.substring(1)}';
 }
 
+/// PR5 : nom d'un format au départ chronométré selon l'intervalle :
+/// « EMOM » (60 s), « E2MOM » (120 s), « E90s » (90 s).
+String everyFormatName(int seconds) => seconds == 60
+    ? 'EMOM'
+    : seconds % 60 == 0
+    ? 'E${seconds ~/ 60}MOM'
+    : 'E${seconds}s';
+
 /// Nom de la technique de série, ou null pour une série classique.
-String? techniqueLabel(kc.SetTechniqueKind k) => switch (k) {
+/// [every] : intervalle des départs d'une technique chronométrée (PR5 :
+/// « E2MOM (départ toutes les 2 min) » ; inconnu : « départs
+/// chronométrés »).
+String? techniqueLabel(kc.SetTechniqueKind k, {int? every}) => switch (k) {
   kc.SetTechniqueKind.standard => null,
   kc.SetTechniqueKind.topSetBackoff => 'Série de tête puis séries allégées',
   kc.SetTechniqueKind.cluster => 'Clusters (pauses courtes dans la série)',
@@ -291,7 +302,13 @@ String? techniqueLabel(kc.SetTechniqueKind k) => switch (k) {
   kc.SetTechniqueKind.contrast => 'Contraste (lourd puis explosif)',
   kc.SetTechniqueKind.wave => 'Vagues',
   kc.SetTechniqueKind.amrap => 'Série au maximum',
-  kc.SetTechniqueKind.emom => 'EMOM (départ chaque minute)',
+  kc.SetTechniqueKind.emom =>
+    every == null
+        ? 'Départs chronométrés'
+        : every == 60
+        ? 'EMOM (départ chaque minute)'
+        : '${everyFormatName(every)} (départ toutes les '
+              '${every % 60 == 0 ? '${every ~/ 60} min' : '$every s'})',
   kc.SetTechniqueKind.density => 'Bloc de densité',
   kc.SetTechniqueKind.ladder => 'Échelle',
   kc.SetTechniqueKind.pyramid => 'Pyramide',
@@ -313,8 +330,13 @@ String? techniqueHint(kc.ExercisePrescription p) {
       'Contrôle chaque descente ; arrête la série dès qu’une descente '
           'accélère.',
     kc.SetTechniqueKind.emom =>
-      'Lance le chrono : chaque série part au début de la minute, le repos '
-          'est ce qui reste. Si les répétitions ne passent plus, arrête là.',
+      (t.intervalSeconds ?? 60) == 60
+          ? 'Lance le chrono : chaque série part au début de la minute, le '
+                'repos est ce qui reste. Si les répétitions ne passent plus, '
+                'arrête là.'
+          : 'Lance le chrono : une série part toutes les '
+                '${_duration(t.intervalSeconds!)}, le repos est ce qui reste. '
+                'Si les répétitions ne passent plus, arrête là.',
     kc.SetTechniqueKind.density =>
       'Lance le chrono : un maximum de répétitions propres dans le temps, '
           'en petites séries.',

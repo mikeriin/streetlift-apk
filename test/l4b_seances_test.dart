@@ -525,9 +525,12 @@ void main() {
       expect(find.textContaining('Reps : nombre entier'), findsNothing);
       await tester.tap(find.byTooltip('Valider la série 1').first);
       await tester.pumpAndSettle();
-      // G9 correction 1 : validée avec la flamme visée, corrigée sur la
-      // ligne ouverte sous la série.
-      await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-7')));
+      // G9 correction 1 : validée avec la flamme visée ; PR5 : corrigée
+      // dans la popup de la flamme, à la place de la coche.
+      final flame = find.byKey(const ValueKey('set-flame-1')).first;
+      await tester.ensureVisible(flame);
+      await tester.pumpAndSettle();
+      await tester.tap(flame);
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('flame-pos-7')));
       await tester.pumpAndSettle();
