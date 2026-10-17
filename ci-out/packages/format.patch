@@ -1,0 +1,55 @@
+diff --git a/packages/kalis_adapt/lib/src/koach/seance.dart b/packages/kalis_adapt/lib/src/koach/seance.dart
+index b38649a..a618924 100644
+--- a/packages/kalis_adapt/lib/src/koach/seance.dart
++++ b/packages/kalis_adapt/lib/src/koach/seance.dart
+@@ -715,9 +715,7 @@ class Seances {
+           somme([
+             for (final x in listeOuVide(mq['items'])) _seriesDures(jm(x)),
+           ]);
+-      _compterEcritZone(sem, [
+-        for (final x in listeOuVide(mq['items'])) jm(x),
+-      ]);
++      _compterEcritZone(sem, [for (final x in listeOuVide(mq['items'])) jm(x)]);
+       _compterManqueZone(sem, [
+         for (final x in listeOuVide(mq['items'])) jm(x),
+       ]);
+diff --git a/packages/kalis_adapt/lib/src/koach/securite.dart b/packages/kalis_adapt/lib/src/koach/securite.dart
+index 22db53c..54ffcaf 100644
+--- a/packages/kalis_adapt/lib/src/koach/securite.dart
++++ b/packages/kalis_adapt/lib/src/koach/securite.dart
+@@ -402,9 +402,7 @@ class Gardefous {
+   /// (règle 1 du lot KM1c4).
+   bool sensible(String z) {
+     final ep = episode(z);
+-    return ep != null &&
+-        0 <= jour - ep.$2 &&
+-        jour - ep.$2 <= _n('sensible_j');
++    return ep != null && 0 <= jour - ep.$2 && jour - ep.$2 <= _n('sensible_j');
+   }
+ 
+   List<String> sensibles() => [
+@@ -731,9 +729,7 @@ class Gardefous {
+         out['rir'] = _secMax(dbl(out['rir']), dbl(s['douleur_rir_bonus']));
+         note(z, 'douleur');
+       }
+-      if (act <= 0 &&
+-          niveau >= 0.5 &&
+-          geneRecente(z) > _n('douleur_seuil')) {
++      if (act <= 0 && niveau >= 0.5 && geneRecente(z) > _n('douleur_seuil')) {
+         // 1.0.5 (KM1c4, règle 4) : une gêne au-dessus du seuil dans les
+         // `douleur_hausse_j` derniers jours interdit toute hausse de charge
+         // sur un exercice qui sollicite la zone (≥ 0,5), même si le dernier
+diff --git a/packages/kalis_adapt/test/koach_elargir_test.dart b/packages/kalis_adapt/test/koach_elargir_test.dart
+index 7a6aed4..2caf488 100644
+--- a/packages/kalis_adapt/test/koach_elargir_test.dart
++++ b/packages/kalis_adapt/test/koach_elargir_test.dart
+@@ -48,8 +48,7 @@ Koach _koach() => Koach(copieJson(_params), _fiches, <String, Object?>{
+   return (m, t);
+ }
+ 
+-double _lambda() =>
+-    dbl(jm(_params['rupture'])['elargissement_vers_a_priori']);
++double _lambda() => dbl(jm(_params['rupture'])['elargissement_vers_a_priori']);
+ 
+ void main() {
+   test('uniforme vers l\'a priori : (1 − λ) v + λ v0, croisés × (1 − λ)', () {

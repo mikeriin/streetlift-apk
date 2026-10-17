@@ -1,0 +1,5 @@
+tests kalis_adapt : échec
+durée : 88 s
+00:41 +188 -1: loading test/km2c3_verite_test.dart [E]
+00:53 +260 -2: test/koach_parametres_test.dart: lireParametresKoach version, schéma, nombre de clés (346 : 6 + 340) [E]
+01:22 +346 -2: Some tests failed.
