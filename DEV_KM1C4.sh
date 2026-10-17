@@ -1,0 +1,50 @@
+#!/bin/bash
+# Mise au point KM1c4, run A (point de départ sur kalis_plan 0.4.2).
+#  PART 0     : export KM1 sur kalis_plan 0.4.2 (34 profils, témoin 16 graines) ; données neuves
+#               mises à la place de celles de 0.4.1 dans l'arbre de la CI ; sécurité des blocs ;
+#               tests Python de la référence ; tests km de kalis_bench (version de référence 0.4.2)
+#  PART 1-34  : campagne Dart du couple kalis_plan 0.4.2 × Koach 1.0.4 (kalis_adapt 1.0.3),
+#               groupe g = (PART+1)/2 (graines 6(g-1)..6g-1 ; 17 : 96-99), part h = 1 + (PART+1)%2 sur 2 ;
+#               saisons vivantes, témoin de 0.4.1 lu
+root=$PWD
+out=$root/out-packages
+status=0
+B=$root/packages/kalis_bench
+R=$root/packages/kalis_adapt/reference
+for name in kalis_adapt kalis_bench; do
+  (cd packages/$name && dart pub get) > $out/$name-pub-$PART.log 2>&1 || { echo "pub get $name échec"; tail -30 $out/$name-pub-$PART.log; status=1; }
+done
+if [ "$PART" = 0 ]; then
+  cd $B
+  start=$(date +%s)
+  dart run bin/km1.dart --sortie $out/km1 --sans-securite --sans-adversaires > $out/km1_export.log 2>&1 || { echo "export km1 : échec"; status=1; }
+  tail -5 $out/km1_export.log; echo "export : $(( $(date +%s) - start )) s"
+  # Données neuves à la place de celles de 0.4.1 (dans l'arbre de la CI seulement).
+  rm -rf $R/donnees/reference $R/donnees/temoin
+  cp -r $out/km1/reference $out/km1/temoin $R/donnees/
+  cp $out/km1/catalogue_infos.json.gz $out/km1/traces_verite.json.gz $out/km1/traces_endurance.json.gz $R/donnees/
+  rm -rf km1_entree/securite
+  (cd $R && python3 -m banc.securite_banc --entrees-dart $B/km1_entree/securite) | tail -2
+  dart run bin/km1.dart --sortie $out/km1 --outils-seuls --sans-adversaires > $out/km1_securite.log 2>&1 || { echo "sécurité de blocs : échec"; status=1; }
+  tail -3 $out/km1_securite.log
+  cp $out/km1/securite_dart.json.gz $R/donnees/
+  # Ce qui diffère de 0.4.1 (saisons de référence et témoin) : liste des fichiers changés.
+  cd $root
+  git status --porcelain -- $R/donnees > $out/km1_diff_0_4_1.txt; wc -l < $out/km1_diff_0_4_1.txt
+  cd $R
+  python3 -m pytest tests -q > $out/pytest.log 2>&1 || echo "pytest : échec"
+  tail -30 $out/pytest.log
+  cd $root
+  sed -i "s/const String _planReference = '0.4.1';/const String _planReference = '0.4.2';/" packages/kalis_bench/test/km2_banc_test.dart
+  (cd packages/kalis_bench && dart test --reporter expanded test/km2_banc_test.dart test/km_export_test.dart) > $out/kalis_bench-test.log 2>&1 || { echo "tests kalis_bench km : échec"; status=1; }
+  grep -E "\[E\]|Some tests failed|All tests passed" $out/kalis_bench-test.log | tail -30
+elif [ "$PART" -le 34 ]; then
+  g=$(( (PART + 1) / 2 )); h=$(( 2 - PART % 2 ))
+  a=$(( 6 * (g - 1) )); b=$(( a + 5 )); [ $b -gt 99 ] && b=99
+  cd $B
+  mkdir -p $out/parts
+  extra=""; [ "$g" != 1 ] && extra="--sans-determinisme"
+  dart run bin/km2.dart --graines $a-$b --coeurs 4 $extra --temoin $R/donnees/temoin --partie $h/2 --sortie $out/parts/km1c4d_g${a}_${b}_partie_${h}_sur_2.json.gz > $out/campagne_${a}_${b}_$h.log 2>&1 || { echo "campagne $a-$b part $h : échec"; status=1; }
+  tail -4 $out/campagne_${a}_${b}_$h.log
+fi
+exit $status
