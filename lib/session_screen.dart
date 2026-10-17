@@ -698,13 +698,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     if (next == null || next.$1 == k) return;
     final target = _cardKeys[next.$1]?.currentContext;
     if (target == null) return;
-    unawaited(
-      Scrollable.ensureVisible(
-        target,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-        alignment: .05,
-      ),
+    final motion = KMotion.standard;
+    Scrollable.ensureVisible(
+      target,
+      alignment: .05,
+      duration: motion.durationIn(context),
+      curve: motion.curve,
     );
   }
   int epoch = 0; // force la recréation des champs (reprise du précédent…)
@@ -1677,7 +1676,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (!widget.readOnly && widget.exs.length > 1) ...[
         _RoundOrder(
           names: [for (final e in widget.exs) store.splitName(e.name).$1],
-          done: [for (final l in logs) [for (final s in l.sets) s.done]],
+          done: [for (final l in logs) l.sets.map((s) => s.done).toList()],
           next: _nextStep(),
         ),
         const SizedBox(height: KSpacing.cardGap),
