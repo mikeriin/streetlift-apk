@@ -1,12 +1,1 @@
-{
-  "tests/test_documents.py::test_empreinte_des_parametres": true,
-  "tests/test_fixtures.py::test_fixtures_a_jour": true,
-  "tests/test_fixtures.py::test_taille_codage_entete": true,
-  "tests/test_fixtures.py::test_rejeu_moteur[moteur_4.json]": true,
-  "tests/test_fixtures.py::test_rejeu_moteur[moteur_7.json]": true,
-  "tests/test_fixtures.py::test_rejeu_moteur[moteur_10.json]": true,
-  "tests/test_fixtures.py::test_rejouer_le_journal[moteur_4.json]": true,
-  "tests/test_fixtures.py::test_rejouer_le_journal[moteur_7.json]": true,
-  "tests/test_fixtures.py::test_rejouer_le_journal[moteur_10.json]": true,
-  "tests/test_fixtures.py::test_generation_deterministe": true
-}
+{}

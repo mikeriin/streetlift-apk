@@ -1,8 +1,8 @@
-# Koach 1.0.4 — référence Python (lot KM1, corrections 1 à 3 ; lot KR1)
+# Koach 1.0.5 — référence Python (lot KM1, corrections 1 à 4 ; lot KR1)
 
-Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.4 : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10), « KM1 correction 2 » (C13.12), « KM1 correction 3 » (C17.9 : estimation sous notes non fiables) et le lot KR1 (C17.18 : Koach sur `kalis_plan` 0.4.1 ; élargissement « rien de spécial » plafonné à l'a priori ; paramètres `1.0.4-ref.1`, mêmes valeurs). Ce qui change est dans les notes datées du 10/10, du 11/10, du 15/10 et du 16/10/2026 en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md` à `CHANGEMENTS_1_0_4.md`. `kalis_adapt` 1.0.3 (lot KR1) porte la version 1.0.4 : mêmes entrées, mêmes sorties à 1e-9 sur les fixtures. Elle n'est pas embarquée dans l'application.
+Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.5 : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10), « KM1 correction 2 » (C13.12), « KM1 correction 3 » (C17.9 : estimation sous notes non fiables), le lot KR1 (C17.18 : Koach sur `kalis_plan` 0.4.1 ; élargissement plafonné) et la passe « KM1 correction 4 » (lot KM1c4, C17.23, C17.25 : conduite sous douleur et rampe du réalisé par zone sensible, aucune hausse de charge sous une gêne de la semaine, élargissement « rien de spécial » uniforme et borné ; paramètres `1.0.5-ref.1`). Ce qui change est dans les notes datées en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md` à `CHANGEMENTS_1_0_5.md`. `kalis_adapt` 1.0.3 (lot KR1) porte la version 1.0.4 ; le portage de 1.0.5 est le lot KM2c3 (`PORTAGE_DART.md`, delta 1.0.4 → 1.0.5 ; `PORTAGE_BANC.md`, delta KM1c4 du modèle de vérité). La référence n'est pas embarquée dans l'application.
 
-Données de référence (`donnees/reference/`, `donnees/temoin/`) : saisons de `kalis_plan` 0.4.1, 34 profils (lot KR1) ; les saisons figées sur `kalis_plan` 0.3.1 (27 profils), lues par les mesures de KM1 à KM2c2, sont dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/` (`reference/`, `temoin/` ; hors de `kalis_adapt`, que l'application copie, C17.19.3).
+Données de référence (`donnees/reference/`, `donnees/temoin/`) : saisons de `kalis_plan` 0.4.2, 34 profils (régénérées au lot KM1c4 ; 0.4.1 au lot KR1, seules quatre saisons « douleur à l'épaule » diffèrent) ; les saisons figées sur `kalis_plan` 0.3.1 (27 profils), lues par les mesures de KM1 à KM2c2, sont dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/` (`reference/`, `temoin/` ; hors de `kalis_adapt`, que l'application copie, C17.19.3).
 
 Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal réel ne publie que des agrégats.
 
@@ -12,12 +12,12 @@ Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal r�
 | --- | --- |
 | `CONTRAT_1_0.md` | Contrat gelé 1.0, modifié pour 1.0.1 et 1.0.2 par des notes datées (10/10 et 11/10/2026) : API `observe` / `posterior` / `plan` / `explain`, schéma du journal, modèles, règles de sécurité, paramètres, portage, écarts connus (annexe A). |
 | `SOURCES.md` | Origine de chaque paramètre de `params/koach_params_v1.json` (une ligne par clé). |
-| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.4-ref.1`, 338 clés), lu tel quel par les tests Dart de `kalis_adapt` 1.0.3 (asset `assets/koach/koach_params_1_0_4.json`, copie à l'octet près). |
+| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.5-ref.1`, 344 clés). `params/koach_params_d4.json` : copie de `1.0.4-ref.1` (338 clés) lue par les tests Dart de `kalis_adapt` 1.0.3 (asset `assets/koach/koach_params_1_0_4.json`, copie à l'octet près) et de `kalis_bench` jusqu'au portage KM2c3. |
 | `qualites/` | Vecteurs de qualités des 1 039 exercices (`regles.py` → `vecteurs_qualites_v1.json`). |
 | `koach/` | Le moteur : `modele.py` (estimation), `seance.py` et `securite.py` (séance, garde-fous), `planification.py`, `rupture.py`, `adherence.py`, `dual.py`, `moteur.py` (façade), `numerique.py`. |
 | `banc/` | Port Python des modèles de vérité et des critères de sécurité de `kalis_bench`, meneur de saison, banc adversarial, campagne de mesure des critères. |
 | `rejeu/` | Rejeu walk-forward d'un export de l'application (agrégats seulement). |
-| `fixtures/` | Fixtures de parité Python/Dart (`generer.py`, format décrit dans `fixtures/README.md`). |
+| `fixtures/` | Fixtures de parité Python/Dart (`generer.py`, format décrit dans `fixtures/README.md`), moteur 1.0.5. `fix_dart/` : copies des fixtures de 1.0.4 lues par les tests de `kalis_adapt` 1.0.3 jusqu'au portage KM2c3. |
 | `donnees/` | Saisons de référence, témoin `kalis_adapt` 0.3.1 exporté par `kalis_bench` (Dart), résultats publiés. |
 | `tests/` | Tests (pytest). |
 

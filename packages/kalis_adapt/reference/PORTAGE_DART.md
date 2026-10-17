@@ -174,3 +174,45 @@ Liste exacte : `CHANGEMENTS_1_0_3.md` (section H : fichiers Dart concernés). Po
 - Paramètres : aucune valeur changée ; version `1.0.4-ref.1`, asset `koach_params_1_0_4.json`.
 - Données de référence régénérées sur `kalis_plan` 0.4.1 (34 profils) : la saison vivante du banc est de nouveau celle
   que lit Python (`km2_banc_test.dart`, égalité stricte) ; `--saisons-figees` relit `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/reference/`.
+
+## Delta 1.0.4 → 1.0.5 (lot KM1c4, 17/10/2026 ; portage = lot KM2c3, `kalis_adapt` 1.0.4)
+
+Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Points d'attention pour la parité :
+
+- `securite.dart` : `episode(z)` renvoie `(premier, dernier)` des signalements ≥ `arret_persistance_min` de
+  l'épisode en cours, par le même découpage que `_episode` (déjà porté pour les arrêts) ; `sensible(z)` =
+  `0 ≤ jour − dernier ≤ sensible_j` ; `sensibles()` trié ; `geneRecente(z)` = `pireEntre(jour − douleur_hausse_j + 1,
+  jour)`. Dans `conduite`, après le bloc « zone bloquante depuis la dernière séance » et avant le bloc `recente` :
+  `if (act <= 0 && niveau >= 0.5 && geneRecente(z) > douleur_seuil) { sans_hausse ; rir = max(rir,
+  douleur_rir_bonus) ; note(z, 'douleur') }` (ordre des `note` : la première raison l'emporte, comme en Python).
+- `seance.dart` : état `ecritZone` (zone → semaine → séries écrites), `budgetSemaine` (zone → permis), `rampeZone`
+  (ensemble, parcouru trié quand il est écrit) ; `_semainesCloses()` = `{j ~/ 7 pour j dans joursSeances}` ;
+  `_compterEcritZone(semaine, items)` (sur `zonesEx` connues seulement, `sets` entier > 0) ; `_ecritZone` ;
+  `_budgetZoneSemaine(z)` ligne pour ligne (boucles `w` décroissantes, `charge_fermee(w) = semaines[w] == true &&
+  closes.contains(w)` ; `debut = ep.premier ~/ 7` ; `floor(x + 1e-9)` ; `habitude = somme / 4.0` ; sortie progressive
+  qui retire `z` de `rampeZone` et renvoie `null`, sinon l'ajoute) ; `_budgetsZoneJour(items)` : `part = floor(reste ·
+  e_jour / (e_jour + e_reste) + 0,5)` en double, `reste` entier ; `ouvrir` : `budgetSemaine` recalculé après les
+  séances manquées (qui alimentent aussi `ecritZone`) ; `prescrire` : `_compterEcritZone(sem, items)` puis
+  `budgetZone = _budgetsZoneJour(items)` avant la boucle, et le vrai test n'est pas tenté quand une zone provoquée
+  par l'exercice est dans `budgetZone` ; `_item` : le bloc du budget s'applique à **tout** item (échauffement et test
+  compris), le retrait n'a lieu que si une zone provoquée est sous budget, la raison `douleur_retrait` porte
+  `cond['zone'] ?? zones provoquées triées [0]`. `_budgetReprise` disparaît.
+- `modele.dart` : `elargir(part)` : `lam = clamp(part, 0, 1)` ; `idx` = indices de `variancesAPriori()` ; lignes puis
+  colonnes de chaque `i` multipliées par `(1 − lam)` ; puis, si `lam < 1`, le bloc `idx × idx` divisé par `(1 − lam)`
+  (division, pas multiplication par l'inverse : même arrondi que Python), sinon mis à 0 ; puis `P[i][i] += lam · v0`.
+  Même ordre d'opérations que `modele.py`.
+- `rupture.dart` : cause « rien » : `part = elargissement_vers_a_priori` (défaut 0,25), `modele.elargir(part)`, action
+  `{'action': 'elargir', 'part': part}` ; `bornes` : `('rupture', 'elargissement_vers_a_priori') : (0, 1)` ;
+  `elargissement_rien_de_special` n'est plus lu (clé gardée dans le fichier ; le validateur Dart ne doit pas la
+  refuser).
+- Paramètres : 6 clés nouvelles à la fin de leur section (`securite` après `reprise_dose_hausse`, `rupture` après
+  `elargissement_rien_de_special`), `securite.reprise_dose_depart` 0,5 ; version `1.0.5-ref.1`, asset
+  `koach_params_1_0_5.json`, SHA-256 et 344 clés (6 + 338) dans `koach_parametres_test.dart`.
+- Modèle de vérité du banc (`lib/src/sim/truth.dart`) : `PORTAGE_BANC.md`, « Delta KM1c4 » (`_painKnown = false` au
+  début d'un épisode de la fiche et d'un épisode tendineux).
+- Tests Dart : depuis KM1c4 ils lisent les copies figées de 1.0.4 (`reference/fix_dart/`,
+  `reference/params/koach_params_d4.json`) ; `kalis_bench` (`km2_banc_test`, `km2_validateur_test`,
+  `km2_adversaire_test`, `bin/km2.dart`, `bin/km2_adversaire.dart`) lit `koach_params_d4.json`. KM2c3 repointe tout
+  vers `reference/fixtures/` et `reference/params/koach_params_v1.json`, supprime `fix_dart/` et
+  `koach_params_d4.json`, régénère `kalis_bench/test/fixtures/km2/` (`generer_banc_km2.py`, moteur 1.0.5, vérité
+  corrigée) et met `_planReference` à la version courante de `kalis_plan` si elle change.
