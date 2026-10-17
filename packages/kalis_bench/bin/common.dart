@@ -489,6 +489,13 @@ void _write(String path, String text) {
 /// « 0 violation » mesuré sur les 34 profils et toutes les graines).
 const List<String> seasonProfileDirs = <String>['profiles', 'profiles_ks'];
 
+/// Profils des saisons (banc et profils ajoutés, `seasonProfileDirs`), en
+/// JSON brut : lus par les exports et les campagnes de Koach depuis 0.5.3
+/// (lot KR1 : couple `kalis_plan` 0.4.1 × Koach sur les 34 profils).
+List<Map<String, Object?>> readSeasonJsonAll() => <Map<String, Object?>>[
+  for (final dir in seasonProfileDirs) ...readSeasonJson(dir: dir),
+];
+
 /// Bases de la grille des profils incomplets du lot KS1c2 : le profil du
 /// constat de KS1A (`profiles_ks1c2`) et les sept profils du lot KS1
 /// (`profiles_ks`), dans l'ordre des noms de fichier.

@@ -12,7 +12,7 @@
 - **`kalis_bench` 0.5.4** (`etiquettes/kalis_bench-v0.5.4` ; 0.5.3 réservée à KR1, C17.22) : critère « aucun jour sans
   son principal » au rapport de structure (`principal_criteria.dart`), grille de 576 profils incomplets, profil du
   constat de KS1A (`profiles_ks1c2/ks1a_street_5050.json`), test `test/ks1c2_test.dart`.
-- `moteurs` : __MOTEURS__ (sur eae158b8, KS1c1) ; contrôle complet `claude/ci-cp-b` run __RUN__ vert.
+- `moteurs` : __MOTEURS__ (rebasé sur 597c10b7, KR1 : `kalis_adapt` 1.0.3, `kalis_bench` 0.5.3) ; contrôle complet `claude/ci-cp-b` run __RUN__ vert.
 - Rien dans `kalis_adapt`, `kalis_core` ni l'application.
 
 ## 2. Cause (test qui échoue avant)
@@ -72,14 +72,15 @@ note `reps_calibrate`), relevés de jambes, mobilité ; les cinq autres jours in
 | 0 jour typé sans exercice principal de son schéma, 34 profils | 0 écart de schéma ; 0 jour de gabarit typé sans principal | oui |
 | Même critère, grille des profils incomplets (576 profils : 8 bases × 6 états de repères × 3 questionnaires × 4 niveaux, tout l'horizon) | 0 (avant : 489) | oui |
 | Aucun recul sur les critères tenus par KS1 et KS1c1 | squelettes des 34 profils identiques à 0.4.1 (signatures comparées) ; __STRUCTURE__ | oui |
-| 0 nouvelle violation de sécurité | programmes et saisons des 34 profils identiques à 0.4.1 ; grille : __GRILLE_SECU__ | __OK_SECU__ |
+| 0 nouvelle violation de sécurité | programmes créés des 34 profils identiques à 0.4.1 ; saisons racontées (graine 0, modèle B, tous les scénarios) : `SECURITE.md` identique à 0.4.1 (banc 0, profils ajoutés 2 — les deux de KS1c1, cause dans `kalis_adapt`) ; seules 4 saisons « douleur à l'épaule » changent (`street_12`, `ks_01`, `ks_03`, `ks_04` : jours de poussée servis autrement) ; campagne des saisons sur toutes les graines : __CAMPAGNE__ ; grille : __GRILLE_SECU__ | __OK_SECU__ |
 | Relecture indépendante du code (sous-agent Opus) | 0 bloquant ; 4 majeurs et 10 mineurs traités (§ 5) | oui |
 
 Lecture du critère : un exercice porteur est un emplacement principal, secondaire ou de figure du schéma (le contrat
 ne porte pas la méthode). Les gabarits d'avant 0.4.0, figés par le critère d'identité (KS1 : 51 séances), écrivent des
 jours de volume en secondaires : ils portent tous leurs schémas et sont comptés à part (« jours figés sans emplacement
 principal », __FIGES__). Non-ressemblance aux références : programmes des 34 profils identiques à 0.4.1, mesure de KS1
-inchangée (clé non lue).
+inchangée (clé non lue). Saisons de référence de Koach (KR1, sept fixtures) : identiques hors la version du moteur
+(`km2_banc_test.dart`, version ramenée à 0.4.1 pour la comparaison ; données de `kalis_adapt` non touchées).
 
 ## 5. Relecture indépendante (sous-agent Opus)
 

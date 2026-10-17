@@ -400,14 +400,28 @@ def securite_saison(saison, infos, tour, pol):
                                                                         blocs_s)
         out[vue] = cl
         out[vue + '_exemples'] = ex
+    # Lot KR1 (rapporté, hors critère 7) : saison RÉALISÉE — séances faites
+    # telles que servies (tests comptés pour leurs tentatives faites),
+    # séances manquées vidées ; constats classés contre le plan initial,
+    # sans reclassement « retour à l'écrit » (ce que l'athlète a fait).
+    blocs_r = vider_manquees(saison, tour, blocs_servis_prescrits(saison, tour, True))
+    real = sb.constats_saison(saison, infos, blocs=blocs_r)
+    cl, ex = classer_constats(initial, real)
+    out['realise'] = cl
+    out['realise_exemples'] = ex
+    # Contrefactuel apparié (relecture KR1, M2) : le plan écrit de
+    # `kalis_plan` seul avec les MÊMES séances manquées vidées ; ce qui reste
+    # « introduit » ou « aggravé » vient de ce que Koach a servi, pas de la
+    # règle de rampe appliquée à une semaine incomplète.
+    cf = sb.constats_saison(saison, infos, blocs=vider_manquees(saison, tour, saison['blocks']))
+    cl, ex = classer_constats(cf, real)
+    out['realise_apparie'] = cl
+    out['realise_apparie_exemples'] = ex
     return out
 
 
-def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
-    """{code: n} des constats de [serv] absents du plan initial (même clé)
-    qui disparaissent quand chaque séance manquée de [blocs_s] est vidée
-    (diagnostic : le volume écrit d'une séance manquée compte dans la vue
-    servie ; Koach ne le sert pas et ne peut que le réserver)."""
+def vider_manquees(saison, tour, blocs_s):
+    """Copie de [blocs_s] où chaque séance manquée (non servie) est vidée."""
     faites = set((g, bi, wb, di) for (g, bi, wb, di, items) in tour.servi)
     vide = copy.deepcopy(blocs_s)
     for (g, bi, wb, di, sim_day) in saison['sessions']:
@@ -418,6 +432,15 @@ def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
                 for d in w['days']:
                     if d['dayIndex'] == di:
                         d['items'] = []
+    return vide
+
+
+def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
+    """{code: n} des constats de [serv] absents du plan initial (même clé)
+    qui disparaissent quand chaque séance manquée de [blocs_s] est vidée
+    (diagnostic : le volume écrit d'une séance manquée compte dans la vue
+    servie ; Koach ne le sert pas et ne peut que le réserver)."""
+    vide = vider_manquees(saison, tour, blocs_s)
     cles_ini = set(_cle_constat(c) for c in initial)
     restent = set(_cle_constat(c) for c in sb.constats_saison(saison, infos, blocs=vide))
     out = {}
@@ -443,7 +466,13 @@ def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s):
     semaines = sorted({c.get('week') for c in serv if c.get('week') is not None})
     position = {}
     g = 0
-    for bi, b in enumerate(saison['blocks']):
+    # Lot KR1 : semaines SERVIES de chaque bloc (un bloc interrompu par une
+    # re-planification — échéance avancée, changement de discipline — est
+    # tronqué par `blockWeeks`, comme le validateur) ; sans cela, l'indice de
+    # semaine de la saison pointait sur une semaine écrite non servie après
+    # le premier bloc interrompu, et un « retour à l'écrit » restait classé
+    # « introduit » (9 constats sur 90 600 saisons, mesuré au lot KR1).
+    for bi, b in enumerate(sb.blocs_servis(saison['blocks'], saison.get('blockWeeks'))):
         for w in b['pass2']['weeks']:
             position[g] = (bi, w['weekIndex'])
             g += 1

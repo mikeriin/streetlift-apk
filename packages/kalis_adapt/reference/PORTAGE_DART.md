@@ -161,5 +161,16 @@ Liste exacte : `CHANGEMENTS_1_0_3.md` (section H : fichiers Dart concernés). Po
   tirages du jumeau avec κ > 1) : fixtures complémentaires `kalis_adapt/test/fixtures/km2c2/` produites par la
   référence sans la modifier (`generer_km2c2.py`). Note : `fixtures/generer.py`, `tirage_intermediaire` (aide au
   portage, non lue par les tests Dart) n'applique pas κ ; le générateur de KM2c2 en a une variante qui l'applique.
-  Le banc Dart compare la référence sur les saisons figées (`--saisons-figees`, `kalis_bench` : la saison vivante de
-  `kalis_plan` 0.4.x n'est plus celle que lit Python).
+  Le banc Dart comparait alors la référence sur les saisons figées (`--saisons-figees`) : la saison vivante de
+  `kalis_plan` 0.4.x n'était plus celle que lisait Python (régénérée au lot KR1, ci-dessous).
+
+## Delta 1.0.3 → 1.0.4 (lot KR1, `kalis_adapt` 1.0.3, 16/10/2026)
+
+- `modele.dart` : `elargir(facteur)` lit d'abord, pour chaque composante de `variancesAPriori()` (qualités `th + q`,
+  puis `pistes[e].idx` dans l'ordre de `ordre`), `ri = !(v > 0) ? √facteur : min(√facteur ; max(1 ; √(v0 / v)))` sur
+  la diagonale d'avant, puis multiplie ligne puis colonne, composante par composante (même ordre que Python) ;
+  `variancesAPriori()` : `theta_sd²` (via `pw(x, 2)`), puis pour chaque piste `max(sd·sd − Σ v_q²·theta_sd² ;
+  pw(0,5·sd, 2))`, `sd` lu comme dans `piste` (`tenue` sur `reps_sd`). La branche `alt` n'est pas touchée.
+- Paramètres : aucune valeur changée ; version `1.0.4-ref.1`, asset `koach_params_1_0_4.json`.
+- Données de référence régénérées sur `kalis_plan` 0.4.1 (34 profils) : la saison vivante du banc est de nouveau celle
+  que lit Python (`km2_banc_test.dart`, égalité stricte) ; `--saisons-figees` relit `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/reference/`.

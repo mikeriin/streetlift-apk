@@ -1,5 +1,28 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.3
+
+Lot KR1 (DECISIONS_CP.md C17.17.3, C17.18 : Koach sur `kalis_plan` 0.4.1, campagne du couple) : **portage Dart de
+la référence Koach 1.0.4** (`reference/CHANGEMENTS_1_0_4.md`), à l'identique. API, schéma du journal, façade et
+valeurs des paramètres inchangés (une application intégrée sur 1.0.x monte de version et remplace l'asset de
+paramètres).
+
+- **Élargissement plafonné à l'a priori** (`modele.dart`, `Modele.elargir`, `Modele.variancesAPriori`, contrat
+  § 4.4) : la réponse « rien de spécial » au diagnostic multiplie la variance de chaque composante de capacité par le
+  facteur, sans jamais dépasser son a priori de population (variance nouvelle = min(facteur·v ; max(v ; v0)),
+  P ← D P D). Avant : réponses répétées sans borne (écart-type de 20 en ln, `NaN` dans `Seances._cibleTenue`, 8
+  saisons plantées de `ks_test_ppl6` sur la campagne du couple, lot KR1).
+- **Paramètres** : asset `assets/koach/koach_params_1_0_4.json` (`1.0.4-ref.1`, 338 clés, mêmes valeurs, SHA-256
+  `2d023854…9016`) à la place de `koach_params_1_0_3.json`.
+- **Référence** (`reference/`) : moteur 1.0.4 ; données de référence régénérées sur `kalis_plan` 0.4.1 et étendues
+  aux 34 profils (saisons figées sur 0.3.1 gardées dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/`) ;
+  campagne : vues « réalisée » et « réalisée appariée » de la sécurité (séances manquées vidées, rapportées), classement
+  « retour à l'écrit » corrigé après un bloc interrompu ; fixtures régénérées ; `tests/test_kr1_violations.py` :
+  mécanismes des violations restantes du couple sur cent graines (59 poussées, 4 aggravations : conduite sous
+  douleur, non corrigée ici, `pipeline/cp/livraisons/LIVRAISON_KR1.md`).
+- **Tests** : parité sur les 15 fixtures régénérées et les 3 complémentaires (`test/fixtures/km2c2/`, régénérées),
+  traces comprises ; `test/koach_elargir_test.dart` (plafond, comportement inchangé sous l'a priori).
+
 ## 1.0.2
 
 Lot KM2c2 (KM2 correction 2, DECISIONS_CP.md C13.13.2, C17.13) : **portage Dart de la référence Koach 1.0.3**

@@ -237,7 +237,7 @@ List<String> _lireProfils(String arg, List<String> tous) {
 
 Map<String, Map<String, Object?>> _profilsBruts() =>
     <String, Map<String, Object?>>{
-      for (final j in readSeasonJson()) j['key']! as String: j,
+      for (final j in readSeasonJsonAll()) j['key']! as String: j,
     };
 
 List<String> _scenariosDe(Map<String, Object?> json) => <String>[

@@ -3,7 +3,7 @@
 ## 0.5.4 — 17/10/2026 (lot KS1c2)
 
 Mesure du critère « aucun jour sans son principal » du lot KS1c2 (`pipeline/cp/prompts/KS1c2.txt`), pour `kalis_plan`
-0.4.2 ; sur 0.5.2 (lot KS1c1). La version 0.5.3 est réservée au lot KR1 (C17.22). Critères, profils, attentes et
+0.4.2 ; sur 0.5.3 (lot KR1). Critères, profils, attentes et
 grilles d'avant inchangés.
 
 - **Critère** (`lib/src/principal_criteria.dart`) : écarts d'un jour typé (`schéma <s>`, `corps entier`, `figure`,
@@ -15,6 +15,36 @@ grilles d'avant inchangés.
 - **Rapport de structure** (`runStructureBench`, `structureReport`) : lignes KS1c2 sur les 34 profils et sur la grille
   (tout l'horizon), liste des écarts, objet `principal` de `structure.json`.
 - **Test** `test/ks1c2_test.dart`.
+- `test/km2_banc_test.dart` (lot KR1) : la saison vivante est comparée aux saisons de référence de Koach (écrites par
+  `kalis_plan` 0.4.1) la version du moteur (`engineVersion`) ramenée à 0.4.1 ; tout le reste à l'égalité stricte
+  (identique sur les sept fixtures avec `kalis_plan` 0.4.2).
+
+## 0.5.3 — 16/10/2026 (lot KR1)
+
+Couple `kalis_plan` 0.4.1 × Koach 1.0.4 (`kalis_adapt` 1.0.3) mesuré tel qu'il sera servi
+(`pipeline/cp/prompts/KR1.txt`, DECISIONS_CP.md C17.17.3) ; sur 0.5.2 (lot KS1c1). Critères, profils, attentes et
+grilles inchangés.
+
+- **Koach sur les 34 profils** : les exports de la référence (`bin/km1.dart`), la campagne (`bin/km2.dart`) et le
+  banc adversarial lisent les profils du banc et ceux du lot KS1 (`readSeasonJsonAll`, `seasonProfileDirs`).
+- **Données de référence de Koach régénérées** sur `kalis_plan` 0.4.1 (`kalis_adapt/reference/donnees/reference/`,
+  `temoin/`) : la saison vivante (`kmReferenceSeason`) leur est identique ; `test/km2_banc_test.dart` le vérifie à
+  l'égalité stricte (avant : squelette et calendrier seulement) ; fixture `ks_test_ppl6`, séances manquées
+  (`test/fixtures/km2/`). `--saisons-figees` relit les saisons figées sur 0.3.1 (`docs/data/kr1/saisons_figees_0_3_1/`, sortis de `kalis_adapt` que l'application copie).
+- **Sécurité de la saison réalisée** (`kmSecuriteSaison`, `kmViderManquees`) : vues `realise` (séances faites
+  telles que servies, tests comptés pour leurs tentatives faites, séances manquées vidées ; constats classés contre
+  le plan initial) et `realise_apparie` (même saison classée contre le plan écrit aux mêmes séances manquées
+  vidées : ce que Koach a servi au-delà du plan). Publiées par saison dans les parts de campagne et lues par
+  `tool/kr1_securite.py` ; le critère 7 (`kmCritereSecurite`) est inchangé et ne les agrège pas. Parité Python
+  (`campagne.securite_saison`) vérifiée par `test/km2_banc_test.dart` sur les sept saisons du banc (clé `securite`
+  des fixtures).
+- **Retour à l'écrit après un bloc interrompu** (`kmRetirerRetoursALEcrit`, `campagne.retirer_retours_a_l_ecrit`) : l'indice
+  de semaine de la saison suit les semaines SERVIES (bloc interrompu tronqué par `blockWeeks`) ; avant, 9 hausses de
+  volume « retour à l'écrit » sur 90 600 saisons restaient classées « introduites » (critère 7). Fixture du banc
+  `autres_08`, changement de discipline, graine 87 ; test Python `test_retour_a_l_ecrit_apres_un_bloc_interrompu`.
+- **Outils** : `tool/kr1_securite.py` (violations par type, profil, scénario et modèle de vérité sur les parts de
+  campagne, cent graines ; extraction saison par saison pour le critère 5) ; `tool/kr1_comparer.py` (parité saison
+  par saison Dart / Python d'une campagne).
 
 ## 0.5.2 — 16/10/2026 (lot KS1c1)
 

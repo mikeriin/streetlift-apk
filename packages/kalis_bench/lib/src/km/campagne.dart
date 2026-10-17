@@ -970,15 +970,11 @@ Map<String, Object?> kmComptes(List<kc.Json> found) {
   return out;
 }
 
-/// {code: n} des constats de [serv] absents du plan initial qui
-/// disparaissent quand chaque séance manquée de [blocsS] est vidée
-/// (diagnostic, `campagne.constats_dus_aux_manquees`).
-Map<String, Object?> kmConstatsDusAuxManquees(
+/// Copie de [blocsS] où chaque séance manquée (non servie) est vidée
+/// (`campagne.vider_manquees`).
+List<Object?> kmViderManquees(
   kc.Json saison,
-  KmConstats constats,
   KmTour tour,
-  List<kc.Json> initial,
-  List<kc.Json> serv,
   List<Object?> blocsS,
 ) {
   final faites = <(int, int, int, int)>{
@@ -1006,6 +1002,21 @@ Map<String, Object?> kmConstatsDusAuxManquees(
       }
     }
   }
+  return vide;
+}
+
+/// {code: n} des constats de [serv] absents du plan initial qui
+/// disparaissent quand chaque séance manquée de [blocsS] est vidée
+/// (diagnostic, `campagne.constats_dus_aux_manquees`).
+Map<String, Object?> kmConstatsDusAuxManquees(
+  kc.Json saison,
+  KmConstats constats,
+  KmTour tour,
+  List<kc.Json> initial,
+  List<kc.Json> serv,
+  List<Object?> blocsS,
+) {
+  final vide = kmViderManquees(saison, tour, blocsS);
   final clesIni = <(Object?, Object?, Object?, Object?)>{
     for (final c in initial) kmCleConstat(c),
   };
@@ -1042,8 +1053,21 @@ Map<String, Object?> kmConstatsDusAuxManquees(
   final position = <int, (int, Object?)>{};
   var g = 0;
   final blocsSaison = kc.jl(saison['blocks']);
+  // Lot KR1 : semaines servies de chaque bloc (bloc interrompu tronqué par
+  // `blockWeeks`, comme le validateur et `securite_banc.blocs_servis`).
+  final bw = saison['blockWeeks'] == null
+      ? null
+      : <int>[for (final x in kc.jl(saison['blockWeeks'])) kc.ent(x)];
   for (var bi = 0; bi < blocsSaison.length; bi++) {
-    for (final w in kc.jl(kc.jm(kc.jm(blocsSaison[bi])['pass2'])['weeks'])) {
+    final semaines = kc.jl(kc.jm(kc.jm(blocsSaison[bi])['pass2'])['weeks']);
+    var n = semaines.length;
+    if (bw != null && bw.isNotEmpty && bi + 1 < bw.length) {
+      final servi = bw[bi + 1] - bw[bi];
+      if (servi >= 1 && servi < n) {
+        n = servi;
+      }
+    }
+    for (final w in semaines.take(n)) {
       position[g] = (bi, kc.jm(w)['weekIndex']);
       g += 1;
     }
@@ -1138,6 +1162,27 @@ Map<String, Object?> kmSecuriteSaison(
     out[vue] = cl;
     out['${vue}_exemples'] = ex;
   }
+  // Lot KR1 (rapporté, hors critère 7) : saison réalisée — séances faites
+  // telles que servies (tests comptés pour leurs tentatives faites), séances
+  // manquées vidées ; constats classés contre le plan initial, sans
+  // reclassement « retour à l'écrit » (ce que l'athlète a fait).
+  final blocsR = kmViderManquees(
+    saison,
+    tour,
+    kmBlocsServisPrescrits(saison, tour, testsFaits: true),
+  );
+  final reel = constats(blocsR);
+  final (clR, exR) = kmClasserConstats(initial, reel);
+  out['realise'] = clR;
+  out['realise_exemples'] = exR;
+  // Contrefactuel apparié (relecture KR1, M2) : le plan écrit de
+  // `kalis_plan` seul avec les mêmes séances manquées vidées ; ce qui reste
+  // « introduit » ou « aggravé » vient de ce que Koach a servi, pas de la
+  // règle de rampe appliquée à une semaine incomplète.
+  final cf = constats(kmViderManquees(saison, tour, kc.jl(saison['blocks'])));
+  final (clA, exA) = kmClasserConstats(cf, reel);
+  out['realise_apparie'] = clA;
+  out['realise_apparie_exemples'] = exA;
   return out;
 }
 

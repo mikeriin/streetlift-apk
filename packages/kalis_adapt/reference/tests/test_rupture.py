@@ -284,9 +284,54 @@ def test_reponse_rien_elargit_et_reinitialise():
     a = s.repondre(k, {'cause': 'rien'})
     f = params()['rupture']['elargissement_rien_de_special']
     assert a == {'action': 'elargir', 'facteur': f}
-    assert abs(float(k.modele.P[t.idx, t.idx]) - f * avant) < 1e-12 * f * avant
+    # 1.0.4 : variance nouvelle = min(f · v ; max(v ; v0)), v0 = a priori.
+    v0 = dict(k.modele.variances_a_priori())[t.idx]
+    attendu = min(f * avant, max(avant, v0))
+    assert abs(float(k.modele.P[t.idx, t.idx]) - attendu) < 1e-12 * attendu
     assert s.bocpd.n == 0 and s.etat()['p_rupture'] == 0.0
     assert not s.etat()['hors_modele']
+
+
+def _modele_observe():
+    """Koach dont l'exercice EX a été observé (variance bien sous l'a priori)."""
+    k, s = koach_minimal()
+    t = k.modele.piste(EX)
+    for j in range(6):
+        k.modele.P[t.idx, :] *= 0.3
+        k.modele.P[:, t.idx] *= 0.3
+    return k, s, t
+
+
+def test_elargir_multiplie_sous_l_a_priori():
+    """1.0.4 : loin sous l'a priori, la variance est bien multipliée par le
+    facteur (comportement de 1.0.3), et P reste symétrique."""
+    k, s, t = _modele_observe()
+    avant = float(k.modele.P[t.idx, t.idx])
+    v0 = dict(k.modele.variances_a_priori())[t.idx]
+    assert 4.0 * avant < v0
+    k.modele.elargir(4.0)
+    assert abs(float(k.modele.P[t.idx, t.idx]) - 4.0 * avant) < 1e-12 * 4.0 * avant
+    assert float(abs(k.modele.P - k.modele.P.T).max()) == 0.0
+
+
+def test_elargir_repete_plafonne_a_l_a_priori():
+    """1.0.4 (lot KR1) : des réponses « rien de spécial » répétées ne rendent
+    jamais une composante plus incertaine que son a priori (avant : variance
+    × 4 à chaque réponse, écart-type de 20 en ln et dépassement de capacité
+    sur une saison de quarante semaines) ; l'écart-type de la capacité reste
+    borné et P semi-définie positive."""
+    k, s, t = _modele_observe()
+    _, sd0 = k.modele.capacite(EX)
+    v0s = dict(k.modele.variances_a_priori())
+    for _ in range(30):
+        k.modele.elargir(params()['rupture']['elargissement_rien_de_special'])
+    for i, v0 in v0s.items():
+        assert float(k.modele.P[i, i]) <= v0 * (1 + 1e-12)
+    mu, sd = k.modele.capacite(EX)
+    assert math.isfinite(mu) and sd < 1.0 and sd > sd0
+    import numpy as np
+    n = k.modele.n
+    assert float(np.linalg.eigvalsh(k.modele.P[:n, :n]).min()) > -1e-12
 
 
 def test_reponse_inconnue():
@@ -456,3 +501,38 @@ def test_import_rejoue_depuis_le_journal():
     assert k.journal[-1]['type'] == 'parametres'
     k2 = rejouer(params(), k.fiches, k.profil, json.loads(json.dumps(k.journal)))
     assert k2.params['mesure']['bruit_test'] == k.params['mesure']['bruit_test']
+
+
+def test_elargir_sur_un_a_posteriori_reel():
+    """1.0.4 (relecture KR1, M1) : sur un a posteriori réel (six semaines
+    simulées, covariances croisées entre qualités et écarts), une réponse
+    « rien de spécial » ne rend aucune composante plus incertaine que
+    max(v ; v0), garde P symétrique semi-définie positive et toute capacité
+    finie ; le facteur sur la variance d'une capacité n'est plus exactement
+    le facteur (élargissement par composante) : il reste ≥ 0,95 (mesuré :
+    0,987 au plus bas sur les saisons de quarante semaines) et il est publié
+    dans CHANGEMENTS_1_0_4.md § A."""
+    import numpy as np
+    from banc import campagne as ca, donnees, meneur
+    from banc import criteres_moteur as cm
+    opts = dict(ca.options_de([]), sans_planificateur=False, trajectoires=40)
+    ca.appliquer_parametres(opts)
+    saison = cm._saison('street_07_avance_streetlifting_competition', 'reference', 6)
+    pol = ca.politique(opts, 0)
+    meneur.simuler(saison, donnees.catalogue_infos(), pol, 'a', 0)
+    m = pol.koach.modele
+    avant = {e: m.capacite(e)[1] ** 2 for e in m.ordre}
+    diag = {i: float(m.P[i, i]) for i, _ in m.variances_a_priori()}
+    v0 = dict(m.variances_a_priori())
+    m.elargir(params()['rupture']['elargissement_rien_de_special'])
+    for i, v in diag.items():
+        assert float(m.P[i, i]) <= max(v, v0[i]) * (1 + 1e-12)
+    n = m.n
+    assert float(abs(m.P[:n, :n] - m.P[:n, :n].T).max()) == 0.0
+    assert float(np.linalg.eigvalsh(m.P[:n, :n]).min()) > -1e-12
+    rapports = []
+    for e in m.ordre:
+        mu, sd = m.capacite(e)
+        assert math.isfinite(mu) and math.isfinite(sd)
+        rapports.append(sd ** 2 / avant[e])
+    assert len(rapports) > 5 and min(rapports) >= 0.95
