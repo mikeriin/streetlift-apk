@@ -72,8 +72,9 @@ committer les fichiers déchiffrés.
 - `8×3 · E2MOM`, `6×2 · E90s`, `12×6 · EMOM` : départ chronométré, une ligne
   par série (PR1). Une ligne dont le nom contient « enchaîné » rejoint le
   groupe de la ligne précédente. Une page de plusieurs exercices enchaînés
-  affiche l'ordre tour par tour (A1, B1, A2…) et amène l'exercice suivant à
-  l'écran après chaque série (PR3).
+  tient dans une seule carte (PR4) : la prescription de chaque exercice
+  (A, B…), puis les séries tour par tour (A·S1, B·S1, A·S2…), chacune avec
+  sa coche et ses flammes ; la saisie ne change pas.
 - `EMOM 12 min × 18 reps par minute` · `EMOM 20 min · 10 reps, +1 rep/min
   jusqu'à l'échec` (EMOM montant, PR1).
 - `1×max puis 2×max (15 s intra) · rest-pause` (PR1).

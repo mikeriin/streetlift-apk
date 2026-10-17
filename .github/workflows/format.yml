@@ -1,0 +1,44 @@
+# PR4 : formatage à distance. Un push sur une branche `claude/fmt-*` passe
+# `dart format` (même Flutter que la CI) sur lib et test, puis pousse le
+# résultat sur la même branche. Sert aux sessions sans SDK Dart local.
+name: Formatage à distance
+
+on:
+  push:
+    branches: ["claude/fmt-*"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalis-format-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.5'
+          channel: stable
+          cache: true
+      # Sans package_config, dart format prend la dernière version du
+      # langage et reformate tout le dépôt : mêmes dépendances que la CI.
+      - name: Dépendances
+        run: flutter pub get --enforce-lockfile
+      - name: Formater lib et test
+        run: dart format lib test
+      - name: Pousser le résultat
+        run: |
+          git config user.name "kalis-format"
+          git config user.email "kalis-format@users.noreply.github.com"
+          if git diff --quiet -- lib test; then
+            echo "Déjà formaté."
+            exit 0
+          fi
+          git add lib test
+          git commit -m "Formatage automatique (dart format)"
+          git push
