@@ -575,3 +575,30 @@ def test_le_vrai_test_reste_possible_sous_la_rampe_de_retour():
     s._vrai_test = vt
     seance(k, 51, [dips('d', 6, ex=ex)])
     assert SH in s.budget_semaine and SH in s.retour_zone and appels == [ex]
+
+
+def test_la_rampe_de_retour_est_suspendue_en_semaine_verrouillee():
+    """Une semaine verrouillée (affûtage, test, compétition…) n'ouvre ni
+    n'applique la rampe de retour : au retour d'une coupure en semaine de
+    compétition, l'écrit est servi (A6.1 seule) et, la coupure consommée,
+    aucune rampe ne s'ouvre ensuite (limite dite au contrat) ; une semaine
+    d'affûtage au milieu d'une rampe ouverte la suspend sans la fermer."""
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 10)])
+    manquees = [{'semaine': w, 'genre': 'accumulation', 'items': [dips('d', 10)]} for w in (4, 5)]
+    out = seance(k, 43, [dips('d', 10)], manquees=manquees, genre='competition')
+    assert not k.seances.retour_zone and SH not in k.seances.budget_semaine
+    assert expo(out) == 8  # A6.1 seule (semaine du retour)
+    assert expo(seance(k, 50, [dips('d', 10)])) == 8 and not k.seances.retour_zone   # A6.1 (fenêtre de 7 jours)
+    assert expo(seance(k, 57, [dips('d', 10)])) == 10 and not k.seances.retour_zone
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 10)])
+    assert expo(seance(k, 43, [dips('d', 10)], manquees=manquees)) == 5
+    out = seance(k, 50, [dips('d', 10)], genre='taper')
+    assert SH in k.seances.retour_zone and SH not in k.seances.budget_semaine and expo(out) == 8  # A6.1 seule
+    # Reprise de la rampe : référence = dernière semaine de charge (5), pas
+    # l'affûtage (allégé, 8) → 6.
+    assert expo(seance(k, 57, [dips('d', 10)])) == 6 and SH in k.seances.retour_zone
+
