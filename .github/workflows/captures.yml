@@ -36,7 +36,13 @@ jobs:
           TZ: Europe/Paris
         run: |
           files="$(grep -v '^#' tools/shots.txt | xargs)"
-          flutter test --no-pub --dart-define=KALIS_CAPTURE=true $files 2>&1 | tail -n 60 || true
+          flutter test --no-pub --dart-define=KALIS_CAPTURE=true $files > shots.log 2>&1 || true
+          # Fin du journal en annotation (lisible sans télécharger les
+          # journaux).
+          out="$( { grep -E -A25 'EXCEPTION CAUGHT|Error:|error:' shots.log | head -n 80; tail -n 15 shots.log; ls validation/UI 2>/dev/null | head -n 40; } )"
+          out="${out//'%'/'%25'}"
+          out="${out//$'\n'/'%0A'}"
+          echo "::notice title=Captures::${out}"
       - name: Pousser les images
         run: |
           git config user.name "kalis-shots"
