@@ -13,8 +13,6 @@ import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
-import 'phone_test_support.dart' show scrollToAction;
-
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -91,8 +89,8 @@ void main() {
   // S3·J1 : P0-84 muscle-up lesté 4×4 RIR 3 (première page).
   const mu = 'P0-84';
 
-  testWidgets('coche : série validée avec la flamme visée ; correction sur '
-      'la ligne ; aucune suggestion de l’ancien Koach', (tester) async {
+  testWidgets('coche : série validée avec la flamme visée ; correction en '
+      'popup ; aucune suggestion de l’ancien Koach', (tester) async {
     phone(tester, const Size(390, 844));
     final semantics = tester.ensureSemantics();
     await tester.pumpWidget(page(SessionScreen(week: w3, day: d1)));
@@ -102,11 +100,20 @@ void main() {
     expect(find.byKey(const ValueKey('session-koach-page')), findsNothing);
     await tester.tap(find.byTooltip('Valider la série 1').first);
     await tester.pumpAndSettle();
-    // La coche valide la série avec la flamme visée (RIR 3 → 5) ; la ligne
-    // des 10 positions s'ouvre sous la série.
+    // La coche valide la série avec la flamme visée (RIR 3 → 5) ; PR5 : la
+    // flamme remplace la coche, un appui ouvre les 10 positions en popup.
     final log = store.logs['S3-J1']!.ex[mu]!;
     expect(log.sets[0].done, isTrue);
     expect(log.sets[0].flames, 5);
+    Future<void> openFlames() async {
+      final f = find.byKey(const ValueKey('set-flame-1')).first;
+      await tester.ensureVisible(f);
+      await tester.pumpAndSettle();
+      await tester.tap(f);
+      await tester.pumpAndSettle();
+    }
+
+    await openFlames();
     expect(find.byKey(const ValueKey('flame-track-1')), findsOneWidget);
     for (var f = 1; f <= 10; f++) {
       expect(find.byKey(ValueKey('flame-pos-$f')), findsOneWidget);
@@ -115,18 +122,21 @@ void main() {
     // Repères sous la ligne : le mot de la flamme 1 et de la flamme 10.
     expect(find.text('1 · léger'), findsOneWidget);
     expect(find.text('échec · 10'), findsOneWidget);
-    await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-1')));
-    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('flame-pos-1')));
     await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('flame-popup')), findsNothing);
     expect(log.sets[0].done, isTrue);
     expect(log.sets[0].flames, 1);
     expect(log.sets[0].effort, 5);
+    await openFlames();
     expect(find.text('Léger · RIR 5 et plus'), findsOneWidget);
     expect(
       find.bySemanticsLabel(RegExp(r'^Difficulté de la série 1')),
       findsOneWidget,
     );
+    await tester.tapAt(const Offset(4, 4));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('flame-popup')), findsNothing);
     // Rien de l'ancien Koach : ni suggestion, ni prescription écrite.
     expect(find.byKey(const ValueKey('koach-apply')), findsNothing);
     expect(find.byKey(const ValueKey('koach-suggestion')), findsNothing);
@@ -148,22 +158,34 @@ void main() {
     await tester.pumpAndSettle();
     final log = store.logs['S3-J1']!.ex[mu]!;
     expect(log.sets[0].done, isTrue);
-    await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-3')));
-    await tester.pumpAndSettle();
+    // PR5 : la note et le menu de la série dans la popup de la flamme.
+    Future<void> openFlames() async {
+      final f = find.byKey(const ValueKey('set-flame-1')).first;
+      await tester.ensureVisible(f);
+      await tester.pumpAndSettle();
+      await tester.tap(f);
+      await tester.pumpAndSettle();
+    }
+
+    await openFlames();
     await tester.tap(find.byKey(const ValueKey('flame-pos-3')));
     await tester.pumpAndSettle();
     expect(log.sets[0].flames, 3);
-    await scrollToAction(tester, find.byKey(const ValueKey('flame-menu')));
+    await openFlames();
     await tester.tap(find.byKey(const ValueKey('flame-menu')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('action-exclude')));
     await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('flame-popup')), findsNothing);
     expect(log.sets[0].excluded, isTrue);
     expect(log.sets[0].done, isTrue);
+    await openFlames();
     await tester.tap(find.byKey(const ValueKey('flame-menu')));
     await tester.pumpAndSettle();
     expect(find.text('Réintégrer la série'), findsOneWidget);
     await tester.tapAt(const Offset(10, 10));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(4, 4));
     await tester.pumpAndSettle();
     await tester.pumpWidget(const SizedBox());
     await tester.runAsync(() => store.flush());

@@ -11,6 +11,11 @@
 // feuille d'actions (C10, une action réversible, donc pas en `danger`) ;
 // « Je ne sais pas » en lien texte discret de 48 dp (C13) ; ligne résumée
 // sans troncature (C3). Le dessin de la flamme ([FlameIcon]) est inchangé.
+//
+// PR5 : la ligne des flammes passe en popup. Une série validée montre sa
+// flamme à la place de la coche ([FlameSetButton]) : un appui ouvre la
+// popup ([showFlamePopup]), la note est validée au lâcher et la popup se
+// ferme ; un appui long annule la validation de la série.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -118,8 +123,13 @@ class FlameTrack extends StatefulWidget {
 
   /// Première notation : l'échelle expliquée sous la ligne.
   final bool intro;
+
+  /// PR5 : appelé à chaque lâcher (toucher, fin de glissement), même sur
+  /// la note déjà donnée : la popup se ferme.
+  final VoidCallback? onReleased;
   const FlameTrack({
     super.key,
+    this.onReleased,
     required this.setLabel,
     required this.value,
     required this.onChanged,
@@ -151,6 +161,7 @@ class _FlameTrackState extends State<FlameTrack> {
   void _commit(int f) {
     setState(() => _drag = null);
     if (f != widget.value || widget.unknown) widget.onChanged(f);
+    widget.onReleased?.call();
   }
 
   void _dragTo(double dx, double width) {
@@ -400,6 +411,160 @@ class _FlameTrackState extends State<FlameTrack> {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// PR5 : note d'une série validée en popup : la ligne des flammes (même
+/// curseur), validée au lâcher ; « Je ne sais pas » et « Écarter la
+/// série » ferment aussi la popup.
+Future<void> showFlamePopup(
+  BuildContext context, {
+  required String setLabel,
+  required int? value,
+  required ValueChanged<int> onChanged,
+  required VoidCallback onUnknown,
+  required VoidCallback onToggleExcluded,
+  bool unknown = false,
+  bool excluded = false,
+  bool intro = false,
+}) => showDialog<void>(
+  context: context,
+  builder: (ctx) {
+    final k = KTokens.of(ctx);
+    var closed = false;
+    void close() {
+      if (closed) return;
+      closed = true;
+      Navigator.of(ctx).pop();
+    }
+
+    return Dialog(
+      key: const ValueKey('flame-popup'),
+      backgroundColor: k.surface,
+      shape: KRadius.cardShape,
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: KSpacing.s16,
+        vertical: KSpacing.s24,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(
+          KSpacing.s16,
+          KSpacing.s16,
+          KSpacing.s8,
+          KSpacing.s8,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Semantics(
+                header: true,
+                child: Text(
+                  'Série $setLabel',
+                  style: KType.titreCarte.copyWith(color: k.texte),
+                ),
+              ),
+              const SizedBox(height: KSpacing.s8),
+              FlameTrack(
+                setLabel: setLabel,
+                value: value,
+                unknown: unknown,
+                excluded: excluded,
+                intro: intro,
+                onChanged: onChanged,
+                onReleased: close,
+                onUnknown: () {
+                  onUnknown();
+                  close();
+                },
+                onToggleExcluded: () {
+                  onToggleExcluded();
+                  close();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  },
+);
+
+/// PR5 : bouton d'une série validée, à la place de la coche : sa flamme
+/// (sinon « ? », sans note, ou ⊘, série écartée). Un appui : la note en
+/// popup ; un appui long : la validation est annulée.
+class FlameSetButton extends StatelessWidget {
+  final String setLabel;
+  final int? value;
+  final bool unknown;
+  final bool excluded;
+  final VoidCallback onTap;
+  final VoidCallback onLongPress;
+  const FlameSetButton({
+    super.key,
+    required this.setLabel,
+    required this.value,
+    required this.onTap,
+    required this.onLongPress,
+    this.unknown = false,
+    this.excluded = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final f = value;
+    final note = excluded
+        ? 'série écartée'
+        : f != null
+        ? flameValueText(f)
+        : unknown
+        ? 'sans note'
+        : 'pas encore notée';
+    return Semantics(
+      button: true,
+      label: 'Série $setLabel validée, $note',
+      onTapHint: 'noter la série',
+      onLongPressHint: 'annuler la validation',
+      excludeSemantics: true,
+      child: Material(
+        color: k.validation.withValues(alpha: .14),
+        shape: KRadius.pill,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          onLongPress: onLongPress,
+          child: SizedBox(
+            width: KSize.target,
+            height: KDensity.field(KSize.target),
+            child: Center(
+              child: excluded
+                  ? Icon(
+                      Icons.block_rounded,
+                      size: KSize.iconSmall,
+                      color: k.texte2,
+                    )
+                  : f != null
+                  ? FlameIcon(
+                      f,
+                      key: ValueKey('set-flame-value-$setLabel-$f'),
+                      size: KSize.icon,
+                      semantics: false,
+                      centered: true,
+                    )
+                  : Icon(
+                      unknown
+                          ? Icons.help_outline
+                          : Icons.local_fire_department_outlined,
+                      size: KSize.icon,
+                      color: k.texte2,
+                    ),
+            ),
+          ),
+        ),
       ),
     );
   }

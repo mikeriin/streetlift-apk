@@ -156,17 +156,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(SessionHistoryScreen), findsNothing);
     expect(find.byType(SessionScreen), findsOneWidget);
-    // G9 correction 1 : exercice fini, séries résumées en une ligne ; un
-    // appui rouvre la série et ses champs.
-    final line = find.byKey(const ValueKey('set-summary-1'));
-    if (line.evaluate().isNotEmpty) {
-      // UI2 : carte d'exercice plus haute (tableau des séries à 48 dp) :
-      // la ligne est amenée à l'écran avant l'appui.
-      await tester.ensureVisible(line.first);
-      await tester.pumpAndSettle();
-      await tester.tap(line.first);
-      await tester.pumpAndSettle();
-    }
+    // PR5 : en séance, chaque série validée garde sa ligne et ses champs.
     expect(find.byType(EditableText), findsWidgets);
     expect(store.isDone(8, 4), isFalse);
     expect(log.finishedAt, _finished);

@@ -195,8 +195,10 @@ void main() {
     await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('exercise-card-merged')), findsOneWidget);
-    expect(find.text('Enchaîné, A'), findsOneWidget);
-    expect(find.text('Enchaîné, B'), findsOneWidget);
+    // PR5 : la lettre devant le nom, sans puce « Enchaîné ».
+    expect(find.textContaining(RegExp(r'^A · ')), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^B · ')), findsOneWidget);
+    expect(find.textContaining('Enchaîné'), findsNothing);
     double y(String id, int i) =>
         tester.getTopLeft(find.byKey(ValueKey('set-check-$id-$i'))).dy;
     // Ordre d'exécution : A·1, B·1, A·2, B·2, chacun avec sa coche.
@@ -385,13 +387,19 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('Valider la série 5'));
       await tester.pumpAndSettle();
-      // G9 correction 1 : la ligne des flammes s'ouvre sous la série.
-      expect(find.byKey(const ValueKey('flame-track-5')), findsOneWidget);
-      await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-7')));
+      // PR5 : la flamme remplace la coche ; un appui ouvre la note en
+      // popup, validée au lâcher.
+      final flame = find.byKey(const ValueKey('set-flame-5'));
+      expect(flame, findsOneWidget);
+      expect(tester.getSize(flame).height, greaterThanOrEqualTo(44));
+      await tester.tap(flame);
       await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('flame-track-5')), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('flame-pos-7')));
       await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('flame-popup')), findsNothing);
       expect(log.sets.last.done, isTrue);
+      expect(log.sets.last.flames, 7);
       expect(tester.takeException(), null);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();

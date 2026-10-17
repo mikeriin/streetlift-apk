@@ -880,24 +880,30 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// Problème de saisie affiché sous une série (KT-009) : (exercice, série).
   final Map<(int, int), SetCheck> _issues = {};
 
-  /// G9 correction 1 : série validée ouverte (ligne des flammes) par
-  /// exercice ; les autres séries validées sont résumées en une ligne. -1 :
-  /// aucune. Absente : la dernière validée tant que l'exercice n'est pas
-  /// fini (série n − 1 ouverte, n − 2 et avant résumées).
-  final Map<int, int> _openSet = {};
-
-  /// Première notation en flammes : l'échelle expliquée sous cette série.
+  /// Première notation en flammes : l'échelle expliquée dans la popup de
+  /// cette série (PR5).
   (int, int)? _introAt;
 
-  int _openOf(int k) {
-    final o = _openSet[k];
-    if (o != null) return o;
-    final sets = logs[k].sets;
-    if (!sets.any((s) => !s.done)) return -1;
-    for (var i = sets.length - 1; i >= 0; i--) {
-      if (sets[i].done) return i;
-    }
-    return -1;
+  /// PR5 : note de la série validée [i] en popup (même curseur), validée
+  /// au lâcher.
+  void _openFlames(int k, int i, String label) {
+    final s = logs[k].sets[i];
+    if (!s.done) return;
+    final intro = _introAt == (k, i);
+    _introAt = null;
+    unawaited(
+      showFlamePopup(
+        context,
+        setLabel: label,
+        value: flamesOf(s),
+        unknown: s.flamesUnknown,
+        excluded: s.excluded,
+        intro: intro,
+        onChanged: (f) => _setFlames(k, i, f),
+        onUnknown: () => _setFlames(k, i, null, unknown: true),
+        onToggleExcluded: () => _toggleExcluded(k, i),
+      ),
+    );
   }
 
   // ---- Flammes (G9, D5.3-D5.5) ----
@@ -948,8 +954,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final log = logs[k];
     final s = log.sets[i];
     // G9 correction 1 : saisie valide d'abord ; la coche valide la série
-    // avec la flamme visée déjà placée sur la ligne ouverte sous la série,
-    // où elle se corrige.
+    // avec la flamme visée déjà placée ; PR5 : elle se corrige d'un appui
+    // sur la flamme (popup).
     if (!s.done) {
       // CI1f : série notée par mini-séries : le total fait foi ; durée
       // notée en minutes (marquée pour le journal).
@@ -979,8 +985,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     setState(() {
       if (check.ok) {
         _issues.remove((k, i));
-        if (s.done) _openSet[k] = i;
-        if (!s.done && _openSet[k] == i) _openSet.remove(k);
       } else {
         _issues[(k, i)] = check;
       }
@@ -1263,11 +1267,19 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ? 'Test'
         : technique == null
         ? null
-        : ct.techniqueLabel(technique);
+        : ct.techniqueLabel(
+            technique,
+            every: it.technique?.intervalSeconds ?? 60,
+          );
+    // PR5 : départs chronométrés déjà dits par l'en-tête du groupe : pas
+    // de seconde ligne sur l'exercice.
+    final timedByGroup =
+        _group != null && technique == kc.SetTechniqueKind.emom;
     final lines = <String>[
-      if (label != null) '$label : ${ct.coachVolumeText(it)}',
+      if (label != null && !timedByGroup) '$label : ${ct.coachVolumeText(it)}',
       if (ct.coachIntensityText(it) case final t?) t,
-      if (ct.techniqueHint(it) case final t?) t,
+      if (!timedByGroup)
+        if (ct.techniqueHint(it) case final t?) t,
     ];
     final reasons = [...?block?.reasons, ...it.reasons];
     // CI1d (`kalis_adapt` 0.2.3) : le renvoi vers un professionnel n'est
@@ -1327,7 +1339,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       title: store.splitName(ex.name).$1,
       text: [...lines, ...pain, ...notes].join('\n\n'),
     );
-    final all = label != null
+    final all = label != null && !timedByGroup
         ? [
             for (final l in lines)
               l.startsWith('$label : ') ? l.substring(label.length + 3) : l,
@@ -1364,7 +1376,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (label != null)
+                if (label != null && !timedByGroup)
                   Text(
                     label,
                     key: ValueKey('coach-technique-${ex.id}'),
@@ -1648,21 +1660,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       KSpacing.s24 + KSpacing.s32,
     ),
     children: [
-      if (_group case final g?) ...[
-        _GroupCard(
-          group: g,
-          names: [for (final e in widget.exs) store.splitName(e.name).$1],
-          result: widget.readOnly
-              ? widget.history!.groups[g.groupId]
-              : store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId],
-          readOnly: widget.readOnly,
-          timer: widget.timer,
-          onResult: (r) {
-            store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] = r;
-            store.saveLogs(affectsProgression: false);
-            setState(() {});
-          },
-        ),
+      if (_group case final g? when !_merged) ...[
+        _groupCard(g),
         const SizedBox(height: KSpacing.cardGap),
       ],
       if (_merged)
@@ -1673,6 +1672,24 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           _block(k),
         ],
     ],
+  );
+
+  /// CI1f : en-tête du groupe (format, chrono, résultat) ; PR5 : [bare],
+  /// en tête de la carte commune.
+  Widget _groupCard(kc.GroupSpec g, {bool bare = false}) => _GroupCard(
+    bare: bare,
+    group: g,
+    names: [for (final e in widget.exs) store.splitName(e.name).$1],
+    result: widget.readOnly
+        ? widget.history!.groups[g.groupId]
+        : store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId],
+    readOnly: widget.readOnly,
+    timer: widget.timer,
+    onResult: (r) {
+      store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] = r;
+      store.saveLogs(affectsProgression: false);
+      setState(() {});
+    },
   );
 
   Widget _block(int k) {
@@ -1733,6 +1750,13 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // PR5 : l'en-tête du groupe (format, chrono, tours) ouvre la
+          // carte.
+          if (_group case final g?) ...[
+            const SizedBox(height: KSpacing.s8),
+            _groupCard(g, bare: true),
+            Divider(height: KSpacing.s16, color: t.filet),
+          ],
           for (var k = 0; k < parts.length; k++) ...[
             if (k > 0) Divider(height: KSpacing.s16, color: t.filet),
             KeyedSubtree(
@@ -1745,9 +1769,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           ],
           Divider(height: KSpacing.s16, color: t.filet),
           ...header,
-          for (var i = 0; i < rounds; i++)
+          // PR5 : un espace entre deux tours (A·1, B·1 | A·2, B·2…).
+          for (var i = 0; i < rounds; i++) ...[
+            if (i > 0) const SizedBox(height: KSpacing.s12),
             for (var k = 0; k < parts.length; k++)
               if (i < parts[k].count) ...parts[k].row(i),
+          ],
         ],
       ),
     );
@@ -1763,7 +1790,15 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final finalRest = !readOnly && sp.myo
         ? store.restAfterSet(ex, sp, log.sets.length - 1, log.sets.length)
         : null;
-    final (title, subtitle) = store.splitName(ex.name);
+    final (title, rawSubtitle) = store.splitName(ex.name);
+    // PR5 : pas de répétition sur la carte : « enchaîné » est dit par la
+    // carte commune, « lift principal » par le surtitre.
+    var subtitle = _merged
+        ? rawSubtitle
+              .replaceAll(RegExp(r',?\s*enchaîn\w*', caseSensitive: false), '')
+              .replaceAll(RegExp(r'^[\s,·]+|[\s,·]+$'), '')
+        : rawSubtitle;
+    if (ex.main && subtitle.toLowerCase() == 'lift principal') subtitle = '';
     final interval = ex.interval;
     final noLoad =
         sp.kind == 'duration' ||
@@ -1912,11 +1947,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (_merged)
-              Padding(
-                padding: const EdgeInsets.only(bottom: KSpacing.s8),
-                child: KChip('Enchaîné, ${String.fromCharCode(65 + k)}'),
-              ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1939,8 +1969,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                           ),
                         // C3 : jamais coupé ; C4 : capitales du titre
                         // par le jeton (U3).
+                        // PR5 : carte commune : la lettre de l'exercice
+                        // (A, B…) devant son nom.
                         KFitTitle(
-                          t.title(title),
+                          _merged
+                              ? '${String.fromCharCode(65 + k)} · ${t.title(title)}'
+                              : t.title(title),
                           style: t.titleStyle(
                             KType.titreSeance.copyWith(color: t.texte),
                           ),
@@ -2207,26 +2241,22 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final header = <Widget>[
       // ----- Tableau des séries : en-tête de colonnes + lignes -----
       // G9 correction 1 : sans ligne de saisie visible (toutes les
-      // séries résumées), pas d'en-tête de colonnes.
-      if ([
-        for (var i = 0; i < log.sets.length; i++)
-          !log.sets[i].done || (!readOnly && i == _openOf(k)),
-      ].any((x) => x))
+      // séries résumées, en lecture), pas d'en-tête de colonnes. PR5 :
+      // en séance, les séries validées gardent leur ligne.
+      if (readOnly ? log.sets.any((s) => !s.done) : log.sets.isNotEmpty)
         KSetTable(columns: columns, rows: const [], actionCount: actions),
     ];
     List<Widget> row(int i) => [
-      // G9 correction 1 : séries validées résumées en une ligne, sauf
-      // la série ouverte (la dernière validée) ; toutes résumées en
-      // lecture (fin de séance, historique). Correction 2 : aussi
-      // pour les exercices sans flammes.
-      if (log.sets[i].done && (readOnly || i != _openOf(k)))
+      // G9 correction 1 : en lecture (fin de séance, historique), les
+      // séries validées résumées en une ligne. PR5 : en séance, chaque
+      // série garde sa ligne ; validée, sa flamme remplace la coche.
+      if (log.sets[i].done && readOnly)
         SetSummaryLine(
           setLabel: rowLabel(i),
           done: setDoneText(log.sets[i], sp, units: !unresolved),
           flames: flamesOf(log.sets[i]),
           unknown: log.sets[i].flamesUnknown,
           excluded: log.sets[i].excluded,
-          onTap: readOnly ? null : () => setState(() => _openSet[k] = i),
         )
       else ...[
         Padding(
@@ -2246,8 +2276,13 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             issue: _issues[(k, i)],
             onEdited: readOnly ? null : () => _edited(k, i),
             onCheck: readOnly ? null : () => _checkSet(k, i),
-            onLongPressLabel: !readOnly && log.sets[i].done
-                ? () => setState(() => _openSet[k] = i)
+            // PR5 : flamme à la place de la coche (série validée notée).
+            onFlame: !readOnly && flameSets && log.sets[i].done
+                ? () => _openFlames(k, i, rowLabel(i))
+                : null,
+            onUncheck: readOnly ? null : () => _checkSet(k, i),
+            onLongPressLabel: !readOnly && flameSets && log.sets[i].done
+                ? () => _openFlames(k, i, rowLabel(i))
                 : null,
             onTimer: readOnly
                 ? null
@@ -2293,17 +2328,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               onIntra: (sec) =>
                   widget.timer.single('INTRA', sec, prepare: false),
             ),
-        if (flameSets && log.sets[i].done && !readOnly)
-          FlameTrack(
-            setLabel: rowLabel(i),
-            value: flamesOf(log.sets[i]),
-            unknown: log.sets[i].flamesUnknown,
-            excluded: log.sets[i].excluded,
-            intro: _introAt == (k, i),
-            onChanged: (f) => _setFlames(k, i, f),
-            onUnknown: () => _setFlames(k, i, null, unknown: true),
-            onToggleExcluded: () => _toggleExcluded(k, i),
-          ),
       ],
     ];
     final tail = <Widget>[
@@ -2815,8 +2839,16 @@ class _SetRow extends StatefulWidget {
 
   /// Clé du bouton de validation (tests).
   final Key? checkKey;
+
+  /// PR5 : série validée notée en flammes : la flamme remplace la coche ;
+  /// un appui ([onFlame]) ouvre la note en popup, un appui long
+  /// ([onUncheck]) annule la validation. Null : la coche reste.
+  final VoidCallback? onFlame;
+  final VoidCallback? onUncheck;
   const _SetRow({
     super.key,
+    this.onFlame,
+    this.onUncheck,
     this.lockReps = false,
     this.checkKey,
     this.issue,
@@ -2931,7 +2963,18 @@ class _SetRowState extends State<_SetRow> {
       if (widget.showV && !compact)
         _f(v, (t) => e.v = t, name: 'Vitesse en m/s', field: SetField.velocity),
     ];
-    final check = widget.readOnly
+    final flame = widget.onFlame;
+    final check = !widget.readOnly && done && flame != null
+        ? FlameSetButton(
+            key: ValueKey('set-flame-${widget.label}'),
+            setLabel: widget.label,
+            value: setFlamesOf(e),
+            unknown: e.flamesUnknown,
+            excluded: e.excluded,
+            onTap: flame,
+            onLongPress: widget.onUncheck ?? widget.onCheck ?? () {},
+          )
+        : widget.readOnly
         ? Semantics(
             label: 'Série ${widget.label} ${done ? "validée" : "non validée"}',
             excludeSemantics: true,
@@ -3182,9 +3225,11 @@ String groupTitle(kc.GroupSpec g) {
           '${g.timeCapSeconds == null ? '' : ' (limite ${_minutes(g.timeCapSeconds!)})'}',
     kc.GroupFormat.amrap =>
       'AMRAP ${_minutes(g.durationSeconds ?? 60)} : un maximum de tours',
+    // PR5 : E2MOM, E90s… nommés par leur intervalle.
     kc.GroupFormat.emom =>
-      'EMOM ${_minutes(g.durationSeconds ?? 60)}'
-          '${(g.intervalSeconds ?? 60) == 60 ? '' : ' (départ toutes les ${unitText('${g.intervalSeconds}', 's')})'}',
+      '${ct.everyFormatName(g.intervalSeconds ?? 60)} '
+          '${_minutes(g.durationSeconds ?? 60)}'
+          '${(g.intervalSeconds ?? 60) == 60 ? '' : ' · départ toutes les ${_minutes(g.intervalSeconds!)}'}',
     kc.GroupFormat.chipper =>
       'Chipper : tout, une fois, au meilleur temps'
           '${g.timeCapSeconds == null ? '' : ' (limite ${_minutes(g.timeCapSeconds!)})'}',
@@ -3198,10 +3243,10 @@ String groupTitle(kc.GroupSpec g) {
 String groupHint(kc.GroupSpec g, int members) => switch (g.format) {
   kc.GroupFormat.emom =>
     members > 1
-        ? 'Chaque minute, enchaîne les exercices dans l’ordre ; le repos '
-              'est ce qui reste de la minute.'
-        : 'Chaque minute, fais tes répétitions ; le repos est ce qui reste '
-              'de la minute.',
+        ? 'À chaque départ, enchaîne les exercices dans l’ordre ; le repos '
+              'est ce qui reste de l’intervalle.'
+        : 'À chaque départ, fais tes répétitions ; le repos est ce qui '
+              'reste de l’intervalle.',
   kc.GroupFormat.amrap =>
     'Enchaîne les exercices dans l’ordre, tour après tour, jusqu’au bout '
         'du chrono, à un rythme tenable.',
@@ -3227,7 +3272,11 @@ class _GroupCard extends StatefulWidget {
   final bool readOnly;
   final TimerCtl timer;
   final void Function(Map<String, dynamic> result) onResult;
+
+  /// PR5 : sans carte (en tête de la carte commune des exercices).
+  final bool bare;
   const _GroupCard({
+    this.bare = false,
     required this.group,
     required this.names,
     required this.result,
@@ -3329,7 +3378,8 @@ class _GroupCardState extends State<_GroupCard> {
   }
 
   String get _clockLabel => switch (g.format) {
-    kc.GroupFormat.emom => 'Lancer l’EMOM',
+    kc.GroupFormat.emom =>
+      'Lancer l’${ct.everyFormatName(g.intervalSeconds ?? 60)}',
     kc.GroupFormat.amrap => 'Lancer l’AMRAP',
     kc.GroupFormat.intervals => 'Lancer les intervalles',
     kc.GroupFormat.roundsForTime ||
@@ -3382,121 +3432,124 @@ class _GroupCardState extends State<_GroupCard> {
       borderRadius: const BorderRadius.all(Radius.circular(KSize.target / 2)),
       borderSide: k.controlSide,
     );
-    return KCard(
-      key: ValueKey('group-card-${g.groupId}'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text('Enchaînement', style: KType.section.copyWith(color: k.encre)),
-          const SizedBox(height: KSpacing.s4),
-          Text(
-            groupTitle(g),
-            key: ValueKey('group-title-${g.groupId}'),
-            style: KType.titreCarte.copyWith(color: k.texte),
-          ),
-          if (names.length > 1)
-            Padding(
-              padding: const EdgeInsets.only(top: KSpacing.s8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (var i = 0; i < names.length; i++)
-                    Text(
-                      '${i + 1}. ${names[i]}',
-                      style: KType.corps.copyWith(color: k.texte),
-                    ),
-                ],
+    // PR5 : en-tête compact : le format sur une ligne avec son chrono,
+    // puis le résultat ; les exercices (A, B…) suivent dans la carte. La
+    // consigne n'est dite que là où le résultat se note autrement (AMRAP,
+    // temps).
+    final hint = switch (g.format) {
+      kc.GroupFormat.amrap ||
+      kc.GroupFormat.roundsForTime ||
+      kc.GroupFormat.chipper => groupHint(g, names.length),
+      _ => null,
+    };
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Semantics(
+                label: _clockLabel,
+                child: Text(
+                  groupTitle(g),
+                  key: ValueKey('group-title-${g.groupId}'),
+                  style: KType.corpsFort.copyWith(color: k.encre),
+                ),
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.only(top: KSpacing.s8),
-            child: Text(
-              groupHint(g, names.length),
-              style: KType.detail.copyWith(color: k.texte2),
-            ),
-          ),
-          if (!widget.readOnly)
-            Padding(
-              padding: const EdgeInsets.only(top: KSpacing.s12),
-              child: KTonalButton(
+            if (!widget.readOnly) ...[
+              const SizedBox(width: KSpacing.s8),
+              KTonalButton(
                 key: ValueKey('group-clock-${g.groupId}'),
                 icon: Icons.timer_outlined,
-                label: _clockLabel,
-                expand: true,
+                label: switch (g.format) {
+                  kc.GroupFormat.superset || kc.GroupFormat.circuit => 'Repos',
+                  _ => 'Lancer',
+                },
                 onPressed: _startClock,
               ),
-            ),
-          const SizedBox(height: KSpacing.s16),
-          Text(
-            'Résultat du groupe',
-            style: KType.corpsFort.copyWith(color: k.texte),
+            ],
+          ],
+        ),
+        if (hint != null)
+          Padding(
+            padding: const EdgeInsets.only(top: KSpacing.s4),
+            child: Text(hint, style: KType.detail.copyWith(color: k.texte2)),
           ),
-          if (g.format != kc.GroupFormat.chipper)
-            _stepper(
-              planned == null ? 'Tours complets' : 'Tours faits (sur $planned)',
-              rounds,
-              (v) => rounds = v,
-              ValueKey('group-rounds-${g.groupId}'),
-            ),
-          if (g.format == kc.GroupFormat.amrap)
-            _stepper(
-              'Répétitions du tour entamé',
-              extra,
-              (v) => extra = v,
-              ValueKey('group-extra-${g.groupId}'),
-            ),
-          if (_timed)
-            Padding(
-              padding: const EdgeInsets.only(top: KSpacing.s8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Temps (min:s)',
-                      style: KType.corps.copyWith(color: k.texte2),
-                    ),
+        if (g.format != kc.GroupFormat.chipper)
+          _stepper(
+            planned == null ? 'Tours complets' : 'Tours faits (sur $planned)',
+            rounds,
+            (v) => rounds = v,
+            ValueKey('group-rounds-${g.groupId}'),
+          ),
+        if (g.format == kc.GroupFormat.amrap)
+          _stepper(
+            'Répétitions du tour entamé',
+            extra,
+            (v) => extra = v,
+            ValueKey('group-extra-${g.groupId}'),
+          ),
+        if (_timed)
+          Padding(
+            padding: const EdgeInsets.only(top: KSpacing.s8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Temps (min:s)',
+                    style: KType.corps.copyWith(color: k.texte2),
                   ),
-                  SizedBox(
-                    width: KSize.target * 2,
-                    child: TextField(
-                      key: ValueKey('group-time-${g.groupId}'),
-                      controller: time,
-                      enabled: !widget.readOnly,
-                      keyboardType: TextInputType.datetime,
-                      textAlign: TextAlign.center,
-                      style: KType.chiffreMoyen.copyWith(color: k.texte),
-                      decoration: InputDecoration(
-                        hintText: '12:30',
-                        hintStyle: KType.chiffreMoyen.copyWith(color: k.texte3),
-                        filled: true,
-                        fillColor: k.haute,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: KSpacing.s8,
-                          vertical: KSpacing.s12,
+                ),
+                SizedBox(
+                  width: KSize.target * 2,
+                  child: TextField(
+                    key: ValueKey('group-time-${g.groupId}'),
+                    controller: time,
+                    enabled: !widget.readOnly,
+                    keyboardType: TextInputType.datetime,
+                    textAlign: TextAlign.center,
+                    style: KType.chiffreMoyen.copyWith(color: k.texte),
+                    decoration: InputDecoration(
+                      hintText: '12:30',
+                      hintStyle: KType.chiffreMoyen.copyWith(color: k.texte3),
+                      filled: true,
+                      fillColor: k.haute,
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: KSpacing.s8,
+                        vertical: KSpacing.s12,
+                      ),
+                      border: border,
+                      enabledBorder: border,
+                      disabledBorder: border,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(KSize.target / 2),
                         ),
-                        border: border,
-                        enabledBorder: border,
-                        disabledBorder: border,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(KSize.target / 2),
-                          ),
-                          borderSide: BorderSide(
-                            color: k.encre,
-                            width: KSize.current,
-                          ),
+                        borderSide: BorderSide(
+                          color: k.encre,
+                          width: KSize.current,
                         ),
                       ),
-                      onChanged: (_) => _save(),
                     ),
+                    onChanged: (_) => _save(),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-        ],
-      ),
+          ),
+      ],
     );
+    // PR5 : dans la carte commune des exercices enchaînés, sans carte à
+    // part.
+    if (widget.bare) {
+      return KeyedSubtree(
+        key: ValueKey('group-card-${g.groupId}'),
+        child: content,
+      );
+    }
+    return KCard(key: ValueKey('group-card-${g.groupId}'), child: content);
   }
 }
 
