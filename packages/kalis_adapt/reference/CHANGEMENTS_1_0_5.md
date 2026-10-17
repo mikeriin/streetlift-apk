@@ -1,6 +1,6 @@
 # Lot KM1c4 — liste exacte des changements de la référence (1.0.4 → 1.0.5)
 
-Base : `moteurs` bcb8422b (référence 1.0.4, `kalis_adapt` 1.0.3, `kalis_plan` 0.4.2, `kalis_bench` 0.5.4). Décisions : DECISIONS_CP.md C17.17.3 et C17.23 (critère dur de la bascule : 0 violation du couple servi sur les 90 600 saisons ; les 63 violations de KR1 relèvent de la conduite sous douleur), C17.25 (lancement, prompt `KM1c4.txt`). Paramètres : `params/koach_params_v1.json` version `1.0.5-ref.1` (344 clés : 6 nouvelles, **1 valeur changée**, `securite.reprise_dose_depart` 0,6 → 0,5). L'API et le schéma du journal du contrat 1.0 ne changent pas. Le code Dart de `kalis_adapt` (`lib/`) n'est pas touché : le portage est le lot KM2c3 (section G).
+Base : `moteurs` bcb8422b (référence 1.0.4, `kalis_adapt` 1.0.3, `kalis_plan` 0.4.2, `kalis_bench` 0.5.4). Décisions : DECISIONS_CP.md C17.17.3 et C17.23 (critère dur de la bascule : 0 violation du couple servi sur les 90 600 saisons ; les 63 violations de KR1 relèvent de la conduite sous douleur), C17.25 (lancement, prompt `KM1c4.txt`). Paramètres : `params/koach_params_v1.json` version `1.0.5-ref.1` (344 clés : 6 nouvelles, **1 valeur changée**, `securite.reprise_dose_depart` 0,6 → 0,5). L'API et le schéma du journal du contrat 1.0 ne changent pas. Le code Dart de `kalis_adapt` (`lib/`) n'est pas touché : le portage est le lot KM2c3 (section H).
 
 Mesures : `pipeline/cp/livraisons/LIVRAISON_KM1c4.md` ; `kalis_bench` `docs/CRITERES_KM1C4.md` et `docs/data/km1c4/`.
 
