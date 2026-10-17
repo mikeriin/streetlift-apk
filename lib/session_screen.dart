@@ -2245,9 +2245,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                                   timed: _group != null || _sharedEvery != null,
                                 ),
                               ),
-                        style: showBigLoad || readOnly
+                        // PR10 : volume toujours au même corps (chiffres
+                        // moyens), avec ou sans charge : les exercices
+                        // d'une carte commune s'alignent.
+                        style: readOnly
                             ? KType.corpsFort.copyWith(color: t.texte)
-                            : KType.chiffre.copyWith(color: ink),
+                            : KType.chiffreMoyen.copyWith(
+                                color: showBigLoad ? t.texte : ink,
+                              ),
                       ),
                       // Grand texte : la cible passe sous la charge.
                       if (target case (final rir, final level) when largeText)
