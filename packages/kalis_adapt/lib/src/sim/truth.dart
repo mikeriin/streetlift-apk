@@ -477,6 +477,27 @@ final class SimAthlete {
 
   bool _painKnown = false;
 
+  /// Douleur en cours connue du moteur (signalée au bilan ou en fin de
+  /// séance) : seule une hausse de charge sur une douleur connue compte
+  /// comme aggravation. Lecture pour les tests et le banc.
+  bool get painKnown => _painKnown;
+
+  /// Réglage direct d'états internes du modèle de vérité, pour ses tests
+  /// seulement (comme les affectations de
+  /// `reference/tests/test_kr1_violations.py`) : douleur connue,
+  /// tolérance de tenue du tendon, tenue de la semaine.
+  void setForTest({bool? painKnown, double? tendon, double? holdWeek}) {
+    if (painKnown != null) {
+      _painKnown = painKnown;
+    }
+    if (tendon != null) {
+      _tendon = tendon;
+    }
+    if (holdWeek != null) {
+      _holdWeek = holdWeek;
+    }
+  }
+
   // Modèles B et C : zone restée réactive après un épisode de douleur (CA2,
   // partie 0) — séries de la semaine sur chaque zone tendineuse, habitude
   // (moyenne mobile) et tolérance de la zone réactive, fin de la fenêtre.
@@ -651,6 +672,9 @@ final class SimAthlete {
     if (painFrom != null && day >= painFrom && painUntil < 0) {
       painUntil = painFrom + spec.painDays;
       painIntensity = spec.painIntensity;
+      // KM1c4 : un épisode qui commence n'est connu du moteur qu'une fois
+      // signalé (comme `overuse` et les poussées).
+      _painKnown = false;
     }
     if (painUntil >= 0 && day > painUntil) {
       final zone = painZone;
@@ -1195,6 +1219,11 @@ final class SimAthlete {
           _tendonZone = BodyZone.wristHand;
           painIntensity = 4;
           painUntil = _day + 10;
+          // KM1c4 : l'épisode tendineux qui commence n'est connu du moteur
+          // qu'une fois signalé (bilan ou fin de séance) ; sans cette remise
+          // à faux, une aggravation était comptée sur une douleur jamais
+          // signalée (4 cas de KR1, `street_10`, poignet, dips lestés).
+          _painKnown = false;
         }
         _tendon = tolerance + (_holdWeek - tolerance) / 6;
       }
