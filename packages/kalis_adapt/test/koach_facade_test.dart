@@ -10,7 +10,7 @@ import 'package:kalis_adapt/koach.dart';
 import 'package:test/test.dart';
 
 Json _lire(String nom) =>
-    jsonDecode(File('reference/fix_dart/$nom').readAsStringSync()) as Json;
+    jsonDecode(File('reference/fixtures/$nom').readAsStringSync()) as Json;
 
 void main() {
   test('proposition : charges inchangées, travail seulement, pas de baisse '
