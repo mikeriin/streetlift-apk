@@ -214,7 +214,7 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets('PR6 : même départ chronométré, un seul chrono et un format', (
+  testWidgets('PR7 : même départ chronométré, un en-tête et un chrono', (
     tester,
   ) async {
     small(tester, size: const Size(400, 1600));
@@ -226,8 +226,12 @@ void main() {
     await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('exercise-card-merged')), findsOneWidget);
-    expect(find.textContaining('Lancer l’E2MOM, 8 × 120'), findsOneWidget);
-    expect(find.textContaining('E2MOM · départ toutes les 2'), findsOneWidget);
+    // PR7 : en-tête du départ chronométré dans la carte : format, tours,
+    // durée et un seul chrono.
+    expect(find.byKey(const ValueKey('timing-header')), findsOneWidget);
+    expect(find.textContaining('E2MOM · 8 tours · 16'), findsOneWidget);
+    expect(find.byKey(const ValueKey('timing-clock')), findsOneWidget);
+    expect(find.textContaining('Lancer l’E2MOM'), findsNothing);
     expect(tester.takeException(), null);
     await tester.pumpWidget(const SizedBox());
     await tester.pumpAndSettle();
