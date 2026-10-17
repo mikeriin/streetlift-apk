@@ -226,9 +226,10 @@ Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Po
   `doseZone` n'est > 0, une zone sans `expoJour` ou avec `jour − expoJour[z] < coupure_j`, une zone sans
   `_manqueRecent` ; `ecrit = ecritZone(z, semaine) + séries des séances restantes sur z` ; si `ecrit > 0`,
   `depart = _departRetour(z)`, `(permis, _) = _budgetRetour(z, depart: depart, debut: semaine)`, et si `permis !=
-  null && permis < ecrit` : `retourZone[z] = (semaine, depart)`, `budgetSemaine[z] = permis`. Dans `ouvrir`, après la
-  boucle des zones sensibles : pour chaque zone de `retourZone` (triée), si elle est dans `budgetSemaine` ou sensible
-  → retirée de `retourZone` ; sinon `(b, sortie) = _budgetRetour(z)` ; `sortie || b == null` → retirée, sinon
+  null && permis < ecrit` : `retourZone[z] = (semaine, depart)`, `budgetSemaine[z] = permis`. `_entrerRetour` rend la main
+  aussitôt si `verrouillee()`. Dans `ouvrir`, après la boucle des zones sensibles : pour chaque zone de `retourZone`
+  (triée), si elle est dans `budgetSemaine` ou sensible → retirée de `retourZone` ; sinon, si `verrouillee()` →
+  rien (suspendue) ; sinon `(b, sortie) = _budgetRetour(z)` ; `sortie || b == null` → retirée, sinon
   `budgetSemaine[z] = b` (sans toucher `rampeZone`). Le permis du jour et `_item` s'appliquent aux zones en retour comme aux zones
   sensibles (même `budgetZone`) ; l'interdiction du vrai test ne vaut que pour une zone de `budgetZone` qui n'est
   pas dans `retourZone`.

@@ -452,10 +452,14 @@ class Seances(object):
                 self.budget_semaine[z] = b
                 self.rampe_zone.add(z)
         # Règle 3 bis : zones en rampe de retour (séances manquées) ; la
-        # rampe de la zone sensible l'emporte dès qu'elle s'applique.
+        # rampe de la zone sensible l'emporte dès qu'elle s'applique ; une
+        # semaine verrouillée (intro, allègement, affûtage, test, compétition,
+        # transition : volume déjà réduit ou échéance) la suspend.
         for z in sorted(self.retour_zone):
             if z in self.budget_semaine or self.g.sensible(z):
                 del self.retour_zone[z]
+                continue
+            if self.verrouillee():
                 continue
             b, sortie = self._budget_retour(z)
             if sortie or b is None:
@@ -793,9 +797,16 @@ class Seances(object):
         sensible, de la moitié de son habitude. Hors coupure, le plan (et
         le retour gradué au volume) gouverne : une progression écrite, une
         séance manquée ici ou là, ne sont pas bornées. Une zone jamais
-        exposée dans le journal est introduite par le plan."""
+        exposée dans le journal est introduite par le plan. Une semaine
+        verrouillée (`verrouillee` : intro, allègement, affûtage, test,
+        compétition, transition) n'ouvre ni n'applique la rampe de retour :
+        son volume est déjà réduit ou c'est l'échéance (choix raisonné :
+        sans douleur connue, une précaution de volume ne coupe pas une
+        compétition ; la zone sensible, elle, s'applique partout)."""
         c = self.contexte or {}
         semaine = self.g.semaine
+        if self.verrouillee():
+            return
         zones = set(self.dose_zone)
         reste = {}
         for seance in list(c.get('reste_semaine') or []) + [items]:
