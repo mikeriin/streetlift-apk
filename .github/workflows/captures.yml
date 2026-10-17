@@ -1,0 +1,64 @@
+# PR9 : captures d'écran à distance. Un push sur une branche
+# `claude/shots-*` lance les tests de capture (polices réelles, rendu du
+# moteur de test) listés dans tools/shots.txt, puis pousse les images dans
+# shots/ sur la même branche. Sert aux sessions sans SDK Flutter local
+# (relecture visuelle de l'interface).
+name: Captures d'écran
+
+on:
+  push:
+    branches: ["claude/shots-*"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalis-shots-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shots:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    # Le commit des images ne relance pas les captures.
+    if: ${{ !startsWith(github.event.head_commit.message, 'Captures d') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.5'
+          channel: stable
+          cache: true
+      - name: Déchiffrer les ressources sous licence
+        # Nécessaires à la compilation des tests (mannequin) ; jamais
+        # poussées (seul shots/ est ajouté au commit).
+        env:
+          KT_ASSETS_KEY: ${{ secrets.KT_ASSETS_KEY }}
+        run: python3 tools/secure_assets.py decrypt
+      - name: Dépendances
+        run: flutter pub get --enforce-lockfile
+      - name: Captures
+        env:
+          TZ: Europe/Paris
+        run: |
+          files="$(grep -v '^#' tools/shots.txt | xargs)"
+          flutter test --no-pub --dart-define=KALIS_CAPTURE=true $files > shots.log 2>&1 || true
+          # Fin du journal en annotation (lisible sans télécharger les
+          # journaux).
+          out="$( { grep -E -A25 'EXCEPTION CAUGHT|Error:|error:' shots.log | head -n 80; tail -n 15 shots.log; ls validation/UI 2>/dev/null | head -n 40; } )"
+          out="${out//'%'/'%25'}"
+          out="${out//$'\n'/'%0A'}"
+          echo "::notice title=Captures::${out}"
+      - name: Pousser les images
+        run: |
+          git config user.name "kalis-shots"
+          git config user.email "kalis-shots@users.noreply.github.com"
+          rm -rf shots && mkdir -p shots
+          cp validation/UI/*.png shots/ 2>/dev/null || true
+          git add -f shots
+          if git diff --cached --quiet; then
+            echo "Aucune image."
+            exit 0
+          fi
+          git commit -m "Captures d'écran"
+          git push

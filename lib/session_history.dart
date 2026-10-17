@@ -159,8 +159,9 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
   }
 
   /// Contexte des feuilles : « Corps entier, S1, J2 » (maquette du menu).
-  String get _sheetContext =>
-      _week.n > 0 ? '${_day.title}, S${_week.n}, J${_day.j}' : _day.title;
+  String get _sheetContext => _week.n > 0
+      ? '${_day.title} · ${store.program.sessionLabel(_week.n, _day.j)}'
+      : _day.title;
 
   /// Feuille de liste (cahier §4.5) : groupes d'exercices numérotés, page
   /// courante en contour, « Bilan de séance » avec son icône.

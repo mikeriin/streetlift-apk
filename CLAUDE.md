@@ -17,6 +17,15 @@ textes de l'app sont **en français**.
   `kalis-track-apk`).
 - `SUIVI_PROJET.md`, `AUDIT_*.md`, `docs/` : suivi et décisions.
 
+## Captures d'écran (sans SDK local)
+
+Push sur une branche `claude/shots-*` → workflow « Captures d'écran »
+(`.github/workflows/captures.yml`) : lance les tests listés dans
+`tools/shots.txt` avec `--dart-define=KALIS_CAPTURE=true` et pousse les PNG
+dans `shots/` sur la même branche (récupérer avec `git archive`). Ne jamais
+fusionner `shots/` dans `main`. Formatage à distance : branche
+`claude/fmt-*` (`format.yml`).
+
 ## Outils
 
 Flutter **3.47.5 stable**, Java 17, Python 3. Commandes de contrôle (les mêmes
