@@ -2,7 +2,7 @@
 
 Base : `moteurs` bcb8422b (référence 1.0.4, `kalis_adapt` 1.0.3, `kalis_plan` 0.4.2, `kalis_bench` 0.5.4). Décisions : DECISIONS_CP.md C17.17.3 et C17.23 (critère dur de la bascule : 0 violation du couple servi sur les 90 600 saisons ; les 63 violations de KR1 relèvent de la conduite sous douleur), C17.25 (lancement, prompt `KM1c4.txt`). Paramètres : `params/koach_params_v1.json` version `1.0.5-ref.1` (346 clés : 7 nouvelles, **1 valeur changée**, `securite.reprise_dose_depart` 0,6 → 0,5). L'API et le schéma du journal du contrat 1.0 ne changent pas. Le code Dart de `kalis_adapt` (`lib/`) n'est pas touché : le portage est le lot KM2c3 (section H).
 
-Mesures : `pipeline/cp/livraisons/LIVRAISON_KM1c4.md` ; `kalis_bench` `docs/CRITERES_KM1C4.md` et `docs/data/km1c4/`.
+Mesures (campagne Python de la référence sur les 90 600 saisons de `kalis_plan` 0.4.2, CI run 39041787498) : critère 7 du cahier **63 (point de départ, Koach 1.0.4) → 4 (règles 1 à 5) → 0** (règle 3 bis), 0 saison plantée, 0 sur la graine 0 et les graines 0 à 5 ; critères 1 à 8 sans recul au-delà du bruit de KR1 (jour J 0,9374 → 0,9339, bruit 0,005) ; réalisée appariée 259 646 → 238 906. Détail : `pipeline/cp/livraisons/LIVRAISON_KM1c4.md` ; `kalis_bench` `docs/CRITERES_KM1C4.md` et `docs/data/km1c4/`.
 
 ## A. Zone sensible et conduite sous douleur (koach/securite.py)
 

@@ -39,6 +39,12 @@ python3 -I rejeu/walk_forward.py <export.json> --programme <prog.json.gz> --koac
 Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `packages/kalis_bench/bin/km1.dart`
 (export des modèles de vérité, des saisons de référence et des mesures de `kalis_adapt` 0.3.1).
 
+## Résultats publiés (1.0.5, lot KM1c4)
+
+- Couple `kalis_plan` 0.4.2 × Koach 1.0.5 (34 profils, 100 graines, 90 600 saisons, campagne Python de la référence en 20 parts sur la CI, agrégée par `banc/securite_campagne.py`) : **0 violation du critère 7** (63 avec Koach 1.0.4 sur les mêmes saisons), 0 saison plantée : `kalis_bench` `docs/CRITERES_KM1C4.md` et `docs/data/km1c4/` (sécurité, point de départ, première campagne sans la règle 3 bis, critères, temps).
+- `donnees/criteres_km1c4.json` : critères du cahier sur six graines (5 436 saisons, Koach 1.0.5 complet contre 0.3.1 sur `kalis_plan` 0.4.2) ; `donnees/comparaison_adversaires_km1c4_*.json` : Koach 1.0.5 rejoué sur les six jeux d'adversaires (critère 7 bis).
+- Mécanismes des violations de KR1 et de la première campagne, rejoués à 0 : `tests/test_kr1_violations.py` ; liste des changements : `CHANGEMENTS_1_0_5.md`.
+
 ## Résultats publiés (1.0.4, lot KR1)
 
 - Couple `kalis_plan` 0.4.1 × Koach 1.0.4 (34 profils, 100 graines, 90 600 saisons, campagne Dart) : `kalis_bench` `docs/CRITERES_KR1.md` et `docs/data/kr1/` (sécurité, critères par groupe de graines, adversaires). La campagne Python des graines 0 à 5 sur les données régénérées donne les mêmes critères (`kalis_bench/docs/data/kr1/criteres/criteres_kr1_python_34p_g0_5.json`).
