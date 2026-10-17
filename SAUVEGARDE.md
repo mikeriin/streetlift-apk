@@ -87,13 +87,9 @@ la ligne « en cours ».
   (CONTRAT, SOURCES (+ Hulin 2014 vérifié), CHANGEMENTS, PORTAGE_DART, README).
 - Run H à pousser : campagne Python 100 graines (20 parts, sans PART 0), assemblage sur l'arbre 0.4.2.
 
-## En cours
+## Livré (17/10/2026 22:40 UTC)
 
-- Run H (campagne 1.0.5 + règle 3 bis sur les 90 600 saisons).
-
-## Reste à faire
-
-- Vérifier run H (0 violation, critères 0-5 sans recul), adversaires et sans douleur à rejouer (règle 3 bis),
-  `docs/data/km1c4/`, `docs/CRITERES_KM1C4.md`, `donnees/criteres_km1c4.json`, README ; CHANGEMENTS (mesures) ;
-  commit `moteurs`, rebase, contrôle complet (workflow officiel), push `moteurs`, étiquette `kalis_bench-v0.5.5` ;
-  LIVRAISON (pipeline + projet), DECISIONS_CP KM1c4, ETAT_CP « livré », page de suivi, notification.
+- `moteurs` ba1e5093 (référence Koach 1.0.5, `kalis_bench` 0.5.5 ; étiquette `etiquettes/kalis_bench-v0.5.5`), contrôle
+  complet run 39062150893 vert (2 h 56) ; `pipeline` 69d70703 (LIVRAISON_KM1c4.md, ETAT_CP « livré », DECISIONS_CP
+  section KM1c4, ligne KM2c3) ; projet claude.ai `claude/LIVRAISON_KM1c4.md` ; page de suivi (version 57).
+- Campagne finale run 39041787498 : 0 violation sur 90 600 saisons (63 → 4 → 0), 0 plantée.
