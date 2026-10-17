@@ -1264,6 +1264,12 @@ extension ImportedProgramStore on AppStore {
           intervalSeconds: every,
           durationSeconds: sets * every,
         ),
+        // PR8 : départ chronométré à reps fixes (« 8×3 · E2MOM ») : servi
+        // tel qu'écrit, comme les contrastes — charge et reps du
+        // programme ; Koach le journalise sans le recalculer (son modèle de
+        // fatigue à repos court en faisait 3-2-1-1… à une charge plus
+        // lourde).
+        asWritten: true,
       );
     } else if (sp.rowPrefix == 'R' || sp.rowPrefix == 'É') {
       // Contrastes (« 3 rounds : 3 sauts groupés + 5 squats sautés ») et

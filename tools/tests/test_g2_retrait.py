@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.1.7 : carte d'exercice compacte (dev7.1.7, PR7).
-        self.assertEqual(version, '7.1.7')
+        # 7.1.8 : E2MOM servi tel qu'écrit (dev7.1.8, PR8).
+        self.assertEqual(version, '7.1.8')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)

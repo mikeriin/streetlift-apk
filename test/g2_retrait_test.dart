@@ -462,8 +462,8 @@ void main() {
     });
   });
 
-  test('version affichée : « 7.1.7 » hors build de développement (PR7)', () {
-    expect(kVersion, '7.1.7');
-    expect(kAppVersion, '7.1.7');
+  test('version affichée : « 7.1.8 » hors build de développement (PR8)', () {
+    expect(kVersion, '7.1.8');
+    expect(kAppVersion, '7.1.8');
   });
 }

@@ -77,8 +77,10 @@ committer les fichiers déchiffrés.
   chaque exercice (« A · NOM »), puis les séries tour par tour (A·1, B·1,
   espace, A·2…). Des exercices au même départ chronométré n'ont qu'un
   chrono et un libellé de format (« E2MOM · départ toutes les 2 min »,
-  PR6). Programme du propriétaire (PR6) : lifts au départ chronométré et
-  leurs enchaînements sans annotation Koach, servis tels qu'écrits.
+  PR6). Une ligne au départ chronométré à reps fixes est servie telle
+  qu'écrite (PR8, `asWritten` de l'import) : charge et reps du programme,
+  Koach la journalise sans la recalculer. (Les annotations Koach du
+  programme ne décident pas du service : l'import passe par le catalogue.)
 - Carte d'exercice compacte en séance (PR7) : une seule carte par page,
   en-tête du groupe ou du départ chronométré dedans (« E2MOM · 8 tours ·
   16 min », Lancer ; tours comptés sur les séries validées, jamais
