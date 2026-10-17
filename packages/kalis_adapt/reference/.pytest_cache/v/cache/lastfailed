@@ -1,1 +1,4 @@
-{}
+{
+  "tests/test_fixtures.py::test_fixtures_a_jour": true,
+  "tests/test_fixtures.py::test_generation_deterministe": true
+}
