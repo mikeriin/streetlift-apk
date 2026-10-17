@@ -879,6 +879,32 @@ décision requise.** Détail : `pipeline/cp/livraisons/LIVRAISON_KR1.md`, `packa
   critère dur « 0 sur les saisons racontées et les graines 0 à 5 » avec les 63 suivies comme indicateur ;
   (3) KB1 après cette décision (`kalis_adapt` 1.0.3 peut remplacer 1.0.2 dans l'application).
 
+### KS1c2
+
+Lot livré le 17/10/2026 (session Opus 5.5, effort maximal, C17.22), validation automatique par le pilotage :
+`kalis_plan` 0.4.2 et `kalis_bench` 0.5.4 (`moteurs` bcb8422b, rebasé sur KR1 597c10b7 ; étiquettes publiées),
+contrôle complet `claude/ci-cp-b` run 38991643691 vert. Détail : `pipeline/cp/livraisons/LIVRAISON_KS1c2.md`.
+
+- **KS1c2.1 Lancement** : message sans ligne « Lot : » ; KS1c2 seul lot « à faire » ; `add_repo` absent de la session,
+  accès push vérifié par `git push --dry-run`. Pas de SDK Dart (proxy) : mise au point par des commits « KS1c2
+  contrôle (dev) » sur `claude/ci-cp-b`. Clé des références non lue (programmes des 34 profils inchangés).
+- **KS1c2.2 Cause** : constat reproduit au banc (`profiles_ks1c2/ks1a_street_5050.json`) ; dans `_buildTyped`, les
+  briques d'endurance et les replis de force n'ajoutent rien sans repère ; le questionnaire non rempli n'y est pour
+  rien (écarts identiques avec un questionnaire standard). Grille avant : 489 jours en défaut sur 8 928.
+- **KS1c2.3 Correction** (`_ensurePrincipal`) : n'agit que sur un jour qui ne tient pas la règle ; repli au poids du
+  corps dosé par la passe 2, trois séries en mode prudent, première série de mesure proposée ; à défaut, promotion d'un
+  porteur ; sinon changement de type avec sa raison (codes existants, `kalis_core` inchangé). Gardé par les plafonds.
+- **KS1c2.4 Critère** : « exercice porteur » = principal, secondaire ou figure (le contrat ne porte pas la méthode) ;
+  sur un gabarit typé, un emplacement principal en plus ; jours des gabarits figés sans principal comptés à part
+  (291, schémas tous portés). 0 écart sur les 34 profils et la grille.
+- **KS1c2.5 Sécurité** : programmes créés (34 profils, grille) 0 ; saisons racontées identiques ; campagne toutes
+  graines 95 583 → 95 574 ; les cases qui montent (`ks_02` épaule C +1, `ks_test_ppl6` coude C +9) suivent toutes une
+  proposition « volume » de `kalis_adapt` (cause de KS1c1.3, `_upFits`). Test KR1 `km2_banc_test.dart` : saisons de
+  référence identiques hors `engineVersion` (comparaison ramenée à 0.4.1 ; données de `kalis_adapt` non touchées).
+- **KS1c2.6 Relecture indépendante** (sous-agent Opus) : 0 bloquant, 4 majeurs et 10 mineurs traités.
+- **KS1c2.7 Recommandations (C8)** : valider ; lot court d'application pour `kalis_plan` 0.4.2 ; corriger `_upFits`
+  (KS1c1.7 b) ; l'option (c) de C17.15 reste à faire (séances du constat servies en 20 à 40 min sur 120).
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
