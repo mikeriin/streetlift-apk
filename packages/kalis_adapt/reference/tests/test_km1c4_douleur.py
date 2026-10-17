@@ -224,16 +224,29 @@ def test_pas_de_hausse_si_la_zone_a_ete_signalee_dans_la_semaine():
     assert expo(seance(k, 43, [dips('d', 10)], douleurs=[])) == 5
 
 
-def test_semaine_du_signalement_jamais_reference():
-    """Ce qui a été fait avant le signalement, dans sa semaine, ne sert pas
-    de référence : un signalement en fin de semaine après huit séries ne
-    permet pas neuf séries la semaine suivante, mais le départ (4)."""
+def test_semaine_du_signalement_tenue_sans_hausse():
+    """La semaine du premier signalement ne sert de référence que si c'est
+    la semaine précédente, et sans hausse (une partie de son exposition a
+    été faite avant le signalement) : un signalement de 3 (sans retrait) en
+    fin de semaine après huit séries donne huit séries la semaine suivante
+    (tenue), pas neuf ; et jamais par la fenêtre de recherche : après une
+    semaine vide qui suit le signalement, départ (4), pas huit."""
     k = koach()
     for w in range(4):
         seance(k, 7 * w + 1, [dips('d', 8)])
     assert expo(seance(k, 29, [dips('d', 8)])) == 8
-    seance(k, 33, [], douleurs=[{'zone': SH, 'intensity': 4}])
-    assert expo(seance(k, 36, [dips('d', 10)], douleurs=[])) == 4
+    seance(k, 33, [], douleurs=[{'zone': SH, 'intensity': 3}])
+    assert expo(seance(k, 36, [dips('d', 10)], douleurs=[])) == 8
+    assert expo(seance(k, 43, [dips('d', 10)], douleurs=[])) == 9
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 8)])
+    assert expo(seance(k, 29, [dips('d', 8)])) == 8
+    seance(k, 33, [], douleurs=[{'zone': SH, 'intensity': 3}])
+    # Semaine 5 fermée sans exposition de la zone (autre séance).
+    seance(k, 36, [{'slotId': 'r', 'exerciseId': 'mu-rowing-barre-pronation', 'kind': 'work', 'sets': 3,
+                    'repsLow': 8, 'repsHigh': 10, 'targetFlames': 7}], douleurs=[])
+    assert expo(seance(k, 43, [dips('d', 10)], douleurs=[])) == 4
 
 
 def test_budget_reparti_au_prorata_des_seances_restantes_echauffement_compris():

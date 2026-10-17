@@ -51,6 +51,19 @@ la ligne « en cours ».
 - Run B poussé à 07:32 UTC (84b3afdb, run 39011629136) : export 0.4.2 (PART 0), campagne Python graines 0-5 de la
   référence 1.0.5 préliminaire (PARTS 41-48, saisons 0.4.2 exportées dans la part).
 
+- Affinement : la semaine du signalement ne sert de référence que si c'est la semaine précédente, et sans hausse
+  (un 3/10 sans retrait gèle, ne coupe pas) ; la recherche arrière de la dernière semaine exposée reste strictement
+  après la semaine du signalement. 12 tests `test_km1c4_douleur.py`, 5 `test_kr1_violations.py` verts ; fixtures
+  régénérées. Documents mis à jour (CHANGEMENTS § B, CONTRAT note et § 8.3, PORTAGE_DART).
+- Critère 7 bis (six jeux, Python, témoin stocké) : 24/24, 22, 19, 23, 22, 21 ; contre le témoin de KR1 (même
+  témoin) : tenus 18, 15, 14, 18 (+1 : adv-433b3b7e), 17, 15 contre 18, 15, 14, 17, 17, 15 ; cas sous le plancher
+  identiques ; jour J moyen ±0,003 (fichiers dans le scratchpad `adv/`, à copier dans `donnees/` à la livraison).
+- Runs B et C annulés ; **run D** poussé à 07:40 UTC (2316876f, run 39013954817) : PART 0 export 0.4.2 + tests ;
+  PARTS 61-80 campagne Python 1.0.5 sur les 100 graines (20 parts) ; assemblage : `banc/securite_campagne.py`
+  (nouveau, agrégation en flux), critères Python 0-5.
+- En cours (fond, scratchpad `sansdouleur.*`) : comparaison 1.0.4 / 1.0.5 des 34 profils, scénario référence,
+  vérités a et b, graine 0 (prescriptions identiques sans douleur ni diagnostic ?).
+
 ## En cours
 
 - Régénération des fixtures (après intégration des données 0.4.2 du run A/B), documents (CHANGEMENTS_1_0_5.md, SOURCES.md,

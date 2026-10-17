@@ -146,6 +146,7 @@
   "tests/test_km1c4_douleur.py::test_pas_de_vrai_test_sur_une_zone_sous_rampe",
   "tests/test_km1c4_douleur.py::test_reference_realisee_pas_l_ecrit_apres_des_seances_manquees",
   "tests/test_km1c4_douleur.py::test_semaine_du_signalement_jamais_reference",
+  "tests/test_km1c4_douleur.py::test_semaine_du_signalement_tenue_sans_hausse",
   "tests/test_km1c4_douleur.py::test_sortie_progressive_apres_la_fenetre",
   "tests/test_km1c4_douleur.py::test_zone_sensible_douze_semaines_avec_ou_sans_arret",
   "tests/test_kr1_violations.py::test_aggravation_hausse_de_charge_sous_douleur_au_poignet",
