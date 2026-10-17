@@ -817,6 +817,30 @@ class KConfirm extends StatelessWidget {
   }
 }
 
+/// PR5 : fenêtre libre du kit (popup centrée, fond `surface`, coins de
+/// carte), fermée d'un appui à côté ; [builder] reçoit le contexte de la
+/// fenêtre (pour `Navigator.pop`).
+Future<T?> showKDialog<T>(
+  BuildContext context, {
+  required WidgetBuilder builder,
+  Key? dialogKey,
+}) => showDialog<T>(
+  context: context,
+  builder: (ctx) {
+    final k = KTokens.of(ctx);
+    return Dialog(
+      key: dialogKey,
+      backgroundColor: k.surface,
+      shape: KRadius.cardShape,
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: KSpacing.s16,
+        vertical: KSpacing.s24,
+      ),
+      child: builder(ctx),
+    );
+  },
+);
+
 /// Ouvre une confirmation ; vrai seulement si le verbe est choisi.
 Future<bool> showKConfirm(
   BuildContext context, {

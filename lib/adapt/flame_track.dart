@@ -429,8 +429,9 @@ Future<void> showFlamePopup(
   bool unknown = false,
   bool excluded = false,
   bool intro = false,
-}) => showDialog<void>(
-  context: context,
+}) => showKDialog<void>(
+  context,
+  dialogKey: const ValueKey('flame-popup'),
   builder: (ctx) {
     final k = KTokens.of(ctx);
     var closed = false;
@@ -440,53 +441,44 @@ Future<void> showFlamePopup(
       Navigator.of(ctx).pop();
     }
 
-    return Dialog(
-      key: const ValueKey('flame-popup'),
-      backgroundColor: k.surface,
-      shape: KRadius.cardShape,
-      insetPadding: const EdgeInsets.symmetric(
-        horizontal: KSpacing.s16,
-        vertical: KSpacing.s24,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        KSpacing.s16,
+        KSpacing.s16,
+        KSpacing.s8,
+        KSpacing.s8,
       ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          KSpacing.s16,
-          KSpacing.s16,
-          KSpacing.s8,
-          KSpacing.s8,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Semantics(
-                header: true,
-                child: Text(
-                  'Série $setLabel',
-                  style: KType.titreCarte.copyWith(color: k.texte),
-                ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Semantics(
+              header: true,
+              child: Text(
+                'Série $setLabel',
+                style: KType.titreCarte.copyWith(color: k.texte),
               ),
-              const SizedBox(height: KSpacing.s8),
-              FlameTrack(
-                setLabel: setLabel,
-                value: value,
-                unknown: unknown,
-                excluded: excluded,
-                intro: intro,
-                onChanged: onChanged,
-                onReleased: close,
-                onUnknown: () {
-                  onUnknown();
-                  close();
-                },
-                onToggleExcluded: () {
-                  onToggleExcluded();
-                  close();
-                },
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: KSpacing.s8),
+            FlameTrack(
+              setLabel: setLabel,
+              value: value,
+              unknown: unknown,
+              excluded: excluded,
+              intro: intro,
+              onChanged: onChanged,
+              onReleased: close,
+              onUnknown: () {
+                onUnknown();
+                close();
+              },
+              onToggleExcluded: () {
+                onToggleExcluded();
+                close();
+              },
+            ),
+          ],
         ),
       ),
     );
