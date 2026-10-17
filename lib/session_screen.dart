@@ -1615,7 +1615,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             value: 'note',
           ),
           if (columns)
-            KAction(
+            const KAction(
               icon: Icons.tune_rounded,
               label: 'Colonnes',
               value: 'columns',

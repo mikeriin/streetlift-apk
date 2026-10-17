@@ -104,7 +104,15 @@ jobs:
             exit 1
           fi
       - name: Analyser le code
-        run: flutter analyze --no-pub 2>&1 | tee validation-output/analyze.log
+        run: |
+          # PR7 : en cas d'échec, les problèmes sortent en annotation.
+          if ! flutter analyze --no-pub 2>&1 | tee validation-output/analyze.log; then
+            out="$(grep -E ' • ' validation-output/analyze.log | head -n 60)"
+            out="${out//'%'/'%25'}"
+            out="${out//$'\n'/'%0A'}"
+            echo "::error title=Analyse::${out}"
+            exit 1
+          fi
       - name: Exécuter les tests de régression
         run: |
           # PR4 : en cas d'échec, l'extrait du journal sort en annotation
