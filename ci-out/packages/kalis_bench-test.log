@@ -1,0 +1,114 @@
+00:00 +0: loading test/km2_banc_test.dart
+00:00 +0: test/km2_banc_test.dart: fixtures du lot KM2 présentes
+00:00 +1: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +2: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +3: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +4: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:01 +5: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:02 +5: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:02 +6: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 tour.sets : clés, valeurs et types (hors traces)
+00:02 +7: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 tour.sets : traces des cibles
+00:02 +8: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 tour.estimates : clés, valeurs et types
+00:02 +9: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 séances servies
+00:02 +10: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 compteurs, gains et capacités
+00:02 +11: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 prévisions de la planification
+00:02 +12: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 journal du moteur : longueur et types
+00:02 +13: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 posterior final
+00:02 +14: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 journaux des extensions du banc
+00:02 +15: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 rejeu du journal : même état, extensions et façade comprises
+00:02 +16: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 états des extensions
+00:02 +17: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 sécurité de la saison (kmSecuriteSaison)
+00:02 +18: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (tearDownAll)
+00:02 +18: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:04 +18: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:04 +19: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 tour.sets : clés, valeurs et types (hors traces)
+00:04 +20: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 tour.sets : traces des cibles
+00:04 +21: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 tour.estimates : clés, valeurs et types
+00:04 +22: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 séances servies
+00:04 +23: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 compteurs, gains et capacités
+00:04 +24: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 prévisions de la planification
+00:04 +25: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 journal du moteur : longueur et types
+00:04 +26: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 posterior final
+00:04 +27: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 journaux des extensions du banc
+00:04 +28: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:04 +29: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 états des extensions
+00:04 +30: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 sécurité de la saison (kmSecuriteSaison)
+00:04 +31: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (tearDownAll)
+00:04 +31: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:13 +31: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:13 +32: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 tour.sets : clés, valeurs et types (hors traces)
+00:13 +33: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 tour.sets : traces des cibles
+00:13 +34: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 tour.estimates : clés, valeurs et types
+00:13 +35: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 séances servies
+00:13 +36: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 compteurs, gains et capacités
+00:13 +37: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 prévisions de la planification
+00:13 +38: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 journal du moteur : longueur et types
+00:13 +39: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 posterior final
+00:13 +40: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 journaux des extensions du banc
+00:13 +41: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:20 +42: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 états des extensions
+00:20 +43: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 sécurité de la saison (kmSecuriteSaison)
+00:21 +44: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (tearDownAll)
+00:21 +44: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 (setUpAll)
+00:21 +44: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:21 +45: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.sets : clés, valeurs et types (hors traces)
+00:21 +46: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.sets : traces des cibles
+00:21 +47: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.estimates : clés, valeurs et types
+00:21 +48: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 séances servies
+00:21 +49: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 compteurs, gains et capacités
+00:21 +50: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 prévisions de la planification
+00:21 +51: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 journal du moteur : longueur et types
+00:21 +52: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 posterior final
+00:21 +53: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 journaux des extensions du banc
+00:21 +54: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 rejeu du journal : même état, extensions et façade comprises
+00:22 +55: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 états des extensions
+00:22 +56: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 sécurité de la saison (kmSecuriteSaison)
+00:22 +57: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 (tearDownAll)
+00:22 +57: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 (setUpAll)
+00:23 +57: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:23 +58: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.sets : clés, valeurs et types (hors traces)
+00:23 +59: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.sets : traces des cibles
+00:23 +60: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.estimates : clés, valeurs et types
+00:23 +61: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 séances servies
+00:23 +62: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 compteurs, gains et capacités
+00:23 +63: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 prévisions de la planification
+00:23 +64: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 journal du moteur : longueur et types
+00:23 +65: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 posterior final
+00:23 +66: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 journaux des extensions du banc
+00:23 +67: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 rejeu du journal : même état, extensions et façade comprises
+00:24 +68: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 états des extensions
+00:24 +69: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 sécurité de la saison (kmSecuriteSaison)
+00:24 +70: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 (tearDownAll)
+00:24 +70: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 (setUpAll)
+00:25 +70: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:25 +71: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.sets : clés, valeurs et types (hors traces)
+00:25 +72: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.sets : traces des cibles
+00:25 +73: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.estimates : clés, valeurs et types
+00:25 +74: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 séances servies
+00:25 +75: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 compteurs, gains et capacités
+00:25 +76: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 prévisions de la planification
+00:25 +77: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 journal du moteur : longueur et types
+00:25 +78: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 posterior final
+00:25 +79: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 journaux des extensions du banc
+00:25 +80: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 rejeu du journal : même état, extensions et façade comprises
+00:27 +81: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 états des extensions
+00:27 +82: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 sécurité de la saison (kmSecuriteSaison)
+00:27 +83: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 (tearDownAll)
+00:27 +83: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 (setUpAll)
+00:28 +83: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:28 +84: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.sets : clés, valeurs et types (hors traces)
+00:28 +85: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.sets : traces des cibles
+00:28 +86: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.estimates : clés, valeurs et types
+00:28 +87: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 séances servies
+00:28 +88: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 compteurs, gains et capacités
+00:28 +89: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 prévisions de la planification
+00:28 +90: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 journal du moteur : longueur et types
+00:28 +91: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 posterior final
+00:28 +92: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 journaux des extensions du banc
+00:28 +93: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +94: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 états des extensions
+00:29 +95: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 sécurité de la saison (kmSecuriteSaison)
+00:29 +96: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 (tearDownAll)
+00:29 +96: test/km2_banc_test.dart: comparateur : chemins, tolérance et types
+00:29 +97: test/km2_banc_test.dart: KmBanc : saisons figées = saisons que lit la référence Python
+00:30 +98: All tests passed!

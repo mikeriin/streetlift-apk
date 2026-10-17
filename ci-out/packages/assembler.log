@@ -1,0 +1,4 @@
+saisons 90600 (plantées 0) ; critère 7 : 63 ; réalisée appariée : 259646 ; retour à l'écrit : 45046 ; réalisée contre le plan initial : 634325
+saisons 5436 (plantées 0) ; critère 7 : 0 ; réalisée appariée : 12248 ; retour à l'écrit : 2236 ; réalisée contre le plan initial : 29761
+90600 saisons, 63 violations dans 25 saisons
+bilan : respectés ["2_mauvais_jour_isole", "3_convergence_sous_3", "4_couverture_90", "6_performance_jour_j", "7_securite", "8_temps_calcul"] ; NON respectés ["1_erreur_e1rm_rang_6", "5_calibration_p_reussite"]
