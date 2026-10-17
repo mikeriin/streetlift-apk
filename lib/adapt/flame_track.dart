@@ -522,38 +522,54 @@ class FlameSetButton extends StatelessWidget {
       onTapHint: 'noter la série',
       onLongPressHint: 'annuler la validation',
       excludeSemantics: true,
-      child: Material(
-        color: k.validation.withValues(alpha: .14),
-        shape: KRadius.pill,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          onLongPress: onLongPress,
-          child: SizedBox(
-            width: KSize.target,
-            height: KDensity.field(KSize.target),
-            child: Center(
-              child: excluded
-                  ? Icon(
-                      Icons.block_rounded,
-                      size: KSize.iconSmall,
-                      color: k.texte2,
-                    )
-                  : f != null
-                  ? FlameIcon(
-                      f,
-                      key: ValueKey('set-flame-value-$setLabel-$f'),
-                      size: KSize.icon,
-                      semantics: false,
-                      centered: true,
-                    )
-                  : Icon(
-                      unknown
-                          ? Icons.help_outline
-                          : Icons.local_fire_department_outlined,
-                      size: KSize.icon,
-                      color: k.texte2,
-                    ),
+      // Même gabarit que la coche : pastille à la hauteur des champs, zone
+      // d'appui de 48 dp hors densité compacte (C13).
+      child: SizedBox(
+        width: KSize.target,
+        height: KDensity.factor < 1
+            ? KDensity.field(KSize.target)
+            : KSize.target,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            Feedback.forTap(context);
+            onTap();
+          },
+          onLongPress: () {
+            Feedback.forLongPress(context);
+            onLongPress();
+          },
+          child: Center(
+            child: Material(
+              color: k.validation.withValues(alpha: .14),
+              shape: KRadius.pill,
+              child: SizedBox(
+                width: KSize.target,
+                height: KDensity.field(KSize.target),
+                child: Center(
+                  child: excluded
+                      ? Icon(
+                          Icons.block_rounded,
+                          size: KSize.iconSmall,
+                          color: k.texte2,
+                        )
+                      : f != null
+                      ? FlameIcon(
+                          f,
+                          key: ValueKey('set-flame-value-$setLabel-$f'),
+                          size: KSize.icon,
+                          semantics: false,
+                          centered: true,
+                        )
+                      : Icon(
+                          unknown
+                              ? Icons.help_outline
+                              : Icons.local_fire_department_outlined,
+                          size: KSize.icon,
+                          color: k.texte2,
+                        ),
+                ),
+              ),
             ),
           ),
         ),

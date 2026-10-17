@@ -75,7 +75,10 @@ committer les fichiers déchiffrés.
   tient dans une seule carte (PR4) : l'en-tête compact du groupe (« E2MOM
   16 min · départ toutes les 2 min », chrono, tours), la prescription de
   chaque exercice (« A · NOM »), puis les séries tour par tour (A·1, B·1,
-  espace, A·2…).
+  espace, A·2…). Des exercices au même départ chronométré n'ont qu'un
+  chrono et un libellé de format (« E2MOM · départ toutes les 2 min »,
+  PR6). Programme du propriétaire (PR6) : lifts au départ chronométré et
+  leurs enchaînements sans annotation Koach, servis tels qu'écrits.
 - Notation (PR5) : une série validée montre sa flamme à la place de la
   coche ; un appui ouvre le curseur en popup (note validée au lâcher), un
   appui long annule la validation. En lecture, séries résumées en une ligne.

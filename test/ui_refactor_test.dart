@@ -210,6 +210,25 @@ void main() {
     await tester.pumpAndSettle();
   });
 
+  testWidgets('PR6 : même départ chronométré, un seul chrono et un format', (
+    tester,
+  ) async {
+    small(tester, size: const Size(400, 1600));
+    final week = manualWeek(993, 'E2MOM enchaîné', [
+      manualExercise('CU-993-0', 'Traction lestée', '8×3 · E2MOM', count: 8),
+      manualExercise('CU-993-1', 'Pompes enchaînées', '8×12 · E2MOM', count: 8),
+    ]);
+    final day = week.days.single;
+    await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('exercise-card-merged')), findsOneWidget);
+    expect(find.textContaining('Lancer l’E2MOM, 8 × 120'), findsOneWidget);
+    expect(find.textContaining('E2MOM · départ toutes les 2'), findsOneWidget);
+    expect(tester.takeException(), null);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('les exercices enchaînés ont chacun leur bloc et leur note', (
     tester,
   ) async {
