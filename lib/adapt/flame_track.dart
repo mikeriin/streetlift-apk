@@ -522,13 +522,10 @@ class FlameSetButton extends StatelessWidget {
       onTapHint: 'noter la série',
       onLongPressHint: 'annuler la validation',
       excludeSemantics: true,
-      // Même gabarit que la coche : pastille à la hauteur des champs, zone
-      // d'appui de 48 dp hors densité compacte (C13).
+      // Pastille à la hauteur des champs, zone d'appui de 48 dp (C13).
       child: SizedBox(
         width: KSize.target,
-        height: KDensity.factor < 1
-            ? KDensity.field(KSize.target)
-            : KSize.target,
+        height: KSize.target,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
