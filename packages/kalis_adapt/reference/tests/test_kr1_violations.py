@@ -58,7 +58,9 @@ class _Espion(object):
             avant = athlete.pain_flares
             espion._rw(athlete)
             if z is not None:
-                espion.semaines.append((athlete._weeks, z, semaine, tol, athlete.pain_flares > avant))
+                # `end_week` a déjà incrémenté `_weeks` : l'exposition relevée
+                # est celle de la semaine `_weeks − 1` (relecture KM1c4, M5).
+                espion.semaines.append((athlete._weeks - 1, z, semaine, tol, athlete.pain_flares > avant))
 
         def ov(athlete, zone, intensite, jours):
             espion.surcharges.append((athlete._day, zone, intensite))
@@ -92,7 +94,7 @@ class _Espion(object):
         pk.PolitiqueKoach.planifier = self._pl
 
 
-def _rejouer(cle, scenario, verite_kind, graine, espion=None):
+def _rejouer(cle, scenario, verite_kind, graine, espion=None, garder_journal=False):
     opts = ca.options_de([])
     ca.appliquer_parametres(opts)
     saison = cm._saison(cle, scenario, None)
@@ -100,7 +102,8 @@ def _rejouer(cle, scenario, verite_kind, graine, espion=None):
     if espion is not None:
         espion.installer()
     try:
-        return meneur.simuler(saison, donnees.catalogue_infos(), pol, verite_kind, graine)
+        return meneur.simuler(saison, donnees.catalogue_infos(), pol, verite_kind, graine,
+                              garder_journal=garder_journal)
     finally:
         if espion is not None:
             espion.retirer()
@@ -160,13 +163,25 @@ def test_aggravation_sur_une_douleur_jamais_signalee():
     aggravation, dips lestés 10 → 11,25 kg) : la douleur du poignet (tendon,
     4/10) n'avait pas été signalée (dernier signalement vu par Koach : 0) ;
     avec la remise à faux de `_pain_known` au début de l'épisode, aucune
-    aggravation ; une fois signalée (5/10), Koach retire les dips lestés."""
+    aggravation ; une fois signalée (4/10 : sans l'aggravation, elle ne monte
+    plus à 5), aucune hausse de charge sur les dips lestés."""
     e = _Espion()
-    tour = _rejouer('street_10_elite_figures', 'seances_manquees', 'b', 34, e)
+    tour = _rejouer('street_10_elite_figures', 'seances_manquees', 'b', 34, e, garder_journal=True)
     assert tour.pain_aggravations == 0 and tour.pain_flares == 0, e.aggravations
     g = e.koach.garde.zones['wrist_hand']
-    forts = [(j, i) for (j, i) in g.signalements if i >= 4]
-    assert forts and max(i for _, i in forts) >= 4
+    # La douleur du tendon (4/10, sans l'aggravation qui la portait à 5) est
+    # signalée après la semaine 10 (fin de la séance du jour 78, où les dips
+    # lestés sont montés sans qu'elle soit connue) ; ensuite, règle 4 et
+    # A1.1 : aucune charge de dips lestés servie après ce signalement ne
+    # dépasse la dernière d'avant tant que la gêne dure.
+    forts = [j for (j, i) in g.signalements if i >= 4 and j >= 70]
+    assert forts
+    j0 = forts[0]
+    dips = [(r['simDay'], st.get('externalLoadKg')) for r in tour.journal for st in r['sets']
+            if st['exerciseId'] == 'sl-dips-leste' and st.get('kind') != 'warmup']
+    assert dips and [d for d in dips if d[0] > j0]
+    avant = max(c for (j, c) in dips if j <= j0 and c is not None)
+    assert all(c <= avant + 1e-9 for (j, c) in dips if j > j0 and c is not None)
 
 
 def test_douleur_tendineuse_inconnue_tant_que_non_signalee():

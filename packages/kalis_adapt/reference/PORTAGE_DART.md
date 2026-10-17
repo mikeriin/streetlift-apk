@@ -188,8 +188,10 @@ Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Po
 - `seance.dart` : état `ecritZone` (zone → semaine → séries écrites), `budgetSemaine` (zone → permis), `rampeZone`
   (ensemble, parcouru trié quand il est écrit) ; `_semainesCloses()` = `{j ~/ 7 pour j dans joursSeances}` ;
   `_compterEcritZone(semaine, items)` (sur `zonesEx` connues seulement, `sets` entier > 0) ; `_ecritZone` ;
-  `_budgetZoneSemaine(z)` ligne pour ligne (boucles `w` décroissantes, `charge_fermee(w) = semaines[w] == true &&
-  closes.contains(w)` ; `debut = ep.premier ~/ 7` ; `floor(x + 1e-9)` ; `habitude = somme / 4.0` ; sortie progressive
+  `_budgetZoneSemaine(z)` ligne pour ligne (boucles `w` décroissantes depuis `semaine − 1` jusqu'à `debut`,
+  `charge_fermee(w) = semaines[w] == true && closes.contains(w)` ; `debut = ep.premier ~/ 7` ; `tenir` vrai quand
+  la référence est la semaine `debut` ; recherche arrière bornée à `max(debut + 1, w − rampe_zone_semaines_max)` ;
+  `floor(x + 1e-9)` ; `habitude = somme / 4.0` ; sortie progressive
   qui retire `z` de `rampeZone` et renvoie `null`, sinon l'ajoute) ; `_budgetsZoneJour(items)` : `part = floor(reste ·
   e_jour / (e_jour + e_reste) + 0,5)` en double, `reste` entier ; `ouvrir` : `budgetSemaine` recalculé après les
   séances manquées (qui alimentent aussi `ecritZone`) ; `prescrire` : `_compterEcritZone(sem, items)` puis

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Mise au point KM1c4, run D (export 0.4.2 (PART 0) ; campagne Python de la référence 1.0.5 sur les 100 graines, 20 parts (61-80)).
+# Mise au point KM1c4, run E (export 0.4.2 (PART 0) ; campagne Python de la référence 1.0.5 après relecture sur les 100 graines, 20 parts (61-80)).
 #  PART 0     : export KM1 sur kalis_plan 0.4.2 (34 profils, témoin 16 graines) ; données neuves
 #               mises à la place de celles de 0.4.1 dans l'arbre de la CI ; sécurité des blocs ;
 #               tests Python de la référence ; tests km de kalis_bench (version de référence 0.4.2)

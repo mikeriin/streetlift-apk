@@ -284,6 +284,7 @@ class Seances(object):
         self.budget_zone = {}    # zone sensible -> séries encore permises aujourd'hui (rampe du réalisé)
         self.budget_semaine = {}  # zone sensible -> séries permises cette semaine (total)
         self.rampe_zone = set()  # zones encore sous rampe après la fenêtre sensible (sortie progressive)
+        self.reserve_echauffement = {}  # zone sous budget -> séries que l'échauffement peut prendre aujourd'hui
         # Retour gradué au volume (critères `volume_trop_vite` et
         # `tendon_figures` du banc), recalculé du journal (contexte des
         # séances, appels de plan, fins de séance) :
@@ -439,10 +440,13 @@ class Seances(object):
         if c.get('semaine') is not None:
             self.allegees[c['semaine']] = c.get('genre') in legeres
         self.budget_semaine = {}
-        for z in list(self.g.zones):
-            b = self._budget_zone_semaine(z)
+        for z in sorted(self.g.zones):
+            b, sortie = self._budget_zone_semaine(z)
+            if sortie:
+                self.rampe_zone.discard(z)
             if b is not None:
                 self.budget_semaine[z] = b
+                self.rampe_zone.add(z)
         for mem in self.memoire.values():
             mem.charge_seance = None
             mem.reps_seance = None
@@ -497,9 +501,22 @@ class Seances(object):
     def _dose_semaine(self, z, semaine):
         return self.dose_zone.get(z, {}).get(semaine, 0)
 
-    def _semaines_closes(self):
-        """Semaines ayant au moins une séance fermée (journal)."""
-        return set(j // 7 for j in self.jours_seances)
+    def _semaine_connue(self, w):
+        """Semaine [w] connue du journal : une séance y a été ouverte
+        (`garde.semaines`) ou une séance manquée y a été versée
+        (`allegees`, par `contexte['manquees']`) ; jamais tronqué (le journal
+        des jours de séance, lui, ne garde que les 20 derniers)."""
+        return w in self.g.semaines or w in self.allegees
+
+    def _semaine_de_charge(self, w):
+        """Semaine connue ET de charge (genre ou intention hors allègement,
+        test, affûtage, compétition, transition) ; une semaine entièrement
+        manquée est une semaine de charge connue à exposition 0."""
+        if w in self.g.semaines:
+            return bool(self.g.semaines[w])
+        if w in self.allegees:
+            return not self.allegees[w]
+        return False
 
     def _compter_ecrit_zone(self, semaine, items):
         """Séries écrites de la semaine [semaine] par zone provoquée
@@ -520,81 +537,105 @@ class Seances(object):
         return self.ecrit_zone.get(z, {}).get(semaine, 0)
 
     def _budget_zone_semaine(self, z):
-        """1.0.5 (lot KM1c4, règles 1 à 3) : séries permises cette semaine,
-        tous mouvements qui provoquent la zone [z] confondus (échauffement
-        compris), quand la zone est sensible (`Gardefous.sensible` : épisode
-        ≥ `arret_persistance_min`, avec ou sans arrêt, douze semaines après
-        son dernier signalement) ou encore sous rampe après la fenêtre (sortie
-        progressive). None sinon. « Rampe du réalisé » :
+        """1.0.5 (lot KM1c4, règles 1 à 3) : (permis, sortie) — séries
+        permises cette semaine, tous mouvements qui provoquent la zone [z]
+        confondus (échauffement compris), quand la zone est sensible
+        (`Gardefous.sensible` : épisode ≥ `arret_persistance_min`, avec ou
+        sans arrêt, douze semaines après son dernier signalement) ou encore
+        sous rampe après la fenêtre (sortie progressive) ; (None, False)
+        sinon ; `sortie` vrai quand la zone sort de la rampe. Fonction pure
+        (l'appelant tient `rampe_zone`). « Rampe du réalisé » :
 
         * référence = exposition RÉALISÉE de la dernière semaine de charge
-          fermée (séances manquées à 0, jamais comptées à l'écrit) ; une
-          semaine fermée sans exposition renvoie à la dernière semaine de
-          charge exposée parmi les `rampe_zone_semaines_max` précédentes ;
+          connue depuis la semaine du premier signalement de l'épisode et,
+          s'il y a eu un arrêt, après la semaine de sa levée (séances
+          manquées à 0, jamais comptées à l'écrit) ; une semaine de charge
+          sans exposition renvoie à la dernière semaine exposée parmi les
+          `rampe_zone_semaines_max` précédentes, strictement après la
+          semaine du signalement et après la levée ; la semaine du
+          signalement elle-même ne sert que si aucune semaine de charge
+          connue ne la sépare de la semaine en cours, et sans hausse
+          (tenue) ; dans la semaine du signalement, tenue au réalisé de la
+          semaine de charge précédente ;
         * permis = max(référence + 1 ; référence × (1 + `reprise_dose_hausse`))
           (hausse hebdomadaire bornée : Gabbett 2016, rapport aigu:chronique
           0,8-1,3, danger ≥ 1,5 ; Nielsen et al. 2014) ; pas de hausse si la
-          zone a été signalée > `reprise_douleur_max` dans les 7 derniers jours
-          (Silbernagel et al. 2007 : la douleur ne doit pas augmenter d'une
-          semaine à l'autre) ;
+          zone a été signalée > `reprise_douleur_max` dans les
+          `douleur_hausse_j` derniers jours (Silbernagel et al. 2007 : la
+          douleur ne doit pas augmenter d'une semaine à l'autre) ;
         * sans référence (aucune semaine de charge exposée depuis le début de
-          l'épisode, ou arrêt) : départ à `reprise_dose_depart` × habitude,
-          habitude = charge chronique = somme de l'exposition réalisée des
-          quatre semaines de charge précédant l'épisode / 4 (moyenne glissante
-          sur quatre semaines du rapport aigu:chronique, Gabbett 2016 ; une
-          semaine sans journal compte 0) ; sans habitude :
-          `reprise_dose_sans_habitude` ;
+          l'épisode ou depuis la levée de l'arrêt, ou arrêt en cours) :
+          départ à `reprise_dose_depart` × habitude, habitude = charge
+          chronique = somme de l'exposition réalisée des semaines de charge
+          connues parmi les quatre semaines précédant la semaine du premier
+          signalement, divisée par 4 (moyenne glissante sur quatre semaines
+          du rapport aigu:chronique, Gabbett 2016 ; une semaine inconnue ou
+          allégée compte 0) ; sans habitude : `reprise_dose_sans_habitude` ;
         * jamais sous `reprise_dose_min`."""
         g = self.g
         s = self.s
         d = g.zones.get(z)
         if d is None:
-            return None
+            return None, False
         semaine = g.semaine
         ep = g.episode(z)
         sensible = g.sensible(z)
         if not sensible and z not in self.rampe_zone:
-            return None
-        closes = self._semaines_closes()
-
-        def charge_fermee(w):
-            return g.semaines.get(w, False) and w in closes
-
+            return None, False
+        charge = self._semaine_de_charge
         debut = ep[0] // 7 if ep is not None else semaine
-        # Référence : dernière semaine de charge fermée depuis la semaine du
-        # premier signalement de l'épisode. La semaine du signalement
-        # elle-même ne sert que si c'est la semaine précédente, et sans
-        # hausse (ce qui a été fait cette semaine-là l'a été en partie avant
-        # le signalement : on tient, on ne monte pas) ; une semaine fermée
-        # sans exposition renvoie à la dernière semaine exposée parmi les
-        # `rampe_zone_semaines_max` précédentes, STRICTEMENT après la
-        # semaine du signalement (sinon un épisode qui a vidé une ou deux
-        # semaines repartirait de l'exposition d'avant l'épisode) ; après
-        # l'arrêt le cas échéant.
+        # Après un arrêt levé dans l'épisode, rien d'avant la semaine de la
+        # levée ne sert de référence (la zone repart de l'arrêt).
+        apres = debut + 1
+        if ep is not None and d.arret_leve is not None and d.arret_leve >= ep[0]:
+            # Première semaine qui compte après la levée : celle de la levée
+            # si elle lui laisse au moins 4 jours (règle de
+            # `Gardefous._semaines_de_charge`), sinon la suivante.
+            leve = d.arret_leve
+            premiere = leve // 7 if 7 - (leve % 7) >= 4 else leve // 7 + 1
+            apres = max(apres, premiere)
         ref = None
         tenir = False
-        w = semaine - 1
-        while w >= debut and w >= 0:
-            if charge_fermee(w):
-                ref = self._dose_semaine(z, w)
-                if w == debut:
+        if semaine == debut:
+            # Semaine du signalement : tenue au réalisé de la semaine de
+            # charge précédente (un signalement sans retrait gèle, ne coupe
+            # pas) ; sans semaine de charge précédente, départ.
+            w = semaine - 1
+            while w >= 0 and w >= semaine - s['rampe_zone_semaines_max']:
+                if charge(w):
+                    ref = self._dose_semaine(z, w)
                     tenir = True
-                elif ref <= 0:
-                    for k in range(w - 1, max(debut + 1, w - s['rampe_zone_semaines_max']) - 1, -1):
-                        if charge_fermee(k) and self._dose_semaine(z, k) > 0:
-                            ref = self._dose_semaine(z, k)
-                            break
-                break
-            w -= 1
+                    break
+                w -= 1
+        else:
+            w = semaine - 1
+            while w >= debut and w >= 0:
+                if charge(w):
+                    if w < apres:
+                        break
+                    ref = self._dose_semaine(z, w)
+                    if ref <= 0:
+                        for k in range(w - 1, max(apres, w - s['rampe_zone_semaines_max']) - 1, -1):
+                            if charge(k) and self._dose_semaine(z, k) > 0:
+                                ref = self._dose_semaine(z, k)
+                                break
+                    break
+                w -= 1
+            if ref is None and (debut < semaine) and apres == debut + 1:
+                # Aucune semaine de charge connue entre le signalement et
+                # aujourd'hui : la semaine du signalement sert, tenue.
+                if charge(debut):
+                    ref = self._dose_semaine(z, debut)
+                    tenir = True
         if ref is not None and ref > 0 and g.arret(z):
             ref = None
         if ref is not None and ref > 0:
-            if tenir or d.pire_entre(self.jour - 6, self.jour) > s['reprise_douleur_max']:
+            if tenir or d.pire_entre(self.jour - s['douleur_hausse_j'] + 1, self.jour) > s['reprise_douleur_max']:
                 total = int(ref)
             else:
                 total = max(int(ref) + 1, int(math.floor(ref * (1 + s['reprise_dose_hausse']) + 1e-9)))
         else:
-            avant = [self._dose_semaine(z, k) for k in range(debut - 4, debut) if k >= 0 and charge_fermee(k)]
+            avant = [self._dose_semaine(z, k) for k in range(debut - 4, debut) if k >= 0 and charge(k)]
             if avant:
                 habitude = sum(avant) / 4.0
                 total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
@@ -604,21 +645,19 @@ class Seances(object):
             total = int(s['reprise_dose_min'])
         if not sensible:
             # Sortie progressive (règle 2) : après la fenêtre, la rampe
-            # continue tant que le permis n'atteint pas l'écrit de la
-            # semaine de référence ; dès qu'il l'atteint, la zone sort.
-            ecrit_ref = 0
+            # continue tant que le permis n'atteint pas l'écrit (dernière
+            # semaine de charge connue, et semaine en cours vue jusqu'ici) ;
+            # dès qu'il l'atteint, la zone sort.
+            ecrit_ref = self._ecrit_zone(z, semaine)
             w = semaine - 1
             while w >= 0:
-                if charge_fermee(w):
-                    ecrit_ref = self._ecrit_zone(z, w)
+                if charge(w):
+                    ecrit_ref = max(ecrit_ref, self._ecrit_zone(z, w))
                     break
                 w -= 1
             if total >= ecrit_ref:
-                self.rampe_zone.discard(z)
-                return None
-        else:
-            self.rampe_zone.add(z)
-        return total
+                return None, True
+        return total, False
 
     def _budgets_zone_jour(self, items):
         """Part du budget hebdomadaire de chaque zone sensible pour la séance
@@ -670,6 +709,16 @@ class Seances(object):
             self.ecrit_semaines[sem] = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(p) for p in items)
             self._compter_ecrit_zone(sem, items)
         self.budget_zone = self._budgets_zone_jour(items)
+        # Réserve de l'échauffement : ce que le permis du jour laisse après
+        # les séries de travail écrites sur la zone (le travail d'abord).
+        self.reserve_echauffement = {}
+        for z, b in self.budget_zone.items():
+            travail = 0
+            for p in items:
+                zz = self.zones_ex.get(p['exerciseId'])
+                if zz and z in zz[1] and p.get('kind') != 'warmup':
+                    travail += int(p.get('sets') or 0)
+            self.reserve_echauffement[z] = max(0, b - travail)
         for item in items:
             servi = self._item(item, grilles.get(item['exerciseId']), zones.get(item['exerciseId']),
                                roles.get(item['slotId']))
@@ -807,18 +856,27 @@ class Seances(object):
         # Rampe du réalisé (1.0.5, KM1c4) : séries de tout mouvement qui
         # provoque une zone sous budget ramenées à ce que la séance permet
         # encore, échauffement compris (chaque série expose la structure).
+        epuisee = None
         for z in sorted(hits):
             if z in self.budget_zone:
                 reste = self.budget_zone[z]
+                if echauffement:
+                    # L'échauffement ne prend que ce que le travail de la
+                    # séance laisse (réservé à la prescription).
+                    reste = min(reste, self.reserve_echauffement.get(z, reste))
                 if series > reste:
                     series = reste if reste > 0 else 0
+                    if series <= 0:
+                        epuisee = z
                     self._raison('koach.reprise_dose', exercice=ex_id, zone=z)
-        if series <= 0 and any(z in self.budget_zone for z in hits):
-            self._raison('koach.douleur_retrait', exercice=ex_id, zone=cond['zone'] or sorted(hits)[0], cause='reprise_dose')
+        if series <= 0 and epuisee is not None:
+            self._raison('koach.douleur_retrait', exercice=ex_id, zone=epuisee, cause='reprise_dose')
             return None
         for z in sorted(hits):
             if z in self.budget_zone:
                 self.budget_zone[z] -= series
+                if echauffement and z in self.reserve_echauffement:
+                    self.reserve_echauffement[z] -= series
         servi['sets'] = series
         self.plans[item['slotId']] = plan
         if typ in ('charge', 'reps', 'tenue') and not echauffement:
