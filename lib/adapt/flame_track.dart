@@ -566,6 +566,7 @@ class FlameSetButton extends StatelessWidget {
                         size: KSize.icon,
                         color: k.texte2,
                       ),
+                ),
               ),
             ),
           ),
