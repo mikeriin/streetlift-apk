@@ -905,6 +905,51 @@ contrôle complet `claude/ci-cp-b` run 38991643691 vert. Détail : `pipeline/cp/
 - **KS1c2.7 Recommandations (C8)** : valider ; lot court d'application pour `kalis_plan` 0.4.2 ; corriger `_upFits`
   (KS1c1.7 b) ; l'option (c) de C17.15 reste à faire (séances du constat servies en 20 à 40 min sur 120).
 
+### KM1c4
+
+Lot livré le 17/10/2026 (session Fable 5.1, effort maximal, C17.25), lot de méthode Koach (C13.9) sans panel ni relecture
+documentée (C13.3), validation automatique par le pilotage : référence Koach 1.0.5 (Python ; `kalis_adapt` 1.0.3 et
+son Dart inchangés, portage = KM2c3) et `kalis_bench` 0.5.5 (`moteurs` ba1e5093 ; étiquette `kalis_bench-v0.5.5`),
+contrôle complet `claude/ci-cp-a` run 39062150893 vert (arbre identique). **Critère dur C17.17.3 tenu sur la référence : 0
+violation sur 90 600 saisons.** Détail : `pipeline/cp/livraisons/LIVRAISON_KM1c4.md`, `packages/kalis_bench/docs/CRITERES_KM1C4.md`,
+`packages/kalis_adapt/reference/CHANGEMENTS_1_0_5.md`.
+
+- **KM1c4.1 Lancement** : message sans ligne « Lot : » ; KM1c4 seul lot moteur « à faire ». `add_repo` absent ; accès en
+  écriture vérifié par `git push --dry-run` puis par le push de la ligne « en cours ». Pas de SDK Dart (proxy) : exports,
+  campagnes et contrôle sur `claude/ci-cp-a` (commits « KM1c4 contrôle (dev) »). Clé des références non lue. Sauvegardes
+  sur `cp-sauvegardes/KM1c4`.
+- **KM1c4.2 Règles** (référence Python, chaque chiffre sourcé dans `SOURCES.md` ou dit comme choix raisonné) : (1) zone
+  sensible 84 jours après tout épisode ≥ 3, avec ou sans arrêt ; (2-3) rampe du réalisé par zone sensible : permis
+  hebdomadaire d'exposition = réalisé de la dernière semaine de charge + 1 ou + 20 % (Gabbett 2016, Nielsen 2014), pas
+  de hausse après une gêne > 2 dans la semaine (Silbernagel 2007), départ à la moitié de la charge chronique, séances
+  manquées à 0, sortie progressive jusqu'à l'écrit, budget sur tout item, pas de vrai test ; (3 bis) même rampe au
+  retour d'une coupure de 14 jours de la zone avec séance manquée, sans douleur connue (une douleur née pendant la
+  coupure n'a pu être signalée), suspendue en semaine verrouillée ; (4) aucune hausse de charge sur un exercice qui
+  sollicite ≥ 0,5 une zone gênée > 3 dans les sept jours (Malliaras 2015) ; (5) élargissement « rien de spécial » =
+  mélange convexe vers l'a priori (λ 0,25), toutes branches. Paramètres `1.0.5-ref.1` : 7 clés nouvelles,
+  `reprise_dose_depart` 0,6 → 0,5. API, journal et codes de raison inchangés.
+- **KM1c4.3 Banc** : les 4 aggravations de KR1 comptaient une hausse de charge sur une douleur tendineuse jamais signalée
+  (`_pain_known` non remis à faux au début d'un épisode) : corrigé dans `banc/verite.py`, à porter dans `truth.dart`
+  (KM2c3). `banc/securite_campagne.py` agrège en flux les parts d'une campagne Python de cent graines ; `kalis_bench`
+  tests et CLI km2 sur `koach_params_d4.json` (copie de 1.0.4), `_planReference` 0.4.2 ; limite du contrôle complet
+  180 → 240 min (reco KR1).
+- **KM1c4.4 Sécurité** (90 600 saisons, `kalis_plan` 0.4.2) : point de départ Dart 0.4.2 × 1.0.4 = KR1 à l'identique (63,
+  25 saisons) ; règles 1 à 5 : **4** (3 saisons `street_03`, séances manquées : épisode du poignet né et fini pendant
+  une coupure, jamais signalé, retour à l'écrit) ; règle 3 bis ajoutée : **0**. 0 saison plantée. Graine 0 et graines
+  0 à 5 : 0. Réalisée appariée 259 646 → 238 906 (indicateur).
+- **KM1c4.5 Critères** (graines 0 à 5, Python, témoin 0.4.2, bruit des 17 groupes de KR1) : aucun recul au-delà du bruit (e1RM 3,67 % contre 3,61 ; mauvais jour 0,81 contre 0,88 ; convergence 4,83 contre 4,88 ; couverture 91,94 contre 91,42 ; jour J 0,9339 contre 0,9374, bruit 0,005 ; critère 5, jamais tenu, 14,5 → 25,9 pts sur un décile de 71 cas, 1,4 erreur-type). 7 bis sur six
+  jeux (même témoin que KM1c3) : tenus 24, 22, 18, 23, 22, 21 contre 24, 22, 19, 22, 22, 21, cas sous le plancher identiques, jour J moyen de −0,004 à +0,002. Athlètes sans douleur (68 saisons) : 49 identiques, les 19 autres ont un diagnostic « rien de spécial » ou une douleur signalée ≥ 3 ; 0 écart sans l'un ni l'autre (37 saisons). Temps Python : écarts de
+  −5 à +4 %, dans le bruit (critère 11 au portage).
+- **KM1c4.6 Relecture indépendante** (sous-agent Opus, avant mesure) : 2 bloquants, 5 majeurs, 10 mineurs trouvés ;
+  tous traités sauf deux limites écrites au contrat (annexe A.3, 23 bis et 23 ter).
+- **KM1c4.7 Limites et incidents** : le modèle de vérité ne fait pas décroître la tolérance sans exposition ; la rampe de
+  retour ne couvre pas une absence courte ou voulue par le plan ; `numerique.json` diffère aux derniers chiffres sous
+  numpy 2.4.6 (CI) — déjà en KR1 ; publications `if: always()` des runs annulés à forcer ; 20 parts + part 0 dépassent
+  la limite de 20 jobs.
+- **KM1c4.8 Recommandations (C8)** : valider ; lancer KM2c3 (portage Dart 1.0.4 : règles, paramètres, modèle de vérité,
+  remesure Dart des 90 600 saisons et du critère 11) ; KB1 ensuite ; garder réalisée appariée et critère 5 comme
+  indicateurs.
+
 ## C14 — Refonte UI et UX (conversation de pilotage, 10/10/2026)
 
 - **C14.1** Le propriétaire demande une refonte de l'UI et de l'UX (« propre, pas brouillon », inspirée de Samsung, Google et Microsoft, avec ses 8 palettes). Pipeline à part : `pipeline/ui/` (PIPELINE_UI.md, CAHIER_UI.md, ETAT_UI.md, DECISIONS_UI.md), tâche `trig_01Fqf4osZzdda75J4DqmoLB1`.
