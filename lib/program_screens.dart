@@ -99,8 +99,8 @@ String _modelText() {
     return [
       '$label.',
       if (explain.isNotEmpty) explain,
-      '${inst!.weeks.length} semaines, programme généré avant la création '
-          'avec Koach, affiché tel quel.',
+      '${store.program.shownWeeks.length} semaines, programme généré avant '
+          'la création avec Koach, affiché tel quel.',
     ].join(' ');
   }
   return _templateExplain;
