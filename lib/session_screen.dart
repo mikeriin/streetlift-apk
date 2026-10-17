@@ -1717,10 +1717,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       (p) => p.columns.join('|') == parts.first.columns.join('|'),
     );
     final header = same
-        ? parts.map((p) => p.header).firstWhere(
-            (h) => h.isNotEmpty,
-            orElse: () => const <Widget>[],
-          )
+        ? parts
+              .map((p) => p.header)
+              .firstWhere((h) => h.isNotEmpty, orElse: () => const <Widget>[])
         : const <Widget>[];
     return KCard(
       key: const ValueKey('exercise-card-merged'),
@@ -1833,9 +1832,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     }
 
     // PR4 : carte commune d'exercices enchaînés : lettre de l'exercice.
-    String rowLabel(int i) => _merged
-        ? '${String.fromCharCode(65 + k)}·${ownLabel(i)}'
-        : ownLabel(i);
+    String rowLabel(int i) =>
+        _merged ? '${String.fromCharCode(65 + k)}·${ownLabel(i)}' : ownLabel(i);
 
     final missing = _missingReference(ex, readOnly);
     // Bandeau des mini-séries présent (cluster, myo-reps, rest-pause servis
@@ -1931,9 +1929,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         if (lead)
                           Padding(
                             key: ValueKey('main-lift-${ex.id}'),
-                            padding: const EdgeInsets.only(
-                              bottom: KSpacing.s4,
-                            ),
+                            padding: const EdgeInsets.only(bottom: KSpacing.s4),
                             child: Text(
                               t.title('Lift principal'),
                               style: t.titleStyle(
@@ -1993,10 +1989,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                             : KType.chiffre.copyWith(color: ink),
                       ),
                       // Grand texte : la cible passe sous la charge.
-                      if (target case (
-                        final rir,
-                        final level,
-                      ) when largeText)
+                      if (target case (final rir, final level) when largeText)
                         _TargetBadge(
                           key: ValueKey('target-${ex.id}'),
                           rir: rir,
@@ -2077,8 +2070,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   ],
                 ),
               ),
-            if (readOnly &&
-                (log.prescribed != null || log.koach != null)) ...[
+            if (readOnly && (log.prescribed != null || log.koach != null)) ...[
               const SizedBox(height: KSpacing.s8),
               if (log.prescribed != null)
                 Text(
@@ -2166,10 +2158,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       ),
       const SizedBox(height: KSpacing.s8),
       // ----- Chronos de mode -----
-      if (!readOnly &&
-          interval != null &&
-          ex.timer == null &&
-          _group == null)
+      if (!readOnly && interval != null && ex.timer == null && _group == null)
         _big(
           Icons.timer_outlined,
           'Lancer ${interval.rounds} × ${interval.work} s / ${interval.rest} s',
@@ -2181,20 +2170,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ),
       if (!readOnly && ex.timer != null && !sp.cluster && _group == null)
         _modeButton(ex),
-      if (!readOnly &&
-          ex.timer == null &&
-          sp.kind == 'emom' &&
-          _group == null)
+      if (!readOnly && ex.timer == null && sp.kind == 'emom' && _group == null)
         _big(
           Icons.timer_outlined,
           'Lancer l’EMOM de ${sp.seconds! ~/ 60} min',
           () => widget.timer.emom(sp.seconds! ~/ 60, 60),
         ),
       // PR1 : séries au départ chronométré (E2MOM, E90s…).
-      if (!readOnly &&
-          ex.timer == null &&
-          sp.every != null &&
-          _group == null)
+      if (!readOnly && ex.timer == null && sp.every != null && _group == null)
         _everyButton(sp, log.sets.length),
       if (!readOnly && ex.timer == null && sp.kind == 'duration')
         _big(
@@ -2278,8 +2261,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 : sp.kind == 'duration'
                 ? () => widget.timer.single(
                     'DURÉE',
-                    (int.tryParse(log.sets[i].reps) ??
-                            (sp.seconds! ~/ 60)) *
+                    (int.tryParse(log.sets[i].reps) ?? (sp.seconds! ~/ 60)) *
                         60,
                   )
                 : null,
@@ -2434,14 +2416,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Notes',
-                    style: KType.detail.copyWith(color: t.texte2),
-                  ),
-                  Text(
-                    log.note,
-                    style: KType.corps.copyWith(color: t.texte),
-                  ),
+                  Text('Notes', style: KType.detail.copyWith(color: t.texte2)),
+                  Text(log.note, style: KType.corps.copyWith(color: t.texte)),
                 ],
               ),
             ),
