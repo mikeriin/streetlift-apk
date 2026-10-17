@@ -1,0 +1,52 @@
+# PR9 : captures d'écran à distance. Un push sur une branche
+# `claude/shots-*` lance les tests de capture (polices réelles, rendu du
+# moteur de test) listés dans tools/shots.txt, puis pousse les images dans
+# shots/ sur la même branche. Sert aux sessions sans SDK Flutter local
+# (relecture visuelle de l'interface).
+name: Captures d'écran
+
+on:
+  push:
+    branches: ["claude/shots-*"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalis-shots-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shots:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    # Le commit des images ne relance pas les captures.
+    if: ${{ !startsWith(github.event.head_commit.message, 'Captures d') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.5'
+          channel: stable
+          cache: true
+      - name: Dépendances
+        run: flutter pub get --enforce-lockfile
+      - name: Captures
+        env:
+          TZ: Europe/Paris
+        run: |
+          files="$(grep -v '^#' tools/shots.txt | xargs)"
+          flutter test --no-pub --dart-define=KALIS_CAPTURE=true $files 2>&1 | tail -n 60 || true
+      - name: Pousser les images
+        run: |
+          git config user.name "kalis-shots"
+          git config user.email "kalis-shots@users.noreply.github.com"
+          rm -rf shots && mkdir -p shots
+          cp validation/UI/*.png shots/ 2>/dev/null || true
+          git add -f shots
+          if git diff --cached --quiet; then
+            echo "Aucune image."
+            exit 0
+          fi
+          git commit -m "Captures d'écran"
+          git push

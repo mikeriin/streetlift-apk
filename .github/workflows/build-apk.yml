@@ -5,8 +5,9 @@ name: Build APK et AAB
 
 on:
   push:
-    # PR4 : les branches de formatage à distance n'ont pas de build.
-    branches: ["**", "!claude/fmt-*"]
+    # PR4 : les branches de formatage à distance (et PR9, de captures)
+    # n'ont pas de build.
+    branches: ["**", "!claude/fmt-*", "!claude/shots-*"]
     paths:
       - lib/**
       - assets/**
