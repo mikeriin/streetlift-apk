@@ -1,6 +1,6 @@
 # kalis_adapt — mesures de la campagne de simulation
 
-Document généré par `dart run bin/kalis_adapt_cli.dart --rapport <dossier>` (moteur 1.0.2) à partir de `docs/data/campagne.json` : 8 athlètes simulés × 24 semaines × 200 graines × 4 politiques (dont l'oracle) à programme égal, puis 40 graines par athlète en boucle complète. Lecture et limites : `VALIDATION.md`.
+Document généré par `dart run bin/kalis_adapt_cli.dart --rapport <dossier>` (moteur 1.0.3) à partir de `docs/data/campagne.json` : 8 athlètes simulés × 24 semaines × 200 graines × 4 politiques (dont l'oracle) à programme égal, puis 40 graines par athlète en boucle complète. Lecture et limites : `VALIDATION.md`.
 
 Chaque valeur est la moyenne des graines ; « ± » donne la demi-largeur de l'intervalle de confiance à 95 % (1,96 × erreur standard entre graines).
 
@@ -199,7 +199,7 @@ Mesurés par le simulateur sur la machine de contrôle (le moteur n'a pas d'horl
 
 | Opération | Médiane | 95ᵉ centile | 99ᵉ centile | Maximum | Cible |
 | --- | --- | --- | --- | --- | --- |
-| Décision de séance (`prescribeSession`) | 0.16 ms | 0.25 ms | 6.80 ms | 10.23 ms | ≤ 50 ms |
-| Mise à jour après une série (`adviseNextSet`) | 0.07 ms | 0.13 ms | 0.15 ms | 2.18 ms | ≤ 5 ms |
-| Revue (`review`) | 0.81 ms | 0.99 ms | 2.83 ms | 2.83 ms | — |
-| Décision de séance à froid | 12.96 ms | 23.38 ms | 26.66 ms | 26.66 ms | — |
+| Décision de séance (`prescribeSession`) | 0.32 ms | 0.48 ms | 13.39 ms | 32.86 ms | ≤ 50 ms |
+| Mise à jour après une série (`adviseNextSet`) | 0.06 ms | 0.22 ms | 0.30 ms | 9.24 ms | ≤ 5 ms |
+| Revue (`review`) | 0.81 ms | 1.44 ms | 5.76 ms | 5.76 ms | — |
+| Décision de séance à froid | 9.48 ms | 18.57 ms | 23.30 ms | 23.30 ms | — |

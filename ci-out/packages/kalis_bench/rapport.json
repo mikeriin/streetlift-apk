@@ -1,7 +1,7 @@
 {
  "benchVersion": "0.5.4",
  "planVersion": "0.4.2",
- "adaptVersion": "1.0.2",
+ "adaptVersion": "1.0.3",
  "coreVersion": "0.4.4",
  "catalogVersion": "1.1.0",
  "mode": "croisement",
@@ -19803,112 +19803,112 @@
  ],
  "timingsMs": {
   "autres_01_debutant_musculation": {
-   "createBlockMs": 168.8,
-   "benchMs": 844.3
+   "createBlockMs": 105.0,
+   "benchMs": 512.7
   },
   "autres_02_hypertrophie_intermediaire": {
-   "createBlockMs": 23.1,
-   "benchMs": 700.3
+   "createBlockMs": 67.6,
+   "benchMs": 455.6
   },
   "autres_03_powerlifter_competition": {
-   "createBlockMs": 17.6,
-   "benchMs": 394.3
+   "createBlockMs": 12.8,
+   "benchMs": 263.7
   },
   "autres_04_force_generale_46_ans": {
-   "createBlockMs": 11.6,
-   "benchMs": 518.2
+   "createBlockMs": 9.6,
+   "benchMs": 380.0
   },
   "autres_05_course_10_km_debutante": {
-   "createBlockMs": 9.4,
-   "benchMs": 85.8
+   "createBlockMs": 6.5,
+   "benchMs": 55.2
   },
   "autres_06_semi_marathon_intermediaire": {
-   "createBlockMs": 5.8,
-   "benchMs": 318.9
+   "createBlockMs": 4.1,
+   "benchMs": 167.0
   },
   "autres_07_mobilite_sante_senior": {
-   "createBlockMs": 9.1,
-   "benchMs": 137.2
+   "createBlockMs": 5.6,
+   "benchMs": 91.6
   },
   "autres_08_crossfit_intermediaire": {
-   "createBlockMs": 22.6,
-   "benchMs": 427.4
+   "createBlockMs": 79.3,
+   "benchMs": 373.4
   },
   "autres_09_perte_de_poids_debutante": {
-   "createBlockMs": 10.5,
-   "benchMs": 187.5
+   "createBlockMs": 4.5,
+   "benchMs": 115.6
   },
   "autres_10_contraintes_multiples": {
-   "createBlockMs": 6.4,
-   "benchMs": 166.5
+   "createBlockMs": 6.6,
+   "benchMs": 89.4
   },
   "street_01_debutant_complet": {
-   "createBlockMs": 31.3,
-   "benchMs": 405.3
+   "createBlockMs": 9.2,
+   "benchMs": 198.3
   },
   "street_02_debutant_surpoids": {
-   "createBlockMs": 9.0,
-   "benchMs": 243.4
+   "createBlockMs": 5.2,
+   "benchMs": 217.6
   },
   "street_03_debutante": {
-   "createBlockMs": 6.5,
-   "benchMs": 376.3
+   "createBlockMs": 5.3,
+   "benchMs": 386.5
   },
   "street_04_reprise_longue_pause": {
-   "createBlockMs": 19.9,
-   "benchMs": 289.0
+   "createBlockMs": 14.0,
+   "benchMs": 207.6
   },
   "street_05_inter_calisthenie_front_lever": {
-   "createBlockMs": 36.9,
-   "benchMs": 649.2
+   "createBlockMs": 13.7,
+   "benchMs": 450.2
   },
   "street_06_inter_sets_reps": {
-   "createBlockMs": 8.7,
-   "benchMs": 283.5
+   "createBlockMs": 12.2,
+   "benchMs": 174.4
   },
   "street_07_avance_streetlifting_competition": {
-   "createBlockMs": 13.3,
-   "benchMs": 432.5
+   "createBlockMs": 10.7,
+   "benchMs": 233.1
   },
   "street_08_avance_sets_reps_competition": {
-   "createBlockMs": 6.3,
-   "benchMs": 153.1
+   "createBlockMs": 12.2,
+   "benchMs": 126.7
   },
   "street_09_elite_streetlifting": {
-   "createBlockMs": 7.1,
-   "benchMs": 326.8
+   "createBlockMs": 4.2,
+   "benchMs": 201.5
   },
   "street_10_elite_figures": {
-   "createBlockMs": 7.4,
-   "benchMs": 490.7
+   "createBlockMs": 10.1,
+   "benchMs": 397.4
   },
   "street_11_master_51_ans": {
-   "createBlockMs": 11.4,
-   "benchMs": 192.4
+   "createBlockMs": 10.5,
+   "benchMs": 138.5
   },
   "street_12_antecedent_coude": {
-   "createBlockMs": 6.8,
-   "benchMs": 128.5
+   "createBlockMs": 5.6,
+   "benchMs": 83.4
   },
   "street_13_peu_de_temps": {
-   "createBlockMs": 4.1,
-   "benchMs": 137.7
+   "createBlockMs": 2.3,
+   "benchMs": 48.6
   },
   "street_14_parc_sans_lest": {
-   "createBlockMs": 4.8,
-   "benchMs": 106.2
+   "createBlockMs": 5.5,
+   "benchMs": 63.7
   },
   "street_15_travail_physique_sommeil_court": {
-   "createBlockMs": 4.1,
-   "benchMs": 95.6
+   "createBlockMs": 4.9,
+   "benchMs": 96.1
   },
   "street_16_specialisation_traction_lestee": {
-   "createBlockMs": 2.8,
-   "benchMs": 98.5
+   "createBlockMs": 2.4,
+   "benchMs": 75.5
   },
   "street_17_hybride_street_course": {
-   "createBlockMs": 3.0,
-   "benchMs": 87.3
+   "createBlockMs": 2.7,
+   "benchMs": 54.1
   }
  }
 }

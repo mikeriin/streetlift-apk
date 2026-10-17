@@ -1,6 +1,6 @@
 # Rapport du banc kalis_bench 0.5.4
 
-Moteurs : kalis_plan 0.4.2, kalis_adapt 1.0.2, kalis_core 0.4.4 (catalogue 1.1.0). Mode `croisement`, profils `tous`, graine 0, 27 profils. Tout est déterministe, sauf les temps de calcul.
+Moteurs : kalis_plan 0.4.2, kalis_adapt 1.0.3, kalis_core 0.4.4 (catalogue 1.1.0). Mode `croisement`, profils `tous`, graine 0, 27 profils. Tout est déterministe, sauf les temps de calcul.
 
 ## 1. Programmes créés
 
