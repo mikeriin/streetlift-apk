@@ -174,3 +174,85 @@ Liste exacte : `CHANGEMENTS_1_0_3.md` (section H : fichiers Dart concernés). Po
 - Paramètres : aucune valeur changée ; version `1.0.4-ref.1`, asset `koach_params_1_0_4.json`.
 - Données de référence régénérées sur `kalis_plan` 0.4.1 (34 profils) : la saison vivante du banc est de nouveau celle
   que lit Python (`km2_banc_test.dart`, égalité stricte) ; `--saisons-figees` relit `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/reference/`.
+
+## Delta 1.0.4 → 1.0.5 (lot KM1c4, 17/10/2026 ; portage = lot KM2c3, `kalis_adapt` 1.0.4)
+
+Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Points d'attention pour la parité :
+
+- `securite.dart` : `episode(z)` renvoie `(premier, dernier)` des signalements ≥ `arret_persistance_min` de
+  l'épisode en cours, par le même découpage que `_episode` (déjà porté pour les arrêts) ; `sensible(z)` =
+  `0 ≤ jour − dernier ≤ sensible_j` ; `sensibles()` trié ; `geneRecente(z)` = `pireEntre(jour − douleur_hausse_j + 1,
+  jour)`. Dans `conduite`, après le bloc « zone bloquante depuis la dernière séance » et avant le bloc `recente` :
+  `if (act <= 0 && niveau >= 0.5 && geneRecente(z) > douleur_seuil) { sans_hausse ; rir = max(rir,
+  douleur_rir_bonus) ; note(z, 'douleur') }` (ordre des `note` : la première raison l'emporte, comme en Python).
+- `seance.dart` : état `ecritZone` (zone → semaine → séries écrites), `budgetSemaine` (zone → permis), `rampeZone`
+  (ensemble, parcouru trié quand il est écrit), `reserveEchauffement` (zone → séries que l'échauffement peut prendre
+  aujourd'hui) ; `_semaineConnue(w)` = `garde.semaines.containsKey(w) || allegees.containsKey(w)` ;
+  `_semaineDeCharge(w)` = `garde.semaines[w]` si connue là, sinon `!allegees[w]` si connue là, sinon faux (jamais sur
+  `joursSeances`, tronqué à 20) ; `_compterEcritZone(semaine, items)` (sur `zonesEx` connues seulement, `sets` entier
+  > 0) ; `_ecritZone` ; `_budgetZoneSemaine(z)` → `(int? permis, bool sortie)`, fonction pure, ligne pour ligne :
+  `debut = ep.premier ~/ 7` ; `apres = debut + 1`, ou, si `arretLeve != null && arretLeve >= ep.premier`,
+  `max(apres, premiere)` avec `premiere = 7 − leve % 7 >= 4 ? leve ~/ 7 : leve ~/ 7 + 1` ; branche `semaine == debut`
+  (recherche de la dernière semaine de charge parmi les `rampe_zone_semaines_max` précédentes, `tenir`), sinon boucle
+  `w` décroissante de `semaine − 1` à `debut` qui s'arrête à la première semaine de charge (si `w < apres` : pas de
+  référence), recherche arrière de `w − 1` à `max(apres, w − rampe_zone_semaines_max)` ; puis, sans référence, si
+  `apres == debut + 1` et que `debut` est de charge : référence `debut`, `tenir` ; `floor(x + 1e-9)` ; `habitude =
+  somme / 4.0` ; sortie quand `total >= max(ecrit(semaine), ecrit(dernière semaine de charge))` ; `ouvrir` : zones
+  triées, `(b, sortie) = _budgetZoneSemaine(z)`, `sortie` retire de `rampeZone`, `b != null` l'y ajoute et pose
+  `budgetSemaine[z]` ; `_budgetsZoneJour(items)` : `part = floor(reste · e_jour / (e_jour + e_reste) + 0,5)` en double,
+  `reste` entier ; `prescrire` : `_compterEcritZone(sem, items)`, `budgetZone = _budgetsZoneJour(items)`,
+  `reserveEchauffement[z] = max(0, budgetZone[z] − travail écrit sur z)` avant la boucle, et le vrai test n'est pas
+  tenté quand une zone provoquée par l'exercice est dans `budgetZone` ; `_item` : le bloc du budget s'applique à **tout**
+  item (échauffement et test compris), un échauffement est borné par `min(reste, reserveEchauffement[z])` et débite les
+  deux, le retrait n'a lieu que si une zone est épuisée (`epuisee`), la raison `douleur_retrait` porte cette zone.
+  `_budgetReprise` disparaît.
+  Règle 3 bis (rampe de retour après une coupure) : état `retourZone` (zone → `(int semaine, int depart)`, parcouru
+  trié), `manqueZone` (zone → semaine → séries écrites des séances manquées, `_compterManqueZone` appelé dans
+  `ouvrir` juste après `_compterEcritZone` pour chaque séance manquée versée), `expoJour` (zone → dernier jour
+  d'exposition réalisée, posé dans `fermer` dans la boucle qui incrémente `doseZone`) ; `_manqueRecent(z)` = une
+  entrée > 0 dans `manqueZone[z]` pour `k ∈ [semaine − charge_chronique_semaines ; semaine[` ; `_habitudeAvant(z,
+  fin)` = somme de `doseZone[z][k]` pour `k ∈ [fin − charge_chronique_semaines + 1 ; fin]` et `k ≥ min(garde.semaines
+  ∪ allegees)` divisée par le nombre de ces `k` (null sans semaine connue ou sans `k`) ; `_departRetour(z)` =
+  `floor(reprise_dose_depart · habitude + 1e-9)` avec `fin = expoJour[z] ~/ 7`, `reprise_dose_sans_habitude` si
+  l'habitude est null ou ≤ 0, au moins `reprise_dose_min` ; `_budgetRetour(z, {depart, debut})` → `(int? permis, bool
+  sortie)`, fonction pure : `(debut, depart)` lus dans `retourZone[z]` s'ils ne sont pas donnés (null sinon) ; boucle
+  `w` décroissante de `semaine − 1` à `debut` qui s'arrête à la première semaine de charge, recherche arrière de
+  `w − 1` à `max(debut, w − rampe_zone_semaines_max)` si la dose est ≤ 0 ; avec référence > 0 : `max(ref + 1,
+  floor(ref · (1 + reprise_dose_hausse) + 1e-9))`, sinon `depart` ; au moins `reprise_dose_min` ; sortie quand `total
+  >= max(ecrit(semaine), ecrit(dernière semaine de charge))` ; `_entrerRetour(items)` appelé dans `prescrire` juste
+  après `_compterEcritZone(sem, items)` (donc seulement si `sem != null`) et avant `_budgetsZoneJour` : zones = clés
+  de `doseZone` ∪ zones provoquées des items du jour et de `contexte['reste_semaine']` (`zonesEx` connues), triées ;
+  on saute une zone déjà dans `budgetSemaine`, `retourZone`, `rampeZone` ou sensible, une zone dont aucune valeur de
+  `doseZone` n'est > 0, une zone sans `expoJour` ou avec `jour − expoJour[z] < coupure_j`, une zone sans
+  `_manqueRecent` ; `ecrit = ecritZone(z, semaine) + séries des séances restantes sur z` ; si `ecrit > 0`,
+  `depart = _departRetour(z)`, `(permis, _) = _budgetRetour(z, depart: depart, debut: semaine)`, et si `permis !=
+  null && permis < ecrit` : `retourZone[z] = (semaine, depart)`, `budgetSemaine[z] = permis`. `_entrerRetour` rend la main
+  aussitôt si `verrouillee()`. Dans `ouvrir`, après la boucle des zones sensibles : pour chaque zone de `retourZone`
+  (triée), si elle est dans `budgetSemaine` ou sensible → retirée de `retourZone` ; sinon, si `verrouillee()` →
+  rien (suspendue) ; sinon `(b, sortie) = _budgetRetour(z)` ; `sortie || b == null` → retirée, sinon
+  `budgetSemaine[z] = b` (sans toucher `rampeZone`). Le permis du jour et `_item` s'appliquent aux zones en retour comme aux zones
+  sensibles (même `budgetZone`) ; l'interdiction du vrai test ne vaut que pour une zone de `budgetZone` qui n'est
+  pas dans `retourZone`.
+- `modele.dart` : `elargir(part)` : `lam = clamp(part, 0, 1)` ; `idx` = indices de `variancesAPriori()` ; pour chaque
+  branche (`P` principale, puis `alt.P` si la branche « mauvais jour » existe, dans l'ordre de `_branches`) : lignes
+  puis colonnes de chaque `i` multipliées par `(1 − lam)` ; puis, si `lam < 1`, le bloc `idx × idx` divisé par
+  `(1 − lam)` (division, pas multiplication par l'inverse : même arrondi que Python), sinon mis à 0 ; puis
+  `P[i][i] += lam · v0`. Même ordre d'opérations que `modele.py`.
+- `rupture.dart` : cause « rien » : `part = elargissement_vers_a_priori` (défaut 0,25), `modele.elargir(part)`, action
+  `{'action': 'elargir', 'part': part}` ; `bornes` : `('rupture', 'elargissement_vers_a_priori') : (0, 1)` ;
+  `elargissement_rien_de_special` n'est plus lu : KM2c3 la retire du fichier `koach_params_v1.json`, de l'asset et des
+  bornes (le validateur Dart ne doit ni l'exiger ni la refuser).
+- Paramètres : 7 clés nouvelles insérées dans leur section (`securite` : `reprise_dose_sans_habitude`,
+  `reprise_dose_min`, `rampe_zone_semaines_max`, `sensible_j`, `douleur_hausse_j`, `charge_chronique_semaines` juste
+  après `reprise_dose_hausse` ;
+  `rupture` : `elargissement_vers_a_priori` juste après `elargissement_rien_de_special`), `securite.reprise_dose_depart`
+  0,5 ; version `1.0.5-ref.1`, asset
+  `koach_params_1_0_5.json`, SHA-256 et 346 clés (6 + 340) dans `koach_parametres_test.dart`.
+- Modèle de vérité du banc (`lib/src/sim/truth.dart`) : `PORTAGE_BANC.md`, « Delta KM1c4 » (`_painKnown = false` au
+  début d'un épisode de la fiche et d'un épisode tendineux).
+- Tests Dart : depuis KM1c4 ils lisent les copies figées de 1.0.4 (`reference/fix_dart/`,
+  `reference/params/koach_params_d4.json`) ; `kalis_bench` (`km2_banc_test`, `km2_validateur_test`,
+  `km2_adversaire_test`, `bin/km2.dart`, `bin/km2_adversaire.dart`) lit `koach_params_d4.json`. KM2c3 repointe tout
+  vers `reference/fixtures/` et `reference/params/koach_params_v1.json`, supprime `fix_dart/` et
+  `koach_params_d4.json`, régénère `kalis_bench/test/fixtures/km2/` (`generer_banc_km2.py`, moteur 1.0.5, vérité
+  corrigée) et met `_planReference` à la version courante de `kalis_plan` si elle change.

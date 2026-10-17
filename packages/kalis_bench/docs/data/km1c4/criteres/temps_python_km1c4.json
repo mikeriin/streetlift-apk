@@ -1,0 +1,201 @@
+{
+ "note": "Référence Python (numpy 2.5.3, Python 3.13, 2 cœurs, session du lot KM1c4), trois mesures par version (criteres_moteur.mesurer_temps) ; médianes ; indicatif : le critère 11 vaut pour le portage Dart (KM2c3).",
+ "saisons": {
+  "autres_08_crossfit_intermediaire/reference/b/47": {
+   "1.0.4": {
+    "observe_serie_ms": {
+     "mediane_des_max": 6.8335,
+     "mediane_des_moyennes": 1.867,
+     "mesures_moyenne": [
+      1.867,
+      1.8764,
+      1.7205
+     ]
+    },
+    "plan_seance_ms": {
+     "mediane_des_max": 1.5124,
+     "mediane_des_moyennes": 0.8779,
+     "mesures_moyenne": [
+      0.8779,
+      0.9005,
+      0.846
+     ]
+    },
+    "replanification_s": {
+     "mediane_des_max": 0.4106,
+     "mediane_des_moyennes": 0.29,
+     "mesures_moyenne": [
+      0.2916,
+      0.2898,
+      0.29
+     ]
+    }
+   },
+   "1.0.5": {
+    "observe_serie_ms": {
+     "mediane_des_max": 6.2013,
+     "mediane_des_moyennes": 1.8768,
+     "mesures_moyenne": [
+      1.8768,
+      1.811,
+      1.938
+     ]
+    },
+    "plan_seance_ms": {
+     "mediane_des_max": 1.7296,
+     "mediane_des_moyennes": 0.9105,
+     "mesures_moyenne": [
+      0.9105,
+      0.9012,
+      0.9403
+     ]
+    },
+    "replanification_s": {
+     "mediane_des_max": 0.414,
+     "mediane_des_moyennes": 0.2953,
+     "mesures_moyenne": [
+      0.2791,
+      0.2953,
+      0.3137
+     ]
+    }
+   },
+   "ecart_1_0_5_sur_1_0_4": {
+    "observe_serie_ms": 0.005,
+    "plan_seance_ms": 0.037,
+    "replanification_s": 0.018
+   }
+  },
+  "ks_01_streetlifting_sets_reps_4_seances/douleur_epaule/b/38": {
+   "1.0.4": {
+    "observe_serie_ms": {
+     "mediane_des_max": 6.4571,
+     "mediane_des_moyennes": 2.3273,
+     "mesures_moyenne": [
+      2.1827,
+      2.4153,
+      2.3273
+     ]
+    },
+    "plan_seance_ms": {
+     "mediane_des_max": 2.1289,
+     "mediane_des_moyennes": 0.8895,
+     "mesures_moyenne": [
+      0.859,
+      0.8995,
+      0.8895
+     ]
+    },
+    "replanification_s": {
+     "mediane_des_max": 1.5482,
+     "mediane_des_moyennes": 0.77,
+     "mesures_moyenne": [
+      0.77,
+      0.8072,
+      0.7667
+     ]
+    }
+   },
+   "1.0.5": {
+    "observe_serie_ms": {
+     "mediane_des_max": 6.8293,
+     "mediane_des_moyennes": 2.2076,
+     "mesures_moyenne": [
+      2.3415,
+      2.2076,
+      2.1849
+     ]
+    },
+    "plan_seance_ms": {
+     "mediane_des_max": 1.4073,
+     "mediane_des_moyennes": 0.8942,
+     "mesures_moyenne": [
+      0.9278,
+      0.8942,
+      0.8623
+     ]
+    },
+    "replanification_s": {
+     "mediane_des_max": 1.4632,
+     "mediane_des_moyennes": 0.7861,
+     "mesures_moyenne": [
+      0.7865,
+      0.7861,
+      0.7652
+     ]
+    }
+   },
+   "ecart_1_0_5_sur_1_0_4": {
+    "observe_serie_ms": -0.051,
+    "plan_seance_ms": 0.005,
+    "replanification_s": 0.021
+   }
+  },
+  "street_07_avance_streetlifting_competition/reference/a/0": {
+   "1.0.4": {
+    "observe_serie_ms": {
+     "mediane_des_max": 10.6716,
+     "mediane_des_moyennes": 2.4063,
+     "mesures_moyenne": [
+      2.3041,
+      2.4063,
+      2.4387
+     ]
+    },
+    "plan_seance_ms": {
+     "mediane_des_max": 1.684,
+     "mediane_des_moyennes": 0.9479,
+     "mesures_moyenne": [
+      0.8953,
+      0.9479,
+      0.9646
+     ]
+    },
+    "replanification_s": {
+     "mediane_des_max": 0.7654,
+     "mediane_des_moyennes": 0.4706,
+     "mesures_moyenne": [
+      0.4706,
+      0.4688,
+      0.4746
+     ]
+    }
+   },
+   "1.0.5": {
+    "observe_serie_ms": {
+     "mediane_des_max": 10.1562,
+     "mediane_des_moyennes": 2.3405,
+     "mesures_moyenne": [
+      2.2856,
+      2.3405,
+      2.4751
+     ]
+    },
+    "plan_seance_ms": {
+     "mediane_des_max": 1.8487,
+     "mediane_des_moyennes": 0.949,
+     "mesures_moyenne": [
+      0.9073,
+      0.949,
+      0.9994
+     ]
+    },
+    "replanification_s": {
+     "mediane_des_max": 0.8043,
+     "mediane_des_moyennes": 0.4852,
+     "mesures_moyenne": [
+      0.4988,
+      0.4727,
+      0.4852
+     ]
+    }
+   },
+   "ecart_1_0_5_sur_1_0_4": {
+    "observe_serie_ms": -0.027,
+    "plan_seance_ms": 0.001,
+    "replanification_s": 0.031
+   }
+  }
+ },
+ "schema": "kalis_bench/temps_python_km1c4/1"
+}

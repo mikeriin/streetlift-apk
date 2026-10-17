@@ -279,8 +279,15 @@ class Seances(object):
         self.contexte = None
         self.plans = {}          # slotId -> plan de l'item servi (séance en cours)
         self.dose_zone = {}      # zone -> {semaine: séries faites des mouvements qui la provoquent}
+        self.ecrit_zone = {}     # zone -> {semaine: séries écrites (séances vues et manquées)}
         self.zones_ex = {}       # id -> (niveaux de zone, zones provoquées), vu à la prescription
-        self.budget_zone = {}    # zone en reprise -> séries encore permises cette semaine
+        self.budget_zone = {}    # zone sensible -> séries encore permises aujourd'hui (rampe du réalisé)
+        self.budget_semaine = {}  # zone sensible -> séries permises cette semaine (total)
+        self.rampe_zone = set()  # zones encore sous rampe après la fenêtre sensible (sortie progressive)
+        self.retour_zone = {}    # zone -> (semaine d'entrée, départ) de la rampe de retour après coupure (règle 3 bis)
+        self.manque_zone = {}    # zone -> {semaine: séries écrites des séances manquées qui la provoquent}
+        self.expo_jour = {}      # zone -> dernier jour d'exposition réalisée (règle 3 bis)
+        self.reserve_echauffement = {}  # zone sous budget -> séries que l'échauffement peut prendre aujourd'hui
         # Retour gradué au volume (critères `volume_trop_vite` et
         # `tendon_figures` du banc), recalculé du journal (contexte des
         # séances, appels de plan, fins de séance) :
@@ -432,15 +439,33 @@ class Seances(object):
             self._compter(m['semaine'], m.get('items') or [])
             self.ecrit_semaines[m['semaine']] = self.ecrit_semaines.get(m['semaine'], 0.0) + \
                 sum(self._series_dures(p) for p in m.get('items') or [])
+            self._compter_ecrit_zone(m['semaine'], m.get('items') or [])
+            self._compter_manque_zone(m['semaine'], m.get('items') or [])
         if c.get('semaine') is not None:
             self.allegees[c['semaine']] = c.get('genre') in legeres
-        for z in list(self.g.zones):
-            dz = self.g.zones[z]
-            if dz.arret_leve is not None and not self.g.arret(z) \
-                    and 0 <= jour - dz.arret_leve <= self.s['reprise_surveillance_j']:
-                b = self._budget_reprise(z)
-                if b is not None:
-                    self.budget_zone[z] = b
+        self.budget_semaine = {}
+        for z in sorted(self.g.zones):
+            b, sortie = self._budget_zone_semaine(z)
+            if sortie:
+                self.rampe_zone.discard(z)
+            if b is not None:
+                self.budget_semaine[z] = b
+                self.rampe_zone.add(z)
+        # Règle 3 bis : zones en rampe de retour (séances manquées) ; la
+        # rampe de la zone sensible l'emporte dès qu'elle s'applique ; une
+        # semaine verrouillée (intro, allègement, affûtage, test, compétition,
+        # transition : volume déjà réduit ou échéance) la suspend.
+        for z in sorted(self.retour_zone):
+            if z in self.budget_semaine or self.g.sensible(z):
+                del self.retour_zone[z]
+                continue
+            if self.verrouillee():
+                continue
+            b, sortie = self._budget_retour(z)
+            if sortie or b is None:
+                del self.retour_zone[z]
+            else:
+                self.budget_semaine[z] = b
         for mem in self.memoire.values():
             mem.charge_seance = None
             mem.reps_seance = None
@@ -495,44 +520,350 @@ class Seances(object):
     def _dose_semaine(self, z, semaine):
         return self.dose_zone.get(z, {}).get(semaine, 0)
 
-    def _budget_reprise(self, z):
-        """Séries encore permises cette semaine, tous mouvements qui
-        provoquent la zone [z] confondus, pendant la reprise graduée. Plus
-        prudent que 0.3.1 (part du volume écrit) : la dose hebdomadaire de la
-        zone repart d'une fraction de l'habitude d'avant la douleur et ne
-        monte pas de plus d'un quart (ou d'une série) d'une semaine de charge
-        à la suivante, quel que soit le volume écrit."""
+    def _semaine_connue(self, w):
+        """Semaine [w] connue du journal : une séance y a été ouverte
+        (`garde.semaines`) ou une séance manquée y a été versée
+        (`allegees`, par `contexte['manquees']`) ; jamais tronqué (le journal
+        des jours de séance, lui, ne garde que les 20 derniers)."""
+        return w in self.g.semaines or w in self.allegees
+
+    def _semaine_de_charge(self, w):
+        """Semaine connue ET de charge (genre ou intention hors allègement,
+        test, affûtage, compétition, transition) ; une semaine entièrement
+        manquée est une semaine de charge connue à exposition 0."""
+        if w in self.g.semaines:
+            return bool(self.g.semaines[w])
+        if w in self.allegees:
+            return not self.allegees[w]
+        return False
+
+    def _compter_ecrit_zone(self, semaine, items):
+        """Séries écrites de la semaine [semaine] par zone provoquée
+        (exercices déjà vus à la prescription ; échauffement compris, comme le
+        réalisé de `fermer`)."""
+        for p in items:
+            zz = self.zones_ex.get(p['exerciseId'])
+            if not zz:
+                continue
+            n = int(p.get('sets') or 0)
+            if n <= 0:
+                continue
+            for z in zz[1]:
+                e = self.ecrit_zone.setdefault(z, {})
+                e[semaine] = e.get(semaine, 0) + n
+
+    def _ecrit_zone(self, z, semaine):
+        return self.ecrit_zone.get(z, {}).get(semaine, 0)
+
+    def _compter_manque_zone(self, semaine, items):
+        """Séries écrites des séances manquées de la semaine [semaine] par
+        zone provoquée (exercices déjà vus) : ce que la zone n'a pas reçu
+        (règle 3 bis)."""
+        for p in items:
+            zz = self.zones_ex.get(p['exerciseId'])
+            if not zz:
+                continue
+            n = int(p.get('sets') or 0)
+            if n <= 0:
+                continue
+            for z in zz[1]:
+                e = self.manque_zone.setdefault(z, {})
+                e[semaine] = e.get(semaine, 0) + n
+
+    def _manque_recent(self, z):
+        """Vrai si une séance manquée a privé la zone [z] d'exposition dans
+        la fenêtre de la charge chronique."""
+        semaine = self.g.semaine
+        m = self.manque_zone.get(z) or {}
+        return any(m.get(k, 0) > 0 for k in range(semaine - int(self.s['charge_chronique_semaines']), semaine))
+
+    def _budget_zone_semaine(self, z):
+        """1.0.5 (lot KM1c4, règles 1 à 3) : (permis, sortie) — séries
+        permises cette semaine, tous mouvements qui provoquent la zone [z]
+        confondus (échauffement compris), quand la zone est sensible
+        (`Gardefous.sensible` : épisode ≥ `arret_persistance_min`, avec ou
+        sans arrêt, douze semaines après son dernier signalement) ou encore
+        sous rampe après la fenêtre (sortie progressive) ; (None, False)
+        sinon ; `sortie` vrai quand la zone sort de la rampe. Fonction pure
+        (l'appelant tient `rampe_zone`). « Rampe du réalisé » :
+
+        * référence = exposition RÉALISÉE de la dernière semaine de charge
+          connue depuis la semaine du premier signalement de l'épisode et,
+          s'il y a eu un arrêt, après la semaine de sa levée (séances
+          manquées à 0, jamais comptées à l'écrit) ; une semaine de charge
+          sans exposition renvoie à la dernière semaine exposée parmi les
+          `rampe_zone_semaines_max` précédentes, strictement après la
+          semaine du signalement et après la levée ; la semaine du
+          signalement elle-même ne sert que si aucune semaine de charge
+          connue ne la sépare de la semaine en cours, et sans hausse
+          (tenue) ; dans la semaine du signalement, tenue au réalisé de la
+          semaine de charge précédente ;
+        * permis = max(référence + 1 ; référence × (1 + `reprise_dose_hausse`))
+          (hausse hebdomadaire bornée : Gabbett 2016, rapport aigu:chronique
+          0,8-1,3, danger ≥ 1,5 ; Nielsen et al. 2014) ; pas de hausse si la
+          zone a été signalée > `reprise_douleur_max` dans les
+          `douleur_hausse_j` derniers jours (Silbernagel et al. 2007 : la
+          douleur ne doit pas augmenter d'une semaine à l'autre) ;
+        * sans référence (aucune semaine de charge exposée depuis le début de
+          l'épisode ou depuis la levée de l'arrêt, ou arrêt en cours) :
+          départ à `reprise_dose_depart` × habitude, habitude = charge
+          chronique = somme de l'exposition réalisée des semaines de charge
+          connues parmi les quatre semaines précédant la semaine du premier
+          signalement, divisée par 4 (moyenne glissante sur quatre semaines
+          du rapport aigu:chronique, Gabbett 2016 ; une semaine inconnue ou
+          allégée compte 0) ; sans habitude : `reprise_dose_sans_habitude` ;
+        * jamais sous `reprise_dose_min`."""
         g = self.g
-        d = g.zones.get(z)
         s = self.s
-        if d is None or d.arret_leve is None:
-            return None
+        d = g.zones.get(z)
+        if d is None:
+            return None, False
         semaine = g.semaine
-        # Habitude : moyenne des 4 dernières semaines de charge avant le
-        # premier signalement de l'épisode.
-        debut = d.signalements[0][0] // 7 if d.signalements else semaine
-        for (j, i) in d.signalements:
-            if i >= s['arret_persistance_min']:
-                debut = j // 7
-                break
-        avant = [self._dose_semaine(z, w) for w in range(debut - 4, debut) if w >= 0 and g.semaines.get(w, False)]
-        habitude = sum(avant) / len(avant) if avant else None
-        # Dernière semaine de charge depuis la levée.
-        premiere = d.arret_leve // 7
-        precedente = None
-        for w in range(semaine - 1, premiere - 1, -1):
-            if g.semaines.get(w, False):
-                precedente = self._dose_semaine(z, w)
-                break
-        if precedente is None or precedente <= 0:
-            if habitude is None:
-                return None
-            total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
-            if total < 1:
-                total = 1
+        ep = g.episode(z)
+        sensible = g.sensible(z)
+        if not sensible and z not in self.rampe_zone:
+            return None, False
+        charge = self._semaine_de_charge
+        debut = ep[0] // 7 if ep is not None else semaine
+        # Après un arrêt levé dans l'épisode, rien d'avant la semaine de la
+        # levée ne sert de référence (la zone repart de l'arrêt).
+        apres = debut + 1
+        if ep is not None and d.arret_leve is not None and d.arret_leve >= ep[0]:
+            # Première semaine qui compte après la levée : celle de la levée
+            # si elle lui laisse au moins 4 jours (règle de
+            # `Gardefous._semaines_de_charge`), sinon la suivante.
+            leve = d.arret_leve
+            premiere = leve // 7 if 7 - (leve % 7) >= 4 else leve // 7 + 1
+            apres = max(apres, premiere)
+        ref = None
+        tenir = False
+        if semaine == debut:
+            # Semaine du signalement : tenue au réalisé de la semaine de
+            # charge précédente (un signalement sans retrait gèle, ne coupe
+            # pas) ; sans semaine de charge précédente, départ.
+            w = semaine - 1
+            while w >= 0 and w >= semaine - s['rampe_zone_semaines_max']:
+                if charge(w):
+                    ref = self._dose_semaine(z, w)
+                    tenir = True
+                    break
+                w -= 1
         else:
-            total = max(precedente + 1, int(math.floor(precedente * (1 + s['reprise_dose_hausse']) + 1e-9)))
-        return total - self._dose_semaine(z, semaine)
+            w = semaine - 1
+            while w >= debut and w >= 0:
+                if charge(w):
+                    if w < apres:
+                        break
+                    ref = self._dose_semaine(z, w)
+                    if ref <= 0:
+                        for k in range(w - 1, max(apres, w - s['rampe_zone_semaines_max']) - 1, -1):
+                            if charge(k) and self._dose_semaine(z, k) > 0:
+                                ref = self._dose_semaine(z, k)
+                                break
+                    break
+                w -= 1
+            if ref is None and (debut < semaine) and apres == debut + 1:
+                # Aucune semaine de charge connue entre le signalement et
+                # aujourd'hui : la semaine du signalement sert, tenue.
+                if charge(debut):
+                    ref = self._dose_semaine(z, debut)
+                    tenir = True
+        if ref is not None and ref > 0 and g.arret(z):
+            ref = None
+        if ref is not None and ref > 0:
+            if tenir or d.pire_entre(self.jour - s['douleur_hausse_j'] + 1, self.jour) > s['reprise_douleur_max']:
+                total = int(ref)
+            else:
+                total = max(int(ref) + 1, int(math.floor(ref * (1 + s['reprise_dose_hausse']) + 1e-9)))
+        else:
+            avant = [self._dose_semaine(z, k) for k in range(debut - 4, debut) if k >= 0 and charge(k)]
+            if avant:
+                habitude = sum(avant) / 4.0
+                total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
+            else:
+                total = int(s['reprise_dose_sans_habitude'])
+        if total < s['reprise_dose_min']:
+            total = int(s['reprise_dose_min'])
+        if not sensible:
+            # Sortie progressive (règle 2) : après la fenêtre, la rampe
+            # continue tant que le permis n'atteint pas l'écrit (dernière
+            # semaine de charge connue, et semaine en cours vue jusqu'ici) ;
+            # dès qu'il l'atteint, la zone sort.
+            ecrit_ref = self._ecrit_zone(z, semaine)
+            w = semaine - 1
+            while w >= 0:
+                if charge(w):
+                    ecrit_ref = max(ecrit_ref, self._ecrit_zone(z, w))
+                    break
+                w -= 1
+            if total >= ecrit_ref:
+                return None, True
+        return total, False
+
+    def _habitude_avant(self, z, fin):
+        """Habitude de la zone [z] avant une coupure (règle 3 bis) : moyenne
+        de l'exposition réalisée sur les `charge_chronique_semaines` (4)
+        semaines calendaires qui finissent à la semaine [fin] (celle de la
+        dernière exposition), limitées à celles qui suivent la première
+        semaine connue du journal (allègements compris, semaine manquée ou
+        sans séance à 0 : la charge chronique du rapport aigu:chronique,
+        Gabbett 2016, sur les semaines que le journal connaît). None sans
+        semaine connue."""
+        connues = list(self.g.semaines) + list(self.allegees)
+        if not connues:
+            return None
+        premiere = min(connues)
+        ks = [k for k in range(fin - int(self.s['charge_chronique_semaines']) + 1, fin + 1) if k >= premiere]
+        if not ks:
+            return None
+        return sum(self._dose_semaine(z, k) for k in ks) / float(len(ks))
+
+    def _depart_retour(self, z):
+        """Permis de la première semaine de retour d'une zone après une
+        coupure : `reprise_dose_depart` × habitude d'avant la coupure (la
+        moitié : règle A3 de 0.3.1, reprise à 50 %, et pratique du retour
+        après deux semaines d'arrêt), `reprise_dose_sans_habitude` sans
+        exposition connue, jamais sous `reprise_dose_min`."""
+        s = self.s
+        fin = self.expo_jour[z] // 7
+        habitude = self._habitude_avant(z, fin)
+        if habitude is None or habitude <= 0:
+            total = int(s['reprise_dose_sans_habitude'])
+        else:
+            total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
+        if total < s['reprise_dose_min']:
+            total = int(s['reprise_dose_min'])
+        return total
+
+    def _budget_retour(self, z, depart=None, debut=None):
+        """1.0.5 (lot KM1c4, règle 3 bis, « rampe du réalisé après une
+        coupure ») : (permis, sortie) pour une zone sans douleur connue qui
+        revient d'une coupure (`_entrer_retour`). Même rampe que la zone
+        sensible : permis = exposition réalisée de la dernière semaine de
+        charge connue depuis l'entrée dans la rampe ([debut]) + 1 ou
+        + `reprise_dose_hausse` (une semaine de charge sans exposition
+        renvoie à la dernière exposée parmi les `rampe_zone_semaines_max`
+        précédentes, jamais avant [debut]) ; sans référence, le départ
+        [depart] (`_depart_retour`, figé à l'entrée) ; jamais sous
+        `reprise_dose_min`. `sortie` dès que le permis atteint l'écrit de la
+        zone (dernière semaine de charge connue et semaine en cours vue
+        jusqu'ici). Fonction pure (l'appelant tient `retour_zone`)."""
+        s = self.s
+        semaine = self.g.semaine
+        if debut is None or depart is None:
+            r = self.retour_zone.get(z)
+            if r is None:
+                return None, False
+            debut, depart = r
+        charge = self._semaine_de_charge
+        ref = None
+        w = semaine - 1
+        while w >= debut and w >= 0:
+            if charge(w):
+                ref = self._dose_semaine(z, w)
+                if ref <= 0:
+                    for k in range(w - 1, max(debut, w - s['rampe_zone_semaines_max']) - 1, -1):
+                        if charge(k) and self._dose_semaine(z, k) > 0:
+                            ref = self._dose_semaine(z, k)
+                            break
+                break
+            w -= 1
+        if ref is not None and ref > 0:
+            total = max(int(ref) + 1, int(math.floor(ref * (1 + s['reprise_dose_hausse']) + 1e-9)))
+        else:
+            total = int(depart)
+        if total < s['reprise_dose_min']:
+            total = int(s['reprise_dose_min'])
+        ecrit_ref = self._ecrit_zone(z, semaine)
+        w = semaine - 1
+        while w >= 0:
+            if charge(w):
+                ecrit_ref = max(ecrit_ref, self._ecrit_zone(z, w))
+                break
+            w -= 1
+        if total >= ecrit_ref:
+            return None, True
+        return total, False
+
+    def _entrer_retour(self, items):
+        """Règle 3 bis : une zone sans douleur connue, ni sous rampe, qui
+        n'a reçu aucune exposition depuis `coupure_j` jours au moins (une
+        coupure, comme A6.1) alors qu'une séance manquée l'écrivait dans
+        les `charge_chronique_semaines` dernières semaines, entre dans la
+        rampe de retour quand l'écrit de la semaine (séances vues et
+        manquées, séance du jour, séances restantes) dépasse son départ ;
+        son permis est posé pour la semaine. Une douleur survenue pendant
+        la coupure n'a pu être signalée : la zone repart comme une zone
+        sensible, de la moitié de son habitude. Hors coupure, le plan (et
+        le retour gradué au volume) gouverne : une progression écrite, une
+        séance manquée ici ou là, ne sont pas bornées. Une zone jamais
+        exposée dans le journal est introduite par le plan. Une semaine
+        verrouillée (`verrouillee` : intro, allègement, affûtage, test,
+        compétition, transition) n'ouvre ni n'applique la rampe de retour :
+        son volume est déjà réduit ou c'est l'échéance (choix raisonné :
+        sans douleur connue, une précaution de volume ne coupe pas une
+        compétition ; la zone sensible, elle, s'applique partout)."""
+        c = self.contexte or {}
+        semaine = self.g.semaine
+        if self.verrouillee():
+            return
+        zones = set(self.dose_zone)
+        reste = {}
+        for seance in list(c.get('reste_semaine') or []) + [items]:
+            for p in seance:
+                zz = self.zones_ex.get(p['exerciseId'])
+                if not zz:
+                    continue
+                for z in zz[1]:
+                    zones.add(z)
+                    if seance is not items:
+                        reste[z] = reste.get(z, 0) + int(p.get('sets') or 0)
+        for z in sorted(zones):
+            if z in self.budget_semaine or z in self.retour_zone or z in self.rampe_zone or self.g.sensible(z):
+                continue
+            if z not in self.expo_jour or self.jour - self.expo_jour[z] < self.s['coupure_j']:
+                continue
+            if not self._manque_recent(z):
+                continue
+            ecrit = self._ecrit_zone(z, semaine) + reste.get(z, 0)
+            if ecrit <= 0:
+                continue
+            depart = self._depart_retour(z)
+            permis, _ = self._budget_retour(z, depart=depart, debut=semaine)
+            if permis is not None and permis < ecrit:
+                self.retour_zone[z] = (semaine, depart)
+                self.budget_semaine[z] = permis
+
+    def _budgets_zone_jour(self, items):
+        """Part du budget hebdomadaire de chaque zone sensible pour la séance
+        du jour : reste de la semaine réparti au prorata de l'écrit du jour et
+        des séances restantes de la semaine (`contexte['reste_semaine']`),
+        arrondi au plus proche (demi vers le haut) ; tout le reste quand rien
+        n'est écrit."""
+        out = {}
+        c = self.contexte or {}
+        semaine = self.g.semaine
+        for z, total in self.budget_semaine.items():
+            reste = total - self._dose_semaine(z, semaine)
+            if reste < 0:
+                reste = 0
+            e_jour = 0
+            for p in items:
+                zz = self.zones_ex.get(p['exerciseId'])
+                if zz and z in zz[1]:
+                    e_jour += int(p.get('sets') or 0)
+            e_reste = 0
+            for seance in c.get('reste_semaine') or []:
+                for p in seance:
+                    zz = self.zones_ex.get(p['exerciseId'])
+                    if zz and z in zz[1]:
+                        e_reste += int(p.get('sets') or 0)
+            if e_jour + e_reste > 0:
+                part = int(math.floor(reste * e_jour / float(e_jour + e_reste) + 0.5))
+            else:
+                part = reste
+            out[z] = part
+        return out
 
     def verrouillee(self):
         c = self.contexte or {}
@@ -551,6 +882,19 @@ class Seances(object):
         sem = (self.contexte or {}).get('semaine')
         if sem is not None:
             self.ecrit_semaines[sem] = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(p) for p in items)
+            self._compter_ecrit_zone(sem, items)
+            self._entrer_retour(items)
+        self.budget_zone = self._budgets_zone_jour(items)
+        # Réserve de l'échauffement : ce que le permis du jour laisse après
+        # les séries de travail écrites sur la zone (le travail d'abord).
+        self.reserve_echauffement = {}
+        for z, b in self.budget_zone.items():
+            travail = 0
+            for p in items:
+                zz = self.zones_ex.get(p['exerciseId'])
+                if zz and z in zz[1] and p.get('kind') != 'warmup':
+                    travail += int(p.get('sets') or 0)
+            self.reserve_echauffement[z] = max(0, b - travail)
         for item in items:
             servi = self._item(item, grilles.get(item['exerciseId']), zones.get(item['exerciseId']),
                                roles.get(item['slotId']))
@@ -562,7 +906,15 @@ class Seances(object):
                 continue
             plan = self.plans.get(item['slotId'])
             ex_id = item['exerciseId']
-            if plan is not None and ex_id not in testes and item.get('kind') == 'work':
+            if plan is not None and ex_id not in testes and item.get('kind') == 'work' \
+                    and not any(z in self.budget_zone and z not in self.retour_zone
+                                for z in (zones.get(ex_id) or ({}, set()))[1]):
+                # 1.0.5 : pas de vrai test (montée de charge) sur un
+                # mouvement qui provoque une zone SENSIBLE sous rampe du
+                # réalisé ; la rampe de retour après une coupure (règle 3
+                # bis, sans douleur connue) ne l'interdit pas : A6.1 l'interdit
+                # déjà la semaine du retour, et la montée compte dans le
+                # permis comme toute série.
                 vt = self._vrai_test(servi, plan, self.m.pistes.get(ex_id))
                 if vt is not None and not self._duree_permet_test(items, item, vt, sum(
                         1 for x in out if x.get('koach') == 'vrai_test')):
@@ -682,19 +1034,30 @@ class Seances(object):
                     if series > plancher:
                         series -= 1
                 series = self._surmenage(ex_id, mem, role, series)
-        if not echauffement:
-            for z in sorted(hits):
-                if z in self.budget_zone:
-                    reste = self.budget_zone[z]
-                    if series > reste:
-                        series = reste if reste > 0 else 0
-                        self._raison('koach.reprise_dose', exercice=ex_id, zone=z)
-            if series <= 0:
-                self._raison('koach.douleur_retrait', exercice=ex_id, zone=cond['zone'], cause='reprise_dose')
-                return None
-            for z in sorted(hits):
-                if z in self.budget_zone:
-                    self.budget_zone[z] -= series
+        # Rampe du réalisé (1.0.5, KM1c4) : séries de tout mouvement qui
+        # provoque une zone sous budget ramenées à ce que la séance permet
+        # encore, échauffement compris (chaque série expose la structure).
+        epuisee = None
+        for z in sorted(hits):
+            if z in self.budget_zone:
+                reste = self.budget_zone[z]
+                if echauffement:
+                    # L'échauffement ne prend que ce que le travail de la
+                    # séance laisse (réservé à la prescription).
+                    reste = min(reste, self.reserve_echauffement.get(z, reste))
+                if series > reste:
+                    series = reste if reste > 0 else 0
+                    if series <= 0:
+                        epuisee = z
+                    self._raison('koach.reprise_dose', exercice=ex_id, zone=z)
+        if series <= 0 and epuisee is not None:
+            self._raison('koach.douleur_retrait', exercice=ex_id, zone=epuisee, cause='reprise_dose')
+            return None
+        for z in sorted(hits):
+            if z in self.budget_zone:
+                self.budget_zone[z] -= series
+                if echauffement and z in self.reserve_echauffement:
+                    self.reserve_echauffement[z] -= series
         servi['sets'] = series
         self.plans[item['slotId']] = plan
         if typ in ('charge', 'reps', 'tenue') and not echauffement:
@@ -2585,6 +2948,7 @@ class Seances(object):
                     for z in zz[1]:
                         dz = self.dose_zone.setdefault(z, {})
                         dz[semaine] = dz.get(semaine, 0) + 1
+                        self.expo_jour[z] = jour
         vus = set()
         for (ex_id, slot), series in par_ex.items():
             mem = self.mem(ex_id)

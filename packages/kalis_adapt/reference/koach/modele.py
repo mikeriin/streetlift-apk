@@ -1558,35 +1558,64 @@ class Modele(object):
         self.journal_semaines.append(ligne)
         return ligne
 
-    def elargir(self, facteur):
+    def elargir(self, part):
         """« Rien de spécial » au diagnostic : incertitude élargie sur les
-        capacités, réapprentissage rapide (cahier § 9). La variance de toute
-        capacité (combinaison des qualités et de l'écart de l'exercice) est
-        multipliée par [facteur] : lignes et colonnes des composantes de
-        capacité multipliées par √facteur (P ← D P D). Multiplier les seules
-        diagonales défaisait les covariances négatives entre qualités et
-        écarts d'exercice et multipliait l'écart-type d'une capacité par
-        bien plus que √facteur (mesuré : × 7 au lieu de × 2).
+        capacités, réapprentissage rapide (cahier § 9).
 
-        1.0.4 (lot KR1) : l'élargissement ne rend jamais une composante plus
-        incertaine que son a priori de population (`variances_a_priori`) :
-        variance nouvelle = min(facteur · v ; max(v ; v0)). Sans ce plafond,
-        des réponses « rien de spécial » répétées (saison de quarante
-        semaines aux séances manquées) multipliaient la variance par
-        facteur à chaque diagnostic, jusqu'à un écart-type de 20 en ln et
-        un dépassement de capacité des flottants (8 saisons plantées sur
-        5 436, `ks_test_ppl6`, scénario « séances manquées »). Les facteurs
-        sont lus sur la diagonale d'avant (P ← D P D, D diagonale positive :
-        P reste semi-définie positive)."""
-        r = math.sqrt(facteur)
-        fac = []
-        for i, v0 in self.variances_a_priori():
-            v = self.P[i, i]
-            ri = r if not v > 0 else min(r, max(1.0, math.sqrt(v0 / v)))
-            fac.append((i, ri))
-        for i, ri in fac:
-            self.P[i, :] *= ri
-            self.P[:, i] *= ri
+        1.0.5 (lot KM1c4, règle 5) : élargissement UNIFORME et BORNÉ, mélange
+        convexe de l'a posteriori et de l'a priori de population sur les
+        composantes de capacité (qualités et écarts propres des exercices
+        suivis, `variances_a_priori`) : P ← (1 − part) P + part · diag(v0),
+        les autres lignes et colonnes (effets de jour, fatigue, biais de
+        notation) inchangées. Propriétés : la variance de toute capacité
+        (combinaison linéaire h des composantes) devient (1 − part) V + part ·
+        h'diag(v0)h, donc jamais au-dessus de max(V ; V0) où V0 est la
+        variance a priori de cette capacité (« jamais plus incertain qu'un
+        athlète inconnu », pour chaque capacité et non plus par composante) ;
+        même part pour toutes (uniforme) ; P reste semi-définie positive
+        (combinaison convexe de deux matrices SDP) ; des diagnostics répétés
+        convergent géométriquement vers l'a priori sans jamais le dépasser ;
+        les covariances apprises s'effacent à proportion (oubli). Une
+        capacité apprise à un quart de son a priori de variance voit sa
+        variance multipliée par 1 + 3·part (≈ ×1,75 à part 0,25) ; une
+        capacité à un seizième par ×(1 + 15·part) ≈ ×4,75, soit l'ordre de
+        grandeur du facteur 4 de 1.0 à 1.0.4.
+
+        1.0 à 1.0.4 : variance de chaque composante multipliée par un facteur
+        (P ← D P D), plafonnée par composante à son a priori depuis 1.0.4 ;
+        quand une partie seulement des composantes d'une capacité était
+        plafonnée, sa variance était multipliée par un facteur entre 1 et plus
+        de 8 (mesuré sur la saison de quarante semaines : 1,0 à 8,6 par
+        diagnostic ; relecture M1 du lot KR1), et 5 à 8 composantes sur 35
+        dépassaient déjà leur a priori au premier diagnostic (un facteur
+        uniforme borné par composante aurait valu 1)."""
+        lam = float(part)
+        if lam < 0.0:
+            lam = 0.0
+        if lam > 1.0:
+            lam = 1.0
+        comps = self.variances_a_priori()
+        idx = [i for i, _ in comps]
+        # Toutes les branches (principale et « mauvais jour », séance
+        # ouverte) : le mélange des branches en fin de séance garde alors
+        # exactement V' = (1 − λ) V + λ V0 (relecture KM1c4, M4).
+        for _, P in self._branches():
+            for i in idx:
+                P[i, :] *= (1.0 - lam)
+                P[:, i] *= (1.0 - lam)
+            # Les blocs croisés (composante, non composante) ont été
+            # multipliés une fois par (1 − λ), le bloc des composantes deux
+            # fois : on le ramène à (1 − λ) puis on ajoute λ · diag(v0).
+            if lam < 1.0:
+                for i in idx:
+                    for k in idx:
+                        P[i, k] /= (1.0 - lam)
+            else:
+                for i in idx:
+                    for k in idx:
+                        P[i, k] = 0.0
+            for i, v0 in comps:
+                P[i, i] += lam * v0
         self.elargi += 1
 
     def variances_a_priori(self):

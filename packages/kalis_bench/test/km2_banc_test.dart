@@ -33,7 +33,7 @@ const String _reference = '../kalis_adapt/reference';
 /// Version de `kalis_plan` qui a écrit les saisons de référence de Koach
 /// (lot KR1). Une version suivante de `kalis_plan` qui ne change pas ces
 /// saisons (lot KS1c2 : 0.4.2) ne diffère que par `engineVersion`.
-const String _planReference = '0.4.1';
+const String _planReference = '0.4.2';
 
 /// Texte JSON de la saison [s] écrite par le `kalis_plan` courant, la
 /// version du moteur ramenée à celle des données de référence.
@@ -238,7 +238,7 @@ Map<String, Object?> _profil(String cle) =>
 
 /// Paramètres de Koach (fichier décodé).
 Map<String, Object?> _parametres() =>
-    readJsonObject('$_reference/params/koach_params_v1.json');
+    readJsonObject('$_reference/params/koach_params_d4.json');
 
 /// Fiches de Koach (`vecteurs_qualites_v1.json`, champ `exercices`).
 Map<String, Map<String, Object?>> _fiches() {
