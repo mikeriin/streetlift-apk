@@ -64,14 +64,27 @@ la ligne « en cours ».
 - En cours (fond, scratchpad `sansdouleur.*`) : comparaison 1.0.4 / 1.0.5 des 34 profils, scénario référence,
   vérités a et b, graine 0 (prescriptions identiques sans douleur ni diagnostic ?).
 
+- Relecture indépendante (Opus) traitée (B1, B2, M1-M5, mineurs) ; 290 tests Python verts (3.13) ; sous 3.11 / numpy 2.4.6
+  (CI) 2 tests de `test_fixtures` échouent sur `numerique.json` (derniers chiffres de flottants d'algèbre linéaire) : déjà
+  le cas en KR1 (run A, 1.0.4 : mêmes échecs) ; environnement, pas le lot. Run E poussé à 08:20 UTC (f97cb053, run
+  39016950696) : PART 0 vert (export 0.4.2, 40 fichiers de données changés, tests km de kalis_bench verts), PARTS 61-80
+  (campagne Python 1.0.5, 100 graines) ; les parts 73 et 80 n'ont démarré qu'à 09:07 (limite de 20 jobs : les
+  publications `if: always()` des runs B, C, D annulés tournaient encore — assemblage recalculant la campagne — ;
+  `force-cancel` fait). Run F (180c1a2c, demi-parts) annulé, inutile. Publication E attendue vers 12:40-13:00 UTC ;
+  publication A (point de départ 0.4.2 × 1.0.4, export 0.4.2) dès qu'un slot se libère (~11:50).
+- Temps Python 1.0.4 / 1.0.5 (trois mesures, médianes ; scratchpad `temps_python_km1c4.json`) : écarts de −5 à +4 %,
+  dans le bruit. Limite du job du contrôle complet relevée à 240 min (`.github/workflows/ci-paquets.yml`, reco KR1 § 8).
+- Squelette de `LIVRAISON_KM1c4.md` dans le scratchpad.
+
 ## En cours
 
-- Régénération des fixtures (après intégration des données 0.4.2 du run A/B), documents (CHANGEMENTS_1_0_5.md, SOURCES.md,
-  CONTRAT note, PORTAGE_DART.md, PORTAGE_BANC.md, README), campagne Python 100 graines sur la CI.
+- Attente des publications des runs E (sécurité 100 graines, critères Python 0-5) et A (export 0.4.2, point de départ).
 
 ## Reste à faire
 
-- Tests, fixtures régénérées, paramètres `1.0.5-ref.1`, CHANGEMENTS_1_0_5.md, SOURCES.md, note au contrat, PORTAGE_DART.md,
-  PORTAGE_BANC.md ; copies figées 1.0.4 pour les tests Dart (`reference/fix_dart/`, `params/koach_params_d4.json`).
-- Campagnes : Python 100 graines sur la CI (parts), critères 1-8 et 11 (graines 0-5), 7 bis (six jeux), jour J, réalisée
-  appariée, athlètes sans douleur ; relecture indépendante (Opus) ; contrôle complet ; livraison.
+- Intégrer les données 0.4.2 du run A (`donnees/reference`, `temoin`, `securite_dart`, catalogue, traces), régénérer les
+  fixtures, relancer pytest ; rejouer les six jeux d'adversaires (scratchpad `adv/run.sh`) et copier dans `donnees/` ;
+  `docs/data/km1c4/` (sécurité E et A, critères, temps), `docs/CRITERES_KM1C4.md`, `donnees/criteres_km1c4.json`, README ;
+  CHANGEMENTS (mesures) ; commit `moteurs`, rebase, contrôle complet sur `claude/ci-cp-a` (workflow officiel), push
+  `moteurs`, étiquette `kalis_bench-v0.5.5` ; LIVRAISON (pipeline + projet), DECISIONS_CP section KM1c4, ETAT_CP « livré »,
+  page de suivi, notification.
