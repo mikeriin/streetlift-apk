@@ -10,5 +10,7 @@
 ## État
 - Commit candidat sur ks1c2 (local), contrôle complet lancé sur claude/ci-cp-b ; relecture indépendante traitée (keep, promotion du tirage, raisons, tests).
 
+- Contrôle complet : run 38985187353 (commit addc2ca0, ~2 h 50). Brouillon de livraison : dev_ks1c2/LIVRAISON_KS1c2.md.
+
 ## Reste
 - Tests du changement de type (poignet, genou, sans barre fixe) à vérifier ; format (patch CI) ; version kalis_bench (0.5.3 ou suivante libre, KR1) + CHANGELOG/docs banc ; relecture indépendante (sous-agent Opus) ; contrôle complet sur claude/ci-cp-b ; push moteurs, étiquettes ; livraison, état, page de suivi, notification.
