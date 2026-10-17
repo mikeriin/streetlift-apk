@@ -1,24 +1,24 @@
 1.2G	/home/runner/work/streetlift-apk/streetlift-apk/ci-out/packages/py_travail
-fa96b65448c1fcf2
-90600 saisons, 0 plantée(s) ; critère 7 : 4 (3 saisons) ; réalisée appariée : 255480 ; retour à l'écrit : 45406
-906 saisons, 0 plantée(s) ; critère 7 : 0 (0 saisons) ; réalisée appariée : 758 ; retour à l'écrit : 83
-5436 saisons, 0 plantée(s) ; critère 7 : 0 (0 saisons) ; réalisée appariée : 11951 ; retour à l'écrit : 2258
-campagne : 5436 saisons, 5436 en cache, 0 à calculer (dossier /home/runner/work/streetlift-apk/streetlift-apk/ci-out/packages/py_travail/fa96b65448c1fcf2)
+fc5d3c7882809785
+90600 saisons, 0 plantée(s) ; critère 7 : 0 (0 saisons) ; réalisée appariée : 238906 ; retour à l'écrit : 50828
+906 saisons, 0 plantée(s) ; critère 7 : 0 (0 saisons) ; réalisée appariée : 650 ; retour à l'écrit : 86
+5436 saisons, 0 plantée(s) ; critère 7 : 0 (0 saisons) ; réalisée appariée : 11129 ; retour à l'écrit : 2469
+campagne : 5436 saisons, 5436 en cache, 0 à calculer (dossier /home/runner/work/streetlift-apk/streetlift-apk/ci-out/packages/py_travail/fc5d3c7882809785)
 critère 2 (mauvais jour) ...
 critère 8 (temps) ...
 saisons : 5436 prévues, 5436 mesurées, 0 plantées
-[NON] 1 e1RM rang 6 : Koach 3.65 % (n=8785), témoin 5.83 % ; seuil < 3 %
-      par vérité : a 3.06 %/4.29 %, b 4.46 %/7.81 %, c 3.43 %/5.38 %
+[NON] 1 e1RM rang 6 : Koach 3.67 % (n=8751), témoin 5.83 % ; seuil < 3 %
+      par vérité : a 3.07 %/4.29 %, b 4.51 %/7.81 %, c 3.44 %/5.38 %
 [OK ] 2 mauvais jour : |écart| moyen 0.81 % (après) 0.88 % (+1) 0.74 % (+2), médian après 0.75 %, signé -0.30 % ; seuil < 1 %
-[OK ] 3 convergence : premier passage (censuré) Koach 4.826, témoin 11 ; atteints 3.454 / 6.246 ; jamais 6.37 % / 25.36 %
-[OK ] 4 couverture 90 % (rangs >= 3) : 91.95 % (n=130859) ; par rang 1:95.12 %, 3:94.25 %, 6:93.55 %, 12:92.42 %, 24:88.96 % ; seuil 88–92 %
-[NON] 5 calibration P(réussite) par cible : écart max 24.30 % (déciles de n >= 30) ; n=5796 ; d0 n=3885 p=2.29 % obs=1.29 %, d1 n=907 p=13.10 % obs=10.03 %, d2 n=398 p=24.24 % obs=13.32 %, d3 n=158 p=34.89 % obs=27.85 %, d4 n=180 p=44.59 % obs=40.56 %, d5 n=107 p=54.56 % obs=54.21 %, d6 n=62 p=64.24 % obs=62.90 %, d7 n=73 p=74.98 % obs=50.68 %, d8 n=21 p=83.74 % obs=85.71 %, d9 n=5 p=91.40 % obs=100.00 %
-      toutes les cibles : debut n=681 p=3.33 % obs=1.91 %, mi_saison n=681 p=4.44 % obs=1.91 %, moins_4_semaines n=594 p=3.80 % obs=1.85 %
+[OK ] 3 convergence : premier passage (censuré) Koach 4.827, témoin 11 ; atteints 3.453 / 6.246 ; jamais 6.38 % / 25.36 %
+[OK ] 4 couverture 90 % (rangs >= 3) : 91.94 % (n=130518) ; par rang 1:95.12 %, 3:94.17 %, 6:93.49 %, 12:92.60 %, 24:89.29 % ; seuil 88–92 %
+[NON] 5 calibration P(réussite) par cible : écart max 25.87 % (déciles de n >= 30) ; n=5796 ; d0 n=3880 p=2.29 % obs=1.29 %, d1 n=910 p=13.12 % obs=9.78 %, d2 n=400 p=24.24 % obs=12.50 %, d3 n=156 p=34.96 % obs=26.28 %, d4 n=180 p=44.60 % obs=40.56 %, d5 n=107 p=54.52 % obs=52.34 %, d6 n=65 p=64.48 % obs=63.08 %, d7 n=71 p=75.17 % obs=49.30 %, d8 n=22 p=83.95 % obs=86.36 %, d9 n=5 p=91.40 % obs=100.00 %
+      toutes les cibles : debut n=681 p=3.35 % obs=1.76 %, mi_saison n=681 p=4.48 % obs=1.76 %, moins_4_semaines n=594 p=3.81 % obs=1.68 %
       exclusions : {'aucun_test_le_jour_j': 219, 'cible_non_testee': 288, 'sans_cible': 324, 'sans_echeance': 4140}
-[OK ] 6 jour J (chargé, best/max) : Koach 0.9337, témoin 0.9154 (678 saisons appariées, écart 0.01587 ± 0.003006) ; sans test {'koach_sans_test': 0, 'temoin_sans_test': 72, 'aucun_test': 546, 'temoin_absent': 0}
-[OK ] 7 sécurité : douleur {'aggravations': 0, 'poussees': 0}, hausses 0, validateur {'plan_module': {'introduit': {}, 'aggrave': {}, 'deja_initial': {}}, 'servi': {'introduit': {'decharge_absente': 3, 'plafond_volume': 12284, 'seance_trop_longue': 533, 'tendon_figures': 89, 'volume_trop_vite': 62239}, 'aggrave': {}, 'deja_initial': {}}, 'servi_tests_faits': {'introduit': {}, 'aggrave': {}, 'deja_initial': {}}} ; témoin apparié {'aggravations': 0, 'poussees': 108, 'violations': 68}
+[OK ] 6 jour J (chargé, best/max) : Koach 0.9339, témoin 0.9154 (678 saisons appariées, écart 0.01589 ± 0.00304) ; sans test {'koach_sans_test': 0, 'temoin_sans_test': 72, 'aucun_test': 546, 'temoin_absent': 0}
+[OK ] 7 sécurité : douleur {'aggravations': 0, 'poussees': 0}, hausses 0, validateur {'plan_module': {'introduit': {}, 'aggrave': {}, 'deja_initial': {}}, 'servi': {'introduit': {'decharge_absente': 3, 'plafond_volume': 12185, 'seance_trop_longue': 531, 'tendon_figures': 125, 'volume_trop_vite': 61712}, 'aggrave': {}, 'deja_initial': {}}, 'servi_tests_faits': {'introduit': {}, 'aggrave': {}, 'deja_initial': {}}} ; témoin apparié {'aggravations': 0, 'poussees': 108, 'violations': 68}
 [OK ] 8 temps : série max 3.665 ms, replanification max 0.5411 s (donnees/criteres_moteur.json (lu, non remesuré))
       9 rappels : {'pire_cas_adversarial': True}
-secondaires : MAE6 reps 9.51 %/21.08 %, tenues 17.12 %/27.75 %, écart effort 3.59/1.526, échecs 0.68 %/0.73 %, gain 0.002119/0.00193, alertes/100 séances 2.734
+secondaires : MAE6 reps 9.54 %/21.08 %, tenues 17.10 %/27.75 %, écart effort 3.585/1.526, échecs 0.68 %/0.73 %, gain 0.002103/0.00193, alertes/100 séances 2.728
 bilan : respectés ['2_mauvais_jour_isole', '3_convergence_sous_3', '4_couverture_90', '6_performance_jour_j', '7_securite', '8_temps_calcul'] ; NON respectés ['1_erreur_e1rm_rang_6', '5_calibration_p_reussite']
-durée : 97 s ; 12.76 s/saison (calcul, un cœur) ; 0 calculée(s), cache /home/runner/work/streetlift-apk/streetlift-apk/ci-out/packages/py_travail/fa96b65448c1fcf2
+durée : 181 s ; 13.22 s/saison (calcul, un cœur) ; 0 calculée(s), cache /home/runner/work/streetlift-apk/streetlift-apk/ci-out/packages/py_travail/fc5d3c7882809785

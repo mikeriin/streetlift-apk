@@ -1,5 +1,5 @@
-export saisons : 12 s
-exports KM1 : 34 profils, 16 graines pour le témoin (10 s).
-  4500/4530 saisons (0 plantée(s)) — 11402 s, 2.53 s/saison, reste ~76 s
-  4530/4530 saisons (0 plantée(s)) — 11464 s, 2.53 s/saison, reste ~0 s
-partie 8/20 : 4530 saisons, 0 plantée(s), 11466 s ; dossier /home/runner/work/streetlift-apk/streetlift-apk/out-packages/py_travail/fa96b65448c1fcf2
+export saisons : 15 s
+exports KM1 : 34 profils, 16 graines pour le témoin (12 s).
+  4500/4530 saisons (0 plantée(s)) — 15350 s, 3.41 s/saison, reste ~102 s
+  4530/4530 saisons (0 plantée(s)) — 15433 s, 3.41 s/saison, reste ~0 s
+partie 8/20 : 4530 saisons, 0 plantée(s), 15435 s ; dossier /home/runner/work/streetlift-apk/streetlift-apk/out-packages/py_travail/fc5d3c7882809785
