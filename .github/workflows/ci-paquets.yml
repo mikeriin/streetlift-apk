@@ -22,6 +22,7 @@ concurrency:
 env:
   FLUTTER_VERSION: "3.47.5"
   RUN_PRECEDENT: ""
+  RUN_PYTHON: "39041787498"
 
 jobs:
   parts:
@@ -75,7 +76,7 @@ jobs:
     needs: [packages]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 300
     defaults:
       run:
         shell: bash
@@ -84,8 +85,16 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
-      # Runs F et G : les parts du run E (39016950696) sont reprises de ses
-      # artefacts (même commit de sources, même empreinte de campagne).
+      # Run C : la campagne Python de la référence 1.0.5 (KM1c4, run
+      # 39041787498, une saison par fichier) pour la comparaison saison par
+      # saison.
+      - uses: actions/download-artifact@v4
+        if: ${{ env.RUN_PYTHON != '' }}
+        with:
+          path: artifacts_py
+          pattern: packages-*
+          run-id: ${{ env.RUN_PYTHON }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/download-artifact@v4
         if: ${{ env.RUN_PRECEDENT != '' }}
         with:

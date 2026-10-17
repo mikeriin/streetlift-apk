@@ -2,7 +2,7 @@
 library;
 
 /// Version du paquet (celle de `pubspec.yaml`).
-const String kalisBenchVersion = '0.5.5';
+const String kalisBenchVersion = '0.5.6';
 
 /// Version du format des profils du banc (`profiles/*.json`).
 const int benchProfileSchemaVersion = 1;
