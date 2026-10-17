@@ -107,10 +107,19 @@ jobs:
         run: flutter analyze --no-pub 2>&1 | tee validation-output/analyze.log
       - name: Exécuter les tests de régression
         run: |
-          python3 -m unittest discover -s tools/tests -v 2>&1 | tee validation-output/python-tests.log
-          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded 2>&1 | tee validation-output/flutter-tests.log
+          # PR4 : en cas d'échec, l'extrait du journal sort en annotation
+          # (lisible sans télécharger les journaux).
+          fail() {
+            out="$(grep -E -B3 -A30 '\[E\]|^(FAIL|ERROR):|Traceback' "$1" | head -n 150)"
+            out="${out//'%'/'%25'}"
+            out="${out//$'\n'/'%0A'}"
+            echo "::error title=Tests ($1)::${out}"
+            exit 1
+          }
+          python3 -m unittest discover -s tools/tests -v 2>&1 | tee validation-output/python-tests.log || fail validation-output/python-tests.log
+          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded 2>&1 | tee validation-output/flutter-tests.log || fail validation-output/flutter-tests.log
           # G1 : tests du mode dev, compilés avec le drapeau du build de développement.
-          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart test/g2_mode_dev_test.dart test/g3_mode_dev_test.dart test/g6_mode_dev_test.dart test/g7_mode_dev_test.dart test/g10_mode_dev_test.dart 2>&1 | tee validation-output/flutter-tests-dev.log
+          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart test/g2_mode_dev_test.dart test/g3_mode_dev_test.dart test/g6_mode_dev_test.dart test/g7_mode_dev_test.dart test/g10_mode_dev_test.dart 2>&1 | tee validation-output/flutter-tests-dev.log || fail validation-output/flutter-tests-dev.log
       - name: Générer les icônes
         run: dart run flutter_launcher_icons
       - name: Prouver le refus réel des releases sans secrets valides
