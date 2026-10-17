@@ -66,6 +66,14 @@ Exercise manualExercise(
   );
 }
 
+/// PR7 : la note s'ouvre et se ferme par le menu ⋯ de l'exercice.
+Future<void> toggleNote(WidgetTester tester, String id) async {
+  await tester.tap(find.byKey(ValueKey('$id-menu')));
+  await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('action-note')));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
@@ -141,17 +149,14 @@ void main() {
       final first = day.exercises.first;
       expect(find.byKey(ValueKey('exercise-card-${first.id}')), findsOneWidget);
       await tester.enterText(find.byType(TextField).first, '14');
-      await tester.tap(find.byKey(ValueKey('${first.id}-note-toggle')));
-      await tester.pumpAndSettle();
+      await toggleNote(tester, first.id);
       await tester.enterText(
         find.byKey(ValueKey('${first.id}-note')),
         'Première note',
       );
-      await tester.tap(find.byKey(ValueKey('${first.id}-note-toggle')));
-      await tester.pumpAndSettle();
+      await toggleNote(tester, first.id);
       expect(find.byKey(ValueKey('${first.id}-note')), findsNothing);
-      await tester.tap(find.byKey(ValueKey('${first.id}-note-toggle')));
-      await tester.pumpAndSettle();
+      await toggleNote(tester, first.id);
       expect(find.text('Première note'), findsOneWidget);
       // Correctifs UI (11/10/2026) : la carte plus compacte place le champ
       // de charge, encore actif, au centre de la page ; un glissement qui
@@ -161,8 +166,7 @@ void main() {
       await tester.pumpAndSettle();
       await swipePage(tester);
       final second = day.exercises.last;
-      await tester.tap(find.byKey(ValueKey('${second.id}-note-toggle')));
-      await tester.pumpAndSettle();
+      await toggleNote(tester, second.id);
       await tester.enterText(
         find.byKey(ValueKey('${second.id}-note')),
         'Seconde note',
@@ -243,7 +247,7 @@ void main() {
     await tester.pumpAndSettle();
     for (var i = 0; i < day.exercises.length; i++) {
       final note = find.byKey(ValueKey('${day.exercises[i].id}-note'));
-      final toggle = find.byKey(ValueKey('${day.exercises[i].id}-note-toggle'));
+      final toggle = find.byKey(ValueKey('${day.exercises[i].id}-menu'));
       await tester.scrollUntilVisible(
         toggle.hitTestable(),
         200,
@@ -254,8 +258,7 @@ void main() {
             )
             .first,
       );
-      await tester.tap(toggle);
-      await tester.pumpAndSettle();
+      await toggleNote(tester, day.exercises[i].id);
       await tester.enterText(note, 'Note exercice $i');
       await tester.pumpAndSettle();
       expect(
@@ -375,7 +378,7 @@ void main() {
       }
       expect(find.byKey(ValueKey('${exercise.id}-note')), findsNothing);
       expect(
-        find.byKey(ValueKey('${exercise.id}-note-toggle')).hitTestable(),
+        find.byKey(ValueKey('${exercise.id}-menu')).hitTestable(),
         findsOneWidget,
       );
       final instruction = find.byKey(ValueKey('${exercise.id}-instructions'));

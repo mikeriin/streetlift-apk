@@ -46,12 +46,12 @@ void main() {
       app(SessionScreen(week: week, day: week.days.single)),
     );
     await tester.enterText(find.byType(TextField).first, '12');
-    await tester.tap(
-      find.byKey(
-        ValueKey('${week.days.single.exercises.single.id}-note-toggle'),
-      ),
-    );
-    await tester.pump();
+    // PR7 : la note s'ouvre par le menu ⋯ de l'exercice.
+    final id = week.days.single.exercises.single.id;
+    await tester.tap(find.byKey(ValueKey('$id-menu')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('action-note')));
+    await tester.pumpAndSettle();
     final notes = find.byType(TextField).last;
     await tester.enterText(notes, 'Saisie conservée');
     await tester.pump(const Duration(seconds: 1));

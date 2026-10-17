@@ -79,6 +79,12 @@ committer les fichiers déchiffrés.
   chrono et un libellé de format (« E2MOM · départ toutes les 2 min »,
   PR6). Programme du propriétaire (PR6) : lifts au départ chronométré et
   leurs enchaînements sans annotation Koach, servis tels qu'écrits.
+- Carte d'exercice compacte en séance (PR7) : une seule carte par page,
+  en-tête du groupe ou du départ chronométré dedans (« E2MOM · 8 tours ·
+  16 min », Lancer ; tours comptés sur les séries validées, jamais
+  saisis) ; titre, charge, volume, cible ; rôle, repères, consigne du
+  coach et notes de Koach dans la feuille ⓘ ; séance précédente, note et
+  colonnes dans le menu ⋯ ; nombre de séries fixé par le programme.
 - Notation (PR5) : une série validée montre sa flamme à la place de la
   coche ; un appui ouvre le curseur en popup (note validée au lâcher), un
   appui long annule la validation. En lecture, séries résumées en une ligne.
