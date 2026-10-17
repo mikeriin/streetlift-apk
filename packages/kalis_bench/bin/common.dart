@@ -414,6 +414,7 @@ void runStructureBench(String outPath) {
     ...readProfiles('profiles_ks'),
   ];
   final measures = <StructureMeasure>[];
+  final bench = PrincipalMeasure('${profiles.length} profils du banc');
   for (final p in profiles) {
     final program = generateProgram(
       catalog,
@@ -422,6 +423,9 @@ void runStructureBench(String outPath) {
       horizonWeeks: p.key == structureTestProfile ? 40 : null,
     );
     measures.add(structureMeasureOf(catalog, program, p));
+    bench.add(catalog, p.key, <Pass1Plan>[
+      for (final b in program.blocks) b.pass1,
+    ]);
     if (p.key.startsWith('ks_')) {
       final view = ProgramView(catalog, program);
       _write('$outPath/programmes_ks/${p.key}.md', programMarkdown(view));
@@ -430,6 +434,22 @@ void runStructureBench(String outPath) {
         '${jsonEncode(programJson(view))}\n',
       );
     }
+  }
+  // Grille des profils incomplets du lot KS1c2 (repères absents par
+  // schéma, questionnaire non rempli ou prudent, du débutant à l'élite) :
+  // tout l'horizon de chaque profil.
+  final grid = PrincipalMeasure('grille des profils incomplets');
+  for (final p in principalGrid(principalGridBases())) {
+    final program = generateProgram(catalog, engine, p);
+    grid.add(
+      catalog,
+      p.key,
+      <Pass1Plan>[for (final b in program.blocks) b.pass1],
+      safetyCodes: <String>[
+        for (final f in safetyFindings(ProgramView(catalog, program), p))
+          f.code,
+      ],
+    );
   }
   final seasons = writeSeasonExports(
     outPath,
@@ -447,6 +467,7 @@ void runStructureBench(String outPath) {
     reference: reference.existsSync()
         ? readJsonObject(reference.path)
         : const <String, Object?>{},
+    principal: <PrincipalMeasure>[bench, grid],
   );
   for (final entry in files.entries) {
     _write('$outPath/${entry.key}', entry.value);
@@ -474,6 +495,23 @@ const List<String> seasonProfileDirs = <String>['profiles', 'profiles_ks'];
 List<Map<String, Object?>> readSeasonJsonAll() => <Map<String, Object?>>[
   for (final dir in seasonProfileDirs) ...readSeasonJson(dir: dir),
 ];
+
+/// Bases de la grille des profils incomplets du lot KS1c2 : le profil du
+/// constat de KS1A (`profiles_ks1c2`) et les sept profils du lot KS1
+/// (`profiles_ks`), dans l'ordre des noms de fichier.
+List<Map<String, Object?>> principalGridBases() {
+  final out = <Map<String, Object?>>[];
+  for (final dir in const <String>['profiles_ks1c2', 'profiles_ks']) {
+    final paths = <String>[
+      for (final f in Directory(dir).listSync())
+        if (f is File && f.path.endsWith('.json')) f.path,
+    ]..sort();
+    for (final path in paths) {
+      out.add(readJsonObject(path));
+    }
+  }
+  return out;
+}
 
 Map<String, Object?> _seasonOf(String key, int seeds) {
   final inputs = loadInputs('tous');

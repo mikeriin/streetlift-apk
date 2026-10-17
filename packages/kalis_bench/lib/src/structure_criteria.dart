@@ -14,6 +14,7 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show coachSessionSeconds;
 
 import 'analysis.dart';
+import 'principal_criteria.dart';
 import 'profile.dart';
 import 'program.dart';
 import 'safety.dart';
@@ -613,6 +614,7 @@ Map<String, String> structureReport(
   required int seasonViolations,
   Map<String, Object?> before = const <String, Object?>{},
   Map<String, Object?> reference = const <String, Object?>{},
+  List<PrincipalMeasure> principal = const <PrincipalMeasure>[],
 }) {
   final identity = <String, List<String>>{};
   for (final m in measures) {
@@ -773,6 +775,25 @@ Map<String, String> structureReport(
       '| Ordre par exigence : son jour en tête de la rotation | 0 bloc | '
       '${rotationOff.length} sur $rotation | ${held(rotationOff.isEmpty)} |',
     );
+  for (final m in principal) {
+    b
+      ..writeln(
+        '| Jour typé sans exercice de son schéma (KS1c2), ${m.label} '
+        '(${m.profiles} profils, ${m.days} jours) | 0 | '
+        '${m.schemaGaps.length} | ${held(m.schemaGaps.isEmpty)} |',
+      )
+      ..writeln(
+        '| Jour d\'un gabarit typé sans emplacement principal (KS1c2), '
+        '${m.label} | 0 | ${m.typedNoMain.length} | '
+        '${held(m.typedNoMain.isEmpty)} |',
+      );
+    if (m.label.startsWith('grille')) {
+      b.writeln(
+        '| Violations de sécurité (programmes créés), ${m.label} | 0 | '
+        '${m.safety.length} profil(s) | ${held(m.safety.isEmpty)} |',
+      );
+    }
+  }
   if (test != null) {
     for (final e in test.testChecks.entries) {
       b.writeln(
@@ -794,6 +815,26 @@ Map<String, String> structureReport(
     }
   }
 
+  for (final m in principal) {
+    list('Jours typés sans exercice de leur schéma (${m.label})', m.schemaGaps);
+    list(
+      'Jours d\'un gabarit typé sans emplacement principal (${m.label})',
+      m.typedNoMain,
+    );
+    list('Violations de sécurité (${m.label})', m.safety);
+  }
+  if (principal.isNotEmpty) {
+    final legacy = principal.fold<int>(0, (n, m) => n + m.legacyNoMain.length);
+    b
+      ..writeln()
+      ..writeln(
+        'Critère KS1c2 : un exercice porteur est un emplacement principal, '
+        'secondaire ou de figure du schéma. Les gabarits d\'avant 0.4.0 '
+        '(figés par le critère d\'identité) écrivent des jours de volume en '
+        'secondaires : $legacy jour(s) sans emplacement principal, leurs '
+        'schémas tous portés (comptés à part, comme au lot KS1).',
+      );
+  }
   list('Blocs sous le seuil de récupération', recoveryLow);
   list('Séances sans principal', noMain);
   list('Séances où le plus exigeant ne vient pas en tête', orderOff);
@@ -844,6 +885,7 @@ Map<String, String> structureReport(
           'measures': <Object?>[for (final m in measures) m.toJson()],
           'identity': identity,
           'seasonViolations': seasonViolations,
+          'principal': <Object?>[for (final m in principal) m.toJson()],
         })}\n',
   };
 }

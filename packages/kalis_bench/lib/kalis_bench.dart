@@ -23,6 +23,7 @@ export 'src/endurance_export.dart';
 export 'src/campaign.dart';
 export 'src/expectations.dart';
 export 'src/export.dart';
+export 'src/principal_criteria.dart';
 export 'src/profile.dart';
 export 'src/program.dart';
 export 'src/quality.dart';

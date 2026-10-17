@@ -1,5 +1,24 @@
 # Journal
 
+## 0.5.4 — 17/10/2026 (lot KS1c2)
+
+Mesure du critère « aucun jour sans son principal » du lot KS1c2 (`pipeline/cp/prompts/KS1c2.txt`), pour `kalis_plan`
+0.4.2 ; sur 0.5.3 (lot KR1). Critères, profils, attentes et
+grilles d'avant inchangés.
+
+- **Critère** (`lib/src/principal_criteria.dart`) : écarts d'un jour typé (`schéma <s>`, `corps entier`, `figure`,
+  `principal`), grille des profils incomplets (`principalGrid` : 6 états de repères × 3 questionnaires × 4 niveaux par
+  base), `PrincipalMeasure` (écarts de schéma, jours d'un gabarit typé sans principal, jours figés sans principal
+  comptés à part, violations de sécurité des programmes créés).
+- **Profil** `profiles_ks1c2/ks1a_street_5050.json` : équivalent au banc du profil du constat de KS1A (hors des
+  campagnes de saisons).
+- **Rapport de structure** (`runStructureBench`, `structureReport`) : lignes KS1c2 sur les 34 profils et sur la grille
+  (tout l'horizon), liste des écarts, objet `principal` de `structure.json`.
+- **Test** `test/ks1c2_test.dart`.
+- `test/km2_banc_test.dart` (lot KR1) : la saison vivante est comparée aux saisons de référence de Koach (écrites par
+  `kalis_plan` 0.4.1) la version du moteur (`engineVersion`) ramenée à 0.4.1 ; tout le reste à l'égalité stricte
+  (identique sur les sept fixtures avec `kalis_plan` 0.4.2).
+
 ## 0.5.3 — 16/10/2026 (lot KR1)
 
 Couple `kalis_plan` 0.4.1 × Koach 1.0.4 (`kalis_adapt` 1.0.3) mesuré tel qu'il sera servi

@@ -351,6 +351,11 @@ final class _Builder {
   int extraRunDay = -1;
   final List<Reason> reasons = <Reason>[];
 
+  /// Raisons propres à un jour (KS1c2 : jour qui change de type faute
+  /// d'exercice possible de son schéma), écrites après son type dans les
+  /// raisons du gabarit.
+  final Map<int, List<Reason>> dayReasons = <int, List<Reason>>{};
+
   /// Ajoute au jour [day] le premier exercice admissible de [candidates]
   /// qui n'y est pas déjà. Rend l'emplacement, ou `null`.
   SlotSpec? add(
@@ -3783,13 +3788,15 @@ Skeleton buildSkeleton(
       'templateId': templateId,
       'sessions': sessions,
     }),
-    for (final day in b.days)
+    for (final day in b.days) ...<Reason>[
       reason(ReasonCodes.planDayType, <String, Object?>{
         'patterns': <String>[
           for (final p in day.type!.patterns) p.code,
         ].join('+'),
         'quality': day.type!.quality.code,
       }),
+      ...?b.dayReasons[day.dayIndex],
+    ],
   ];
 
   final target = shape.target;

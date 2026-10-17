@@ -22,13 +22,25 @@ import 'package:kalis_bench/src/km/km_export.dart';
 import 'package:kalis_bench/src/km/meneur.dart';
 import 'package:kalis_bench/src/km/politique_koach.dart';
 import 'package:kalis_core/kalis_core.dart' show Catalog;
-import 'package:kalis_plan/kalis_plan.dart' show KalisPlan;
+import 'package:kalis_plan/kalis_plan.dart' show KalisPlan, kalisPlanVersion;
 import 'package:test/test.dart';
 
 import 'support.dart';
 
 /// Référence Python de kalis_adapt (paquet voisin).
 const String _reference = '../kalis_adapt/reference';
+
+/// Version de `kalis_plan` qui a écrit les saisons de référence de Koach
+/// (lot KR1). Une version suivante de `kalis_plan` qui ne change pas ces
+/// saisons (lot KS1c2 : 0.4.2) ne diffère que par `engineVersion`.
+const String _planReference = '0.4.1';
+
+/// Texte JSON de la saison [s] écrite par le `kalis_plan` courant, la
+/// version du moteur ramenée à celle des données de référence.
+String _saisonTexte(Map<String, Object?> s) => jsonEncode(s).replaceAll(
+  '"engineVersion":"$kalisPlanVersion"',
+  '"engineVersion":"$_planReference"',
+);
 
 /// Fixtures du lot KM2.
 const String _dossier = 'test/fixtures/km2';
@@ -341,7 +353,7 @@ void main() {
 
       test('kmReferenceSeason = saison lue par Python (données régénérées '
           'sur le kalis_plan courant, lot KR1)', () {
-        expect(jsonEncode(saisonDart), jsonEncode(saisonPython));
+        expect(_saisonTexte(saisonDart), jsonEncode(saisonPython));
         final s = attendu['saison']! as Map<String, Object?>;
         expect(saison['weeks'], s['weeks']);
         expect((saison['sessions']! as List<Object?>).length, s['sessions']);
