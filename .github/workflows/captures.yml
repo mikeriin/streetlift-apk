@@ -29,6 +29,12 @@ jobs:
           flutter-version: '3.47.5'
           channel: stable
           cache: true
+      - name: Déchiffrer les ressources sous licence
+        # Nécessaires à la compilation des tests (mannequin) ; jamais
+        # poussées (seul shots/ est ajouté au commit).
+        env:
+          KT_ASSETS_KEY: ${{ secrets.KT_ASSETS_KEY }}
+        run: python3 tools/secure_assets.py decrypt
       - name: Dépendances
         run: flutter pub get --enforce-lockfile
       - name: Captures
