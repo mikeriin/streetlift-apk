@@ -11,7 +11,11 @@
 #  PART 61-80 : campagne Python (référence 1.0.5) graines 0-99, parts 1/20..20/20, mêmes saisons 0.4.2
 #  PART 81-84 : run F : les parts 13/20 et 20/20 du run E (restées en file derrière la limite de 20 jobs)
 #               refaites en quatre demi-parts 13/40, 33/40, 20/40, 40/40 (même matrice, même empreinte) ;
-#               la publication du run F réunit ses parts et les artefacts du run E (39016950696)
+#               la publication du run F réunit ses parts et les artefacts du run E (39016950696) — run F annulé,
+#               les parts 73 et 80 ayant démarré dès l'annulation forcée des publications des runs B, C, D
+#  PART 99    : run G : attend la fin du run E (gh api), ne calcule rien ; la publication du run G réunit les
+#               artefacts du run E (20 parts) et les assemble sur l'arbre portant les données 0.4.2 (témoin
+#               0.4.2 : les cinq saisons « douleur à l'épaule » du témoin changent avec kalis_plan 0.4.2)
 root=$PWD
 out=$root/out-packages
 status=0
@@ -68,6 +72,15 @@ elif [ "$PART" -ge 61 ] && [ "$PART" -le 84 ]; then
   cd $R
   python3 -m banc.campagne --graines 100 --coeurs 4 --partie $i/$n --travail $out/py_travail > $out/py_campagne_c${i}_sur_$n.log 2>&1 || { echo "campagne python 100 graines $i/$n : échec"; status=1; }
   tail -3 $out/py_campagne_c${i}_sur_$n.log
+elif [ "$PART" = 99 ]; then
+  st=""
+  for k in $(seq 1 330); do
+    st=$(gh api repos/$GITHUB_REPOSITORY/actions/runs/$RUN_PRECEDENT --jq .status 2>/dev/null)
+    [ "$st" = completed ] && break
+    sleep 60
+  done
+  echo "run $RUN_PRECEDENT : $st ($(date -u +%H:%M))"
+  [ "$st" = completed ] || status=1
 elif [ "$PART" -le 34 ]; then
   g=$(( (PART + 1) / 2 )); h=$(( 2 - PART % 2 ))
   a=$(( 6 * (g - 1) )); b=$(( a + 5 )); [ $b -gt 99 ] && b=99

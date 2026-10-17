@@ -55,6 +55,8 @@ jobs:
         with:
           python-version: "3.11"
       - name: Mise au point
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p out-packages
           pip install --quiet numpy pytest
@@ -81,8 +83,8 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
-      # Run F : les parts 1-12, 14-19 du run E (39016950696) sont reprises de
-      # ses artefacts (même commit de sources, même empreinte de campagne).
+      # Runs F et G : les parts du run E (39016950696) sont reprises de ses
+      # artefacts (même commit de sources, même empreinte de campagne).
       - uses: actions/download-artifact@v4
         if: ${{ env.RUN_PRECEDENT != '' }}
         with:
