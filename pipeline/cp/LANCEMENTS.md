@@ -343,3 +343,11 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - **Base** : `moteurs` bcb8422b (ou suivant) : Koach 1.0.4 (`kalis_adapt` 1.0.3), **`kalis_plan` 0.4.2** (KS1c2, validé C17.24), `kalis_bench` 0.5.4. Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM1c4`.
 - **Couple mesuré** : `kalis_plan` 0.4.2 × Koach (le couple qui sera servi par KB1). Rejoue d'abord la campagne de KR1 sur 0.4.2 (point de départ : 63 violations sur 90 600 avec 0.4.1 ; KS1c2 a changé quatre saisons « douleur à l'épaule ») et donne le nouveau point de départ dans la livraison.
 - Seul lot en cours ; aucune autre session sur `moteurs`. Clé des références : pas nécessaire sauf rejeu du journal réel (C7.8 si besoin).
+
+## KM2c3 — portage Dart de Koach 1.0.5, `kalis_adapt` 1.0.4 (lancé le 17/10/2026 vers 22:55 UTC, tâche « Opus 5.5, effort maximal, moteurs » ; C17.26, C17.27)
+
+- Lot : **KM2c3**, prompt `prompts/KM2c3.txt`. Portage à oracle exact (C13.9), validation automatique par le pilotage.
+- **Base** : `moteurs` ba1e5093 (ou suivant) : référence Koach 1.0.5 (KM1c4, validé C17.26), `kalis_adapt` 1.0.3 (Dart 1.0.4), `kalis_plan` 0.4.2, `kalis_bench` 0.5.5. Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM2c3`.
+- À lire d'abord : `livraisons/LIVRAISON_KM1c4.md` § 6 et § 7 (incidents CI : lancer 20 parts sans part 0 ; forcer l'annulation des publications `if: always()` des runs annulés ; parts de 2 h 15 à 4 h 20 ; artefacts par `ci-out/`). Référence de comparaison : campagne Python run 39041787498 (`kalis_bench/docs/data/km1c4/securite/`).
+- Seul lot en cours ; aucune autre session sur `moteurs`. Clé des références non nécessaire.
+

@@ -1,0 +1,24 @@
+LOT KM2c3 — KM2 CORRECTION 3 : PORTAGE DE KOACH 1.0.5 (`kalis_adapt` 1.0.4) ET REMESURE DART DU COUPLE
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs », C13.9 : portage à oracle exact). Validation : automatique, par le pilotage.
+Prérequis : KM1c4 validé (C17.26).
+Base : `moteurs` à la pointe (référence 1.0.5, ba1e5093 ou suivant ; `kalis_plan` 0.4.2, `kalis_bench` 0.5.5). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM2c3`.
+Décisions : C13.3, C13.9, C17.17.3, C17.23, C17.26. Livraison à lire : `livraisons/LIVRAISON_KM1c4.md` (§ 2, § 6, § 7). Documents : `packages/kalis_adapt/reference/PORTAGE_DART.md` (delta 1.0.4 → 1.0.5), `reference/PORTAGE_BANC.md`, `reference/CHANGEMENTS_1_0_5.md`.
+
+OBJECTIF
+Que le Koach qui sera servi par l'application (`kalis_adapt`, Dart) soit exactement la référence 1.0.5, et que le critère dur C17.17.3 soit tenu **par le moteur Dart** : 0 violation du critère 7 sur les 90 600 saisons du couple `kalis_plan` 0.4.2 × Koach 1.0.5 (34 profils × 100 graines × 3 modèles de vérité × scénarios), 0 saison plantée. Aucune règle nouvelle : si la parité ou la campagne Dart révèle un écart de méthode, le décrire dans la livraison sans changer la référence (lot KM suivant).
+
+CONTENU
+1. **Portage ligne pour ligne** du delta 1.0.4 → 1.0.5 dans `packages/kalis_adapt/lib/src/koach/` (§ 6 de la livraison KM1c4) : `securite.dart` (`episode`, `sensible`, `sensibles`, `geneRecente`, règle 4 dans `conduite`, ordre des raisons) ; `seance.dart` (rampe du réalisé par zone, règle 3 bis de retour après coupure suspendue en semaine verrouillée, permis réparti par séance, arrondis `floor(x + 1e-9)` et ordre des divisions identiques) ; `modele.dart` (`elargir(part)` sur toutes les branches, même ordre d'opérations) ; `rupture.dart` (`elargissement_vers_a_priori`, action `part`, retrait de `elargissement_rien_de_special` : fichier, asset, bornes). Asset `koach_params_1_0_5.json` (`1.0.5-ref.1`, 346 clés, SHA-256 identique à la référence). API, schéma du journal et codes de raison inchangés.
+2. **Modèle de vérité du banc** : `truth.dart`, `_painKnown = false` au début d'un épisode de la fiche et d'un épisode tendineux, comme `banc/verite.py` (KM1c4.3) ; test qui échoue avant, passe après.
+3. **Tests et copies figées** : tests `koach_*_test.dart` et `kalis_bench` repointés sur `reference/fixtures/` et `reference/params/koach_params_v1.json` ; `reference/fix_dart/` et `koach_params_d4.json` supprimés (l'arbre de `kalis_adapt` doit redescendre sous sa taille de KR1, 31,1 Mo, ou l'écart dit) ; fixtures `kalis_bench/test/fixtures/km2/` régénérées. **Parité 1e-9 sur les 15 fixtures**, traces de rampe comprises.
+4. **Campagne Dart** (`kalis_bench`, méthode de KR1 et KM1c4 : 20 parts sans part 0 sur `claude/ci-cp-a`, agrégation en flux) sur les 90 600 saisons : critère 7 = 0, 0 saison plantée ; comparaison saison par saison à la campagne Python de KM1c4 (run 39041787498) : mêmes constats, sinon chaque écart expliqué. Critères KM 1 à 8 et 11 sur les graines 0 à 5 en Dart, identiques à la référence (critère 11 mesuré sur la VM Dart : ≤ 10 s par replanification, ≤ 50 ms par série) ; 7 bis sur les six jeux d'adversaires ; critère 5 lu selon C17.13.2 avec son bruit entre les 17 groupes de six graines (indicateur, C17.26.3).
+5. **Relecture indépendante du portage** (sous-agent Opus) ; 0 bloquant ouvert.
+
+NE PAS FAIRE
+- Ni la référence Python (sauf correction d'un défaut de portabilité, dit et testé, sans changer un résultat), ni `kalis_plan`, ni `kalis_core`, ni l'application (`main`, `lib/`) : l'intégration est KB1.
+- Ni durée des séances (option (c), C17.15), ni gabarits (KS2).
+
+FIN DE LOT
+- `kalis_adapt` 1.0.4 (Koach 1.0.5) et `kalis_bench` à la version libre suivante, push `moteurs` (rebase avant chaque push), étiquettes `etiquettes/<paquet>-v<version>` jamais réécrites, contrôle complet vert sur `claude/ci-cp-a`.
+- `LIVRAISON_KM2c3.md` (pipeline et projet claude.ai) : parité, campagne Dart contre Python, tableau des critères, temps, taille de l'arbre, ce que KB1 doit copier dans l'application (C17.19.3 : Dart et assets seulement).
+- Ligne KM2c3 de `ETAT_CP.md` « livré » ; notification ; arrête-toi (aucun fire_trigger).
