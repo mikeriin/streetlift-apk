@@ -1840,6 +1840,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final numericLoad = RegExp(r'\d').hasMatch(loadLabel);
     final showBigLoad = shownLoad && numericLoad;
     final kindLabel = _kindLabel(sp);
+    // PR6 : carte commune : un exercice au même départ chronométré qu'un
+    // exercice d'avant n'en répète ni le format ni le chrono.
+    final sameTiming =
+        _merged &&
+        sp.every != null &&
+        specs.take(k).any((x) => x.every == sp.every);
     final showIntensity =
         ex.intensity.isNotEmpty &&
         !kindLabel.toLowerCase().startsWith(ex.intensity.toLowerCase());
@@ -1923,13 +1929,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         _Meta(Icons.fitness_center_rounded, 'Charge : $loadLabel'),
       // « Reps » redit l'en-tête de colonne : le repère ne nomme que les
       // autres mesures.
-      if (!unresolved && (sp.kind != 'reps' || sp.special))
+      if (!unresolved && (sp.kind != 'reps' || sp.special) && !sameTiming)
         _Meta(Icons.repeat_rounded, kindLabel),
       if (!readOnly && showIntensity && target == null)
         _Meta(Icons.local_fire_department_outlined, nbsp(ex.intensity)),
       if (!readOnly && ex.tempo.isNotEmpty)
         _Meta(Icons.bolt_rounded, nbsp(ex.tempo)),
-      if (!readOnly && ex.rest.isNotEmpty && ex.rest != '—')
+      // PR6 : départs chronométrés : le format dit déjà le repos.
+      if (!readOnly && ex.rest.isNotEmpty && ex.rest != '—' && sp.every == null)
         _Meta(Icons.timer_outlined, 'Repos ${nbsp(ex.rest)}'),
       if (finalRest != null)
         _Meta(Icons.timer_outlined, 'Repos final ${fmt(finalRest)}'),
@@ -2211,7 +2218,13 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           () => widget.timer.emom(sp.seconds! ~/ 60, 60),
         ),
       // PR1 : séries au départ chronométré (E2MOM, E90s…).
-      if (!readOnly && ex.timer == null && sp.every != null && _group == null)
+      // PR6 : carte commune : un seul chrono pour les exercices au même
+      // départ.
+      if (!readOnly &&
+          ex.timer == null &&
+          sp.every != null &&
+          _group == null &&
+          !sameTiming)
         _everyButton(sp, log.sets.length),
       if (!readOnly && ex.timer == null && sp.kind == 'duration')
         _big(
@@ -2555,10 +2568,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// PR1 : chrono des départs (« Lancer l’E2MOM, 8 × 120 s »).
   Widget _everyButton(LogSpec sp, int n) {
     final s = sp.every!;
-    final name = s % 60 == 0 ? (s == 60 ? 'EMOM' : 'E${s ~/ 60}MOM') : 'E${s}s';
     return _big(
       Icons.timer_outlined,
-      'Lancer l’$name, $n × $s s',
+      'Lancer l’${ct.everyFormatName(s)}, $n × $s s',
       () => widget.timer.emom(n, s),
     );
   }
@@ -2623,7 +2635,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     };
     if (sp.restPause) return 'Rest-pause, mini-repos ${sp.intra} s';
     if (sp.myo) return 'Myo-reps, mini-repos ${sp.intra} s';
-    if (sp.every != null) return 'Départ toutes les ${sp.every} s';
+    // PR6 : « E2MOM · départ toutes les 2 min », « E90s · départ toutes
+    // les 90 s ».
+    if (sp.every case final e?) {
+      return '${ct.everyFormatName(e)} · départ toutes les '
+          '${e % 60 == 0 ? '${e ~/ 60} min' : '$e s'}';
+    }
     if (sp.stages != null) {
       return 'Drop set mécanique, ${sp.stages} paliers enchaînés';
     }
