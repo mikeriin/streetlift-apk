@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
   group: ci-km1c4-${{ github.sha }}
@@ -19,6 +20,7 @@ concurrency:
 
 env:
   FLUTTER_VERSION: "3.47.5"
+  RUN_PRECEDENT: "39016950696"
 
 jobs:
   parts:
@@ -79,6 +81,15 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
+      # Run F : les parts 1-12, 14-19 du run E (39016950696) sont reprises de
+      # ses artefacts (même commit de sources, même empreinte de campagne).
+      - uses: actions/download-artifact@v4
+        if: ${{ env.RUN_PRECEDENT != '' }}
+        with:
+          path: artifacts
+          pattern: packages-*
+          run-id: ${{ env.RUN_PRECEDENT }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -90,6 +101,7 @@ jobs:
       - name: Assembler ci-out
         run: |
           rm -rf ci-out && mkdir -p ci-out/packages
+          ls artifacts
           for d in artifacts/packages-*; do cp -r "$d"/. ci-out/packages/ 2>/dev/null || true; done
           pip install --quiet numpy
           if [ -f DEV_ASSEMBLER.sh ]; then bash DEV_ASSEMBLER.sh 2>&1 | tee ci-out/packages/assembler.log || true; fi
