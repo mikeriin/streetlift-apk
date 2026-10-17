@@ -159,8 +159,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
   }
 
   /// Contexte des feuilles : « Corps entier, S1, J2 » (maquette du menu).
-  String get _sheetContext =>
-      _week.n > 0
+  String get _sheetContext => _week.n > 0
       ? '${_day.title} · ${store.program.sessionLabel(_week.n, _day.j)}'
       : _day.title;
 

@@ -26,9 +26,10 @@ import 'support/ui_capture.dart';
 
 Future<void> _state(AppStore app) async {
   final backup = backupOf(app);
-  final week = (jsonDecode(
-    File('test/fixtures/pr9_semaine.json').readAsStringSync(),
-  ) as Map).cast<String, dynamic>();
+  final week =
+      (jsonDecode(File('test/fixtures/pr9_semaine.json').readAsStringSync())
+              as Map)
+          .cast<String, dynamic>();
   backup['programStart'] = {
     'status': 'set',
     'date': '2026-10-19',

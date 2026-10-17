@@ -2073,8 +2073,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // pastille que les lignes servies par Koach).
     String? levelOfRir(String rir) {
       final v = double.tryParse(
-        RegExp(r'\d+(?:[.,]\d+)?').stringMatch(rir)?.replaceAll(',', '.') ??
-            '',
+        RegExp(r'\d+(?:[.,]\d+)?').stringMatch(rir)?.replaceAll(',', '.') ?? '',
       );
       return v == null ? null : '${kc.Flames.fromRir(v)}';
     }
