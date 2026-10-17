@@ -57,6 +57,26 @@ void main() {
     store.storeClock = () => DateTime(2026, 10, 19, 9);
     await store.init();
     await _state(store);
+    // Références synthétiques (jamais celles du propriétaire).
+    for (final (ref, v) in [
+      ('B4', 70.0),
+      ('B8', 50.0),
+      ('B9', 70.0),
+      ('B10', 15.0),
+      ('B11', 110.0),
+      ('B16', 8.0),
+      ('B17', 25.0),
+      ('B18', 50.0),
+      ('B19', 50.0),
+      ('B20', 20.0),
+      ('B25', 70.0),
+      ('B28', 30.0),
+      ('B30', 14.0),
+      ('B43', 20.0),
+      ('B45', 4.0),
+    ]) {
+      store.setValue(ref, v);
+    }
     store.saveAthleteProfile(
       ProfileDraft.of(
         sampleAthleteProfile(

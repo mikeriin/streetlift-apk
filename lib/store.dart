@@ -3107,6 +3107,13 @@ class AppStore extends ChangeNotifier {
             while (k < d.exercises.length && ids[k] == id) {
               k++;
             }
+            // PR10 : ligne « enchaînée » que le moteur ne porte pas : elle
+            // reste sur la page du groupe d'avant.
+            while (k < d.exercises.length &&
+                ids[k] == null &&
+                d.exercises[k].name.toLowerCase().contains('enchaîn')) {
+              k++;
+            }
           } else if (k < d.exercises.length &&
               ids[k] == null &&
               d.exercises[k].name.toLowerCase().contains('enchaîn')) {

@@ -1,2 +1,4 @@
 # PR9 : tests de capture lancés par .github/workflows/captures.yml
 test/pr9_seance_capture_test.dart
+test/ui4_ecrans_capture_test.dart
+test/ui1_programme_capture_test.dart

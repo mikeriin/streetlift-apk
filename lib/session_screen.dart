@@ -54,8 +54,25 @@ String nbsp(String t) => t.replaceAllMapped(
 /// UI2 : repère de la journée affiché sous le titre (« S1, J2 » ; le nom du
 /// bloc pour une séance hors semaine). Le titre enregistré dans le journal
 /// (« S1 · J2 ») ne change pas.
+/// PR10 : volume affiché sur la carte : « 8 × 3 » (espaces autour du ×,
+/// comme les lignes servies par Koach) ; sans le format au temps quand
+/// l'en-tête de la carte le dit déjà (« 8 × 3 · E2MOM » → « 8 × 3 »).
+String volumeText(String raw, {bool timed = false}) {
+  var s = raw.replaceAllMapped(
+    RegExp(r'(\d|\?)\s*[×x]\s*(?=[\d?(])'),
+    (m) => '${m[1]} × ',
+  );
+  if (timed) {
+    s = s.replaceFirst(
+      RegExp(r'\s*·\s*E(?:\d*MOM|\d+\s*s)\s*$', caseSensitive: false),
+      '',
+    );
+  }
+  return s;
+}
+
 String sessionPlace(WeekPlan w, DayPlan d) =>
-    w.n == 0 ? w.block : '${store.program.weekLabel(w.n)}, J${d.j}';
+    w.n == 0 ? w.block : store.program.sessionLabel(w.n, d.j);
 
 // ============================ SÉANCE =====================================
 
@@ -397,7 +414,7 @@ class _SessionScreenState extends State<SessionScreen> {
   void _instructions() => showKContentSheet<void>(
     context,
     title: 'Consignes de séance',
-    subtitle: '${widget.day.title}, ${sessionPlace(widget.week, widget.day)}',
+    subtitle: '${widget.day.title} · ${sessionPlace(widget.week, widget.day)}',
     builder: (ctx) => Text(contentText(widget.day.conduite)),
   );
 
@@ -409,7 +426,7 @@ class _SessionScreenState extends State<SessionScreen> {
     final choice = await showKActionSheet<String>(
       context,
       title: 'Séance',
-      subtitle: '${restDay ? 'Récupération' : d.title}, ${sessionPlace(w, d)}',
+      subtitle: '${restDay ? 'Récupération' : d.title} · ${sessionPlace(w, d)}',
       groups: [
         [
           if (!restDay)
@@ -1916,6 +1933,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ? store.restAfterSet(ex, sp, log.sets.length - 1, log.sets.length)
         : null;
     final (title, rawSubtitle) = store.splitName(ex.name);
+    // PR10 : en séance, le matériel entre parenthèses (« (par haltère) »)
+    // reste dans la feuille ⓘ : titre sur une ligne.
+    final bare = title.replaceFirst(RegExp(r'\s*\([^)]*\)\s*$'), '');
+    final shownTitle = readOnly || bare.isEmpty ? title : bare;
     // PR5 : pas de répétition sur la carte : « enchaîné » est dit par la
     // carte commune, « lift principal » par le surtitre.
     var subtitle = _merged
@@ -2048,8 +2069,21 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final rirMatch = RegExp(r'RIR\s*(\S+)').firstMatch(ex.intensity);
     final levelMatch = RegExp(r'(\d+)\s*/\s*10').firstMatch(ex.intensity);
     final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.3;
+    // PR10 : sans « x/10 » écrit, la difficulté se déduit du RIR (même
+    // pastille que les lignes servies par Koach).
+    String? levelOfRir(String rir) {
+      final v = double.tryParse(
+        RegExp(r'\d+(?:[.,]\d+)?').stringMatch(rir)?.replaceAll(',', '.') ??
+            '',
+      );
+      return v == null ? null : '${kc.Flames.fromRir(v)}';
+    }
+
     final target = !readOnly && showIntensity && rirMatch != null
-        ? (rirMatch.group(1)!, levelMatch?.group(1))
+        ? (
+            rirMatch.group(1)!,
+            levelMatch?.group(1) ?? levelOfRir(rirMatch.group(1)!),
+          )
         : null;
     final meta = <Widget>[
       if (shownLoad && !numericLoad && missing == null)
@@ -2142,8 +2176,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         // (A, B…) devant son nom.
                         KFitTitle(
                           _merged
-                              ? '${String.fromCharCode(65 + k)} · ${t.title(title)}'
-                              : t.title(title),
+                              ? '${String.fromCharCode(65 + k)} · ${t.title(shownTitle)}'
+                              : t.title(shownTitle),
                           style: t.titleStyle(
                             KType.titreSeance.copyWith(color: t.texte),
                           ),
@@ -2206,7 +2240,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       Text(
                         readOnly
                             ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
-                            : nbsp(store.setsLabel(ex)),
+                            : nbsp(
+                                volumeText(
+                                  store.setsLabel(ex),
+                                  timed: _group != null || _sharedEvery != null,
+                                ),
+                              ),
                         style: showBigLoad || readOnly
                             ? KType.corpsFort.copyWith(color: t.texte)
                             : KType.chiffre.copyWith(color: ink),
