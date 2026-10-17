@@ -182,7 +182,32 @@ void main() {
     },
   );
 
-  testWidgets('les exercices enchaînés ont chacun leur carte et leur note', (
+  testWidgets('PR4 : exercices enchaînés dans une seule carte, tour par tour', (
+    tester,
+  ) async {
+    small(tester);
+    final week = manualWeek(994, 'Carte unique', [
+      manualExercise('CU-994-0', 'Dips', '2×8'),
+      manualExercise('CU-994-1', 'Tractions enchaînées', '2×6'),
+    ]);
+    final day = week.days.single;
+    await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('exercise-card-merged')), findsOneWidget);
+    expect(find.text('Enchaîné, A'), findsOneWidget);
+    expect(find.text('Enchaîné, B'), findsOneWidget);
+    double y(String id, int i) =>
+        tester.getTopLeft(find.byKey(ValueKey('set-check-$id-$i'))).dy;
+    // Ordre d'exécution : A·1, B·1, A·2, B·2, chacun avec sa coche.
+    expect(y('CU-994-0', 0), lessThan(y('CU-994-1', 0)));
+    expect(y('CU-994-1', 0), lessThan(y('CU-994-0', 1)));
+    expect(y('CU-994-0', 1), lessThan(y('CU-994-1', 1)));
+    expect(tester.takeException(), null);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('les exercices enchaînés ont chacun leur bloc et leur note', (
     tester,
   ) async {
     small(tester);

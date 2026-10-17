@@ -661,6 +661,18 @@ class SessionExercisePage extends StatefulWidget {
   State<SessionExercisePage> createState() => SessionExercisePageState();
 }
 
+/// PR4 : morceaux de la carte d'un exercice : prescription, en-tête du
+/// tableau, lignes de séries, barre d'outils et notes.
+typedef _BlockParts = ({
+  List<Widget> head,
+  List<Widget> header,
+  List<String> columns,
+  List<Widget> Function(int i) row,
+  int count,
+  List<Widget> tail,
+  bool lead,
+});
+
 class SessionExercisePageState extends State<SessionExercisePage> {
   late final List<ExerciseLog> logs;
   late final List<LogSpec> specs;
@@ -669,11 +681,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// Exercices dont la séance précédente est affichée (correctifs UI).
   final Set<int> _prevOpen = {};
 
-  /// PR3 : cartes des exercices de la page, pour amener à l'écran
-  /// l'exercice de l'étape suivante (tour par tour).
-  final Map<int, GlobalKey> _cardKeys = {};
-
-  GlobalKey _cardKey(int k) => _cardKeys.putIfAbsent(k, GlobalKey.new);
+  /// PR4 : plusieurs exercices sur la page : une seule carte (PR4).
+  bool get _merged => widget.exs.length > 1;
 
   /// PR3 : prochaine étape d'une page d'exercices enchaînés, faits tour par
   /// tour (A1, B1, A2, B2…) : (exercice, série) ; null : tout est fait.
@@ -689,22 +698,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       }
     }
     return null;
-  }
-
-  /// PR3 : après une série, l'exercice de l'étape suivante vient à l'écran.
-  void _followOrder(int k) {
-    if (widget.exs.length < 2) return;
-    final next = _nextStep();
-    if (next == null || next.$1 == k) return;
-    final target = _cardKeys[next.$1]?.currentContext;
-    if (target == null) return;
-    final motion = KMotion.standard;
-    Scrollable.ensureVisible(
-      target,
-      alignment: .05,
-      duration: motion.durationIn(context),
-      curve: motion.curve,
-    );
   }
 
   int epoch = 0; // force la recréation des champs (reprise du précédent…)
@@ -1012,7 +1005,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       }
     }
     if (s.done) _celebrateRecord(ex, s);
-    if (s.done) _followOrder(k);
     if (!s.done || !store.settings.autoTimer) return;
     if (widget.exs.length == 2 && k == 0) {
       showKSnack(
@@ -1673,28 +1665,100 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ),
         const SizedBox(height: KSpacing.cardGap),
       ],
-      // PR3 : ordre d'exécution tour par tour des exercices enchaînés.
-      if (!widget.readOnly && widget.exs.length > 1) ...[
-        _RoundOrder(
-          names: [for (final e in widget.exs) store.splitName(e.name).$1],
-          done: [for (final l in logs) l.sets.map((s) => s.done).toList()],
-          next: _nextStep(),
-        ),
-        const SizedBox(height: KSpacing.cardGap),
-      ],
-      for (var k = 0; k < widget.exs.length; k++) ...[
-        if (k > 0) const SizedBox(height: KSpacing.cardGap),
-        KeyedSubtree(key: _cardKey(k), child: _block(k)),
-      ],
+      if (_merged)
+        _mergedCard()
+      else
+        for (var k = 0; k < widget.exs.length; k++) ...[
+          if (k > 0) const SizedBox(height: KSpacing.cardGap),
+          _block(k),
+        ],
     ],
   );
 
   Widget _block(int k) {
     final t = KTokens.of(context);
+    final p = _parts(k);
+    return KCard(
+      key: ValueKey('exercise-card-${widget.exs[k].id}'),
+      outline: p.lead ? t.encre.withValues(alpha: .55) : null,
+      padding: const EdgeInsets.fromLTRB(
+        KSpacing.s16,
+        KSpacing.s8,
+        KSpacing.s8,
+        KSpacing.s4,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ...p.head,
+          ...p.header,
+          for (var i = 0; i < p.count; i++) ...p.row(i),
+          ...p.tail,
+        ],
+      ),
+    );
+  }
+
+  /// PR4 : page de plusieurs exercices enchaînés : une seule carte. La
+  /// prescription de chaque exercice (A, B…), puis toutes les séries dans
+  /// l'ordre d'exécution, tour par tour (A·1, B·1, A·2…), chacune avec sa
+  /// coche et sa note en flammes. Purement visuel : la saisie ne change
+  /// pas.
+  Widget _mergedCard() {
+    final t = KTokens.of(context);
+    final parts = [for (var k = 0; k < widget.exs.length; k++) _parts(k)];
+    var rounds = 0;
+    for (final p in parts) {
+      if (p.count > rounds) rounds = p.count;
+    }
+    // En-tête de colonnes commun quand les exercices partagent les mêmes
+    // colonnes ; sinon, chaque ligne garde ses champs sans en-tête.
+    final same = parts.every(
+      (p) => p.columns.join('|') == parts.first.columns.join('|'),
+    );
+    final header = same
+        ? parts.map((p) => p.header).firstWhere(
+            (h) => h.isNotEmpty,
+            orElse: () => const <Widget>[],
+          )
+        : const <Widget>[];
+    return KCard(
+      key: const ValueKey('exercise-card-merged'),
+      outline: parts.any((p) => p.lead) ? t.encre.withValues(alpha: .55) : null,
+      padding: const EdgeInsets.fromLTRB(
+        KSpacing.s16,
+        KSpacing.s8,
+        KSpacing.s8,
+        KSpacing.s4,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var k = 0; k < parts.length; k++) ...[
+            if (k > 0) Divider(height: KSpacing.s16, color: t.filet),
+            KeyedSubtree(
+              key: ValueKey('exercise-card-${widget.exs[k].id}'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [...parts[k].head, ...parts[k].tail],
+              ),
+            ),
+          ],
+          Divider(height: KSpacing.s16, color: t.filet),
+          ...header,
+          for (var i = 0; i < rounds; i++)
+            for (var k = 0; k < parts.length; k++)
+              if (i < parts[k].count) ...parts[k].row(i),
+        ],
+      ),
+    );
+  }
+
+  _BlockParts _parts(int k) {
+    final t = KTokens.of(context);
     final ex = widget.exs[k];
     final sp = specs[k];
     final log = logs[k];
-    final chained = widget.exs.length == 2;
     final readOnly = widget.readOnly;
     final unresolved = widget.unresolvedIds.contains(ex.id);
     final finalRest = !readOnly && sp.myo
@@ -1758,7 +1822,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // Un rôle répété sur plusieurs lignes (« Test ») est numéroté : chaque
     // ligne du tableau se distingue.
     final baseLabels = [for (var i = 0; i < log.sets.length; i++) baseLabel(i)];
-    String rowLabel(int i) {
+    String ownLabel(int i) {
       final label = i < baseLabels.length ? baseLabels[i] : baseLabel(i);
       final same = [
         for (var j = 0; j < baseLabels.length; j++)
@@ -1767,6 +1831,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (same.length < 2 || RegExp(r'\d').hasMatch(label)) return label;
       return '$label ${same.indexOf(i) + 1}';
     }
+
+    // PR4 : carte commune d'exercices enchaînés : lettre de l'exercice.
+    String rowLabel(int i) => _merged
+        ? '${String.fromCharCode(65 + k)}·${ownLabel(i)}'
+        : ownLabel(i);
 
     final missing = _missingReference(ex, readOnly);
     // Bandeau des mini-séries présent (cluster, myo-reps, rest-pause servis
@@ -1791,7 +1860,13 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         : null;
     final openRows = [?coachRow, ?notesRow];
     // Ligne courante (contour `encre`) : la première série à faire.
-    final current = readOnly ? -1 : log.sets.indexWhere((s) => !s.done);
+    // PR4 : carte commune : seule l'étape suivante, tour par tour.
+    final next = _merged ? _nextStep() : null;
+    final current = readOnly
+        ? -1
+        : next != null
+        ? (next.$1 == k ? next.$2 : -1)
+        : log.sets.indexWhere((s) => !s.done);
     final hasTimer = !readOnly && sp.timed;
     final valueColumn = unresolved ? 'Valeur' : _valueColumn(sp.kind);
     final compact = _splitColumns(context, showKg, showRir, showV, hasTimer);
@@ -1832,570 +1907,571 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // une carte neutre (charge en `texte`, cible sur `haute`).
     final lead = ex.main && !readOnly;
     final ink = lead ? t.encre : t.texte;
-    return KCard(
-      key: ValueKey('exercise-card-${ex.id}'),
-      outline: lead ? t.encre.withValues(alpha: .55) : null,
-      padding: const EdgeInsets.fromLTRB(
-        KSpacing.s16,
-        KSpacing.s8,
-        KSpacing.s8,
-        KSpacing.s4,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // ----- Prescription -----
-          Padding(
-            padding: const EdgeInsets.only(right: KSpacing.s4),
-            child: Column(
+    final head = <Widget>[
+      // ----- Prescription -----
+      Padding(
+        padding: const EdgeInsets.only(right: KSpacing.s4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (_merged)
+              Padding(
+                padding: const EdgeInsets.only(bottom: KSpacing.s8),
+                child: KChip('Enchaîné, ${String.fromCharCode(65 + k)}'),
+              ),
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (chained && _group == null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: KSpacing.s8),
-                    child: KChip(k == 0 ? 'Enchaîné, A' : 'Enchaîné, B'),
-                  ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: KSpacing.s8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (lead)
-                              Padding(
-                                key: ValueKey('main-lift-${ex.id}'),
-                                padding: const EdgeInsets.only(
-                                  bottom: KSpacing.s4,
-                                ),
-                                child: Text(
-                                  t.title('Lift principal'),
-                                  style: t.titleStyle(
-                                    KType.micro.copyWith(color: t.encre),
-                                  ),
-                                ),
-                              ),
-                            // C3 : jamais coupé ; C4 : capitales du titre
-                            // par le jeton (U3).
-                            KFitTitle(
-                              t.title(title),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: KSpacing.s8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (lead)
+                          Padding(
+                            key: ValueKey('main-lift-${ex.id}'),
+                            padding: const EdgeInsets.only(
+                              bottom: KSpacing.s4,
+                            ),
+                            child: Text(
+                              t.title('Lift principal'),
                               style: t.titleStyle(
-                                KType.titreSeance.copyWith(color: t.texte),
+                                KType.micro.copyWith(color: t.encre),
                               ),
                             ),
-                            if (subtitle.isNotEmpty)
-                              Text(subtitle, style: detailStyle),
-                          ],
-                        ),
-                      ),
-                    ),
-                    if (!readOnly || (!unresolved && ex.cue.isNotEmpty))
-                      KIconButton(
-                        key: ValueKey('${ex.id}-instructions'),
-                        icon: Icons.info_outline_rounded,
-                        tooltip: 'Consignes de l’exercice',
-                        color: t.texte2,
-                        onPressed: () => _showCue(ex),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: KSpacing.s4),
-                // Correctifs UI (11/10/2026) : ce qui compte d'un coup d'œil
-                // sur une ligne — charge en grand (`encre`), volume, cible
-                // de réserve (RIR) mise en avant à droite ; le reste en
-                // repères discrets dessous (repos, tempo, technique).
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: KSpacing.s8,
-                        runSpacing: KSpacing.s4,
-                        children: [
-                          if (showBigLoad)
-                            Text(
-                              frenchNumbersText(loadLabel),
-                              style: KType.chiffre.copyWith(color: ink),
-                            ),
-                          Text(
-                            readOnly
-                                ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
-                                : nbsp(store.setsLabel(ex)),
-                            style: showBigLoad || readOnly
-                                ? KType.corpsFort.copyWith(color: t.texte)
-                                : KType.chiffre.copyWith(color: ink),
                           ),
-                          // Grand texte : la cible passe sous la charge.
-                          if (target case (
-                            final rir,
-                            final level,
-                          ) when largeText)
-                            _TargetBadge(
-                              key: ValueKey('target-${ex.id}'),
-                              rir: rir,
-                              level: level,
-                              lead: lead,
-                            ),
-                          // État (C5) : texte et icône en `validation`.
-                          if (readOnly)
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.check_circle_rounded,
-                                  size: KSize.iconSmall,
-                                  color: t.validation,
-                                ),
-                                const SizedBox(width: KSpacing.s4),
-                                Flexible(
-                                  child: Text(
-                                    'Enregistré',
-                                    style: KType.libelle.copyWith(
-                                      color: t.validation,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
-                    ),
-                    if (target case (final rir, final level) when !largeText)
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                          start: KSpacing.s8,
-                          end: KSpacing.s4,
+                        // C3 : jamais coupé ; C4 : capitales du titre
+                        // par le jeton (U3).
+                        KFitTitle(
+                          t.title(title),
+                          style: t.titleStyle(
+                            KType.titreSeance.copyWith(color: t.texte),
+                          ),
                         ),
-                        child: _TargetBadge(
+                        if (subtitle.isNotEmpty)
+                          Text(subtitle, style: detailStyle),
+                      ],
+                    ),
+                  ),
+                ),
+                if (!readOnly || (!unresolved && ex.cue.isNotEmpty))
+                  KIconButton(
+                    key: ValueKey('${ex.id}-instructions'),
+                    icon: Icons.info_outline_rounded,
+                    tooltip: 'Consignes de l’exercice',
+                    color: t.texte2,
+                    onPressed: () => _showCue(ex),
+                  ),
+              ],
+            ),
+            const SizedBox(height: KSpacing.s4),
+            // Correctifs UI (11/10/2026) : ce qui compte d'un coup d'œil
+            // sur une ligne — charge en grand (`encre`), volume, cible
+            // de réserve (RIR) mise en avant à droite ; le reste en
+            // repères discrets dessous (repos, tempo, technique).
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: KSpacing.s8,
+                    runSpacing: KSpacing.s4,
+                    children: [
+                      if (showBigLoad)
+                        Text(
+                          frenchNumbersText(loadLabel),
+                          style: KType.chiffre.copyWith(color: ink),
+                        ),
+                      Text(
+                        readOnly
+                            ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
+                            : nbsp(store.setsLabel(ex)),
+                        style: showBigLoad || readOnly
+                            ? KType.corpsFort.copyWith(color: t.texte)
+                            : KType.chiffre.copyWith(color: ink),
+                      ),
+                      // Grand texte : la cible passe sous la charge.
+                      if (target case (
+                        final rir,
+                        final level,
+                      ) when largeText)
+                        _TargetBadge(
                           key: ValueKey('target-${ex.id}'),
                           rir: rir,
                           level: level,
                           lead: lead,
                         ),
-                      ),
-                  ],
-                ),
-                if (meta.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: KSpacing.s8),
-                    child: Wrap(
-                      spacing: KSpacing.s12,
-                      runSpacing: KSpacing.s4,
-                      children: meta,
-                    ),
-                  ),
-                if (missing != null) missing,
-                // L8 (KT-041) : consigne du mode prudent.
-                // G9 : exercice servi par le moteur, la prudence est dans
-                // ses cibles (pas de seconde règle de charge).
-                if (!readOnly && !ex.engine && store.cautionNote(ex) != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: KSpacing.s12),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.shield_outlined,
-                          size: KSize.iconSmall,
-                          color: t.avertissement,
-                        ),
-                        const SizedBox(width: KSpacing.s8),
-                        Expanded(
-                          child: Text(
-                            store.cautionNote(ex)!,
-                            key: ValueKey('caution-${ex.id}'),
-                            style: KType.detail.copyWith(color: t.texte),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                if (readOnly &&
-                    (log.prescribed != null || log.koach != null)) ...[
-                  const SizedBox(height: KSpacing.s8),
-                  if (log.prescribed != null)
-                    Text(
-                      'Prescrit ce jour-là : ${log.prescribed}',
-                      key: ValueKey('prescribed-${ex.id}'),
-                      style: detailStyle,
-                    ),
-                  if (log.koach != null) Text(log.koach!, style: detailStyle),
-                ],
-                ...coach,
-                // CI1f : « N × ? reps » servi sur une référence estimée.
-                if (!readOnly)
-                  if (store.referenceEstimateText(
-                        widget.adapt && ex.engine
-                            ? (store.programExerciseOf(
-                                    widget.week.n,
-                                    widget.day.j,
-                                    ex,
-                                  ) ??
-                                  ex)
-                            : ex,
-                      )
-                      case final x?)
-                    Padding(
-                      key: ValueKey('reference-estimate-${ex.id}'),
-                      padding: const EdgeInsets.only(top: KSpacing.s8),
-                      child: Text(x, style: detailStyle),
-                    ),
-                // Notes du coach et calibrage : deux lignes ouvrables.
-                if (openRows.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: KSpacing.s8),
-                    child: Material(
-                      color: t.haute,
-                      shape: KRadius.menuShape,
-                      clipBehavior: Clip.antiAlias,
-                      child: Column(
-                        children: [
-                          for (var i = 0; i < openRows.length; i++) ...[
-                            if (i > 0)
-                              Divider(
-                                height: 1,
-                                thickness: 1,
-                                indent: KSpacing.s14,
-                                endIndent: KSpacing.s14,
-                                color: t.filet,
-                              ),
-                            openRows[i],
-                          ],
-                        ],
-                      ),
-                    ),
-                  ),
-                // Séance précédente : affichée à la demande (icône
-                // d'historique de la barre d'outils), correctifs UI.
-                if (prev != null && _prevOpen.contains(k))
-                  Padding(
-                    key: ValueKey('previous-${ex.id}'),
-                    padding: const EdgeInsets.only(top: KSpacing.s8),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.history_rounded,
-                          size: KSize.chevron,
-                          color: t.texte2,
-                        ),
-                        const SizedBox(width: KSpacing.s8),
-                        Expanded(
-                          child: Text(
-                            '${store.program.weekLabel(prev.week)} : ${frenchNumbersText(store.summarize(prev.log, kg: showKg))}',
-                            style: detailStyle.copyWith(
-                              fontFeatures: KFont.tabular,
+                      // État (C5) : texte et icône en `validation`.
+                      if (readOnly)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.check_circle_rounded,
+                              size: KSize.iconSmall,
+                              color: t.validation,
                             ),
-                          ),
+                            const SizedBox(width: KSpacing.s4),
+                            Flexible(
+                              child: Text(
+                                'Enregistré',
+                                style: KType.libelle.copyWith(
+                                  color: t.validation,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        KTonalButton(
-                          label: 'Reprendre',
-                          onPressed: () => _reusePrevious(k, prev.log),
-                        ),
-                      ],
+                    ],
+                  ),
+                ),
+                if (target case (final rir, final level) when !largeText)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      start: KSpacing.s8,
+                      end: KSpacing.s4,
+                    ),
+                    child: _TargetBadge(
+                      key: ValueKey('target-${ex.id}'),
+                      rir: rir,
+                      level: level,
+                      lead: lead,
                     ),
                   ),
               ],
             ),
-          ),
-          const SizedBox(height: KSpacing.s8),
-          // ----- Chronos de mode -----
-          if (!readOnly &&
-              interval != null &&
-              ex.timer == null &&
-              _group == null)
-            _big(
-              Icons.timer_outlined,
-              'Lancer ${interval.rounds} × ${interval.work} s / ${interval.rest} s',
-              () => widget.timer.startInterval(
-                interval.rounds,
-                interval.work,
-                interval.rest,
-              ),
-            ),
-          if (!readOnly && ex.timer != null && !sp.cluster && _group == null)
-            _modeButton(ex),
-          if (!readOnly &&
-              ex.timer == null &&
-              sp.kind == 'emom' &&
-              _group == null)
-            _big(
-              Icons.timer_outlined,
-              'Lancer l’EMOM de ${sp.seconds! ~/ 60} min',
-              () => widget.timer.emom(sp.seconds! ~/ 60, 60),
-            ),
-          // PR1 : séries au départ chronométré (E2MOM, E90s…).
-          if (!readOnly &&
-              ex.timer == null &&
-              sp.every != null &&
-              _group == null)
-            _everyButton(sp, log.sets.length),
-          if (!readOnly && ex.timer == null && sp.kind == 'duration')
-            _big(
-              Icons.timer_outlined,
-              'Lancer ${sp.seconds! ~/ 60} min',
-              () => widget.timer.single('DURÉE', sp.seconds!),
-            ),
-          // Correctifs UI : le mini-repos d'un cluster servi par le moteur
-          // part du bandeau des mini-séries ; pas de second bouton.
-          if (!readOnly && sp.cluster && sp.intra != null && !miniSets)
-            _big(
-              Icons.av_timer_rounded,
-              'Mini-repos du cluster, ${sp.intra} s',
-              () => widget.timer.single('INTRA', sp.intra!, prepare: false),
-            ),
-          // KM3 : suggestion de Koach (charge de la première série, test
-          // court), validée d'un tap ou refusée avec une raison.
-          if (!readOnly && widget.adapt && ex.engine)
-            KoachSuggestionCard(
-              key: ValueKey('koach-card-${ex.id}-$epoch'),
-              week: widget.week.n,
-              day: widget.baseDay ?? widget.day,
-              exercise: ex,
-              onChanged: () => setState(() => epoch++),
-            ),
-          // ----- Tableau des séries : en-tête de colonnes + lignes -----
-          // G9 correction 1 : sans ligne de saisie visible (toutes les
-          // séries résumées), pas d'en-tête de colonnes.
-          if ([
-            for (var i = 0; i < log.sets.length; i++)
-              !log.sets[i].done || (!readOnly && i == _openOf(k)),
-          ].any((x) => x))
-            KSetTable(columns: columns, rows: const [], actionCount: actions),
-          for (var i = 0; i < log.sets.length; i++)
-            // G9 correction 1 : séries validées résumées en une ligne, sauf
-            // la série ouverte (la dernière validée) ; toutes résumées en
-            // lecture (fin de séance, historique). Correction 2 : aussi
-            // pour les exercices sans flammes.
-            if (log.sets[i].done && (readOnly || i != _openOf(k)))
-              SetSummaryLine(
-                setLabel: rowLabel(i),
-                done: setDoneText(log.sets[i], sp, units: !unresolved),
-                flames: flamesOf(log.sets[i]),
-                unknown: log.sets[i].flamesUnknown,
-                excluded: log.sets[i].excluded,
-                onTap: readOnly ? null : () => setState(() => _openSet[k] = i),
-              )
-            else ...[
+            if (meta.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: KSpacing.s4),
-                child: _SetRow(
-                  key: ValueKey('${ex.id}-$i-$epoch'),
-                  checkKey: ValueKey('set-check-${ex.id}-$i'),
-                  label: rowLabel(i),
-                  current: i == current,
-                  lockReps: (log.sets[i].parts?.isNotEmpty ?? false),
-                  entry: log.sets[i],
-                  spec: sp,
-                  showKg: showKg,
-                  showRir: showRir,
-                  showV: showV,
-                  readOnly: readOnly,
-                  issue: _issues[(k, i)],
-                  onEdited: readOnly ? null : () => _edited(k, i),
-                  onCheck: readOnly ? null : () => _checkSet(k, i),
-                  onLongPressLabel: !readOnly && log.sets[i].done
-                      ? () => setState(() => _openSet[k] = i)
-                      : null,
-                  onTimer: readOnly
-                      ? null
-                      : sp.kind == 'hold'
-                      ? () => widget.timer.single(
-                          'TENUE',
-                          int.tryParse(log.sets[i].reps) ?? sp.seconds ?? 30,
-                        )
-                      : sp.kind == 'holdMax'
-                      ? () => widget.timer.stopwatch('MAX')
-                      : sp.kind == 'duration'
-                      ? () => widget.timer.single(
-                          'DURÉE',
-                          (int.tryParse(log.sets[i].reps) ??
-                                  (sp.seconds! ~/ 60)) *
-                              60,
-                        )
-                      : null,
+                padding: const EdgeInsets.only(top: KSpacing.s8),
+                child: Wrap(
+                  spacing: KSpacing.s12,
+                  runSpacing: KSpacing.s4,
+                  children: meta,
                 ),
               ),
-              // CI1f : mini-séries de la série en cours (la première non
-              // validée), ou d'une série déjà commencée.
-              if (!readOnly &&
-                  !log.sets[i].done &&
-                  widget.adapt &&
-                  ex.engine &&
-                  (i == log.sets.indexWhere((s) => !s.done) ||
-                      (log.sets[i].parts?.isNotEmpty ?? false)))
-                if (store.miniSetPlanFor(widget.week.n, widget.day.j, ex, i)
-                    case final plan?)
-                  _MiniSetStrip(
-                    key: ValueKey('miniset-${ex.id}-$i-$epoch'),
-                    id: '${ex.id}-$i',
-                    plan: plan,
-                    entry: log.sets[i],
-                    target: store
-                        .adaptGoal(widget.week.n, widget.day.j, ex, i)
-                        ?.prefill,
-                    onChanged: () {
-                      log.sets[i].edited = true;
-                      store.saveLogs(affectsProgression: false);
-                      setState(() => epoch++);
-                    },
-                    onIntra: (sec) =>
-                        widget.timer.single('INTRA', sec, prepare: false),
-                  ),
-              if (flameSets && log.sets[i].done && !readOnly)
-                FlameTrack(
-                  setLabel: rowLabel(i),
-                  value: flamesOf(log.sets[i]),
-                  unknown: log.sets[i].flamesUnknown,
-                  excluded: log.sets[i].excluded,
-                  intro: _introAt == (k, i),
-                  onChanged: (f) => _setFlames(k, i, f),
-                  onUnknown: () => _setFlames(k, i, null, unknown: true),
-                  onToggleExcluded: () => _toggleExcluded(k, i),
-                ),
-            ],
-          if (!readOnly && widget.adapt)
-            if (_adaptPendingCard(k) case final card?) card,
-          if (readOnly && log.sets.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: KSpacing.s12),
-              child: Text(
-                'Aucune série enregistrée.',
-                style: KType.corps.copyWith(color: t.texte2),
-              ),
-            ),
-          // ----- Barre d'outils de la série (C13 : 48 dp) -----
-          if (!readOnly) ...[
-            const SizedBox(height: KSpacing.s4),
-            Divider(height: 1, thickness: 1, color: t.filet),
-            Padding(
-              padding: EdgeInsets.zero,
-              child: Row(
-                children: [
-                  KIconButton(
-                    icon: Icons.remove_rounded,
-                    tooltip: 'Retirer une série',
-                    onPressed: () {
-                      if (log.removeLastSet()) {
-                        store.saveLogs(affectsProgression: false);
-                        setState(() {});
-                      }
-                    },
-                  ),
-                  KIconButton(
-                    icon: Icons.add_rounded,
-                    tooltip: 'Ajouter une série',
-                    onPressed: () {
-                      log.addSet();
-                      _prefill(ex, sp, log);
-                      store.saveLogs(affectsProgression: false);
-                      setState(() {});
-                    },
-                  ),
-                  const SizedBox(width: KSpacing.s4),
-                  // Le compteur reste entier : il se réduit en grand texte
-                  // plutôt que de couper « séries » (C3).
-                  Expanded(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: AlignmentDirectional.centerStart,
+            if (missing != null) missing,
+            // L8 (KT-041) : consigne du mode prudent.
+            // G9 : exercice servi par le moteur, la prudence est dans
+            // ses cibles (pas de seconde règle de charge).
+            if (!readOnly && !ex.engine && store.cautionNote(ex) != null)
+              Padding(
+                padding: const EdgeInsets.only(top: KSpacing.s12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.shield_outlined,
+                      size: KSize.iconSmall,
+                      color: t.avertissement,
+                    ),
+                    const SizedBox(width: KSpacing.s8),
+                    Expanded(
                       child: Text(
-                        '${log.sets.length} série${log.sets.length > 1 ? 's' : ''}',
-                        maxLines: 1,
-                        style: KType.libelle.copyWith(color: t.texte2),
+                        store.cautionNote(ex)!,
+                        key: ValueKey('caution-${ex.id}'),
+                        style: KType.detail.copyWith(color: t.texte),
                       ),
                     ),
-                  ),
-                  if (prev != null)
-                    KIconButton(
-                      key: ValueKey('${ex.id}-previous-toggle'),
-                      tooltip: _prevOpen.contains(k)
-                          ? 'Masquer la séance précédente'
-                          : 'Séance précédente',
-                      icon: Icons.history_rounded,
-                      color: _prevOpen.contains(k) ? t.encre : t.texte2,
-                      onPressed: () => setState(() {
-                        if (!_prevOpen.add(k)) _prevOpen.remove(k);
-                      }),
-                    ),
-                  KIconButton(
-                    key: ValueKey('${ex.id}-note-toggle'),
-                    tooltip: _notesOpen.contains(k)
-                        ? 'Masquer la note'
-                        : log.note.isEmpty
-                        ? 'Ajouter une note'
-                        : 'Afficher la note',
-                    icon: log.note.isEmpty
-                        ? Icons.note_add_outlined
-                        : Icons.notes_rounded,
-                    color: _notesOpen.contains(k) || log.note.isNotEmpty
-                        ? t.encre
-                        : t.texte2,
-                    onPressed: () {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      setState(() {
-                        if (!_notesOpen.add(k)) _notesOpen.remove(k);
-                      });
-                    },
-                  ),
-                  if (!noLoad)
-                    KIconButton(
-                      icon: Icons.tune_rounded,
-                      tooltip: 'Colonnes',
-                      color: t.texte2,
-                      onPressed: () => _columns(k, sp, showKg, showV),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-          if (_notesOpen.contains(k)) ...[
-            const SizedBox(height: KSpacing.s8),
-            if (readOnly)
-              Material(
-                color: t.haute,
-                shape: KRadius.menuShape,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: KSpacing.s16,
-                    vertical: KSpacing.s12,
-                  ),
+            if (readOnly &&
+                (log.prescribed != null || log.koach != null)) ...[
+              const SizedBox(height: KSpacing.s8),
+              if (log.prescribed != null)
+                Text(
+                  'Prescrit ce jour-là : ${log.prescribed}',
+                  key: ValueKey('prescribed-${ex.id}'),
+                  style: detailStyle,
+                ),
+              if (log.koach != null) Text(log.koach!, style: detailStyle),
+            ],
+            ...coach,
+            // CI1f : « N × ? reps » servi sur une référence estimée.
+            if (!readOnly)
+              if (store.referenceEstimateText(
+                    widget.adapt && ex.engine
+                        ? (store.programExerciseOf(
+                                widget.week.n,
+                                widget.day.j,
+                                ex,
+                              ) ??
+                              ex)
+                        : ex,
+                  )
+                  case final x?)
+                Padding(
+                  key: ValueKey('reference-estimate-${ex.id}'),
+                  padding: const EdgeInsets.only(top: KSpacing.s8),
+                  child: Text(x, style: detailStyle),
+                ),
+            // Notes du coach et calibrage : deux lignes ouvrables.
+            if (openRows.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: KSpacing.s8),
+                child: Material(
+                  color: t.haute,
+                  shape: KRadius.menuShape,
+                  clipBehavior: Clip.antiAlias,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Notes',
-                        style: KType.detail.copyWith(color: t.texte2),
-                      ),
-                      Text(
-                        log.note,
-                        style: KType.corps.copyWith(color: t.texte),
-                      ),
+                      for (var i = 0; i < openRows.length; i++) ...[
+                        if (i > 0)
+                          Divider(
+                            height: 1,
+                            thickness: 1,
+                            indent: KSpacing.s14,
+                            endIndent: KSpacing.s14,
+                            color: t.filet,
+                          ),
+                        openRows[i],
+                      ],
                     ],
                   ),
                 ),
-              )
-            else
-              _NoteField(
-                fieldKey: ValueKey('${ex.id}-note'),
-                initial: log.note,
-                style: KType.corps.copyWith(color: t.texte),
-                decoration: _noteDecoration(
-                  t,
-                  label: 'Notes',
-                  hint: 'Sensations, ajustements…',
+              ),
+            // Séance précédente : affichée à la demande (icône
+            // d'historique de la barre d'outils), correctifs UI.
+            if (prev != null && _prevOpen.contains(k))
+              Padding(
+                key: ValueKey('previous-${ex.id}'),
+                padding: const EdgeInsets.only(top: KSpacing.s8),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.history_rounded,
+                      size: KSize.chevron,
+                      color: t.texte2,
+                    ),
+                    const SizedBox(width: KSpacing.s8),
+                    Expanded(
+                      child: Text(
+                        '${store.program.weekLabel(prev.week)} : ${frenchNumbersText(store.summarize(prev.log, kg: showKg))}',
+                        style: detailStyle.copyWith(
+                          fontFeatures: KFont.tabular,
+                        ),
+                      ),
+                    ),
+                    KTonalButton(
+                      label: 'Reprendre',
+                      onPressed: () => _reusePrevious(k, prev.log),
+                    ),
+                  ],
                 ),
-                onChanged: (value) {
-                  log.note = value;
-                  store.saveLogs(affectsProgression: false);
+              ),
+          ],
+        ),
+      ),
+      const SizedBox(height: KSpacing.s8),
+      // ----- Chronos de mode -----
+      if (!readOnly &&
+          interval != null &&
+          ex.timer == null &&
+          _group == null)
+        _big(
+          Icons.timer_outlined,
+          'Lancer ${interval.rounds} × ${interval.work} s / ${interval.rest} s',
+          () => widget.timer.startInterval(
+            interval.rounds,
+            interval.work,
+            interval.rest,
+          ),
+        ),
+      if (!readOnly && ex.timer != null && !sp.cluster && _group == null)
+        _modeButton(ex),
+      if (!readOnly &&
+          ex.timer == null &&
+          sp.kind == 'emom' &&
+          _group == null)
+        _big(
+          Icons.timer_outlined,
+          'Lancer l’EMOM de ${sp.seconds! ~/ 60} min',
+          () => widget.timer.emom(sp.seconds! ~/ 60, 60),
+        ),
+      // PR1 : séries au départ chronométré (E2MOM, E90s…).
+      if (!readOnly &&
+          ex.timer == null &&
+          sp.every != null &&
+          _group == null)
+        _everyButton(sp, log.sets.length),
+      if (!readOnly && ex.timer == null && sp.kind == 'duration')
+        _big(
+          Icons.timer_outlined,
+          'Lancer ${sp.seconds! ~/ 60} min',
+          () => widget.timer.single('DURÉE', sp.seconds!),
+        ),
+      // Correctifs UI : le mini-repos d'un cluster servi par le moteur
+      // part du bandeau des mini-séries ; pas de second bouton.
+      if (!readOnly && sp.cluster && sp.intra != null && !miniSets)
+        _big(
+          Icons.av_timer_rounded,
+          'Mini-repos du cluster, ${sp.intra} s',
+          () => widget.timer.single('INTRA', sp.intra!, prepare: false),
+        ),
+      // KM3 : suggestion de Koach (charge de la première série, test
+      // court), validée d'un tap ou refusée avec une raison.
+      if (!readOnly && widget.adapt && ex.engine)
+        KoachSuggestionCard(
+          key: ValueKey('koach-card-${ex.id}-$epoch'),
+          week: widget.week.n,
+          day: widget.baseDay ?? widget.day,
+          exercise: ex,
+          onChanged: () => setState(() => epoch++),
+        ),
+    ];
+    final header = <Widget>[
+      // ----- Tableau des séries : en-tête de colonnes + lignes -----
+      // G9 correction 1 : sans ligne de saisie visible (toutes les
+      // séries résumées), pas d'en-tête de colonnes.
+      if ([
+        for (var i = 0; i < log.sets.length; i++)
+          !log.sets[i].done || (!readOnly && i == _openOf(k)),
+      ].any((x) => x))
+        KSetTable(columns: columns, rows: const [], actionCount: actions),
+    ];
+    List<Widget> row(int i) => [
+      // G9 correction 1 : séries validées résumées en une ligne, sauf
+      // la série ouverte (la dernière validée) ; toutes résumées en
+      // lecture (fin de séance, historique). Correction 2 : aussi
+      // pour les exercices sans flammes.
+      if (log.sets[i].done && (readOnly || i != _openOf(k)))
+        SetSummaryLine(
+          setLabel: rowLabel(i),
+          done: setDoneText(log.sets[i], sp, units: !unresolved),
+          flames: flamesOf(log.sets[i]),
+          unknown: log.sets[i].flamesUnknown,
+          excluded: log.sets[i].excluded,
+          onTap: readOnly ? null : () => setState(() => _openSet[k] = i),
+        )
+      else ...[
+        Padding(
+          padding: const EdgeInsets.only(top: KSpacing.s4),
+          child: _SetRow(
+            key: ValueKey('${ex.id}-$i-$epoch'),
+            checkKey: ValueKey('set-check-${ex.id}-$i'),
+            label: rowLabel(i),
+            current: i == current,
+            lockReps: (log.sets[i].parts?.isNotEmpty ?? false),
+            entry: log.sets[i],
+            spec: sp,
+            showKg: showKg,
+            showRir: showRir,
+            showV: showV,
+            readOnly: readOnly,
+            issue: _issues[(k, i)],
+            onEdited: readOnly ? null : () => _edited(k, i),
+            onCheck: readOnly ? null : () => _checkSet(k, i),
+            onLongPressLabel: !readOnly && log.sets[i].done
+                ? () => setState(() => _openSet[k] = i)
+                : null,
+            onTimer: readOnly
+                ? null
+                : sp.kind == 'hold'
+                ? () => widget.timer.single(
+                    'TENUE',
+                    int.tryParse(log.sets[i].reps) ?? sp.seconds ?? 30,
+                  )
+                : sp.kind == 'holdMax'
+                ? () => widget.timer.stopwatch('MAX')
+                : sp.kind == 'duration'
+                ? () => widget.timer.single(
+                    'DURÉE',
+                    (int.tryParse(log.sets[i].reps) ??
+                            (sp.seconds! ~/ 60)) *
+                        60,
+                  )
+                : null,
+          ),
+        ),
+        // CI1f : mini-séries de la série en cours (la première non
+        // validée), ou d'une série déjà commencée.
+        if (!readOnly &&
+            !log.sets[i].done &&
+            widget.adapt &&
+            ex.engine &&
+            (i == log.sets.indexWhere((s) => !s.done) ||
+                (log.sets[i].parts?.isNotEmpty ?? false)))
+          if (store.miniSetPlanFor(widget.week.n, widget.day.j, ex, i)
+              case final plan?)
+            _MiniSetStrip(
+              key: ValueKey('miniset-${ex.id}-$i-$epoch'),
+              id: '${ex.id}-$i',
+              plan: plan,
+              entry: log.sets[i],
+              target: store
+                  .adaptGoal(widget.week.n, widget.day.j, ex, i)
+                  ?.prefill,
+              onChanged: () {
+                log.sets[i].edited = true;
+                store.saveLogs(affectsProgression: false);
+                setState(() => epoch++);
+              },
+              onIntra: (sec) =>
+                  widget.timer.single('INTRA', sec, prepare: false),
+            ),
+        if (flameSets && log.sets[i].done && !readOnly)
+          FlameTrack(
+            setLabel: rowLabel(i),
+            value: flamesOf(log.sets[i]),
+            unknown: log.sets[i].flamesUnknown,
+            excluded: log.sets[i].excluded,
+            intro: _introAt == (k, i),
+            onChanged: (f) => _setFlames(k, i, f),
+            onUnknown: () => _setFlames(k, i, null, unknown: true),
+            onToggleExcluded: () => _toggleExcluded(k, i),
+          ),
+      ],
+    ];
+    final tail = <Widget>[
+      if (!readOnly && widget.adapt)
+        if (_adaptPendingCard(k) case final card?) card,
+      if (readOnly && log.sets.isEmpty)
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: KSpacing.s12),
+          child: Text(
+            'Aucune série enregistrée.',
+            style: KType.corps.copyWith(color: t.texte2),
+          ),
+        ),
+      // ----- Barre d'outils de la série (C13 : 48 dp) -----
+      if (!readOnly) ...[
+        const SizedBox(height: KSpacing.s4),
+        Divider(height: 1, thickness: 1, color: t.filet),
+        Padding(
+          padding: EdgeInsets.zero,
+          child: Row(
+            children: [
+              KIconButton(
+                icon: Icons.remove_rounded,
+                tooltip: 'Retirer une série',
+                onPressed: () {
+                  if (log.removeLastSet()) {
+                    store.saveLogs(affectsProgression: false);
+                    setState(() {});
+                  }
                 },
               ),
-            const SizedBox(height: KSpacing.s8),
-          ],
-        ],
-      ),
+              KIconButton(
+                icon: Icons.add_rounded,
+                tooltip: 'Ajouter une série',
+                onPressed: () {
+                  log.addSet();
+                  _prefill(ex, sp, log);
+                  store.saveLogs(affectsProgression: false);
+                  setState(() {});
+                },
+              ),
+              const SizedBox(width: KSpacing.s4),
+              // Le compteur reste entier : il se réduit en grand texte
+              // plutôt que de couper « séries » (C3).
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    '${log.sets.length} série${log.sets.length > 1 ? 's' : ''}',
+                    maxLines: 1,
+                    style: KType.libelle.copyWith(color: t.texte2),
+                  ),
+                ),
+              ),
+              if (prev != null)
+                KIconButton(
+                  key: ValueKey('${ex.id}-previous-toggle'),
+                  tooltip: _prevOpen.contains(k)
+                      ? 'Masquer la séance précédente'
+                      : 'Séance précédente',
+                  icon: Icons.history_rounded,
+                  color: _prevOpen.contains(k) ? t.encre : t.texte2,
+                  onPressed: () => setState(() {
+                    if (!_prevOpen.add(k)) _prevOpen.remove(k);
+                  }),
+                ),
+              KIconButton(
+                key: ValueKey('${ex.id}-note-toggle'),
+                tooltip: _notesOpen.contains(k)
+                    ? 'Masquer la note'
+                    : log.note.isEmpty
+                    ? 'Ajouter une note'
+                    : 'Afficher la note',
+                icon: log.note.isEmpty
+                    ? Icons.note_add_outlined
+                    : Icons.notes_rounded,
+                color: _notesOpen.contains(k) || log.note.isNotEmpty
+                    ? t.encre
+                    : t.texte2,
+                onPressed: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  setState(() {
+                    if (!_notesOpen.add(k)) _notesOpen.remove(k);
+                  });
+                },
+              ),
+              if (!noLoad)
+                KIconButton(
+                  icon: Icons.tune_rounded,
+                  tooltip: 'Colonnes',
+                  color: t.texte2,
+                  onPressed: () => _columns(k, sp, showKg, showV),
+                ),
+            ],
+          ),
+        ),
+      ],
+      if (_notesOpen.contains(k)) ...[
+        const SizedBox(height: KSpacing.s8),
+        if (readOnly)
+          Material(
+            color: t.haute,
+            shape: KRadius.menuShape,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: KSpacing.s16,
+                vertical: KSpacing.s12,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Notes',
+                    style: KType.detail.copyWith(color: t.texte2),
+                  ),
+                  Text(
+                    log.note,
+                    style: KType.corps.copyWith(color: t.texte),
+                  ),
+                ],
+              ),
+            ),
+          )
+        else
+          _NoteField(
+            fieldKey: ValueKey('${ex.id}-note'),
+            initial: log.note,
+            style: KType.corps.copyWith(color: t.texte),
+            decoration: _noteDecoration(
+              t,
+              label: 'Notes',
+              hint: 'Sensations, ajustements…',
+            ),
+            onChanged: (value) {
+              log.note = value;
+              store.saveLogs(affectsProgression: false);
+            },
+          ),
+        const SizedBox(height: KSpacing.s8),
+      ],
+    ];
+    return (
+      head: head,
+      header: header,
+      columns: columns,
+      row: row,
+      count: log.sets.length,
+      tail: tail,
+      lead: lead,
     );
   }
 
@@ -3164,98 +3240,6 @@ String groupHint(kc.GroupSpec g, int members) => switch (g.format) {
               'tours.'
         : 'Un tour, puis la récupération prévue.',
 };
-
-/// PR3 : ordre d'exécution d'une page d'exercices enchaînés, tour par
-/// tour : « T1 · Dip lesté → Tractions PdC », étapes faites cochées, étape
-/// suivante en `encre`.
-class _RoundOrder extends StatelessWidget {
-  final List<String> names;
-
-  /// Séries faites de chaque exercice, dans l'ordre.
-  final List<List<bool>> done;
-
-  /// Prochaine étape (exercice, série) ; null : tout est fait.
-  final (int, int)? next;
-  const _RoundOrder({
-    required this.names,
-    required this.done,
-    required this.next,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final k = KTokens.of(context);
-    var rounds = 0;
-    for (final d in done) {
-      if (d.length > rounds) rounds = d.length;
-    }
-    Widget step(int e, int i) {
-      final ok = done[e][i];
-      final now = next == (e, i);
-      final color = now ? k.encre : (ok ? k.texte2 : k.texte);
-      // Texte qui passe à la ligne : jamais coupé sur un écran étroit.
-      return Text.rich(
-        TextSpan(
-          children: [
-            WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
-              child: Padding(
-                padding: const EdgeInsets.only(right: KSpacing.s4),
-                child: Icon(
-                  ok ? Icons.check_rounded : Icons.circle_outlined,
-                  size: KSize.iconSmall,
-                  color: ok ? k.validation : color,
-                ),
-              ),
-            ),
-            TextSpan(text: names[e]),
-          ],
-        ),
-        style: (now ? KType.corpsFort : KType.corps).copyWith(color: color),
-      );
-    }
-
-    return KCard(
-      key: const ValueKey('round-order'),
-      padding: const EdgeInsets.all(KSpacing.s16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Ordre : tour par tour',
-            style: KType.section.copyWith(color: k.texte2),
-          ),
-          for (var i = 0; i < rounds; i++)
-            Padding(
-              padding: const EdgeInsets.only(top: KSpacing.s8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: KSize.target,
-                    child: Text(
-                      'T${i + 1}',
-                      style: KType.chiffrePetit.copyWith(color: k.texte2),
-                    ),
-                  ),
-                  Expanded(
-                    child: Wrap(
-                      spacing: KSpacing.s8,
-                      runSpacing: KSpacing.s4,
-                      children: [
-                        for (var e = 0; e < done.length; e++)
-                          if (i < done[e].length) step(e, i),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
 
 /// CI1f : en-tête d'un groupe d'exercices enchaînés (format, ordre,
 /// chrono du groupe) et son résultat (tours, temps), journalisé avec le
