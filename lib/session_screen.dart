@@ -1677,20 +1677,20 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// CI1f : en-tête du groupe (format, chrono, résultat) ; PR5 : [bare],
   /// en tête de la carte commune.
   Widget _groupCard(kc.GroupSpec g, {bool bare = false}) => _GroupCard(
-          bare: bare,
-          group: g,
-          names: [for (final e in widget.exs) store.splitName(e.name).$1],
-          result: widget.readOnly
-              ? widget.history!.groups[g.groupId]
-              : store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId],
-          readOnly: widget.readOnly,
-          timer: widget.timer,
-          onResult: (r) {
-            store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] = r;
-            store.saveLogs(affectsProgression: false);
-            setState(() {});
-          },
-        );
+    bare: bare,
+    group: g,
+    names: [for (final e in widget.exs) store.splitName(e.name).$1],
+    result: widget.readOnly
+        ? widget.history!.groups[g.groupId]
+        : store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId],
+    readOnly: widget.readOnly,
+    timer: widget.timer,
+    onResult: (r) {
+      store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] = r;
+      store.saveLogs(affectsProgression: false);
+      setState(() {});
+    },
+  );
 
   Widget _block(int k) {
     final t = KTokens.of(context);
@@ -3477,68 +3477,68 @@ class _GroupCardState extends State<_GroupCard> {
             child: Text(hint, style: KType.detail.copyWith(color: k.texte2)),
           ),
         if (g.format != kc.GroupFormat.chipper)
-            _stepper(
-              planned == null ? 'Tours complets' : 'Tours faits (sur $planned)',
-              rounds,
-              (v) => rounds = v,
-              ValueKey('group-rounds-${g.groupId}'),
-            ),
-          if (g.format == kc.GroupFormat.amrap)
-            _stepper(
-              'Répétitions du tour entamé',
-              extra,
-              (v) => extra = v,
-              ValueKey('group-extra-${g.groupId}'),
-            ),
-          if (_timed)
-            Padding(
-              padding: const EdgeInsets.only(top: KSpacing.s8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Temps (min:s)',
-                      style: KType.corps.copyWith(color: k.texte2),
-                    ),
+          _stepper(
+            planned == null ? 'Tours complets' : 'Tours faits (sur $planned)',
+            rounds,
+            (v) => rounds = v,
+            ValueKey('group-rounds-${g.groupId}'),
+          ),
+        if (g.format == kc.GroupFormat.amrap)
+          _stepper(
+            'Répétitions du tour entamé',
+            extra,
+            (v) => extra = v,
+            ValueKey('group-extra-${g.groupId}'),
+          ),
+        if (_timed)
+          Padding(
+            padding: const EdgeInsets.only(top: KSpacing.s8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Temps (min:s)',
+                    style: KType.corps.copyWith(color: k.texte2),
                   ),
-                  SizedBox(
-                    width: KSize.target * 2,
-                    child: TextField(
-                      key: ValueKey('group-time-${g.groupId}'),
-                      controller: time,
-                      enabled: !widget.readOnly,
-                      keyboardType: TextInputType.datetime,
-                      textAlign: TextAlign.center,
-                      style: KType.chiffreMoyen.copyWith(color: k.texte),
-                      decoration: InputDecoration(
-                        hintText: '12:30',
-                        hintStyle: KType.chiffreMoyen.copyWith(color: k.texte3),
-                        filled: true,
-                        fillColor: k.haute,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: KSpacing.s8,
-                          vertical: KSpacing.s12,
+                ),
+                SizedBox(
+                  width: KSize.target * 2,
+                  child: TextField(
+                    key: ValueKey('group-time-${g.groupId}'),
+                    controller: time,
+                    enabled: !widget.readOnly,
+                    keyboardType: TextInputType.datetime,
+                    textAlign: TextAlign.center,
+                    style: KType.chiffreMoyen.copyWith(color: k.texte),
+                    decoration: InputDecoration(
+                      hintText: '12:30',
+                      hintStyle: KType.chiffreMoyen.copyWith(color: k.texte3),
+                      filled: true,
+                      fillColor: k.haute,
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: KSpacing.s8,
+                        vertical: KSpacing.s12,
+                      ),
+                      border: border,
+                      enabledBorder: border,
+                      disabledBorder: border,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(KSize.target / 2),
                         ),
-                        border: border,
-                        enabledBorder: border,
-                        disabledBorder: border,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(KSize.target / 2),
-                          ),
-                          borderSide: BorderSide(
-                            color: k.encre,
-                            width: KSize.current,
-                          ),
+                        borderSide: BorderSide(
+                          color: k.encre,
+                          width: KSize.current,
                         ),
                       ),
-                      onChanged: (_) => _save(),
                     ),
+                    onChanged: (_) => _save(),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
       ],
     );
     // PR5 : dans la carte commune des exercices enchaînés, sans carte à

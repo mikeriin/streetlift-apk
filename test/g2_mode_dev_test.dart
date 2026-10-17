@@ -47,13 +47,10 @@ void main() {
   group('build de développement (G2)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test(
-      'version affichée : « dev7.1.5 » (flamme en popup, PR5)',
-      () {
-        expect(kAppVersion, 'dev$kVersion');
-        expect(kAppVersion, 'dev7.1.5');
-      },
-    );
+    test('version affichée : « dev7.1.5 » (flamme en popup, PR5)', () {
+      expect(kAppVersion, 'dev$kVersion');
+      expect(kAppVersion, 'dev7.1.5');
+    });
 
     test('copie et suppression séparées par session', () async {
       final perso = _document('dark');

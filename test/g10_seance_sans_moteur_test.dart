@@ -13,7 +13,6 @@ import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
-
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
