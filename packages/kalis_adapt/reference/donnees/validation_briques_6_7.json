@@ -1,0 +1,1124 @@
+{
+ "adherence": {
+  "calibration": [
+   {
+    "n": 411,
+    "observe": 0.35279805352798055,
+    "predit": 0.12364120287104623,
+    "tranche": [
+     0.0,
+     0.2
+    ]
+   },
+   {
+    "n": 1133,
+    "observe": 0.4580759046778464,
+    "predit": 0.3102802575736978,
+    "tranche": [
+     0.2,
+     0.4
+    ]
+   },
+   {
+    "n": 1713,
+    "observe": 0.5884413309982487,
+    "predit": 0.5083106513963789,
+    "tranche": [
+     0.4,
+     0.6000000000000001
+    ]
+   },
+   {
+    "n": 3938,
+    "observe": 0.6988318943626206,
+    "predit": 0.7108718991488071,
+    "tranche": [
+     0.6000000000000001,
+     0.8
+    ]
+   },
+   {
+    "n": 4322,
+    "observe": 0.8017121702915317,
+    "predit": 0.9036851202806533,
+    "tranche": [
+     0.8,
+     1.0
+    ]
+   }
+  ],
+  "decisions": 11517,
+  "dernier_palier_egal_cible": true,
+  "ecart_p_vraie_par_quart": [
+   0.16799861701676502,
+   0.14519901231117413,
+   0.12409583893658362,
+   0.11396238100257908
+  ],
+  "moments": {
+   "debut_de_seance": 5797,
+   "entre_series": 2445,
+   "prochaine_seance": 3275
+  },
+  "paliers": {
+   "1": 8011,
+   "2": 1228,
+   "3": 1102,
+   "4": 1176
+  },
+  "part_acceptees": 0.6849874099157767
+ },
+ "anti_complaisance": {
+  "decisions": 803,
+  "refus": 246,
+  "saisons": 54,
+  "series_identiques": 54,
+  "servis_identiques": 54
+ },
+ "banc_complet": {
+  "saisons": 972,
+  "secondes": 468.7
+ },
+ "banc_complet_residu_propose": {
+  "saisons": 972,
+  "secondes": 461.7
+ },
+ "bocpd": [
+  {
+   "douleur_coude": {
+    "delai_median_jours": 20.5,
+    "delai_median_seances": 11.0,
+    "fausses_alertes_avant_100": 0.3394145099703012,
+    "saisons": 162,
+    "taux_detection": 0.20987654320987653
+   },
+   "douleur_epaule": {
+    "delai_median_jours": 13.5,
+    "delai_median_seances": 7.0,
+    "fausses_alertes_avant_100": 0.3394145099703012,
+    "saisons": 162,
+    "taux_detection": 0.2345679012345679
+   },
+   "maladie": {
+    "delai_median_jours": 13.0,
+    "delai_median_seances": 7.5,
+    "fausses_alertes_avant_100": 0.7124536905101169,
+    "saisons": 162,
+    "taux_detection": 0.32098765432098764
+   },
+   "reference": {
+    "fausses_alertes_100": 1.4848218213814341,
+    "part_seances_au_dessus": 0.03794544654641443,
+    "seances": 9092
+   },
+   "seances_manquees": {
+    "delai_median_jours": 23,
+    "delai_median_seances": 5,
+    "fausses_alertes_avant_100": 0.3907637655417407,
+    "saisons": 162,
+    "taux_detection": 0.05555555555555555
+   },
+   "seuil": 0.4
+  },
+  {
+   "douleur_coude": {
+    "delai_median_jours": 21,
+    "delai_median_seances": 11,
+    "fausses_alertes_avant_100": 0.21213406873143828,
+    "saisons": 162,
+    "taux_detection": 0.1419753086419753
+   },
+   "douleur_epaule": {
+    "delai_median_jours": 18.5,
+    "delai_median_seances": 9.5,
+    "fausses_alertes_avant_100": 0.21213406873143828,
+    "saisons": 162,
+    "taux_detection": 0.19753086419753085
+   },
+   "maladie": {
+    "delai_median_jours": 10.0,
+    "delai_median_seances": 6.5,
+    "fausses_alertes_avant_100": 0.4844685095468795,
+    "saisons": 162,
+    "taux_detection": 0.25925925925925924
+   },
+   "reference": {
+    "fausses_alertes_100": 1.0448746150461945,
+    "part_seances_au_dessus": 0.024527056753189617,
+    "seances": 9092
+   },
+   "seances_manquees": {
+    "delai_median_jours": 11.5,
+    "delai_median_seances": 2.0,
+    "fausses_alertes_avant_100": 0.17761989342806395,
+    "saisons": 162,
+    "taux_detection": 0.024691358024691357
+   },
+   "seuil": 0.5
+  },
+  {
+   "douleur_coude": {
+    "delai_median_jours": 21,
+    "delai_median_seances": 11,
+    "fausses_alertes_avant_100": 0.0848536274925753,
+    "saisons": 162,
+    "taux_detection": 0.10493827160493827
+   },
+   "douleur_epaule": {
+    "delai_median_jours": 18,
+    "delai_median_seances": 9,
+    "fausses_alertes_avant_100": 0.0848536274925753,
+    "saisons": 162,
+    "taux_detection": 0.15432098765432098
+   },
+   "maladie": {
+    "delai_median_jours": 6,
+    "delai_median_seances": 5,
+    "fausses_alertes_avant_100": 0.31347962382445144,
+    "saisons": 162,
+    "taux_detection": 0.2037037037037037
+   },
+   "reference": {
+    "fausses_alertes_100": 0.7809062912450506,
+    "part_seances_au_dessus": 0.016937967443906733,
+    "seances": 9092
+   },
+   "seances_manquees": {
+    "delai_median_jours": 13,
+    "delai_median_seances": 3,
+    "fausses_alertes_avant_100": 0.07104795737122557,
+    "saisons": 162,
+    "taux_detection": 0.018518518518518517
+   },
+   "seuil": 0.6
+  },
+  {
+   "douleur_coude": {
+    "delai_median_jours": 22.5,
+    "delai_median_seances": 11.5,
+    "fausses_alertes_avant_100": 0.04242681374628765,
+    "saisons": 162,
+    "taux_detection": 0.07407407407407407
+   },
+   "douleur_epaule": {
+    "delai_median_jours": 18.5,
+    "delai_median_seances": 10.0,
+    "fausses_alertes_avant_100": 0.04242681374628765,
+    "saisons": 162,
+    "taux_detection": 0.1111111111111111
+   },
+   "maladie": {
+    "delai_median_jours": 6,
+    "delai_median_seances": 4,
+    "fausses_alertes_avant_100": 0.2279851809632374,
+    "saisons": 162,
+    "taux_detection": 0.1419753086419753
+   },
+   "reference": {
+    "fausses_alertes_100": 0.5939287285525737,
+    "part_seances_au_dessus": 0.011768587769467664,
+    "seances": 9092
+   },
+   "seances_manquees": {
+    "delai_median_jours": 16.5,
+    "delai_median_seances": 3.0,
+    "fausses_alertes_avant_100": 0.07104795737122557,
+    "saisons": 162,
+    "taux_detection": 0.012345679012345678
+   },
+   "seuil": 0.7
+  },
+  {
+   "douleur_coude": {
+    "delai_median_jours": 25,
+    "delai_median_seances": 12,
+    "fausses_alertes_avant_100": 0.04242681374628765,
+    "saisons": 162,
+    "taux_detection": 0.043209876543209874
+   },
+   "douleur_epaule": {
+    "delai_median_jours": 21.0,
+    "delai_median_seances": 11.0,
+    "fausses_alertes_avant_100": 0.04242681374628765,
+    "saisons": 162,
+    "taux_detection": 0.06172839506172839
+   },
+   "maladie": {
+    "delai_median_jours": 6.0,
+    "delai_median_seances": 3.5,
+    "fausses_alertes_avant_100": 0.19948703334283271,
+    "saisons": 162,
+    "taux_detection": 0.09876543209876543
+   },
+   "reference": {
+    "fausses_alertes_100": 0.4179498460184778,
+    "part_seances_au_dessus": 0.007699076110866696,
+    "seances": 9092
+   },
+   "seances_manquees": {
+    "delai_median_jours": 10,
+    "delai_median_seances": 1,
+    "fausses_alertes_avant_100": 0.0,
+    "saisons": 162,
+    "taux_detection": 0.006172839506172839
+   },
+   "seuil": 0.8
+  }
+ ],
+ "bocpd_calibrer_alerte": [
+  {
+   "delai_median": null,
+   "fausses_alertes_100": 1.4848218213814341,
+   "seuil": 0.4,
+   "taux_detection": 0.49691358024691357
+  },
+  {
+   "delai_median": null,
+   "fausses_alertes_100": 1.0448746150461945,
+   "seuil": 0.5,
+   "taux_detection": 0.39969135802469136
+  },
+  {
+   "delai_median": null,
+   "fausses_alertes_100": 0.7809062912450506,
+   "seuil": 0.6,
+   "taux_detection": 0.3194444444444444
+  },
+  {
+   "delai_median": null,
+   "fausses_alertes_100": 0.5939287285525737,
+   "seuil": 0.7,
+   "taux_detection": 0.22685185185185186
+  },
+  {
+   "delai_median": null,
+   "fausses_alertes_100": 0.4179498460184778,
+   "seuil": 0.8,
+   "taux_detection": 0.15123456790123457
+  }
+ ],
+ "collecte": {
+  "saisons": 972,
+  "secondes": 473.5
+ },
+ "diagnostic": {
+  "douleur_coude": {
+   "actions": {
+    "conduite_douleur": 337,
+    "elargir": 136,
+    "replanifier": 1
+   },
+   "alertes": 478,
+   "alertes_100_seances": 4.860687411022981,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 395,
+    "residu": 6,
+    "rupture": 68
+   },
+   "dans_fenetre": 344,
+   "dans_fenetre_ok": 337,
+   "hors_fenetre": 130,
+   "part_action_attendue_dans_fenetre": 0.9796511627906976,
+   "questions": {
+    "1": 136,
+    "3": 338
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 162,
+   "seances": 9834,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  },
+  "douleur_epaule": {
+   "actions": {
+    "conduite_douleur": 336,
+    "elargir": 146,
+    "replanifier": 1
+   },
+   "alertes": 488,
+   "alertes_100_seances": 4.96237543217409,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 402,
+    "residu": 3,
+    "rupture": 74
+   },
+   "dans_fenetre": 343,
+   "dans_fenetre_ok": 336,
+   "hors_fenetre": 140,
+   "part_action_attendue_dans_fenetre": 0.9795918367346939,
+   "questions": {
+    "1": 146,
+    "3": 337
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 162,
+   "seances": 9834,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  },
+  "maladie": {
+   "actions": {
+    "conduite_douleur": 11,
+    "elargir": 78,
+    "replanifier": 2,
+    "semaine_allegee": 88
+   },
+   "alertes": 185,
+   "alertes_100_seances": 1.8812283912955055,
+   "allegement_jours": 355,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 12,
+    "rupture": 164
+   },
+   "dans_fenetre": 91,
+   "dans_fenetre_ok": 88,
+   "hors_fenetre": 88,
+   "part_action_attendue_dans_fenetre": 0.967032967032967,
+   "questions": {
+    "1": 166,
+    "3": 13
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": 0.574744295830055,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 79,
+   "seances": 9834,
+   "series_allegees": 2922,
+   "series_ecrites": 5084
+  },
+  "parc_seulement": {
+   "actions": {
+    "conduite_douleur": 10,
+    "elargir": 80,
+    "replanifier": 19
+   },
+   "alertes": 113,
+   "alertes_100_seances": 1.1490746390075248,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 12,
+    "residu": 1,
+    "rupture": 91
+   },
+   "dans_fenetre": 18,
+   "dans_fenetre_ok": 18,
+   "hors_fenetre": 91,
+   "part_action_attendue_dans_fenetre": 1.0,
+   "questions": {
+    "1": 80,
+    "3": 29
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 18,
+   "seances": 9834,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  },
+  "reference": {
+   "actions": {
+    "conduite_douleur": 10,
+    "elargir": 93,
+    "replanifier": 4
+   },
+   "alertes": 111,
+   "alertes_100_seances": 1.1287370347773031,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 12,
+    "residu": 1,
+    "rupture": 89
+   },
+   "dans_fenetre": 0,
+   "dans_fenetre_ok": 0,
+   "hors_fenetre": 107,
+   "part_action_attendue_dans_fenetre": null,
+   "questions": {
+    "1": 93,
+    "3": 14
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 0,
+   "seances": 9834,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  },
+  "seances_manquees": {
+   "actions": {
+    "conduite_douleur": 13,
+    "elargir": 486,
+    "replanifier": 2
+   },
+   "alertes": 565,
+   "alertes_100_seances": 7.365402163994264,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 498,
+    "douleur": 17,
+    "residu": 14,
+    "rupture": 46
+   },
+   "dans_fenetre": 0,
+   "dans_fenetre_ok": 0,
+   "hors_fenetre": 501,
+   "part_action_attendue_dans_fenetre": null,
+   "questions": {
+    "1": 486,
+    "3": 15
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 0,
+   "seances": 7671,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  }
+ },
+ "diagnostic_residu_propose": {
+  "douleur_coude": {
+   "actions": {
+    "conduite_douleur": 337,
+    "elargir": 131,
+    "replanifier": 1
+   },
+   "alertes": 473,
+   "alertes_100_seances": 4.809843400447427,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 395,
+    "rupture": 69
+   },
+   "dans_fenetre": 344,
+   "dans_fenetre_ok": 337,
+   "hors_fenetre": 125,
+   "part_action_attendue_dans_fenetre": 0.9796511627906976,
+   "questions": {
+    "1": 131,
+    "3": 338
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 162,
+   "seances": 9834,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  },
+  "douleur_epaule": {
+   "actions": {
+    "conduite_douleur": 336,
+    "elargir": 143,
+    "replanifier": 1
+   },
+   "alertes": 485,
+   "alertes_100_seances": 4.931869025828758,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 402,
+    "rupture": 74
+   },
+   "dans_fenetre": 343,
+   "dans_fenetre_ok": 336,
+   "hors_fenetre": 137,
+   "part_action_attendue_dans_fenetre": 0.9795918367346939,
+   "questions": {
+    "1": 143,
+    "3": 337
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 162,
+   "seances": 9834,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  },
+  "maladie": {
+   "actions": {
+    "conduite_douleur": 11,
+    "elargir": 78,
+    "replanifier": 2,
+    "semaine_allegee": 88
+   },
+   "alertes": 185,
+   "alertes_100_seances": 1.8812283912955055,
+   "allegement_jours": 355,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 12,
+    "rupture": 164
+   },
+   "dans_fenetre": 91,
+   "dans_fenetre_ok": 88,
+   "hors_fenetre": 88,
+   "part_action_attendue_dans_fenetre": 0.967032967032967,
+   "questions": {
+    "1": 166,
+    "3": 13
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": 0.574744295830055,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 79,
+   "seances": 9834,
+   "series_allegees": 2922,
+   "series_ecrites": 5084
+  },
+  "parc_seulement": {
+   "actions": {
+    "conduite_douleur": 10,
+    "elargir": 79,
+    "replanifier": 19
+   },
+   "alertes": 112,
+   "alertes_100_seances": 1.138905836892414,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 12,
+    "rupture": 91
+   },
+   "dans_fenetre": 18,
+   "dans_fenetre_ok": 18,
+   "hors_fenetre": 90,
+   "part_action_attendue_dans_fenetre": 1.0,
+   "questions": {
+    "1": 79,
+    "3": 29
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 18,
+   "seances": 9834,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  },
+  "reference": {
+   "actions": {
+    "conduite_douleur": 10,
+    "elargir": 92,
+    "replanifier": 4
+   },
+   "alertes": 110,
+   "alertes_100_seances": 1.1185682326621924,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 9,
+    "douleur": 12,
+    "rupture": 89
+   },
+   "dans_fenetre": 0,
+   "dans_fenetre_ok": 0,
+   "hors_fenetre": 106,
+   "part_action_attendue_dans_fenetre": null,
+   "questions": {
+    "1": 92,
+    "3": 14
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 0,
+   "seances": 9834,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  },
+  "seances_manquees": {
+   "actions": {
+    "conduite_douleur": 13,
+    "elargir": 482,
+    "replanifier": 2
+   },
+   "alertes": 560,
+   "alertes_100_seances": 7.300221613870421,
+   "allegement_jours": 0,
+   "causes": {
+    "assiduite": 500,
+    "douleur": 17,
+    "rupture": 47
+   },
+   "dans_fenetre": 0,
+   "dans_fenetre_ok": 0,
+   "hors_fenetre": 497,
+   "part_action_attendue_dans_fenetre": null,
+   "questions": {
+    "1": 482,
+    "3": 15
+   },
+   "questions_max": 3,
+   "ratio_series_allegees": null,
+   "saisons": 162,
+   "saisons_avec_action_attendue": 0,
+   "seances": 7671,
+   "series_allegees": 0,
+   "series_ecrites": 0
+  }
+ },
+ "dual": {
+  "conclus": 0,
+  "dans_plafonds": true,
+  "decisions": {},
+  "demi_largeur_max_fin_mediane": 0.0894065,
+  "en_cours_fin": 68,
+  "entropie_fin_moyenne": 2.170797052659465,
+  "entropie_max": 2.1972245773362196,
+  "interrompus": 12,
+  "lances": 80,
+  "plafond_intensite": 0.05,
+  "plafond_volume": 0.15,
+  "poids_max_fin_moyen": 0.13704550905967078,
+  "premiere_semaine_calibree_mediane": 11.0,
+  "propositions": 116,
+  "raisons_interruption": {
+   "alerte_hors_modele": 12
+  },
+  "ratio_intensite_max": 1.029872,
+  "ratio_volume_semaine_max": 1.142857,
+  "refus": {
+   "alerte_hors_modele": 3,
+   "echeance_proche": 33
+  },
+  "saisons": 972,
+  "saisons_calibrees": 80,
+  "sans_lift_principal": 504,
+  "semaines": 15732,
+  "semaines_calibrees": 229,
+  "series_servies_bras": 334
+ },
+ "dual_diagnostic_2_bras_sans_echeance": {
+  "conclus": 7,
+  "dans_plafonds": true,
+  "decisions": {
+   "A": 2,
+   "indetermine": 5
+  },
+  "demi_largeur_max_fin_mediane": 0.0734245,
+  "en_cours_fin": 20,
+  "entropie_fin_moyenne": 2.1675818865987653,
+  "entropie_max": 2.1972245773362196,
+  "interrompus": 5,
+  "lances": 32,
+  "plafond_intensite": 0.05,
+  "plafond_volume": 0.15,
+  "poids_max_fin_moyen": 0.13876051955555554,
+  "premiere_semaine_calibree_mediane": 11,
+  "propositions": 32,
+  "raisons_interruption": {
+   "alerte_hors_modele": 5
+  },
+  "ratio_intensite_max": 1.029872,
+  "ratio_volume_semaine_max": 1.142857,
+  "refus": {},
+  "saisons": 162,
+  "saisons_calibrees": 23,
+  "sans_lift_principal": 84,
+  "semaines": 2622,
+  "semaines_calibrees": 69,
+  "series_servies_bras": 109
+ },
+ "dual_residu_propose": {
+  "conclus": 0,
+  "dans_plafonds": true,
+  "decisions": {},
+  "demi_largeur_max_fin_mediane": 0.08910799999999999,
+  "en_cours_fin": 68,
+  "entropie_fin_moyenne": 2.1707383341975306,
+  "entropie_max": 2.1972245773362196,
+  "interrompus": 12,
+  "lances": 80,
+  "plafond_intensite": 0.05,
+  "plafond_volume": 0.15,
+  "poids_max_fin_moyen": 0.1371134463292181,
+  "premiere_semaine_calibree_mediane": 11.0,
+  "propositions": 116,
+  "raisons_interruption": {
+   "alerte_hors_modele": 12
+  },
+  "ratio_intensite_max": 1.029872,
+  "ratio_volume_semaine_max": 1.142857,
+  "refus": {
+   "alerte_hors_modele": 3,
+   "echeance_proche": 33
+  },
+  "saisons": 972,
+  "saisons_calibrees": 80,
+  "sans_lift_principal": 504,
+  "semaines": 15732,
+  "semaines_calibrees": 229,
+  "series_servies_bras": 334
+ },
+ "graines": 2,
+ "modeles": "abc",
+ "plantages": [],
+ "residu_propose": 0.2,
+ "secondes": 1553.2,
+ "secours": {
+  "_residu_reference_part_sup_5pc": 0.0093603744149766,
+  "_residu_reference_quantiles": {
+   "q50": 0.006273621969091567,
+   "q75": 0.011766490432659139,
+   "q90": 0.01909096924853912,
+   "q95": 0.027349016364315526
+  },
+  "douleur_coude": {
+   "assiduite": 9,
+   "detectees": {
+    "assiduite": 0,
+    "douleur": 162,
+    "residu": 0
+   },
+   "douleur": 559,
+   "part_semaines": {
+    "assiduite": 0.003432494279176201,
+    "douleur": 0.2131960335621663,
+    "residu": 0.0
+   },
+   "residu": 0,
+   "saisons": 162,
+   "semaines": 2622,
+   "taux_detection": {
+    "assiduite": 0.0,
+    "douleur": 1.0,
+    "residu": 0.0
+   },
+   "variante_ligne_de_base": {
+    "actives": 2,
+    "detectees": 2,
+    "part_semaines": 0.0007627765064836003,
+    "semaines": 2622,
+    "taux_detection": 0.012345679012345678
+   }
+  },
+  "douleur_epaule": {
+   "assiduite": 9,
+   "detectees": {
+    "assiduite": 0,
+    "douleur": 162,
+    "residu": 0
+   },
+   "douleur": 566,
+   "part_semaines": {
+    "assiduite": 0.003432494279176201,
+    "douleur": 0.21586575133485889,
+    "residu": 0.0
+   },
+   "residu": 0,
+   "saisons": 162,
+   "semaines": 2622,
+   "taux_detection": {
+    "assiduite": 0.0,
+    "douleur": 1.0,
+    "residu": 0.0
+   },
+   "variante_ligne_de_base": {
+    "actives": 3,
+    "detectees": 2,
+    "part_semaines": 0.0011441647597254005,
+    "semaines": 2622,
+    "taux_detection": 0.012345679012345678
+   }
+  },
+  "maladie": {
+   "assiduite": 9,
+   "detectees": {
+    "assiduite": 0,
+    "douleur": 2,
+    "residu": 0
+   },
+   "douleur": 15,
+   "part_semaines": {
+    "assiduite": 0.003432494279176201,
+    "douleur": 0.005720823798627002,
+    "residu": 0.0
+   },
+   "residu": 0,
+   "saisons": 162,
+   "semaines": 2622,
+   "taux_detection": {
+    "assiduite": 0.0,
+    "douleur": 0.012345679012345678,
+    "residu": 0.0
+   },
+   "variante_ligne_de_base": {
+    "actives": 4,
+    "detectees": 1,
+    "part_semaines": 0.0015255530129672007,
+    "semaines": 2622,
+    "taux_detection": 0.006172839506172839
+   }
+  },
+  "parc_seulement": {
+   "assiduite": 9,
+   "detectees": {
+    "assiduite": 0,
+    "douleur": 2,
+    "residu": 0
+   },
+   "douleur": 15,
+   "part_semaines": {
+    "assiduite": 0.003432494279176201,
+    "douleur": 0.005720823798627002,
+    "residu": 0.0
+   },
+   "residu": 0,
+   "saisons": 162,
+   "semaines": 2622,
+   "taux_detection": {
+    "assiduite": 0.0,
+    "douleur": 0.012345679012345678,
+    "residu": 0.0
+   },
+   "variante_ligne_de_base": {
+    "actives": 3,
+    "detectees": 0,
+    "part_semaines": 0.0011441647597254005,
+    "semaines": 2622,
+    "taux_detection": 0.0
+   }
+  },
+  "reference": {
+   "assiduite": 9,
+   "detectees": {
+    "assiduite": 0,
+    "douleur": 0,
+    "residu": 0
+   },
+   "douleur": 15,
+   "part_semaines": {
+    "assiduite": 0.003432494279176201,
+    "douleur": 0.005720823798627002,
+    "residu": 0.0
+   },
+   "residu": 0,
+   "saisons": 162,
+   "semaines": 2622,
+   "taux_detection": {
+    "assiduite": 0.0,
+    "douleur": 0.0,
+    "residu": 0.0
+   },
+   "variante_ligne_de_base": {
+    "actives": 3,
+    "detectees": 0,
+    "part_semaines": 0.0011441647597254005,
+    "semaines": 2622,
+    "taux_detection": 0.0
+   }
+  },
+  "seances_manquees": {
+   "assiduite": 852,
+   "detectees": {
+    "assiduite": 162,
+    "douleur": 3,
+    "residu": 2
+   },
+   "douleur": 21,
+   "part_semaines": {
+    "assiduite": 0.32494279176201374,
+    "douleur": 0.008009153318077803,
+    "residu": 0.0011441647597254005
+   },
+   "residu": 3,
+   "saisons": 162,
+   "semaines": 2622,
+   "taux_detection": {
+    "assiduite": 1.0,
+    "douleur": 0.018518518518518517,
+    "residu": 0.012345679012345678
+   },
+   "variante_ligne_de_base": {
+    "actives": 4,
+    "detectees": 3,
+    "part_semaines": 0.0015255530129672007,
+    "semaines": 2622,
+    "taux_detection": 0.018518518518518517
+   }
+  }
+ },
+ "secours_residu_balayage": [
+  {
+   "douleur_coude": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "douleur_epaule": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "maladie": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "parc_seulement": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "reference": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seances_manquees": {
+    "alertes_par_saison": 0.012345679012345678,
+    "part_semaines": 0.0011441647597254005,
+    "taux_detection": 0.012345679012345678
+   },
+   "seuil": 0.05
+  },
+  {
+   "douleur_coude": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "douleur_epaule": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "maladie": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "parc_seulement": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "reference": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seances_manquees": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seuil": 0.1
+  },
+  {
+   "douleur_coude": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "douleur_epaule": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "maladie": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "parc_seulement": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "reference": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seances_manquees": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seuil": 0.15
+  },
+  {
+   "douleur_coude": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "douleur_epaule": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "maladie": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "parc_seulement": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "reference": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seances_manquees": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seuil": 0.2
+  },
+  {
+   "douleur_coude": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "douleur_epaule": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "maladie": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "parc_seulement": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "reference": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seances_manquees": {
+    "alertes_par_saison": 0.0,
+    "part_semaines": 0.0,
+    "taux_detection": 0.0
+   },
+   "seuil": 0.25
+  }
+ ],
+ "seuil_retenu": 0.6
+}

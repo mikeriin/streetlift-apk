@@ -1,0 +1,2147 @@
+{
+ "bilan": {
+  "non_respectes": [
+   "1_erreur_e1rm_rang_6",
+   "5_calibration_p_reussite"
+  ],
+  "respectes": [
+   "2_mauvais_jour_isole",
+   "3_convergence_sous_3",
+   "4_couverture_90",
+   "6_performance_jour_j",
+   "7_securite",
+   "8_temps_calcul"
+  ]
+ },
+ "configuration": {
+  "defaut_modele_sd": null,
+  "extensions": [
+   "PlanificationBanc",
+   "SurveillanceBanc",
+   "ControleDualBanc",
+   "AdherenceBanc"
+  ],
+  "graines": 6,
+  "planificateur": true,
+  "profils": [
+   "autres_01_debutant_musculation",
+   "autres_02_hypertrophie_intermediaire",
+   "autres_03_powerlifter_competition",
+   "autres_04_force_generale_46_ans",
+   "autres_05_course_10_km_debutante",
+   "autres_06_semi_marathon_intermediaire",
+   "autres_07_mobilite_sante_senior",
+   "autres_08_crossfit_intermediaire",
+   "autres_09_perte_de_poids_debutante",
+   "autres_10_contraintes_multiples",
+   "ks_01_streetlifting_sets_reps_4_seances",
+   "ks_02_streetlifting_sets_reps_5_seances",
+   "ks_03_streetlifting_sets_reps_6_seances",
+   "ks_04_sets_reps_principal_streetlifting_secondaire",
+   "ks_05_force_hypertrophie",
+   "ks_06_calisthenie_sets_reps_30",
+   "ks_test_ppl6",
+   "street_01_debutant_complet",
+   "street_02_debutant_surpoids",
+   "street_03_debutante",
+   "street_04_reprise_longue_pause",
+   "street_05_inter_calisthenie_front_lever",
+   "street_06_inter_sets_reps",
+   "street_07_avance_streetlifting_competition",
+   "street_08_avance_sets_reps_competition",
+   "street_09_elite_streetlifting",
+   "street_10_elite_figures",
+   "street_11_master_51_ans",
+   "street_12_antecedent_coude",
+   "street_13_peu_de_temps",
+   "street_14_parc_sans_lest",
+   "street_15_travail_physique_sommeil_court",
+   "street_16_specialisation_traction_lestee",
+   "street_17_hybride_street_course"
+  ],
+  "rapide": false,
+  "scenarios": [
+   "tous"
+  ],
+  "semaines": null,
+  "trajectoires": 1000,
+  "verites": "abc"
+ },
+ "criteres": {
+  "1_erreur_e1rm_rang_6": {
+   "detail": {
+    "autres_modes_rang_6": {
+     "hold": {
+      "koach": {
+       "biais": 0.049454,
+       "couverture": 0.945674,
+       "mae": 0.171229,
+       "n": 9756,
+       "rmse": 0.215791,
+       "sd": 0.269387,
+       "sous3": 0.090713
+      },
+      "temoin": {
+       "biais": -0.239773,
+       "couverture": 0.596155,
+       "mae": 0.277248,
+       "n": 18257,
+       "rmse": 0.349038,
+       "sous3": 0.080462
+      }
+     },
+     "loaded": {
+      "koach": {
+       "biais": 0.007738,
+       "couverture": 0.933548,
+       "mae": 0.058595,
+       "n": 26756,
+       "rmse": 0.086322,
+       "sd": 0.089052,
+       "sous3": 0.392884
+      },
+      "temoin": {
+       "biais": -0.057094,
+       "couverture": 0.766895,
+       "mae": 0.103059,
+       "n": 76133,
+       "rmse": 0.160701,
+       "sous3": 0.284266
+      }
+     },
+     "reps": {
+      "koach": {
+       "biais": 0.00825,
+       "couverture": 0.924984,
+       "mae": 0.094728,
+       "n": 35699,
+       "rmse": 0.13551,
+       "sd": 0.152052,
+       "sous3": 0.25813
+      },
+      "temoin": {
+       "biais": -0.172476,
+       "couverture": 0.542253,
+       "mae": 0.21169,
+       "n": 100951,
+       "rmse": 0.30476,
+       "sous3": 0.179473
+      }
+     }
+    },
+    "koach": {
+     "biais": 0.000578,
+     "couverture": 0.930293,
+     "mae": 0.036117,
+     "n": 8837,
+     "rmse": 0.051031,
+     "sd": 0.05457,
+     "sous3": 0.556411
+    },
+    "par_niveau": {
+     "0": {
+      "koach": {
+       "biais": -0.000146,
+       "couverture": 0.911436,
+       "mae": 0.058028,
+       "n": 1163,
+       "rmse": 0.082198,
+       "sd": 0.080197,
+       "sous3": 0.402408
+      },
+      "temoin": {
+       "biais": -0.049292,
+       "couverture": 0.728834,
+       "mae": 0.100397,
+       "n": 3260,
+       "rmse": 0.141631,
+       "sous3": 0.245092
+      }
+     },
+     "1": {
+      "koach": {
+       "biais": 4.9e-05,
+       "couverture": 0.936714,
+       "mae": 0.034935,
+       "n": 2623,
+       "rmse": 0.047844,
+       "sd": 0.054851,
+       "sous3": 0.564621
+      },
+      "temoin": {
+       "biais": -0.020656,
+       "couverture": 0.885751,
+       "mae": 0.061491,
+       "n": 6267,
+       "rmse": 0.085564,
+       "sous3": 0.322962
+      }
+     },
+     "2": {
+      "koach": {
+       "biais": 0.001987,
+       "couverture": 0.937457,
+       "mae": 0.031997,
+       "n": 4397,
+       "rmse": 0.043162,
+       "sd": 0.049555,
+       "sous3": 0.584944
+      },
+      "temoin": {
+       "biais": -0.012092,
+       "couverture": 0.930344,
+       "mae": 0.043736,
+       "n": 9992,
+       "rmse": 0.056841,
+       "sous3": 0.43725
+      }
+     },
+     "3": {
+      "koach": {
+       "biais": -0.005482,
+       "couverture": 0.889908,
+       "mae": 0.029592,
+       "n": 654,
+       "rmse": 0.038308,
+       "sd": 0.04159,
+       "sous3": 0.605505
+      },
+      "temoin": {
+       "biais": 0.005707,
+       "couverture": 0.965152,
+       "mae": 0.039838,
+       "n": 660,
+       "rmse": 0.055551,
+       "sous3": 0.539394
+      }
+     }
+    },
+    "par_verite": {
+     "a": {
+      "koach": {
+       "biais": 0.004672,
+       "couverture": 0.960964,
+       "mae": 0.029818,
+       "n": 2946,
+       "rmse": 0.038416,
+       "sd": 0.047848,
+       "sous3": 0.611677
+      },
+      "temoin": {
+       "biais": -0.005037,
+       "couverture": 0.975882,
+       "mae": 0.042889,
+       "n": 6717,
+       "rmse": 0.05638,
+       "sous3": 0.460622
+      }
+     },
+     "b": {
+      "koach": {
+       "biais": 0.002467,
+       "couverture": 0.933786,
+       "mae": 0.044234,
+       "n": 2945,
+       "rmse": 0.065742,
+       "sd": 0.064145,
+       "sous3": 0.51545
+      },
+      "temoin": {
+       "biais": -0.061436,
+       "couverture": 0.808802,
+       "mae": 0.078146,
+       "n": 6726,
+       "rmse": 0.116215,
+       "sous3": 0.331401
+      }
+     },
+     "c": {
+      "koach": {
+       "biais": -0.005403,
+       "couverture": 0.89613,
+       "mae": 0.034302,
+       "n": 2946,
+       "rmse": 0.044892,
+       "sd": 0.051721,
+       "sous3": 0.542091
+      },
+      "temoin": {
+       "biais": 0.005917,
+       "couverture": 0.870695,
+       "mae": 0.053781,
+       "n": 6736,
+       "rmse": 0.070418,
+       "sous3": 0.330315
+      }
+     }
+    },
+    "temoin": {
+     "biais": -0.020179,
+     "couverture": 0.885079,
+     "mae": 0.058277,
+     "n": 20179,
+     "rmse": 0.084942,
+     "sous3": 0.374052
+    },
+    "toutes_estimations": 0.036117
+   },
+   "mesure": 0.036118,
+   "methode": "MAE relative |e1RM estimé / e1RM vrai − 1| au rang 6 (6e jour d'entraînement de l'exercice, dernière estimation du jour, `mesures.Estimations`) sur les mouvements principaux chargés, moyenne des modèles de vérité du banc (C13.10.2.a) ; témoin : export 0.3.1 (16 graines) sur les mêmes saisons.",
+   "n": 8837,
+   "respecte": false,
+   "seuil": 0.03
+  },
+  "2_mauvais_jour_isole": {
+   "detail": {
+    "erreurs": 0,
+    "horizons": {
+     "apres": {
+      "max_abs": 0.022074,
+      "mediane_abs": 0.007505,
+      "moyenne_abs": 0.008079,
+      "n": 48,
+      "p95_abs": 0.018076,
+      "signe_moyen": -0.00304
+     },
+     "plus_1": {
+      "max_abs": 0.037398,
+      "mediane_abs": 0.005705,
+      "moyenne_abs": 0.008841,
+      "n": 48,
+      "p95_abs": 0.020479,
+      "signe_moyen": -0.003057
+     },
+     "plus_2": {
+      "max_abs": 0.025455,
+      "mediane_abs": 0.005113,
+      "moyenne_abs": 0.00742,
+      "n": 48,
+      "p95_abs": 0.020918,
+      "signe_moyen": -0.002469
+     }
+    },
+    "jobs": 36,
+    "plantages": 0,
+    "saisons": 36,
+    "saisons_divergentes": {
+     "horizons": {
+      "apres": {
+       "max_abs": 0.022074,
+       "mediane_abs": 0.007505,
+       "moyenne_abs": 0.008079,
+       "n": 48,
+       "p95_abs": 0.018076,
+       "signe_moyen": -0.00304
+      },
+      "plus_1": {
+       "max_abs": 0.043088,
+       "mediane_abs": 0.006527,
+       "moyenne_abs": 0.008623,
+       "n": 48,
+       "p95_abs": 0.023754,
+       "signe_moyen": -0.002912
+      },
+      "plus_2": {
+       "max_abs": 0.036272,
+       "mediane_abs": 0.005801,
+       "moyenne_abs": 0.007972,
+       "n": 48,
+       "p95_abs": 0.025472,
+       "signe_moyen": -0.002461
+      }
+     },
+     "mesure": 0.008623,
+     "note": "mesure de KM1 : les deux saisons divergent après le mauvais jour"
+    }
+   },
+   "mesure": 0.008841,
+   "methode": "`criteres_moteur.mesurer_mauvais_jour(apparie=True)` : contrefactuel apparié (C13.10.2.b). Le journal de la saison est rejoué deux fois dans un moteur neuf : tel quel, puis avec la séance du mauvais jour (−6 % de capacité, 2e moitié, après 6 séances) à la place de la séance du même jour, les séances suivantes restant celles de la saison telle quelle ; écart relatif des e1RM des principaux chargés juste après, +1 et +2 séances ; mesure = pire moyenne absolue des trois horizons.",
+   "n": 36,
+   "respecte": true,
+   "seuil": 0.01
+  },
+  "3_convergence_sous_3": {
+   "detail": {
+    "koach": {
+     "mediane_censuree": 2,
+     "moyenne_atteints": 3.426557,
+     "moyenne_censuree": 4.884315,
+     "n": 9353,
+     "part_jamais": 0.067572
+    },
+    "par_verite": {
+     "a": {
+      "koach": {
+       "mediane_censuree": 2.0,
+       "moyenne_atteints": 3.336891,
+       "moyenne_censuree": 4.170622,
+       "n": 3118,
+       "part_jamais": 0.038486
+      },
+      "temoin": {
+       "mediane_censuree": 6,
+       "moyenne_atteints": 6.376536,
+       "moyenne_censuree": 10.47454,
+       "n": 9289,
+       "part_jamais": 0.220045
+      }
+     },
+     "b": {
+      "koach": {
+       "mediane_censuree": 3,
+       "moyenne_atteints": 3.696747,
+       "moyenne_censuree": 5.460058,
+       "n": 3117,
+       "part_jamais": 0.082772
+      },
+      "temoin": {
+       "mediane_censuree": 11,
+       "moyenne_atteints": 6.977288,
+       "moyenne_censuree": 13.557624,
+       "n": 9293,
+       "part_jamais": 0.365114
+      }
+     },
+     "c": {
+      "koach": {
+       "mediane_censuree": 3.0,
+       "moyenne_atteints": 3.250698,
+       "moyenne_censuree": 5.02245,
+       "n": 3118,
+       "part_jamais": 0.081462
+      },
+      "temoin": {
+       "mediane_censuree": 5.0,
+       "moyenne_atteints": 5.558785,
+       "moyenne_censuree": 8.989588,
+       "n": 9316,
+       "part_jamais": 0.176471
+      }
+     }
+    },
+    "premier_rang_mae_sous_3": {
+     "koach": null,
+     "temoin": null
+    },
+    "temoin": {
+     "mediane_censuree": 6.0,
+     "moyenne_atteints": 6.245424,
+     "moyenne_censuree": 11.005663,
+     "n": 27898,
+     "part_jamais": 0.253817
+    }
+   },
+   "mesure": 4.884315,
+   "methode": "Par exercice principal chargé et par saison, premier rang de séance où |erreur| < 3 % (`first_under`) ; moyenne avec « jamais » compté 25 (censure), à comparer au témoin 0.3.1 sur les mêmes (profil, scénario, vérité) ; seuil = valeur du témoin.",
+   "n": 9353,
+   "respecte": true,
+   "seuil": 11.005663
+  },
+  "4_couverture_90": {
+   "detail": {
+    "defaut_modele_sd": 0.01,
+    "par_mode_rangs_3_et_plus": {
+     "hold": {
+      "couverture": 0.948237,
+      "n": 184630
+     },
+     "loaded": {
+      "couverture": 0.92218,
+      "n": 452521
+     },
+     "loadedMain": {
+      "couverture": 0.914245,
+      "n": 131025
+     },
+     "reps": {
+      "couverture": 0.911619,
+      "n": 624701
+     }
+    },
+    "par_rang": {
+     "1": {
+      "couverture": 0.950925,
+      "n": 9353,
+      "sd": 0.09789
+     },
+     "12": {
+      "couverture": 0.91921,
+      "n": 7439,
+      "sd": 0.044777
+     },
+     "24": {
+      "couverture": 0.885703,
+      "n": 2511,
+      "sd": 0.043909
+     },
+     "3": {
+      "couverture": 0.941765,
+      "n": 9290,
+      "sd": 0.067386
+     },
+     "6": {
+      "couverture": 0.930293,
+      "n": 8837,
+      "sd": 0.05457
+     }
+    },
+    "par_verite": {
+     "a": {
+      "couverture": 0.939607,
+      "n": 43763
+     },
+     "b": {
+      "couverture": 0.91573,
+      "n": 43610
+     },
+     "c": {
+      "couverture": 0.887336,
+      "n": 43652
+     }
+    },
+    "tous_modes_rangs_3_et_plus": {
+     "couverture": 0.920764,
+     "n": 1261852
+    }
+   },
+   "mesure": 0.914245,
+   "methode": "Part des estimations (principaux chargés, rangs >= 3) dont l'intervalle à 90 % de Koach [exp(mu ∓ 1,645 sd)] contient la capacité vraie (à frais).",
+   "n": 131025,
+   "respecte": true,
+   "seuil": [
+    0.88,
+    0.92
+   ]
+  },
+  "5_calibration_p_reussite": {
+   "detail": {
+    "exclusions": {
+     "aucun_test_le_jour_j": 219,
+     "cible_non_testee": 288,
+     "sans_cible": 324,
+     "sans_echeance": 4140
+    },
+    "mesurable": true,
+    "par_cible": {
+     "deciles": [
+      {
+       "decile": 0,
+       "ecart": 0.009314,
+       "n": 3936,
+       "observee": 0.012957,
+       "p_prevue": 0.022272
+      },
+      {
+       "decile": 1,
+       "ecart": 0.013303,
+       "n": 903,
+       "observee": 0.117386,
+       "p_prevue": 0.13069
+      },
+      {
+       "decile": 2,
+       "ecart": 0.083228,
+       "n": 377,
+       "observee": 0.159151,
+       "p_prevue": 0.242379
+      },
+      {
+       "decile": 3,
+       "ecart": 0.041168,
+       "n": 149,
+       "observee": 0.308725,
+       "p_prevue": 0.349893
+      },
+      {
+       "decile": 4,
+       "ecart": 0.003694,
+       "n": 160,
+       "observee": 0.44375,
+       "p_prevue": 0.447444
+      },
+      {
+       "decile": 5,
+       "ecart": 0.035325,
+       "n": 114,
+       "observee": 0.578947,
+       "p_prevue": 0.543623
+      },
+      {
+       "decile": 6,
+       "ecart": 0.031192,
+       "n": 52,
+       "observee": 0.673077,
+       "p_prevue": 0.641885
+      },
+      {
+       "decile": 7,
+       "ecart": 0.145027,
+       "n": 73,
+       "observee": 0.60274,
+       "p_prevue": 0.747767
+      },
+      {
+       "decile": 8,
+       "ecart": 0.058714,
+       "n": 28,
+       "observee": 0.892857,
+       "p_prevue": 0.834143,
+       "signal": "n < 30"
+      },
+      {
+       "decile": 9,
+       "ecart": 0.07875,
+       "n": 4,
+       "observee": 1.0,
+       "p_prevue": 0.92125,
+       "signal": "n < 30"
+      }
+     ],
+     "deciles_peuples": 8,
+     "ecart_max": 0.145027,
+     "erreur_ponderee_tous_cas": 0.018111,
+     "n": 5796,
+     "part_des_cas_juges": 0.994479,
+     "une_prevision_par_cible": {
+      "deciles": [
+       {
+        "decile": 0,
+        "ecart": 0.007518,
+        "n": 1353,
+        "observee": 0.005913,
+        "p_prevue": 0.013431
+       },
+       {
+        "decile": 1,
+        "ecart": 0.002386,
+        "n": 114,
+        "observee": 0.140351,
+        "p_prevue": 0.137965
+       },
+       {
+        "decile": 2,
+        "ecart": 0.054653,
+        "n": 72,
+        "observee": 0.305556,
+        "p_prevue": 0.250903
+       },
+       {
+        "decile": 3,
+        "ecart": 0.0147,
+        "n": 60,
+        "observee": 0.366667,
+        "p_prevue": 0.351967
+       },
+       {
+        "decile": 4,
+        "ecart": 0.085281,
+        "n": 64,
+        "observee": 0.359375,
+        "p_prevue": 0.444656
+       },
+       {
+        "decile": 5,
+        "ecart": 0.188892,
+        "n": 37,
+        "observee": 0.72973,
+        "p_prevue": 0.540838
+       },
+       {
+        "decile": 6,
+        "ecart": 0.127318,
+        "n": 22,
+        "observee": 0.772727,
+        "p_prevue": 0.645409,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 7,
+        "ecart": 0.153227,
+        "n": 22,
+        "observee": 0.590909,
+        "p_prevue": 0.744136,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 8,
+        "ecart": 0.023214,
+        "n": 14,
+        "observee": 0.857143,
+        "p_prevue": 0.833929,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 9,
+        "n": 0,
+        "signal": "vide"
+       }
+      ],
+      "ecart_max": 0.188892,
+      "n": 1758
+     },
+     "unites": 681,
+     "variante_capacite_du_jour": {
+      "deciles": [
+       {
+        "decile": 0,
+        "ecart": 0.066397,
+        "n": 3936,
+        "observee": 0.088669,
+        "p_prevue": 0.022272
+       },
+       {
+        "decile": 1,
+        "ecart": 0.287915,
+        "n": 903,
+        "observee": 0.418605,
+        "p_prevue": 0.13069
+       },
+       {
+        "decile": 2,
+        "ecart": 0.163456,
+        "n": 377,
+        "observee": 0.405836,
+        "p_prevue": 0.242379
+       },
+       {
+        "decile": 3,
+        "ecart": 0.408497,
+        "n": 149,
+        "observee": 0.758389,
+        "p_prevue": 0.349893
+       },
+       {
+        "decile": 4,
+        "ecart": 0.408806,
+        "n": 160,
+        "observee": 0.85625,
+        "p_prevue": 0.447444
+       },
+       {
+        "decile": 5,
+        "ecart": 0.412518,
+        "n": 114,
+        "observee": 0.95614,
+        "p_prevue": 0.543623
+       },
+       {
+        "decile": 6,
+        "ecart": 0.300423,
+        "n": 52,
+        "observee": 0.942308,
+        "p_prevue": 0.641885
+       },
+       {
+        "decile": 7,
+        "ecart": 0.197438,
+        "n": 73,
+        "observee": 0.945205,
+        "p_prevue": 0.747767
+       },
+       {
+        "decile": 8,
+        "ecart": 0.165857,
+        "n": 28,
+        "observee": 1.0,
+        "p_prevue": 0.834143,
+        "signal": "n < 30"
+       },
+       {
+        "decile": 9,
+        "ecart": 0.07875,
+        "n": 4,
+        "observee": 1.0,
+        "p_prevue": 0.92125,
+        "signal": "n < 30"
+       }
+      ],
+      "ecart_max": 0.412518,
+      "n": 5796
+     }
+    },
+    "toutes_les_cibles": {
+     "dates_insuffisantes": {
+      "moins_4_semaines": 1
+     },
+     "ecart_max_deciles_n20": 0.160062,
+     "par_date": {
+      "debut": {
+       "deciles": [
+        {
+         "decile": 0,
+         "ecart": 0.000768,
+         "n": 556,
+         "observee": 0.0,
+         "p_prevue": 0.000768
+        },
+        {
+         "decile": 1,
+         "ecart": 0.050333,
+         "n": 108,
+         "observee": 0.083333,
+         "p_prevue": 0.133667
+        },
+        {
+         "decile": 2,
+         "ecart": 0.2595,
+         "n": 2,
+         "observee": 0.5,
+         "p_prevue": 0.2405,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 3,
+         "ecart": 0.200857,
+         "n": 7,
+         "observee": 0.142857,
+         "p_prevue": 0.343714,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 4,
+         "ecart": 0.227333,
+         "n": 3,
+         "observee": 0.666667,
+         "p_prevue": 0.439333,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 5,
+         "ecart": 0.453,
+         "n": 2,
+         "observee": 1.0,
+         "p_prevue": 0.547,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 6,
+         "ecart": 0.619,
+         "n": 1,
+         "observee": 0.0,
+         "p_prevue": 0.619,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 7,
+         "ecart": 0.261,
+         "n": 2,
+         "observee": 0.5,
+         "p_prevue": 0.761,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 8,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 9,
+         "n": 0,
+         "signal": "vide"
+        }
+       ],
+       "deciles_mesurables": 2,
+       "ecart_max_deciles_n20": 0.050333,
+       "n": 681,
+       "p_moyenne": 0.03275,
+       "reussite_observee": 0.023495,
+       "variante_capacite_du_jour": {
+        "deciles": [
+         {
+          "decile": 0,
+          "ecart": 0.004628,
+          "n": 556,
+          "observee": 0.005396,
+          "p_prevue": 0.000768
+         },
+         {
+          "decile": 1,
+          "ecart": 0.477444,
+          "n": 108,
+          "observee": 0.611111,
+          "p_prevue": 0.133667
+         },
+         {
+          "decile": 2,
+          "ecart": 0.2595,
+          "n": 2,
+          "observee": 0.5,
+          "p_prevue": 0.2405,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 3,
+          "ecart": 0.227714,
+          "n": 7,
+          "observee": 0.571429,
+          "p_prevue": 0.343714,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 4,
+          "ecart": 0.560667,
+          "n": 3,
+          "observee": 1.0,
+          "p_prevue": 0.439333,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 5,
+          "ecart": 0.453,
+          "n": 2,
+          "observee": 1.0,
+          "p_prevue": 0.547,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 6,
+          "ecart": 0.381,
+          "n": 1,
+          "observee": 1.0,
+          "p_prevue": 0.619,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 7,
+          "ecart": 0.239,
+          "n": 2,
+          "observee": 1.0,
+          "p_prevue": 0.761,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 8,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 9,
+          "n": 0,
+          "signal": "vide"
+         }
+        ],
+        "ecart_max_deciles_n20": 0.477444,
+        "reussite_observee": 0.120411
+       }
+      },
+      "mi_saison": {
+       "deciles": [
+        {
+         "decile": 0,
+         "ecart": 0.00161,
+         "n": 600,
+         "observee": 0.0,
+         "p_prevue": 0.00161
+        },
+        {
+         "decile": 1,
+         "ecart": 0.008,
+         "n": 8,
+         "observee": 0.125,
+         "p_prevue": 0.133,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 2,
+         "ecart": 0.079333,
+         "n": 18,
+         "observee": 0.166667,
+         "p_prevue": 0.246,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 3,
+         "ecart": 0.160062,
+         "n": 32,
+         "observee": 0.1875,
+         "p_prevue": 0.347562
+        },
+        {
+         "decile": 4,
+         "ecart": 0.160714,
+         "n": 14,
+         "observee": 0.285714,
+         "p_prevue": 0.446429,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 5,
+         "ecart": 0.1552,
+         "n": 5,
+         "observee": 0.4,
+         "p_prevue": 0.5552,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 6,
+         "ecart": 0.6385,
+         "n": 2,
+         "observee": 0.0,
+         "p_prevue": 0.6385,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 7,
+         "ecart": 0.752,
+         "n": 2,
+         "observee": 0.0,
+         "p_prevue": 0.752,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 8,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 9,
+         "n": 0,
+         "signal": "vide"
+        }
+       ],
+       "deciles_mesurables": 2,
+       "ecart_max_deciles_n20": 0.160062,
+       "n": 681,
+       "p_moyenne": 0.043153,
+       "reussite_observee": 0.023495,
+       "variante_capacite_du_jour": {
+        "deciles": [
+         {
+          "decile": 0,
+          "ecart": 0.016723,
+          "n": 600,
+          "observee": 0.018333,
+          "p_prevue": 0.00161
+         },
+         {
+          "decile": 1,
+          "ecart": 0.492,
+          "n": 8,
+          "observee": 0.625,
+          "p_prevue": 0.133,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 2,
+          "ecart": 0.531778,
+          "n": 18,
+          "observee": 0.777778,
+          "p_prevue": 0.246,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 3,
+          "ecart": 0.621188,
+          "n": 32,
+          "observee": 0.96875,
+          "p_prevue": 0.347562
+         },
+         {
+          "decile": 4,
+          "ecart": 0.553571,
+          "n": 14,
+          "observee": 1.0,
+          "p_prevue": 0.446429,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 5,
+          "ecart": 0.2448,
+          "n": 5,
+          "observee": 0.8,
+          "p_prevue": 0.5552,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 6,
+          "ecart": 0.3615,
+          "n": 2,
+          "observee": 1.0,
+          "p_prevue": 0.6385,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 7,
+          "ecart": 0.252,
+          "n": 2,
+          "observee": 0.5,
+          "p_prevue": 0.752,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 8,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 9,
+          "n": 0,
+          "signal": "vide"
+         }
+        ],
+        "ecart_max_deciles_n20": 0.621188,
+        "reussite_observee": 0.120411
+       }
+      },
+      "moins_4_semaines": {
+       "deciles": [
+        {
+         "decile": 0,
+         "ecart": 0.001049,
+         "n": 533,
+         "observee": 0.001876,
+         "p_prevue": 0.002925
+        },
+        {
+         "decile": 1,
+         "ecart": 0.070846,
+         "n": 13,
+         "observee": 0.076923,
+         "p_prevue": 0.147769,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 2,
+         "ecart": 0.140529,
+         "n": 17,
+         "observee": 0.117647,
+         "p_prevue": 0.258176,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 3,
+         "ecart": 0.056643,
+         "n": 14,
+         "observee": 0.428571,
+         "p_prevue": 0.371929,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 4,
+         "ecart": 0.3379,
+         "n": 10,
+         "observee": 0.1,
+         "p_prevue": 0.4379,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 5,
+         "ecart": 0.04975,
+         "n": 4,
+         "observee": 0.5,
+         "p_prevue": 0.54975,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 6,
+         "ecart": 0.1595,
+         "n": 2,
+         "observee": 0.5,
+         "p_prevue": 0.6595,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 7,
+         "n": 0,
+         "signal": "vide"
+        },
+        {
+         "decile": 8,
+         "ecart": 0.806,
+         "n": 1,
+         "observee": 0.0,
+         "p_prevue": 0.806,
+         "signal": "n < 20"
+        },
+        {
+         "decile": 9,
+         "n": 0,
+         "signal": "vide"
+        }
+       ],
+       "deciles_mesurables": 1,
+       "ecart_max_deciles_n20": 0.001049,
+       "n": 594,
+       "p_moyenne": 0.036665,
+       "reussite_observee": 0.023569,
+       "variante_capacite_du_jour": {
+        "deciles": [
+         {
+          "decile": 0,
+          "ecart": 0.030846,
+          "n": 533,
+          "observee": 0.033771,
+          "p_prevue": 0.002925
+         },
+         {
+          "decile": 1,
+          "ecart": 0.775308,
+          "n": 13,
+          "observee": 0.923077,
+          "p_prevue": 0.147769,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 2,
+          "ecart": 0.741824,
+          "n": 17,
+          "observee": 1.0,
+          "p_prevue": 0.258176,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 3,
+          "ecart": 0.628071,
+          "n": 14,
+          "observee": 1.0,
+          "p_prevue": 0.371929,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 4,
+          "ecart": 0.4621,
+          "n": 10,
+          "observee": 0.9,
+          "p_prevue": 0.4379,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 5,
+          "ecart": 0.45025,
+          "n": 4,
+          "observee": 1.0,
+          "p_prevue": 0.54975,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 6,
+          "ecart": 0.1595,
+          "n": 2,
+          "observee": 0.5,
+          "p_prevue": 0.6595,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 7,
+          "n": 0,
+          "signal": "vide"
+         },
+         {
+          "decile": 8,
+          "ecart": 0.194,
+          "n": 1,
+          "observee": 1.0,
+          "p_prevue": 0.806,
+          "signal": "n < 20"
+         },
+         {
+          "decile": 9,
+          "n": 0,
+          "signal": "vide"
+         }
+        ],
+        "ecart_max_deciles_n20": 0.030846,
+        "reussite_observee": 0.127946
+       }
+      }
+     }
+    },
+    "unites_sans_prevision_a_la_date": {
+     "moins_4_semaines": 87
+    }
+   },
+   "mesure": 0.145027,
+   "methode": "Calibration PAR CIBLE (C13.10.2.c) : P(cible atteinte à l'échéance) prévue par la planification (`p_cibles` de la replanification, journal `previsions` de PlanificationBanc) au début, à mi-chemin et 4 semaines avant l'échéance, contre la réussite observée de la cible (meilleure barre réussie, ou valeur faite, au test du jour J >= cible) ; déciles de probabilité prévue, écart |prévu − observé| max sur les déciles d'au moins 30 cas ; mesurable avec au moins 2 déciles peuplés. P(toutes les cibles) est rapportée par date dans `detail.toutes_les_cibles` (trop rarement atteinte sur le banc pour peupler les déciles).",
+   "n": 5796,
+   "respecte": false,
+   "seuil": 0.05
+  },
+  "6_performance_jour_j": {
+   "detail": {
+    "par_mode": {
+     "hold": {
+      "ecart_apparie_moyen": null,
+      "ecart_apparie_se": null,
+      "koach": null,
+      "par_scenario": {},
+      "par_verite": {},
+      "saisons_appariees": 0,
+      "saisons_sans_test": {
+       "aucun_test": 0,
+       "koach_sans_test": 0,
+       "temoin_absent": 0,
+       "temoin_sans_test": 0
+      },
+      "temoin": null,
+      "tests": [
+       0,
+       0
+      ]
+     },
+     "loaded": {
+      "ecart_apparie_moyen": 0.019669,
+      "ecart_apparie_se": 0.00286,
+      "koach": 0.937385,
+      "par_scenario": {
+       "changement_discipline": {
+        "koach": 0.942805,
+        "n": [
+         234,
+         233
+        ],
+        "temoin": 0.913751
+       },
+       "deuxieme_echeance": {
+        "koach": 0.957597,
+        "n": [
+         288,
+         287
+        ],
+        "temoin": 0.931958
+       },
+       "douleur_coude": {
+        "koach": 0.899251,
+        "n": [
+         108,
+         94
+        ],
+        "temoin": 0.772107
+       },
+       "douleur_epaule": {
+        "koach": 0.899174,
+        "n": [
+         108,
+         102
+        ],
+        "temoin": 0.913185
+       },
+       "echeance_avancee": {
+        "koach": 0.940076,
+        "n": [
+         288,
+         286
+        ],
+        "temoin": 0.924201
+       },
+       "maladie": {
+        "koach": 0.937788,
+        "n": [
+         288,
+         286
+        ],
+        "temoin": 0.91292
+       },
+       "parc_seulement": {
+        "koach": 0.944076,
+        "n": [
+         288,
+         250
+        ],
+        "temoin": 0.929053
+       },
+       "reference": {
+        "koach": 0.944068,
+        "n": [
+         288,
+         286
+        ],
+        "temoin": 0.920322
+       },
+       "seances_manquees": {
+        "koach": 0.924389,
+        "n": [
+         276,
+         270
+        ],
+        "temoin": 0.925319
+       }
+      },
+      "par_verite": {
+       "a": {
+        "koach": 0.955179,
+        "n": [
+         722,
+         707
+        ],
+        "temoin": 0.932844
+       },
+       "b": {
+        "koach": 0.947692,
+        "n": [
+         722,
+         705
+        ],
+        "temoin": 0.906505
+       },
+       "c": {
+        "koach": 0.909283,
+        "n": [
+         722,
+         682
+        ],
+        "temoin": 0.906482
+       }
+      },
+      "saisons_appariees": 678,
+      "saisons_sans_test": {
+       "aucun_test": 546,
+       "koach_sans_test": 0,
+       "temoin_absent": 0,
+       "temoin_sans_test": 72
+      },
+      "temoin": 0.91539,
+      "tests": [
+       2166,
+       2094
+      ]
+     },
+     "reps": {
+      "ecart_apparie_moyen": 0.014702,
+      "ecart_apparie_se": 0.001351,
+      "koach": 0.973802,
+      "par_scenario": {
+       "changement_discipline": {
+        "koach": 0.971116,
+        "n": [
+         54,
+         54
+        ],
+        "temoin": 0.959863
+       },
+       "course_ajoutee": {
+        "koach": 0.935084,
+        "n": [
+         18,
+         18
+        ],
+        "temoin": 0.935111
+       },
+       "deuxieme_echeance": {
+        "koach": 0.988089,
+        "n": [
+         54,
+         54
+        ],
+        "temoin": 0.961535
+       },
+       "echeance_avancee": {
+        "koach": 0.977125,
+        "n": [
+         45,
+         45
+        ],
+        "temoin": 0.951226
+       },
+       "maladie": {
+        "koach": 0.971596,
+        "n": [
+         54,
+         54
+        ],
+        "temoin": 0.961472
+       },
+       "parc_seulement": {
+        "koach": 0.971116,
+        "n": [
+         54,
+         54
+        ],
+        "temoin": 0.959688
+       },
+       "reference": {
+        "koach": 0.971116,
+        "n": [
+         54,
+         54
+        ],
+        "temoin": 0.959863
+       },
+       "seances_manquees": {
+        "koach": 0.986036,
+        "n": [
+         27,
+         27
+        ],
+        "temoin": 0.954742
+       }
+      },
+      "par_verite": {
+       "a": {
+        "koach": 0.973385,
+        "n": [
+         120,
+         120
+        ],
+        "temoin": 0.958731
+       },
+       "b": {
+        "koach": 0.977662,
+        "n": [
+         120,
+         120
+        ],
+        "temoin": 0.958143
+       },
+       "c": {
+        "koach": 0.970361,
+        "n": [
+         120,
+         120
+        ],
+        "temoin": 0.956008
+       }
+      },
+      "saisons_appariees": 132,
+      "saisons_sans_test": {
+       "aucun_test": 0,
+       "koach_sans_test": 0,
+       "temoin_absent": 0,
+       "temoin_sans_test": 0
+      },
+      "temoin": 0.957628,
+      "tests": [
+       360,
+       360
+      ]
+     }
+    },
+    "temoin_toutes_graines": {
+     "moyenne": 0.913205,
+     "n": 5362
+    }
+   },
+   "mesure": 0.937385,
+   "methode": "Jour de l'échéance, mouvements chargés testés : meilleure charge totale réussie / maximum vrai du jour (`mesures.evenements`, ligne « echeance loaded best/max » d'essai2/temoin), moyenne sur les tests des saisons appariées (même profil, scénario, vérité et graine) où Koach et le témoin ont tous deux un test ; seuil = moyenne du témoin.",
+   "n": 678,
+   "respecte": true,
+   "seuil": 0.91539
+  },
+  "7_securite": {
+   "detail": {
+    "a_douleur": {
+     "aggravations": 0,
+     "poussees": 0
+    },
+    "b_validateur": {
+     "note": "`plan_module` = blocs de référence + plan de la planification (`Planification.blocs_modules`) ; `servi` = blocs de référence où chaque séance faite est remplacée par les items servis par Koach (séries prescrites, contrôle dual et allègement compris) ; `servi_tests_faits` = idem, tests ajoutés par Koach comptés pour leurs tentatives faites (le validateur compte chaque tentative prescrite d'une rampe de test comme une série dure)",
+     "plan_initial": {},
+     "vues": {
+      "plan_module": {
+       "aggrave": {},
+       "deja_initial": {},
+       "exemples": [],
+       "introduit": {},
+       "retour_ecrit": {},
+       "saisons_touchees": 0
+      },
+      "servi": {
+       "aggrave": {},
+       "deja_initial": {},
+       "exemples": [
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 18.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 21.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 29.0
+          }
+         ],
+         "saison": [
+          "autres_01_debutant_musculation",
+          "reference",
+          "a",
+          0
+         ]
+        },
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 2,
+           "valeur": 18.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 2,
+           "valeur": 18.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 2,
+           "valeur": 21.0
+          }
+         ],
+         "saison": [
+          "autres_01_debutant_musculation",
+          "reference",
+          "a",
+          1
+         ]
+        },
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 21.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 29.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 15,
+           "valeur": 12.5
+          }
+         ],
+         "saison": [
+          "autres_01_debutant_musculation",
+          "reference",
+          "a",
+          2
+         ]
+        },
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 17.5
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 19.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 28.0
+          }
+         ],
+         "saison": [
+          "autres_01_debutant_musculation",
+          "reference",
+          "a",
+          3
+         ]
+        },
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 18.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 21.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 29.0
+          }
+         ],
+         "saison": [
+          "autres_01_debutant_musculation",
+          "reference",
+          "a",
+          4
+         ]
+        },
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 17.5
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 21.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 29.0
+          }
+         ],
+         "saison": [
+          "autres_01_debutant_musculation",
+          "reference",
+          "a",
+          5
+         ]
+        },
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 18.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 21.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 1,
+           "valeur": 29.0
+          }
+         ],
+         "saison": [
+          "autres_01_debutant_musculation",
+          "reference",
+          "b",
+          0
+         ]
+        },
+        {
+         "constats": [
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 2,
+           "valeur": 18.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 2,
+           "valeur": 18.0
+          },
+          {
+           "categorie": "introduit",
+           "code": "plafond_volume",
+           "exercice": null,
+           "jour": null,
+           "limite": 12.0,
+           "semaine": 2,
+           "valeur": 21.0
+          }
+         ],
+         "saison": [
+          "autres_01_debutant_musculation",
+          "reference",
+          "b",
+          1
+         ]
+        }
+       ],
+       "introduit": {
+        "decharge_absente": 3,
+        "plafond_volume": 12272,
+        "seance_trop_longue": 530,
+        "tendon_figures": 90,
+        "volume_trop_vite": 62729
+       },
+       "retour_ecrit": {},
+       "saisons_touchees": 3330
+      },
+      "servi_tests_faits": {
+       "aggrave": {},
+       "deja_initial": {},
+       "dont_dus_aux_manquees": {
+        "decharge_absente": 3,
+        "tendon_figures": 90,
+        "volume_trop_vite": 2109
+       },
+       "exemples": [],
+       "introduit": {},
+       "retour_ecrit": {
+        "decharge_absente": 3,
+        "tendon_figures": 90,
+        "volume_trop_vite": 2143
+       },
+       "saisons_touchees": 0
+      }
+     }
+    },
+    "c_hausses_trop_fortes": 0,
+    "temoin_apparie": {
+     "aggravations": 0,
+     "codes": {
+      "plafond_volume": 1,
+      "volume_trop_vite": 72
+     },
+     "poussees": 110,
+     "saisons": 5436,
+     "violations": 73
+    },
+    "temoin_hausses_trop_fortes": 24600,
+    "temoin_toutes_graines": {
+     "aggravations": 0,
+     "codes": {
+      "plafond_volume": 1,
+      "tendon_figures": 1,
+      "volume_trop_vite": 146
+     },
+     "poussees": 257,
+     "saisons": 14496,
+     "violations": 148
+    }
+   },
+   "mesure": 0,
+   "mesure_avec_rampes_de_test": 75624,
+   "methode": "Somme (a) des aggravations et poussées de douleur de l'athlète simulé, (b) des constats du validateur `securite_banc` introduits ou aggravés par Koach par rapport au plan initial de kalis_plan (sur `blocs_modules` de la planification et sur les séances servies telles que prescrites, tests ajoutés par Koach comptés pour leurs tentatives faites), (c) des hausses de charge > 10 % sur plusieurs crans (`mesures.effort`). La vue `servi` (rampes de test comprises) est rapportée à part : `mesure_avec_rampes_de_test`.",
+   "n": 5436,
+   "respecte": true,
+   "seuil": 0
+  },
+  "8_temps_calcul": {
+   "detail": {
+    "observe_serie_ms": {
+     "max": 3.664625,
+     "mediane": 1.004078,
+     "moyenne": 0.911438,
+     "n": 1221,
+     "p95": 1.577629
+    },
+    "plan_seance_ms": {
+     "max": 1.408308,
+     "mediane": 0.685346,
+     "moyenne": 0.699239,
+     "n": 79,
+     "p95": 1.062005
+    },
+    "plan_serie_ms": {
+     "max": 3.118161,
+     "mediane": 0.15348,
+     "moyenne": 0.172958,
+     "n": 1264,
+     "p95": 0.402472
+    },
+    "replanification": {
+     "plans_evalues": [
+      267
+     ],
+     "plans_max": 256,
+     "trajectoires": 1000,
+     "validateur": true
+    },
+    "replanification_s": {
+     "max": 0.541118,
+     "mediane": 0.398586,
+     "moyenne": 0.403447,
+     "n": 16,
+     "p95": 0.541118
+    },
+    "saison": {
+     "graine": 0,
+     "profil": "street_07_avance_streetlifting_competition",
+     "scenario": "reference",
+     "semaines": 16,
+     "verite": "a"
+    },
+    "source": "donnees/criteres_moteur.json (lu, non remesuré)"
+   },
+   "mesure": {
+    "observe_serie_ms_max": 3.664625,
+    "replanification_s_max": 0.541118
+   },
+   "methode": "`criteres_moteur.mesurer_temps` : `observe` série et `plan` sur une saison complète, puis chaque replanification (validateur compris) ; indicatif (Python, cette machine).",
+   "n": 1221,
+   "respecte": true,
+   "seuil": {
+    "replanification_s": 10.0,
+    "serie_ms": 50.0
+   }
+  },
+  "9_rappels": {
+   "detail": {
+    "pire_cas_adversarial": {
+     "critere": {
+      "libelle": "pire cas de Koach >= pire cas du témoin (performance le jour J, moyenne par adversaire)",
+      "pire_koach": 0.798913,
+      "pire_temoin": 0.0,
+      "respecte": true,
+      "saisons_temoin_manquantes": 0
+     },
+     "fichier": "donnees/comparaison_adversaires.json",
+     "pires": {
+      "e1rm6": {
+       "koach": {
+        "moyenne": 0.086556,
+        "n": 32,
+        "pire": 0.194152
+       },
+       "temoin": {
+        "moyenne": 0.119649,
+        "n": 32,
+        "pire": 0.353069
+       }
+      },
+      "n": 32,
+      "perf_a": {
+       "koach": {
+        "moyenne": 0.87224,
+        "n": 18,
+        "pire": 0.798913
+       },
+       "temoin": {
+        "moyenne": 0.603271,
+        "n": 18,
+        "pire": 0.0
+       }
+      },
+      "perf_a_par_saison": {
+       "koach": {
+        "moyenne": 0.833319,
+        "n": 18,
+        "pire": 0.730866
+       },
+       "temoin": {
+        "moyenne": 0.541558,
+        "n": 18,
+        "pire": 0.0
+       }
+      },
+      "securite": {
+       "koach": {
+        "aggravations": 0,
+        "plantages": 0,
+        "poussees": 0,
+        "violations_indicatives": 170
+       },
+       "temoin": {
+        "aggravations": 0,
+        "poussees": 10,
+        "violations": 16
+       }
+      }
+     }
+    },
+    "rejeu_journal": {
+     "fichier": "donnees/rejeu_journal_agregats.json",
+     "objectif_brique_8": {
+      "couverture_dans_88_92_pct": false,
+      "erreur_moyenne_sous_3_pct": false
+     },
+     "rejeu": {
+      "causes": {
+       "A_exercice_sans_serie_retenue_aucune_serie_notee_dure": 6
+      },
+      "exercices_suivis_par_le_moteur": 42,
+      "seances_avant_evaluation": 24,
+      "seances_evaluees": 11,
+      "seances_rejouees": 35
+     },
+     "series_fiables": {
+      "biais_signe_median": -0.0561,
+      "biais_signe_moyen": -0.0483,
+      "couverture_90": 1.0,
+      "demi_largeur_mediane_pct": 15.67,
+      "erreur_mediane": 0.0677,
+      "erreur_moyenne": 0.0666,
+      "n": 10,
+      "sd_jour_median": 0.0868
+     },
+     "tests_reels": {
+      "biais_signe_median": -0.0314,
+      "biais_signe_moyen": 0.0089,
+      "couverture_90": 1.0,
+      "erreur_mediane": 0.0615,
+      "erreur_moyenne": 0.0802,
+      "n": 4
+     },
+     "une_seance_d_avance": {
+      "biais_signe_median": -0.0019,
+      "biais_signe_moyen": -0.0027,
+      "couverture_90": 0.974,
+      "demi_largeur_mediane_pct": 15.75,
+      "erreur_mediane": 0.0225,
+      "erreur_moyenne": 0.0427,
+      "n": 38,
+      "sd_jour_median": 0.0873
+     }
+    }
+   },
+   "methode": "lecture seule des fichiers existants, sans recalcul",
+   "rapporte_seulement": [
+    "rejeu_journal"
+   ],
+   "respecte": {
+    "pire_cas_adversarial": true
+   }
+  }
+ },
+ "empreinte_sources": "6481b61598d5d616fa1890d57baa3bdeba83f8b6ddf0ee7477c8fbb6264fe3d7",
+ "saisons": {
+  "mesurees": 5436,
+  "plantages": [],
+  "plantees": 0,
+  "prevues": 5436,
+  "temoin_triplets": 906
+ },
+ "schema": "kalis_adapt/criteres_km1/1",
+ "secondaires": {
+  "alertes_rupture_par_100_seances": {
+   "alertes": 10254,
+   "koach": 2.72368,
+   "seances": 376476
+  },
+  "ecart_effort": {
+   "koach": 3.561107,
+   "temoin": 1.525714
+  },
+  "echecs": {
+   "koach": 0.006885,
+   "temoin": 0.007332
+  },
+  "gain_moyen_hebdo": {
+   "koach": 0.002118,
+   "temoin": 0.001929
+  },
+  "mae_rang_6": {
+   "hold": {
+    "koach": {
+     "biais": 0.049454,
+     "couverture": 0.945674,
+     "mae": 0.171229,
+     "n": 9756,
+     "rmse": 0.215791,
+     "sd": 0.269387,
+     "sous3": 0.090713
+    },
+    "temoin": {
+     "biais": -0.239773,
+     "couverture": 0.596155,
+     "mae": 0.277248,
+     "n": 18257,
+     "rmse": 0.349038,
+     "sous3": 0.080462
+    }
+   },
+   "reps": {
+    "koach": {
+     "biais": 0.00825,
+     "couverture": 0.924984,
+     "mae": 0.094728,
+     "n": 35699,
+     "rmse": 0.13551,
+     "sd": 0.152052,
+     "sous3": 0.25813
+    },
+    "temoin": {
+     "biais": -0.172476,
+     "couverture": 0.542253,
+     "mae": 0.21169,
+     "n": 100951,
+     "rmse": 0.30476,
+     "sous3": 0.179473
+    }
+   }
+  },
+  "seances_faites_sur_prevues": 0.908377,
+  "tentatives_reussies": {
+   "koach": 0.964243
+  }
+ }
+}

@@ -1,0 +1,142 @@
+{
+ "schemaVersion": 1,
+ "key": "autres_06_semi_marathon_intermediaire",
+ "group": "autres",
+ "title": "Semi-marathon, intermédiaire",
+ "summary": "Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par semaine. Semi-marathon dans 12 semaines, objectif 1 h 45. Quatre séances.",
+ "level": "intermediate",
+ "trainingAgeMonths": 48,
+ "core": {
+  "sex": "male",
+  "birthYear": 1988,
+  "heightCm": 178,
+  "bodyWeightKg": 72.0,
+  "disciplines": {
+   "primary": "cardio",
+   "primaryPct": 80,
+   "secondaries": [
+    {
+     "discipline": "musculation",
+     "pct": 10
+    },
+    {
+     "discipline": "mobility",
+     "pct": 10
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 2,
+    "minutes": 60
+   },
+   {
+    "weekday": 4,
+    "minutes": 60
+   },
+   {
+    "weekday": 6,
+    "minutes": 45
+   },
+   {
+    "weekday": 7,
+    "minutes": 120
+   }
+  ],
+  "places": [
+   "exterieur"
+  ],
+  "equipment": [
+   "piste ou terrain extérieur",
+   "côte ou escaliers",
+   "tapis",
+   "élastique"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "ca-footing-endurance-fondamentale",
+   "measure": "time_seconds",
+   "value": 2880,
+   "distanceMeters": 10000
+  }
+ ],
+ "events": [
+  {
+   "id": "e1",
+   "kind": "competition",
+   "label": "semi-marathon",
+   "weeksOut": 12,
+   "priority": "A",
+   "format": "course",
+   "targets": [
+    {
+     "exerciseId": "ca-sortie-longue",
+     "metric": "time_seconds",
+     "targetValue": 6300,
+     "distanceMeters": 21097.5
+    }
+   ]
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Volume de pointe de 35 à 55 km par semaine, sortie longue de 18 à 22 km, quatre à cinq séances (R6-P19).",
+   "80 % en endurance facile, une à deux séances de qualité (seuil, intervalles de 3 à 4 minutes), jamais deux jours intenses de suite (R6-P15, R6-P18).",
+   "Hausse hebdomadaire de 10 à 20 %, jamais 30 % ; semaine allégée toutes les 3 à 4 semaines (R6-P16).",
+   "Affûtage de 10 à 14 jours, volume réduit de 40 à 60 %, rappels d'allure conservés (R6-P20).",
+   "Un à deux renforcements par semaine, coupés 7 à 10 jours avant (R6-P22)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "min_weekly_minutes",
+    "label": "Au moins 180 minutes de course par semaine",
+    "kind": "cardio",
+    "minutes": 180
+   },
+   {
+    "id": "c2",
+    "type": "pattern_present",
+    "label": "Une séance de qualité (fractionné) par semaine",
+    "patterns": [
+     "cardio_fractionne"
+    ],
+    "perWeek": 1
+   },
+   {
+    "id": "c3",
+    "type": "min_frequency",
+    "label": "Sortie longue chaque semaine",
+    "exerciseIds": [
+     "ca-sortie-longue"
+    ],
+    "exact": true,
+    "perWeek": 1
+   },
+   {
+    "id": "c4",
+    "type": "relief_every",
+    "label": "Pas plus de 4 semaines de charge sans allègement",
+    "weeks": 4
+   },
+   {
+    "id": "c5",
+    "type": "weeks_kind_present",
+    "label": "Une semaine allégée ou de test avant la course",
+    "kind": "test",
+    "min": 1
+   }
+  ]
+ }
+}

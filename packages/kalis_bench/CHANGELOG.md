@@ -1,0 +1,279 @@
+# Journal
+
+## 0.5.4 — 17/10/2026 (lot KS1c2)
+
+Mesure du critère « aucun jour sans son principal » du lot KS1c2 (`pipeline/cp/prompts/KS1c2.txt`), pour `kalis_plan`
+0.4.2 ; sur 0.5.3 (lot KR1). Critères, profils, attentes et
+grilles d'avant inchangés.
+
+- **Critère** (`lib/src/principal_criteria.dart`) : écarts d'un jour typé (`schéma <s>`, `corps entier`, `figure`,
+  `principal`), grille des profils incomplets (`principalGrid` : 6 états de repères × 3 questionnaires × 4 niveaux par
+  base), `PrincipalMeasure` (écarts de schéma, jours d'un gabarit typé sans principal, jours figés sans principal
+  comptés à part, violations de sécurité des programmes créés).
+- **Profil** `profiles_ks1c2/ks1a_street_5050.json` : équivalent au banc du profil du constat de KS1A (hors des
+  campagnes de saisons).
+- **Rapport de structure** (`runStructureBench`, `structureReport`) : lignes KS1c2 sur les 34 profils et sur la grille
+  (tout l'horizon), liste des écarts, objet `principal` de `structure.json`.
+- **Test** `test/ks1c2_test.dart`.
+- `test/km2_banc_test.dart` (lot KR1) : la saison vivante est comparée aux saisons de référence de Koach (écrites par
+  `kalis_plan` 0.4.1) la version du moteur (`engineVersion`) ramenée à 0.4.1 ; tout le reste à l'égalité stricte
+  (identique sur les sept fixtures avec `kalis_plan` 0.4.2).
+
+## 0.5.3 — 16/10/2026 (lot KR1)
+
+Couple `kalis_plan` 0.4.1 × Koach 1.0.4 (`kalis_adapt` 1.0.3) mesuré tel qu'il sera servi
+(`pipeline/cp/prompts/KR1.txt`, DECISIONS_CP.md C17.17.3) ; sur 0.5.2 (lot KS1c1). Critères, profils, attentes et
+grilles inchangés.
+
+- **Koach sur les 34 profils** : les exports de la référence (`bin/km1.dart`), la campagne (`bin/km2.dart`) et le
+  banc adversarial lisent les profils du banc et ceux du lot KS1 (`readSeasonJsonAll`, `seasonProfileDirs`).
+- **Données de référence de Koach régénérées** sur `kalis_plan` 0.4.1 (`kalis_adapt/reference/donnees/reference/`,
+  `temoin/`) : la saison vivante (`kmReferenceSeason`) leur est identique ; `test/km2_banc_test.dart` le vérifie à
+  l'égalité stricte (avant : squelette et calendrier seulement) ; fixture `ks_test_ppl6`, séances manquées
+  (`test/fixtures/km2/`). `--saisons-figees` relit les saisons figées sur 0.3.1 (`docs/data/kr1/saisons_figees_0_3_1/`, sortis de `kalis_adapt` que l'application copie).
+- **Sécurité de la saison réalisée** (`kmSecuriteSaison`, `kmViderManquees`) : vues `realise` (séances faites
+  telles que servies, tests comptés pour leurs tentatives faites, séances manquées vidées ; constats classés contre
+  le plan initial) et `realise_apparie` (même saison classée contre le plan écrit aux mêmes séances manquées
+  vidées : ce que Koach a servi au-delà du plan). Publiées par saison dans les parts de campagne et lues par
+  `tool/kr1_securite.py` ; le critère 7 (`kmCritereSecurite`) est inchangé et ne les agrège pas. Parité Python
+  (`campagne.securite_saison`) vérifiée par `test/km2_banc_test.dart` sur les sept saisons du banc (clé `securite`
+  des fixtures).
+- **Retour à l'écrit après un bloc interrompu** (`kmRetirerRetoursALEcrit`, `campagne.retirer_retours_a_l_ecrit`) : l'indice
+  de semaine de la saison suit les semaines SERVIES (bloc interrompu tronqué par `blockWeeks`) ; avant, 9 hausses de
+  volume « retour à l'écrit » sur 90 600 saisons restaient classées « introduites » (critère 7). Fixture du banc
+  `autres_08`, changement de discipline, graine 87 ; test Python `test_retour_a_l_ecrit_apres_un_bloc_interrompu`.
+- **Outils** : `tool/kr1_securite.py` (violations par type, profil, scénario et modèle de vérité sur les parts de
+  campagne, cent graines ; extraction saison par saison pour le critère 5) ; `tool/kr1_comparer.py` (parité saison
+  par saison Dart / Python d'une campagne).
+
+## 0.5.2 — 16/10/2026 (lot KS1c1)
+
+Mesure du critère « 0 violation » du lot KS1c1 sur les 34 profils (`pipeline/cp/prompts/KS1c1.txt`), pour `kalis_plan` 0.4.1 ; sur 0.5.1 (lot KM2c2, `kalis_adapt` 1.0.2).
+Critères, profils, attentes et grilles inchangés.
+
+- **Saisons croisées** (`runSeasonCampaign`, `saisons.json`, `SAISONS.md`) : les sept profils ajoutés par KS1
+  (`profiles_ks/`) sont suivis comme les 27 du banc (toutes les graines, trois modèles de vérité, tous les
+  scénarios) ; `seasonProfileDirs`.
+- **Test** `test/ks1c1_test.dart` : saisons réalisées (vérité B, graine 0) des cas relevés par KS1 — échéance
+  avancée de `ks_01` à `ks_03` et changement de discipline de `street_12` sans violation ; les violations de
+  volume qui restent sur le profil de test sous douleur à l'épaule suivent toutes une proposition « volume »
+  appliquée par le moteur d'évolution dans le même bloc (cause hors de `kalis_plan`, `LIVRAISON_KS1c1.md`).
+## 0.5.1 — 16/10/2026 (lot KM2c2)
+
+Banc de Koach 1.0.3 (`kalis_adapt` 1.0.2). Aucun changement des critères de sécurité, des profils, des grilles ni des
+attentes de coach.
+
+- **Saisons figées** (`KmBanc.saisonsFigees`, option `--saisons-figees <dossier>` de `bin/km2.dart` et
+  `bin/km2_adversaire.dart`) : la campagne et le banc adversarial peuvent lire les saisons que lit la référence Python
+  (`kalis_adapt/reference/donnees/reference/`, figées sur `kalis_plan` 0.3.1 ; un scénario `blocksAs` reprend les
+  blocs de la saison de base, comme `donnees.saisons_reference`) au lieu de `kmReferenceSeason` sur le `kalis_plan`
+  courant. Depuis `kalis_plan` 0.4.0 (KS1) la saison vivante n'est plus celle de Python (charges du § 8 du cahier
+  KS : 12 adversaires de `autres_03_powerlifter_competition` et les prévisions de la planification divergent) ; la
+  parité Dart = Python se mesure sur les saisons figées, témoin relu (`--temoin`). Sans l'option, rien ne change.
+  Test : `km2_banc_test.dart` (saisons figées = saisons de la référence, tous les scénarios de `street_07`).
+- Fixtures `test/fixtures/km2/` régénérées par `fixtures/generer_banc_km2.py` (référence 1.0.3 : `posterior` avec
+  `fiabilite`) ; évaluation de référence de `adv-7ee0da71` (1.0.3) mise à jour.
+- Mesures de KM2c2 : `docs/CRITERES_KM2C2.md`, données `docs/data/km2c2/`.
+
+## 0.5.0 — 15/10/2026 (lot KS1)
+
+Banc de la structure de la semaine (`pipeline/cp/CAHIER_KS.md` § 9) pour `kalis_plan` 0.4.0 × `kalis_core` 0.4.4, sur 0.4.2
+(lot KM2c1, `kalis_adapt` 1.0.1).
+Critères de sécurité, profils types (`profiles/`, 27), attentes de coach et grilles du panel inchangés.
+
+- **Profils ajoutés** (`profiles_ks/`, 7) : streetlifting 50 / sets & reps 50 à 4, 5 et 6 séances ; sets & reps
+  principal avec streetlifting secondaire ; force + hypertrophie ; calisthénie avec 30 % de sets & reps ; profil de
+  test `ks_test_ppl6` (§ 7.1, valeurs dans la livraison KS1). Lecture : « prise » et « fin de série » deviennent
+  des points faibles du profil.
+- **Critères de structure** (`lib/src/structure_criteria.dart`) : couverture des objectifs par semaine de charge,
+  récupération (composante du score et recalcul du banc par schéma chargé), temps par séance (± 15 %), séances sans
+  principal, ordre par exigence (§ 11.2) dans la séance et dans la rotation, contrôle d'identité des squelettes
+  mono-discipline contre 0.3.1 (`docs/data/ks1/`), contrôles du profil de test (§ 7) ; rapport `STRUCTURE.md` et
+  `structure.json` (rapport du banc, `runStructureBench`), programmes et saisons des profils ajoutés.
+- `generateProgram` accepte un horizon (`horizonWeeks`, 40 semaines pour le profil de test).
+- **Parité de Koach** (`test/km2_banc_test.dart`) : Koach rejoue la saison figée que lit la référence Python
+  (données de référence sur `kalis_plan` 0.3.1) ; la saison vivante de `kmReferenceSeason` doit en garder le squelette
+  et le calendrier (hors changement de discipline). Régénérer ces données sur `kalis_plan` 0.4.0 revient au pipeline
+  Koach.
+- Export des programmes : en-tête de séance au type du jour quand le moteur le donne (« tirage, endurance de
+  force »).
+## 0.4.2 — 15/10/2026 (lot KM2c1)
+
+Banc de Koach 1.0.2 (`kalis_adapt` 1.0.1). Aucun changement des critères de sécurité, des profils, des grilles ni des
+attentes de coach.
+
+- **Critère 7 bis** (adversaires appariés, C13.12) porté de la référence (`critere_apparie`) : `kmCritereApparie`,
+  clé `critere_7_bis` de `kmComparerAdversaires` (variante `temoin_avec_barre`, `hors_critere`) ; test contre la
+  sortie Python sur les mêmes lignes.
+- Les tests `km2_*` et les outils `bin/km2.dart`, `bin/km2_adversaire.dart` relisent le fichier vivant
+  `kalis_adapt/reference/params/koach_params_v1.json` (`1.0.2-ref.1`) ; fixtures `test/fixtures/km2/` régénérées
+  par `fixtures/generer_banc_km2.py` (référence 1.0.2, prévisions avec `prevu_jour`) ; évaluation de référence de
+  `adv-7ee0da71` mise à jour.
+
+## 0.4.1 — 11/10/2026 (lot KM1c2)
+
+Aucun changement de code du banc, des critères, des profils ni des grilles. La référence Python de Koach passe en
+1.0.2 (`kalis_adapt/reference/`, KM1 correction 2) alors que le moteur Dart reste `kalis_adapt` 1.0.0 (référence
+1.0.1) jusqu'au lot KM2c1 :
+
+- les tests `km2_banc_test.dart`, `km2_validateur_test.dart`, `km2_adversaire_test.dart` et les outils `bin/km2.dart`,
+  `bin/km2_adversaire.dart` lisent la copie figée des paramètres 1.0.1
+  (`kalis_adapt/reference/params/koach_params_d1.json`, à l'octet près l'asset `koach_params_1_0_1.json`) au lieu du
+  fichier vivant `koach_params_v1.json` (désormais `1.0.2-ref.1`) ;
+- le critère 7 bis (adversaires appariés, C13.12) est mesuré par la référence Python (`banc/adversaire.py`,
+  `critere_apparie`) avec le témoin exporté par `bin/km1.dart` ; son portage dans `lib/src/km/adversaire.dart` est
+  laissé au lot KM2c1 (`reference/PORTAGE_DART.md`).
+
+## 0.4.0 — 11/10/2026 (lot KM2)
+
+Banc Dart de Koach 1.0 (`kalis_adapt` 1.0.0). Ajouts seulement : couple `kalis_plan` 0.3.1 × `kalis_adapt` 0.3.1
+inchangé, **aucun changement des critères de sécurité, des profils types, des attentes de coach ni des grilles du
+panel** ; le rapport du banc (`bin/kalis_bench_cli.dart`) ne change que sa ligne de version.
+
+- **Meneur de saison et politique Koach** (`lib/src/km/meneur.dart`, `politique_koach.dart`) : portages de
+  `reference/banc/meneur.py`, `politique_koach.py`, `extensions_koach.py`, `planification_banc.py` ; Koach complet
+  (planification, surveillance, contrôle dual, adhérence) conduit par sa façade (crochets intégrés, référence au
+  journal). Parité avec la référence Python sur 5 saisons complètes (`test/km2_banc_test.dart`, fixtures de
+  `reference/fixtures/generer_banc_km2.py`).
+- **Campagne des critères du cahier KM** (`lib/src/km/campagne.dart`, `criteres_moteur.dart`, `bin/km2.dart`) :
+  portage de `campagne.py`, `criteres_moteur.py`, `mesures.py` ; Koach contre le témoin `kalis_adapt` 0.3.1 sur la
+  matrice du banc, critère 5 mesuré selon C13.11.2, temps sur la VM Dart, parts exécutables séparément en CI
+  (`--partie i/n`, `assembler`).
+- **Banc adversarial** (`lib/src/km/adversaire.dart`, `bin/km2_adversaire.dart`, `bin/km2.dart adversaires`) :
+  portage de `adversaire.py` (rejeu des adversaires de KM1, nouvelle recherche contre le moteur Dart, témoin dans
+  la même campagne).
+- Tests : `km2_banc_test.dart`, `km2_campagne_test.dart`, `km2_adversaire_test.dart`, `km2_validateur_test.dart`
+  (validateur de `kalis_adapt` identique à `safetyFindings`).
+
+## 0.3.1 — 09/10/2026 (lot KM1)
+
+Ajouts additifs pour la référence Python de `kalis_adapt` 1.0 (méthode Koach). Couple `kalis_plan` 0.3.1 ×
+`kalis_adapt` 0.3.1 inchangé ; **aucun changement des critères, des profils types, des attentes de coach ni des
+grilles du panel** ; le rapport du banc (`bin/kalis_bench_cli.dart`, `bin/run.dart`) n'importe aucun de ces ajouts :
+seule sa ligne de version change.
+
+- **Exports KM1** (`lib/src/km/km_export.dart`, `dart run bin/km1.dart --sortie <dossier>`) : fiches du catalogue
+  vues par le modèle de vérité (complétées de ce que lisent les critères de sécurité), tirages de départ des
+  athlètes simulés, saisons de référence de `kalis_plan` (blocs, calendrier, échéances), traces des modèles de
+  vérité de force et d'endurance, mesures du témoin `kalis_adapt` 0.3.1 par saison.
+- **Outils** (`bin/km_common.dart`, dossier d'entrée `km1_entree/`) : constats de sécurité de blocs écrits
+  ailleurs (`securite/*.json.gz` → `securite_dart.json.gz`, `kmSafetyOfBlocks`, même lecture que
+  `safetyFindings`) et saisons du témoin sur des athlètes adversariaux (`adversaires.json` →
+  `adversaires_temoin.json.gz`, `kmAdversaryRun` : fiche d'athlète recouverte, multiplicateurs de vérité à la
+  création de chaque exercice).
+- Test `test/km_export_test.dart` : saison de référence déterministe et complète, sécurité de blocs identique à
+  `safetyFindings` sur la même vue, athlète adversarial déterministe dont la fiche recouverte agit.
+
+## 0.3.0 — 09/10/2026 (lot CY)
+
+Couple `kalis_plan` 0.3.1 × `kalis_adapt` 0.3.1. Grilles, profils types et critères inchangés.
+
+- **Saisons croisées pour tous les profils du banc** (street et autres disciplines) : exports `saisons/`,
+  campagne `saisons.json` / `SAISONS.md`, `saisons/SECURITE.md`.
+- **Deux scénarios imposés de plus** : `changement_discipline` (la première discipline secondaire devient la
+  principale à mi-saison, profils qui en ont une) et `course_ajoutee` (10 km annoncé en semaine 5, couru en
+  semaine 10, profil street hybride) ; un scénario sans objet pour un profil n'est pas simulé.
+
+## 0.2.4 — 09/10/2026 (lot CP2, partie 1)
+
+Couple `kalis_plan` 0.3.0 × `kalis_adapt` 0.3.0. Profils types, attentes de coach et grilles du panel
+**inchangés**.
+
+- Adaptateur : un point faible d'un groupe musculaire (sans mouvement prioritaire) devient la spécialisation
+  « muscle » du profil, nommée dans le vocabulaire `muscles` du catalogue (le premier seulement : le contrat
+  n'en porte qu'une).
+- Critère `seance_trop_longue` : le jour de l'épreuve (test de l'échéance, note `event_day`) n'est plus compté —
+  sa durée est celle de l'épreuve choisie par l'athlète (un 10 km de débutante dans un créneau d'une heure), même
+  règle que la relecture de `kalis_plan` qui exempte les emplacements imposés.
+
+## 0.2.3 — 08/10/2026 (lot CA2, partie 1)
+
+Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.3.0. Profils types, attentes de coach, critères de sécurité et grilles
+du panel **inchangés**.
+
+- Trajectoires : partie « Endurance et conditionnement, séance par séance » (écrit, servi, fait, raison ; blessures
+  de surcharge simulées, plus forte course rapportée à la plus longue des 30 jours, minutes de course par semaine).
+
+## 0.2.2 — 05/10/2026 (lot CA2, partie 0)
+
+Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.2.3. Profils types, attentes de coach, critères de sécurité et
+grilles du panel **inchangés**.
+
+- Banc des saisons : la colonne « Douleur » donne les hausses sur une zone douloureuse (au-dessus de 3/10)
+  et, après la barre oblique, les poussées d'une zone restée réactive après un épisode de douleur (modèles
+  de vérité B et C de `kalis_adapt` 0.2.3) ; champ `painFlares` de `saisons.json`.
+
+## 0.2.1 — 05/10/2026 (lot CX correction 1)
+
+Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.2.2. Profils types, attentes de coach, critères de sécurité et
+grilles du panel **inchangés**.
+
+- Export des saisons : notes d'arrêt et de reprise après une douleur qui dure listées sous chaque bloc ;
+  montées d'échauffement écrites à chaque exercice ; texte de `adapt.pain_persistent` (consulter, reprise
+  après deux semaines à 2/10) ; texte du pourcentage complété du 1RM de référence (« ; 1RM de référence
+  X kg »).
+
+## 0.2.0 — 04/10/2026 (lot CX)
+
+Saisons street complètes, couple `kalis_plan` 0.2.1 × `kalis_adapt` 0.2.1. Profils types, attentes de coach et
+grilles du panel **inchangés** ; un seul critère de sécurité précisé (ci-dessous).
+
+- **Critère `tendon_figures` précisé** : la tenue menton au-dessus de la barre (bras fléchis) n'entre plus dans
+  le budget des tenues bras tendus — le catalogue la range avec les figures statiques de tirage, mais elle ne
+  charge pas le coude en extension (R4-F10 vise les leviers bras tendus). Effet : les débutants dont le test
+  du chemin vers la traction est cette tenue ne sont plus signalés ; aucun seuil ne change.
+
+- **Mode saisons** (`lib/src/season.dart`, `lib/src/season_export.dart`) : chaque profil street sur toute
+  sa saison (16 semaines au moins, jusqu'à l'échéance et une semaine après), sous les trois modèles de
+  vérité et plusieurs graines ; scénarios imposés (séances manquées, semaine de maladie, douleur au coude ou
+  à l'épaule, parc seulement, échéance avancée de deux semaines, deuxième échéance) ; mesures : progression,
+  jour de l'échéance rapporté au maximum atteignable, tentatives, échecs non voulus, écart entre programme
+  écrit et séances servies, exercices prioritaires retirés sans raison, violations de sécurité de la saison
+  réalisée, stabilité entre graines, comparaison aux moteurs 0.1. Sorties : `saisons.json`, `SAISONS.md`,
+  `saisons/` (export de chaque saison, scénarios, sécurité).
+- `simulateTrajectory` prend un athlète simulé (`spec`) et des changements de profil (`changes`).
+- `tool/relecture/build_manche_saisons.py` : manche « saisons » de la page de relecture.
+
+## 0.1.2 — 04/10/2026 (lot CA1)
+
+Ajouts pour les trajectoires de `kalis_adapt` 0.2.0 (mode coach). Profils types, attentes de coach, critères de sécurité et grilles du panel **inchangés**.
+
+- **Trajectoires** (`lib/src/trajectory.dart`) : `simulateTrajectory` prend le modèle de vérité (`truth` : A, B ou C, `kalis_adapt/simulation.dart`) et `legacy` (comportement 0.1 du moteur d'évolution). Mesures ajoutées quand le programme porte le contrat 0.4.0 (`coached`) : écart à l'effort affiché sur les cibles atteignables (`effortGap`, `effortReachableShare`, `harderRate`, `easierRate`), échecs non voulus hors tests (`coachFailureRate`), plus forte hausse à schéma égal (`maxSchemeRise`, `schemeRisesOverLimit`), tentatives (`attempts`, `attemptsMade`, `openerRate`), performance du jour de l'échéance rapportée au maximum réel du jour (`eventOverDayMax`), écart par exercice (`effortByExercise`). Repères ajoutés pour ces programmes : `ecart_effort`, `pics_a_schema_egal`, `ouvertures` ; les repères de 0.1.0 restent calculés. `athleteSpecJson`.
+- **Rapport** (`lib/src/report.dart`) : pour un programme au contrat 0.4.0, la trajectoire racontée est celle du modèle de vérité B (le plus éloigné des hypothèses du moteur) ; les trajectoires des modèles A et C sont mesurées à côté (`trajectoryOtherTruths` dans `rapport.json`, tableau en fin d'export) ; la sécurité du programme tel qu'il a évolué est comptée sous chaque modèle.
+- **Export lisible des trajectoires** (`lib/src/trajectory_export.dart`, `coachTrajectoryMarkdown`) : bilan ; par mouvement suivi et par semaine, ce que le programme écrit, ce que l'athlète fait, l'effort affiché et l'effort réel, le maximum réel et le maximum estimé, les décisions du moteur en clair (`adaptReasonText`) ; les étapes d'une figure dans le tableau de la figure ; journal des décisions semaine par semaine (ajustements du jour, techniques non servies, arrêts, propositions, résultats de test, étapes) ; état des figures ; tentatives ; tableau des trois modèles de vérité. Les programmes sans champ du contrat 0.4.0 gardent l'export de 0.1.0.
+- **Export des trajectoires, ajouts du calibrage** : colonne « Servi par le moteur » (charges, répétitions ou durées servies à la séance montrée ; une plage entre parenthèses est une série au ressenti) à côté de « Écrit par le programme » et de « Fait » ; raisons en clair pour les répétitions recalées sur le maximum mesuré, les séries repère, le cran d'assistance conseillé, les séries arrêtées (baisse des répétitions, de la qualité), l'alerte de surmenage ; sous chaque tableau, le maximum réel hors fatigue de l'athlète simulé au départ et en fin de cycle (le record déclaré au profil peut être plus haut) ; tableau d'une figure visée travaillée seulement par ses étapes ; la séance montrée est la plus lourde de la semaine (à charge égale, la plus grande série servie).
+- **Séries d'une trajectoire** (`bin/common.dart`) : `series/<profil>.json` dans le dossier du rapport (séances servies, journal, conseils, lignes de mesure, estimations) pour l'analyse du calibrage ; le rapport et les notes du panel n'en dépendent pas.
+- **Campagne street** (`lib/src/campaign.dart`, `bin/kalis_bench_cli.dart`) : chaque profil street × graines × trois modèles de vérité × quatre politiques (`kalis_adapt`, `kalis_adapt` en comportement 0.1, coach simple à la note d'effort, oracle), un isolat par profil ; `campagne_street.json` et `CAMPAGNE_STREET.md` dans le dossier du rapport ; `campaign_seeds.txt` à la racine du paquet remplace le nombre de graines (100 par défaut).
+- **CLI** (`bin/common.dart`) : blocs bruts des programmes (`blocs/`), blocs tels que la trajectoire les a suivis et résumés d'adaptation (`blocs_realises/`), profils au contrat de `kalis_core` (`profils/`, fixtures des tests de `kalis_adapt`).
+
+## 0.1.1 — 04/10/2026 (lot CP1)
+
+Le banc transmet le profil au schéma 3 et lit le chemin street de `kalis_plan` 0.2.0. Profils types, attentes de coach et grilles du panel inchangés.
+
+- **Adaptateur** (`lib/src/adapter.dart`) : produit le profil d'athlète au **schéma 3** (`schemaVersion: 3`) au lieu du profil v2. Sont maintenant transmis :
+  - expérience (niveau du profil) ; ancienneté en tranches (`trainingAge` : moins de 6 mois, 6 à 24 mois, 2 à 5 ans, plus) ; coupure en tranches (`trainingGap` : aucune, moins de 3 semaines, 3 à 10, 11 à 26, 27 à 104 semaines, plus) ;
+  - sommeil (durée en tranches : moins de 6 h, 6 à 7 h, 7 h et plus), stress (2 ou moins : bas, 3 : modéré, au-delà : élevé), travail physique lourd (`occupationalLoad`), déficit énergétique (`bodyWeightGoal: lose`), autres sports (course, vélo, natation, escalade ou autre, avec séances, minutes et intensité dure) ;
+  - tests datés (`benchmarks`) : 1RM (charge × 1 répétition, 0 en réserve, poids du corps), maximum de répétitions, maintien maximal, chrono sur une distance ; date = début du programme moins l'ancienneté du test ; un record nul n'est pas transmis comme test. Les records restent aussi transmis en fourchette (bas = haut) pour le chemin 0.1 ;
+  - échéances (`events`) : test personnel, ou compétition de force (streetlifting, powerlifting), de répétitions (sets & reps), course ou autre ; priorité A, B ou C ; mouvements de force à 3 tentatives avec meilleur 1RM déclaré et cible ; stations en maximum de répétitions ; distance et temps visé d'une course ; objectifs liés ;
+  - points faibles d'un mouvement (`weakPoints`), nature lue dans la note : départ bras tendus, verrouillage, transition, bas, sinon milieu du mouvement ;
+  - spécialisation : premier mouvement prioritaire, sur les semaines jusqu'à l'échéance principale, le reste en entretien ;
+  - toutes les blessures, y compris les antécédents sans gêne actuelle, avec leur ancienneté (`since`).
+- Nouvel argument `catalog` de `adaptProfile` (passé par `generateProgram` et par la CLI, `bin/common.dart`) : chaque figure visée (figure à débloquer ou tenue) reçoit son étape actuelle (`skills`), le record non nul le plus difficile de sa chaîne de progression, avec son maintien ou ses répétitions.
+- Pertes listées (`AdaptedProfile.lost`) réduites à : points faibles musculaires (sans mouvement), description de la blessure, qualité du sommeil, libellé de l'échéance, liste des mouvements à entretenir.
+- **Analyse** (`lib/src/analysis.dart`) : `DayView.stress` (séance lourde, moyenne ou légère) et `WeekView.intent` (intention de la semaine), quand le moteur les donne.
+- **Export lisible** (`lib/src/export.dart`) :
+  - volume : série de tête puis séries allégées (avec la baisse en %), départs à la minute ou à intervalle fixe, tentatives d'un test de 1RM, série maximale d'un test de répétitions avec son repère, course d'au moins 1 500 m d'une traite écrite en km ;
+  - charge : part du 1RM du mouvement de compétition, ou part du maximum de répétitions ou du maintien maximal avec le repère écrit ;
+  - effort : en répétitions en réserve seulement (la note sur 10 n'est plus affichée) ; course et cardio en allure (facile, soutenue) ou au chrono ; descente freinée « au contrôle » ; tenues décrites par la marge sur la position ; séries à une part du maximum de répétitions : la réserve écrite est celle de la dernière série quand les premières en laissent nettement plus ;
+  - notes : technique de série (tenue isométrique, pratique technique, autres formats), tempo (descente, pause en haut), récupération en trottinant, notes de coach de `kalis_plan` (`coachReasonText`) ; pas de rôle sur une épreuve, pas d'« échauffement » en double ; pas de repos écrit pour les départs à la minute ;
+  - nouvelles sections « Saison » (une ligne par bloc, phases par semaines), « Échelles des figures » (étapes, étape actuelle, critère de passage) et « Règles du programme » (règles du bloc et règles communes aux exercices écrites une fois, définition de la réserve), vides pour un moteur 0.1 ;
+  - semaines nommées par leur intention et séances par leur charge quand le moteur les donne ; course chronométrée nommée par sa distance ;
+  - export JSON : champs `season`, `ladders` et `rules`.
+- `tool/panel_export.py` : colonne « notes » dans les tableaux (et dans la détection des séances identiques) ; sections Saison, Échelles des figures et Règles du programme.
+- Test de l'adaptateur (`test/profiles_test.dart`) : antécédent sans gêne actuelle transmis avec son ancienneté, sommeil et coupure transmis, profil au schéma 3, description de la blessure dans les pertes.
+
+## 0.1.0 — 03/10/2026 (lot CR)
+
+Première version : référentiel scientifique (145 principes, six chapitres, références vérifiées deux fois, R5 rapproché de la revue du profil v3), mesures agrégées des programmes de référence, 27 profils types avec attentes de coach, adaptateur vers le profil v2, critères de sécurité (15), de qualité (9) et de trajectoire, exports lisibles, rapports, CLI, protocole et grilles du panel de coachs virtuels (gelées après étalonnage), mesure des moteurs 0.1.
+
+Compatible avec `kalis_core` 0.4.0 (techniques structurées et enchaînements lus par les critères), `kalis_plan` 0.1.0, `kalis_adapt` 0.1.0.

@@ -1,0 +1,6 @@
+[
+  "tests/test_kr1_violations.py::test_aggravation_hausse_de_charge_sous_douleur_au_poignet",
+  "tests/test_kr1_violations.py::test_poussee_au_retour_apres_des_seances_manquees",
+  "tests/test_kr1_violations.py::test_poussees_a_la_fin_de_la_reprise_graduee",
+  "tests/test_kr1_violations.py::test_poussees_apres_surcharge_sans_arret"
+]
