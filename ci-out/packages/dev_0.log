@@ -1,8 +1,8 @@
-exports KM1 : 34 profils, 16 graines pour le témoin (921 s).
-export : 924 s
+exports KM1 : 34 profils, 16 graines pour le témoin (538 s).
+export : 540 s
 302 entrée(s) écrite(s).
 sécurité de blocs : 302 fichier(s).
-outils KM1 (7 s).
+outils KM1 (5 s).
 40
 pytest : échec
   -  b'gulaire inf\xc3\xa9rieure)","interval_moments":"entr\xc3\xa9e [m, v, s2, a, '
@@ -29,10 +29,10 @@ pytest : échec
   ?                                                                 -------------
   +  b're":"Outils num\xc3\xa9riques de Koach 1.0 (koach/numerique.py)","toleranc'
   ?    +++++++++++++
-  -  b'sion_format":2,"version_moteur":"1.0.4-ref.1","version_parametres":null}\n')
+  -  b'sion_format":2,"version_moteur":"1.0.5-ref.1","version_parametres":null}\n')
   ?                                                                   ----------- -
-  +  b'e":1e-09,"version_format":2,"version_moteur":"1.0.4-ref.1","version_parametr'
+  +  b'e":1e-09,"version_format":2,"version_moteur":"1.0.5-ref.1","version_parametr'
   ?    +++++++++++++
   +  b'es":null}\n')
-3 failed, 267 passed in 690.98s (0:11:30)
-00:30 +98: All tests passed!
+2 failed, 288 passed in 396.46s (0:06:36)
+00:17 +98: All tests passed!

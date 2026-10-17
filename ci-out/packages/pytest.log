@@ -1,7 +1,8 @@
-........................................................................ [ 26%]
-....................F........................................F.F........ [ 53%]
-........................................................................ [ 80%]
-......................................................                   [100%]
+........................................................................ [ 24%]
+....................F..........................................F........ [ 49%]
+........................................................................ [ 74%]
+........................................................................ [ 99%]
+..                                                                       [100%]
 =================================== FAILURES ===================================
 _____________________________ test_fixtures_a_jour _____________________________
 
@@ -9,61 +10,13 @@ _____________________________ test_fixtures_a_jour _____________________________
         r = subprocess.run([sys.executable, os.path.join(FIX, 'generer.py'), '--verifier'],
                            cwd=REF, capture_output=True, text=True)
 >       assert r.returncode == 0, r.stderr + r.stdout
-E       AssertionError: fixtures pas à jour : numerique.json (différent), planification_1.json (différent), planification_2.json (différent)
+E       AssertionError: fixtures pas à jour : numerique.json (différent)
 E         (relancer python3 fixtures/generer.py)
 E         
 E       assert 1 == 0
-E        +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...férent), planification_1.json (différent), planification_2.json (différent)\n(relancer python3 fixtures/generer.py)\n').returncode
+E        +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...code=1, stdout='', stderr='fixtures pas à jour : numerique.json (différent)\n(relancer python3 fixtures/generer.py)\n').returncode
 
 tests/test_fixtures.py:109: AssertionError
-________________ test_rejeu_planification[planification_2.json] ________________
-
-nom = 'planification_2.json'
-
-    @pytest.mark.parametrize('nom', PLANIFS)
-    def test_rejeu_planification(nom):
-        d = _lire(nom)
-        e_ = d['entrees']
-        att = d['attendu']
-        k = rejouer(copy.deepcopy(e_['params']), e_['fiches'], copy.deepcopy(e_['profil']),
-                    copy.deepcopy(e_['journal']))
-        _identique(k.posterior(), att['posterior_avant'], 'posterior_avant')
-        pl_d = d['planification']
-        ref = pl_d['reference']
-        assert pl_d['options'].get('sans_validateur') is True
-        with pytest.raises(ValueError):
-            Planification(e_['params'], e_['fiches'], None, {'trajectoires': 2})
-        pl = Planification(e_['params'], e_['fiches'], None, pl_d['options'])
-        pl.charger_reference(ref['blocs'], ref['block_weeks'], ref['horizon'], cibles=ref['cibles'],
-                             echeance_jour=ref['echeance_jour'], principaux=ref['principaux'],
-                             poids_corps=ref['poids_corps'])
-        _identique(list(pl.suivis), att['suivis'], 'suivis')
-        w = pl_d['semaine']
-        tirage = pl.tirer(k, w, int(pl.p['trajectoires']))
-        assert pl.hypothese_thompson == att['hypothese_thompson']
-        for c, v in att['tirage'].items():
->           _identique(tirage[c], v, 'tirage.' + c)
-
-tests/test_fixtures.py:322: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-x = array([[4.6389226 , 3.58401439, 3.22410296, 4.21038354, 2.33303172,
-        3.88482173, 4.13977125],
-       [4.7375029...687, 4.12043342],
-       [4.74055902, 3.63844799, 3.37084654, 4.39427181, 2.42718719,
-        4.07455639, 4.3954114 ]])
-attendu = [[4.638922601598175, 3.5840143885683435, 3.224102956905968, 4.210383543612638, 2.3330317183588054, 3.8848217254916992,...473127705, 3.6103126353656467, 3.5696182935076446, 4.297306583150735, 2.4099099907832717, 3.582687193388855, ...], ...]
-quoi = 'tirage.mu'
-
-    def _identique(x, attendu, quoi=''):
-        """Égalité stricte (texte JSON canonique identique : même double, même
-        type) d'une sortie du moteur et de la valeur attendue."""
-        obtenu = _json(x)
-        if generer.texte(obtenu) != generer.texte(attendu):
->           raise AssertionError('%s : %r' % (quoi, _premier_ecart(obtenu, attendu)))
-E           AssertionError: tirage.mu : ('[98][4]', 2.558422780846623, 2.5584227808466236)
-
-tests/test_fixtures.py:74: AssertionError
 _________________________ test_generation_deterministe _________________________
 
     def test_generation_deterministe():
@@ -2285,20 +2238,19 @@ E                 -  b'um\xc3\xa9riques de Koach 1.0 (koach/numerique.py)","tole
 E                 ?                                                                 -------------
 E                 +  b're":"Outils num\xc3\xa9riques de Koach 1.0 (koach/numerique.py)","toleranc'
 E                 ?    +++++++++++++
-E                 -  b'sion_format":2,"version_moteur":"1.0.4-ref.1","version_parametres":null}\n')
+E                 -  b'sion_format":2,"version_moteur":"1.0.5-ref.1","version_parametres":null}\n')
 E                 ?                                                                   ----------- -
-E                 +  b'e":1e-09,"version_format":2,"version_moteur":"1.0.4-ref.1","version_parametr'
+E                 +  b'e":1e-09,"version_format":2,"version_moteur":"1.0.5-ref.1","version_parametr'
 E                 ?    +++++++++++++
 E                 +  b'es":null}\n')
 
 tests/test_fixtures.py:362: AssertionError
 =========================== short test summary info ============================
-FAILED tests/test_fixtures.py::test_fixtures_a_jour - AssertionError: fixtures pas à jour : numerique.json (différent), planification_1.json (différent), planification_2.json (différent)
+FAILED tests/test_fixtures.py::test_fixtures_a_jour - AssertionError: fixtures pas à jour : numerique.json (différent)
   (relancer python3 fixtures/generer.py)
   
 assert 1 == 0
- +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...férent), planification_1.json (différent), planification_2.json (différent)\n(relancer python3 fixtures/generer.py)\n').returncode
-FAILED tests/test_fixtures.py::test_rejeu_planification[planification_2.json] - AssertionError: tirage.mu : ('[98][4]', 2.558422780846623, 2.5584227808466236)
+ +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...code=1, stdout='', stderr='fixtures pas à jour : numerique.json (différent)\n(relancer python3 fixtures/generer.py)\n').returncode
 FAILED tests/test_fixtures.py::test_generation_deterministe - AssertionError: numerique.json
 assert b'{"cas":{"ar...tres":null}\n' == b'{"cas":{"ar...tres":null}\n'
   
@@ -4509,9 +4461,9 @@ assert b'{"cas":{"ar...tres":null}\n' == b'{"cas":{"ar...tres":null}\n'
   ?                                                                 -------------
   +  b're":"Outils num\xc3\xa9riques de Koach 1.0 (koach/numerique.py)","toleranc'
   ?    +++++++++++++
-  -  b'sion_format":2,"version_moteur":"1.0.4-ref.1","version_parametres":null}\n')
+  -  b'sion_format":2,"version_moteur":"1.0.5-ref.1","version_parametres":null}\n')
   ?                                                                   ----------- -
-  +  b'e":1e-09,"version_format":2,"version_moteur":"1.0.4-ref.1","version_parametr'
+  +  b'e":1e-09,"version_format":2,"version_moteur":"1.0.5-ref.1","version_parametr'
   ?    +++++++++++++
   +  b'es":null}\n')
-3 failed, 267 passed in 690.98s (0:11:30)
+2 failed, 288 passed in 396.46s (0:06:36)
