@@ -110,7 +110,7 @@ jobs:
           # PR4 : en cas d'échec, l'extrait du journal sort en annotation
           # (lisible sans télécharger les journaux).
           fail() {
-            out="$(grep -E -B3 -A30 '\[E\]|^(FAIL|ERROR):|Traceback' "$1" | head -n 150)"
+            out="$( { grep -A45 'EXCEPTION CAUGHT BY' "$1" | head -n 120; grep -E -B3 -A30 '\[E\]|^(FAIL|ERROR):|Traceback' "$1" | head -n 60; } )"
             out="${out//'%'/'%25'}"
             out="${out//$'\n'/'%0A'}"
             echo "::error title=Tests ($1)::${out}"

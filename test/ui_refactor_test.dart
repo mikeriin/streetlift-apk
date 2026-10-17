@@ -54,13 +54,14 @@ Exercise manualExercise(
   String sets, {
   double? kg,
   int? hold,
+  int count = 1,
 }) {
   return Exercise.manual(
     id: id,
     name: name,
     setsText: sets,
     kg: kg,
-    forcedSets: 1,
+    forcedSets: count,
     timer: hold == null ? null : {'type': 'hold', 'sec': hold},
   );
 }
@@ -187,8 +188,8 @@ void main() {
   ) async {
     small(tester);
     final week = manualWeek(994, 'Carte unique', [
-      manualExercise('CU-994-0', 'Dips', '2×8'),
-      manualExercise('CU-994-1', 'Tractions enchaînées', '2×6'),
+      manualExercise('CU-994-0', 'Dips', '2×8', count: 2),
+      manualExercise('CU-994-1', 'Tractions enchaînées', '2×6', count: 2),
     ]);
     final day = week.days.single;
     await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
