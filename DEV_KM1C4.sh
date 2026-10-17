@@ -1,5 +1,5 @@
 #!/bin/bash
-# Mise au point KM1c4, run B (export 0.4.2 seul ; campagne Python 0-5 de Koach 1.0.5 préliminaire).
+# Mise au point KM1c4, run C (campagne Python de la référence 1.0.5 sur les 100 graines, 20 parts ; run B : export 0.4.2, campagne 0-5).
 #  PART 0     : export KM1 sur kalis_plan 0.4.2 (34 profils, témoin 16 graines) ; données neuves
 #               mises à la place de celles de 0.4.1 dans l'arbre de la CI ; sécurité des blocs ;
 #               tests Python de la référence ; tests km de kalis_bench (version de référence 0.4.2)
@@ -8,6 +8,7 @@
 #               saisons vivantes, témoin de 0.4.1 lu
 #  PART 41-48 : campagne Python (référence 1.0.5 en cours) graines 0-5, parts 1/8..8/8, sur les saisons de
 #               kalis_plan 0.4.2 (export rapide sans témoin dans la part), témoin de 0.4.1 lu
+#  PART 61-80 : campagne Python (référence 1.0.5) graines 0-99, parts 1/20..20/20, mêmes saisons 0.4.2
 root=$PWD
 out=$root/out-packages
 status=0
@@ -52,6 +53,18 @@ elif [ "$PART" -ge 41 ] && [ "$PART" -le 48 ]; then
   cd $R
   python3 -m banc.campagne --graines 6 --coeurs 4 --partie $i/8 --travail $out/py_travail > $out/py_campagne_$i.log 2>&1 || { echo "campagne python $i : échec"; status=1; }
   tail -4 $out/py_campagne_$i.log
+elif [ "$PART" -ge 61 ] && [ "$PART" -le 80 ]; then
+  i=$((PART-60))
+  cd $B
+  start=$(date +%s)
+  dart run bin/km1.dart --sortie $out/km1s --sans-temoin --sans-securite --sans-adversaires > $out/km1_export_c$i.log 2>&1 || { echo "export km1 (saisons) : échec"; status=1; }
+  echo "export saisons : $(( $(date +%s) - start )) s"; tail -2 $out/km1_export_c$i.log
+  rm -rf $R/donnees/reference && cp -r $out/km1s/reference $R/donnees/
+  cp $out/km1s/catalogue_infos.json.gz $out/km1s/traces_verite.json.gz $out/km1s/traces_endurance.json.gz $R/donnees/
+  rm -rf $out/km1s
+  cd $R
+  python3 -m banc.campagne --graines 100 --coeurs 4 --partie $i/20 --travail $out/py_travail > $out/py_campagne_c$i.log 2>&1 || { echo "campagne python 100 graines $i : échec"; status=1; }
+  tail -3 $out/py_campagne_c$i.log
 elif [ "$PART" -le 34 ]; then
   g=$(( (PART + 1) / 2 )); h=$(( 2 - PART % 2 ))
   a=$(( 6 * (g - 1) )); b=$(( a + 5 )); [ $b -gt 99 ] && b=99

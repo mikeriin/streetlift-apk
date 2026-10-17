@@ -1,25 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Lot KR1 : violations de sécurité restantes du couple `kalis_plan` 0.4.1 ×
-Koach 1.0.4 sur les 90 600 saisons (34 profils, 100 graines, trois modèles de
-vérité, tous les scénarios ; critère 7 du cahier : 4 aggravations et 59
-poussées de douleur, toutes hors des graines 0 à 5). Chaque test rejoue une
-saison qui les porte et vérifie le MÉCANISME établi (LIVRAISON_KR1.md § 4) ;
-il attend la violation tant que Koach ne la corrige pas : le jour où une
-correction de méthode la retire, le test échoue et doit être mis à jour.
+"""Lot KR1 puis KM1c4 : les violations de sécurité du couple `kalis_plan`
+0.4.x × Koach 1.0.4 sur les 90 600 saisons (critère 7 du cahier : 59
+poussées de douleur et 4 aggravations, 25 saisons, toutes hors des graines
+0 à 5 ; LIVRAISON_KR1.md § 4) sont rejouées sur les saisons qui les
+portaient. Depuis Koach 1.0.5 (KM1c4, CHANGEMENTS_1_0_5.md) chaque test
+vérifie que la violation a disparu ET le mécanisme qui la retire :
 
-Mécanismes :
-* poussée (tendon réactif) : après un épisode douloureux, la zone reste
-  réactive douze semaines dans le modèle de vérité (tolérance ≈ exposition de
-  la dernière semaine ou moitié de l'habitude) ; une semaine qui y expose plus
-  de 1,5 fois la tolérance déclenche une gêne de 2 à 3 sur 10, sous le seuil
-  de douleur active de Koach (`securite.douleur_seuil` = 3), qui ne réagit
-  donc pas ; l'exposition servie remonte d'un coup (fin de la reprise graduée
-  à 84 jours, séances manquées, ou aucune reprise faute d'arrêt) ;
-* aggravation : douleur connue de 5 au poignet (tenues), Koach monte la charge
-  des dips lestés (sollicitation du poignet 0,5) : sa conduite ne bloque les
-  hausses sur une zone douloureuse qu'à partir de
-  `securite.douleur_moyenne_contrainte` (5) pour une sollicitation moyenne,
-  quand le banc compte toute hausse au-dessus de 3.
+* poussées (tendon réactif du modèle de vérité : douze semaines après un
+  épisode, une semaine qui expose la zone à plus de 1,5 fois sa tolérance
+  déclenche une gêne de 2 à 3 sur 10) : l'exposition hebdomadaire de la
+  zone sensible est bornée par la rampe du réalisé (`Seances.
+  _budget_zone_semaine`), avec ou sans arrêt (`autres_08`), sans saut en fin
+  de fenêtre (`ks_01`), au retour après des séances manquées (`street_03`) ;
+* aggravations (`street_10`, poignet, dips lestés) : la douleur du tendon
+  (4/10, fin de la semaine 10 du modèle de vérité) n'avait jamais été
+  signalée à Koach avant la série aggravante (bilan sans douleur) ; le banc
+  la tenait pour « connue » (`_pain_known` non remis à faux au début d'un
+  épisode tendineux) : corrigé dans le modèle de vérité (Python ici, Dart au
+  portage KM2c3) ; et dès qu'elle est signalée, Koach retire les dips
+  (douleur ≥ `douleur_moyenne_contrainte` sur une sollicitation 0,5).
 """
 import os
 import sys
@@ -29,33 +28,27 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from banc import campagne as ca  # noqa: E402
 from banc import criteres_moteur as cm  # noqa: E402
 from banc import donnees, meneur, verite  # noqa: E402
-
-
-def _rejouer(cle, scenario, verite_kind, graine, espion=None):
-    opts = ca.options_de([])
-    ca.appliquer_parametres(opts)
-    saison = cm._saison(cle, scenario, None)
-    pol = ca.politique(opts, graine)
-    if espion is not None:
-        espion.installer()
-    try:
-        return meneur.simuler(saison, donnees.catalogue_infos(), pol, verite_kind, graine)
-    finally:
-        if espion is not None:
-            espion.retirer()
+from banc.verite import make_book  # noqa: E402
+from banc import politique_koach as pk  # noqa: E402
 
 
 class _Espion(object):
-    """Relève les semaines de tendon réactif et les surcharges du modèle de vérité."""
+    """Relève les semaines de tendon réactif (exposition, tolérance,
+    poussée), les surcharges, les aggravations et, côté Koach, le budget
+    hebdomadaire de chaque zone sensible et l'exposition servie."""
 
     def __init__(self):
-        self.semaines = []
+        self.semaines = []        # (semaine, zone, exposition, tolérance, poussée)
         self.surcharges = []
         self.aggravations = []
+        self.budgets = {}         # (zone, semaine) -> permis de la semaine
+        self.signales = []        # (jour, zone, intensité) vus par Koach au moment d'une aggravation
+        self.koach = None
 
     def installer(self):
         A = verite.SimAthlete
         self._rw, self._ov, self._pf = A._reactive_week, A.overuse, A.perform
+        self._pl = pk.PolitiqueKoach.planifier
         espion = self
 
         def rw(athlete):
@@ -76,57 +69,124 @@ class _Espion(object):
             precedente = t.last_load
             r = espion._pf(athlete, t, load, *args)
             if athlete.pain_aggravations > avant:
+                g = espion.koach.garde if espion.koach is not None else None
+                d = g.zones.get(athlete.pain_zone) if g is not None else None
                 espion.aggravations.append((athlete._day, t.info.id, load, precedente, athlete.pain_zone,
-                                            athlete.pain_intensity, t.info.zone_level(athlete.pain_zone)))
+                                            athlete.pain_intensity, t.info.zone_level(athlete.pain_zone),
+                                            d.derniere() if d is not None else None))
             return r
 
+        def pl(self, ctx):
+            out = espion._pl(self, ctx)
+            espion.koach = self.koach
+            for z, b in self.koach.seances.budget_semaine.items():
+                espion.budgets[(z, ctx.semaine)] = b
+            return out
+
         A._reactive_week, A.overuse, A.perform = rw, ov, pf
+        pk.PolitiqueKoach.planifier = pl
 
     def retirer(self):
         A = verite.SimAthlete
         A._reactive_week, A.overuse, A.perform = self._rw, self._ov, self._pf
+        pk.PolitiqueKoach.planifier = self._pl
+
+
+def _rejouer(cle, scenario, verite_kind, graine, espion=None):
+    opts = ca.options_de([])
+    ca.appliquer_parametres(opts)
+    saison = cm._saison(cle, scenario, None)
+    pol = ca.politique(opts, graine)
+    if espion is not None:
+        espion.installer()
+    try:
+        return meneur.simuler(saison, donnees.catalogue_infos(), pol, verite_kind, graine)
+    finally:
+        if espion is not None:
+            espion.retirer()
+
+
+def _expositions_bornees(e, zone):
+    """Chaque semaine réactive de [zone] : exposition ≤ 1,5 × max(4 ;
+    tolérance) (aucune poussée) et, quand Koach avait un budget pour la
+    semaine, exposition ≤ budget."""
+    for (w, z, expo, tol, poussee) in e.semaines:
+        if z != zone:
+            continue
+        assert not poussee, (w, expo, tol)
+        assert expo <= 1.5 * max(4.0, tol) + 1e-9, (w, expo, tol)
+        b = e.budgets.get((z, w))
+        if b is not None:
+            assert expo <= b + 1e-9, (w, expo, b)
 
 
 def test_poussees_apres_surcharge_sans_arret():
-    """`autres_08` (CrossFit), référence, vérité b, graine 47 : surcharge à
-    l'épaule au 4e jour (pièce de conditionnement), pas d'arrêt (épisode trop
-    court), puis l'exposition de l'épaule remonte à 7-13 séries par semaine
-    pour une tolérance de 3 à 4 : 7 poussées de 2 à 3 sur 10."""
+    """`autres_08` (CrossFit), référence, vérité b, graine 47 (KR1 : 7
+    poussées, 38 sur sept scénarios) : surcharge à l'épaule au 4e jour,
+    douleur en semaine 0 (aucune habitude mesurée) ; 1.0.5 : budget sans
+    habitude (4 séries), puis +1 ou +20 % par semaine ; 0 poussée."""
     e = _Espion()
     tour = _rejouer('autres_08_crossfit_intermediaire', 'reference', 'b', 47, e)
     assert e.surcharges and e.surcharges[0][1] == 'shoulder'
-    poussees = [s for s in e.semaines if s[4]]
-    assert tour.pain_flares == 7 and len(poussees) == 7
-    assert all(s[1] == 'shoulder' and s[2] > 1.5 * max(4.0, s[3]) for s in poussees)
+    assert tour.pain_flares == 0 and tour.pain_aggravations == 0
+    _expositions_bornees(e, 'shoulder')
+    assert any(z == 'shoulder' for (z, w) in e.budgets)
 
 
-def test_poussees_a_la_fin_de_la_reprise_graduee():
-    """`ks_01`, douleur à l'épaule, vérité b, graine 38 : reprise graduée à 2-3
-    séries par semaine, une semaine sans épaule, puis 7 séries (fin de la
-    fenêtre de reprise) pour une tolérance de 4,5 : 2 poussées."""
+def test_pas_de_saut_a_la_fin_de_la_reprise_graduee():
+    """`ks_01`, douleur à l'épaule, vérité b, graine 38 (KR1 : 2 poussées à
+    la fin de la fenêtre de reprise, 7 séries après une semaine à 0) ;
+    1.0.5 : référence = dernière semaine de charge exposée, pas l'habitude ;
+    0 poussée."""
     e = _Espion()
     tour = _rejouer('ks_01_streetlifting_sets_reps_4_seances', 'douleur_epaule', 'b', 38, e)
-    poussees = [s for s in e.semaines if s[4]]
-    assert tour.pain_flares == 2 and [s[2] for s in poussees] == [7.0, 7.0]
-    assert max(s[2] for s in e.semaines if not s[4] and s[0] < poussees[0][0]) <= 3.0
+    assert tour.pain_flares == 0 and tour.pain_aggravations == 0
+    _expositions_bornees(e, 'shoulder')
 
 
-def test_poussee_au_retour_apres_des_seances_manquees():
-    """`street_03`, séances manquées, vérité b, graine 19 : deux semaines sans
-    exposition du poignet (séances manquées), puis 8 séries pour une tolérance
-    de 4,8 : 1 poussée."""
+def test_retour_apres_des_seances_manquees():
+    """`street_03`, séances manquées, vérité b, graine 19 (KR1 : 8 séries au
+    poignet pour une tolérance de 4,8 après deux semaines sans exposition) ;
+    1.0.5 : départ à la moitié de l'habitude (charge chronique sur quatre
+    semaines) ; 0 poussée."""
     e = _Espion()
     tour = _rejouer('street_03_debutante', 'seances_manquees', 'b', 19, e)
-    poussees = [s for s in e.semaines if s[4]]
-    assert tour.pain_flares == 1 and poussees[0][1] == 'wrist_hand' and poussees[0][2] == 8.0
+    assert tour.pain_flares == 0 and tour.pain_aggravations == 0
+    _expositions_bornees(e, 'wrist_hand')
 
 
-def test_aggravation_hausse_de_charge_sous_douleur_au_poignet():
-    """`street_10`, séances manquées, vérité b, graine 34 : douleur connue de 5
-    au poignet, Koach monte les dips lestés de 10 à 11,25 kg : 1 aggravation."""
+def test_aggravation_sur_une_douleur_jamais_signalee():
+    """`street_10`, séances manquées, vérité b, graine 34 (KR1 : 1
+    aggravation, dips lestés 10 → 11,25 kg) : la douleur du poignet (tendon,
+    4/10) n'avait pas été signalée (dernier signalement vu par Koach : 0) ;
+    avec la remise à faux de `_pain_known` au début de l'épisode, aucune
+    aggravation ; une fois signalée (5/10), Koach retire les dips lestés."""
     e = _Espion()
     tour = _rejouer('street_10_elite_figures', 'seances_manquees', 'b', 34, e)
-    assert tour.pain_aggravations == 1
-    jour, ex, charge, precedente, zone, intensite, niveau = e.aggravations[0]
-    assert (ex, zone, charge, precedente) == ('sl-dips-leste', 'wrist_hand', 11.25, 10.0)
-    assert intensite >= 4 and niveau == 0.5
+    assert tour.pain_aggravations == 0 and tour.pain_flares == 0, e.aggravations
+    g = e.koach.garde.zones['wrist_hand']
+    forts = [(j, i) for (j, i) in g.signalements if i >= 4]
+    assert forts and max(i for _, i in forts) >= 4
+
+
+def test_douleur_tendineuse_inconnue_tant_que_non_signalee():
+    """Modèle de vérité : un épisode tendineux qui commence (`end_week`) et
+    un épisode de la fiche (`advance`) ne sont connus du moteur qu'une fois
+    signalés (comme `overuse` et les poussées) : `_pain_known` est remis à
+    faux."""
+    profil = {'level': 'intermediate', 'bodyWeightKg': 75.0, 'sex': 'male', 'equipment': []}
+    livre = make_book(donnees.catalogue_infos(), profil)
+    # Fiche : épisode de douleur imposé au jour 10 pendant 7 jours.
+    base = {'key': 'test', 'level': 1, 'weeklyGain': 0.01}
+    spec = verite.Spec(dict(base, painZone='elbow', painFromDay=10, painDays=7, painIntensity=5))
+    a = verite.SimAthlete(spec, profil, livre, 1, kind='b')
+    a._pain_known = True
+    a.advance(10)
+    assert a.in_pain and not a._pain_known
+    # Tendons (modèle b) : tolérance de tenue dépassée en fin de semaine.
+    b = verite.SimAthlete(verite.Spec(base), profil, livre, 2, kind='b')
+    b._pain_known = True
+    b._tendon = 10.0
+    b._hold_week = 10.0 * 1.3 + 11
+    b.end_week()
+    assert b.in_pain and b.pain_zone == 'wrist_hand' and not b._pain_known

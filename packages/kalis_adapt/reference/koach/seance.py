@@ -561,17 +561,20 @@ class Seances(object):
             return g.semaines.get(w, False) and w in closes
 
         debut = ep[0] // 7 if ep is not None else semaine
-        # Référence : dernière semaine de charge fermée depuis le début de
-        # l'épisode (après l'arrêt le cas échéant).
+        # Référence : dernière semaine de charge fermée STRICTEMENT après la
+        # semaine du premier signalement de l'épisode (ce qui a été fait
+        # avant ou pendant la semaine du signalement ne dit rien de ce que
+        # la zone tolère après ; après l'arrêt le cas échéant).
         ref = None
         w = semaine - 1
-        while w >= debut and w >= 0:
+        while w > debut and w >= 0:
             if charge_fermee(w):
                 ref = self._dose_semaine(z, w)
                 if ref <= 0:
                     # Semaine fermée sans exposition : dernière semaine
-                    # exposée parmi les précédentes (fenêtre courte).
-                    for k in range(w - 1, max(debut, w - s['rampe_zone_semaines_max']) - 1, -1):
+                    # exposée parmi les `rampe_zone_semaines_max`
+                    # précédentes (après la semaine du signalement).
+                    for k in range(w - 1, max(debut + 1, w - s['rampe_zone_semaines_max']) - 1, -1):
                         if charge_fermee(k) and self._dose_semaine(z, k) > 0:
                             ref = self._dose_semaine(z, k)
                             break
