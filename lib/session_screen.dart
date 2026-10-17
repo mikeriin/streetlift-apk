@@ -993,6 +993,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (store.settings.vibration) HapticFeedback.heavyImpact();
       return;
     }
+    _recordGroupRounds();
     if (store.settings.vibration) HapticFeedback.lightImpact();
     int? adviceRest;
     if (s.done && widget.adapt && ex.engine) {
@@ -1256,9 +1257,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// UI2 (C5) : le titre de la consigne en `encre`, sans capitales, le
   /// texte en texte courant ; les notes du coach et le calibrage forment un
   /// groupe de lignes ouvrables ([_openRows]).
-  (List<Widget>, Widget?) _coachPanel(Exercise ex, {bool intraButton = true}) {
+  ///
+  /// PR7 : carte compacte : seules la règle de douleur et l'action
+  /// (mini-repos) restent sur la carte ; la consigne ([info]) passe dans
+  /// la feuille ⓘ de l'exercice.
+  ({List<Widget> card, Widget? row, List<String> info}) _coachPanel(
+    Exercise ex, {
+    bool intraButton = true,
+  }) {
     final it = store.adaptItemFor(widget.week.n, widget.day.j, ex);
-    if (it == null) return (const [], null);
+    if (it == null) return (card: const [], row: null, info: const []);
     final kt = KTokens.of(context);
     final block = store.adaptBlockItemFor(widget.week.n, widget.day.j, ex);
     final catalog = store.content.catalog;
@@ -1325,7 +1333,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         if (!pain.contains(n)) n,
     ];
     if (lines.isEmpty && pain.isEmpty && notes.isEmpty) {
-      return (const [], null);
+      return (card: const [], row: null, info: const []);
     }
     final intra = switch (technique) {
       kc.SetTechniqueKind.cluster ||
@@ -1345,9 +1353,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               l.startsWith('$label : ') ? l.substring(label.length + 3) : l,
           ]
         : lines;
-    // Correctifs UI (11/10/2026) : hors mode guidé, une seule ligne de
-    // consigne sur la carte ; la feuille de Koach (appui) donne le reste.
-    final body = koachGuided ? all : all.take(1).toList();
     // Une note au moins, ou deux lignes de consigne : la feuille de Koach
     // les reprend toutes (comme l'appui sur le panneau d'avant).
     final row = notes.isEmpty && (lines.length < 2 || !koachGuided)
@@ -1363,35 +1368,20 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             onTap: sheet,
           );
     return (
-      [
-        const SizedBox(height: KSpacing.s8),
-        // L'appui sur le panneau ouvre la feuille de Koach, comme avant
-        // (toute sa surface, la ligne ouvrable reste l'accès signalé).
-        GestureDetector(
-          key: ValueKey('coach-panel-${ex.id}'),
-          behavior: HitTestBehavior.opaque,
-          onTap: sheet,
-          child: Semantics(
-            container: true,
+      card: [
+        if (pain.isNotEmpty) ...[
+          const SizedBox(height: KSpacing.s8),
+          // L'appui ouvre la feuille de Koach (consigne complète).
+          GestureDetector(
+            key: ValueKey('coach-panel-${ex.id}'),
+            behavior: HitTestBehavior.opaque,
+            onTap: sheet,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (label != null && !timedByGroup)
-                  Text(
-                    label,
-                    key: ValueKey('coach-technique-${ex.id}'),
-                    style: KType.section.copyWith(color: kt.encre),
-                  ),
-                for (var i = 0; i < body.length; i++)
-                  Text(
-                    body[i],
-                    style: KType.detail.copyWith(
-                      color: i == 0 ? kt.texte : kt.texte2,
-                    ),
-                  ),
                 for (final p in pain)
                   Padding(
-                    padding: const EdgeInsets.only(top: KSpacing.s8),
+                    padding: const EdgeInsets.only(top: KSpacing.s4),
                     child: Row(
                       key: ValueKey('coach-pain-${ex.id}'),
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1414,7 +1404,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               ],
             ),
           ),
-        ),
+        ],
         if (intraButton && intra != null && intra > 0)
           Padding(
             padding: const EdgeInsets.only(top: KSpacing.s8),
@@ -1423,14 +1413,15 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               child: KTonalButton(
                 key: ValueKey('coach-intra-${ex.id}'),
                 icon: Icons.av_timer_rounded,
-                label: 'Mini-repos $intra s',
+                label: 'Mini-repos $intra s',
                 onPressed: () =>
                     widget.timer.single('INTRA', intra, prepare: false),
               ),
             ),
           ),
       ],
-      row,
+      row: row,
+      info: [if (label != null && !timedByGroup) label, ...all],
     );
   }
 
@@ -1586,7 +1577,125 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// ⓘ d'un exercice : consignes, pourquoi, estimation et, quand
   /// l'exercice est dans la base, « Voir la fiche » (cahier §4.1 : fiche
   /// d'Arsenal en 2 appuis depuis la séance).
-  void _showCue(Exercise ex) {
+  /// PR7 : options de l'exercice (séance précédente, note, colonnes) dans
+  /// une feuille d'actions : la barre d'outils sous les séries disparaît
+  /// (le nombre de séries suit le programme, il ne se règle plus).
+  Future<void> _exerciseMenu(
+    int k, {
+    required bool hasPrevious,
+    required bool columns,
+    required LogSpec sp,
+    required bool showKg,
+    required bool showV,
+  }) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    final log = logs[k];
+    final v = await showKActionSheet<String>(
+      context,
+      title: store.splitName(widget.exs[k].name).$1,
+      groups: [
+        [
+          if (hasPrevious)
+            KAction(
+              icon: Icons.history_rounded,
+              label: _prevOpen.contains(k)
+                  ? 'Masquer la séance précédente'
+                  : 'Séance précédente',
+              value: 'previous',
+            ),
+          KAction(
+            icon: log.note.isEmpty
+                ? Icons.note_add_outlined
+                : Icons.notes_rounded,
+            label: _notesOpen.contains(k)
+                ? 'Masquer la note'
+                : log.note.isEmpty
+                ? 'Ajouter une note'
+                : 'Afficher la note',
+            value: 'note',
+          ),
+          if (columns)
+            KAction(icon: Icons.tune_rounded, label: 'Colonnes', value: 'columns'),
+        ],
+      ],
+    );
+    if (!mounted || v == null) return;
+    switch (v) {
+      case 'previous':
+        setState(() {
+          if (!_prevOpen.add(k)) _prevOpen.remove(k);
+        });
+      case 'note':
+        setState(() {
+          if (!_notesOpen.add(k)) _notesOpen.remove(k);
+        });
+      case 'columns':
+        await _columns(k, sp, showKg, showV);
+    }
+  }
+
+  /// PR7 : départ chronométré commun à tous les exercices de la page (hors
+  /// groupe du moteur) : un en-tête de carte le porte, avec son chrono.
+  int? get _sharedEvery {
+    final e = specs.first.every;
+    if (e == null || widget.exs.any((x) => x.timer != null)) return null;
+    return specs.every((x) => x.every == e) ? e : null;
+  }
+
+  /// PR7 : en-tête de la carte : le groupe du moteur (format, chrono), ou
+  /// le départ chronométré écrit (« E2MOM · 8 tours · 16 min » et son
+  /// chrono) ; null : rien à dire.
+  Widget? _timingHeader() {
+    if (_group case final g?) return _groupCard(g, bare: true);
+    final every = _sharedEvery;
+    if (every == null || widget.readOnly) return null;
+    var n = 0;
+    for (final l in logs) {
+      if (l.sets.length > n) n = l.sets.length;
+    }
+    final k = KTokens.of(context);
+    return Row(
+      key: const ValueKey('timing-header'),
+      children: [
+        Expanded(
+          child: Text(
+            '${ct.everyFormatName(every)} · $n tours · ${_minutes(n * every)}',
+            style: KType.corpsFort.copyWith(color: k.encre),
+          ),
+        ),
+        const SizedBox(width: KSpacing.s8),
+        KTonalButton(
+          key: const ValueKey('timing-clock'),
+          icon: Icons.timer_outlined,
+          label: 'Lancer',
+          onPressed: () => widget.timer.emom(n, every),
+        ),
+      ],
+    );
+  }
+
+  /// PR7 : tours d'un groupe au temps (EMOM, superset, circuit,
+  /// intervalles) : comptés sur les séries validées, jamais saisis.
+  void _recordGroupRounds() {
+    final g = _group;
+    if (g == null || widget.readOnly || !groupAutoRounds(g.format)) return;
+    var n = -1;
+    for (final l in logs) {
+      if (n < 0 || l.sets.length < n) n = l.sets.length;
+    }
+    var rounds = 0;
+    for (var i = 0; i < n; i++) {
+      if (logs.every((l) => l.sets[i].done)) rounds++;
+    }
+    final planned = groupPlannedRounds(g) ?? n;
+    store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] = {
+      'rounds': rounds,
+      'completed': rounds >= planned,
+    };
+    store.saveLogs(affectsProgression: false);
+  }
+
+  void _showCue(Exercise ex, {List<Widget> info = const []}) {
     FocusManager.instance.primaryFocus?.unfocus();
     final id = ex.catalogId ?? store.content.idFor(ex.name);
     final sheetId = id != null && store.content.byId.containsKey(id)
@@ -1602,6 +1711,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // PR7 : ce qui ne tient plus sur la carte compacte (rôle,
+            // repères, consigne du coach, notes de Koach).
+            for (var i = 0; i < info.length; i++) ...[
+              if (i > 0) const SizedBox(height: KSpacing.s8),
+              info[i],
+            ],
+            if (info.isNotEmpty && ex.cue.isNotEmpty)
+              const SizedBox(height: KSpacing.s12),
             if (ex.cue.isNotEmpty) Text(contentText(ex.cue)),
             // L10 (KT-057) : pourquoi cet exercice (programme généré).
             if (ex.why.isNotEmpty) ...[
@@ -1660,10 +1777,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       KSpacing.s24 + KSpacing.s32,
     ),
     children: [
-      if (_group case final g? when !_merged) ...[
-        _groupCard(g),
-        const SizedBox(height: KSpacing.cardGap),
-      ],
+      // PR7 : l'en-tête du groupe est toujours dans la carte de
+      // l'exercice (une seule carte par page).
       if (_merged)
         _mergedCard()
       else
@@ -1675,7 +1790,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   );
 
   /// CI1f : en-tête du groupe (format, chrono, résultat) ; PR5 : [bare],
-  /// en tête de la carte commune.
+  /// en tête de la carte de l'exercice.
   Widget _groupCard(kc.GroupSpec g, {bool bare = false}) => _GroupCard(
     bare: bare,
     group: g,
@@ -1695,6 +1810,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   Widget _block(int k) {
     final t = KTokens.of(context);
     final p = _parts(k);
+    final top = _timingHeader();
     return KCard(
       key: ValueKey('exercise-card-${widget.exs[k].id}'),
       outline: p.lead ? t.encre.withValues(alpha: .55) : null,
@@ -1707,6 +1823,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          if (top != null) ...[
+            const SizedBox(height: KSpacing.s8),
+            top,
+            Divider(height: KSpacing.s16, color: t.filet),
+          ],
           ...p.head,
           ...p.header,
           for (var i = 0; i < p.count; i++) ...p.row(i),
@@ -1750,11 +1871,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // PR5 : l'en-tête du groupe (format, chrono, tours) ouvre la
-          // carte.
-          if (_group case final g?) ...[
+          // PR5 : l'en-tête du groupe (format, chrono) ouvre la carte ;
+          // PR7 : ou le départ chronométré commun.
+          if (_timingHeader() case final top?) ...[
             const SizedBox(height: KSpacing.s8),
-            _groupCard(g, bare: true),
+            top,
             Divider(height: KSpacing.s16, color: t.filet),
           ],
           for (var k = 0; k < parts.length; k++) ...[
@@ -1795,7 +1916,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // carte commune, « lift principal » par le surtitre.
     var subtitle = _merged
         ? rawSubtitle
-              .replaceAll(RegExp(r',?\s*enchaîn\w*', caseSensitive: false), '')
+              .replaceAll(RegExp(r',?\s*enchaîn\S*', caseSensitive: false), '')
               .replaceAll(RegExp(r'^[\s,·]+|[\s,·]+$'), '')
         : rawSubtitle;
     if (ex.main && subtitle.toLowerCase() == 'lift principal') subtitle = '';
@@ -1891,9 +2012,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           for (var i = 0; i < log.sets.length; i++)
             store.miniSetPlanFor(widget.week.n, widget.day.j, ex, i),
         ].any((p) => p != null);
-    final (coach, coachRow) = !readOnly && widget.adapt && ex.engine
+    final panel = !readOnly && widget.adapt && ex.engine
         ? _coachPanel(ex, intraButton: !miniSets)
-        : (const <Widget>[], null);
+        : null;
+    final coach = panel?.card ?? const <Widget>[];
+    final coachRow = panel?.row;
     final notesRow = !readOnly && widget.adapt && ex.engine
         ? _adaptNotes(ex)
         : null;
@@ -1947,6 +2070,52 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // une carte neutre (charge en `texte`, cible sur `haute`).
     final lead = ex.main && !readOnly;
     final ink = lead ? t.encre : t.texte;
+    // PR7 : carte compacte en séance : rôle, repères (tempo, repos,
+    // technique), consigne du coach, notes de Koach et référence estimée
+    // passent dans la feuille ⓘ de l'exercice.
+    final estimate = readOnly
+        ? null
+        : store.referenceEstimateText(
+            widget.adapt && ex.engine
+                ? (store.programExerciseOf(widget.week.n, widget.day.j, ex) ??
+                      ex)
+                : ex,
+          );
+    final info = <Widget>[
+      if (subtitle.isNotEmpty) Text(subtitle, style: detailStyle),
+      if (meta.isNotEmpty)
+        Wrap(spacing: KSpacing.s12, runSpacing: KSpacing.s4, children: meta),
+      for (final l in panel?.info ?? const <String>[])
+        Text(l, style: KType.corps.copyWith(color: t.texte)),
+      if (estimate != null)
+        Text(
+          estimate,
+          key: ValueKey('reference-estimate-${ex.id}'),
+          style: detailStyle,
+        ),
+      // Notes du coach et calibrage : deux lignes ouvrables.
+      if (openRows.isNotEmpty)
+        Material(
+          color: t.haute,
+          shape: KRadius.menuShape,
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            children: [
+              for (var i = 0; i < openRows.length; i++) ...[
+                if (i > 0)
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: KSpacing.s14,
+                    endIndent: KSpacing.s14,
+                    color: t.filet,
+                  ),
+                openRows[i],
+              ],
+            ],
+          ),
+        ),
+    ];
     final head = <Widget>[
       // ----- Prescription -----
       Padding(
@@ -1963,17 +2132,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (lead)
-                          Padding(
-                            key: ValueKey('main-lift-${ex.id}'),
-                            padding: const EdgeInsets.only(bottom: KSpacing.s4),
-                            child: Text(
-                              t.title('Lift principal'),
-                              style: t.titleStyle(
-                                KType.micro.copyWith(color: t.encre),
-                              ),
-                            ),
-                          ),
                         // C3 : jamais coupé ; C4 : capitales du titre
                         // par le jeton (U3).
                         // PR5 : carte commune : la lettre de l'exercice
@@ -1986,19 +2144,39 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                             KType.titreSeance.copyWith(color: t.texte),
                           ),
                         ),
-                        if (subtitle.isNotEmpty)
+                        // PR7 : en séance, le rôle est dans la feuille ⓘ.
+                        if (readOnly && subtitle.isNotEmpty)
                           Text(subtitle, style: detailStyle),
                       ],
                     ),
                   ),
                 ),
+                // PR7 : séance précédente, note et colonnes dans le menu de
+                // l'exercice (plus de barre d'outils sous les séries).
+                if (!readOnly)
+                  KIconButton(
+                    key: ValueKey('${ex.id}-menu'),
+                    icon: Icons.more_horiz_rounded,
+                    tooltip: 'Plus d’options',
+                    color: log.note.isNotEmpty || _notesOpen.contains(k)
+                        ? t.encre
+                        : t.texte2,
+                    onPressed: () => _exerciseMenu(
+                      k,
+                      hasPrevious: prev != null,
+                      columns: !noLoad,
+                      sp: sp,
+                      showKg: showKg,
+                      showV: showV,
+                    ),
+                  ),
                 if (!readOnly || (!unresolved && ex.cue.isNotEmpty))
                   KIconButton(
                     key: ValueKey('${ex.id}-instructions'),
                     icon: Icons.info_outline_rounded,
                     tooltip: 'Consignes de l’exercice',
                     color: t.texte2,
-                    onPressed: () => _showCue(ex),
+                    onPressed: () => _showCue(ex, info: info),
                   ),
               ],
             ),
@@ -2076,7 +2254,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   ),
               ],
             ),
-            if (meta.isNotEmpty)
+            if (readOnly && meta.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: KSpacing.s8),
                 child: Wrap(
@@ -2122,51 +2300,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               if (log.koach != null) Text(log.koach!, style: detailStyle),
             ],
             ...coach,
-            // CI1f : « N × ? reps » servi sur une référence estimée.
-            if (!readOnly)
-              if (store.referenceEstimateText(
-                    widget.adapt && ex.engine
-                        ? (store.programExerciseOf(
-                                widget.week.n,
-                                widget.day.j,
-                                ex,
-                              ) ??
-                              ex)
-                        : ex,
-                  )
-                  case final x?)
-                Padding(
-                  key: ValueKey('reference-estimate-${ex.id}'),
-                  padding: const EdgeInsets.only(top: KSpacing.s8),
-                  child: Text(x, style: detailStyle),
-                ),
-            // Notes du coach et calibrage : deux lignes ouvrables.
-            if (openRows.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: KSpacing.s8),
-                child: Material(
-                  color: t.haute,
-                  shape: KRadius.menuShape,
-                  clipBehavior: Clip.antiAlias,
-                  child: Column(
-                    children: [
-                      for (var i = 0; i < openRows.length; i++) ...[
-                        if (i > 0)
-                          Divider(
-                            height: 1,
-                            thickness: 1,
-                            indent: KSpacing.s14,
-                            endIndent: KSpacing.s14,
-                            color: t.filet,
-                          ),
-                        openRows[i],
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-            // Séance précédente : affichée à la demande (icône
-            // d'historique de la barre d'outils), correctifs UI.
+            // Séance précédente : affichée à la demande (menu de
+            // l'exercice), correctifs UI.
             if (prev != null && _prevOpen.contains(k))
               Padding(
                 key: ValueKey('previous-${ex.id}'),
@@ -2224,6 +2359,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           ex.timer == null &&
           sp.every != null &&
           _group == null &&
+          _sharedEvery == null &&
           !sameTiming)
         _everyButton(sp, log.sets.length),
       if (!readOnly && ex.timer == null && sp.kind == 'duration')
@@ -2354,91 +2490,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             style: KType.corps.copyWith(color: t.texte2),
           ),
         ),
-      // ----- Barre d'outils de la série (C13 : 48 dp) -----
-      if (!readOnly) ...[
-        const SizedBox(height: KSpacing.s4),
-        Divider(height: 1, thickness: 1, color: t.filet),
-        Padding(
-          padding: EdgeInsets.zero,
-          child: Row(
-            children: [
-              KIconButton(
-                icon: Icons.remove_rounded,
-                tooltip: 'Retirer une série',
-                onPressed: () {
-                  if (log.removeLastSet()) {
-                    store.saveLogs(affectsProgression: false);
-                    setState(() {});
-                  }
-                },
-              ),
-              KIconButton(
-                icon: Icons.add_rounded,
-                tooltip: 'Ajouter une série',
-                onPressed: () {
-                  log.addSet();
-                  _prefill(ex, sp, log);
-                  store.saveLogs(affectsProgression: false);
-                  setState(() {});
-                },
-              ),
-              const SizedBox(width: KSpacing.s4),
-              // Le compteur reste entier : il se réduit en grand texte
-              // plutôt que de couper « séries » (C3).
-              Expanded(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text(
-                    '${log.sets.length} série${log.sets.length > 1 ? 's' : ''}',
-                    maxLines: 1,
-                    style: KType.libelle.copyWith(color: t.texte2),
-                  ),
-                ),
-              ),
-              if (prev != null)
-                KIconButton(
-                  key: ValueKey('${ex.id}-previous-toggle'),
-                  tooltip: _prevOpen.contains(k)
-                      ? 'Masquer la séance précédente'
-                      : 'Séance précédente',
-                  icon: Icons.history_rounded,
-                  color: _prevOpen.contains(k) ? t.encre : t.texte2,
-                  onPressed: () => setState(() {
-                    if (!_prevOpen.add(k)) _prevOpen.remove(k);
-                  }),
-                ),
-              KIconButton(
-                key: ValueKey('${ex.id}-note-toggle'),
-                tooltip: _notesOpen.contains(k)
-                    ? 'Masquer la note'
-                    : log.note.isEmpty
-                    ? 'Ajouter une note'
-                    : 'Afficher la note',
-                icon: log.note.isEmpty
-                    ? Icons.note_add_outlined
-                    : Icons.notes_rounded,
-                color: _notesOpen.contains(k) || log.note.isNotEmpty
-                    ? t.encre
-                    : t.texte2,
-                onPressed: () {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  setState(() {
-                    if (!_notesOpen.add(k)) _notesOpen.remove(k);
-                  });
-                },
-              ),
-              if (!noLoad)
-                KIconButton(
-                  icon: Icons.tune_rounded,
-                  tooltip: 'Colonnes',
-                  color: t.texte2,
-                  onPressed: () => _columns(k, sp, showKg, showV),
-                ),
-            ],
-          ),
-        ),
-      ],
       if (_notesOpen.contains(k)) ...[
         const SizedBox(height: KSpacing.s8),
         if (readOnly)
@@ -3242,11 +3293,14 @@ String groupTitle(kc.GroupSpec g) {
           '${g.timeCapSeconds == null ? '' : ' (limite ${_minutes(g.timeCapSeconds!)})'}',
     kc.GroupFormat.amrap =>
       'AMRAP ${_minutes(g.durationSeconds ?? 60)} : un maximum de tours',
-    // PR5 : E2MOM, E90s… nommés par leur intervalle.
+    // PR5 : E2MOM, E90s… nommés par leur intervalle ; PR7 : le nom dit
+    // déjà l'intervalle (« E2MOM · 8 tours · 16 min »).
     kc.GroupFormat.emom =>
-      '${ct.everyFormatName(g.intervalSeconds ?? 60)} '
-          '${_minutes(g.durationSeconds ?? 60)}'
-          '${(g.intervalSeconds ?? 60) == 60 ? '' : ' · départ toutes les ${_minutes(g.intervalSeconds!)}'}',
+      (g.intervalSeconds ?? 60) == 60
+          ? 'EMOM · ${_minutes(g.durationSeconds ?? 60)}'
+          : '${ct.everyFormatName(g.intervalSeconds!)} · '
+                '${groupPlannedRounds(g)} tours · '
+                '${_minutes(g.durationSeconds ?? 60)}',
     kc.GroupFormat.chipper =>
       'Chipper : tout, une fois, au meilleur temps'
           '${g.timeCapSeconds == null ? '' : ' (limite ${_minutes(g.timeCapSeconds!)})'}',
@@ -3255,6 +3309,24 @@ String groupTitle(kc.GroupSpec g) {
           '${rest == null || rest == 0 ? '' : ', récupération ${unitText('$rest', 's')}'}',
   };
 }
+
+/// Tours prévus d'un groupe (null : maximum, AMRAP ; une fois, chipper).
+int? groupPlannedRounds(kc.GroupSpec g) => switch (g.format) {
+  kc.GroupFormat.amrap || kc.GroupFormat.chipper => null,
+  kc.GroupFormat.emom =>
+    ((g.durationSeconds ?? 60) / (g.intervalSeconds ?? 60)).round(),
+  _ => g.rounds ?? 1,
+};
+
+/// PR7 : tours comptés sur les séries validées (rien à saisir) ; AMRAP,
+/// tours pour le temps et chipper gardent leur saisie (tours entamés,
+/// temps).
+bool groupAutoRounds(kc.GroupFormat f) => switch (f) {
+  kc.GroupFormat.amrap ||
+  kc.GroupFormat.roundsForTime ||
+  kc.GroupFormat.chipper => false,
+  _ => true,
+};
 
 /// Consigne courte d'un groupe.
 String groupHint(kc.GroupSpec g, int members) => switch (g.format) {
@@ -3318,12 +3390,7 @@ class _GroupCardState extends State<_GroupCard> {
       g.format == kc.GroupFormat.chipper;
 
   /// Tours prévus (null : maximum, AMRAP ; une fois, chipper).
-  int? get _planned => switch (g.format) {
-    kc.GroupFormat.amrap || kc.GroupFormat.chipper => null,
-    kc.GroupFormat.emom =>
-      ((g.durationSeconds ?? 60) / (g.intervalSeconds ?? 60)).round(),
-    _ => g.rounds ?? 1,
-  };
+  int? get _planned => groupPlannedRounds(g);
 
   @override
   void initState() {
@@ -3493,7 +3560,9 @@ class _GroupCardState extends State<_GroupCard> {
             padding: const EdgeInsets.only(top: KSpacing.s4),
             child: Text(hint, style: KType.detail.copyWith(color: k.texte2)),
           ),
-        if (g.format != kc.GroupFormat.chipper)
+        // PR7 : tours comptés sur les séries validées (EMOM, superset,
+        // circuit, intervalles) : pas de saisie.
+        if (g.format != kc.GroupFormat.chipper && !groupAutoRounds(g.format))
           _stepper(
             planned == null ? 'Tours complets' : 'Tours faits (sur $planned)',
             rounds,

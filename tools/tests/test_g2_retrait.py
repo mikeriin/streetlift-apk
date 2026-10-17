@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.1.6 : départs chronométrés, un chrono par carte (dev7.1.6, PR6).
-        self.assertEqual(version, '7.1.6')
+        # 7.1.7 : carte d'exercice compacte (dev7.1.7, PR7).
+        self.assertEqual(version, '7.1.7')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)
