@@ -668,6 +668,45 @@ class SessionExercisePageState extends State<SessionExercisePage> {
 
   /// Exercices dont la séance précédente est affichée (correctifs UI).
   final Set<int> _prevOpen = {};
+
+  /// PR3 : cartes des exercices de la page, pour amener à l'écran
+  /// l'exercice de l'étape suivante (tour par tour).
+  final Map<int, GlobalKey> _cardKeys = {};
+
+  GlobalKey _cardKey(int k) => _cardKeys.putIfAbsent(k, GlobalKey.new);
+
+  /// PR3 : prochaine étape d'une page d'exercices enchaînés, faits tour par
+  /// tour (A1, B1, A2, B2…) : (exercice, série) ; null : tout est fait.
+  (int, int)? _nextStep() {
+    var rounds = 0;
+    for (final l in logs) {
+      if (l.sets.length > rounds) rounds = l.sets.length;
+    }
+    for (var i = 0; i < rounds; i++) {
+      for (var k = 0; k < logs.length; k++) {
+        final sets = logs[k].sets;
+        if (i < sets.length && !sets[i].done) return (k, i);
+      }
+    }
+    return null;
+  }
+
+  /// PR3 : après une série, l'exercice de l'étape suivante vient à l'écran.
+  void _followOrder(int k) {
+    if (widget.exs.length < 2) return;
+    final next = _nextStep();
+    if (next == null || next.$1 == k) return;
+    final target = _cardKeys[next.$1]?.currentContext;
+    if (target == null) return;
+    unawaited(
+      Scrollable.ensureVisible(
+        target,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+        alignment: .05,
+      ),
+    );
+  }
   int epoch = 0; // force la recréation des champs (reprise du précédent…)
 
   @override
@@ -973,6 +1012,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       }
     }
     if (s.done) _celebrateRecord(ex, s);
+    if (s.done) _followOrder(k);
     if (!s.done || !store.settings.autoTimer) return;
     if (widget.exs.length == 2 && k == 0) {
       showKSnack(
@@ -1633,9 +1673,18 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ),
         const SizedBox(height: KSpacing.cardGap),
       ],
+      // PR3 : ordre d'exécution tour par tour des exercices enchaînés.
+      if (!widget.readOnly && widget.exs.length > 1) ...[
+        _RoundOrder(
+          names: [for (final e in widget.exs) store.splitName(e.name).$1],
+          done: [for (final l in logs) [for (final s in l.sets) s.done]],
+          next: _nextStep(),
+        ),
+        const SizedBox(height: KSpacing.cardGap),
+      ],
       for (var k = 0; k < widget.exs.length; k++) ...[
         if (k > 0) const SizedBox(height: KSpacing.cardGap),
-        _block(k),
+        KeyedSubtree(key: _cardKey(k), child: _block(k)),
       ],
     ],
   );
@@ -3115,6 +3164,98 @@ String groupHint(kc.GroupSpec g, int members) => switch (g.format) {
               'tours.'
         : 'Un tour, puis la récupération prévue.',
 };
+
+/// PR3 : ordre d'exécution d'une page d'exercices enchaînés, tour par
+/// tour : « T1 · Dip lesté → Tractions PdC », étapes faites cochées, étape
+/// suivante en `encre`.
+class _RoundOrder extends StatelessWidget {
+  final List<String> names;
+
+  /// Séries faites de chaque exercice, dans l'ordre.
+  final List<List<bool>> done;
+
+  /// Prochaine étape (exercice, série) ; null : tout est fait.
+  final (int, int)? next;
+  const _RoundOrder({
+    required this.names,
+    required this.done,
+    required this.next,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    var rounds = 0;
+    for (final d in done) {
+      if (d.length > rounds) rounds = d.length;
+    }
+    Widget step(int e, int i) {
+      final ok = done[e][i];
+      final now = next == (e, i);
+      final color = now ? k.encre : (ok ? k.texte2 : k.texte);
+      // Texte qui passe à la ligne : jamais coupé sur un écran étroit.
+      return Text.rich(
+        TextSpan(
+          children: [
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Padding(
+                padding: const EdgeInsets.only(right: KSpacing.s4),
+                child: Icon(
+                  ok ? Icons.check_rounded : Icons.circle_outlined,
+                  size: KSize.iconSmall,
+                  color: ok ? k.validation : color,
+                ),
+              ),
+            ),
+            TextSpan(text: names[e]),
+          ],
+        ),
+        style: (now ? KType.corpsFort : KType.corps).copyWith(color: color),
+      );
+    }
+
+    return KCard(
+      key: const ValueKey('round-order'),
+      padding: const EdgeInsets.all(KSpacing.s16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Ordre : tour par tour',
+            style: KType.section.copyWith(color: k.texte2),
+          ),
+          for (var i = 0; i < rounds; i++)
+            Padding(
+              padding: const EdgeInsets.only(top: KSpacing.s8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: KSize.target,
+                    child: Text(
+                      'T${i + 1}',
+                      style: KType.chiffrePetit.copyWith(color: k.texte2),
+                    ),
+                  ),
+                  Expanded(
+                    child: Wrap(
+                      spacing: KSpacing.s8,
+                      runSpacing: KSpacing.s4,
+                      children: [
+                        for (var e = 0; e < done.length; e++)
+                          if (i < done[e].length) step(e, i),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
 
 /// CI1f : en-tête d'un groupe d'exercices enchaînés (format, ordre,
 /// chrono du groupe) et son résultat (tours, temps), journalisé avec le

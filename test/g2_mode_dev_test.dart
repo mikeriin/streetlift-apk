@@ -47,9 +47,9 @@ void main() {
   group('build de développement (G2)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test('version affichée : « dev7.1.2 » (départ affiché, PR2)', () {
+    test('version affichée : « dev7.1.3 » (ordre tour par tour, PR3)', () {
       expect(kAppVersion, 'dev$kVersion');
-      expect(kAppVersion, 'dev7.1.2');
+      expect(kAppVersion, 'dev7.1.3');
     });
 
     test('copie et suppression séparées par session', () async {

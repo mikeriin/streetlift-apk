@@ -462,8 +462,8 @@ void main() {
     });
   });
 
-  test('version affichée : « 7.1.2 » hors build de développement (PR2)', () {
-    expect(kVersion, '7.1.2');
-    expect(kAppVersion, '7.1.2');
+  test('version affichée : « 7.1.3 » hors build de développement (PR3)', () {
+    expect(kVersion, '7.1.3');
+    expect(kAppVersion, '7.1.3');
   });
 }
