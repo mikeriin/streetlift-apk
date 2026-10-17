@@ -551,3 +551,27 @@ def test_la_zone_sensible_l_emporte_sur_la_rampe_de_retour():
     assert expo(seance(k, 43, [dips('d', 10)], manquees=manquees)) == 5
     out = seance(k, 50, [dips('d', 10)], douleurs=[{'zone': SH, 'intensity': 3}])
     assert SH not in k.seances.retour_zone and k.seances.budget_semaine[SH] == 5 and expo(out) == 5
+
+
+def test_le_vrai_test_reste_possible_sous_la_rampe_de_retour():
+    """La rampe de retour (sans douleur connue) n'interdit pas le vrai test :
+    `_vrai_test` est consulté sur un mouvement dont la zone est en retour
+    (A6.1 l'interdit déjà la semaine même du retour : séance hors de cette
+    semaine ici)."""
+    k = koach()
+    ex = 'sl-dips-leste'
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 6, ex=ex)])
+    manquees = [{'semaine': w, 'genre': 'accumulation', 'items': [dips('d', 6, ex=ex)]} for w in (4, 5)]
+    seance(k, 43, [dips('d', 6, ex=ex)], manquees=manquees)
+    s = k.seances
+    assert SH in s.retour_zone
+    appels = []
+    vt0 = s._vrai_test
+
+    def vt(servi, plan, piste):
+        appels.append(servi['exerciseId'])
+        return vt0(servi, plan, piste)
+    s._vrai_test = vt
+    seance(k, 51, [dips('d', 6, ex=ex)])
+    assert SH in s.budget_semaine and SH in s.retour_zone and appels == [ex]

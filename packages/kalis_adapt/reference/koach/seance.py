@@ -896,9 +896,14 @@ class Seances(object):
             plan = self.plans.get(item['slotId'])
             ex_id = item['exerciseId']
             if plan is not None and ex_id not in testes and item.get('kind') == 'work' \
-                    and not any(z in self.budget_zone for z in (zones.get(ex_id) or ({}, set()))[1]):
+                    and not any(z in self.budget_zone and z not in self.retour_zone
+                                for z in (zones.get(ex_id) or ({}, set()))[1]):
                 # 1.0.5 : pas de vrai test (montée de charge) sur un
-                # mouvement qui provoque une zone sous rampe du réalisé.
+                # mouvement qui provoque une zone SENSIBLE sous rampe du
+                # réalisé ; la rampe de retour après une coupure (règle 3
+                # bis, sans douleur connue) ne l'interdit pas : A6.1 l'interdit
+                # déjà la semaine du retour, et la montée compte dans le
+                # permis comme toute série.
                 vt = self._vrai_test(servi, plan, self.m.pistes.get(ex_id))
                 if vt is not None and not self._duree_permet_test(items, item, vt, sum(
                         1 for x in out if x.get('koach') == 'vrai_test')):
