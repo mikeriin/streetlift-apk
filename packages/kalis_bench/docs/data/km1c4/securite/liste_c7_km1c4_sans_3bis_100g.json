@@ -1,0 +1,43 @@
+{
+ "liste": [
+  {
+   "constats": {
+    "poussee_douleur": 1
+   },
+   "exemples": [],
+   "saison": [
+    "street_03_debutante",
+    "seances_manquees",
+    "b",
+    57
+   ]
+  },
+  {
+   "constats": {
+    "poussee_douleur": 2
+   },
+   "exemples": [],
+   "saison": [
+    "street_03_debutante",
+    "seances_manquees",
+    "b",
+    67
+   ]
+  },
+  {
+   "constats": {
+    "poussee_douleur": 1
+   },
+   "exemples": [],
+   "saison": [
+    "street_03_debutante",
+    "seances_manquees",
+    "b",
+    81
+   ]
+  }
+ ],
+ "saisons": 90600,
+ "saisons_touchees": 3,
+ "violations": 4
+}

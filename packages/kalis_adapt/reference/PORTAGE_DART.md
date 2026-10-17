@@ -229,8 +229,9 @@ Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Po
   null && permis < ecrit` : `retourZone[z] = (semaine, depart)`, `budgetSemaine[z] = permis`. Dans `ouvrir`, après la
   boucle des zones sensibles : pour chaque zone de `retourZone` (triée), si elle est dans `budgetSemaine` ou sensible
   → retirée de `retourZone` ; sinon `(b, sortie) = _budgetRetour(z)` ; `sortie || b == null` → retirée, sinon
-  `budgetSemaine[z] = b` (sans toucher `rampeZone`). Le permis du jour, `_item` et l'interdiction du vrai test
-  s'appliquent aux zones en retour comme aux zones sensibles (même `budgetZone`).
+  `budgetSemaine[z] = b` (sans toucher `rampeZone`). Le permis du jour et `_item` s'appliquent aux zones en retour comme aux zones
+  sensibles (même `budgetZone`) ; l'interdiction du vrai test ne vaut que pour une zone de `budgetZone` qui n'est
+  pas dans `retourZone`.
 - `modele.dart` : `elargir(part)` : `lam = clamp(part, 0, 1)` ; `idx` = indices de `variancesAPriori()` ; pour chaque
   branche (`P` principale, puis `alt.P` si la branche « mauvais jour » existe, dans l'ordre de `_branches`) : lignes
   puis colonnes de chaque `i` multipliées par `(1 − lam)` ; puis, si `lam < 1`, le bloc `idx × idx` divisé par

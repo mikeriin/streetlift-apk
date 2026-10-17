@@ -1,5 +1,5 @@
 #!/bin/bash
-# Mise au point KM1c4, runs E à H (export 0.4.2 (PART 0) ; campagne Python de la référence 1.0.5 après relecture sur les 100 graines, 20 parts (61-80)).
+# Mise au point KM1c4, runs E à I (export 0.4.2 (PART 0) ; campagne Python de la référence 1.0.5 après relecture sur les 100 graines, 20 parts (61-80)).
 #  PART 0     : export KM1 sur kalis_plan 0.4.2 (34 profils, témoin 16 graines) ; données neuves
 #               mises à la place de celles de 0.4.1 dans l'arbre de la CI ; sécurité des blocs ;
 #               tests Python de la référence ; tests km de kalis_bench (version de référence 0.4.2)
@@ -9,7 +9,7 @@
 #  PART 41-48 : campagne Python (référence 1.0.5 en cours) graines 0-5, parts 1/8..8/8, sur les saisons de
 #               kalis_plan 0.4.2 (export rapide sans témoin dans la part), témoin de 0.4.1 lu
 #  PART 61-80 : campagne Python (référence 1.0.5) graines 0-99, parts 1/20..20/20, mêmes saisons 0.4.2
-#               (run H : règle 3 bis, rampe de retour après une coupure ; arbre portant déjà les données 0.4.2)
+#               (runs H et I : règle 3 bis, rampe de retour après une coupure, vrai test permis sous la rampe de retour ; arbre portant déjà les données 0.4.2)
 #  PART 81-84 : run F : les parts 13/20 et 20/20 du run E (restées en file derrière la limite de 20 jobs)
 #               refaites en quatre demi-parts 13/40, 33/40, 20/40, 40/40 (même matrice, même empreinte) ;
 #               la publication du run F réunit ses parts et les artefacts du run E (39016950696) — run F annulé,
