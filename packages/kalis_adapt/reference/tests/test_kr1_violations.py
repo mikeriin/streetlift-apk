@@ -18,7 +18,14 @@ vérifie que la violation a disparu ET le mécanisme qui la retire :
   la tenait pour « connue » (`_pain_known` non remis à faux au début d'un
   épisode tendineux) : corrigé dans le modèle de vérité (Python ici, Dart au
   portage KM2c3) ; et dès qu'elle est signalée, Koach retire les dips
-  (douleur ≥ `douleur_moyenne_contrainte` sur une sollicitation 0,5).
+  (douleur ≥ `douleur_moyenne_contrainte` sur une sollicitation 0,5) ;
+* douleur pendant une coupure (`street_03`, séances manquées, vérité b,
+  graines 57, 67, 81 : les 4 poussées restantes de la première campagne de
+  KM1c4) : un épisode tendineux né et fini pendant deux semaines sans séance
+  n'est jamais signalé, et le retour à l'écrit (10 à 17 séries au poignet)
+  dépasse la tolérance réduite de moitié ; règle 3 bis : après une coupure
+  de la zone (≥ `coupure_j` jours sans exposition, séances manquées), la zone
+  repart de la moitié de son habitude, +1 ou +20 % par semaine.
 """
 import os
 import sys
@@ -182,6 +189,22 @@ def test_aggravation_sur_une_douleur_jamais_signalee():
     assert dips and [d for d in dips if d[0] > j0]
     avant = max(c for (j, c) in dips if j <= j0 and c is not None)
     assert all(c <= avant + 1e-9 for (j, c) in dips if j > j0 and c is not None)
+
+
+def test_douleur_pendant_une_coupure_jamais_signalee():
+    """`street_03`, séances manquées, vérité b, graines 57, 67, 81 (première
+    campagne de KM1c4 : 1, 2 et 1 poussées) : l'épisode du poignet (4/10,
+    tendon) naît et finit pendant une coupure de 14 à 16 jours, jamais
+    signalé ; au retour, 1.0.4 et la première règle 3 servaient l'écrit (10,
+    17, 15 séries pour une tolérance d'environ 5) ; règle 3 bis : rampe de
+    retour (départ à la moitié de l'habitude), 0 poussée, expositions
+    bornées."""
+    for g in (57, 67, 81):
+        e = _Espion()
+        tour = _rejouer('street_03_debutante', 'seances_manquees', 'b', g, e)
+        assert tour.pain_flares == 0 and tour.pain_aggravations == 0, (g, e.semaines)
+        assert any(z == 'wrist_hand' for (z, w) in e.budgets), g
+        _expositions_bornees(e, 'wrist_hand')
 
 
 def test_douleur_tendineuse_inconnue_tant_que_non_signalee():

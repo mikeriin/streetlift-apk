@@ -284,6 +284,9 @@ class Seances(object):
         self.budget_zone = {}    # zone sensible -> séries encore permises aujourd'hui (rampe du réalisé)
         self.budget_semaine = {}  # zone sensible -> séries permises cette semaine (total)
         self.rampe_zone = set()  # zones encore sous rampe après la fenêtre sensible (sortie progressive)
+        self.retour_zone = {}    # zone -> (semaine d'entrée, départ) de la rampe de retour après coupure (règle 3 bis)
+        self.manque_zone = {}    # zone -> {semaine: séries écrites des séances manquées qui la provoquent}
+        self.expo_jour = {}      # zone -> dernier jour d'exposition réalisée (règle 3 bis)
         self.reserve_echauffement = {}  # zone sous budget -> séries que l'échauffement peut prendre aujourd'hui
         # Retour gradué au volume (critères `volume_trop_vite` et
         # `tendon_figures` du banc), recalculé du journal (contexte des
@@ -437,6 +440,7 @@ class Seances(object):
             self.ecrit_semaines[m['semaine']] = self.ecrit_semaines.get(m['semaine'], 0.0) + \
                 sum(self._series_dures(p) for p in m.get('items') or [])
             self._compter_ecrit_zone(m['semaine'], m.get('items') or [])
+            self._compter_manque_zone(m['semaine'], m.get('items') or [])
         if c.get('semaine') is not None:
             self.allegees[c['semaine']] = c.get('genre') in legeres
         self.budget_semaine = {}
@@ -447,6 +451,17 @@ class Seances(object):
             if b is not None:
                 self.budget_semaine[z] = b
                 self.rampe_zone.add(z)
+        # Règle 3 bis : zones en rampe de retour (séances manquées) ; la
+        # rampe de la zone sensible l'emporte dès qu'elle s'applique.
+        for z in sorted(self.retour_zone):
+            if z in self.budget_semaine or self.g.sensible(z):
+                del self.retour_zone[z]
+                continue
+            b, sortie = self._budget_retour(z)
+            if sortie or b is None:
+                del self.retour_zone[z]
+            else:
+                self.budget_semaine[z] = b
         for mem in self.memoire.values():
             mem.charge_seance = None
             mem.reps_seance = None
@@ -535,6 +550,28 @@ class Seances(object):
 
     def _ecrit_zone(self, z, semaine):
         return self.ecrit_zone.get(z, {}).get(semaine, 0)
+
+    def _compter_manque_zone(self, semaine, items):
+        """Séries écrites des séances manquées de la semaine [semaine] par
+        zone provoquée (exercices déjà vus) : ce que la zone n'a pas reçu
+        (règle 3 bis)."""
+        for p in items:
+            zz = self.zones_ex.get(p['exerciseId'])
+            if not zz:
+                continue
+            n = int(p.get('sets') or 0)
+            if n <= 0:
+                continue
+            for z in zz[1]:
+                e = self.manque_zone.setdefault(z, {})
+                e[semaine] = e.get(semaine, 0) + n
+
+    def _manque_recent(self, z):
+        """Vrai si une séance manquée a privé la zone [z] d'exposition dans
+        la fenêtre de la charge chronique."""
+        semaine = self.g.semaine
+        m = self.manque_zone.get(z) or {}
+        return any(m.get(k, 0) > 0 for k in range(semaine - int(self.s['charge_chronique_semaines']), semaine))
 
     def _budget_zone_semaine(self, z):
         """1.0.5 (lot KM1c4, règles 1 à 3) : (permis, sortie) — séries
@@ -659,6 +696,133 @@ class Seances(object):
                 return None, True
         return total, False
 
+    def _habitude_avant(self, z, fin):
+        """Habitude de la zone [z] avant une coupure (règle 3 bis) : moyenne
+        de l'exposition réalisée sur les `charge_chronique_semaines` (4)
+        semaines calendaires qui finissent à la semaine [fin] (celle de la
+        dernière exposition), limitées à celles qui suivent la première
+        semaine connue du journal (allègements compris, semaine manquée ou
+        sans séance à 0 : la charge chronique du rapport aigu:chronique,
+        Gabbett 2016, sur les semaines que le journal connaît). None sans
+        semaine connue."""
+        connues = list(self.g.semaines) + list(self.allegees)
+        if not connues:
+            return None
+        premiere = min(connues)
+        ks = [k for k in range(fin - int(self.s['charge_chronique_semaines']) + 1, fin + 1) if k >= premiere]
+        if not ks:
+            return None
+        return sum(self._dose_semaine(z, k) for k in ks) / float(len(ks))
+
+    def _depart_retour(self, z):
+        """Permis de la première semaine de retour d'une zone après une
+        coupure : `reprise_dose_depart` × habitude d'avant la coupure (la
+        moitié : règle A3 de 0.3.1, reprise à 50 %, et pratique du retour
+        après deux semaines d'arrêt), `reprise_dose_sans_habitude` sans
+        exposition connue, jamais sous `reprise_dose_min`."""
+        s = self.s
+        fin = self.expo_jour[z] // 7
+        habitude = self._habitude_avant(z, fin)
+        if habitude is None or habitude <= 0:
+            total = int(s['reprise_dose_sans_habitude'])
+        else:
+            total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
+        if total < s['reprise_dose_min']:
+            total = int(s['reprise_dose_min'])
+        return total
+
+    def _budget_retour(self, z, depart=None, debut=None):
+        """1.0.5 (lot KM1c4, règle 3 bis, « rampe du réalisé après une
+        coupure ») : (permis, sortie) pour une zone sans douleur connue qui
+        revient d'une coupure (`_entrer_retour`). Même rampe que la zone
+        sensible : permis = exposition réalisée de la dernière semaine de
+        charge connue depuis l'entrée dans la rampe ([debut]) + 1 ou
+        + `reprise_dose_hausse` (une semaine de charge sans exposition
+        renvoie à la dernière exposée parmi les `rampe_zone_semaines_max`
+        précédentes, jamais avant [debut]) ; sans référence, le départ
+        [depart] (`_depart_retour`, figé à l'entrée) ; jamais sous
+        `reprise_dose_min`. `sortie` dès que le permis atteint l'écrit de la
+        zone (dernière semaine de charge connue et semaine en cours vue
+        jusqu'ici). Fonction pure (l'appelant tient `retour_zone`)."""
+        s = self.s
+        semaine = self.g.semaine
+        if debut is None or depart is None:
+            r = self.retour_zone.get(z)
+            if r is None:
+                return None, False
+            debut, depart = r
+        charge = self._semaine_de_charge
+        ref = None
+        w = semaine - 1
+        while w >= debut and w >= 0:
+            if charge(w):
+                ref = self._dose_semaine(z, w)
+                if ref <= 0:
+                    for k in range(w - 1, max(debut, w - s['rampe_zone_semaines_max']) - 1, -1):
+                        if charge(k) and self._dose_semaine(z, k) > 0:
+                            ref = self._dose_semaine(z, k)
+                            break
+                break
+            w -= 1
+        if ref is not None and ref > 0:
+            total = max(int(ref) + 1, int(math.floor(ref * (1 + s['reprise_dose_hausse']) + 1e-9)))
+        else:
+            total = int(depart)
+        if total < s['reprise_dose_min']:
+            total = int(s['reprise_dose_min'])
+        ecrit_ref = self._ecrit_zone(z, semaine)
+        w = semaine - 1
+        while w >= 0:
+            if charge(w):
+                ecrit_ref = max(ecrit_ref, self._ecrit_zone(z, w))
+                break
+            w -= 1
+        if total >= ecrit_ref:
+            return None, True
+        return total, False
+
+    def _entrer_retour(self, items):
+        """Règle 3 bis : une zone sans douleur connue, ni sous rampe, qui
+        n'a reçu aucune exposition depuis `coupure_j` jours au moins (une
+        coupure, comme A6.1) alors qu'une séance manquée l'écrivait dans
+        les `charge_chronique_semaines` dernières semaines, entre dans la
+        rampe de retour quand l'écrit de la semaine (séances vues et
+        manquées, séance du jour, séances restantes) dépasse son départ ;
+        son permis est posé pour la semaine. Une douleur survenue pendant
+        la coupure n'a pu être signalée : la zone repart comme une zone
+        sensible, de la moitié de son habitude. Hors coupure, le plan (et
+        le retour gradué au volume) gouverne : une progression écrite, une
+        séance manquée ici ou là, ne sont pas bornées. Une zone jamais
+        exposée dans le journal est introduite par le plan."""
+        c = self.contexte or {}
+        semaine = self.g.semaine
+        zones = set(self.dose_zone)
+        reste = {}
+        for seance in list(c.get('reste_semaine') or []) + [items]:
+            for p in seance:
+                zz = self.zones_ex.get(p['exerciseId'])
+                if not zz:
+                    continue
+                for z in zz[1]:
+                    zones.add(z)
+                    if seance is not items:
+                        reste[z] = reste.get(z, 0) + int(p.get('sets') or 0)
+        for z in sorted(zones):
+            if z in self.budget_semaine or z in self.retour_zone or z in self.rampe_zone or self.g.sensible(z):
+                continue
+            if z not in self.expo_jour or self.jour - self.expo_jour[z] < self.s['coupure_j']:
+                continue
+            if not self._manque_recent(z):
+                continue
+            ecrit = self._ecrit_zone(z, semaine) + reste.get(z, 0)
+            if ecrit <= 0:
+                continue
+            depart = self._depart_retour(z)
+            permis, _ = self._budget_retour(z, depart=depart, debut=semaine)
+            if permis is not None and permis < ecrit:
+                self.retour_zone[z] = (semaine, depart)
+                self.budget_semaine[z] = permis
+
     def _budgets_zone_jour(self, items):
         """Part du budget hebdomadaire de chaque zone sensible pour la séance
         du jour : reste de la semaine réparti au prorata de l'écrit du jour et
@@ -708,6 +872,7 @@ class Seances(object):
         if sem is not None:
             self.ecrit_semaines[sem] = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(p) for p in items)
             self._compter_ecrit_zone(sem, items)
+            self._entrer_retour(items)
         self.budget_zone = self._budgets_zone_jour(items)
         # Réserve de l'échauffement : ce que le permis du jour laisse après
         # les séries de travail écrites sur la zone (le travail d'abord).
@@ -2767,6 +2932,7 @@ class Seances(object):
                     for z in zz[1]:
                         dz = self.dose_zone.setdefault(z, {})
                         dz[semaine] = dz.get(semaine, 0) + 1
+                        self.expo_jour[z] = jour
         vus = set()
         for (ex_id, slot), series in par_ex.items():
             mem = self.mem(ex_id)

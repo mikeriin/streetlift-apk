@@ -76,15 +76,24 @@ la ligne « en cours ».
   dans le bruit. Limite du job du contrôle complet relevée à 240 min (`.github/workflows/ci-paquets.yml`, reco KR1 § 8).
 - Squelette de `LIVRAISON_KM1c4.md` dans le scratchpad.
 
+- **Run E publié (13:26 UTC) et run G (assemblage sur le témoin 0.4.2) : 90 600 saisons, 0 plantée, critère 7 = 4
+  poussées (3 saisons : `street_03` séances manquées b 57, 67, 81), réalisée appariée 255 480, graine 0 et 0-5 : 0.**
+  Cause : épisode tendineux du poignet né et fini pendant une coupure de 14-16 jours, jamais signalé ; retour à
+  l'écrit (10-17 séries) pour une tolérance 5. **Règle 3 bis écrite** (`_entrer_retour`, `_budget_retour`,
+  `_depart_retour`, `_habitude_avant`, `_manque_recent` ; `charge_chronique_semaines` 4 ; 346 clés, SHA
+  d8a492b7…f26d) : zone sans douleur connue, coupure ≥ `coupure_j` avec séance manquée → départ à la moitié de
+  l'habitude d'avant, +1/+20 % jusqu'à l'écrit. Écarté : borne ACWR générale (bornait les progressions écrites et les
+  petites zones). 4 tests nouveaux + test des 3 saisons ; 295 tests verts ; fixtures régénérées ; documents à jour
+  (CONTRAT, SOURCES (+ Hulin 2014 vérifié), CHANGEMENTS, PORTAGE_DART, README).
+- Run H à pousser : campagne Python 100 graines (20 parts, sans PART 0), assemblage sur l'arbre 0.4.2.
+
 ## En cours
 
-- Attente des publications des runs E (sécurité 100 graines, critères Python 0-5) et A (export 0.4.2, point de départ).
+- Run H (campagne 1.0.5 + règle 3 bis sur les 90 600 saisons).
 
 ## Reste à faire
 
-- Intégrer les données 0.4.2 du run A (`donnees/reference`, `temoin`, `securite_dart`, catalogue, traces), régénérer les
-  fixtures, relancer pytest ; rejouer les six jeux d'adversaires (scratchpad `adv/run.sh`) et copier dans `donnees/` ;
-  `docs/data/km1c4/` (sécurité E et A, critères, temps), `docs/CRITERES_KM1C4.md`, `donnees/criteres_km1c4.json`, README ;
-  CHANGEMENTS (mesures) ; commit `moteurs`, rebase, contrôle complet sur `claude/ci-cp-a` (workflow officiel), push
-  `moteurs`, étiquette `kalis_bench-v0.5.5` ; LIVRAISON (pipeline + projet), DECISIONS_CP section KM1c4, ETAT_CP « livré »,
-  page de suivi, notification.
+- Vérifier run H (0 violation, critères 0-5 sans recul), adversaires et sans douleur à rejouer (règle 3 bis),
+  `docs/data/km1c4/`, `docs/CRITERES_KM1C4.md`, `donnees/criteres_km1c4.json`, README ; CHANGEMENTS (mesures) ;
+  commit `moteurs`, rebase, contrôle complet (workflow officiel), push `moteurs`, étiquette `kalis_bench-v0.5.5` ;
+  LIVRAISON (pipeline + projet), DECISIONS_CP KM1c4, ETAT_CP « livré », page de suivi, notification.
