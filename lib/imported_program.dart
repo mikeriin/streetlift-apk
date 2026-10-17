@@ -1227,6 +1227,44 @@ extension ImportedProgramStore on AppStore {
           durationSeconds: minutes * 60,
         ),
       );
+    } else if (sp.every != null) {
+      // PR1 : « 8×3 · E2MOM » : une ligne par série, départ toutes les
+      // `every` s (technique `emom`), dans un groupe au temps qui réunit
+      // les exercices enchaînés dans le même intervalle.
+      final every = sp.every!;
+      final m = RegExp(r'^(\d+)\s*[×x]\s*(\d+)').firstMatch(text);
+      if (m == null || info.mode == null) return null;
+      final sets = int.parse(m.group(1)!);
+      final reps = int.parse(m.group(2)!);
+      if (sets < 2 || sets > 30 || reps < 1 || reps > 100) return null;
+      line = _ImportedLine(
+        kc.ExercisePrescription(
+          slotId: slot,
+          exerciseId: id,
+          sets: sets,
+          repsLow: reps,
+          repsHigh: reps,
+          targetFlames: flames,
+          restSeconds: 0,
+          startLoadKg: startKg,
+          toCalibrate: false,
+          loadBasis: basis,
+          reasons: const <kc.Reason>[],
+          technique: kc.SetTechnique(
+            kind: kc.SetTechniqueKind.emom,
+            intervalSeconds: every,
+            intervals: sets,
+          ),
+          intensity: intensity,
+        ),
+        role,
+        group: kc.GroupSpec(
+          groupId: 'g',
+          format: kc.GroupFormat.emom,
+          intervalSeconds: every,
+          durationSeconds: sets * every,
+        ),
+      );
     } else if (sp.rowPrefix == 'R' || sp.rowPrefix == 'É') {
       // Contrastes (« 3 rounds : 3 sauts groupés + 5 squats sautés ») et
       // échelles (« 4 échelles dégressives de 7 à 1 ») : tours d'un groupe,

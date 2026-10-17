@@ -864,7 +864,7 @@ extension SessionAdaptStore on AppStore {
     final info = book.find(id);
     if (cat == null || info == null) return null;
     final sp = logSpec(e);
-    if (sp.myo || sp.cluster || sp.rowPrefix.isNotEmpty) return null;
+    if (sp.special || sp.rowPrefix.isNotEmpty) return null;
     final n = setCount(e);
     if (n < 1 || n > 20) return null;
     final text = setsLabel(e).toLowerCase().trim();
@@ -2107,7 +2107,8 @@ extension SessionAdaptStore on AppStore {
                 sp.kind == 'interval' ||
                 sp.kind == 'amrap' ||
                 sp.rowPrefix == 'É' ||
-                sp.rowPrefix == 'R'));
+                sp.rowPrefix == 'R' ||
+                sp.rowPrefix == 'D'));
     return (
       exerciseId: exerciseId,
       seconds: sp?.kind == 'duration' ? true : null,

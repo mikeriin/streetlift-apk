@@ -1766,7 +1766,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         _Meta(Icons.fitness_center_rounded, 'Charge : $loadLabel'),
       // « Reps » redit l'en-tête de colonne : le repère ne nomme que les
       // autres mesures.
-      if (!unresolved && (sp.kind != 'reps' || sp.myo || sp.cluster))
+      if (!unresolved && (sp.kind != 'reps' || sp.special))
         _Meta(Icons.repeat_rounded, kindLabel),
       if (!readOnly && showIntensity && target == null)
         _Meta(Icons.local_fire_department_outlined, nbsp(ex.intensity)),
@@ -2077,6 +2077,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               'Lancer l’EMOM de ${sp.seconds! ~/ 60} min',
               () => widget.timer.emom(sp.seconds! ~/ 60, 60),
             ),
+          // PR1 : séries au départ chronométré (E2MOM, E90s…).
+          if (!readOnly &&
+              ex.timer == null &&
+              sp.every != null &&
+              _group == null)
+            _everyButton(sp, log.sets.length),
           if (!readOnly && ex.timer == null && sp.kind == 'duration')
             _big(
               Icons.timer_outlined,
@@ -2421,6 +2427,17 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     ),
   );
 
+  /// PR1 : chrono des départs (« Lancer l’E2MOM, 8 × 120 s »).
+  Widget _everyButton(LogSpec sp, int n) {
+    final s = sp.every!;
+    final name = s % 60 == 0 ? (s == 60 ? 'EMOM' : 'E${s ~/ 60}MOM') : 'E${s}s';
+    return _big(
+      Icons.timer_outlined,
+      'Lancer l’$name, $n × $s s',
+      () => widget.timer.emom(n, s),
+    );
+  }
+
   Widget _modeButton(Exercise ex) {
     final tm = ex.timer!;
     switch (tm['type'] as String) {
@@ -2479,7 +2496,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       'emom': 'EMOM',
       'amrap': 'AMRAP',
     };
+    if (sp.restPause) return 'Rest-pause, mini-repos ${sp.intra} s';
     if (sp.myo) return 'Myo-reps, mini-repos ${sp.intra} s';
+    if (sp.every != null) return 'Départ toutes les ${sp.every} s';
+    if (sp.stages != null) {
+      return 'Drop set mécanique, ${sp.stages} paliers enchaînés';
+    }
     if (sp.cluster) return 'Clusters, mini-repos ${sp.intra} s';
     return labels[sp.kind] ?? sp.kind;
   }

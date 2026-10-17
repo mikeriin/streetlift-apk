@@ -539,6 +539,16 @@ class AppSettings {
       };
 }
 
+/// PR1 : séries au départ chronométré, marquées après « · » : « 8×3 ·
+/// E2MOM » (groupe 1 : multiple de la minute, vide pour EMOM), « 6×2 ·
+/// E90s » (groupe 2 : secondes).
+final RegExp _everySets = RegExp(
+  r'^\d+\s*[×x]\s*\d+[^·]*·\s*e(?:(\d*)mom|(\d+)\s*s)(?![a-z])',
+);
+
+/// PR1 : drop set mécanique « 2 tours × 4 paliers : … ».
+final RegExp _dropSet = RegExp(r'^(\d+)\s*tours?\s*[×x]\s*(\d+)\s*paliers?');
+
 /// Nature de la saisie d'un exercice, déduite des données.
 class LogSpec {
   final String
@@ -547,8 +557,19 @@ class LogSpec {
   final int? intra; // micro-repos myo-reps / clusters
   final bool myo;
   final bool cluster;
-  final String
-  rowPrefix; // M (myo) · C (cluster) · É (échelle) · R (round) · T (test)
+  // M (myo) · C (cluster) · É (échelle) · R (round) · T (test) · D (drop set).
+  final String rowPrefix;
+
+  /// PR1 : départ de chaque série au chrono (« 8×3 · E2MOM », « · E90s ») :
+  /// intervalle en secondes ; null : repos après la série.
+  final int? every;
+
+  /// PR1 : paliers d'un drop set mécanique (« 2 tours × 4 paliers ») ; une
+  /// ligne par palier, enchaînés sans repos dans un tour.
+  final int? stages;
+
+  /// PR1 : rest-pause (même saisie que les myo-reps, autre libellé).
+  final bool restPause;
   const LogSpec(
     this.kind, {
     this.seconds,
@@ -556,8 +577,15 @@ class LogSpec {
     this.myo = false,
     this.cluster = false,
     this.rowPrefix = '',
+    this.every,
+    this.stages,
+    this.restPause = false,
   });
   bool get timed => kind == 'hold' || kind == 'holdMax' || kind == 'duration';
+
+  /// Saisie particulière à nommer sous l'exercice (mini-séries, départs
+  /// chronométrés, paliers).
+  bool get special => myo || cluster || every != null || stages != null;
 }
 
 class AppStore extends ChangeNotifier {
@@ -2589,6 +2617,11 @@ class AppStore extends ChangeNotifier {
     if (RegExp(r'^(\d+)(?:-(\d+))?\s*min$').hasMatch(low)) return 1;
     final myo = RegExp(r'puis\s*(\d+)\s*[×x]').firstMatch(txt);
     if (myo != null) return 1 + int.parse(myo.group(1)!);
+    // PR1 : drop set mécanique, une ligne par palier de chaque tour.
+    final drop = _dropSet.firstMatch(low);
+    if (drop != null) {
+      return int.parse(drop.group(1)!) * int.parse(drop.group(2)!);
+    }
     if (low.contains('montée')) return 6; // 3 paliers de montée + 3 tentatives
     final lead = RegExp(r'^(\d+)\s*(?:[×x]|rounds?|échelles?)').firstMatch(low);
     if (lead != null) return int.parse(lead.group(1)!);
@@ -2877,6 +2910,24 @@ class AppStore extends ChangeNotifier {
       }
     }
     if (e.interval != null) return const LogSpec('interval');
+    // PR1 : séries au départ chronométré (« 8×3 · E2MOM », « 6×2 · E90s »,
+    // « 12×6 · EMOM ») : une ligne par série, pas de repos après la série,
+    // le chrono de l'intervalle donne les départs.
+    final ev = _everySets.firstMatch(low);
+    if (ev != null) {
+      final secs = ev.group(2) != null
+          ? int.parse(ev.group(2)!)
+          : 60 * (ev.group(1)!.isEmpty ? 1 : int.parse(ev.group(1)!));
+      if (secs >= 15 && secs <= 600) return LogSpec('reps', every: secs);
+    }
+    final drop = _dropSet.firstMatch(low);
+    if (drop != null) {
+      return LogSpec(
+        'reps',
+        rowPrefix: 'D',
+        stages: int.parse(drop.group(2)!).clamp(1, 10),
+      );
+    }
     final emom = RegExp(r'^emom\s*(\d+)\s*min').firstMatch(low);
     if (emom != null) {
       return LogSpec('emom', seconds: int.parse(emom.group(1)!) * 60);
@@ -2897,6 +2948,7 @@ class AppStore extends ChangeNotifier {
         intra: intra == null ? (e.restSec ?? 10) : int.parse(intra.group(1)!),
         myo: true,
         rowPrefix: 'M',
+        restPause: low.contains('rest-pause') || low.contains('rest pause'),
       );
     }
     final hold = RegExp(
@@ -2942,6 +2994,8 @@ class AppStore extends ChangeNotifier {
     }
 
     if (sp.kind == 'emom') {
+      // PR1 : EMOM montant (« +1 rep/min jusqu'à l'échec ») : pas de cible.
+      if (low.contains('+1') || low.contains('échec')) return out;
       final c = RegExp(
         r'emom\s*(\d+)\s*[×x]\s*\d+\s*s.*?(\d+)\s*reps',
       ).firstMatch(low);
@@ -2998,6 +3052,9 @@ class AppStore extends ChangeNotifier {
         return 'R${i + 1}';
       case 'T':
         return i < 3 ? 'Mo${i + 1}' : 'T${i - 2}';
+      case 'D':
+        final k = sp.stages ?? 1;
+        return '${i ~/ k + 1}.${i % k + 1}';
     }
     return '${i + 1}';
   }
@@ -3012,6 +3069,11 @@ class AppStore extends ChangeNotifier {
     if (r.contains('après') || r.contains('au total')) return null;
     final def = settings.defaultRest > 0 ? settings.defaultRest : null;
     final last = i >= total - 1;
+    // PR1 : le chrono de l'intervalle donne le départ de chaque série.
+    if (sp.every != null) return null;
+    // PR1 : paliers d'un tour enchaînés ; repos à la fin du tour.
+    final k = sp.stages;
+    if (k != null && k > 1 && i % k != k - 1) return null;
     if (sp.myo) {
       if (!last) return sp.intra;
       // « 10 s intra » décrit le micro-repos : le repos final est le défaut.

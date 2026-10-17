@@ -95,9 +95,13 @@ class TimerCtl extends ChangeNotifier {
   void single(String lbl, int seconds, {bool prepare = true}) =>
       _startPhases([(lbl, seconds)], prepare: prepare);
 
-  void emom(int rounds, int interval) => _startPhases([
-    for (var i = 1; i <= rounds; i++) ('MINUTE $i/$rounds', interval),
-  ]);
+  /// PR1 : départ toutes les [interval] s (EMOM, E2MOM, E90s).
+  void emom(int rounds, int interval) {
+    final unit = interval == 60 ? 'MINUTE' : 'TOUR';
+    _startPhases([
+      for (var i = 1; i <= rounds; i++) ('$unit $i/$rounds', interval),
+    ]);
+  }
 
   void startInterval(int rounds, int work, int rest) => _startPhases([
     for (var i = 1; i <= rounds; i++) ...[
