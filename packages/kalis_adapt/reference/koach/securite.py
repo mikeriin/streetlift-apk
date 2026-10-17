@@ -252,6 +252,43 @@ class Gardefous(object):
         return d is not None and d.pire_entre(self.jour - 6, self.jour) > self.s['reprise_douleur_max']
 
     # ------------------------------------------------------------------
+    # Zone sensible (1.0.5, lot KM1c4 : conduite sous douleur)
+    # ------------------------------------------------------------------
+    def episode(self, z):
+        """(premier jour, dernier jour) des signalements ≥
+        `arret_persistance_min` de l'épisode en cours de la zone [z] (même
+        découpage que les arrêts : signalements à `arret_levee_j` jours au
+        plus l'un de l'autre), ou None sans épisode."""
+        d = self.zones.get(z)
+        if d is None:
+            return None
+        ep, _ = self._episode(d)
+        if not ep:
+            return None
+        return ep[0][0], ep[-1][0]
+
+    def sensible(self, z):
+        """Zone sensible : un épisode (signalement ≥ `arret_persistance_min`)
+        a commencé et son dernier signalement date de `sensible_j` jours au
+        plus (douze semaines : horizon habituel de la rééducation d'un tendon,
+        Alfredson et al. 1998, Silbernagel et al. 2007 ; après un épisode, la
+        structure reste réactive à une hausse brusque de son exposition). Avec
+        ou sans arrêt (règle 1 du lot KM1c4)."""
+        ep = self.episode(z)
+        return ep is not None and 0 <= self.jour - ep[1] <= self.s['sensible_j']
+
+    def sensibles(self):
+        return [z for z in sorted(self.zones) if self.sensible(z)]
+
+    def gene_recente(self, z):
+        """Pire gêne de la zone [z] signalée dans les `douleur_hausse_j`
+        derniers jours (aujourd'hui compris) ; 0 sans signalement."""
+        d = self.zones.get(z)
+        if d is None:
+            return 0
+        return d.pire_entre(self.jour - self.s['douleur_hausse_j'] + 1, self.jour)
+
+    # ------------------------------------------------------------------
     # Poignet (règles A4 de 0.3.1)
     # ------------------------------------------------------------------
     def appui_neutre(self, fiche):
@@ -466,6 +503,18 @@ class Gardefous(object):
                 note(z, 'douleur')
             if act <= 0 and niveau >= 0.5 and depuis_jour is not None \
                     and d.pire_entre(depuis_jour, self.jour) > s['douleur_seuil']:
+                out['sans_hausse'] = True
+                out['rir'] = max(out['rir'], s['douleur_rir_bonus'])
+                note(z, 'douleur')
+            if act <= 0 and niveau >= 0.5 and self.gene_recente(z) > s['douleur_seuil']:
+                # 1.0.5 (KM1c4, règle 4) : une gêne au-dessus du seuil dans
+                # les `douleur_hausse_j` derniers jours interdit toute hausse
+                # de charge sur un exercice qui sollicite la zone (≥ 0,5),
+                # même si le dernier signalement est redescendu à 0 et même
+                # pour un exercice jamais fait depuis (Silbernagel et al.
+                # 2007 : la douleur ne doit pas augmenter d'une semaine à
+                # l'autre ; Malliaras et al. 2015 : on ne progresse qu'à
+                # douleur ≤ 3/10 dans les 24 h).
                 out['sans_hausse'] = True
                 out['rir'] = max(out['rir'], s['douleur_rir_bonus'])
                 note(z, 'douleur')

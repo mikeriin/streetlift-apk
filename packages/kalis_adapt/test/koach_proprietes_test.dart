@@ -57,7 +57,7 @@ class _Releve {
 }
 
 Json _lireFixture(String nom) =>
-    jm(jsonDecode(File('reference/fixtures/$nom').readAsStringSync()));
+    jm(jsonDecode(File('reference/fix_dart/$nom').readAsStringSync()));
 
 Map<String, Json> _fiches(Object? v) => <String, Json>{
   for (final e in jm(v).entries) e.key: jm(e.value),
