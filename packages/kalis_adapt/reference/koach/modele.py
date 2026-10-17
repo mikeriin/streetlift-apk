@@ -1596,22 +1596,26 @@ class Modele(object):
             lam = 1.0
         comps = self.variances_a_priori()
         idx = [i for i, _ in comps]
-        for i in idx:
-            self.P[i, :] *= (1.0 - lam)
-            self.P[:, i] *= (1.0 - lam)
-        # Les blocs croisés (composante, non composante) ont été multipliés
-        # une fois par (1 − λ), le bloc des composantes deux fois : on le
-        # ramène à (1 − λ) puis on ajoute λ · diag(v0).
-        if lam < 1.0:
+        # Toutes les branches (principale et « mauvais jour », séance
+        # ouverte) : le mélange des branches en fin de séance garde alors
+        # exactement V' = (1 − λ) V + λ V0 (relecture KM1c4, M4).
+        for _, P in self._branches():
             for i in idx:
-                for k in idx:
-                    self.P[i, k] /= (1.0 - lam)
-        else:
-            for i in idx:
-                for k in idx:
-                    self.P[i, k] = 0.0
-        for i, v0 in comps:
-            self.P[i, i] += lam * v0
+                P[i, :] *= (1.0 - lam)
+                P[:, i] *= (1.0 - lam)
+            # Les blocs croisés (composante, non composante) ont été
+            # multipliés une fois par (1 − λ), le bloc des composantes deux
+            # fois : on le ramène à (1 − λ) puis on ajoute λ · diag(v0).
+            if lam < 1.0:
+                for i in idx:
+                    for k in idx:
+                        P[i, k] /= (1.0 - lam)
+            else:
+                for i in idx:
+                    for k in idx:
+                        P[i, k] = 0.0
+            for i, v0 in comps:
+                P[i, i] += lam * v0
         self.elargi += 1
 
     def variances_a_priori(self):

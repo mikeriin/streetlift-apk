@@ -356,6 +356,38 @@ def test_elargir_repete_borne_par_l_a_priori():
     assert float(np.linalg.eigvalsh(k.modele.P[:n, :n]).min()) > -1e-12
 
 
+def test_elargir_bornes_et_branche_mauvais_jour():
+    """λ borné à [0 ; 1] (λ < 0 → rien, λ > 1 → a priori) ; séance ouverte :
+    la branche « mauvais jour » (`alt`) est élargie comme la principale, de
+    sorte que la variance de la capacité après le mélange des branches vaut
+    exactement (1 − λ) V + λ V0 (relecture KM1c4, M4)."""
+    import numpy as np
+    k, s, t = _modele_observe()
+    v0s = dict(k.modele.variances_a_priori())
+    P0 = k.modele.P.copy()
+    k.modele.elargir(-0.3)
+    assert np.array_equal(k.modele.P, P0)
+    k.modele.elargir(1.7)
+    for i, v0 in v0s.items():
+        assert abs(float(k.modele.P[i, i]) - v0) <= 1e-12 * v0
+        for j in range(k.modele.n):
+            if j != i:
+                assert float(k.modele.P[i, j]) == 0.0
+    # Séance ouverte avec bilan bas : branche alt présente.
+    k, s, t = _modele_observe()
+    k.modele.debut_seance(10, {'overall': 1, 'sleepQuality': 2, 'energy': 2}, None)
+    assert k.modele.alt is not None
+    lam = params()['rupture']['elargissement_vers_a_priori']
+    idx, co = k.modele._h_capacite(t, jour=False)
+    v0_cap = sum(c * c * v0s[i] for i, c in zip(idx, co) if i in v0s)
+    avant = [float(k.modele._stats(m, P, idx, co)[1]) for m, P in k.modele._branches()]
+    k.modele.elargir(lam)
+    apres = [float(k.modele._stats(m, P, idx, co)[1]) for m, P in k.modele._branches()]
+    assert len(avant) == 2
+    for v, v2 in zip(avant, apres):
+        assert abs(v2 - ((1 - lam) * v + lam * v0_cap)) <= 1e-12 * max(1.0, v2)
+
+
 def test_reponse_inconnue():
     k, s = _en_alerte()
     with pytest.raises(ValueError):

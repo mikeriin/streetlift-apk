@@ -179,7 +179,7 @@ def test_budget_sans_habitude_quatre_series():
     k = koach()
     out = seance(k, 1, [dips('d', 8)], douleurs=[{'zone': SH, 'intensity': 4}])
     assert expo(out) == 0
-    assert k.seances._budget_zone_semaine(SH) == S['reprise_dose_sans_habitude']   # dès l'épisode (sans habitude)
+    assert k.seances._budget_zone_semaine(SH) == (S['reprise_dose_sans_habitude'], False)   # dès l'épisode (sans habitude)
     ouvrir(k, 8, {'overall': 4, 'pains': []})
     assert k.seances.budget_semaine[SH] == S['reprise_dose_sans_habitude']
     out = seance(k, 8, [dips('d', 10)], douleurs=[])
@@ -215,13 +215,15 @@ def test_pas_de_hausse_si_la_zone_a_ete_signalee_dans_la_semaine():
     for w in range(4):
         seance(k, 7 * w + 1, [dips('d', 8)])
     seance(k, 29, [dips('d', 8)], douleurs=[{'zone': SH, 'intensity': 4}])
-    # Gêne 3 quatre jours plus tard (≤ `douleur_seuil` : pas de retrait, pas
-    # d'arrêt à moins de 14 jours ; > `reprise_douleur_max`) : départ 4.
-    assert expo(seance(k, 33, [dips('d', 10)], douleurs=[{'zone': SH, 'intensity': 3}])) == 4
-    # Semaine 5, trois jours après cette gêne : pas de hausse (4, pas 5).
+    # Semaine 5 : départ 4 (semaine du signalement sans exposition).
     assert expo(seance(k, 36, [dips('d', 10)], douleurs=[])) == 4
-    # Semaine 6, plus de gêne depuis plus de sept jours : la rampe reprend.
-    assert expo(seance(k, 43, [dips('d', 10)], douleurs=[])) == 5
+    # Gêne 3 signalée au jour 40 (≤ `douleur_seuil` : pas de retrait, pas
+    # d'arrêt à moins de 14 jours ; > `reprise_douleur_max`).
+    seance(k, 40, [], douleurs=[{'zone': SH, 'intensity': 3}])
+    # Semaine 6, trois jours après cette gêne : pas de hausse (4, pas 5).
+    assert expo(seance(k, 43, [dips('d', 10)], douleurs=[])) == 4
+    # Semaine 7, plus de gêne depuis plus de sept jours : la rampe reprend.
+    assert expo(seance(k, 50, [dips('d', 10)], douleurs=[])) == 5
 
 
 def test_semaine_du_signalement_tenue_sans_hausse():
@@ -255,17 +257,29 @@ def test_budget_reparti_au_prorata_des_seances_restantes_echauffement_compris():
         seance(k, 7 * w + 1, [dips('d', 8)])
     seance(k, 29, [dips('d', 8)], douleurs=[{'zone': SH, 'intensity': 4}])
     # Semaine 5 : permis 4 ; deux séances écrites à 5 séries (dont une
-    # d'échauffement) : 2 aujourd'hui (4 × 5/10), 2 à la suivante.
+    # d'échauffement) : 2 aujourd'hui (4 × 5/10), 2 à la suivante. Le
+    # travail passe avant l'échauffement : l'échauffement ne prend que ce que
+    # le travail laisse (ici rien : retiré, avec la zone épuisée).
     items = [dips('e', 1, kind='warmup'), dips('d', 4)]
     out = seance(k, 36, items, douleurs=[], reste_semaine=[items])
-    assert expo(out) == 2 and out[0]['kind'] == 'warmup' and out[0]['sets'] == 1 and out[1]['sets'] == 1
+    assert expo(out) == 2 and len(out) == 1 and out[0]['kind'] == 'work' and out[0]['sets'] == 2
+    assert any(r['code'] == 'koach.douleur_retrait' and r['params']['cause'] == 'reprise_dose'
+               and r['params']['zone'] == SH and r['params']['exercice'] == 'sw-dips-barres-paralleles'
+               for r in k.seances.raisons)
     out = seance(k, 38, items, douleurs=[])
     assert expo(out) == 2
     # Plus rien : retrait, avec la raison.
     out = seance(k, 40, items, douleurs=[])
     assert expo(out) == 0
-    assert any(r['code'] == 'koach.douleur_retrait' and r['params']['cause'] == 'reprise_dose'
-               for r in k.seances.raisons)
+    # Permis 5 sur deux séances à 1 + 2 : l'échauffement a sa place (1 + 2
+    # aujourd'hui, 5 × 3/6 = 2,5 → 3 ; reste 2 à la suivante).
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 10)])
+    seance(k, 29, [dips('d', 10)], douleurs=[{'zone': SH, 'intensity': 4}])
+    items = [dips('e', 1, kind='warmup'), dips('d', 2)]
+    out = seance(k, 36, items, douleurs=[], reste_semaine=[items])
+    assert [(it['kind'], it['sets']) for it in out] == [('warmup', 1), ('work', 2)]
 
 
 def test_pas_de_vrai_test_sur_une_zone_sous_rampe():
@@ -315,3 +329,148 @@ def test_sortie_progressive_apres_la_fenetre():
     assert SH not in k.seances.rampe_zone
     out = seance(k, j, [dips('d', 12)], douleurs=[])
     assert expo(out) == 12
+
+
+# ----------------------------------------------------------------------
+# Relecture KM1c4 (B1, B2, M1, m1, m10) : arrêt levé, semaines manquées,
+# journal long, deux zones, plancher, rejeu, règle 4 de bout en bout
+# ----------------------------------------------------------------------
+def test_apres_un_arret_leve_rien_d_avant_l_arret_ne_sert_de_reference():
+    """B1 : gêne 3 puis arrêt (épisode de 14 jours), levée ; les semaines
+    exposées avant l'arrêt (dans l'épisode) ne servent pas de référence : la
+    zone repart de la moitié de l'habitude."""
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 8)])
+    g = k.garde
+    seance(k, 29, [dips('d', 8)], douleurs=[{'zone': SH, 'intensity': 3}])    # 8 servies (3 : rien retiré)
+    seance(k, 36, [dips('d', 10)], douleurs=[{'zone': SH, 'intensity': 3}])   # tenue 8 (semaine du signalement)
+    seance(k, 43, [dips('d', 10)], douleurs=[{'zone': SH, 'intensity': 3}])   # 43 − 29 ≥ 14 : arrêt
+    assert g.zones[SH].arret_depuis == 43
+    assert expo(seance(k, 50, [dips('d', 10)], douleurs=[])) == 0            # à l'arrêt : dips retirés
+    # Levée au jour 57 (43 + 14), semaine de charge commencée le jour même :
+    # reprise ; départ : floor(0,5 × 8) = 4 (1.0.4 : 4 aussi), pas 8 + 1 de
+    # la semaine 6 (exposée pendant l'épisode, avant l'arrêt).
+    out = seance(k, 57, [dips('d', 10)], douleurs=[])
+    assert not k.garde.arret(SH) and k.seances.budget_semaine[SH] == 4 and 0 < expo(out) <= 4
+    assert expo(seance(k, 64, [dips('d', 10)], douleurs=[])) == 5
+
+
+def test_semaines_entierement_manquees_comptent_zero():
+    """B2 : une semaine sans aucune séance fermée mais versée comme manquée
+    (contexte) est une semaine de charge à exposition 0 ; après plus de
+    `rampe_zone_semaines_max` semaines manquées, départ (4), pas la dernière
+    semaine exposée + 1."""
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 8)])
+    seance(k, 29, [dips('d', 8)], douleurs=[{'zone': SH, 'intensity': 4}])
+    assert expo(seance(k, 36, [dips('d', 10)], douleurs=[])) == 4
+    assert expo(seance(k, 43, [dips('d', 10)], douleurs=[])) == 5
+    # Semaines 7 à 10 manquées (versées à la séance du jour 78).
+    manquees = [{'semaine': w, 'genre': 'accumulation', 'items': [dips('d', 10)]} for w in range(7, 11)]
+    out = seance(k, 78, [dips('d', 10)], douleurs=[], manquees=manquees)
+    assert expo(out) == 4
+    # Une seule semaine manquée : la dernière exposée (5) sert → 6.
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 8)])
+    seance(k, 29, [dips('d', 8)], douleurs=[{'zone': SH, 'intensity': 4}])
+    seance(k, 36, [dips('d', 10)], douleurs=[])
+    seance(k, 43, [dips('d', 10)], douleurs=[])
+    out = seance(k, 57, [dips('d', 10)], douleurs=[],
+                 manquees=[{'semaine': 7, 'genre': 'accumulation', 'items': [dips('d', 10)]}])
+    assert expo(out) == 6
+
+
+def test_journal_long_habitude_complete():
+    """M1 : l'habitude et les semaines connues ne dépendent pas des 20
+    derniers jours de séance : six séances par semaine pendant quatre
+    semaines (24 séances), habitude 12 → départ 6."""
+    k = koach()
+    for w in range(4):
+        for j in range(6):
+            seance(k, 7 * w + 1 + j, [dips('d', 2)])
+    seance(k, 29, [dips('d', 2)], douleurs=[{'zone': SH, 'intensity': 4}])
+    seance(k, 36, [dips('d', 10)], douleurs=[])
+    assert k.seances.budget_semaine[SH] == 6
+
+
+def test_deux_zones_sensibles_et_plancher():
+    """Deux zones sous permis : chaque mouvement est borné par la plus
+    stricte ; `reprise_dose_min` : jamais sous 1."""
+    k = koach()
+    ex = 'sl-dips-leste'    # provoque épaule et coude
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 2, ex=ex)])
+    seance(k, 29, [dips('d', 2, ex=ex)], douleurs=[{'zone': SH, 'intensity': 4}, {'zone': 'elbow', 'intensity': 4}])
+    out = seance(k, 36, [dips('d', 10, ex=ex)], douleurs=[])
+    # Habitude 2 → floor(1) = 1 pour chacune ; plancher 1.
+    assert k.seances.budget_semaine == {SH: 1, 'elbow': 1}
+    assert expo(out) == 1 and expo(out, 'elbow') == 1
+
+
+def test_rejeu_redonne_l_etat_de_la_rampe():
+    """Déterminisme : `rejouer` redonne `budget_semaine`, `rampe_zone`,
+    `ecrit_zone`, `dose_zone`, le permis du jour et la réserve de
+    l'échauffement (séances versées par l'API `observe` / `plan`)."""
+    from koach.moteur import rejouer
+
+    def jouer(k, jour, items, douleurs=None, reste=None):
+        bilan = {'overall': 4, 'pains': douleurs} if douleurs is not None else None
+        k.observe({'type': 'seance_debut', 'jour': jour, 'bilan': bilan, 'poids_kg': None,
+                   'contexte': {'semaine': jour // 7, 'genre': 'accumulation', 'reste_semaine': reste or []}})
+        r = k.plan({'horizon': 'seance', 'items': items, 'grilles': {}, 'zones': ZONES, 'roles': {}})
+        sets = []
+        for it in r['items']:
+            for i in range(it['sets']):
+                sets.append({'exerciseId': it['exerciseId'], 'slotId': it['slotId'], 'setIndex': i,
+                             'kind': it.get('kind'), 'reps': it.get('repsHigh'), 'flames': 7, 'failed': False,
+                             'target': {'flames': 7}})
+        k.observe({'type': 'seance_fin', 'jour': jour, 'douleurs': [], 'seance': {'sets': sets}})
+        return r['items']
+
+    k = koach()
+    for w in range(4):
+        jouer(k, 7 * w + 1, [dips('d', 8)])
+    jouer(k, 29, [dips('d', 8)], douleurs=[{'zone': SH, 'intensity': 4}])
+    items = [dips('e', 1, kind='warmup'), dips('d', 4)]
+    jouer(k, 36, items, douleurs=[], reste=[items])
+    out = jouer(k, 38, items, douleurs=[])
+    assert expo(out) == 2
+    journal = json.loads(json.dumps(k.journal))
+    r = rejouer(PARAMS, FICHES, k.profil, journal)
+    a, b = k.seances, r.seances
+    assert a.budget_semaine == {SH: 4} and a.rampe_zone == {SH}
+    assert (a.budget_semaine, a.budget_zone, sorted(a.rampe_zone), a.ecrit_zone, a.dose_zone) == \
+        (b.budget_semaine, b.budget_zone, sorted(b.rampe_zone), b.ecrit_zone, b.dose_zone)
+    assert a.reserve_echauffement == b.reserve_echauffement
+
+
+def test_regle_4_charge_servie_jamais_au_dessus_du_dernier_passage():
+    """Règle 4 de bout en bout : charge servie ≤ dernier passage sur un
+    exercice chargé qui sollicite la zone, après une gêne 4 signalée puis 0."""
+    k = koach()
+    ex = 'sl-dips-leste'
+    s = k.seances
+    t = k.modele.piste(ex)
+    item = {'slotId': 'd', 'exerciseId': ex, 'kind': 'work', 'sets': 3, 'repsLow': 5, 'repsHigh': 5,
+            'targetFlames': 7, 'loadBasis': 'external'}
+    grilles = {ex: __import__('koach.seance', fromlist=['Grille']).Grille(1.25, 0.0, False)}
+    # Trois séances à 20 kg (passages), puis gêne 4 à l'épaule un jour sans
+    # séance de l'exercice, puis 0.
+    for j in (1, 4, 8):
+        ouvrir(k, j, {'overall': 4, 'pains': []})
+        servi = s.prescrire([item], grilles, ZONES, {'d': 'main'})
+        sets = [{'exerciseId': ex, 'slotId': 'd', 'setIndex': i, 'kind': 'work', 'reps': 5,
+                 'externalLoadKg': 20.0, 'flames': 7, 'failed': False, 'target': {'flames': 7}} for i in range(3)]
+        s.fermer({'sets': sets})
+    assert s.mem(ex).charge_derniere == 20.0
+    ouvrir(k, 10, {'overall': 4, 'pains': [{'zone': SH, 'intensity': 4}]})
+    s.fermer({'sets': []})
+    ouvrir(k, 12, {'overall': 4, 'pains': []})
+    servi = s.prescrire([item], grilles, ZONES, {'d': 'main'})
+    assert servi and s.plans['d']['cond']['sans_hausse']
+    for i in range(3):
+        cible = s.cible(servi[0], i, [])
+        assert cible.get('externalLoadKg') is None or cible['externalLoadKg'] <= 20.0 + 1e-9

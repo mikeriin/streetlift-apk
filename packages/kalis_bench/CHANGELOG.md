@@ -1,5 +1,22 @@
 # Journal
 
+## 0.5.5 — 17/10/2026 (lot KM1c4)
+
+Mesure du couple `kalis_plan` 0.4.2 × Koach 1.0.5 (référence Python ; `pipeline/cp/prompts/KM1c4.txt`) ; sur 0.5.4
+(lot KS1c2). Critères, profils, attentes et grilles inchangés ; aucun code du banc Dart ne change.
+
+- **Tests et outils de Koach sur les paramètres de 1.0.4** : `test/km2_banc_test.dart`, `test/km2_validateur_test.dart`,
+  `test/km2_adversaire_test.dart`, `bin/km2.dart` et `bin/km2_adversaire.dart` lisent
+  `kalis_adapt/reference/params/koach_params_d4.json` (copie de `1.0.4-ref.1`) : le moteur Dart de `kalis_adapt` 1.0.3
+  est Koach 1.0.4 et `koach_params_v1.json` est passé en 1.0.5 (`securite.reprise_dose_depart` 0,5, six clés
+  nouvelles). Le portage KM2c3 les repointe sur `koach_params_v1.json` et régénère `test/fixtures/km2/` (moteur 1.0.5,
+  modèle de vérité corrigé : `kalis_adapt/reference/PORTAGE_BANC.md`).
+- `test/km2_banc_test.dart` : saisons de référence de Koach régénérées sur `kalis_plan` 0.4.2 (`_planReference`
+  0.4.2 ; quatre saisons « douleur à l'épaule » changent, lot KS1c2).
+- `docs/CRITERES_KM1C4.md`, `docs/data/km1c4/` : point de départ du couple 0.4.2 × Koach 1.0.4 (campagne Dart, 100
+  graines), sécurité et critères du couple 0.4.2 × Koach 1.0.5 (campagne Python de la référence, 100 graines,
+  `kalis_adapt/reference/banc/securite_campagne.py`), adversaires appariés des six jeux.
+
 ## 0.5.4 — 17/10/2026 (lot KS1c2)
 
 Mesure du critère « aucun jour sans son principal » du lot KS1c2 (`pipeline/cp/prompts/KS1c2.txt`), pour `kalis_plan`

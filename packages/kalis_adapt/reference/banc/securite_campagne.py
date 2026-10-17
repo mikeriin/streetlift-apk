@@ -84,24 +84,34 @@ class _Mesure(object):
                 'exemples': self.exemples}
 
 
-def fichiers(dossiers):
+def fichiers(dossiers, empreintes_multiples=False):
     """Fichiers de saison des dossiers de travail (triés, dédoublonnés par
-    nom de saison : le premier trouvé l'emporte)."""
+    nom de saison : le premier trouvé l'emporte, parcours trié). Les
+    résultats de parts d'une même campagne sont sous le même sous-dossier
+    `<empreinte>` (paramètres, sources et configuration identiques) : plusieurs
+    empreintes sont refusées, sauf [empreintes_multiples] (mélange de
+    versions assumé)."""
     vus = set()
     out = []
+    empreintes = set()
     for d in dossiers:
-        for racine, _, noms in os.walk(d):
+        for racine, dirs, noms in os.walk(d):
+            dirs.sort()
             for f in sorted(noms):
                 if not f.endswith('.json') or '__' not in f or f.startswith('mauvais_jour'):
                     continue
+                empreintes.add(os.path.basename(racine))
                 if f in vus:
                     continue
                 vus.add(f)
                 out.append(os.path.join(racine, f))
+    if len(empreintes) > 1 and not empreintes_multiples:
+        raise SystemExit('plusieurs empreintes de campagne (%s) : --empreintes-multiples pour les mélanger'
+                         % ', '.join(sorted(empreintes)))
     return sorted(out)
 
 
-def agreger(dossiers, graines=None):
+def agreger(dossiers, graines=None, empreintes_multiples=False):
     c7 = _Mesure()
     apparie = _Mesure()
     realise = _Mesure()
@@ -114,7 +124,7 @@ def agreger(dossiers, graines=None):
     graines_vues = set()
     profils = set()
     duree = 0.0
-    for chemin in fichiers(dossiers):
+    for chemin in fichiers(dossiers, empreintes_multiples):
         with open(chemin, encoding='utf-8') as f:
             r = json.load(f)
         if 'saison' not in r:
@@ -214,12 +224,13 @@ def main(argv=None):
     ap.add_argument('--liste')
     ap.add_argument('--graines', help='a-b : graines gardées')
     ap.add_argument('--titre', default='Sécurité du couple `kalis_plan` × Koach (campagne Python)')
+    ap.add_argument('--empreintes-multiples', action='store_true')
     a = ap.parse_args(argv)
     graines = None
     if a.graines:
         x, y = a.graines.split('-')
         graines = (int(x), int(y))
-    r, liste = agreger(a.dossiers, graines)
+    r, liste = agreger(a.dossiers, graines, a.empreintes_multiples)
     with open(a.sortie, 'w', encoding='utf-8') as f:
         json.dump(r, f, ensure_ascii=False, indent=1, sort_keys=True)
     if a.md:
