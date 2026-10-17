@@ -48,8 +48,7 @@ Koach _koach() => Koach(copieJson(_params), _fiches, <String, Object?>{
   return (m, t);
 }
 
-double _lambda() =>
-    dbl(jm(_params['rupture'])['elargissement_vers_a_priori']);
+double _lambda() => dbl(jm(_params['rupture'])['elargissement_vers_a_priori']);
 
 void main() {
   test('uniforme vers l\'a priori : (1 − λ) v + λ v0, croisés × (1 − λ)', () {

@@ -715,9 +715,7 @@ class Seances {
           somme([
             for (final x in listeOuVide(mq['items'])) _seriesDures(jm(x)),
           ]);
-      _compterEcritZone(sem, [
-        for (final x in listeOuVide(mq['items'])) jm(x),
-      ]);
+      _compterEcritZone(sem, [for (final x in listeOuVide(mq['items'])) jm(x)]);
       _compterManqueZone(sem, [
         for (final x in listeOuVide(mq['items'])) jm(x),
       ]);

@@ -27,9 +27,10 @@ const int koachParametresSchema = 1;
 const String koachParametresSha256 =
     'd8a492b7debca0e4a504ed399efee0a8a6e4e003ab99f7cbb7f49c114bfbf26d';
 
-/// Nombre de clés du fichier de paramètres : 6 à la racine, 340 dans les
-/// onze sections (contrat § 7.4).
-const int koachParametresCles = 346;
+/// Nombre de clés du fichier de paramètres : 6 à la racine, 339 dans les
+/// onze sections (contrat § 7.4 ; l'en-tête du contrat 1.0.5 écrivait 346
+/// par erreur : 338 + 7 = 345).
+const int koachParametresCles = 345;
 
 /// Clés de la racine du fichier de paramètres (contrat § 7.1).
 const List<String> koachParametresRacine = [

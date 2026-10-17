@@ -6,6 +6,7 @@
 // moteur qu'une fois signalé. Avant la correction, le drapeau restait vrai
 // depuis un épisode antérieur et une hausse de charge sur une douleur jamais
 // signalée comptait comme aggravation (4 cas de KR1, `street_10`).
+import 'package:kalis_adapt/kalis_adapt.dart' show ExerciseBook;
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_core/kalis_core.dart';
 import 'package:test/test.dart';
