@@ -73,3 +73,5 @@ Base : `moteurs` eae158b8. Arbre = `moteurs` modifié (sans `.github`) ; `kr1_de
 - Reste : attendre le contrôle ; rebase/push moteurs ; étiquettes kalis_adapt-v1.0.3, kalis_bench-v0.5.3 ; livraison (pipeline + projet), DECISIONS (section KR1), ETAT (livré — critère dur non tenu), page de suivi, notification.
 
 - 21:58 UTC : contrôle final run 38972216385 (ba88acd5) en cours ; brouillons DECISIONS (decisions_kr1.md) et section de page (page_section.html) prêts.
+
+- 00:54 UTC (17/10) : LOT TERMINÉ. Contrôle final run 38972216385 vert (arbre identique à moteurs 597c10b7). moteurs poussé (eae158b8..597c10b7), étiquettes kalis_adapt-v1.0.3 et kalis_bench-v0.5.3 créées. Pipeline da4fa5e8 (livraison, DECISIONS § KR1, ETAT livré — critère dur non tenu). Projet claude/LIVRAISON_KR1.md écrit. Page de suivi version 55.

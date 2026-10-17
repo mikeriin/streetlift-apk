@@ -1,8 +1,8 @@
 ### KR1
 
 Lot livré le 16/10/2026 (session Opus 5.5, effort maximal, C17.18), sans panel ni relecture documentée (C13.3),
-validation par le pilotage : `kalis_adapt` 1.0.3 (Koach 1.0.4) et `kalis_bench` 0.5.3 (`moteurs` __COMMIT__,
-étiquettes publiées), contrôle complet `claude/ci-cp-a` run __RUN__ vert (arbre identique). **Critère dur non tenu :
+validation par le pilotage : `kalis_adapt` 1.0.3 (Koach 1.0.4) et `kalis_bench` 0.5.3 (`moteurs` 597c10b7,
+étiquettes publiées), contrôle complet `claude/ci-cp-a` run 38972216385 vert (arbre identique). **Critère dur non tenu :
 décision requise.** Détail : `pipeline/cp/livraisons/LIVRAISON_KR1.md`, `packages/kalis_bench/docs/CRITERES_KR1.md`.
 
 - **KR1.1 Lancement** : message sans ligne « Lot : » ; KR1 seul lot moteur « à faire ». `add_repo` absent ; accès en
