@@ -82,12 +82,12 @@
        "sous3": 0.089688
       },
       "temoin": {
-       "biais": -0.239773,
-       "couverture": 0.596155,
-       "mae": 0.277248,
-       "n": 18257,
-       "rmse": 0.349038,
-       "sous3": 0.080462
+       "biais": -0.240145,
+       "couverture": 0.595237,
+       "mae": 0.277484,
+       "n": 18223,
+       "rmse": 0.34925,
+       "sous3": 0.080283
       }
      },
      "loaded": {
@@ -101,12 +101,12 @@
        "sous3": 0.388019
       },
       "temoin": {
-       "biais": -0.057094,
-       "couverture": 0.766895,
-       "mae": 0.103059,
-       "n": 76133,
-       "rmse": 0.160701,
-       "sous3": 0.284266
+       "biais": -0.057075,
+       "couverture": 0.766983,
+       "mae": 0.103002,
+       "n": 76106,
+       "rmse": 0.160598,
+       "sous3": 0.284432
       }
      },
      "reps": {
@@ -120,12 +120,12 @@
        "sous3": 0.256172
       },
       "temoin": {
-       "biais": -0.172476,
-       "couverture": 0.542253,
-       "mae": 0.21169,
-       "n": 100951,
-       "rmse": 0.30476,
-       "sous3": 0.179473
+       "biais": -0.171664,
+       "couverture": 0.543291,
+       "mae": 0.21082,
+       "n": 100806,
+       "rmse": 0.303609,
+       "sous3": 0.179771
       }
      }
     },
@@ -188,12 +188,12 @@
        "sous3": 0.572152
       },
       "temoin": {
-       "biais": -0.012092,
-       "couverture": 0.930344,
-       "mae": 0.043736,
-       "n": 9992,
-       "rmse": 0.056841,
-       "sous3": 0.43725
+       "biais": -0.012074,
+       "couverture": 0.930379,
+       "mae": 0.043734,
+       "n": 9997,
+       "rmse": 0.056834,
+       "sous3": 0.437131
       }
      },
      "3": {
@@ -228,12 +228,12 @@
        "sous3": 0.593238
       },
       "temoin": {
-       "biais": -0.005037,
-       "couverture": 0.975882,
-       "mae": 0.042889,
-       "n": 6717,
-       "rmse": 0.05638,
-       "sous3": 0.460622
+       "biais": -0.005051,
+       "couverture": 0.975886,
+       "mae": 0.042867,
+       "n": 6718,
+       "rmse": 0.056359,
+       "sous3": 0.460851
       }
      },
      "b": {
@@ -247,12 +247,12 @@
        "sous3": 0.506658
       },
       "temoin": {
-       "biais": -0.061436,
-       "couverture": 0.808802,
-       "mae": 0.078146,
-       "n": 6726,
-       "rmse": 0.116215,
-       "sous3": 0.331401
+       "biais": -0.061425,
+       "couverture": 0.808859,
+       "mae": 0.078135,
+       "n": 6728,
+       "rmse": 0.1162,
+       "sous3": 0.331302
       }
      },
      "c": {
@@ -266,22 +266,22 @@
        "sous3": 0.539276
       },
       "temoin": {
-       "biais": 0.005917,
-       "couverture": 0.870695,
-       "mae": 0.053781,
-       "n": 6736,
-       "rmse": 0.070418,
-       "sous3": 0.330315
+       "biais": 0.005953,
+       "couverture": 0.870733,
+       "mae": 0.053797,
+       "n": 6738,
+       "rmse": 0.070426,
+       "sous3": 0.330068
       }
      }
     },
     "temoin": {
-     "biais": -0.020179,
-     "couverture": 0.885079,
-     "mae": 0.058277,
-     "n": 20179,
-     "rmse": 0.084942,
-     "sous3": 0.374052
+     "biais": -0.020169,
+     "couverture": 0.885107,
+     "mae": 0.058272,
+     "n": 20184,
+     "rmse": 0.084934,
+     "sous3": 0.374009
     },
     "toutes_estimations": 0.036524
    },
@@ -380,10 +380,10 @@
       },
       "temoin": {
        "mediane_censuree": 6,
-       "moyenne_atteints": 6.376536,
-       "moyenne_censuree": 10.47454,
+       "moyenne_atteints": 6.379467,
+       "moyenne_censuree": 10.472817,
        "n": 9289,
-       "part_jamais": 0.220045
+       "part_jamais": 0.21983
       }
      },
      "b": {
@@ -396,10 +396,10 @@
       },
       "temoin": {
        "mediane_censuree": 11,
-       "moyenne_atteints": 6.977288,
-       "moyenne_censuree": 13.557624,
+       "moyenne_atteints": 6.975775,
+       "moyenne_censuree": 13.550845,
        "n": 9293,
-       "part_jamais": 0.365114
+       "part_jamais": 0.364791
       }
      },
      "c": {
@@ -412,10 +412,10 @@
       },
       "temoin": {
        "mediane_censuree": 5.0,
-       "moyenne_atteints": 5.558785,
-       "moyenne_censuree": 8.989588,
+       "moyenne_atteints": 5.557988,
+       "moyenne_censuree": 8.984757,
        "n": 9316,
-       "part_jamais": 0.176471
+       "part_jamais": 0.176256
       }
      }
     },
@@ -425,17 +425,17 @@
     },
     "temoin": {
      "mediane_censuree": 6.0,
-     "moyenne_atteints": 6.245424,
-     "moyenne_censuree": 11.005663,
+     "moyenne_atteints": 6.245774,
+     "moyenne_censuree": 11.001219,
      "n": 27898,
-     "part_jamais": 0.253817
+     "part_jamais": 0.253567
     }
    },
    "mesure": 4.826287,
    "methode": "Par exercice principal chargé et par saison, premier rang de séance où |erreur| < 3 % (`first_under`) ; moyenne avec « jamais » compté 25 (censure), à comparer au témoin 0.3.1 sur les mêmes (profil, scénario, vérité) ; seuil = valeur du témoin.",
    "n": 9343,
    "respecte": true,
-   "seuil": 11.005663
+   "seuil": 11.001219
   },
   "4_couverture_90": {
    "detail": {
@@ -1872,23 +1872,23 @@
      "aggravations": 0,
      "codes": {
       "plafond_volume": 1,
-      "volume_trop_vite": 72
+      "volume_trop_vite": 67
      },
-     "poussees": 110,
+     "poussees": 108,
      "saisons": 5436,
-     "violations": 73
+     "violations": 68
     },
-    "temoin_hausses_trop_fortes": 24600,
+    "temoin_hausses_trop_fortes": 24601,
     "temoin_toutes_graines": {
      "aggravations": 0,
      "codes": {
       "plafond_volume": 1,
       "tendon_figures": 1,
-      "volume_trop_vite": 146
+      "volume_trop_vite": 141
      },
-     "poussees": 257,
+     "poussees": 255,
      "saisons": 14496,
-     "violations": 148
+     "violations": 143
     }
    },
    "mesure": 0,
@@ -2092,7 +2092,7 @@
   },
   "ecart_effort": {
    "koach": 3.590153,
-   "temoin": 1.525714
+   "temoin": 1.525999
   },
   "echecs": {
    "koach": 0.006826,
@@ -2100,7 +2100,7 @@
   },
   "gain_moyen_hebdo": {
    "koach": 0.002119,
-   "temoin": 0.001929
+   "temoin": 0.00193
   },
   "mae_rang_6": {
    "hold": {
@@ -2114,12 +2114,12 @@
      "sous3": 0.089688
     },
     "temoin": {
-     "biais": -0.239773,
-     "couverture": 0.596155,
-     "mae": 0.277248,
-     "n": 18257,
-     "rmse": 0.349038,
-     "sous3": 0.080462
+     "biais": -0.240145,
+     "couverture": 0.595237,
+     "mae": 0.277484,
+     "n": 18223,
+     "rmse": 0.34925,
+     "sous3": 0.080283
     }
    },
    "reps": {
@@ -2133,12 +2133,12 @@
      "sous3": 0.256172
     },
     "temoin": {
-     "biais": -0.172476,
-     "couverture": 0.542253,
-     "mae": 0.21169,
-     "n": 100951,
-     "rmse": 0.30476,
-     "sous3": 0.179473
+     "biais": -0.171664,
+     "couverture": 0.543291,
+     "mae": 0.21082,
+     "n": 100806,
+     "rmse": 0.303609,
+     "sous3": 0.179771
     }
    }
   },
