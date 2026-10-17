@@ -16,7 +16,7 @@ const double tolerance = 1e-9;
 Json lireFixture(String nom) =>
     jsonDecode(
           File(
-            nom.contains('/') ? nom : 'reference/fixtures/$nom',
+            nom.contains('/') ? nom : 'reference/fix_dart/$nom',
           ).readAsStringSync(),
         )
         as Json;

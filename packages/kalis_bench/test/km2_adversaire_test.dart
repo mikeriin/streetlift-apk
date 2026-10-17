@@ -532,7 +532,7 @@ void main() {
       banc = KmBanc(
         catalog: loadCatalog(),
         plan: KalisPlan(),
-        parametres: readJsonObject('$_reference/params/koach_params_v1.json'),
+        parametres: readJsonObject('$_reference/params/koach_params_d4.json'),
         fiches: <String, kc.Json>{
           for (final e in kc.jm(v['exercices']).entries) e.key: kc.jm(e.value),
         },

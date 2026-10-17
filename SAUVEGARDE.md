@@ -39,11 +39,22 @@ la ligne « en cours ».
   Nielsen et al. 2014 JOSPT 44(10):739-747 (> 30 % sur deux semaines) ; Malliaras et al. 2015 JOSPT 45(11):887-898 (règle des
   24 h, progression si douleur ≤ 3/10).
 
+- **Règles 1 à 5 écrites** (référence Python) : `securite.py` (`episode`, `sensible`, `gene_recente`, règle 4 dans
+  `conduite`) ; `seance.py` (`_budget_zone_semaine`, `_budgets_zone_jour`, `_compter_ecrit_zone`, budget sur tous les
+  items échauffement compris, pas de vrai test sous rampe, `rampe_zone` pour la sortie progressive) ; `modele.elargir`
+  (mélange convexe vers l'a priori, λ = `rupture.elargissement_vers_a_priori` 0,25) ; `rupture.py` ; `banc/verite.py`
+  (`_pain_known` remis à faux au début d'un épisode tendineux ou de la fiche). Paramètres `1.0.5-ref.1` (6 clés nouvelles,
+  `reprise_dose_depart` 0,6 → 0,5 ; copie 1.0.4 dans `params/koach_params_d4.json`). Tests : `test_km1c4_douleur.py`
+  (12), `test_rupture.py` (élargissement réécrit), `test_kr1_violations.py` réécrit (0 violation sur les 4 saisons, bornes
+  d'exposition, vérité). Tests Dart de `kalis_adapt` 1.0.3 repointés sur `reference/fix_dart/` (copies 1.0.4) et
+  `koach_params_d4.json` ; `kalis_bench` (tests km2 et CLI km2) sur `koach_params_d4.json`, `_planReference` 0.4.2.
+- Run B poussé à 07:32 UTC (84b3afdb, run 39011629136) : export 0.4.2 (PART 0), campagne Python graines 0-5 de la
+  référence 1.0.5 préliminaire (PARTS 41-48, saisons 0.4.2 exportées dans la part).
+
 ## En cours
 
-- Écriture des règles 1 à 5 dans la référence Python (plan : `securite.py` zone sensible et règle 4 ; `seance.py` budget par
-  zone sensible fondé sur le réalisé, départ 0,5 × habitude, +20 % ou +1 série par semaine de charge, sans saut en fin de
-  fenêtre ; `modele.elargir` mélange vers l'a priori ; `banc/verite.py` remise à faux de `_pain_known`).
+- Régénération des fixtures (après intégration des données 0.4.2 du run A/B), documents (CHANGEMENTS_1_0_5.md, SOURCES.md,
+  CONTRAT note, PORTAGE_DART.md, PORTAGE_BANC.md, README), campagne Python 100 graines sur la CI.
 
 ## Reste à faire
 

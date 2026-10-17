@@ -44,7 +44,8 @@ DEFAUTS_RUPTURE = {
     'assiduite_secours': 0.7,
     'assiduite_secours_semaines': 2,
     'douleur_secours': 2,
-    'elargissement_rien_de_special': 4.0,
+    'elargissement_rien_de_special': 4.0,   # sans effet depuis 1.0.5 (gardé pour les validateurs)
+    'elargissement_vers_a_priori': 0.25,   # 1.0.5 : part du chemin vers l'a priori à chaque « rien de spécial »
     'semaine_allegee_series': 0.6,
     'semaine_allegee_rir': 2.0,
     'journal_dossier': 60,          # événements du journal dans le dossier
@@ -656,11 +657,15 @@ class Surveillance(Extension):
             j = int(getattr(koach, 'jour', 0))
             self.allegement = [j, j + 7, action['series'], action['rir']]
         else:
-            facteur = float(_param(p, 'elargissement_rien_de_special'))
-            koach.modele.elargir(facteur)
+            # 1.0.5 (KM1c4, règle 5) : élargissement uniforme et borné,
+            # part du chemin vers l'a priori (`modele.elargir`) ;
+            # `elargissement_rien_de_special` (facteur de 1.0 à 1.0.4) n'est
+            # plus lu.
+            part = float(_param(p, 'elargissement_vers_a_priori'))
+            koach.modele.elargir(part)
             self.bocpd.reinitialiser()
             self.p = 0.0
-            action = {'action': 'elargir', 'facteur': facteur}
+            action = {'action': 'elargir', 'part': part}
         self.mj_suite = 0
         # Acquittement : chaque cause levée se tait `silence_semaines` semaines.
         for c in range(4):
@@ -833,6 +838,7 @@ BORNES = {
     ('rupture', 'assiduite_secours'): (0.0, 1.0),
     ('rupture', 'douleur_secours'): (0.0, 10.0),
     ('rupture', 'elargissement_rien_de_special'): (1.0, 100.0),
+    ('rupture', 'elargissement_vers_a_priori'): (0.0, 1.0),
     ('rupture', 'semaine_allegee_series'): (0.1, 1.0),
     ('rupture', 'semaine_allegee_rir'): (0.0, 5.0),
     ('rupture', 'course_max'): (10, 1000),

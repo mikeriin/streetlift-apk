@@ -282,11 +282,11 @@ def test_reponse_rien_elargit_et_reinitialise():
     t = k.modele.piste(EX)
     avant = float(k.modele.P[t.idx, t.idx])
     a = s.repondre(k, {'cause': 'rien'})
-    f = params()['rupture']['elargissement_rien_de_special']
-    assert a == {'action': 'elargir', 'facteur': f}
-    # 1.0.4 : variance nouvelle = min(f · v ; max(v ; v0)), v0 = a priori.
+    lam = params()['rupture']['elargissement_vers_a_priori']
+    assert a == {'action': 'elargir', 'part': lam}
+    # 1.0.5 : variance nouvelle = (1 − λ) v + λ v0, v0 = a priori.
     v0 = dict(k.modele.variances_a_priori())[t.idx]
-    attendu = min(f * avant, max(avant, v0))
+    attendu = (1 - lam) * avant + lam * v0
     assert abs(float(k.modele.P[t.idx, t.idx]) - attendu) < 1e-12 * attendu
     assert s.bocpd.n == 0 and s.etat()['p_rupture'] == 0.0
     assert not s.etat()['hors_modele']
@@ -302,34 +302,56 @@ def _modele_observe():
     return k, s, t
 
 
-def test_elargir_multiplie_sous_l_a_priori():
-    """1.0.4 : loin sous l'a priori, la variance est bien multipliée par le
-    facteur (comportement de 1.0.3), et P reste symétrique."""
+def test_elargir_uniforme_vers_l_a_priori():
+    """1.0.5 (KM1c4, règle 5) : chaque composante de capacité passe à
+    (1 − λ) v + λ v0, les covariances entre composantes et avec le reste de
+    l'état sont multipliées par (1 − λ) ; le reste de l'état (effets de jour,
+    fatigue, biais) ne bouge pas ; P reste symétrique."""
+    import numpy as np
     k, s, t = _modele_observe()
-    avant = float(k.modele.P[t.idx, t.idx])
-    v0 = dict(k.modele.variances_a_priori())[t.idx]
-    assert 4.0 * avant < v0
-    k.modele.elargir(4.0)
-    assert abs(float(k.modele.P[t.idx, t.idx]) - 4.0 * avant) < 1e-12 * 4.0 * avant
-    assert float(abs(k.modele.P - k.modele.P.T).max()) == 0.0
+    lam = params()['rupture']['elargissement_vers_a_priori']
+    P0 = k.modele.P.copy()
+    v0s = dict(k.modele.variances_a_priori())
+    idx = sorted(v0s)
+    k.modele.elargir(lam)
+    P1 = k.modele.P
+    n = k.modele.n
+    for i in range(n):
+        for j in range(n):
+            if i in v0s and j in v0s:
+                attendu = (1 - lam) * P0[i, j] + (lam * v0s[i] if i == j else 0.0)
+            elif i in v0s or j in v0s:
+                attendu = (1 - lam) * P0[i, j]
+            else:
+                attendu = P0[i, j]
+            assert abs(float(P1[i, j]) - attendu) <= 1e-12 * max(1.0, abs(attendu)), (i, j)
+    assert float(abs(P1[:n, :n] - P1[:n, :n].T).max()) == 0.0
+    assert len(idx) >= 1
 
 
-def test_elargir_repete_plafonne_a_l_a_priori():
-    """1.0.4 (lot KR1) : des réponses « rien de spécial » répétées ne rendent
-    jamais une composante plus incertaine que son a priori (avant : variance
-    × 4 à chaque réponse, écart-type de 20 en ln et dépassement de capacité
-    sur une saison de quarante semaines) ; l'écart-type de la capacité reste
-    borné et P semi-définie positive."""
+def test_elargir_repete_borne_par_l_a_priori():
+    """1.0.5 : des réponses « rien de spécial » répétées convergent vers
+    l'a priori sans jamais le dépasser (par composante ET pour la variance de
+    la capacité), l'écart-type de la capacité reste borné, P semi-définie
+    positive."""
+    import numpy as np
     k, s, t = _modele_observe()
     _, sd0 = k.modele.capacite(EX)
     v0s = dict(k.modele.variances_a_priori())
+    lam = params()['rupture']['elargissement_vers_a_priori']
+    idx, co = k.modele._h_capacite(t, jour=False)
+    v0_cap = sum(c * c * v0s[i] for i, c in zip(idx, co) if i in v0s)
     for _ in range(30):
-        k.modele.elargir(params()['rupture']['elargissement_rien_de_special'])
+        k.modele.elargir(lam)
     for i, v0 in v0s.items():
         assert float(k.modele.P[i, i]) <= v0 * (1 + 1e-12)
-    mu, sd = k.modele.capacite(EX)
+    mu, sd = k.modele.capacite(EX, brut=True)
     assert math.isfinite(mu) and sd < 1.0 and sd > sd0
-    import numpy as np
+    d2 = k.modele.p['mesure'].get('defaut_modele_sd', 0.0) ** 2   # ajouté par `capacite`
+    assert sd * sd - d2 <= v0_cap * (1 + 1e-9)
+    # Après 30 réponses à λ = 0,25, à moins de 10⁻³ de l'a priori.
+    for i, v0 in v0s.items():
+        assert abs(float(k.modele.P[i, i]) - v0) <= 1e-3 * v0
     n = k.modele.n
     assert float(np.linalg.eigvalsh(k.modele.P[:n, :n]).min()) > -1e-12
 
@@ -504,14 +526,14 @@ def test_import_rejoue_depuis_le_journal():
 
 
 def test_elargir_sur_un_a_posteriori_reel():
-    """1.0.4 (relecture KR1, M1) : sur un a posteriori réel (six semaines
-    simulées, covariances croisées entre qualités et écarts), une réponse
-    « rien de spécial » ne rend aucune composante plus incertaine que
-    max(v ; v0), garde P symétrique semi-définie positive et toute capacité
-    finie ; le facteur sur la variance d'une capacité n'est plus exactement
-    le facteur (élargissement par composante) : il reste ≥ 0,95 (mesuré :
-    0,987 au plus bas sur les saisons de quarante semaines) et il est publié
-    dans CHANGEMENTS_1_0_4.md § A."""
+    """1.0.5 (KM1c4, règle 5 ; relecture KR1, M1) : sur un a posteriori réel
+    (six semaines simulées, covariances croisées entre qualités et écarts),
+    une réponse « rien de spécial » ne rend aucune capacité plus incertaine
+    que max(V ; V0) (V0 : variance a priori de la capacité), garde P
+    symétrique semi-définie positive, toute capacité finie, et le facteur sur
+    la variance de chaque capacité est UNIFORME dans sa forme : V' = (1 − λ) V
+    + λ V0 exactement (1.0.4 : de 0,987 à 18,6 selon les composantes
+    plafonnées)."""
     import numpy as np
     from banc import campagne as ca, donnees, meneur
     from banc import criteres_moteur as cm
@@ -521,18 +543,27 @@ def test_elargir_sur_un_a_posteriori_reel():
     pol = ca.politique(opts, 0)
     meneur.simuler(saison, donnees.catalogue_infos(), pol, 'a', 0)
     m = pol.koach.modele
-    avant = {e: m.capacite(e)[1] ** 2 for e in m.ordre}
-    diag = {i: float(m.P[i, i]) for i, _ in m.variances_a_priori()}
+    lam = params()['rupture']['elargissement_vers_a_priori']
     v0 = dict(m.variances_a_priori())
-    m.elargir(params()['rupture']['elargissement_rien_de_special'])
+    avant = {}
+    v0_cap = {}
+    d2 = m.p['mesure'].get('defaut_modele_sd', 0.0) ** 2   # ajouté par `capacite`
+    for e in m.ordre:
+        t = m.piste(e)
+        idx, co = m._h_capacite(t, jour=False)
+        avant[e] = m.capacite(e, brut=True)[1] ** 2 - d2
+        v0_cap[e] = sum(c * c * v0[i] for i, c in zip(idx, co) if i in v0)
+    diag = {i: float(m.P[i, i]) for i in v0}
+    m.elargir(lam)
     for i, v in diag.items():
         assert float(m.P[i, i]) <= max(v, v0[i]) * (1 + 1e-12)
     n = m.n
     assert float(abs(m.P[:n, :n] - m.P[:n, :n].T).max()) == 0.0
     assert float(np.linalg.eigvalsh(m.P[:n, :n]).min()) > -1e-12
-    rapports = []
+    assert len(m.ordre) > 5
     for e in m.ordre:
-        mu, sd = m.capacite(e)
+        mu, sd = m.capacite(e, brut=True)
         assert math.isfinite(mu) and math.isfinite(sd)
-        rapports.append(sd ** 2 / avant[e])
-    assert len(rapports) > 5 and min(rapports) >= 0.95
+        attendu = (1 - lam) * avant[e] + lam * v0_cap[e]
+        assert abs(sd * sd - d2 - attendu) <= 1e-9 * max(1.0, attendu), e
+        assert sd * sd - d2 <= max(avant[e], v0_cap[e]) * (1 + 1e-9)
