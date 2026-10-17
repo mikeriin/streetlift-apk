@@ -12,5 +12,5 @@
 
 - Contrôle complet : run 38985187353 (commit addc2ca0, ~2 h 50). Brouillon de livraison : dev_ks1c2/LIVRAISON_KS1c2.md.
 
-## Reste
-- Tests du changement de type (poignet, genou, sans barre fixe) à vérifier ; format (patch CI) ; version kalis_bench (0.5.3 ou suivante libre, KR1) + CHANGELOG/docs banc ; relecture indépendante (sous-agent Opus) ; contrôle complet sur claude/ci-cp-b ; push moteurs, étiquettes ; livraison, état, page de suivi, notification.
+## Terminé
+- moteurs bcb8422b, étiquettes kalis_plan-v0.4.2 et kalis_bench-v0.5.4, contrôle complet run 38991643691 vert ; livraison (pipeline 65b053e7, projet claude/LIVRAISON_KS1c2.md), ETAT « livré », DECISIONS § KS1c2, page de suivi version 56, notification.
