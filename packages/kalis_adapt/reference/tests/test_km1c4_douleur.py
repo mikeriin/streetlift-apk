@@ -13,6 +13,10 @@ cas construits à la main (CHANGEMENTS_1_0_5.md, contrat § 8.4 bis).
    quatre séries sans habitude ; pas de hausse si la zone a été signalée
    dans la semaine ; répartition au prorata des séances restantes ; pas de
    vrai test sur la zone ;
+3 bis. rampe du réalisé après une coupure : une zone sans douleur connue qui
+   n'a rien reçu depuis `coupure_j` jours alors qu'une séance manquée
+   l'écrivait repart de la moitié de son habitude ; rien sans coupure ni
+   séance manquée ; la zone sensible l'emporte ;
 4. aucune hausse de charge sur un exercice qui sollicite (≥ 0,5) une zone
    signalée au-dessus du seuil dans les sept derniers jours ;
 5. élargissement « rien de spécial » : `test_rupture.py`.
@@ -474,3 +478,76 @@ def test_regle_4_charge_servie_jamais_au_dessus_du_dernier_passage():
     for i in range(3):
         cible = s.cible(servi[0], i, [])
         assert cible.get('externalLoadKg') is None or cible['externalLoadKg'] <= 20.0 + 1e-9
+
+
+# ----------------------------------------------------------------------
+# Règle 3 bis : rampe du réalisé après une coupure (séances manquées)
+# ----------------------------------------------------------------------
+def test_retour_apres_une_coupure_sans_douleur_connue():
+    """Quatre semaines à 10 séries d'épaule, deux semaines manquées (versées
+    au retour, 21 jours après la dernière séance), aucune douleur signalée :
+    la zone repart de la moitié de son habitude (5), puis +1 ou +20 % par
+    semaine, jusqu'à l'écrit (10) où elle sort de la rampe."""
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 10)])
+    manquees = [{'semaine': w, 'genre': 'accumulation', 'items': [dips('d', 10)]} for w in (4, 5)]
+    out = seance(k, 43, [dips('d', 10)], manquees=manquees)
+    assert expo(out) == 5 and k.seances.budget_semaine[SH] == 5
+    assert k.seances.retour_zone[SH] == (6, 5)
+    assert [expo(seance(k, j, [dips('d', 10)])) for j in (50, 57, 64, 71)] == [6, 7, 8, 9]
+    out = seance(k, 78, [dips('d', 10)])
+    assert expo(out) == 10 and SH not in k.seances.retour_zone and SH not in k.seances.budget_semaine
+
+
+def test_pas_de_rampe_de_retour_sans_coupure_ni_seance_manquee():
+    """Une séance manquée sans coupure de la zone (retour sept jours après la
+    dernière séance) : aucun permis. Une coupure de 21 jours sans séance
+    manquée versée (le plan ne prévoyait rien) : aucun permis non plus, le
+    plan gouverne (seule la règle A6.1, 80 % des séries, s'applique)."""
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 10)])
+    out = seance(k, 29, [dips('d', 10)],
+                 manquees=[{'semaine': 3, 'genre': 'accumulation', 'items': [dips('d', 10)]}])
+    assert expo(out) == 10 and not k.seances.retour_zone
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 10)])
+    out = seance(k, 43, [dips('d', 10)])
+    assert not k.seances.retour_zone and SH not in k.seances.budget_semaine
+    assert expo(out) == 8  # A6.1
+
+
+def test_retour_sans_habitude_et_zone_jamais_exposee():
+    """Sans exposition connue dans la fenêtre (journal qui commence par les
+    semaines manquées d'une zone déjà exposée une fois) : départ
+    `reprise_dose_sans_habitude` (4) ; une zone jamais exposée dans le
+    journal n'entre pas dans la rampe (le plan l'introduit)."""
+    k = koach()
+    seance(k, 1, [dips('d', 1)])
+    manquees = [{'semaine': w, 'genre': 'accumulation', 'items': [dips('d', 10)]} for w in (1, 2, 3, 4)]
+    out = seance(k, 36, [dips('d', 10)], manquees=manquees)
+    # Habitude sur les semaines 1 à 4 (fin = semaine 0 → semaines 0 seulement :
+    # 1 série / 1 semaine) → moitié 0 → plancher ; départ = 1 ? Non : la
+    # fenêtre finit à la semaine de la dernière exposition (0) : habitude
+    # 1/1 = 1 → floor(0,5) = 0 → `reprise_dose_min` 1.
+    assert expo(out) == 1 and k.seances.retour_zone[SH][1] == 1
+    k = koach()
+    seance(k, 1, [dips('p', 4, ex='sw-pompe')])
+    manquees = [{'semaine': w, 'genre': 'accumulation', 'items': [dips('d', 10)]} for w in (1, 2)]
+    out = seance(k, 22, [dips('d', 10)], manquees=manquees)
+    assert SH not in k.seances.retour_zone and expo(out) >= 8
+
+
+def test_la_zone_sensible_l_emporte_sur_la_rampe_de_retour():
+    """Une douleur signalée pendant la rampe de retour : la zone devient
+    sensible, la rampe de la zone sensible la remplace (tenue au réalisé de
+    la semaine de charge précédente dans la semaine du signalement)."""
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w + 1, [dips('d', 10)])
+    manquees = [{'semaine': w, 'genre': 'accumulation', 'items': [dips('d', 10)]} for w in (4, 5)]
+    assert expo(seance(k, 43, [dips('d', 10)], manquees=manquees)) == 5
+    out = seance(k, 50, [dips('d', 10)], douleurs=[{'zone': SH, 'intensity': 3}])
+    assert SH not in k.seances.retour_zone and k.seances.budget_semaine[SH] == 5 and expo(out) == 5

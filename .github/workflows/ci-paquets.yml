@@ -20,7 +20,7 @@ concurrency:
 
 env:
   FLUTTER_VERSION: "3.47.5"
-  RUN_PRECEDENT: "39016950696"
+  RUN_PRECEDENT: ""
 
 jobs:
   parts:
