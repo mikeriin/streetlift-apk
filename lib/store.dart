@@ -703,6 +703,11 @@ class AppStore extends ChangeNotifier {
     if (inst != null && inst.generated) {
       try {
         program = Program.fromJson(inst.programJson(_baseProgramJson));
+        // PR2 : départ affiché d'un programme repris en cours de route.
+        final first = inst.summary['firstShownWeek'];
+        program.firstShown = first is int
+            ? first.clamp(1, program.weeks.length)
+            : 1;
         weekKinds = _baseKoachAvailable
             ? LegacyWeekKinds.fromJson(inst.koachJson(_baseKoachJson))
             : const LegacyWeekKinds.empty();

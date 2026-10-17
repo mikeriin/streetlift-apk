@@ -55,7 +55,7 @@ String nbsp(String t) => t.replaceAllMapped(
 /// bloc pour une séance hors semaine). Le titre enregistré dans le journal
 /// (« S1 · J2 ») ne change pas.
 String sessionPlace(WeekPlan w, DayPlan d) =>
-    w.n == 0 ? w.block : 'S${w.n}, J${d.j}';
+    w.n == 0 ? w.block : '${store.program.weekLabel(w.n)}, J${d.j}';
 
 // ============================ SÉANCE =====================================
 
@@ -204,7 +204,7 @@ class _SessionScreenState extends State<SessionScreen> {
   Future<void> _confirmClear() async {
     final w = widget.week;
     final d = widget.day;
-    final head = w.n == 0 ? w.block : 'S${w.n} · J${d.j}';
+    final head = w.n == 0 ? w.block : store.program.sessionLabel(w.n, d.j);
     final ok = await showKConfirm(
       context,
       title: 'Supprimer l’historique de cette séance ?',
@@ -2035,7 +2035,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         const SizedBox(width: KSpacing.s8),
                         Expanded(
                           child: Text(
-                            'S${prev.week} : ${frenchNumbersText(store.summarize(prev.log, kg: showKg))}',
+                            '${store.program.weekLabel(prev.week)} : ${frenchNumbersText(store.summarize(prev.log, kg: showKg))}',
                             style: detailStyle.copyWith(
                               fontFeatures: KFont.tabular,
                             ),
@@ -4268,7 +4268,9 @@ class _FinishPageState extends State<_FinishPage> {
       totalSets += l.sets.length;
       doneSets += l.sets.where((s) => s.done).length;
     }
-    final title = week.n == 0 ? week.block : 'S${week.n} · J${day.j}';
+    final title = week.n == 0
+        ? week.block
+        : store.program.sessionLabel(week.n, day.j);
     final goal = store.game.sessionGoal;
     final reached = totalSets > 0 && doneSets / totalSets >= goal - 1e-9;
     return SingleChildScrollView(

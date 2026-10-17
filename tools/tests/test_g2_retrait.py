@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.1.1 : protocoles du programme (dev7.1.1, PR1).
-        self.assertEqual(version, '7.1.1')
+        # 7.1.2 : départ affiché d'un programme repris (dev7.1.2, PR2).
+        self.assertEqual(version, '7.1.2')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)

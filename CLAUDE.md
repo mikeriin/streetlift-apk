@@ -50,7 +50,10 @@ committer les fichiers déchiffrés.
   sauvegarde réelle du propriétaire.
 - Les sauvegardes de l'app sont du JSON (ou `gz:` + base64). Le programme
   personnel du propriétaire passe par la section `programInstance`
-  (`kind: generated`, semaines au schéma `programme_v33`).
+  (`kind: generated`, semaines au schéma `programme_v33`). Son
+  `summary.firstShownWeek` (PR2) masque les semaines d'avant : elles restent
+  au journal et pour Koach, la numérotation affichée repart de S1
+  (`Program.weekLabel`, `shownWeeks`, `shownNumber`).
 
 ## Façon de travailler (préférences du propriétaire)
 

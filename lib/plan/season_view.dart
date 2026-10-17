@@ -327,7 +327,7 @@ SeasonOverview? storeSeasonOverview() {
             ? imp.segments.last
             : imp.segments.first);
     final event = imp.event;
-    return seasonOverviewOf(
+    final view = seasonOverviewOf(
       season,
       events: [
         ...?store.athlete?.profile.events,
@@ -343,6 +343,23 @@ SeasonOverview? storeSeasonOverview() {
       blockFirstWeek: seg.first,
       blockIndex: seg.index,
       catalog: store.content.catalog,
+    );
+    // PR2 : phases d'avant le départ affiché masquées.
+    final from = store.program.shownStart;
+    if (from == null || store.program.firstShown <= 1) return view;
+    return SeasonOverview(
+      phases: [
+        for (final p in view.phases)
+          if (!p.end.isBefore(from)) p,
+      ],
+      eventName: view.eventName,
+      eventDate: view.eventDate,
+      event: view.event,
+      daysToEvent: view.daysToEvent,
+      blockWeeks: view.blockWeeks,
+      blockIndex: view.blockIndex,
+      rules: view.rules,
+      ladders: view.ladders,
     );
   }
   return seasonOverview(
@@ -427,7 +444,7 @@ class SeasonCard extends StatelessWidget {
                       Text(
                         next.current
                             ? 'Cette semaine : ${next.label.toLowerCase()}.'
-                            : 'Semaine ${next.n} : ${next.label.toLowerCase()}.',
+                            : 'Semaine ${store.program.shownNumber(next.n)} : ${next.label.toLowerCase()}.',
                         style: detail,
                       ),
                     Text(
@@ -629,7 +646,7 @@ class _WeekRow extends StatelessWidget {
     final k = KTokens.of(context);
     return Semantics(
       label:
-          'Semaine ${w.n}, ${w.label}'
+          'Semaine ${store.program.shownNumber(w.n)}, ${w.label}'
           '${w.current ? ', cette semaine' : ''}'
           '${w.special ? ', semaine particulière' : ''}',
       excludeSemantics: true,
@@ -645,7 +662,7 @@ class _WeekRow extends StatelessWidget {
               SizedBox(
                 width: KSize.target,
                 child: Text(
-                  'S${w.n}',
+                  store.program.weekLabel(w.n),
                   style: KType.chiffrePetit.copyWith(
                     color: w.current ? k.encre : k.texte2,
                   ),

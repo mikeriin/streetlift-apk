@@ -141,7 +141,7 @@ class ProgramScreen extends StatelessWidget {
               title: 'Départ du programme',
               subtitle: start == null
                   ? 'Pas encore choisi : choisis ta première séance'
-                  : 'S1 · J1 le ${longCivilDate(start)}',
+                  : 'S1 · J1 le ${longCivilDate(store.program.shownStart ?? start)}',
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (_) => const ProgramStartScreen(),
@@ -155,7 +155,7 @@ class ProgramScreen extends StatelessWidget {
                 title: 'Où j’en suis',
                 subtitle: position == null
                     ? 'Choisis ta semaine et ta séance'
-                    : 'Semaine ${position.week}, jour ${position.day}',
+                    : 'Semaine ${store.program.shownNumber(position.week)}, jour ${position.day}',
                 onTap: () => _openPosition(context),
               ),
           ],

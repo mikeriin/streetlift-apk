@@ -552,4 +552,29 @@ class Program {
     final a = dateFor(n, 1), b = dateFor(n, 7);
     return '${two(a.day)}/${two(a.month)}→${two(b.day)}/${two(b.month)}/${b.year}';
   }
+
+  /// PR2 : première semaine affichée d'un programme repris en cours de
+  /// route. Les semaines d'avant restent au journal, pour Koach et pour la
+  /// progression, mais ne s'affichent plus : la numérotation affichée
+  /// repart de S1. 1 : tout s'affiche.
+  int firstShown = 1;
+
+  /// PR2 : semaines affichées.
+  List<WeekPlan> get shownWeeks =>
+      weeks.where((w) => w.n >= firstShown).toList();
+
+  /// PR2 : numéro affiché de la semaine [n] (S15 → S1 quand l'affichage
+  /// commence en S15).
+  int shownNumber(int n) => n - firstShown + 1;
+
+  /// PR2 : libellé court « S3 », ou « S12 (ancien) » avant l'affichage.
+  String weekLabel(int n) =>
+      n >= firstShown ? 'S${shownNumber(n)}' : 'S$n (ancien)';
+
+  /// PR2 : libellé d'une séance, « S3 · J2 ».
+  String sessionLabel(int n, int j) => '${weekLabel(n)} · J$j';
+
+  /// PR2 : date de la première séance affichée (S1·J1 affiché), null sans
+  /// départ.
+  DateTime? get shownStart => start == null ? null : dateFor(firstShown, 1);
 }

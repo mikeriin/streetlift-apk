@@ -33,7 +33,10 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
   void initState() {
     super.initState();
     final pos = PlanStore(store).programPosition;
-    _week = (pos?.week ?? 1).clamp(1, store.program.weeks.length);
+    _week = (pos?.week ?? 1).clamp(
+      store.program.firstShown,
+      store.program.weeks.length,
+    );
     final w = store.program.week(_week);
     final today = pos?.day;
     _day = today != null && (w.day(today)?.exercises.isNotEmpty ?? false)
@@ -49,7 +52,7 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
   }
 
   void _setWeek(int w) {
-    final n = w.clamp(1, store.program.weeks.length);
+    final n = w.clamp(store.program.firstShown, store.program.weeks.length);
     setState(() {
       _week = n;
       _day = _firstTraining(store.program.week(n));
@@ -61,7 +64,7 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
     if (day == null) return 0;
     final at = (_week - 1) * 7 + day - 1;
     var n = 0;
-    for (final w in store.program.weeks) {
+    for (final w in store.program.shownWeeks) {
       for (final d in w.days) {
         if (d.exercises.isEmpty) continue;
         if ((w.n - 1) * 7 + d.j - 1 >= at) continue;
@@ -82,10 +85,11 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
     final colors = KoachToastColors.of(context);
     final messenger = ScaffoldMessenger.of(context);
     PlanStore(store).setProgramPosition(_week, day);
+    final shown = store.program.shownNumber(_week);
     messenger.showSnackBar(
       koachSnackBar(
         colors,
-        'C’est noté : aujourd’hui, semaine $_week, séance J$day.',
+        'C’est noté : aujourd’hui, semaine $shown, séance J$day.',
         pose: KoachPose.thumbsUp,
       ),
     );
@@ -96,6 +100,7 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final w = store.program.week(_week);
+    final shown = store.program.shownNumber(_week);
     final count = _resumeCount;
     return KPage.sub(
       key: const ValueKey('position-list'),
@@ -141,13 +146,15 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
                 tooltip: 'Semaine précédente',
                 filled: true,
                 icon: Icons.chevron_left_rounded,
-                onPressed: _week > 1 ? () => _setWeek(_week - 1) : null,
+                onPressed: _week > store.program.firstShown
+                    ? () => _setWeek(_week - 1)
+                    : null,
               ),
               Expanded(
                 child: Column(
                   children: [
                     Text(
-                      k.title('Semaine $_week'),
+                      k.title('Semaine $shown'),
                       key: const ValueKey('position-week'),
                       textAlign: TextAlign.center,
                       style: k.titleStyle(

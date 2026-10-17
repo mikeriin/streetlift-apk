@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    week = store.program.weekFor(now);
+    week = math.max(store.program.weekFor(now), store.program.firstShown);
   }
 
   final ScrollController _scroll = ScrollController();
@@ -137,7 +137,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _selectWeek(int value) {
-    final next = value.clamp(1, store.program.weeks.length);
+    final next = value.clamp(
+      store.program.firstShown,
+      store.program.weeks.length,
+    );
     if (next == week) return;
     setState(() => week = next);
     if (_scroll.hasClients) _scroll.jumpTo(0);
@@ -148,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Choix d'une semaine : feuille de liste (§4.5).
   Future<void> _pickWeek() async {
-    final weeks = store.program.weeks;
+    final weeks = store.program.shownWeeks;
     final selected = await showKListSheet(
       context,
       title: 'Choisir une semaine',
@@ -157,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
       items: [
         for (final w in weeks)
           KListItem(
-            'Semaine ${w.n}',
+            'Semaine ${store.program.shownNumber(w.n)}',
             detail:
                 '${[_dates(store.program.weekDates(w.n)), w.block, if (_isCurrentWeek(w.n)) 'semaine actuelle'].join(', ')}. '
                 '${w.days.where((d) => store.isDone(w.n, d.j)).length}\u00a0/\u00a0'
@@ -179,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
     context,
     draggable: true,
     contentKey: const ValueKey('week-sheet'),
-    title: 'Semaine ${w.n}',
+    title: 'Semaine ${store.program.shownNumber(w.n)}',
     subtitle: _dates(store.program.weekDates(w.n)),
     gap: KSpacing.s8,
     children: (sheetContext) {
@@ -396,10 +399,10 @@ class _HomeScreenState extends State<HomeScreen> {
           onChoose: _pickWeek,
         ),
         _WeekSlider(
-          week: week,
-          count: store.program.weeks.length,
+          week: store.program.shownNumber(week),
+          count: store.program.shownWeeks.length,
           blocks: _blocks(),
-          onChanged: _selectWeek,
+          onChanged: (v) => _selectWeek(v + store.program.firstShown - 1),
           onDetails: () => _weekDetails(w),
           onChoose: _pickWeek,
         ),
@@ -483,7 +486,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final out = <KSeasonBlock>[];
     String? name;
     var n = 0;
-    for (final w in store.program.weeks) {
+    for (final w in store.program.shownWeeks) {
       if (w.block != name && n > 0) {
         out.add(KSeasonBlock(n, label: name));
         n = 0;
@@ -497,7 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Rang de la semaine [n] dans son bloc et longueur du bloc.
   (int, int) _weekInBlock(int n) {
-    final weeks = store.program.weeks;
+    final weeks = store.program.shownWeeks;
     final i = weeks.indexWhere((w) => w.n == n);
     if (i < 0) return (1, 1);
     final block = weeks[i].block;
@@ -538,12 +541,13 @@ class _HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final (rank, length) = weekInBlock;
+    final shown = store.program.shownNumber(week.n);
     final block = length > 1
         ? '${week.block}, semaine\u00a0$rank\u00a0sur\u00a0$length'
         : week.block;
     final title = Semantics(
       button: true,
-      label: 'Semaine ${week.n}, $dates, $block',
+      label: 'Semaine $shown, $dates, $block',
       onTapHint: 'Choisir une semaine',
       excludeSemantics: true,
       child: Material(
@@ -566,7 +570,7 @@ class _HomeHeader extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          k.title('Semaine ${week.n}'),
+                          k.title('Semaine $shown'),
                           key: const ValueKey('week-title'),
                           style: k.titleStyle(
                             KType.titreEcran.copyWith(color: k.texte),

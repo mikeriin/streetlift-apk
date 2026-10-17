@@ -42,7 +42,8 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
 
   bool get _correctable => _editable && store.correctionPlan(_key!) != null;
 
-  String get _head => _week.n > 0 ? 'S${_week.n} · J${_day.j}' : _day.title;
+  String get _head =>
+      _week.n > 0 ? store.program.sessionLabel(_week.n, _day.j) : _day.title;
 
   @override
   void initState() {

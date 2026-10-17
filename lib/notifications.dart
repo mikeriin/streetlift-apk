@@ -70,7 +70,7 @@ List<PlannedReminder> planReminders(
       result.add(
         PlannedReminder(
           1000 + (week.n - 1) * 7 + day.j,
-          'S${week.n} · J${day.j} — ${day.title}',
+          '${app.program.sessionLabel(week.n, day.j)} — ${day.title}',
           '${day.exercises.length} exercices · ${week.block}',
           'S${week.n}-J${day.j}',
           at,
