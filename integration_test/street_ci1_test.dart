@@ -393,7 +393,20 @@ void main() {
         }
         releve['page_exercice'] = card.evaluate().isNotEmpty;
         final panel = find.byKey(ValueKey('coach-panel-${e.id}'));
-        releve['panneau_coach'] = await until(tester, panel, max: 40);
+        // PR7 (carte compacte) : la consigne du coach est dans la feuille ⓘ
+        // (« Consignes de l'exercice ») ; le panneau ne reste que pour une
+        // douleur ou un avis médical.
+        final cue = find.byKey(ValueKey('${e.id}-instructions'));
+        releve['panneau_coach'] = await until(
+          tester,
+          find.byWidgetPredicate(
+            (w) =>
+                w.key == ValueKey('coach-panel-${e.id}') ||
+                w.key == ValueKey('${e.id}-instructions'),
+          ),
+          max: 40,
+        );
+        releve['consignes_feuille'] = cue.evaluate().isNotEmpty;
         releve['technique_affichee'] = find
             .byKey(ValueKey('coach-technique-${e.id}'))
             .evaluate()

@@ -144,7 +144,8 @@ void main() {
     for (final e in texts.evaluate()) {
       final w = e.widget as Text;
       final t = w.data ?? w.textSpan?.toPlainText() ?? '';
-      if (RegExp(r'S\d+, J\d').hasMatch(t)) return t;
+      // PR2 (dev7.1.2) : « S14 · J5 » (avant : « S14, J5 »).
+      if (RegExp(r'S\d+(, | · )J\d').hasMatch(t)) return t;
     }
     return null;
   }
