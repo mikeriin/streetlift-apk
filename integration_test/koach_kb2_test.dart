@@ -297,7 +297,9 @@ void main() {
     final imp = store.importedProgram!;
     String? key;
     for (final k in imp.fixedLoad.keys) {
-      if (int.parse(k.split('|').first) == 15) key = k;
+      if (int.parse(k.split('|').first) == 15 && imp.fixedLoad[k]!.$2 > 0) {
+        key = k;
+      }
     }
     releve['charge_fixe_trouvee'] = key != null;
     if (key != null) {

@@ -242,7 +242,7 @@ class KoachEngineCard extends StatelessWidget {
               'Je prends les commandes de ton programme '
               '(${store.program.weekLabel(w)}) : un instant, une seule fois.';
         } else {
-          final m = store.program.dateFor(w, 1);
+          final m = store.koachLundi!.addDays(7 * (w - 1));
           wait =
               'Je prends les commandes de ton programme à partir de '
               '${store.program.weekLabel(w)} (semaine du '
@@ -538,10 +538,19 @@ class _KoachTakeoverDialogState extends State<KoachTakeoverDialog> {
   bool _slow = false;
   bool _closed = false;
 
+  /// Ferme cet écran (et lui seul, même si une page s'est ouverte
+  /// par-dessus entre-temps).
   void _close() {
     if (_closed || !mounted) return;
+    final route = ModalRoute.of(context);
+    if (route == null) return;
     _closed = true;
-    Navigator.of(context).pop();
+    final nav = Navigator.of(context);
+    if (route.isCurrent) {
+      nav.pop();
+    } else if (route.isActive) {
+      nav.removeRoute(route);
+    }
   }
 
   @override

@@ -23,11 +23,8 @@ import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
-import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/koach1/koach1_widgets.dart';
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
-import 'package:streetlift_tracker/models.dart';
-import 'package:streetlift_tracker/plan_store.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
@@ -316,7 +313,10 @@ void main() {
       final imp = app.importedProgram!;
       String? key;
       for (final k in imp.fixedLoad.keys) {
-        if (int.parse(k.split('|').first) == 15) key = k;
+        if (int.parse(k.split('|').first) == 15 &&
+            imp.fixedLoad[k]!.$2 > 0) {
+          key = k;
+        }
       }
       expect(key, isNotNull);
       final slot = key!.substring(key.indexOf('|') + 1);
@@ -343,7 +343,7 @@ void main() {
       final before = app.koachEngine.journal.length;
       app.koachStop();
       expect(app.koachEngine.stop, isNotNull);
-      final next = _dayWithWork(app, 15, j + 1);
+      final next = _dayWithWork(app, 15, j == 1 ? 2 : 1);
       final nb = app.program.week(15).day(next)!;
       expect(app.koachServesDay(15, next), isFalse);
       expect(app.adaptOpen(15, nb), isNull);
@@ -351,6 +351,43 @@ void main() {
       expect(app.koachEngine.stop, isNull);
       expect(app.koachEngine.journal.length, greaterThanOrEqualTo(before));
       expect(app.koachServesDay(15, next), isTrue);
+    });
+    test('séance commencée avec le moteur d’avant avant la prise de main : '
+        'gardée telle quelle (ni réécrite, ni modulée)', () async {
+      debugKoachBasculeAutorisee = false;
+      await _pr2Owner(app);
+      clock = DateTime(2026, 10, 19, 7);
+      final base = app.program.week(15).day(1)!;
+      final a = app.adaptOpen(15, base);
+      expect(a, isNotNull);
+      expect(a!.koach, isNull);
+      final e = app.adaptDay(15, base, a).exercises.first;
+      final log = app.exLog(15, 1, e);
+      app.adaptPrefill(15, 1, e, log);
+      if (log.sets.first.reps.isEmpty) log.sets.first.reps = '5';
+      expect(app.toggleSet(log, 0, app.logSpec(e)).ok, isTrue);
+      String done() => jsonEncode([
+        for (final x in app.logs[app.sessionKey(15, 1)]!.ex.values)
+          for (final st in x.sets)
+            if (st.done) st.toJson(),
+      ]);
+      final started = done();
+      final adaptBefore = jsonEncode(app.logs[app.sessionKey(15, 1)]!.adapt);
+      debugKoachBasculeAutorisee = true;
+      await app.koachRefresh();
+      expect(app.koachEngine.fromWeek, 15);
+      expect(app.koachStartedBefore(15, 1), isTrue);
+      expect(app.koachServesDay(15, 1), isFalse);
+      // Aucune séance de Koach écrite dessus ; séries validées intactes.
+      expect(jsonEncode(app.logs[app.sessionKey(15, 1)]!.adapt), adaptBefore);
+      final again = app.adaptOpen(15, base);
+      expect(again?.koach, isNull);
+      app.koachOverlayWeek();
+      expect(done(), started);
+      expect(app.sessionAdapt(15, 1)?.koach, isNull);
+      // Les journées suivantes : servies par Koach.
+      final j = _dayWithWork(app, 15, 2);
+      expect(app.koachServesDay(15, j), isTrue);
     });
   });
 
@@ -388,8 +425,9 @@ void main() {
 
     test('application fermée pendant la prise de main : rien d’écrit, '
         'reprise propre au lancement suivant', () async {
-      final b = await _pr2Owner(app);
+      await _pr2Owner(app);
       clock = DateTime(2026, 10, 19, 7);
+      final logs = _section(app, 'logs');
       // La prise de main commence ; l'état enregistré à cet instant est
       // celui qu'un arrêt brutal laisserait.
       final running = app.koachRefresh();
@@ -400,7 +438,7 @@ void main() {
       );
       expect(
         jsonEncode((jsonDecode(cut) as Map<String, dynamic>)['logs']),
-        jsonEncode(b['logs']),
+        logs,
       );
       await running;
       // Lancement suivant (autre instance, même horloge) depuis cet état.
@@ -411,10 +449,7 @@ void main() {
       expect(next.koachEngine.snap, isNull);
       await next.koachRefresh();
       expect(next.koachEngine.fromWeek, 15);
-      expect(
-        jsonEncode((jsonDecode(next.exportAll()) as Map)['logs']),
-        jsonEncode(b['logs']),
-      );
+      expect(_section(next, 'logs'), logs);
       await next.flush();
       next.dispose();
     });
