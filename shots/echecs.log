@@ -1,0 +1,89 @@
+02:04 +392 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_km3_capture_test.dart: Koach actif : carte, suggestion, refus, récapitulatif, inspecteur, arrêt
+02:08 +392 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+Kalis notifications: LateInitializationError: Field '_instance@1829271368' has not been initialized.
+Kalis notifications: LateInitializationError: Field '_instance@1829271368' has not been initialized.
+02:08 +392 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_km3_capture_test.dart: Koach actif : carte, suggestion, refus, récapitulatif, inspecteur, arrêt
+KM3|capture|recap=20|hors_modele=true
+02:09 +393 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_km3_capture_test.dart: Koach actif : carte, suggestion, refus, récapitulatif, inspecteur, arrêt
+02:09 +394 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_km3_capture_test.dart: Koach actif : carte, suggestion, refus, récapitulatif, inspecteur, arrêt
+02:09 +395 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_km3_capture_test.dart: Koach actif : carte, suggestion, refus, récapitulatif, inspecteur, arrêt
+02:09 +396 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: supprimer les anciennes réponses : confirmation destructive
+02:09 +397 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: Données et confidentialité : textes et libellés sans jargon
+02:09 +398 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: Aide et à propos : version une fois, entrées de l’aide
+02:10 +399 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: Coller une sauvegarde : sous-page, texte rendu à l’aperçu
+02:10 +400 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: mise en évidence : la ligne visée s’allume puis s’éteint
+02:10 +401 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_test.dart: (tearDownAll)
+02:10 +401 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: instantané de référence : 5 jeux × 1 812 exercices
+02:10 +402 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: sans données de l’ancien Koach : identique à 2.x
+02:11 +403 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: (setUpAll)
+02:11 +403 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+02:11 +404 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+02:11 +405 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+02:11 +406 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+02:11 +407 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+02:11 +408 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+02:11 +409 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+02:12 +410 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart: (setUpAll)
+02:12 +411 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart: (setUpAll)
+02:12 +411 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (clair)
+02:13 +412 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart: Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille
+02:13 +413 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart: Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille
+02:13 +414 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart: Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille
+02:13 +415 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart: Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille
+02:13 +416 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart: Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille
+02:13 +417 ~27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui3_stats_test.dart: Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille
+--
+04:30 +948 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données migration depuis dev7.2.0 : aucune séance réécrite, sauvegarde d’origine intacte ; export après la prise de main réimporté à l’identique
+04:33 +948 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: chaque page de réglage s’ouvre avec la ligne en évidence
+Kalis notifications: LateInitializationError: Field '_instance@1829271368' has not been initialized.
+Kalis notifications: LateInitializationError: Field '_instance@1829271368' has not been initialized.
+04:33 +949 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données migration depuis dev7.2.0 : aucune séance réécrite, sauvegarde d’origine intacte ; export après la prise de main réimporté à l’identique
+04:36 +950 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données migration depuis dev7.2.0 : aucune séance réécrite, sauvegarde d’origine intacte ; export après la prise de main réimporté à l’identique
+04:36 +951 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_settings_search_test.dart: « repos » : résultats groupés, ouvre Séance en évidence
+04:36 +952 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:36 +953 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:37 +954 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:37 +955 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:38 +956 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:38 +957 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:39 +958 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:39 +959 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:39 +960 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:39 +961 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:40 +962 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:40 +963 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:40 +964 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:40 +965 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:40 +966 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:40 +967 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:41 +968 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:41 +969 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:41 +970 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+04:42 +971 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin simulateur : même graine, même session ; séances faites, notées en flammes, revue du moteur
+04:42 +972 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: programme créé (kalis_plan) même règle : la semaine de la première séance non faite, séance faite intacte
+04:42 +973 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: programme créé (kalis_plan) même règle : la semaine de la première séance non faite, séance faite intacte
+04:43 +974 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+04:44 +975 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+04:44 +976 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/kb2_prise_de_main_test.dart: écran d’attente de la prise de main attente bornée : passé le délai, la séance s’ouvre sans attendre
+04:44 +977 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (clair) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+04:44 +978 ~38: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans écran Évolution : mode modifiable, déblocage, historique avec raisons ; annulation
+05:23 +1096 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_filter_menu_test.dart: menu thème clair, Forest Endurance, texte 200 %, 320 px
+05:23 +1097 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_content_test.dart: fiches à 320 px et 200 % démonstration indisponible : carte et consignes
+05:23 +1098 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_content_test.dart: fiches à 320 px et 200 % démonstration indisponible : carte et consignes
+05:24 +1099 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_filter_menu_test.dart: écrans bibliothèque : union, intersection, mémorisée pendant la session
+05:24 +1100 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_filter_menu_test.dart: écrans bibliothèque : union, intersection, mémorisée pendant la session
+05:24 +1101 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_content_test.dart: fiches à 320 px et 200 % bibliothèque : recherche et filtre à 320 px et 200 %
+05:24 +1102 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_content_test.dart: fiches à 320 px et 200 % mentions : sources et licences lisibles à 320 px
+05:25 +1103 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_content_test.dart: (tearDownAll)
+05:25 +1103 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: (setUpAll)
+05:25 +1103 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: la pastille de l’accueil suit un passage de niveau
+05:26 +1104 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: la carte d’objectif hebdo de l’Aperçu suit une séance validée
+05:26 +1105 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: un StoreWidget const se reconstruit puis se désabonne
+05:26 +1106 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: fin de séance ouverte sans vérification au retour : bilan affiché, décompte lancé après la fermeture de la séance
+05:27 +1107 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: un rappel ouvre la séance, ou son historique une fois faite
+05:28 +1108 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: le décompte part de zéro et va jusqu’au gain complet
+05:28 +1109 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: « Réduire les animations » affiche le bilan final sans attendre
+05:28 +1110 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: récompense à 320 px, texte 1.3 : actions par défilement
+05:28 +1111 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: récompense à 320 px, texte 2.0 : actions par défilement
+05:28 +1112 ~51: /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: (tearDownAll)
+05:28 +1112 ~51: All tests passed!
