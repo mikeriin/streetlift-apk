@@ -267,6 +267,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'objectif. Fais les répétitions écrites avec la réserve '
               'indiquée ; le nombre de répétitions monte de semaine en '
               'semaine, la charge ne bouge pas.',
+        CoachNotes.repsCalibrate =>
+          'Pas encore de repère sur ce mouvement : à la première séance, '
+              'fais la première série jusqu\'à ${_int(v)} répétitions de '
+              "l'échec et note le total ; déclare-le dans l'application "
+              '(ou fais son test guidé) : les séries suivantes et le bloc '
+              'suivant partent de ce repère.',
         CoachNotes.pushLadder =>
           'Échelle de poussée : pompe au mur → mains surélevées (barre '
               'basse ou barres parallèles, de plus en plus bas) → genoux '

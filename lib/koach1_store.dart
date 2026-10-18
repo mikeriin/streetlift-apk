@@ -2689,12 +2689,22 @@ extension KoachStore on AppStore {
               x['fin'] as Json,
             ],
           ];
+    // KB1 : versions du moteur qui rejoue le journal (celui de ce build) ;
+    // une prise de main faite par une version d'avant (session de test de
+    // dev7.1.x) garde la sienne à part, le journal est rejoué par 1.0.5.
     return {
       'type': 'journal_moteur',
       'version': 1,
-      'version_moteur': snap.versionMoteur,
-      'version_parametres': snap.versionParametres,
-      'sha256_parametres': snap.shaParametres,
+      'version_moteur': ko.koachVersion,
+      'version_parametres': res.versionParametres,
+      'sha256_parametres': ko.koachParametresSha256,
+      if (snap.versionMoteur != ko.koachVersion ||
+          snap.shaParametres != ko.koachParametresSha256)
+        'prise_de_main': {
+          'version_moteur': snap.versionMoteur,
+          'version_parametres': snap.versionParametres,
+          'sha256_parametres': snap.shaParametres,
+        },
       'profil': snap.profil,
       'extensions': snap.extensions,
       'principaux': principaux.toList()..sort(),

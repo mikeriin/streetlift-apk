@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 7.1.9+139
+version: 7.2.0+140
 
 environment:
   # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
@@ -46,6 +46,9 @@ dependencies:
   # par étiquette (branche fixe etiquettes/kalis_adapt-v0.1.0), avec
   # kalis_core 0.3.0 (etiquettes/kalis_core-v0.3.0, évolution additive).
   # KM3 : kalis_adapt 1.0.2 (Koach 1.0.3, etiquettes/kalis_adapt-v1.0.2).
+  # KB1 : kalis_adapt 1.0.4 (Koach 1.0.5, etiquettes/kalis_adapt-v1.0.4 ;
+  # lib/, assets/koach/ et pubspec.yaml seulement, C17.19.3) et kalis_plan
+  # 0.4.2 (etiquettes/kalis_plan-v0.4.2, KS1c2).
   kalis_adapt:
     path: packages/kalis_adapt
 
@@ -78,7 +81,7 @@ flutter:
     # d'exercices, copies à l'octet de packages/kalis_adapt/assets/koach/
     # (SHA-256 vérifiés par test/km3_koach_test.dart ; INTEGRATION_KM3.md
     # § 3).
-    - assets/koach/koach_params_1_0_3.json
+    - assets/koach/koach_params_1_0_5.json
     - assets/koach/vecteurs_qualites_v1.json
     # CU : parcours de création du profil v3 (copie de l'asset de
     # kalis_core 0.4.0).

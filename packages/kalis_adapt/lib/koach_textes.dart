@@ -307,8 +307,10 @@ String _texteKoach(String code, Map<String, Object?> p, NomExercice? noms) {
     case 'koach.surmenage':
       return _texteSurmenage(p, ex);
     case 'koach.reprise_dose':
-      return 'Reprise après douleur : séries limitées sur $ex pour '
-          'ménager ${zone.nom}.';
+      // 1.0.5 : rampe du réalisé après une douleur ou après une coupure
+      // (règle 3 bis, sans douleur connue) : texte neutre.
+      return 'Retour progressif : séries limitées sur $ex pour ménager '
+          '${zone.nom}.';
     case 'koach.vrai_test':
       final sur = nom == null ? '' : ' sur $ex';
       return 'Test du jour$sur : une montée par paliers jusqu’à une série '
@@ -399,8 +401,8 @@ String _texteRetrait(Object? cause, String ex, _Zone zone) {
       return 'Je retire $ex : il charge trop le poignet tant qu’il te fait '
           'mal.';
     case 'reprise_dose':
-      return 'Je retire $ex : la dose de reprise après ta douleur est '
-          'atteinte pour cette semaine.';
+      return 'Je retire $ex : la dose du jour pour ${zone.nom} est atteinte '
+          '(retour progressif).';
   }
   return 'Je retire $ex aujourd’hui pour ménager une zone douloureuse.';
 }

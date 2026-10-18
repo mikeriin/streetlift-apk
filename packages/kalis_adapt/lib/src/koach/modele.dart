@@ -2139,23 +2139,88 @@ class Modele {
     return ligne;
   }
 
-  /// « Rien de spécial » : variance de toute capacité × [facteur].
-  void elargir(double facteur) {
-    final r = math.sqrt(facteur);
-    final idx = [
-      for (var q = 0; q < nq; q++) th + q,
-      for (final e in ordre) pistes[e]!.idx,
-    ];
-    final c = cap;
-    for (final i in idx) {
-      for (var j = 0; j < c; j++) {
-        pm[i * c + j] *= r;
+  /// « Rien de spécial » au diagnostic : incertitude élargie sur les
+  /// capacités, réapprentissage rapide (cahier § 9).
+  ///
+  /// 1.0.5 (lot KM1c4, règle 5) : élargissement UNIFORME et BORNÉ, mélange
+  /// convexe de l'a posteriori et de l'a priori de population sur les
+  /// composantes de capacité ([variancesAPriori]) : P ← (1 − part) P + part ·
+  /// diag(v0), les autres lignes et colonnes inchangées, sur toutes les
+  /// branches (principale et « mauvais jour »). La variance de toute capacité
+  /// devient (1 − part) V + part · V0 : jamais au-dessus de max(V ; V0) ;
+  /// P reste semi-définie positive. Même ordre d'opérations que la référence
+  /// (lignes puis colonnes × (1 − λ), bloc des composantes ÷ (1 − λ), puis
+  /// + λ · v0 sur la diagonale).
+  void elargir(double part) {
+    var lam = part;
+    if (lam < 0.0) {
+      lam = 0.0;
+    }
+    if (lam > 1.0) {
+      lam = 1.0;
+    }
+    final comps = variancesAPriori();
+    final idx = [for (final (i, _) in comps) i];
+    for (final br in _branches()) {
+      final c = br.cap;
+      final pp = br.p;
+      for (final i in idx) {
+        for (var j = 0; j < c; j++) {
+          pp[i * c + j] *= (1.0 - lam);
+        }
+        for (var j = 0; j < c; j++) {
+          pp[j * c + i] *= (1.0 - lam);
+        }
       }
-      for (var j = 0; j < c; j++) {
-        pm[j * c + i] *= r;
+      // Les blocs croisés (composante, non composante) ont été multipliés
+      // une fois par (1 − λ), le bloc des composantes deux fois : on le
+      // ramène à (1 − λ) puis on ajoute λ · diag(v0).
+      if (lam < 1.0) {
+        for (final i in idx) {
+          for (final k in idx) {
+            pp[i * c + k] /= (1.0 - lam);
+          }
+        }
+      } else {
+        for (final i in idx) {
+          for (final k in idx) {
+            pp[i * c + k] = 0.0;
+          }
+        }
+      }
+      for (final (i, v0) in comps) {
+        pp[i * c + i] += lam * v0;
       }
     }
     elargi += 1;
+  }
+
+  /// [(indice, variance a priori)] des composantes que [elargir] élargit
+  /// (1.0.4) : qualités (theta_sd²), puis écart propre de chaque exercice
+  /// suivi (a priori total de son type moins la part des qualités a priori,
+  /// au moins (0,5 sd)², règle de [piste] à l'état initial).
+  List<(int, double)> variancesAPriori() {
+    final ap = jm(p['a_priori']);
+    final vth = pw(dbl(ap['theta_sd']), 2);
+    final out = <(int, double)>[for (var q = 0; q < nq; q++) (th + q, vth)];
+    for (final e in ordre) {
+      final t = pistes[e]!;
+      final sd = dbl(
+        ap[const {
+          'charge': 'delta_sd',
+          'reps': 'reps_sd',
+          'tenue': 'reps_sd',
+          'cardio': 'cardio_sd',
+          'wod': 'wod_sd',
+        }[t.type]!],
+      );
+      var vq = 0.0;
+      for (var q = 0; q < nq; q++) {
+        vq += t.vecteur[q] * t.vecteur[q] * vth;
+      }
+      out.add((t.idx, math.max(sd * sd - vq, pw(0.5 * sd, 2))));
+    }
+    return out;
   }
 
   // ------------------------------------------------------------------

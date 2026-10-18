@@ -94,6 +94,7 @@ Deux codes existent, ont un texte, mais ne sont émis nulle part : `push_mainten
 | Code | `value` | Émise quand | Texte rendu (résumé) |
 | --- | --- | --- | --- |
 | `submaximal_hold` | 0,7 (toujours) | maintiens en secondes de `beginner.hold`, `skill.hold`, `skill.easy_hold` | Tenues sous-maximales à 60 à 75 % du dernier maintien maximal mesuré ; chaque tenue reste propre. |
+| `reps_calibrate` | réserve visée (3 en endurance, 2 en force) | principal de repli sans repère d'un jour typé (lot KS1c2, `_ensurePrincipal`), première semaine du premier bloc | Pas encore de repère : première série jusqu'à la réserve écrite, note le total et déclare-le (ou fais son test guidé) ; les séries suivantes et le bloc suivant en partent. |
 | `hold_calibrate` | part du maximum à travailler (0,6) | même maintien sans repère, première semaine du premier bloc | Première séance : mesure ton maintien maximal propre, puis travaille à 60 % de ce temps. |
 | `max_attempt` | semaines entre deux essais (2) | élite, séance lourde d'une figure, semaines de montée de rang impair, maintien connu | Toutes les 2 semaines, la première tenue est un maintien maximal propre ; les semaines suivantes valent 60 à 75 % de ce repère. |
 | `step_gate` | secondes du critère de passage (12, 10 ou 8) | `skill.attempt` (essais de l'étape suivante) | Étape suivante sous condition : maintien d'au moins 0,75 × critère (arrondi à la seconde supérieure) au dernier test, puis 3 × critère sur une séance lourde par semaine, propres 3 séances de suite, avant d'ouvrir les entrées de 2 à 3 s. |

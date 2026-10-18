@@ -469,8 +469,37 @@ class Seances {
   /// id -> (niveaux de zone, zones provoquées), vu à la prescription.
   final Map<String, (Json, Set<String>)> zonesEx = {};
 
-  /// zone en reprise -> séries encore permises cette semaine.
+  /// zone -> {semaine: séries écrites (séances vues et manquées)}.
+  final Map<String, Map<int, int>> ecritZone = {};
+
+  /// zone sensible -> séries encore permises aujourd'hui (rampe du réalisé).
   Map<String, num> budgetZone = {};
+
+  /// zone sensible -> séries permises cette semaine (total).
+  Map<String, int> budgetSemaine = {};
+
+  /// Zones encore sous rampe après la fenêtre sensible (sortie progressive).
+  final Set<String> rampeZone = {};
+
+  /// zone -> (semaine d'entrée, départ) de la rampe de retour après coupure
+  /// (règle 3 bis).
+  final Map<String, (int, int)> retourZone = {};
+
+  /// zone -> {semaine: séries écrites des séances manquées qui la
+  /// provoquent}.
+  final Map<String, Map<int, int>> manqueZone = {};
+
+  /// zone -> dernier jour d'exposition réalisée (règle 3 bis).
+  final Map<String, int> expoJour = {};
+
+  /// zone sous budget -> séries que l'échauffement peut prendre aujourd'hui.
+  Map<String, num> reserveEchauffement = {};
+
+  /// Exercices pour lesquels la porte du vrai test a laissé consulter
+  /// `_vraiTest`, dans l'ordre (lecture pour les tests : la référence compte
+  /// ces appels en remplaçant `Seances._vrai_test`). N'entre dans aucun
+  /// résultat.
+  final List<String> appelsVraiTest = [];
 
   /// semaine -> séries dures créditées par groupe majeur.
   final Map<int, List<double>> volSemaines = {};
@@ -692,21 +721,42 @@ class Seances {
           somme([
             for (final x in listeOuVide(mq['items'])) _seriesDures(jm(x)),
           ]);
+      _compterEcritZone(sem, [for (final x in listeOuVide(mq['items'])) jm(x)]);
+      _compterManqueZone(sem, [
+        for (final x in listeOuVide(mq['items'])) jm(x),
+      ]);
     }
     if (c['semaine'] != null) {
       allegees[ent(c['semaine'])] = dans(c['genre'], legeres);
     }
-    for (final z in List<String>.of(g.zones.keys)) {
-      final dz = g.zones[z]!;
-      final leve = dz.arretLeve;
-      if (leve != null &&
-          !g.arret(z) &&
-          0 <= jour - leve &&
-          jour - leve <= _n('reprise_surveillance_j')) {
-        final b = _budgetReprise(z);
-        if (b != null) {
-          budgetZone[z] = b;
-        }
+    budgetSemaine = {};
+    for (final z in g.zones.keys.toList()..sort()) {
+      final (b, sortie) = _budgetZoneSemaine(z);
+      if (sortie) {
+        rampeZone.remove(z);
+      }
+      if (b != null) {
+        budgetSemaine[z] = b;
+        rampeZone.add(z);
+      }
+    }
+    // Règle 3 bis : zones en rampe de retour (séances manquées) ; la rampe
+    // de la zone sensible l'emporte dès qu'elle s'applique ; une semaine
+    // verrouillée (intro, allègement, affûtage, test, compétition,
+    // transition : volume déjà réduit ou échéance) la suspend.
+    for (final z in retourZone.keys.toList()..sort()) {
+      if (budgetSemaine.containsKey(z) || g.sensible(z)) {
+        retourZone.remove(z);
+        continue;
+      }
+      if (verrouillee()) {
+        continue;
+      }
+      final (b, sortie) = _budgetRetour(z);
+      if (sortie || b == null) {
+        retourZone.remove(z);
+      } else {
+        budgetSemaine[z] = b;
       }
     }
     for (final mm in memoire.values) {
@@ -775,62 +825,443 @@ class Seances {
 
   int _doseSemaine(String z, int semaine) => doseZone[z]?[semaine] ?? 0;
 
-  /// Séries encore permises cette semaine, tous mouvements qui provoquent
-  /// la zone [z] confondus, pendant la reprise graduée.
-  int? _budgetReprise(String z) {
+  // `Seances._semaine_connue` de la référence n'est appelée nulle part
+  // (1.0.5) : non portée (élément privé inutilisé).
+
+  /// Semaine connue ET de charge (genre ou intention hors allègement, test,
+  /// affûtage, compétition, transition) ; une semaine entièrement manquée
+  /// est une semaine de charge connue à exposition 0.
+  bool _semaineDeCharge(int w) {
+    final gs = g.semaines[w];
+    if (gs != null) {
+      return gs;
+    }
+    final al = allegees[w];
+    if (al != null) {
+      return !al;
+    }
+    return false;
+  }
+
+  /// Séries écrites de la semaine [semaine] par zone provoquée (exercices
+  /// déjà vus à la prescription ; échauffement compris, comme le réalisé de
+  /// [fermer]).
+  void _compterEcritZone(int semaine, List<Json> items) {
+    for (final x in items) {
+      final zz = zonesEx[x['exerciseId']];
+      if (zz == null) {
+        continue;
+      }
+      final n = ent(ou(x['sets'], 0));
+      if (n <= 0) {
+        continue;
+      }
+      for (final z in zz.$2) {
+        final e = ecritZone.putIfAbsent(z, () => <int, int>{});
+        e[semaine] = (e[semaine] ?? 0) + n;
+      }
+    }
+  }
+
+  int _ecritZone(String z, int semaine) => ecritZone[z]?[semaine] ?? 0;
+
+  /// Séries écrites des séances manquées de la semaine [semaine] par zone
+  /// provoquée (exercices déjà vus) : ce que la zone n'a pas reçu (règle 3
+  /// bis).
+  void _compterManqueZone(int semaine, List<Json> items) {
+    for (final x in items) {
+      final zz = zonesEx[x['exerciseId']];
+      if (zz == null) {
+        continue;
+      }
+      final n = ent(ou(x['sets'], 0));
+      if (n <= 0) {
+        continue;
+      }
+      for (final z in zz.$2) {
+        final e = manqueZone.putIfAbsent(z, () => <int, int>{});
+        e[semaine] = (e[semaine] ?? 0) + n;
+      }
+    }
+  }
+
+  /// Vrai si une séance manquée a privé la zone [z] d'exposition dans la
+  /// fenêtre de la charge chronique.
+  bool _manqueRecent(String z) {
+    final semaine = g.semaine;
+    final mq = manqueZone[z] ?? const <int, int>{};
+    for (
+      var k = semaine - ent(s['charge_chronique_semaines']);
+      k < semaine;
+      k++
+    ) {
+      if ((mq[k] ?? 0) > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// 1.0.5 (lot KM1c4, règles 1 à 3) : (permis, sortie) — séries permises
+  /// cette semaine, tous mouvements qui provoquent la zone [z] confondus
+  /// (échauffement compris), quand la zone est sensible
+  /// ([Gardefous.sensible]) ou encore sous rampe après la fenêtre (sortie
+  /// progressive) ; (null, false) sinon ; `sortie` vrai quand la zone sort
+  /// de la rampe. Fonction pure (l'appelant tient [rampeZone]). « Rampe du
+  /// réalisé » : référence = exposition réalisée de la dernière semaine de
+  /// charge connue depuis l'épisode (et après la levée d'un arrêt), permis
+  /// = max(référence + 1 ; référence × (1 + `reprise_dose_hausse`)), tenue
+  /// sous une gêne récente ; sans référence, `reprise_dose_depart` ×
+  /// habitude (charge chronique des quatre semaines d'avant l'épisode), ou
+  /// `reprise_dose_sans_habitude` ; jamais sous `reprise_dose_min`. Port
+  /// ligne pour ligne de `Seances._budget_zone_semaine`.
+  (int?, bool) _budgetZoneSemaine(String z) {
     final d = g.zones[z];
-    if (d == null || d.arretLeve == null) {
-      return null;
+    if (d == null) {
+      return (null, false);
     }
     final semaine = g.semaine;
-    // Habitude : moyenne des 4 dernières semaines de charge avant le
-    // premier signalement de l'épisode.
-    var debut = d.signalements.isNotEmpty
-        ? divEnt(d.signalements[0].$1, 7)
-        : semaine;
-    for (final (j, i) in d.signalements) {
-      if (i >= _n('arret_persistance_min')) {
-        debut = divEnt(j, 7);
-        break;
-      }
+    final ep = g.episode(z);
+    final sensible = g.sensible(z);
+    if (!sensible && !rampeZone.contains(z)) {
+      return (null, false);
     }
-    final avant = <int>[
-      for (var w = debut - 4; w < debut; w++)
-        if (w >= 0 && (g.semaines[w] ?? false)) _doseSemaine(z, w),
-    ];
-    double? habitude;
-    if (avant.isNotEmpty) {
-      var tot = 0;
-      for (final x in avant) {
-        tot += x;
-      }
-      habitude = tot / avant.length;
+    final rzsm = ent(s['rampe_zone_semaines_max']);
+    final debut = ep != null ? divEnt(ep.$1, 7) : semaine;
+    // Après un arrêt levé dans l'épisode, rien d'avant la semaine de la
+    // levée ne sert de référence (la zone repart de l'arrêt).
+    var apres = debut + 1;
+    final leve = d.arretLeve;
+    if (ep != null && leve != null && leve >= ep.$1) {
+      // Première semaine qui compte après la levée : celle de la levée si
+      // elle lui laisse au moins 4 jours, sinon la suivante.
+      final premiere = 7 - (leve % 7) >= 4
+          ? divEnt(leve, 7)
+          : divEnt(leve, 7) + 1;
+      apres = _seMax(apres, premiere);
     }
-    // Dernière semaine de charge depuis la levée.
-    final premiere = divEnt(d.arretLeve!, 7);
-    int? precedente;
-    for (var w = semaine - 1; w > premiere - 1; w--) {
-      if (g.semaines[w] ?? false) {
-        precedente = _doseSemaine(z, w);
-        break;
-      }
-    }
-    int total;
-    if (precedente == null || precedente <= 0) {
-      if (habitude == null) {
-        return null;
-      }
-      total = (dbl(s['reprise_dose_depart']) * habitude + 1e-9).floor();
-      if (total < 1) {
-        total = 1;
+    int? ref;
+    var tenir = false;
+    if (semaine == debut) {
+      // Semaine du signalement : tenue au réalisé de la semaine de charge
+      // précédente ; sans semaine de charge précédente, départ.
+      var w = semaine - 1;
+      while (w >= 0 && w >= semaine - rzsm) {
+        if (_semaineDeCharge(w)) {
+          ref = _doseSemaine(z, w);
+          tenir = true;
+          break;
+        }
+        w -= 1;
       }
     } else {
-      total = _seMax(
-        precedente + 1,
-        (precedente * (1 + dbl(s['reprise_dose_hausse'])) + 1e-9).floor(),
-      );
+      var w = semaine - 1;
+      while (w >= debut && w >= 0) {
+        if (_semaineDeCharge(w)) {
+          if (w < apres) {
+            break;
+          }
+          ref = _doseSemaine(z, w);
+          if (ref <= 0) {
+            final fin = _seMax(apres, w - rzsm) - 1;
+            for (var k = w - 1; k > fin; k--) {
+              if (_semaineDeCharge(k) && _doseSemaine(z, k) > 0) {
+                ref = _doseSemaine(z, k);
+                break;
+              }
+            }
+          }
+          break;
+        }
+        w -= 1;
+      }
+      if (ref == null && debut < semaine && apres == debut + 1) {
+        // Aucune semaine de charge connue entre le signalement et
+        // aujourd'hui : la semaine du signalement sert, tenue.
+        if (_semaineDeCharge(debut)) {
+          ref = _doseSemaine(z, debut);
+          tenir = true;
+        }
+      }
     }
-    return total - _doseSemaine(z, semaine);
+    if (ref != null && ref > 0 && g.arret(z)) {
+      ref = null;
+    }
+    int total;
+    if (ref != null && ref > 0) {
+      if (tenir ||
+          d.pireEntre(jour - _n('douleur_hausse_j') + 1, jour) >
+              _n('reprise_douleur_max')) {
+        total = ref;
+      } else {
+        total = _seMax(
+          ref + 1,
+          (ref * (1 + dbl(s['reprise_dose_hausse'])) + 1e-9).floor(),
+        );
+      }
+    } else {
+      final avant = <int>[
+        for (var k = debut - 4; k < debut; k++)
+          if (k >= 0 && _semaineDeCharge(k)) _doseSemaine(z, k),
+      ];
+      if (avant.isNotEmpty) {
+        var tot = 0;
+        for (final x in avant) {
+          tot += x;
+        }
+        final habitude = tot / 4.0;
+        total = (dbl(s['reprise_dose_depart']) * habitude + 1e-9).floor();
+      } else {
+        total = ent(s['reprise_dose_sans_habitude']);
+      }
+    }
+    if (total < _n('reprise_dose_min')) {
+      total = ent(s['reprise_dose_min']);
+    }
+    if (!sensible) {
+      // Sortie progressive (règle 2) : après la fenêtre, la rampe continue
+      // tant que le permis n'atteint pas l'écrit (dernière semaine de charge
+      // connue, et semaine en cours vue jusqu'ici) ; dès qu'il l'atteint, la
+      // zone sort.
+      var ecritRef = _ecritZone(z, semaine);
+      var w = semaine - 1;
+      while (w >= 0) {
+        if (_semaineDeCharge(w)) {
+          ecritRef = _seMax(ecritRef, _ecritZone(z, w));
+          break;
+        }
+        w -= 1;
+      }
+      if (total >= ecritRef) {
+        return (null, true);
+      }
+    }
+    return (total, false);
+  }
+
+  /// Habitude de la zone [z] avant une coupure (règle 3 bis) : moyenne de
+  /// l'exposition réalisée sur les `charge_chronique_semaines` semaines
+  /// calendaires qui finissent à la semaine [fin], limitées à celles qui
+  /// suivent la première semaine connue du journal. null sans semaine
+  /// connue.
+  double? _habitudeAvant(String z, int fin) {
+    final connues = <int>[...g.semaines.keys, ...allegees.keys];
+    if (connues.isEmpty) {
+      return null;
+    }
+    var premiere = connues[0];
+    for (final k in connues) {
+      if (k < premiere) {
+        premiere = k;
+      }
+    }
+    final ks = <int>[
+      for (
+        var k = fin - ent(s['charge_chronique_semaines']) + 1;
+        k < fin + 1;
+        k++
+      )
+        if (k >= premiere) k,
+    ];
+    if (ks.isEmpty) {
+      return null;
+    }
+    var tot = 0;
+    for (final k in ks) {
+      tot += _doseSemaine(z, k);
+    }
+    return tot / ks.length.toDouble();
+  }
+
+  /// Permis de la première semaine de retour d'une zone après une coupure :
+  /// `reprise_dose_depart` × habitude d'avant la coupure,
+  /// `reprise_dose_sans_habitude` sans exposition connue, jamais sous
+  /// `reprise_dose_min`.
+  int _departRetour(String z) {
+    final fin = divEnt(expoJour[z]!, 7);
+    final habitude = _habitudeAvant(z, fin);
+    int total;
+    if (habitude == null || habitude <= 0) {
+      total = ent(s['reprise_dose_sans_habitude']);
+    } else {
+      total = (dbl(s['reprise_dose_depart']) * habitude + 1e-9).floor();
+    }
+    if (total < _n('reprise_dose_min')) {
+      total = ent(s['reprise_dose_min']);
+    }
+    return total;
+  }
+
+  /// 1.0.5 (lot KM1c4, règle 3 bis, « rampe du réalisé après une
+  /// coupure ») : (permis, sortie) pour une zone sans douleur connue qui
+  /// revient d'une coupure ([_entrerRetour]). Même rampe que la zone
+  /// sensible depuis l'entrée ([debut]) ; sans référence, le départ
+  /// [depart] figé à l'entrée ; jamais sous `reprise_dose_min` ; `sortie`
+  /// dès que le permis atteint l'écrit. Fonction pure (l'appelant tient
+  /// [retourZone]).
+  (int?, bool) _budgetRetour(String z, {int? depart, int? debut}) {
+    final semaine = g.semaine;
+    int debutR;
+    int departR;
+    if (debut == null || depart == null) {
+      final r = retourZone[z];
+      if (r == null) {
+        return (null, false);
+      }
+      debutR = r.$1;
+      departR = r.$2;
+    } else {
+      debutR = debut;
+      departR = depart;
+    }
+    final rzsm = ent(s['rampe_zone_semaines_max']);
+    int? ref;
+    var w = semaine - 1;
+    while (w >= debutR && w >= 0) {
+      if (_semaineDeCharge(w)) {
+        ref = _doseSemaine(z, w);
+        if (ref <= 0) {
+          final fin = _seMax(debutR, w - rzsm) - 1;
+          for (var k = w - 1; k > fin; k--) {
+            if (_semaineDeCharge(k) && _doseSemaine(z, k) > 0) {
+              ref = _doseSemaine(z, k);
+              break;
+            }
+          }
+        }
+        break;
+      }
+      w -= 1;
+    }
+    int total;
+    if (ref != null && ref > 0) {
+      total = _seMax(
+        ref + 1,
+        (ref * (1 + dbl(s['reprise_dose_hausse'])) + 1e-9).floor(),
+      );
+    } else {
+      total = departR;
+    }
+    if (total < _n('reprise_dose_min')) {
+      total = ent(s['reprise_dose_min']);
+    }
+    var ecritRef = _ecritZone(z, semaine);
+    w = semaine - 1;
+    while (w >= 0) {
+      if (_semaineDeCharge(w)) {
+        ecritRef = _seMax(ecritRef, _ecritZone(z, w));
+        break;
+      }
+      w -= 1;
+    }
+    if (total >= ecritRef) {
+      return (null, true);
+    }
+    return (total, false);
+  }
+
+  /// Règle 3 bis : une zone sans douleur connue, ni sous rampe, qui n'a reçu
+  /// aucune exposition depuis `coupure_j` jours au moins alors qu'une séance
+  /// manquée l'écrivait dans les `charge_chronique_semaines` dernières
+  /// semaines, entre dans la rampe de retour quand l'écrit de la semaine
+  /// (séances vues et manquées, séance du jour, séances restantes) dépasse
+  /// son départ ; son permis est posé pour la semaine. Une semaine
+  /// verrouillée n'ouvre ni n'applique la rampe de retour.
+  void _entrerRetour(List<Json> items) {
+    final c = dictOuVide(contexte);
+    final semaine = g.semaine;
+    if (verrouillee()) {
+      return;
+    }
+    final zones = <String>{...doseZone.keys};
+    final reste = <String, int>{};
+    final seances = <(List<Json>, bool)>[
+      for (final x in listeOuVide(c['reste_semaine']))
+        ([for (final y in listeOuVide(x)) jm(y)], false),
+      (items, true),
+    ];
+    for (final (seance, duJour) in seances) {
+      for (final x in seance) {
+        final zz = zonesEx[x['exerciseId']];
+        if (zz == null) {
+          continue;
+        }
+        for (final z in zz.$2) {
+          zones.add(z);
+          if (!duJour) {
+            reste[z] = (reste[z] ?? 0) + ent(ou(x['sets'], 0));
+          }
+        }
+      }
+    }
+    for (final z in zones.toList()..sort()) {
+      if (budgetSemaine.containsKey(z) ||
+          retourZone.containsKey(z) ||
+          rampeZone.contains(z) ||
+          g.sensible(z)) {
+        continue;
+      }
+      final ej = expoJour[z];
+      if (ej == null || jour - ej < _n('coupure_j')) {
+        continue;
+      }
+      if (!_manqueRecent(z)) {
+        continue;
+      }
+      final ecrit = _ecritZone(z, semaine) + (reste[z] ?? 0);
+      if (ecrit <= 0) {
+        continue;
+      }
+      final depart = _departRetour(z);
+      final (permis, _) = _budgetRetour(z, depart: depart, debut: semaine);
+      if (permis != null && permis < ecrit) {
+        retourZone[z] = (semaine, depart);
+        budgetSemaine[z] = permis;
+      }
+    }
+  }
+
+  /// Part du budget hebdomadaire de chaque zone sous rampe pour la séance du
+  /// jour : reste de la semaine réparti au prorata de l'écrit du jour et des
+  /// séances restantes de la semaine (`contexte['reste_semaine']`), arrondi
+  /// au plus proche (demi vers le haut) ; tout le reste quand rien n'est
+  /// écrit.
+  Map<String, num> _budgetsZoneJour(List<Json> items) {
+    final out = <String, num>{};
+    final c = dictOuVide(contexte);
+    final semaine = g.semaine;
+    for (final e in budgetSemaine.entries) {
+      final z = e.key;
+      var reste = e.value - _doseSemaine(z, semaine);
+      if (reste < 0) {
+        reste = 0;
+      }
+      var eJour = 0;
+      for (final x in items) {
+        final zz = zonesEx[x['exerciseId']];
+        if (zz != null && zz.$2.contains(z)) {
+          eJour += ent(ou(x['sets'], 0));
+        }
+      }
+      var eReste = 0;
+      for (final sc in listeOuVide(c['reste_semaine'])) {
+        for (final y in listeOuVide(sc)) {
+          final x = jm(y);
+          final zz = zonesEx[x['exerciseId']];
+          if (zz != null && zz.$2.contains(z)) {
+            eReste += ent(ou(x['sets'], 0));
+          }
+        }
+      }
+      int part;
+      if (eJour + eReste > 0) {
+        part = (reste * eJour / (eJour + eReste).toDouble() + 0.5).floor();
+      } else {
+        part = reste;
+      }
+      out[z] = part;
+    }
+    return out;
   }
 
   bool verrouillee() {
@@ -860,6 +1291,23 @@ class Seances {
       ecritSemaines[sem] =
           (ecritSemaines[sem] ?? 0.0) +
           somme([for (final x in items) _seriesDures(x)]);
+      _compterEcritZone(sem, items);
+      _entrerRetour(items);
+    }
+    budgetZone = _budgetsZoneJour(items);
+    // Réserve de l'échauffement : ce que le permis du jour laisse après les
+    // séries de travail écrites sur la zone (le travail d'abord).
+    reserveEchauffement = {};
+    for (final e in budgetZone.entries) {
+      final z = e.key;
+      var travail = 0;
+      for (final x in items) {
+        final zz = zonesEx[x['exerciseId']];
+        if (zz != null && zz.$2.contains(z) && x['kind'] != 'warmup') {
+          travail += ent(ou(x['sets'], 0));
+        }
+      }
+      reserveEchauffement[z] = _seMax<num>(0, e.value - travail);
     }
     for (final item in items) {
       var servi = _item(
@@ -878,7 +1326,17 @@ class Seances {
       }
       final plan = plans[item['slotId']];
       final exId = item['exerciseId'] as String;
-      if (plan != null && !testes.contains(exId) && item['kind'] == 'work') {
+      final zonesTest = zones[exId]?.$2 ?? const <String>{};
+      if (plan != null &&
+          !testes.contains(exId) &&
+          item['kind'] == 'work' &&
+          !zonesTest.any(
+            (z) => budgetZone.containsKey(z) && !retourZone.containsKey(z),
+          )) {
+        // 1.0.5 : pas de vrai test (montée de charge) sur un mouvement qui
+        // provoque une zone SENSIBLE sous rampe du réalisé ; la rampe de
+        // retour après une coupure (règle 3 bis) ne l'interdit pas.
+        appelsVraiTest.add(exId);
         var vt = _vraiTest(servi, plan, m.pistes[exId]);
         if (vt != null &&
             !_dureePermetTest(
@@ -1096,28 +1554,41 @@ class Seances {
         series = _surmenage(exId, mem, role, series);
       }
     }
-    if (!echauffement) {
-      final tri = hits.toList()..sort();
-      for (final z in tri) {
-        if (budgetZone.containsKey(z)) {
-          final reste = budgetZone[z]!;
-          if (series > reste) {
-            series = reste > 0 ? reste : 0;
-            _raison('koach.reprise_dose', {'exercice': exId, 'zone': z});
+    // Rampe du réalisé (1.0.5, KM1c4) : séries de tout mouvement qui
+    // provoque une zone sous budget ramenées à ce que la séance permet
+    // encore, échauffement compris (chaque série expose la structure).
+    String? epuisee;
+    final tri = hits.toList()..sort();
+    for (final z in tri) {
+      if (budgetZone.containsKey(z)) {
+        var reste = budgetZone[z]!;
+        if (echauffement) {
+          // L'échauffement ne prend que ce que le travail de la séance
+          // laisse (réservé à la prescription).
+          reste = _seMin<num>(reste, reserveEchauffement[z] ?? reste);
+        }
+        if (series > reste) {
+          series = reste > 0 ? reste : 0;
+          if (series <= 0) {
+            epuisee = z;
           }
+          _raison('koach.reprise_dose', {'exercice': exId, 'zone': z});
         }
       }
-      if (series <= 0) {
-        _raison('koach.douleur_retrait', {
-          'exercice': exId,
-          'zone': cond['zone'],
-          'cause': 'reprise_dose',
-        });
-        return null;
-      }
-      for (final z in tri) {
-        if (budgetZone.containsKey(z)) {
-          budgetZone[z] = budgetZone[z]! - series;
+    }
+    if (series <= 0 && epuisee != null) {
+      _raison('koach.douleur_retrait', {
+        'exercice': exId,
+        'zone': epuisee,
+        'cause': 'reprise_dose',
+      });
+      return null;
+    }
+    for (final z in tri) {
+      if (budgetZone.containsKey(z)) {
+        budgetZone[z] = budgetZone[z]! - series;
+        if (echauffement && reserveEchauffement.containsKey(z)) {
+          reserveEchauffement[z] = reserveEchauffement[z]! - series;
         }
       }
     }
@@ -3912,6 +4383,7 @@ class Seances {
           for (final z in zz.$2) {
             final dz = doseZone.putIfAbsent(z, () => <int, int>{});
             dz[semaine] = (dz[semaine] ?? 0) + 1;
+            expoJour[z] = jour;
           }
         }
       }
