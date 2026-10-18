@@ -1,0 +1,5 @@
+durée : 37 s
+tous     n=40  jour J koach moy 0.884099 pire 0.504525 | témoin moy 0.641811 pire 0.0
+pires    n=32  jour J koach moy 0.872175 pire 0.504525 | témoin moy 0.659889 pire 0.0
+temoins  n=8  jour J koach moy 0.91987 pire 0.912311 | témoin moy 0.587577 pire 0.0
+critère : {"libelle": "pire cas de Koach >= pire cas du témoin (performance le jour J, moyenne par adversaire)", "pire_koach": 0.504525, "pire_temoin": 0.0, "respecte": true, "saisons_temoin_manquantes": 0}
