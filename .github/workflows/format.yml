@@ -30,15 +30,15 @@ jobs:
       - name: Dépendances
         run: flutter pub get --enforce-lockfile
       - name: Formater lib et test
-        run: dart format lib test
+        run: dart format lib test integration_test
       - name: Pousser le résultat
         run: |
           git config user.name "kalis-format"
           git config user.email "kalis-format@users.noreply.github.com"
-          if git diff --quiet -- lib test; then
+          if git diff --quiet -- lib test integration_test; then
             echo "Déjà formaté."
             exit 0
           fi
-          git add lib test
+          git add lib test integration_test
           git commit -m "Formatage automatique (dart format)"
           git push
