@@ -10,3 +10,4 @@ Ce dépôt est **public** : les programmes de référence transmis par le propri
 - Seules des mesures agrégées et anonymes (fourchettes) peuvent être publiées (PIPELINE_CP.md §2).
 - Branche orpheline : jamais fusionnée ailleurs.
 - `journal_proprietaire.tar.gpg` : export du journal du propriétaire (données de santé) pour le rejeu de KM1, même clé, mêmes règles : jamais en clair, seuls des agrégats publiés (DECISIONS_CP.md C13.6).
+- `journal_proprietaire_2026-10-18.tar.gpg` : export neuf du journal moteur du propriétaire (dev7.2.0, Koach 1.0.5, 18/10/2026 ; fichier `journal_moteur_2026-10-18.json`) pour le critère 10 de KB2, même clé, mêmes règles (DECISIONS_CP.md C17.32).
