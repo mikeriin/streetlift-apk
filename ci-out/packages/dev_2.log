@@ -1,0 +1,4 @@
+tests kalis_adapt : échec
+durée : 135 s
+00:03 +42 -1: test/docs_test.dart: docs/PROPRIETAIRE.md est le rejeu de la fixture [E]
+02:06 +372 -1: Some tests failed.

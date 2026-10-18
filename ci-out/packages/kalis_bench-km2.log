@@ -1,0 +1,191 @@
+00:00 +0: loading test/km2_banc_test.dart
+00:00 +0: test/km2_banc_test.dart: fixtures du lot KM2 présentes
+00:00 +1: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +2: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:01 +3: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:02 +3: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +4: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +5: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +6: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +7: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +8: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +9: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +10: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +11: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +12: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:02 +13: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:03 +14: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:03 +15: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:03 +16: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:03 +17: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:05 +18: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:05 +18: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +19: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +20: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +21: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +22: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +23: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +24: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +25: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +26: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +27: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:05 +28: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:06 +29: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:06 +30: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:06 +31: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:06 +32: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__reference__b__47 (setUpAll)
+00:07 +32: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +33: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +34: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +35: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +36: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +37: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +38: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +39: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +40: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +41: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +42: test/km2_validateur_test.dart: autres_05_course_10_km_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:07 +43: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__reference__b__47 rejeu du journal : même état, extensions et façade comprises
+00:08 +44: test/km2_validateur_test.dart: autres_06_semi_marathon_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:08 +45: test/km2_validateur_test.dart: autres_06_semi_marathon_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:08 +46: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__reference__b__47 sécurité de la saison (kmSecuriteSaison)
+00:08 +47: test/km2_validateur_test.dart: autres_07_mobilite_sante_senior : mêmes constats que le banc (référence et blocs modulés)
+00:09 +48: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:11 +49: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:11 +49: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +50: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +51: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +52: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +53: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +54: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +55: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +56: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +57: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +58: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +59: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+00:11 +60: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 rejeu du journal : même état, extensions et façade comprises
+00:12 +61: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 rejeu du journal : même état, extensions et façade comprises
+00:12 +62: test/km2_validateur_test.dart: street_01_debutant_complet : mêmes constats que le banc (référence et blocs modulés)
+00:12 +63: test/km2_validateur_test.dart: street_01_debutant_complet : mêmes constats que le banc (référence et blocs modulés)
+00:12 +64: test/km2_validateur_test.dart: street_01_debutant_complet : mêmes constats que le banc (référence et blocs modulés)
+00:13 +65: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:15 +66: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:16 +67: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:16 +68: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:18 +69: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:19 +70: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:20 +71: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:21 +72: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:22 +73: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:24 +74: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:24 +74: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +75: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +76: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +77: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +78: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +79: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +80: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +81: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +82: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +83: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +84: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+00:24 +85: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:25 +86: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:26 +87: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:26 +88: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:27 +89: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:28 +90: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:28 +91: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:28 +92: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:28 +93: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +94: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +95: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +96: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +97: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +98: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +99: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +100: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +101: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:29 +102: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:31 +103: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 rejeu du journal : même état, extensions et façade comprises
+00:32 +104: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) evaluer_saison : adv-7ee0da71, graine 0
+00:32 +105: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) evaluer_saison : adv-7ee0da71, graine 0
+00:32 +106: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) evaluer_saison : adv-7ee0da71, graine 0
+00:32 +107: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 (setUpAll)
+00:33 +107: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:33 +108: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.sets : clés, valeurs et types (hors traces)
+00:33 +109: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.sets : traces des cibles
+00:33 +110: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.estimates : clés, valeurs et types
+00:33 +111: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 séances servies
+00:33 +112: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 compteurs, gains et capacités
+00:33 +113: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 prévisions de la planification
+00:33 +114: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 journal du moteur : longueur et types
+00:33 +115: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 posterior final
+00:33 +116: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 journaux des extensions du banc
+00:33 +117: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 rejeu du journal : même état, extensions et façade comprises
+00:34 +118: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 états des extensions
+00:34 +119: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 sécurité de la saison (kmSecuriteSaison)
+00:34 +120: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 (tearDownAll)
+00:34 +120: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 (setUpAll)
+00:35 +120: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:35 +121: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 tour.sets : clés, valeurs et types (hors traces)
+00:35 +122: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 tour.sets : traces des cibles
+00:35 +123: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 tour.estimates : clés, valeurs et types
+00:35 +124: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 séances servies
+00:35 +125: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 compteurs, gains et capacités
+00:35 +126: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 prévisions de la planification
+00:35 +127: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 journal du moteur : longueur et types
+00:35 +128: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 posterior final
+00:35 +129: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 journaux des extensions du banc
+00:35 +130: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 rejeu du journal : même état, extensions et façade comprises
+00:35 +131: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 états des extensions
+00:35 +132: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 sécurité de la saison (kmSecuriteSaison)
+00:35 +133: test/km2_banc_test.dart: street_03_debutante__seances_manquees__b__57 (tearDownAll)
+00:35 +133: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 (setUpAll)
+00:36 +133: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:36 +134: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.sets : clés, valeurs et types (hors traces)
+00:36 +135: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.sets : traces des cibles
+00:36 +136: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.estimates : clés, valeurs et types
+00:36 +137: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 séances servies
+00:36 +138: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 compteurs, gains et capacités
+00:36 +139: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 prévisions de la planification
+00:36 +140: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 journal du moteur : longueur et types
+00:36 +141: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 posterior final
+00:36 +142: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 journaux des extensions du banc
+00:36 +143: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 rejeu du journal : même état, extensions et façade comprises
+00:37 +144: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 états des extensions
+00:37 +145: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 sécurité de la saison (kmSecuriteSaison)
+00:37 +146: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 (tearDownAll)
+00:37 +146: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 (setUpAll)
+00:39 +146: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:39 +147: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.sets : clés, valeurs et types (hors traces)
+00:39 +148: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.sets : traces des cibles
+00:39 +149: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.estimates : clés, valeurs et types
+00:39 +150: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 séances servies
+00:39 +151: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 compteurs, gains et capacités
+00:39 +152: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 prévisions de la planification
+00:39 +153: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 journal du moteur : longueur et types
+00:39 +154: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 posterior final
+00:39 +155: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 journaux des extensions du banc
+00:39 +156: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 rejeu du journal : même état, extensions et façade comprises
+00:40 +157: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 états des extensions
+00:40 +158: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 sécurité de la saison (kmSecuriteSaison)
+00:40 +159: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 (tearDownAll)
+00:40 +159: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 (setUpAll)
+00:41 +159: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:41 +160: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.sets : clés, valeurs et types (hors traces)
+00:41 +161: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.sets : traces des cibles
+00:41 +162: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.estimates : clés, valeurs et types
+00:41 +163: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 séances servies
+00:41 +164: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 compteurs, gains et capacités
+00:41 +165: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 prévisions de la planification
+00:41 +166: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 journal du moteur : longueur et types
+00:41 +167: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 posterior final
+00:41 +168: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 journaux des extensions du banc
+00:41 +169: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 rejeu du journal : même état, extensions et façade comprises
+00:42 +170: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 états des extensions
+00:42 +171: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 sécurité de la saison (kmSecuriteSaison)
+00:42 +172: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 (tearDownAll)
+00:42 +172: test/km2_banc_test.dart: comparateur : chemins, tolérance et types
+00:42 +173: test/km2_banc_test.dart: KmBanc : saisons figées = saisons que lit la référence Python
+00:43 +174: All tests passed!
