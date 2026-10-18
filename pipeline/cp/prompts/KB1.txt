@@ -1,0 +1,30 @@
+LOT KB1 — BASCULE DE KOACH 1.0 : `kalis_adapt` 1.0.4 (Koach 1.0.5) ET `kalis_plan` 0.4.2 DANS L'APPLICATION, CRITÈRE 10, OUVERTURE (dev7.2.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : KM2c3 validé (C17.29) ; export neuf du journal moteur du propriétaire (« Exporter le journal moteur », inspecteur du mode dev de dev7.x), déposé chiffré par le pilotage sur `cp-references` (chemin dans la section KB1 de LANCEMENTS.md). Jalon : livré avant le 16/11/2026 pour la bascule au 23/11/2026.
+Base : pointe de `main` (dev7.1.0, ee2b2078 ou suivant). Contrôle `claude/ci-3d` (voie rapide `claude/ci-ui-*-rapide` pour itérer). Sauvegardes `cp-sauvegardes/KB1`.
+Décisions : C8, C11, C13.11.3, C15, C17.17.3, C17.19, C17.24, C17.26, C17.28, C17.29. Livraisons à lire : `LIVRAISON_KM3.md`, `LIVRAISON_KS1A.md`, `LIVRAISON_KS1c2.md`, `LIVRAISON_KM2c3.md` (§ 7). Pour `main` : PIPELINE_GP.md comme pour la piste A (ni signature, ni identifiant Android, ni secrets ; jamais de réécriture de l'historique de `main`).
+
+OBJECTIF
+Que l'application serve exactement le couple mesuré à 0 violation sur les 90 600 saisons (`kalis_plan` 0.4.2 × Koach 1.0.5, C17.17.3), et que la bascule du programme du propriétaire vers Koach s'ouvre si, et seulement si, le critère 10 est tenu sur son journal réel.
+
+CONTENU
+1. **Montée des paquets**, copiés à l'octet depuis leurs étiquettes : `kalis_plan` 0.4.2 (`etiquettes/kalis_plan-v0.4.2`) et `kalis_adapt` 1.0.4 (`etiquettes/kalis_adapt-v1.0.4`). Pour `kalis_adapt`, **seulement `lib/`, `assets/koach/` et `pubspec.yaml`** (C17.19.3, `LIVRAISON_KM2c3.md` § 7) : la copie actuelle avec `reference/` sort de l'arbre de l'application ; arbre sous la limite de 59 Mo, taille avant / après dans la livraison. Asset `koach_params_1_0_5.json` à la place de `koach_params_1_0_4.json` (déclaration, chemin lu, test d'empreinte : SHA-256 `d8a492b7debca0e4a504ed399efee0a8a6e4e003ab99f7cbb7f49c114bfbf26d`). Deux textes de raison changent (`koach_textes.dart`) ; API, journal et codes inchangés.
+2. **Critère 10** (CAHIER_KM.md : rejeu walk-forward du journal depuis S12, au moins 100 séries notées, erreur d'e1RM sous 3 %, couverture 88 à 92 %, biais moyen sous 2 % en valeur absolue) mesuré sur l'export neuf, avec Koach 1.0.5 (référence Python, qui déchiffre en session : clé dans le document privé du projet claude.ai `claude/CLE_REFERENCES_CP.md`, passée à gpg par un fichier /tmp en mode 600, jamais en ligne de commande ni en CI ; **rien de déchiffré n'est committé**, seules des statistiques agrégées vont dans la livraison, C7.8). Dire aussi si le journal porte un cas des limites acceptées en C17.26.4 (douleur pendant une absence courte ou voulue).
+3. **Bascule** : critère 10 tenu → `kKoachBasculeAutorisee = true` ; la date de bascule notée à l'installation reste celle de KM3 (23/11/2026 si installé au plus tard le 16/11). Critère 10 non tenu ou export insuffisant (moins de 100 séries notées) → constante laissée à `false`, paquets montés quand même, chiffres et cause dans la livraison, arrête-toi après la livraison (le pilotage décide).
+4. **Retrait du code 0.x devenu mort** : ce que KM3 n'appelle plus (`kalis_adapt` 0.3.x : `review.dart`, `applyProposal`, `KalisAdapt`…) et tout code d'avant Koach qui ne sert plus après la date de bascule ; **garder** ce qui sert le bloc en cours jusqu'à cette date. Inventaire (retiré / gardé et pourquoi) dans la livraison.
+5. **Carte « Structure de la semaine »** : afficher la raison d'un changement de type de jour (codes de raison de `kalis_plan` 0.4.2, `_ensurePrincipal`, KS1c2), avec les composants et jetons du kit UI (CAHIER_UI.md).
+
+NE PAS FAIRE
+- Rien dans `packages/` sur `moteurs` ; aucune version de paquet qui ne vient pas d'une étiquette validée par le pipeline CP (C17.28.3 : jamais une version du nouveau pipeline Claude Code).
+- Aucun changement de comportement C15 (charge fixe, séance future au jour réel) ; pas de refonte d'écran ; ni durée des séances (option (c), C17.15), ni gabarits (KS2).
+- Si le nouveau pipeline a publié sur `main` entre-temps : rebase sur la pointe (C17.28.3), jamais l'inverse.
+
+TESTS
+- Empreinte des paquets copiés contre leurs étiquettes ; test d'empreinte de l'asset ; journal Koach existant (dev7.1.0) rejoué : décisions de 1.0.5, aucune ligne perdue.
+- Migration depuis dev7.1.0 sur un journal proche de celui du propriétaire (S1 à S14, programme de 40 semaines) : même nombre de séances, séries, records ; séances faites jamais réécrites ; sauvegarde d'origine intacte (C11.2).
+- Bascule : constante vraie → à la date notée Koach sert le bloc ; avant la date, rien ne change ; session de test : bascule forcée toujours possible. Cible émulateur pour la bascule et la carte « Structure de la semaine », thèmes clair et sombre, sessions perso et dev. Tous les tests et cibles des lots précédents restent verts.
+
+FIN DE LOT
+- dev7.2.0 sur `main`, contrôle complet `claude/ci-3d` vert, build signé réussi (push sur `main` refusé : commit prêt sur `cp-sauvegardes/KB1-candidat` et arrête-toi).
+- `LIVRAISON_KB1.md` (pipeline et projet claude.ai) : paquets et empreintes, taille de l'arbre, critère 10 (chiffres agrégés), état de la bascule, inventaire du code retiré, limites, « À tester » court pour le propriétaire.
+- Ligne KB1 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.2.0 prêt à tester — bascule Koach » (ou « … — Koach 1.0.5, bascule fermée » si le critère 10 n'est pas tenu) ; arrête-toi (aucun fire_trigger).

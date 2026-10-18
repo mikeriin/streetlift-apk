@@ -351,3 +351,10 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - À lire d'abord : `livraisons/LIVRAISON_KM1c4.md` § 6 et § 7 (incidents CI : lancer 20 parts sans part 0 ; forcer l'annulation des publications `if: always()` des runs annulés ; parts de 2 h 15 à 4 h 20 ; artefacts par `ci-out/`). Référence de comparaison : campagne Python run 39041787498 (`kalis_bench/docs/data/km1c4/securite/`).
 - Seul lot en cours ; aucune autre session sur `moteurs`. Clé des références non nécessaire.
 
+
+## KB1 — bascule de Koach 1.0, dev7.2.0 (préparé le 18/10/2026, C17.29 ; à lancer à l'accord du propriétaire, tâche « Opus 5.5, effort élevé, application »)
+
+- Lot : **KB1**, prompt `prompts/KB1.txt`. Base : pointe de `main` (dev7.1.0, ee2b2078 ou suivant). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KB1`.
+- Paquets : `etiquettes/kalis_plan-v0.4.2`, `etiquettes/kalis_adapt-v1.0.4` (9c81a201 ; copier `lib/`, `assets/koach/`, `pubspec.yaml` seulement).
+- Export du journal : à déposer chiffré par le pilotage sur `cp-references` au lancement (chemin écrit ici à ce moment-là).
+- Coexistence avec le nouveau pipeline Claude Code (C17.28.3) : rebase sur la pointe de `main` avant de publier.
