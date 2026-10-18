@@ -250,11 +250,7 @@ class KoachEngineCard extends StatelessWidget {
               'tes séances faites restent telles quelles.';
         }
         rows = [
-          Text(
-            wait,
-            key: const ValueKey('koach-engine-waiting'),
-            style: body,
-          ),
+          Text(wait, key: const ValueKey('koach-engine-waiting'), style: body),
           if (e.blocked == 'poids')
             Text(
               'Il me faut ton poids (profil ou pesée) avant de commencer.',
