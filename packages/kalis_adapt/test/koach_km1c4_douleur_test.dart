@@ -28,13 +28,9 @@
 //   le premier membre du couple attendu (`reprise_dose_sans_habitude`, 4).
 // - `test_pas_de_vrai_test_sur_une_zone_sous_rampe` et
 //   `test_le_vrai_test_reste_possible_sous_la_rampe_de_retour` remplacent
-//   `Seances._vrai_test` pour compter ses appels (avec `roles = {}`, il
-//   renvoie toujours None : l'appel n'a aucun effet visible). Ici, on vérifie
-//   la porte qui décide de l'appel (`prescrire`), entre `prescrire` et
-//   `fermer` : ligne de travail servie, plan de l'emplacement présent, et
-//   aucune zone provoquée dans `budgetZone` hors `retourZone` (appel attendu)
-//   ou une zone provoquée dans `budgetZone` hors `retourZone` (pas d'appel) ;
-//   plus aucune ligne `vrai_test` servie.
+//   `Seances._vrai_test` pour compter ses appels : ici, le journal public
+//   `Seances.appelsVraiTest` (exercices pour lesquels la porte de `prescrire`
+//   a consulté `_vraiTest`) donne la même liste (`[]`, puis `[ex]`).
 // Tests non portés : aucun (le point 5, élargissement « rien de spécial »,
 // est dans `koach_elargir_test.dart`).
 import 'dart:convert';
@@ -459,23 +455,12 @@ void main() {
     _quatreSemaines(k, 6, ex: ex);
     _seance(k, 29, [_dips('d', 6, ex: ex)], douleurs: _douleur(_sh, 4));
     final s = k.seances;
-    var porte = true;
-    _seance(
-      k,
-      36,
-      [_dips('d', 6, ex: ex)],
-      douleurs: <Object?>[],
-      avantFermer: (out) {
-        // `_vraiTest` n'est pas consulté : une zone provoquée est sous
-        // permis du jour hors rampe de retour.
-        porte = !_zones[ex]!.$2.any(
-          (z) => s.budgetZone.containsKey(z) && !s.retourZone.containsKey(z),
-        );
-        expect(out.any((x) => x['koach'] == 'vrai_test'), isFalse);
-      },
-    );
+    final avant = s.appelsVraiTest.length;
+    final out = _seance(k, 36, [_dips('d', 6, ex: ex)], douleurs: <Object?>[]);
+    // `_vraiTest` n'est pas consulté (référence : `appels == []`).
+    expect(s.appelsVraiTest.sublist(avant), isEmpty);
+    expect(out.any((x) => x['koach'] == 'vrai_test'), isFalse);
     expect(s.budgetSemaine.containsKey(_sh), isTrue);
-    expect(porte, isFalse);
   });
 
   // --------------------------------------------------------------------
@@ -871,26 +856,12 @@ void main() {
     );
     final s = k.seances;
     expect(s.retourZone.containsKey(_sh), isTrue);
-    var porte = false;
-    _seance(
-      k,
-      51,
-      [_dips('d', 6, ex: ex)],
-      avantFermer: (out) {
-        // `_vraiTest` est consulté : ligne de travail servie, plan présent,
-        // aucune zone provoquée sous permis du jour hors rampe de retour.
-        porte =
-            s.plans['d'] != null &&
-            out.any((x) => x['exerciseId'] == ex && x['kind'] == 'work') &&
-            !_zones[ex]!.$2.any(
-              (z) =>
-                  s.budgetZone.containsKey(z) && !s.retourZone.containsKey(z),
-            );
-      },
-    );
+    final avant = s.appelsVraiTest.length;
+    _seance(k, 51, [_dips('d', 6, ex: ex)]);
     expect(s.budgetSemaine.containsKey(_sh), isTrue);
     expect(s.retourZone.containsKey(_sh), isTrue);
-    expect(porte, isTrue);
+    // `_vraiTest` est consulté une fois (référence : `appels == [ex]`).
+    expect(s.appelsVraiTest.sublist(avant), [ex]);
   });
 
   test('la rampe de retour est suspendue en semaine verrouillée', () {

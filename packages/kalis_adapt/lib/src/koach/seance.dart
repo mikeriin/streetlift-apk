@@ -495,6 +495,12 @@ class Seances {
   /// zone sous budget -> séries que l'échauffement peut prendre aujourd'hui.
   Map<String, num> reserveEchauffement = {};
 
+  /// Exercices pour lesquels la porte du vrai test a laissé consulter
+  /// `_vraiTest`, dans l'ordre (lecture pour les tests : la référence compte
+  /// ces appels en remplaçant `Seances._vrai_test`). N'entre dans aucun
+  /// résultat.
+  final List<String> appelsVraiTest = [];
+
   /// semaine -> séries dures créditées par groupe majeur.
   final Map<int, List<double>> volSemaines = {};
 
@@ -1330,6 +1336,7 @@ class Seances {
         // 1.0.5 : pas de vrai test (montée de charge) sur un mouvement qui
         // provoque une zone SENSIBLE sous rampe du réalisé ; la rampe de
         // retour après une coupure (règle 3 bis) ne l'interdit pas.
+        appelsVraiTest.add(exId);
         var vt = _vraiTest(servi, plan, m.pistes[exId]);
         if (vt != null &&
             !_dureePermetTest(

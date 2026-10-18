@@ -247,7 +247,7 @@ Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Po
   après `reprise_dose_hausse` ;
   `rupture` : `elargissement_vers_a_priori` juste après `elargissement_rien_de_special`), `securite.reprise_dose_depart`
   0,5 ; version `1.0.5-ref.1`, asset
-  `koach_params_1_0_5.json`, SHA-256 et 346 clés (6 + 340) dans `koach_parametres_test.dart`.
+  `koach_params_1_0_5.json`, SHA-256 et 345 clés (6 + 339 ; 346 écrit par erreur au départ) dans `koach_parametres_test.dart`.
 - Modèle de vérité du banc (`lib/src/sim/truth.dart`) : `PORTAGE_BANC.md`, « Delta KM1c4 » (`_painKnown = false` au
   début d'un épisode de la fiche et d'un épisode tendineux).
 - Tests Dart : depuis KM1c4 ils lisent les copies figées de 1.0.4 (`reference/fix_dart/`,
@@ -256,3 +256,12 @@ Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Po
   vers `reference/fixtures/` et `reference/params/koach_params_v1.json`, supprime `fix_dart/` et
   `koach_params_d4.json`, régénère `kalis_bench/test/fixtures/km2/` (`generer_banc_km2.py`, moteur 1.0.5, vérité
   corrigée) et met `_planReference` à la version courante de `kalis_plan` si elle change.
+- **Fait en KM2c3** (`kalis_adapt` 1.0.4, `kalis_bench` 0.5.6, 17-18/10/2026) : delta porté ligne pour ligne, tests
+  repointés, `fix_dart/` et `koach_params_d4.json` supprimés, asset `koach_params_1_0_5.json` (345 clés, SHA-256
+  `d8a492b7…f26d`, identique au fichier de la référence), `truth.dart` corrigé, fixtures du banc régénérées (et trois
+  saisons ajoutées : `autres_08` référence b 47, `ks_01` douleur à l'épaule b 38, `street_03` séances manquées b 57),
+  fixtures complémentaires `test/fixtures/km2c2/` régénérées, tests de `test_km1c4_douleur.py` portés
+  (`test/koach_km1c4_douleur_test.dart`). Écart à la liste ci-dessus : `rupture.elargissement_rien_de_special` est
+  GARDÉE dans le fichier, l'asset, les défauts et les bornes, comme dans la référence (le fichier porte le SHA-256 que
+  les fixtures vérifient ; la retirer change la référence) ; le code Dart ne la lit plus et son validateur l'admet sans
+  l'exiger. `Seances._semaine_connue` (appelée nulle part dans la référence) n'est pas portée.

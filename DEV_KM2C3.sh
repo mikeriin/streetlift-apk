@@ -1,43 +1,39 @@
 #!/bin/bash
-# Mise au point KM2c3 (portage Dart de Koach 1.0.5), run C : campagne Dart du couple kalis_plan 0.4.2 ×
-# Koach 1.0.5 (kalis_adapt 1.0.4) sur les 90 600 saisons, et banc adversarial (six jeux).
-#  PART 1-34  : campagne Dart, groupe g = (PART+1)/2 (graines 6(g-1)..6g-1 ; 17 : 96-99), part h sur 2 ;
-#               saisons vivantes (kalis_plan 0.4.2, les mêmes que lit la référence Python), témoin 0.3.1 lu
-#               (méthode de KR1 et KM1c4) ; déterminisme vérifié sur le groupe 0-5
-#  PART 41-46 : critère 7 bis, six jeux d'adversaires rejoués par Koach (Dart, sans extension), témoin
-#               relu (le même que lit la référence Python de KM1c4)
+# Mise au point KM2c3 (portage Dart de Koach 1.0.5), run D : compilation, format, tests (après relecture ; trois saisons du banc ajoutées).
+#  PART 0 : dart format (le correctif de format est publié dans format.patch), analyse
+#           --fatal-infos de kalis_adapt et kalis_bench, tests koach_* et km2c3_* de kalis_adapt
+#  PART 1 : tests km2_* de kalis_bench (parité du banc sur les fixtures régénérées, validateur, adversaires)
+#  PART 2 : tous les tests de kalis_adapt
 root=$PWD
 out=$root/out-packages
 status=0
-B=$root/packages/kalis_bench
-R=$root/packages/kalis_adapt/reference
 for name in kalis_adapt kalis_bench; do
   (cd packages/$name && dart pub get) > $out/$name-pub-$PART.log 2>&1 || { echo "pub get $name échec"; tail -30 $out/$name-pub-$PART.log; status=1; }
 done
-if [ "$PART" -ge 1 ] && [ "$PART" -le 34 ]; then
-  g=$(( (PART + 1) / 2 )); h=$(( 2 - PART % 2 ))
-  a=$(( 6 * (g - 1) )); b=$(( a + 5 )); [ $b -gt 99 ] && b=99
-  cd $B
-  mkdir -p $out/parts
-  extra=""; [ "$g" != 1 ] && extra="--sans-determinisme"
+if [ "$PART" = 0 ]; then
+  for name in kalis_adapt kalis_bench; do
+    (cd packages/$name && dart format .) > $out/format-$name.log 2>&1
+    tail -3 $out/format-$name.log
+  done
+  git diff -- packages > $out/format.patch; wc -l < $out/format.patch
+  for name in kalis_adapt kalis_bench; do
+    (cd packages/$name && dart analyze --fatal-infos) > $out/analyze-$name.log 2>&1 || { echo "analyse $name : échec"; status=1; }
+    tail -40 $out/analyze-$name.log
+  done
+  cd packages/kalis_adapt
+  dart test --reporter expanded $(ls test/koach_*_test.dart test/km2c3_*_test.dart test/validateur_test.dart) > $out/kalis_adapt-koach.log 2>&1 || { echo "tests koach : échec"; status=1; }
+  grep -E "\[E\]|Some tests failed|All tests passed|Expected|Actual|Which" $out/kalis_adapt-koach.log | head -80
+elif [ "$PART" = 1 ]; then
+  cd packages/kalis_bench
+  dart format . > /dev/null 2>&1
+  dart test --reporter expanded test/km2_banc_test.dart test/km2_validateur_test.dart test/km2_adversaire_test.dart > $out/kalis_bench-km2.log 2>&1 || { echo "tests km2 : échec"; status=1; }
+  grep -E "\[E\]|Some tests failed|All tests passed|Expected|Actual|Which" $out/kalis_bench-km2.log | head -80
+elif [ "$PART" = 2 ]; then
+  cd packages/kalis_adapt
+  dart format . > /dev/null 2>&1
   start=$(date +%s)
-  dart run bin/km2.dart --graines $a-$b --coeurs 4 $extra --temoin $R/donnees/temoin --partie $h/2 --sortie $out/parts/km2c3_g${a}_${b}_partie_${h}_sur_2.json.gz > $out/campagne_${a}_${b}_$h.log 2>&1 || { echo "campagne $a-$b part $h : échec"; status=1; }
+  dart test --reporter expanded > $out/kalis_adapt-tout.log 2>&1 || { echo "tests kalis_adapt : échec"; status=1; }
   echo "durée : $(( $(date +%s) - start )) s"
-  tail -4 $out/campagne_${a}_${b}_$h.log
-elif [ "$PART" -ge 41 ] && [ "$PART" -le 46 ]; then
-  case $PART in
-    41) jeu=km1_v1; adv=$R/donnees/adversaires_v1.json; tem=$R/donnees/adversaires_temoin.json.gz;;
-    42) jeu=km1c2; adv=$R/donnees/adversaires_km1c2.json; tem=$R/donnees/adversaires_km1c2_temoin.json.gz;;
-    43) jeu=km1c3; adv=$R/donnees/adversaires_km1c3.json; tem=$R/donnees/adversaires_km1c3_temoin.json.gz;;
-    44) jeu=km2_b300; adv=$B/docs/data/km2/adversaires_km2_b300.json; tem=$R/donnees/temoin_adversaires/adversaires_km2_b300_temoin.json.gz;;
-    45) jeu=km2_complet_b600; adv=$B/docs/data/km2/adversaires_km2_complet_b600.json; tem=$R/donnees/temoin_adversaires/adversaires_km2_complet_b600_temoin.json.gz;;
-    46) jeu=km2_b3000; adv=$B/docs/data/km2/adversaires_km2_b3000.json; tem=$R/donnees/temoin_adversaires/adversaires_km2_b3000_temoin.json.gz;;
-  esac
-  cd $B
-  mkdir -p $out/adversaires
-  start=$(date +%s)
-  dart run bin/km2.dart adversaires --rejouer $adv --temoin-lu $tem --coeurs 4 --sortie $out/adversaires/comparaison_adversaires_km2c3_$jeu.json > $out/adversaires_$jeu.log 2>&1 || { echo "adversaires $jeu : échec"; status=1; }
-  echo "durée : $(( $(date +%s) - start )) s"
-  tail -6 $out/adversaires_$jeu.log
+  grep -E "\[E\]|Some tests failed|All tests passed" $out/kalis_adapt-tout.log | head -60
 fi
 exit $status

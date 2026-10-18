@@ -1,5 +1,34 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.4
+
+Lot KM2c3 (KM2 correction 3, DECISIONS_CP.md C13.9, C17.23, C17.26) : **portage Dart de la référence Koach 1.0.5**
+(lot KM1c4, `reference/CHANGEMENTS_1_0_5.md`), ligne pour ligne. API, schéma du journal, codes de raison et façade
+inchangés ; une valeur de paramètre change (`securite.reprise_dose_depart` 0,6 → 0,5) et sept clés sont nouvelles
+(une application intégrée sur 1.0.x monte de version et remplace l'asset de paramètres).
+
+- **Conduite sous douleur** (`securite.dart`, `seance.dart`) : zone sensible douze semaines après tout épisode, avec ou
+  sans arrêt (`Gardefous.episode`, `sensible`, `sensibles`, `geneRecente`) ; rampe hebdomadaire de l'exposition
+  RÉALISÉE de la zone (+1 série ou +20 %, départ à la moitié de la charge chronique, séances manquées à zéro, sortie
+  progressive jusqu'à l'écrit), répartie par séance au prorata de l'écrit, échauffement compris (réserve) ; même
+  rampe au retour d'une coupure sans douleur connue (règle 3 bis, suspendue en semaine verrouillée) ; pas de vrai test
+  sur une zone sensible sous rampe ; aucune hausse de charge sous une gêne > seuil des sept derniers jours (règle 4).
+  `_budgetReprise` disparaît. Journal public `Seances.appelsVraiTest` (tests).
+- **Élargissement « rien de spécial »** (`modele.dart`, `rupture.dart`) : `Modele.elargir(part)`, mélange convexe vers
+  l'a priori (`rupture.elargissement_vers_a_priori` 0,25, borne [0 ; 1]) sur toutes les branches ; l'action du
+  diagnostic porte `part`. `elargissement_rien_de_special` n'est plus lue (gardée dans le fichier, les défauts et les
+  bornes, comme la référence).
+- **Paramètres** : asset `assets/koach/koach_params_1_0_5.json` (`1.0.5-ref.1`, 345 clés, SHA-256 `d8a492b7…f26d`, copie
+  à l'octet près de `reference/params/koach_params_v1.json`) à la place de `koach_params_1_0_4.json`.
+- **Textes** (`koach_textes.dart`) : `koach.reprise_dose` et le retrait `reprise_dose` ont un texte neutre (la rampe vaut
+  aussi au retour d'une coupure, sans douleur).
+- **Banc** (`lib/src/sim/truth.dart`) : une douleur qui commence (fiche, épisode tendineux) n'est connue du moteur qu'une
+  fois signalée (`_painKnown` remis à faux, comme `reference/banc/verite.py`) ; `SimAthlete.painKnown`, `setForTest`.
+- **Tests** : repointés sur `reference/fixtures/` et `reference/params/koach_params_v1.json` (copies figées `fix_dart/` et
+  `koach_params_d4.json` supprimées) ; parité sur les 15 fixtures et les 3 complémentaires (`test/fixtures/km2c2/`,
+  régénérées) ; `test/koach_km1c4_douleur_test.dart` (les 23 tests de `reference/tests/test_km1c4_douleur.py`, mêmes
+  valeurs) ; `test/koach_elargir_test.dart` (1.0.5) ; `test/km2c3_verite_test.dart`.
+
 ## 1.0.3
 
 Lot KR1 (DECISIONS_CP.md C17.17.3, C17.18 : Koach sur `kalis_plan` 0.4.1, campagne du couple) : **portage Dart de
