@@ -21,3 +21,8 @@ Base : `moteurs` ba1e5093. Session Opus 5.5 (cse_01RgefQJuvkg7SCNCJUPJrgt), dém
 - Lire run C ; run D : format + analyse + tous tests (kalis_adapt, kalis_bench km2 avec 10 fixtures).
 - docs/CRITERES_KM2C3.md, docs/data/km2c3/, CHANGELOG kalis_bench 0.5.6.
 - Push moteurs, étiquettes kalis_adapt-v1.0.4 et kalis_bench-v0.5.6, contrôle complet ci-cp-a, livraison, ETAT_CP, page de suivi, notification.
+
+## Point au 18/10 ~03:00 UTC
+- Run C (39080556198) : 90 600 saisons Dart, critère 7 = 0, 0 plantée ; run E (39090980389) : 90 600/90 600 saisons identiques au Python (run 39041787498), 6 jeux d'adversaires identiques à la référence Python recalculée.
+- Commit local moteurs 9c81a201 (pas encore poussé) ; contrôle complet poussé sur claude/ci-cp-a (d4a30303).
+- Reste : contrôle vert → push moteurs (rebase), étiquettes, livraison (pipeline + projet), ETAT_CP, page de suivi, notification.
