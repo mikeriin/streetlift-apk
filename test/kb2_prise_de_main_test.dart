@@ -23,6 +23,7 @@ import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
+import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/koach1/koach1_widgets.dart';
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -313,8 +314,7 @@ void main() {
       final imp = app.importedProgram!;
       String? key;
       for (final k in imp.fixedLoad.keys) {
-        if (int.parse(k.split('|').first) == 15 &&
-            imp.fixedLoad[k]!.$2 > 0) {
+        if (int.parse(k.split('|').first) == 15 && imp.fixedLoad[k]!.$2 > 0) {
           key = k;
         }
       }
@@ -505,9 +505,10 @@ void main() {
           home: Builder(
             builder: (context) => Center(
               child: TextButton(
-                onPressed: () => showDialog<void>(
-                  context: context,
-                  barrierDismissible: false,
+                onPressed: () => showKDialog<void>(
+                  context,
+                  dialogKey: const ValueKey('koach-takeover'),
+                  dismissible: false,
                   builder: (_) => KoachTakeoverDialog(done: done),
                 ),
                 child: const Text('ouvrir'),
