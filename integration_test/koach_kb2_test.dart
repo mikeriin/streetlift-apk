@@ -199,6 +199,25 @@ void main() {
       'summary': {'firstShownWeek': 15},
       'cycle': 1,
     };
+    // Références du programme (comme test/kb2_prise_de_main_test.dart) :
+    // la ligne de squat d'endurance à 70 kg porte son volume (B20).
+    final pilot = (b['pilotage'] as Map).cast<String, dynamic>();
+    const refs = {
+      'B4': 71.5,
+      'B8': 55.0,
+      'B9': 75.0,
+      'B10': 15.0,
+      'B11': 120.0,
+      'B16': 10.0,
+      'B17': 30.0,
+      'B18': 70.0,
+      'B19': 65.0,
+      'B20': 35.0,
+    };
+    for (final e in refs.entries) {
+      pilot.putIfAbsent(e.key, () => e.value);
+    }
+    b['pilotage'] = pilot;
     b['programStart'] = {
       'status': 'set',
       'date': '2026-07-13',
@@ -222,8 +241,6 @@ void main() {
         const FakeAccessibilityFeatures();
     await tester.pumpWidget(RepaintBoundary(key: _root, child: kalisApp()));
     await opened(tester);
-    releve['ouverture'] = store.koachEngine.openedOn;
-    releve['installation'] = store.koachEngine.installedOn;
     // Semaine de prise de main prévue (S15 = S1 affichée jusqu'au 25/10 ;
     // ensuite la semaine du jour), horloge placée à son lundi.
     final wk = store.koachTakeoverPlanned() ?? 15;
@@ -286,6 +303,10 @@ void main() {
       if (skip.evaluate().isNotEmpty) releve['attente_trop_longue'] = true;
     }
     releve['attente_ms'] = sw.elapsedMilliseconds;
+    // Dates notées au premier lancement de dev7.2.1 (horloge placée) :
+    // ouverture de la bascule ; installation gardée de dev7.2.0.
+    releve['ouverture'] = store.koachEngine.openedOn;
+    releve['installation'] = store.koachEngine.installedOn;
     releve['koach_actif'] = store.koachEngine.snap != null;
     releve['depuis'] = store.koachEngine.fromWeek;
     releve['active_le'] = store.koachEngine.activatedOn;
@@ -397,6 +418,7 @@ void main() {
 
     expect(releve['import'], isTrue);
     expect(releve['ouverture'], isNotNull);
+    expect(releve['charge_fixe_trouvee'], isTrue);
     expect(releve['installation'], '2026-10-16');
     expect(releve['prevue'] as int, greaterThanOrEqualTo(15));
     // S1 affichée la semaine du 19/10 (S15 interne).
