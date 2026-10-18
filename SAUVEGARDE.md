@@ -19,3 +19,4 @@ Base : main e5d3829 (dev7.1.9). Travail dans un worktree de main (branche locale
 ## Reste
 - Lire les résultats CI, corriger ; rebase sur main ; push main ; build signé ; livraison ; ETAT ; page de suivi ; notification.
 - Run 39121486450 (c45cbe4) : suite Dart et paquets verts ; émulateur : KB1 rouge (export de l'inspecteur dans la session de test non atteint : défilement), KS1A (en-tête « S14 · J5 » depuis PR2), CI1 (panneau du coach dans ⓘ depuis PR7), KM3 (dimanche : aucune séance restante dans la semaine) rouges sur des causes antérieures à KB1 ; CI1e, CI1f : émulateur (connexion VM refusée). Corrigés dans les cibles (17f39fc), contrôle relancé 12:45 UTC.
+- Run 39128620136 (17f39fc) : toutes les cibles vertes (KB1, KS1A, KM3, CI1…) sauf CI1e a (connexion VM refusée, deux essais) ; formatage de la cible KB1 corrigé (31376d1e), contrôle final relancé 14:12 UTC. Livraison rédigée (pipeline/cp/livraisons/LIVRAISON_KB1.md, à compléter : main, runs).
