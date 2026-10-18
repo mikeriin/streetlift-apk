@@ -1,0 +1,595 @@
+{
+ "A_series_fiables_1_5_en_reserve_ou_moins": {
+  "par_exercice": {
+   "autres (moins de 5 chacun, 9 exercices)": {
+    "biais_signe_median": -0.024,
+    "biais_signe_moyen": -0.0302,
+    "couverture_90": 0.833,
+    "demi_largeur_mediane_pct": 12.28,
+    "erreur_mediane": 0.0498,
+    "erreur_moyenne": 0.0537,
+    "n": 12,
+    "sd_jour_median": 0.0692
+   },
+   "mu-elevation-laterale-halteres": {
+    "biais_signe_median": -0.0377,
+    "biais_signe_moyen": -0.005,
+    "couverture_90": 0.667,
+    "demi_largeur_mediane_pct": 17.3,
+    "erreur_mediane": 0.1091,
+    "erreur_moyenne": 0.1153,
+    "n": 6,
+    "sd_jour_median": 0.0951
+   }
+  },
+  "par_famille": {
+   "autre": {
+    "biais_signe_median": -0.0628,
+    "biais_signe_moyen": -0.0435,
+    "couverture_90": 0.75,
+    "demi_largeur_mediane_pct": 16.99,
+    "erreur_mediane": 0.0772,
+    "erreur_moyenne": 0.0987,
+    "n": 12,
+    "sd_jour_median": 0.0947
+   },
+   "principal": {
+    "biais_signe_median": 0.0072,
+    "biais_signe_moyen": 0.0217,
+    "couverture_90": 0.833,
+    "demi_largeur_mediane_pct": 10.21,
+    "erreur_mediane": 0.0091,
+    "erreur_moyenne": 0.0253,
+    "n": 6,
+    "sd_jour_median": 0.0569
+   }
+  },
+  "par_famille_et_rang": {
+   "autre / premiere": {
+    "biais_signe_median": -0.0628,
+    "biais_signe_moyen": -0.0435,
+    "couverture_90": 0.75,
+    "demi_largeur_mediane_pct": 16.99,
+    "erreur_mediane": 0.0772,
+    "erreur_moyenne": 0.0987,
+    "n": 12,
+    "sd_jour_median": 0.0947
+   },
+   "principal / premiere": {
+    "biais_signe_median": 0.0072,
+    "biais_signe_moyen": 0.0217,
+    "couverture_90": 0.833,
+    "demi_largeur_mediane_pct": 10.21,
+    "erreur_mediane": 0.0091,
+    "erreur_moyenne": 0.0253,
+    "n": 6,
+    "sd_jour_median": 0.0569
+   }
+  },
+  "par_note": {
+   "10 (0 en réserve)": {
+    "n": 1
+   },
+   "8-9 (0,5 à 1,5)": {
+    "biais_signe_median": -0.0412,
+    "biais_signe_moyen": -0.0289,
+    "couverture_90": 0.824,
+    "demi_largeur_mediane_pct": 16.12,
+    "erreur_mediane": 0.0584,
+    "erreur_moyenne": 0.0728,
+    "n": 17,
+    "sd_jour_median": 0.0895
+   }
+  },
+  "par_rang_dans_l_exercice": {
+   "premiere serie": {
+    "biais_signe_median": -0.0247,
+    "biais_signe_moyen": -0.0218,
+    "couverture_90": 0.778,
+    "demi_largeur_mediane_pct": 16.1,
+    "erreur_mediane": 0.0628,
+    "erreur_moyenne": 0.0742,
+    "n": 18,
+    "sd_jour_median": 0.0894
+   }
+  },
+  "par_repetitions": {
+   "01-03": {
+    "biais_signe_median": 0.0072,
+    "biais_signe_moyen": 0.0088,
+    "couverture_90": 1.0,
+    "demi_largeur_mediane_pct": 10.21,
+    "erreur_mediane": 0.0091,
+    "erreur_moyenne": 0.0122,
+    "n": 4,
+    "sd_jour_median": 0.0569
+   },
+   "04-06": {
+    "n": 2
+   },
+   "07-10": {
+    "n": 2
+   },
+   "11+": {
+    "biais_signe_median": -0.0628,
+    "biais_signe_moyen": -0.0219,
+    "couverture_90": 0.6,
+    "demi_largeur_mediane_pct": 16.99,
+    "erreur_mediane": 0.0896,
+    "erreur_moyenne": 0.1079,
+    "n": 10,
+    "sd_jour_median": 0.0947
+   }
+  },
+  "par_role": {
+   "None": {
+    "biais_signe_median": -0.0412,
+    "biais_signe_moyen": -0.0289,
+    "couverture_90": 0.824,
+    "demi_largeur_mediane_pct": 16.12,
+    "erreur_mediane": 0.0584,
+    "erreur_moyenne": 0.0728,
+    "n": 17,
+    "sd_jour_median": 0.0895
+   },
+   "test": {
+    "n": 1
+   }
+  },
+  "par_valeur_declaree": {
+   "a priori de population": {
+    "n": 1
+   },
+   "declare": {
+    "biais_signe_median": -0.0082,
+    "biais_signe_moyen": -0.0169,
+    "couverture_90": 0.765,
+    "demi_largeur_mediane_pct": 16.08,
+    "erreur_mediane": 0.0584,
+    "erreur_moyenne": 0.0724,
+    "n": 17,
+    "sd_jour_median": 0.0892
+   }
+  },
+  "total": {
+   "biais_signe_median": -0.0247,
+   "biais_signe_moyen": -0.0218,
+   "couverture_90": 0.778,
+   "demi_largeur_mediane_pct": 16.1,
+   "erreur_mediane": 0.0628,
+   "erreur_moyenne": 0.0742,
+   "n": 18,
+   "sd_jour_median": 0.0894
+  }
+ },
+ "A_une_seance_d_avance": {
+  "par_exercice": {
+   "autres (moins de 5 chacun, 15 exercices)": {
+    "biais_signe_median": -0.0041,
+    "biais_signe_moyen": 0.0037,
+    "couverture_90": 0.907,
+    "demi_largeur_mediane_pct": 16.33,
+    "erreur_mediane": 0.0276,
+    "erreur_moyenne": 0.0526,
+    "n": 43,
+    "sd_jour_median": 0.0895
+   },
+   "mu-elevation-laterale-halteres": {
+    "biais_signe_median": -0.0377,
+    "biais_signe_moyen": -0.005,
+    "couverture_90": 0.667,
+    "demi_largeur_mediane_pct": 17.3,
+    "erreur_mediane": 0.1091,
+    "erreur_moyenne": 0.1153,
+    "n": 6,
+    "sd_jour_median": 0.0951
+   },
+   "mu-reverse-wrist-curl-haltere": {
+    "biais_signe_median": -0.008,
+    "biais_signe_moyen": -0.0137,
+    "couverture_90": 1.0,
+    "demi_largeur_mediane_pct": 17.86,
+    "erreur_mediane": 0.0162,
+    "erreur_moyenne": 0.0245,
+    "n": 6,
+    "sd_jour_median": 0.0971
+   },
+   "sl-squat-competition": {
+    "biais_signe_median": 0.041,
+    "biais_signe_moyen": 0.0763,
+    "couverture_90": 0.667,
+    "demi_largeur_mediane_pct": 10.52,
+    "erreur_mediane": 0.041,
+    "erreur_moyenne": 0.0826,
+    "n": 6,
+    "sd_jour_median": 0.0545
+   }
+  },
+  "par_famille": {
+   "autre": {
+    "biais_signe_median": -0.0127,
+    "biais_signe_moyen": -0.0007,
+    "couverture_90": 0.87,
+    "demi_largeur_mediane_pct": 17.25,
+    "erreur_mediane": 0.0409,
+    "erreur_moyenne": 0.0644,
+    "n": 46,
+    "sd_jour_median": 0.0947
+   },
+   "principal": {
+    "biais_signe_median": 0.0115,
+    "biais_signe_moyen": 0.0361,
+    "couverture_90": 0.867,
+    "demi_largeur_mediane_pct": 10.56,
+    "erreur_mediane": 0.0187,
+    "erreur_moyenne": 0.0425,
+    "n": 15,
+    "sd_jour_median": 0.0574
+   }
+  },
+  "par_famille_et_rang": {
+   "autre / premiere": {
+    "biais_signe_median": -0.0134,
+    "biais_signe_moyen": -0.0108,
+    "couverture_90": 0.878,
+    "demi_largeur_mediane_pct": 17.07,
+    "erreur_mediane": 0.0412,
+    "erreur_moyenne": 0.0611,
+    "n": 41,
+    "sd_jour_median": 0.0934
+   },
+   "autre / suivante": {
+    "biais_signe_median": 0.0184,
+    "biais_signe_moyen": 0.0816,
+    "couverture_90": 0.8,
+    "demi_largeur_mediane_pct": 20.56,
+    "erreur_mediane": 0.0244,
+    "erreur_moyenne": 0.0914,
+    "n": 5,
+    "sd_jour_median": 0.113
+   },
+   "principal / premiere": {
+    "biais_signe_median": 0.0109,
+    "biais_signe_moyen": 0.0405,
+    "couverture_90": 0.833,
+    "demi_largeur_mediane_pct": 10.46,
+    "erreur_mediane": 0.014,
+    "erreur_moyenne": 0.0455,
+    "n": 12,
+    "sd_jour_median": 0.0576
+   },
+   "principal / suivante": {
+    "biais_signe_median": 0.029,
+    "biais_signe_moyen": 0.0183,
+    "couverture_90": 1.0,
+    "demi_largeur_mediane_pct": 10.67,
+    "erreur_mediane": 0.029,
+    "erreur_moyenne": 0.0308,
+    "n": 3,
+    "sd_jour_median": 0.055
+   }
+  },
+  "par_note": {
+   "10 (0 en réserve)": {
+    "n": 1
+   },
+   "5-7 (2 à 3)": {
+    "biais_signe_median": 0.0088,
+    "biais_signe_moyen": 0.0209,
+    "couverture_90": 0.907,
+    "demi_largeur_mediane_pct": 17.27,
+    "erreur_mediane": 0.0259,
+    "erreur_moyenne": 0.0526,
+    "n": 43,
+    "sd_jour_median": 0.0928
+   },
+   "8-9 (0,5 à 1,5)": {
+    "biais_signe_median": -0.0412,
+    "biais_signe_moyen": -0.0289,
+    "couverture_90": 0.824,
+    "demi_largeur_mediane_pct": 16.12,
+    "erreur_mediane": 0.0584,
+    "erreur_moyenne": 0.0728,
+    "n": 17,
+    "sd_jour_median": 0.0895
+   }
+  },
+  "par_rang_dans_l_exercice": {
+   "premiere serie": {
+    "biais_signe_median": -0.0068,
+    "biais_signe_moyen": 0.0008,
+    "couverture_90": 0.868,
+    "demi_largeur_mediane_pct": 16.39,
+    "erreur_mediane": 0.0323,
+    "erreur_moyenne": 0.0575,
+    "n": 53,
+    "sd_jour_median": 0.0894
+   },
+   "serie suivante": {
+    "biais_signe_median": 0.0237,
+    "biais_signe_moyen": 0.0579,
+    "couverture_90": 0.875,
+    "demi_largeur_mediane_pct": 19.72,
+    "erreur_mediane": 0.0267,
+    "erreur_moyenne": 0.0687,
+    "n": 8,
+    "sd_jour_median": 0.1087
+   }
+  },
+  "par_repetitions": {
+   "01-03": {
+    "biais_signe_median": 0.0276,
+    "biais_signe_moyen": 0.0232,
+    "couverture_90": 1.0,
+    "demi_largeur_mediane_pct": 10.67,
+    "erreur_mediane": 0.0276,
+    "erreur_moyenne": 0.0251,
+    "n": 7,
+    "sd_jour_median": 0.0574
+   },
+   "04-06": {
+    "biais_signe_median": -0.0024,
+    "biais_signe_moyen": 0.0277,
+    "couverture_90": 0.857,
+    "demi_largeur_mediane_pct": 15.98,
+    "erreur_mediane": 0.0165,
+    "erreur_moyenne": 0.0642,
+    "n": 7,
+    "sd_jour_median": 0.0891
+   },
+   "07-10": {
+    "biais_signe_median": -0.0178,
+    "biais_signe_moyen": -0.0014,
+    "couverture_90": 1.0,
+    "demi_largeur_mediane_pct": 14.11,
+    "erreur_mediane": 0.0274,
+    "erreur_moyenne": 0.0387,
+    "n": 14,
+    "sd_jour_median": 0.079
+   },
+   "11+": {
+    "biais_signe_median": -0.0082,
+    "biais_signe_moyen": 0.0051,
+    "couverture_90": 0.788,
+    "demi_largeur_mediane_pct": 17.23,
+    "erreur_mediane": 0.0495,
+    "erreur_moyenne": 0.0737,
+    "n": 33,
+    "sd_jour_median": 0.0945
+   }
+  },
+  "par_role": {
+   "None": {
+    "biais_signe_median": -0.0034,
+    "biais_signe_moyen": 0.0068,
+    "couverture_90": 0.883,
+    "demi_largeur_mediane_pct": 16.82,
+    "erreur_mediane": 0.029,
+    "erreur_moyenne": 0.0583,
+    "n": 60,
+    "sd_jour_median": 0.0924
+   },
+   "test": {
+    "n": 1
+   }
+  },
+  "par_valeur_declaree": {
+   "a priori de population": {
+    "n": 2
+   },
+   "declare": {
+    "biais_signe_median": -0.0028,
+    "biais_signe_moyen": 0.0095,
+    "couverture_90": 0.864,
+    "demi_largeur_mediane_pct": 16.71,
+    "erreur_mediane": 0.029,
+    "erreur_moyenne": 0.0583,
+    "n": 59,
+    "sd_jour_median": 0.092
+   }
+  },
+  "total": {
+   "biais_signe_median": -0.0028,
+   "biais_signe_moyen": 0.0083,
+   "couverture_90": 0.869,
+   "demi_largeur_mediane_pct": 16.71,
+   "erreur_mediane": 0.029,
+   "erreur_moyenne": 0.059,
+   "n": 61,
+   "sd_jour_median": 0.092
+  }
+ },
+ "B_tests_reels": {
+  "enduranceTest": {
+   "biais_signe_median": -0.0276,
+   "biais_signe_moyen": 0.1695,
+   "couverture_90": 0.6,
+   "erreur_mediane": 0.0711,
+   "erreur_moyenne": 0.2228,
+   "meilleure_serie_sous_10_flammes": 1,
+   "n": 5,
+   "par_famille": {
+    "principal": {
+     "biais_signe_median": -0.0276,
+     "biais_signe_moyen": 0.1695,
+     "couverture_90": 0.6,
+     "erreur_mediane": 0.0711,
+     "erreur_moyenne": 0.2228,
+     "n": 5
+    }
+   }
+  },
+  "test1rm": {
+   "meilleure_serie_sous_10_flammes": 0,
+   "n": 0,
+   "par_famille": {}
+  },
+  "total": {
+   "biais_signe_median": -0.0276,
+   "biais_signe_moyen": 0.1695,
+   "couverture_90": 0.6,
+   "erreur_mediane": 0.0711,
+   "erreur_moyenne": 0.2228,
+   "n": 5
+  }
+ },
+ "C_calibration_des_notes": {
+  "calibration_par_tranche_de_probabilite": {
+   "0.0-0.1": {
+    "n": 82,
+    "observee": 0.0,
+    "prevue": 0.025
+   },
+   "0.1-0.3": {
+    "n": 33,
+    "observee": 0.0,
+    "prevue": 0.197
+   },
+   "0.3-0.6": {
+    "n": 41,
+    "observee": 0.146,
+    "prevue": 0.464
+   },
+   "0.6-1.0": {
+    "n": 84,
+    "observee": 0.488,
+    "prevue": 0.847
+   }
+  },
+  "par_famille_et_type": {
+   "autre / charge": {
+    "ecart_absolu_moyen_notes_fermees": 2.28,
+    "ecart_moyen_note_moins_prevision": -1.167,
+    "ecart_moyen_notes_fermees": -0.741,
+    "n": 129,
+    "n_notes_fermees": 111,
+    "part_ouvertes_observee": 0.14,
+    "part_ouvertes_prevue": 0.352
+   },
+   "autre / reps": {
+    "ecart_absolu_moyen_notes_fermees": 2.279,
+    "ecart_moyen_note_moins_prevision": -0.359,
+    "ecart_moyen_notes_fermees": -0.359,
+    "n": 6,
+    "n_notes_fermees": 6,
+    "part_ouvertes_observee": 0.0,
+    "part_ouvertes_prevue": 0.409
+   },
+   "principal / charge": {
+    "ecart_absolu_moyen_notes_fermees": 1.319,
+    "ecart_moyen_note_moins_prevision": -0.961,
+    "ecart_moyen_notes_fermees": -0.905,
+    "n": 71,
+    "n_notes_fermees": 62,
+    "part_ouvertes_observee": 0.127,
+    "part_ouvertes_prevue": 0.283
+   },
+   "principal / reps": {
+    "ecart_absolu_moyen_notes_fermees": 8.879,
+    "ecart_moyen_note_moins_prevision": -11.573,
+    "ecart_moyen_notes_fermees": -8.188,
+    "n": 34,
+    "n_notes_fermees": 14,
+    "part_ouvertes_observee": 0.588,
+    "part_ouvertes_prevue": 0.902
+   }
+  },
+  "total": {
+   "ecart_absolu_moyen_notes_fermees": 2.45,
+   "ecart_moyen_note_moins_prevision": -2.56,
+   "ecart_moyen_notes_fermees": -1.322,
+   "n": 240,
+   "n_notes_fermees": 193,
+   "part_ouvertes_observee": 0.196,
+   "part_ouvertes_prevue": 0.411
+  }
+ },
+ "D_fiabilite_des_notes": {
+  "avant_periode_evaluee": {
+   "elargissement": 1.9676962432231369,
+   "ln_phi": -0.004635235382887854,
+   "notes": 15,
+   "p_phi_sup_2": 0.13068188291665242,
+   "par_schema": {
+    "leger": {
+     "notes": 6,
+     "part_non_notee": 0.8226143478041407,
+     "phi": 1.119379735708739
+    },
+    "lourd": {
+     "notes": 9,
+     "part_non_notee": 0.7055859924238261,
+     "phi": 1.1276287049147715
+    }
+   },
+   "part_non_notee": 0.6892024551582612,
+   "phi": 1.11572978500149
+  },
+  "elargissement_kappa": 1.0269,
+  "fin_de_journal": {
+   "elargissement": 1.0268957468870674,
+   "ln_phi": 0.04118543190149281,
+   "notes": 255,
+   "p_phi_sup_2": 0.08819735532178967,
+   "par_schema": {
+    "leger": {
+     "notes": 185,
+     "part_non_notee": 0.09877418878778657,
+     "phi": 1.2598350460112258
+    },
+    "lourd": {
+     "notes": 70,
+     "part_non_notee": 0.4788038126813789,
+     "phi": 0.6084430005436603
+    }
+   },
+   "part_non_notee": 0.26740108491631026,
+   "phi": 1.1172126471009611
+  },
+  "methode": "Indicateur `Fiabilite` du moteur (contrat § 5.13) après rejeu de tout le journal, avec oubli (les notes récentes pèsent plus) ; « avant » = à l'entrée de la première séance évaluée. Effet sur les prescriptions : mouvements principaux chargés, état de fin de journal ; palier = plafond d'ouverture d'une tentative que les barres réussies des 42 derniers jours autorisent, avec et sans la réserve de fiabilité ; série lourde = écart relatif de charge dû à l'élargissement (prudence_charge·σ·(κ − 1)) et à la prudence de fiabilité. Cellules de moins de 3 exercices : effectif seul.",
+  "principaux_charges": {
+   "ecart_type_elargi_moyen": 0.0861,
+   "ecart_type_sans_kappa_moyen": 0.0838,
+   "n": 5,
+   "palier_ouverture_ecart_relatif": {
+    "max": -0.0027,
+    "min": -0.0047,
+    "moyenne": -0.0039,
+    "n": 5
+   },
+   "serie_lourde_ecart_relatif": {
+    "max": -0.0002,
+    "min": -0.0018,
+    "moyenne": -0.0006,
+    "n": 5
+   }
+  }
+ },
+ "conversion": {
+  "seances_converties": 34,
+  "series_converties": 672
+ },
+ "description": "Rejeu walk-forward d'un journal réel par Koach 1.0 : agrégats seulement (aucune valeur individuelle, aucune date, aucun identifiant de séance).",
+ "objectif_brique_8": {
+  "couverture_dans_88_92_pct": false,
+  "erreur_moyenne_sous_3_pct": false
+ },
+ "parametres": {
+  "depuis_semaine": 12,
+  "n_min_par_cellule": 3,
+  "n_min_par_exercice": 5,
+  "niveau_intervalle": 0.9,
+  "seuil_flammes_A": 5,
+  "seuil_flammes_fiables": 8
+ },
+ "rejeu": {
+  "causes": {
+   "A_exercice_sans_serie_retenue_aucune_serie_notee_dure": 8
+  },
+  "exercices_suivis_par_le_moteur": 42,
+  "seances_avant_evaluation": 16,
+  "seances_evaluees": 18,
+  "seances_rejouees": 34
+ },
+ "schema": "kalis_adapt/rejeu_journal_agregats/1"
+}
