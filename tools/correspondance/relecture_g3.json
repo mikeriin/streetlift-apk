@@ -1,0 +1,2742 @@
+{
+ "schema": 1,
+ "note": "Relecture des anciens exercices (pack 2.0.0) sans correspondance automatique : exercice de la base v1.1 qui désigne le même mouvement. confiance : sur (même mouvement, même matériel, même variante), proche (même mouvement, petite différence, dite dans la note), aucun (pas d'équivalent ; new_id nul).",
+ "entrees": [
+  {
+   "old_id": "ab-wheel-a-genoux-amplitude-courte",
+   "new_id": "mu-roue-abdominale-genoux",
+   "confiance": "proche",
+   "note": "Roue abdominale à genoux ; l'ancien en amplitude courte."
+  },
+  {
+   "old_id": "ab-wheel-debout",
+   "new_id": "mu-roue-abdominale-debout",
+   "confiance": "sur",
+   "note": "Roue abdominale debout, même geste."
+  },
+  {
+   "old_id": "abducteurs-machine",
+   "new_id": "mu-abduction-hanche-machine",
+   "confiance": "sur",
+   "note": "Même machine à abducteurs."
+  },
+  {
+   "old_id": "adducteurs-machine",
+   "new_id": "mu-adduction-hanche-machine",
+   "confiance": "sur",
+   "note": "Même machine à adducteurs."
+  },
+  {
+   "old_id": "archer-rows-anneaux",
+   "new_id": "sw-row-archer",
+   "confiance": "proche",
+   "note": "Row archer du catalogue sur barre basse ; ici aux anneaux"
+  },
+  {
+   "old_id": "around-the-world-suspendu",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Cercles de jambes suspendu à la barre : seul « around the world » du catalogue est au kettlebell (autre geste), essuie-glace = autre mouvement."
+  },
+  {
+   "old_id": "atr-dos-au-mur-tenue",
+   "new_id": "cs-handstand-dos-au-mur",
+   "confiance": "sur",
+   "note": "ATR = handstand, tenue dos au mur."
+  },
+  {
+   "old_id": "atr-equilibre",
+   "new_id": "cs-handstand",
+   "confiance": "sur",
+   "note": "ATR = handstand libre."
+  },
+  {
+   "old_id": "atr-poitrine-au-mur-tenue",
+   "new_id": "cs-handstand-ventre-au-mur",
+   "confiance": "sur",
+   "note": "Même tenue en ATR ventre face au mur"
+  },
+  {
+   "old_id": "australian-pull-ups-rows-barre-basse",
+   "new_id": "sw-row-australien",
+   "confiance": "sur",
+   "note": "Row australien à la barre basse."
+  },
+  {
+   "old_id": "back-lever-advanced-tuck",
+   "new_id": "cs-back-lever-tuck-avance",
+   "confiance": "sur",
+   "note": "Même figure."
+  },
+  {
+   "old_id": "back-lever-complet",
+   "new_id": "cs-back-lever",
+   "confiance": "sur",
+   "note": "Back lever complet."
+  },
+  {
+   "old_id": "back-squat",
+   "new_id": "sl-squat-competition",
+   "confiance": "proche",
+   "note": "Lift principal du programme de streetlifting : squat de compétition (barre sur le dos, profondeur réglementaire)."
+  },
+  {
+   "old_id": "bar-dips-dips-a-la-barre-fixe",
+   "new_id": "sw-dips-barre-droite",
+   "confiance": "sur",
+   "note": "Dips à la barre droite (barre fixe)."
+  },
+  {
+   "old_id": "bar-dips-lestes",
+   "new_id": "sl-dips-barre-fixe-leste",
+   "confiance": "sur",
+   "note": "Dips barre droite lestés."
+  },
+  {
+   "old_id": "barre-au-front-ez",
+   "new_id": "mu-barre-au-front-ez",
+   "confiance": "sur",
+   "note": "Barre au front EZ."
+  },
+  {
+   "old_id": "battle-ropes",
+   "new_id": "mu-battle-rope-ondulations",
+   "confiance": "sur",
+   "note": "Battle rope (ondulations)."
+  },
+  {
+   "old_id": "bear-crawl-leste-gilet",
+   "new_id": "cf-bear-crawl-leste-gilet",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "bear-hug-carry-sac-leste",
+   "new_id": "mu-porte-sac-leste",
+   "confiance": "sur",
+   "note": "Alias « Bear hug carry »."
+  },
+  {
+   "old_id": "bicycle-crunchs",
+   "new_id": "mu-bicycle-crunch",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "bilan",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Pas un exercice (bilan de séance)."
+  },
+  {
+   "old_id": "body-saw-amplitude-complete",
+   "new_id": "mu-body-saw",
+   "confiance": "proche",
+   "note": "Body saw ; catalogue aux sangles, ancien à la serviette."
+  },
+  {
+   "old_id": "body-saw-sliders",
+   "new_id": "mu-body-saw",
+   "confiance": "proche",
+   "note": "Même geste ; catalogue aux sangles, ancien sur sliders/serviette au sol."
+  },
+  {
+   "old_id": "box-jumps",
+   "new_id": "mu-box-jump",
+   "confiance": "sur",
+   "note": "Saut sur box."
+  },
+  {
+   "old_id": "box-jumps-step-down",
+   "new_id": "mu-box-jump",
+   "confiance": "sur",
+   "note": "Box jump ; la redescente en marchant est une consigne d'exécution"
+  },
+  {
+   "old_id": "broad-jumps-sauts-en-longueur",
+   "new_id": "mu-broad-jump",
+   "confiance": "sur",
+   "note": "Saut en longueur sans élan."
+  },
+  {
+   "old_id": "burpees",
+   "new_id": "cf-burpee",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "burpees-box-jump-over",
+   "new_id": "cf-burpee-box-jump-over",
+   "confiance": "sur",
+   "note": "Même enchaînement burpee + saut par-dessus la box."
+  },
+  {
+   "old_id": "burpees-broad-jump",
+   "new_id": "cf-burpee-broad-jump",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "burpees-lestes-gilet",
+   "new_id": "cf-burpee-leste-gilet",
+   "confiance": "sur",
+   "note": "Burpee lesté au gilet."
+  },
+  {
+   "old_id": "burpees-navy-seal",
+   "new_id": "cf-burpee-navy-seal",
+   "confiance": "sur",
+   "note": "Burpee Navy SEAL."
+  },
+  {
+   "old_id": "burpees-over-the-bar",
+   "new_id": "cf-burpee-lateral-barre",
+   "confiance": "sur",
+   "note": "Alias « Burpee over the bar »."
+  },
+  {
+   "old_id": "burpees-pull-up",
+   "new_id": "cf-burpee-traction",
+   "confiance": "sur",
+   "note": "Burpee avec traction."
+  },
+  {
+   "old_id": "burpees-pull-up-lestes-gilet",
+   "new_id": "cf-burpee-traction-leste-gilet",
+   "confiance": "sur",
+   "note": "Burpee traction lesté au gilet."
+  },
+  {
+   "old_id": "butterfly-pull-ups",
+   "new_id": "cf-traction-butterfly",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "charniere-de-hanche-au-baton",
+   "new_id": "mo-good-morning-baton",
+   "confiance": "sur",
+   "note": "Alias « Hip hinge au bâton »."
+  },
+  {
+   "old_id": "chin-up-leste",
+   "new_id": "sl-chin-up-leste",
+   "confiance": "sur",
+   "note": "Chin-up lesté."
+  },
+  {
+   "old_id": "ciseaux-scissors",
+   "new_id": "mu-flutter-kicks",
+   "confiance": "sur",
+   "note": "Alias « Ciseaux verticaux ; Scissor kicks »."
+  },
+  {
+   "old_id": "clamshell-elastique",
+   "new_id": "mu-clamshell",
+   "confiance": "proche",
+   "note": "Clamshell ; l'ancien ajoute un élastique."
+  },
+  {
+   "old_id": "clean-et-jerk",
+   "new_id": "mu-epaule-jete",
+   "confiance": "sur",
+   "note": "Épaulé-jeté = clean & jerk"
+  },
+  {
+   "old_id": "contraste-francais",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Méthode d'entraînement, pas un exercice."
+  },
+  {
+   "old_id": "copenhagen-plank-a-levier-long",
+   "new_id": "mu-copenhagen-plank",
+   "confiance": "sur",
+   "note": "Copenhagen plank (levier long = version standard)."
+  },
+  {
+   "old_id": "crunchs-inverses",
+   "new_id": "mu-crunch-inverse",
+   "confiance": "sur",
+   "note": "Crunch inversé au sol."
+  },
+  {
+   "old_id": "crunchs-lestes",
+   "new_id": "mu-crunch-sol",
+   "confiance": "proche",
+   "note": "Crunch au sol ; l'ancien est lesté (disque)."
+  },
+  {
+   "old_id": "crunchs-poulie-haute",
+   "new_id": "mu-crunch-poulie-genoux",
+   "confiance": "sur",
+   "note": "Crunch à la poulie haute à genoux"
+  },
+  {
+   "old_id": "curl-araignee",
+   "new_id": "mu-spider-curl-halteres",
+   "confiance": "sur",
+   "note": "Spider curl = curl araignée, haltères sur banc incliné."
+  },
+  {
+   "old_id": "curl-barre-ez",
+   "new_id": "mu-curl-barre-ez",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "curl-concentration",
+   "new_id": "mu-curl-concentre",
+   "confiance": "sur",
+   "note": "Curl concentré haltère."
+  },
+  {
+   "old_id": "curl-elastique",
+   "new_id": "mu-curl-elastique",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "curl-incline",
+   "new_id": "mu-curl-incline-halteres",
+   "confiance": "sur",
+   "note": "Curl incliné aux haltères."
+  },
+  {
+   "old_id": "curl-ischio-glisse-une-jambe-serviette",
+   "new_id": "mu-curl-ischio-glisse",
+   "confiance": "proche",
+   "note": "Curl ischio glissé ; catalogue bilatéral, ancien une jambe."
+  },
+  {
+   "old_id": "curl-marteau",
+   "new_id": "mu-curl-marteau-halteres",
+   "confiance": "sur",
+   "note": "Hammer curl haltères."
+  },
+  {
+   "old_id": "curl-marteau-par-haltere",
+   "new_id": "mu-curl-marteau-halteres",
+   "confiance": "sur",
+   "note": "Curl marteau haltères."
+  },
+  {
+   "old_id": "curl-poignet",
+   "new_id": "mu-wrist-curl-barre",
+   "confiance": "proche",
+   "note": "Wrist curl ; catalogue à la barre, ancien aux haltères"
+  },
+  {
+   "old_id": "curl-pronation-reverse-curl",
+   "new_id": "mu-curl-inverse-barre-ez",
+   "confiance": "proche",
+   "note": "Curl inversé ; barre EZ au lieu de barre droite."
+  },
+  {
+   "old_id": "curl-pupitre-larry-scott",
+   "new_id": "mu-curl-pupitre-barre-ez",
+   "confiance": "sur",
+   "note": "Alias « Curl Larry Scott » ; barre EZ au pupitre."
+  },
+  {
+   "old_id": "curl-zottman",
+   "new_id": "mu-curl-zottman",
+   "confiance": "sur",
+   "note": "Curl Zottman haltères."
+  },
+  {
+   "old_id": "dead-hang-leste-ou-pdc",
+   "new_id": "sl-dead-hang-leste",
+   "confiance": "proche",
+   "note": "Suspension lestée ou au poids du corps : rattachée au dead hang lesté."
+  },
+  {
+   "old_id": "dead-hang-serviette",
+   "new_id": "sw-dead-hang",
+   "confiance": "proche",
+   "note": "Dead hang ; l'ancien se fait avec prise sur serviette (variante de grip)."
+  },
+  {
+   "old_id": "dead-hang-une-main",
+   "new_id": "cs-suspension-un-bras",
+   "confiance": "sur",
+   "note": "One-arm dead hang."
+  },
+  {
+   "old_id": "developpe-couche-pause",
+   "new_id": "mu-developpe-couche-pause",
+   "confiance": "sur",
+   "note": "Développé couché avec pause."
+  },
+  {
+   "old_id": "developpe-decline",
+   "new_id": "mu-developpe-decline-barre",
+   "confiance": "sur",
+   "note": "Même exercice à la barre"
+  },
+  {
+   "old_id": "developpe-elastique-au-dessus-de-la-tete",
+   "new_id": "mu-developpe-epaules-elastique-debout",
+   "confiance": "sur",
+   "note": "Développé épaules à l'élastique."
+  },
+  {
+   "old_id": "developpe-incline",
+   "new_id": "mu-developpe-incline-barre",
+   "confiance": "sur",
+   "note": "Développé incliné barre."
+  },
+  {
+   "old_id": "developpe-kettlebell-par-bras",
+   "new_id": "mu-developpe-kettlebell",
+   "confiance": "sur",
+   "note": "Développé kettlebell un bras."
+  },
+  {
+   "old_id": "developpe-militaire-assis",
+   "new_id": "mu-developpe-militaire-barre-assis",
+   "confiance": "sur",
+   "note": "Développé militaire barre assis."
+  },
+  {
+   "old_id": "developpe-militaire-debout",
+   "new_id": "mu-developpe-militaire-barre-debout",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "developpe-militaire-halteres-debout",
+   "new_id": "mu-developpe-halteres-debout",
+   "confiance": "sur",
+   "note": "Développé haltères debout."
+  },
+  {
+   "old_id": "dip",
+   "new_id": "sw-dips-barres-paralleles",
+   "confiance": "sur",
+   "note": "Dips PdC aux barres parallèles (doublon de dips)."
+  },
+  {
+   "old_id": "dip-leste",
+   "new_id": "sl-dips-leste",
+   "confiance": "sur",
+   "note": "Dips lestés aux barres parallèles."
+  },
+  {
+   "old_id": "dips-a-resistance-accommodante-elastique-depuis-le-sol",
+   "new_id": "sl-dips-leste-elastique",
+   "confiance": "proche",
+   "note": "Dips avec élastique en résistance accommodante ; le catalogue ajoute du lest"
+  },
+  {
+   "old_id": "dips-assistes-elastique",
+   "new_id": "sw-dips-assistes-elastique",
+   "confiance": "sur",
+   "note": "Dips assistés à l'élastique."
+  },
+  {
+   "old_id": "dips-aux-anneaux-lestes",
+   "new_id": "sl-dips-leste-anneaux",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "dips-aux-anneaux-rto-tournes",
+   "new_id": "sw-dips-anneaux-rto",
+   "confiance": "sur",
+   "note": "Dips anneaux RTO."
+  },
+  {
+   "old_id": "dips-bulgares-prise-large",
+   "new_id": "cd-dips-bulgares-anneaux",
+   "confiance": "proche",
+   "note": "Dips bulgares ; catalogue aux anneaux, ancien aux barres parallèles"
+  },
+  {
+   "old_id": "dips-excentriques-lestes",
+   "new_id": "sl-dips-negatif-leste-supramaximal",
+   "confiance": "proche",
+   "note": "Dips négatif lesté ; le catalogue le précise supramaximal."
+  },
+  {
+   "old_id": "dips-explosifs",
+   "new_id": "cd-dips-explosifs",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "dips-isometriques-mi-course",
+   "new_id": "sl-dips-isometrie-lestee-blocage",
+   "confiance": "proche",
+   "note": "Isométrie de dips à mi-course (point de blocage) ; le catalogue la prévoit lestée, l'ancien au poids du corps."
+  },
+  {
+   "old_id": "dips-lestes-cluster",
+   "new_id": "sl-dips-leste",
+   "confiance": "sur",
+   "note": "Dips lestés ; le cluster est une méthode de séries"
+  },
+  {
+   "old_id": "dips-lestes-lourds",
+   "new_id": "sl-dips-leste",
+   "confiance": "sur",
+   "note": "Dips lestés (charge lourde)."
+  },
+  {
+   "old_id": "dips-lestes-pause",
+   "new_id": "sl-dips-leste-pause-bas",
+   "confiance": "proche",
+   "note": "Dips lesté avec pause ; position de pause non précisée dans l'ancien (bas le plus courant)."
+  },
+  {
+   "old_id": "dips-lestes-singles-lourds",
+   "new_id": "sl-dips-leste",
+   "confiance": "sur",
+   "note": "Dips lestés ; « singles lourds » = schéma de séries, même mouvement."
+  },
+  {
+   "old_id": "dips-lestes-tempo",
+   "new_id": "sl-dips-leste",
+   "confiance": "proche",
+   "note": "Dips lestés ; le tempo n'est pas une variante distincte au catalogue."
+  },
+  {
+   "old_id": "dips-negatifs",
+   "new_id": "sw-dips-negatifs",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "dips-pause-basse",
+   "new_id": "sl-dips-leste-pause-bas",
+   "confiance": "proche",
+   "note": "Dips pause en bas ; l'ancien est au poids du corps, le catalogue lesté."
+  },
+  {
+   "old_id": "dips-pdc",
+   "new_id": "sw-dips-barres-paralleles",
+   "confiance": "sur",
+   "note": "Dips PdC aux barres parallèles."
+  },
+  {
+   "old_id": "dips-sur-banc-genoux-flechis",
+   "new_id": "sw-dips-banc",
+   "confiance": "sur",
+   "note": "Dips au banc pieds au sol genoux fléchis"
+  },
+  {
+   "old_id": "dips-sur-banc-triceps",
+   "new_id": "sw-dips-banc",
+   "confiance": "sur",
+   "note": "Dips au banc."
+  },
+  {
+   "old_id": "dips-tempo-3-s-excentrique",
+   "new_id": "sw-dips-barres-paralleles",
+   "confiance": "proche",
+   "note": "Dips PdC ; le tempo 3 s excentrique est une consigne"
+  },
+  {
+   "old_id": "dragon-flag-negatif-support-au-sol",
+   "new_id": "sw-dragon-flag-negatif",
+   "confiance": "sur",
+   "note": "Dragon flag négatif."
+  },
+  {
+   "old_id": "dragon-flag-progression",
+   "new_id": "sw-dragon-flag",
+   "confiance": "proche",
+   "note": "Dragon flag ; l'ancien regroupe la progression (tuck, une jambe…)."
+  },
+  {
+   "old_id": "dragon-flag-support-au-sol",
+   "new_id": "sw-dragon-flag",
+   "confiance": "proche",
+   "note": "Dragon flag ; prise sur support au sol au lieu d'un banc"
+  },
+  {
+   "old_id": "drapeau-straddle",
+   "new_id": "cs-drapeau-straddle",
+   "confiance": "sur",
+   "note": "Drapeau humain straddle."
+  },
+  {
+   "old_id": "drapeau-vertical-tenue",
+   "new_id": "cs-drapeau-vertical",
+   "confiance": "sur",
+   "note": "Même figure."
+  },
+  {
+   "old_id": "ecarte-halteres",
+   "new_id": "mu-ecarte-halteres-plat",
+   "confiance": "sur",
+   "note": "Écarté couché haltères sur banc."
+  },
+  {
+   "old_id": "ecarte-poulie-vis-a-vis",
+   "new_id": "mu-ecarte-poulie-vis-a-vis-milieu",
+   "confiance": "sur",
+   "note": "Écarté poulie vis-à-vis (version standard, milieu)."
+  },
+  {
+   "old_id": "elevations-en-atr-tenue",
+   "new_id": "cs-handstand-dos-au-mur",
+   "confiance": "proche",
+   "note": "Montée en ATR au mur (kick-up) et tenue ; libellé ancien imprécis"
+  },
+  {
+   "old_id": "elevations-frontales",
+   "new_id": "mu-elevation-frontale-halteres",
+   "confiance": "sur",
+   "note": "Élévation frontale haltères."
+  },
+  {
+   "old_id": "elevations-laterales-elastique",
+   "new_id": "mu-elevation-laterale-elastique",
+   "confiance": "sur",
+   "note": "Élévation latérale élastique."
+  },
+  {
+   "old_id": "elevations-laterales-par-haltere",
+   "new_id": "mu-elevation-laterale-halteres",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "elevations-laterales-poulie",
+   "new_id": "mu-elevation-laterale-poulie-unilaterale",
+   "confiance": "sur",
+   "note": "Élévation latérale à la poulie"
+  },
+  {
+   "old_id": "enrouleur-de-poignet-wrist-roller",
+   "new_id": "mu-rouleau-de-poignet",
+   "confiance": "sur",
+   "note": "Rouleau de poignet (wrist roller)."
+  },
+  {
+   "old_id": "excentrique-de-transition-muscle-up",
+   "new_id": "cd-muscle-up-barre-negatif",
+   "confiance": "proche",
+   "note": "Muscle-up négatif barre ; l'ancien isole la descente de la transition."
+  },
+  {
+   "old_id": "excentriques-de-transition-lestes",
+   "new_id": "sl-muscle-up-negatif-leste",
+   "confiance": "proche",
+   "note": "Négatif lesté de muscle-up (descente par la transition) ; l'ancien cible la phase de transition."
+  },
+  {
+   "old_id": "extension-corde",
+   "new_id": "mu-pushdown-corde",
+   "confiance": "sur",
+   "note": "Extension triceps poulie haute à la corde"
+  },
+  {
+   "old_id": "extension-poignet",
+   "new_id": "mu-reverse-wrist-curl-haltere",
+   "confiance": "sur",
+   "note": "Extension du poignet à l'haltère (reverse wrist curl)."
+  },
+  {
+   "old_id": "extension-poignet-barre",
+   "new_id": "mu-reverse-wrist-curl-barre",
+   "confiance": "sur",
+   "note": "Alias « Extension des poignets » à la barre."
+  },
+  {
+   "old_id": "extension-triceps-au-poids-de-corps-mains-au-sol",
+   "new_id": "sw-pompe-sphinx",
+   "confiance": "proche",
+   "note": "Extension triceps PdC depuis les avant-bras = pompe sphinx"
+  },
+  {
+   "old_id": "extension-triceps-au-poids-de-corps-pieds-sureleves",
+   "new_id": "sw-pompe-sphinx",
+   "confiance": "proche",
+   "note": "Extension des coudes au poids du corps (isolation triceps) ; le catalogue au sol sur avant-bras, l'ancien pieds surélevés (plus dur)."
+  },
+  {
+   "old_id": "extension-triceps-couche-barre-ez",
+   "new_id": "mu-barre-au-front-ez",
+   "confiance": "sur",
+   "note": "Barre au front EZ = extension couchée barre EZ."
+  },
+  {
+   "old_id": "extension-triceps-haltere-a-deux-mains",
+   "new_id": "mu-extension-nuque-haltere-deux-mains",
+   "confiance": "sur",
+   "note": "Extension nuque à l'haltère à deux mains"
+  },
+  {
+   "old_id": "extension-triceps-nuque",
+   "new_id": "mu-extension-nuque-haltere-deux-mains",
+   "confiance": "sur",
+   "note": "Extension nuque à l'haltère."
+  },
+  {
+   "old_id": "extension-triceps-poulie",
+   "new_id": "mu-pushdown-barre-droite",
+   "confiance": "proche",
+   "note": "Extension triceps poulie haute ; accessoire non précisé (barre/corde)."
+  },
+  {
+   "old_id": "extension-triceps-poulie-corde",
+   "new_id": "mu-pushdown-corde",
+   "confiance": "sur",
+   "note": "Extension triceps poulie haute corde = pushdown corde."
+  },
+  {
+   "old_id": "extension-triceps-unilaterale-poulie",
+   "new_id": "mu-pushdown-unilateral-supination",
+   "confiance": "proche",
+   "note": "Pushdown unilatéral ; le catalogue précise la prise supination"
+  },
+  {
+   "old_id": "extensions-de-doigts-elastique",
+   "new_id": "mu-extension-doigts-elastique",
+   "confiance": "sur",
+   "note": "Extension des doigts à l'élastique."
+  },
+  {
+   "old_id": "face-pulls",
+   "new_id": "mu-face-pull-corde",
+   "confiance": "sur",
+   "note": "Face pull à la poulie."
+  },
+  {
+   "old_id": "face-pulls-aux-anneaux",
+   "new_id": "mu-face-pull-corde",
+   "confiance": "proche",
+   "note": "Même face pull ; aux anneaux au poids du corps au lieu de la poulie."
+  },
+  {
+   "old_id": "face-pulls-elastique",
+   "new_id": "mu-face-pull-elastique",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "false-grip-hang",
+   "new_id": "sw-dead-hang",
+   "confiance": "proche",
+   "note": "Suspension à la barre ; l'ancien impose la prise false grip."
+  },
+  {
+   "old_id": "false-grip-hold-anneaux-ou-barre",
+   "new_id": "cs-tenue-haute-false-grip-anneaux",
+   "confiance": "proche",
+   "note": "Seule tenue false grip du catalogue (position haute, anneaux) ; l'ancien peut être une suspension."
+  },
+  {
+   "old_id": "farmer-hold-tenue",
+   "new_id": "mu-farmer-walk",
+   "confiance": "proche",
+   "note": "Farmer haltères ; l'ancien est une tenue statique, pas une marche."
+  },
+  {
+   "old_id": "farmer-walk-halteres-lourds",
+   "new_id": "mu-farmer-walk",
+   "confiance": "sur",
+   "note": "Marche du fermier aux haltères."
+  },
+  {
+   "old_id": "farmer-walk-kettlebells",
+   "new_id": "mu-farmer-walk",
+   "confiance": "proche",
+   "note": "Marche du fermier ; catalogue aux haltères, ancien aux kettlebells"
+  },
+  {
+   "old_id": "farmer-walk-lourd-trap-bar",
+   "new_id": "mu-farmer-walk",
+   "confiance": "proche",
+   "note": "Marche du fermier ; trap bar au lieu d'haltères."
+  },
+  {
+   "old_id": "farmer-walk-sacs-lestes",
+   "new_id": "mu-farmer-walk",
+   "confiance": "proche",
+   "note": "Marche du fermier ; sacs lestés au lieu d'haltères."
+  },
+  {
+   "old_id": "farmer-walk-tres-lourd-trap-bar",
+   "new_id": "mu-farmer-walk",
+   "confiance": "proche",
+   "note": "Marche du fermier ; trap bar au lieu d'haltères"
+  },
+  {
+   "old_id": "fente-statique-split-squat",
+   "new_id": "mu-split-squat",
+   "confiance": "proche",
+   "note": "Split squat ; haltères dans le catalogue, poids du corps dans l'ancien."
+  },
+  {
+   "old_id": "fentes-arriere",
+   "new_id": "mu-fente-arriere-poids-du-corps",
+   "confiance": "sur",
+   "note": "Fente arrière PdC."
+  },
+  {
+   "old_id": "fentes-arriere-en-deficit-lestees",
+   "new_id": "mu-fente-arriere-deficit",
+   "confiance": "sur",
+   "note": "Fente arrière en déficit aux haltères sur step."
+  },
+  {
+   "old_id": "fentes-avant",
+   "new_id": "mu-fente-avant-halteres",
+   "confiance": "proche",
+   "note": "Fente avant ; l'ancien sans charge, le catalogue aux haltères."
+  },
+  {
+   "old_id": "fentes-bulgares",
+   "new_id": "mu-split-squat-bulgare-poids-du-corps",
+   "confiance": "sur",
+   "note": "Fente bulgare au poids du corps, pied arrière sur support"
+  },
+  {
+   "old_id": "fentes-bulgares-sautees",
+   "new_id": "mu-split-squat-bulgare-poids-du-corps",
+   "confiance": "proche",
+   "note": "Fente bulgare PdC ; version sautée (pliométrique)"
+  },
+  {
+   "old_id": "fentes-deficit",
+   "new_id": "mu-fente-arriere-deficit",
+   "confiance": "proche",
+   "note": "Fente en déficit ; le catalogue précise fente arrière avec haltères."
+  },
+  {
+   "old_id": "fentes-laterales",
+   "new_id": "mu-fente-laterale",
+   "confiance": "sur",
+   "note": "Même exercice PdC."
+  },
+  {
+   "old_id": "fentes-marchees-halteres",
+   "new_id": "mu-fente-marchee-halteres",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "fentes-marchees-lestees-lourdes-gilet",
+   "new_id": "mu-fente-marchee-halteres",
+   "confiance": "proche",
+   "note": "Fentes marchées lourdes ; gilet lesté au lieu des haltères."
+  },
+  {
+   "old_id": "fentes-marchees-lestees-sac",
+   "new_id": "mu-fente-marchee-halteres",
+   "confiance": "proche",
+   "note": "Fente marchée lestée ; sac lesté au lieu d'haltères."
+  },
+  {
+   "old_id": "fentes-marchees-par-haltere",
+   "new_id": "mu-fente-marchee-halteres",
+   "confiance": "sur",
+   "note": "Fentes marchées haltères."
+  },
+  {
+   "old_id": "foulees-bondissantes-bounding",
+   "new_id": "mu-bonds-alternes",
+   "confiance": "sur",
+   "note": "Bonds alternés (bounding)."
+  },
+  {
+   "old_id": "frog-stand-crow",
+   "new_id": "cs-frog-stand",
+   "confiance": "sur",
+   "note": "Frog stand (crow proche : cs-crow)."
+  },
+  {
+   "old_id": "front-lever-advanced-tuck",
+   "new_id": "cs-front-lever-tuck-avance",
+   "confiance": "sur",
+   "note": "Même figure."
+  },
+  {
+   "old_id": "front-lever-complet",
+   "new_id": "cs-front-lever",
+   "confiance": "sur",
+   "note": "Front lever complet."
+  },
+  {
+   "old_id": "front-lever-hold-a-l-elastique",
+   "new_id": "cs-front-lever-assiste-elastique",
+   "confiance": "sur",
+   "note": "Même tenue assistée élastique"
+  },
+  {
+   "old_id": "front-lever-negatif",
+   "new_id": "cd-front-lever-raise-complet",
+   "confiance": "proche",
+   "note": "Pas de front lever négatif seul ; le front lever raise inclut la descente contrôlée."
+  },
+  {
+   "old_id": "front-lever-one-leg",
+   "new_id": "cs-front-lever-une-jambe",
+   "confiance": "sur",
+   "note": "Même figure."
+  },
+  {
+   "old_id": "front-lever-pull-ups-tuck",
+   "new_id": "cd-front-lever-row-tuck",
+   "confiance": "sur",
+   "note": "Alias « Tuck front lever pull-up »."
+  },
+  {
+   "old_id": "front-lever-raises",
+   "new_id": "cd-front-lever-raise-complet",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "gainage-anti-rotation-en-planche-epaules",
+   "new_id": "mu-gainage-shoulder-taps",
+   "confiance": "proche",
+   "note": "Planche bras tendus avec touches d'épaules (anti-rotation)."
+  },
+  {
+   "old_id": "german-hang-tenue",
+   "new_id": "cs-german-hang",
+   "confiance": "proche",
+   "note": "German hang ; anneaux dans le catalogue, barre fixe dans l'ancien."
+  },
+  {
+   "old_id": "good-mornings",
+   "new_id": "mu-good-morning-barre",
+   "confiance": "sur",
+   "note": "Good morning barre."
+  },
+  {
+   "old_id": "half-burpees",
+   "new_id": "cf-demi-burpee",
+   "confiance": "sur",
+   "note": "Demi-burpee = burpee sans pompe (alias half burpee)."
+  },
+  {
+   "old_id": "handstand-push-ups-mur",
+   "new_id": "cd-hspu-mur-dos",
+   "confiance": "sur",
+   "note": "HSPU au mur"
+  },
+  {
+   "old_id": "handstand-walk-marche-en-atr",
+   "new_id": "cd-handstand-walk",
+   "confiance": "sur",
+   "note": "Handstand walk."
+  },
+  {
+   "old_id": "high-knees-montees-de-genoux",
+   "new_id": "cf-high-knees",
+   "confiance": "sur",
+   "note": "Montées de genoux."
+  },
+  {
+   "old_id": "hiit-court",
+   "new_id": "cf-burpee",
+   "confiance": "proche",
+   "note": "Les points clés décrivent des burpees en 6 × (30 s / 30 s)."
+  },
+  {
+   "old_id": "hip-thrust-barre-lourd",
+   "new_id": "mu-hip-thrust-barre",
+   "confiance": "sur",
+   "note": "Hip thrust barre (charge lourde)."
+  },
+  {
+   "old_id": "hip-thrust-une-jambe-epaules-sur-une-chaise",
+   "new_id": "mu-hip-thrust-unilateral",
+   "confiance": "sur",
+   "note": "Hip thrust unilatéral épaules sur support."
+  },
+  {
+   "old_id": "hip-thrust-une-jambe-leste",
+   "new_id": "mu-hip-thrust-unilateral",
+   "confiance": "proche",
+   "note": "Hip thrust une jambe ; l'ancien ajoute du lest."
+  },
+  {
+   "old_id": "hollow-body-groupe",
+   "new_id": "mu-hollow-body-groupe",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "hollow-hold-leste",
+   "new_id": "mu-hollow-body-hold",
+   "confiance": "proche",
+   "note": "Hollow hold ; pas de version lestée au catalogue"
+  },
+  {
+   "old_id": "hspu-freestanding-progression",
+   "new_id": "cd-hspu-libre",
+   "confiance": "proche",
+   "note": "HSPU libre ; l'ancien regroupe la progression."
+  },
+  {
+   "old_id": "hspu-negatives-mur",
+   "new_id": "cd-hspu-negatif-mur",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "hspu-stricts-en-deficit",
+   "new_id": "cd-hspu-mur-deficit-parallettes",
+   "confiance": "sur",
+   "note": "HSPU au mur en déficit ; poignées ≈ parallettes."
+  },
+  {
+   "old_id": "human-flag-drapeau",
+   "new_id": "cs-drapeau-humain",
+   "confiance": "sur",
+   "note": "Drapeau humain complet."
+  },
+  {
+   "old_id": "human-flag-tuck",
+   "new_id": "cs-drapeau-tuck",
+   "confiance": "sur",
+   "note": "Drapeau humain tuck"
+  },
+  {
+   "old_id": "hyperextensions-banc-45",
+   "new_id": "mu-hyperextension-45-dos",
+   "confiance": "sur",
+   "note": "Hyperextension 45°."
+  },
+  {
+   "old_id": "isometrie-bas-de-dip",
+   "new_id": "sl-dips-isometrie-lestee-blocage",
+   "confiance": "proche",
+   "note": "Isométrie de poussée maximale en bas de dip (Smith verrouillée) : rattachée à l'isométrie au point de blocage des dips (l'étirement passif en bas de dips est un autre travail)."
+  },
+  {
+   "old_id": "isometrie-de-transition-muscle-up",
+   "new_id": "cs-tenue-transition-muscle-up-anneaux",
+   "confiance": "proche",
+   "note": "Tenue en transition de muscle-up ; aux anneaux au catalogue, à la barre fixe dans l'ancien."
+  },
+  {
+   "old_id": "isometrie-maximale",
+   "new_id": "sl-dips-isometrie-lestee-blocage",
+   "confiance": "proche",
+   "note": "Même exercice que l'isométrie bas de dip."
+  },
+  {
+   "old_id": "kettlebell-clean-et-press",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Pas de clean & press KB ; seulement l'épaulé (mu-clean-kettlebell) ou le développé (mu-developpe-kettlebell) séparés"
+  },
+  {
+   "old_id": "kettlebell-swing",
+   "new_id": "mu-swing-kettlebell-russe",
+   "confiance": "sur",
+   "note": "Swing kettlebell (russe, version standard)."
+  },
+  {
+   "old_id": "kettlebell-swing-lourd-deux-mains",
+   "new_id": "mu-swing-kettlebell-russe",
+   "confiance": "sur",
+   "note": "Swing russe à deux mains"
+  },
+  {
+   "old_id": "kettlebell-swing-une-main",
+   "new_id": "mu-swing-kettlebell-unilateral",
+   "confiance": "sur",
+   "note": "Swing à une main."
+  },
+  {
+   "old_id": "kick-back-fessiers-poulie",
+   "new_id": "mu-kickback-fessier-poulie",
+   "confiance": "sur",
+   "note": "Kickback fessier poulie."
+  },
+  {
+   "old_id": "kickback-triceps",
+   "new_id": "mu-kickback-haltere",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "kipping-pull-ups",
+   "new_id": "cf-traction-kipping",
+   "confiance": "sur",
+   "note": "Traction kipping."
+  },
+  {
+   "old_id": "knee-raises-suspendu",
+   "new_id": "sw-releve-genoux-suspendu",
+   "confiance": "sur",
+   "note": "Hanging knee raise."
+  },
+  {
+   "old_id": "l-sit-a-la-barre-fixe-tenue",
+   "new_id": "cs-l-sit-barres-paralleles",
+   "confiance": "proche",
+   "note": "L-sit tenu ; à la barre fixe dans l'ancien, aux barres parallèles au catalogue (pas de L-sit barre fixe)."
+  },
+  {
+   "old_id": "l-sit-au-sol-tenue",
+   "new_id": "cs-l-sit-sol",
+   "confiance": "sur",
+   "note": "Même tenue"
+  },
+  {
+   "old_id": "l-sit-genoux-flechis-au-sol",
+   "new_id": "cs-l-sit-tuck",
+   "confiance": "proche",
+   "note": "L-sit tuck ; catalogue sur parallettes, ancien au sol"
+  },
+  {
+   "old_id": "l-sit-tuck-tenue",
+   "new_id": "cs-l-sit-tuck",
+   "confiance": "proche",
+   "note": "L-sit tuck ; parallettes dans le catalogue, barres parallèles dans l'ancien."
+  },
+  {
+   "old_id": "landmine-rotations",
+   "new_id": "mu-landmine-rotation",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "leg-curl",
+   "new_id": "mu-leg-curl-couche",
+   "confiance": "sur",
+   "note": "Leg curl machine (version couchée, standard) ; posture non précisée dans l'ancien."
+  },
+  {
+   "old_id": "leg-curl-sliders",
+   "new_id": "mu-curl-ischio-glisse",
+   "confiance": "sur",
+   "note": "Curl ischio glissé (alias serviette)"
+  },
+  {
+   "old_id": "leg-curl-swiss-ball",
+   "new_id": "mu-curl-ischio-ballon",
+   "confiance": "sur",
+   "note": "Curl ischio sur ballon."
+  },
+  {
+   "old_id": "leg-raises-lestes",
+   "new_id": "mu-releve-jambes-allonge",
+   "confiance": "proche",
+   "note": "Relevé de jambes allongé ; pas de version lestée au sol au catalogue."
+  },
+  {
+   "old_id": "leg-raises-lestes-suspendu",
+   "new_id": "sl-releve-jambes-suspendu-leste",
+   "confiance": "sur",
+   "note": "Relevé de jambes suspendu lesté."
+  },
+  {
+   "old_id": "leg-raises-suspendu",
+   "new_id": "sw-releve-jambes-tendues-suspendu",
+   "confiance": "sur",
+   "note": "Hanging leg raise"
+  },
+  {
+   "old_id": "manna-progression",
+   "new_id": "cs-manna",
+   "confiance": "proche",
+   "note": "Manna ; l'ancien regroupe la progression, aux barres parallèles."
+  },
+  {
+   "old_id": "marche-en-fente",
+   "new_id": "mu-fente-marchee-halteres",
+   "confiance": "proche",
+   "note": "Fentes marchées ; l'ancien sans charge."
+  },
+  {
+   "old_id": "marche-laterale-elastique-monster-walk",
+   "new_id": "mu-marche-laterale-elastique",
+   "confiance": "sur",
+   "note": "Alias « Monster walk latéral »."
+  },
+  {
+   "old_id": "marche-ou-velo-tres-leger",
+   "new_id": "ca-marche-recuperation",
+   "confiance": "proche",
+   "note": "Récupération active très légère (marche) ; variante vélo : ca-velo-recuperation."
+  },
+  {
+   "old_id": "mollets-debout",
+   "new_id": "mu-mollets-debout-machine",
+   "confiance": "sur",
+   "note": "Même exercice à la machine"
+  },
+  {
+   "old_id": "mollets-debout-barre",
+   "new_id": "mu-mollets-smith",
+   "confiance": "proche",
+   "note": "Mollets debout barre sur le dos ; Smith machine dans le catalogue."
+  },
+  {
+   "old_id": "mollets-sur-presse",
+   "new_id": "mu-mollets-presse",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "mollets-unilateraux-sur-marche",
+   "new_id": "mu-mollets-unilateral-haltere",
+   "confiance": "proche",
+   "note": "Mollets unilatéral sur marche ; l'ancien sans haltère."
+  },
+  {
+   "old_id": "montee-en-atr-contre-le-mur-kick-up",
+   "new_id": "cs-handstand-dos-au-mur",
+   "confiance": "sur",
+   "note": "Handstand dos au mur (alias kick-up au mur)."
+  },
+  {
+   "old_id": "muscle-up",
+   "new_id": "cd-muscle-up-barre-strict",
+   "confiance": "sur",
+   "note": "Muscle-up barre"
+  },
+  {
+   "old_id": "muscle-up-aux-anneaux",
+   "new_id": "cd-muscle-up-anneaux-strict",
+   "confiance": "sur",
+   "note": "Muscle-up aux anneaux (strict)."
+  },
+  {
+   "old_id": "muscle-up-aux-anneaux-strict",
+   "new_id": "cd-muscle-up-anneaux-strict",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "muscle-up-kipping",
+   "new_id": "cd-muscle-up-barre-kipping",
+   "confiance": "sur",
+   "note": "Muscle-up barre kipping."
+  },
+  {
+   "old_id": "muscle-up-leste",
+   "new_id": "sl-muscle-up-leste",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "muscle-up-leste-cluster",
+   "new_id": "sl-muscle-up-leste",
+   "confiance": "proche",
+   "note": "Muscle-up lesté ; « cluster » est une méthode de séries."
+  },
+  {
+   "old_id": "muscle-up-leste-singles",
+   "new_id": "sl-muscle-up-leste",
+   "confiance": "sur",
+   "note": "Muscle-up lesté (singles = répétitions unitaires)."
+  },
+  {
+   "old_id": "negatif-de-muscle-up",
+   "new_id": "cd-muscle-up-barre-negatif",
+   "confiance": "sur",
+   "note": "Muscle-up barre négatif."
+  },
+  {
+   "old_id": "negatifs-de-muscle-up",
+   "new_id": "cd-muscle-up-barre-negatif",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "negatifs-de-muscle-up-complets",
+   "new_id": "cd-muscle-up-barre-negatif",
+   "confiance": "sur",
+   "note": "Muscle-up barre négatif."
+  },
+  {
+   "old_id": "nordic-curl-assiste-elastique",
+   "new_id": "mu-nordic-hamstring-curl-assiste",
+   "confiance": "sur",
+   "note": "Nordic assisté élastique."
+  },
+  {
+   "old_id": "nordic-curl-assiste-mains",
+   "new_id": "mu-nordic-hamstring-curl-assiste",
+   "confiance": "proche",
+   "note": "Nordic assisté ; élastique au lieu des mains."
+  },
+  {
+   "old_id": "nordic-curl-complet",
+   "new_id": "mu-nordic-hamstring-curl",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "nordic-curl-excentrique",
+   "new_id": "mu-nordic-hamstring-curl-negatif",
+   "confiance": "sur",
+   "note": "Nordic excentrique."
+  },
+  {
+   "old_id": "nordic-curl-leste",
+   "new_id": "mu-nordic-hamstring-curl",
+   "confiance": "proche",
+   "note": "Nordic curl complet ; l'ancien ajoute du lest."
+  },
+  {
+   "old_id": "oiseau-a-la-poulie",
+   "new_id": "mu-oiseau-poulie-croisee",
+   "confiance": "sur",
+   "note": "Oiseau à la poulie."
+  },
+  {
+   "old_id": "oiseau-elevations-buste-penche",
+   "new_id": "mu-oiseau-halteres",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "overhead-carry-barre",
+   "new_id": "mu-overhead-carry",
+   "confiance": "proche",
+   "note": "Overhead carry ; barre au lieu de la kettlebell."
+  },
+  {
+   "old_id": "overhead-carry-sac-leste",
+   "new_id": "mu-overhead-carry",
+   "confiance": "proche",
+   "note": "Overhead carry ; sac lesté au lieu de la kettlebell."
+  },
+  {
+   "old_id": "pallof-isometrique-au-partenaire-ou-a-la-serviette",
+   "new_id": "mu-pallof-press-debout",
+   "confiance": "proche",
+   "note": "Pallof en tenue isométrique ; résistance partenaire/serviette au lieu de poulie"
+  },
+  {
+   "old_id": "pallof-press-elastique",
+   "new_id": "mu-pallof-press-debout",
+   "confiance": "proche",
+   "note": "Même geste ; catalogue à la poulie, ancien à l'élastique."
+  },
+  {
+   "old_id": "pike-hold-v-inverse",
+   "new_id": "cs-handstand-pike-pieds-sureleves",
+   "confiance": "proche",
+   "note": "Pike hold ; catalogue pieds surélevés, ancien pieds au sol"
+  },
+  {
+   "old_id": "pike-push-ups",
+   "new_id": "sw-pompe-pike",
+   "confiance": "sur",
+   "note": "Pompe pike."
+  },
+  {
+   "old_id": "pike-push-ups-sureleves-pieds-sur-banc",
+   "new_id": "sw-pompe-pike-pieds-sureleves",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "pinch-grip-disques-tenue",
+   "new_id": "mu-pinch-grip-disques",
+   "confiance": "sur",
+   "note": "Pinch grip de disques."
+  },
+  {
+   "old_id": "pistol-squat-sur-box",
+   "new_id": "sw-pistol-squat-assis-box",
+   "confiance": "proche",
+   "note": "Pistol vers box ; libellé ancien ambigu (assis sur box ou debout sur box)"
+  },
+  {
+   "old_id": "planche-a-levier-long-mains-avancees",
+   "new_id": "mu-gainage-ventral-coudes",
+   "confiance": "proche",
+   "note": "Gainage ventral ; appuis avancés (levier long)"
+  },
+  {
+   "old_id": "planche-a-un-bras",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Gainage sur un bras (anti-rotation) absent ; les shoulder taps sont dynamiques"
+  },
+  {
+   "old_id": "planche-advanced-tuck",
+   "new_id": "cs-planche-tuck-avancee",
+   "confiance": "sur",
+   "note": "Planche tuck avancée."
+  },
+  {
+   "old_id": "planche-avec-passage-d-objet-sous-le-corps",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Planche avec passage d'objet (pull-through) : absent du catalogue."
+  },
+  {
+   "old_id": "planche-bras-et-jambe-opposes-leves",
+   "new_id": "mu-bird-dog",
+   "confiance": "proche",
+   "note": "Bras et jambe opposés levés ; catalogue en quadrupédie, ancien en planche."
+  },
+  {
+   "old_id": "planche-bras-et-jambe-opposes-tenue",
+   "new_id": "mu-bird-dog",
+   "confiance": "proche",
+   "note": "Levée bras-jambe opposés tenue ; en planche dans l'ancien, à quatre pattes au catalogue."
+  },
+  {
+   "old_id": "planche-bras-tendus-taps",
+   "new_id": "mu-gainage-shoulder-taps",
+   "confiance": "sur",
+   "note": "Gainage bras tendus avec touches d'épaules"
+  },
+  {
+   "old_id": "planche-de-l-ours-avec-touchers-d-epaules",
+   "new_id": "mu-bear-hold",
+   "confiance": "proche",
+   "note": "Bear hold ; l'ancien ajoute des touchers d'épaules alternés."
+  },
+  {
+   "old_id": "planche-gainage",
+   "new_id": "mu-gainage-ventral-coudes",
+   "confiance": "sur",
+   "note": "Planche sur les coudes."
+  },
+  {
+   "old_id": "planche-laterale-avec-abduction-de-jambe",
+   "new_id": "mu-gainage-lateral-abduction",
+   "confiance": "sur",
+   "note": "Gainage latéral avec abduction de hanche."
+  },
+  {
+   "old_id": "planche-laterale-bras-tendu",
+   "new_id": "mu-gainage-lateral-bras-tendu",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "planche-laterale-bras-tendu-lestee",
+   "new_id": "mu-gainage-lateral-bras-tendu",
+   "confiance": "proche",
+   "note": "Gainage latéral bras tendu ; pas de version lestée au catalogue"
+  },
+  {
+   "old_id": "planche-laterale-etoile",
+   "new_id": "mu-gainage-lateral-abduction",
+   "confiance": "sur",
+   "note": "Alias « Star plank »."
+  },
+  {
+   "old_id": "planche-laterale-lestee",
+   "new_id": "mu-gainage-lateral-coude",
+   "confiance": "proche",
+   "note": "Gainage latéral ; l'ancien ajoute un disque de lest."
+  },
+  {
+   "old_id": "planche-laterale-pieds-sureleves",
+   "new_id": "mu-gainage-lateral-coude",
+   "confiance": "proche",
+   "note": "Gainage latéral ; l'ancien a les pieds surélevés."
+  },
+  {
+   "old_id": "planche-laterale-sur-les-genoux",
+   "new_id": "mu-gainage-lateral-genoux",
+   "confiance": "sur",
+   "note": "Gainage latéral sur les genoux."
+  },
+  {
+   "old_id": "planche-lean-a-l-elastique",
+   "new_id": "cs-planche-lean",
+   "confiance": "proche",
+   "note": "Planche lean ; l'ancien ajoute l'élastique."
+  },
+  {
+   "old_id": "planche-lestee-gainage",
+   "new_id": "mu-gainage-ventral-leste",
+   "confiance": "sur",
+   "note": "Gainage ventral lesté (alias planche lestée)."
+  },
+  {
+   "old_id": "planche-rkc-coudes",
+   "new_id": "mu-planche-rkc",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "planche-superman-tenue",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Gainage en planche « superman » : aucun gainage équivalent (bird dog = quadrupédie, autre geste)."
+  },
+  {
+   "old_id": "planche-sur-les-genoux",
+   "new_id": "mu-gainage-ventral-coudes",
+   "confiance": "proche",
+   "note": "Gainage ventral ; appui genoux au lieu des pieds"
+  },
+  {
+   "old_id": "plate-pinch-carry",
+   "new_id": "mu-pinch-grip-disques",
+   "confiance": "proche",
+   "note": "Pinch grip de disques ; l'ancien se fait en marchant."
+  },
+  {
+   "old_id": "pompes",
+   "new_id": "sw-pompe",
+   "confiance": "sur",
+   "note": "Pompe classique."
+  },
+  {
+   "old_id": "pompes-a-genoux",
+   "new_id": "sw-pompe-genoux",
+   "confiance": "sur",
+   "note": "Pompe sur les genoux."
+  },
+  {
+   "old_id": "pompes-archer",
+   "new_id": "sw-pompe-archer",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "pompes-au-mur",
+   "new_id": "sw-pompe-murale",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "pompes-aux-anneaux",
+   "new_id": "sw-pompe-anneaux",
+   "confiance": "sur",
+   "note": "Pompe aux anneaux."
+  },
+  {
+   "old_id": "pompes-aux-anneaux-rto",
+   "new_id": "sw-pompe-anneaux-rto",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "pompes-avec-touchers-d-epaules",
+   "new_id": "mu-gainage-shoulder-taps",
+   "confiance": "proche",
+   "note": "Touches d'épaules en planche haute ; l'ancien y ajoute une pompe."
+  },
+  {
+   "old_id": "pompes-declinees",
+   "new_id": "sw-pompe-declinee",
+   "confiance": "sur",
+   "note": "Pompe déclinée pieds surélevés."
+  },
+  {
+   "old_id": "pompes-deficit-poignees",
+   "new_id": "sw-pompe-parallettes-deficit",
+   "confiance": "proche",
+   "note": "Pompe en déficit ; parallettes au lieu de poignées"
+  },
+  {
+   "old_id": "pompes-diamant",
+   "new_id": "sw-pompe-diamant",
+   "confiance": "sur",
+   "note": "Pompe diamant."
+  },
+  {
+   "old_id": "pompes-diamant-surelevees",
+   "new_id": "sw-pompe-diamant",
+   "confiance": "proche",
+   "note": "Pompe diamant ; la surélévation n'existe pas au catalogue."
+  },
+  {
+   "old_id": "pompes-elastique",
+   "new_id": "sw-pompe",
+   "confiance": "proche",
+   "note": "Pompe ; la résistance élastique n'est pas une variante du catalogue."
+  },
+  {
+   "old_id": "pompes-explosives-clap",
+   "new_id": "sw-pompe-claquee",
+   "confiance": "sur",
+   "note": "Pompe claquée (clap push-up)."
+  },
+  {
+   "old_id": "pompes-hindu",
+   "new_id": "sw-pompe-hindu",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "pompes-inclinees-mains-surelevees",
+   "new_id": "sw-pompe-inclinee",
+   "confiance": "sur",
+   "note": "Pompe inclinée mains surélevées."
+  },
+  {
+   "old_id": "pompes-lestees",
+   "new_id": "sl-pompe-lestee-gilet",
+   "confiance": "sur",
+   "note": "Pompe lestée (gilet = lest standard)."
+  },
+  {
+   "old_id": "pompes-lestees-lest-ajoute",
+   "new_id": "sl-pompe-lestee-gilet",
+   "confiance": "sur",
+   "note": "Pompe lestée (lest générique ; gilet au catalogue)."
+  },
+  {
+   "old_id": "pompes-lestees-lourdes",
+   "new_id": "sl-pompe-lestee-gilet",
+   "confiance": "proche",
+   "note": "Pompe lestée ; type de lest non précisé dans l'ancien."
+  },
+  {
+   "old_id": "pompes-pause-au-sol",
+   "new_id": "sw-pompe",
+   "confiance": "proche",
+   "note": "Pompe classique ; la pause poitrine au sol est une consigne"
+  },
+  {
+   "old_id": "pompes-pdc",
+   "new_id": "sw-pompe",
+   "confiance": "sur",
+   "note": "Pompe classique au poids du corps."
+  },
+  {
+   "old_id": "pompes-pike-sur-les-genoux",
+   "new_id": "sw-pompe-pike",
+   "confiance": "proche",
+   "note": "Pompe pike ; l'ancien genoux au sol (version facilitée)."
+  },
+  {
+   "old_id": "pompes-pliometriques-mains-sur-boxes",
+   "new_id": "sw-pompe-explosive",
+   "confiance": "proche",
+   "note": "Pompe pliométrique ; ancien avec réception sur boxes."
+  },
+  {
+   "old_id": "pompes-prise-large",
+   "new_id": "sw-pompe-large",
+   "confiance": "sur",
+   "note": "Pompe prise large."
+  },
+  {
+   "old_id": "pompes-prise-serree",
+   "new_id": "sw-pompe-serree",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "pompes-pseudo-planche",
+   "new_id": "cd-pompe-pseudo-planche",
+   "confiance": "sur",
+   "note": "Pompe pseudo-planche."
+  },
+  {
+   "old_id": "pompes-spiderman",
+   "new_id": "sw-pompe-spiderman",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "pompes-sur-les-poings",
+   "new_id": "sw-pompe-poings",
+   "confiance": "sur",
+   "note": "Pompe sur les poings."
+  },
+  {
+   "old_id": "pompes-surelevees-pieds-sur-banc",
+   "new_id": "sw-pompe-declinee",
+   "confiance": "sur",
+   "note": "Pompe déclinée pieds surélevés"
+  },
+  {
+   "old_id": "pompes-tempo",
+   "new_id": "sw-pompe",
+   "confiance": "proche",
+   "note": "Pompe classique ; l'ancien impose un tempo."
+  },
+  {
+   "old_id": "pompes-typewriter",
+   "new_id": "sw-pompe-typewriter",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "pompes-une-main-progression",
+   "new_id": "cd-pompe-un-bras-surelevee",
+   "confiance": "proche",
+   "note": "Pompe à un bras mains surélevées (progression sur support) ; niveau de progression non précisé."
+  },
+  {
+   "old_id": "pont-fessier-marche",
+   "new_id": "mu-pont-fessier-sol",
+   "confiance": "proche",
+   "note": "Pont fessier avec levées de pieds alternées"
+  },
+  {
+   "old_id": "pont-fessier-une-jambe",
+   "new_id": "mu-pont-fessier-unilateral",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "pont-fessier-une-jambe-pieds-sureleves",
+   "new_id": "mu-pont-fessier-unilateral",
+   "confiance": "proche",
+   "note": "Pont fessier une jambe ; l'ancien pied surélevé."
+  },
+  {
+   "old_id": "press-to-handstand-pike-press",
+   "new_id": "cd-press-handstand-pike",
+   "confiance": "sur",
+   "note": "Press to handstand pike."
+  },
+  {
+   "old_id": "presse-a-cuisses",
+   "new_id": "mu-presse-cuisses-45",
+   "confiance": "sur",
+   "note": "Presse à cuisses (45°, version standard)."
+  },
+  {
+   "old_id": "pronation-supination-haltere",
+   "new_id": "mu-pronation-levier",
+   "confiance": "proche",
+   "note": "Rotation de l'avant-bras à l'haltère ; catalogue sépare pronation et supination (mu-supination-levier)."
+  },
+  {
+   "old_id": "prone-y-raises",
+   "new_id": "mu-y-raise-banc-incline",
+   "confiance": "sur",
+   "note": "Y raise allongé ventral sur banc, haltères."
+  },
+  {
+   "old_id": "pseudo-planche-hold",
+   "new_id": "cs-planche-lean",
+   "confiance": "sur",
+   "note": "Planche lean (alias pseudo-planche lean)"
+  },
+  {
+   "old_id": "pull-apart-elastique",
+   "new_id": "mu-band-pull-apart",
+   "confiance": "sur",
+   "note": "Band pull-apart."
+  },
+  {
+   "old_id": "pull-over-poulie",
+   "new_id": "mu-tirage-bras-tendus-poulie-corde",
+   "confiance": "proche",
+   "note": "Pull-over debout poulie haute (alias « Rope pullover debout ») ; accessoire non précisé."
+  },
+  {
+   "old_id": "push-press-halteres",
+   "new_id": "mu-push-press",
+   "confiance": "proche",
+   "note": "Push press ; haltères au lieu de la barre."
+  },
+  {
+   "old_id": "rack-carry-kettlebells",
+   "new_id": "mu-rack-carry",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "rack-pulls",
+   "new_id": "mu-rack-pull",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "releves-de-jambes-au-sol",
+   "new_id": "mu-releve-jambes-allonge",
+   "confiance": "sur",
+   "note": "Relevé de jambes allongé au sol."
+  },
+  {
+   "old_id": "releves-de-jambes-au-sol-avec-elevation-du-bassin",
+   "new_id": "mu-releve-jambes-allonge",
+   "confiance": "proche",
+   "note": "Relevé de jambes au sol ; l'ancien finit par une élévation du bassin (type crunch inversé)."
+  },
+  {
+   "old_id": "repos-actif",
+   "new_id": "ca-marche-recuperation",
+   "confiance": "proche",
+   "note": "Hors générateur ; équivalent « Récupération active / marche lente »."
+  },
+  {
+   "old_id": "rice-bucket-seau-de-riz",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Aucun travail en seau de riz (préhension dans le riz) au catalogue ; les exercices d'avant-bras sont des gestes différents."
+  },
+  {
+   "old_id": "rollout-barre",
+   "new_id": "mu-rollout-barre",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "rotations-externes-elastique",
+   "new_id": "mu-rotation-externe-elastique",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "rotations-externes-par-haltere",
+   "new_id": "mu-rotation-externe-haltere-couche",
+   "confiance": "proche",
+   "note": "Rotation externe à l'haltère ; position couché sur le côté précisée par le catalogue."
+  },
+  {
+   "old_id": "rotations-internes-elastique",
+   "new_id": "mu-rotation-interne-elastique",
+   "confiance": "sur",
+   "note": "Rotation interne élastique."
+  },
+  {
+   "old_id": "rowing-a-la-serviette-a-une-main-porte",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Rowing une main à la serviette accrochée à une porte : pas de version équivalente (le row un bras aux anneaux est bien plus difficile)."
+  },
+  {
+   "old_id": "rowing-a-la-serviette-porte",
+   "new_id": "sw-row-australien-anneaux",
+   "confiance": "proche",
+   "note": "Row incliné PdC à prise souple ; serviette coincée dans une porte au lieu d'anneaux"
+  },
+  {
+   "old_id": "rowing-australien-barre-haute",
+   "new_id": "sw-row-australien",
+   "confiance": "proche",
+   "note": "Row australien ; barre haute = inclinaison plus facile."
+  },
+  {
+   "old_id": "rowing-barre-penche",
+   "new_id": "mu-rowing-barre-pronation",
+   "confiance": "sur",
+   "note": "Rowing barre buste penché"
+  },
+  {
+   "old_id": "rowing-haltere-appui-poitrine",
+   "new_id": "mu-rowing-poitrine-appuyee-banc-incline-halteres",
+   "confiance": "sur",
+   "note": "Rowing haltères poitrine appuyée sur banc incliné."
+  },
+  {
+   "old_id": "rowing-haltere-unilateral-par-haltere",
+   "new_id": "mu-rowing-haltere-unilateral-banc",
+   "confiance": "sur",
+   "note": "Rowing un bras haltère (doublon)."
+  },
+  {
+   "old_id": "rowing-halteres-penche",
+   "new_id": "mu-rowing-halteres-buste-penche",
+   "confiance": "sur",
+   "note": "Rowing haltères buste penché."
+  },
+  {
+   "old_id": "rowing-inverse-a-un-bras-barre-basse",
+   "new_id": "sw-row-un-bras-assiste",
+   "confiance": "proche",
+   "note": "Row inversé un bras ; catalogue aux anneaux avec assistance"
+  },
+  {
+   "old_id": "rowing-inverse-a-un-bras-sous-table",
+   "new_id": "sw-row-un-bras-assiste",
+   "confiance": "proche",
+   "note": "Row inversé un bras ; sous table au lieu des anneaux, catalogue en version assistée."
+  },
+  {
+   "old_id": "rowing-kettlebell",
+   "new_id": "mu-gorilla-row-kettlebell",
+   "confiance": "proche",
+   "note": "Rowing à la kettlebell ; le catalogue n'a que le gorilla row (alterné, deux KB)"
+  },
+  {
+   "old_id": "rowing-t-bar",
+   "new_id": "mu-t-bar-row",
+   "confiance": "sur",
+   "note": "Rowing T-bar."
+  },
+  {
+   "old_id": "rowing-unilateral-haltere",
+   "new_id": "mu-rowing-haltere-unilateral-banc",
+   "confiance": "sur",
+   "note": "Rowing un bras haltère."
+  },
+  {
+   "old_id": "rows-archer-barre-basse",
+   "new_id": "sw-row-archer",
+   "confiance": "sur",
+   "note": "Row archer (inverted)."
+  },
+  {
+   "old_id": "rows-archer-sous-table",
+   "new_id": "sw-row-archer",
+   "confiance": "proche",
+   "note": "Row archer ; sous une table au lieu d'une barre basse."
+  },
+  {
+   "old_id": "rows-australiens-lestes-gilet",
+   "new_id": "sl-row-australien-leste",
+   "confiance": "sur",
+   "note": "Row australien lesté au gilet."
+  },
+  {
+   "old_id": "rows-aux-anneaux",
+   "new_id": "sw-row-australien-anneaux",
+   "confiance": "sur",
+   "note": "Ring row"
+  },
+  {
+   "old_id": "rows-aux-sangles-trx",
+   "new_id": "sw-row-australien-anneaux",
+   "confiance": "proche",
+   "note": "Row au poids du corps en suspension ; anneaux au lieu de sangles TRX."
+  },
+  {
+   "old_id": "rows-barre-basse-pieds-sureleves",
+   "new_id": "sw-row-australien-pieds-sureleves",
+   "confiance": "sur",
+   "note": "Row australien pieds surélevés."
+  },
+  {
+   "old_id": "rows-une-main-anneaux",
+   "new_id": "sw-row-un-bras-assiste",
+   "confiance": "proche",
+   "note": "Row un bras aux anneaux ; le catalogue est la version assistée."
+  },
+  {
+   "old_id": "russian-twists",
+   "new_id": "mu-russian-twist",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "russian-twists-lestes",
+   "new_id": "mu-russian-twist-leste",
+   "confiance": "sur",
+   "note": "Russian twist lesté (médecine-ball ou disque)."
+  },
+  {
+   "old_id": "sandbag-carry-lourd",
+   "new_id": "mu-porte-sac-leste",
+   "confiance": "sur",
+   "note": "Alias « Sandbag carry »."
+  },
+  {
+   "old_id": "sandbag-squat-bear-hug",
+   "new_id": "mu-goblet-squat",
+   "confiance": "proche",
+   "note": "Squat à charge frontale ; catalogue kettlebell, ancien sac lesté en bear hug."
+  },
+  {
+   "old_id": "sauts-de-mollets-pogo",
+   "new_id": "cf-pogo-jumps",
+   "confiance": "sur",
+   "note": "Pogo jumps (alias sauts de mollets)."
+  },
+  {
+   "old_id": "sauts-en-contrebas-depth-jumps",
+   "new_id": "mu-depth-jump",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "scapular-pull-ups",
+   "new_id": "sw-traction-scapulaire",
+   "confiance": "sur",
+   "note": "Traction scapulaire."
+  },
+  {
+   "old_id": "scapular-pull-ups-lestes",
+   "new_id": "sl-traction-scapulaire-lestee",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "scapular-push-ups",
+   "new_id": "sw-pompe-scapulaire",
+   "confiance": "sur",
+   "note": "Pompe scapulaire."
+  },
+  {
+   "old_id": "serratus-push-ups-protraction",
+   "new_id": "sw-pompe-scapulaire",
+   "confiance": "sur",
+   "note": "Pompe scapulaire / push-up plus"
+  },
+  {
+   "old_id": "shoulder-taps-en-atr",
+   "new_id": "cd-shoulder-taps-mur",
+   "confiance": "sur",
+   "note": "Handstand shoulder taps au mur."
+  },
+  {
+   "old_id": "shrimp-squat-avance-pied-tenu-a-deux-mains",
+   "new_id": "sw-shrimp-squat-deux-mains",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "shrugs-barre",
+   "new_id": "mu-shrug-barre",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "shrugs-halteres",
+   "new_id": "mu-shrug-halteres",
+   "confiance": "sur",
+   "note": "Shrug haltères."
+  },
+  {
+   "old_id": "side-bend-haltere",
+   "new_id": "mu-flexion-laterale-haltere",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "sit-ups",
+   "new_id": "mu-sit-up",
+   "confiance": "sur",
+   "note": "Sit-up."
+  },
+  {
+   "old_id": "sit-ups-butterfly",
+   "new_id": "cf-sit-up-abmat",
+   "confiance": "sur",
+   "note": "Alias « Butterfly sit-up »."
+  },
+  {
+   "old_id": "sit-ups-ghd",
+   "new_id": "cf-ghd-sit-up",
+   "confiance": "sur",
+   "note": "GHD sit-up."
+  },
+  {
+   "old_id": "sit-ups-jambes-tendues-bras-leves",
+   "new_id": "mu-sit-up",
+   "confiance": "proche",
+   "note": "Sit-up ; ancien jambes tendues bras levés."
+  },
+  {
+   "old_id": "skaters",
+   "new_id": "mu-skater-jumps",
+   "confiance": "sur",
+   "note": "Sauts du patineur"
+  },
+  {
+   "old_id": "sled-drag-arriere",
+   "new_id": "mu-tirage-traineau-marche-arriere",
+   "confiance": "sur",
+   "note": "Tirage de traîneau en marche arrière."
+  },
+  {
+   "old_id": "sled-pull-traineau-corde",
+   "new_id": "mu-tirage-traineau-corde",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "snatch-arrache",
+   "new_id": "mu-arrache",
+   "confiance": "sur",
+   "note": "Arraché complet."
+  },
+  {
+   "old_id": "souleve-de-terre",
+   "new_id": "mu-souleve-de-terre-conventionnel",
+   "confiance": "sur",
+   "note": "Soulevé de terre conventionnel"
+  },
+  {
+   "old_id": "souleve-de-terre-roumain",
+   "new_id": "mu-souleve-de-terre-roumain-barre",
+   "confiance": "sur",
+   "note": "Soulevé de terre roumain à la barre."
+  },
+  {
+   "old_id": "souleve-de-terre-roumain-halteres",
+   "new_id": "mu-souleve-de-terre-roumain-halteres",
+   "confiance": "sur",
+   "note": "RDL haltères."
+  },
+  {
+   "old_id": "souleve-de-terre-roumain-une-jambe-halteres-lourd",
+   "new_id": "mu-souleve-de-terre-roumain-unilateral",
+   "confiance": "sur",
+   "note": "RDL une jambe à l'haltère."
+  },
+  {
+   "old_id": "souleve-de-terre-roumain-une-jambe-sac-leste",
+   "new_id": "mu-souleve-de-terre-roumain-unilateral",
+   "confiance": "proche",
+   "note": "RDL une jambe ; sac lesté au lieu d'haltère"
+  },
+  {
+   "old_id": "souleve-de-terre-sur-une-jambe-au-poids-de-corps",
+   "new_id": "mu-souleve-de-terre-roumain-unilateral",
+   "confiance": "proche",
+   "note": "RDL une jambe ; catalogue à l'haltère, ancien sans charge"
+  },
+  {
+   "old_id": "souleve-de-terre-trap-bar",
+   "new_id": "mu-souleve-de-terre-trap-bar",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "souleve-de-terre-unilateral-haltere",
+   "new_id": "mu-souleve-de-terre-roumain-unilateral",
+   "confiance": "proche",
+   "note": "SDT unilatéral haltère ≈ RDL une jambe à l'haltère ; exécution jambes tendues non précisée."
+  },
+  {
+   "old_id": "squat-1-14",
+   "new_id": "mu-back-squat-barre-haute",
+   "confiance": "proche",
+   "note": "Back squat ; le 1¼ (remontée partielle en bas) est une variante d'amplitude"
+  },
+  {
+   "old_id": "squat-assiste-appui",
+   "new_id": "mu-air-squat",
+   "confiance": "proche",
+   "note": "Squat PdC ; l'ancien se tient à un appui."
+  },
+  {
+   "old_id": "squat-au-poids-de-corps",
+   "new_id": "mu-air-squat",
+   "confiance": "sur",
+   "note": "Air squat."
+  },
+  {
+   "old_id": "squat-bulgare-gilet-leste-lourd",
+   "new_id": "mu-split-squat-bulgare-halteres",
+   "confiance": "proche",
+   "note": "Fente bulgare lestée ; gilet au lieu d'haltères."
+  },
+  {
+   "old_id": "squat-bulgare-halteres",
+   "new_id": "mu-split-squat-bulgare-halteres",
+   "confiance": "sur",
+   "note": "Fente bulgare haltères."
+  },
+  {
+   "old_id": "squat-bulgare-halteres-lourd",
+   "new_id": "mu-split-squat-bulgare-halteres",
+   "confiance": "sur",
+   "note": "Split squat bulgare aux haltères."
+  },
+  {
+   "old_id": "squat-bulgare-leste-gilet",
+   "new_id": "mu-split-squat-bulgare-halteres",
+   "confiance": "proche",
+   "note": "Squat bulgare ; lest au gilet au lieu des haltères."
+  },
+  {
+   "old_id": "squat-elastique",
+   "new_id": "mu-air-squat",
+   "confiance": "proche",
+   "note": "Squat ; l'ancien ajoute une résistance élastique."
+  },
+  {
+   "old_id": "squat-endurance-70-kg",
+   "new_id": "sl-squat-competition",
+   "confiance": "proche",
+   "note": "Séries longues sur le lift principal : squat de compétition."
+  },
+  {
+   "old_id": "squat-overhead",
+   "new_id": "mu-overhead-squat",
+   "confiance": "sur",
+   "note": "Overhead squat barre."
+  },
+  {
+   "old_id": "squat-pause",
+   "new_id": "mu-squat-pause",
+   "confiance": "sur",
+   "note": "Squat pause barre."
+  },
+  {
+   "old_id": "squat-saute-leste",
+   "new_id": "mu-squat-saute-charge",
+   "confiance": "proche",
+   "note": "Squat sauté chargé ; lest générique au lieu de la barre hexagonale."
+  },
+  {
+   "old_id": "squat-sumo-haltere",
+   "new_id": "mu-squat-sumo-haltere",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "squat-sur-chaise",
+   "new_id": "mu-air-squat",
+   "confiance": "proche",
+   "note": "Squat au poids du corps ; l'ancien descend jusqu'à s'asseoir sur une chaise."
+  },
+  {
+   "old_id": "squat-tempo",
+   "new_id": "mu-back-squat-barre-haute",
+   "confiance": "proche",
+   "note": "Back squat barre ; l'ancien impose un tempo."
+  },
+  {
+   "old_id": "squat-walkout-lourd",
+   "new_id": "sl-squat-walkout-supramaximal",
+   "confiance": "sur",
+   "note": "Alias « Heavy walkout »."
+  },
+  {
+   "old_id": "step-ups",
+   "new_id": "mu-step-up-halteres",
+   "confiance": "proche",
+   "note": "Step-up ; l'ancien au poids du corps, le catalogue aux haltères."
+  },
+  {
+   "old_id": "step-ups-hauts-box",
+   "new_id": "mu-step-up-halteres",
+   "confiance": "proche",
+   "note": "Step-up sur box ; catalogue aux haltères, box haute"
+  },
+  {
+   "old_id": "step-ups-lestes",
+   "new_id": "mu-step-up-halteres",
+   "confiance": "sur",
+   "note": "Step-up aux haltères."
+  },
+  {
+   "old_id": "suitcase-carry-sac-leste",
+   "new_id": "mu-suitcase-carry",
+   "confiance": "proche",
+   "note": "Suitcase carry ; sac lesté au lieu de kettlebell."
+  },
+  {
+   "old_id": "superman-w",
+   "new_id": "mu-superman",
+   "confiance": "proche",
+   "note": "Superman au sol ; l'ancien tire les bras en W."
+  },
+  {
+   "old_id": "support-hold-aux-barres",
+   "new_id": "cs-support-barres-paralleles",
+   "confiance": "sur",
+   "note": "Support hold aux barres parallèles."
+  },
+  {
+   "old_id": "support-hold-leste",
+   "new_id": "sl-dips-isometrie-lestee-appui",
+   "confiance": "sur",
+   "note": "Alias « Weighted support hold »."
+  },
+  {
+   "old_id": "suspension-active-active-hang",
+   "new_id": "sw-active-hang",
+   "confiance": "sur",
+   "note": "Suspension active."
+  },
+  {
+   "old_id": "suspension-passive-pieds-au-sol",
+   "new_id": "sw-dead-hang",
+   "confiance": "proche",
+   "note": "Dead hang ; l'ancien est assisté pieds au sol."
+  },
+  {
+   "old_id": "test-1rm-back-squat",
+   "new_id": "sl-squat-competition",
+   "confiance": "proche",
+   "note": "Test du lift principal : squat de compétition."
+  },
+  {
+   "old_id": "test-1rm-developpe-couche",
+   "new_id": "mu-developpe-couche-barre",
+   "confiance": "sur",
+   "note": "Test 1RM du développé couché barre."
+  },
+  {
+   "old_id": "test-1rm-dip-leste",
+   "new_id": "sl-dips-leste",
+   "confiance": "sur",
+   "note": "Test du mouvement dips lesté."
+  },
+  {
+   "old_id": "test-1rm-front-squat",
+   "new_id": "mu-front-squat",
+   "confiance": "sur",
+   "note": "Test 1RM du front squat."
+  },
+  {
+   "old_id": "test-1rm-muscle-up-leste",
+   "new_id": "sl-muscle-up-leste",
+   "confiance": "sur",
+   "note": "Test : mouvement testé = muscle-up lesté"
+  },
+  {
+   "old_id": "test-1rm-souleve-de-terre",
+   "new_id": "mu-souleve-de-terre-conventionnel",
+   "confiance": "sur",
+   "note": "Test 1RM du soulevé de terre conventionnel."
+  },
+  {
+   "old_id": "test-1rm-traction-lestee",
+   "new_id": "sl-traction-lestee",
+   "confiance": "sur",
+   "note": "Test du mouvement traction lestée."
+  },
+  {
+   "old_id": "test-2-km-rameur",
+   "new_id": "ca-rameur-endurance",
+   "confiance": "proche",
+   "note": "Test sur 2 km au rameur ; mouvement = rameur (le catalogue n'a pas de test chronométré)."
+  },
+  {
+   "old_id": "test-5-km-course",
+   "new_id": "ca-footing-endurance-fondamentale",
+   "confiance": "proche",
+   "note": "Test : course à pied ; le catalogue n'a pas de 5 km chronométré"
+  },
+  {
+   "old_id": "test-cooper-12-min",
+   "new_id": "ca-footing-endurance-fondamentale",
+   "confiance": "proche",
+   "note": "Test de course 12 min ; rattaché à la course à pied (allure max au lieu d'endurance)."
+  },
+  {
+   "old_id": "test-max-burpees-3-min",
+   "new_id": "cf-burpee",
+   "confiance": "sur",
+   "note": "Test du mouvement burpee."
+  },
+  {
+   "old_id": "test-max-dead-hang",
+   "new_id": "sw-dead-hang",
+   "confiance": "sur",
+   "note": "Test max du dead hang."
+  },
+  {
+   "old_id": "test-max-dips-pdc",
+   "new_id": "sw-dips-barres-paralleles",
+   "confiance": "sur",
+   "note": "Test : dips PdC"
+  },
+  {
+   "old_id": "test-max-handstand-hold",
+   "new_id": "cs-handstand",
+   "confiance": "sur",
+   "note": "Test de tenue max en handstand libre."
+  },
+  {
+   "old_id": "test-max-l-sit",
+   "new_id": "cs-l-sit-barres-paralleles",
+   "confiance": "sur",
+   "note": "Test L-sit aux barres parallèles."
+  },
+  {
+   "old_id": "test-max-muscle-ups-pdc",
+   "new_id": "cd-muscle-up-barre-strict",
+   "confiance": "sur",
+   "note": "Test max de muscle-ups barre au poids du corps."
+  },
+  {
+   "old_id": "test-max-pompes-pdc",
+   "new_id": "sw-pompe",
+   "confiance": "sur",
+   "note": "Test : pompes PdC"
+  },
+  {
+   "old_id": "test-max-squat-70-kg",
+   "new_id": "sl-squat-competition",
+   "confiance": "proche",
+   "note": "Test d'endurance sur le lift principal : squat de compétition."
+  },
+  {
+   "old_id": "test-max-tractions-pdc",
+   "new_id": "sw-traction-pronation",
+   "confiance": "sur",
+   "note": "Test tractions PdC pronation."
+  },
+  {
+   "old_id": "thruster-halteres",
+   "new_id": "cf-thruster-halteres",
+   "confiance": "sur",
+   "note": "Thruster haltères."
+  },
+  {
+   "old_id": "thruster-halteres-lourd",
+   "new_id": "cf-thruster-halteres",
+   "confiance": "sur",
+   "note": "Thruster haltères (charge lourde)."
+  },
+  {
+   "old_id": "tibialis-raises",
+   "new_id": "mu-tibial-raise",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "tirage-bucheron-a-la-barre-fixe",
+   "new_id": "sw-traction-commando",
+   "confiance": "proche",
+   "note": "Tirage latéral alterné (lumberjack) = traction commando, tête alternativement de chaque côté."
+  },
+  {
+   "old_id": "tirage-elastique-horizontal",
+   "new_id": "mu-rowing-elastique-assis",
+   "confiance": "proche",
+   "note": "Rowing à l'élastique ; position (assis) non précisée dans l'ancien."
+  },
+  {
+   "old_id": "tirage-elastique-vertical",
+   "new_id": "mu-tirage-vertical-elastique",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "tirage-horizontal-unilateral-poulie",
+   "new_id": "mu-rowing-poulie-assis-unilateral",
+   "confiance": "sur",
+   "note": "Rowing poulie un bras."
+  },
+  {
+   "old_id": "tirage-isometrique-a-la-serviette",
+   "new_id": null,
+   "confiance": "aucun",
+   "note": "Tirage isométrique sur serviette seule (sans barre) : aucun équivalent ; les tenues de traction se font à la barre."
+  },
+  {
+   "old_id": "tirage-menton-barre",
+   "new_id": "mu-rowing-menton-barre",
+   "confiance": "sur",
+   "note": "Rowing menton barre (alias tirage menton)."
+  },
+  {
+   "old_id": "tirage-menton-halteres",
+   "new_id": "mu-rowing-menton-halteres",
+   "confiance": "sur",
+   "note": "Upright row haltères"
+  },
+  {
+   "old_id": "tirage-vertical-prise-neutre",
+   "new_id": "mu-tirage-vertical-prise-neutre",
+   "confiance": "sur",
+   "note": "Tirage vertical poulie prise neutre."
+  },
+  {
+   "old_id": "tirage-vertical-pronation",
+   "new_id": "mu-tirage-vertical-prise-large-pronation",
+   "confiance": "sur",
+   "note": "Lat pulldown pronation."
+  },
+  {
+   "old_id": "tirage-vertical-supination",
+   "new_id": "mu-tirage-vertical-prise-serree-supination",
+   "confiance": "sur",
+   "note": "Tirage vertical poulie supination."
+  },
+  {
+   "old_id": "tirage-vertical-unilateral",
+   "new_id": "mu-tirage-vertical-unilateral",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "toes-to-bar",
+   "new_id": "sw-toes-to-bar",
+   "confiance": "sur",
+   "note": "Toes-to-bar strict."
+  },
+  {
+   "old_id": "toes-to-bar-strict-tempo",
+   "new_id": "sw-toes-to-bar",
+   "confiance": "proche",
+   "note": "Toes-to-bar strict ; le tempo est une consigne"
+  },
+  {
+   "old_id": "traction-a-la-serviette",
+   "new_id": "sw-traction-corde",
+   "confiance": "proche",
+   "note": "Traction à prise verticale suspendue ; corde au catalogue, serviette à l'ancien."
+  },
+  {
+   "old_id": "traction-assistee-elastique",
+   "new_id": "sw-traction-assistee-elastique",
+   "confiance": "sur",
+   "note": "Traction assistée élastique."
+  },
+  {
+   "old_id": "traction-autour-du-monde",
+   "new_id": "sw-traction-typewriter",
+   "confiance": "proche",
+   "note": "Traction avec déplacement latéral en haut ; trajet circulaire vs typewriter"
+  },
+  {
+   "old_id": "traction-aux-anneaux-prise-neutre",
+   "new_id": "sw-traction-anneaux",
+   "confiance": "proche",
+   "note": "Traction aux anneaux ; prise neutre non distinguée dans le catalogue."
+  },
+  {
+   "old_id": "traction-excentrique-lestee",
+   "new_id": "sl-traction-negative-lestee-supramaximale",
+   "confiance": "sur",
+   "note": "Négative lestée de traction."
+  },
+  {
+   "old_id": "traction-explosive",
+   "new_id": "cd-traction-explosive-poitrine-barre",
+   "confiance": "proche",
+   "note": "Traction explosive ; le catalogue précise la hauteur (poitrine à la barre)."
+  },
+  {
+   "old_id": "traction-haute-explosive-high-pull-up",
+   "new_id": "cd-traction-explosive-poitrine-barre",
+   "confiance": "sur",
+   "note": "Traction explosive haute PdC"
+  },
+  {
+   "old_id": "traction-isometrique-90",
+   "new_id": "cs-tenue-bras-90",
+   "confiance": "sur",
+   "note": "Lock-off 90°."
+  },
+  {
+   "old_id": "traction-isometrique-menton-au-dessus",
+   "new_id": "cs-tenue-menton-barre-pronation",
+   "confiance": "sur",
+   "note": "Tenue menton au-dessus de la barre."
+  },
+  {
+   "old_id": "traction-l-sit",
+   "new_id": "sw-traction-l-sit",
+   "confiance": "sur",
+   "note": "Traction en L."
+  },
+  {
+   "old_id": "traction-lestee-cluster",
+   "new_id": "sl-traction-lestee",
+   "confiance": "sur",
+   "note": "Traction lestée ; le cluster est une méthode"
+  },
+  {
+   "old_id": "traction-lestee-elastique-accommodante",
+   "new_id": "sl-traction-lestee-elastique",
+   "confiance": "sur",
+   "note": "Traction lestée avec élastique (résistance variable)."
+  },
+  {
+   "old_id": "traction-lestee-lourde",
+   "new_id": "sl-traction-lestee",
+   "confiance": "sur",
+   "note": "Traction lestée (charge lourde)."
+  },
+  {
+   "old_id": "traction-lestee-pause",
+   "new_id": "sl-traction-lestee-pause-haut",
+   "confiance": "proche",
+   "note": "Traction lestée avec pause ; position de pause non précisée (haut retenu)."
+  },
+  {
+   "old_id": "traction-lestee-singles-lourds",
+   "new_id": "sl-traction-lestee",
+   "confiance": "sur",
+   "note": "Traction lestée ; singles lourds = méthode"
+  },
+  {
+   "old_id": "traction-lestee-tempo",
+   "new_id": "sl-traction-lestee",
+   "confiance": "proche",
+   "note": "Traction lestée ; l'ancien impose un tempo lent."
+  },
+  {
+   "old_id": "traction-negative-lente",
+   "new_id": "sw-traction-negative",
+   "confiance": "sur",
+   "note": "Traction négative."
+  },
+  {
+   "old_id": "traction-pause-haute",
+   "new_id": "sw-traction-pronation",
+   "confiance": "proche",
+   "note": "Traction PdC ; la pause haute n'existe qu'en version lestée au catalogue."
+  },
+  {
+   "old_id": "traction-poitrine-barre",
+   "new_id": "sw-traction-chest-to-bar",
+   "confiance": "sur",
+   "note": "Traction chest-to-bar."
+  },
+  {
+   "old_id": "traction-prise-large",
+   "new_id": "sw-traction-large",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "traction-prise-serree",
+   "new_id": "sw-traction-serree",
+   "confiance": "sur",
+   "note": "Traction pronation prise serrée."
+  },
+  {
+   "old_id": "traction-sternum",
+   "new_id": "sw-traction-chest-to-bar",
+   "confiance": "proche",
+   "note": "Traction poitrine à la barre ; le sternum monte un peu plus haut."
+  },
+  {
+   "old_id": "traction-tempo-3-s-excentrique",
+   "new_id": "sw-traction-tempo-excentrique",
+   "confiance": "sur",
+   "note": "Traction tempo excentrique lent."
+  },
+  {
+   "old_id": "traction-une-main-assistee",
+   "new_id": "cd-traction-un-bras-assistee-elastique",
+   "confiance": "sur",
+   "note": "Traction un bras assistée élastique"
+  },
+  {
+   "old_id": "traction-une-main-negative",
+   "new_id": "cd-traction-un-bras-negative",
+   "confiance": "sur",
+   "note": "Traction un bras négative."
+  },
+  {
+   "old_id": "tractions-australiennes-pieds-au-sol-table",
+   "new_id": "sw-row-australien",
+   "confiance": "proche",
+   "note": "Row australien ; sous une table au lieu d'une barre basse."
+  },
+  {
+   "old_id": "tractions-australiennes-sous-table-genoux-flechis",
+   "new_id": "sw-row-australien-genoux-flechis",
+   "confiance": "proche",
+   "note": "Row australien genoux fléchis ; sous une table au lieu d'une barre."
+  },
+  {
+   "old_id": "tractions-australiennes-sous-table-pieds-sureleves",
+   "new_id": "sw-row-australien-pieds-sureleves",
+   "confiance": "proche",
+   "note": "Row australien pieds surélevés ; sous une table au lieu d'une barre basse"
+  },
+  {
+   "old_id": "tractions-explosives-poitrine-barre",
+   "new_id": "cd-traction-explosive-poitrine-barre",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "tractions-pdc",
+   "new_id": "sw-traction-pronation",
+   "confiance": "sur",
+   "note": "Traction pronation au poids du corps."
+  },
+  {
+   "old_id": "transition-muscle-up-a-l-elastique",
+   "new_id": "cd-muscle-up-barre-assiste-elastique",
+   "confiance": "proche",
+   "note": "Muscle-up assisté élastique ; l'ancien cible la transition"
+  },
+  {
+   "old_id": "transition-muscle-up-assistee-pieds-au-sol",
+   "new_id": "cd-muscle-up-barre-basse-pieds-au-sol",
+   "confiance": "proche",
+   "note": "Muscle-up barre basse pieds au sol ; l'ancien cible la transition."
+  },
+  {
+   "old_id": "transitions-de-muscle-up-a-l-elastique",
+   "new_id": "cd-muscle-up-barre-assiste-elastique",
+   "confiance": "proche",
+   "note": "Muscle-up barre assisté élastique ; l'ancien cible la transition."
+  },
+  {
+   "old_id": "travail-poignet-excentrique-haltere",
+   "new_id": "mu-reverse-wrist-curl-haltere",
+   "confiance": "proche",
+   "note": "Travail du poignet à l'haltère ; l'ancien insiste sur l'excentrique (fléchisseurs et extenseurs), le catalogue est l'extension du poignet."
+  },
+  {
+   "old_id": "tuck-jump-burpees",
+   "new_id": "cf-burpee-tuck-jump",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "tuck-ups",
+   "new_id": "mu-tuck-up",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "v-sit-progression",
+   "new_id": "cs-v-sit",
+   "confiance": "proche",
+   "note": "V-sit ; ancien aux barres parallèles, catalogue au sol."
+  },
+  {
+   "old_id": "v-sit-tenue",
+   "new_id": "cs-v-sit",
+   "confiance": "proche",
+   "note": "V-sit ; au sol dans le catalogue, aux barres parallèles dans l'ancien."
+  },
+  {
+   "old_id": "v-ups",
+   "new_id": "mu-v-up",
+   "confiance": "sur",
+   "note": "V-up."
+  },
+  {
+   "old_id": "wall-sit-chaise",
+   "new_id": "mu-wall-sit",
+   "confiance": "sur",
+   "note": "Même exercice"
+  },
+  {
+   "old_id": "wall-slides-glisses-au-mur",
+   "new_id": "mo-wall-slides",
+   "confiance": "sur",
+   "note": "Wall slides dos au mur."
+  },
+  {
+   "old_id": "wall-walks",
+   "new_id": "cd-wall-walk",
+   "confiance": "sur",
+   "note": "Même exercice."
+  },
+  {
+   "old_id": "wall-walks-partiels-mi-hauteur",
+   "new_id": "cd-wall-walk",
+   "confiance": "proche",
+   "note": "Wall walk ; amplitude partielle."
+  },
+  {
+   "old_id": "windshield-wipers-essuie-glaces",
+   "new_id": "sw-windshield-wiper",
+   "confiance": "sur",
+   "note": "Windshield wiper suspendu."
+  },
+  {
+   "old_id": "woodchop-poulie",
+   "new_id": "mu-woodchop-haut-bas",
+   "confiance": "sur",
+   "note": "Woodchop poulie (haut vers bas, version racine)"
+  },
+  {
+   "old_id": "ytw-a-plat-ventre-banc-incline",
+   "new_id": "mu-y-raise-banc-incline",
+   "confiance": "proche",
+   "note": "Le catalogue sépare Y, T et W raise sur banc incliné ; rattaché au Y (aussi mu-t-raise / mu-w-raise)."
+  },
+  {
+   "old_id": "ytw-allonge",
+   "new_id": "mu-y-raise-banc-incline",
+   "confiance": "proche",
+   "note": "Catalogue sépare Y/T/W (aussi mu-t-raise / mu-w-raise-banc-incline)."
+  },
+  {
+   "old_id": "zercher-carry-sac-leste",
+   "new_id": "mu-porte-sac-leste",
+   "confiance": "proche",
+   "note": "Porté de sac lesté ; tenue zercher au lieu de bear hug."
+  }
+ ]
+}
