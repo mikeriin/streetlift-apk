@@ -296,10 +296,11 @@ void main() {
     // 2a. Création : jours de poussée qui changent de type (poignet).
     final monday = (DateTime.monday - real.weekday + 7) % 7;
     KalisClock.setOffsetDays(monday);
+    // (Gêne gardée seulement avec le consentement aux données de santé.)
     releve['profil'] =
         store.saveAthleteProfile(
           ProfileDraft.of(_wrist(civilOf(KalisClock.now())))
-            ..consent = 'refused',
+            ..consent = 'given',
         ) !=
         null;
     unawaited(
@@ -386,7 +387,7 @@ void main() {
     expect(releve['profil'], isTrue);
     expect(releve['structure'], isTrue);
     expect(releve['changements'] as int, greaterThan(0));
-    expect('${releve['changement_texte']}', contains('zone à ménager'));
+    expect('${releve['changement_texte']}', contains('pour ménager ton poignet'));
     expect(releve['dev_import'], isTrue);
     expect(releve['dev_koach_actif'], isTrue);
     expect(releve['dev_version_moteur'], '1.0.5-ref.1');

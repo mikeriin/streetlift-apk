@@ -442,17 +442,16 @@ void main() {
           c[0].$2,
           exerciseName: name,
         ),
-        'Mardi devient « Jambes — force » : zone à ménager : poignet, gêne '
-        '6/10.',
+        'Mardi devient « Jambes — force » pour ménager ton poignet (gêne '
+        '6/10).',
       );
       expect(
         dayTypeChangeText('Mercredi', null, c[1].$2, exerciseName: name),
-        'Mercredi change de type : il manque du matériel (barres '
-        'parallèles).',
+        'Mercredi change de type faute de matériel (barres parallèles).',
       );
       expect(
         dayTypeChangeCause(c[2].$2, exerciseName: name),
-        'il faut d’abord maîtriser Dips',
+        'faute d’exercice possible pour l’instant (Dips écarté)',
       );
       expect(dayTypeChanges([r('plan.joint_limitation')]), isEmpty);
       expect(dayTypeChanges(const []), isEmpty);
@@ -462,14 +461,22 @@ void main() {
         'le type des jours de poussée et dit pourquoi', () {
       clock = DateTime(2026, 10, 5, 9); // lundi
       final saved = app.saveAthleteProfile(
-        ProfileDraft.of(kb1WristProfile(civilOf(clock)))..consent = 'refused',
+        // Gêne gardée seulement avec le consentement aux données de santé.
+        ProfileDraft.of(kb1WristProfile(civilOf(clock)))..consent = 'given',
       );
       expect(saved, isNotNull);
       final c = PlanStore(app).newPlanCreation(journal: false)!;
       c.start();
+      expect(app.athlete!.profile.limitations, hasLength(1));
       final plan = c.plan;
       final changes = dayTypeChanges(plan.split?.reasons ?? const []);
-      expect(changes, isNotEmpty, reason: '${plan.split?.reasons}');
+      expect(
+        changes,
+        isNotEmpty,
+        reason:
+            '${plan.split?.reasons}\n${app.athlete!.profile.equipment}\n'
+            '${[for (final d in plan.days) d.slots.map((s) => s.exerciseId).join(' ')].join('\n')}',
+      );
       for (final (i, cause) in changes) {
         expect(i, lessThan(plan.days.length));
         expect(cause.code, 'plan.joint_limitation');
@@ -481,7 +488,7 @@ void main() {
           cause,
           exerciseName: (id) => id,
         );
-        expect(t, contains('zone à ménager : poignet, gêne 6/10'));
+        expect(t, contains('pour ménager ton poignet (gêne 6/10)'));
         // ignore: avoid_print
         print('KB1|structure|$t');
       }

@@ -13,5 +13,8 @@ Base : main e5d3829 (dev7.1.9). Travail dans un worktree de main (branche locale
 - test/kb1_koach105_test.dart, cible émulateur integration_test/koach_kb1_test.dart (ci3d_drive.sh, délai 125 min), formatage fait (claude/fmt-kb1 bc86738).
 - Poussé sur claude/ci-ui-kb1-rapide et claude/ci-3d (commit bc86738).
 
+- Relecture indépendante faite (0 bloquant) ; phrases revues, clés uniques, précompilation de la cible KB1.
+- Suite Dart complète verte (1 097 tests, run 39120362509) sur 2f178b5 ; contrôle final lancé sur c45cbe4 (claude/ci-3d).
+
 ## Reste
 - Lire les résultats CI, corriger ; rebase sur main ; push main ; build signé ; livraison ; ETAT ; page de suivi ; notification.
