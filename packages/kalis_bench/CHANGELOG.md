@@ -1,5 +1,23 @@
 # Journal
 
+## 0.5.6 — 18/10/2026 (lot KM2c3)
+
+Mesure du couple `kalis_plan` 0.4.2 × Koach 1.0.5 **en Dart** (`kalis_adapt` 1.0.4, portage de la référence ;
+`pipeline/cp/prompts/KM2c3.txt`) ; sur 0.5.5 (lot KM1c4). Critères, profils, attentes et grilles inchangés.
+
+- **Tests et outils de Koach sur les paramètres de 1.0.5** : `test/km2_banc_test.dart`, `test/km2_validateur_test.dart`,
+  `test/km2_adversaire_test.dart`, `bin/km2.dart` et `bin/km2_adversaire.dart` relisent
+  `kalis_adapt/reference/params/koach_params_v1.json` (la copie figée `koach_params_d4.json` est supprimée).
+- **Fixtures du banc** (`test/fixtures/km2/`) régénérées avec le moteur 1.0.5 et le modèle de vérité corrigé (quatre
+  changent) ; trois saisons ajoutées, celles qui portent la conduite sous douleur : `autres_08` référence b 47 (zone
+  sensible sans arrêt), `ks_01` douleur à l'épaule b 38 (sortie progressive de la rampe), `street_03` séances
+  manquées b 57 (rampe de retour après une coupure).
+- **Modèle de vérité** (dans `kalis_adapt`, `lib/src/sim/truth.dart`) : une douleur qui commence n'est connue du moteur
+  qu'une fois signalée (KM1c4) ; les aggravations comptées sur une douleur jamais signalée disparaissent.
+- **Outil** `tool/km2c3_comparer.py` : campagne Dart contre campagne Python, saison par saison (dictionnaire complet
+  de `kmMesurerSaison` contre `campagne.mesurer_saison`, flottants à 1e-9).
+- Mesures : `docs/CRITERES_KM2C3.md`, `docs/data/km2c3/`.
+
 ## 0.5.5 — 17/10/2026 (lot KM1c4)
 
 Mesure du couple `kalis_plan` 0.4.2 × Koach 1.0.5 (référence Python ; `pipeline/cp/prompts/KM1c4.txt`) ; sur 0.5.4

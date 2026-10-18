@@ -29,7 +29,7 @@ void _lisible(String texte, String quoi) {
 }
 
 Json _fixture(int i) {
-  final f = File('reference/fix_dart/moteur_$i.json');
+  final f = File('reference/fixtures/moteur_$i.json');
   return jm(jsonDecode(f.readAsStringSync()));
 }
 
