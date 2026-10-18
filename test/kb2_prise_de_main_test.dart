@@ -280,15 +280,17 @@ void main() {
       expect(app.koachServesWeek(16), isTrue);
     });
 
-    test('semaine en cours toute faite : prise de main le lundi suivant',
-        () async {
-      await _pr2Owner(app, lastWeek: 15);
-      clock = DateTime(2026, 10, 25, 20); // dimanche, S15 finie
-      expect(app.koachTakeoverPlanned(), 16);
-      expect(app.koachTakeoverWeek(), isNull);
-      clock = DateTime(2026, 10, 26, 8);
-      expect(app.koachTakeoverWeek(), 16);
-    });
+    test(
+      'semaine en cours toute faite : prise de main le lundi suivant',
+      () async {
+        await _pr2Owner(app, lastWeek: 15);
+        clock = DateTime(2026, 10, 25, 20); // dimanche, S15 finie
+        expect(app.koachTakeoverPlanned(), 16);
+        expect(app.koachTakeoverWeek(), isNull);
+        clock = DateTime(2026, 10, 26, 8);
+        expect(app.koachTakeoverWeek(), 16);
+      },
+    );
 
     test('bascule fermée (constante à faux) : rien ne change', () async {
       debugKoachBasculeAutorisee = false;
@@ -447,10 +449,7 @@ void main() {
       final e = app.koachEngine;
       expect(e.snap, isNotNull, reason: '${e.blocked}');
       expect(e.fromWeek, w0);
-      expect(
-        jsonEncode(app.logs[app.sessionKey(w0, j0)]!.toJson()),
-        done,
-      );
+      expect(jsonEncode(app.logs[app.sessionKey(w0, j0)]!.toJson()), done);
       final j1 = _dayWithWork(app, w0, j0 + 1);
       expect(app.koachServesDay(w0, j1), isTrue);
       expect(

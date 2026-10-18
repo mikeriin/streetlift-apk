@@ -249,7 +249,9 @@ void main() {
         jsonEncode(
               ((jsonDecode(
                     cut.startsWith('gz:')
-                        ? utf8.decode(gzip.decode(base64Decode(cut.substring(3))))
+                        ? utf8.decode(
+                            gzip.decode(base64Decode(cut.substring(3))),
+                          )
                         : cut,
                   )
                   as Map<String, dynamic>)['logs']),
