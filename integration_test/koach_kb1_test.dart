@@ -183,7 +183,25 @@ void main() {
         .isNotEmpty;
     await shot(name);
     final b = find.byKey(const ValueKey('ki-export-journal'));
-    await scrollTo(tester, b);
+    // Liste de l'inspecteur (longue quand Koach est actif) : défilée
+    // jusqu'au bouton.
+    final list = find.descendant(
+      of: find.byKey(const ValueKey('koach-inspector')),
+      matching: find.byWidgetPredicate(
+        (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+      ),
+    );
+    for (var i = 0; i < 150 && b.hitTestable().evaluate().isEmpty; i++) {
+      if (b.evaluate().isNotEmpty) {
+        await tester.ensureVisible(b.first);
+        await wait(tester, 400);
+        continue;
+      }
+      if (list.evaluate().isEmpty) break;
+      await tester.drag(list.first, const Offset(0, -300));
+      await wait(tester, 200);
+    }
+    out['bouton'] = b.hitTestable().evaluate().isNotEmpty;
     if (b.hitTestable().evaluate().isNotEmpty) {
       await tester.tap(b.hitTestable().first);
       for (var i = 0; i < 300 && out['json'] == null; i++) {

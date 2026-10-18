@@ -18,3 +18,4 @@ Base : main e5d3829 (dev7.1.9). Travail dans un worktree de main (branche locale
 
 ## Reste
 - Lire les résultats CI, corriger ; rebase sur main ; push main ; build signé ; livraison ; ETAT ; page de suivi ; notification.
+- Run 39121486450 (c45cbe4) : suite Dart et paquets verts ; émulateur : KB1 rouge (export de l'inspecteur dans la session de test non atteint : défilement), KS1A (en-tête « S14 · J5 » depuis PR2), CI1 (panneau du coach dans ⓘ depuis PR7), KM3 (dimanche : aucune séance restante dans la semaine) rouges sur des causes antérieures à KB1 ; CI1e, CI1f : émulateur (connexion VM refusée). Corrigés dans les cibles (17f39fc), contrôle relancé 12:45 UTC.

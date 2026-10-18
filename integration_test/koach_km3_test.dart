@@ -30,6 +30,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/athlete_profile.dart' show civilOf;
 import 'package:streetlift_tracker/dev/dev_session.dart';
 import 'package:streetlift_tracker/dev/koach_inspector.dart';
+import 'package:streetlift_tracker/kalis_clock.dart';
 import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/koach1/koach1_widgets.dart';
 import 'package:streetlift_tracker/main.dart';
@@ -225,12 +226,28 @@ void main() {
 
     // Séance du jour servie par Koach (première journée avec exercices à
     // partir d'aujourd'hui dans la semaine).
+    // Jour du test : aujourd'hui, ou la semaine suivante quand il ne reste
+    // plus de journée d'entraînement dans la semaine (un dimanche).
+    var wd = w;
     var jd = j;
-    final week = store.program.week(w);
+    while (jd <= 7 &&
+        (store.program.week(wd).day(jd)?.exercises.isEmpty ?? true)) {
+      jd++;
+    }
+    if (jd > 7) {
+      // (Horloge de l'application avancée au lundi : séance du jour réel.)
+      final now0 = store.storeClock();
+      KalisClock.setOffsetDays(8 - now0.weekday);
+      await store.koachRefresh();
+      await wait(tester, 800);
+      wd = w + 1;
+      jd = 1;
+    }
+    final week = store.program.week(wd);
     while (jd <= 7 && (week.day(jd)?.exercises.isEmpty ?? true)) {
       jd++;
     }
-    releve['dev_seance'] = 'S$w-J$jd';
+    releve['dev_seance'] = 'S$wd-J$jd';
     if (jd <= 7) {
       final day = week.day(jd)!;
       unawaited(
@@ -242,14 +259,14 @@ void main() {
       );
       await until(tester, find.byKey(const ValueKey('health-question')));
       await wait(tester, 800);
-      releve['dev_apercu'] = store.koachPending(w, jd);
+      releve['dev_apercu'] = store.koachPending(wd, jd);
       await shot('2_bilan');
       await tapKey(tester, 'feel-4', ms: 300);
       // Début réel (rattrapage, `seance_debut`, `plan(seance)`) : attendu
       // jusqu'à 60 s, diagnostic hors modèle éventuel passé (« Plus tard »).
       final debut = Stopwatch()..start();
       final appuis = <String>[];
-      while (!store.koachOpen(w, jd) && debut.elapsedMilliseconds < 60000) {
+      while (!store.koachOpen(wd, jd) && debut.elapsedMilliseconds < 60000) {
         await wait(tester, 250);
         for (final k in const [
           'koach-diag-later',
@@ -268,21 +285,21 @@ void main() {
       releve['dev_debut_appuis'] = appuis;
       releve['dev_temps_debut'] = store.koachTemps.toJson();
       await wait(tester, 1000);
-      releve['dev_seance_ouverte'] = store.koachOpen(w, jd);
-      final a = store.sessionAdapt(w, jd);
+      releve['dev_seance_ouverte'] = store.koachOpen(wd, jd);
+      final a = store.sessionAdapt(wd, jd);
       releve['dev_items_servis'] = (a?.koach?['items'] as List?)?.length;
       await shot('3_exercice');
       // Première série : cible de Koach, validée ; temps d'une série.
       final served = store
-          .adaptDay(w, day, a!)
+          .adaptDay(wd, day, a!)
           .exercises
           .where((e) => e.engine && e.slotId != null)
           .toList();
       if (served.isNotEmpty) {
         final e = served.first;
-        final log = store.exLog(w, jd, e);
-        store.adaptPrefill(w, jd, e, log);
-        final g = store.adaptGoal(w, jd, e, 0);
+        final log = store.exLog(wd, jd, e);
+        store.adaptPrefill(wd, jd, e, log);
+        final g = store.adaptGoal(wd, jd, e, 0);
         releve['dev_cible_0'] = g == null
             ? null
             : {'kg': g.kg, 'bas': g.low, 'haut': g.high, 'flammes': g.flames};
@@ -292,16 +309,16 @@ void main() {
           final ok = store.toggleSet(log, 0, store.logSpec(e)).ok;
           releve['dev_serie_validee'] = ok;
           final t = Stopwatch()..start();
-          store.koachAfterSet(w, day, e, 0);
+          store.koachAfterSet(wd, day, e, 0);
           releve['dev_serie_ms'] = t.elapsedMicroseconds / 1000;
         }
         // Suggestion (forme d'adhérence) posée sur la première série du
         // deuxième exercice, puis refusée « trop lourd » dans l'écran.
         if (served.length > 1) {
           final e2 = served[1];
-          final log2 = store.exLog(w, jd, e2);
-          store.adaptPrefill(w, jd, e2, log2);
-          final a2 = store.sessionAdapt(w, jd)!;
+          final log2 = store.exLog(wd, jd, e2);
+          store.adaptPrefill(wd, jd, e2, log2);
+          final a2 = store.sessionAdapt(wd, jd)!;
           final st = Map<String, Object?>.of(a2.koach!);
           final cibles = Map<String, Object?>.of(
             ((st['cibles'] as Map?) ?? const {}).cast<String, Object?>(),
@@ -323,7 +340,7 @@ void main() {
           };
           cibles[e2.slotId!] = m;
           st['cibles'] = cibles;
-          store.sessionLog(w, jd).adapt = a2
+          store.sessionLog(wd, jd).adapt = a2
               .copyWith(koach: st)
               .toJson()
               .cast<String, dynamic>();
@@ -356,15 +373,15 @@ void main() {
             await wait(tester, 1200);
           }
           releve['dev_suggestion_refusee'] = store
-              .koachSuggestion(w, jd, e2)
+              .koachSuggestion(wd, jd, e2)
               ?.decided;
           await shot('6_refuse');
         }
       }
-      store.markSessionDone(w, jd, true);
+      store.markSessionDone(wd, jd, true);
       await wait(tester, 800);
       releve['dev_versee'] = store.koachEngine.versed.contains(
-        store.sessionKey(w, jd),
+        store.sessionKey(wd, jd),
       );
       final dec = store.koachEngine.journal.where(
         (x) => x['type'] == 'decision' && x['proposition'] != null,
@@ -409,6 +426,7 @@ void main() {
     await home(tester);
     await store.flush();
 
+    KalisClock.setOffsetDays(0);
     final stored = raw.getString('kalis_state_v3') ?? '';
     releve['perso_intacte'] = stored.isNotEmpty;
     record();
