@@ -1,4 +1,5 @@
-tests kalis_adapt : échec
-durée : 135 s
-00:03 +42 -1: test/docs_test.dart: docs/PROPRIETAIRE.md est le rejeu de la fixture [E]
-02:06 +372 -1: Some tests failed.
+durée : 3863 s
+  2700/2756 tâches (0 plantée(s)) — 3824 s, reste ~79 s
+  2750/2756 tâches (0 plantée(s)) — 3853 s, reste ~8 s
+  2756/2756 tâches (0 plantée(s)) — 3859 s, reste ~0 s
+part 2/2 écrite dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/parts/km2c3_g0_5_partie_2_sur_2.json.gz (3860 s).
