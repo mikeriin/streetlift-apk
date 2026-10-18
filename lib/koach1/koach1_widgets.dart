@@ -500,9 +500,10 @@ Future<void> _koachWait(BuildContext context) async {
     Future<void>.delayed(const Duration(milliseconds: 400)),
   ]);
   if (finished || !context.mounted) return;
-  await showDialog<void>(
-    context: context,
-    barrierDismissible: false,
+  await showKDialog<void>(
+    context,
+    dialogKey: const ValueKey('koach-takeover'),
+    dismissible: false,
     builder: (_) => KoachTakeoverDialog(done: done),
   );
 }
@@ -571,14 +572,7 @@ class _KoachTakeoverDialogState extends State<KoachTakeoverDialog> {
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
-    return PopScope(
-      canPop: false,
-      child: Dialog(
-        key: const ValueKey('koach-takeover'),
-        backgroundColor: k.surface,
-        shape: KRadius.cardShape,
-        insetPadding: const EdgeInsets.all(KSpacing.s24),
-        child: Padding(
+    return Padding(
           padding: const EdgeInsets.all(KSpacing.s24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -621,8 +615,6 @@ class _KoachTakeoverDialogState extends State<KoachTakeoverDialog> {
                 ),
             ],
           ),
-        ),
-      ),
     );
   }
 }
