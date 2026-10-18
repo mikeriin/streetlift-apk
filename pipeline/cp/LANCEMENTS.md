@@ -352,9 +352,9 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Seul lot en cours ; aucune autre session sur `moteurs`. Clé des références non nécessaire.
 
 
-## KB1 — bascule de Koach 1.0, dev7.2.0 (préparé le 18/10/2026, C17.29 ; à lancer à l'accord du propriétaire, tâche « Opus 5.5, effort élevé, application »)
+## KB1 — Koach 1.0.5 et `kalis_plan` 0.4.2 dans l'application, bascule fermée, dev7.2.0 (lancé le 18/10/2026 vers 09:55 UTC, tâche « Opus 5.5, effort élevé, application » ; C17.29, C17.30)
 
-- Lot : **KB1**, prompt `prompts/KB1.txt`. Base : pointe de `main` (dev7.1.0, ee2b2078 ou suivant). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KB1`.
+- Lot : **KB1**, prompt `prompts/KB1.txt`. Base : pointe de `main` (dev7.1.9, e5d3829b, ou suivant ; lots PR1 à PR10 du propriétaire depuis Claude Code sur son PC : lis le `CLAUDE.md` de `main`). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KB1`.
 - Paquets : `etiquettes/kalis_plan-v0.4.2`, `etiquettes/kalis_adapt-v1.0.4` (9c81a201 ; copier `lib/`, `assets/koach/`, `pubspec.yaml` seulement).
-- Export du journal : à déposer chiffré par le pilotage sur `cp-references` au lancement (chemin écrit ici à ce moment-là).
-- Coexistence avec le nouveau pipeline Claude Code (C17.28.3) : rebase sur la pointe de `main` avant de publier.
+- Bascule fermée ; pas de critère 10 ni de clé (KB2).
+- Coexistence avec le pipeline Claude Code du propriétaire (C17.28.3) : il peut publier sur `main` pendant le lot ; rebase sur la pointe avant de publier.
