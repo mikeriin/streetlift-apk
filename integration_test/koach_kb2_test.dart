@@ -232,9 +232,11 @@ void main() {
     final monday = store.koachLundi!.addDays(7 * (wk - 1));
     final now0 = KalisClock.now();
     final offset =
-        DateTime(monday.year, monday.month, monday.day)
-            .difference(DateTime(now0.year, now0.month, now0.day))
-            .inHours ~/
+        DateTime(
+          monday.year,
+          monday.month,
+          monday.day,
+        ).difference(DateTime(now0.year, now0.month, now0.day)).inHours ~/
         24;
     KalisClock.setOffsetDays(offset);
     releve['horloge'] = KalisClock.now().toIso8601String();
@@ -398,10 +400,7 @@ void main() {
     expect(releve['installation'], '2026-10-16');
     expect(releve['prevue'] as int, greaterThanOrEqualTo(15));
     // S1 affichée la semaine du 19/10 (S15 interne).
-    expect(
-      releve['libelle'],
-      'S${(releve['prevue'] as int) - 14}',
-    );
+    expect(releve['libelle'], 'S${(releve['prevue'] as int) - 14}');
     expect(releve['attente_affichee'], isTrue);
     if (releve['pendant'] == true) {
       expect(releve['pendant_actif_ecrit'], isFalse);
