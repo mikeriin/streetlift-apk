@@ -848,8 +848,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
       for (final (i, cause) in dayTypeChanges(
         plan.split?.reasons ?? const <kc.Reason>[],
       ))
-        if (plan.days.where((d) => d.dayIndex == i).firstOrNull
-            case final day?)
+        if (plan.days.where((d) => d.dayIndex == i).firstOrNull case final day?)
           dayTypeChangeText(
             weekdayLabel(day.weekday),
             dayTypeLabel(day.type),
