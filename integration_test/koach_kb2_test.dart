@@ -5,13 +5,14 @@
 //     --target=integration_test/koach_kb2_test.dart \
 //     --dart-define=M6B_PART=a --dart-define=KALIS_DEV=true -d emulator-5554
 // a = thème sombre, rouge Kalis ; b = thème clair, violet.
-// Session personnelle, horloge de l'application au lundi 19/10/2026 (S15
-// interne = S1 affichée) : sauvegarde synthétique de la forme de celle du
+// Session personnelle : sauvegarde synthétique de la forme de celle du
 // propriétaire (programme importé PR2 au départ affiché S15, ancien
-// journal de 34 séances, environ 670 séries ; jamais l'export réel,
+// journal de 34 séances, environ 790 séries ; jamais l’export réel,
 // C17.33.2), laissée par dev7.2.0 (installation notée le 16/10, Koach pas
-// actif). Lancement de dev7.2.1 : prise de main en arrière-plan ; J1
-// ouvert tout de suite → écran d'attente, puis séance servie par Koach ;
+// actif). Lancement de dev7.2.1, horloge de l'application placée au lundi
+// de la semaine de prise de main (S15 = S1 affichée la semaine du 19/10) ;
+// J1 ouvert tout de suite → écran d'attente pendant la prise de main,
+// puis séance servie par Koach ;
 // temps de la prise de main ; journal identique ; squat d'endurance à
 // 70 kg (charge fixe C15) servi par Koach le samedi ; arrêt d'urgence puis
 // réactivation ; inspecteur (critère 10 affiché).
@@ -147,13 +148,7 @@ void main() {
 
   testWidgets('KB2 $_part ($theme, $accent) : prise de main immédiate de '
       'Koach 1.0.5 sur le programme PR2 (S1 affichée)', (tester) async {
-    // Horloge de l'application : lundi 19/10/2026 (S15 interne).
-    final real = DateTime.now();
-    final today = DateTime(real.year, real.month, real.day);
-    final offset = DateTime(2026, 10, 19).difference(today).inHours ~/ 24;
-    KalisClock.setOffsetDays(offset);
-    releve['horloge'] = KalisClock.now().toIso8601String();
-
+    KalisClock.setOffsetDays(0);
     final raw = await SharedPreferences.getInstance();
     await raw.clear();
     final seed = AppStore();
@@ -210,14 +205,8 @@ void main() {
       'origin': 'migration',
     };
     releve['import'] = await seed.importAll(jsonEncode(b));
-    seed.saveAthleteProfile(
-      ProfileDraft.of(
-        sampleAthleteProfile(
-          on: civilOf(KalisClock.now()),
-          guidance: kc.GuidanceMode.assisted,
-        ),
-      )..consent = 'refused',
-    );
+    // (Profil d'athlète enregistré après le lancement, une fois l'horloge
+    // de l'application placée : sans lui, la prise de main attend.)
     await seed.flush();
     // État laissé par dev7.2.0 : installation notée le 16/10, Koach pas
     // actif (aucune section `koachEngine`).
@@ -227,19 +216,53 @@ void main() {
     );
     seed.dispose();
 
-    // Lancement de dev7.2.1 : la prise de main part en arrière-plan.
-    final sw = Stopwatch()..start();
+    // Lancement de dev7.2.1 (horloge réelle : le lancement remet à zéro le
+    // décalage de l'horloge de la session personnelle).
     tester.platformDispatcher.accessibilityFeaturesTestValue =
         const FakeAccessibilityFeatures();
     await tester.pumpWidget(RepaintBoundary(key: _root, child: kalisApp()));
     await opened(tester);
     releve['ouverture'] = store.koachEngine.openedOn;
     releve['installation'] = store.koachEngine.installedOn;
-    releve['prevue'] = store.koachTakeoverPlanned();
-    releve['libelle'] = store.program.weekLabel(15);
+    // Semaine de prise de main prévue (S15 = S1 affichée jusqu'au 25/10 ;
+    // ensuite la semaine du jour), horloge placée à son lundi.
+    final wk = store.koachTakeoverPlanned() ?? 15;
+    releve['prevue'] = wk;
+    releve['libelle'] = store.program.weekLabel(wk);
+    final monday = store.koachLundi!.addDays(7 * (wk - 1));
+    final now0 = KalisClock.now();
+    final offset =
+        DateTime(
+          monday.year,
+          monday.month,
+          monday.day,
+        ).difference(DateTime(now0.year, now0.month, now0.day)).inHours ~/
+        24;
+    KalisClock.setOffsetDays(offset);
+    releve['horloge'] = KalisClock.now().toIso8601String();
+    store.saveAthleteProfile(
+      ProfileDraft.of(
+        sampleAthleteProfile(
+          on: civilOf(KalisClock.now()),
+          guidance: kc.GuidanceMode.assisted,
+        ),
+      )..consent = 'refused',
+    );
+    await wait(tester, 600);
+
+    // J1 ouvert tout de suite : écran d'attente pendant la prise de main,
+    // puis séance de Koach.
+    final w15 = store.program.week(wk);
+    final j1 = w15.day(1)!;
+    final sw = Stopwatch()..start();
+    unawaited(openProgramDay(appNavigator.currentState!, w15, j1));
+    await wait(tester, 900);
+    final dialog = find.byKey(const ValueKey('koach-takeover'));
+    releve['attente_affichee'] = dialog.evaluate().isNotEmpty;
+    if (dialog.evaluate().isNotEmpty) await shot('1_attente');
     // Ce qu'un arrêt brutal laisserait pendant la prise de main : aucun
-    // état de Koach écrit, journal identique.
-    // (Relevé seulement si la prise de main n'est pas déjà finie.)
+    // état de Koach écrit, journal identique (relevé seulement si la prise
+    // de main n'est pas déjà finie).
     releve['pendant'] = store.koachEngine.snap == null;
     await store.flush();
     final cut = raw.getString('kalis_state_v3') ?? '';
@@ -257,31 +280,22 @@ void main() {
                   as Map<String, dynamic>)['logs']),
             ) ==
             logsBefore;
-
-    // J1 ouvert tout de suite : écran d'attente, puis séance de Koach.
-    final w15 = store.program.week(15);
-    final j1 = w15.day(1)!;
-    unawaited(openProgramDay(appNavigator.currentState!, w15, j1));
-    await wait(tester, 900);
-    final dialog = find.byKey(const ValueKey('koach-takeover'));
-    releve['attente_affichee'] = dialog.evaluate().isNotEmpty;
-    if (dialog.evaluate().isNotEmpty) await shot('1_attente');
     for (var i = 0; i < 1500 && dialog.evaluate().isNotEmpty; i++) {
       await tester.pump(const Duration(milliseconds: 100));
       final skip = find.byKey(const ValueKey('koach-takeover-skip'));
       if (skip.evaluate().isNotEmpty) releve['attente_trop_longue'] = true;
     }
-    releve['prise_de_main_ms_ecran'] = sw.elapsedMilliseconds;
+    releve['attente_ms'] = sw.elapsedMilliseconds;
     releve['koach_actif'] = store.koachEngine.snap != null;
     releve['depuis'] = store.koachEngine.fromWeek;
     releve['active_le'] = store.koachEngine.activatedOn;
     releve['evenements'] = store.koachEngine.journal.length;
     releve['temps'] = store.koachTemps.toJson();
-    final debutJ1 = await begin(tester, 15, 1);
+    final debutJ1 = await begin(tester, wk, 1);
     releve['j1_debut_ms'] = debutJ1;
-    releve['j1_servie'] = store.koachOpen(15, 1);
+    releve['j1_servie'] = store.koachOpen(wk, 1);
     releve['j1_items'] =
-        (store.sessionAdapt(15, 1)?.koach?['items'] as List?)?.length;
+        (store.sessionAdapt(wk, 1)?.koach?['items'] as List?)?.length;
     await shot('2_seance_j1');
     await home(tester);
     final logsAfter = (jsonDecode(store.exportAll()) as Map)['logs'] as Map;
@@ -297,7 +311,7 @@ void main() {
     final imp = store.importedProgram!;
     String? key;
     for (final k in imp.fixedLoad.keys) {
-      if (int.parse(k.split('|').first) == 15 && imp.fixedLoad[k]!.$2 > 0) {
+      if (int.parse(k.split('|').first) == wk && imp.fixedLoad[k]!.$2 > 0) {
         key = k;
       }
     }
@@ -308,7 +322,7 @@ void main() {
       var j = 0;
       for (final d in w15.days) {
         for (final e in d.original.exercises) {
-          if (imp.slotOf(15, d.j, e.id) == slot) j = d.j;
+          if (imp.slotOf(wk, d.j, e.id) == slot) j = d.j;
         }
       }
       releve['charge_fixe_jour'] = j;
@@ -316,18 +330,18 @@ void main() {
         final day = w15.day(j)!;
         unawaited(openProgramDay(appNavigator.currentState!, w15, day));
         await begin(tester, 15, j);
-        final a = store.sessionAdapt(15, j);
-        releve['j6_servie'] = store.koachOpen(15, j);
+        final a = store.sessionAdapt(wk, j);
+        releve['j6_servie'] = store.koachOpen(wk, j);
         if (a != null) {
           final e = store
-              .adaptDay(15, day, a)
+              .adaptDay(wk, day, a)
               .exercises
               .where((x) => x.slotId == slot)
               .firstOrNull;
           if (e != null) {
-            final log = store.exLog(15, j, e);
-            store.adaptPrefill(15, j, e, log);
-            final g = store.adaptGoal(15, j, e, 0);
+            final log = store.exLog(wk, j, e);
+            store.adaptPrefill(wk, j, e, log);
+            final g = store.adaptGoal(wk, j, e, 0);
             releve['squat_kg_servi'] = g?.kg;
             releve['squat_reps'] = '${g?.low}-${g?.high}';
           }
@@ -355,7 +369,7 @@ void main() {
     }
     releve['arret'] = store.koachEngine.stop != null;
     releve['arret_ecrit'] =
-        !store.koachServesDay(15, 5) && store.koachStoppedWeek(15);
+        !store.koachServesDay(wk, 5) && store.koachStoppedWeek(wk);
     await shot('5_arret');
     await tapKey(tester, 'koach-resume', ms: 2500);
     await store.koachRefresh();
@@ -382,16 +396,18 @@ void main() {
     tester.platformDispatcher.clearAccessibilityFeaturesTestValue();
 
     expect(releve['import'], isTrue);
-    expect(releve['ouverture'], '2026-10-19');
+    expect(releve['ouverture'], isNotNull);
     expect(releve['installation'], '2026-10-16');
-    expect(releve['prevue'], 15);
-    expect(releve['libelle'], 'S1');
+    expect(releve['prevue'] as int, greaterThanOrEqualTo(15));
+    // S1 affichée la semaine du 19/10 (S15 interne).
+    expect(releve['libelle'], 'S${(releve['prevue'] as int) - 14}');
+    expect(releve['attente_affichee'], isTrue);
     if (releve['pendant'] == true) {
       expect(releve['pendant_actif_ecrit'], isFalse);
       expect(releve['pendant_journal_identique'], isTrue);
     }
     expect(releve['koach_actif'], isTrue);
-    expect(releve['depuis'], 15);
+    expect(releve['depuis'], releve['prevue']);
     expect(releve['j1_servie'], isTrue);
     expect(releve['journal_identique'], isTrue);
     expect(releve['origine_presente'], isTrue);
