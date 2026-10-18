@@ -462,14 +462,22 @@ void main() {
         'le type des jours de poussée et dit pourquoi', () {
       clock = DateTime(2026, 10, 5, 9); // lundi
       final saved = app.saveAthleteProfile(
-        ProfileDraft.of(kb1WristProfile(civilOf(clock)))..consent = 'refused',
+        // Gêne gardée seulement avec le consentement aux données de santé.
+        ProfileDraft.of(kb1WristProfile(civilOf(clock)))..consent = 'given',
       );
       expect(saved, isNotNull);
       final c = PlanStore(app).newPlanCreation(journal: false)!;
       c.start();
+      expect(app.athlete!.profile.limitations, hasLength(1));
       final plan = c.plan;
       final changes = dayTypeChanges(plan.split?.reasons ?? const []);
-      expect(changes, isNotEmpty, reason: '${plan.split?.reasons}');
+      expect(
+        changes,
+        isNotEmpty,
+        reason:
+            '${plan.split?.reasons}\n${app.athlete!.profile.equipment}\n'
+            '${[for (final d in plan.days) d.slots.map((s) => s.exerciseId).join(' ')].join('\n')}',
+      );
       for (final (i, cause) in changes) {
         expect(i, lessThan(plan.days.length));
         expect(cause.code, 'plan.joint_limitation');

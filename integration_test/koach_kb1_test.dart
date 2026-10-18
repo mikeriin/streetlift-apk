@@ -296,10 +296,11 @@ void main() {
     // 2a. Création : jours de poussée qui changent de type (poignet).
     final monday = (DateTime.monday - real.weekday + 7) % 7;
     KalisClock.setOffsetDays(monday);
+    // (Gêne gardée seulement avec le consentement aux données de santé.)
     releve['profil'] =
         store.saveAthleteProfile(
           ProfileDraft.of(_wrist(civilOf(KalisClock.now())))
-            ..consent = 'refused',
+            ..consent = 'given',
         ) !=
         null;
     unawaited(
