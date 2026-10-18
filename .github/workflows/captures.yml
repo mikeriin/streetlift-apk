@@ -42,7 +42,8 @@ jobs:
           TZ: Europe/Paris
         run: |
           mkdir -p shots
-          dart format --output=none --set-exit-if-changed lib test integration_test > shots/format.log 2>&1 || true
+          dart format lib test integration_test > shots/format.log 2>&1 || true
+          git diff -- lib test integration_test > shots/format.patch
           flutter analyze --no-pub > shots/analyze.log 2>&1 || true
           flutter test --no-pub --timeout 60s --reporter expanded > shots/tests.log 2>&1 || true
           grep -E -B2 -A30 'EXCEPTION CAUGHT|\[E\]$|Error:' shots/tests.log | head -n 1500 > shots/echecs.log || true
