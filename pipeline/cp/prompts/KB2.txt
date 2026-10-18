@@ -1,0 +1,26 @@
+LOT KB2 — CRITÈRE 10 SUR LE JOURNAL RÉEL ET OUVERTURE DE LA BASCULE DE KOACH (dev7.2.1)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : KB1 validé (C17.31) ; export neuf du journal moteur du propriétaire fait sur dev7.2.0 (session de test : sauvegarde importée, inspecteur de Koach › « Exporter le journal moteur », avant de forcer la bascule), déposé chiffré par le pilotage sur `cp-references` (chemin dans la section KB2 de LANCEMENTS.md). Jalon : livré avant le 16/11/2026 pour garder la bascule au 23/11/2026.
+Base : pointe de `main` (dev7.2.0, 293e5689, ou suivant ; le propriétaire publie aussi depuis Claude Code sur son PC : respecte le `CLAUDE.md` de `main`). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/KB2`.
+Décisions : C7.8, C8, C11, C13.11.3, C17.17.3, C17.19, C17.26.4, C17.30, C17.31. Livraisons à lire : `LIVRAISON_KB1.md` (§ 3, § 7, § 8), `LIVRAISON_KM2c3.md`. Pour `main` : PIPELINE_GP.md comme pour la piste A (ni signature, ni identifiant Android, ni secrets ; jamais de réécriture de l'historique de `main`).
+
+OBJECTIF
+Ouvrir la bascule du programme du propriétaire vers Koach 1.0.5 si, et seulement si, Koach tient le critère 10 sur son journal réel ; sinon la laisser fermée et dire pourquoi.
+
+CONTENU
+1. **Critère 10** (CAHIER_KM.md : rejeu walk-forward du journal depuis S12, au moins 100 séries notées, erreur d'e1RM sous 3 %, couverture 88 à 92 %, biais moyen sous 2 % en valeur absolue) mesuré sur l'export avec la référence Python de Koach 1.0.5 (`etiquettes/kalis_adapt-v1.0.4`, `reference/`), qui déchiffre en session : clé dans le document privé du projet claude.ai `claude/CLE_REFERENCES_CP.md`, passée à gpg par un fichier /tmp en mode 600, jamais en ligne de commande ni en CI ; **rien de déchiffré n'est committé**, seules des statistiques agrégées vont dans la livraison (C7.8). Dire aussi : nombre de séries notées, fiabilité des notes mesurée (KM1c3), et si le journal porte un cas des limites acceptées en C17.26.4 (douleur pendant une absence courte ou voulue).
+2. **Temps de la prise de main** (LIVRAISON_KB1.md § 7 : 10 à 14 s sur l'émulateur de la CI, repère 10 s) : mesure sur le téléphone du propriétaire si l'export en porte la trace (inspecteur › Temps de calcul), sinon sur l'émulateur ; au-dessus du repère, dire ce que le propriétaire verra (un écran d'attente borné) et vérifier qu'aucune séance ni donnée n'est perdue si l'application est fermée pendant la prise de main.
+3. **Bascule** : critère 10 tenu → `kKoachBasculeAutorisee = true` (`lib/koach1_store.dart`) ; date notée à l'installation inchangée (23/11/2026 ; Koach prend la main au début du bloc qui suit, LIVRAISON_KB1.md § 3) ; version 7.2.1. Critère 10 non tenu ou export insuffisant → aucune publication sur `main`, constante à `false`, chiffres et cause dans la livraison.
+4. Rien d'autre : paquets déjà montés par KB1, code 0.x gardé (il sert jusqu'à la prise de main effective ; son retrait est un lot après le 23/11).
+
+NE PAS FAIRE
+- Aucun changement de paquet ni de moteur ; aucun changement de comportement C15 ni des lots du propriétaire ; pas de refonte d'écran.
+- Si `main` avance pendant le lot : rebase sur la pointe avant de publier (C17.28.3).
+
+TESTS
+- Bascule ouverte : à la date notée, Koach sert le bloc qui commence ; avant, rien ne change ; programme de 40 semaines intact, séances faites jamais réécrites, sauvegarde d'origine intacte (C11.2). Cible émulateur KB1 et toutes les cibles des lots précédents vertes.
+
+FIN DE LOT
+- Si tenu : dev7.2.1 sur `main`, contrôle complet `claude/ci-3d` vert, build signé réussi (push sur `main` refusé : commit prêt sur `cp-sauvegardes/KB2-candidat` et arrête-toi).
+- `LIVRAISON_KB2.md` (pipeline et projet claude.ai) : critère 10 (chiffres agrégés), temps de la prise de main, état de la bascule, « À tester » court.
+- Ligne KB2 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.2.1 prêt — bascule Koach ouverte au 23/11 » (ou « Kalis Track KB2 — critère 10 non tenu, bascule fermée ») ; arrête-toi (aucun fire_trigger).

@@ -358,3 +358,8 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Paquets : `etiquettes/kalis_plan-v0.4.2`, `etiquettes/kalis_adapt-v1.0.4` (9c81a201 ; copier `lib/`, `assets/koach/`, `pubspec.yaml` seulement).
 - Bascule fermée ; pas de critère 10 ni de clé (KB2).
 - Coexistence avec le pipeline Claude Code du propriétaire (C17.28.3) : il peut publier sur `main` pendant le lot ; rebase sur la pointe avant de publier.
+
+## KB2 — critère 10 et ouverture de la bascule, dev7.2.1 (préparé le 18/10/2026, C17.31 ; à lancer à l'accord du propriétaire, tâche « Opus 5.5, effort élevé, application »)
+
+- Lot : **KB2**, prompt `prompts/KB2.txt`. Base : pointe de `main` (dev7.2.0, 293e5689, ou suivant). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KB2`.
+- Export du journal moteur (dev7.2.0) : à déposer chiffré par le pilotage sur `cp-references` au lancement (chemin écrit ici à ce moment-là).
