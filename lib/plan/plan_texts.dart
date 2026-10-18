@@ -10,6 +10,7 @@ import 'package:kalis_plan/kalis_plan.dart' show DisciplineClass;
 
 import '../athlete_profile.dart'
     show kDisciplineLabels, kZoneLabels, weekdayName;
+import '../profile.dart' show equipmentLabel;
 import 'reason_texts_0_4.dart';
 
 /// Jour de la semaine avec majuscule (ISO : 1 = lundi).
@@ -374,4 +375,75 @@ String? loadLabel(kc.ExercisePrescription p) {
     kc.LoadBasis.bodyweight => 'poids du corps',
     _ => '$t kg',
   };
+}
+
+// ------------------------------------------------- KB1 : type du jour
+
+/// KB1 (`kalis_plan` 0.4.2, KS1c2) : causes d'un changement de type de
+/// jour. Quand aucun exercice du schéma d'un jour n'est possible (douleur,
+/// matériel, prérequis), le jour prend le type de ce qu'il porte et
+/// `Pass1Plan.split.reasons` écrit la cause juste après le `plan.day_type`
+/// de ce jour.
+const kDayTypeChangeCodes = <String>{
+  'plan.joint_limitation',
+  'plan.equipment_missing',
+  'plan.prerequisite_missing',
+};
+
+/// Changements de type de jour des raisons du gabarit [splitReasons] :
+/// (rang du jour dans `Pass1Plan.days`, cause). Les `plan.day_type` sont
+/// écrits dans l'ordre des jours du programme ; une cause rejoint le
+/// dernier jour vu. Vide pour un bloc écrit avant 0.4.2.
+List<(int, kc.Reason)> dayTypeChanges(List<kc.Reason> splitReasons) {
+  final out = <(int, kc.Reason)>[];
+  var day = -1;
+  for (final r in splitReasons) {
+    if (r.code == 'plan.day_type') {
+      day++;
+    } else if (day >= 0 && kDayTypeChangeCodes.contains(r.code)) {
+      out.add((day, r));
+    }
+  }
+  return out;
+}
+
+/// Cause d'un changement de type de jour, en une phrase (« zone à ménager :
+/// coude, gêne 6/10 »). [exerciseName] : nom d'un exercice.
+String dayTypeChangeCause(
+  kc.Reason r, {
+  required String Function(String id) exerciseName,
+}) {
+  final p = r.params;
+  switch (r.code) {
+    case 'plan.joint_limitation':
+      final d = p['discomfort'];
+      return 'zone à ménager : ${jointLabel('${p['joint'] ?? ''}')}'
+          '${d is num ? ', gêne ${d.round()}/10' : ''}';
+    case 'plan.equipment_missing':
+      final id = '${p['equipment'] ?? ''}';
+      return id.isEmpty
+          ? 'il manque du matériel'
+          : 'il manque du matériel (${equipmentLabel(id).toLowerCase()})';
+    case 'plan.prerequisite_missing':
+      final id = '${p['exerciseId'] ?? ''}';
+      return id.isEmpty
+          ? 'un prérequis manque'
+          : 'il faut d’abord maîtriser ${exerciseName(id)}';
+  }
+  return 'aucun exercice de ce type n’est possible ce jour-là';
+}
+
+/// Phrase complète d'un changement de type de jour : « Mardi devient
+/// « Jambes — force » : zone à ménager : coude, gêne 6/10. ». [day] :
+/// libellé du jour ; [type] : libellé du type retenu (null : sans type).
+String dayTypeChangeText(
+  String day,
+  String? type,
+  kc.Reason cause, {
+  required String Function(String id) exerciseName,
+}) {
+  final why = dayTypeChangeCause(cause, exerciseName: exerciseName);
+  return type == null
+      ? '$day change de type : $why.'
+      : '$day devient « $type » : $why.';
 }

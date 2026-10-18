@@ -108,6 +108,38 @@ en fin d'amplitude, R5-P20, R5-P27) :
 Les réglages communs suivent (bras tendus, plafonds de volume par groupe, compléments de fin de séance). Un jour sans
 principal est une erreur d'audit, pas un jour à remplir.
 
+**Aucun jour sans son principal (0.4.2, lot KS1c2).** Les briques ci-dessus supposaient un repère : sans maximum
+déclaré de dips, de pompes ou de tractions, le jour « poussée E » (ou « tirage E ») ne recevait aucun exercice de son
+schéma (constat de KS1A : préparation, tronc et mobilité seulement). Après les briques, chaque jour typé est contrôlé
+(`_ensurePrincipal`) : un emplacement principal d'un de ses schémas, et chacun de ses schémas porté par un travail
+principal ou secondaire (deux des trois pour un corps entier). Un jour qui tient la règle n'est pas touché par ce contrôle (les
+34 profils du banc gardent leur squelette de 0.4.1 à l'identique ; sur un profil incomplet, le repli consomme du
+plafond de volume par groupe et les plafonds de la semaine peuvent retirer une série ailleurs). Sinon, dans l'ordre :
+
+1. chaque schéma non porté reçoit son **principal de repli**, le travail que le jour aurait reçu avec un repère,
+   dosé sans repère par les règles existantes de la passe 2 — tirage : traction (prise neutre et note `pull_return`
+   quand le coude est à ménager), sinon traction assistée, tirage horizontal au poids du corps, puis tirage
+   horizontal chargé ; poussée : dips, sinon pompes (variantes dures pour un jour de force, réglées sur le maximum de
+   pompes quand il est connu) ; jambes : unilatéral ou poids du corps, dosage de l'assistance de jambes ; force :
+   4 à 6 répétitions à 2 en réserve (`_repsStrength`), endurance : 5 à 8 à 3 en réserve (`_repsVolume`), double
+   progression ; trois séries en mode prudent, quatre sinon (ACSM 2009 : une à trois séries au début) ; en semaine 1
+   du premier bloc, une première série de mesure est proposée (note `reps_calibrate`) ; le repli est gardé
+   (`keep`) : les plafonds ne le retirent pas ;
+2. sans principal, le premier travail porteur d'un de ses schémas devient le principal : un secondaire (séries de
+   répétitions, séries chargées, polyarticulaire d'assistance : pompe lestée, jambes d'un jour sans squat), sinon un
+   accessoire polyarticulaire (tirage horizontal) ; il est gardé et ne reçoit pas de note de rôle d'assistance ;
+3. sinon un principal de repli s'ajoute.
+
+Le principal ainsi servi ouvre la séance, après la préparation. Si aucun exercice du schéma n'est possible (douleur,
+matériel), le jour prend le type de ce qu'il porte (`coachDerivedType`, lu avant les compléments de fin de séance) et
+la raison suit son type dans les raisons du gabarit, d'après le refus du mouvement de base du schéma non tenu
+(`Athlete.rejection`) : `plan.joint_limitation` (la limitation la plus gênante parmi celles qui sollicitent ce
+mouvement), `plan.equipment_missing` (le premier matériel absent ce jour-là) ou `plan.prerequisite_missing`. Le
+chemin typé seul applique la règle ; le gabarit composite `mix_q` et les chemins d'avant 0.4.0 sont mesurés au banc.
+Le débutant ne passe pas par le chemin typé (`mixedStreetShares` : niveau 1 et plus) : son gabarit `fb_beginner`
+est mesuré par la grille du banc. Le créneau n'est pas rempli par de la technique ou de la mobilité (option (c) de
+C17.15, lot ultérieur).
+
 ## 6. Type du jour
 
 `PlanDay.type` : schémas (`pull`, `push`, `legs`, `full`, `skill`, `run`, `recovery`), qualité (`force`, `volume`,

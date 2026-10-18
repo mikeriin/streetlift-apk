@@ -248,7 +248,13 @@ jobs:
             (cd "$dir" && dart pub get) >> "$log" 2>&1 || ok=0
             (cd "$dir" && dart format --output=none --set-exit-if-changed .) >> "$log" 2>&1 || { echo "formatage : échec" >> "$log"; ok=0; }
             (cd "$dir" && dart analyze --fatal-infos) >> "$log" 2>&1 || { echo "analyse : échec" >> "$log"; ok=0; }
-            (cd "$dir" && dart test --reporter expanded) >> "$log" 2>&1 || { echo "tests : échec" >> "$log"; ok=0; }
+            # KB1 : `kalis_adapt` n'est copié qu'avec `lib/`, `assets/koach/` et
+            # `pubspec.yaml` (C17.19.3) ; ses tests tournent sur `moteurs`.
+            if [ -d "${dir}test" ]; then
+              (cd "$dir" && dart test --reporter expanded) >> "$log" 2>&1 || { echo "tests : échec" >> "$log"; ok=0; }
+            else
+              echo "tests : sans objet (copie sans test/, testée sur moteurs)" >> "$log"
+            fi
             if [ -f "${dir}bin/${name}_cli.dart" ]; then
               (cd "$dir" && dart run "bin/${name}_cli.dart" --rapport "$root/out-packages/$name") >> "$log" 2>&1 || { echo "rapport : échec" >> "$log"; ok=0; }
             fi
@@ -325,8 +331,8 @@ jobs:
     # CI1c : 45 min (cibles CI1c et CI1, deux parties chacune) ; CI1e :
     # 55 min (cible CI1e en plus) ; CI1f : 70 min (cible CI1f en plus) ;
     # CI1g : 80 min (cible CI1g en plus) ; CIF : 95 min ; BV11 : 110 min
-    # (cible BV11 en plus).
-    timeout-minutes: 110
+    # (cible BV11 en plus) ; KB1 : 125 min (cible KB1 en plus).
+    timeout-minutes: 125
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     defaults:

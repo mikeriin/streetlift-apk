@@ -297,7 +297,13 @@ jobs:
             (cd "$dir" && dart pub get) >> "$log" 2>&1 || ok=0
             (cd "$dir" && dart format --output=none --set-exit-if-changed .) >> "$log" 2>&1 || { echo "formatage : échec" >> "$log"; ok=0; }
             (cd "$dir" && dart analyze --fatal-infos) >> "$log" 2>&1 || { echo "analyse : échec" >> "$log"; ok=0; }
-            (cd "$dir" && dart test --reporter expanded) >> "$log" 2>&1 || { echo "tests : échec" >> "$log"; ok=0; }
+            # KB1 : `kalis_adapt` n'est copié qu'avec `lib/`, `assets/koach/` et
+            # `pubspec.yaml` (C17.19.3) ; ses tests tournent sur `moteurs`.
+            if [ -d "${dir}test" ]; then
+              (cd "$dir" && dart test --reporter expanded) >> "$log" 2>&1 || { echo "tests : échec" >> "$log"; ok=0; }
+            else
+              echo "tests : sans objet (copie sans test/, testée sur moteurs)" >> "$log"
+            fi
             if [ "$ok" = 1 ]; then echo "$name=success" >> "$bilan"; else echo "$name=failure" >> "$bilan"; status=1; fi
             tail -n 30 "$log"
           done

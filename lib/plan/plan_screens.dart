@@ -830,6 +830,10 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
   /// construite en tirage, poussée, jambes, deux fois, pour tes 6
   /// séances ») et raisons de structure du bloc (objectif sans séance,
   /// jalon) ; null pour un bloc écrit avant 0.4.
+  ///
+  /// KB1 (`kalis_plan` 0.4.2, KS1c2) : un jour qui change de type faute
+  /// d'exercice possible de son schéma dit pourquoi (douleur, matériel,
+  /// prérequis), une ligne par jour.
   Widget? _structureNotice(BuildContext context, kc.Pass1Plan plan) {
     final lines = <String>[
       for (final r in plan.split?.reasons ?? const <kc.Reason>[])
@@ -838,7 +842,22 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
         if (r.code == 'plan.goal_uncovered' || r.code == 'plan.milestone')
           planReason(r),
     ];
-    if (lines.isEmpty) return null;
+    final changes = <(int, String)>[
+      for (final (i, cause) in dayTypeChanges(
+        plan.split?.reasons ?? const <kc.Reason>[],
+      ))
+        if (i < plan.days.length)
+          (
+            plan.days[i].dayIndex,
+            dayTypeChangeText(
+              weekdayLabel(plan.days[i].weekday),
+              dayTypeLabel(plan.days[i].type),
+              cause,
+              exerciseName: planName,
+            ),
+          ),
+    ];
+    if (lines.isEmpty && changes.isEmpty) return null;
     final k = KTokens.of(context);
     return KCard(
       key: const ValueKey('plan-structure'),
@@ -854,6 +873,28 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
             Padding(
               padding: const EdgeInsets.only(top: KSpacing.s4),
               child: Text(l, style: KType.corps.copyWith(color: k.texte)),
+            ),
+          for (final (day, text) in changes)
+            Padding(
+              key: ValueKey('plan-structure-change-$day'),
+              padding: const EdgeInsets.only(top: KSpacing.s8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.swap_horiz_rounded,
+                    size: KSize.chevron,
+                    color: k.texte2,
+                  ),
+                  const SizedBox(width: KSpacing.s8),
+                  Expanded(
+                    child: Text(
+                      text,
+                      style: KType.corps.copyWith(color: k.texte2),
+                    ),
+                  ),
+                ],
+              ),
             ),
         ],
       ),

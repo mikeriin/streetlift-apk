@@ -120,18 +120,18 @@ void main() {
   });
 
   group('paquets et textes', () {
-    test('kalis_core 0.4.4, kalis_plan 0.4.1, kalis_adapt 1.0.2 inchangé ; '
+    test('kalis_core 0.4.4, kalis_plan 0.4.2 (KB1), kalis_adapt 1.0.4 (KB1) ; '
         'parcours v3 recopié à l’octet', () {
       expect(kc.kalisCoreVersion, '0.4.4');
-      expect(kp.kalisPlanVersion, '0.4.1');
-      expect(ka.kalisAdaptVersion, '1.0.2');
+      expect(kp.kalisPlanVersion, '0.4.2');
+      expect(ka.kalisAdaptVersion, '1.0.4');
       expect(kc.reasonRegistry, hasLength(144));
       expect(
         File('assets/catalog/parcours_v3.json').readAsBytesSync(),
         File('packages/kalis_core/data/parcours_v3.json').readAsBytesSync(),
       );
       final pub = File('pubspec.yaml').readAsStringSync();
-      expect(pub, contains('version: 7.1.9+'));
+      expect(pub, contains('version: 7.2.0+'));
     });
 
     test('six codes de structure : phrases de l’application, aucun code '

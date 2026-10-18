@@ -14,7 +14,7 @@ import '../version.dart';
 import 'athlete.dart';
 import 'model.dart';
 import 'season.dart';
-import 'skeleton.dart' show coachPushLadder, coachStepHold;
+import 'skeleton.dart' show coachPrincipalNote, coachPushLadder, coachStepHold;
 import 'tables.dart';
 
 /// Codes des notes de coach (`plan.coach_note`, paramètre `note`).
@@ -307,6 +307,11 @@ abstract final class CoachNotes {
   /// (lot KS1 ; `value` : charge en kg).
   static const String fixedLoad = 'fixed_load';
 
+  /// Mouvement sans repère porté comme principal d'un jour typé (lot
+  /// KS1c2) : une première série de mesure à la réserve écrite en semaine
+  /// 1 du premier bloc (`value` : réserve).
+  static const String repsCalibrate = 'reps_calibrate';
+
   /// Série d'entrée de reprise, écrite sur la ligne (`value` : réserve).
   static const String entrySet = 'entry_set';
 
@@ -436,6 +441,7 @@ abstract final class CoachNotes {
     smallLoad,
     minimumLoad,
     fixedLoad,
+    repsCalibrate,
     pushLadder,
     dressRehearsal,
     primer,
@@ -2743,6 +2749,12 @@ final class Prescriber {
       if (s.note == 'pull_return') {
         x.reasons.add(_note(CoachNotes.pullReturn, 2.5));
       }
+      if (s.note == 'reps_calibrate' &&
+          (a.reps[s.referenceId ?? s.exerciseId] ?? 0) <= 0 &&
+          blockIndex == 0 &&
+          week == 0) {
+        x.reasons.add(_note(CoachNotes.repsCalibrate, x.rir ?? 3));
+      }
       return x;
     }
     // R4-G4 : volume sous-maximal à 50 à 70 % du maximum, 3 répétitions en
@@ -3104,6 +3116,12 @@ final class Prescriber {
       ..repsHigh = high + _shift(ws)
       ..rir = _rirOf(e, 2, ws, week)
       ..reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
+    if (s.note == 'reps_calibrate' &&
+        base <= 0 &&
+        blockIndex == 0 &&
+        week == 0) {
+      x.reasons.add(_note(CoachNotes.repsCalibrate, x.rir ?? 2));
+    }
     return x;
   }
 
@@ -3917,6 +3935,12 @@ final class Prescriber {
 
   /// Note de rôle d'un exercice d'assistance (pourquoi il est là).
   void _roleNote(_Draft x) {
+    // (Principal servi par la règle KS1c2 : pas de note de rôle
+    // d'assistance.)
+    final own = x.slot?.note;
+    if (own == coachPrincipalNote || own == 'reps_calibrate') {
+      return;
+    }
     final e = x.e;
     String? note;
     if (e.id.contains('wrist-curl')) {
