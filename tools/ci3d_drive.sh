@@ -52,6 +52,30 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
+# KB1 (dev7.2.0, Koach 1.0.5 et `kalis_plan` 0.4.2, bascule fermée) :
+# session personnelle (programme de 40 semaines, journal S1 à S14 au format
+# de dev7.1.9) : journal identique, Koach pas actif, inspecteur et export
+# du journal moteur (1.0.5) ; session de test : carte « Structure de la
+# semaine » (jours de poussée qui changent de type, poignet gêné), bascule
+# forcée par Koach 1.0.5, inspecteur et export ; session personnelle
+# intacte. Build de développement, deux parties : a = sombre, rouge ; b =
+# clair, violet.
+code_kb1=0
+for part in a b; do
+  cible koach_kb1_test "$part" dev
+  c=$?
+  if [ "$c" -ne 0 ] && [ ! -f "$out/kb1_releve_$part.json" ]; then
+    echo "KB1 $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-koach_kb1_test-$part.log" "$out/drive-kb1-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible koach_kb1_test "$part" dev
+    c=$?
+  fi
+  [ "$c" -ne 0 ] && code_kb1=$c
+  tail -n 30 "$out/drive-koach_kb1_test-$part.log"
+done
 # KS1A (dev7.1.0, types de jour de `kalis_core` 0.4.4 et `kalis_plan`
 # 0.4.1) : session personnelle (programme de 40 semaines, journal S1 à S14
 # au format de dev7.0.0) : journal identique, Koach pas actif, types de jour
@@ -486,7 +510,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_ks1a=$code_ks1a code_km3=$code_km3 code_bv11=$code_bv11 code_cif=$code_cif code_ci1g=$code_ci1g code_ci1f=$code_ci1f code_ci1e=$code_ci1e code_ci1c=$code_ci1c code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_kb1=$code_kb1 code_ks1a=$code_ks1a code_km3=$code_km3 code_bv11=$code_bv11 code_cif=$code_cif code_ci1g=$code_ci1g code_ci1f=$code_ci1f code_ci1e=$code_ci1e code_ci1c=$code_ci1c code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_ks1a" -eq 0 ] && [ "$code_km3" -eq 0 ] && [ "$code_bv11" -eq 0 ] && [ "$code_cif" -eq 0 ] && [ "$code_ci1g" -eq 0 ] && [ "$code_ci1f" -eq 0 ] && [ "$code_ci1e" -eq 0 ] && [ "$code_ci1c" -eq 0 ] && [ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_kb1" -eq 0 ] && [ "$code_ks1a" -eq 0 ] && [ "$code_km3" -eq 0 ] && [ "$code_bv11" -eq 0 ] && [ "$code_cif" -eq 0 ] && [ "$code_ci1g" -eq 0 ] && [ "$code_ci1f" -eq 0 ] && [ "$code_ci1e" -eq 0 ] && [ "$code_ci1c" -eq 0 ] && [ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

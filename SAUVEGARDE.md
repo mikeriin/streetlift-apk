@@ -10,5 +10,8 @@ Base : main e5d3829 (dev7.1.9). Travail dans un worktree de main (branche locale
 - CI paquets : `dart test` sauté sans test/ (ci-3d.yml, ci-ui.yml).
 - Inventaire du code 0.x : rien de mort tant que la bascule est fermée (sous-agent) ; rien retiré dans lib/.
 
+- test/kb1_koach105_test.dart, cible émulateur integration_test/koach_kb1_test.dart (ci3d_drive.sh, délai 125 min), formatage fait (claude/fmt-kb1 bc86738).
+- Poussé sur claude/ci-ui-kb1-rapide et claude/ci-3d (commit bc86738).
+
 ## Reste
-- test/kb1_*_test.dart, cible émulateur integration_test/koach_kb1_test.dart + ci3d_drive.sh, formatage (claude/fmt-kb1), CI rapide puis ci-3d, main, build, livraison.
+- Lire les résultats CI, corriger ; rebase sur main ; push main ; build signé ; livraison ; ETAT ; page de suivi ; notification.
