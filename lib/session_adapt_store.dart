@@ -261,7 +261,13 @@ extension SessionAdaptStore on AppStore {
     if (week < 1 || week > program.weeks.length) return null;
     // KM3 : semaine servie par Koach 1.0 : bloc de référence écrit (sans
     // les propositions de 0.x, D2).
-    if (koachServesWeek(week)) return _koachPlace(week, j);
+    // KB2 : sauf une séance commencée avant la prise de main (moteur
+    // d'avant), gardée telle qu'elle a été servie.
+    if (koachServesWeek(week) &&
+        !(koachStartedBefore(week, j) &&
+            logs[sessionKey(week, j)]?.adapt != null)) {
+      return _koachPlace(week, j);
+    }
     final plan = planProgram;
     if (plan != null && week >= plan.firstWeek) {
       final loc = plan.locate(week);

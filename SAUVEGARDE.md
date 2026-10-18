@@ -6,5 +6,5 @@ Fait :
 - Tests : `test/kb2_prise_de_main_test.dart`, `test/flutter_test_config.dart` (bascule fermée par défaut pour les tests d'avant), tests de version 7.2.1, KM3/KB1 mis à jour ; cible `integration_test/koach_kb2_test.dart` ajoutée à `tools/ci3d_drive.sh` ; cibles d'avant jouées bascule fermée.
 - Version 7.2.1+141.
 
-En cours : formatage distant (claude/fmt-kb2), puis contrôle complet claude/ci-3d.
+En cours : contrôle complet claude/ci-3d sur b8003f5 (lancé 20:04 UTC) ; contrôles rapides (claude/shots-kb2, workflow modifié sur cette branche seulement) verts : analyse, 1112 tests, Python. Brouillon de livraison : pipeline/cp/livraisons/LIVRAISON_KB2.md (non poussé) — copie dans SAUVEGARDE_LIVRAISON.md.
 Reste : CI verte, SUIVI_PROJET.md, publication main, build signé, livraison, ETAT_CP, page de suivi, notification.

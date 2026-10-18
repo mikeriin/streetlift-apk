@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : KB1 — Koach 1.0.5 et `kalis_plan` 0.4.2, bascule fermée (pipeline CP), version dev7.2.0 ; précédent : dev7.1.9 (PR1 à PR10 du propriétaire)**  
-**Date : 18 octobre 2026, Europe/Paris — version : 7.2.0+140, affichée « dev7.2.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : KB2 — bascule ouverte par dérogation, prise de main immédiate de Koach 1.0.5 (pipeline CP), version dev7.2.1 ; précédent : dev7.2.0 (KB1)**  
+**Date : 18 octobre 2026, Europe/Paris — version : 7.2.1+141, affichée « dev7.2.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le pilotage (C8).**
+
+## KB2 — Prise de main immédiate de Koach 1.0.5 (version dev7.2.1, pipeline CP, DECISIONS_CP.md C17.32, C17.33, C17.34)
+
+- Bascule ouverte (`kKoachBasculeAutorisee = true`) par dérogation du propriétaire : critère 10 non tenu au 18/10 (erreur 5,9 %, couverture 86,9 %, rejeu du pilotage, agrégats `pipeline/cp/donnees/rejeu_journal_agregats_kb2.json`) ; re-mesure vers le 09/11/2026.
+- Prise de main la semaine de la première séance non faite du programme en cours (programme importé comme créé) : jamais avant le départ affiché (PR2), jamais une semaine passée, jamais une séance faite ; plus de date du 23/11 ni d'attente d'un début de bloc. Date d'ouverture notée au premier lancement (`openedOn`).
+- Séance ouverte pendant la prise de main : écran d'attente (« Koach prend la main sur ton programme »), borné à 45 s puis « Ouvrir la séance ». Inspecteur : bascule et critère 10. Paquets inchangés. Tests : `test/kb2_prise_de_main_test.dart` ; cible émulateur `integration_test/koach_kb2_test.dart`. Livraison : `pipeline/cp/livraisons/LIVRAISON_KB2.md`.
 
 ## KB1 — Koach 1.0.5 et `kalis_plan` 0.4.2 dans l'application (version dev7.2.0, pipeline CP, DECISIONS_CP.md C17.29, C17.30)
 

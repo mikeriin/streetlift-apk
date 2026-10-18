@@ -331,9 +331,22 @@ extension KoachStore on AppStore {
         week >= e.fromWeek!;
   }
 
+  /// KB2 : séance S[week]·J[j] commencée avant la prise de main (séries
+  /// validées, servie par le moteur d'avant ou telle qu'écrite) : gardée
+  /// telle quelle jusqu'à sa fin (ni réécrite, ni modulée) ; Koach la
+  /// verse au journal une fois faite.
+  bool koachStartedBefore(int week, int j) {
+    final log = logs[sessionKey(week, j)];
+    if (log == null || log.done) return false;
+    if (log.adapt?['koach'] != null) return false;
+    return log.ex.values.any((x) => x.sets.any((s) => s.done));
+  }
+
   /// Koach sert la journée S[week]·J[j] du programme.
   bool koachServesDay(int week, int j) =>
-      koachServesWeek(week) && adaptPlaceOf(week, j) != null;
+      koachServesWeek(week) &&
+      !koachStartedBefore(week, j) &&
+      adaptPlaceOf(week, j) != null;
 
   // ------------------------------------------------------- ressources
 
@@ -2387,6 +2400,7 @@ extension KoachStore on AppStore {
     for (var i = 0; i < w.days.length; i++) {
       final d = w.days[i];
       if (logs[sessionKey(week, d.j)]?.done ?? false) continue;
+      if (koachStartedBefore(week, d.j)) continue;
       final out = <Exercise>[];
       var changed = false;
       for (final e in d.exercises) {

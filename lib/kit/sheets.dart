@@ -819,13 +819,16 @@ class KConfirm extends StatelessWidget {
 
 /// PR5 : fenêtre libre du kit (popup centrée, fond `surface`, coins de
 /// carte), fermée d'un appui à côté ; [builder] reçoit le contexte de la
-/// fenêtre (pour `Navigator.pop`).
+/// fenêtre (pour `Navigator.pop`). KB2 : [dismissible] faux = ni appui à
+/// côté, ni retour système (attente bornée de la prise de main de Koach).
 Future<T?> showKDialog<T>(
   BuildContext context, {
   required WidgetBuilder builder,
   Key? dialogKey,
+  bool dismissible = true,
 }) => showDialog<T>(
   context: context,
+  barrierDismissible: dismissible,
   builder: (ctx) {
     final k = KTokens.of(ctx);
     return Dialog(
@@ -836,7 +839,9 @@ Future<T?> showKDialog<T>(
         horizontal: KSpacing.s16,
         vertical: KSpacing.s24,
       ),
-      child: builder(ctx),
+      child: dismissible
+          ? builder(ctx)
+          : PopScope(canPop: false, child: builder(ctx)),
     );
   },
 );

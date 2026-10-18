@@ -25,8 +25,7 @@ import 'resume_banner.dart';
 import 'stats_mannequin.dart';
 import 'guided_tests.dart';
 import 'profile_completion.dart';
-import 'koach1/koach1_widgets.dart'
-    show KoachRecapCard, awaitKoachTakeover;
+import 'koach1/koach1_widgets.dart' show KoachRecapCard, awaitKoachTakeover;
 import 'store.dart';
 import 'store_widget.dart';
 import 'kit/kit.dart';
