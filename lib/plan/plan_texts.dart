@@ -407,8 +407,28 @@ List<(int, kc.Reason)> dayTypeChanges(List<kc.Reason> splitReasons) {
   return out;
 }
 
-/// Cause d'un changement de type de jour, en une phrase (« zone à ménager :
-/// coude, gêne 6/10 »). [exerciseName] : nom d'un exercice.
+/// Articulation avec son possessif (« ton poignet », « ta hanche ») ; une
+/// zone sans articulation : « la zone « … » ».
+String _myJoint(String code) {
+  const joints = <String, String>{
+    'epaule': 'ton épaule',
+    'coude': 'ton coude',
+    'poignet': 'ton poignet',
+    'lombaires': 'ton bas du dos',
+    'genou': 'ton genou',
+    'hanche': 'ta hanche',
+    'cheville': 'ta cheville',
+  };
+  return joints[code] ?? 'la zone « ${jointLabel(code)} »';
+}
+
+/// Cause d'un changement de type de jour, en complément de la phrase
+/// (« pour ménager ton poignet (gêne 6/10) », « faute de matériel (barres
+/// parallèles) »). [exerciseName] : nom d'un exercice.
+///
+/// `plan.prerequisite_missing` est aussi la cause écrite par `kalis_plan`
+/// 0.4.2 pour un mouvement de base écarté par un autre motif (exclu, niveau,
+/// technique) : texte neutre, sans « il faut d'abord maîtriser ».
 String dayTypeChangeCause(
   kc.Reason r, {
   required String Function(String id) exerciseName,
@@ -417,24 +437,25 @@ String dayTypeChangeCause(
   switch (r.code) {
     case 'plan.joint_limitation':
       final d = p['discomfort'];
-      return 'zone à ménager : ${jointLabel('${p['joint'] ?? ''}')}'
-          '${d is num ? ', gêne ${d.round()}/10' : ''}';
+      return 'pour ménager ${_myJoint('${p['joint'] ?? ''}')}'
+          '${d is num ? ' (gêne ${d.round()}/10)' : ''}';
     case 'plan.equipment_missing':
       final id = '${p['equipment'] ?? ''}';
       return id.isEmpty
-          ? 'il manque du matériel'
-          : 'il manque du matériel (${equipmentLabel(id).toLowerCase()})';
+          ? 'faute de matériel'
+          : 'faute de matériel (${equipmentLabel(id).toLowerCase()})';
     case 'plan.prerequisite_missing':
       final id = '${p['exerciseId'] ?? ''}';
       return id.isEmpty
-          ? 'un prérequis manque'
-          : 'il faut d’abord maîtriser ${exerciseName(id)}';
+          ? 'faute d’exercice possible pour l’instant'
+          : 'faute d’exercice possible pour l’instant '
+                '(${exerciseName(id)} écarté)';
   }
-  return 'aucun exercice de ce type n’est possible ce jour-là';
+  return 'faute d’exercice possible ce jour-là';
 }
 
 /// Phrase complète d'un changement de type de jour : « Mardi devient
-/// « Jambes — force » : zone à ménager : coude, gêne 6/10. ». [day] :
+/// « Jambes — force » pour ménager ton poignet (gêne 6/10). ». [day] :
 /// libellé du jour ; [type] : libellé du type retenu (null : sans type).
 String dayTypeChangeText(
   String day,
@@ -444,6 +465,6 @@ String dayTypeChangeText(
 }) {
   final why = dayTypeChangeCause(cause, exerciseName: exerciseName);
   return type == null
-      ? '$day change de type : $why.'
-      : '$day devient « $type » : $why.';
+      ? '$day change de type $why.'
+      : '$day devient « $type » $why.';
 }

@@ -442,17 +442,16 @@ void main() {
           c[0].$2,
           exerciseName: name,
         ),
-        'Mardi devient « Jambes — force » : zone à ménager : poignet, gêne '
-        '6/10.',
+        'Mardi devient « Jambes — force » pour ménager ton poignet (gêne '
+        '6/10).',
       );
       expect(
         dayTypeChangeText('Mercredi', null, c[1].$2, exerciseName: name),
-        'Mercredi change de type : il manque du matériel (barres '
-        'parallèles).',
+        'Mercredi change de type faute de matériel (barres parallèles).',
       );
       expect(
         dayTypeChangeCause(c[2].$2, exerciseName: name),
-        'il faut d’abord maîtriser Dips',
+        'faute d’exercice possible pour l’instant (Dips écarté)',
       );
       expect(dayTypeChanges([r('plan.joint_limitation')]), isEmpty);
       expect(dayTypeChanges(const []), isEmpty);
@@ -489,7 +488,7 @@ void main() {
           cause,
           exerciseName: (id) => id,
         );
-        expect(t, contains('zone à ménager : poignet, gêne 6/10'));
+        expect(t, contains('pour ménager ton poignet (gêne 6/10)'));
         // ignore: avoid_print
         print('KB1|structure|$t');
       }

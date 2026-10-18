@@ -387,7 +387,7 @@ void main() {
     expect(releve['profil'], isTrue);
     expect(releve['structure'], isTrue);
     expect(releve['changements'] as int, greaterThan(0));
-    expect('${releve['changement_texte']}', contains('zone à ménager'));
+    expect('${releve['changement_texte']}', contains('pour ménager ton poignet'));
     expect(releve['dev_import'], isTrue);
     expect(releve['dev_koach_actif'], isTrue);
     expect(releve['dev_version_moteur'], '1.0.5-ref.1');

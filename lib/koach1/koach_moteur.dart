@@ -18,8 +18,8 @@ import 'package:kalis_core/kalis_core.dart' as kc;
 typedef Json = Map<String, Object?>;
 
 /// Chemins des deux assets de Koach (copies à l'octet de
-/// `packages/kalis_adapt/assets/koach/`, INTEGRATION_KM3.md § 3).
-// KB1 : Koach 1.0.5 (`kalis_adapt` 1.0.4), paramètres `1.0.5-ref.1`.
+/// `packages/kalis_adapt/assets/koach/`, INTEGRATION_KM3.md § 3 ; KB1 :
+/// Koach 1.0.5, `kalis_adapt` 1.0.4, paramètres `1.0.5-ref.1`).
 const kKoachParamsAsset = 'assets/koach/koach_params_1_0_5.json';
 const kKoachFichesAsset = 'assets/koach/vecteurs_qualites_v1.json';
 

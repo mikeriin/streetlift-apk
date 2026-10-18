@@ -842,19 +842,19 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
         if (r.code == 'plan.goal_uncovered' || r.code == 'plan.milestone')
           planReason(r),
     ];
-    final changes = <(int, String)>[
+    // (Rang dans les raisons = `dayIndex` : `kalis_plan` écrit un
+    // `plan.day_type` par jour, dans l'ordre des jours.)
+    final changes = <String>[
       for (final (i, cause) in dayTypeChanges(
         plan.split?.reasons ?? const <kc.Reason>[],
       ))
-        if (i < plan.days.length)
-          (
-            plan.days[i].dayIndex,
-            dayTypeChangeText(
-              weekdayLabel(plan.days[i].weekday),
-              dayTypeLabel(plan.days[i].type),
-              cause,
-              exerciseName: planName,
-            ),
+        if (plan.days.where((d) => d.dayIndex == i).firstOrNull
+            case final day?)
+          dayTypeChangeText(
+            weekdayLabel(day.weekday),
+            dayTypeLabel(day.type),
+            cause,
+            exerciseName: planName,
           ),
     ];
     if (lines.isEmpty && changes.isEmpty) return null;
@@ -874,9 +874,9 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
               padding: const EdgeInsets.only(top: KSpacing.s4),
               child: Text(l, style: KType.corps.copyWith(color: k.texte)),
             ),
-          for (final (day, text) in changes)
+          for (final (n, text) in changes.indexed)
             Padding(
-              key: ValueKey('plan-structure-change-$day'),
+              key: ValueKey('plan-structure-change-$n'),
               padding: const EdgeInsets.only(top: KSpacing.s8),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
