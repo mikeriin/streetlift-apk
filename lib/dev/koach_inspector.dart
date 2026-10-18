@@ -128,7 +128,7 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
       final etat = [
         e.snap == null
             ? 'Koach n’a pas pris la main.'
-            : 'Actif depuis S${e.fromWeek} (${e.activatedOn}) · '
+            : 'Actif depuis ${_week(e.fromWeek)} (${e.activatedOn}) · '
                   'semaines fermées : ${e.closed}',
         if (e.stop != null) 'Arrêt d’urgence depuis le ${e.stop!['since']}',
         'Événements au journal : ${e.journal.length}',

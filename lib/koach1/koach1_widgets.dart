@@ -282,7 +282,9 @@ class KoachEngineCard extends StatelessWidget {
       } else {
         rows = [
           Text(
-            'Koach conduit ton programme depuis S${e.fromWeek} '
+            // KB2 : semaine affichée (PR2 : S1 du programme repris).
+            'Koach conduit ton programme depuis '
+            '${store.program.weekLabel(e.fromWeek ?? 1)} '
             '(${date(e.activatedOn)}) : il propose, tu valides d’un tap. '
             'Chaque lundi, il replanifie la semaine qui vient.',
             key: const ValueKey('koach-engine-active'),
