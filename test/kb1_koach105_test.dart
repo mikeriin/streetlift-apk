@@ -187,14 +187,20 @@ void main() {
           'packages/kalis_adapt/assets/koach',
           'packages/kalis_adapt/pubspec.yaml',
         ]),
-        (55, '06c8f9713599becb56fa7cdcfd0676892e37e25040f3091612a2e8df45716154'),
+        (
+          55,
+          '06c8f9713599becb56fa7cdcfd0676892e37e25040f3091612a2e8df45716154',
+        ),
       );
       expect(
         _empreinte(const [
           'packages/kalis_plan/lib',
           'packages/kalis_plan/pubspec.yaml',
         ]),
-        (32, '9ce7e5a06633084455909dc4a517e4481e62f91f816e788260d6b9b9a9b35ace'),
+        (
+          32,
+          '9ce7e5a06633084455909dc4a517e4481e62f91f816e788260d6b9b9a9b35ace',
+        ),
       );
     });
 
@@ -311,15 +317,18 @@ void main() {
       );
     }
 
-    test('prise de main par 1.0.5 : instantané et paramètres de 1.0.5', () async {
-      await activate();
-      final snap = app.koachEngine.snap!;
-      expect(snap.versionMoteur, '1.0.5-ref.1');
-      expect(snap.versionParametres, '1.0.5-ref.1');
-      expect(snap.shaParametres, ko.koachParametresSha256);
-      expect(app.koachLive!.params['version'], '1.0.5-ref.1');
-      expect(app.koachEngine.fromWeek, 15);
-    });
+    test(
+      'prise de main par 1.0.5 : instantané et paramètres de 1.0.5',
+      () async {
+        await activate();
+        final snap = app.koachEngine.snap!;
+        expect(snap.versionMoteur, '1.0.5-ref.1');
+        expect(snap.versionParametres, '1.0.5-ref.1');
+        expect(snap.shaParametres, ko.koachParametresSha256);
+        expect(app.koachLive!.params['version'], '1.0.5-ref.1');
+        expect(app.koachEngine.fromWeek, 15);
+      },
+    );
 
     test('journal d’une version d’avant (dev7.1.x, Koach 1.0.3) rejoué par '
         '1.0.5 sans perte ; l’export le dit', () async {
@@ -417,14 +426,22 @@ void main() {
         r('plan.prerequisite_missing', {'exerciseId': 'sw-dips'}),
       ];
       final c = dayTypeChanges(reasons);
-      expect([for (final (i, x) in c) '$i ${x.code}'], [
-        '1 plan.joint_limitation',
-        '2 plan.equipment_missing',
-        '3 plan.prerequisite_missing',
-      ]);
+      expect(
+        [for (final (i, x) in c) '$i ${x.code}'],
+        [
+          '1 plan.joint_limitation',
+          '2 plan.equipment_missing',
+          '3 plan.prerequisite_missing',
+        ],
+      );
       String name(String id) => id == 'sw-dips' ? 'Dips' : id;
       expect(
-        dayTypeChangeText('Mardi', 'Jambes — force', c[0].$2, exerciseName: name),
+        dayTypeChangeText(
+          'Mardi',
+          'Jambes — force',
+          c[0].$2,
+          exerciseName: name,
+        ),
         'Mardi devient « Jambes — force » : zone à ménager : poignet, gêne '
         '6/10.',
       );
