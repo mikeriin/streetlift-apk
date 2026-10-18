@@ -87,7 +87,7 @@ void main() {
   group('lireParametresKoach', () {
     final p = lireParametresKoach(_texte(koachFichierParametres));
 
-    test('version, schéma, nombre de clés (346 : 6 + 340)', () {
+    test('version, schéma, nombre de clés (345 : 6 + 339)', () {
       expect(p['schema'], koachParametresSchema);
       expect(p['version'], koachParametresVersion);
       expect(koachParametresVersion, koachVersion);
@@ -107,9 +107,9 @@ void main() {
         cles += jm(p[s]).length;
       }
       expect(racine.length, 6);
-      expect(cles - racine.length, 340);
+      expect(cles - racine.length, 339);
       expect(cles, koachParametresCles);
-      expect(cles, 346);
+      expect(cles, 345);
     });
 
     test('identique au fichier de référence décodé', () {

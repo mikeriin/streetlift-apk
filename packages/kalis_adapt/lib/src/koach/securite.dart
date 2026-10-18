@@ -402,9 +402,7 @@ class Gardefous {
   /// (règle 1 du lot KM1c4).
   bool sensible(String z) {
     final ep = episode(z);
-    return ep != null &&
-        0 <= jour - ep.$2 &&
-        jour - ep.$2 <= _n('sensible_j');
+    return ep != null && 0 <= jour - ep.$2 && jour - ep.$2 <= _n('sensible_j');
   }
 
   List<String> sensibles() => [
@@ -731,9 +729,7 @@ class Gardefous {
         out['rir'] = _secMax(dbl(out['rir']), dbl(s['douleur_rir_bonus']));
         note(z, 'douleur');
       }
-      if (act <= 0 &&
-          niveau >= 0.5 &&
-          geneRecente(z) > _n('douleur_seuil')) {
+      if (act <= 0 && niveau >= 0.5 && geneRecente(z) > _n('douleur_seuil')) {
         // 1.0.5 (KM1c4, règle 4) : une gêne au-dessus du seuil dans les
         // `douleur_hausse_j` derniers jours interdit toute hausse de charge
         // sur un exercice qui sollicite la zone (≥ 0,5), même si le dernier
