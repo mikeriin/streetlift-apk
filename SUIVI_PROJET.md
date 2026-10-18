@@ -1,8 +1,15 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : KS1A — types de jour (pipeline CP), version dev7.1.0 ; précédent : dev7.0.0 (KM3, Koach 1.0)**  
-**Date : 16 octobre 2026, Europe/Paris — version : 7.1.0+130, affichée « dev7.1.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : KB1 — Koach 1.0.5 et `kalis_plan` 0.4.2, bascule fermée (pipeline CP), version dev7.2.0 ; précédent : dev7.1.9 (PR1 à PR10 du propriétaire)**  
+**Date : 18 octobre 2026, Europe/Paris — version : 7.2.0+140, affichée « dev7.2.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le pilotage (C8).**
+
+## KB1 — Koach 1.0.5 et `kalis_plan` 0.4.2 dans l'application (version dev7.2.0, pipeline CP, DECISIONS_CP.md C17.29, C17.30)
+
+- Couple mesuré à 0 violation sur 90 600 saisons : `kalis_plan` 0.4.2 (KS1c2) × `kalis_adapt` 1.0.4 (Koach 1.0.5) ; `kalis_adapt` copié sans sa référence Python ni ses tests (`lib/`, `assets/koach/`, `pubspec.yaml`) : arbre du dépôt 55,80 → 28,34 Mo. Asset `koach_params_1_0_5.json`.
+- Bascule fermée (`kKoachBasculeAutorisee = false`) ; la session de test force la bascule avec Koach 1.0.5 ; export du journal moteur (inspecteur) aux versions de ce build, pour KB2 (critère 10, ouverture de la bascule).
+- Carte « Structure de la semaine » : jour qui change de type et pourquoi (« Mardi devient « Récupération » pour ménager ton poignet (gêne 6/10). »).
+- Code 0.x gardé : il sert le bloc en cours tant que Koach n'a pas pris la main. Tests : `test/kb1_koach105_test.dart` ; cible émulateur `integration_test/koach_kb1_test.dart`. Livraison : `pipeline/cp/livraisons/LIVRAISON_KB1.md`.
 
 ## KS1A — Types de jour dans l'application (version dev7.1.0, pipeline CP, DECISIONS_CP.md C17.20)
 
