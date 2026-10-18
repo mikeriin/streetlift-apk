@@ -1,0 +1,23 @@
+{
+ "biais_prevu_moins_observe_p_10_pct_ou_plus": {
+  "ic90_par_grappes": [
+   -0.053946,
+   0.073946
+  ],
+  "valeur": 0.008262
+ },
+ "cas": 1757,
+ "cas_p_10_pct_ou_plus": 531,
+ "ecart_max_observe": 0.206023,
+ "grappes": 96,
+ "grappes_a_issue_mixte": 17,
+ "grappes_avec_p_10_pct_ou_plus": 60,
+ "modele_parfait_issues_liees": {
+  "mediane": 0.224241,
+  "part_au_moins_l_observe": 0.5885,
+  "part_sous_5_points": 0.0,
+  "q10": 0.137841,
+  "q90": 0.327039,
+  "tirages": 2000
+ }
+}
