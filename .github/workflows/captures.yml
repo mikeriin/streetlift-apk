@@ -37,24 +37,21 @@ jobs:
         run: python3 tools/secure_assets.py decrypt
       - name: Dépendances
         run: flutter pub get --enforce-lockfile
-      - name: Captures
+      - name: Contrôles (branche temporaire KB2)
         env:
           TZ: Europe/Paris
         run: |
-          files="$(grep -v '^#' tools/shots.txt | xargs)"
-          flutter test --no-pub --dart-define=KALIS_CAPTURE=true $files > shots.log 2>&1 || true
-          # Fin du journal en annotation (lisible sans télécharger les
-          # journaux).
-          out="$( { grep -E -A25 'EXCEPTION CAUGHT|Error:|error:' shots.log | head -n 80; tail -n 15 shots.log; ls validation/UI 2>/dev/null | head -n 40; } )"
-          out="${out//'%'/'%25'}"
-          out="${out//$'\n'/'%0A'}"
-          echo "::notice title=Captures::${out}"
+          mkdir -p shots
+          dart format --output=none --set-exit-if-changed lib test integration_test > shots/format.log 2>&1 || true
+          flutter analyze --no-pub > shots/analyze.log 2>&1 || true
+          flutter test --no-pub --timeout 60s --reporter expanded > shots/tests.log 2>&1 || true
+          grep -E -B2 -A30 'EXCEPTION CAUGHT|\[E\]$|Error:' shots/tests.log | head -n 1500 > shots/echecs.log || true
+          tail -n 20 shots/tests.log >> shots/echecs.log
+          python3 -m unittest discover -s tools/tests > shots/python.log 2>&1 || true
       - name: Pousser les images
         run: |
           git config user.name "kalis-shots"
           git config user.email "kalis-shots@users.noreply.github.com"
-          rm -rf shots && mkdir -p shots
-          cp validation/UI/*.png shots/ 2>/dev/null || true
           git add -f shots
           if git diff --cached --quiet; then
             echo "Aucune image."
