@@ -4,13 +4,12 @@
 // - section `koachEngine` du document : journal de Koach (source de vérité
 //   du moteur, rejoué à l'identique), instantanés hors journal, date
 //   d'installation et de bascule, arrêt d'urgence, récapitulatifs de bloc ;
-// - prise de main au début d'un bloc : programme créé dès le premier bloc
-//   qui commence après l'installation ; programme de 40 semaines au début
-//   du bloc de la bascule (23/11/2026 ou 04/01/2027), seulement si la
-//   bascule est ouverte ([kKoachBasculeAutorisee] : version de Koach validée
-//   et rejeu du journal réel passé, C17.13.3) ; avant, le bloc en cours
-//   n'est pas coupé (INTEGRATION_KM3.md § 10, question 1 : le moteur de
-//   dev6.19.0 le sert jusqu'à la bascule) ;
+// - KB2 (dev7.2.1, C17.32, C17.34) : bascule ouverte par dérogation du
+//   propriétaire ([kKoachBasculeAutorisee]) ; prise de main immédiate, la
+//   semaine de la première séance non faite du programme en cours à
+//   l'ouverture (jamais une semaine d'avant le départ affiché, jamais une
+//   semaine passée, jamais une séance faite), programme importé comme
+//   programme créé ; plus d'attente d'un début de bloc ni du 23/11 ;
 // - rattrapage du lundi (séances manquées, fin de semaine, replanification
 //   hors du fil d'interface), séance du jour (`seance_debut`, diagnostic,
 //   `plan(seance)`, `plan(serie)` une fois par série, `seance_fin`,
@@ -21,23 +20,24 @@
 // Koach ; la contrainte de charge fixe de CI1h (C15) s'applique au-dessus.
 part of 'store.dart';
 
-/// Bascule du programme de 40 semaines ouverte dans ce build : faux dans
-/// dev7.0.0. La bascule exige la version de Koach validée la plus récente
-/// (1.0.3, KM2c2) et le rejeu du journal réel sur un export neuf
-/// (C17.13.3) : le lot qui monte le paquet après ces deux preuves passe
-/// cette constante à vrai. La session de test du mode dev peut forcer la
-/// bascule (`koachForcerBascule`).
-const bool kKoachBasculeAutorisee = false;
+/// Bascule ouverte dans ce build. KB2 (dev7.2.1) : vrai par dérogation du
+/// propriétaire (DECISIONS_CP.md C17.34) — le critère 10 n'est pas tenu au
+/// 18/10/2026 ([kKoachCritere10]) ; re-mesure vers le 09/11/2026
+/// (C17.34.3). Faux : le moteur d'avant sert tous les programmes (repli).
+/// La session de test du mode dev peut forcer la bascule
+/// (`koachForceBascule`).
+const bool kKoachBasculeAutorisee = true;
 
 /// Tests : bascule ouverte sans build dédié.
 @visibleForTesting
 bool debugKoachBasculeAutorisee = kKoachBasculeAutorisee;
 
-/// Dernier jour d'installation qui garde la bascule du 23/11/2026
-/// (cahier : APK installé au plus tard le 16/11/2026), et les deux dates.
-final kKoachInstallLimite = kc.CivilDate(2026, 11, 16);
-final kKoachBasculeVisee = kc.CivilDate(2026, 11, 23);
-final kKoachBasculeRepli = kc.CivilDate(2027, 1, 4);
+/// KB2 : critère 10 (rejeu du journal réel par le pilotage, 18/10/2026,
+/// `pipeline/cp/donnees/rejeu_journal_agregats_kb2.json`, C17.33.3) :
+/// agrégats seulement, affichés par l'inspecteur du mode dev.
+const kKoachCritere10 =
+    'Critère 10 (18/10) : non tenu — ouverture par dérogation · '
+    'erreur 5,9 %, couverture 86,9 %';
 
 /// Suffixe de la clé du journal de l'application d'un vrai test inséré par
 /// Koach avant l'exercice de travail (emplacement « <slot>.t »).
@@ -87,6 +87,11 @@ class KoachEngineData {
   /// Mode dev (session de test) : date de bascule forcée.
   String? forced;
 
+  /// KB2 : première ouverture d'un build où la bascule est ouverte
+  /// (dev7.2.1 ou suivant ; AAAA-MM-JJ). La date d'installation notée par
+  /// dev7.0.0 à dev7.2.0 ([installedOn]) ne compte pas.
+  String? openedOn;
+
   /// Raison d'une activation refusée (`poids` : aucun poids connu).
   String? blocked;
 
@@ -102,6 +107,7 @@ class KoachEngineData {
   Map<String, Object?> toJson() => {
     'v': 1,
     if (installedOn != null) 'installedOn': installedOn,
+    if (openedOn != null) 'openedOn': openedOn,
     if (snap != null) 'snap': snap!.toJson(),
     if (journal.isNotEmpty) 'journal': journal,
     if (fromWeek != null) 'fromWeek': fromWeek,
@@ -130,6 +136,7 @@ class KoachEngineData {
     }
 
     out.installedOn = day('installedOn');
+    out.openedOn = day('openedOn');
     out.activatedOn = day('activatedOn');
     out.forced = day('forced');
     try {
@@ -225,86 +232,87 @@ extension KoachStore on AppStore {
 
   kc.CivilDate? _mondayOfWeek(int s) => koachLundi?.addDays(7 * (s - 1));
 
-  /// Date de la bascule du programme de 40 semaines (cahier : 23/11/2026
-  /// si l'APK est installé au plus tard le 16/11/2026, sinon 04/01/2027).
-  kc.CivilDate get koachBasculeDate {
-    final f = koachEngine.forced;
-    if (f != null) return kc.CivilDate.parse(f);
-    final inst = koachEngine.installedOn == null
-        ? _kToday
-        : kc.CivilDate.parse(koachEngine.installedOn!);
-    return inst.compareTo(kKoachInstallLimite) <= 0
-        ? kKoachBasculeVisee
-        : kKoachBasculeRepli;
-  }
-
-  /// La bascule du programme de 40 semaines peut avoir lieu dans ce build
-  /// (ou forcée dans la session de test).
+  /// La bascule peut avoir lieu dans ce build (ou forcée dans la session
+  /// de test).
   bool get koachBasculeOuverte =>
       debugKoachBasculeAutorisee || koachEngine.forced != null;
 
   static const _kInstall = 'km3_installation_v1';
+  static const _kOuverture = 'kb2_ouverture_v1';
 
   /// Note la première ouverture d'une version avec Koach 1.0 (date
-  /// d'installation, qui fixe la date de bascule) : clé locale de la
-  /// session, puis section `koachEngine` à la prise de main.
+  /// d'installation, affichée par l'inspecteur) : clé locale de la
+  /// session, puis section `koachEngine` ; KB2 : et la première ouverture
+  /// d'un build où la bascule est ouverte ([KoachEngineData.openedOn]).
   void koachNoteInstall() {
-    if (koachEngine.installedOn != null) return;
-    final saved = _prefs.getString(_kInstall);
-    if (saved != null && parseCivilDate(saved) != null) {
-      koachEngine.installedOn = saved;
-      return;
+    final e = koachEngine;
+    if (e.installedOn == null) {
+      final saved = _prefs.getString(_kInstall);
+      if (saved != null && parseCivilDate(saved) != null) {
+        e.installedOn = saved;
+      } else {
+        e.installedOn = _kToday.iso;
+        unawaited(_prefs.setString(_kInstall, e.installedOn!));
+      }
     }
-    koachEngine.installedOn = _kToday.iso;
-    unawaited(_prefs.setString(_kInstall, koachEngine.installedOn!));
+    if (e.openedOn == null && debugKoachBasculeAutorisee) {
+      final saved = _prefs.getString(_kOuverture);
+      if (saved != null && parseCivilDate(saved) != null) {
+        e.openedOn = saved;
+      } else {
+        e.openedOn = _kToday.iso;
+        unawaited(_prefs.setString(_kOuverture, e.openedOn!));
+      }
+    }
   }
 
-  /// Semaine S où Koach prend la main sur le programme en place (début de
-  /// bloc), ou null : pas encore (ou jamais dans ce build).
-  int? koachTakeoverWeek() {
+  /// KB2 : semaine S où Koach prendra la main sur le programme en cours
+  /// (null : jamais dans ce build, ou programme absent / fini), même si
+  /// elle n'a pas encore commencé : la semaine de la première séance non
+  /// faite à partir de la semaine du jour, jamais avant le départ affiché
+  /// (`firstShown`, PR2) ni avant le premier bloc d'un programme créé.
+  /// Session de test : la semaine de la date forcée.
+  int? koachTakeoverPlanned() {
     final lundi = koachLundi;
     if (lundi == null || content.catalog == null) return null;
-    // Bascule fermée dans ce build (hors session de test forcée) : le
-    // moteur de dev6.19.0 continue de servir tous les programmes.
     if (!koachBasculeOuverte) return null;
-    final today = _kToday;
     final plan = planProgram;
-    final starts = <int>[];
-    kc.CivilDate from;
-    if (plan != null) {
-      for (var w = plan.firstWeek; w <= plan.totalWeeks; w++) {
-        if (plan.locate(w)?.weekIndex == 0) starts.add(w);
-      }
-      final f = koachEngine.forced;
-      from = f != null
-          ? kc.CivilDate.parse(f)
-          : (koachEngine.installedOn == null
-                ? today
-                : kc.CivilDate.parse(koachEngine.installedOn!));
-    } else {
-      final imp = importedProgram;
-      if (imp == null) return null;
-      for (final s in imp.segments) {
-        starts.add(s.first);
-      }
-      from = koachBasculeDate;
+    if (plan == null && importedProgram == null) return null;
+    final last = math.min(
+      plan?.totalWeeks ?? importedLastWeek,
+      program.weeks.length,
+    );
+    final f = koachEngine.forced;
+    if (f != null) {
+      final w = koachWeekOf(kc.CivilDate.parse(f));
+      return w == null || w > last ? null : w;
     }
-    // Session de test : prise de main forcée la semaine de la date choisie
-    // (sans attendre un début de bloc).
-    if (koachEngine.forced != null) {
-      final w = koachWeekOf(from);
-      if (w == null) return null;
-      final last = plan?.totalWeeks ?? importedLastWeek;
-      if (w > last) return null;
-      return from.compareTo(today) <= 0 ? w : null;
-    }
-    final fromMonday = koachLundiDe(from);
-    for (final s in starts..sort()) {
-      final m = _mondayOfWeek(s)!;
-      if (m.compareTo(fromMonday) < 0) continue;
-      return m.compareTo(today) <= 0 ? s : null;
+    final today = _kToday;
+    var from = math.max(program.firstShown, plan?.firstWeek ?? 1);
+    from = math.max(from, koachWeekOf(today) ?? 1);
+    final opened = koachEngine.openedOn == null
+        ? null
+        : koachWeekOf(kc.CivilDate.parse(koachEngine.openedOn!));
+    if (opened != null) from = math.max(from, opened);
+    for (var w = from; w <= last; w++) {
+      for (final d in program.week(w).days) {
+        if (d.exercises.isEmpty) continue;
+        if (logs[sessionKey(w, d.j)]?.done ?? false) continue;
+        return w;
+      }
     }
     return null;
+  }
+
+  /// Semaine S où Koach prend la main maintenant (la semaine prévue a
+  /// commencé ; session de test : la date forcée est passée), ou null.
+  int? koachTakeoverWeek() {
+    final w = koachTakeoverPlanned();
+    if (w == null) return null;
+    final today = _kToday;
+    final f = koachEngine.forced;
+    final start = f != null ? kc.CivilDate.parse(f) : _mondayOfWeek(w)!;
+    return start.compareTo(today) <= 0 ? w : null;
   }
 
   /// Koach sert la semaine S[week] (actif, pas d'arrêt d'urgence).

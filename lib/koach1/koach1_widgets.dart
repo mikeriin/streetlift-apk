@@ -3,6 +3,8 @@
 // en trois questions au plus, récapitulatif de fin de bloc, état de Koach
 // et arrêt d'urgence. Textes : `package:kalis_adapt/koach_textes.dart`
 // (jamais un code brut à l'écran).
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:kalis_adapt/koach_textes.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose, KoachUsage;
@@ -223,17 +225,33 @@ class KoachEngineCard extends StatelessWidget {
 
       final List<Widget> rows;
       if (e.snap == null) {
-        final b = store.koachBasculeDate;
+        // KB2 : prise de main la semaine de la prochaine séance non faite.
+        final w = store.koachTakeoverPlanned();
+        final String wait;
+        if (!store.koachBasculeOuverte) {
+          wait =
+              'Koach 1.0 est installé. Il prendra les commandes une fois '
+              'sa version validée. D’ici là, ton programme continue comme '
+              'avant.';
+        } else if (w == null) {
+          wait =
+              'Je prendrai les commandes dès qu’un programme sera en cours '
+              '(une séance à venir).';
+        } else if (store.koachBusy) {
+          wait =
+              'Je prends les commandes de ton programme '
+              '(${store.program.weekLabel(w)}) : un instant, une seule fois.';
+        } else {
+          final m = store.program.dateFor(w, 1);
+          wait =
+              'Je prends les commandes de ton programme à partir de '
+              '${store.program.weekLabel(w)} (semaine du '
+              '${civilDateLabel(DateTime(m.year, m.month, m.day))}) : '
+              'tes séances faites restent telles quelles.';
+        }
         rows = [
           Text(
-            store.koachBasculeOuverte
-                ? 'Je prendrai les commandes de ton programme au début de '
-                      'ton prochain bloc, à partir du '
-                      '${civilDateLabel(DateTime(b.year, b.month, b.day))}.'
-                : 'Koach 1.0 est installé. Il prendra les commandes au '
-                      'début d’un bloc, une fois sa version validée '
-                      '(date visée : ${civilDateLabel(DateTime(b.year, b.month, b.day))}). '
-                      'D’ici là, ton bloc en cours continue comme avant.',
+            wait,
             key: const ValueKey('koach-engine-waiting'),
             style: body,
           ),
@@ -451,6 +469,155 @@ class KoachRecapScreen extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+/// KB2 : la prise de main de Koach est due (ou en cours) : la séance attend
+/// qu'elle finisse, derrière un écran d'attente borné, pour être servie
+/// par Koach dès sa première séance. Une fois par lancement : un échec ou
+/// une attente trop longue ne bloque pas les séances suivantes.
+Future<void> awaitKoachTakeover(BuildContext context) {
+  final running = _koachWaiting;
+  if (running != null) return running;
+  if (_koachWaited ||
+      store.koachEngine.snap != null ||
+      store.koachTakeoverWeek() == null) {
+    return Future<void>.value();
+  }
+  _koachWaited = true;
+  final f = _koachWait(context).whenComplete(() => _koachWaiting = null);
+  _koachWaiting = f;
+  return f;
+}
+
+Future<void> _koachWait(BuildContext context) async {
+  // (Une erreur de calcul est déjà notée par le magasin : l'écran ne
+  // l'attend pas.)
+  final done = store.koachRefresh().catchError((Object _) {});
+  var finished = false;
+  unawaited(done.whenComplete(() => finished = true));
+  // Prise de main déjà finie (ou impossible tout de suite) : rien à
+  // afficher.
+  await Future.any([
+    done,
+    Future<void>.delayed(const Duration(milliseconds: 400)),
+  ]);
+  if (finished || !context.mounted) return;
+  await showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => KoachTakeoverDialog(done: done),
+  );
+}
+
+bool _koachWaited = false;
+Future<void>? _koachWaiting;
+
+/// Tests : attente de la prise de main de nouveau possible.
+@visibleForTesting
+void debugResetKoachTakeoverWait() {
+  _koachWaited = false;
+  _koachWaiting = null;
+}
+
+/// Délai au-delà duquel l'écran d'attente propose d'ouvrir la séance sans
+/// attendre (repère du cahier : 10 s ; mesuré 10 à 14 s sur l'émulateur
+/// de la CI, KB1).
+const kKoachTakeoverPatience = Duration(seconds: 45);
+
+/// Écran d'attente de la prise de main (une seule fois) : se ferme seul à
+/// la fin ; passé [kKoachTakeoverPatience], propose d'ouvrir la séance
+/// sans attendre.
+class KoachTakeoverDialog extends StatefulWidget {
+  final Future<void> done;
+  const KoachTakeoverDialog({super.key, required this.done});
+
+  @override
+  State<KoachTakeoverDialog> createState() => _KoachTakeoverDialogState();
+}
+
+class _KoachTakeoverDialogState extends State<KoachTakeoverDialog> {
+  Timer? _late;
+  bool _slow = false;
+  bool _closed = false;
+
+  void _close() {
+    if (_closed || !mounted) return;
+    _closed = true;
+    Navigator.of(context).pop();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.done.then((_) => _close(), onError: (Object _) => _close());
+    _late = Timer(kKoachTakeoverPatience, () {
+      if (mounted) setState(() => _slow = true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _late?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return PopScope(
+      canPop: false,
+      child: Dialog(
+        key: const ValueKey('koach-takeover'),
+        backgroundColor: k.surface,
+        shape: KRadius.cardShape,
+        insetPadding: const EdgeInsets.all(KSpacing.s24),
+        child: Padding(
+          padding: const EdgeInsets.all(KSpacing.s24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Semantics(
+                header: true,
+                child: Text(
+                  'Koach prend la main sur ton programme',
+                  style: KType.titreSeance.copyWith(color: k.texte),
+                ),
+              ),
+              const SizedBox(height: KSpacing.s8),
+              Text(
+                _slow
+                    ? 'Ça prend plus longtemps que prévu. Tu peux ouvrir ta '
+                          'séance sans attendre : elle est servie comme '
+                          'avant tant que Koach n’a pas fini.'
+                    : 'Une seule fois : il relit ton historique pour servir '
+                          'ta séance (quelques secondes). Rien n’est perdu '
+                          'si tu fermes l’application.',
+                style: KType.corps.copyWith(color: k.texte2),
+              ),
+              const SizedBox(height: KSpacing.s24),
+              if (_slow)
+                KPrimaryButton(
+                  key: const ValueKey('koach-takeover-skip'),
+                  label: 'Ouvrir la séance',
+                  onPressed: _close,
+                )
+              else
+                Center(
+                  child: SizedBox.square(
+                    dimension: KSize.icon,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: k.encre,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

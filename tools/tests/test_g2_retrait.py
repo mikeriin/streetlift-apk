@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.2.0 : Koach 1.0.5 et kalis_plan 0.4.2, bascule fermée (dev7.2.0, KB1).
-        self.assertEqual(version, '7.2.0')
+        # 7.2.1 : prise de main immédiate de Koach 1.0.5 (dev7.2.1, KB2).
+        self.assertEqual(version, '7.2.1')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)

@@ -48,6 +48,10 @@ const _limit = Timeout(Duration(minutes: 9));
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  // KB2 (dev7.2.1) : cible d'un lot d'avant, jouée bascule fermée comme
+  // à son lot (moteur d'avant, repli) ; la prise de main immédiate a sa
+  // cible (koach_kb2_test).
+  debugKoachBasculeAutorisee = false;
   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
   final data = <String, Object?>{};
   final dark = _part == 'a';
@@ -170,7 +174,7 @@ void main() {
 
     // 1. Session personnelle : bascule fermée, rien ne change.
     releve['perso_koach_actif'] = store.koachEngine.snap != null;
-    releve['perso_bascule'] = store.koachBasculeDate.iso;
+    releve['perso_bascule'] = store.koachBasculeOuverte ? 'ouverte' : 'fermée';
     releve['perso_installation'] = store.koachEngine.installedOn;
     releve['perso_origine'] = store.programOrigin != null;
     releve['perso_journal_identique'] =

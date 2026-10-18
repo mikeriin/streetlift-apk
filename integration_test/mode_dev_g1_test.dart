@@ -59,6 +59,10 @@ bool _same(Object? a, Object? b) {
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  // KB2 (dev7.2.1) : cible d'un lot d'avant, jouée bascule fermée comme
+  // à son lot (moteur d'avant, repli) ; la prise de main immédiate a sa
+  // cible (koach_kb2_test).
+  debugKoachBasculeAutorisee = false;
   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
   final data = <String, Object?>{};
   final releve = <String, Object?>{'partie': _part, 'kDevBuild': kDevBuild};

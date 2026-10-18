@@ -236,7 +236,7 @@ void main() {
       final p = File('pubspec.yaml').readAsStringSync();
       expect(p, contains('- assets/koach/koach_params_1_0_5.json'));
       expect(p, isNot(contains('koach_params_1_0_3')));
-      expect(p, contains('version: 7.2.0+'));
+      expect(p, contains('version: 7.2.1+'));
       final res = KoachRessources.lire(
         File(kKoachParamsAsset).readAsStringSync(),
         File(kKoachFichesAsset).readAsStringSync(),
@@ -265,9 +265,12 @@ void main() {
   });
 
   group('bascule fermée', () {
-    test('kKoachBasculeAutorisee reste false : le moteur d’avant sert le '
-        'bloc en cours ; date de bascule inchangée', () async {
-      expect(kKoachBasculeAutorisee, isFalse);
+    // KB2 (dev7.2.1) : la constante est ouverte par dérogation (C17.34) ;
+    // bascule fermée (repli, tests des lots d'avant) : même comportement
+    // qu'en dev7.2.0.
+    test('bascule fermée (repli) : le moteur d’avant sert le bloc en '
+        'cours', () async {
+      expect(kKoachBasculeAutorisee, isTrue);
       await _owner(app);
       await app.koachRefresh();
       expect(app.koachEngine.snap, isNull);
@@ -280,7 +283,7 @@ void main() {
         break;
       }
       app.koachNoteInstall();
-      expect(app.koachBasculeDate, kc.CivilDate(2026, 11, 23));
+      expect(app.koachEngine.openedOn, isNull);
     });
 
     test('export du journal moteur avant la bascule (KB2) : versions de '

@@ -25,7 +25,8 @@ import 'resume_banner.dart';
 import 'stats_mannequin.dart';
 import 'guided_tests.dart';
 import 'profile_completion.dart';
-import 'koach1/koach1_widgets.dart' show KoachRecapCard;
+import 'koach1/koach1_widgets.dart'
+    show KoachRecapCard, awaitKoachTakeover;
 import 'store.dart';
 import 'store_widget.dart';
 import 'kit/kit.dart';
@@ -61,6 +62,12 @@ Route<dynamic>? _topRoute(NavigatorState nav) {
 /// n'est créée par l'ouverture.
 Future<void> openProgramDay(NavigatorState nav, WeekPlan w, DayPlan d) async {
   final key = store.sessionKey(w.n, d.j);
+  // KB2 : prise de main de Koach due ou en cours : la séance attend
+  // qu'elle finisse (écran d'attente borné), pour être servie par Koach.
+  if (store.logs[key]?.done != true) {
+    await awaitKoachTakeover(nav.context);
+    if (!nav.mounted) return;
+  }
   final active = [
     for (final e in openDayRoutes)
       if (e.route.isActive && identical(e.route.navigator, nav)) e,

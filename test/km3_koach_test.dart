@@ -164,11 +164,11 @@ void main() {
       print('KM3|paquet|${ko.koachVersion}|${res.versionParametres}');
     });
 
-    test('pubspec : assets de Koach déclarés, version 7.2.0 (KB1)', () {
+    test('pubspec : assets de Koach déclarés, version 7.2.1 (KB2)', () {
       final p = File('pubspec.yaml').readAsStringSync();
       expect(p, contains('- assets/koach/koach_params_1_0_5.json'));
       expect(p, contains('- assets/koach/vecteurs_qualites_v1.json'));
-      expect(p, contains('version: 7.2.0+'));
+      expect(p, contains('version: 7.2.1+'));
     });
   });
 
@@ -187,21 +187,19 @@ void main() {
       },
     );
 
-    test('date : 23/11/2026 si installé au plus tard le 16/11, sinon '
-        '04/01/2027 ; prise de main au début du bloc (S20)', () async {
+    // KB2 (dev7.2.1, C17.32, C17.34) : plus de date de bascule (23/11) ni
+    // d'attente d'un début de bloc : prise de main la semaine de la
+    // première séance non faite (test/kb2_prise_de_main_test.dart).
+    test('ouverte (KB2) : prise de main la semaine en cours, sans attendre '
+        'le début du bloc (S20)', () async {
       await _owner(app);
       app.koachNoteInstall();
       expect(app.koachEngine.installedOn, '2026-10-19');
-      expect(app.koachBasculeDate, kc.CivilDate(2026, 11, 23));
-      app.koachEngine.installedOn = '2026-11-17';
-      expect(app.koachBasculeDate, kc.CivilDate(2027, 1, 4));
-      app.koachEngine.installedOn = '2026-10-19';
+      expect(app.koachEngine.openedOn, isNull);
       debugKoachBasculeAutorisee = true;
-      expect(app.koachTakeoverWeek(), isNull); // pas avant le 23/11
-      clock = DateTime(2026, 11, 23, 8);
-      expect(app.koachTakeoverWeek(), 20);
-      clock = DateTime(2026, 11, 25, 8);
-      expect(app.koachTakeoverWeek(), 20);
+      app.koachNoteInstall();
+      expect(app.koachEngine.openedOn, '2026-10-19');
+      expect(app.koachTakeoverWeek(), 15);
     });
   });
 

@@ -27,6 +27,10 @@ Future<void> openKoachInspector(BuildContext context) {
   ).push(MaterialPageRoute<void>(builder: (_) => const KoachInspectorScreen()));
 }
 
+/// KB2 : semaine interne et semaine affichée (PR2), ou « — ».
+String _week(int? w) =>
+    w == null ? '—' : 'S$w interne (${store.program.weekLabel(w)} affichée)';
+
 String _n(Object? v, [int d = 2]) =>
     v is num ? v.toStringAsFixed(d).replaceAll('.', ',') : '—';
 
@@ -129,9 +133,13 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
         if (e.stop != null) 'Arrêt d’urgence depuis le ${e.stop!['since']}',
         'Événements au journal : ${e.journal.length}',
         'Séances versées : ${e.versed.length}',
-        'Bascule : ${store.koachBasculeDate.iso}'
-            ' (${store.koachBasculeOuverte ? 'ouverte' : 'fermée dans ce build'}'
-            '${e.forced != null ? ', forcée' : ''})',
+        // KB2 : bascule ouverte par dérogation (C17.34), prise de main
+        // immédiate.
+        'Bascule : ${kKoachBasculeAutorisee ? 'ouverte par dérogation' : 'fermée dans ce build'}'
+            '${e.forced != null ? ', forcée au ${e.forced}' : ''}'
+            ' · ouverture : ${e.openedOn ?? '—'}'
+            '${e.snap == null ? ' · prise de main prévue : ${_week(store.koachTakeoverPlanned())}' : ''}',
+        kKoachCritere10,
         'Installation : ${e.installedOn ?? '—'}',
       ];
       final tempsLines = [

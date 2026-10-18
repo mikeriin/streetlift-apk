@@ -73,6 +73,10 @@ kc.AthleteProfile _wrist(kc.CivilDate on) {
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  // KB2 (dev7.2.1) : cible d'un lot d'avant, jouée bascule fermée comme
+  // à son lot (moteur d'avant, repli) ; la prise de main immédiate a sa
+  // cible (koach_kb2_test).
+  debugKoachBasculeAutorisee = false;
   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
   final data = <String, Object?>{};
   final dark = _part == 'a';
@@ -276,7 +280,7 @@ void main() {
         logsBefore;
     releve['origine_presente'] = store.programOrigin != null;
     releve['koach_actif'] = store.koachEngine.snap != null;
-    releve['bascule'] = store.koachBasculeDate.iso;
+    releve['bascule'] = store.koachBasculeOuverte ? 'ouverte' : 'fermée';
     releve['installation'] = store.koachEngine.installedOn;
     await shot('1_accueil_perso');
     releve['perso_inspecteur'] = await inspectAndExport(
@@ -392,7 +396,7 @@ void main() {
     expect(releve['journal_identique'], isTrue);
     expect(releve['origine_presente'], isTrue);
     expect(releve['koach_actif'], isFalse);
-    expect(releve['bascule'], anyOf('2026-11-23', '2027-01-04'));
+    expect(releve['bascule'], 'fermée');
     final perso = releve['perso_inspecteur']! as Map;
     expect(perso['inspecteur'], isTrue);
     expect(perso['fichier'], 'koach_journal_moteur.json');

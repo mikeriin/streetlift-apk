@@ -131,7 +131,7 @@ void main() {
         File('packages/kalis_core/data/parcours_v3.json').readAsBytesSync(),
       );
       final pub = File('pubspec.yaml').readAsStringSync();
-      expect(pub, contains('version: 7.2.0+'));
+      expect(pub, contains('version: 7.2.1+'));
     });
 
     test('six codes de structure : phrases de l’application, aucun code '
