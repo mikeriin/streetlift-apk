@@ -359,7 +359,11 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Bascule fermée ; pas de critère 10 ni de clé (KB2).
 - Coexistence avec le pipeline Claude Code du propriétaire (C17.28.3) : il peut publier sur `main` pendant le lot ; rebase sur la pointe avant de publier.
 
-## KB2 — critère 10 et ouverture de la bascule, dev7.2.1 (préparé le 18/10/2026, C17.31 ; à lancer à l'accord du propriétaire, tâche « Opus 5.5, effort élevé, application »)
+## KB2 — critère 10, ouverture de la bascule et prise de main immédiate, dev7.2.1 (lancé le 18/10/2026 vers 18:40 UTC, tâche « Opus 5.5, effort élevé, application » ; C17.31, C17.32)
 
-- Lot : **KB2**, prompt `prompts/KB2.txt`. Base : pointe de `main` (dev7.2.0, 293e5689, ou suivant). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KB2`.
-- Export du journal moteur (dev7.2.0) : à déposer chiffré par le pilotage sur `cp-references` au lancement (chemin écrit ici à ce moment-là).
+- Lot : **KB2**, prompt `prompts/KB2.txt` (réécrit pour C17.32 : il prime sur toute mention du 23/11). Base : pointe de `main` (dev7.2.0, 293e5689, ou suivant ; le propriétaire publie aussi depuis Claude Code sur son PC, C17.28 : lis le `CLAUDE.md` de `main` s'il existe, rebase sur la pointe avant de publier). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KB2`.
+- Export du journal moteur (dev7.2.0, 18/10/2026) : `cp-references`, fichier `journal_proprietaire_2026-10-18.tar.gpg` (commit 1f60615), contient `journal_moteur_2026-10-18.json` (SHA-256 `011aaecb7e22eae5f0fe2c5dd5a8511dd7e417202617e0d046f3e0a8a730fc79`). Déchiffrement : clé dans le document privé du projet claude.ai `claude/CLE_REFERENCES_CP.md`, fichier /tmp en mode 600, `gpg --batch --pinentry-mode loopback --passphrase-file <fichier> -d journal_proprietaire_2026-10-18.tar.gpg | tar -C /tmp/kb2-journal -xf -`. Rien de déchiffré n'est committé ; seuls des agrégats dans la livraison.
+- Compte du pilotage (à recompter par le lot) : 34 séances, 672 séries converties, 244 séries notées depuis S12 (S12 67, S13 88, S14 89).
+- **Le propriétaire a changé de programme** : nouveau programme à partir de lundi 19/10/2026 (S15 interne = S1 affichée, lot PR2), 6 séances par semaine en PPL, deux blocs jusqu'au 27/12, tests la dernière semaine, deux finishers cardio courts par semaine, squat lourd et squat 70 kg à charge fixe. Le journal rejoué (S12 à S14) vient de l'ancien programme : dire combien d'exercices du nouveau programme ont un historique au journal et lesquels partent des a priori de Koach.
+- Le propriétaire veut que Koach conduise ce nouveau programme **dès sa première séance** (lundi 19/10) ou, si dev7.2.1 arrive après, dès la séance non faite suivante : livrer vite (exactitude d'abord), sans rien sauter du contrôle.
+
