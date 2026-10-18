@@ -573,48 +573,48 @@ class _KoachTakeoverDialogState extends State<KoachTakeoverDialog> {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     return Padding(
-          padding: const EdgeInsets.all(KSpacing.s24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Semantics(
-                header: true,
-                child: Text(
-                  'Koach prend la main sur ton programme',
-                  style: KType.titreSeance.copyWith(color: k.texte),
-                ),
-              ),
-              const SizedBox(height: KSpacing.s8),
-              Text(
-                _slow
-                    ? 'Ça prend plus longtemps que prévu. Tu peux ouvrir ta '
-                          'séance sans attendre : elle est servie comme '
-                          'avant tant que Koach n’a pas fini.'
-                    : 'Une seule fois : il relit ton historique pour servir '
-                          'ta séance (quelques secondes). Rien n’est perdu '
-                          'si tu fermes l’application.',
-                style: KType.corps.copyWith(color: k.texte2),
-              ),
-              const SizedBox(height: KSpacing.s24),
-              if (_slow)
-                KPrimaryButton(
-                  key: const ValueKey('koach-takeover-skip'),
-                  label: 'Ouvrir la séance',
-                  onPressed: _close,
-                )
-              else
-                Center(
-                  child: SizedBox.square(
-                    dimension: KSize.icon,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: k.encre,
-                    ),
-                  ),
-                ),
-            ],
+      padding: const EdgeInsets.all(KSpacing.s24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Semantics(
+            header: true,
+            child: Text(
+              'Koach prend la main sur ton programme',
+              style: KType.titreSeance.copyWith(color: k.texte),
+            ),
           ),
+          const SizedBox(height: KSpacing.s8),
+          Text(
+            _slow
+                ? 'Ça prend plus longtemps que prévu. Tu peux ouvrir ta '
+                      'séance sans attendre : elle est servie comme '
+                      'avant tant que Koach n’a pas fini.'
+                : 'Une seule fois : il relit ton historique pour servir '
+                      'ta séance (quelques secondes). Rien n’est perdu '
+                      'si tu fermes l’application.',
+            style: KType.corps.copyWith(color: k.texte2),
+          ),
+          const SizedBox(height: KSpacing.s24),
+          if (_slow)
+            KPrimaryButton(
+              key: const ValueKey('koach-takeover-skip'),
+              label: 'Ouvrir la séance',
+              onPressed: _close,
+            )
+          else
+            Center(
+              child: SizedBox.square(
+                dimension: KSize.icon,
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: k.encre,
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
