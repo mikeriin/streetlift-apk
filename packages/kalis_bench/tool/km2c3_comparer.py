@@ -17,7 +17,8 @@ aggravations, poussées, séances, alertes, calibration, sécurité.
 Chaque saison Dart est comparée à la saison Python de même nom, champ par
 champ (récursif) : entiers et textes à l'identique, flottants à 1e-9 près
 (relatif, absolu 1e-12 près de zéro), listes de même longueur, clés
-identiques. Sortie : saisons comparées, identiques, différentes (par champ
+identiques ; `duree_s` (temps machine) ignoré, `first_under` comparé trié
+(rempli en parcourant un ensemble Python, ordre sans information). Sortie : saisons comparées, identiques, différentes (par champ
 de tête, avec les 60 premiers écarts : saison, chemin, Dart, Python),
 saisons Dart sans saison Python et l'inverse.
 """
@@ -32,6 +33,15 @@ import sys
 TOL_REL = 1e-9
 TOL_ABS = 1e-12
 EXEMPLES_MAX = 60
+#: Champs qui ne se comparent pas : temps de calcul de la saison (machine),
+#: description du moteur (texte libre des sorties d'adversaires).
+IGNORES = {'duree_s', 'moteur'}
+#: Listes dont l'ordre ne porte aucune information : `first_under` (premier
+#: passage sous 3 % par exercice) est rempli en parcourant un ENSEMBLE Python
+#: (`banc/mesures.py`, `ids`), dont l'ordre dépend du hachage des chaînes
+#: (aléatoire d'un processus à l'autre) ; les critères ne lisent que la
+#: multiplicité des valeurs (moyenne, part sous un seuil). Comparées triées.
+MULTIENSEMBLES = {'first_under'}
 
 
 def _parts(chemins):
@@ -89,6 +99,11 @@ def comparer(a, b, chemin, ecarts):
         return n
     if isinstance(a, dict) and isinstance(b, dict):
         for k in sorted(set(a) | set(b)):
+            if k in IGNORES:
+                continue
+            if k in MULTIENSEMBLES and isinstance(a.get(k), list) and isinstance(b.get(k), list):
+                n += comparer(sorted(a[k]), sorted(b[k]), chemin + '.' + str(k) + '(trié)', ecarts)
+                continue
             if k not in a or k not in b:
                 ecarts.append((chemin + '.' + str(k), a.get(k, '<absent>'), b.get(k, '<absent>')))
                 n += 1
