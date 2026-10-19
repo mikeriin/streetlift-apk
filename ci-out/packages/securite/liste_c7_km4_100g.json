@@ -1,0 +1,731 @@
+{
+ "liste": [
+  {
+   "constats": {
+    "volume_trop_vite": 3
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 5.0,
+     "semaine": 4,
+     "valeur": 6.0
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 6.5
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "deuxieme_echeance",
+    "a",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "deuxieme_echeance",
+    "b",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "deuxieme_echeance",
+    "c",
+    48
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "deuxieme_echeance",
+    "c",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 2
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 7.0
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "douleur_coude",
+    "a",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "douleur_coude",
+    "b",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "douleur_coude",
+    "c",
+    48
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "douleur_coude",
+    "c",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 2
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 7.0
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "douleur_epaule",
+    "a",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "douleur_epaule",
+    "b",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "douleur_epaule",
+    "c",
+    48
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "douleur_epaule",
+    "c",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 3
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 5.0,
+     "semaine": 4,
+     "valeur": 6.0
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 6.5
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "echeance_avancee",
+    "a",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "echeance_avancee",
+    "b",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "echeance_avancee",
+    "c",
+    48
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "echeance_avancee",
+    "c",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 3
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 5.0,
+     "semaine": 4,
+     "valeur": 6.0
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 6.5
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "maladie",
+    "a",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "maladie",
+    "b",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "maladie",
+    "c",
+    48
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "maladie",
+    "c",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 3
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 5.0,
+     "semaine": 4,
+     "valeur": 6.0
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 6.5
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "parc_seulement",
+    "a",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "parc_seulement",
+    "b",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "parc_seulement",
+    "c",
+    48
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "parc_seulement",
+    "c",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 3
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 5.0,
+     "semaine": 4,
+     "valeur": 6.0
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 6.5
+    },
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.0,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "reference",
+    "a",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.0
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "reference",
+    "b",
+    96
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "reference",
+    "c",
+    48
+   ]
+  },
+  {
+   "constats": {
+    "volume_trop_vite": 1
+   },
+   "exemples": [
+    {
+     "categorie": "introduit",
+     "code": "volume_trop_vite",
+     "exercice": null,
+     "jour": null,
+     "limite": 6.5,
+     "semaine": 4,
+     "valeur": 7.5
+    }
+   ],
+   "saison": [
+    "autres_10_contraintes_multiples",
+    "reference",
+    "c",
+    96
+   ]
+  }
+ ],
+ "saisons": 90600,
+ "saisons_touchees": 28,
+ "violations": 40
+}

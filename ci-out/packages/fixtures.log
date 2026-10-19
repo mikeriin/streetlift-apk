@@ -1,0 +1,2 @@
+fixtures pas à jour : numerique.json (différent), planification_1.json (différent), planification_2.json (différent)
+(relancer python3 fixtures/generer.py)
