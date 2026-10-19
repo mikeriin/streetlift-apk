@@ -1,31 +1,38 @@
 #!/bin/bash
-# Mise au point KM4 (Koach 1.0.6), run A : point de départ. Campagne Dart du couple kalis_plan 0.4.2 ×
-# Koach 1.0.5 (kalis_adapt 1.0.4, inchangé) sur les 90 600 saisons, avec la mesure de la rampe sur les
-# principaux ajoutée au banc (`rampe` : principal retiré par la rampe de volume sans douleur, part des
-# séances dont un principal est réduit, part servie) et le rôle des emplacements dans `reste_semaine`
-# (sans effet sur 1.0.5).
-#  PART 1-34 : groupe g = (PART+1)/2 (graines 6(g-1)..6g-1 ; 17 : 96-99), part h sur 2 ; témoin lu
+# Mise au point KM4 (Koach 1.0.6), run B : référence Python 1.0.6 (retour gradué réparti sur la semaine,
+# priorisé par rôle, plancher des principaux) et portage Dart (kalis_adapt 1.0.5, kalis_bench 0.5.7).
+#  PART 0     : tests Python de la référence ; fixtures à jour ; Dart : format, analyse de kalis_adapt et
+#               kalis_bench, tests de kalis_adapt, tests km de kalis_bench (km2_banc_test, km_export_test)
+#  PART 61-80 : campagne Python de la référence 1.0.6, graines 0-99, parts 1/20..20/20 (saisons de
+#               kalis_plan 0.4.2 de l'arbre, témoin 0.3.1 lu)
 root=$PWD
 out=$root/out-packages
 status=0
 B=$root/packages/kalis_bench
-R=$root/packages/kalis_adapt/reference
-for name in kalis_adapt kalis_bench; do
-  (cd packages/$name && dart pub get) > $out/$name-pub-$PART.log 2>&1 || { echo "pub get $name échec"; tail -30 $out/$name-pub-$PART.log; status=1; }
-done
-if [ "$PART" = 1 ]; then
-  (cd $B && dart analyze --fatal-infos lib bin tool test) > $out/analyze-kalis_bench.log 2>&1 || { echo "analyse kalis_bench : échec"; tail -30 $out/analyze-kalis_bench.log; status=1; }
-  (cd $B && dart format --output=none --set-exit-if-changed lib bin test) > $out/format-kalis_bench.log 2>&1 || { echo "format kalis_bench : échec"; cat $out/format-kalis_bench.log | tail; status=1; }
-fi
-if [ "$PART" -ge 1 ] && [ "$PART" -le 34 ]; then
-  g=$(( (PART + 1) / 2 )); h=$(( 2 - PART % 2 ))
-  a=$(( 6 * (g - 1) )); b=$(( a + 5 )); [ $b -gt 99 ] && b=99
-  cd $B
-  mkdir -p $out/parts
-  extra=""; [ "$g" != 1 ] && extra="--sans-determinisme"
+A=$root/packages/kalis_adapt
+R=$A/reference
+if [ "$PART" = 0 ]; then
+  (cd $R && python3 -m pytest tests -q) > $out/pytest.log 2>&1 || { echo "pytest : échec"; status=1; }
+  tail -30 $out/pytest.log
+  (cd $R && python3 fixtures/generer.py --verifier && python3 fixtures/generer_banc_km2.py --verifier && python3 ../test/fixtures/km2c2/generer_km2c2.py --verifier) > $out/fixtures.log 2>&1 || { echo "fixtures pas à jour"; status=1; }
+  tail -5 $out/fixtures.log
+  for name in kalis_adapt kalis_bench; do
+    (cd packages/$name && dart pub get) > $out/$name-pub-0.log 2>&1 || { echo "pub get $name échec"; tail -30 $out/$name-pub-0.log; status=1; }
+    (cd packages/$name && dart format --output=none --set-exit-if-changed .) > $out/format-$name.log 2>&1 || { echo "format $name : échec"; (cd packages/$name && dart format . >/dev/null; git diff) > $out/format-$name.patch; status=1; }
+    (cd packages/$name && dart analyze --fatal-infos) > $out/analyze-$name.log 2>&1 || { echo "analyse $name : échec"; tail -40 $out/analyze-$name.log; status=1; }
+  done
+  (cd $A && dart test --reporter expanded) > $out/kalis_adapt-test.log 2>&1 || { echo "tests kalis_adapt : échec"; status=1; }
+  grep -E "\[E\]|Some tests failed|All tests passed|Expected|Actual" $out/kalis_adapt-test.log | tail -60
+  (cd $B && dart test --reporter expanded test/km2_banc_test.dart test/km_export_test.dart) > $out/kalis_bench-test.log 2>&1 || { echo "tests kalis_bench km : échec"; status=1; }
+  grep -E "\[E\]|Some tests failed|All tests passed" $out/kalis_bench-test.log | tail -30
+elif [ "$PART" -ge 61 ] && [ "$PART" -le 80 ]; then
+  i=$((PART-60))
+  cd $R
   start=$(date +%s)
-  dart run bin/km2.dart --graines $a-$b --coeurs 4 $extra --temoin $R/donnees/temoin --partie $h/2 --sortie $out/parts/km4avant_g${a}_${b}_partie_${h}_sur_2.json.gz > $out/campagne_${a}_${b}_$h.log 2>&1 || { echo "campagne $a-$b part $h : échec"; status=1; }
+  python3 -m banc.campagne --graines 100 --coeurs 4 --partie $i/20 --travail $out/py_travail > $out/py_campagne_c${i}_sur_20.log 2>&1 || { echo "campagne python $i/20 : échec"; status=1; }
   echo "durée : $(( $(date +%s) - start )) s"
-  tail -4 $out/campagne_${a}_${b}_$h.log
+  tail -3 $out/py_campagne_c${i}_sur_20.log
+else
+  echo "part inconnue : $PART"; status=1
 fi
 exit $status
