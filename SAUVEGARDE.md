@@ -7,6 +7,10 @@ Base : main 60e17e2b. Travail sur la branche locale `travail` (même contenu que
 - Popup : libellés, codes, message d'entrée (`koach1_widgets.dart`).
 - Garde de la séance (`koachGardeSeance`), réponse refusée (état `ecrite`), arrêt d'urgence ramène la séance à l'écrit.
 
+## Fait aussi
+- Relecture indépendante traitée (journal coupé sur échec, endurance_retrait motivé, état ecrite périmé le lendemain, ligne à 0 série par la planification laissée retirée).
+- Version 7.2.2, tests test/kb2c1_*, cible integration_test/koach_kb2c1_test.dart inscrite dans tools/ci3d_drive.sh ; rapide vert (19 tests).
+
 ## Reste
 - Tests unitaires et widget `test/kb2c1_*`, cible émulateur `integration_test/koach_kb2c1_test.dart` + `tools/ci3d_drive.sh`.
 - Version 7.2.2, contrôle complet ci-3d, main, build signé, livraison, ETAT, page de suivi, notification.

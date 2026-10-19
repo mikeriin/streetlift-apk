@@ -65,12 +65,12 @@ String koachSlotEcrit(String slot) =>
 ///   servies telles qu'écrites (`{slotId, exercice, cause?}`, `cause` : code
 ///   de la raison de Koach sur l'exercice, s'il en a donné une) ;
 /// - `retraits` : retraits motivés (`{slotId, exercice, code}`) : conduite
-///   sous douleur (`koach.douleur_retrait`), test reporté
+///   sous douleur (`koach.douleur_retrait`), course ou cardio retirés au
+///   bilan bas ou sous douleur (`koach.endurance_retrait`), test reporté
 ///   (`koach.test_reporte` sur une ligne de test), séance bornée au temps
 ///   donné par l'athlète (`koach.seance_bornee`, [budgetDonne]).
 /// Pur (testé).
-({List<Json> servis, List<Json> ecrites, List<Json> retraits})
-koachGardeSeance(
+({List<Json> servis, List<Json> ecrites, List<Json> retraits}) koachGardeSeance(
   List<Json> ecrit,
   List<Json> servi,
   List<Json> raisons, {
@@ -89,9 +89,7 @@ koachGardeSeance(
     final c = a.$1.compareTo(b.$1);
     return c != 0 ? c : a.$2.compareTo(b.$2);
   });
-  final present = {
-    for (final g in gardes) koachSlotEcrit('${g.$3['slotId']}'),
-  };
+  final present = {for (final g in gardes) koachSlotEcrit('${g.$3['slotId']}')};
   final ecrites = <Json>[];
   final retraits = <Json>[];
   for (final w in ecrit) {
@@ -105,6 +103,7 @@ koachGardeSeance(
       if (p is! Map || p['exercice'] != ex) continue;
       final code = '${r['code']}';
       if (code == 'koach.douleur_retrait' ||
+          code == 'koach.endurance_retrait' ||
           (code == 'koach.test_reporte' && w['kind'] == 'test') ||
           (code == 'koach.seance_bornee' && budgetDonne)) {
         motif ??= code;
@@ -1438,6 +1437,13 @@ extension KoachStore on AppStore {
       return false;
     }
     final sw = Stopwatch()..start();
+    // Longueur du journal avant le début de séance : un échec le coupe là
+    // (le journal reste rejouable, aucun `seance_debut` orphelin).
+    final n0 = k.journal.length;
+    void couper() {
+      if (k.journal.length > n0) k.journal.removeRange(n0, k.journal.length);
+    }
+
     Json r;
     try {
       k.observe({
@@ -1455,8 +1461,9 @@ extension KoachStore on AppStore {
             kKoachCleDiag: diagnostic,
           });
         } catch (_) {
-          // Début de séance déjà versé à l'instance : rejeu du journal
-          // gardé au prochain passage.
+          // Début de séance déjà versé à l'instance : journal coupé, rejeu
+          // au prochain passage.
+          couper();
           _koachRt.live = null;
           _koachRefuseAnswer(week, base, a);
           return false;
@@ -1472,7 +1479,8 @@ extension KoachStore on AppStore {
               })!
               as Json;
     } catch (_) {
-      // État du moteur partiel : rejeu au prochain passage.
+      // État du moteur partiel : journal coupé, rejeu au prochain passage.
+      couper();
       _koachRt.live = null;
       _koachRt.error = 'Séance de Koach impossible : séance écrite servie.';
       return false;
@@ -1502,8 +1510,21 @@ extension KoachStore on AppStore {
       budgetDonne: contexte['budget'] != null,
     );
     final served = garde.servis;
-    final ecrites = {for (final x in garde.ecrites) '${x['slotId']}'};
     final apercu = {for (final it in a.plan.items) it.slotId: it};
+    final ecrites = {
+      for (final x in garde.ecrites)
+        if (apercu.containsKey(x['slotId'])) '${x['slotId']}',
+    };
+    final retraits = [
+      ...garde.retraits,
+      for (final x in garde.ecrites)
+        if (!apercu.containsKey(x['slotId']))
+          {...x, 'code': 'koach.planification'},
+    ];
+    final gardees = [
+      for (final x in garde.ecrites)
+        if (apercu.containsKey(x['slotId'])) x,
+    ];
     final items = <kc.ExercisePrescription>[];
     for (final w in info.items) {
       final slot = '${w['slotId']}';
@@ -1513,12 +1534,10 @@ extension KoachStore on AppStore {
         if (p != null) items.add(p);
       }
       if (!ecrites.contains(slot)) continue;
-      var p = apercu[slot];
-      if (p == null) {
-        try {
-          p = kc.ExercisePrescription.fromJson(w).copyWith(setTargets: null);
-        } catch (_) {}
-      }
+      // La ligne de l'aperçu (séries de la semaine, charge fixe) ; une
+      // ligne que la planification de la semaine a mise à 0 série n'est
+      // pas dans l'aperçu : elle reste retirée, comme l'aperçu le montrait.
+      final p = apercu[slot];
       if (p != null) items.add(p);
     }
     var plan = kc.SessionPlan(
@@ -1551,8 +1570,8 @@ extension KoachStore on AppStore {
         'semaine': week - 1,
         'items': served,
         'raisons': raisons,
-        if (garde.ecrites.isNotEmpty) 'ecrites': garde.ecrites,
-        if (garde.retraits.isNotEmpty) 'retraits': garde.retraits,
+        if (gardees.isNotEmpty) 'ecrites': gardees,
+        if (retraits.isNotEmpty) 'retraits': retraits,
         'cibles': <String, Object?>{},
         'versed': <Object?>[],
         if (check != null) 'debut': check,
@@ -2102,8 +2121,11 @@ extension KoachStore on AppStore {
     // KB2 correction 1 : ligne servie telle qu'écrite par la garde.
     final ecrites = st['ecrites'];
     if (ecrites is List) {
+      // (Une ligne au départ chronométré servie telle qu'écrite, PR8, est
+      // la ligne du programme : emplacement relu.)
+      final slot = e.slotId ?? adaptSlotOf(week, j, e.id);
       for (final x in ecrites) {
-        if (x is Map && x['slotId'] == e.slotId) {
+        if (x is Map && x['slotId'] == slot) {
           return koachTexteEcrite(x['cause'] as String?);
         }
       }
@@ -2476,6 +2498,7 @@ extension KoachStore on AppStore {
       if (m == null) continue;
       final week = int.parse(m[1]!), j = int.parse(m[2]!);
       if (week < 1 || week > program.weeks.length) continue;
+      if (!koachStoppedWeek(week)) continue;
       final base = program.week(week).day(j);
       if (base == null) continue;
       for (final e in base.exercises) {
@@ -2558,7 +2581,15 @@ extension KoachStore on AppStore {
         log != null &&
         (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)));
     final st = stored?.koach;
-    if (st != null && st['state'] != 'preview') return stored;
+    // KB2 correction 1 : séance écrite après une réponse refusée, gardée le
+    // jour même ; un autre jour, pas commencée, elle redevient l'aperçu
+    // (Koach la sert, la question revient).
+    final stale =
+        st != null &&
+        st['state'] == 'ecrite' &&
+        !started &&
+        st['date'] != _kToday.iso;
+    if (st != null && st['state'] != 'preview' && !stale) return stored;
     if (started) {
       if (stored != null && st == null) return stored;
       if (st != null && koachStartNow(week, base)) {

@@ -462,8 +462,9 @@ void main() {
     });
   });
 
-  test('version affichée : « 7.2.1 » hors build de développement (KB2)', () {
-    expect(kVersion, '7.2.1');
-    expect(kAppVersion, '7.2.1');
+  test('version affichée : « 7.2.2 » hors build de développement (KB2 '
+      'correction 1)', () {
+    expect(kVersion, '7.2.2');
+    expect(kAppVersion, '7.2.2');
   });
 }

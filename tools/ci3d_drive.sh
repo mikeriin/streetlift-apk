@@ -52,6 +52,28 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
+# KB2 correction 1 (dev7.2.2, C17.36) : popup du questionnaire hors modèle
+# (message d'entrée, quatre choix sous leur texte, feuille fermée = « Plus
+# tard ») et séance S1·J1 du programme PR2 synthétique servie par Koach
+# identique à l'écrit ; arrêt d'urgence pendant la séance (séance écrite,
+# série gardée), réactivation ; J2 : « Rien de spécial » accepté. Build de
+# développement, deux parties : a = sombre, rouge ; b = clair, violet.
+code_kb2c1=0
+for part in a b; do
+  cible koach_kb2c1_test "$part" dev
+  c=$?
+  if [ "$c" -ne 0 ] && [ ! -f "$out/kb2c1_releve_$part.json" ]; then
+    echo "KB2c1 $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-koach_kb2c1_test-$part.log" "$out/drive-kb2c1-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible koach_kb2c1_test "$part" dev
+    c=$?
+  fi
+  [ "$c" -ne 0 ] && code_kb2c1=$c
+  tail -n 30 "$out/drive-koach_kb2c1_test-$part.log"
+done
 # KB2 (dev7.2.1, bascule ouverte par dérogation, prise de main immédiate) :
 # session personnelle, horloge au lundi 19/10/2026 : sauvegarde synthétique
 # de la forme de celle du propriétaire (programme PR2 au départ affiché S15,
@@ -534,7 +556,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_kb2=$code_kb2 code_kb1=$code_kb1 code_ks1a=$code_ks1a code_km3=$code_km3 code_bv11=$code_bv11 code_cif=$code_cif code_ci1g=$code_ci1g code_ci1f=$code_ci1f code_ci1e=$code_ci1e code_ci1c=$code_ci1c code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_kb2c1=$code_kb2c1 code_kb2=$code_kb2 code_kb1=$code_kb1 code_ks1a=$code_ks1a code_km3=$code_km3 code_bv11=$code_bv11 code_cif=$code_cif code_ci1g=$code_ci1g code_ci1f=$code_ci1f code_ci1e=$code_ci1e code_ci1c=$code_ci1c code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_kb2" -eq 0 ] && [ "$code_kb1" -eq 0 ] && [ "$code_ks1a" -eq 0 ] && [ "$code_km3" -eq 0 ] && [ "$code_bv11" -eq 0 ] && [ "$code_cif" -eq 0 ] && [ "$code_ci1g" -eq 0 ] && [ "$code_ci1f" -eq 0 ] && [ "$code_ci1e" -eq 0 ] && [ "$code_ci1c" -eq 0 ] && [ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_kb2c1" -eq 0 ] && [ "$code_kb2" -eq 0 ] && [ "$code_kb1" -eq 0 ] && [ "$code_ks1a" -eq 0 ] && [ "$code_km3" -eq 0 ] && [ "$code_bv11" -eq 0 ] && [ "$code_cif" -eq 0 ] && [ "$code_ci1g" -eq 0 ] && [ "$code_ci1f" -eq 0 ] && [ "$code_ci1e" -eq 0 ] && [ "$code_ci1c" -eq 0 ] && [ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
