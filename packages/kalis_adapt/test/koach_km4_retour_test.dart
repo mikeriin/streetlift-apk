@@ -274,12 +274,9 @@ int _troisSemainesA(Koach k) {
 /// 14).
 void _troisSemainesDips(Koach k, int sets, {bool roles = true}) {
   for (var w = 0; w < 3; w++) {
-    _seance(
-      k,
-      7 * w,
-      [_it('x$w', _dl, sets, role: roles ? 'main' : null)],
-      roles: roles,
-    );
+    _seance(k, 7 * w, [
+      _it('x$w', _dl, sets, role: roles ? 'main' : null),
+    ], roles: roles);
   }
 }
 
@@ -481,7 +478,9 @@ void main() {
       28,
       [_it('x', _dl, 10, role: 'main')],
       zones: zones,
-      douleurs: <Object?>[<String, Object?>{'zone': _sh, 'intensity': 4}],
+      douleurs: <Object?>[
+        <String, Object?>{'zone': _sh, 'intensity': 4},
+      ],
     );
     expect(_series(out, 'x'), 0);
     (out, raisons) = _seance(
@@ -590,7 +589,11 @@ void main() {
     expect(sans, isNotEmpty);
     final k = _koach();
     _troisSemainesDips(k, 2, roles: false);
-    final s = [_it('m.0', sans.first, 3), _it('m.1', _dl, 6), _it('m.2', _pp, 4)];
+    final s = [
+      _it('m.0', sans.first, 3),
+      _it('m.1', _dl, 6),
+      _it('m.2', _pp, 4),
+    ];
     final (out, _) = _seance(k, 21, s, roles: false);
     expect(_series(out, 'm.1'), greaterThanOrEqualTo(3));
     expect(_series(out, 'm.2'), 0);
