@@ -12,6 +12,10 @@ Session Opus 5.5 (19/10/2026, depuis 11:04 UTC). Base : `moteurs` 9c81a201.
 - Échantillon 1.0.6 réparti : c7 0, retiré 0, réduit 2,0 %, part servie 27 %, retour à l'écrit 31 → 84 (séances manquées comptées à l'écrit après répartition) ; mode prudent toujours : retour à l'écrit 49, réduit 3,8 %.
 - CI : run A 39247073902 (Dart 1.0.4 avant, mesure) ; run B 89a320e9 (tests + campagne Python 1.0.6).
 
+- Relecture indépendante (Opus) : 0 bloquant ; M2 corrigé (lignes restantes sans rôle non coupées, rang 3), mineur 4 (première ligne créditée), texte de retrait, commentaire rupture.dart ; M1 (tenues bras tendus : règle tendineuse gardée, exception documentée) ; mineurs documentés.
+- CI : run A 39247073902 (avant, Dart 1.0.4) ; run B (ter) 39260047813 (tests + campagne Python 1.0.6, 20 parts) ; run C (bis) be0711bb (campagne Dart 1.0.6 + adversaires, comparaison au run B) ; format distant branche claude/fmt-km4 (033c6eda).
+- Part 0 du run B : Dart compile, tests kalis_adapt verts sauf docs/PROPRIETAIRE.md (version, corrigé) ; format kalis_adapt à corriger (branche fmt) ; pytest : test_campagne (corrigé) + test_fixtures (numpy de la CI, connu).
+
 ## En cours / reste
 - Échantillon 1.0.6 ; tests hérités (`test_securite_regles.py` retour gradué) à mettre à la sémantique 1.0.6 ; fixtures ; portage Dart ; banc Dart (rôle, mesure) ; campagnes CI (Dart avant, Python 1.0.6, Dart 1.0.6) ; documents ; livraison.
 

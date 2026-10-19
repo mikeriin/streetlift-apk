@@ -2111,7 +2111,9 @@ class Seances {
       for (final (r, w) in poids) {
         exces[r] += w * series;
       }
-      unites.add(_UniteRetour(seance, pos, slot, series, poids, rang, plancher));
+      unites.add(
+        _UniteRetour(seance, pos, slot, series, poids, rang, plancher),
+      );
       return true;
     }
 
@@ -2174,7 +2176,11 @@ class Seances {
     }
     rv.repartie = repartie;
 
-    void couper(String portee, int rang, int Function(_UniteRetour) plancherDe) {
+    void couper(
+      String portee,
+      int rang,
+      int Function(_UniteRetour) plancherDe,
+    ) {
       while (true) {
         if (!exces.any((x) => x > 1e-9)) {
           return;
