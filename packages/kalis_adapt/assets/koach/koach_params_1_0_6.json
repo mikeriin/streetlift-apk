@@ -399,7 +399,8 @@
     "volume_hausse_2sem_series": 4,
     "volume_reprise_part": 0.5,
     "retour_plancher_principal": 0.5,
-    "retour_repartition_semaines": 4,
+    "retour_repartition_semaines": 0,
+    "retour_emprunt_plancher": 1,
     "volume_groupes_majeurs": [
       "chest",
       "delt_anterior",

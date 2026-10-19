@@ -1460,7 +1460,7 @@ class Seances(object):
         c = self.contexte or {}
         sem = c.get('semaine')
         fenetre = int(s['retour_repartition_semaines'])
-        repartie = not any(w in self.semaines_manquees for w in range(sem - fenetre + 1, sem + 1))
+        repartie = fenetre > 0 and not any(w in self.semaines_manquees for w in range(sem - fenetre + 1, sem + 1))
         rv['repartie'] = repartie
 
         def couper(portee, rang, plancher_de):
@@ -1498,13 +1498,20 @@ class Seances(object):
         if repartie:
             for (rang, f) in etapes:
                 couper('tous', rang, f)
-        else:
+        elif int(s['retour_emprunt_plancher']):
             for (rang, f) in etapes[:3]:
                 couper('jour', rang, f)
             for (rang, f) in etapes[:3]:
                 couper('reste', rang, f)
             for (rang, f) in etapes[3:]:
                 couper('jour', rang, f)
+                couper('reste', rang, f)
+        else:
+            # Emprunt minimal : la séance du jour paie jusqu'à une série par
+            # principal avant toute coupe promise à une séance restante.
+            for (rang, f) in etapes:
+                couper('jour', rang, f)
+            for (rang, f) in etapes:
                 couper('reste', rang, f)
         rv['depasse'] = [r for r in range(len(exces)) if exces[r] > 1e-9]
         for u in unites:
