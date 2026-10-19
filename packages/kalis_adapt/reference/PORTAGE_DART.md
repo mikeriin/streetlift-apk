@@ -265,3 +265,12 @@ Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Po
   GARDÉE dans le fichier, l'asset, les défauts et les bornes, comme dans la référence (le fichier porte le SHA-256 que
   les fixtures vérifient ; la retirer change la référence) ; le code Dart ne la lit plus et son validateur l'admet sans
   l'exiger. `Seances._semaine_connue` (appelée nulle part dans la référence) n'est pas portée.
+
+## Delta 1.0.5 → 1.0.6 (lot KM4, 19/10/2026 ; portage dans le même lot, `kalis_adapt` 1.0.5)
+
+- `seance.dart` : `prescrire` en deux passes (`_item` sur toutes les lignes, puis `_planRetour`, puis `_retourGradue` et le vrai test) ; `BudgetsRetour` réécrit (`limites`, `fait`, `limiteDures`, `faitDures`, `reste`, `plan`, `cause`, `repartie`, `depasse`, tenues inchangées) ; `_UniteRetour` ; `rangRole` ; `_douleurUnite` ; `semainesManquees` (rempli par `ouvrir` depuis `contexte['manquees']`) ; raison `koach.retour_gradue` avec `ecrites` et `douleur`. Ligne pour ligne : arrondi du plancher `(écrit × part − 1e-9).ceil()`, comparaison `m / n` en double, égalités départagées par la séance puis la ligne la plus tardive, excès comparés à `1e-9`.
+- `parametres.dart` : `koachVersion` et `koachParametresVersion` `1.0.6-ref.1`, asset `koach_params_1_0_6.json` (copie à l'octet de `params/koach_params_v1.json`), SHA-256, 346 clés.
+- `rupture.dart` : `elargissement_rien_de_special` retirée des défauts et des bornes.
+- `koach_textes.dart` : « N séries au lieu de M » quand `ecrites` > `series` (sens des autres textes inchangé).
+- Banc : `_pkItemsVolume(items, roles)`, `kmMesureRampe`, `rampe` dans le résultat de saison (`kmMesureDeSaison`), `tool/kr1_securite.py` (`rampe_principaux`).
+- Tests : `test/koach_km4_retour_test.dart` (port des 11 tests de `tests/test_km4_retour.py`), `koach_parametres_test.dart`, `koach_textes_test.dart` ; fixtures régénérées.

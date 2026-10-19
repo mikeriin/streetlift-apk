@@ -1,5 +1,17 @@
 # Journal
 
+
+## 0.5.7 — 19/10/2026 (lot KM4)
+
+Lot KM4 (DECISIONS_CP.md C17.37) : mesure de la rampe de volume sur les principaux et rôle des emplacements dans le
+contexte de Koach.
+
+- `PolitiqueKoach` : les items des séances manquées et restantes de la semaine (`reste_semaine`) portent le rôle de
+  leur emplacement (`role`, lu par Koach 1.0.6) ; `kmMesureRampe` compte, séance par séance, les principaux écrits
+  (`main`) réduits par `koach.retour_gradue`, leur part servie et les principaux **retirés par la rampe sans douleur**
+  (critère KM4) ; `rampe` dans le résultat de chaque saison (`kmMesureDeSaison`), comme `reference/banc/campagne.py`.
+- `tool/kr1_securite.py` : agrégat `rampe_principaux` (total, par scénario, exemples) et tableau du rapport.
+- Fixtures `test/fixtures/km2/` régénérées (Koach 1.0.6).
 ## 0.5.6 — 18/10/2026 (lot KM2c3)
 
 Mesure du couple `kalis_plan` 0.4.2 × Koach 1.0.5 **en Dart** (`kalis_adapt` 1.0.4, portage de la référence ;

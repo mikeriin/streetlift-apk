@@ -28,6 +28,17 @@ du journal et valeurs des paramètres inchangés : monter le paquet et remplacer
 (`koach_params_1_0_3.json` → `koach_params_1_0_4.json`, version `1.0.4-ref.1`, nouvelle empreinte au § 3). Mesuré
 sur le couple servi, `kalis_plan` 0.4.1 × Koach 1.0.4, 34 profils (`pipeline/cp/livraisons/LIVRAISON_KR1.md`).
 
+**Mise à jour du 19/10/2026 (`kalis_adapt` 1.0.5, lot KM4)** : portage de la référence Koach 1.0.6 (retour gradué
+au volume réparti sur la semaine et priorisé par rôle, `reference/CHANGEMENTS_1_0_6.md`). API et schéma du journal
+inchangés. À faire dans l'application (lot KB3) : (1) remplacer l'asset de paramètres (`koach_params_1_0_5.json` →
+`koach_params_1_0_6.json`, version `1.0.6-ref.1`, 346 clés, nouvelle empreinte au § 3) ; (2) donner à chaque item de
+`contexte['reste_semaine']` (et des séances manquées) le **rôle de son emplacement** (`role` : `main`, `secondary`,
+`accessory`…, tiré de `pass1.days[].slots[]` comme `roles` du plan de séance) — sans rôle, Koach prend la première
+ligne dure de chaque séance pour le principal ; (3) la garde de l'application sur le retour gradué (KB2 correction 1 :
+un exercice ramené à 0 série servi à la moitié de ses séries) peut rester en filet : Koach 1.0.6 ne retire plus un
+principal par la rampe sans douleur ; un accessoire ou un secondaire peut encore l'être (raison affichée) ; (4) la
+raison `koach.retour_gradue` porte `ecrites` et `douleur` (texte « N séries au lieu de M »).
+
 **Mise à jour du 18/10/2026 (`kalis_adapt` 1.0.4, lot KM2c3)** : portage de la référence Koach 1.0.5 (conduite sous
 douleur et rampe du réalisé, `reference/CHANGEMENTS_1_0_5.md`) : zone sensible douze semaines après tout épisode,
 rampe hebdomadaire de l'exposition réalisée par zone (échauffement compris) et au retour d'une coupure, aucune
@@ -95,7 +106,7 @@ Textes des raisons : `package:kalis_adapt/koach_textes.dart` (§ 4), testé par 
 ### 1.2 Construction
 
 ```dart
-final params = lireParametresKoach(await rootBundle.loadString('assets/koach/koach_params_1_0_5.json'));
+final params = lireParametresKoach(await rootBundle.loadString('assets/koach/koach_params_1_0_6.json'));
 final fiches = lireFichesKoach(await rootBundle.loadString('assets/koach/vecteurs_qualites_v1.json'));
 final koach = Koach(params, fiches, profilKoach);           // profilKoach : § 2.6, figé (instantané)
 final validation = ProfilValidation.depuisProfil(athleteProfile, debut: lundiS1);
@@ -356,7 +367,7 @@ fiche sont ignorés par la planification (`chargerReference`, d'après le code).
 
 ## 3. Paramètres
 
-- **Assets.** Copier dans l'application, octet pour octet, `packages/kalis_adapt/assets/koach/koach_params_1_0_5.json`
+- **Assets.** Copier dans l'application, octet pour octet, `packages/kalis_adapt/assets/koach/koach_params_1_0_6.json`
   et `vecteurs_qualites_v1.json` dans `assets/koach/`, déclarés dans `pubspec.yaml` de l'application comme
   `assets/catalog/catalog_v1.json.gz` (copie de l'asset de `kalis_core`). Le paquet est du Dart pur et ne déclare
   aucun asset Flutter (son `pubspec.yaml` n'a pas de section `flutter`) : ne pas utiliser `koachAssetParametres` /
@@ -364,7 +375,7 @@ fiche sont ignorés par la planification (`chargerReference`, d'après le code).
   `rootBundle.loadString('assets/koach/…')`, puis `lireParametresKoach` / `lireFichesKoach` (`parametres.dart`),
   qui contrôlent schéma, version, types, bornes et positivité et lèvent `FormatException`.
 - **Empreintes.** Paramètres : version `1.0.5-ref.1`, 345 clés, SHA-256
-  `d8a492b7debca0e4a504ed399efee0a8a6e4e003ab99f7cbb7f49c114bfbf26d` (`koachParametresSha256`). Fiches : version
+  `55a423cd53b2a31b92f6b14239a4786197f9cd8a575e2f9d348432e217e1dbe8` (`koachParametresSha256`). Fiches : version
   `1.0.0`, 1 039 fiches, SHA-256 `71454d2d6fcc6df8823b23cb640eec5293f40e91822bda9afa75f5ca0098ba6c`
   (`koachFichesSha256`). Un test de l'application compare les octets de `assets/koach/` à ceux du paquet et leur
   SHA-256 aux constantes (comme `test/koach_parametres_test.dart` du paquet).
@@ -693,7 +704,7 @@ Koach n'en a pas (contrat § 10.2) : c'est un état de l'application, hors du jo
 - [ ] `packages/kalis_adapt` = la dernière étiquette **validée** de `kalis_adapt` (1.0.4 si le lot KM2c3 est validé) à l'octet ;
       `kalis_bench` absent ; `kalis_core` 0.4.3, `kalis_plan` 0.3.1 inchangés (`kalis_plan` 0.4.1 entre par le lot court
       de KS1 ; le couple `kalis_plan` 0.4.1 × Koach est celui que mesure KR1).
-- [ ] Assets `assets/koach/koach_params_1_0_5.json` et `vecteurs_qualites_v1.json` copiés, déclarés, SHA-256
+- [ ] Assets `assets/koach/koach_params_1_0_6.json` et `vecteurs_qualites_v1.json` copiés, déclarés, SHA-256
       vérifiés par un test ; lus par `lireParametresKoach` / `lireFichesKoach`.
 - [ ] Construction : `Koach` + `Planification` (validateur `validateurSecurite` + `ProfilValidation.depuisProfil`),
       `Surveillance`, `ControleDual`, `Adherence`, dans cet ordre ; même ordre pour `rejouer`.

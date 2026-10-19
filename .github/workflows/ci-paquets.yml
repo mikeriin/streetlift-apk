@@ -22,7 +22,7 @@ concurrency:
 env:
   FLUTTER_VERSION: "3.47.5"
   RUN_PRECEDENT: ""
-  RUN_PYTHON: ""
+  RUN_PYTHON: "39260047813"
 
 jobs:
   parts:
@@ -85,8 +85,8 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
-      # Run C : la campagne Python de la référence 1.0.5 (KM1c4, run
-      # 39041787498, une saison par fichier) pour la comparaison saison par
+      # Run C (KM4) : la campagne Python de la référence 1.0.6 (run B,
+      # 39260047813, une saison par fichier) pour la comparaison saison par
       # saison.
       - uses: actions/download-artifact@v4
         if: ${{ env.RUN_PYTHON != '' }}
