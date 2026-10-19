@@ -270,6 +270,37 @@ def test_sans_role_premiere_ligne_principale():
     assert series(out, 'm.2') == 0 and series(out, 'm.3') == 0
 
 
+def test_lignes_restantes_sans_role_non_coupees_d_avance():
+    """Relecture KM4 (M2) : une ligne d'une séance restante sans rôle n'est
+    pas coupée d'avance (son rôle réel peut la protéger le jour venu) : la
+    séance du jour paie comme en 1.0.5, avec ses propres priorités."""
+    k = koach()
+    for w in range(3):
+        seance(k, 7 * w, [it('x%d' % w, DL, 10, role='main')])
+    s1 = [it('p.1', DL, 5, role='main'), it('p.2', PD, 6, role='accessory')]
+    s2 = [it('q.1', DL, 5), it('q.2', PD, 6)]                  # sans rôle
+    out1, _ = seance(k, 21, s1, reste=[s2])
+    assert k.seances.retour_vol['repartie'] is True
+    # 22 écrites pour 12, dont 11 réservées au reste : le jour coupe son
+    # accessoire à 0 (6), son principal à son plancher 3 (2), puis à 1 (2).
+    assert series(out1, 'p.2') == 0
+    assert series(out1, 'p.1') == 1
+
+
+def test_premiere_ligne_sans_credit_ne_prend_pas_le_role_de_principal():
+    """Relecture KM4 (mineur 4) : sans rôle, une première ligne dure sans
+    crédit de groupe majeur ne consomme pas la place du principal."""
+    sans = [e for e, f in FICHES.items() if f.get('renforcement') and not k_credits(e)]
+    assert sans
+    k = koach()
+    for w in range(3):
+        seance(k, 7 * w, [it('x%d' % w, DL, 2)], roles=False)
+    s = [it('m.0', sans[0], 3), it('m.1', DL, 6), it('m.2', PP, 4)]
+    out, _ = seance(k, 21, s, roles=False)
+    assert series(out, 'm.1') >= 3                      # principal (plancher)
+    assert series(out, 'm.2') == 0
+
+
 def test_principal_sous_douleur_sans_plancher():
     k = koach()
     for w in range(3):

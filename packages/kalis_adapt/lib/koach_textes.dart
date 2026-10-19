@@ -461,8 +461,8 @@ String _texteRetourGradue(Map<String, Object?> p, String ex) {
     borne = limite == null ? '' : ' (au plus $limite séries cette semaine)';
   }
   if (series == 0) {
-    return 'Je retire $ex cette semaine : pour $qui, le volume que la '
-        'reprise permet est déjà atteint$borne.';
+    return 'Je retire $ex aujourd’hui : pour $qui, le volume que la '
+        'semaine permet est déjà pris$borne.';
   }
   if (secondes != null) {
     return 'Tenue raccourcie à $secondes s sur $ex : pour $qui, le volume '
