@@ -48,10 +48,10 @@ void main() {
     tearDown(() => SessionSpace.devActive = false);
 
     test(
-      'version affichée : « dev7.2.2 » (popup de Koach, KB2 correction 1)',
+      'version affichée : « dev7.2.3 » (plages de reps et tours, 19/10)',
       () {
         expect(kAppVersion, 'dev$kVersion');
-        expect(kAppVersion, 'dev7.2.2');
+        expect(kAppVersion, 'dev7.2.3');
       },
     );
 
