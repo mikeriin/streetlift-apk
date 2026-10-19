@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:streetlift_tracker/adapt/session_adapt.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
