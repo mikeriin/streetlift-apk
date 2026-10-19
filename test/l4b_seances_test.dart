@@ -536,12 +536,17 @@ void main() {
       await tester.pumpAndSettle();
       expect(store.exLog(w.n, d.j, ex).sets[0].done, isTrue);
       expect(store.exLog(w.n, d.j, ex).sets[0].flames, 7);
-      // Modifiée après la coche avec une valeur invalide : non validée.
-      await tester.enterText(reps, '8,5');
-      await tester.pump();
+      // Correctif 20/10/2026 (dev7.2.4) : validée et notée, la série passe
+      // en ligne compacte ; un appui long annule la validation et rend la
+      // ligne de saisie, valeurs gardées.
+      final compact = find.byKey(ValueKey('set-compact-${ex.id}-0'));
+      expect(compact, findsOneWidget);
+      await tester.longPress(compact);
+      await tester.pumpAndSettle();
       expect(store.exLog(w.n, d.j, ex).sets[0].done, isFalse);
-      expect(find.textContaining('Série repassée non validée'), findsOneWidget);
-      expect(tester.widget<TextField>(reps).controller!.text, '8,5');
+      expect(store.exLog(w.n, d.j, ex).sets[0].reps, '8');
+      expect(compact, findsNothing);
+      expect(find.byTooltip('Valider la série 1'), findsWidgets);
       await tester.pumpWidget(const SizedBox());
       await tester.runAsync(() => store.flush());
     });
