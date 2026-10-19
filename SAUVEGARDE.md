@@ -6,5 +6,5 @@ Fait :
 - Tests : `test/kb2_prise_de_main_test.dart`, `test/flutter_test_config.dart` (bascule fermée par défaut pour les tests d'avant), tests de version 7.2.1, KM3/KB1 mis à jour ; cible `integration_test/koach_kb2_test.dart` ajoutée à `tools/ci3d_drive.sh` ; cibles d'avant jouées bascule fermée.
 - Version 7.2.1+141.
 
-En cours : run 39190303462 (60e17e2) : contrôles verts ; émulateur annulé (pannes VM service avant tout test : CI1, CI1c b, CI1e a, CI1f a) ; KB2, KB1, KM3, KS1A, BV11, CIF, CI1g verts → relance des jobs en échec (04:54 UTC).
-Reste : CI verte, SUIVI_PROJET.md, publication main, build signé, livraison, ETAT_CP, page de suivi, notification.
+Livré : dev7.2.1 sur main 60e17e2b, build signé run 39206500464, contrôle run 39190303462 ; livraison, ETAT (à valider), projet, page de suivi faits. Branches temporaires claude/shots-kb2 et claude/fmt-kb2 non supprimables (403).
+Reste : rien.
