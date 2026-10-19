@@ -57,10 +57,75 @@ def profil_koach(saison, profil):
 CHAMPS_VOLUME = ('slotId', 'exerciseId', 'kind', 'sets', 'targetFlames', 'secondsLow', 'secondsHigh')
 
 
-def items_volume(items):
+def items_volume(items, roles=None):
     """Items réduits aux champs de `CHAMPS_VOLUME` (contexte de séance plus
-    léger dans le journal)."""
-    return [{k: it.get(k) for k in CHAMPS_VOLUME} for it in items]
+    léger dans le journal), avec le rôle de l'emplacement (`role`, 1.0.6 :
+    priorité du retour gradué réparti sur la semaine) quand [roles]
+    (slotId -> rôle) est donné."""
+    out = []
+    for it in items:
+        d = {k: it.get(k) for k in CHAMPS_VOLUME}
+        if roles is not None:
+            d['role'] = roles.get(it.get('slotId'))
+        out.append(d)
+    return out
+
+
+#: Raisons de la conduite sous douleur (mesure de la rampe de volume, KM4).
+RAISONS_DOULEUR = ('koach.douleur_retrait', 'koach.reprise_dose', 'koach.douleur_persistante')
+
+
+def mesure_rampe(acc, items, roles, servis, raisons):
+    """Mesure du retour gradué sur les principaux (KM4, C17.37) ajoutée à
+    [acc] pour une séance : [items] écrits, [roles] slotId -> rôle,
+    [servis] items servis, [raisons] de Koach. Principal : ligne écrite de
+    rôle `main`, hors échauffement, au moins une série. Réduit : une raison
+    `koach.retour_gradue` porte sur son exercice ; retiré : réduit à 0 série
+    et absent du servi, sans raison de douleur sur l'exercice (ni conduite
+    sous douleur dite par la raison, `douleur`, 1.0.6)."""
+    acc['seances'] += 1
+    servi = {}
+    for it in servis:
+        servi[it.get('slotId')] = int(it.get('sets') or 0)
+    rampe = {}
+    douleur = set()
+    for r in raisons:
+        pr = r.get('params') or {}
+        ex = pr.get('exercice')
+        if r.get('code') == 'koach.retour_gradue':
+            rampe.setdefault(ex, []).append(pr.get('series'))
+            if pr.get('douleur'):
+                douleur.add(ex)
+        elif r.get('code') in RAISONS_DOULEUR or str(r.get('code')).startswith('koach.douleur'):
+            douleur.add(ex)
+    avec = False
+    reduit = False
+    retire = 0
+    for it in items:
+        if roles.get(it.get('slotId')) != 'main' or it.get('kind') == 'warmup' or int(it.get('sets') or 0) <= 0:
+            continue
+        avec = True
+        ex = it['exerciseId']
+        if ex not in rampe:
+            continue
+        reduit = True
+        n = servi.get(it.get('slotId'), 0)
+        acc['principaux_reduits'] += 1
+        acc['part_servie'] += n / float(it['sets'])
+        if n == 0 and 0 in rampe[ex] and ex not in douleur:
+            retire += 1
+    if avec:
+        acc['seances_principal'] += 1
+    if reduit:
+        acc['seances_principal_reduit'] += 1
+    if retire:
+        acc['principal_retire'] += retire
+        acc['seances_principal_retire'] += 1
+
+
+def rampe_vide():
+    return {'seances': 0, 'seances_principal': 0, 'seances_principal_reduit': 0, 'principaux_reduits': 0,
+            'part_servie': 0.0, 'principal_retire': 0, 'seances_principal_retire': 0}
 
 
 class PolitiqueKoach(Politique):
@@ -96,12 +161,17 @@ class PolitiqueKoach(Politique):
         # à Koach dans le contexte (retour gradué au volume).
         self.ecrits = {}
         self.par_semaine = {}
+        self.rampe = rampe_vide()
         for (g, bi, wb, di, sim_day) in saison.get('sessions') or []:
+            roles_bloc = {}
+            for d1 in saison['blocks'][bi]['pass1']['days']:
+                for sl in d1['slots']:
+                    roles_bloc[sl['slotId']] = sl.get('role')
             for w in saison['blocks'][bi]['pass2']['weeks']:
                 if w['weekIndex'] == wb:
                     for d in w['days']:
                         if d['dayIndex'] == di:
-                            self.ecrits[sim_day] = (g, w.get('kind'), items_volume(d['items']))
+                            self.ecrits[sim_day] = (g, w.get('kind'), items_volume(d['items'], roles_bloc))
             self.par_semaine.setdefault(g, []).append(sim_day)
         self.manquees = []
 
@@ -152,6 +222,7 @@ class PolitiqueKoach(Politique):
                 roles[s['slotId']] = s.get('role')
         r = self.koach.plan({'horizon': 'seance', 'items': items, 'grilles': self.grilles,
                              'zones': self.zones, 'roles': roles})
+        mesure_rampe(self.rampe, ctx.ecrit['items'], roles, r['items'], r.get('raisons') or [])
         return {'items': r['items']}
 
     def _verser(self, done):

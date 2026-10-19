@@ -471,6 +471,11 @@ String _texteRetourGradue(Map<String, Object?> p, String ex) {
   var combien = 'Moins de séries';
   if (series != null) {
     combien = series == 1 ? 'Une série' : '$series séries';
+    // 1.0.6 : séries écrites de la ligne (`ecrites`), quand elles sont dites.
+    final ecrites = _entier(p['ecrites']);
+    if (ecrites != null && ecrites > series) {
+      combien = '$combien au lieu de $ecrites';
+    }
   }
   return '$combien sur $ex : pour $qui, le volume remonte '
       'progressivement$borne.';

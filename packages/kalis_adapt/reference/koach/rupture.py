@@ -44,7 +44,6 @@ DEFAUTS_RUPTURE = {
     'assiduite_secours': 0.7,
     'assiduite_secours_semaines': 2,
     'douleur_secours': 2,
-    'elargissement_rien_de_special': 4.0,   # sans effet depuis 1.0.5 (gardé pour les validateurs)
     'elargissement_vers_a_priori': 0.25,   # 1.0.5 : part du chemin vers l'a priori à chaque « rien de spécial »
     'semaine_allegee_series': 0.6,
     'semaine_allegee_rir': 2.0,
@@ -837,7 +836,6 @@ BORNES = {
     ('rupture', 'residu_secours'): (0.0, 1.0),
     ('rupture', 'assiduite_secours'): (0.0, 1.0),
     ('rupture', 'douleur_secours'): (0.0, 10.0),
-    ('rupture', 'elargissement_rien_de_special'): (1.0, 100.0),
     ('rupture', 'elargissement_vers_a_priori'): (0.0, 1.0),
     ('rupture', 'semaine_allegee_series'): (0.1, 1.0),
     ('rupture', 'semaine_allegee_rir'): (0.0, 5.0),
