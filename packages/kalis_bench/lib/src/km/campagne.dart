@@ -25,7 +25,7 @@ import 'package:kalis_adapt/koach.dart' as kc;
 
 import 'criteres_moteur.dart';
 import 'meneur.dart' show KmTour, kmSimuler;
-import 'politique_koach.dart' show PolitiqueKoach;
+import 'politique_koach.dart' show PolitiqueKoach, kmRampeVide;
 
 /// Schéma de la sortie.
 const String kmSchemaCriteres = 'kalis_bench/criteres_km2/1';
@@ -1214,6 +1214,7 @@ Map<String, Object?> kmMesureDeSaison(
   required int? alertes,
   required List<kc.Json>? blocsModules,
   required bool sansPlanificateur,
+  Map<String, Object>? rampe,
 }) {
   final est = <String, Object?>{};
   for (final m in kmModes) {
@@ -1254,6 +1255,8 @@ Map<String, Object?> kmMesureDeSaison(
       tour,
       blocsModules: blocsModules,
     ),
+    // KM4 (C17.37) : principaux réduits ou retirés par la rampe de volume.
+    'rampe': Map<String, Object>.of(rampe ?? kmRampeVide()),
   };
 }
 
@@ -1285,6 +1288,7 @@ Map<String, Object?> kmMesurerSaison(
     alertes: _alertesDe(pol),
     blocsModules: pol.planification?.blocsModules(),
     sansPlanificateur: opts.sansPlanificateur,
+    rampe: pol.rampe,
   );
 }
 
