@@ -1,7 +1,7 @@
 # Journal
 
 
-## 0.5.7
+## 0.5.7 — 19/10/2026 (lot KM4)
 
 Lot KM4 (DECISIONS_CP.md C17.37) : mesure de la rampe de volume sur les principaux et rôle des emplacements dans le
 contexte de Koach.
