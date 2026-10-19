@@ -1,0 +1,16 @@
+commit=94219e64b5e3353eb36e4a25b368b3dc9832a018
+date=2026-09-26T16:26:10Z
+Flutter 3.29.3 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision ea121f8859 (1 year, 6 months ago) • 2025-04-11 19:10:07 +0000
+Engine • revision cf56914b32
+Tools • Dart 3.7.2 • DevTools 2.42.3
+CPU(s):                                  2
+Model name:                              AMD EPYC 9V45 96-Core Processor
+               total        used        free      shared  buff/cache   available
+Mem:            7938        1355        2316          46        4627        6582
+base_lib=7e38c5a33371d1368fec63078097d1ce9442acd50ecdcc487df6ee4f32c5640a  -
+cand_lib=7e38c5a33371d1368fec63078097d1ce9442acd50ecdcc487df6ee4f32c5640a  -
+fixture=eab7d105d0cd8ede840b655655807bbcd4b8774d544de9677ce8788ed7a21770  streetlift_tracker/test/support/perf_fixtures.dart
+978af86e4379025a60b6b6cee2cea960c5bea85f4aba991942f7bb87a7df067c  streetlift_tracker/test/l6_perf_bench_test.dart
+fixtures identiques
+banc identique
