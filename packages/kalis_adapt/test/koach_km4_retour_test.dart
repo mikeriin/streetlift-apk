@@ -73,13 +73,23 @@ const String _sh = 'shoulder';
 
 int _n(String k) => ent(_s[k]);
 
-Koach _koach() => Koach(copieJson(_params), _fiches, <String, Object?>{
-  'niveau': 2,
-  'sexe': 'male',
-  'poids_kg': 75.0,
-  'declares': <String, Object?>{},
-  'zones_fragiles': <Object?>[],
-});
+/// Koach aux paramètres livrés ; [securite] remplace des clés de la section
+/// `securite` (essais de la répartition, désactivée par défaut).
+Koach _koach({Json securite = const <String, Object?>{}}) {
+  final p = copieJson(_params);
+  jm(p['securite']).addAll(securite);
+  return Koach(p, _fiches, <String, Object?>{
+    'niveau': 2,
+    'sexe': 'male',
+    'poids_kg': 75.0,
+    'declares': <String, Object?>{},
+    'zones_fragiles': <Object?>[],
+  });
+}
+
+/// Répartition sur la semaine (désactivée par défaut ; le mécanisme reste
+/// testé).
+const Json _reparti = <String, Object?>{'retour_repartition_semaines': 4};
 
 Json _it(
   String slot,
@@ -298,9 +308,48 @@ void main() {
     expect(_ecritChest(_programmeB()), 28.0);
   });
 
+  test('scénario C17.37 par défaut : le lundi paie d\'abord, principaux '
+      'gardés, accessoire retiré, limite tenue', () {
+    final k = _koach();
+    final j0 = _troisSemainesA(k);
+    final b = _programmeB();
+    final servis = <(List<Json>, List<Json>)>[];
+    for (var i = 0; i < b.length; i++) {
+      servis.add(_seance(k, j0 + i, b[i], reste: b.sublist(i + 1)));
+      expect(k.seances.retourVol!.repartie, isFalse);
+    }
+    final (lundi, raisons) = servis[0];
+    expect(
+      [for (final s in ['b0.1', 'b0.2', 'b0.3', 'b0.4']) _series(lundi, s)],
+      [4, 3, 0, 3],
+    );
+    final rg = _retourGradue(raisons);
+    expect(
+      [
+        for (final r in rg)
+          [_p(r)['exercice'], _p(r)['series'], _p(r)['ecrites'], _p(r)['groupe']],
+      ],
+      [
+        [_mu, 4, 6, 'chest'],
+        [_tl, 3, 4, 'chest'],
+        [_po, 0, 3, 'chest'],
+      ],
+    );
+    for (var i = 1; i < servis.length; i++) {
+      for (final x in servis[i].$1) {
+        final slot = x['slotId'] as String;
+        expect(ent(x['sets']), _series([for (final s in b) ...s], slot));
+      }
+    }
+    final limites = k.seances.retourVol!.limites;
+    for (var g = 0; g < limites.length; g++) {
+      expect(k.seances.volSemaines[3]![g], lessThanOrEqualTo(limites[g] + 1e-9));
+    }
+  });
+
   test('scénario C17.37 réparti : muscle-up et traction lestés servis, '
       'accessoires réduits, limite tenue', () {
-    final k = _koach();
+    final k = _koach(securite: _reparti);
     final j0 = _troisSemainesA(k);
     expect([for (var w = 0; w < 3; w++) _chestDe(k, w)], [20.0, 20.0, 20.0]);
     final b = _programmeB();
@@ -512,7 +561,7 @@ void main() {
   test('répartition au prorata entre séances', () {
     // Deux séances identiques, 8 séries d'accessoires de trop : 4 + 4, pas
     // 8 sur la première.
-    final k = _koach();
+    final k = _koach(securite: _reparti);
     _troisSemainesDips(k, 10);
     final s1 = [
       _it('p.1', _dl, 5, role: 'main'),
@@ -552,10 +601,12 @@ void main() {
   });
 
   test('fenêtre d\'assiduité', () {
-    final k = _koach();
+    final k = _koach(securite: _reparti);
     _troisSemainesDips(k, 10);
     // Hors fenêtre.
-    k.seances.semainesManquees.add(3 - _n('retour_repartition_semaines'));
+    k.seances.semainesManquees.add(
+      3 - ent(_reparti['retour_repartition_semaines']),
+    );
     final s1 = [
       _it('p.1', _dl, 5, role: 'main'),
       _it('p.2', _pd, 6, role: 'accessory'),
@@ -565,7 +616,7 @@ void main() {
   });
 
   test('lignes restantes sans rôle non coupées d\'avance (relecture M2)', () {
-    final k = _koach();
+    final k = _koach(securite: _reparti);
     _troisSemainesDips(k, 10);
     final s1 = [
       _it('p.1', _dl, 5, role: 'main'),
@@ -602,7 +653,9 @@ void main() {
   test('paramètres 1.0.6', () {
     expect(_params['version'], '1.0.6-ref.1');
     expect(dbl(_s['retour_plancher_principal']), 0.5);
-    expect(_n('retour_repartition_semaines'), 4);
+    // Répartition désactivée (run B du lot KM4 : 40 constats introduits).
+    expect(_n('retour_repartition_semaines'), 0);
+    expect(_n('retour_emprunt_plancher'), 1);
     expect(
       jm(_params['rupture']).containsKey('elargissement_rien_de_special'),
       isFalse,
