@@ -422,6 +422,16 @@ class SetGoal {
   /// Valeur pré-remplie de la colonne « valeur » (bas de la plage).
   int? get prefill => low ?? high;
 
+  /// Correctif 19/10/2026 : plage de répétitions (« 15-21 », hors test au
+  /// maximum) : le nombre fait se saisit, le champ reste vide et le haut
+  /// de la plage est montré en indication.
+  bool get repRange =>
+      !seconds && low != null && high != null && high! > low! && high! < 100;
+
+  /// Valeur écrite dans le champ de saisie : rien pour une plage de
+  /// répétitions ([repRange]).
+  int? get fieldPrefill => repRange ? null : prefill;
+
   kc.SetTarget toTarget() => kc.SetTarget(
     repsLow: seconds ? null : low,
     repsHigh: seconds ? null : high,

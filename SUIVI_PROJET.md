@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : KB2 correction 1 — popup du questionnaire hors modèle et séance servie par Koach (pipeline CP), version dev7.2.2 ; précédent : dev7.2.1 (KB2)**  
-**Date : 19 octobre 2026, Europe/Paris — version : 7.2.2+142, affichée « dev7.2.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le pilotage (C8).**
+**Passe actuelle : correctif séance — plages de répétitions et tours des enchaînements, version dev7.2.3 ; précédent : dev7.2.2 (KB2 correction 1)**  
+**Date : 19 octobre 2026, Europe/Paris — version : 7.2.3+143, affichée « dev7.2.3 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : demande directe du propriétaire (hors pipeline, sans conflit avec KM4 ni KB3 qui visera dev7.3.0) ; build signé sur `main`.**
+
+## Correctif séance — plages de répétitions et tours (version dev7.2.3, demande du propriétaire, 19/10/2026)
+
+- Plage de répétitions (« 1 × 15-21 ») : le champ des répétitions n'est plus pré-rempli (le bas de plage était validé tel quel sans être saisi) ; le champ vide indique « max 21 » et le volume met le haut de la plage en avant (« 15–**21** max »). Cible de Koach : `SetGoal.repRange` / `fieldPrefill` (le mini-série garde le bas de plage) ; un bas de plage pré-rempli par une version d'avant et jamais touché est retiré. Exercice hors moteur : `repRangeOf` (reps fixes, pyramides, durées et protocoles inchangés). Tenues en secondes inchangées.
+- Carte d'exercices enchaînés : chaque tour est intitulé (« Tour 1 », « Tour 2 »…) et séparé par un filet sur toute la largeur.
+- Paquets et moteurs inchangés. Tests : `test/c1910_plages_tours_test.dart`.
 
 ## KB2 correction 1 — Popup de Koach et séance servie (version dev7.2.2, pipeline CP, DECISIONS_CP.md C17.36)
 

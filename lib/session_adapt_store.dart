@@ -2297,19 +2297,20 @@ extension SessionAdaptStore on AppStore {
     return adviceGoal(it, index, a.advice[e.id] ?? const []);
   }
 
-  /// Texte « kg » et « valeur » pré-remplis d'une cible.
+  /// Texte « kg » et « valeur » pré-remplis d'une cible. Correctif
+  /// 19/10/2026 : une plage de répétitions laisse la valeur vide.
   ({String kg, String value}) _goalTexts(
     SetGoal g,
     bool loaded, {
     bool minutes = false,
   }) => (
     kg: loaded && g.kg != null ? adaptKgField(g.kg!) : '',
-    value: g.prefill == null
+    value: g.fieldPrefill == null
         ? ''
         : minutes
         // CI1f : durée notée en minutes.
-        ? '${(g.prefill! / 60).round()}'
-        : '${g.prefill}',
+        ? '${(g.fieldPrefill! / 60).round()}'
+        : '${g.fieldPrefill}',
   );
 
   /// CI1c (migration) : valeurs que la séance servie [a] pré-remplissait
@@ -2365,11 +2366,11 @@ extension SessionAdaptStore on AppStore {
     for (var i = 0; i < log.sets.length; i++) {
       final s = log.sets[i];
       if (s.done) continue;
-      final t = _goalTexts(
-        adviceGoal(it, i, a.advice[e.id] ?? const []),
-        loaded,
-        minutes: prescriptionInMinutes(it),
-      );
+      final g = adviceGoal(it, i, a.advice[e.id] ?? const []);
+      final t = _goalTexts(g, loaded, minutes: prescriptionInMinutes(it));
+      // Correctif 19/10/2026 : plage de répétitions : le bas de plage
+      // pré-rempli avant ce correctif, jamais touché, est retiré.
+      if (g.repRange && !s.edited && s.reps == '${g.low}') s.reps = '';
       if (s.kg.isEmpty && t.kg.isNotEmpty) s.kg = t.kg;
       if (s.reps.isEmpty && t.value.isNotEmpty && !test) s.reps = t.value;
       // CI1f : distance prévue, en mètres.

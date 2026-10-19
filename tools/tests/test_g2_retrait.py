@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.2.2 : popup de Koach et séance servie (dev7.2.2, KB2 correction 1).
-        self.assertEqual(version, '7.2.2')
+        # 7.2.3 : plages de reps sans pré-remplissage, tours séparés (dev7.2.3).
+        self.assertEqual(version, '7.2.3')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)

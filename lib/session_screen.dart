@@ -71,6 +71,51 @@ String volumeText(String raw, {bool timed = false}) {
   return s;
 }
 
+/// Correctif 19/10/2026 : plage de répétitions d'un volume (« 3 × 15-21 »,
+/// « 1×15–21 ») : (bas, haut) ; null pour des reps fixes, une pyramide
+/// (« 4×12-10-8 »), une durée ou un protocole.
+(int, int)? repRangeOf(String volume) {
+  final m = RegExp(
+    r'^\s*\d+\s*[×x]\s*(\d+)\s*[-–]\s*(\d+)\b(?!\s*[-–]\s*\d)'
+    r'(?!\s*(?:s|sec|min|m)\b)(?!.*\bpuis\b)',
+    caseSensitive: false,
+  ).firstMatch(volume);
+  if (m == null) return null;
+  final low = int.parse(m.group(1)!);
+  final high = int.parse(m.group(2)!);
+  return high > low && high < 100 ? (low, high) : null;
+}
+
+/// Correctif 19/10/2026 : volume d'une plage de répétitions, haut de la
+/// plage mis en avant : bas en `texte2`, haut en `encre` suivi de « max »
+/// (« 1 × 15–21 max »).
+Widget _rangeVolume(String text, TextStyle style, KTokens t, {Key? key}) {
+  final m = RegExp(r'(\d+)\s*[-–]\s*(\d+)').firstMatch(text);
+  if (m == null) return Text(nbsp(text), key: key, style: style);
+  return Text.rich(
+    TextSpan(
+      style: style,
+      children: [
+        TextSpan(text: nbsp(text.substring(0, m.start))),
+        TextSpan(
+          text: '${m[1]}–',
+          style: style.copyWith(color: t.texte2),
+        ),
+        TextSpan(
+          text: m[2],
+          style: style.copyWith(color: t.encre),
+        ),
+        TextSpan(
+          text: ' max',
+          style: KType.libelle.copyWith(color: t.encre),
+        ),
+        TextSpan(text: nbsp(text.substring(m.end))),
+      ],
+    ),
+    key: key,
+  );
+}
+
 String sessionPlace(WeekPlan w, DayPlan d) =>
     w.n == 0 ? w.block : store.program.sessionLabel(w.n, d.j);
 
@@ -832,7 +877,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         if (s.reps.isEmpty && !s.done) s.reps = '${sp.seconds! ~/ 60}';
       }
     }
-    if (sp.kind == 'reps' || sp.kind == 'emom') {
+    // Correctif 19/10/2026 : plage de répétitions (« 3 × 15-21 ») : le
+    // nombre fait se saisit, rien n'est pré-rempli.
+    final range = sp.kind == 'reps' && repRangeOf(store.setsLabel(ex)) != null;
+    if ((sp.kind == 'reps' || sp.kind == 'emom') && !range) {
       final planned = store.plannedReps(ex, sp, log.sets.length);
       for (var i = 0; i < log.sets.length; i++) {
         final s = log.sets[i];
@@ -1930,8 +1978,15 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           Divider(height: KSpacing.s16, color: t.filet),
           ...header,
           // PR5 : un espace entre deux tours (A·1, B·1 | A·2, B·2…).
+          // Correctif 19/10/2026 : chaque tour a son intitulé (« Tour 2 »)
+          // et un filet : la séparation se voit d'un coup d'œil.
           for (var i = 0; i < rounds; i++) ...[
-            if (i > 0) const SizedBox(height: KSpacing.s12),
+            if (rounds > 1)
+              _RoundDivider(
+                i + 1,
+                first: i == 0,
+                key: ValueKey('merged-round-${i + 1}'),
+              ),
             for (var k = 0; k < parts.length; k++)
               if (i < parts[k].count) ...parts[k].row(i),
           ],
@@ -2073,6 +2128,20 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ? (next.$1 == k ? next.$2 : -1)
         : log.sets.indexWhere((s) => !s.done);
     final hasTimer = !readOnly && sp.timed;
+    // Correctif 19/10/2026 : plage de répétitions (« 1 × 15-21 ») : champ
+    // vide, haut de la plage en indication (« max 21 ») et mis en avant
+    // dans le volume.
+    final plainReps = sp.kind == 'reps' && !sp.myo && !sp.cluster;
+    final textRange = plainReps ? repRangeOf(store.setsLabel(ex)) : null;
+    int? rangeMax(int i) {
+      if (readOnly || !plainReps) return null;
+      if (widget.adapt && ex.engine) {
+        final g = store.adaptGoal(widget.week.n, widget.day.j, ex, i);
+        if (g != null) return g.repRange ? g.high : null;
+      }
+      return textRange?.$2;
+    }
+
     final valueColumn = unresolved ? 'Valeur' : _valueColumn(sp.kind);
     final compact = _splitColumns(context, showKg, showRir, showV, hasTimer);
     final columns = [
@@ -2254,24 +2323,38 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                           frenchNumbersText(loadLabel),
                           style: KType.chiffre.copyWith(color: ink),
                         ),
-                      Text(
-                        readOnly
-                            ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
-                            : nbsp(
-                                volumeText(
-                                  store.setsLabel(ex),
-                                  timed: _group != null || _sharedEvery != null,
+                      if (!readOnly && textRange != null)
+                        _rangeVolume(
+                          volumeText(
+                            store.setsLabel(ex),
+                            timed: _group != null || _sharedEvery != null,
+                          ),
+                          KType.chiffreMoyen.copyWith(
+                            color: showBigLoad ? t.texte : ink,
+                          ),
+                          t,
+                          key: ValueKey('range-volume-${ex.id}'),
+                        )
+                      else
+                        Text(
+                          readOnly
+                              ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
+                              : nbsp(
+                                  volumeText(
+                                    store.setsLabel(ex),
+                                    timed:
+                                        _group != null || _sharedEvery != null,
+                                  ),
                                 ),
-                              ),
-                        // PR10 : volume toujours au même corps (chiffres
-                        // moyens), avec ou sans charge : les exercices
-                        // d'une carte commune s'alignent.
-                        style: readOnly
-                            ? KType.corpsFort.copyWith(color: t.texte)
-                            : KType.chiffreMoyen.copyWith(
-                                color: showBigLoad ? t.texte : ink,
-                              ),
-                      ),
+                          // PR10 : volume toujours au même corps (chiffres
+                          // moyens), avec ou sans charge : les exercices
+                          // d'une carte commune s'alignent.
+                          style: readOnly
+                              ? KType.corpsFort.copyWith(color: t.texte)
+                              : KType.chiffreMoyen.copyWith(
+                                  color: showBigLoad ? t.texte : ink,
+                                ),
+                        ),
                       // Grand texte : la cible passe sous la charge.
                       if (target case (final rir, final level) when largeText)
                         _TargetBadge(
@@ -2481,6 +2564,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             label: rowLabel(i),
             current: i == current,
             lockReps: (log.sets[i].parts?.isNotEmpty ?? false),
+            valueHint: switch (rangeMax(i)) {
+              final max? => 'max $max',
+              null => null,
+            },
             entry: log.sets[i],
             spec: sp,
             showKg: showKg,
@@ -2786,10 +2873,15 @@ class _SetField extends StatefulWidget {
   /// U0.19 : un point tapé s'affiche en virgule (champ de charge).
   final bool decimalComma;
   final String semanticLabel;
+
+  /// Correctif 19/10/2026 : indication du champ vide (« max 21 »), en
+  /// `texte2` ; « – » en `texte3` sans indication.
+  final String? hint;
   const _SetField({
     required this.controller,
     required this.onChanged,
     required this.semanticLabel,
+    this.hint,
     this.decimal = true,
     this.decimalComma = false,
     this.current = false,
@@ -2897,8 +2989,10 @@ class _SetFieldState extends State<_SetField> {
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
-                      hintText: '–',
-                      hintStyle: style.copyWith(color: k.texte3),
+                      hintText: widget.hint ?? '–',
+                      hintStyle: widget.hint == null
+                          ? style.copyWith(color: k.texte3)
+                          : style.copyWith(color: k.texte2),
                       semanticCounterText: '',
                       // Le texte occupe le milieu de la pilule ; ses marges
                       // restent touchables (un appui au bord sélectionne
@@ -2973,6 +3067,10 @@ class _SetRow extends StatefulWidget {
   /// Clé du bouton de validation (tests).
   final Key? checkKey;
 
+  /// Correctif 19/10/2026 : indication du champ des répétitions vide
+  /// (« max 21 » pour une plage), « – » sinon.
+  final String? valueHint;
+
   /// PR5 : série validée notée en flammes : la flamme remplace la coche ;
   /// un appui ([onFlame]) ouvre la note en popup, un appui long
   /// ([onUncheck]) annule la validation. Null : la coche reste.
@@ -2984,6 +3082,7 @@ class _SetRow extends StatefulWidget {
     this.onUncheck,
     this.lockReps = false,
     this.checkKey,
+    this.valueHint,
     this.issue,
     this.onEdited,
     this.onLongPressLabel,
@@ -3033,10 +3132,12 @@ class _SetRowState extends State<_SetRow> {
     bool decimal = true,
     bool decimalComma = false,
     bool locked = false,
+    String? hint,
   }) {
     final done = widget.entry.done;
     return _SetField(
       controller: c,
+      hint: hint,
       semanticLabel: '$name, série ${widget.label}',
       decimal: decimal,
       decimalComma: decimalComma,
@@ -3090,6 +3191,7 @@ class _SetRowState extends State<_SetRow> {
         field: SetField.value,
         decimal: false,
         locked: widget.lockReps && !widget.readOnly,
+        hint: widget.valueHint,
       ),
       if (widget.showRir && !compact)
         _f(rir, (t) => e.rir = t, name: 'Effort', field: SetField.effort),
@@ -4770,6 +4872,33 @@ class _RestDay extends StatelessWidget {
                 title: 'S${week.n} · J${day.j}',
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Correctif 19/10/2026 : intitulé d'un tour dans la carte d'exercices
+/// enchaînés (« Tour 2 ») suivi d'un filet sur toute la largeur ; plus
+/// d'espace au-dessus des tours suivants que du premier.
+class _RoundDivider extends StatelessWidget {
+  final int round;
+  final bool first;
+  const _RoundDivider(this.round, {this.first = false, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = KTokens.of(context);
+    return Padding(
+      padding: EdgeInsets.only(
+        top: first ? KSpacing.s4 : KSpacing.s16,
+        bottom: KSpacing.s4,
+      ),
+      child: Row(
+        children: [
+          Text('Tour $round', style: KType.libelle.copyWith(color: t.texte2)),
+          const SizedBox(width: KSpacing.s8),
+          Expanded(child: Divider(height: 1, thickness: 1, color: t.texte3)),
         ],
       ),
     );
