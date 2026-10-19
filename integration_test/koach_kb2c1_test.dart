@@ -36,6 +36,7 @@ import 'package:streetlift_tracker/home_screen.dart' show openProgramDay;
 import 'package:streetlift_tracker/kalis_clock.dart';
 import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/koach1/koach1_widgets.dart';
+import 'package:streetlift_tracker/koach1/koach_moteur.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/store.dart';
 
