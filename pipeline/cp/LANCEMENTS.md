@@ -388,3 +388,7 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 ## KM4 — Koach 1.0.6 : retour gradué réparti et priorisé (référence Python + Dart `kalis_adapt` 1.0.5) (lancé le 19/10/2026 vers 11:05 UTC, C17.37, en parallèle de KB2 correction 1 (branches distinctes), tâche « Opus 5.5, effort maximal, moteurs »)
 
 - Lot : **KM4**, prompt `prompts/KM4.txt`. Base : `moteurs` à la pointe (Koach 1.0.5, `kalis_adapt` 1.0.4, `kalis_bench` 0.5.6, 9c81a201 ou suivant). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM4`. Aucune donnée réelle, aucun déchiffrement (C17.33).
+
+### KM4 — ajout du pilotage (19/10/2026 13:05 UTC, C17.38.4)
+
+- **Volume réalisé** : `fermer` ne compte au réalisé de la semaine que les items servis par Koach ; depuis dev7.2.2, l'application sert telles qu'écrites les lignes que Koach aurait retirées (garde `koachGardeSeance`) et leurs séries sont observées hors du servi. KM4 doit **compter au volume réalisé les séries observées hors du servi** (avec test), sinon la rampe sous-estime le réalisé et continue de vouloir retirer ces lignes. À lire : `LIVRAISON_KB2_correction1.md` § 1.
