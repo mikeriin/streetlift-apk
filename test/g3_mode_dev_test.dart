@@ -17,8 +17,8 @@ void main() {
   group('build de développement (G3)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test('version affichée : « dev7.2.3 » (plages et tours)', () {
-      expect(kAppVersion, 'dev7.2.3');
+    test('version affichée : « dev7.2.4 » (GtG et séries compactes)', () {
+      expect(kAppVersion, 'dev7.2.4');
     });
 
     test('session de test : même base d\'exercices, session personnelle '

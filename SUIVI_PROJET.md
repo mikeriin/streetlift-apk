@@ -1,8 +1,16 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : correctif séance — plages de répétitions et tours des enchaînements, version dev7.2.3 ; précédent : dev7.2.2 (KB2 correction 1)**  
-**Date : 19 octobre 2026, Europe/Paris — version : 7.2.3+143, affichée « dev7.2.3 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : demande directe du propriétaire (hors pipeline, sans conflit avec KM4 ni KB3 qui visera dev7.3.0) ; build signé sur `main`.**
+**Passe actuelle : correctif séance 2 — GtG hors séance, plages des accessoires, séries compactes, version dev7.2.4 ; précédent : dev7.2.3**  
+**Date : 20 octobre 2026, Europe/Paris — version : 7.2.4+144, affichée « dev7.2.4 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : demande directe du propriétaire (hors pipeline ; paquets inchangés, sans conflit avec KM4 ; KB3 visera dev7.3.0 depuis ce `main`) ; build signé sur `main`.**
+
+## Correctif séance 2 — GtG, plages des accessoires, séries compactes (version dev7.2.4, 20/10/2026)
+
+- GtG : les lignes « GtG … » du programme suivi (semaines à partir du départ affiché) sortent de la séance (`DayPlan.gtg`, `Program.detachGtg`) ; les semaines d'avant gardent leurs séries notées (journal de Koach inchangé). Carte du jour : pastille « GtG muscle-up · 3 × 4 · dans la journée » ; lignes de la semaine : pastille « GtG ». Rappels toutes les 2 h de 9 h à 21 h les jours de GtG (exercice et reps), sur 14 jours glissants, identifiants 2000-4247 (`planGtgReminders`).
+- Plages de reps : cause trouvée — depuis la prise de main de Koach 1.0 (dev7.2.1), les lignes sont servies aux reps écrites (le programme suivi est écrit en reps fixes), seule la série repère portait une plage ; l'ancien moteur élargissait chaque ligne. Décision (pilotage, sur délégation du propriétaire) : accessoires, secondaires et gainage en séries classiques de 6 à 29 reps servis en plage écrit −2 à +4 (3×15 → 13-19), charge de Koach gardée ; lifts principaux, départs chronométrés, techniques, tests, tenues et charges fixes inchangés (`withAccessoryRange`, `accessoryRangeTarget`, côté application, paquets inchangés).
+- Charge en grand d'un exercice servi par Koach : cible de la série à faire (celle des champs), plus la charge de départ de la ligne (72,5 affiché pour 82,5 demandé).
+- Séance : une série validée et notée passe en ligne compacte (fait, flamme) ; enchaînement : quand tout le tour est fait ; appui sur la flamme : note ; appui long : validation annulée.
+- Tests : `test/c2010_gtg_plages_compact_test.dart`.
 
 ## Correctif séance — plages de répétitions et tours (version dev7.2.3, demande du propriétaire, 19/10/2026)
 
@@ -2438,8 +2446,6 @@ reste une décision distincte. Aucun accès ni changement du dépôt distant.
 ---
 
 # Historique R1 — État avant le second journal CI
-
-# Kalis Track — Suivi du projet
 
 **Passe actuelle : L1-R1 — correctif du contrôle final du certificat, KT-001 uniquement**  
 **Date : 25 septembre 2026, Europe/Paris**  

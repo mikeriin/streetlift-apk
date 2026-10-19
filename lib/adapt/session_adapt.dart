@@ -444,6 +444,66 @@ class SetGoal {
   );
 }
 
+/// Correctif 20/10/2026 : plage des accessoires servis par Koach 1.0.
+/// Koach garde les répétitions écrites et règle la charge ; sur un
+/// accessoire (emplacement secondaire, accessoire ou gainage) en séries
+/// classiques à reps fixes (6 à 29), la ligne est servie en plage : écrit
+/// −2 à +4 (3×15 → 13-19). Double progression : la charge de Koach reste,
+/// l'athlète va jusqu'à l'effort visé. Lifts principaux, départs
+/// chronométrés, techniques, tests, tenues et charges fixes : inchangés.
+const kAccessoryRangeBelow = 2;
+const kAccessoryRangeAbove = 4;
+
+/// La ligne [it] (rôle d'emplacement [role]) se sert en plage.
+bool accessoryRangeApplies(kc.ExercisePrescription it, kc.SlotRole? role) {
+  if (role != kc.SlotRole.secondary &&
+      role != kc.SlotRole.accessory &&
+      role != kc.SlotRole.core) {
+    return false;
+  }
+  final t = it.technique?.kind;
+  if (t != null && t != kc.SetTechniqueKind.standard) return false;
+  if (it.kind != null && it.kind != kc.SetKind.work) return false;
+  if (it.secondsLow != null || it.secondsHigh != null) return false;
+  if (it.distanceMeters != null) return false;
+  final lo = it.repsLow, hi = it.repsHigh;
+  return lo != null && hi != null && lo == hi && lo >= 6 && lo < 30;
+}
+
+/// Ligne [it] servie en plage quand [accessoryRangeApplies] ; sinon telle
+/// quelle. Les cibles par série suivent ([accessoryRangeTarget]).
+kc.ExercisePrescription withAccessoryRange(
+  kc.ExercisePrescription it,
+  kc.SlotRole? role,
+) {
+  if (!accessoryRangeApplies(it, role)) return it;
+  final w = it.repsLow!;
+  return it.copyWith(
+    repsLow: w - kAccessoryRangeBelow,
+    repsHigh: w + kAccessoryRangeAbove,
+    setTargets: it.setTargets == null
+        ? null
+        : [for (final t in it.setTargets!) accessoryRangeTarget(t, it)],
+  );
+}
+
+/// Cible d'une série d'une ligne servie en plage [it] : une cible à reps
+/// fixes prend la plage de la ligne ; une plage plus large (série repère
+/// de Koach) est gardée.
+kc.SetTarget accessoryRangeTarget(kc.SetTarget t, kc.ExercisePrescription it) {
+  final lo = it.repsLow, hi = it.repsHigh;
+  if (lo == null || hi == null || lo >= hi) return t;
+  if (t.secondsLow != null || t.secondsHigh != null) return t;
+  if (t.role != null &&
+      t.role != kc.SetRole.straight &&
+      t.role != kc.SetRole.backOff) {
+    return t;
+  }
+  final a = t.repsLow, b = t.repsHigh;
+  if (a == null || b == null) return t;
+  return t.copyWith(repsLow: math.min(a, lo), repsHigh: math.max(b, hi));
+}
+
 /// L'exercice se mesure en secondes (tenue).
 bool prescriptionInSeconds(kc.ExercisePrescription p) =>
     p.secondsLow != null || p.secondsHigh != null;

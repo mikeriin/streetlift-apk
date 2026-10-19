@@ -222,6 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     '${d.exercises.length} exercices, '
                         '${store.dayDurationText(d)}',
                   ].join(' · '),
+            badge: store.gtgText(d, short: true),
             state: _status(w, d),
             onTap: () {
               Navigator.pop(sheetContext);
@@ -375,6 +376,8 @@ class _HomeScreenState extends State<HomeScreen> {
           key: ValueKey('programme-day-${d.j}'),
           day: d.j,
           title: d.title,
+          // Correctif 20/10/2026 : GtG du jour (hors séance).
+          badge: store.gtgText(d, short: true),
           // (KS1A : le type du jour est dans la carte du jour, la feuille
           // de la semaine et le résumé ; les lignes restent sur une ligne
           // pour que la semaine entière tienne à l'écran, L5.)
@@ -910,6 +913,16 @@ class _TodayCard extends StatelessWidget {
           style: KType.detail.copyWith(color: ink),
         ),
       ],
+      // Correctif 20/10/2026 : GtG du jour, hors séance (rappels toutes
+      // les 2 h).
+      if (store.gtgText(day) case final gtg?) ...[
+        const SizedBox(height: KSpacing.s8),
+        _GtgChip(
+          key: ValueKey('today-gtg-${day.j}'),
+          text: '$gtg · dans la journée',
+          color: ink,
+        ),
+      ],
     ];
     // G5 (D6.4) : Koach sur la carte du jour, sa pose dit la journée
     // (séance, repos, en cours, faite).
@@ -1022,4 +1035,37 @@ class _TodayCard extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Correctif 20/10/2026 : pastille du GtG sur la carte du jour (« GtG
+/// muscle-up · 3 × 4 · dans la journée »), contour de la couleur du texte.
+class _GtgChip extends StatelessWidget {
+  final String text;
+  final Color color;
+  const _GtgChip({super.key, required this.text, required this.color});
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: ShapeDecoration(
+      shape: StadiumBorder(
+        side: BorderSide(color: color.withValues(alpha: .6)),
+      ),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: KSpacing.s8,
+        vertical: KSpacing.s4,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.notifications_active_outlined, size: 14, color: color),
+          const SizedBox(width: KSpacing.s4),
+          Flexible(
+            child: Text(text, style: KType.detail.copyWith(color: color)),
+          ),
+        ],
+      ),
+    ),
+  );
 }
