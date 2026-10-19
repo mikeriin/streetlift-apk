@@ -1,0 +1,31 @@
+LOT KM4 — KOACH 1.0.6 : RETOUR GRADUÉ RÉPARTI ET PRIORISÉ (référence Python + portage Dart `kalis_adapt` 1.0.5)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs »). Lot KM : pas de panel, pas de relecture documentée (C13.3). Validation : automatique, par le pilotage.
+Prérequis : KM2c3 validé (C17.29) ; décision C17.37.
+Base : `moteurs` à la pointe (9c81a201 ou suivant : Koach 1.0.5, `kalis_adapt` 1.0.4, `kalis_bench` 0.5.6). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM4`.
+Décisions : C13.3, C13.12, C17.17.3, C17.23, C17.26, C17.29, C17.33 (aucune donnée réelle, aucun déchiffrement), C17.37. Livraisons à lire : `LIVRAISON_KM1c4.md`, `LIVRAISON_KM2c3.md`.
+
+CONSTAT (C17.37.1, séance réelle du 19/10/2026)
+Programme importé de 6 séances par semaine en PPL, plus de volume « chest » que les trois semaines précédentes. Lundi, séance de tirage : `koach.retour_gradue` (groupe « chest », limite 55,8 séries créditées) ramène le muscle-up lesté (crédit chest 1,0) et la traction lestée (chest 0,5) à 0 série → retirés ; les pompes à RIR 5+ (0 série dure) restent et passent en tête. Mécanisme (`reference/koach/seance.py`) : `_limite_volume` (rampe +20 % ou +2 séries sur trois semaines, +30 % ou +4 sur deux semaines) ; `_budgets_retour` réserve d'avance **tout** l'écrit des séances restantes de la semaine ; `_retour_gradue` coupe les items **dans l'ordre de la séance**, sans priorité de rôle, jusqu'à **0 = retrait**. Résultat : la première séance de la semaine paie tout, et les exercices principaux, lourds, sont coupés avant les accessoires.
+
+OBJECTIF
+Garder la sécurité (critère 7 = 0 violation, la rampe de volume reste une règle de sécurité) tout en servant une séance qui garde son sens : jamais un principal retiré sans douleur, coupes réparties sur la semaine et portées d'abord par ce qui compte le moins.
+
+CONTENU (référence Python d'abord, puis portage Dart ligne pour ligne)
+1. **Répartition sur la semaine** : quand l'écrit de la semaine dépasse la limite d'un groupe, la réduction se répartit sur toutes les séances de la semaine qui créditent ce groupe (au prorata de leur écrit, ou règle équivalente mesurée), au lieu de faire payer la séance du jour ; les séances déjà faites comptent à leur réalisé ; une séance manquée libère sa part.
+2. **Priorité de rôle** : dans une séance, la réduction porte d'abord sur les finishers et accessoires, puis sur les secondaires, en dernier sur les principaux (rôles de `plan`, `roles` des items ; sans rôle : ordre inverse de la séance, choix raisonné dit comme tel).
+3. **Plancher des principaux** : un exercice principal n'est jamais ramené à 0 série par la rampe de volume sans douleur signalée sur une zone qu'il sollicite (la conduite sous douleur garde la main) ; plancher chiffré à établir et à justifier (référence ou mesure : par exemple garder au moins une série de travail et la moitié des séries écrites) ; si le plancher dépasse la limite du groupe, l'excès est retiré ailleurs dans la semaine, et la limite de la semaine reste tenue dans la campagne (critère 7).
+4. **Changement de programme** (nouvelle référence, programme importé repris en cours de route, `firstShown`) : la rampe reste mesurée sur le réalisé des semaines précédentes, mais la première semaine du nouveau programme ne doit plus vider ses premières séances : vérifier que 1 à 3 suffisent ; sinon règle de transition explicite et sourcée.
+5. **Crédits de groupes** (`vecteurs_qualites_v1`, champ `groupes`) : revoir sur sources la part « chest » des tractions et du muscle-up (et tout crédit comparable des exercices de street workout et de streetlifting : dips, pompes, rowing, tirages) ; une part changée est sourcée ; table avant / après dans la livraison.
+6. **Raisons** : chaque réduction rend sa raison (`koach.retour_gradue` avec groupe, limite, séries servies et séries écrites) ; texte français neutre dans `koach_textes.dart` si un nouveau champ apparaît (sans changer le sens des raisons existantes).
+
+CRITÈRES (mêmes campagnes que KM1c4 / KM2c3 : `kalis_bench`, 34 profils, 100 graines, 90 600 saisons ; graines 0-5 pour les critères du cahier)
+- **0 violation du critère 7** sur les 90 600 saisons, en Python **et** en Dart ; 0 saison plantée.
+- **Nouveau critère (C17.37)** : « principal retiré par la rampe de volume sans douleur » = **0** sur toute la campagne ; part des séances dont un principal est réduit, et réduction moyenne : mesurées avant / après (indicateur).
+- Scénario dédié (fixture synthétique, jamais de données réelles) : athlète de niveau avancé, trois semaines d'un programme A, puis programme B de 6 séances par semaine en PPL avec +40 % de volume « chest » et séance de tirage en premier (muscle-up lesté E2MOM 6 × 2, traction lestée, puis accessoires) : muscle-up lesté et traction lestée servis (séries réduites au plus), accessoires réduits avant eux, limite de la semaine tenue.
+- Critères KM 1 à 8 et 11 : aucun recul au-delà du bruit mesuré (KR1 § 5) ; 7 bis sur les six jeux sans recul ; temps (critère 11) tenu.
+- Parité Dart : fixtures régénérées, 90 600 saisons identiques une à une à la campagne Python.
+
+FIN DE LOT
+- Référence Koach 1.0.6 (paramètres `1.0.6-ref.1`, `CHANGEMENTS_1_0_6.md`, `SOURCES.md`, note datée au contrat) ; `kalis_adapt` 1.0.5 (Dart, asset `koach_params_1_0_6.json`, SHA-256 dans la livraison) ; `kalis_bench` en version suivante si le banc change ; étiquettes `etiquettes/kalis_adapt-v1.0.5` (et `kalis_bench` si changé) ; contrôle complet vert sur `claude/ci-cp-a` ; push `moteurs` (rebase avant chaque push).
+- `LIVRAISON_KM4.md` (pipeline et projet claude.ai) : mécanisme avant / après, règles et sources, table des crédits, critères avant / après (Python et Dart), ce que KB3 doit monter.
+- Ligne KM4 de `ETAT_CP.md` « livré » ; notification « Kalis Track KM4 livré — Koach 1.0.6 » ; arrête-toi (aucun fire_trigger).
