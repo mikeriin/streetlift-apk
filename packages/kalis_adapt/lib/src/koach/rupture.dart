@@ -35,8 +35,6 @@ const Json defautsRupture = <String, Object?>{
   'assiduite_secours': 0.7,
   'assiduite_secours_semaines': 2,
   'douleur_secours': 2,
-  // Sans effet depuis 1.0.5 (gardé pour les validateurs, comme la
-  // référence).
   // 1.0.5 : part du chemin vers l'a priori à chaque « rien de spécial ».
   'elargissement_vers_a_priori': 0.25,
   'semaine_allegee_series': 0.6,

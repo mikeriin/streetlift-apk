@@ -2064,7 +2064,7 @@ class Seances {
     final part = dbl(s['retour_plancher_principal']);
     final unites = <_UniteRetour>[];
 
-    void ajouter(
+    bool ajouter(
       int seance,
       int pos,
       String? slot,
@@ -2080,11 +2080,18 @@ class Seances {
         poids.add((n, 1.0));
       }
       if (poids.isEmpty) {
-        return;
+        return false;
       }
       int rang;
       if (role == null) {
-        rang = premier ? 2 : 0;
+        // Sans rôle : la première ligne dure de la séance du jour est le
+        // principal, les autres de rang 0 ; une ligne d'une séance restante
+        // sans rôle n'est pas coupée d'avance (rang 3, écrit réservé).
+        if (seance > 0) {
+          rang = 3;
+        } else {
+          rang = premier ? 2 : 0;
+        }
       } else {
         rang = rangRole[role] ?? 0;
       }
@@ -2105,6 +2112,7 @@ class Seances {
         exces[r] += w * series;
       }
       unites.add(_UniteRetour(seance, pos, slot, series, poids, rang, plancher));
+      return true;
     }
 
     var pos = 0;
@@ -2116,7 +2124,7 @@ class Seances {
       }
       final plan = plans[item['slotId']];
       final exId = item['exerciseId'] as String;
-      ajouter(
+      if (ajouter(
         0,
         pos,
         item['slotId'] as String?,
@@ -2126,8 +2134,9 @@ class Seances {
         plan?['role'],
         _douleurUnite(exId, plan),
         premier,
-      );
-      premier = false;
+      )) {
+        premier = false;
+      }
       pos += 1;
     }
     for (var k = 0; k < rv.reste.length; k++) {
@@ -2138,7 +2147,7 @@ class Seances {
         if (series <= 0 || _seriesDures(p0) <= 0) {
           continue;
         }
-        ajouter(
+        if (ajouter(
           k + 1,
           pos,
           p0['slotId'] as String?,
@@ -2148,8 +2157,9 @@ class Seances {
           p0['role'],
           false,
           premier,
-        );
-        premier = false;
+        )) {
+          premier = false;
+        }
         pos += 1;
       }
     }
