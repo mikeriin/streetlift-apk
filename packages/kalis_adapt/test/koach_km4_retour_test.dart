@@ -565,6 +565,37 @@ void main() {
     expect(k.seances.retourVol!.repartie, isTrue);
   });
 
+  test('lignes restantes sans rôle non coupées d\'avance (relecture M2)', () {
+    final k = _koach();
+    _troisSemainesDips(k, 10);
+    final s1 = [
+      _it('p.1', _dl, 5, role: 'main'),
+      _it('p.2', _pd, 6, role: 'accessory'),
+    ];
+    final s2 = [_it('q.1', _dl, 5), _it('q.2', _pd, 6)];
+    final (out1, _) = _seance(k, 21, s1, reste: [s2]);
+    expect(k.seances.retourVol!.repartie, isTrue);
+    // 22 écrites pour 12, dont 11 réservées au reste : le jour coupe son
+    // accessoire à 0 (6), son principal à son plancher 3 (2), puis à 1 (2).
+    expect(_series(out1, 'p.2'), 0);
+    expect(_series(out1, 'p.1'), 1);
+  });
+
+  test('sans rôle, une première ligne sans crédit ne prend pas la place du '
+      'principal (relecture, mineur 4)', () {
+    final sans = <String>[
+      for (final e in _fiches.entries)
+        if (e.value['renforcement'] == true && _credits(e.key).isEmpty) e.key,
+    ];
+    expect(sans, isNotEmpty);
+    final k = _koach();
+    _troisSemainesDips(k, 2, roles: false);
+    final s = [_it('m.0', sans.first, 3), _it('m.1', _dl, 6), _it('m.2', _pp, 4)];
+    final (out, _) = _seance(k, 21, s, roles: false);
+    expect(_series(out, 'm.1'), greaterThanOrEqualTo(3));
+    expect(_series(out, 'm.2'), 0);
+  });
+
   test('paramètres 1.0.6', () {
     expect(_params['version'], '1.0.6-ref.1');
     expect(dbl(_s['retour_plancher_principal']), 0.5);

@@ -1381,9 +1381,10 @@ class Seances(object):
         plancher de ses principaux (étapes 1 à 3), puis les séances restantes
         (1 à 3), puis 4 et 5 (jour, puis reste).
 
-        Sans rôle : la première ligne dure de la séance est le principal, les
-        autres sont de rang 0 (choix raisonné : l'exercice prioritaire ouvre
-        la séance, ACSM 2009, Simão et al. 2012). Résultat dans
+        Sans rôle : la première ligne dure (créditée) de la séance du jour est
+        le principal, les autres sont de rang 0 (choix raisonné : l'exercice
+        prioritaire ouvre la séance, ACSM 2009, Simão et al. 2012) ; une ligne
+        d'une séance restante sans rôle n'est pas coupée d'avance (rang 3). Résultat dans
         `retour_vol['plan']` (slotId -> séries permises) et `['cause']`."""
         rv = self.retour_vol
         if rv is None:
@@ -1404,9 +1405,17 @@ class Seances(object):
             if total:
                 poids.append((n, 1.0))
             if not poids:
-                return
+                return False
             if role is None:
-                rang = 2 if premier else 0
+                # Sans rôle : la première ligne dure de la séance du jour est
+                # le principal, les autres de rang 0 ; une ligne d'une séance
+                # restante sans rôle n'est pas coupée d'avance (rang 3, écrit
+                # réservé comme 1.0.5) : son rôle réel, connu le jour venu,
+                # pourrait la protéger (relecture KM4, M2).
+                if seance > 0:
+                    rang = 3
+                else:
+                    rang = 2 if premier else 0
             else:
                 rang = self.RANG_ROLE.get(role, 0)
             if rang == 2 and douleur:
@@ -1422,6 +1431,7 @@ class Seances(object):
                 exces[r] += w * series
             unites.append({'seance': seance, 'pos': pos, 'slot': slot, 'n': series, 'm': series,
                            'poids': poids, 'rang': rang, 'plancher': plancher})
+            return True
 
         pos = 0
         premier = True
@@ -1431,9 +1441,9 @@ class Seances(object):
                 continue
             plan = self.plans.get(item['slotId'])
             role = (plan or {}).get('role')
-            ajouter(0, pos, item['slotId'], item['exerciseId'], series, int(item.get('sets') or 0),
-                    role, self._douleur_unite(item['exerciseId'], plan), premier)
-            premier = False
+            if ajouter(0, pos, item['slotId'], item['exerciseId'], series, int(item.get('sets') or 0),
+                       role, self._douleur_unite(item['exerciseId'], plan), premier):
+                premier = False
             pos += 1
         for k, seance in enumerate(rv['reste']):
             pos = 0
@@ -1442,9 +1452,9 @@ class Seances(object):
                 series = int(p.get('sets') or 0)
                 if series <= 0 or self._series_dures(p) <= 0:
                     continue
-                ajouter(k + 1, pos, p.get('slotId'), p['exerciseId'], series, series, p.get('role'), False,
-                        premier)
-                premier = False
+                if ajouter(k + 1, pos, p.get('slotId'), p['exerciseId'], series, series, p.get('role'), False,
+                           premier):
+                    premier = False
                 pos += 1
         initial = list(exces)
         c = self.contexte or {}
