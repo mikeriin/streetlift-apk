@@ -4898,9 +4898,7 @@ class _RoundDivider extends StatelessWidget {
         children: [
           Text('Tour $round', style: KType.libelle.copyWith(color: t.texte2)),
           const SizedBox(width: KSpacing.s8),
-          Expanded(
-            child: Divider(height: 1, thickness: 1, color: t.texte3),
-          ),
+          Expanded(child: Divider(height: 1, thickness: 1, color: t.texte3)),
         ],
       ),
     );

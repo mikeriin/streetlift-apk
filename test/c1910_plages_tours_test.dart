@@ -27,13 +27,12 @@ void _size(WidgetTester tester) {
   addTearDown(tester.view.resetDevicePixelRatio);
 }
 
-WeekPlan _week(int j, String name, List<Exercise> exercises) =>
-    WeekPlan.manual(
-      n: 0,
-      block: name,
-      color: const Color(0xFF4FA3C7),
-      days: [DayPlan.manual(j: j, title: name, exercises: exercises)],
-    );
+WeekPlan _week(int j, String name, List<Exercise> exercises) => WeekPlan.manual(
+  n: 0,
+  block: name,
+  color: const Color(0xFF4FA3C7),
+  days: [DayPlan.manual(j: j, title: name, exercises: exercises)],
+);
 
 Exercise _exercise(String id, String name, String sets, {int count = 1}) =>
     Exercise.manual(id: id, name: name, setsText: sets, forcedSets: count);
@@ -99,10 +98,7 @@ void main() {
       expect(_reps(week, 0, 1), isEmpty);
       expect(find.text('max 21'), findsWidgets);
       expect(find.byKey(const ValueKey('range-volume-PL-1')), findsOneWidget);
-      expect(
-        find.textContaining('21 max', findRichText: true),
-        findsOneWidget,
-      );
+      expect(find.textContaining('21 max', findRichText: true), findsOneWidget);
       expect(tester.takeException(), null);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
