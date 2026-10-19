@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : KB2 — bascule ouverte par dérogation, prise de main immédiate de Koach 1.0.5 (pipeline CP), version dev7.2.1 ; précédent : dev7.2.0 (KB1)**  
-**Date : 18 octobre 2026, Europe/Paris — version : 7.2.1+141, affichée « dev7.2.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : KB2 correction 1 — popup du questionnaire hors modèle et séance servie par Koach (pipeline CP), version dev7.2.2 ; précédent : dev7.2.1 (KB2)**  
+**Date : 19 octobre 2026, Europe/Paris — version : 7.2.2+142, affichée « dev7.2.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le pilotage (C8).**
+
+## KB2 correction 1 — Popup de Koach et séance servie (version dev7.2.2, pipeline CP, DECISIONS_CP.md C17.36)
+
+- Questionnaire hors modèle : chaque choix sous son texte (le code du choix, plus « Autre chose »), réponses envoyées par leur code et validées avant l'envoi ; une réponse refusée sert la séance écrite avec un message et la question revient à la séance suivante ; message d'entrée sans redite ; feuille fermée = « Plus tard ».
+- Séance servie : Koach ne retire ni n'ajoute plus en silence un exercice de la séance écrite (garde `koachGardeSeance`, ordre écrit). Cause du constat (S1·J1 sans muscle-up ni traction lestés) : la règle de retour gradué du moteur (`koach.retour_gradue`, volume de la semaine) ramenait ces deux lignes à 0 série et l'écran effaçait les lignes absentes ; elles sont servies telles qu'écrites, raison affichée. « Plus tard » sert la même séance que sans alerte.
+- Arrêt d'urgence pendant une séance commencée : retour à la séance écrite, séries notées gardées. Paquets inchangés. Tests : `test/kb2c1_seance_servie_test.dart`, `test/kb2c1_popup_test.dart` ; cible émulateur `integration_test/koach_kb2c1_test.dart`. Livraison : `pipeline/cp/livraisons/LIVRAISON_KB2_correction1.md`.
 
 ## KB2 — Prise de main immédiate de Koach 1.0.5 (version dev7.2.1, pipeline CP, DECISIONS_CP.md C17.32, C17.33, C17.34)
 

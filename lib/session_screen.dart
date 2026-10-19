@@ -142,7 +142,8 @@ class _SessionScreenState extends State<SessionScreen> {
   /// G9 : journée servie par le moteur dynamique ; sinon celle du
   /// programme.
   DayPlan get _day {
-    if (adaptOn) {
+    // KB2 correction 1 : arrêt d'urgence pendant la séance : séance écrite.
+    if (adaptOn && !store.koachStoppedWeek(widget.week.n)) {
       final a = store.sessionAdapt(widget.week.n, widget.day.j);
       if (a != null) return store.adaptDay(widget.week.n, widget.day, a);
     }
@@ -358,7 +359,24 @@ class _SessionScreenState extends State<SessionScreen> {
         widget.day,
         diagnostic: diagnostic,
       );
-      if (!mounted || !ok) return;
+      if (!mounted) return;
+      // KB2 correction 1 (C17.36) : réponse refusée : message clair, séance
+      // écrite servie, question reposée à la séance suivante.
+      if (!ok && store.koachAnswerRefused(widget.week.n, widget.day.j)) {
+        _adapted(true);
+        _restore(from);
+        showKSnack(
+          context,
+          message:
+              'Koach n’a pas pu prendre ta réponse en compte : tu fais la '
+              'séance écrite aujourd’hui. Il te reposera la question à la '
+              'prochaine séance.',
+          bottom: KBottomInset.of(context),
+          duration: const Duration(seconds: 6),
+        );
+        return;
+      }
+      if (!ok) return;
       _adapted(true);
       _restore(from);
     } finally {

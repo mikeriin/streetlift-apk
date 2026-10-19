@@ -157,21 +157,67 @@ class KoachSuggestionCard extends StatelessWidget {
   }
 }
 
+/// KB2 correction 1 (C17.36) : code d'un choix d'une question du
+/// diagnostic (`{code, texte}` de `Surveillance.questions`, ou le code
+/// lui-même) : chaîne ou entier, c'est lui que `Surveillance.repondre`
+/// attend ; null : choix illisible.
+Object? koachChoiceCode(Object? choix) {
+  final c = choix is Map ? choix['code'] : choix;
+  if (c is String || c is int) return c;
+  if (c is num && c == c.roundToDouble()) return c.toInt();
+  return null;
+}
+
+/// Libellé d'un choix [choix] de la question [question] : texte de
+/// l'application pour son code ; à défaut (code que l'application ne
+/// connaît pas), le texte du choix rendu par le moteur.
+String koachChoiceLabel(String question, Object? choix) {
+  final code = koachChoiceCode(choix);
+  final label = texteChoixKoach(question, code);
+  final texte = choix is Map ? choix['texte'] : null;
+  const generiques = {
+    'Autre chose',
+    'Autre endroit',
+    'Autre réponse',
+    'Je ne sais pas',
+  };
+  if (generiques.contains(label) && texte is String && texte.isNotEmpty) {
+    return texte;
+  }
+  return label;
+}
+
+/// Fin de phrase d'une cause qui redit le message d'entrée.
+final _causeHorsModele = RegExp(
+  r'\s*:\s*cette situation sort de mon modèle\.?\s*$',
+);
+
+/// KB2 correction 1 (C17.36) : message d'entrée du diagnostic : une phrase
+/// par cause (sans redire « sort de mon modèle »), puis le message d'entrée,
+/// une seule fois.
+String koachDiagnosticIntro(List<String> causes) {
+  final phrases = <String>[];
+  for (final c in causes) {
+    var t = texteRaisonKoach({'code': c}).trim();
+    if (t == texteHorsModeleKoach) continue;
+    t = t.replaceFirst(_causeHorsModele, '.');
+    if (!phrases.contains(t)) phrases.add(t);
+  }
+  return [...phrases, texteHorsModeleKoach].join(' ');
+}
+
 /// Diagnostic hors modèle (trois questions au plus) : message de Koach,
 /// puis les questions de la surveillance, chacune en un tap. Rend les
-/// réponses, ou null (passé).
+/// réponses (le code de chaque choix), ou null : « Plus tard », ou une
+/// feuille fermée sans choix (glisser, retour), qui vaut « Plus tard ».
 Future<Json?> showKoachDiagnostic(BuildContext context) async {
   final causes = store.koachAlertCauses;
   final reponses = <String, Object?>{};
-  final intro = [
-    texteHorsModeleKoach,
-    for (final c in causes) texteRaisonKoach({'code': c}),
-  ].join(' ');
   final go = await showKoachSheet<bool>(
     context,
     pose: KoachPose.think,
     title: 'Avant de commencer',
-    text: intro,
+    text: koachDiagnosticIntro(causes),
     actions: [
       KoachBubbleAction(
         'Répondre (3 questions au plus)',
@@ -192,15 +238,20 @@ Future<Json?> showKoachDiagnostic(BuildContext context) async {
     if (step >= qs.length) break;
     final q = qs[step];
     final code = '${q['code']}';
-    final choix = [for (final c in (q['choix'] as List? ?? const [])) c];
+    final choix = [
+      for (final c in (q['choix'] as List? ?? const []))
+        if (koachChoiceCode(c) != null) c,
+    ];
     if (choix.isEmpty) break;
     final i = await showKListSheet(
       context,
       title: texteQuestionKoach(code),
-      items: [for (final c in choix) KListItem(texteChoixKoach(code, c))],
+      items: [for (final c in choix) KListItem(koachChoiceLabel(code, c))],
     );
-    if (i == null || !context.mounted) return null;
-    reponses[code] = choix[i];
+    if (i == null || i < 0 || i >= choix.length || !context.mounted) {
+      return null;
+    }
+    reponses[code] = koachChoiceCode(choix[i]);
   }
   return reponses.isEmpty ? null : reponses;
 }

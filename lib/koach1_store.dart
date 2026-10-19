@@ -49,6 +49,98 @@ const kKoachTestSuffix = '#t';
 /// affiché (tools/check_claims.py).
 const kKoachCleDiag = 'diag${'nostic'}';
 
+/// KB2 correction 1 : emplacement écrit d'un item servi (« <slot>.t » :
+/// vrai test inséré par Koach avant la ligne <slot>).
+String koachSlotEcrit(String slot) =>
+    slot.endsWith('.t') ? slot.substring(0, slot.length - 2) : slot;
+
+/// KB2 correction 1 (C17.36, point 5) — garde de la séance servie : Koach
+/// ne retire ni n'ajoute jamais en silence un exercice de la séance écrite.
+///
+/// [ecrit] : items écrits du jour (ordre du programme) ; [servi] : items de
+/// `plan(seance)` ; [raisons] : `Koach.explain()` après ce plan. Rend :
+/// - `servis` : les items servis dans l'ordre écrit (un vrai test reste
+///   devant sa ligne) ; un item sans ligne écrite (ajout) est écarté ;
+/// - `ecrites` : lignes écrites absentes du servi sans retrait motivé,
+///   servies telles qu'écrites (`{slotId, exercice, cause?}`, `cause` : code
+///   de la raison de Koach sur l'exercice, s'il en a donné une) ;
+/// - `retraits` : retraits motivés (`{slotId, exercice, code}`) : conduite
+///   sous douleur (`koach.douleur_retrait`), course ou cardio retirés au
+///   bilan bas ou sous douleur (`koach.endurance_retrait`), test reporté
+///   (`koach.test_reporte` sur une ligne de test), séance bornée au temps
+///   donné par l'athlète (`koach.seance_bornee`, [budgetDonne]).
+/// Pur (testé).
+({List<Json> servis, List<Json> ecrites, List<Json> retraits}) koachGardeSeance(
+  List<Json> ecrit,
+  List<Json> servi,
+  List<Json> raisons, {
+  bool budgetDonne = false,
+}) {
+  final rang = <String, int>{};
+  for (var i = 0; i < ecrit.length; i++) {
+    rang.putIfAbsent('${ecrit[i]['slotId']}', () => i);
+  }
+  final gardes = <(int, int, Json)>[];
+  for (var i = 0; i < servi.length; i++) {
+    final r = rang[koachSlotEcrit('${servi[i]['slotId']}')];
+    if (r != null) gardes.add((r, i, servi[i]));
+  }
+  gardes.sort((a, b) {
+    final c = a.$1.compareTo(b.$1);
+    return c != 0 ? c : a.$2.compareTo(b.$2);
+  });
+  final present = {for (final g in gardes) koachSlotEcrit('${g.$3['slotId']}')};
+  final ecrites = <Json>[];
+  final retraits = <Json>[];
+  for (final w in ecrit) {
+    final slot = '${w['slotId']}';
+    if (present.contains(slot)) continue;
+    final ex = w['exerciseId'];
+    String? motif;
+    String? cause;
+    for (final r in raisons) {
+      final p = r['params'];
+      if (p is! Map || p['exercice'] != ex) continue;
+      final code = '${r['code']}';
+      if (code == 'koach.douleur_retrait' ||
+          code == 'koach.endurance_retrait' ||
+          (code == 'koach.test_reporte' && w['kind'] == 'test') ||
+          (code == 'koach.seance_bornee' && budgetDonne)) {
+        motif ??= code;
+      } else {
+        cause ??= code;
+      }
+    }
+    if (motif != null) {
+      retraits.add({'slotId': slot, 'exercice': ex, 'code': motif});
+    } else {
+      ecrites.add({
+        'slotId': slot,
+        'exercice': ex,
+        if (cause != null) 'cause': cause,
+      });
+    }
+  }
+  return (
+    servis: [for (final g in gardes) g.$3],
+    ecrites: ecrites,
+    retraits: retraits,
+  );
+}
+
+/// KB2 correction 1 : raison affichée d'une ligne écrite que Koach n'a
+/// pas servie (garde de la séance) ; [cause] : code de la raison de Koach
+/// sur l'exercice.
+String koachTexteEcrite(String? cause) => switch (cause) {
+  'koach.retour_gradue' =>
+    'Servi tel qu’écrit. Koach l’aurait retiré pour rester dans le volume '
+        'de la semaine : écoute tes sensations.',
+  'koach.seance_bornee' =>
+    'Servi tel qu’écrit. Koach l’aurait retiré pour tenir la durée de la '
+        'séance.',
+  _ => 'Servi tel qu’écrit : Koach garde chaque exercice du programme.',
+};
+
 /// Section `koachEngine` du document.
 class KoachEngineData {
   /// Première ouverture d'une version avec Koach 1.0 (AAAA-MM-JJ).
@@ -1259,6 +1351,51 @@ extension KoachStore on AppStore {
     return ok;
   }
 
+  /// KB2 correction 1 (C17.36) : réponses au questionnaire hors modèle
+  /// valides : chaque réponse est le code d'un choix de sa question, dans
+  /// l'ordre des questions de la surveillance (cause d'abord).
+  bool koachDiagnosticValid(Json reponses) {
+    final sv = _koachRt.live?.surveillance;
+    if (sv == null || reponses['cause'] == null) return false;
+    final seen = <String>{};
+    for (var step = 0; step < 3; step++) {
+      final qs = sv.questions(reponses);
+      if (step >= qs.length) break;
+      final q = qs[step];
+      final code = '${q['code']}';
+      if (!reponses.containsKey(code)) break;
+      final r = reponses[code];
+      final codes = [
+        for (final c in (q['choix'] as List? ?? const []))
+          c is Map ? c['code'] : c,
+      ];
+      if (!codes.contains(r)) return false;
+      seen.add(code);
+    }
+    return seen.length == reponses.length;
+  }
+
+  /// KB2 correction 1 : la réponse au questionnaire de S[week]·J[j] a été
+  /// refusée (séance écrite servie, question reposée à la séance
+  /// suivante).
+  bool koachAnswerRefused(int week, int j) {
+    final k = logs[sessionKey(week, j)]?.adapt?['koach'];
+    return k is Map && k['state'] == 'ecrite' && k['refus'] == 'reponse';
+  }
+
+  /// Réponse refusée : la séance reste la séance écrite (l'aperçu, séries
+  /// de la semaine et charge fixe comprises), hors de Koach ; rien n'est
+  /// versé au journal de Koach pour son début (rejeu au prochain passage).
+  void _koachRefuseAnswer(int week, DayPlan base, SessionAdapt a) {
+    final log = sessionLog(week, base.j);
+    final next = a.copyWith(
+      koach: {'state': 'ecrite', 'refus': 'reponse', 'date': _kToday.iso},
+    );
+    log.adapt = next.toJson().cast<String, dynamic>();
+    saveLogs();
+    _persist();
+  }
+
   /// [koachStart] sans attendre : le moteur doit être prêt.
   bool koachStartNow(int week, DayPlan base, {Json? diagnostic}) {
     final key = sessionKey(week, base.j);
@@ -1292,7 +1429,21 @@ extension KoachStore on AppStore {
     final contexte = inputs.contexte;
     final grilles = inputs.grilles;
     final zones = inputs.zones;
+    // KB2 correction 1 (C17.36) : réponses validées avant l'envoi ; une
+    // réponse refusée ne fait jamais tomber la séance en silence.
+    final withAnswer = diagnostic != null && koachNeedsDiagnostic;
+    if (withAnswer && !koachDiagnosticValid(diagnostic)) {
+      _koachRefuseAnswer(week, base, a);
+      return false;
+    }
     final sw = Stopwatch()..start();
+    // Longueur du journal avant le début de séance : un échec le coupe là
+    // (le journal reste rejouable, aucun `seance_debut` orphelin).
+    final n0 = k.journal.length;
+    void couper() {
+      if (k.journal.length > n0) k.journal.removeRange(n0, k.journal.length);
+    }
+
     Json r;
     try {
       k.observe({
@@ -1302,12 +1453,21 @@ extension KoachStore on AppStore {
         'poids_kg': _koachPeseeAu(today),
         'contexte': contexte,
       });
-      if (diagnostic != null && koachNeedsDiagnostic) {
-        k.observe({
-          'type': 'decision',
-          'jour': jour,
-          kKoachCleDiag: diagnostic,
-        });
+      if (withAnswer) {
+        try {
+          k.observe({
+            'type': 'decision',
+            'jour': jour,
+            kKoachCleDiag: diagnostic,
+          });
+        } catch (_) {
+          // Début de séance déjà versé à l'instance : journal coupé, rejeu
+          // au prochain passage.
+          couper();
+          _koachRt.live = null;
+          _koachRefuseAnswer(week, base, a);
+          return false;
+        }
       }
       r =
           k.plan({
@@ -1319,7 +1479,8 @@ extension KoachStore on AppStore {
               })!
               as Json;
     } catch (_) {
-      // État du moteur partiel : rejeu au prochain passage.
+      // État du moteur partiel : journal coupé, rejeu au prochain passage.
+      couper();
       _koachRt.live = null;
       _koachRt.error = 'Séance de Koach impossible : séance écrite servie.';
       return false;
@@ -1333,13 +1494,50 @@ extension KoachStore on AppStore {
         if (post['${it['exerciseId']}'] != null)
           '${it['exerciseId']}': koachCopie(post['${it['exerciseId']}']),
     };
-    final served = [
-      for (final it in (r['items'] as List? ?? const []))
-        if (it is Map) koachCopie(it) as Json,
+    final raisons = k.explain();
+    // KB2 correction 1 (C17.36, point 5) : Koach ne retire ni n'ajoute
+    // jamais en silence un exercice de la séance écrite. Ordre écrit ; un
+    // exercice écrit absent du servi est servi tel qu'écrit (la ligne de
+    // l'aperçu), raison affichée, sauf retrait motivé (douleur, test
+    // reporté, temps donné par l'athlète).
+    final garde = koachGardeSeance(
+      info.items,
+      [
+        for (final it in (r['items'] as List? ?? const []))
+          if (it is Map) koachCopie(it) as Json,
+      ],
+      raisons,
+      budgetDonne: contexte['budget'] != null,
+    );
+    final served = garde.servis;
+    final apercu = {for (final it in a.plan.items) it.slotId: it};
+    final ecrites = {
+      for (final x in garde.ecrites)
+        if (apercu.containsKey(x['slotId'])) '${x['slotId']}',
+    };
+    final retraits = [
+      ...garde.retraits,
+      for (final x in garde.ecrites)
+        if (!apercu.containsKey(x['slotId']))
+          {...x, 'code': 'koach.planification'},
+    ];
+    final gardees = [
+      for (final x in garde.ecrites)
+        if (apercu.containsKey(x['slotId'])) x,
     ];
     final items = <kc.ExercisePrescription>[];
-    for (final it in served) {
-      final p = _koachItemOf(it, info);
+    for (final w in info.items) {
+      final slot = '${w['slotId']}';
+      for (final it in served) {
+        if (koachSlotEcrit('${it['slotId']}') != slot) continue;
+        final p = _koachItemOf(it, info);
+        if (p != null) items.add(p);
+      }
+      if (!ecrites.contains(slot)) continue;
+      // La ligne de l'aperçu (séries de la semaine, charge fixe) ; une
+      // ligne que la planification de la semaine a mise à 0 série n'est
+      // pas dans l'aperçu : elle reste retirée, comme l'aperçu le montrait.
+      final p = apercu[slot];
       if (p != null) items.add(p);
     }
     var plan = kc.SessionPlan(
@@ -1371,7 +1569,9 @@ extension KoachStore on AppStore {
         'jour': jour,
         'semaine': week - 1,
         'items': served,
-        'raisons': k.explain(),
+        'raisons': raisons,
+        if (gardees.isNotEmpty) 'ecrites': gardees,
+        if (retraits.isNotEmpty) 'retraits': retraits,
         'cibles': <String, Object?>{},
         'versed': <Object?>[],
         if (check != null) 'debut': check,
@@ -1918,6 +2118,18 @@ extension KoachStore on AppStore {
     final a = sessionAdapt(week, j);
     final st = a?.koach;
     if (st == null || st['state'] == 'preview') return null;
+    // KB2 correction 1 : ligne servie telle qu'écrite par la garde.
+    final ecrites = st['ecrites'];
+    if (ecrites is List) {
+      // (Une ligne au départ chronométré servie telle qu'écrite, PR8, est
+      // la ligne du programme : emplacement relu.)
+      final slot = e.slotId ?? adaptSlotOf(week, j, e.id);
+      for (final x in ecrites) {
+        if (x is Map && x['slotId'] == slot) {
+          return koachTexteEcrite(x['cause'] as String?);
+        }
+      }
+    }
     final raisons = st['raisons'];
     if (raisons is! List) return null;
     final id = e.catalogId;
@@ -1939,8 +2151,29 @@ extension KoachStore on AppStore {
   /// raisons générales de l'ouverture (deux au plus à l'écran).
   List<String> koachSessionReasons(int week, int j, {int max = 2}) {
     final a = sessionAdapt(week, j);
-    final raisons = a?.koach?['raisons'];
-    if (raisons is! List) return const [];
+    final st = a?.koach;
+    final raisons0 = st?['raisons'];
+    if (raisons0 is! List) return const [];
+    // KB2 correction 1 : un retrait motivé se dit d'abord ; la raison d'un
+    // retrait que la garde a annulé (ligne servie telle qu'écrite) ne se
+    // dit pas.
+    bool match(Object? r, Object? list, String key) {
+      if (r is! Map || list is! List) return false;
+      final p = r['params'];
+      final ex = p is Map ? p['exercice'] : null;
+      return list.any(
+        (x) => x is Map && x['exercice'] == ex && x[key] == r['code'],
+      );
+    }
+
+    final raisons = [
+      for (final r in raisons0)
+        if (match(r, st?['retraits'], 'code')) r,
+      for (final r in raisons0)
+        if (!match(r, st?['retraits'], 'code') &&
+            !match(r, st?['ecrites'], 'cause'))
+          r,
+    ];
     final out = <String>[];
     for (final r in raisons) {
       if (r is! Map) continue;
@@ -2243,9 +2476,48 @@ extension KoachStore on AppStore {
       },
     };
     _koachRt.live = null;
+    _koachBackToWritten();
     _g9Cache.clear();
+    saveLogs();
     _persist();
     notifyListeners();
+  }
+
+  /// KB2 correction 1 (C17.36, point 6) : à l'arrêt d'urgence, une séance
+  /// commencée et non finie servie par Koach revient à la séance écrite :
+  /// séries validées ou saisies gardées telles quelles ; les autres
+  /// reprennent le nombre et les valeurs du programme (cibles de Koach
+  /// retirées). L'état de Koach de la séance est gardé (réactivation).
+  void _koachBackToWritten() {
+    final re = RegExp(r'^S(\d+)-J(\d+)$');
+    for (final entry in logs.entries) {
+      final log = entry.value;
+      final st = log.adapt?['koach'];
+      if (log.done || st is! Map || st['state'] != 'open') continue;
+      final m = re.firstMatch(entry.key);
+      if (m == null) continue;
+      final week = int.parse(m[1]!), j = int.parse(m[2]!);
+      if (week < 1 || week > program.weeks.length) continue;
+      if (!koachStoppedWeek(week)) continue;
+      final base = program.week(week).day(j);
+      if (base == null) continue;
+      for (final e in base.exercises) {
+        final x = log.ex[e.id];
+        if (x == null) continue;
+        for (final s in x.sets) {
+          if (s.done || s.edited) continue;
+          s.kg = '';
+          s.reps = '';
+        }
+        final n = setCount(e);
+        while (x.sets.length > n && !x.sets.last.done && !x.sets.last.edited) {
+          x.sets.removeLast();
+        }
+        while (x.sets.length < n) {
+          x.addSet();
+        }
+      }
+    }
   }
 
   /// Réactivation : rejeu du journal gardé, puis rattrapage de tout ce
@@ -2309,7 +2581,15 @@ extension KoachStore on AppStore {
         log != null &&
         (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)));
     final st = stored?.koach;
-    if (st != null && st['state'] != 'preview') return stored;
+    // KB2 correction 1 : séance écrite après une réponse refusée, gardée le
+    // jour même ; un autre jour, pas commencée, elle redevient l'aperçu
+    // (Koach la sert, la question revient).
+    final stale =
+        st != null &&
+        st['state'] == 'ecrite' &&
+        !started &&
+        st['date'] != _kToday.iso;
+    if (st != null && st['state'] != 'preview' && !stale) return stored;
     if (started) {
       if (stored != null && st == null) return stored;
       if (st != null && koachStartNow(week, base)) {
@@ -2455,6 +2735,9 @@ extension KoachStore on AppStore {
     final st = a?.koach;
     final k = _koachRt.live;
     if (a == null || st == null || k == null) return null;
+    // KB2 correction 1 : séance écrite (réponse refusée) : pas de résumé de
+    // Koach.
+    if (st['state'] == 'ecrite') return null;
     final avant = (st['avant'] as Map?) ?? const {};
     final post = (k.posterior()['exercices'] as Map?) ?? const {};
     final day = adaptDay(week, base, a);

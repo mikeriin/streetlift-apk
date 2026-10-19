@@ -236,7 +236,7 @@ void main() {
       final p = File('pubspec.yaml').readAsStringSync();
       expect(p, contains('- assets/koach/koach_params_1_0_5.json'));
       expect(p, isNot(contains('koach_params_1_0_3')));
-      expect(p, contains('version: 7.2.1+'));
+      expect(p, contains('version: 7.2.2+'));
       final res = KoachRessources.lire(
         File(kKoachParamsAsset).readAsStringSync(),
         File(kKoachFichesAsset).readAsStringSync(),

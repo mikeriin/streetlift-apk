@@ -164,12 +164,15 @@ void main() {
       print('KM3|paquet|${ko.koachVersion}|${res.versionParametres}');
     });
 
-    test('pubspec : assets de Koach déclarés, version 7.2.1 (KB2)', () {
-      final p = File('pubspec.yaml').readAsStringSync();
-      expect(p, contains('- assets/koach/koach_params_1_0_5.json'));
-      expect(p, contains('- assets/koach/vecteurs_qualites_v1.json'));
-      expect(p, contains('version: 7.2.1+'));
-    });
+    test(
+      'pubspec : assets de Koach déclarés, version 7.2.2 (KB2 correction 1)',
+      () {
+        final p = File('pubspec.yaml').readAsStringSync();
+        expect(p, contains('- assets/koach/koach_params_1_0_5.json'));
+        expect(p, contains('- assets/koach/vecteurs_qualites_v1.json'));
+        expect(p, contains('version: 7.2.2+'));
+      },
+    );
   });
 
   group('bascule', () {

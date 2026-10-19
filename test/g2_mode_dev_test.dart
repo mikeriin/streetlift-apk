@@ -47,10 +47,13 @@ void main() {
   group('build de développement (G2)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test('version affichée : « dev7.2.1 » (prise de main de Koach, KB2)', () {
-      expect(kAppVersion, 'dev$kVersion');
-      expect(kAppVersion, 'dev7.2.1');
-    });
+    test(
+      'version affichée : « dev7.2.2 » (popup de Koach, KB2 correction 1)',
+      () {
+        expect(kAppVersion, 'dev$kVersion');
+        expect(kAppVersion, 'dev7.2.2');
+      },
+    );
 
     test('copie et suppression séparées par session', () async {
       final perso = _document('dark');
