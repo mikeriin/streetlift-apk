@@ -71,7 +71,7 @@ void main() {
       // En-tête du contrat 1.0.6 (CONTRAT_1_0.md).
       expect(
         koachParametresSha256,
-        '55a423cd53b2a31b92f6b14239a4786197f9cd8a575e2f9d348432e217e1dbe8',
+        '4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a',
       );
     });
 
@@ -87,7 +87,7 @@ void main() {
   group('lireParametresKoach', () {
     final p = lireParametresKoach(_texte(koachFichierParametres));
 
-    test('version, schéma, nombre de clés (346 : 6 + 340)', () {
+    test('version, schéma, nombre de clés (347 : 6 + 341)', () {
       expect(p['schema'], koachParametresSchema);
       expect(p['version'], koachParametresVersion);
       expect(koachParametresVersion, koachVersion);
@@ -107,9 +107,9 @@ void main() {
         cles += jm(p[s]).length;
       }
       expect(racine.length, 6);
-      expect(cles - racine.length, 340);
+      expect(cles - racine.length, 341);
       expect(cles, koachParametresCles);
-      expect(cles, 346);
+      expect(cles, 347);
     });
 
     test('identique au fichier de référence décodé', () {
