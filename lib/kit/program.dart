@@ -37,10 +37,14 @@ class KDayRow extends StatelessWidget {
 
   /// Fond de la ligne (`surface` sur la page, `haute` dans une feuille).
   final Color? color;
+
+  /// Correctif 20/10/2026 : pastille courte avant l'état (« GtG »).
+  final String? badge;
   const KDayRow({
     super.key,
     required this.day,
     required this.title,
+    this.badge,
     this.detail,
     this.state = KDayState.todo,
     this.onTap,
@@ -99,7 +103,7 @@ class KDayRow extends StatelessWidget {
     );
     final main = Semantics(
       button: true,
-      label: 'Jour $day · $title. $statusLabel',
+      label: 'Jour $day · $title${badge == null ? '' : ' · $badge'}. $statusLabel',
       value: detail,
       onTap: onTap,
       onLongPress: onLongPress,
@@ -167,6 +171,24 @@ class KDayRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: KSpacing.s8),
+                if (badge != null) ...[
+                  Container(
+                    key: ValueKey('day-badge-$day'),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: KSpacing.s8,
+                      vertical: 2,
+                    ),
+                    decoration: ShapeDecoration(
+                      color: k.encre.withValues(alpha: .16),
+                      shape: const StadiumBorder(),
+                    ),
+                    child: Text(
+                      badge!,
+                      style: KType.micro.copyWith(color: k.encre),
+                    ),
+                  ),
+                  const SizedBox(width: KSpacing.s8),
+                ],
                 if (written != null && !large) ...[
                   Text(
                     written,

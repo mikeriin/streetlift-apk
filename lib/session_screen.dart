@@ -2046,8 +2046,18 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final recordedLoad = recordedLoads.length == 1
         ? unitText(decimalFieldText(recordedLoads.single), 'kg')
         : '—';
+    // Correctif 20/10/2026 : exercice servi par Koach : la charge en grand
+    // est la cible de la série à faire (celle des champs), plus la charge
+    // de départ de la ligne (72,5 affiché pour 82,5 demandé).
+    final nextSet = log.sets.indexWhere((s) => !s.done);
+    final koachKgTarget =
+        !readOnly && widget.adapt && ex.engine && nextSet >= 0
+        ? store.adaptGoal(widget.week.n, widget.day.j, ex, nextSet)?.kg
+        : null;
     final loadLabel = readOnly
         ? recordedLoad
+        : koachKgTarget != null && koachKgTarget > 0 && !store.settings.lb
+        ? '${koachKg(koachKgTarget)} kg'
         : store.loadLabel(ex, week: widget.week.n, day: widget.day.j);
     final shownLoad =
         (readOnly || !noLoad) &&
@@ -2535,25 +2545,53 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           onChanged: () => setState(() => epoch++),
         ),
     ];
+    // Correctif 20/10/2026 : en séance, une série validée et notée passe
+    // en ligne compacte ; enchaînement : quand tout le tour est fait. Un
+    // appui rouvre la note, un appui long annule la validation.
+    bool rated(SetEntry e) =>
+        !flameSets || flamesOf(e) != null || e.flamesUnknown || e.excluded;
+    bool compactRow(int i) {
+      final e = log.sets[i];
+      if (!e.done) return false;
+      if (readOnly) return true;
+      if (!rated(e)) return false;
+      return !_merged ||
+          logs.every((l) => i >= l.sets.length || l.sets[i].done);
+    }
+
     final header = <Widget>[
       // ----- Tableau des séries : en-tête de colonnes + lignes -----
       // G9 correction 1 : sans ligne de saisie visible (toutes les
       // séries résumées, en lecture), pas d'en-tête de colonnes. PR5 :
-      // en séance, les séries validées gardent leur ligne.
-      if (readOnly ? log.sets.any((s) => !s.done) : log.sets.isNotEmpty)
+      // en séance, les séries validées gardent leur ligne. Correctif
+      // 20/10/2026 : en séance, sans ligne de saisie restante, pas
+      // d'en-tête non plus.
+      if ([for (var i = 0; i < log.sets.length; i++) i].any(
+        (i) => !compactRow(i),
+      ))
         KSetTable(columns: columns, rows: const [], actionCount: actions),
     ];
     List<Widget> row(int i) => [
       // G9 correction 1 : en lecture (fin de séance, historique), les
       // séries validées résumées en une ligne. PR5 : en séance, chaque
       // série garde sa ligne ; validée, sa flamme remplace la coche.
-      if (log.sets[i].done && readOnly)
+      if (compactRow(i) && readOnly)
         SetSummaryLine(
           setLabel: rowLabel(i),
           done: setDoneText(log.sets[i], sp, units: !unresolved),
           flames: flamesOf(log.sets[i]),
           unknown: log.sets[i].flamesUnknown,
           excluded: log.sets[i].excluded,
+        )
+      else if (compactRow(i))
+        _CompactSetRow(
+          key: ValueKey('set-compact-${ex.id}-$i'),
+          checkKey: ValueKey('set-check-${ex.id}-$i'),
+          label: rowLabel(i),
+          entry: log.sets[i],
+          done: setDoneText(log.sets[i], sp, units: !unresolved),
+          onFlame: flameSets ? () => _openFlames(k, i, rowLabel(i)) : null,
+          onUncheck: () => _checkSet(k, i),
         )
       else ...[
         Padding(
@@ -4900,6 +4938,97 @@ class _RoundDivider extends StatelessWidget {
           const SizedBox(width: KSpacing.s8),
           Expanded(child: Divider(height: 1, thickness: 1, color: t.texte3)),
         ],
+      ),
+    );
+  }
+}
+
+/// Correctif 20/10/2026 : série validée et notée, en séance, sur une ligne
+/// compacte : numéro, ce qui a été fait (« 82,5 kg × 8 »), flamme. Un appui
+/// sur la flamme rouvre la note ; un appui long (ligne ou flamme) annule
+/// la validation et rend la ligne de saisie. Sans note (série non notée
+/// en flammes) : la coche, qui annule d'un appui.
+class _CompactSetRow extends StatelessWidget {
+  final String label;
+  final SetEntry entry;
+  final String done;
+  final VoidCallback? onFlame;
+  final VoidCallback onUncheck;
+  final Key? checkKey;
+  const _CompactSetRow({
+    super.key,
+    required this.label,
+    required this.entry,
+    required this.done,
+    required this.onFlame,
+    required this.onUncheck,
+    this.checkKey,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final excluded = entry.excluded;
+    final flame = onFlame;
+    return Semantics(
+      container: true,
+      label: 'Série $label validée : ${done.isEmpty ? '—' : done}',
+      onLongPress: onUncheck,
+      onLongPressHint: 'annuler la validation',
+      child: InkWell(
+        borderRadius: KRadius.menuRadius,
+        onLongPress: onUncheck,
+        child: Padding(
+          padding: const EdgeInsets.only(top: KSpacing.s4, left: KSpacing.s4),
+          child: Row(
+            children: [
+              SizedBox(
+                width: KSize.target - KSpacing.s4,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    style: KType.chiffrePetit.copyWith(color: k.texte2),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  done.isEmpty ? '—' : done,
+                  style: KType.corps.copyWith(
+                    color: excluded ? k.texte2 : k.texte,
+                    decoration: excluded ? TextDecoration.lineThrough : null,
+                    fontFeatures: KFont.tabular,
+                  ),
+                ),
+              ),
+              if (flame != null)
+                FlameSetButton(
+                  key: ValueKey('set-flame-$label'),
+                  setLabel: label,
+                  value: setFlamesOf(entry),
+                  unknown: entry.flamesUnknown,
+                  excluded: excluded,
+                  onTap: flame,
+                  onLongPress: onUncheck,
+                )
+              else
+                IconButton(
+                  key: checkKey,
+                  tooltip: 'Annuler la série $label',
+                  style: IconButton.styleFrom(
+                    backgroundColor: k.validation.withValues(alpha: .14),
+                    foregroundColor: k.validation,
+                    shape: KRadius.pill,
+                  ),
+                  icon: const Icon(Icons.check_rounded, size: KSize.icon),
+                  onPressed: onUncheck,
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

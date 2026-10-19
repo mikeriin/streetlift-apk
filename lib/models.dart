@@ -94,6 +94,10 @@ class SetsSpec {
 class Exercise {
   final String id;
   final String name;
+
+  /// Correctif 20/10/2026 : ligne de Grease the Groove (« GtG muscle-up —
+  /// dans la journée ») : faite dans la journée, hors séance.
+  bool get isGtg => RegExp(r'^\s*gtg\b', caseSensitive: false).hasMatch(name);
   final SetsSpec sets;
   final String intensity;
   final LoadSpec load;
@@ -278,6 +282,11 @@ class DayPlan {
   final String conduite;
   final List<Exercise> exercises;
 
+  /// Correctif 20/10/2026 : lignes GtG de la journée, retirées de la
+  /// séance ([DayPlan.withoutGtg]) : montrées sur la carte du jour et
+  /// rappelées par notification.
+  final List<Exercise> gtg;
+
   /// L10 (KT-057) : ligne « pourquoi » de la séance (programme généré).
   final String why;
 
@@ -303,6 +312,7 @@ class DayPlan {
     this.cycle = '',
     this.conduite = '',
     required this.exercises,
+    this.gtg = const [],
   }) : why = '',
        source = null,
        type = null,
@@ -311,6 +321,7 @@ class DayPlan {
   /// L11 : même journée avec une liste d'exercices adaptée.
   DayPlan.adapted(DayPlan base, this.exercises)
     : j = base.j,
+      gtg = base.gtg,
       title = base.title,
       cycle = base.cycle,
       conduite = base.conduite,
@@ -323,6 +334,7 @@ class DayPlan {
   /// place ([exercises]) ; l'original reste lisible par [original].
   DayPlan.overlay(DayPlan base, this.exercises)
     : j = base.j,
+      gtg = base.gtg,
       title = base.title,
       cycle = base.cycle,
       conduite = base.conduite,
@@ -334,6 +346,27 @@ class DayPlan {
   /// Journée telle qu'écrite dans le programme, sans couche d'ajustements.
   DayPlan get original => source ?? this;
 
+  /// Correctif 20/10/2026 : même journée, lignes GtG sorties de la séance
+  /// (vers [gtg]).
+  DayPlan.withoutGtg(DayPlan base)
+    : j = base.j,
+      title = base.title,
+      cycle = base.cycle,
+      conduite = base.conduite,
+      why = base.why,
+      type = base.type,
+      minutes = base.minutes,
+      source = base.source,
+      exercises = [
+        for (final e in base.exercises)
+          if (!e.isGtg) e,
+      ],
+      gtg = [
+        ...base.gtg,
+        for (final e in base.exercises)
+          if (e.isGtg) e,
+      ];
+
   DayPlan.fromJson(Map<String, dynamic> j0)
     : j = j0['j'] as int,
       title = j0['title'] as String,
@@ -343,6 +376,7 @@ class DayPlan {
       source = null,
       type = _dayType(j0['type']),
       minutes = _dayMinutes(j0['minutes']),
+      gtg = const [],
       exercises = (j0['exercises'] as List)
           .map((e) => Exercise.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -558,6 +592,20 @@ class Program {
   /// progression, mais ne s'affichent plus : la numérotation affichée
   /// repart de S1. 1 : tout s'affiche.
   int firstShown = 1;
+
+  /// Correctif 20/10/2026 : lignes GtG sorties des séances à partir de la
+  /// semaine [fromWeek] (les semaines d'avant gardent leurs séries notées,
+  /// lues par Koach).
+  void detachGtg({required int fromWeek}) {
+    for (final w in weeks) {
+      if (w.n < fromWeek) continue;
+      for (var i = 0; i < w.days.length; i++) {
+        if (w.days[i].exercises.any((e) => e.isGtg)) {
+          w.days[i] = DayPlan.withoutGtg(w.days[i]);
+        }
+      }
+    }
+  }
 
   /// PR2 : semaines affichées.
   List<WeekPlan> get shownWeeks =>

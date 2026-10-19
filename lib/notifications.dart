@@ -82,6 +82,71 @@ List<PlannedReminder> planReminders(
   return result;
 }
 
+/// Correctif 20/10/2026 : heures des rappels de GtG (toutes les 2 h, de 9 h
+/// à 21 h).
+const gtgReminderHours = [9, 11, 13, 15, 17, 19, 21];
+
+/// Jours couverts par les rappels de GtG (la liste se refait à chaque
+/// ouverture de l'application).
+const gtgReminderDays = 14;
+
+/// Identifiants des rappels de GtG : 2000 + (jour du programme) × 8 +
+/// créneau.
+const gtgReminderFirstId = 2000;
+const gtgReminderLastId = 2000 + 40 * 7 * 8 + 7;
+
+/// Correctif 20/10/2026 : rappels de GtG d'un jour qui en porte (lignes
+/// GtG sorties de la séance, [DayPlan.gtg]) : toutes les 2 h avec
+/// l'exercice et les répétitions, que la séance du jour soit faite ou non.
+List<PlannedReminder> planGtgReminders(
+  AppStore app,
+  DateTime now, {
+  tz.Location? location,
+}) {
+  if (!app.settings.notifOn || !app.program.scheduled) return [];
+  final until = now.add(const Duration(days: gtgReminderDays));
+  final result = <PlannedReminder>[];
+  for (final week in app.program.weeks) {
+    for (final day in week.days) {
+      if (day.gtg.isEmpty) continue;
+      final date = app.program.dateFor(week.n, day.j);
+      if (date.isAfter(until)) continue;
+      final lines = [
+        for (final e in day.gtg)
+          switch (app.gtgReps(e)) {
+            final r? => '${app.splitName(e.name).$1} : $r reps propres',
+            null => '${app.splitName(e.name).$1} : ${app.setsLabel(e)}',
+          },
+      ];
+      for (var h = 0; h < gtgReminderHours.length; h++) {
+        final hour = gtgReminderHours[h];
+        final at = location == null
+            ? tz.TZDateTime.from(
+                DateTime(date.year, date.month, date.day, hour),
+                tz.UTC,
+              )
+            : tz.TZDateTime(location, date.year, date.month, date.day, hour);
+        if (!at.isAfter(now)) continue;
+        result.add(
+          PlannedReminder(
+            gtgReminderFirstId + ((week.n - 1) * 7 + day.j - 1) * 8 + h,
+            'GtG — ${lines.first}',
+            [
+              ...lines.skip(1),
+              'Loin de l’échec, technique parfaite '
+                  '(${app.program.sessionLabel(week.n, day.j)}).',
+            ].join(' · '),
+            'S${week.n}-J${day.j}',
+            at,
+          ),
+        );
+      }
+    }
+  }
+  result.sort((a, b) => a.at.compareTo(b.at));
+  return result;
+}
+
 class NotificationAccess {
   final bool allowed, channelAllowed, exact;
   const NotificationAccess({
@@ -359,7 +424,9 @@ class NotificationService {
   }
 
   static bool _ours(int id) =>
-      (id >= 100 && id <= 106) || (id >= 1001 && id <= 1280);
+      (id >= 100 && id <= 106) ||
+      (id >= 1001 && id <= 1280) ||
+      (id >= gtgReminderFirstId && id <= gtgReminderLastId);
   Future<void> _reschedule(int revision) async {
     status.value = ReminderStatus(access: status.value.access, busy: true);
     await init(); // Retente après un échec initial.
@@ -369,7 +436,11 @@ class NotificationService {
       final name = await backend.timeZoneName();
       if (name != null) location = tz.getLocation(name);
     } catch (_) {} // Le repli DateTime local garde le bon instant.
-    final planned = planReminders(app, now(), location: location);
+    final planned = [
+      ...planReminders(app, now(), location: location),
+      // Correctif 20/10/2026 : rappels de GtG.
+      ...planGtgReminders(app, now(), location: location),
+    ]..sort((a, b) => a.at.compareTo(b.at));
     final desired = app.settings.notifOn && access.usable
         ? planned
         : <PlannedReminder>[];

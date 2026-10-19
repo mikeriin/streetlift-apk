@@ -1221,6 +1221,11 @@ extension KoachStore on AppStore {
     final day = place?.day;
     if (place == null || day == null) return null;
     final modules = _koachModules(week - 1);
+    final roles = {
+      for (final d in place.block.pass1.days)
+        if (d.dayIndex == place.dayIndex)
+          for (final s in d.slots) s.slotId: s.role,
+    };
     final items = <kc.ExercisePrescription>[];
     for (final it in day.items) {
       final m = modules?['${place.dayIndex}|${it.slotId}'];
@@ -1229,7 +1234,9 @@ extension KoachStore on AppStore {
         if (m.$1 == 0) continue;
         next = it.copyWith(sets: m.$1, setTargets: null);
       }
-      items.add(next);
+      // Correctif 20/10/2026 : accessoires servis en plage (aperçu comme
+      // séance ouverte).
+      items.add(_koachRange(place, next, roles[it.slotId]));
     }
     final plan = kc.SessionPlan(
       date: _kToday,
@@ -1531,7 +1538,17 @@ extension KoachStore on AppStore {
       for (final it in served) {
         if (koachSlotEcrit('${it['slotId']}') != slot) continue;
         final p = _koachItemOf(it, info);
-        if (p != null) items.add(p);
+        if (p != null) {
+          items.add(
+            _koachRange(
+              place,
+              p,
+              kc.SlotRole.values
+                  .where((r) => r.code == info.roles[slot])
+                  .firstOrNull,
+            ),
+          );
+        }
       }
       if (!ecrites.contains(slot)) continue;
       // La ligne de l'aperçu (séries de la semaine, charge fixe) ; une
@@ -1593,6 +1610,18 @@ extension KoachStore on AppStore {
     saveLogs();
     _persist();
     return true;
+  }
+
+  /// Correctif 20/10/2026 : ligne [it] servie en plage quand c'est un
+  /// accessoire à reps fixes ([withAccessoryRange]) ; une charge fixe
+  /// (C15) garde sa ligne écrite.
+  kc.ExercisePrescription _koachRange(
+    AdaptPlace place,
+    kc.ExercisePrescription it,
+    kc.SlotRole? role,
+  ) {
+    if (_fixedLoadAt(place, it.slotId, it.exerciseId) != null) return it;
+    return withAccessoryRange(it, role);
   }
 
   /// Item servi par Koach au format du contrat de l'application : champs
@@ -1980,7 +2009,9 @@ extension KoachStore on AppStore {
       if (c is Map) last = c;
       final t = last;
       out.add(
-        kc.SetTarget(
+        // Correctif 20/10/2026 : ligne servie en plage : la cible à reps
+        // fixes de Koach prend la plage de la ligne.
+        accessoryRangeTarget(kc.SetTarget(
           repsLow: t?['repsLow'] as int? ?? it.repsLow,
           repsHigh: t?['repsHigh'] as int? ?? it.repsHigh,
           secondsLow: t?['secondsLow'] as int? ?? it.secondsLow,
@@ -1994,7 +2025,7 @@ extension KoachStore on AppStore {
               : kc.SetRole.values
                     .where((r) => r.code == t!['role'])
                     .firstOrNull,
-        ),
+        ), it),
       );
     }
     return out;

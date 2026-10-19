@@ -462,9 +462,9 @@ void main() {
     });
   });
 
-  test('version affichée : « 7.2.3 » hors build de développement (plages '
-      'de reps et tours)', () {
-    expect(kVersion, '7.2.3');
-    expect(kAppVersion, '7.2.3');
+  test('version affichée : « 7.2.4 » hors build de développement (GtG, '
+      'plages, séries compactes)', () {
+    expect(kVersion, '7.2.4');
+    expect(kAppVersion, '7.2.4');
   });
 }

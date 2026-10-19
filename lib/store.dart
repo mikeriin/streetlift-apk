@@ -708,6 +708,9 @@ class AppStore extends ChangeNotifier {
         program.firstShown = first is int
             ? first.clamp(1, program.weeks.length)
             : 1;
+        // Correctif 20/10/2026 : GtG hors séance (carte du jour et
+        // rappels) dans le programme suivi.
+        program.detachGtg(fromWeek: program.firstShown);
         weekKinds = _baseKoachAvailable
             ? LegacyWeekKinds.fromJson(inst.koachJson(_baseKoachJson))
             : const LegacyWeekKinds.empty();
@@ -2610,6 +2613,26 @@ class AppStore extends ChangeNotifier {
       return '${s.prefix}$n${s.suffix}';
     }
     return s.value ?? '';
+  }
+
+  /// Correctif 20/10/2026 : GtG d'une journée en une ligne (« GtG
+  /// muscle-up · 3 × 4 »), null sans GtG. [short] : « GtG » seul (ligne
+  /// compacte).
+  String? gtgText(DayPlan d, {bool short = false}) {
+    if (d.gtg.isEmpty) return null;
+    if (short) return 'GtG';
+    return [
+      for (final e in d.gtg)
+        '${splitName(e.name).$1} · '
+            '${setsLabel(e).replaceAllMapped(RegExp(r'(\d)\s*[×x]\s*(\d)'), (m) => '${m[1]}\u00a0×\u00a0${m[2]}')}',
+    ].join(' · ');
+  }
+
+  /// Correctif 20/10/2026 : répétitions d'une série de GtG (« 3×4 » → 4,
+  /// « 5×3-5 » → 3), null : volume illisible.
+  int? gtgReps(Exercise e) {
+    final m = RegExp(r'[×x]\s*(\d+)').firstMatch(setsLabel(e));
+    return m == null ? null : int.tryParse(m[1]!);
   }
 
   /// Nombre de lignes de séries à afficher dans le logger.
