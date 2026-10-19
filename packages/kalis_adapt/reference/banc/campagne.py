@@ -546,6 +546,8 @@ def mesurer_saison(cle, scenario, verite, graine, opts):
         'alertes': alertes,
         'calibration': {'unites': unites, 'exclus': exclus},
         'securite': securite_saison(saison, infos, tour, pol),
+        # KM4 (C17.37) : principaux réduits ou retirés par la rampe de volume.
+        'rampe': dict(getattr(pol, 'rampe', None) or pk.rampe_vide()),
     }
 
 

@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "version": "1.0.5-ref.1",
-  "date": "2026-10-17",
-  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour. 1.0.2 (KM1 correction 2, DECISIONS_CP.md C13.12) : reprise par paliers mesurés et ouverture des tentatives selon la note des barres (securite.tentative_palier_par_rir, tentative_palier_bande), dispersion des trajectoires à l'échéance (planification.dispersion_echeance), intervalle recalé sur six graines (mesure.defaut_modele_sd, intervalle_echelle). 1.0.3 (KM1 correction 3, DECISIONS_CP.md C17.9) : fiabilité des notes (mesure.fiabilite_*) élargissant l'incertitude des capacités, prudence ciblée à l'ouverture des tentatives (securite.tentative_palier_fiabilite, tentative_marge_fiabilite, tentative_marge_fiabilite_max), barre suivante après un échec hors compétition (securite.tentative_echec_baisse_part), règle d'échec non prévu (securite.echec_sans_hausse_tout_schema), prudence des séries lourdes (planification.prudence_charge_fiabilite). 1.0.4 (KR1, DECISIONS_CP.md C17.18) : aucune valeur nouvelle ; l'élargissement « rien de spécial » (rupture.elargissement_rien_de_special) est plafonné à l'a priori de population de chaque composante (code). 1.0.5 (KM1c4, DECISIONS_CP.md C17.23, C17.25) : conduite sous douleur et rampe du réalisé — zone sensible douze semaines après un épisode, avec ou sans arrêt (securite.sensible_j), budget hebdomadaire d'exposition de la zone fondé sur le réalisé (securite.reprise_dose_depart passe de 0,6 à 0,5, reprise_dose_sans_habitude, reprise_dose_min, rampe_zone_semaines_max), aucune hausse de charge sur une zone signalée au-dessus du seuil dans la semaine (securite.douleur_hausse_j), rampe de retour d'une zone après une coupure (séances manquées), sans douleur connue, depuis la moitié de son habitude (securite.charge_chronique_semaines), élargissement « rien de spécial » uniforme et borné (rupture.elargissement_vers_a_priori ; elargissement_rien_de_special n'est plus lu).",
+  "version": "1.0.6-ref.1",
+  "date": "2026-10-19",
+  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour. 1.0.2 (KM1 correction 2, DECISIONS_CP.md C13.12) : reprise par paliers mesurés et ouverture des tentatives selon la note des barres (securite.tentative_palier_par_rir, tentative_palier_bande), dispersion des trajectoires à l'échéance (planification.dispersion_echeance), intervalle recalé sur six graines (mesure.defaut_modele_sd, intervalle_echelle). 1.0.3 (KM1 correction 3, DECISIONS_CP.md C17.9) : fiabilité des notes (mesure.fiabilite_*) élargissant l'incertitude des capacités, prudence ciblée à l'ouverture des tentatives (securite.tentative_palier_fiabilite, tentative_marge_fiabilite, tentative_marge_fiabilite_max), barre suivante après un échec hors compétition (securite.tentative_echec_baisse_part), règle d'échec non prévu (securite.echec_sans_hausse_tout_schema), prudence des séries lourdes (planification.prudence_charge_fiabilite). 1.0.4 (KR1, DECISIONS_CP.md C17.18) : aucune valeur nouvelle ; l'élargissement « rien de spécial » (rupture.elargissement_rien_de_special) est plafonné à l'a priori de population de chaque composante (code). 1.0.5 (KM1c4, DECISIONS_CP.md C17.23, C17.25) : conduite sous douleur et rampe du réalisé — zone sensible douze semaines après un épisode, avec ou sans arrêt (securite.sensible_j), budget hebdomadaire d'exposition de la zone fondé sur le réalisé (securite.reprise_dose_depart passe de 0,6 à 0,5, reprise_dose_sans_habitude, reprise_dose_min, rampe_zone_semaines_max), aucune hausse de charge sur une zone signalée au-dessus du seuil dans la semaine (securite.douleur_hausse_j), rampe de retour d'une zone après une coupure (séances manquées), sans douleur connue, depuis la moitié de son habitude (securite.charge_chronique_semaines), élargissement « rien de spécial » uniforme et borné (rupture.elargissement_vers_a_priori ; elargissement_rien_de_special n'est plus lu). 1.0.6 (KM4, DECISIONS_CP.md C17.37) : retour gradué au volume réparti sur les séances de la semaine et priorisé par rôle (accessoires d'abord, principaux en dernier), jamais un principal à 0 série sans douleur (securite.retour_plancher_principal), répartition seulement sans séance manquée récente (securite.retour_repartition_semaines) ; rupture.elargissement_rien_de_special retirée.",
   "qualites": [
     "pousser",
     "tirer",
@@ -398,6 +398,8 @@
     "volume_hausse_2sem": 0.3,
     "volume_hausse_2sem_series": 4,
     "volume_reprise_part": 0.5,
+    "retour_plancher_principal": 0.5,
+    "retour_repartition_semaines": 4,
     "volume_groupes_majeurs": [
       "chest",
       "delt_anterior",
@@ -564,7 +566,6 @@
     "assiduite_secours": 0.7,
     "assiduite_secours_semaines": 2,
     "douleur_secours": 2,
-    "elargissement_rien_de_special": 4.0,
     "elargissement_vers_a_priori": 0.25,
     "semaine_allegee_series": 0.6,
     "semaine_allegee_rir": 2.0,
