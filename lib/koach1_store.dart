@@ -2011,21 +2011,24 @@ extension KoachStore on AppStore {
       out.add(
         // Correctif 20/10/2026 : ligne servie en plage : la cible à reps
         // fixes de Koach prend la plage de la ligne.
-        accessoryRangeTarget(kc.SetTarget(
-          repsLow: t?['repsLow'] as int? ?? it.repsLow,
-          repsHigh: t?['repsHigh'] as int? ?? it.repsHigh,
-          secondsLow: t?['secondsLow'] as int? ?? it.secondsLow,
-          secondsHigh: t?['secondsHigh'] as int? ?? it.secondsHigh,
-          loadKg:
-              (t?['loadKg'] as num?)?.toDouble() ??
-              (t == null ? it.startLoadKg : null),
-          flames: t?['flames'] as int? ?? it.targetFlames,
-          role: t?['role'] == null
-              ? null
-              : kc.SetRole.values
-                    .where((r) => r.code == t!['role'])
-                    .firstOrNull,
-        ), it),
+        accessoryRangeTarget(
+          kc.SetTarget(
+            repsLow: t?['repsLow'] as int? ?? it.repsLow,
+            repsHigh: t?['repsHigh'] as int? ?? it.repsHigh,
+            secondsLow: t?['secondsLow'] as int? ?? it.secondsLow,
+            secondsHigh: t?['secondsHigh'] as int? ?? it.secondsHigh,
+            loadKg:
+                (t?['loadKg'] as num?)?.toDouble() ??
+                (t == null ? it.startLoadKg : null),
+            flames: t?['flames'] as int? ?? it.targetFlames,
+            role: t?['role'] == null
+                ? null
+                : kc.SetRole.values
+                      .where((r) => r.code == t!['role'])
+                      .firstOrNull,
+          ),
+          it,
+        ),
       );
     }
     return out;

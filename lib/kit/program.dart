@@ -103,7 +103,8 @@ class KDayRow extends StatelessWidget {
     );
     final main = Semantics(
       button: true,
-      label: 'Jour $day · $title${badge == null ? '' : ' · $badge'}. $statusLabel',
+      label:
+          'Jour $day · $title${badge == null ? '' : ' · $badge'}. $statusLabel',
       value: detail,
       onTap: onTap,
       onLongPress: onLongPress,

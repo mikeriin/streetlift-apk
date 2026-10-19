@@ -30,13 +30,12 @@ void _size(WidgetTester tester) {
   addTearDown(tester.view.resetDevicePixelRatio);
 }
 
-WeekPlan _week(int j, String name, List<Exercise> exercises) =>
-    WeekPlan.manual(
-      n: 0,
-      block: name,
-      color: const Color(0xFF4FA3C7),
-      days: [DayPlan.manual(j: j, title: name, exercises: exercises)],
-    );
+WeekPlan _week(int j, String name, List<Exercise> exercises) => WeekPlan.manual(
+  n: 0,
+  block: name,
+  color: const Color(0xFF4FA3C7),
+  days: [DayPlan.manual(j: j, title: name, exercises: exercises)],
+);
 
 Exercise _exercise(
   String id,

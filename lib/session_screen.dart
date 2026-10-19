@@ -2050,8 +2050,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // est la cible de la série à faire (celle des champs), plus la charge
     // de départ de la ligne (72,5 affiché pour 82,5 demandé).
     final nextSet = log.sets.indexWhere((s) => !s.done);
-    final koachKgTarget =
-        !readOnly && widget.adapt && ex.engine && nextSet >= 0
+    final koachKgTarget = !readOnly && widget.adapt && ex.engine && nextSet >= 0
         ? store.adaptGoal(widget.week.n, widget.day.j, ex, nextSet)?.kg
         : null;
     final loadLabel = readOnly
@@ -2566,9 +2565,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       // en séance, les séries validées gardent leur ligne. Correctif
       // 20/10/2026 : en séance, sans ligne de saisie restante, pas
       // d'en-tête non plus.
-      if ([for (var i = 0; i < log.sets.length; i++) i].any(
-        (i) => !compactRow(i),
-      ))
+      if ([
+        for (var i = 0; i < log.sets.length; i++) i,
+      ].any((i) => !compactRow(i)))
         KSetTable(columns: columns, rows: const [], actionCount: actions),
     ];
     List<Widget> row(int i) => [
