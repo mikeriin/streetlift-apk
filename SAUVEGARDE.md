@@ -8,6 +8,10 @@ Session Opus 5.5 (19/10/2026, depuis 11:04 UTC). Base : `moteurs` 9c81a201.
 - Tests : `tests/test_km4_retour.py` (11 verts).
 - Échantillon local (34 profils × 9 scénarios × vérité b × graine 0, --rapide) : 1.0.5 : critère 7 = 0, principal retiré par la rampe 792 (657 séances), 5,3 % des séances avec principal réduit, part servie 6,5 %.
 
+- Portage Dart : seance.dart (plan, BudgetsRetour, _UniteRetour), parametres (1.0.6, asset koach_params_1_0_6.json SHA 55a423cd…1dbe8, 346 clés), rupture (clé retirée), textes (« au lieu de N »), tests Dart (koach_km4_retour_test.dart, paramètres, textes) ; banc Dart (rôle, mesure rampe), kr1_securite.py ; versions kalis_adapt 1.0.5, kalis_bench 0.5.7 ; fixtures régénérées.
+- Échantillon 1.0.6 réparti : c7 0, retiré 0, réduit 2,0 %, part servie 27 %, retour à l'écrit 31 → 84 (séances manquées comptées à l'écrit après répartition) ; mode prudent toujours : retour à l'écrit 49, réduit 3,8 %.
+- CI : run A 39247073902 (Dart 1.0.4 avant, mesure) ; run B 89a320e9 (tests + campagne Python 1.0.6).
+
 ## En cours / reste
 - Échantillon 1.0.6 ; tests hérités (`test_securite_regles.py` retour gradué) à mettre à la sémantique 1.0.6 ; fixtures ; portage Dart ; banc Dart (rôle, mesure) ; campagnes CI (Dart avant, Python 1.0.6, Dart 1.0.6) ; documents ; livraison.
 

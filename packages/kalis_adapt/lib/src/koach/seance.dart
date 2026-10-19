@@ -394,25 +394,66 @@ class Memoire {
 class BudgetsRetour {
   BudgetsRetour({
     required this.limites,
-    required this.budgets,
-    required this.jour,
+    required this.fait,
+    required this.limiteDures,
+    required this.faitDures,
+    required this.reste,
     required this.limitesTenue,
     required this.budgetsTenue,
     required this.jourTenue,
-    required this.limiteDures,
-    required this.budgetDures,
-    required this.jourDures,
   });
 
+  /// Limites de la rampe par groupe majeur.
   final List<double> limites;
-  final List<double> budgets;
-  final List<double> jour;
+
+  /// Réalisé de la semaine par groupe (séances fermées, manquées à l'écrit).
+  final List<double> fait;
+
+  /// Limite et réalisé des séries dures d'une semaine d'allègement.
+  final double? limiteDures;
+  final double? faitDures;
+
+  /// Séances restantes de la semaine (écrit).
+  final List<List<Json>> reste;
+
+  /// slotId -> séries permises par le plan de la semaine (1.0.6).
+  final Map<String?, int> plan = {};
+
+  /// slotId -> cause d'une coupure du plan : ('groupe', indice) ou
+  /// ('total', null).
+  final Map<String?, (String, Object?)> cause = {};
+
+  /// Vrai si le plan a réparti les coupes sur la semaine.
+  bool? repartie;
+
+  /// Lignes encore en excès après le plan (planchers des principaux).
+  List<int> depasse = [];
+
   final Map<String, double?> limitesTenue;
   final Map<String, double?> budgetsTenue;
   final Map<String, double> jourTenue;
-  final double? limiteDures;
-  final double? budgetDures;
-  double jourDures;
+}
+
+/// Unité du plan du retour gradué (`_plan_retour`).
+class _UniteRetour {
+  _UniteRetour(
+    this.seance,
+    this.pos,
+    this.slot,
+    this.n,
+    this.poids,
+    this.rang,
+    this.plancher,
+  ) : m = n;
+
+  final int seance;
+  final int pos;
+  final String? slot;
+  final int n;
+  int m;
+  final List<(int, double)> poids;
+  final int rang;
+  final int plancher;
 }
 
 // ----------------------------------------------------------------------
@@ -524,6 +565,9 @@ class Seances {
 
   /// Budgets de la séance en cours.
   BudgetsRetour? retourVol;
+
+  /// Semaines où une séance a été manquée (1.0.6, répartition).
+  final Set<int> semainesManquees = {};
 
   num _n(String k) => s[k] as num;
 
@@ -712,6 +756,7 @@ class Seances {
         continue;
       }
       final sem = ent(mq['semaine']);
+      semainesManquees.add(sem);
       if (mq.containsKey('genre') && !allegees.containsKey(sem)) {
         allegees[sem] = dans(mq['genre'], legeres);
       }
@@ -1309,17 +1354,28 @@ class Seances {
       }
       reserveEchauffement[z] = _seMax<num>(0, e.value - travail);
     }
+    // 1.0.6 (KM4) : deux passes — la séance servie par les règles de
+    // chaque exercice, puis le plan du retour gradué de la semaine
+    // (`_planRetour`) appliqué ligne par ligne avec le vrai test.
+    final premiers = <(Json, Json?)>[];
     for (final item in items) {
-      var servi = _item(
+      final servi = _item(
         item,
         grilles[item['exerciseId']],
         zones[item['exerciseId']],
         roles[item['slotId']],
       );
-      if (servi == null) {
+      premiers.add((item, servi));
+    }
+    _planRetour([
+      for (final (item, servi) in premiers)
+        if (servi != null) (item, servi),
+    ]);
+    for (final (item, servi0) in premiers) {
+      if (servi0 == null) {
         continue;
       }
-      servi = _retourGradue(servi);
+      final servi = _retourGradue(servi0);
       if (servi == null) {
         plans.remove(item['slotId']);
         continue;
@@ -1863,8 +1919,21 @@ class Seances {
     );
   }
 
-  /// Budgets de la séance du jour ; null la première semaine du programme
-  /// ou du journal, ou sans semaine connue.
+  /// Rang de priorité du retour gradué par rôle d'emplacement (1.0.6, KM4) :
+  /// 0 coupé d'abord, 1 ensuite (secondaire, technique), 2 en dernier
+  /// (principal).
+  static const Map<String, int> rangRole = {
+    'main': 2,
+    'secondary': 1,
+    'skill': 1,
+  };
+
+  /// Données du retour gradué de la séance du jour (1.0.6) : limites et
+  /// réalisé de la semaine par groupe majeur ; une semaine d'allègement,
+  /// limite et réalisé des séries dures ; séances restantes (réparties par
+  /// [_planRetour]) ; tenues bras tendus : budget = limite − fait − écrit
+  /// restant. null la première semaine du programme ou du journal, ou sans
+  /// semaine connue.
   BudgetsRetour? _budgetsRetour([List<Json> items = const []]) {
     final c = dictOuVide(contexte);
     final semO = c['semaine'];
@@ -1878,46 +1947,32 @@ class Seances {
       return null;
     }
     final n = jl(s['volume_groupes_majeurs']).length;
-    final reserve = List<double>.filled(n, 0.0);
+    final reste = <List<Json>>[];
     final reserveT = <String, double>{};
-    var reserveD = 0.0;
     var ecritReste = 0.0;
     for (final seance in listeOuVide(c['reste_semaine'])) {
-      final rS = List<double>.filled(n, 0.0);
       final rT = <String, double>{};
-      var rD = 0.0;
+      final items0 = <Json>[];
       for (final x in jl(seance)) {
         final it = jm(x);
-        final dures = _seriesDures(it);
-        rD += dures;
-        if (dures > 0) {
-          for (final (gi, cr) in _credits(it['exerciseId'] as String)) {
-            rS[gi] += dures * cr;
-          }
-        }
+        items0.add(it);
+        ecritReste += _seriesDures(it);
         final (fam, sec) = _tenueBrasTendus(it);
         if (fam != null) {
           rT[fam] = (rT[fam] ?? 0.0) + dbl(ou(it['sets'], 0)) * sec;
         }
       }
-      ecritReste += rD;
-      reserveD += rD;
-      for (var gi = 0; gi < n; gi++) {
-        reserve[gi] += rS[gi];
-      }
       for (final fam in rT.keys.toList()..sort()) {
         reserveT[fam] = (reserveT[fam] ?? 0.0) + rT[fam]!;
       }
+      reste.add(items0);
     }
     final faitV = volSemaines[sem];
     final fait = (faitV != null && faitV.isNotEmpty)
-        ? faitV
+        ? List<double>.of(faitV)
         : List<double>.filled(n, 0.0);
     final faitT = tenueSemaines[sem] ?? <String, double>{};
     final limites = [for (var gi = 0; gi < n; gi++) _limiteVolume(gi, sem)];
-    final budgets = [
-      for (var gi = 0; gi < n; gi++) limites[gi] - fait[gi] - reserve[gi],
-    ];
     final limitesT = <String, double?>{};
     final budgetsT = <String, double?>{};
     for (final fam in famillesBrasTendus) {
@@ -1942,34 +1997,271 @@ class Seances {
     ]);
     final allegement = refE > 0 ? (ecrit <= part * refE + 1e-9) : legere;
     double? limiteD;
-    double? budgetD;
+    double? faitD;
     if (allegement || legere) {
       final refS = _seMaxListe([
         for (var k = sem - 3; k < sem; k++)
           if (k >= 0) duresSemaines[k] ?? 0.0,
       ]);
       if (refS > 0) {
-        final ld = part * refS;
-        limiteD = ld;
-        budgetD = ld - (duresSemaines[sem] ?? 0.0) - reserveD;
+        limiteD = part * refS;
+        faitD = duresSemaines[sem] ?? 0.0;
       }
     }
     return BudgetsRetour(
       limites: limites,
-      budgets: budgets,
-      jour: List<double>.filled(n, 0.0),
+      fait: fait,
+      limiteDures: limiteD,
+      faitDures: faitD,
+      reste: reste,
       limitesTenue: limitesT,
       budgetsTenue: budgetsT,
       jourTenue: <String, double>{},
-      limiteDures: limiteD,
-      budgetDures: budgetD,
-      jourDures: 0.0,
     );
   }
 
-  /// Retour gradué au volume : séries de l'item ramenées à ce que la
-  /// semaine permet encore. Zéro série : item retiré. Raison
-  /// `koach.retour_gradue`. Renvoie l'item ou null.
+  /// Vrai si la conduite sous douleur tient l'exercice aujourd'hui (raison
+  /// de douleur notée par `conduite`, ou zone sensible sous la rampe du
+  /// réalisé qu'il provoque, hors rampe de retour après une coupure).
+  bool _douleurUnite(String exId, Json? plan) {
+    final cond = dictOuVide(dictOuVide(plan)['cond']);
+    if (cond['zone'] != null) {
+      return true;
+    }
+    final zz = zonesEx[exId];
+    if (zz != null) {
+      for (final z in zz.$2.toList()..sort()) {
+        if (budgetZone.containsKey(z) && !retourZone.containsKey(z)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /// Plan du retour gradué au volume de la semaine (1.0.6, KM4 ;
+  /// `_plan_retour`) : lignes = groupes majeurs (et total d'une semaine
+  /// d'allègement), unités = lignes dures du jour ([paires] : écrit, servi
+  /// par `_item`) et des séances restantes ; coupes une série à la fois par
+  /// étapes (rang 0 à 0, rang 1 à 1, principaux au plancher, rang 1 à 0,
+  /// principaux à 1), l'unité qui garde la plus grande part de son écrit
+  /// d'abord, à égalité la plus tardive ; répartie sur la semaine sans
+  /// séance manquée dans les `retour_repartition_semaines` dernières
+  /// semaines, sinon la séance du jour d'abord.
+  void _planRetour(List<(Json, Json)> paires) {
+    final rv = retourVol;
+    if (rv == null) {
+      return;
+    }
+    final n = jl(s['volume_groupes_majeurs']).length;
+    final total = rv.limiteDures != null;
+    final exces = <double>[
+      for (var gi = 0; gi < n; gi++) rv.fait[gi] - rv.limites[gi],
+    ];
+    if (total) {
+      exces.add(rv.faitDures! - rv.limiteDures!);
+    }
+    final part = dbl(s['retour_plancher_principal']);
+    final unites = <_UniteRetour>[];
+
+    void ajouter(
+      int seance,
+      int pos,
+      String? slot,
+      String exId,
+      int series,
+      int ecrites,
+      Object? role,
+      bool douleur,
+      bool premier,
+    ) {
+      final poids = <(int, double)>[..._credits(exId)];
+      if (total) {
+        poids.add((n, 1.0));
+      }
+      if (poids.isEmpty) {
+        return;
+      }
+      int rang;
+      if (role == null) {
+        rang = premier ? 2 : 0;
+      } else {
+        rang = rangRole[role] ?? 0;
+      }
+      if (rang == 2 && douleur) {
+        rang = 1;
+      }
+      var plancher = 0;
+      if (rang == 2) {
+        plancher = (ecrites * part - 1e-9).ceil();
+        if (plancher < 1) {
+          plancher = 1;
+        }
+        if (plancher > series) {
+          plancher = series;
+        }
+      }
+      for (final (r, w) in poids) {
+        exces[r] += w * series;
+      }
+      unites.add(_UniteRetour(seance, pos, slot, series, poids, rang, plancher));
+    }
+
+    var pos = 0;
+    var premier = true;
+    for (final (item, servi) in paires) {
+      final series = ent(ou(servi['sets'], 0));
+      if (series <= 0 || _seriesDures(servi) <= 0) {
+        continue;
+      }
+      final plan = plans[item['slotId']];
+      final exId = item['exerciseId'] as String;
+      ajouter(
+        0,
+        pos,
+        item['slotId'] as String?,
+        exId,
+        series,
+        ent(ou(item['sets'], 0)),
+        plan?['role'],
+        _douleurUnite(exId, plan),
+        premier,
+      );
+      premier = false;
+      pos += 1;
+    }
+    for (var k = 0; k < rv.reste.length; k++) {
+      pos = 0;
+      premier = true;
+      for (final p0 in rv.reste[k]) {
+        final series = ent(ou(p0['sets'], 0));
+        if (series <= 0 || _seriesDures(p0) <= 0) {
+          continue;
+        }
+        ajouter(
+          k + 1,
+          pos,
+          p0['slotId'] as String?,
+          p0['exerciseId'] as String,
+          series,
+          series,
+          p0['role'],
+          false,
+          premier,
+        );
+        premier = false;
+        pos += 1;
+      }
+    }
+    final initial = List<double>.of(exces);
+    final sem = ent(dictOuVide(contexte)['semaine']);
+    final fenetre = ent(s['retour_repartition_semaines']);
+    var repartie = true;
+    for (var w = sem - fenetre + 1; w < sem + 1; w++) {
+      if (semainesManquees.contains(w)) {
+        repartie = false;
+      }
+    }
+    rv.repartie = repartie;
+
+    void couper(String portee, int rang, int Function(_UniteRetour) plancherDe) {
+      while (true) {
+        if (!exces.any((x) => x > 1e-9)) {
+          return;
+        }
+        _UniteRetour? best;
+        var bf = 0.0;
+        for (final u in unites) {
+          if ((portee == 'jour' && u.seance != 0) ||
+              (portee == 'reste' && u.seance == 0)) {
+            continue;
+          }
+          if (u.rang != rang || u.m <= plancherDe(u)) {
+            continue;
+          }
+          var utile = false;
+          for (final (r, _) in u.poids) {
+            if (exces[r] > 1e-9) {
+              utile = true;
+              break;
+            }
+          }
+          if (!utile) {
+            continue;
+          }
+          final f = u.m / u.n;
+          if (best == null ||
+              f > bf ||
+              (f == bf &&
+                  (u.seance > best.seance ||
+                      (u.seance == best.seance && u.pos > best.pos)))) {
+            best = u;
+            bf = f;
+          }
+        }
+        if (best == null) {
+          return;
+        }
+        best.m -= 1;
+        for (final (r, w) in best.poids) {
+          exces[r] -= w;
+        }
+      }
+    }
+
+    int zero(_UniteRetour u) => 0;
+    int un(_UniteRetour u) => 1;
+    int plancher(_UniteRetour u) => u.plancher;
+    final etapes = <(int, int Function(_UniteRetour))>[
+      (0, zero),
+      (1, un),
+      (2, plancher),
+      (1, zero),
+      (2, un),
+    ];
+    if (repartie) {
+      for (final (rang, f) in etapes) {
+        couper('tous', rang, f);
+      }
+    } else {
+      for (final (rang, f) in etapes.sublist(0, 3)) {
+        couper('jour', rang, f);
+      }
+      for (final (rang, f) in etapes.sublist(0, 3)) {
+        couper('reste', rang, f);
+      }
+      for (final (rang, f) in etapes.sublist(3)) {
+        couper('jour', rang, f);
+        couper('reste', rang, f);
+      }
+    }
+    rv.depasse = [
+      for (var r = 0; r < exces.length; r++)
+        if (exces[r] > 1e-9) r,
+    ];
+    for (final u in unites) {
+      if (u.seance != 0) {
+        continue;
+      }
+      rv.plan[u.slot] = u.m;
+      if (u.m < u.n) {
+        int? cause;
+        for (final (r, _) in u.poids) {
+          if (initial[r] > 1e-9 &&
+              (cause == null || initial[r] > initial[cause])) {
+            cause = r;
+          }
+        }
+        rv.cause[u.slot] = cause == n ? ('total', null) : ('groupe', cause);
+      }
+    }
+  }
+
+  /// Retour gradué au volume : séries de l'item ramenées à celles que le
+  /// plan de la semaine lui laisse ([_planRetour]), puis à ce que sa famille
+  /// de tenue bras tendus permet encore. Zéro série : item retiré (jamais un
+  /// principal sans douleur par le plan). Raison `koach.retour_gradue`.
+  /// Renvoie l'item ou null.
   Json? _retourGradue(Json servi) {
     final rv = retourVol;
     if (rv == null) {
@@ -1979,40 +2271,16 @@ class Seances {
     if (series <= 0) {
       return servi;
     }
-    var parSerie = <(int, double)>[];
-    final dure = _seriesDures(servi) > 0;
-    if (dure) {
-      parSerie = _credits(servi['exerciseId'] as String);
+    var maxi = series;
+    (String, Object?)? cause;
+    final pl = rv.plan[servi['slotId']];
+    if (pl != null && pl < maxi) {
+      maxi = pl;
+      cause = rv.cause[servi['slotId']];
     }
-    final total = dure && rv.budgetDures != null;
     var (fam, sec) = _tenueBrasTendus(servi);
     if (fam != null && (rv.budgetsTenue[fam] == null || sec <= 0)) {
       fam = null;
-    }
-    if (parSerie.isEmpty && fam == null && !total) {
-      return servi;
-    }
-    var maxi = series;
-    (String, Object?)? cause;
-    if (total) {
-      var mx = (rv.budgetDures! - rv.jourDures + 1e-9).floor();
-      if (mx < 0) {
-        mx = 0;
-      }
-      if (mx < maxi) {
-        maxi = mx;
-        cause = ('total', null);
-      }
-    }
-    for (final (gi, c) in parSerie) {
-      var mx = ((rv.budgets[gi] - rv.jour[gi]) / c + 1e-9).floor();
-      if (mx < 0) {
-        mx = 0;
-      }
-      if (mx < maxi) {
-        maxi = mx;
-        cause = ('groupe', gi);
-      }
     }
     int? secondes;
     if (fam != null && maxi > 0) {
@@ -2023,13 +2291,13 @@ class Seances {
         // de suite.
         cause = ('famille', fam);
         var trouve = 0;
-        for (var n = maxi; n > 0; n--) {
-          var h = (resteT / n + 1e-9).floor();
+        for (var k = maxi; k > 0; k--) {
+          var h = (resteT / k + 1e-9).floor();
           if (h > sec) {
             h = sec.truncate();
           }
           if (h >= tenueMinS) {
-            trouve = n;
+            trouve = k;
             if (h < sec) {
               secondes = h;
             }
@@ -2040,12 +2308,6 @@ class Seances {
       }
     }
     if (maxi >= series && secondes == null) {
-      if (total) {
-        rv.jourDures += series;
-      }
-      for (final (gi, c) in parSerie) {
-        rv.jour[gi] += series * c;
-      }
       if (fam != null) {
         rv.jourTenue[fam] = (rv.jourTenue[fam] ?? 0.0) + series * sec;
       }
@@ -2066,12 +2328,18 @@ class Seances {
       groupe = 'bras_tendus_$f';
       limite = rv.limitesTenue[f];
     }
+    final planItem = plans[servi['slotId']];
+    final ecritItem = planItem == null
+        ? servi
+        : (planItem['ecrit'] as Json?) ?? servi;
     _raison('koach.retour_gradue', {
       'exercice': servi['exerciseId'],
       'groupe': groupe,
       'limite': arrondi(limite!, 1),
       'series': maxi,
       'secondes': secondes,
+      'ecrites': ent(ou(ecritItem['sets'], 0)),
+      'douleur': _douleurUnite(servi['exerciseId'] as String, planItem),
     });
     if (maxi <= 0) {
       return null;
@@ -2088,12 +2356,6 @@ class Seances {
         servi['secondsLow'] = secondes;
       }
       sec = secondes.toDouble();
-    }
-    if (total) {
-      rv.jourDures += maxi;
-    }
-    for (final (gi, c) in parSerie) {
-      rv.jour[gi] += maxi * c;
     }
     if (fam != null) {
       rv.jourTenue[fam] = (rv.jourTenue[fam] ?? 0.0) + maxi * sec;

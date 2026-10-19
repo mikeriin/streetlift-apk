@@ -222,7 +222,7 @@ class PolitiqueKoach(Politique):
                 roles[s['slotId']] = s.get('role')
         r = self.koach.plan({'horizon': 'seance', 'items': items, 'grilles': self.grilles,
                              'zones': self.zones, 'roles': roles})
-        mesure_rampe(self.rampe, items, roles, r['items'], r.get('raisons') or [])
+        mesure_rampe(self.rampe, ctx.ecrit['items'], roles, r['items'], r.get('raisons') or [])
         return {'items': r['items']}
 
     def _verser(self, done):
