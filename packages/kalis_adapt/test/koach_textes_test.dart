@@ -189,6 +189,22 @@ void main() {
         expect(t.contains('ce groupe musculaire'), isFalse, reason: g);
       }
     }
+    // 1.0.6 (KM4) : séries écrites et douleur dans les paramètres.
+    final r6 = <String, Object?>{
+      'code': 'koach.retour_gradue',
+      'params': <String, Object?>{
+        'exercice': 'mu-exercice-essai',
+        'groupe': 'chest',
+        'limite': 24.0,
+        'series': 3,
+        'secondes': null,
+        'ecrites': 6,
+        'douleur': false,
+      },
+    };
+    final t6 = texteRaisonKoach(r6);
+    _lisible(t6, 'ecrites');
+    expect(t6.startsWith('3 séries au lieu de 6 sur '), isTrue, reason: t6);
     final techniques = jm(jm(params['securite'])['technique_niveau_acces']);
     for (final tech in techniques.keys) {
       final r = <String, Object?>{

@@ -119,6 +119,9 @@ def agreger(dossiers, graines=None, empreintes_multiples=False):
     par_vue = {v: {c: collections.Counter() for c in CATS} for v in VUES}
     initial = collections.Counter()
     douleur = collections.Counter()
+    rampe = collections.Counter()
+    rampe_par_scenario = collections.defaultdict(collections.Counter)
+    rampe_exemples = []
     saisons = 0
     plantages = []
     graines_vues = set()
@@ -140,6 +143,12 @@ def agreger(dossiers, graines=None, empreintes_multiples=False):
             plantages.append({'saison': r['saison'], 'plantage': r.get('plantage'), 'trace': r.get('trace')})
             continue
         s = r['securite']
+        ra = r.get('rampe') or {}
+        for k in sorted(ra):
+            rampe[k] += ra[k]
+            rampe_par_scenario[scen][k] += ra[k]
+        if ra.get('principal_retire') and len(rampe_exemples) < EXEMPLES_MAX:
+            rampe_exemples.append({'saison': r['saison'], 'rampe': ra})
         _ajouter(initial, s.get('initial'))
         for vue in VUES:
             for cat in CATS:
@@ -181,7 +190,26 @@ def agreger(dossiers, graines=None, empreintes_multiples=False):
         'douleur_et_hausses': dict(sorted(douleur.items())),
         'initial_kalis_plan': dict(sorted(initial.items())),
         'vues': {v: {c: dict(sorted(par_vue[v][c].items())) for c in CATS} for v in VUES},
+        'rampe_principaux': rampe_json(rampe, rampe_par_scenario, rampe_exemples),
     }, liste
+
+
+def _rampe_indicateurs(c):
+    d = dict(sorted((k, (round(v, 6) if isinstance(v, float) else v)) for k, v in c.items()))
+    sp = c.get('seances_principal', 0)
+    d['part_seances_principal_reduit'] = round(c.get('seances_principal_reduit', 0) / float(sp), 6) if sp else None
+    n = c.get('principaux_reduits', 0)
+    d['part_servie_moyenne'] = round(c.get('part_servie', 0.0) / float(n), 6) if n else None
+    return d
+
+
+def rampe_json(c, par_scenario, exemples):
+    """Critère KM4 (C17.37) : principaux retirés par la rampe de volume sans
+    douleur (0 attendu) ; indicateurs : part des séances dont un principal
+    est réduit, part moyenne des séries écrites servie au principal réduit."""
+    return {'principal_retire': c.get('principal_retire', 0), 'total': _rampe_indicateurs(c),
+            'par_scenario': {k: _rampe_indicateurs(v) for k, v in sorted(par_scenario.items())},
+            'exemples': exemples}
 
 
 def _table(titre, m):
@@ -208,6 +236,23 @@ def markdown(r, titre):
         if m['total']:
             L += _table('Par profil', m['par_profil']) + _table('Par scénario', m['par_scenario']) + \
                 _table('Par modèle de vérité', m['par_verite'])
+        L.append('')
+    rp = r.get('rampe_principaux') or {}
+    if rp:
+        t = rp['total']
+        L += ['## Rampe de volume et principaux (KM4, C17.37)', '',
+              '**Principal retiré par la rampe sans douleur : %d** (séances : %d). Séances avec un principal : %d ; '
+              'dont un principal réduit par le retour gradué : %d (part %s) ; part moyenne des séries écrites servie '
+              'au principal réduit : %s.' % (rp['principal_retire'], t.get('seances_principal_retire', 0),
+                                             t.get('seances_principal', 0), t.get('seances_principal_reduit', 0),
+                                             t.get('part_seances_principal_reduit'), t.get('part_servie_moyenne')),
+              '', '| Scénario | Séances avec principal | Réduit | Part | Part servie | Retirés |',
+              '| --- | --- | --- | --- | --- | --- |']
+        for k, v in rp['par_scenario'].items():
+            L.append('| %s | %d | %d | %s | %s | %d |' % (k, v.get('seances_principal', 0),
+                                                          v.get('seances_principal_reduit', 0),
+                                                          v.get('part_seances_principal_reduit'),
+                                                          v.get('part_servie_moyenne'), v.get('principal_retire', 0)))
         L.append('')
     L += ['## Plan initial de `kalis_plan`', '', '%s.' % (
         ', '.join('%s %d' % kv for kv in r['initial_kalis_plan'].items()) or '0 constat'), '']
@@ -242,8 +287,10 @@ def main(argv=None):
                        'saisons_touchees': len(liste), 'liste': liste}, f, ensure_ascii=False, indent=1,
                       sort_keys=True)
     print('%d saisons, %d plantée(s) ; critère 7 : %d (%d saisons) ; réalisée appariée : %d ; retour à l\'écrit : %d'
+          ' ; principal retiré par la rampe : %d'
           % (r['saisons'], r['plantages'], r['critere_7_cahier']['total'], r['critere_7_cahier']['saisons_touchees'],
-             r['realisee_appariee']['total'], r['retour_ecrit_publie_a_part']['total']))
+             r['realisee_appariee']['total'], r['retour_ecrit_publie_a_part']['total'],
+             r['rampe_principaux']['principal_retire']))
     return 0
 
 

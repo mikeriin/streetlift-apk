@@ -123,11 +123,104 @@ const List<String> _pkChampsVolume = <String>[
   'secondsHigh',
 ];
 
-/// `items_volume`.
-List<Json> _pkItemsVolume(List<Object?> items) => <Json>[
+/// `items_volume` : avec le rôle de l'emplacement (`role`, 1.0.6) quand
+/// [roles] (slotId -> rôle) est donné.
+List<Json> _pkItemsVolume(List<Object?> items, [Json? roles]) => <Json>[
   for (final it in items)
-    <String, Object?>{for (final k in _pkChampsVolume) k: kc.jm(it)[k]},
+    <String, Object?>{
+      for (final k in _pkChampsVolume) k: kc.jm(it)[k],
+      if (roles != null) 'role': roles[kc.jm(it)['slotId']],
+    },
 ];
+
+/// Raisons de la conduite sous douleur (`RAISONS_DOULEUR`, mesure KM4).
+const List<String> _pkRaisonsDouleur = <String>[
+  'koach.douleur_retrait',
+  'koach.reprise_dose',
+  'koach.douleur_persistante',
+];
+
+/// Compteurs vides de la mesure de la rampe (`rampe_vide`).
+Map<String, Object> kmRampeVide() => <String, Object>{
+  'seances': 0,
+  'seances_principal': 0,
+  'seances_principal_reduit': 0,
+  'principaux_reduits': 0,
+  'part_servie': 0.0,
+  'principal_retire': 0,
+  'seances_principal_retire': 0,
+};
+
+void _ajouterEnt(Map<String, Object> acc, String k, int v) {
+  acc[k] = (acc[k]! as int) + v;
+}
+
+/// `mesure_rampe` : retour gradué sur les principaux (KM4, C17.37) ajouté à
+/// [acc] pour une séance.
+void kmMesureRampe(
+  Map<String, Object> acc,
+  List<Object?> items,
+  Json roles,
+  List<Object?> servis,
+  List<Object?> raisons,
+) {
+  _ajouterEnt(acc, 'seances', 1);
+  final servi = <Object?, int>{};
+  for (final it0 in servis) {
+    final it = kc.jm(it0);
+    servi[it['slotId']] = kc.ent(it['sets'] ?? 0);
+  }
+  final rampe = <Object?, List<Object?>>{};
+  final douleur = <Object?>{};
+  for (final r0 in raisons) {
+    final r = kc.jm(r0);
+    final pr = kc.jm(r['params'] ?? <String, Object?>{});
+    final ex = pr['exercice'];
+    final code = r['code'];
+    if (code == 'koach.retour_gradue') {
+      rampe.putIfAbsent(ex, () => <Object?>[]).add(pr['series']);
+      if (kc.vrai(pr['douleur'])) {
+        douleur.add(ex);
+      }
+    } else if (_pkRaisonsDouleur.contains(code) ||
+        '$code'.startsWith('koach.douleur')) {
+      douleur.add(ex);
+    }
+  }
+  var avec = false;
+  var reduit = false;
+  var retire = 0;
+  for (final it0 in items) {
+    final it = kc.jm(it0);
+    final sets = kc.ent(it['sets'] ?? 0);
+    if (roles[it['slotId']] != 'main' || it['kind'] == 'warmup' || sets <= 0) {
+      continue;
+    }
+    avec = true;
+    final ex = it['exerciseId'];
+    final rr = rampe[ex];
+    if (rr == null) {
+      continue;
+    }
+    reduit = true;
+    final n = servi[it['slotId']] ?? 0;
+    _ajouterEnt(acc, 'principaux_reduits', 1);
+    acc['part_servie'] = (acc['part_servie']! as double) + n / sets;
+    if (n == 0 && rr.any((x) => x == 0) && !douleur.contains(ex)) {
+      retire += 1;
+    }
+  }
+  if (avec) {
+    _ajouterEnt(acc, 'seances_principal', 1);
+  }
+  if (reduit) {
+    _ajouterEnt(acc, 'seances_principal_reduit', 1);
+  }
+  if (retire > 0) {
+    _ajouterEnt(acc, 'principal_retire', retire);
+    _ajouterEnt(acc, 'seances_principal_retire', 1);
+  }
+}
 
 /// Champs d'une série journalisée versés à Koach (`_serie`).
 const List<String> _pkChampsSerie = <String>[
@@ -870,6 +963,9 @@ final class PolitiqueKoach implements KmPolitique {
       <int, (int, Object?, List<Json>)>{};
   final Map<int, List<int>> _parSemaine = <int, List<int>>{};
   List<Object?> _manquees = <Object?>[];
+
+  /// Mesure de la rampe de volume sur les principaux (KM4, `rampe`).
+  Map<String, Object> rampe = kmRampeVide();
   kc.Planification? _planification;
   _SurveillanceBanc? _surveillance;
   _VeriteScenario? _verite;
@@ -997,6 +1093,7 @@ final class PolitiqueKoach implements KmPolitique {
     _cibles = _pkCiblesTentatives(profil);
     _ecrits.clear();
     _parSemaine.clear();
+    rampe = kmRampeVide();
     for (final s0 in kc.listeOuVide(saison['sessions'])) {
       final s = kc.jl(s0);
       final g = kc.ent(s[0]);
@@ -1005,6 +1102,13 @@ final class PolitiqueKoach implements KmPolitique {
       final di = s[3];
       final simDay = kc.ent(s[4]);
       final bloc = kc.jm(kc.jl(saison['blocks'])[bi]);
+      final rolesBloc = <String, Object?>{};
+      for (final d1 in kc.jl(kc.jm(bloc['pass1'])['days'])) {
+        for (final sl0 in kc.jl(kc.jm(d1)['slots'])) {
+          final sl = kc.jm(sl0);
+          rolesBloc[sl['slotId']! as String] = sl['role'];
+        }
+      }
       for (final w0 in kc.jl(kc.jm(bloc['pass2'])['weeks'])) {
         final w = kc.jm(w0);
         if (w['weekIndex'] == wb) {
@@ -1014,7 +1118,7 @@ final class PolitiqueKoach implements KmPolitique {
               _ecrits[simDay] = (
                 g,
                 w['kind'],
-                _pkItemsVolume(kc.jl(d['items'])),
+                _pkItemsVolume(kc.jl(d['items']), rolesBloc),
               );
             }
           }
@@ -1138,6 +1242,13 @@ final class PolitiqueKoach implements KmPolitique {
         'zones': _zones,
         'roles': roles,
       }),
+    );
+    kmMesureRampe(
+      rampe,
+      kc.jl(ctx.ecrit['items']),
+      roles,
+      kc.jl(r['items']),
+      kc.listeOuVide(r['raisons']),
     );
     return <String, Object?>{'items': r['items']};
   }

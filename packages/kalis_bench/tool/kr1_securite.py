@@ -109,6 +109,9 @@ def agreger(chemins):
     par_vue = {v: {c: collections.Counter() for c in CATS} for v in VUES}
     initial = collections.Counter()
     douleur = collections.Counter()
+    rampe = collections.Counter()
+    rampe_scen = collections.defaultdict(collections.Counter)
+    rampe_ex = []
     saisons = 0
     sans_vue = 0
     plantages = []
@@ -132,6 +135,12 @@ def agreger(chemins):
                 plantages.append({'saison': r['saison'], 'plantage': r.get('plantage')})
                 continue
             s = r['securite']
+            ra = r.get('rampe') or {}
+            for k in sorted(ra):
+                rampe[k] += ra[k]
+                rampe_scen[scen][k] += ra[k]
+            if ra.get('principal_retire') and len(rampe_ex) < 40:
+                rampe_ex.append({'saison': r['saison'], 'rampe': ra})
             _ajouter(initial, s.get('initial'))
             for vue in VUES:
                 for cat in CATS:
@@ -175,7 +184,22 @@ def agreger(chemins):
         'douleur_et_hausses': dict(douleur),
         'initial_kalis_plan': dict(sorted(initial.items())),
         'vues': {v: {c: dict(sorted(par_vue[v][c].items())) for c in CATS} for v in VUES},
+        'rampe_principaux': {'principal_retire': rampe.get('principal_retire', 0),
+                             'total': _rampe_ind(rampe),
+                             'par_scenario': {k: _rampe_ind(v) for k, v in sorted(rampe_scen.items())},
+                             'exemples': rampe_ex},
     }
+
+
+def _rampe_ind(c):
+    """Indicateurs de la rampe sur les principaux (KM4, C17.37 ; mêmes que
+    `reference/banc/securite_campagne.py`)."""
+    d = dict(sorted((k, (round(v, 6) if isinstance(v, float) else v)) for k, v in c.items()))
+    sp = c.get('seances_principal', 0)
+    d['part_seances_principal_reduit'] = round(c.get('seances_principal_reduit', 0) / float(sp), 6) if sp else None
+    n = c.get('principaux_reduits', 0)
+    d['part_servie_moyenne'] = round(c.get('part_servie', 0.0) / float(n), 6) if n else None
+    return d
 
 
 def _table(titre, m):
@@ -202,6 +226,23 @@ def markdown(r):
         if m['total']:
             L += (_table('Par profil', m['par_profil']) + _table('Par scénario', m['par_scenario'])
                   + _table('Par modèle de vérité', m['par_verite']))
+        L.append('')
+    rp = r.get('rampe_principaux') or {}
+    if rp:
+        t = rp['total']
+        L += ['## Rampe de volume et principaux (KM4, C17.37)', '',
+              '**Principal retiré par la rampe sans douleur : %d** (séances : %d). Séances avec un principal : %d ; '
+              'dont un principal réduit par le retour gradué : %d (part %s) ; part moyenne des séries écrites servie '
+              'au principal réduit : %s.' % (rp['principal_retire'], t.get('seances_principal_retire', 0),
+                                             t.get('seances_principal', 0), t.get('seances_principal_reduit', 0),
+                                             t.get('part_seances_principal_reduit'), t.get('part_servie_moyenne')),
+              '', '| Scénario | Séances avec principal | Réduit | Part | Part servie | Retirés |',
+              '| --- | --- | --- | --- | --- | --- |']
+        for k, v in rp['par_scenario'].items():
+            L.append('| %s | %d | %d | %s | %s | %d |' % (k, v.get('seances_principal', 0),
+                                                          v.get('seances_principal_reduit', 0),
+                                                          v.get('part_seances_principal_reduit'),
+                                                          v.get('part_servie_moyenne'), v.get('principal_retire', 0)))
         L.append('')
     L += ['## Par vue et catégorie', '', '| Vue | ' + ' | '.join(CATS) + ' |', '| --- |' + ' --- |' * len(CATS)]
     for v in VUES:
@@ -250,9 +291,10 @@ def main(argv):
         with open(a.md, 'w', encoding='utf-8') as f:
             f.write(markdown(r))
     print('saisons %d (plantées %d) ; critère 7 : %d ; réalisée appariée : %d ; retour à l\'écrit : %d ; '
-          'réalisée contre le plan initial : %d' % (
+          'réalisée contre le plan initial : %d ; principal retiré par la rampe : %d' % (
               r['saisons'], r['plantages'], r['critere_7_cahier']['total'], r['realisee_appariee']['total'],
-              r['retour_ecrit_publie_a_part']['total'], r['realisee_contre_plan_initial']['total']))
+              r['retour_ecrit_publie_a_part']['total'], r['realisee_contre_plan_initial']['total'],
+              r['rampe_principaux']['principal_retire']))
     return 0
 
 

@@ -1,0 +1,43 @@
+# KM4 : formatage à distance des paquets (branche claude/fmt-km4 seulement) :
+# `dart format .` dans kalis_adapt et kalis_bench (même Flutter que la CI),
+# puis pousse le résultat sur la même branche.
+name: Formatage à distance
+
+on:
+  push:
+    branches: ["claude/fmt-*"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalis-format-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.5'
+          channel: stable
+          cache: true
+      - name: Formater les paquets
+        run: |
+          for p in kalis_adapt kalis_bench; do
+            (cd packages/$p && dart pub get > /dev/null && dart format .)
+          done
+      - name: Pousser le résultat
+        run: |
+          git config user.name "kalis-format"
+          git config user.email "kalis-format@users.noreply.github.com"
+          if git diff --quiet -- packages; then
+            echo "Déjà formaté."
+            exit 0
+          fi
+          git add packages
+          git commit -m "Formatage automatique (dart format, paquets)"
+          git push

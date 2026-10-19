@@ -37,7 +37,6 @@ const Json defautsRupture = <String, Object?>{
   'douleur_secours': 2,
   // Sans effet depuis 1.0.5 (gardé pour les validateurs, comme la
   // référence).
-  'elargissement_rien_de_special': 4.0,
   // 1.0.5 : part du chemin vers l'a priori à chaque « rien de spécial ».
   'elargissement_vers_a_priori': 0.25,
   'semaine_allegee_series': 0.6,
@@ -1222,7 +1221,6 @@ final Map<(String, String), (num, num)> bornes = {
   ('rupture', 'residu_secours'): (0.0, 1.0),
   ('rupture', 'assiduite_secours'): (0.0, 1.0),
   ('rupture', 'douleur_secours'): (0.0, 10.0),
-  ('rupture', 'elargissement_rien_de_special'): (1.0, 100.0),
   ('rupture', 'elargissement_vers_a_priori'): (0.0, 1.0),
   ('rupture', 'semaine_allegee_series'): (0.1, 1.0),
   ('rupture', 'semaine_allegee_rir'): (0.0, 5.0),

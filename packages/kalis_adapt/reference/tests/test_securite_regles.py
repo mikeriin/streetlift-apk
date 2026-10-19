@@ -769,24 +769,44 @@ def test_retour_gradue_apres_trois_semaines_reduites():
 
 
 def test_retour_gradue_reserve_les_seances_restantes_et_compte_les_manquees():
+    # 1.0.6 (KM4) : sans séance manquée récente, la réduction se répartit sur
+    # la semaine (la séance restante, écrite à 4 séries, prend sa part) ;
+    # sans rôle, la première ligne dure est le principal (plancher ⌈10/2⌉).
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)])
-    # Séance restante de la semaine écrite à 4 séries : réservée en entier
-    # (manquée, le banc la compte à son volume écrit).
-    out = seance_faite(k, 22, [pompes('p', 10)], reste_semaine=[[pompes('p', 4)]])
-    assert out[0]['sets'] == 2
+    out = seance_faite(k, 22, [pompes('p', 10)], reste_semaine=[[pompes('q', 4)]])
+    assert k.seances.retour_vol['repartie'] is True
+    assert out[0]['sets'] == 5                           # 1.0.5 : 2 (tout l'écrit restant réservé)
+    out = seance_faite(k, 24, [pompes('q', 4)])
+    assert out[0]['sets'] == 1                           # 5 + 1 = 6 : limite tenue
+    assert k.seances.vol_semaines[3][0] == 6.0
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)])
-    # Séance manquée plus tôt dans la semaine : son écrit compte.
+    # Séance manquée plus tôt dans la semaine : son écrit compte, et la
+    # répartition est suspendue (la séance du jour paie d'abord).
     out = seance_faite(k, 24, [pompes('p', 10)],
                        manquees=[{'semaine': 3, 'genre': 'accumulation', 'items': [pompes('p', 5)]}])
+    assert k.seances.retour_vol['repartie'] is False
     assert out[0]['sets'] == 1
-    # Plus rien de permis : ligne retirée.
+    # Plus rien de permis : le principal n'est jamais retiré par la rampe
+    # sans douleur (1.0.5 : ligne retirée) ; une série, le dépassement est dit.
     out = seance_faite(k, 25, [pompes('p', 3)])
+    assert out[0]['sets'] == 1
+    assert k.seances.retour_vol['depasse'] == [0, 1, 7]
+    r = [x for x in k.seances.raisons if x['code'] == 'koach.retour_gradue']
+    assert r[0]['params']['series'] == 1 and r[0]['params']['ecrites'] == 3
+    # Une ligne d'accessoire, elle, peut l'être.
+    k2 = koach()
+    for w in range(3):
+        seance_faite(k2, 7 * w + 1, [pompes('p', 4)])
+    seance_faite(k2, 24, [pompes('p', 10)],
+                 manquees=[{'semaine': 3, 'genre': 'accumulation', 'items': [pompes('p', 5)]}])
+    ouvrir(k2, 25)
+    out = k2.seances.prescrire([pompes('a', 3)], {}, {}, {'a': 'accessory'})
     assert out == []
-    assert any(x['code'] == 'koach.retour_gradue' and x['params']['series'] == 0 for x in k.seances.raisons)
+    assert any(x['code'] == 'koach.retour_gradue' and x['params']['series'] == 0 for x in k2.seances.raisons)
 
 
 def test_retour_gradue_semaines_allegees():

@@ -299,6 +299,7 @@ class Seances(object):
         self.genres = {}         # semaine -> intention ou genre de la semaine (affûtage, compétition…)
         self.servis = None       # items servis de la séance en cours (comptés à la fin de séance)
         self.retour_vol = None   # budgets de la séance en cours (`_budgets_retour`)
+        self.semaines_manquees = set()  # semaines où une séance a été manquée (1.0.6, répartition)
 
     def mem(self, ex_id):
         if ex_id not in self.memoire:
@@ -434,6 +435,7 @@ class Seances(object):
             # écrit (`blocs_servis_prescrits`) ; Koach fait de même.
             if m.get('semaine') is None:
                 continue
+            self.semaines_manquees.add(m['semaine'])
             if 'genre' in m and m['semaine'] not in self.allegees:
                 self.allegees[m['semaine']] = m.get('genre') in legeres
             self._compter(m['semaine'], m.get('items') or [])
@@ -895,9 +897,18 @@ class Seances(object):
                 if zz and z in zz[1] and p.get('kind') != 'warmup':
                     travail += int(p.get('sets') or 0)
             self.reserve_echauffement[z] = max(0, b - travail)
+        # 1.0.6 (KM4) : deux passes. D'abord la séance servie par les règles
+        # de chaque exercice (douleur, bilan, coupure, surmenage, rampe du
+        # réalisé) ; puis le plan du retour gradué au volume, réparti sur la
+        # semaine et priorisé par rôle (`_plan_retour`), appliqué ligne par
+        # ligne avec le vrai test.
+        premiers = []
         for item in items:
             servi = self._item(item, grilles.get(item['exerciseId']), zones.get(item['exerciseId']),
                                roles.get(item['slotId']))
+            premiers.append((item, servi))
+        self._plan_retour([(item, servi) for (item, servi) in premiers if servi is not None])
+        for (item, servi) in premiers:
             if servi is None:
                 continue
             servi = self._retour_gradue(servi)
@@ -1261,15 +1272,20 @@ class Seances(object):
         return self._limite_rampe(allegees, serie, semaine, self.s['tenue_hausse_par_niveau'][self.g.niveau],
                            self.s['tenue_hausse_hebdo_s'])
 
+    #: Rang de priorité du retour gradué par rôle d'emplacement (1.0.6, KM4) :
+    #: 0 coupé d'abord (accessoire, gainage, conditionnement, mobilité, retour
+    #: au calme), 1 ensuite (secondaire, technique), 2 en dernier (principal).
+    RANG_ROLE = {'main': 2, 'secondary': 1, 'skill': 1}
+
     def _budgets_retour(self, items=()):
-        """Budgets de la séance du jour : par groupe majeur (et par famille
-        de tenue bras tendus), limite de la semaine − déjà fait cette
-        semaine (séances fermées et manquées) − écrit des séances restantes
-        de la semaine (`contexte['reste_semaine']`, réservé en entier : une
-        séance restante manquée compte à son volume écrit) ; et, une semaine
-        d'allègement, séries dures de la semaine tous groupes confondus. None
-        la première semaine du programme ou du journal (aucune limite) ou
-        sans semaine connue."""
+        """Données du retour gradué de la séance du jour (1.0.6) : limites de
+        la semaine par groupe majeur et réalisé de la semaine (séances
+        fermées, séances manquées à leur écrit) ; une semaine d'allègement,
+        limite et réalisé des séries dures tous groupes confondus ; séances
+        restantes de la semaine (`contexte['reste_semaine']`), réparties par
+        `_plan_retour` ; tenues bras tendus : budget = limite − fait − écrit
+        restant (réservé en entier, comme 1.0.5). None la première semaine
+        du programme ou du journal (aucune limite) ou sans semaine connue."""
         c = self.contexte or {}
         sem = c.get('semaine')
         if sem is None or sem < 1:
@@ -1279,33 +1295,22 @@ class Seances(object):
             # limite, comme la première semaine du programme pour le banc.
             return None
         n = len(self.s['volume_groupes_majeurs'])
-        reserve = [0.0] * n
+        reste = []
         reserve_t = {}
-        reserve_d = 0.0
         ecrit_reste = 0.0
         for seance in c.get('reste_semaine') or []:
-            r_s = [0.0] * n
             r_t = {}
-            r_d = 0.0
             for p in seance:
-                dures = self._series_dures(p)
-                r_d += dures
-                if dures > 0:
-                    for (g, cr) in self._credits(p['exerciseId']):
-                        r_s[g] += dures * cr
+                ecrit_reste += self._series_dures(p)
                 fam, sec = self._tenue_bras_tendus(p)
                 if fam is not None:
                     r_t[fam] = r_t.get(fam, 0.0) + float(p.get('sets') or 0) * sec
-            ecrit_reste += r_d
-            reserve_d += r_d
-            for g in range(n):
-                reserve[g] += r_s[g]
             for fam in sorted(r_t):
                 reserve_t[fam] = reserve_t.get(fam, 0.0) + r_t[fam]
+            reste.append(list(seance))
         fait = self.vol_semaines.get(sem) or [0.0] * n
         fait_t = self.tenue_semaines.get(sem) or {}
         limites = [self._limite_volume(g, sem) for g in range(n)]
-        budgets = [limites[g] - fait[g] - reserve[g] for g in range(n)]
         limites_t = {}
         budgets_t = {}
         for fam in self.FAMILLES_BRAS_TENDUS:
@@ -1323,55 +1328,210 @@ class Seances(object):
         ref_e = max([self.ecrit_semaines.get(k, 0.0) for k in range(sem - 3, sem) if k >= 0] or [0.0])
         allegement = (ecrit <= part * ref_e + 1e-9) if ref_e > 0 else legere
         limite_d = None
-        budget_d = None
+        fait_d = None
         if allegement or legere:
             ref_s = max([self.dures_semaines.get(k, 0.0) for k in range(sem - 3, sem) if k >= 0] or [0.0])
             if ref_s > 0:
                 limite_d = part * ref_s
-                budget_d = limite_d - self.dures_semaines.get(sem, 0.0) - reserve_d
-        return {'limites': limites, 'budgets': budgets, 'jour': [0.0] * n,
-                'limites_tenue': limites_t, 'budgets_tenue': budgets_t, 'jour_tenue': {},
-                'limite_dures': limite_d, 'budget_dures': budget_d, 'jour_dures': 0.0}
+                fait_d = self.dures_semaines.get(sem, 0.0)
+        return {'limites': limites, 'fait': list(fait), 'limite_dures': limite_d, 'fait_dures': fait_d,
+                'reste': reste, 'plan': {}, 'cause': {}, 'repartie': None, 'depasse': [],
+                'limites_tenue': limites_t, 'budgets_tenue': budgets_t, 'jour_tenue': {}}
+
+    def _douleur_unite(self, ex_id, plan):
+        """Vrai si la conduite sous douleur tient l'exercice aujourd'hui
+        (raison de douleur notée par `conduite`, ou zone sensible sous la
+        rampe du réalisé qu'il provoque ; la rampe de retour après une coupure,
+        sans douleur connue, n'en est pas une)."""
+        cond = (plan or {}).get('cond') or {}
+        if cond.get('zone') is not None:
+            return True
+        zz = self.zones_ex.get(ex_id)
+        if zz:
+            for z in sorted(zz[1]):
+                if z in self.budget_zone and z not in self.retour_zone:
+                    return True
+        return False
+
+    def _plan_retour(self, paires):
+        """Plan du retour gradué au volume de la semaine (1.0.6, KM4).
+
+        Lignes : chaque groupe majeur (limite de la rampe − réalisé), et le
+        total des séries dures une semaine d'allègement. Unités : lignes
+        dures de la séance du jour ([paires] : (écrit, servi par
+        `_item`), séries servies) et des séances restantes de la semaine
+        (séries écrites). Excès d'une ligne = réalisé + séries créditées des
+        unités − limite. Les coupes se font une série à la fois, par étapes :
+          1. rang 0 (accessoire, gainage, conditionnement…) jusqu'à 0 ;
+          2. rang 1 (secondaire, technique, principal sous douleur) jusqu'à 1 ;
+          3. principal jusqu'à son plancher, max(1, ⌈écrit ×
+             `retour_plancher_principal`⌉) ;
+          4. rang 1 jusqu'à 0 ;
+          5. principal jusqu'à 1 (jamais 0 sans douleur) ;
+        dans une étape, la série coupée est celle de l'unité qui garde la plus
+        grande part de son écrit (répartition au prorata), à égalité la plus
+        tardive (séance puis rang dans la séance). Seules les unités qui
+        créditent une ligne encore en excès sont coupées.
+
+        Répartition sur la semaine seulement si aucune séance n'a été manquée
+        dans les `retour_repartition_semaines` dernières semaines (semaine en
+        cours comprise) : une séance manquée compte à son volume écrit, les
+        coupes promises aux séances restantes ne tiennent que si elles sont
+        faites. Sinon (prudent) : la séance du jour paie d'abord jusqu'au
+        plancher de ses principaux (étapes 1 à 3), puis les séances restantes
+        (1 à 3), puis 4 et 5 (jour, puis reste).
+
+        Sans rôle : la première ligne dure de la séance est le principal, les
+        autres sont de rang 0 (choix raisonné : l'exercice prioritaire ouvre
+        la séance, ACSM 2009, Simão et al. 2012). Résultat dans
+        `retour_vol['plan']` (slotId -> séries permises) et `['cause']`."""
+        rv = self.retour_vol
+        if rv is None:
+            return
+        s = self.s
+        n = len(s['volume_groupes_majeurs'])
+        total = rv['limite_dures'] is not None
+        exces = [rv['fait'][g] - rv['limites'][g] for g in range(n)]
+        if total:
+            exces.append(rv['fait_dures'] - rv['limite_dures'])
+        part = s['retour_plancher_principal']
+        unites = []
+
+        def ajouter(seance, pos, slot, ex_id, series, ecrites, role, douleur, premier):
+            poids = []
+            for (g, cr) in self._credits(ex_id):
+                poids.append((g, cr))
+            if total:
+                poids.append((n, 1.0))
+            if not poids:
+                return
+            if role is None:
+                rang = 2 if premier else 0
+            else:
+                rang = self.RANG_ROLE.get(role, 0)
+            if rang == 2 and douleur:
+                rang = 1
+            plancher = 0
+            if rang == 2:
+                plancher = int(math.ceil(ecrites * part - 1e-9))
+                if plancher < 1:
+                    plancher = 1
+                if plancher > series:
+                    plancher = series
+            for (r, w) in poids:
+                exces[r] += w * series
+            unites.append({'seance': seance, 'pos': pos, 'slot': slot, 'n': series, 'm': series,
+                           'poids': poids, 'rang': rang, 'plancher': plancher})
+
+        pos = 0
+        premier = True
+        for (item, servi) in paires:
+            series = int(servi.get('sets') or 0)
+            if series <= 0 or self._series_dures(servi) <= 0:
+                continue
+            plan = self.plans.get(item['slotId'])
+            role = (plan or {}).get('role')
+            ajouter(0, pos, item['slotId'], item['exerciseId'], series, int(item.get('sets') or 0),
+                    role, self._douleur_unite(item['exerciseId'], plan), premier)
+            premier = False
+            pos += 1
+        for k, seance in enumerate(rv['reste']):
+            pos = 0
+            premier = True
+            for p in seance:
+                series = int(p.get('sets') or 0)
+                if series <= 0 or self._series_dures(p) <= 0:
+                    continue
+                ajouter(k + 1, pos, p.get('slotId'), p['exerciseId'], series, series, p.get('role'), False,
+                        premier)
+                premier = False
+                pos += 1
+        initial = list(exces)
+        c = self.contexte or {}
+        sem = c.get('semaine')
+        fenetre = int(s['retour_repartition_semaines'])
+        repartie = not any(w in self.semaines_manquees for w in range(sem - fenetre + 1, sem + 1))
+        rv['repartie'] = repartie
+
+        def couper(portee, rang, plancher_de):
+            while True:
+                if not any(x > 1e-9 for x in exces):
+                    return
+                best = None
+                cle = None
+                for u in unites:
+                    if (portee == 'jour' and u['seance'] != 0) or (portee == 'reste' and u['seance'] == 0):
+                        continue
+                    if u['rang'] != rang or u['m'] <= plancher_de(u):
+                        continue
+                    utile = False
+                    for (r, w) in u['poids']:
+                        if exces[r] > 1e-9:
+                            utile = True
+                            break
+                    if not utile:
+                        continue
+                    k = (u['m'] / float(u['n']), u['seance'], u['pos'])
+                    if best is None or k > cle:
+                        best = u
+                        cle = k
+                if best is None:
+                    return
+                best['m'] -= 1
+                for (r, w) in best['poids']:
+                    exces[r] -= w
+
+        zero = lambda u: 0
+        un = lambda u: 1
+        plancher = lambda u: u['plancher']
+        etapes = [(0, zero), (1, un), (2, plancher), (1, zero), (2, un)]
+        if repartie:
+            for (rang, f) in etapes:
+                couper('tous', rang, f)
+        else:
+            for (rang, f) in etapes[:3]:
+                couper('jour', rang, f)
+            for (rang, f) in etapes[:3]:
+                couper('reste', rang, f)
+            for (rang, f) in etapes[3:]:
+                couper('jour', rang, f)
+                couper('reste', rang, f)
+        rv['depasse'] = [r for r in range(len(exces)) if exces[r] > 1e-9]
+        for u in unites:
+            if u['seance'] != 0:
+                continue
+            rv['plan'][u['slot']] = u['m']
+            if u['m'] < u['n']:
+                cause = None
+                for (r, w) in u['poids']:
+                    if initial[r] > 1e-9 and (cause is None or initial[r] > initial[cause]):
+                        cause = r
+                rv['cause'][u['slot']] = ('total', None) if cause == n else ('groupe', cause)
 
     def _retour_gradue(self, servi):
-        """Retour gradué au volume : séries de l'item ramenées à ce que la
-        semaine permet encore, pour chacun de ses groupes majeurs (séries
-        dures créditées), pour le total de la semaine une semaine
-        d'allègement, et pour sa famille de tenue bras tendus (secondes :
-        tenues raccourcies à séries égales, 5 s au moins, puis une série de
-        moins). Zéro série : item retiré. Raison `koach.retour_gradue`. Renvoie l'item ou None."""
+        """Retour gradué au volume : séries de l'item ramenées à celles que
+        le plan de la semaine lui laisse (`_plan_retour` : groupes majeurs,
+        total d'une semaine d'allègement), puis à ce que sa famille de tenue
+        bras tendus permet encore (secondes : tenues raccourcies à séries
+        égales, 5 s au moins, puis une série de moins). Zéro série : item
+        retiré (jamais un principal sans douleur par le plan). Raison
+        `koach.retour_gradue` (groupe, limite, séries servies, séries
+        écrites). Renvoie l'item ou None."""
         rv = self.retour_vol
         if rv is None:
             return servi
         series = int(servi.get('sets') or 0)
         if series <= 0:
             return servi
-        par_serie = []
-        dure = self._series_dures(servi) > 0
-        if dure:
-            par_serie = self._credits(servi['exerciseId'])
-        total = dure and rv['budget_dures'] is not None
+        maxi = series
+        cause = None
+        p = rv['plan'].get(servi['slotId'])
+        if p is not None and p < maxi:
+            maxi = p
+            cause = rv['cause'][servi['slotId']]
         fam, sec = self._tenue_bras_tendus(servi)
         if fam is not None and (rv['budgets_tenue'].get(fam) is None or sec <= 0):
             fam = None
-        if not par_serie and fam is None and not total:
-            return servi
-        maxi = series
-        cause = None
-        if total:
-            m = int(math.floor(rv['budget_dures'] - rv['jour_dures'] + 1e-9))
-            if m < 0:
-                m = 0
-            if m < maxi:
-                maxi = m
-                cause = ('total', None)
-        for (g, c) in par_serie:
-            m = int(math.floor((rv['budgets'][g] - rv['jour'][g]) / c + 1e-9))
-            if m < 0:
-                m = 0
-            if m < maxi:
-                maxi = m
-                cause = ('groupe', g)
         secondes = None
         if fam is not None and maxi > 0:
             reste_t = rv['budgets_tenue'][fam] - rv['jour_tenue'].get(fam, 0.0)
@@ -1381,21 +1541,17 @@ class Seances(object):
                 # une série de moins, et ainsi de suite.
                 cause = ('famille', fam)
                 trouve = 0
-                for n in range(maxi, 0, -1):
-                    h = int(math.floor(reste_t / n + 1e-9))
+                for k in range(maxi, 0, -1):
+                    h = int(math.floor(reste_t / k + 1e-9))
                     if h > sec:
                         h = int(sec)
                     if h >= self.TENUE_MIN_S:
-                        trouve = n
+                        trouve = k
                         if h < sec:
                             secondes = h
                         break
                 maxi = trouve
         if maxi >= series and secondes is None:
-            if total:
-                rv['jour_dures'] += series
-            for (g, c) in par_serie:
-                rv['jour'][g] += series * c
             if fam is not None:
                 rv['jour_tenue'][fam] = rv['jour_tenue'].get(fam, 0.0) + series * sec
             return servi
@@ -1409,7 +1565,9 @@ class Seances(object):
             groupe = 'bras_tendus_' + cause[1]
             limite = rv['limites_tenue'][cause[1]]
         self._raison('koach.retour_gradue', exercice=servi['exerciseId'], groupe=groupe,
-                     limite=arrondi_decimal(limite, 1), series=maxi, secondes=secondes)
+                     limite=arrondi_decimal(limite, 1), series=maxi, secondes=secondes,
+                     ecrites=int(((self.plans.get(servi['slotId']) or {}).get('ecrit') or servi).get('sets') or 0),
+                     douleur=self._douleur_unite(servi['exerciseId'], self.plans.get(servi['slotId'])))
         if maxi <= 0:
             return None
         servi['sets'] = maxi
@@ -1420,10 +1578,6 @@ class Seances(object):
             if servi.get('secondsLow') is not None and servi['secondsLow'] > secondes:
                 servi['secondsLow'] = secondes
             sec = float(secondes)
-        if total:
-            rv['jour_dures'] += maxi
-        for (g, c) in par_serie:
-            rv['jour'][g] += maxi * c
         if fam is not None:
             rv['jour_tenue'][fam] = rv['jour_tenue'].get(fam, 0.0) + maxi * sec
         return servi
