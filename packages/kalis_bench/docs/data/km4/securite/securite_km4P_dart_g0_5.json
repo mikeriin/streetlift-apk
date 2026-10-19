@@ -1,0 +1,4024 @@
+{
+ "critere_7_cahier": {
+  "exemples": [],
+  "graine_0": 0,
+  "par_code": {},
+  "par_profil": {},
+  "par_scenario": {},
+  "par_verite": {},
+  "saisons_touchees": 0,
+  "total": 0
+ },
+ "douleur_et_hausses": {},
+ "graines": [
+  0,
+  5
+ ],
+ "initial_kalis_plan": {},
+ "parts": 2,
+ "plantages": 0,
+ "plantages_exemples": [],
+ "profils": 34,
+ "rampe_principaux": {
+  "exemples": [],
+  "par_scenario": {
+   "changement_discipline": {
+    "part_seances_principal_reduit": 0.012002,
+    "part_servie": 227.666667,
+    "part_servie_moyenne": 0.573468,
+    "principal_retire": 0,
+    "principaux_reduits": 397,
+    "seances": 37422,
+    "seances_principal": 27996,
+    "seances_principal_reduit": 336,
+    "seances_principal_retire": 0
+   },
+   "course_ajoutee": {
+    "part_seances_principal_reduit": 0.0,
+    "part_servie": 0.0,
+    "part_servie_moyenne": null,
+    "principal_retire": 0,
+    "principaux_reduits": 0,
+    "seances": 1335,
+    "seances_principal": 963,
+    "seances_principal_reduit": 0,
+    "seances_principal_retire": 0
+   },
+   "deuxieme_echeance": {
+    "part_seances_principal_reduit": 0.009939,
+    "part_servie": 234.55,
+    "part_servie_moyenne": 0.574877,
+    "principal_retire": 0,
+    "principaux_reduits": 408,
+    "seances": 49896,
+    "seances_principal": 36021,
+    "seances_principal_reduit": 358,
+    "seances_principal_retire": 0
+   },
+   "douleur_coude": {
+    "part_seances_principal_reduit": 0.086285,
+    "part_servie": 746.9,
+    "part_servie_moyenne": 0.240548,
+    "principal_retire": 0,
+    "principaux_reduits": 3105,
+    "seances": 42558,
+    "seances_principal": 31419,
+    "seances_principal_reduit": 2711,
+    "seances_principal_retire": 0
+   },
+   "douleur_epaule": {
+    "part_seances_principal_reduit": 0.112639,
+    "part_servie": 1076.366667,
+    "part_servie_moyenne": 0.252965,
+    "principal_retire": 0,
+    "principaux_reduits": 4255,
+    "seances": 42558,
+    "seances_principal": 31419,
+    "seances_principal_reduit": 3539,
+    "seances_principal_retire": 0
+   },
+   "echeance_avancee": {
+    "part_seances_principal_reduit": 0.010757,
+    "part_servie": 221.3,
+    "part_servie_moyenne": 0.579319,
+    "principal_retire": 0,
+    "principaux_reduits": 382,
+    "seances": 42558,
+    "seances_principal": 31329,
+    "seances_principal_reduit": 337,
+    "seances_principal_retire": 0
+   },
+   "maladie": {
+    "part_seances_principal_reduit": 0.02629,
+    "part_servie": 550.016667,
+    "part_servie_moyenne": 0.542423,
+    "principal_retire": 0,
+    "principaux_reduits": 1014,
+    "seances": 42558,
+    "seances_principal": 31419,
+    "seances_principal_reduit": 826,
+    "seances_principal_retire": 0
+   },
+   "parc_seulement": {
+    "part_seances_principal_reduit": 0.010885,
+    "part_servie": 224.183333,
+    "part_servie_moyenne": 0.577792,
+    "principal_retire": 0,
+    "principaux_reduits": 388,
+    "seances": 42558,
+    "seances_principal": 31419,
+    "seances_principal_reduit": 342,
+    "seances_principal_retire": 0
+   },
+   "reference": {
+    "part_seances_principal_reduit": 0.010981,
+    "part_servie": 226.766667,
+    "part_servie_moyenne": 0.579966,
+    "principal_retire": 0,
+    "principaux_reduits": 391,
+    "seances": 42558,
+    "seances_principal": 31419,
+    "seances_principal_reduit": 345,
+    "seances_principal_retire": 0
+   },
+   "seances_manquees": {
+    "part_seances_principal_reduit": 0.022418,
+    "part_servie": 320.483333,
+    "part_servie_moyenne": 0.5469,
+    "principal_retire": 0,
+    "principaux_reduits": 586,
+    "seances": 32475,
+    "seances_principal": 24222,
+    "seances_principal_reduit": 543,
+    "seances_principal_retire": 0
+   }
+  },
+  "principal_retire": 0,
+  "total": {
+   "part_seances_principal_reduit": 0.033632,
+   "part_servie": 3828.233333,
+   "part_servie_moyenne": 0.350378,
+   "principal_retire": 0,
+   "principaux_reduits": 10926,
+   "seances": 376476,
+   "seances_principal": 277626,
+   "seances_principal_reduit": 9337,
+   "seances_principal_retire": 0
+  }
+ },
+ "realisee_appariee": {
+  "exemples": [
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "reference",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "reference",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 5.0,
+      "semaine": 8,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 9,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "a",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 3,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 9,
+      "valeur": 10.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 3.0,
+      "semaine": 8,
+      "valeur": 5.5
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 8,
+      "valeur": 6.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 5
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 15,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 5.0,
+      "semaine": 8,
+      "valeur": 7.5
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "b",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 3,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.5,
+      "semaine": 9,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 9,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 3.0,
+      "semaine": 8,
+      "valeur": 5.5
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 8,
+      "valeur": 6.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 5.0,
+      "semaine": 8,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 9,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "c",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.5,
+      "semaine": 13,
+      "valeur": 8.5
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 3,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 9,
+      "valeur": 10.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 3.0,
+      "semaine": 8,
+      "valeur": 5.5
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 8,
+      "valeur": 6.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 6
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.5,
+      "semaine": 10,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 8.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 9
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 5.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 6.0,
+      "semaine": 7,
+      "valeur": 7.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 6.0,
+      "semaine": 7,
+      "valeur": 7.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 6.5,
+      "semaine": 12,
+      "valeur": 7.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 8.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 10.5
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 4.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 6.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 7,
+      "valeur": 8.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 5.0,
+      "semaine": 10,
+      "valeur": 6.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 12,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 4.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 6.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 7,
+      "valeur": 8.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 9,
+      "valeur": 4.5
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 9,
+      "valeur": 4.5
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 9,
+      "valeur": 4.5
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "parc_seulement",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "parc_seulement",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "echeance_avancee",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "echeance_avancee",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "deuxieme_echeance",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "deuxieme_echeance",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 13.5,
+      "semaine": 10,
+      "valeur": 14.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 14.4,
+      "semaine": 3,
+      "valeur": 15.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 12.0,
+      "semaine": 4,
+      "valeur": 16.0
+     }
+    ],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "reference",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 11.0,
+      "semaine": 15,
+      "valeur": 13.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 13.2,
+      "semaine": 4,
+      "valeur": 14.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 11.5,
+      "semaine": 4,
+      "valeur": 14.5
+     }
+    ],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "reference",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 12.5,
+      "semaine": 10,
+      "valeur": 14.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 14.4,
+      "semaine": 3,
+      "valeur": 15.0
+     }
+    ],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "reference",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 15,
+      "valeur": 13.5
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 12.0,
+      "semaine": 6,
+      "valeur": 15.0
+     }
+    ],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "reference",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 14.4,
+      "semaine": 3,
+      "valeur": 15.0
+     }
+    ],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "reference",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 11.0,
+      "semaine": 15,
+      "valeur": 13.5
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 15.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 13.0,
+      "semaine": 9,
+      "valeur": 14.0
+     }
+    ],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "reference",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 6.5,
+      "semaine": 11,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.5,
+      "semaine": 11,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 14.0,
+      "semaine": 15,
+      "valeur": 15.0
+     }
+    ],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "a",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 13.0,
+      "semaine": 10,
+      "valeur": 14.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 13.2,
+      "semaine": 10,
+      "valeur": 15.0
+     },
+     {
+      "categorie": "aggrave",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 14.4,
+      "semaine": 3,
+      "valeur": 15.0
+     }
+    ],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "a",
+     2
+    ]
+   }
+  ],
+  "graine_0": 672,
+  "par_code": {
+   "affutage_absent": 4,
+   "decharge_absente": 13,
+   "tendon_figures": 220,
+   "volume_trop_vite": 11139
+  },
+  "par_profil": {
+   "autres_01_debutant_musculation": {
+    "volume_trop_vite": 195
+   },
+   "autres_02_hypertrophie_intermediaire": {
+    "volume_trop_vite": 380
+   },
+   "autres_03_powerlifter_competition": {
+    "affutage_absent": 3,
+    "volume_trop_vite": 252
+   },
+   "autres_04_force_generale_46_ans": {
+    "volume_trop_vite": 378
+   },
+   "autres_05_course_10_km_debutante": {
+    "volume_trop_vite": 60
+   },
+   "autres_06_semi_marathon_intermediaire": {
+    "volume_trop_vite": 45
+   },
+   "autres_07_mobilite_sante_senior": {
+    "volume_trop_vite": 72
+   },
+   "autres_08_crossfit_intermediaire": {
+    "decharge_absente": 2,
+    "volume_trop_vite": 350
+   },
+   "autres_09_perte_de_poids_debutante": {
+    "volume_trop_vite": 143
+   },
+   "autres_10_contraintes_multiples": {
+    "volume_trop_vite": 209
+   },
+   "ks_01_streetlifting_sets_reps_4_seances": {
+    "volume_trop_vite": 578
+   },
+   "ks_02_streetlifting_sets_reps_5_seances": {
+    "volume_trop_vite": 437
+   },
+   "ks_03_streetlifting_sets_reps_6_seances": {
+    "volume_trop_vite": 504
+   },
+   "ks_04_sets_reps_principal_streetlifting_secondaire": {
+    "volume_trop_vite": 439
+   },
+   "ks_05_force_hypertrophie": {
+    "decharge_absente": 1,
+    "volume_trop_vite": 263
+   },
+   "ks_06_calisthenie_sets_reps_30": {
+    "decharge_absente": 3,
+    "tendon_figures": 83,
+    "volume_trop_vite": 234
+   },
+   "ks_test_ppl6": {
+    "decharge_absente": 3,
+    "volume_trop_vite": 1772
+   },
+   "street_01_debutant_complet": {
+    "volume_trop_vite": 197
+   },
+   "street_02_debutant_surpoids": {
+    "volume_trop_vite": 321
+   },
+   "street_03_debutante": {
+    "tendon_figures": 11,
+    "volume_trop_vite": 181
+   },
+   "street_04_reprise_longue_pause": {
+    "volume_trop_vite": 162
+   },
+   "street_05_inter_calisthenie_front_lever": {
+    "tendon_figures": 54,
+    "volume_trop_vite": 375
+   },
+   "street_06_inter_sets_reps": {
+    "volume_trop_vite": 319
+   },
+   "street_07_avance_streetlifting_competition": {
+    "volume_trop_vite": 421
+   },
+   "street_08_avance_sets_reps_competition": {
+    "volume_trop_vite": 310
+   },
+   "street_09_elite_streetlifting": {
+    "volume_trop_vite": 468
+   },
+   "street_10_elite_figures": {
+    "tendon_figures": 72,
+    "volume_trop_vite": 189
+   },
+   "street_11_master_51_ans": {
+    "volume_trop_vite": 359
+   },
+   "street_12_antecedent_coude": {
+    "volume_trop_vite": 154
+   },
+   "street_13_peu_de_temps": {
+    "volume_trop_vite": 344
+   },
+   "street_14_parc_sans_lest": {
+    "volume_trop_vite": 339
+   },
+   "street_15_travail_physique_sommeil_court": {
+    "volume_trop_vite": 217
+   },
+   "street_16_specialisation_traction_lestee": {
+    "affutage_absent": 1,
+    "decharge_absente": 3,
+    "volume_trop_vite": 282
+   },
+   "street_17_hybride_street_course": {
+    "decharge_absente": 1,
+    "volume_trop_vite": 190
+   }
+  },
+  "par_scenario": {
+   "changement_discipline": {
+    "volume_trop_vite": 755
+   },
+   "course_ajoutee": {
+    "volume_trop_vite": 19
+   },
+   "deuxieme_echeance": {
+    "decharge_absente": 1,
+    "tendon_figures": 12,
+    "volume_trop_vite": 1424
+   },
+   "douleur_coude": {
+    "tendon_figures": 52,
+    "volume_trop_vite": 812
+   },
+   "douleur_epaule": {
+    "decharge_absente": 3,
+    "tendon_figures": 39,
+    "volume_trop_vite": 773
+   },
+   "echeance_avancee": {
+    "tendon_figures": 12,
+    "volume_trop_vite": 997
+   },
+   "maladie": {
+    "affutage_absent": 1,
+    "decharge_absente": 2,
+    "tendon_figures": 17,
+    "volume_trop_vite": 1274
+   },
+   "parc_seulement": {
+    "tendon_figures": 13,
+    "volume_trop_vite": 858
+   },
+   "reference": {
+    "tendon_figures": 13,
+    "volume_trop_vite": 852
+   },
+   "seances_manquees": {
+    "affutage_absent": 3,
+    "decharge_absente": 7,
+    "tendon_figures": 62,
+    "volume_trop_vite": 3375
+   }
+  },
+  "par_verite": {
+   "a": {
+    "affutage_absent": 1,
+    "decharge_absente": 4,
+    "tendon_figures": 73,
+    "volume_trop_vite": 3711
+   },
+   "b": {
+    "affutage_absent": 2,
+    "decharge_absente": 4,
+    "tendon_figures": 75,
+    "volume_trop_vite": 3695
+   },
+   "c": {
+    "affutage_absent": 1,
+    "decharge_absente": 5,
+    "tendon_figures": 72,
+    "volume_trop_vite": 3733
+   }
+  },
+  "saisons_touchees": 3039,
+  "total": 11376
+ },
+ "realisee_contre_plan_initial": {
+  "exemples": [
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "reference",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 6,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "reference",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "reference",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 5
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 6,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 10.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "reference",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "reference",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 8.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 6,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 10.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "reference",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 17
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 6.0,
+      "semaine": 3,
+      "valeur": 6.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "a",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.5,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 10,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 10,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 2.0,
+      "semaine": 8,
+      "valeur": 3.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 13
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 15,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 10.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "b",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 9
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.5,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 10,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 10,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 2.0,
+      "semaine": 8,
+      "valeur": 3.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 14
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 8,
+      "valeur": 4.5
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "c",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 9
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.5,
+      "semaine": 13,
+      "valeur": 8.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 10,
+      "valeur": 7.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 10,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 2.0,
+      "semaine": 8,
+      "valeur": 3.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 13
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.5,
+      "semaine": 10,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 8.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 9
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 5.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 6.0,
+      "semaine": 7,
+      "valeur": 7.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 6.0,
+      "semaine": 7,
+      "valeur": 7.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 10
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 6.5,
+      "semaine": 12,
+      "valeur": 7.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 8.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 10.5
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 4.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 6.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 7,
+      "valeur": 8.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 11
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 5.0,
+      "semaine": 10,
+      "valeur": 6.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 12,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 12,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 4.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 4.0,
+      "semaine": 7,
+      "valeur": 6.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 7,
+      "valeur": 8.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 5
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 5
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 5
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.5,
+      "semaine": 6,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.5,
+      "semaine": 6,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.5,
+      "semaine": 6,
+      "valeur": 8.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 10.0,
+      "semaine": 6,
+      "valeur": 11.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "parc_seulement",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 6,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 9.0,
+      "semaine": 6,
+      "valeur": 12.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "parc_seulement",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "parc_seulement",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 5
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 6,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 10.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "parc_seulement",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "parc_seulement",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 8.5
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 6,
+      "valeur": 10.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 6,
+      "valeur": 10.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "parc_seulement",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 7
+    },
+    "exemples": [
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 7.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     },
+     {
+      "categorie": "introduit",
+      "code": "volume_trop_vite",
+      "exercice": null,
+      "jour": null,
+      "limite": 8.0,
+      "semaine": 3,
+      "valeur": 9.0
+     }
+    ],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "echeance_avancee",
+     "a",
+     2
+    ]
+   }
+  ],
+  "graine_0": 1956,
+  "par_code": {
+   "affutage_absent": 10,
+   "decharge_absente": 16,
+   "tendon_figures": 531,
+   "volume_trop_vite": 27374
+  },
+  "par_profil": {
+   "autres_01_debutant_musculation": {
+    "volume_trop_vite": 652
+   },
+   "autres_02_hypertrophie_intermediaire": {
+    "volume_trop_vite": 1270
+   },
+   "autres_03_powerlifter_competition": {
+    "affutage_absent": 3,
+    "volume_trop_vite": 577
+   },
+   "autres_04_force_generale_46_ans": {
+    "volume_trop_vite": 954
+   },
+   "autres_05_course_10_km_debutante": {
+    "volume_trop_vite": 84
+   },
+   "autres_06_semi_marathon_intermediaire": {
+    "volume_trop_vite": 78
+   },
+   "autres_07_mobilite_sante_senior": {
+    "volume_trop_vite": 95
+   },
+   "autres_08_crossfit_intermediaire": {
+    "decharge_absente": 2,
+    "volume_trop_vite": 894
+   },
+   "autres_09_perte_de_poids_debutante": {
+    "volume_trop_vite": 238
+   },
+   "autres_10_contraintes_multiples": {
+    "volume_trop_vite": 301
+   },
+   "ks_01_streetlifting_sets_reps_4_seances": {
+    "volume_trop_vite": 1165
+   },
+   "ks_02_streetlifting_sets_reps_5_seances": {
+    "volume_trop_vite": 864
+   },
+   "ks_03_streetlifting_sets_reps_6_seances": {
+    "volume_trop_vite": 990
+   },
+   "ks_04_sets_reps_principal_streetlifting_secondaire": {
+    "volume_trop_vite": 882
+   },
+   "ks_05_force_hypertrophie": {
+    "decharge_absente": 1,
+    "volume_trop_vite": 843
+   },
+   "ks_06_calisthenie_sets_reps_30": {
+    "decharge_absente": 3,
+    "tendon_figures": 167,
+    "volume_trop_vite": 853
+   },
+   "ks_test_ppl6": {
+    "decharge_absente": 3,
+    "volume_trop_vite": 4672
+   },
+   "street_01_debutant_complet": {
+    "tendon_figures": 21,
+    "volume_trop_vite": 492
+   },
+   "street_02_debutant_surpoids": {
+    "volume_trop_vite": 469
+   },
+   "street_03_debutante": {
+    "tendon_figures": 33,
+    "volume_trop_vite": 473
+   },
+   "street_04_reprise_longue_pause": {
+    "volume_trop_vite": 351
+   },
+   "street_05_inter_calisthenie_front_lever": {
+    "tendon_figures": 150,
+    "volume_trop_vite": 950
+   },
+   "street_06_inter_sets_reps": {
+    "volume_trop_vite": 916
+   },
+   "street_07_avance_streetlifting_competition": {
+    "volume_trop_vite": 768
+   },
+   "street_08_avance_sets_reps_competition": {
+    "volume_trop_vite": 626
+   },
+   "street_09_elite_streetlifting": {
+    "volume_trop_vite": 819
+   },
+   "street_10_elite_figures": {
+    "decharge_absente": 3,
+    "tendon_figures": 160,
+    "volume_trop_vite": 420
+   },
+   "street_11_master_51_ans": {
+    "volume_trop_vite": 1230
+   },
+   "street_12_antecedent_coude": {
+    "volume_trop_vite": 625
+   },
+   "street_13_peu_de_temps": {
+    "volume_trop_vite": 942
+   },
+   "street_14_parc_sans_lest": {
+    "volume_trop_vite": 996
+   },
+   "street_15_travail_physique_sommeil_court": {
+    "volume_trop_vite": 654
+   },
+   "street_16_specialisation_traction_lestee": {
+    "affutage_absent": 7,
+    "decharge_absente": 3,
+    "volume_trop_vite": 626
+   },
+   "street_17_hybride_street_course": {
+    "decharge_absente": 1,
+    "volume_trop_vite": 605
+   }
+  },
+  "par_scenario": {
+   "changement_discipline": {
+    "tendon_figures": 12,
+    "volume_trop_vite": 1773
+   },
+   "course_ajoutee": {
+    "volume_trop_vite": 54
+   },
+   "deuxieme_echeance": {
+    "decharge_absente": 1,
+    "tendon_figures": 81,
+    "volume_trop_vite": 3739
+   },
+   "douleur_coude": {
+    "tendon_figures": 52,
+    "volume_trop_vite": 1674
+   },
+   "douleur_epaule": {
+    "decharge_absente": 3,
+    "tendon_figures": 39,
+    "volume_trop_vite": 1549
+   },
+   "echeance_avancee": {
+    "tendon_figures": 48,
+    "volume_trop_vite": 2422
+   },
+   "maladie": {
+    "affutage_absent": 1,
+    "decharge_absente": 2,
+    "tendon_figures": 45,
+    "volume_trop_vite": 2575
+   },
+   "parc_seulement": {
+    "tendon_figures": 41,
+    "volume_trop_vite": 2213
+   },
+   "reference": {
+    "tendon_figures": 41,
+    "volume_trop_vite": 2211
+   },
+   "seances_manquees": {
+    "affutage_absent": 9,
+    "decharge_absente": 10,
+    "tendon_figures": 172,
+    "volume_trop_vite": 9164
+   }
+  },
+  "par_verite": {
+   "a": {
+    "affutage_absent": 3,
+    "decharge_absente": 5,
+    "tendon_figures": 176,
+    "volume_trop_vite": 9150
+   },
+   "b": {
+    "affutage_absent": 4,
+    "decharge_absente": 5,
+    "tendon_figures": 177,
+    "volume_trop_vite": 9079
+   },
+   "c": {
+    "affutage_absent": 3,
+    "decharge_absente": 6,
+    "tendon_figures": 178,
+    "volume_trop_vite": 9145
+   }
+  },
+  "saisons_touchees": 3516,
+  "total": 27931
+ },
+ "retour_ecrit_publie_a_part": {
+  "exemples": [
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "seances_manquees",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "maladie",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_coude",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_01_debutant_musculation",
+     "douleur_epaule",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "a",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 8
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "b",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "c",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "seances_manquees",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_coude",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_coude",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_coude",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_coude",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_coude",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_coude",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_epaule",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_epaule",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_epaule",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_epaule",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_epaule",
+     "c",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_02_hypertrophie_intermediaire",
+     "douleur_epaule",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_06_semi_marathon_intermediaire",
+     "changement_discipline",
+     "a",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_06_semi_marathon_intermediaire",
+     "changement_discipline",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_06_semi_marathon_intermediaire",
+     "changement_discipline",
+     "b",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_06_semi_marathon_intermediaire",
+     "changement_discipline",
+     "b",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 3
+    },
+    "exemples": [],
+    "saison": [
+     "autres_06_semi_marathon_intermediaire",
+     "changement_discipline",
+     "c",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_06_semi_marathon_intermediaire",
+     "changement_discipline",
+     "c",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 2
+    },
+    "exemples": [],
+    "saison": [
+     "autres_08_crossfit_intermediaire",
+     "seances_manquees",
+     "a",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 4
+    },
+    "exemples": [],
+    "saison": [
+     "autres_08_crossfit_intermediaire",
+     "seances_manquees",
+     "a",
+     4
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [],
+    "saison": [
+     "autres_08_crossfit_intermediaire",
+     "seances_manquees",
+     "b",
+     0
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 1
+    },
+    "exemples": [],
+    "saison": [
+     "autres_08_crossfit_intermediaire",
+     "seances_manquees",
+     "b",
+     2
+    ]
+   },
+   {
+    "constats": {
+     "volume_trop_vite": 6
+    },
+    "exemples": [],
+    "saison": [
+     "autres_08_crossfit_intermediaire",
+     "seances_manquees",
+     "b",
+     4
+    ]
+   }
+  ],
+  "graine_0": 125,
+  "par_code": {
+   "decharge_absente": 3,
+   "tendon_figures": 125,
+   "volume_trop_vite": 2832
+  },
+  "par_profil": {
+   "autres_01_debutant_musculation": {
+    "volume_trop_vite": 58
+   },
+   "autres_02_hypertrophie_intermediaire": {
+    "volume_trop_vite": 207
+   },
+   "autres_03_powerlifter_competition": {
+    "volume_trop_vite": 3
+   },
+   "autres_04_force_generale_46_ans": {
+    "volume_trop_vite": 2
+   },
+   "autres_06_semi_marathon_intermediaire": {
+    "volume_trop_vite": 24
+   },
+   "autres_08_crossfit_intermediaire": {
+    "volume_trop_vite": 211
+   },
+   "autres_09_perte_de_poids_debutante": {
+    "volume_trop_vite": 9
+   },
+   "autres_10_contraintes_multiples": {
+    "volume_trop_vite": 6
+   },
+   "ks_01_streetlifting_sets_reps_4_seances": {
+    "volume_trop_vite": 214
+   },
+   "ks_02_streetlifting_sets_reps_5_seances": {
+    "volume_trop_vite": 149
+   },
+   "ks_03_streetlifting_sets_reps_6_seances": {
+    "volume_trop_vite": 165
+   },
+   "ks_04_sets_reps_principal_streetlifting_secondaire": {
+    "volume_trop_vite": 175
+   },
+   "ks_05_force_hypertrophie": {
+    "volume_trop_vite": 18
+   },
+   "ks_06_calisthenie_sets_reps_30": {
+    "tendon_figures": 29,
+    "volume_trop_vite": 131
+   },
+   "ks_test_ppl6": {
+    "decharge_absente": 3,
+    "volume_trop_vite": 120
+   },
+   "street_01_debutant_complet": {
+    "volume_trop_vite": 72
+   },
+   "street_02_debutant_surpoids": {
+    "volume_trop_vite": 30
+   },
+   "street_03_debutante": {
+    "tendon_figures": 47,
+    "volume_trop_vite": 25
+   },
+   "street_04_reprise_longue_pause": {
+    "volume_trop_vite": 9
+   },
+   "street_05_inter_calisthenie_front_lever": {
+    "tendon_figures": 18,
+    "volume_trop_vite": 213
+   },
+   "street_06_inter_sets_reps": {
+    "volume_trop_vite": 96
+   },
+   "street_07_avance_streetlifting_competition": {
+    "volume_trop_vite": 51
+   },
+   "street_08_avance_sets_reps_competition": {
+    "volume_trop_vite": 30
+   },
+   "street_09_elite_streetlifting": {
+    "volume_trop_vite": 96
+   },
+   "street_10_elite_figures": {
+    "tendon_figures": 31,
+    "volume_trop_vite": 79
+   },
+   "street_11_master_51_ans": {
+    "volume_trop_vite": 152
+   },
+   "street_12_antecedent_coude": {
+    "volume_trop_vite": 67
+   },
+   "street_13_peu_de_temps": {
+    "volume_trop_vite": 66
+   },
+   "street_14_parc_sans_lest": {
+    "volume_trop_vite": 102
+   },
+   "street_15_travail_physique_sommeil_court": {
+    "volume_trop_vite": 31
+   },
+   "street_16_specialisation_traction_lestee": {
+    "volume_trop_vite": 132
+   },
+   "street_17_hybride_street_course": {
+    "volume_trop_vite": 89
+   }
+  },
+  "par_scenario": {
+   "changement_discipline": {
+    "tendon_figures": 3,
+    "volume_trop_vite": 32
+   },
+   "deuxieme_echeance": {
+    "tendon_figures": 4,
+    "volume_trop_vite": 14
+   },
+   "douleur_coude": {
+    "tendon_figures": 45,
+    "volume_trop_vite": 1197
+   },
+   "douleur_epaule": {
+    "decharge_absente": 3,
+    "tendon_figures": 36,
+    "volume_trop_vite": 1239
+   },
+   "echeance_avancee": {
+    "tendon_figures": 3,
+    "volume_trop_vite": 13
+   },
+   "maladie": {
+    "tendon_figures": 2,
+    "volume_trop_vite": 28
+   },
+   "parc_seulement": {
+    "tendon_figures": 3,
+    "volume_trop_vite": 11
+   },
+   "reference": {
+    "tendon_figures": 3,
+    "volume_trop_vite": 11
+   },
+   "seances_manquees": {
+    "tendon_figures": 26,
+    "volume_trop_vite": 287
+   }
+  },
+  "par_verite": {
+   "a": {
+    "decharge_absente": 1,
+    "tendon_figures": 32,
+    "volume_trop_vite": 909
+   },
+   "b": {
+    "decharge_absente": 1,
+    "tendon_figures": 61,
+    "volume_trop_vite": 1010
+   },
+   "c": {
+    "decharge_absente": 1,
+    "tendon_figures": 32,
+    "volume_trop_vite": 913
+   }
+  },
+  "saisons_touchees": 767,
+  "total": 2960
+ },
+ "saisons": 5436,
+ "saisons_sans_vue_realisee": 0,
+ "schema": "kalis_bench/kr1_securite/2",
+ "vues": {
+  "plan_module": {
+   "aggrave": {},
+   "deja_initial": {},
+   "introduit": {},
+   "retour_ecrit": {}
+  },
+  "realise": {
+   "aggrave": {},
+   "deja_initial": {},
+   "introduit": {
+    "affutage_absent": 10,
+    "decharge_absente": 16,
+    "tendon_figures": 531,
+    "volume_trop_vite": 27374
+   },
+   "retour_ecrit": {}
+  },
+  "realise_apparie": {
+   "aggrave": {
+    "affutage_absent": 3,
+    "tendon_figures": 3,
+    "volume_trop_vite": 6289
+   },
+   "deja_initial": {
+    "affutage_absent": 6,
+    "decharge_absente": 3,
+    "tendon_figures": 311,
+    "volume_trop_vite": 16235
+   },
+   "introduit": {
+    "affutage_absent": 1,
+    "decharge_absente": 13,
+    "tendon_figures": 217,
+    "volume_trop_vite": 4850
+   },
+   "retour_ecrit": {}
+  },
+  "servi": {
+   "aggrave": {},
+   "deja_initial": {},
+   "introduit": {
+    "plafond_volume": 12211,
+    "seance_trop_longue": 532,
+    "tendon_figures": 125,
+    "volume_trop_vite": 62194
+   },
+   "retour_ecrit": {}
+  },
+  "servi_tests_faits": {
+   "aggrave": {},
+   "deja_initial": {},
+   "introduit": {},
+   "retour_ecrit": {
+    "decharge_absente": 3,
+    "tendon_figures": 125,
+    "volume_trop_vite": 2832
+   }
+  }
+ }
+}

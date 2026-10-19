@@ -769,26 +769,24 @@ def test_retour_gradue_apres_trois_semaines_reduites():
 
 
 def test_retour_gradue_reserve_les_seances_restantes_et_compte_les_manquees():
-    # 1.0.6 (KM4) : sans séance manquée récente, la réduction se répartit sur
-    # la semaine (la séance restante, écrite à 4 séries, prend sa part) ;
-    # sans rôle, la première ligne dure est le principal (plancher ⌈10/2⌉).
+    # 1.0.6 (KM4), paramètres livrés : l'écrit des séances restantes reste
+    # réservé (une séance manquée compte à son écrit) et la séance du jour paie
+    # d'abord ; une ligne restante sans rôle n'est jamais coupée d'avance.
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)])
     out = seance_faite(k, 22, [pompes('p', 10)], reste_semaine=[[pompes('q', 4)]])
-    assert k.seances.retour_vol['repartie'] is True
-    assert out[0]['sets'] == 5                           # 1.0.5 : 2 (tout l'écrit restant réservé)
+    assert k.seances.retour_vol['repartie'] is False
+    assert out[0]['sets'] == 2                           # 6 − 4 réservées
     out = seance_faite(k, 24, [pompes('q', 4)])
-    assert out[0]['sets'] == 1                           # 5 + 1 = 6 : limite tenue
+    assert out[0]['sets'] == 4
     assert k.seances.vol_semaines[3][0] == 6.0
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)])
-    # Séance manquée plus tôt dans la semaine : son écrit compte, et la
-    # répartition est suspendue (la séance du jour paie d'abord).
+    # Séance manquée plus tôt dans la semaine : son écrit compte.
     out = seance_faite(k, 24, [pompes('p', 10)],
                        manquees=[{'semaine': 3, 'genre': 'accumulation', 'items': [pompes('p', 5)]}])
-    assert k.seances.retour_vol['repartie'] is False
     assert out[0]['sets'] == 1
     # Plus rien de permis : le principal n'est jamais retiré par la rampe
     # sans douleur (1.0.5 : ligne retirée) ; une série, le dépassement est dit.

@@ -47,9 +47,20 @@ SQ = 'mu-back-squat-barre-basse'
 RW = 'mu-rowing-pendlay'               # aucun crédit chest
 
 
-def koach(niveau=2):
-    return Koach(PARAMS, FICHES, {'niveau': niveau, 'sexe': 'male', 'poids_kg': 75.0, 'declares': {},
-                                  'zones_fragiles': []})
+def koach(niveau=2, **securite):
+    """Koach aux paramètres livrés ; [securite] remplace des clés de la
+    section `securite` (essais de la répartition, désactivée par défaut)."""
+    p = PARAMS
+    if securite:
+        p = copy.deepcopy(PARAMS)
+        p['securite'].update(securite)
+    return Koach(p, FICHES, {'niveau': niveau, 'sexe': 'male', 'poids_kg': 75.0, 'declares': {},
+                             'zones_fragiles': []})
+
+
+#: Répartition sur la semaine (désactivée par défaut depuis le run B du lot ;
+#: le mécanisme reste testé).
+REPARTI = {'retour_repartition_semaines': 4}
 
 
 def it(slot, ex, sets, flames=7, kind='work', role=None):
@@ -162,8 +173,34 @@ def test_ecrit_du_scenario():
     assert ecrit_chest(programme_b()) == 28.0
 
 
-def test_scenario_c17_37_reparti():
+def test_scenario_c17_37_par_defaut():
+    """Paramètres livrés (sans répartition : la séance du jour paie d'abord,
+    priorité de rôle, planchers) : le lundi de tirage garde muscle-up lesté
+    et traction lestée (réduits au plus : 4 sur 6, 3 sur 4), le pull-over
+    (accessoire) est retiré avant eux ; les séances suivantes sont servies à
+    leur écrit ; limite de la semaine tenue sur tous les groupes."""
     k = koach()
+    j0 = trois_semaines_a(k)
+    b = programme_b()
+    servis = []
+    for i, s in enumerate(b):
+        out, raisons = seance(k, j0 + i, s, reste=b[i + 1:])
+        assert k.seances.retour_vol['repartie'] is False
+        servis.append((out, raisons))
+    lundi, raisons = servis[0]
+    assert (series(lundi, 'b0.1'), series(lundi, 'b0.2'), series(lundi, 'b0.3'), series(lundi, 'b0.4')) == (4, 3, 0, 3)
+    rg = [r['params'] for r in raisons if r['code'] == 'koach.retour_gradue']
+    assert [(p['exercice'], p['series'], p['ecrites'], p['groupe']) for p in rg] == [
+        (MU, 4, 6, 'chest'), (TL, 3, 4, 'chest'), (PO, 0, 3, 'chest')]
+    for out, _ in servis[1:]:
+        for x in out:
+            assert x['sets'] == [y for s in b for y in s if y['slotId'] == x['slotId']][0]['sets']
+    for g in range(len(S['volume_groupes_majeurs'])):
+        assert k.seances.vol_semaines[3][g] <= k.seances._limite_volume(g, 3) + 1e-9
+
+
+def test_scenario_c17_37_reparti():
+    k = koach(**REPARTI)
     j0 = trois_semaines_a(k)
     assert [chest(k, w) for w in range(3)] == [20.0, 20.0, 20.0]
     limite = k.seances._limite_volume(CHEST, 3)
@@ -274,7 +311,7 @@ def test_lignes_restantes_sans_role_non_coupees_d_avance():
     """Relecture KM4 (M2) : une ligne d'une séance restante sans rôle n'est
     pas coupée d'avance (son rôle réel peut la protéger le jour venu) : la
     séance du jour paie comme en 1.0.5, avec ses propres priorités."""
-    k = koach()
+    k = koach(**REPARTI)
     for w in range(3):
         seance(k, 7 * w, [it('x%d' % w, DL, 10, role='main')])
     s1 = [it('p.1', DL, 5, role='main'), it('p.2', PD, 6, role='accessory')]
@@ -301,6 +338,52 @@ def test_premiere_ligne_sans_credit_ne_prend_pas_le_role_de_principal():
     assert series(out, 'm.2') == 0
 
 
+def _seance_zones(k, jour, items, zones, douleurs=None):
+    c = {'semaine': jour // 7, 'genre': 'accumulation', 'reste_semaine': [], 'manquees': []}
+    bilan = None
+    k.garde.avancer(jour)
+    if douleurs is not None:
+        bilan = {'overall': 4, 'pains': douleurs}
+        k.garde.noter_seance(jour, douleurs, posee=True)
+    k.seances.ouvrir(jour, bilan, c)
+    out = k.seances.prescrire(copy.deepcopy(items), {}, zones, roles_de(items))
+    raisons = list(k.seances.raisons)
+    sets = []
+    for x in out:
+        for i in range(x['sets']):
+            sets.append({'exerciseId': x['exerciseId'], 'slotId': x['slotId'], 'setIndex': i, 'kind': x.get('kind'),
+                         'reps': x.get('repsHigh'), 'flames': 7, 'failed': False, 'target': {'flames': 7}})
+    k.seances.fermer({'sets': sets})
+    return out, raisons
+
+
+def test_principal_sur_zone_sensible_sans_plancher():
+    """Même scénario que le test Dart (relecture KM4, mineur 10). Sans
+    douleur : `douleur` faux ; le principal est ramené à la limite (4 séries :
+    le plancher de la moitié cède à l'étape 5 avant la limite, une série reste
+    le minimum). Zone d'épaule sensible (gêne 4 en semaine 4) : le principal
+    qui la provoque est traité comme un secondaire (4, sous son plancher 5),
+    raison `douleur` vraie."""
+    k = koach()
+    for w in range(3):
+        seance(k, 7 * w, [it('x%d' % w, DL, 2, role='main')])
+    out, r = seance(k, 21, [it('m.1', DL, 10, role='main')])
+    rg = [x['params'] for x in r if x['code'] == 'koach.retour_gradue']
+    assert [(p['ecrites'], p['douleur']) for p in rg] == [(10, False)] and series(out, 'm.1') == 4
+    zones = {DL: ({'shoulder': 1.0, 'wrist_hand': 0.5}, {'shoulder', 'elbow'})}
+    k = koach()
+    for w in range(4):
+        _seance_zones(k, 7 * w, [it('x', DL, 10, role='main')], zones)
+    out, _ = _seance_zones(k, 28, [it('x', DL, 10, role='main')], zones, [{'zone': 'shoulder', 'intensity': 4}])
+    assert series(out, 'x') == 0
+    out, r = _seance_zones(k, 35, [it('x', DL, 10, role='main'), it('p', PP, 10, role='secondary'),
+                                   it('q', PD, 10, role='accessory')], zones, [])
+    rg = [x['params'] for x in r if x['code'] == 'koach.retour_gradue']
+    assert [(p['exercice'], p['limite'], p['douleur']) for p in rg] == [
+        (DL, 12.0, True), (PP, 12.0, False), (PD, 12.0, False)]
+    assert (series(out, 'x'), series(out, 'p'), series(out, 'q')) == (4, 8, 0)
+
+
 def test_principal_sous_douleur_sans_plancher():
     k = koach()
     for w in range(3):
@@ -313,7 +396,7 @@ def test_principal_sous_douleur_sans_plancher():
 def test_repartition_au_prorata_entre_seances():
     """Deux séances identiques, 8 séries d'accessoires de trop : 4 + 4, pas
     8 sur la première."""
-    k = koach()
+    k = koach(**REPARTI)
     for w in range(3):
         seance(k, 7 * w, [it('x%d' % w, DL, 10, role='main')])
     s1 = [it('p.1', DL, 5, role='main'), it('p.2', PD, 6, role='accessory')]
@@ -343,10 +426,10 @@ def test_mode_prudent_apres_une_seance_manquee():
 
 
 def test_fenetre_d_assiduite():
-    k = koach()
+    k = koach(**REPARTI)
     for w in range(3):
         seance(k, 7 * w, [it('x%d' % w, DL, 10, role='main')])
-    k.seances.semaines_manquees.add(3 - S['retour_repartition_semaines'])   # hors fenêtre
+    k.seances.semaines_manquees.add(3 - REPARTI['retour_repartition_semaines'])   # hors fenêtre
     s1 = [it('p.1', DL, 5, role='main'), it('p.2', PD, 6, role='accessory')]
     seance(k, 21, s1, reste=[s1])
     assert k.seances.retour_vol['repartie'] is True
@@ -355,5 +438,6 @@ def test_fenetre_d_assiduite():
 def test_parametres_1_0_6():
     assert PARAMS['version'] == '1.0.6-ref.1'
     assert S['retour_plancher_principal'] == 0.5
-    assert S['retour_repartition_semaines'] == 4
+    assert S['retour_repartition_semaines'] == 0          # répartition désactivée
+    assert S['retour_emprunt_plancher'] in (0, 1)
     assert 'elargissement_rien_de_special' not in PARAMS['rupture']

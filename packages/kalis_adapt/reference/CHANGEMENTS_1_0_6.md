@@ -21,7 +21,7 @@ Sur le banc (échantillon : 34 profils × 9 scénarios × vérité b × graine 0
 3. **Rang** (rôle de l'emplacement) : 2 = `main` ; 1 = `secondary`, `skill`, et un principal tenu par la conduite sous douleur (raison de douleur notée par `conduite`, ou zone sensible sous la rampe du réalisé qu'il provoque ; la rampe de retour après une coupure, sans douleur connue, n'en est pas une) ; 0 = tout autre rôle (`accessory`, `core`, `conditioning`, `mobility`, `cooldown`). **Sans rôle**, la première ligne dure créditée de la séance du jour est le principal, les autres sont de rang 0 (choix raisonné : l'exercice prioritaire ouvre la séance, ACSM 2009 ; Simão et al. 2012) ; une ligne d'une séance restante sans rôle n'est **pas coupée d'avance** (rang 3 : son écrit est réservé comme en 1.0.5, son rôle réel, inconnu, pourrait la protéger le jour venu ; relecture indépendante, M2).
 4. **Plancher d'un principal** : `max(1, ⌈écrit × retour_plancher_principal⌉)` (0,5), jamais au-dessus de ses séries du jour.
 5. **Coupes**, une série à la fois, par étapes : (1) rang 0 jusqu'à 0 ; (2) rang 1 jusqu'à 1 ; (3) principaux jusqu'au plancher ; (4) rang 1 jusqu'à 0 ; (5) principaux jusqu'à 1. Dans une étape, la série coupée est celle de l'unité qui garde la plus grande part de son écrit (`m / n` : répartition au prorata), à égalité la séance la plus tardive, puis la ligne la plus tardive ; seules les unités qui créditent une ligne encore en excès sont coupées. Un principal n'est **jamais** ramené à 0 par la rampe sans douleur ; s'il reste un excès après (5), il est noté (`depasse`) et les planchers sont gardés.
-6. **Répartition sous condition d'assiduité** (`retour_repartition_semaines`, 4) : sans séance manquée dans les quatre dernières semaines (semaine en cours comprise ; état `semaines_manquees`, tenu par `contexte['manquees']`), les étapes portent sur toutes les séances de la semaine ; sinon (prudent) : (1)-(3) sur la séance du jour, (1)-(3) sur les séances restantes, puis (4) et (5), jour puis reste. Raison : le validateur du banc (vue « servi, tests faits », critère 7) compte une séance manquée à son volume écrit, comme Koach ; une coupe promise à une séance restante ne tient que si elle est faite.
+6. **Répartition sous condition d'assiduité** (`retour_repartition_semaines` ; **désactivée dans les valeurs livrées**, 0, § E) : avec N > 0, sans séance manquée dans les quatre dernières semaines (semaine en cours comprise ; état `semaines_manquees`, tenu par `contexte['manquees']`), les étapes portent sur toutes les séances de la semaine ; sinon (prudent, et toujours avec les valeurs livrées) : avec `retour_emprunt_plancher` = 1, (1)-(3) sur la séance du jour, (1)-(3) sur les séances restantes, puis (4) et (5), jour puis reste ; avec 0, (1)-(5) sur le jour puis (1)-(5) sur le reste. Raison : le validateur du banc (vue « servi, tests faits », critère 7) compte une séance manquée à son volume écrit, comme Koach ; une coupe promise à une séance restante ne tient que si elle est faite.
 
 `_retour_gradue` applique le plan (séries permises par slot ; les `slotId` d'une séance sont supposés uniques, échauffements compris), puis la règle des tenues bras tendus ; raison `koach.retour_gradue` avec deux paramètres additifs : `ecrites` (séries écrites de la ligne) et `douleur` (vrai si la conduite sous douleur tient l'exercice).
 
@@ -30,10 +30,11 @@ Sur le banc (échantillon : 34 profils × 9 scénarios × vérité b × graine 0
 ## B. Paramètres (params/koach_params_v1.json, `1.0.6-ref.1`)
 
 - `securite.retour_plancher_principal` = 0,5 (choix raisonné, `SOURCES.md`) ;
-- `securite.retour_repartition_semaines` = 4 (choix raisonné, `SOURCES.md`) ;
+- `securite.retour_repartition_semaines` = 0 (répartition désactivée, mesure sur le banc, `SOURCES.md` et § E) ;
+- `securite.retour_emprunt_plancher` = 1 (mesure sur le banc, § E) ;
 - `rupture.elargissement_rien_de_special` retirée (non lue depuis 1.0.5 ; DECISIONS_CP.md C17.29.2) ; défauts et bornes de `rupture.py` mis à jour.
 
-346 clés (6 à la racine, 340 dans les sections). `koach.VERSION` = `1.0.6-ref.1`.
+347 clés (6 à la racine, 341 dans les sections). `koach.VERSION` = `1.0.6-ref.1`.
 
 ## C. Contrat et banc
 

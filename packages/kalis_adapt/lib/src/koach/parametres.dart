@@ -25,12 +25,12 @@ const int koachParametresSchema = 1;
 
 /// SHA-256 des octets du fichier de paramètres livré (en-tête du contrat).
 const String koachParametresSha256 =
-    '55a423cd53b2a31b92f6b14239a4786197f9cd8a575e2f9d348432e217e1dbe8';
+    '4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a';
 
-/// Nombre de clés du fichier de paramètres : 6 à la racine, 340 dans les
-/// onze sections (contrat § 7.4 ; 1.0.5 : 345 ; 1.0.6 : deux clés de
+/// Nombre de clés du fichier de paramètres : 6 à la racine, 341 dans les
+/// onze sections (contrat § 7.4 ; 1.0.5 : 345 ; 1.0.6 : trois clés de
 /// `securite` ajoutées, `rupture.elargissement_rien_de_special` retirée).
-const int koachParametresCles = 346;
+const int koachParametresCles = 347;
 
 /// Clés de la racine du fichier de paramètres (contrat § 7.1).
 const List<String> koachParametresRacine = [

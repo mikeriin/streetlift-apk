@@ -31,7 +31,7 @@ sur le couple servi, `kalis_plan` 0.4.1 × Koach 1.0.4, 34 profils (`pipeline/cp
 **Mise à jour du 19/10/2026 (`kalis_adapt` 1.0.5, lot KM4)** : portage de la référence Koach 1.0.6 (retour gradué
 au volume réparti sur la semaine et priorisé par rôle, `reference/CHANGEMENTS_1_0_6.md`). API et schéma du journal
 inchangés. À faire dans l'application (lot KB3) : (1) remplacer l'asset de paramètres (`koach_params_1_0_5.json` →
-`koach_params_1_0_6.json`, version `1.0.6-ref.1`, 346 clés, nouvelle empreinte au § 3) ; (2) donner à chaque item de
+`koach_params_1_0_6.json`, version `1.0.6-ref.1`, 347 clés, nouvelle empreinte au § 3) ; (2) donner à chaque item de
 `contexte['reste_semaine']` (et des séances manquées) le **rôle de son emplacement** (`role` : `main`, `secondary`,
 `accessory`…, tiré de `pass1.days[].slots[]` comme `roles` du plan de séance) — sans rôle, Koach prend la première
 ligne dure de chaque séance pour le principal ; (3) la garde de l'application sur le retour gradué (KB2 correction 1 :
@@ -375,7 +375,7 @@ fiche sont ignorés par la planification (`chargerReference`, d'après le code).
   `rootBundle.loadString('assets/koach/…')`, puis `lireParametresKoach` / `lireFichesKoach` (`parametres.dart`),
   qui contrôlent schéma, version, types, bornes et positivité et lèvent `FormatException`.
 - **Empreintes.** Paramètres : version `1.0.5-ref.1`, 345 clés, SHA-256
-  `55a423cd53b2a31b92f6b14239a4786197f9cd8a575e2f9d348432e217e1dbe8` (`koachParametresSha256`). Fiches : version
+  `4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a` (`koachParametresSha256`). Fiches : version
   `1.0.0`, 1 039 fiches, SHA-256 `71454d2d6fcc6df8823b23cb640eec5293f40e91822bda9afa75f5ca0098ba6c`
   (`koachFichesSha256`). Un test de l'application compare les octets de `assets/koach/` à ceux du paquet et leur
   SHA-256 aux constantes (comme `test/koach_parametres_test.dart` du paquet).

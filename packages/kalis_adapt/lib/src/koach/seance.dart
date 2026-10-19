@@ -2168,7 +2168,7 @@ class Seances {
     final initial = List<double>.of(exces);
     final sem = ent(dictOuVide(contexte)['semaine']);
     final fenetre = ent(s['retour_repartition_semaines']);
-    var repartie = true;
+    var repartie = fenetre > 0;
     for (var w = sem - fenetre + 1; w < sem + 1; w++) {
       if (semainesManquees.contains(w)) {
         repartie = false;
@@ -2239,7 +2239,7 @@ class Seances {
       for (final (rang, f) in etapes) {
         couper('tous', rang, f);
       }
-    } else {
+    } else if (ent(s['retour_emprunt_plancher']) != 0) {
       for (final (rang, f) in etapes.sublist(0, 3)) {
         couper('jour', rang, f);
       }
@@ -2248,6 +2248,15 @@ class Seances {
       }
       for (final (rang, f) in etapes.sublist(3)) {
         couper('jour', rang, f);
+        couper('reste', rang, f);
+      }
+    } else {
+      // Emprunt minimal : la séance du jour paie jusqu'à une série par
+      // principal avant toute coupe promise à une séance restante.
+      for (final (rang, f) in etapes) {
+        couper('jour', rang, f);
+      }
+      for (final (rang, f) in etapes) {
         couper('reste', rang, f);
       }
     }
