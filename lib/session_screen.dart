@@ -86,6 +86,40 @@ String volumeText(String raw, {bool timed = false}) {
   return high > low && high < 100 ? (low, high) : null;
 }
 
+/// Correctif 20/10/2026 (dev7.2.6) : palier d'un drop set mécanique, lu
+/// dans la consigne : nom (« Tractions pronation PdC »), cible (« jusqu’à
+/// RIR 1 »), tenue en secondes.
+class DropStage {
+  final String name;
+  final String target;
+  final bool seconds;
+  const DropStage(this.name, this.target, {this.seconds = false});
+}
+
+/// Paliers numérotés d'une consigne (« 1. tractions … jusqu’à RIR 1 → 2.
+/// rows australiens … ») ; null si la consigne n'en décrit pas exactement
+/// [count].
+List<DropStage>? dropStages(String cue, int count) {
+  final out = <DropStage>[];
+  for (var n = 1; n <= count; n++) {
+    final m = RegExp(
+      '(?:^|[\\s:→])$n\\.\\s+(.+?)(?=\\s*→|\\.\\s|\\.\$|\$)',
+    ).firstMatch(cue);
+    if (m == null) return null;
+    final text = m.group(1)!.trim();
+    final cut = RegExp(r'\s+(jusqu|à RIR|RIR\s)').firstMatch(text);
+    final name = cut == null ? text : text.substring(0, cut.start).trim();
+    if (name.isEmpty) return null;
+    final target = cut == null ? '' : text.substring(cut.start).trim();
+    final seconds = RegExp(
+      r'tenue|hang|gainage|planche|hold|l-sit|isom',
+      caseSensitive: false,
+    ).hasMatch(name);
+    out.add(DropStage(name, target, seconds: seconds));
+  }
+  return out;
+}
+
 /// Correctif 19/10/2026 : volume d'une plage de répétitions, haut de la
 /// plage mis en avant : bas en `texte2`, haut en `encre` suivi de « max »
 /// (« 1 × 15–21 max »).
@@ -2178,7 +2212,32 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       return textRange?.$2;
     }
 
-    final valueColumn = unresolved ? 'Valeur' : _valueColumn(sp.kind);
+    // Correctif 20/10/2026 (dev7.2.6) : drop set mécanique (« 2 tours × 4
+    // paliers ») : chaque palier nommé d'après la consigne du programme
+    // (« 1. tractions pronation PdC jusqu’à RIR 1 → 2. … »), en secondes
+    // pour une tenue ; plus seulement « 1.1 … 2.4 » en reps.
+    final stages = !unresolved && sp.rowPrefix == 'D' && sp.stages != null
+        ? dropStages(ex.cue, sp.stages!)
+        : null;
+    DropStage? stageOf(int i) =>
+        stages == null ? null : stages[i % stages.length];
+    String doneText(int i) {
+      final stage = stageOf(i);
+      if (stage == null) {
+        return setDoneText(log.sets[i], sp, units: !unresolved);
+      }
+      final done = setDoneText(
+        log.sets[i],
+        stage.seconds ? const LogSpec('hold') : sp,
+      );
+      return '${stage.name} · $done';
+    }
+
+    final valueColumn = unresolved
+        ? 'Valeur'
+        : stages != null && stages.any((x) => x.seconds)
+        ? 'Reps ou s'
+        : _valueColumn(sp.kind);
     final compact = _splitColumns(context, showKg, showRir, showV, hasTimer);
     final columns = [
       if (showKg) 'kg',
@@ -2604,7 +2663,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (compactRow(i) && readOnly)
         SetSummaryLine(
           setLabel: rowLabel(i),
-          done: setDoneText(log.sets[i], sp, units: !unresolved),
+          done: doneText(i),
           flames: flamesOf(log.sets[i]),
           unknown: log.sets[i].flamesUnknown,
           excluded: log.sets[i].excluded,
@@ -2615,11 +2674,21 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           checkKey: ValueKey('set-check-${ex.id}-$i'),
           label: rowLabel(i),
           entry: log.sets[i],
-          done: setDoneText(log.sets[i], sp, units: !unresolved),
+          done: doneText(i),
           onFlame: flameSets ? () => _openFlames(k, i, rowLabel(i)) : null,
           onUncheck: () => _checkSet(k, i),
         )
       else ...[
+        if (stageOf(i) case final stage?)
+          Padding(
+            key: ValueKey('drop-stage-${ex.id}-$i'),
+            padding: const EdgeInsets.only(top: KSpacing.s8, left: KSpacing.s4),
+            child: Text(
+              '${rowLabel(i)} · ${stage.name}'
+              '${stage.target.isEmpty ? '' : ' · ${stage.target}'}',
+              style: KType.detail.copyWith(color: t.texte2),
+            ),
+          ),
         Padding(
           padding: const EdgeInsets.only(top: KSpacing.s4),
           child: _SetRow(
@@ -2628,9 +2697,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             label: rowLabel(i),
             current: i == current,
             lockReps: (log.sets[i].parts?.isNotEmpty ?? false),
-            valueHint: switch (rangeMax(i)) {
-              final max? => 'max $max',
-              null => null,
+            valueHint: switch ((stageOf(i), rangeMax(i))) {
+              (final stage?, _) => stage.seconds ? 'secondes' : 'reps',
+              (_, final max?) => 'max $max',
+              _ => null,
             },
             entry: log.sets[i],
             spec: sp,

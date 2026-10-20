@@ -1,7 +1,7 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : KB3 — Koach 1.0.6 dans l'application, version dev7.3.0 ; précédent : dev7.2.5 (correctif séance 3)**  
-**Date : 20 octobre 2026, Europe/Paris — version : 7.3.0+146, affichée « dev7.3.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : KB3 — Koach 1.0.6 dans l'application, version dev7.3.0 ; précédent : dev7.2.6 (paliers des drop sets nommés)**  
+**Date : 20 octobre 2026, Europe/Paris — version : 7.3.0+147, affichée « dev7.3.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : pipeline CP, voie App (DECISIONS_CP.md C17.39) ; `kalis_adapt` 1.0.5 copié à l'octet de son étiquette ; build signé sur `main`.**
 
 ## KB3 — Koach 1.0.6 dans l'application (version dev7.3.0, pipeline CP, DECISIONS_CP.md C17.39)
@@ -12,6 +12,11 @@
 - Lignes au départ chronométré servies telles qu'écrites (PR8, séries du programme) : la séance servie prend la ligne de l'aperçu (le groupe E2MOM reste valide ; avant, une réduction de Koach faisait retomber toute la séance sur l'aperçu) ; la réduction de Koach est dite sur la carte (« Koach aurait fait 3 séries sur 6 … »).
 - Raisons : « N séries au lieu de M », retrait du jour ; affichage dans l'ordre du contrat (indépendant de l'ordre du moteur) ; raisons de l'ouverture gardées après la première série (`ouverture`).
 - Tests : `test/kb3_koach106_test.dart` ; KB2c1, KB1 et versions à jour ; cible émulateur `integration_test/koach_kb3_test.dart`.
+
+## Paliers des drop sets nommés (version dev7.2.6, 20/10/2026)
+
+- Drop set mécanique (« 2 tours × 4 paliers », zone rouge J4 et J5) : chaque ligne porte le nom de son palier et sa cible, lus dans la consigne numérotée du programme (« 1.1 · Tractions pronation PdC · jusqu’à RIR 1 ») ; une tenue (tenue, dead hang, gainage…) se note en secondes (indication « secondes », colonne « Reps ou s », résumé « 25 s ») ; consigne sans paliers numérotés : affichage inchangé (`dropStages`). Programme et Koach inchangés.
+- Programme du propriétaire : finishers rameur / air bike passés en burpees par sa sauvegarde (hors application).
 
 ## Correctif séance 3 — volume et répétitions cohérents (version dev7.2.5, 20/10/2026)
 
