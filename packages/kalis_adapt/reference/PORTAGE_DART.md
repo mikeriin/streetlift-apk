@@ -274,3 +274,11 @@ Liste exacte : `CHANGEMENTS_1_0_5.md` (section G : fichiers Dart concernés). Po
 - `koach_textes.dart` : « N séries au lieu de M » quand `ecrites` > `series` (sens des autres textes inchangé).
 - Banc : `_pkItemsVolume(items, roles)`, `kmMesureRampe`, `rampe` dans le résultat de saison (`kmMesureDeSaison`), `tool/kr1_securite.py` (`rampe_principaux`).
 - Tests : `test/koach_km4_retour_test.dart` (port des 11 tests de `tests/test_km4_retour.py`), `koach_parametres_test.dart`, `koach_textes_test.dart` ; fixtures régénérées.
+
+## Delta 1.0.6 → 1.0.7 (lot KM5, 20/10/2026 ; portage dans le même lot, `kalis_adapt` 1.0.6)
+
+- `seance.dart` : `_ecrites`, `_itemEcrit`, `_creditsEcrits`, `_compterEcrit` (rend l'écrit compté), `_ecritsServis` ; état `ecritVol`, `ecritDures`, `ecritCompte`, `entree` (lecture du banc) ; `semainesManquees` retiré ; `BudgetsRetour` : `ecrit`, `ecritDures`, `plafonds`, `plafondDures` (posés par `_planRetour`), `prevues` ; `repartie` retiré ; `_UniteRetour` réécrit (`pos`, `slot`, `n`, `e`, `poids`, `rang`) ; `_planRetour(premiers)` (paires avec servi null, écrit servi du jour, plafonds, ajouts seuls retirés) ; `_retourGradue` (raison `koach.ajout_borne`, puis rampe tendineuse) ; `ecritSemaines` et séances manquées à l'écrit du programme.
+- `parametres.dart` : `1.0.7-ref.1`, asset `koach_params_1_0_7.json`, SHA-256, 344 clés.
+- `rupture.dart` (`appliquerAllegement`) et `dual.dart` (bras A) : `koachVolume` tenu à jour.
+- `koach_textes.dart` : `koach.ajout_borne` (23 codes).
+- Banc : `kmFiltrerVolumeEcrit`, `KmConstatsSeries`, `KmFiltre`, `KmConstatsSaison.constatsEtSeries`, `kmSecuriteSaison(constatsSeries:)`, `kmMesureRampe(seances:, zones:)`.

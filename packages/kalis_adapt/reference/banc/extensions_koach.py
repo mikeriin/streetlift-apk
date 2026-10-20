@@ -387,6 +387,10 @@ class ControleDualBanc(ControleDual):
             plus = plus if plus > 0 else 0
             it = dict(it)
             it['sets'] = n + plus
+            if plus > 0:
+                # 1.0.7 (KM5) : séries ajoutées par Koach (bras A) au-dessus
+                # de l'écrit du programme, lues par la rampe de volume.
+                it['koachVolume'] = int(it.get('koachVolume') or 0) + plus
             self.semaine_vol[1] = ref
             self.semaine_vol[2] = planifiees
             self.semaine_vol[3] = servies + plus

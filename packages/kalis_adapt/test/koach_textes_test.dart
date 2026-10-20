@@ -108,13 +108,13 @@ void main() {
         expect(avec, contains('« $_nomEssai »'), reason: code);
       }
     }
-    // 19 des 22 codes apparaissent dans les fixtures.
+    // 19 des 23 codes apparaissent dans les fixtures.
     expect(vus.length, greaterThanOrEqualTo(19));
   });
 
   test('tous les codes du contrat (§ 3.5) ont un texte propre', () {
     final contrat = _codesDuContrat();
-    expect(contrat, hasLength(22));
+    expect(contrat, hasLength(23));
     expect(contrat, equals(koachCodesRaisons.toSet()));
     for (final code in koachCodesRaisons) {
       final r = <String, Object?>{
@@ -205,6 +205,38 @@ void main() {
     final t6 = texteRaisonKoach(r6);
     _lisible(t6, 'ecrites');
     expect(t6.startsWith('3 séries au lieu de 6 sur '), isTrue, reason: t6);
+    // 1.0.7 (KM5, C17.40) : ajouts de Koach bornés, l'écrit gardé.
+    Map<String, Object?> ajout(String g, int series, int prevues) =>
+        <String, Object?>{
+          'code': 'koach.ajout_borne',
+          'params': <String, Object?>{
+            'exercice': 'mu-exercice-essai',
+            'groupe': g,
+            'limite': 12.0,
+            'ecrit': 12.0,
+            'series': series,
+            'ecrites': 6,
+            'prevues': prevues,
+          },
+        };
+    final a0 = texteRaisonKoach(ajout('chest', 6, 8));
+    _lisible(a0, 'ajout_borne 6/8');
+    expect(
+      a0,
+      'Je garde les 6 séries écrites de ton programme sur cet exercice, sans '
+      'en ajouter : ton volume de la semaine pour tes pectoraux est déjà '
+      'atteint.',
+    );
+    final a1 = texteRaisonKoach(ajout('triceps', 7, 9));
+    _lisible(a1, 'ajout_borne 7/9');
+    expect(
+      a1,
+      'J’ajoute une série à ton programme sur cet exercice, au lieu des 3 '
+      'prévues : ton volume de la semaine pour tes triceps ne permet pas plus.',
+    );
+    final a2 = texteRaisonKoach(ajout('allegement', 6, 7));
+    expect(a2.contains('cette semaine d’allègement'), isTrue, reason: a2);
+    expect(a2.contains('ce groupe musculaire'), isFalse, reason: a2);
     final techniques = jm(jm(params['securite'])['technique_niveau_acces']);
     for (final tech in techniques.keys) {
       final r = <String, Object?>{

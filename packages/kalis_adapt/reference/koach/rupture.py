@@ -582,8 +582,13 @@ class Surveillance(Extension):
                 out.append(it)
                 continue
             it = dict(it)
+            avant = int(it['sets'])
             n = int(math.floor(it['sets'] * f_series + 0.5))
             it['sets'] = n if n >= 1 else 1
+            # 1.0.7 (KM5) : `koachVolume` reste « séries servies − séries
+            # écrites par le programme » (la rampe de volume ne coupe jamais
+            # sous l'écrit et lit l'écrit par ce champ).
+            it['koachVolume'] = it['sets'] - (avant - int(it.get('koachVolume') or 0))
             f = it.get('targetFlames')
             if f is not None and f < 10:
                 g = f - cran

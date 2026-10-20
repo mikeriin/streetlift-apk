@@ -367,15 +367,15 @@ fiche sont ignorés par la planification (`chargerReference`, d'après le code).
 
 ## 3. Paramètres
 
-- **Assets.** Copier dans l'application, octet pour octet, `packages/kalis_adapt/assets/koach/koach_params_1_0_6.json`
+- **Assets.** Copier dans l'application, octet pour octet, `packages/kalis_adapt/assets/koach/koach_params_1_0_7.json`
   et `vecteurs_qualites_v1.json` dans `assets/koach/`, déclarés dans `pubspec.yaml` de l'application comme
   `assets/catalog/catalog_v1.json.gz` (copie de l'asset de `kalis_core`). Le paquet est du Dart pur et ne déclare
   aucun asset Flutter (son `pubspec.yaml` n'a pas de section `flutter`) : ne pas utiliser `koachAssetParametres` /
   `koachAssetFiches` (clés `packages/kalis_adapt/…`), qui supposent un asset déclaré par le paquet. Lecture :
   `rootBundle.loadString('assets/koach/…')`, puis `lireParametresKoach` / `lireFichesKoach` (`parametres.dart`),
   qui contrôlent schéma, version, types, bornes et positivité et lèvent `FormatException`.
-- **Empreintes.** Paramètres : version `1.0.5-ref.1`, 345 clés, SHA-256
-  `4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a` (`koachParametresSha256`). Fiches : version
+- **Empreintes.** Paramètres (Koach 1.0.7, `kalis_adapt` 1.0.6) : version `1.0.7-ref.1`, 344 clés, SHA-256
+  `2f055c5181743089afd0c3602bc270f77b01063ebc1bab32b293c81c6816f42c` (`koachParametresSha256`). Fiches : version
   `1.0.0`, 1 039 fiches, SHA-256 `71454d2d6fcc6df8823b23cb640eec5293f40e91822bda9afa75f5ca0098ba6c`
   (`koachFichesSha256`). Un test de l'application compare les octets de `assets/koach/` à ceux du paquet et leur
   SHA-256 aux constantes (comme `test/koach_parametres_test.dart` du paquet).
@@ -764,3 +764,19 @@ Koach n'en a pas (contrat § 10.2) : c'est un état de l'application, hors du jo
     aujourd'hui) ; et `cibles` : `mainLifts.target` du programme ou objectifs du profil quand les deux existent ?
 11. **Données 0.x** : afficher l'historique de l'écran Évolution tel quel, ou le replier dans un écran « Avant
     Koach 1.0 » ?
+
+## 11. Koach 1.0.7 (lot KM5, pour KB4)
+
+- **Écrit du programme** : Koach lit l'écrit d'un item comme `sets − koachVolume`. L'application passe à
+  `plan('seance')` les items modulés par `Planification.appliquer` (qui pose `koachVolume`) ; toute transformation de
+  l'application qui change `sets` d'un item avant Koach garde `koachVolume` = « séries servies − séries écrites par
+  le programme » (sinon la rampe lit l'écrit transformé). `contexte['manquees']` et `contexte['reste_semaine']` :
+  items à leur écrit du programme (sans ajouts ; un `koachVolume` présent est soustrait).
+- **Aucune coupe sous l'écrit au nom du volume** : une ligne écrite n'est plus réduite ni retirée par la rampe de
+  volume (raison `koach.retour_gradue` d'un groupe majeur ou `allegement` : plus jamais émise). Seules les séries que
+  Koach ajoute sont bornées : raison `koach.ajout_borne` (texte dans `koach_textes.dart`). La garde
+  `koachGardeSeance` de l'application peut s'appliquer à tous les rôles : une ligne absente du servi sans raison de
+  douleur, de test reporté, de séance bornée, d'endurance ou de rampe tendineuse (`koach.retour_gradue`,
+  `bras_tendus_*`) n'est jamais un choix de Koach 1.0.7.
+- **Un seul `prescrire` compté par séance** : un second appel de la même séance (après `ouvrir`) ne recompte pas son
+  écrit (`ecritCompte`) ; l'aperçu doit continuer de se faire sur une copie du moteur.

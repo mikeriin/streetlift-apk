@@ -23,6 +23,7 @@ import 'dart:typed_data';
 import 'package:kalis_adapt/kalis_adapt.dart' show ExerciseBook;
 import 'package:kalis_adapt/koach.dart' as kc;
 import 'package:kalis_core/kalis_core.dart';
+import 'package:kalis_plan/kalis_plan.dart' show MuscleGroup;
 
 import '../adapter.dart' show benchStartDate;
 import '../analysis.dart' show ProgramView;
@@ -467,7 +468,32 @@ final class KmConstatsSaison {
 
   /// Constats des blocs [blocs] (ceux de la saison sans argument), objets
   /// JSON de `Finding.toJson`.
-  List<kc.Json> constats([List<Object?>? blocs]) {
+  List<kc.Json> constats([List<Object?>? blocs]) => <kc.Json>[
+    for (final f in safetyFindings(_vue(blocs), _season.bench)) f.toJson(),
+  ];
+
+  /// KM5 : (constats, séries dures créditées par groupe MAJEUR de chaque
+  /// semaine lue) des blocs [blocs], en une seule lecture du programme
+  /// (`securite_banc.constats_et_series_saison`).
+  (List<kc.Json>, List<Map<int, double>>) constatsEtSeries([
+    List<Object?>? blocs,
+  ]) {
+    final view = _vue(blocs);
+    return (
+      <kc.Json>[
+        for (final f in safetyFindings(view, _season.bench)) f.toJson(),
+      ],
+      <Map<int, double>>[
+        for (final w in view.weeks)
+          <int, double>{
+            for (final g in MuscleGroup.values)
+              if (g.major) g.index: w.groupSets(g),
+          },
+      ],
+    );
+  }
+
+  ProgramView _vue(List<Object?>? blocs) {
     final blocksJson = blocs ?? kc.jl(saison['blocks']);
     final blocks = <ProgramBlock>[
       for (final b in blocksJson)
@@ -476,7 +502,7 @@ final class KmConstatsSaison {
     final bw = saison['blockWeeks'] == null
         ? null
         : <int>[for (final w in kc.jl(saison['blockWeeks'])) kc.ent(w)];
-    final view = ProgramView(
+    return ProgramView(
       catalog,
       BenchProgram(
         bench: _season.bench,
@@ -491,9 +517,6 @@ final class KmConstatsSaison {
         horizonWeeks: kc.ent(saison['weeks']),
       ),
     );
-    return <kc.Json>[
-      for (final f in safetyFindings(view, _season.bench)) f.toJson(),
-    ];
   }
 
   /// Validateur de la planification (`kc.Validateur`).
