@@ -1614,6 +1614,16 @@ extension KoachStore on AppStore {
       final slot = '${w['slotId']}';
       for (final it in served) {
         if (koachSlotEcrit('${it['slotId']}') != slot) continue;
+        // KB3 : ligne au départ chronométré servie telle qu'écrite (PR8,
+        // nombre de séries fixé par le programme) : la ligne de l'aperçu,
+        // comme à l'écran. Une réduction de Koach 1.0.6 y casserait le
+        // groupe (tours ≠ séries) et ferait retomber toute la séance sur
+        // l'aperçu ; elle est dite sur la carte (`koachTexteReduitEcrit`).
+        final pr8 = apercu[slot];
+        if (it['slotId'] == slot && pr8 != null && adaptAsWritten(week, slot)) {
+          items.add(pr8);
+          continue;
+        }
         final p = _koachItemOf(it, info);
         if (p != null) {
           items.add(
@@ -1643,7 +1653,11 @@ extension KoachStore on AppStore {
       adjustments: const [],
       confidence: 1,
       reasons: const [],
-      groups: place.day?.groups,
+      // KB3 : un groupe dont tous les membres sont retirés (accessoires
+      // coupés par Koach 1.0.6) n'est plus déclaré.
+      groups: place.day?.groups
+          ?.where((g) => items.any((x) => x.groupId == g.groupId))
+          .toList(),
     );
     if (plan.validate().isNotEmpty) {
       plan = plan.copyWith(groups: null);

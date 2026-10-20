@@ -168,6 +168,7 @@ void main() {
       expect(ecrit.first, startsWith('MUSCLE-UP LESTÉ'));
       expect(await app.koachStart(15, base), isTrue);
       expect(app.koachOpen(15, 1), isTrue);
+      expect(structureSeance(app, 15, 1).first, ecrit.first);
       final a = app.sessionAdapt(15, 1)!;
       final st = a.koach!;
       final ecrites = [
@@ -182,10 +183,21 @@ void main() {
       };
       expect(servis['sl-muscle-up-leste'] as num, inInclusiveRange(1, 6));
       expect(servis['sl-traction-lestee'] as num, inInclusiveRange(1, 8));
+      expect(st['invalide'], isNull);
+      // Ordre écrit ; seuls manquent les accessoires que Koach retire en le
+      // disant (retour gradué à 0, accessoires coupés d'abord).
+      final retires = {
+        for (final x in (st['retraits'] as List?) ?? const [])
+          (x as Map)['exercice'],
+      };
       final shown = app.adaptDay(15, base, a).exercises;
-      expect(shown.length, base.exercises.length);
-      for (var i = 0; i < shown.length; i++) {
-        expect(shown[i].name, base.exercises[i].name);
+      final attendus = [
+        for (final e in base.exercises)
+          if (!retires.contains(e.catalogId)) e.name,
+      ];
+      expect([for (final e in shown) e.name], attendus);
+      for (final id in retires) {
+        expect(id, isNot(anyOf('sl-muscle-up-leste', 'sl-traction-lestee')));
       }
       final ex = base.exercises.first;
       final e = shown.firstWhere((x) => x.id == ex.id);
@@ -321,15 +333,16 @@ void main() {
       expect(await app.koachStart(15, base), isTrue);
       final a = app.sessionAdapt(15, 1)!;
       final shown = app.adaptDay(15, base, a).exercises;
-      // Première série du rowing (servie par Koach) notée.
+      // Première série des poignets (servie par Koach) notée (KB3 : le
+      // rowing peut être retiré par le retour gradué de Koach 1.0.6).
       final row = shown.firstWhere(
-        (x) => x.catalogId == 'mu-rowing-barre-pronation',
+        (x) => x.catalogId == 'mu-reverse-wrist-curl-haltere',
       );
       final log = app.exLog(15, 1, row);
       app.adaptPrefill(15, 1, row, log);
       log.sets[0]
-        ..kg = '62.5'
-        ..reps = '8'
+        ..kg = '12'
+        ..reps = '15'
         ..done = true;
       app.saveLogs();
       final done = jsonEncode(log.sets[0].toJson());

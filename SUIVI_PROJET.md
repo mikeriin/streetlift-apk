@@ -1,8 +1,21 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : correctif séance 2 — GtG hors séance, plages des accessoires, séries compactes, version dev7.2.4 ; précédent : dev7.2.3**  
-**Date : 20 octobre 2026, Europe/Paris — version : 7.2.4+144, affichée « dev7.2.4 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : demande directe du propriétaire (hors pipeline ; paquets inchangés, sans conflit avec KM4 ; KB3 visera dev7.3.0 depuis ce `main`) ; build signé sur `main`.**
+**Passe actuelle : KB3 — Koach 1.0.6 dans l'application, version dev7.3.0 ; précédent : dev7.2.5 (correctif séance 3)**  
+**Date : 20 octobre 2026, Europe/Paris — version : 7.3.0+146, affichée « dev7.3.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.39) ; `kalis_adapt` 1.0.5 copié à l'octet de son étiquette ; build signé sur `main`.**
+
+## KB3 — Koach 1.0.6 dans l'application (version dev7.3.0, pipeline CP, DECISIONS_CP.md C17.39)
+
+- Paquet : `kalis_adapt` 1.0.5 (Koach 1.0.6) copié à l'octet de `etiquettes/kalis_adapt-v1.0.5` (`lib/`, `assets/koach/`, `pubspec.yaml`) ; asset `koach_params_1_0_6.json` (`1.0.6-ref.1`, 347 clés, SHA-256 `4156e61b…045a`) à la place de `koach_params_1_0_5.json` ; `kalis_plan` 0.4.2 et `kalis_core` 0.4.4 inchangés.
+- Retour gradué de 1.0.6 : accessoires coupés d'abord, principaux jamais à 0 sans douleur (plancher : la moitié de l'écrit). L'application donne le rôle de l'emplacement (`role`) à chaque item de `reste_semaine` et des séances manquées (programme importé comme programme créé).
+- Garde de la séance (`koachGardeSeance`) pour les principaux seulement : un principal absent du servi est servi tel qu'écrit ; un accessoire, un secondaire ou une technique que le retour gradué met à 0 reste retiré, « Je retire … aujourd’hui » dit en tête de séance ; une autre raison ne retire jamais un exercice.
+- Lignes au départ chronométré servies telles qu'écrites (PR8, séries du programme) : la séance servie prend la ligne de l'aperçu (le groupe E2MOM reste valide ; avant, une réduction de Koach faisait retomber toute la séance sur l'aperçu) ; la réduction de Koach est dite sur la carte (« Koach aurait fait 3 séries sur 6 … »).
+- Raisons : « N séries au lieu de M », retrait du jour ; affichage dans l'ordre du contrat (indépendant de l'ordre du moteur) ; raisons de l'ouverture gardées après la première série (`ouverture`).
+- Tests : `test/kb3_koach106_test.dart` ; KB2c1, KB1 et versions à jour ; cible émulateur `integration_test/koach_kb3_test.dart`.
+
+## Correctif séance 3 — volume et répétitions cohérents (version dev7.2.5, 20/10/2026)
+
+- Exercice servi par Koach : le volume affiché (« 1 × 6-14 ») se calcule sur les cibles des séries, série repère comprise, comme l'indication des champs (« max 14 ») ; avant, le volume venait de la ligne servie (« 1 × 6-12 ») et la série repère de Koach (8-14, élargie à 6-14) n'y était pas. Départs chronométrés inchangés.
 
 ## Correctif séance 2 — GtG, plages des accessoires, séries compactes (version dev7.2.4, 20/10/2026)
 

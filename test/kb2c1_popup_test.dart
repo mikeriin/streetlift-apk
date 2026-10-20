@@ -292,7 +292,11 @@ void main() {
     }
     expect(appuis, contains('koach-diag-later'));
     expect(store.koachOpen(15, 1), isTrue);
-    expect(structureSeance(store, 15, 1), ecrit);
+    // KB3 (Koach 1.0.6) : l'écrit, dans l'ordre, sans les accessoires que
+    // Koach retire en le disant ; muscle-up lesté en tête.
+    final servie = structureSeance(store, 15, 1);
+    expect(servie.first, ecrit.first);
+    expect(servie, orderedEquals(ecrit.where(servie.contains)));
     // Question reposée à la séance suivante.
     expect(store.koachNeedsDiagnostic, isTrue);
     await tester.pumpWidget(const SizedBox());

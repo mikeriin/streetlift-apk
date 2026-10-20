@@ -197,12 +197,13 @@ void main() {
 
     test('principal à 0 sans douleur : servi tel qu’écrit ; accessoire, '
         'secondaire et technique à 0 : retirés, raison gardée', () {
-      final g = koachGardeSeance(
-        ecrit,
-        const [],
-        [rg('a'), rg('b'), rg('c'), rg('e'), rg('f')],
-        roles: roles,
-      );
+      final g = koachGardeSeance(ecrit, const [], [
+        rg('a'),
+        rg('b'),
+        rg('c'),
+        rg('e'),
+        rg('f'),
+      ], roles: roles);
       expect(g.ecrites, [
         {'slotId': 'j1-a', 'exercice': 'a', 'cause': 'koach.retour_gradue'},
         // Sans raison de Koach : jamais retiré en silence.
@@ -210,11 +211,10 @@ void main() {
         // Rôle inconnu : gardé comme un principal.
         {'slotId': 'j1-e', 'exercice': 'e', 'cause': 'koach.retour_gradue'},
       ]);
-      expect([for (final x in g.retraits) x['slotId']], [
-        'j1-b',
-        'j1-c',
-        'j1-f',
-      ]);
+      expect(
+        [for (final x in g.retraits) x['slotId']],
+        ['j1-b', 'j1-c', 'j1-f'],
+      );
       for (final x in g.retraits) {
         expect(x['code'], 'koach.retour_gradue');
       }
@@ -244,7 +244,10 @@ void main() {
       for (final raisons in [autres, autres.reversed.toList()]) {
         final g = koachGardeSeance(
           ecrit,
-          [for (final x in ecrit) if (x['slotId'] != 'j1-c' && x['slotId'] != 'j1-d') x],
+          [
+            for (final x in ecrit)
+              if (x['slotId'] != 'j1-c' && x['slotId'] != 'j1-d') x,
+          ],
           raisons,
           roles: roles,
         );
@@ -261,7 +264,10 @@ void main() {
         'sans rôles : garde de KB2 correction 1', () {
       final g = koachGardeSeance(
         ecrit,
-        [for (final x in ecrit) if (x['slotId'] != 'j1-c' && x['slotId'] != 'j1-a') x],
+        [
+          for (final x in ecrit)
+            if (x['slotId'] != 'j1-c' && x['slotId'] != 'j1-a') x,
+        ],
         [_r('koach.seance_bornee', 'c'), _r('koach.douleur_retrait', 'a')],
         roles: roles,
       );
@@ -372,6 +378,9 @@ void main() {
           'temps': app.koachTemps.toJson(),
         })}',
       );
+      // Séance servie lisible (pas de retour à l'aperçu).
+      expect(st['invalide'], isNull);
+      expect(a.plan.items.length, shown.length);
       // Principaux servis par Koach (pas par la garde), au plus leur écrit.
       final mu = servi('sl-muscle-up-leste');
       final tr = servi('sl-traction-lestee');
@@ -418,10 +427,7 @@ void main() {
         final line = app.koachReasonLine(15, 1, e);
         if ((x['sets'] as num) < n) {
           expect(line, contains('${x['sets']} séries sur $n'), reason: '$x');
-          expect(
-            entete.where((t) => t.contains('au lieu de $n ')),
-            isEmpty,
-          );
+          expect(entete.where((t) => t.contains('au lieu de $n ')), isEmpty);
         }
       }
       // Accessoires réduits par Koach (séries classiques) : séries servies,
@@ -430,7 +436,8 @@ void main() {
         final w = base.exercises
             .where((s) => s.catalogId == x['exerciseId'])
             .firstOrNull;
-        if (w == null || app.koachJourInfo(15, 1)!.roles[x['slotId']] == 'main') {
+        if (w == null ||
+            app.koachJourInfo(15, 1)!.roles[x['slotId']] == 'main') {
           continue;
         }
         final e = shown.firstWhere((s) => s.catalogId == x['exerciseId']);
