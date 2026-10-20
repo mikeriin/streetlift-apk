@@ -1,0 +1,30 @@
+LOT KM5 — KOACH 1.0.7 : LA RAMPE DE VOLUME NE COUPE JAMAIS SOUS L'ÉCRIT DU PROGRAMME (référence Python + portage Dart `kalis_adapt` 1.0.6)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs »). Lot KM : pas de panel, pas de relecture documentée (C13.3). Validation : automatique, par le pilotage.
+Prérequis : KM4 validé (C17.39) ; décision C17.40 (prime sur C17.37.2 et C17.37.4 pour la rampe).
+Base : `moteurs` à la pointe (91d8ea70 ou suivant : Koach 1.0.6, `kalis_adapt` 1.0.5, `kalis_bench` 0.5.7). Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM5`.
+Décisions : C11, C13.3, C13.12, C17.33 (aucune donnée réelle, aucun déchiffrement, aucune clé), C17.37, C17.39, **C17.40**. Livraisons à lire : `LIVRAISON_KM4.md`, `LIVRAISON_KB3.md` (§ 3, § 7).
+URGENCE : le propriétaire a mis Koach à l'arrêt en attendant ce lot puis KB4. Vise la livraison la plus rapide **sans rien sauter du contrôle** : campagne complète une seule fois une fois le code figé, pas d'exploration de variantes.
+
+CONSTAT (C17.40.2, séance réelle du 20/10/2026, chiffres seulement)
+Nouveau programme choisi par l'athlète (6 séances par semaine en PPL), plus volumineux que ses semaines d'avant. Séance de poussée : `koach.retour_gradue` met à 0 série les pompes lestées, le développé militaire, les élévations latérales (`delt_anterior`, limite 27,6) et l'extension triceps (`triceps`, 39,6), dip lesté à 4 sur 8 ; il reste trois exercices. La rampe (`_limite_volume`, mesurée sur le réalisé des semaines précédentes) coupe le programme écrit lui-même.
+
+RÈGLE À METTRE EN ŒUVRE (C17.40.3)
+- **La rampe de volume ne coupe jamais sous l'écrit** : pour chaque item, séries servies ≥ séries écrites au nom du volume (aucun item retiré, aucune série retirée), toutes semaines, tous rôles, programme importé ou créé, séances du jour comme séances restantes (`reste_semaine`) et manquées.
+- Elle borne seulement ce que Koach **ajoute** : par groupe et par semaine, volume servi ≤ max(L, écrit de la semaine), avec L la limite de la rampe actuelle (`_limite_volume`, inchangée). Un ajout de Koach (séries au-dessus de l'écrit, élargissement, modulation hebdomadaire à la hausse) qui ferait dépasser ce plafond est retiré, ajouts les plus récents d'abord (ou règle équivalente mesurée, dite comme telle).
+- Coupes sous l'écrit gardées, pour leurs causes seulement : douleur (conduite sous douleur ; un principal sous douleur peut aller à 0, C17.37.2), rampe tendineuse (M1), surmenage / état du jour, test reporté, séance bornée au temps donné, plafond de la 1re semaine d'un athlète sans historique (règle 0.3.1). Le plancher des principaux, la priorité de rôle et l'emprunt de 1.0.6 restent l'ordre de ces coupes-là quand elles s'appliquent.
+- La modulation hebdomadaire (`planification.itemsModules`, `plafond_volume` +15 %) : vérifier qu'elle ne descend pas sous l'écrit au nom du volume ; sinon même règle (dire ce qui change).
+- Raisons : `koach.retour_gradue` ne sort plus quand rien n'est coupé ; s'il borne un ajout, raison dite (série ajoutée non servie) sans changer le sens des raisons existantes ; textes `koach_textes.dart` en français neutre si un nouveau code apparaît.
+- C17.38.4 (réalisé hors du servi) : sans effet sur les coupes désormais ; garder le comptage, le dire dans la livraison.
+
+VALIDATEUR ET CRITÈRES (`kalis_bench`, mêmes campagnes que KM4 : 34 profils, 100 graines, 90 600 saisons ; graines 0-5 pour les critères du cahier)
+- Redéfinir la vue « volume_trop_vite » du validateur de sécurité (critère 8, clé `7_securite`) : violation = volume servi d'un groupe dans la semaine > max(limite de la rampe, volume écrit de la semaine) + tolérance existante ; écrit les deux nombres dans le constat. `docs/CRITERES_KM5.md` : la définition avant / après et pourquoi (C17.40.3).
+- **0 violation de sécurité** (nouvelle définition) sur les 90 600 saisons, en Python **et** en Dart ; 0 saison plantée. Rapporter aussi, à titre d'indicateur, le nombre de saisons qui auraient violé l'ancienne définition (dépassement de L seul, porté par l'écrit).
+- **Nouveau critère (C17.40)** : « série ou item retiré sous l'écrit par la rampe de volume » = **0** sur toute la campagne.
+- Critères KM 1 à 6 et 11 : aucun recul au-delà du bruit mesuré (KR1 § 5) ; 7 bis sur les six jeux sans recul ; dire l'effet sur la performance le jour J (plus de volume servi).
+- Scénarios dédiés (fixtures synthétiques, jamais de données réelles) : (a) athlète avancé, trois semaines d'un programme A, puis programme B de 6 séances par semaine en PPL avec +40 % de volume « chest » et +60 % « delt_anterior » / « triceps », lundi de tirage (muscle-up lesté E2MOM 6 × 2, traction lestée E2MOM 8 × 3, accessoires) puis mardi de poussée (dip lesté E2MOM 8 × 3 avec tractions PdC dans la pause, pompes lestées 4 × 6, développé militaire 3 × 8, rotations externes 2 × 15, extension triceps 3 × 12, élévations latérales 3 × 15) : **toutes les lignes servies à leurs séries écrites**, aucune raison `koach.retour_gradue` de coupe ; (b) même athlète avec une douleur à l'épaule signalée le mardi : la conduite sous douleur coupe comme avant ; (c) un ajout de Koach au-dessus de l'écrit qui dépasserait L est borné.
+- Parité Dart : fixtures régénérées, 90 600 saisons identiques une à une à la campagne Python.
+
+FIN DE LOT
+- Référence Koach 1.0.7 (paramètres `1.0.7-ref.1` ; clés devenues sans objet gardées ou retirées proprement, dites ; `CHANGEMENTS_1_0_7.md`, `SOURCES.md`, note datée au contrat) ; `kalis_adapt` 1.0.6 (Dart, asset `koach_params_1_0_7.json`, SHA-256 dans la livraison) ; `kalis_bench` 0.5.8 ; étiquettes `etiquettes/kalis_adapt-v1.0.6` et `etiquettes/kalis_bench-v0.5.8` ; contrôle complet vert sur `claude/ci-cp-a` ; push `moteurs` (rebase avant chaque push).
+- `LIVRAISON_KM5.md` (pipeline et projet claude.ai) : mécanisme avant / après, nouvelle définition du validateur, critères avant / après (Python et Dart), scénarios, ce que KB4 doit monter.
+- Ligne KM5 de `ETAT_CP.md` « livré » ; notification « Kalis Track KM5 livré — Koach 1.0.7 » ; arrête-toi (aucun fire_trigger).

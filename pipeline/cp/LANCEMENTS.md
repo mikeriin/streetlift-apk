@@ -397,3 +397,14 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Lot : **KB3**, prompt `prompts/KB3.txt`. Base : pointe de `main` (dev7.2.4, ecb91ea9, ou suivant : **lots du propriétaire publiés depuis son PC**, C17.28 — lire `CLAUDE.md` de `main`, ne rien défaire de ses correctifs séance 1 et 2, rebase avant publication). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KB3`. Aucune donnée réelle, aucun déchiffrement (C17.33).
 - À lire : `LIVRAISON_KM4.md` (§ 8 « Ce que KB3 doit monter »), `LIVRAISON_KB2_correction1.md` (garde `koachGardeSeance`), DECISIONS_CP.md C17.36 à C17.39.
+
+## KM5 — Koach 1.0.7 : la rampe de volume ne coupe jamais sous l'écrit (référence Python + Dart `kalis_adapt` 1.0.6) (lancé le 20/10/2026 vers 16:55 UTC, C17.40, tâche « Opus 5.5, effort maximal, moteurs »)
+
+- Prompt : `prompts/KM5.txt`. Décision : C17.40 (prime sur C17.37.2 et C17.37.4 pour la rampe).
+- Contexte : constat du propriétaire en séance le 20/10 (dev7.3.0) : Koach 1.0.6 a retiré quatre accessoires de sa séance de poussée au nom de la rampe de volume, mesurée sur l'historique de l'ancien programme. Le propriétaire a mis Koach à l'arrêt en attendant la correction : **urgence**, campagne complète une seule fois une fois le code figé, sans exploration de variantes.
+- Les chiffres du constat (groupes, limites, séries) sont dans C17.40.2 ; aucune donnée réelle n'est publiée ni à lire (C17.33).
+- Un seul lot moteur à la fois : aucun autre lot moteur n'est en cours. KB4 (application) suit la validation de KM5.
+
+## KB4 — Koach 1.0.7 dans l'application, dev7.4.0 (à lancer après validation de KM5, tâche « Opus 5.5, effort élevé, application » ; C17.40)
+
+- Prompt : `prompts/KB4.txt`. Section complétée au lancement (décision de validation de KM5, étiquette, SHA de l'asset).

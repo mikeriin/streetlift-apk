@@ -1,0 +1,28 @@
+LOT KB4 — KOACH 1.0.7 DANS L'APPLICATION : LE PROGRAMME N'EST PLUS COUPÉ PAR LA RAMPE (dev7.4.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : KM5 validé (C17.41 ou suivant) ; décision C17.40. **Ce lot ne déchiffre rien, ne lit pas `cp-references`, n'utilise aucune clé ni aucune donnée réelle du propriétaire (C17.33.2)** : tests sur données synthétiques seulement.
+Base : pointe de `main` (dev7.3.0, 88fb1965, ou suivant ; le propriétaire publie aussi depuis Claude Code sur son PC, C17.28 : respecte le `CLAUDE.md` de `main` s'il existe, rebase sur la pointe avant de publier, ne défais rien de ses lots). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/KB4`.
+Décisions : C11, C15, C17.28, C17.33, C17.36, C17.38, C17.39, **C17.40**, et la décision de validation de KM5. Livraisons à lire : `LIVRAISON_KM5.md`, `LIVRAISON_KB3.md`, `LIVRAISON_KB2_correction1.md`. Pour `main` : PIPELINE_GP.md comme pour la piste A (ni signature, ni identifiant Android, ni secrets ; jamais de réécriture de l'historique de `main`).
+URGENCE : le propriétaire a mis Koach à l'arrêt en attendant ce lot ; livre au plus vite sans rien sauter du contrôle.
+
+CONTEXTE (C17.40)
+Avec dev7.3.0, Koach 1.0.6 retirait des accessoires du programme du propriétaire au nom de la rampe de volume (séance de poussée réduite à trois exercices). Koach 1.0.7 (KM5) ne coupe plus jamais sous l'écrit pour le volume ; il borne seulement ce qu'il ajoute.
+
+CONTENU
+1. **Paquet** : copier à l'octet `packages/kalis_adapt/lib/`, `assets/koach/` et `pubspec.yaml` depuis `etiquettes/kalis_adapt-v1.0.6` ; asset `koach_params_1_0_7.json` à la place de `koach_params_1_0_6.json` (déclaration, `kKoachParamsAsset`, tests d'empreinte, SHA-256 de la livraison KM5) ; `pubspec.lock` régénéré par l'outil (piège de KB3 : `--enforce-lockfile` du build signé). Rien d'autre dans `packages/`.
+2. **Garde de la séance (`koachGardeSeance`)** : revenir à la règle de KB2 correction 1 pour **tous les rôles** : aucune ligne écrite retirée ni ajoutée en silence ; une ligne absente du servi sans retrait motivé (douleur, endurance, test reporté, séance bornée au temps donné, tendon si 1.0.7 le dit) est servie telle qu'écrite, raison affichée, et un diagnostic du mode dev le signale (avec 1.0.7 cela ne doit plus arriver pour le volume). Le retrait d'un accessoire sur `koach.retour_gradue` à 0 de KB3 est retiré. Lignes au départ chronométré (PR8) : Koach 1.0.7 les planifie à leurs séries écrites ; le message « Koach aurait fait … » ne s'affiche que si le servi diffère encore de l'écrit.
+3. **Réactivation après l'arrêt d'urgence** : le propriétaire aura fait des séances Koach arrêté. À la réactivation : les séances faites pendant l'arrêt sont versées au journal du moteur (observations, dans l'ordre, séances jamais réécrites), pour que charges et réalisé de la semaine soient connus ; Koach reprend à la première séance non faite ; la modulation figée à l'arrêt est abandonnée pour les séances suivantes. Au premier lancement de dev7.4.0 avec Koach arrêté, une carte courte (écran Koach ou accueil, sans refonte) dit que Koach ne coupe plus le programme pour le volume et propose « Réactiver Koach » — jamais de réactivation automatique.
+4. **Raisons et textes** : textes 1.0.7 de `koach_textes.dart` ; ordre des raisons de KB3 gardé ; plus de « Je retire … aujourd'hui » pour le volume.
+5. **Version** 7.4.0 (`pubspec.yaml`, `SUIVI_PROJET.md`).
+
+NE PAS FAIRE
+- Aucun déchiffrement, aucune donnée réelle (C17.33.2) ; aucun changement de moteur au-delà de la copie de l'étiquette ; aucun changement du programme importé (contenu, dates, numérotation) ni des lots PR du propriétaire ; pas de refonte d'écran.
+
+TESTS
+- Unitaires : PR2 synthétique (six séances par semaine en PPL, départ affiché S15) avec un historique de trois semaines nettement moins volumineux (+40 % « chest », +60 % « delt_anterior » et « triceps ») : lundi de tirage et mardi de poussée (dip lesté E2MOM 8 × 3 et tractions PdC dans la pause, pompes lestées 4 × 6, développé militaire 3 × 8, rotations externes 2 × 15, extension triceps 3 × 12, élévations latérales 3 × 15) servis **avec toutes leurs lignes à leurs séries écrites** ; douleur à l'épaule signalée : conduite sous douleur comme avant ; garde pour tous les rôles (ligne absente sans retrait motivé → servie telle qu'écrite) ; réactivation après un arrêt avec deux séances faites pendant l'arrêt (versées, jamais réécrites, Koach reprend à la suivante) ; passage depuis dev7.3.0 (Koach actif, et Koach arrêté avec une séance commencée) sans perte, `logs`, `programInstance`, `programOrigin` (C11.2) identiques ; sauvegarde exportée puis réimportée à l'identique.
+- Cible émulateur `integration_test/koach_kb4_test.dart` (inscrite dans `tools/ci3d_drive.sh`, deux thèmes) : même scénario, relevé et captures de la séance de poussée complète ; toutes les cibles des lots précédents vertes.
+
+FIN DE LOT
+- dev7.4.0 sur `main`, contrôle complet `claude/ci-3d` **vert sur l'arbre publié** (rebase final compris), build signé réussi (push sur `main` refusé : commit prêt sur `cp-sauvegardes/KB4-candidat` et arrête-toi).
+- `LIVRAISON_KB4.md` (pipeline et projet claude.ai) : ce qui change pour le propriétaire, scénario relevé, réactivation, « À tester » court (installer dev7.4.0, réactiver Koach, vérifier que la séance du jour a toutes ses lignes, noter les flammes au plus juste).
+- Ligne KB4 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.4.0 prêt — Koach ne coupe plus ton programme » ; arrête-toi (aucun fire_trigger).
