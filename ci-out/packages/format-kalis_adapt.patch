@@ -1,0 +1,40 @@
+diff --git a/packages/kalis_adapt/test/koach_km4_retour_test.dart b/packages/kalis_adapt/test/koach_km4_retour_test.dart
+index 7866142..8e4ebd5 100644
+--- a/packages/kalis_adapt/test/koach_km4_retour_test.dart
++++ b/packages/kalis_adapt/test/koach_km4_retour_test.dart
+@@ -320,14 +320,21 @@ void main() {
+     }
+     final (lundi, raisons) = servis[0];
+     expect(
+-      [for (final s in ['b0.1', 'b0.2', 'b0.3', 'b0.4']) _series(lundi, s)],
++      [
++        for (final s in ['b0.1', 'b0.2', 'b0.3', 'b0.4']) _series(lundi, s),
++      ],
+       [4, 3, 0, 3],
+     );
+     final rg = _retourGradue(raisons);
+     expect(
+       [
+         for (final r in rg)
+-          [_p(r)['exercice'], _p(r)['series'], _p(r)['ecrites'], _p(r)['groupe']],
++          [
++            _p(r)['exercice'],
++            _p(r)['series'],
++            _p(r)['ecrites'],
++            _p(r)['groupe'],
++          ],
+       ],
+       [
+         [_mu, 4, 6, 'chest'],
+@@ -343,7 +350,10 @@ void main() {
+     }
+     final limites = k.seances.retourVol!.limites;
+     for (var g = 0; g < limites.length; g++) {
+-      expect(k.seances.volSemaines[3]![g], lessThanOrEqualTo(limites[g] + 1e-9));
++      expect(
++        k.seances.volSemaines[3]![g],
++        lessThanOrEqualTo(limites[g] + 1e-9),
++      );
+     }
+   });
+ 

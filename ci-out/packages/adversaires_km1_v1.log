@@ -1,0 +1,19 @@
+40 adversaires, 95 saisons (Koach rejoué en Dart, briques : aucune) ; hors bornes : 0.
+  saisons de Koach : 1/95 (5 s)
+  saisons de Koach : 9/95 (7 s)
+  saisons de Koach : 18/95 (9 s)
+  saisons de Koach : 27/95 (11 s)
+  saisons de Koach : 36/95 (12 s)
+  saisons de Koach : 45/95 (13 s)
+  saisons de Koach : 54/95 (14 s)
+  saisons de Koach : 63/95 (14 s)
+  saisons de Koach : 72/95 (15 s)
+  saisons de Koach : 81/95 (16 s)
+  saisons de Koach : 90/95 (17 s)
+  saisons de Koach : 95/95 (17 s)
+tous     n=40  jour J koach moy 0.891886 pire 0.785288 | témoin moy 0.599347 pire 0.0
+pires    n=32  jour J koach moy 0.882173 pire 0.785288 | témoin moy 0.603271 pire 0.0
+temoins  n=8  jour J koach moy 0.921025 pire 0.912311 | témoin moy 0.587577 pire 0.0
+critère : {"libelle": "pire cas de Koach >= pire cas du témoin (performance le jour J, moyenne par adversaire)", "pire_koach": 0.785288, "pire_temoin": 0.0, "respecte": true, "saisons_temoin_manquantes": 0}
+référence (../kalis_adapt/reference/donnees/comparaison_adversaires.json) : pire Koach 0.798913, pire témoin 0.0, respecté true
+écrit : /home/runner/work/streetlift-apk/streetlift-apk/out-packages/adversaires/comparaison_adversaires_km4_km1_v1.json (17 s)
