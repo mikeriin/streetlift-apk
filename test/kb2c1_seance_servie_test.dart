@@ -190,8 +190,15 @@ void main() {
       final ex = base.exercises.first;
       final e = shown.firstWhere((x) => x.id == ex.id);
       expect(app.adaptSlotOf(15, 1, e.id), 'j1-sl-muscle-up-leste');
-      if ((servis['sl-muscle-up-leste'] as num) < 6) {
-        expect(app.koachReasonLine(15, 1, shown.first), contains('au lieu de'));
+      // Ligne au départ chronométré (PR8) : séries écrites, réduction de
+      // Koach dite sur la carte.
+      expect(app.setsLabel(shown.first), app.setsLabel(base.exercises.first));
+      final n = servis['sl-muscle-up-leste'] as num;
+      if (n < 6) {
+        expect(
+          app.koachReasonLine(15, 1, shown.first),
+          contains('$n séries sur 6'),
+        );
       }
     });
 

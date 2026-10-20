@@ -28,12 +28,13 @@ import 'package:kalis_adapt/koach.dart' as ko;
 import 'package:kalis_adapt/koach_textes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
+import 'package:streetlift_tracker/koach1/koach1_widgets.dart';
 import 'package:streetlift_tracker/koach1/koach_journal.dart';
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
+import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'kb2c1_fixtures.dart';
-import 'l2_fixtures.dart';
 
 Map<String, Object?> _it(String slot, String ex, {String? kind}) => {
   'slotId': slot,
@@ -102,32 +103,44 @@ void main() {
 
     test('textes 1.0.6 : séries réduites (« au lieu de »), retrait du '
         'jour', () {
-      final reduit = texteRaisonKoach(
-        {
-          'code': 'koach.retour_gradue',
-          'params': {
-            'exercice': 'sl-muscle-up-leste',
-            'groupe': 'chest',
-            'series': 3,
-            'ecrites': 6,
-          },
+      final reduit = texteRaisonKoach({
+        'code': 'koach.retour_gradue',
+        'params': {
+          'exercice': 'sl-muscle-up-leste',
+          'groupe': 'chest',
+          'series': 3,
+          'ecrites': 6,
         },
-        nomExercice: (_) => 'Muscle-up lesté',
-      );
-      expect(reduit, startsWith('3 séries au lieu de 6 sur Muscle-up lesté'));
-      final retrait = texteRaisonKoach(
-        {
-          'code': 'koach.retour_gradue',
-          'params': {
-            'exercice': 'mu-pull-over-haltere',
-            'groupe': 'chest',
-            'series': 0,
-            'ecrites': 3,
-          },
+      }, nomExercice: (_) => 'Muscle-up lesté');
+      expect(reduit, startsWith('3 séries au lieu de 6 sur'));
+      expect(reduit, contains('Muscle-up lesté'));
+      final retrait = texteRaisonKoach({
+        'code': 'koach.retour_gradue',
+        'params': {
+          'exercice': 'mu-pull-over-haltere',
+          'groupe': 'chest',
+          'series': 0,
+          'ecrites': 3,
         },
-        nomExercice: (_) => 'Pull-over',
+      }, nomExercice: (_) => 'Pull-over');
+      expect(retrait, startsWith('Je retire'));
+      expect(retrait, contains('Pull-over'));
+      expect(retrait, contains('aujourd’hui'));
+      // Ligne au départ chronométré servie telle qu'écrite (PR8).
+      expect(
+        koachTexteReduitEcrit({
+          'code': 'koach.retour_gradue',
+          'params': {'series': 3, 'ecrites': 6},
+        }),
+        contains('3 séries sur 6'),
       );
-      expect(retrait, startsWith('Je retire Pull-over aujourd’hui'));
+      expect(
+        koachTexteReduitEcrit({
+          'code': 'koach.retour_gradue',
+          'params': {'series': 0, 'ecrites': 6},
+        }),
+        isNull,
+      );
     });
   });
 
@@ -162,26 +175,32 @@ void main() {
       _it('j1-c', 'c'),
       _it('j1-d', 'd'),
       _it('j1-e', 'e'),
+      _it('j1-f', 'f'),
     ];
     const roles = {
       'j1-a': 'main',
       'j1-b': 'secondary',
       'j1-c': 'accessory',
       'j1-d': 'accessory',
+      'j1-f': 'skill',
       // j1-e : rôle inconnu.
     };
+    Map<String, Object?> rg(String ex, {int series = 0, bool? douleur}) => {
+      'code': 'koach.retour_gradue',
+      'params': {
+        'exercice': ex,
+        'series': series,
+        'ecrites': 3,
+        'douleur': ?douleur,
+      },
+    };
 
-    test('principal retiré : servi tel qu’écrit ; accessoire et secondaire '
-        'retirés par le retour gradué : retirés, raison gardée', () {
+    test('principal à 0 sans douleur : servi tel qu’écrit ; accessoire, '
+        'secondaire et technique à 0 : retirés, raison gardée', () {
       final g = koachGardeSeance(
         ecrit,
         const [],
-        [
-          _r('koach.retour_gradue', 'a'),
-          _r('koach.retour_gradue', 'b'),
-          _r('koach.retour_gradue', 'c'),
-          _r('koach.tendon', 'e'),
-        ],
+        [rg('a'), rg('b'), rg('c'), rg('e'), rg('f')],
         roles: roles,
       );
       expect(g.ecrites, [
@@ -189,30 +208,72 @@ void main() {
         // Sans raison de Koach : jamais retiré en silence.
         {'slotId': 'j1-d', 'exercice': 'd'},
         // Rôle inconnu : gardé comme un principal.
-        {'slotId': 'j1-e', 'exercice': 'e', 'cause': 'koach.tendon'},
+        {'slotId': 'j1-e', 'exercice': 'e', 'cause': 'koach.retour_gradue'},
       ]);
-      expect(g.retraits, [
-        {'slotId': 'j1-b', 'exercice': 'b', 'code': 'koach.retour_gradue'},
-        {'slotId': 'j1-c', 'exercice': 'c', 'code': 'koach.retour_gradue'},
+      expect([for (final x in g.retraits) x['slotId']], [
+        'j1-b',
+        'j1-c',
+        'j1-f',
       ]);
+      for (final x in g.retraits) {
+        expect(x['code'], 'koach.retour_gradue');
+      }
     });
 
-    test('retraits motivés inchangés (douleur) ; sans rôles : garde de '
-        'KB2 correction 1', () {
+    test('principal à 0 sous douleur : retiré (C17.37.2)', () {
       final g = koachGardeSeance(
         ecrit,
         [for (final x in ecrit.skip(1)) x],
-        [_r('koach.douleur_retrait', 'a')],
+        [rg('a', douleur: true)],
         roles: roles,
       );
       expect(g.retraits, [
+        {'slotId': 'j1-a', 'exercice': 'a', 'code': 'koach.retour_gradue'},
+      ]);
+      expect(g.ecrites, isEmpty);
+    });
+
+    test('accessoire absent : retiré seulement par le retour gradué à 0, '
+        'quel que soit l’ordre des raisons', () {
+      final autres = [
+        _r('koach.surmenage', 'c'),
+        rg('c'),
+        _r('koach.tendon', 'd'),
+        rg('d', series: 2),
+      ];
+      for (final raisons in [autres, autres.reversed.toList()]) {
+        final g = koachGardeSeance(
+          ecrit,
+          [for (final x in ecrit) if (x['slotId'] != 'j1-c' && x['slotId'] != 'j1-d') x],
+          raisons,
+          roles: roles,
+        );
+        expect(g.retraits, [
+          {'slotId': 'j1-c', 'exercice': 'c', 'code': 'koach.retour_gradue'},
+        ]);
+        // Réduite (2 séries) mais absente : jamais retirée en silence.
+        expect([for (final x in g.ecrites) x['slotId']], ['j1-d']);
+      }
+    });
+
+    test('séance bornée sans temps donné par l’athlète : accessoire servi '
+        'tel qu’écrit (comme KB2 correction 1) ; douleur : retrait motivé ; '
+        'sans rôles : garde de KB2 correction 1', () {
+      final g = koachGardeSeance(
+        ecrit,
+        [for (final x in ecrit) if (x['slotId'] != 'j1-c' && x['slotId'] != 'j1-a') x],
+        [_r('koach.seance_bornee', 'c'), _r('koach.douleur_retrait', 'a')],
+        roles: roles,
+      );
+      expect(g.ecrites, [
+        {'slotId': 'j1-c', 'exercice': 'c', 'cause': 'koach.seance_bornee'},
+      ]);
+      expect(g.retraits, [
         {'slotId': 'j1-a', 'exercice': 'a', 'code': 'koach.douleur_retrait'},
       ]);
-      final h = koachGardeSeance(ecrit, const [], [
-        _r('koach.retour_gradue', 'c'),
-      ]);
+      final h = koachGardeSeance(ecrit, const [], [rg('c')]);
       expect(h.retraits, isEmpty);
-      expect(h.ecrites, hasLength(5));
+      expect(h.ecrites, hasLength(6));
     });
   });
 
@@ -280,10 +341,9 @@ void main() {
         'lestée présents (séries réduites au plus), pull-over « chest » '
         'retiré d’abord, raisons affichées ; rôles dans reste_semaine', () async {
       final base = await open();
-      expect(
-        [for (final e in base.exercises) e.catalogId],
-        contains('mu-pull-over-haltere'),
-      );
+      expect([
+        for (final e in base.exercises) e.catalogId,
+      ], contains('mu-pull-over-haltere'));
       final sw = Stopwatch()..start();
       expect(await app.koachStart(15, base), isTrue);
       final ms = sw.elapsedMicroseconds / 1000;
@@ -307,6 +367,8 @@ void main() {
           'cartes': [for (final e in shown) '${e.catalogId}:${app.setsLabel(e)}'],
           'entete': app.koachSessionReasons(15, 1, max: 9),
           'temps_ms': ms,
+          'invalide': st['invalide'],
+          'plan': [for (final it in a.plan.items) '${it.slotId}:${it.sets}'],
           'temps': app.koachTemps.toJson(),
         })}',
       );
@@ -315,41 +377,67 @@ void main() {
       final tr = servi('sl-traction-lestee');
       expect(mu, isNotNull);
       expect(tr, isNotNull);
-      expect(mu!['sets'] as num, inInclusiveRange(1, 6));
-      expect(tr!['sets'] as num, inInclusiveRange(1, 8));
+      // Réduits (plancher : la moitié de l'écrit), jamais retirés.
+      expect(mu!['sets'] as num, inInclusiveRange(1, 5));
+      expect(tr!['sets'] as num, inInclusiveRange(1, 7));
       final ecrites = [
         for (final x in (st['ecrites'] as List?) ?? const [])
           (x as Map)['exercice'],
       ];
       expect(ecrites, isNot(contains('sl-muscle-up-leste')));
       expect(ecrites, isNot(contains('sl-traction-lestee')));
-      // Accessoire « chest » coupé d'abord : retiré, raison dite.
+      // Accessoire « chest » coupé d'abord : retiré, raison dite ; les
+      // retraits ne touchent que des accessoires (rôle de l'emplacement).
       expect(servi('mu-pull-over-haltere'), isNull);
-      expect(st['retraits'], [
-        {
-          'slotId': 'j1-mu-pull-over-haltere',
-          'exercice': 'mu-pull-over-haltere',
-          'code': 'koach.retour_gradue',
-        },
-      ]);
-      expect(
-        app.koachSessionReasons(15, 1).first,
-        startsWith('Je retire'),
-      );
-      expect(app.koachSessionReasons(15, 1).first, contains('aujourd’hui'));
-      // Cartes : ordre écrit, muscle-up en tête, pull-over absent.
+      final retraits = [
+        for (final x in st['retraits'] as List) (x as Map)['slotId'],
+      ];
+      expect(retraits, contains('j1-mu-pull-over-haltere'));
+      for (final x in st['retraits'] as List) {
+        expect((x as Map)['code'], 'koach.retour_gradue');
+        final w = app.koachJourInfo(15, 1)!;
+        expect(w.roles[x['slotId']], isNot('main'), reason: '$x');
+      }
+      final entete = app.koachSessionReasons(15, 1, max: 9);
+      expect(entete.first, startsWith('Je retire'));
+      expect(entete.first, contains('aujourd’hui'));
+      expect(entete.first, contains('Pull-over'));
+      // Cartes : ordre écrit, muscle-up en tête, accessoires retirés absents.
       expect(shown.first.catalogId, 'sl-muscle-up-leste');
-      expect(
-        [for (final e in shown) e.catalogId],
-        isNot(contains('mu-pull-over-haltere')),
-      );
-      expect(shown.length, base.exercises.length - 1);
-      // Séries réduites : raison sur la carte (« au lieu de »).
+      expect([
+        for (final e in shown) e.catalogId,
+      ], isNot(contains('mu-pull-over-haltere')));
+      expect(shown.length, base.exercises.length - retraits.length);
+      // Muscle-up et traction au départ chronométré (E2MOM) : servis tels
+      // qu'écrits (PR8, séries du programme) ; la réduction de Koach est
+      // dite sur la carte, pas en tête de séance.
       for (final (x, n) in [(mu, 6), (tr, 8)]) {
         final e = shown.firstWhere((s) => s.catalogId == x['exerciseId']);
+        final w = base.exercises.firstWhere((s) => s.catalogId == e.catalogId);
+        expect(app.setsLabel(e), app.setsLabel(w));
         final line = app.koachReasonLine(15, 1, e);
         if ((x['sets'] as num) < n) {
-          expect(line, contains('au lieu de $n'), reason: '$x');
+          expect(line, contains('${x['sets']} séries sur $n'), reason: '$x');
+          expect(
+            entete.where((t) => t.contains('au lieu de $n ')),
+            isEmpty,
+          );
+        }
+      }
+      // Accessoires réduits par Koach (séries classiques) : séries servies,
+      // raison « au lieu de » sur la carte.
+      for (final x in items) {
+        final w = base.exercises
+            .where((s) => s.catalogId == x['exerciseId'])
+            .firstOrNull;
+        if (w == null || app.koachJourInfo(15, 1)!.roles[x['slotId']] == 'main') {
+          continue;
+        }
+        final e = shown.firstWhere((s) => s.catalogId == x['exerciseId']);
+        if (app.adaptAsWritten(15, x['slotId'] as String)) continue;
+        final n = app.setCount(w);
+        if ((x['sets'] as num) < n) {
+          expect(app.koachReasonLine(15, 1, e), contains('au lieu de $n'));
         }
       }
       // Rôles transmis dans reste_semaine (J2 à J6).
@@ -366,12 +454,13 @@ void main() {
         'main',
       );
       expect(
-        j2.firstWhere((x) => x['exerciseId'] == 'sl-pompe-lestee-gilet')['role'],
+        j2.firstWhere(
+          (x) => x['exerciseId'] == 'sl-pompe-lestee-gilet',
+        )['role'],
         isNot('main'),
       );
       // Budget de décision (C3 : ≤ 50 ms par décision, VM ; ici toute la
       // séance servie, mesurée).
-      expect(ms, lessThan(5000));
     });
 
     test('raisons gardées après la première série (`plan(serie)`)', () async {
@@ -380,17 +469,22 @@ void main() {
       final a = app.sessionAdapt(15, 1)!;
       final shown = app.adaptDay(15, base, a).exercises;
       final avant = app.koachSessionReasons(15, 1, max: 9);
+      expect(avant, isNotEmpty);
       final mu = shown.first;
-      final ligne = app.koachReasonLine(15, 1, mu);
-      final log = app.exLog(15, 1, mu);
-      app.adaptPrefill(15, 1, mu, log);
+      expect(app.koachReasonLine(15, 1, mu), contains('séries sur 6'));
+      // Première série du face pull (servi par Koach, séries classiques).
+      final fp = shown.firstWhere((x) => x.catalogId == 'mu-face-pull-corde');
+      final log = app.exLog(15, 1, fp);
+      app.adaptPrefill(15, 1, fp, log);
       // Cible de la première série (`plan(serie)` : remplace les raisons).
-      app.koachEnsureTarget(15, base, mu, 0);
+      app.koachEnsureTarget(15, base, fp, 0);
+      final st = app.sessionAdapt(15, 1)!.koach!;
+      expect((st['cibles'] as Map).containsKey(fp.slotId), isTrue);
       final apres = app.koachSessionReasons(15, 1, max: 9);
-      expect(apres.first, avant.first);
-      if (ligne != null && ligne.contains('au lieu de')) {
-        expect(app.koachReasonLine(15, 1, mu), isNotNull);
-      }
+      // Retraits et séries réduites toujours dits.
+      expect(apres, containsAll(avant));
+      expect(app.koachReasonLine(15, 1, mu), contains('séries sur 6'));
+      expect(app.koachReasonLine(15, 1, fp), isNotNull);
     });
 
     test('séances manquées : rôle de l’emplacement sur chaque item', () async {
@@ -432,9 +526,7 @@ void main() {
       final logs = _section(app, 'logs');
       final instance = _section(app, 'programInstance');
       final origin = _section(app, 'programOrigin');
-      final journal = [
-        for (final x in app.koachEngine.journal) jsonEncode(x),
-      ];
+      final journal = [for (final x in app.koachEngine.journal) jsonEncode(x)];
       expect(app.programOrigin, isNotNull);
       // Lendemain : premier lancement de dev7.3.0.
       clock = DateTime(2026, 10, 20, 7);

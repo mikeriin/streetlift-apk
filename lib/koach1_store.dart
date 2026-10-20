@@ -73,10 +73,11 @@ String koachSlotEcrit(String slot) =>
 /// KB3 (Koach 1.0.6, DECISIONS_CP.md C17.39.5) : la garde ne vaut plus que
 /// pour les **principaux** ([roles] : emplacement → rôle ; rôle `main`, ou
 /// rôle inconnu par prudence). Une ligne d'un autre rôle (accessoire,
-/// secondaire…) que Koach retire en le disant (retour gradué, accessoires
-/// coupés d'abord) reste retirée : `retraits`, avec le code de sa raison,
-/// affichée. Sans raison de Koach, elle est servie telle qu'écrite (jamais
-/// de retrait en silence).
+/// secondaire…) que le retour gradué de Koach met à 0 série (raison
+/// `koach.retour_gradue`, `series` 0, accessoires coupés d'abord) reste
+/// retirée : `retraits`, raison affichée (« Je retire … aujourd’hui »). Un
+/// principal ne l'est que sous douleur (`douleur` de la raison). Sinon,
+/// servie telle qu'écrite (jamais de retrait en silence).
 /// Pur (testé).
 ({List<Json> servis, List<Json> ecrites, List<Json> retraits}) koachGardeSeance(
   List<Json> ecrit,
@@ -107,10 +108,18 @@ String koachSlotEcrit(String slot) =>
     final ex = w['exerciseId'];
     String? motif;
     String? cause;
+    // KB3 : retrait par le retour gradué (0 série) de cette ligne
+    // (`ecrites` = séries écrites de la ligne quand Koach les dit).
+    Map? retour;
     for (final r in raisons) {
       final p = r['params'];
       if (p is! Map || p['exercice'] != ex) continue;
       final code = '${r['code']}';
+      if (code == 'koach.retour_gradue' &&
+          p['series'] == 0 &&
+          (p['ecrites'] == null || p['ecrites'] == w['sets'])) {
+        retour ??= p;
+      }
       if (code == 'koach.douleur_retrait' ||
           code == 'koach.endurance_retrait' ||
           (code == 'koach.test_reporte' && w['kind'] == 'test') ||
@@ -122,7 +131,14 @@ String koachSlotEcrit(String slot) =>
     }
     final role = roles?[slot];
     final principal = role == null || role == 'main';
-    if (motif == null && !principal && cause != null) motif = cause;
+    // Seul le retour gradué retire un non-principal (jamais une autre
+    // raison, quel que soit l'ordre des raisons) ; un principal seulement
+    // sous douleur sur une zone qu'il sollicite (C17.37.2).
+    if (motif == null &&
+        retour != null &&
+        (!principal || retour['douleur'] == true)) {
+      motif = 'koach.retour_gradue';
+    }
     if (motif != null) {
       retraits.add({'slotId': slot, 'exercice': ex, 'code': motif});
     } else {
@@ -174,13 +190,29 @@ List<Map> koachTrierRaisons(List<Map> raisons) {
     return i < 0 ? koachCodesRaisons.length : i;
   }
 
-  final out = [
-    for (var i = 0; i < raisons.length; i++) (i, raisons[i]),
-  ]..sort((a, b) {
+  final out = [for (var i = 0; i < raisons.length; i++) (i, raisons[i])]
+    ..sort((a, b) {
       final c = rang(a.$2).compareTo(rang(b.$2));
       return c != 0 ? c : a.$1.compareTo(b.$1);
     });
   return [for (final x in out) x.$2];
+}
+
+/// KB3 : texte d'une ligne au départ chronométré servie telle qu'écrite
+/// (PR8 : séries du programme) que le retour gradué de Koach 1.0.6 réduit
+/// (`koach.retour_gradue`, `series` < `ecrites`) ; null pour une autre
+/// raison.
+String? koachTexteReduitEcrit(Map r) {
+  if (r['code'] != 'koach.retour_gradue') return null;
+  final p = r['params'];
+  if (p is! Map) return null;
+  final n = p['series'];
+  final w = p['ecrites'];
+  if (n is! num || w is! num || n <= 0 || n >= w) return null;
+  return 'Servi tel qu’écrit (départ chronométré du programme). Koach '
+      'aurait fait ${n.round()} série${n.round() > 1 ? 's' : ''} sur '
+      '${w.round()} pour rester dans le volume de la semaine : écoute tes '
+      'sensations.';
 }
 
 /// Section `koachEngine` du document.
@@ -1627,6 +1659,12 @@ extension KoachStore on AppStore {
       place: a.place,
       plan: plan.validate().isEmpty ? plan : a.plan,
       koach: {
+        // KB3 : diagnostic (mode dev) d'une séance servie illisible, qui
+        // retombe sur l'aperçu.
+        if (plan.validate().isNotEmpty)
+          'invalide': [
+            for (final v in plan.validate()) '${v.path} ${v.code} ${v.message}',
+          ],
         'state': 'open',
         'jour': jour,
         'semaine': week - 1,
@@ -2219,6 +2257,23 @@ extension KoachStore on AppStore {
         for (final r in raisons)
           if (r is Map && _koachRaisonDe(r, id)) r,
     ];
+    // KB3 : ligne au départ chronométré servie telle qu'écrite (PR8, nombre
+    // de séries fixé par le programme) que le retour gradué de Koach 1.0.6
+    // réduit : la carte garde les séries écrites et le dit.
+    final slot0 = e.slotId ?? adaptSlotOf(week, j, e.id);
+    if (adaptAsWritten(week, slot0)) {
+      final n = koachJourInfo(
+        week,
+        j,
+      )?.items.where((x) => x['slotId'] == slot0).firstOrNull?['sets'];
+      for (final r in [...pour(st['raisons']), ...pour(st['ouverture'])]) {
+        // La raison de cette ligne (séries écrites de la ligne), pas celle
+        // d'une autre ligne du même exercice.
+        if ((r['params'] as Map?)?['ecrites'] != n) continue;
+        final t = koachTexteReduitEcrit(r);
+        if (t != null) return t;
+      }
+    }
     // KB3 : raison la plus importante d'abord (ordre du contrat), sans
     // dépendre de l'ordre rendu par le moteur ; à défaut, raison de
     // structure de l'ouverture (séries réduites par le retour gradué,
@@ -2275,16 +2330,30 @@ extension KoachStore on AppStore {
           if (r is Map && match(r, st?['retraits'], 'code')) r,
       ]),
       ...koachTrierRaisons([
-        for (final r in raisons0)
+        for (final r in [...raisons0, if (ouverture is List) ...ouverture])
           if (r is Map &&
               !match(r, st?['retraits'], 'code') &&
               !match(r, st?['ecrites'], 'cause'))
             r,
       ]),
     ];
+    // KB3 : une réduction de séries sur une ligne servie telle qu'écrite
+    // (PR8) se dit sur sa carte (la ligne garde ses séries écrites), pas en
+    // tête de séance.
+    // (exercice, séries écrites) des lignes PR8 du jour.
+    final ecritsPr8 = <String>{
+      for (final x in koachJourInfo(week, j)?.items ?? const <Json>[])
+        if (adaptAsWritten(week, '${x['slotId']}'))
+          '${x['exerciseId']}|${x['sets']}',
+    };
+    raisons.removeWhere((r) {
+      final p = r['params'];
+      return koachTexteReduitEcrit(r) != null &&
+          p is Map &&
+          ecritsPr8.contains('${p['exercice']}|${p['ecrites']}');
+    });
     final out = <String>[];
     for (final r in raisons) {
-      if (r is! Map) continue;
       final t = texteRaisonKoach(
         r.cast<String, Object?>(),
         nomExercice: (x) => content.byId[x]?.nom,
