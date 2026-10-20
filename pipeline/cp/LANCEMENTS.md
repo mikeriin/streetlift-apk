@@ -392,3 +392,8 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 ### KM4 — ajout du pilotage (19/10/2026 13:05 UTC, C17.38.4)
 
 - **Volume réalisé** : `fermer` ne compte au réalisé de la semaine que les items servis par Koach ; depuis dev7.2.2, l'application sert telles qu'écrites les lignes que Koach aurait retirées (garde `koachGardeSeance`) et leurs séries sont observées hors du servi. KM4 doit **compter au volume réalisé les séries observées hors du servi** (avec test), sinon la rampe sous-estime le réalisé et continue de vouloir retirer ces lignes. À lire : `LIVRAISON_KB2_correction1.md` § 1.
+
+## KB3 — Koach 1.0.6 dans l'application, dev7.3.0 (lancé le 20/10/2026 vers 09:50 UTC, tâche « Opus 5.5, effort élevé, application » ; C17.39)
+
+- Lot : **KB3**, prompt `prompts/KB3.txt`. Base : pointe de `main` (dev7.2.4, ecb91ea9, ou suivant : **lots du propriétaire publiés depuis son PC**, C17.28 — lire `CLAUDE.md` de `main`, ne rien défaire de ses correctifs séance 1 et 2, rebase avant publication). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/KB3`. Aucune donnée réelle, aucun déchiffrement (C17.33).
+- À lire : `LIVRAISON_KM4.md` (§ 8 « Ce que KB3 doit monter »), `LIVRAISON_KB2_correction1.md` (garde `koachGardeSeance`), DECISIONS_CP.md C17.36 à C17.39.

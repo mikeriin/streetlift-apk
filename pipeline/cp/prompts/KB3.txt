@@ -1,0 +1,29 @@
+LOT KB3 — KOACH 1.0.6 DANS L'APPLICATION (dev7.3.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : KM4 validé (C17.39) : `etiquettes/kalis_adapt-v1.0.5` (Koach 1.0.6), `moteurs` 91d8ea70.
+Base : pointe de `main` (dev7.2.4, ecb91ea9, ou suivant). Le propriétaire publie aussi sur `main` depuis Claude Code sur son PC (C17.28) : lis le `CLAUDE.md` de `main`, garde intacts ses lots (correctifs séance dev7.2.3 et dev7.2.4 : plages de reps sans pré-remplissage, GtG hors séance, plages des accessoires, séries compactes…), rebase sur la pointe avant de publier, jamais de réécriture de `main`. Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/KB3`.
+Décisions : C8, C11, C15, C17.19, C17.28, C17.32 à C17.39. Livraisons à lire : `LIVRAISON_KM4.md` (§ 2, § 8, § 9), `LIVRAISON_KB2_correction1.md`, `LIVRAISON_KB2.md`. Pour `main` : PIPELINE_GP.md comme pour la piste A (ni signature, ni identifiant Android, ni secrets).
+**Aucune donnée réelle du propriétaire, aucun déchiffrement, aucune lecture de `cp-references`, aucune clé (C17.33.2).** Tests sur données synthétiques seulement.
+
+OBJECTIF
+Servir Koach 1.0.6 dans l'application : le retour gradué ne retire plus jamais un exercice principal sans douleur et coupe d'abord les accessoires.
+
+CONTENU
+1. **Paquet** : copier à l'octet `packages/kalis_adapt/lib/`, `assets/koach/` et `pubspec.yaml` depuis `etiquettes/kalis_adapt-v1.0.5` (C17.19.3) ; asset `koach_params_1_0_6.json` à la place de `koach_params_1_0_5.json` (version `1.0.6-ref.1`, 347 clés, SHA-256 `4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a`) ; déclarations `pubspec.yaml` de l'application et test d'empreinte mis à jour ; `kalis_plan` 0.4.2 et `kalis_core` inchangés.
+2. **Rôles** : donner `role` à chaque item de `contexte['reste_semaine']` et des séances manquées (rôle de l'emplacement, comme `roles` du plan de séance), pour le programme importé comme pour un programme créé ; test.
+3. **Garde** (`koachGardeSeance`, KB2 correction 1) : gardée **pour les principaux seulement** (filet : un principal absent du servi sans retrait motivé est servi tel qu'écrit, raison affichée) ; un accessoire ou un secondaire que Koach retire par la rampe reste retiré, **raison affichée** (texte de Koach 1.0.6 : « Je retire … aujourd'hui : … ») ; une réduction de séries s'affiche (« 3 séries au lieu de 6 … »). Les séries d'une ligne servie telle qu'écrite sont versées au moteur comme aujourd'hui (limite connue C17.39.5, à dire dans la livraison).
+4. **Raisons** : `ecrites` et `douleur` (textes de `koach_textes.dart`) ; l'application ne dépend pas de l'ordre des raisons.
+5. **Version** : suivante après la pointe de `main` (7.3.0 si la pointe est en 7.2.x) ; `SUIVI_PROJET.md`.
+
+NE PAS FAIRE
+- Aucun changement de `packages/` autre que la copie de l'étiquette ; aucun changement de comportement C15 ; rien défaire des lots du propriétaire ; pas de refonte d'écran.
+
+TESTS
+- Unitaires : programme importé PR2 synthétique (6 séances par semaine en PPL, `firstShown` = 15, semaine qui dépasse la rampe « chest » de +40 %) → lundi de tirage servi par Koach avec muscle-up lesté et traction lestée (séries réduites au plus, raison affichée), accessoire « chest » retiré d'abord (raison affichée) ; rôles transmis dans `reste_semaine` ; garde des principaux.
+- Données : migration depuis dev7.2.4 sans perte ; séances faites jamais réécrites ; sauvegarde d'origine intacte (C11.2) ; prise de main déjà faite conservée (pas de nouvelle prise de main).
+- Cible émulateur (étendre `integration_test/koach_kb2c1_test.dart` ou nouvelle) : même scénario PR2 synthétique ; toutes les cibles d'avant vertes ; temps de la séance servie mesuré.
+
+FIN DE LOT
+- Version sur `main`, contrôle complet `claude/ci-3d` vert, build signé réussi (push refusé : commit prêt sur `cp-sauvegardes/KB3-candidat` et arrête-toi).
+- `LIVRAISON_KB3.md` (pipeline et projet claude.ai) : paquet et empreinte, rôles, garde, raisons, tests, limites, « À tester » court (prochaine séance de tirage : muscle-up lesté et traction lestée présents ; lire les raisons affichées ; flammes au plus juste).
+- Ligne KB3 d'`ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.3.0 prêt — Koach 1.0.6 » ; arrête-toi (aucun fire_trigger).
