@@ -1,4 +1,0 @@
-00:46 +265: test/km2_validateur_test.dart: street_17_hybride_street_course : mêmes constats que le banc (référence et blocs modulés)
-00:47 +266: test/km2_validateur_test.dart: les plans modulés ajoutent des constats (comparaison utile)
-00:47 +267: test/km2_validateur_test.dart: depuisProfil : correspondance des champs sur les profils adaptés
-00:47 +268: All tests passed!
