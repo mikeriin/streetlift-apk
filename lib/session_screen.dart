@@ -2683,10 +2683,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         if (stageOf(i) case final stage?)
           Padding(
             key: ValueKey('drop-stage-${ex.id}-$i'),
-            padding: const EdgeInsets.only(
-              top: KSpacing.s8,
-              left: KSpacing.s4,
-            ),
+            padding: const EdgeInsets.only(top: KSpacing.s8, left: KSpacing.s4),
             child: Text(
               '${rowLabel(i)} · ${stage.name}'
               '${stage.target.isEmpty ? '' : ' · ${stage.target}'}',

@@ -45,9 +45,7 @@ void main() {
     expect(dropStages('Enchaîne sans repos.', 4), isNull);
   });
 
-  testWidgets('carte : palier nommé et unité sur chaque ligne', (
-    tester,
-  ) async {
+  testWidgets('carte : palier nommé et unité sur chaque ligne', (tester) async {
     tester.view.physicalSize = const Size(412, 2400);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -85,7 +83,10 @@ void main() {
     for (var i = 0; i < 8; i++) {
       expect(find.byKey(ValueKey('drop-stage-ZR-1-$i')), findsOneWidget);
     }
-    expect(find.textContaining('1.1 · Tractions pronation PdC'), findsOneWidget);
+    expect(
+      find.textContaining('1.1 · Tractions pronation PdC'),
+      findsOneWidget,
+    );
     expect(find.textContaining('2.4 · Dead hang'), findsOneWidget);
     expect(find.text('secondes'), findsNWidgets(4));
     expect(find.text('reps'), findsNWidgets(4));
