@@ -699,16 +699,7 @@ class AppStore extends ChangeNotifier {
         planProgram = null;
       }
     }
-    var inst = programInstance;
-    // Correctif 20/10/2026 (dev7.2.6) : finishers rameur / air bike du
-    // programme suivi passés en burpees (une fois ; séries notées gardées).
-    if (inst != null) {
-      final burpees = burpeeFinishers(inst);
-      if (burpees != null) {
-        programInstance = inst = burpees;
-        _persist();
-      }
-    }
+    final inst = programInstance;
     if (inst != null && inst.generated) {
       try {
         program = Program.fromJson(inst.programJson(_baseProgramJson));

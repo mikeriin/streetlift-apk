@@ -1,12 +1,8 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : finishers cardio en burpees, version dev7.2.6 ; précédent : dev7.2.5**  
-**Date : 20 octobre 2026, Europe/Paris — version : 7.2.6+146, affichée « dev7.2.6 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : correctif séance 3 — volume servi aligné sur les cibles des séries, version dev7.2.5 ; précédent : dev7.2.4**  
+**Date : 20 octobre 2026, Europe/Paris — version : 7.2.5+145, affichée « dev7.2.5 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : demande directe du propriétaire (hors pipeline, paquets inchangés) ; build signé sur `main`.**
-
-## Finishers cardio en burpees (version dev7.2.6, 20/10/2026)
-
-- Programme suivi (instance générée) : les finishers d'intervalles sur machine (« Intervalles air bike ou rameur », « Intervalles rameur » ; catalogue `ca-air-bike-sprints`, `ca-rameur-sprint`) deviennent « Burpees ou burpees muscle-up — finisher » (`cf-burpee`) sur tout le programme ; volume (intervalles écrits), intensité et identifiants de ligne gardés ; consigne : burpees complets, option burpee muscle-up sur les premiers efforts tant que chaque muscle-up reste propre (jours de GtG). Fait une fois au chargement (`burpeeFinishers`), sauvegardé.
 
 ## Correctif séance 3 — volume et répétitions cohérents (version dev7.2.5, 20/10/2026)
 
