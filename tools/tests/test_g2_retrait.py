@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.2.4 : GtG hors séance, plages des accessoires, séries compactes (dev7.2.4).
-        self.assertEqual(version, '7.2.4')
+        # 7.2.5 : volume servi aligné sur les cibles des séries (dev7.2.5).
+        self.assertEqual(version, '7.2.5')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)

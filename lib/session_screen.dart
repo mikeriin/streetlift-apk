@@ -2141,7 +2141,34 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // vide, haut de la plage en indication (« max 21 ») et mis en avant
     // dans le volume.
     final plainReps = sp.kind == 'reps' && !sp.myo && !sp.cluster;
-    final textRange = plainReps ? repRangeOf(store.setsLabel(ex)) : null;
+    // Correctif 20/10/2026 (dev7.2.5) : exercice servi par Koach : le
+    // volume affiché suit les cibles des séries (série repère comprise),
+    // comme les champs (« 1 × 6-14 » et « max 14 », plus « 6-12 » contre
+    // « max 14 »).
+    var volumeLabel = store.setsLabel(ex);
+    if (!readOnly &&
+        plainReps &&
+        sp.every == null &&
+        widget.adapt &&
+        ex.engine) {
+      final goals = [
+        for (var i = 0; i < log.sets.length; i++)
+          store.adaptGoal(widget.week.n, widget.day.j, ex, i),
+      ];
+      if (goals.isNotEmpty &&
+          goals.every(
+            (g) => g != null && !g.seconds && g.low != null && g.high != null,
+          )) {
+        final lo = goals.map((g) => g!.low!).reduce((a, b) => a < b ? a : b);
+        final hi = goals.map((g) => g!.high!).reduce((a, b) => a > b ? a : b);
+        if (hi < 100) {
+          volumeLabel = lo == hi
+              ? '${log.sets.length}×$lo'
+              : '${log.sets.length}×$lo-$hi';
+        }
+      }
+    }
+    final textRange = plainReps ? repRangeOf(volumeLabel) : null;
     int? rangeMax(int i) {
       if (readOnly || !plainReps) return null;
       if (widget.adapt && ex.engine) {
@@ -2335,7 +2362,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       if (!readOnly && textRange != null)
                         _rangeVolume(
                           volumeText(
-                            store.setsLabel(ex),
+                            volumeLabel,
                             timed: _group != null || _sharedEvery != null,
                           ),
                           KType.chiffreMoyen.copyWith(
@@ -2350,7 +2377,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                               ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
                               : nbsp(
                                   volumeText(
-                                    store.setsLabel(ex),
+                                    volumeLabel,
                                     timed:
                                         _group != null || _sharedEvery != null,
                                   ),

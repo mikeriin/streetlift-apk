@@ -1,8 +1,12 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : correctif séance 2 — GtG hors séance, plages des accessoires, séries compactes, version dev7.2.4 ; précédent : dev7.2.3**  
-**Date : 20 octobre 2026, Europe/Paris — version : 7.2.4+144, affichée « dev7.2.4 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : demande directe du propriétaire (hors pipeline ; paquets inchangés, sans conflit avec KM4 ; KB3 visera dev7.3.0 depuis ce `main`) ; build signé sur `main`.**
+**Passe actuelle : correctif séance 3 — volume servi aligné sur les cibles des séries, version dev7.2.5 ; précédent : dev7.2.4**  
+**Date : 20 octobre 2026, Europe/Paris — version : 7.2.5+145, affichée « dev7.2.5 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : demande directe du propriétaire (hors pipeline, paquets inchangés) ; build signé sur `main`.**
+
+## Correctif séance 3 — volume et répétitions cohérents (version dev7.2.5, 20/10/2026)
+
+- Exercice servi par Koach : le volume affiché (« 1 × 6-14 ») se calcule sur les cibles des séries, série repère comprise, comme l'indication des champs (« max 14 ») ; avant, le volume venait de la ligne servie (« 1 × 6-12 ») et la série repère de Koach (8-14, élargie à 6-14) n'y était pas. Départs chronométrés inchangés.
 
 ## Correctif séance 2 — GtG, plages des accessoires, séries compactes (version dev7.2.4, 20/10/2026)
 
