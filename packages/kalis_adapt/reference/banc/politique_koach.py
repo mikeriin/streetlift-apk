@@ -82,22 +82,48 @@ def mesure_rampe(acc, items, roles, servis, raisons):
     rôle `main`, hors échauffement, au moins une série. Réduit : une raison
     `koach.retour_gradue` porte sur son exercice ; retiré : réduit à 0 série
     et absent du servi, sans raison de douleur sur l'exercice (ni conduite
-    sous douleur dite par la raison, `douleur`, 1.0.6)."""
+    sous douleur dite par la raison, `douleur`, 1.0.6).
+
+    Critère de KM5 (C17.40) : « série ou item retiré sous l'écrit par la
+    rampe de volume » — ligne écrite (hors échauffement, au moins une
+    série) servie sous ses séries écrites alors qu'une raison de la rampe
+    de VOLUME porte sur son exercice (`koach.retour_gradue` d'un groupe
+    majeur ou de l'allègement, hors tenues bras tendus ; `koach.ajout_borne`
+    servie sous ses écrites) : `sous_ecrit_items`, `sous_ecrit_series`
+    (séries écrites − servies, borne haute quand une autre règle a aussi
+    réduit la ligne). Ajouts de Koach bornés (`koach.ajout_borne`, 1.0.7) :
+    `ajouts_bornes` (raisons), `ajouts_bornes_series` (prévues − servies)."""
     acc['seances'] += 1
     servi = {}
     for it in servis:
         servi[it.get('slotId')] = int(it.get('sets') or 0)
     rampe = {}
     douleur = set()
+    volume = set()
     for r in raisons:
         pr = r.get('params') or {}
         ex = pr.get('exercice')
+        if r.get('code') == 'koach.ajout_borne':
+            acc['ajouts_bornes'] += 1
+            acc['ajouts_bornes_series'] += int(pr.get('prevues') or 0) - int(pr.get('series') or 0)
+            if int(pr.get('series') or 0) < int(pr.get('ecrites') or 0):
+                volume.add(ex)
+        if r.get('code') == 'koach.retour_gradue' and not str(pr.get('groupe')).startswith('bras_tendus'):
+            volume.add(ex)
         if r.get('code') == 'koach.retour_gradue':
             rampe.setdefault(ex, []).append(pr.get('series'))
             if pr.get('douleur'):
                 douleur.add(ex)
         elif r.get('code') in RAISONS_DOULEUR or str(r.get('code')).startswith('koach.douleur'):
             douleur.add(ex)
+    for it in items:
+        n0 = int(it.get('sets') or 0)
+        if it.get('kind') == 'warmup' or n0 <= 0 or it['exerciseId'] not in volume:
+            continue
+        n = servi.get(it.get('slotId'), 0)
+        if n < n0:
+            acc['sous_ecrit_items'] += 1
+            acc['sous_ecrit_series'] += n0 - n
     avec = False
     reduit = False
     retire = 0
@@ -125,7 +151,8 @@ def mesure_rampe(acc, items, roles, servis, raisons):
 
 def rampe_vide():
     return {'seances': 0, 'seances_principal': 0, 'seances_principal_reduit': 0, 'principaux_reduits': 0,
-            'part_servie': 0.0, 'principal_retire': 0, 'seances_principal_retire': 0}
+            'part_servie': 0.0, 'principal_retire': 0, 'seances_principal_retire': 0,
+            'sous_ecrit_items': 0, 'sous_ecrit_series': 0, 'ajouts_bornes': 0, 'ajouts_bornes_series': 0}
 
 
 class PolitiqueKoach(Politique):

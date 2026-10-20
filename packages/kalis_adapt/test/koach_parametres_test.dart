@@ -68,10 +68,10 @@ void main() {
         sha256.convert(_octets(koachFichierFiches)).toString(),
         koachFichesSha256,
       );
-      // En-tête du contrat 1.0.6 (CONTRAT_1_0.md).
+      // En-tête du contrat 1.0.7 (CONTRAT_1_0.md).
       expect(
         koachParametresSha256,
-        '4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a',
+        '2f055c5181743089afd0c3602bc270f77b01063ebc1bab32b293c81c6816f42c',
       );
     });
 
@@ -87,11 +87,11 @@ void main() {
   group('lireParametresKoach', () {
     final p = lireParametresKoach(_texte(koachFichierParametres));
 
-    test('version, schéma, nombre de clés (347 : 6 + 341)', () {
+    test('version, schéma, nombre de clés (344 : 6 + 338)', () {
       expect(p['schema'], koachParametresSchema);
       expect(p['version'], koachParametresVersion);
       expect(koachParametresVersion, koachVersion);
-      expect(koachVersion, '1.0.6-ref.1');
+      expect(koachVersion, '1.0.7-ref.1');
       final racine = [
         for (final e in p.entries)
           if (e.value is! Map<String, Object?>) e.key,
@@ -107,9 +107,9 @@ void main() {
         cles += jm(p[s]).length;
       }
       expect(racine.length, 6);
-      expect(cles - racine.length, 341);
+      expect(cles - racine.length, 338);
       expect(cles, koachParametresCles);
-      expect(cles, 347);
+      expect(cles, 344);
     });
 
     test('identique au fichier de référence décodé', () {

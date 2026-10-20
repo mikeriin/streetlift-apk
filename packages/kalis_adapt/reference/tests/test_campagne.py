@@ -137,10 +137,13 @@ def test_retour_a_l_ecrit_apres_un_bloc_interrompu():
     tour = meneur.simuler(saison, infos, pol, 'a', 87)
     s = ca.securite_saison(saison, infos, tour, pol)
     assert s['servi_tests_faits']['introduit'] == {} and s['servi_tests_faits']['aggrave'] == {}
-    # 1.0.6 (KM4) : une hausse de plus, reclassée « retour à l'écrit » (plan
-    # du retour gradué réparti, planchers des principaux ; 1.0.5 : 1).
-    assert s['servi_tests_faits']['retour_ecrit'] == {'volume_trop_vite': 2}
-    # Vue réalisée appariée (indicateur, séances manquées vidées) : 1.0.6 sert
-    # les principaux à leur plancher au lieu de les retirer ; deux hausses de
-    # plus que le plan écrit aux mêmes séances manquées (1.0.5 : aucune).
-    assert s['realise_apparie']['introduit'] == {'volume_trop_vite': 2} and s['realise_apparie']['aggrave'] == {}
+    # 1.0.7 (KM5, C17.40.3) : servi au plus à l'écrit, aucune hausse au-delà
+    # de max(limite, écrit de la semaine) ; l'ancienne définition (limite
+    # seule) reclasse une hausse en « retour à l'écrit » (1.0.6 : 2, 1.0.5 :
+    # 1). Vue réalisée appariée : plus aucune hausse au-delà du plan écrit
+    # (1.0.6 : 2, principaux servis à leur plancher).
+    assert 'retour_ecrit' not in s['servi_tests_faits']
+    assert s['ancienne_definition']['servi_tests_faits']['retour_ecrit'] == {'volume_trop_vite': 1}
+    assert s['ancienne_definition']['servi_tests_faits']['introduit'] == {}
+    assert s['realise_apparie']['introduit'] == {} and s['realise_apparie']['aggrave'] == {}
+    assert pol.rampe['sous_ecrit_items'] == 0 and pol.rampe['principal_retire'] == 0

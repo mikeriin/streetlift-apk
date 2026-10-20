@@ -840,8 +840,14 @@ class Surveillance extends Extension
         continue;
       }
       final it = Map<String, Object?>.of(it0);
+      final avant = ent(it['sets']);
       final n = (dbl(it['sets']) * fSeries + 0.5).floor();
       it['sets'] = n >= 1 ? n : 1;
+      // 1.0.7 (KM5) : `koachVolume` reste « séries servies − séries écrites
+      // par le programme » (la rampe de volume ne coupe jamais sous l'écrit
+      // et lit l'écrit par ce champ).
+      it['koachVolume'] =
+          ent(it['sets']) - (avant - ent(ou(it['koachVolume'], 0)));
       final f = it['targetFlames'];
       if (f != null) {
         final fn = f as num;

@@ -116,6 +116,7 @@ def agreger(dossiers, graines=None, empreintes_multiples=False):
     apparie = _Mesure()
     realise = _Mesure()
     retour = _Mesure()
+    ancienne = _Mesure()
     par_vue = {v: {c: collections.Counter() for c in CATS} for v in VUES}
     initial = collections.Counter()
     douleur = collections.Counter()
@@ -169,6 +170,11 @@ def agreger(dossiers, graines=None, empreintes_multiples=False):
         c7.ajouter(r, k7 + dl, (s.get('servi_tests_faits_exemples') or []) + (s.get('plan_module_exemples') or []),
                    garder_liste=True)
         retour.ajouter(r, _somme(s, 'servi_tests_faits', ('retour_ecrit',)), [])
+        # KM5 (C17.40.3) : critère 7 avec l'ancienne définition de
+        # « volume_trop_vite » (dépassement de la limite seule), indicateur.
+        an = s.get('ancienne_definition') or {}
+        ancienne.ajouter(r, _somme(an, 'plan_module', ('introduit', 'aggrave'))
+                         + _somme(an, 'servi_tests_faits', ('introduit', 'aggrave')) + dl, [])
         apparie.ajouter(r, _somme(s, 'realise_apparie', ('introduit', 'aggrave')) + dl,
                         s.get('realise_apparie_exemples') or [])
         realise.ajouter(r, _somme(s, 'realise', ('deja_initial', 'aggrave', 'introduit')) + dl,
@@ -185,6 +191,7 @@ def agreger(dossiers, graines=None, empreintes_multiples=False):
         'plantages_exemples': plantages[:10],
         'critere_7_cahier': c7.json(),
         'retour_ecrit_publie_a_part': retour.json(),
+        'critere_7_ancienne_definition': ancienne.json(),
         'realisee_appariee': apparie.json(),
         'realisee_contre_plan_initial': realise.json(),
         'douleur_et_hausses': dict(sorted(douleur.items())),
@@ -207,7 +214,12 @@ def rampe_json(c, par_scenario, exemples):
     """Critère KM4 (C17.37) : principaux retirés par la rampe de volume sans
     douleur (0 attendu) ; indicateurs : part des séances dont un principal
     est réduit, part moyenne des séries écrites servie au principal réduit."""
-    return {'principal_retire': c.get('principal_retire', 0), 'total': _rampe_indicateurs(c),
+    return {'principal_retire': c.get('principal_retire', 0),
+            # KM5 (C17.40) : « série ou item retiré sous l'écrit par la rampe
+            # de volume » (0 attendu) ; ajouts de Koach bornés (indicateur).
+            'sous_ecrit_items': c.get('sous_ecrit_items', 0), 'sous_ecrit_series': c.get('sous_ecrit_series', 0),
+            'ajouts_bornes': c.get('ajouts_bornes', 0), 'ajouts_bornes_series': c.get('ajouts_bornes_series', 0),
+            'total': _rampe_indicateurs(c),
             'par_scenario': {k: _rampe_indicateurs(v) for k, v in sorted(par_scenario.items())},
             'exemples': exemples}
 
@@ -228,6 +240,8 @@ def markdown(r, titre):
                    ('Saison réalisée appariée (Koach au-delà du plan écrit aux mêmes séances manquées)',
                     'realisee_appariee'),
                    ('« Retour à l\'écrit » (publié à part, C13.10.1)', 'retour_ecrit_publie_a_part'),
+                   ('Critère 7 avec l\'ancienne définition de « volume_trop_vite » (indicateur, KM5)',
+                    'critere_7_ancienne_definition'),
                    ('Saison réalisée contre le plan initial (diagnostic)', 'realisee_contre_plan_initial')):
         m = r[cle]
         L += ['## ' + t, '', '**%d** (%d saisons touchées ; graine 0 : %d) : %s.' % (
@@ -240,6 +254,11 @@ def markdown(r, titre):
     rp = r.get('rampe_principaux') or {}
     if rp:
         t = rp['total']
+        L += ['## Rampe de volume sous l\'écrit (KM5, C17.40)', '',
+              '**Série ou item retiré sous l\'écrit par la rampe de volume : %d item(s), %d série(s)**. Ajouts de '
+              'Koach bornés : %d (%d séries).' % (rp.get('sous_ecrit_items', 0), rp.get('sous_ecrit_series', 0),
+                                                  rp.get('ajouts_bornes', 0), rp.get('ajouts_bornes_series', 0)),
+              '']
         L += ['## Rampe de volume et principaux (KM4, C17.37)', '',
               '**Principal retiré par la rampe sans douleur : %d** (séances : %d). Séances avec un principal : %d ; '
               'dont un principal réduit par le retour gradué : %d (part %s) ; part moyenne des séries écrites servie '
@@ -287,10 +306,11 @@ def main(argv=None):
                        'saisons_touchees': len(liste), 'liste': liste}, f, ensure_ascii=False, indent=1,
                       sort_keys=True)
     print('%d saisons, %d plantée(s) ; critère 7 : %d (%d saisons) ; réalisée appariée : %d ; retour à l\'écrit : %d'
-          ' ; principal retiré par la rampe : %d'
+          ' ; principal retiré par la rampe : %d ; sous l\'écrit par la rampe : %d ; ancienne définition : %d (%d saisons)'
           % (r['saisons'], r['plantages'], r['critere_7_cahier']['total'], r['critere_7_cahier']['saisons_touchees'],
              r['realisee_appariee']['total'], r['retour_ecrit_publie_a_part']['total'],
-             r['rampe_principaux']['principal_retire']))
+             r['rampe_principaux']['principal_retire'], r['rampe_principaux']['sous_ecrit_items'],
+             r['critere_7_ancienne_definition']['total'], r['critere_7_ancienne_definition']['saisons_touchees']))
     return 0
 
 
