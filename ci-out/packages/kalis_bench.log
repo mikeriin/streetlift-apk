@@ -1,0 +1,359 @@
+== kalis_bench
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 109.0.0
++ analyzer 14.5.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ cli_util 0.6.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.16.0
++ crypto 3.0.7
++ ffi 2.2.0
++ file 7.0.1
++ frontend_server_client 4.1.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_adapt 1.0.5 from path ../kalis_adapt
++ kalis_core 0.4.4 from path ../kalis_core
++ kalis_plan 0.4.2 from path ../kalis_plan
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.3
++ shelf_packages_handler 3.0.2
++ shelf_static 1.2.0
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.33.0
++ test_api 0.7.15
++ test_core 0.6.21
++ typed_data 1.4.0
++ vm_service 15.4.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 53 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 48 files (0 changed) in 0.37 seconds.
+Analyzing kalis_bench...
+No issues found!
+00:00 +0: loading test/km_export_test.dart
+00:00 +0: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +1: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +2: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +3: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +4: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +5: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +6: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +7: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +8: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +9: test/km_export_test.dart: saison de référence : deux appels, même JSON ; champs attendus
+00:00 +10: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) (setUpAll)
+00:00 +11: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) (setUpAll)
+00:00 +12: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) (setUpAll)
+00:00 +12: test/km_export_test.dart: athlète adversarial : déterministe ; la fiche recouverte agit
+00:01 +13: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) cadre de la saison exportée (référence Python)
+00:01 +14: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) cadre de la saison exportée (référence Python)
+00:02 +15: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) cadre de la saison exportée (référence Python)
+00:02 +16: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) cadre de la saison exportée (référence Python)
+00:02 +17: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:04 +17 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:04 +17 -1: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) evaluer_saison : adv-7ee0da71, graine 0 [E]
+  Expected: null
+    Actual: 'saison.echecs : 0.004292 contre 0.00428'
+  saison.echecs : 0.004292 contre 0.00428
+  
+  package:matcher                      expect
+  test/km2_adversaire_test.dart 572:7  main.<fn>.<fn>
+  
+00:04 +17 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:04 +18 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +19 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +20 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +21 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +22 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +23 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +24 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +25 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +26 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +27 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +28 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +29 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +30 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +31 -1: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:09 +32 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:09 +33 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:09 +34 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:09 +35 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:09 +36 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:09 +37 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:09 +38 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:09 +39 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:09 +40 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 (setUpAll)
+00:10 +40 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 kmReferenceSeason = saison lue par Python (données régénérées sur le kalis_plan courant, lot KR1)
+00:10 +41 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 tour.sets : clés, valeurs et types (hors traces)
+00:10 +42 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 tour.sets : traces des cibles
+00:10 +43 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 tour.estimates : clés, valeurs et types
+00:10 +44 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 séances servies
+00:10 +45 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 compteurs, gains et capacités
+00:10 +46 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 prévisions de la planification
+00:10 +47 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 journal du moteur : longueur et types
+00:10 +48 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 posterior final
+00:10 +49 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 journaux des extensions du banc
+00:10 +50 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +51 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +52 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +53 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +54 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +55 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +56 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +57 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +58 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +59 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +60 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +61 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +62 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +63 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +64 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +65 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +66 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +67 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +68 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +69 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +70 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +71 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 rejeu du journal : même état, extensions et façade comprises
+00:10 +72 -1: test/ks1c2_test.dart: règle sur des jours écrits à la main jour poussée sans poussée (constat de KS1A) : deux écarts
+00:10 +73 -1: test/ks1c2_test.dart: règle sur des jours écrits à la main jour poussée sans poussée (constat de KS1A) : deux écarts
+00:10 +74 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 sécurité de la saison (kmSecuriteSaison)
+00:10 +75 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 sécurité de la saison (kmSecuriteSaison)
+00:10 +76 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 sécurité de la saison (kmSecuriteSaison)
+00:10 +77 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 sécurité de la saison (kmSecuriteSaison)
+00:10 +78 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 sécurité de la saison (kmSecuriteSaison)
+00:10 +79 -1: test/km2_banc_test.dart: autres_08_crossfit_intermediaire__changement_discipline__a__87 sécurité de la saison (kmSecuriteSaison)
+00:10 +80 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +81 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +82 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +83 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +84 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +85 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +86 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +87 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +88 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +89 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +90 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +91 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:12 +92 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:13 +93 -1: test/ks1c2_test.dart: grille des profils incomplets profil du constat de KS1A et ses variantes : chaque jour typé porte un principal de son schéma (premier bloc)
+00:13 +94 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +95 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +96 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +97 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +98 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +99 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +100 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +101 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +102 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:13 +103 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +104 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +105 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +106 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +107 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +108 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +109 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +110 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +111 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +112 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +113 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +114 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +115 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +116 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +117 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +118 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +119 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +120 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +121 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:14 +122 -1: test/km2_banc_test.dart: ks_01_streetlifting_sets_reps_4_seances__douleur_epaule__b__38 (setUpAll)
+00:15 +122 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +123 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +124 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +125 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +126 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +127 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +128 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +129 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +130 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +131 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:15 +132 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:16 +133 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:16 +134 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:16 +135 -1: test/ks1c1_test.dart: échéance avancée : plus de hausse de charge après la réécriture du bloc (ks_01 à ks_03 ; KS1 : 4 violations, 0.3.1 : 4)
+00:18 +136 -1: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:18 +137 -1: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:21 +138 -1: test/km2_banc_test.dart: ks_test_ppl6__seances_manquees__a__1 (setUpAll)
+00:27 +138 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:27 +139 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:27 +140 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:27 +141 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:27 +142 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:28 +143 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:28 +144 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:28 +145 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:28 +146 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:28 +147 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:28 +148 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:36 +149 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:36 +150 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:36 +151 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +152 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +153 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +154 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +155 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +156 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +157 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +158 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +159 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +160 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:37 +161 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:38 +162 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:38 +163 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:38 +164 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +165 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +166 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +167 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +168 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +169 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +170 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +171 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +172 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +173 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:39 +174 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:40 +175 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:40 +176 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:40 +177 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +178 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +179 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +180 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +181 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +182 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +183 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +184 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +185 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +186 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:41 +187 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:42 +188 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:42 +189 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:42 +190 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +191 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +192 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +193 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +194 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +195 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +196 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +197 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +198 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +199 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +200 -1: test/ks1c1_test.dart: tous les profils ajoutés, tous les scénarios : seules restent les violations de volume du profil de test sous douleur à l'épaule
+00:44 +201 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 rejeu du journal : même état, extensions et façade comprises
+00:45 +202 -1: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
+00:45 +203 -1: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
+00:45 +204 -1: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
+00:46 +205 -1: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 (setUpAll)
+00:47 +205 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +206 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +207 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +208 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +209 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +210 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +211 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +212 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +213 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +214 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:47 +215 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:48 +216 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:48 +217 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:48 +218 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:48 +219 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:50 +220 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:50 +221 -1: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:50 +222 -1: test/km2_validateur_test.dart: autres_01_debutant_musculation : mêmes constats que le banc (référence et blocs modulés)
+00:50 +223 -1: test/km2_validateur_test.dart: autres_01_debutant_musculation : mêmes constats que le banc (référence et blocs modulés)
+00:50 +224 -1: test/km2_validateur_test.dart: autres_01_debutant_musculation : mêmes constats que le banc (référence et blocs modulés)
+00:50 +225 -1: test/km2_validateur_test.dart: autres_01_debutant_musculation : mêmes constats que le banc (référence et blocs modulés)
+00:50 +226 -1: test/km2_validateur_test.dart: autres_01_debutant_musculation : mêmes constats que le banc (référence et blocs modulés)
+00:50 +227 -1: test/km2_validateur_test.dart: autres_01_debutant_musculation : mêmes constats que le banc (référence et blocs modulés)
+00:51 +228 -1: test/km2_validateur_test.dart: autres_01_debutant_musculation : mêmes constats que le banc (référence et blocs modulés)
+00:51 +229 -1: test/km2_validateur_test.dart: autres_01_debutant_musculation : mêmes constats que le banc (référence et blocs modulés)
+00:52 +230 -1: test/structure_test.dart: profil de test ks_test_ppl6 (setUpAll)
+00:52 +230 -1: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:53 +231 -1: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:53 +232 -1: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:53 +233 -1: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:53 +234 -1: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:53 +235 -1: test/km2_validateur_test.dart: autres_02_hypertrophie_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:53 +236 -1: test/properties_test.dart: propriétés des critères, graines 0 à 2499
+00:55 +237 -1: test/properties_test.dart: propriétés des critères, graines 0 à 2499
+00:56 +238 -1: test/km2_validateur_test.dart: autres_04_force_generale_46_ans : mêmes constats que le banc (référence et blocs modulés)
+00:56 +239 -1: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:57 +240 -1: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:57 +241 -1: test/km2_validateur_test.dart: autres_06_semi_marathon_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+00:57 +242 -1: test/properties_test.dart: propriétés des critères, graines 5000 à 7499
+00:58 +243 -1: test/properties_test.dart: propriétés des critères, graines 5000 à 7499
+00:59 +244 -1: test/km2_validateur_test.dart: autres_08_crossfit_intermediaire : mêmes constats que le banc (référence et blocs modulés)
+01:00 +245 -1: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+01:00 +246 -1: test/km2_validateur_test.dart: autres_09_perte_de_poids_debutante : mêmes constats que le banc (référence et blocs modulés)
+01:00 +247 -1: test/km2_validateur_test.dart: autres_10_contraintes_multiples : mêmes constats que le banc (référence et blocs modulés)
+01:01 +248 -1: test/km2_validateur_test.dart: street_01_debutant_complet : mêmes constats que le banc (référence et blocs modulés)
+01:01 +249 -1: test/km2_validateur_test.dart: street_02_debutant_surpoids : mêmes constats que le banc (référence et blocs modulés)
+01:02 +250 -1: test/km2_validateur_test.dart: street_03_debutante : mêmes constats que le banc (référence et blocs modulés)
+01:03 +251 -1: test/km2_validateur_test.dart: street_04_reprise_longue_pause : mêmes constats que le banc (référence et blocs modulés)
+01:03 +252 -1: test/km2_validateur_test.dart: street_05_inter_calisthenie_front_lever : mêmes constats que le banc (référence et blocs modulés)
+01:04 +253 -1: test/km2_validateur_test.dart: street_06_inter_sets_reps : mêmes constats que le banc (référence et blocs modulés)
+01:05 +254 -1: test/km2_validateur_test.dart: street_07_avance_streetlifting_competition : mêmes constats que le banc (référence et blocs modulés)
+01:06 +255 -1: test/km2_validateur_test.dart: street_08_avance_sets_reps_competition : mêmes constats que le banc (référence et blocs modulés)
+01:06 +256 -1: test/km2_validateur_test.dart: street_09_elite_streetlifting : mêmes constats que le banc (référence et blocs modulés)
+01:07 +257 -1: test/km2_validateur_test.dart: street_10_elite_figures : mêmes constats que le banc (référence et blocs modulés)
+01:08 +258 -1: test/km2_validateur_test.dart: street_11_master_51_ans : mêmes constats que le banc (référence et blocs modulés)
+01:09 +259 -1: test/km2_validateur_test.dart: street_12_antecedent_coude : mêmes constats que le banc (référence et blocs modulés)
+01:10 +260 -1: test/km2_validateur_test.dart: street_13_peu_de_temps : mêmes constats que le banc (référence et blocs modulés)
+01:10 +261 -1: test/km2_validateur_test.dart: street_14_parc_sans_lest : mêmes constats que le banc (référence et blocs modulés)
+01:11 +262 -1: test/km2_validateur_test.dart: street_15_travail_physique_sommeil_court : mêmes constats que le banc (référence et blocs modulés)
+01:11 +263 -1: test/km2_validateur_test.dart: street_16_specialisation_traction_lestee : mêmes constats que le banc (référence et blocs modulés)
+01:12 +264 -1: test/km2_validateur_test.dart: street_17_hybride_street_course : mêmes constats que le banc (référence et blocs modulés)
+01:12 +265 -1: test/km2_validateur_test.dart: les plans modulés ajoutent des constats (comparaison utile)
+01:12 +266 -1: test/km2_validateur_test.dart: depuisProfil : correspondance des champs sur les profils adaptés
+01:12 +267 -1: Some tests failed.
+
+Failing tests:
+  test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) evaluer_saison : adv-7ee0da71, graine 0
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+kalis_bench 0.5.7 : 27 profils, mode croisement, 0 violation(s) de sécurité, rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_bench (10 s).
+campagne street : 17 profils × 100 graines × 3 modèles (343 s).
+saisons croisées : 34 profils × 100 graines × 3 modèles × 10 saisons (6516 s).
+banc KS1 : 34 profils, 2 violation(s) dans les saisons des profils ajoutés (29 s).
+durée : 7005 s
