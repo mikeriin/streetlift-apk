@@ -16,6 +16,10 @@ Session Opus 5.5 (19/10/2026, depuis 11:04 UTC). Base : `moteurs` 9c81a201.
 - CI : run A 39247073902 (avant, Dart 1.0.4) ; run B (ter) 39260047813 (tests + campagne Python 1.0.6, 20 parts) ; run C (bis) be0711bb (campagne Dart 1.0.6 + adversaires, comparaison au run B) ; format distant branche claude/fmt-km4 (033c6eda).
 - Part 0 du run B : Dart compile, tests kalis_adapt verts sauf docs/PROPRIETAIRE.md (version, corrigé) ; format kalis_adapt à corriger (branche fmt) ; pytest : test_campagne (corrigé) + test_fixtures (numpy de la CI, connu).
 
+- Run B (répartition) : critère 7 = 40 (28 saisons, autres_10 graines 48 et 96) → répartition désactivée (`retour_repartition_semaines` 0), nouveau `retour_emprunt_plancher` (1 = P).
+- Run D (Dart, 39304949115) : variante P : critère 7 = 0, principal retiré 0, réduit 3,11 % (avant 4,27 %), part servie 36,2 % (avant 7,0 %), retour à l'écrit 54 064 (avant 50 828), réalisée appariée 243 277 (238 906). Variante M non mesurée (pas de Dart sur les parts ≥ 100).
+- Run E (Python P, 39312132226) en cours ; run F (ea1bacf5 : tests, adversaires, comparaison D↔E, critères) en file.
+
 ## En cours / reste
 - Échantillon 1.0.6 ; tests hérités (`test_securite_regles.py` retour gradué) à mettre à la sémantique 1.0.6 ; fixtures ; portage Dart ; banc Dart (rôle, mesure) ; campagnes CI (Dart avant, Python 1.0.6, Dart 1.0.6) ; documents ; livraison.
 
@@ -23,3 +27,9 @@ Session Opus 5.5 (19/10/2026, depuis 11:04 UTC). Base : `moteurs` 9c81a201.
 - Crédits de groupes : revus sur sources (sous-agent, scratchpad sources_km4.md) ; table partagée avec kalis_plan et le validateur du banc : non changée dans ce lot (recommandation dans la livraison).
 - Plancher principal : max(1, ⌈écrit × 0,5⌉) ; jamais 0 sans douleur.
 - Répartition seulement sans séance manquée dans les 4 dernières semaines (une séance manquée compte à son écrit au validateur).
+
+## Point du 20/10/2026 04:00 UTC
+- Paramètres finaux SHA 4156e61b…045a (347 clés ; `retour_repartition_semaines` 0, `retour_emprunt_plancher` 1).
+- Run D (Dart P) : c7 = 0, principal retiré 0. Run E (Python, 89 438 saisons) : c7 = 0 ; parité D ↔ E : 89 438 identiques (run F). Critères g0-5 sans recul au-delà du bruit.
+- En cours : run G 39363111472 (demi-parts 13/40, 33/40 + publication complète) ; contrôle complet 39363143851 (commit 34580a33, même code que l'arbre final).
+- Reste : remplir ⟨G⟩ (CRITERES_KM4.md, livraison), push moteurs, étiquettes, livraison, ETAT_CP, page de suivi, notification.
