@@ -28,10 +28,12 @@ Map<String, dynamic> pr2Semaine() =>
 /// Importe dans [app] la sauvegarde synthétique : journal de l'ancien
 /// programme jusqu'à S[lastWeek]·J[lastJ], nouveau programme de S15 à S24
 /// (deux blocs), départ affiché S15 ; profil d'athlète enregistré.
+/// KB3 : [semaine] remplace la semaine type (variante d'un test).
 Future<void> importPr2Nouveau(
   AppStore app, {
   int lastWeek = 14,
   int lastJ = 7,
+  Map<String, dynamic>? semaine,
 }) async {
   final b = filledBackup(app);
   final logs = (b['logs'] as Map).cast<String, dynamic>();
@@ -42,7 +44,7 @@ Future<void> importPr2Nouveau(
   });
   final base = _asset('programme_v33.json.gz');
   final koach = _asset('koach_program.json.gz');
-  final semaine = pr2Semaine();
+  final type = semaine ?? pr2Semaine();
   b['programInstance'] = {
     'v': 1,
     'kind': 'generated',
@@ -55,7 +57,7 @@ Future<void> importPr2Nouveau(
       for (final w in (base['weeks'] as List).take(14))
         (w as Map).cast<String, dynamic>(),
       for (var n = 15; n <= 24; n++)
-        (jsonDecode(jsonEncode(semaine)) as Map<String, dynamic>)
+        (jsonDecode(jsonEncode(type)) as Map<String, dynamic>)
           ..['n'] = n
           ..['blockKey'] = n <= 19 ? 'NA' : 'NB',
     ],

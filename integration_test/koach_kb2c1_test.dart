@@ -329,13 +329,13 @@ void main() {
     final a = store.sessionAdapt(wk, 1)!;
     final shown = store.adaptDay(wk, j1, a).exercises;
     final row = shown.firstWhere(
-      (x) => x.catalogId == 'mu-rowing-barre-pronation',
+      (x) => x.catalogId == 'mu-reverse-wrist-curl-haltere',
     );
     final log = store.exLog(wk, 1, row);
     store.adaptPrefill(wk, 1, row, log);
     log.sets[0]
-      ..kg = '60'
-      ..reps = '8'
+      ..kg = '12'
+      ..reps = '15'
       ..done = true;
     store.saveLogs();
     final done = jsonEncode(log.sets[0].toJson());
@@ -417,7 +417,11 @@ void main() {
     expect(choix['Rien de spécial'], 1);
     expect(choix['Autre chose'], 0);
     expect(releve['j1_servie'], isTrue);
-    expect(releve['j1_affiche'], ecrit);
+    // KB3 (Koach 1.0.6) : l'écrit, dans l'ordre, sans les accessoires que
+    // Koach retire en le disant ; muscle-up lesté en tête.
+    final servie = (releve['j1_affiche'] as List).cast<String>();
+    expect(servie.first, ecrit.first);
+    expect(servie, orderedEquals(ecrit.where(servie.contains)));
     expect((ecrit.first), startsWith('MUSCLE-UP LESTÉ'));
     expect(releve['question_reposee'], isTrue);
     expect(releve['arret'], isTrue);

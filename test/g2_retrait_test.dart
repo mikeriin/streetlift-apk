@@ -462,9 +462,9 @@ void main() {
     });
   });
 
-  test('version affichée : « 7.2.6 » hors build de développement (GtG, '
-      'plages, séries compactes)', () {
-    expect(kVersion, '7.2.6');
-    expect(kAppVersion, '7.2.6');
+  test('version affichée : « 7.3.0 » hors build de développement '
+      '(Koach 1.0.6, KB3)', () {
+    expect(kVersion, '7.3.0');
+    expect(kAppVersion, '7.3.0');
   });
 }

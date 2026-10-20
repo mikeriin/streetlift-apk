@@ -11,7 +11,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:kalis_core/kalis_core.dart' show TrainingLog;
 import 'package:kalis_adapt/kalis_adapt.dart' as ka;
 import 'package:kalis_adapt/koach.dart' as ko;
-import 'package:kalis_adapt/koach_textes.dart' show texteRaisonKoach;
+import 'package:kalis_adapt/koach_textes.dart'
+    show koachCodesRaisons, texteRaisonKoach;
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_plan/kalis_plan.dart' as kp;
 

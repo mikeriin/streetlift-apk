@@ -41,7 +41,18 @@ const kKoachChampsVolume = <String>[
   'secondsHigh',
 ];
 
-Json koachItemVolume(Json it) => {for (final k in kKoachChampsVolume) k: it[k]};
+/// KB3 (Koach 1.0.6, contrat § 8.3) : [roles] (emplacement → rôle, `roles`
+/// du plan de séance) donne le champ additif `role` de l'item (`main`,
+/// `secondary`, `accessory`…), lu par le retour gradué pour couper les
+/// accessoires d'abord et garder le plancher des principaux ; omis quand
+/// l'emplacement n'a pas de rôle connu.
+Json koachItemVolume(Json it, [Map<String, Object?>? roles]) {
+  final role = roles?['${it['slotId']}'];
+  return {
+    for (final k in kKoachChampsVolume) k: it[k],
+    if (role != null) 'role': role,
+  };
+}
 
 /// Cible d'une série au format du contrat (`target`).
 Json koachCibleSerie(Object? target) {

@@ -47,13 +47,10 @@ void main() {
   group('build de développement (G2)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test(
-      'version affichée : « dev7.2.6 » (GtG, plages, séries compactes, 20/10)',
-      () {
-        expect(kAppVersion, 'dev$kVersion');
-        expect(kAppVersion, 'dev7.2.6');
-      },
-    );
+    test('version affichée : « dev7.3.0 » (Koach 1.0.6, KB3)', () {
+      expect(kAppVersion, 'dev$kVersion');
+      expect(kAppVersion, 'dev7.3.0');
+    });
 
     test('copie et suppression séparées par session', () async {
       final perso = _document('dark');

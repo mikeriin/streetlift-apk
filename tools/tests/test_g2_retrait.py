@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.2.6 : paliers des drop sets nommés (dev7.2.6).
-        self.assertEqual(version, '7.2.6')
+        # 7.3.0 : Koach 1.0.6 dans l'application (KB3, dev7.3.0).
+        self.assertEqual(version, '7.3.0')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)
