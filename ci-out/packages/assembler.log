@@ -1,6 +1,26 @@
-km4P_g0_5_partie_1_sur_2.json.gz
-km4P_g0_5_partie_2_sur_2.json.gz
-km4P_g12_17_partie_1_sur_2.json.gz
+0615523bc6afb89b
+90600
+90600 saisons, 0 plantée(s) ; critère 7 : 0 (0 saisons) ; réalisée appariée : 243277 ; retour à l'écrit : 54064 ; principal retiré par la rampe : 0
+906 saisons, 0 plantée(s) ; critère 7 : 0 (0 saisons) ; réalisée appariée : 672 ; retour à l'écrit : 125 ; principal retiré par la rampe : 0
+5436 saisons, 0 plantée(s) ; critère 7 : 0 (0 saisons) ; réalisée appariée : 11376 ; retour à l'écrit : 2960 ; principal retiré par la rampe : 0
+campagne : 5436 saisons, 5436 en cache, 0 à calculer (dossier /home/runner/work/streetlift-apk/streetlift-apk/ci-out/packages/py_travail/0615523bc6afb89b)
+critère 2 (mauvais jour) ...
+critère 8 (temps) ...
+saisons : 5436 prévues, 5436 mesurées, 0 plantées
+[NON] 1 e1RM rang 6 : Koach 3.70 % (n=9098), témoin 5.83 % ; seuil < 3 %
+      par vérité : a 3.08 %/4.29 %, b 4.50 %/7.81 %, c 3.52 %/5.38 %
+[OK ] 2 mauvais jour : |écart| moyen 0.78 % (après) 0.85 % (+1) 0.69 % (+2), médian après 0.63 %, signé -0.30 % ; seuil < 1 %
+[OK ] 3 convergence : premier passage (censuré) Koach 4.767, témoin 11 ; atteints 3.463 / 6.246 ; jamais 6.06 % / 25.36 %
+[NON] 4 couverture 90 % (rangs >= 3) : 92.08 % (n=135239) ; par rang 1:95.13 %, 3:94.32 %, 6:93.90 %, 12:92.78 %, 24:88.58 % ; seuil 88–92 %
+[NON] 5 calibration P(réussite) par cible : écart max 25.11 % (déciles de n >= 30) ; n=5796 ; d0 n=3884 p=2.28 % obs=1.29 %, d1 n=907 p=13.12 % obs=9.81 %, d2 n=399 p=24.22 % obs=12.53 %, d3 n=155 p=34.84 % obs=25.81 %, d4 n=181 p=44.60 % obs=41.99 %, d5 n=106 p=54.47 % obs=50.00 %, d6 n=67 p=64.46 % obs=62.69 %, d7 n=70 p=75.11 % obs=50.00 %, d8 n=22 p=83.95 % obs=86.36 %, d9 n=5 p=91.30 % obs=100.00 %
+      toutes les cibles : debut n=681 p=3.35 % obs=2.06 %, mi_saison n=681 p=4.46 % obs=2.06 %, moins_4_semaines n=594 p=3.81 % obs=2.02 %
+      exclusions : {'aucun_test_le_jour_j': 219, 'cible_non_testee': 288, 'sans_cible': 324, 'sans_echeance': 4140}
+[OK ] 6 jour J (chargé, best/max) : Koach 0.9349, témoin 0.9154 (678 saisons appariées, écart 0.01676 ± 0.002919) ; sans test {'koach_sans_test': 0, 'temoin_sans_test': 72, 'aucun_test': 546, 'temoin_absent': 0}
+[OK ] 7 sécurité : douleur {'aggravations': 0, 'poussees': 0}, hausses 0, validateur {'plan_module': {'introduit': {}, 'aggrave': {}, 'deja_initial': {}}, 'servi': {'introduit': {'plafond_volume': 12211, 'seance_trop_longue': 532, 'tendon_figures': 125, 'volume_trop_vite': 62194}, 'aggrave': {}, 'deja_initial': {}}, 'servi_tests_faits': {'introduit': {}, 'aggrave': {}, 'deja_initial': {}}} ; témoin apparié {'aggravations': 0, 'poussees': 108, 'violations': 68}
+[OK ] 8 temps : série max 3.665 ms, replanification max 0.5411 s (donnees/criteres_moteur.json (lu, non remesuré))
+      9 rappels : {'pire_cas_adversarial': True}
+secondaires : MAE6 reps 9.55 %/21.08 %, tenues 17.10 %/27.75 %, écart effort 3.624/1.526, échecs 0.67 %/0.73 %, gain 0.002132/0.00193, alertes/100 séances 2.718
+bilan : respectés ['2_mauvais_jour_isole', '3_convergence_sous_3', '6_performance_jour_j', '7_securite', '8_temps_calcul'] ; NON respectés ['1_erreur_e1rm_rang_6', '4_couverture_90', '5_calibration_p_reussite']
+durée : 106 s ; 12.08 s/saison (calcul, un cœur) ; 0 calculée(s), cache /home/runner/work/streetlift-apk/streetlift-apk/ci-out/packages/py_travail/0615523bc6afb89b
 34
-bilan : respectés ["2_mauvais_jour_isole", "3_convergence_sous_3", "6_performance_jour_j", "7_securite", "8_temps_calcul"] ; NON respectés ["1_erreur_e1rm_rang_6", "4_couverture_90", "5_calibration_p_reussite"]
-saisons Dart 90600, Python 89438 ; comparées 89438, identiques 89438, différentes 0 ; Dart sans Python 1162, Python sans Dart 0
+saisons Dart 90600, Python 90600 ; comparées 90600, identiques 90600, différentes 0 ; Dart sans Python 0, Python sans Dart 0
