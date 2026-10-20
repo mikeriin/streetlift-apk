@@ -1,0 +1,1 @@
+lot=KB2C1 rapide=true
