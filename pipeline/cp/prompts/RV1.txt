@@ -24,3 +24,6 @@ FIN DE LOT
 - dev7.5.0 sur `main` (`pubspec.yaml`, `SUIVI_PROJET.md`), contrôle complet `claude/ci-3d` **vert sur l'arbre publié**, toutes les cibles des lots précédents vertes, build signé réussi (push sur `main` refusé : commit prêt sur `cp-sauvegardes/RV1-candidat` et arrête-toi).
 - `LIVRAISON_RV1.md` (pipeline et projet claude.ai) : découpage ; tableau de tous les constats (zone, fichier, gravité, statut : corrigé / non confirmé / signalé moteur / voulu, test) ; bugs de paquets pour un lot moteur ; captures avant / après des bugs graphiques corrigés ; « À tester » court pour le propriétaire.
 - Ligne RV1 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.5.0 prêt — revue complète : N bugs corrigés » ; arrête-toi (aucun fire_trigger).
+
+BUGS SIGNALÉS PAR LE PROPRIÉTAIRE (à traiter en priorité, liste tenue par le pilotage)
+- 20/10 21:32 : lignes EMOM « volume » affichées en une seule ligne de 24 reps (traité dans KB4, point 5 : vérifier que c'est tenu et chercher les formes voisines).
