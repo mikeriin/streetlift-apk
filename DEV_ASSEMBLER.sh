@@ -1,22 +1,18 @@
-# Assemblage du run F (KM4) : parts Dart de la variante P du run D (RUN_PRECEDENT) contre la campagne Python
-# du run E (RUN_PYTHON), saison par saison ; critères Dart du groupe 0-5 ; critère 5 par groupe ; adversaires.
+# Assemblage du run G (KM4) : campagne Python complète de la référence 1.0.6 sans répartition (parts du run E
+# et demi-parts 13/40, 33/40) : sécurité et rampe (100 graines, graine 0, graines 0-5, liste complète), critères
+# Python 0-5 ; comparaison saison par saison aux parts Dart de la variante P du run D (artifacts_py).
 O=$PWD/ci-out/packages
 B=$PWD/packages/kalis_bench
 R=$PWD/packages/kalis_adapt/reference
-mkdir -p $O/criteres $O/comparaison $O/critere5
-(cd $B && dart pub get > /dev/null 2>&1)
-P=$O/parts
-ls $P | head -3; ls $P | wc -l
-find $P -name 'km4M_*' -delete
-(cd $B && timeout 1800 dart run bin/km2.dart assembler --sortie $O/criteres/criteres_km4_dart_g0_5.json $P/km4P_g0_5_partie_1_sur_2.json.gz $P/km4P_g0_5_partie_2_sur_2.json.gz > $O/criteres/assembler_g0_5.log 2>&1) || echo "assembler g0_5 : échec"
-grep -E "^bilan" $O/criteres/assembler_g0_5.log
-for g in $(seq 1 17); do
-  a=$(( 6 * (g - 1) )); b=$(( a + 5 )); [ $b -gt 99 ] && b=99
-  d=/tmp/c5_$a; rm -rf $d
-  python3 -I $B/tool/kr1_securite.py --extraire $d $P/km4P_g${a}_${b}_partie_1_sur_2.json.gz $P/km4P_g${a}_${b}_partie_2_sur_2.json.gz > /dev/null
-  (cd $R && python3 -m banc.calibration_grappes $d $O/critere5/calibration_grappes_g${a}_${b}.json > $O/critere5/g${a}_${b}.log 2>&1) || echo "critère 5 groupe $a-$b : échec"
-  rm -rf $d
-done
-python3 -I $B/tool/km2c3_comparer.py --python $PWD/artifacts_py --dart $P --sortie $O/comparaison/comparaison_saisons_km4.json --md $O/comparaison/COMPARAISON_SAISONS_KM4.md
-find $P -name 'km4P_g*' ! -name 'km4P_g0_5_*' -delete
-rm -rf $PWD/artifacts_py
+mkdir -p $O/criteres $O/securite $O/comparaison
+ls $O/py_travail; find $O/py_travail -name '*__*.json' | wc -l
+(cd $R && python3 -m banc.securite_campagne --sortie $O/securite/securite_km4_python_100g.json --md $O/securite/SECURITE_KM4_PYTHON_100G.md --liste $O/securite/liste_c7_km4_python_100g.json --titre "Sécurité du couple kalis_plan 0.4.2 × Koach 1.0.6 (sans répartition), 100 graines (campagne Python)" $O/py_travail)
+(cd $R && python3 -m banc.securite_campagne --graines 0-0 --sortie $O/securite/securite_km4_python_g0.json --md $O/securite/SECURITE_KM4_PYTHON_G0.md --titre "Sécurité, graine 0 (Koach 1.0.6)" $O/py_travail)
+(cd $R && python3 -m banc.securite_campagne --graines 0-5 --sortie $O/securite/securite_km4_python_g0_5.json --md $O/securite/SECURITE_KM4_PYTHON_G0_5.md --titre "Sécurité, graines 0 à 5 (Koach 1.0.6)" $O/py_travail)
+(cd $R && python3 -m banc.campagne --graines 6 --coeurs 4 --travail $O/py_travail --temps-existants --sortie $O/criteres/criteres_km4_python_g0_5.json > $O/criteres/py_assemblage_g0_5.log 2>&1 || echo "assemblage python g0-5 : échec")
+tail -25 $O/criteres/py_assemblage_g0_5.log
+D=$PWD/artifacts_dart
+mkdir -p $D && find $PWD/artifacts_py -name 'km4P_g*.json.gz' -exec mv {} $D/ \;
+ls $D | wc -l
+python3 -I $B/tool/km2c3_comparer.py --python $O/py_travail --dart $D --sortie $O/comparaison/comparaison_saisons_km4.json --md $O/comparaison/COMPARAISON_SAISONS_KM4.md
+rm -rf $O/py_travail $PWD/artifacts_py $D

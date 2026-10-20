@@ -1,51 +1,18 @@
 #!/bin/bash
-# Mise au point KM4, run F : arbre final (Koach 1.0.6 sans répartition, variante P ; même moteur que la
-# variante P du run D et le run E, seule la note du fichier de paramètres diffère).
-#  PART 0     : tests Python ; Dart : format, analyse, tests de kalis_adapt et km de kalis_bench
-#  PART 41-46 : critère 7 bis, six jeux d'adversaires rejoués par Koach 1.0.6 (Dart)
-#  PART 99    : attend la fin du run E (campagne Python, RUN_PYTHON) pour la publication
+# Mise au point KM4, run G : la part 13/20 de la campagne Python du run E (39312132226) a dépassé la limite
+# de 355 min (saisons écrites jusque-là gardées dans son artefact) ; elle est refaite en deux demi-parts
+# 13/40 et 33/40 (même partition, même empreinte : arbre et fichier de paramètres du run E). La publication
+# réunit les parts du run E (RUN_PRECEDENT) et celles-ci (une saison déjà calculée l'emporte, même
+# contenu), puis compare saison par saison aux parts Dart de la variante P du run D (RUN_PYTHON).
+#  PART 81 : 13/40 ; PART 82 : 33/40
 root=$PWD
 out=$root/out-packages
 status=0
-B=$root/packages/kalis_bench
-A=$root/packages/kalis_adapt
-R=$A/reference
-if [ "$PART" = 0 ]; then
-  (cd $R && python3 -m pytest tests -q) > $out/pytest.log 2>&1 || { echo "pytest : échec"; status=1; }
-  tail -30 $out/pytest.log
-  for name in kalis_adapt kalis_bench; do
-    (cd packages/$name && dart pub get) > $out/$name-pub-0.log 2>&1 || { echo "pub get $name échec"; status=1; }
-    (cd packages/$name && dart format --output=none --set-exit-if-changed .) > $out/format-$name.log 2>&1 || { echo "format $name : échec"; (cd packages/$name && dart format . >/dev/null; git diff) > $out/format-$name.patch; status=1; }
-    (cd packages/$name && dart analyze --fatal-infos) > $out/analyze-$name.log 2>&1 || { echo "analyse $name : échec"; tail -40 $out/analyze-$name.log; status=1; }
-  done
-  (cd $A && dart test --reporter expanded) > $out/kalis_adapt-test.log 2>&1 || { echo "tests kalis_adapt : échec"; status=1; }
-  grep -E "\[E\]|Some tests failed|All tests passed|Expected|Actual" $out/kalis_adapt-test.log | tail -60
-  (cd $B && dart test --reporter expanded test/km2_banc_test.dart test/km_export_test.dart) > $out/kalis_bench-test.log 2>&1 || { echo "tests kalis_bench km : échec"; status=1; }
-  grep -E "\[E\]|Some tests failed|All tests passed" $out/kalis_bench-test.log | tail -30
-elif [ "$PART" -ge 41 ] && [ "$PART" -le 46 ]; then
-  for name in kalis_adapt kalis_bench; do (cd packages/$name && dart pub get) > /dev/null 2>&1; done
-  case $PART in
-    41) jeu=km1_v1; adv=$R/donnees/adversaires_v1.json; tem=$R/donnees/adversaires_temoin.json.gz;;
-    42) jeu=km1c2; adv=$R/donnees/adversaires_km1c2.json; tem=$R/donnees/adversaires_km1c2_temoin.json.gz;;
-    43) jeu=km1c3; adv=$R/donnees/adversaires_km1c3.json; tem=$R/donnees/adversaires_km1c3_temoin.json.gz;;
-    44) jeu=km2_b300; adv=$B/docs/data/km2/adversaires_km2_b300.json; tem=$R/donnees/temoin_adversaires/adversaires_km2_b300_temoin.json.gz;;
-    45) jeu=km2_complet_b600; adv=$B/docs/data/km2/adversaires_km2_complet_b600.json; tem=$R/donnees/temoin_adversaires/adversaires_km2_complet_b600_temoin.json.gz;;
-    46) jeu=km2_b3000; adv=$B/docs/data/km2/adversaires_km2_b3000.json; tem=$R/donnees/temoin_adversaires/adversaires_km2_b3000_temoin.json.gz;;
-  esac
-  cd $B
-  mkdir -p $out/adversaires
-  start=$(date +%s)
-  dart run bin/km2.dart adversaires --rejouer $adv --temoin-lu $tem --coeurs 4 --sortie $out/adversaires/comparaison_adversaires_km4_$jeu.json > $out/adversaires_$jeu.log 2>&1 || { echo "adversaires $jeu : échec"; status=1; }
-  echo "durée : $(( $(date +%s) - start )) s"
-  tail -6 $out/adversaires_$jeu.log
-elif [ "$PART" = 99 ]; then
-  st=""
-  for k in $(seq 1 340); do
-    st=$(gh api repos/$GITHUB_REPOSITORY/actions/runs/$RUN_PYTHON --jq .status 2>/dev/null)
-    [ "$st" = completed ] && break
-    sleep 60
-  done
-  echo "run $RUN_PYTHON : $st ($(date -u +%H:%M))"
-  [ "$st" = completed ] || status=1
-fi
+R=$root/packages/kalis_adapt/reference
+case $PART in 81) i=13;; 82) i=33;; *) echo "part inconnue"; exit 1;; esac
+cd $R
+start=$(date +%s)
+python3 -m banc.campagne --graines 100 --coeurs 4 --partie $i/40 --travail $out/py_travail > $out/py_campagne_c${i}_sur_40.log 2>&1 || { echo "campagne python $i/40 : échec"; status=1; }
+echo "durée : $(( $(date +%s) - start )) s"
+tail -3 $out/py_campagne_c${i}_sur_40.log
 exit $status
