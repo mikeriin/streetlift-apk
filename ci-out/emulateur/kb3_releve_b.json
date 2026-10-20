@@ -1,0 +1,84 @@
+{
+  "partie": "b",
+  "theme": "clair",
+  "couleur_dominante": "violet",
+  "import": true,
+  "prevue": 15,
+  "koach_actif": true,
+  "depuis": 15,
+  "j1_ecrit": [
+    "MUSCLE-UP LESTÉ",
+    "TRACTION LESTÉE + Pompes PdC",
+    "Pull-over haltère",
+    "Rowing barre penché",
+    "Poignets excentriques (haltère)",
+    "Face pulls (poulie) + Curl marteau (par haltère)"
+  ],
+  "popup_s15-j1": false,
+  "j1_servie": true,
+  "temps_debut_ms": 4266,
+  "temps": {
+    "prise_de_main": {
+      "dernier_ms": 3167.754,
+      "max_ms": 3167.754
+    },
+    "plan_seance": {
+      "dernier_ms": 28.122,
+      "max_ms": 28.122
+    },
+    "debut_seance": {
+      "dernier_ms": 54.433,
+      "max_ms": 54.433
+    }
+  },
+  "servis": {
+    "sl-muscle-up-leste": 3,
+    "sl-traction-lestee": 4,
+    "sw-pompe": 8,
+    "mu-reverse-wrist-curl-haltere": 3,
+    "mu-face-pull-corde": 1,
+    "mu-curl-marteau-halteres": 2
+  },
+  "ecrites": null,
+  "retraits": [
+    {
+      "slotId": "j1-mu-pull-over-haltere",
+      "exercice": "mu-pull-over-haltere",
+      "code": "koach.retour_gradue"
+    },
+    {
+      "slotId": "j1-mu-rowing-barre-pronation",
+      "exercice": "mu-rowing-barre-pronation",
+      "code": "koach.retour_gradue"
+    }
+  ],
+  "j1_affiche": [
+    "MUSCLE-UP LESTÉ",
+    "TRACTION LESTÉE + Pompes PdC",
+    "Poignets excentriques (haltère)",
+    "Face pulls (poulie) + Curl marteau (par haltère)"
+  ],
+  "cartes": [
+    "sl-muscle-up-leste · 6×2 · E2MOM",
+    "sl-traction-lestee · 8×3 · E2MOM",
+    "sw-pompe · 8×11 · E2MOM",
+    "mu-reverse-wrist-curl-haltere · 3 × 13-19",
+    "mu-face-pull-corde · 1 × 13-19",
+    "mu-curl-marteau-halteres · 2 × 8-14"
+  ],
+  "entete": [
+    "Je retire « Pull-over haltère allongé sur banc » aujourd’hui : pour tes pectoraux, le volume que la semaine permet est déjà pris (au plus 55,8 séries cette semaine).",
+    "Je retire « Rowing barre buste penché prise pronation » aujourd’hui : pour tes dorsaux, le volume que la semaine permet est déjà pris (au plus 47,4 séries cette semaine)."
+  ],
+  "raisons_cartes": {
+    "sl-muscle-up-leste": "Servi tel qu’écrit (départ chronométré du programme). Koach aurait fait 3 séries sur 6 pour rester dans le volume de la semaine : écoute tes sensations.",
+    "sl-traction-lestee": "Servi tel qu’écrit (départ chronométré du programme). Koach aurait fait 4 séries sur 8 pour rester dans le volume de la semaine : écoute tes sensations.",
+    "mu-face-pull-corde": "Une série au lieu de 3 sur « Face pull à la poulie corde » : pour l’arrière de tes épaules, le volume remonte progressivement (au plus 25,2 séries cette semaine).",
+    "mu-curl-marteau-halteres": "2 séries au lieu de 3 sur « Curl marteau aux haltères » : pour tes biceps, le volume remonte progressivement (au plus 32,4 séries cette semaine)."
+  },
+  "je_retire_affiche": false,
+  "mu_carte": "6×2 · E2MOM",
+  "reduction_affichee": false,
+  "reste_seances": 5,
+  "reste_roles": true
+}
