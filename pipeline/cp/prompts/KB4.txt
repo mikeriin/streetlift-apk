@@ -1,6 +1,6 @@
 LOT KB4 — KOACH 1.0.7 DANS L'APPLICATION : LE PROGRAMME N'EST PLUS COUPÉ PAR LA RAMPE (dev7.4.0)
 Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
-Prérequis : KM5 validé (C17.41 ou suivant) ; décision C17.40. **Ce lot ne déchiffre rien, ne lit pas `cp-references`, n'utilise aucune clé ni aucune donnée réelle du propriétaire (C17.33.2)** : tests sur données synthétiques seulement.
+Prérequis : KM5 validé (C17.42 ou suivant) ; décision C17.40. **Ce lot ne déchiffre rien, ne lit pas `cp-references`, n'utilise aucune clé ni aucune donnée réelle du propriétaire (C17.33.2)** : tests sur données synthétiques seulement.
 Base : pointe de `main` (dev7.3.0, 88fb1965, ou suivant ; le propriétaire publie aussi depuis Claude Code sur son PC, C17.28 : respecte le `CLAUDE.md` de `main` s'il existe, rebase sur la pointe avant de publier, ne défais rien de ses lots). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/KB4`.
 Décisions : C11, C15, C17.28, C17.33, C17.36, C17.38, C17.39, **C17.40**, et la décision de validation de KM5. Livraisons à lire : `LIVRAISON_KM5.md`, `LIVRAISON_KB3.md`, `LIVRAISON_KB2_correction1.md`. Pour `main` : PIPELINE_GP.md comme pour la piste A (ni signature, ni identifiant Android, ni secrets ; jamais de réécriture de l'historique de `main`).
 URGENCE : le propriétaire a mis Koach à l'arrêt en attendant ce lot ; livre au plus vite sans rien sauter du contrôle.

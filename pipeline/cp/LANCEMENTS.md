@@ -408,3 +408,7 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 ## KB4 — Koach 1.0.7 dans l'application, dev7.4.0 (à lancer après validation de KM5, tâche « Opus 5.5, effort élevé, application » ; C17.40)
 
 - Prompt : `prompts/KB4.txt`. Section complétée au lancement (décision de validation de KM5, étiquette, SHA de l'asset).
+
+## RV1 — revue complète du code, dev7.5.0 (à lancer après validation de KB4, tâche « Opus 5.5, effort élevé, application » ; C17.41)
+
+- Prompt : `prompts/RV1.txt`. Demande du propriétaire du 20/10/2026 (C17.41). Section complétée au lancement (base `main`, bugs signalés par le propriétaire d'ici là).
