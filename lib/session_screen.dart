@@ -108,14 +108,13 @@ List<DropStage>? dropStages(String cue, int count) {
     if (m == null) return null;
     final text = m.group(1)!.trim();
     final cut = RegExp(r'\s+(jusqu|à RIR|RIR\s)').firstMatch(text);
-    final rawName = cut == null ? text : text.substring(0, cut.start).trim();
-    if (rawName.isEmpty) return null;
-    final name = rawName[0].toUpperCase() + rawName.substring(1);
+    final name = cut == null ? text : text.substring(0, cut.start).trim();
+    if (name.isEmpty) return null;
     final target = cut == null ? '' : text.substring(cut.start).trim();
     final seconds = RegExp(
       r'tenue|hang|gainage|planche|hold|l-sit|isom',
       caseSensitive: false,
-    ).hasMatch(rawName);
+    ).hasMatch(name);
     out.add(DropStage(name, target, seconds: seconds));
   }
   return out;

@@ -32,10 +32,10 @@ void main() {
   test('paliers lus dans la consigne', () {
     final s = dropStages(_cue, 4)!;
     expect(s.map((x) => x.name), [
-      'Tractions pronation PdC',
-      'Rows australiens',
-      'Tenue menton au-dessus de la barre',
-      'Dead hang',
+      'tractions pronation PdC',
+      'rows australiens',
+      'tenue menton au-dessus de la barre',
+      'dead hang',
     ]);
     expect(s.map((x) => x.seconds), [false, false, true, true]);
     expect(s.first.target, 'jusqu’à RIR 1');
@@ -84,10 +84,10 @@ void main() {
       expect(find.byKey(ValueKey('drop-stage-ZR-1-$i')), findsOneWidget);
     }
     expect(
-      find.textContaining('1.1 · Tractions pronation PdC'),
+      find.textContaining('1.1 · tractions pronation PdC'),
       findsOneWidget,
     );
-    expect(find.textContaining('2.4 · Dead hang'), findsOneWidget);
+    expect(find.textContaining('2.4 · dead hang'), findsOneWidget);
     expect(find.text('secondes'), findsNWidgets(4));
     expect(find.text('reps'), findsNWidgets(4));
     expect(find.text('Reps ou s'), findsOneWidget);
