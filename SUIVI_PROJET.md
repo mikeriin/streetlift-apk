@@ -1,8 +1,13 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : correctif séance 3 — volume servi aligné sur les cibles des séries, version dev7.2.5 ; précédent : dev7.2.4**  
-**Date : 20 octobre 2026, Europe/Paris — version : 7.2.5+145, affichée « dev7.2.5 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : paliers des drop sets nommés, version dev7.2.6 ; précédent : dev7.2.5 (le premier dev7.2.6, finishers en burpees dans l'application, a été annulé avant livraison : le propriétaire a fait modifier son programme par sa sauvegarde)**  
+**Date : 20 octobre 2026, Europe/Paris — version : 7.2.6+146, affichée « dev7.2.6 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : demande directe du propriétaire (hors pipeline, paquets inchangés) ; build signé sur `main`.**
+
+## Paliers des drop sets nommés (version dev7.2.6, 20/10/2026)
+
+- Drop set mécanique (« 2 tours × 4 paliers », zone rouge J4 et J5) : chaque ligne porte le nom de son palier et sa cible, lus dans la consigne numérotée du programme (« 1.1 · Tractions pronation PdC · jusqu’à RIR 1 ») ; une tenue (tenue, dead hang, gainage…) se note en secondes (indication « secondes », colonne « Reps ou s », résumé « 25 s ») ; consigne sans paliers numérotés : affichage inchangé (`dropStages`). Programme et Koach inchangés.
+- Programme du propriétaire : finishers rameur / air bike passés en burpees par sa sauvegarde (hors application).
 
 ## Correctif séance 3 — volume et répétitions cohérents (version dev7.2.5, 20/10/2026)
 
