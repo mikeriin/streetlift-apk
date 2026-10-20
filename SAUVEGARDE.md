@@ -7,7 +7,7 @@ Session Opus 5.5 (20/10/2026, depuis 16:36 UTC). Base : `moteurs` 91d8ea70. Pas 
 - Relecture indépendante (Opus) faite et traitée : M1 (écrit servi : la douleur ne laisse pas sa place aux ajouts), M2 (allègement sur l'écrit du programme), M3 (mesure indépendante `sans_cause_*`), m1 (un seul prescrire compté), m5 (filtre une lecture) ; M4 (montée du vrai test) et m2 (groupe deviné par la valeur, prudent) dits comme limites.
 - Run A (39463684069) : Dart compile ; échecs attendus corrigés (docs/contrat, sortie Python d'evaluer_saison adv-7ee0da71 : echecs 0,004093, gain −0,000389 ; format patch appliqué).
 - Échantillon local Python (302 saisons, vérité b, graine 0, --rapide) : critère 7 = 0, ancienne définition 0, sous l'écrit 0, sans cause 0, ajouts bornés 27 ; retour à l'écrit 18, réalisée appariée 20. 1.0.6 sur 27 saisons : sous l'écrit 749 items / 1 388 séries. Scénario (a) en 1.0.6 : reproduit le constat (extension triceps et élévations latérales à 0, pompes 2/4, DM 1/3).
-- Run B poussé 17:57 (commit 0db83dd, campagne complète Dart 34 + Python 50 + adversaires + tests) ; contrôle complet poussé (1f96352c).
+- Run B annulé (formatage relevé), run C (39473916713) : patchs de formatage appliqués, analyse verte ; commit local 6f0e8d5 ; contrôle complet e7cf0e08 et run B (bis) 1f3a09b1 poussés à 18:28.
 
 ## Reste
 - Attendre run B et le contrôle complet ; remplir docs/CRITERES_KM5.md, livraison ; push moteurs (rebase), étiquettes kalis_adapt-v1.0.6 et kalis_bench-v0.5.8 ; LIVRAISON_KM5 (pipeline + projet), ETAT_CP, page de suivi, notification.
