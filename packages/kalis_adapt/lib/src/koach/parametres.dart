@@ -15,22 +15,22 @@ part of 'koach.dart';
 // lisent avec `dart:io` depuis la racine du paquet (`koachFichierParametres`).
 
 /// Version du moteur porté (`koach.VERSION` de la référence Python).
-const String koachVersion = '1.0.5-ref.1';
+const String koachVersion = '1.0.6-ref.1';
 
 /// Version du fichier de paramètres livré (champ `version`, contrat § 7.2).
-const String koachParametresVersion = '1.0.5-ref.1';
+const String koachParametresVersion = '1.0.6-ref.1';
 
 /// Schéma du fichier de paramètres (champ `schema`, contrat § 7.1).
 const int koachParametresSchema = 1;
 
 /// SHA-256 des octets du fichier de paramètres livré (en-tête du contrat).
 const String koachParametresSha256 =
-    'd8a492b7debca0e4a504ed399efee0a8a6e4e003ab99f7cbb7f49c114bfbf26d';
+    '4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a';
 
-/// Nombre de clés du fichier de paramètres : 6 à la racine, 339 dans les
-/// onze sections (contrat § 7.4 ; l'en-tête du contrat 1.0.5 écrivait 346
-/// par erreur : 338 + 7 = 345).
-const int koachParametresCles = 345;
+/// Nombre de clés du fichier de paramètres : 6 à la racine, 341 dans les
+/// onze sections (contrat § 7.4 ; 1.0.5 : 345 ; 1.0.6 : trois clés de
+/// `securite` ajoutées, `rupture.elargissement_rien_de_special` retirée).
+const int koachParametresCles = 347;
 
 /// Clés de la racine du fichier de paramètres (contrat § 7.1).
 const List<String> koachParametresRacine = [
@@ -60,10 +60,10 @@ const List<String> koachParametresSections = [
 
 /// Clé Flutter de l'asset de paramètres (asset déclaré par le paquet).
 const String koachAssetParametres =
-    'packages/kalis_adapt/assets/koach/koach_params_1_0_5.json';
+    'packages/kalis_adapt/assets/koach/koach_params_1_0_6.json';
 
 /// Chemin du fichier de paramètres, relatif à la racine du paquet.
-const String koachFichierParametres = 'assets/koach/koach_params_1_0_5.json';
+const String koachFichierParametres = 'assets/koach/koach_params_1_0_6.json';
 
 /// Version des fiches d'exercices livrées (champ `version`).
 const String koachFichesVersion = '1.0.0';

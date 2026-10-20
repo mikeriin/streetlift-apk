@@ -461,8 +461,8 @@ String _texteRetourGradue(Map<String, Object?> p, String ex) {
     borne = limite == null ? '' : ' (au plus $limite séries cette semaine)';
   }
   if (series == 0) {
-    return 'Je retire $ex cette semaine : pour $qui, le volume que la '
-        'reprise permet est déjà atteint$borne.';
+    return 'Je retire $ex aujourd’hui : pour $qui, le volume que la '
+        'semaine permet est déjà pris$borne.';
   }
   if (secondes != null) {
     return 'Tenue raccourcie à $secondes s sur $ex : pour $qui, le volume '
@@ -471,6 +471,11 @@ String _texteRetourGradue(Map<String, Object?> p, String ex) {
   var combien = 'Moins de séries';
   if (series != null) {
     combien = series == 1 ? 'Une série' : '$series séries';
+    // 1.0.6 : séries écrites de la ligne (`ecrites`), quand elles sont dites.
+    final ecrites = _entier(p['ecrites']);
+    if (ecrites != null && ecrites > series) {
+      combien = '$combien au lieu de $ecrites';
+    }
   }
   return '$combien sur $ex : pour $qui, le volume remonte '
       'progressivement$borne.';

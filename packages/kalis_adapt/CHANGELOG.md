@@ -1,5 +1,26 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.5
+
+Lot KM4 (DECISIONS_CP.md C17.37) : **Koach 1.0.6** (référence Python et portage Dart dans le même lot,
+`reference/CHANGEMENTS_1_0_6.md`) — retour gradué au volume réparti sur la semaine et priorisé par rôle. API et schéma
+du journal inchangés ; champ additif `role` des items de `contexte['reste_semaine']` ; paramètres additifs `ecrites`
+et `douleur` de la raison `koach.retour_gradue`.
+
+- **Plan de la semaine** (`seance.dart`, `_planRetour`) : la limite de la rampe par groupe majeur (et le total d'une
+  semaine d'allègement) est tenue par des coupes planifiées sur la séance du jour et les séances restantes de la
+  semaine, par étapes de priorité (accessoires d'abord, secondaires ensuite, principaux en dernier), au prorata ; un
+  principal n'est jamais ramené à 0 série par la rampe sans douleur (plancher `max(1, ⌈écrit × 0,5⌉)` avant qu'un
+  secondaire tombe à 0) ; la répartition des coupes sur les séances restantes est programmée mais **désactivée**
+  (`retour_repartition_semaines` 0 : 40 constats introduits sur 90 600 saisons) : la séance du jour paie d'abord, les
+  séances restantes ne cèdent que pour les planchers. `prescrire` en deux passes. Tenues bras tendus inchangées.
+- **Paramètres** : asset `assets/koach/koach_params_1_0_6.json` (`1.0.6-ref.1`, 347 clés, SHA-256 `4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a`) ; trois
+  clés nouvelles (`securite.retour_plancher_principal`, `securite.retour_repartition_semaines`, `securite.retour_emprunt_plancher`),
+  `rupture.elargissement_rien_de_special` retirée (fichier, défauts, bornes).
+- **Textes** : « N séries au lieu de M » pour `koach.retour_gradue` quand les séries écrites sont dites.
+- **Tests** : `test/koach_km4_retour_test.dart` (port des 11 tests de `reference/tests/test_km4_retour.py`), fixtures
+  régénérées.
+
 ## 1.0.4
 
 Lot KM2c3 (KM2 correction 3, DECISIONS_CP.md C13.9, C17.23, C17.26) : **portage Dart de la référence Koach 1.0.5**

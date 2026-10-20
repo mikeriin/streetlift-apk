@@ -68,10 +68,10 @@ void main() {
         sha256.convert(_octets(koachFichierFiches)).toString(),
         koachFichesSha256,
       );
-      // En-tête du contrat 1.0.5 (CONTRAT_1_0.md).
+      // En-tête du contrat 1.0.6 (CONTRAT_1_0.md).
       expect(
         koachParametresSha256,
-        'd8a492b7debca0e4a504ed399efee0a8a6e4e003ab99f7cbb7f49c114bfbf26d',
+        '4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a',
       );
     });
 
@@ -87,11 +87,11 @@ void main() {
   group('lireParametresKoach', () {
     final p = lireParametresKoach(_texte(koachFichierParametres));
 
-    test('version, schéma, nombre de clés (345 : 6 + 339)', () {
+    test('version, schéma, nombre de clés (347 : 6 + 341)', () {
       expect(p['schema'], koachParametresSchema);
       expect(p['version'], koachParametresVersion);
       expect(koachParametresVersion, koachVersion);
-      expect(koachVersion, '1.0.5-ref.1');
+      expect(koachVersion, '1.0.6-ref.1');
       final racine = [
         for (final e in p.entries)
           if (e.value is! Map<String, Object?>) e.key,
@@ -107,9 +107,9 @@ void main() {
         cles += jm(p[s]).length;
       }
       expect(racine.length, 6);
-      expect(cles - racine.length, 339);
+      expect(cles - racine.length, 341);
       expect(cles, koachParametresCles);
-      expect(cles, 345);
+      expect(cles, 347);
     });
 
     test('identique au fichier de référence décodé', () {
@@ -227,7 +227,7 @@ void main() {
     );
 
     test('1.0.5 (KM1c4, règle 5) : part vers l\'a priori bornée à [0 ; 1], '
-        'ancien facteur ni exigé ni refusé', () {
+        'ancien facteur retiré (1.0.6)', () {
       expect(jm(p['rupture'])['elargissement_vers_a_priori'], 0.25);
       refuse(
         modifie((q) => jm(q['rupture'])['elargissement_vers_a_priori'] = 1.5),
@@ -237,16 +237,9 @@ void main() {
         modifie((q) => jm(q['rupture'])['elargissement_vers_a_priori'] = -0.1),
         'borne: rupture.elargissement_vers_a_priori',
       );
-      // `elargissement_rien_de_special` n'est plus lu (gardé dans le fichier
-      // de la référence pour les validateurs) : un fichier sans elle passe.
-      final sans = modifie(
-        (q) => jm(q['rupture']).remove('elargissement_rien_de_special'),
-      );
-      expect(validerParametres(p, sans), isEmpty);
+      // `elargissement_rien_de_special` retirée en 1.0.6 (KM4, C17.29.2).
       expect(
-        jm(
-          lireParametresKoach(jsonEncode(sans))['rupture'],
-        ).containsKey('elargissement_rien_de_special'),
+        jm(p['rupture']).containsKey('elargissement_rien_de_special'),
         isFalse,
       );
     });

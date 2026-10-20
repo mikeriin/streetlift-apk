@@ -137,5 +137,10 @@ def test_retour_a_l_ecrit_apres_un_bloc_interrompu():
     tour = meneur.simuler(saison, infos, pol, 'a', 87)
     s = ca.securite_saison(saison, infos, tour, pol)
     assert s['servi_tests_faits']['introduit'] == {} and s['servi_tests_faits']['aggrave'] == {}
-    assert s['servi_tests_faits']['retour_ecrit'] == {'volume_trop_vite': 1}
-    assert s['realise_apparie']['introduit'] == {} and s['realise_apparie']['aggrave'] == {}
+    # 1.0.6 (KM4) : une hausse de plus, reclassée « retour à l'écrit » (plan
+    # du retour gradué réparti, planchers des principaux ; 1.0.5 : 1).
+    assert s['servi_tests_faits']['retour_ecrit'] == {'volume_trop_vite': 2}
+    # Vue réalisée appariée (indicateur, séances manquées vidées) : 1.0.6 sert
+    # les principaux à leur plancher au lieu de les retirer ; deux hausses de
+    # plus que le plan écrit aux mêmes séances manquées (1.0.5 : aucune).
+    assert s['realise_apparie']['introduit'] == {'volume_trop_vite': 2} and s['realise_apparie']['aggrave'] == {}
