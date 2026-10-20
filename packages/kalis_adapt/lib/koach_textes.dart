@@ -496,7 +496,9 @@ String _texteAjoutBorne(Map<String, Object?> p, String ex) {
       ? 'cette semaine d’allègement'
       : 'ton volume de la semaine pour ${_groupes[groupe] ?? 'ce groupe musculaire'}';
   if (series != null && ecrites != null && series <= ecrites) {
-    final ecrit = ecrites == 1 ? 'la série écrite' : 'les $ecrites séries écrites';
+    final ecrit = ecrites == 1
+        ? 'la série écrite'
+        : 'les $ecrites séries écrites';
     return 'Je garde $ecrit de ton programme sur $ex, sans en ajouter : '
         '$qui est déjà atteint.';
   }

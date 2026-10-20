@@ -41,7 +41,11 @@ void main() {
     expect(
       [
         for (final c in out)
-          [c['code'], c['value'], c.containsKey('ecrit') ? c['ecrit'] : 'absent'],
+          [
+            c['code'],
+            c['value'],
+            c.containsKey('ecrit') ? c['ecrit'] : 'absent',
+          ],
       ],
       [
         ['volume_trop_vite', 14.0, 12.0],

@@ -278,16 +278,14 @@ void main() {
   test('volumes du scénario', () {
     final a = _programmeA();
     final b = _programmeB();
-    expect([_ecrit(a, _chest), _ecrit(a, _dant), _ecrit(a, _tri)], [
-      26.5,
-      17.5,
-      21.0,
-    ]);
-    expect([_ecrit(b, _chest), _ecrit(b, _dant), _ecrit(b, _tri)], [
-      38.0,
-      27.5,
-      33.5,
-    ]);
+    expect(
+      [_ecrit(a, _chest), _ecrit(a, _dant), _ecrit(a, _tri)],
+      [26.5, 17.5, 21.0],
+    );
+    expect(
+      [_ecrit(b, _chest), _ecrit(b, _dant), _ecrit(b, _tri)],
+      [38.0, 27.5, 33.5],
+    );
   });
 
   test('(a) programme plus volumineux servi tel qu’écrit', () {
@@ -319,7 +317,10 @@ void main() {
     final k = _koach();
     for (var w = 0; w < 3; w++) {
       final a = [
-        [_it('a0.1', _dl, 5, role: 'main'), _it('a0.2', _pp, 4, role: 'secondary')],
+        [
+          _it('a0.1', _dl, 5, role: 'main'),
+          _it('a0.2', _pp, 4, role: 'secondary'),
+        ],
         [
           _it('a1.1', _tl, 4, role: 'main'),
           _it('a1.2', _rw, 5, role: 'secondary'),
@@ -334,7 +335,12 @@ void main() {
         ],
       ];
       for (var i = 0; i < a.length; i++) {
-        _seance(k, 7 * w + const [0, 1, 3, 5][i], a[i], reste: a.sublist(i + 1));
+        _seance(
+          k,
+          7 * w + const [0, 1, 3, 5][i],
+          a[i],
+          reste: a.sublist(i + 1),
+        );
       }
     }
     final b = [
@@ -396,11 +402,10 @@ void main() {
     ];
     var (out, raisons) = _seance(k, 21, s);
     expect(k.seances.retourVol!.limites[_chest], 12.0);
-    expect([_series(out, 'm.1'), _series(out, 'm.2'), _series(out, 'm.3')], [
-      6,
-      4,
-      2,
-    ]);
+    expect(
+      [_series(out, 'm.1'), _series(out, 'm.2'), _series(out, 'm.3')],
+      [6, 4, 2],
+    );
     expect(
       [
         for (final r in _codes(raisons, ['koach.ajout_borne']))
@@ -432,15 +437,17 @@ void main() {
       _it('m.3', _pd, 1, role: 'accessory', ajout: 2),
     ];
     (out, raisons) = _seance(k, 21, s);
-    expect([_series(out, 'm.1'), _series(out, 'm.2'), _series(out, 'm.3')], [
-      8,
-      3,
-      1,
-    ]);
-    expect([
-      for (final r in _codes(raisons, ['koach.ajout_borne']))
-        ent(jm(r['params'])['prevues']) - ent(jm(r['params'])['series']),
-    ], [2]);
+    expect(
+      [_series(out, 'm.1'), _series(out, 'm.2'), _series(out, 'm.3')],
+      [8, 3, 1],
+    );
+    expect(
+      [
+        for (final r in _codes(raisons, ['koach.ajout_borne']))
+          ent(jm(r['params'])['prevues']) - ent(jm(r['params'])['series']),
+      ],
+      [2],
+    );
   });
 
   test('ajout : la ligne la plus tardive d’abord', () {
@@ -451,11 +458,10 @@ void main() {
       _it('m.2', _pp, 3, role: 'accessory', ajout: 2),
       _it('m.3', _pd, 3, role: 'accessory', ajout: 2),
     ]);
-    expect([_series(out, 'm.1'), _series(out, 'm.2'), _series(out, 'm.3')], [
-      6,
-      3,
-      3,
-    ]);
+    expect(
+      [_series(out, 'm.1'), _series(out, 'm.2'), _series(out, 'm.3')],
+      [6, 3, 3],
+    );
   });
 
   test('jamais sous l’écrit, même au-dessus de la limite', () {
@@ -552,10 +558,13 @@ void main() {
     expect(rv.limiteDures, dbl(_s['decharge_part']) * 20.0);
     expect(rv.plafondDures, 14.0);
     expect([_series(out, 'm.1'), _series(out, 'm.2')], [8, 6]);
-    expect({
-      for (final r in _codes(raisons, ['koach.ajout_borne']))
-        jm(r['params'])['groupe'],
-    }, {'allegement'});
+    expect(
+      {
+        for (final r in _codes(raisons, ['koach.ajout_borne']))
+          jm(r['params'])['groupe'],
+      },
+      {'allegement'},
+    );
   });
 
   test('allègement d’un diagnostic : koachVolume gardé', () {
@@ -565,10 +574,10 @@ void main() {
       _it('a', _dl, 5),
       _it('b', _dl, 4, ajout: 1),
     ], 3);
-    expect([for (final x in out) (ent(x['sets']), ent(x['koachVolume']))], [
-      (3, -2),
-      (3, -1),
-    ]);
+    expect(
+      [for (final x in out) (ent(x['sets']), ent(x['koachVolume']))],
+      [(3, -2), (3, -1)],
+    );
   });
 
   test('tenues bras tendus : règle tendineuse gardée', () {
@@ -598,11 +607,17 @@ void main() {
         'targetFlames': 7,
       },
     ]);
-    expect([
-      for (final x in out) (ent(x['sets']), x['secondsLow'], x['secondsHigh']),
-    ], [(7, 5, 5)]);
     expect(
-      [for (final r in _codes(raisons, ['koach.retour_gradue'])) r['params']],
+      [
+        for (final x in out)
+          (ent(x['sets']), x['secondsLow'], x['secondsHigh']),
+      ],
+      [(7, 5, 5)],
+    );
+    expect(
+      [
+        for (final r in _codes(raisons, ['koach.retour_gradue'])) r['params'],
+      ],
       [
         <String, Object?>{
           'exercice': tenue,
@@ -640,15 +655,17 @@ void main() {
     );
     expect(_lignes(out), [('m.2', 6)]);
     final rv = k.seances.retourVol!;
-    expect([rv.limites[_chest], rv.ecrit[_chest], rv.plafonds[_chest]], [
-      6.0,
-      4.0,
-      6.0,
-    ]);
-    expect([
-      for (final r in _codes(raisons, ['koach.ajout_borne']))
-        jm(r['params'])['series'],
-    ], [6]);
+    expect(
+      [rv.limites[_chest], rv.ecrit[_chest], rv.plafonds[_chest]],
+      [6.0, 4.0, 6.0],
+    );
+    expect(
+      [
+        for (final r in _codes(raisons, ['koach.ajout_borne']))
+          jm(r['params'])['series'],
+      ],
+      [6],
+    );
     expect(_codes(raisons, ['koach.douleur_retrait']), isNotEmpty);
   });
 
@@ -661,10 +678,13 @@ void main() {
     final rv = k.seances.retourVol!;
     expect([rv.limiteDures, rv.plafondDures], [7.0, 7.0]);
     expect(_series(out, 'm.1'), 7);
-    expect([
-      for (final r in _codes(raisons, ['koach.ajout_borne']))
-        jm(r['params'])['groupe'],
-    ], ['allegement']);
+    expect(
+      [
+        for (final r in _codes(raisons, ['koach.ajout_borne']))
+          jm(r['params'])['groupe'],
+      ],
+      ['allegement'],
+    );
   });
 
   test('deux prescriptions de la même séance (relecture m1)', () {
