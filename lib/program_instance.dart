@@ -567,3 +567,77 @@ ProgramDiff diffWeeks({
     volume: {for (final g in groups) g: (sa.$3[g] ?? 0, sb.$3[g] ?? 0)},
   );
 }
+
+// ======================================== finishers en burpees (dev7.2.6)
+
+/// Correctif 20/10/2026 (dev7.2.6, demande du propriétaire) : catalogue des
+/// finishers d'intervalles sur machine (rameur, air bike) remplacés.
+const _machineFinisherIds = {'ca-air-bike-sprints', 'ca-rameur-sprint'};
+final _machineFinisherName = RegExp(
+  r'^\s*intervalles\s+(?:air\s*bike|rameur)',
+  caseSensitive: false,
+);
+
+/// Nom de la ligne de burpees (sans parenthèses : le titre en séance les
+/// renvoie dans la feuille ⓘ).
+const kBurpeeFinisherName = 'Burpees ou burpees muscle-up — finisher';
+
+/// Consigne des burpees : même rôle que l'ancien finisher ([long] : 40 s
+/// d'effort, deuxième finisher de la semaine), option muscle-up bornée par
+/// la qualité (journée de GtG).
+String burpeeFinisherCue({required bool long}) =>
+    '${long ? 'Deuxième finisher cardio de la semaine : efforts longs, '
+              'récupération courte.' : 'Finisher court : capacité de travail '
+              'et récupération entre les séries (utile pour tes EMOM), sans '
+              'cardio long qui gênerait la force.'} '
+    'Burpees complets (poitrine au sol, extension, saut bras tendus), même '
+    'nombre de reps sur chaque effort. Option burpee muscle-up : au saut, '
+    'muscle-up strict à la barre, sur les premiers efforts seulement et tant '
+    'que chaque muscle-up reste propre (c’est un jour de GtG : un muscle-up '
+    'qui se dégrade, et tu reviens au burpee classique).';
+
+/// Lignes d'intervalles sur machine (rameur, air bike) de [inst] passées en
+/// burpees ; volume et intensité gardés, identifiant de ligne inchangé
+/// (séries notées gardées). Null : rien à changer (déjà fait, ou instance
+/// sans ces lignes).
+ProgramInstance? burpeeFinishers(ProgramInstance inst) {
+  if (!inst.generated) return null;
+  var changed = false;
+  Map<String, dynamic> exercise(Map<String, dynamic> e) {
+    final name = '${e['name'] ?? ''}';
+    final id = e['catalogId'];
+    if (!_machineFinisherIds.contains(id) &&
+        !_machineFinisherName.hasMatch(name)) {
+      return e;
+    }
+    changed = true;
+    final sets = e['sets'];
+    final text = sets is Map ? '${sets['value'] ?? ''}' : '';
+    return <String, dynamic>{
+      ...e,
+      'name': kBurpeeFinisherName,
+      'catalogId': 'cf-burpee',
+      'cue': burpeeFinisherCue(long: RegExp(r'40\s*s\s*effort').hasMatch(text)),
+    };
+  }
+
+  final weeks = <Map<String, dynamic>>[
+    for (final w in inst.weeks)
+      <String, dynamic>{
+        ...w,
+        'days': [
+          for (final d in (w['days'] as List? ?? const []))
+            d is Map<String, dynamic> && d['exercises'] is List
+                ? <String, dynamic>{
+                    ...d,
+                    'exercises': [
+                      for (final e in d['exercises'] as List)
+                        e is Map<String, dynamic> ? exercise(e) : e,
+                    ],
+                  }
+                : d,
+        ],
+      },
+  ];
+  return changed ? inst.copyWith(weeks: weeks) : null;
+}

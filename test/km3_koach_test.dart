@@ -165,12 +165,12 @@ void main() {
     });
 
     test(
-      'pubspec : assets de Koach déclarés, version 7.2.5 (GtG et séries compactes)',
+      'pubspec : assets de Koach déclarés, version 7.2.6 (GtG et séries compactes)',
       () {
         final p = File('pubspec.yaml').readAsStringSync();
         expect(p, contains('- assets/koach/koach_params_1_0_5.json'));
         expect(p, contains('- assets/koach/vecteurs_qualites_v1.json'));
-        expect(p, contains('version: 7.2.5+'));
+        expect(p, contains('version: 7.2.6+'));
       },
     );
   });
