@@ -33,3 +33,8 @@ Session Opus 5.5 (19/10/2026, depuis 11:04 UTC). Base : `moteurs` 9c81a201.
 - Run D (Dart P) : c7 = 0, principal retiré 0. Run E (Python, 89 438 saisons) : c7 = 0 ; parité D ↔ E : 89 438 identiques (run F). Critères g0-5 sans recul au-delà du bruit.
 - En cours : run G 39363111472 (demi-parts 13/40, 33/40 + publication complète) ; contrôle complet 39363143851 (commit 34580a33, même code que l'arbre final).
 - Reste : remplir ⟨G⟩ (CRITERES_KM4.md, livraison), push moteurs, étiquettes, livraison, ETAT_CP, page de suivi, notification.
+
+## Point du 20/10/2026 06:25 UTC
+- Run G vert : Python 90 600 saisons, c7 0, retiré 0 ; 90 600 identiques Dart ↔ Python. ⟨G⟩ remplis (CRITERES_KM4.md, livraison).
+- Contrôle complet 39363143851 rouge sur km2_adversaire_test (sortie Python en dur de evaluer_saison adv-7ee0da71 : echecs 0,004292, gain −0,00053 avec 1.0.6) : corrigé ; run H 39378877508 vert (268 tests kalis_bench) ; contrôle complet (2) 39378780707 en cours (fd0153cf, arbre = commit local 91d8ea70 de moteurs).
+- Reste : attendre 39378780707, push moteurs 91d8ea70, étiquettes, livraison, ETAT_CP, page, notification.

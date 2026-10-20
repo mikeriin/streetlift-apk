@@ -9,7 +9,7 @@ Lot KM4 (DECISIONS_CP.md C17.37). Campagnes sur les 90 600 saisons du banc (34 p
 | A (39247073902) | Dart, Koach 1.0.5 (`kalis_adapt` 1.0.4) | point de départ avec la mesure de la rampe (`data/km4/securite/securite_km4avant_*`) |
 | B (39260047813) | Python, 1.0.6 avec répartition sur la semaine (`retour_repartition_semaines` 4) | **critère 7 = 40** (28 saisons, `autres_10`, graines 48 et 96, semaine 5) : répartition désactivée (`data/km4/securite/repartie_python_*`) |
 | D (39304949115) | Dart, 1.0.6 sans répartition, variante P (`retour_emprunt_plancher` 1) | campagne Dart complète (`securite_km4P_dart_*`) ; la variante M (0) n'a pas tourné (pas de SDK sur ses parts) |
-| E (39312132226) + G | Python, même moteur que D | campagne Python ; la part 13/20 de E a dépassé 355 min (89 438 saisons), refaite par G en 13/40 et 33/40 |
+| E (39312132226) + G (39363111472) | Python, même moteur que D | campagne Python ; la part 13/20 de E a dépassé 355 min (89 438 saisons), refaite par G en 13/40 et 33/40 ; G publie la campagne Python entière (`securite_km4_python_*`, `criteres_km4_python_g0_5.json`) et la comparaison complète au run D (`comparaison/`) |
 | F (39336305801) | Dart, arbre final | tests, six jeux d'adversaires, critères Dart 0-5, critère 5 par groupe, comparaison D ↔ E |
 
 ## 2. Sécurité et rampe (100 graines)
@@ -26,7 +26,7 @@ Lot KM4 (DECISIONS_CP.md C17.37). Campagnes sur les 90 600 saisons du banc (34 p
 
 Par scénario (run D) : la réduction touche surtout les scénarios de douleur (`douleur_coude` 7,7 % des séances avec principal, part servie 24 % ; `douleur_epaule` 9,8 %, 26 %), où un principal sur une zone sensible passe au rang des secondaires (la conduite sous douleur garde la main) ; ailleurs 1,1 à 2,5 %, part servie 54 à 57 %.
 
-Campagne Python (même moteur) : ⟨G⟩.
+Campagne Python (même moteur, runs E et G, 90 600 saisons) : **0 saison plantée, critère 7 = 0, principal retiré par la rampe sans douleur 0** ; retour à l'écrit 54 064, réalisée appariée 243 277, principal réduit dans 141 079 séances (3,11 %), part servie 36,2 % : mêmes chiffres que le run D (`data/km4/securite/SECURITE_KM4_PYTHON_100G.md`).
 
 ## 3. Critères du cahier (graines 0-5)
 
@@ -44,4 +44,4 @@ Campagne Python (même moteur) : ⟨G⟩.
 
 ## 4. Parité
 
-Run F : 89 438 saisons Python (run E) comparées aux saisons Dart du run D, **89 438 identiques**, 0 différente (champs `duree_s` et ordre de `first_under` exclus, comme KM2c3) ; ⟨G⟩.
+Run F : 89 438 saisons Python (run E) comparées aux saisons Dart du run D, **89 438 identiques**, 0 différente (champs `duree_s` et ordre de `first_under` exclus, comme KM2c3) ; run G, campagne entière : **90 600 saisons Python comparées aux 90 600 saisons Dart du run D, 90 600 identiques**, 0 différente, 0 sans correspondant (`data/km4/comparaison/COMPARAISON_SAISONS_KM4.md`).
