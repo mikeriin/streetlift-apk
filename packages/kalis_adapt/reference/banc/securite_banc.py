@@ -1295,3 +1295,65 @@ if __name__ == '__main__':
         sys.stderr.write('usage : python3 -m banc.securite_banc --entrees-dart <dossier>\n')
         sys.exit(64)
     print('%d entrée(s) écrite(s).' % ecrire_entrees_reference(sys.argv[2]))
+
+
+# ---------------------------------------------------------------------------
+# KM5 (Koach 1.0.7, DECISIONS_CP.md C17.40) : vue « volume_trop_vite » des
+# saisons servies par Koach
+# ---------------------------------------------------------------------------
+
+def series_majeures(weeks, groupes=None):
+    """Séries dures créditées par groupe MAJEUR de chaque semaine lue :
+    liste (indice de semaine) de {indice de groupe: séries}."""
+    groupes = groupes or GROUPES
+    return [{gi: w.series_groupe(gi) for (gi, code, major) in groupes if major} for w in weeks]
+
+
+def constats_et_series_saison(saison, infos, blocs=None, groupes=None):
+    """(constats, séries par groupe majeur et par semaine) des blocs [blocs]
+    d'une saison exportée (ceux de la saison sans argument), en une seule
+    lecture du programme (`constats_saison` + `series_majeures`)."""
+    ctx = ContexteBanc(saison['benchJson'], saison['profiles'][0]['profile'], infos, groupes)
+    weeks = ctx.lire(saison['blocks'] if blocs is None else blocs, saison['weeks'],
+                     saison.get('blockWeeks'))
+    return constats_semaines(weeks, ctx.bench, ctx.infos, ctx.groupes), series_majeures(weeks, ctx.groupes)
+
+
+def filtrer_volume_ecrit(found, servi, ecrit):
+    """Définition KM5 de « volume_trop_vite » pour une saison servie par
+    Koach (C17.40.3) : la rampe de volume protège contre ce que Koach AJOUTE,
+    pas contre le programme choisi par l'athlète. Un constat
+    `volume_trop_vite` de la semaine w (valeur = séries servies du groupe,
+    limite = rampe sur trois semaines ou sur deux) n'est gardé que si les
+    séries servies dépassent max(limite, séries ÉCRITES du groupe dans la
+    semaine w) + EPS ; il porte alors `ecrit` (séries écrites). Le groupe
+    d'un constat est celui dont les séries servies valent sa valeur (à
+    égalité, le premier qui dépasse ; aucun groupe trouvé : gardé, `ecrit`
+    None). [servi], [ecrit] : `series_majeures` des blocs servis et du
+    programme écrit. Les autres constats sont rendus tels quels."""
+    out = []
+    for c in found:
+        if c.get('code') != 'volume_trop_vite':
+            out.append(c)
+            continue
+        w = c.get('week')
+        v = float(c['value'])
+        lim = float(c['limit'])
+        sw = servi[w] if w is not None and 0 <= w < len(servi) else {}
+        ew = ecrit[w] if w is not None and 0 <= w < len(ecrit) else {}
+        trouve = False
+        garde = None
+        for gi in sorted(sw):
+            if abs(sw[gi] - v) > EPS:
+                continue
+            trouve = True
+            e = ew.get(gi, 0.0)
+            if v > (lim if lim > e else e) + EPS:
+                garde = e
+                break
+        if trouve and garde is None:
+            continue
+        c = dict(c)
+        c['ecrit'] = garde
+        out.append(c)
+    return out

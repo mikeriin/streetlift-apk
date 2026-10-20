@@ -1416,6 +1416,11 @@ class ControleDual extends Extension
       plus = plus > 0 ? plus : 0;
       final it = Map<String, Object?>.of(it0);
       it['sets'] = n + plus;
+      if (plus > 0) {
+        // 1.0.7 (KM5) : séries ajoutées par Koach (bras A) au-dessus de
+        // l'écrit du programme, lues par la rampe de volume.
+        it['koachVolume'] = ent(ou(it['koachVolume'], 0)) + plus;
+      }
       sv[1] = ref;
       sv[2] = planifiees;
       sv[3] = servies + plus;

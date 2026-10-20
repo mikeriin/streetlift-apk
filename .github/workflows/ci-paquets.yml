@@ -1,5 +1,5 @@
-# Contrôle de MISE AU POINT du lot KM4 (branche claude/ci-cp-a seulement,
-# jamais sur moteurs) : commandes de DEV_KM4.sh réparties en parts
+# Contrôle de MISE AU POINT du lot KM5 (branche claude/ci-cp-a seulement,
+# jamais sur moteurs) : commandes de DEV_KM5.sh réparties en parts
 # parallèles (DEV_PARTS), assemblage par DEV_ASSEMBLER.sh. Même méthode que
 # les lots KR1 et KM1c4 (commits « <lot> contrôle (dev) ») ; publication
 # sautée quand le run est annulé (incident de KM1c4).
@@ -16,7 +16,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: ci-km4-${{ github.sha }}
+  group: ci-km5-${{ github.sha }}
   cancel-in-progress: true
 
 env:
@@ -34,7 +34,7 @@ jobs:
       - id: p
         run: echo "liste=$(cat DEV_PARTS)" >> "$GITHUB_OUTPUT"
   packages:
-    name: Mise au point KM4 (${{ matrix.part }})
+    name: Mise au point KM5 (${{ matrix.part }})
     needs: [parts]
     strategy:
       fail-fast: false
@@ -62,7 +62,7 @@ jobs:
         run: |
           mkdir -p out-packages
           pip install --quiet numpy pytest
-          PART=${{ matrix.part }} bash DEV_KM4.sh 2>&1 | tee out-packages/dev_${{ matrix.part }}.log
+          PART=${{ matrix.part }} bash DEV_KM5.sh 2>&1 | tee out-packages/dev_${{ matrix.part }}.log
           exit ${PIPESTATUS[0]}
       - uses: actions/upload-artifact@v4
         if: always()

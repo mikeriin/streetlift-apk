@@ -149,6 +149,10 @@ Map<String, Object> kmRampeVide() => <String, Object>{
   'part_servie': 0.0,
   'principal_retire': 0,
   'seances_principal_retire': 0,
+  'sous_ecrit_items': 0,
+  'sous_ecrit_series': 0,
+  'ajouts_bornes': 0,
+  'ajouts_bornes_series': 0,
 };
 
 void _ajouterEnt(Map<String, Object> acc, String k, int v) {
@@ -156,7 +160,10 @@ void _ajouterEnt(Map<String, Object> acc, String k, int v) {
 }
 
 /// `mesure_rampe` : retour gradué sur les principaux (KM4, C17.37) ajouté à
-/// [acc] pour une séance.
+/// [acc] pour une séance ; critère de KM5 (C17.40) : lignes écrites servies
+/// sous leurs séries écrites alors qu'une raison de la rampe de VOLUME porte
+/// sur leur exercice (`sous_ecrit_items`, `sous_ecrit_series`) ; ajouts de
+/// Koach bornés (`ajouts_bornes`, `ajouts_bornes_series`).
 void kmMesureRampe(
   Map<String, Object> acc,
   List<Object?> items,
@@ -172,11 +179,27 @@ void kmMesureRampe(
   }
   final rampe = <Object?, List<Object?>>{};
   final douleur = <Object?>{};
+  final volume = <Object?>{};
   for (final r0 in raisons) {
     final r = kc.jm(r0);
     final pr = kc.jm(r['params'] ?? <String, Object?>{});
     final ex = pr['exercice'];
     final code = r['code'];
+    if (code == 'koach.ajout_borne') {
+      _ajouterEnt(acc, 'ajouts_bornes', 1);
+      _ajouterEnt(
+        acc,
+        'ajouts_bornes_series',
+        kc.ent(pr['prevues'] ?? 0) - kc.ent(pr['series'] ?? 0),
+      );
+      if (kc.ent(pr['series'] ?? 0) < kc.ent(pr['ecrites'] ?? 0)) {
+        volume.add(ex);
+      }
+    }
+    if (code == 'koach.retour_gradue' &&
+        !'${pr['groupe']}'.startsWith('bras_tendus')) {
+      volume.add(ex);
+    }
     if (code == 'koach.retour_gradue') {
       rampe.putIfAbsent(ex, () => <Object?>[]).add(pr['series']);
       if (kc.vrai(pr['douleur'])) {
@@ -185,6 +208,20 @@ void kmMesureRampe(
     } else if (_pkRaisonsDouleur.contains(code) ||
         '$code'.startsWith('koach.douleur')) {
       douleur.add(ex);
+    }
+  }
+  for (final it0 in items) {
+    final it = kc.jm(it0);
+    final n0 = kc.ent(it['sets'] ?? 0);
+    if (it['kind'] == 'warmup' ||
+        n0 <= 0 ||
+        !volume.contains(it['exerciseId'])) {
+      continue;
+    }
+    final n = servi[it['slotId']] ?? 0;
+    if (n < n0) {
+      _ajouterEnt(acc, 'sous_ecrit_items', 1);
+      _ajouterEnt(acc, 'sous_ecrit_series', n0 - n);
     }
   }
   var avec = false;

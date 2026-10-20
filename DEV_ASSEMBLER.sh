@@ -1,2 +1,2 @@
-# Assemblage du run H (KM4) : rien à assembler (journaux des tests seulement).
-echo "run H : journaux seulement"
+# Assemblage du run A (KM5) : rien à agréger (journaux et patchs de formatage dans ci-out/packages).
+ls ci-out/packages
