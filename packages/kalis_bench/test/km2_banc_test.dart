@@ -474,6 +474,7 @@ void main() {
           saison,
           cs.constats,
           tour,
+          constatsSeries: cs.constatsEtSeries,
           blocsModules: politique.planification?.blocsModules(),
         );
         expect(attendu['securite'], isNotNull);

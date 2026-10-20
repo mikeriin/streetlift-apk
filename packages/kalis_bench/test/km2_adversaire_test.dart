@@ -142,16 +142,16 @@ _decodages = <(String, String, String, String)>[
   ),
 ];
 
-/// Sortie de `evaluer_saison` de la référence (Koach 1.0.6 Python, sans
-/// extension ; lot KM4) pour l'adversaire `adv-7ee0da71`, graine 0.
+/// Sortie de `evaluer_saison` de la référence (Koach 1.0.7 Python, sans
+/// extension ; lot KM5) pour l'adversaire `adv-7ee0da71`, graine 0.
 const String _evaluationPython =
     '{"aggravations": 0, "codes_violations": {"volume_trop_vite": 3}, '
     '"e1rm6": 0.034142, "e1rm_famille": "loadedMain", "e1rm_n": 4, '
-    '"echeance": true, "echecs": 0.004292, "evenements": '
+    '"echeance": true, "echecs": 0.004093, "evenements": '
     '[["sl-muscle-up-leste", "loaded", 111.35, 115.900709, 0.960736], '
     '["sl-traction-lestee", "loaded", 152.6, 156.39159, 0.975756], '
     '["sl-dips-leste", "loaded", 160.55, 177.181342, 0.906134]], '
-    '"faites": 57, "gain": -0.00053, "perf_a": 0.947542, "plantage": '
+    '"faites": 57, "gain": -0.000389, "perf_a": 0.947542, "plantage": '
     'null, "poussees": 0, "present": true, "prevues": 80, "seed": 0, '
     '"violations": 3}';
 

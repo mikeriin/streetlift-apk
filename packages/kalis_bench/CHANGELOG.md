@@ -1,6 +1,21 @@
 # Journal
 
 
+## 0.5.8 — 20/10/2026 (lot KM5)
+
+Lot KM5 (DECISIONS_CP.md C17.40) : validateur et mesures de Koach 1.0.7 (la rampe de volume ne coupe jamais sous
+l'écrit).
+
+- **Vue « volume_trop_vite » des saisons servies par Koach redéfinie** (critère 8, clé `7_securite`) : violation =
+  servi > max(limite de la rampe, écrit du programme de la semaine) ; `kmFiltrerVolumeEcrit`,
+  `KmConstatsSaison.constatsEtSeries`, `kmSecuriteSaison` (paramètre `constatsSeries`) ; indicateur
+  `ancienne_definition` (ancienne définition, limite seule) ; `docs/CRITERES_KM5.md`.
+- `kmMesureRampe` : critère KM5 `sous_ecrit_items` / `sous_ecrit_series`, mesure indépendante `sans_cause_items` /
+  `sans_cause_series`, ajouts bornés `ajouts_bornes` / `ajouts_bornes_series`.
+- `tool/kr1_securite.py` : agrégats `critere_7_ancienne_definition`, mesures KM5.
+- Test `test/km5_filtre_test.dart` ; fixtures `test/fixtures/km2/` régénérées (Koach 1.0.7).
+
+
 ## 0.5.7 — 19/10/2026 (lot KM4)
 
 Lot KM4 (DECISIONS_CP.md C17.37) : mesure de la rampe de volume sur les principaux et rôle des emplacements dans le

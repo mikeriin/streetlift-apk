@@ -1,14 +1,13 @@
 # Sauvegarde KM5 (Koach 1.0.7 : la rampe de volume ne coupe jamais sous l'écrit)
 
-Session Opus 5.5 (20/10/2026, depuis 16:36 UTC). Base : `moteurs` 91d8ea70. Pas de SDK Dart en session (Dart sur la CI `claude/ci-cp-a`).
+Session Opus 5.5 (20/10/2026, depuis 16:36 UTC). Base : `moteurs` 91d8ea70. Pas de SDK Dart en session.
 
-## Fait
-- Référence Python 1.0.7 : `seance.py` (`_ecrites` = sets − koachVolume, `_compter_ecrit`, écrit du programme de la semaine, plafonds max(L, E), `_plan_retour` réécrit : seuls les ajouts de Koach sont bornés, rang puis ligne la plus tardive ; `_retour_gradue` : raison `koach.ajout_borne`, rampe tendineuse inchangée) ; `rupture.appliquer_allegement` et bras A (banc) tiennent `koachVolume` ; paramètres `1.0.7-ref.1`, trois clés `retour_*` retirées.
-- Banc Python : `securite_banc.filtrer_volume_ecrit` (nouvelle définition volume_trop_vite : servi > max(limite, écrit)), `securite_saison` (vues de Koach filtrées, `ancienne_definition`), mesure `sous_ecrit_items/series`, `ajouts_bornes(_series)` ; agrégats `securite_campagne.py`, `kalis_bench/tool/kr1_securite.py`.
-- Tests Python : `test_km5_rampe.py` (15, scénarios a, b, c), `test_securite_regles.py` (retour gradué réécrits), `test_campagne.py` ; `test_km4_retour.py` retiré.
-- Dart en cours : `seance.dart` (porté), `rupture.dart`, `dual.dart` (koachVolume), `parametres.dart` (1.0.7, asset `koach_params_1_0_7.json`, 344 clés), `koach_textes.dart` (`koach.ajout_borne`).
+## Fait (17:58 UTC)
+- Code figé : commit local `km5` de9b769 (kalis_adapt 1.0.6, Koach 1.0.7 ; kalis_bench 0.5.8), arbre de cette sauvegarde.
+- Relecture indépendante (Opus) faite et traitée : M1 (écrit servi : la douleur ne laisse pas sa place aux ajouts), M2 (allègement sur l'écrit du programme), M3 (mesure indépendante `sans_cause_*`), m1 (un seul prescrire compté), m5 (filtre une lecture) ; M4 (montée du vrai test) et m2 (groupe deviné par la valeur, prudent) dits comme limites.
+- Run A (39463684069) : Dart compile ; échecs attendus corrigés (docs/contrat, sortie Python d'evaluer_saison adv-7ee0da71 : echecs 0,004093, gain −0,000389 ; format patch appliqué).
+- Échantillon local Python (302 saisons, vérité b, graine 0, --rapide) : critère 7 = 0, ancienne définition 0, sous l'écrit 0, sans cause 0, ajouts bornés 27 ; retour à l'écrit 18, réalisée appariée 20. 1.0.6 sur 27 saisons : sous l'écrit 749 items / 1 388 séries. Scénario (a) en 1.0.6 : reproduit le constat (extension triceps et élévations latérales à 0, pompes 2/4, DM 1/3).
+- Run B poussé 17:57 (commit 0db83dd, campagne complète Dart 34 + Python 50 + adversaires + tests) ; contrôle complet poussé (1f96352c).
 
 ## Reste
-- Dart : tests km5 (port de test_km5_rampe.py), banc Dart (filtre de la définition, mesure, `kmSecuriteSaison`), fixtures (generer.py, generer_banc_km2.py, km2c2), docs (CONTRAT, CHANGEMENTS_1_0_7, SOURCES, CHANGELOG, CRITERES_KM5), versions `kalis_adapt` 1.0.6 / `kalis_bench` 0.5.8.
-- CI : run tests (part 0) puis campagne complète unique (Dart 34 parts + Python 50 parts + adversaires 6 + comparaison).
-- Livraison, étiquettes, ETAT_CP, page de suivi, notification.
+- Attendre run B et le contrôle complet ; remplir docs/CRITERES_KM5.md, livraison ; push moteurs (rebase), étiquettes kalis_adapt-v1.0.6 et kalis_bench-v0.5.8 ; LIVRAISON_KM5 (pipeline + projet), ETAT_CP, page de suivi, notification.

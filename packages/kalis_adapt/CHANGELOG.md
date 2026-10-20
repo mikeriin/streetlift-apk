@@ -1,5 +1,26 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.6
+
+Lot KM5 (DECISIONS_CP.md C17.40) : **Koach 1.0.7** (référence Python et portage Dart dans le même lot,
+`reference/CHANGEMENTS_1_0_7.md`) — **la rampe de volume ne coupe jamais sous l'écrit du programme**. API et schéma du
+journal inchangés ; une raison nouvelle (`koach.ajout_borne`) ; `koachVolume` lu par la séance (écrit = `sets −
+koachVolume`).
+
+- **Rampe de volume** (`seance.dart`, `_planRetour`, `_retourGradue`) : aucun exercice, aucune série retirés au nom du
+  volume, tous rôles, toutes semaines ; seules les séries ajoutées par Koach (planification, bras A) sont bornées, par
+  groupe majeur et par semaine, à max(limite de la rampe, écrit servi de la semaine) (accessoires d'abord, puis la ligne
+  la plus tardive) ; écrit servi compté une fois par séance (`ecritVol`, `ecritDures`, `ecritCompte`) ; un allègement se
+  décide sur l'écrit du programme. Rampe tendineuse des tenues bras tendus inchangée (seule raison `koach.retour_gradue`
+  restante). Planchers, répartition et emprunt de 1.0.6 retirés.
+- `rupture.dart` (semaine allégée d'un diagnostic) et `dual.dart` (bras A) tiennent `koachVolume` à jour.
+- **Paramètres** : asset `assets/koach/koach_params_1_0_7.json` (`1.0.7-ref.1`, 344 clés, SHA-256 `2f055c5181743089afd0c3602bc270f77b01063ebc1bab32b293c81c6816f42c`) ; trois clés
+  `securite.retour_*` retirées.
+- **Textes** : `koach.ajout_borne` (« Je garde les N séries écrites de ton programme sur … »).
+- `Seances.entree` (items reçus par le dernier `prescrire`, lecture du banc).
+- **Tests** : `test/koach_km5_rampe_test.dart` (port de `reference/tests/test_km5_rampe.py`) ;
+  `test/koach_km4_retour_test.dart` retiré ; fixtures régénérées.
+
 ## 1.0.5
 
 Lot KM4 (DECISIONS_CP.md C17.37) : **Koach 1.0.6** (référence Python et portage Dart dans le même lot,

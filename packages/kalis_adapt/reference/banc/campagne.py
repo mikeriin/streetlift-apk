@@ -394,8 +394,8 @@ def securite_saison(saison, infos, tour, pol):
         found, servi = sb.constats_et_series_saison(saison, infos, blocs=blocs)
         return found, sb.filtrer_volume_ecrit(found, servi, ecrit)
 
-    def filtre(found, blocs):
-        return sb.filtrer_volume_ecrit(found, sb.constats_et_series_saison(saison, infos, blocs=blocs)[1], ecrit)
+    def filtre(blocs):
+        return lire(blocs)[1]
 
     ancienne = {}
     plan = None
@@ -468,12 +468,11 @@ def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s, filtr
     qui disparaissent quand chaque séance manquée de [blocs_s] est vidée
     (diagnostic : le volume écrit d'une séance manquée compte dans la vue
     servie ; Koach ne le sert pas et ne peut que le réserver). [filtre]
-    (KM5) : définition des constats des blocs servis (`securite_saison`)."""
+    (KM5) : blocs -> constats à la définition des blocs servis
+    (`securite_saison`)."""
     vide = vider_manquees(saison, tour, blocs_s)
     cles_ini = set(_cle_constat(c) for c in initial)
-    found = sb.constats_saison(saison, infos, blocs=vide)
-    if filtre is not None:
-        found = filtre(found, vide)
+    found = sb.constats_saison(saison, infos, blocs=vide) if filtre is None else filtre(vide)
     restent = set(_cle_constat(c) for c in found)
     out = {}
     for c in serv:
@@ -491,8 +490,8 @@ def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s, filtre=None
     douleur, bilan bas, coupure, arrêt après échecs) qui était plus bas que
     l'écrit, et le retour au plan écrit dépasse la rampe hebdomadaire
     calculée sur ce passé allégé. Les constats qui restent sont de vrais
-    dépassements de la semaine servie. [filtre] (KM5) : définition des
-    constats des blocs servis, appliquée aussi aux blocs hybrides."""
+    dépassements de la semaine servie. [filtre] (KM5) : blocs -> constats à
+    la définition des blocs servis, appliquée aussi aux blocs hybrides."""
     cles_ini = {}
     for c in initial:
         cles_ini[_cle_constat(c)] = cles_ini.get(_cle_constat(c), 0) + 1
@@ -528,9 +527,7 @@ def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s, filtre=None
                         if sem_s['weekIndex'] == wi:
                             hyb[bi]['pass2']['weeks'][j] = copy.deepcopy(sem_s)
             cache[ident] = {}
-            found = sb.constats_saison(saison, infos, blocs=hyb)
-            if filtre is not None:
-                found = filtre(found, hyb)
+            found = sb.constats_saison(saison, infos, blocs=hyb) if filtre is None else filtre(hyb)
             for x in found:
                 cache[ident][_cle_constat(x)] = True
         if k in cache[ident]:

@@ -75,7 +75,7 @@ def items_volume(items, roles=None):
 RAISONS_DOULEUR = ('koach.douleur_retrait', 'koach.reprise_dose', 'koach.douleur_persistante')
 
 
-def mesure_rampe(acc, items, roles, servis, raisons):
+def mesure_rampe(acc, items, roles, servis, raisons, seances=None, zones=None):
     """Mesure du retour gradué sur les principaux (KM4, C17.37) ajoutée à
     [acc] pour une séance : [items] écrits, [roles] slotId -> rôle,
     [servis] items servis, [raisons] de Koach. Principal : ligne écrite de
@@ -92,7 +92,18 @@ def mesure_rampe(acc, items, roles, servis, raisons):
     servie sous ses écrites) : `sous_ecrit_items`, `sous_ecrit_series`
     (séries écrites − servies, borne haute quand une autre règle a aussi
     réduit la ligne). Ajouts de Koach bornés (`koach.ajout_borne`, 1.0.7) :
-    `ajouts_bornes` (raisons), `ajouts_bornes_series` (prévues − servies)."""
+    `ajouts_bornes` (raisons), `ajouts_bornes_series` (prévues − servies).
+
+    Mesure indépendante (relecture KM5, M3) : `sans_cause_items`,
+    `sans_cause_series` — ligne écrite (hors échauffement et tests, au
+    moins une série) servie sous ses séries écrites sans cause dite ni
+    visible : aucune raison de Koach sur son exercice (hors
+    `koach.ajout_borne`), reçue par Koach à au moins ses séries écrites
+    (pas réduite avant : planification, allègement d'un diagnostic), bilan
+    du jour sans palier, aucune zone qu'elle sollicite (niveau ≥ 0,5 ou
+    arrêt) en douleur active, à l'arrêt, en reprise ou sensible
+    ([seances] : `Seances` de Koach après la prescription ; [zones] :
+    id -> (niveaux, zones d'arrêt))."""
     acc['seances'] += 1
     servi = {}
     for it in servis:
@@ -116,6 +127,31 @@ def mesure_rampe(acc, items, roles, servis, raisons):
                 douleur.add(ex)
         elif r.get('code') in RAISONS_DOULEUR or str(r.get('code')).startswith('koach.douleur'):
             douleur.add(ex)
+    if seances is not None:
+        dites = set()
+        for r in raisons:
+            pr = r.get('params') or {}
+            if r.get('code') != 'koach.ajout_borne' and pr.get('exercice') is not None:
+                dites.add(pr['exercice'])
+        recus = {}
+        for p in seances.entree or []:
+            recus[p.get('slotId')] = int(p.get('sets') or 0)
+        g = seances.g
+        for it in items:
+            n0 = int(it.get('sets') or 0)
+            ex = it['exerciseId']
+            if it.get('kind') in ('warmup', 'test') or n0 <= 0 or ex in dites or seances.palier > 0:
+                continue
+            if recus.get(it.get('slotId'), 0) < n0:
+                continue
+            niveaux, arrets = (zones or {}).get(ex) or ({}, set())
+            zs = sorted(set(z for z, v in niveaux.items() if v >= 0.5) | set(arrets))
+            if any(g.active(z) > 0 or g.arret(z) or g.reprise(z) is not None or g.sensible(z) for z in zs):
+                continue
+            n = servi.get(it.get('slotId'), 0)
+            if n < n0:
+                acc['sans_cause_items'] += 1
+                acc['sans_cause_series'] += n0 - n
     for it in items:
         n0 = int(it.get('sets') or 0)
         if it.get('kind') == 'warmup' or n0 <= 0 or it['exerciseId'] not in volume:
@@ -152,7 +188,8 @@ def mesure_rampe(acc, items, roles, servis, raisons):
 def rampe_vide():
     return {'seances': 0, 'seances_principal': 0, 'seances_principal_reduit': 0, 'principaux_reduits': 0,
             'part_servie': 0.0, 'principal_retire': 0, 'seances_principal_retire': 0,
-            'sous_ecrit_items': 0, 'sous_ecrit_series': 0, 'ajouts_bornes': 0, 'ajouts_bornes_series': 0}
+            'sous_ecrit_items': 0, 'sous_ecrit_series': 0, 'ajouts_bornes': 0, 'ajouts_bornes_series': 0,
+            'sans_cause_items': 0, 'sans_cause_series': 0}
 
 
 class PolitiqueKoach(Politique):
@@ -249,7 +286,8 @@ class PolitiqueKoach(Politique):
                 roles[s['slotId']] = s.get('role')
         r = self.koach.plan({'horizon': 'seance', 'items': items, 'grilles': self.grilles,
                              'zones': self.zones, 'roles': roles})
-        mesure_rampe(self.rampe, ctx.ecrit['items'], roles, r['items'], r.get('raisons') or [])
+        mesure_rampe(self.rampe, ctx.ecrit['items'], roles, r['items'], r.get('raisons') or [],
+                     self.koach.seances, self.zones)
         return {'items': r['items']}
 
     def _verser(self, done):
