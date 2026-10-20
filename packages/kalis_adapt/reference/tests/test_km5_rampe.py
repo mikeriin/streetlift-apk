@@ -428,6 +428,75 @@ def test_tenues_bras_tendus_regle_tendineuse_gardee():
     assert not codes(raisons, 'koach.ajout_borne')
 
 
+def test_douleur_sur_une_ligne_ajouts_sur_une_autre():
+    """Relecture KM5 (M1) : l'écrit d'une ligne retirée par la douleur ne
+    compte pas au plafond ; les ajouts de Koach sur une autre ligne du même
+    groupe restent bornés à la limite de la rampe (écrit SERVI)."""
+    zones = {DL: ({'shoulder': 1.0}, {'shoulder'})}
+    k = koach()
+    for w in range(4):
+        seance(k, 7 * w, [it('x%d' % w, DL, 4, role='main')], zones=zones)
+    out, raisons = seance(k, 28, [it('m.1', DL, 12, role='main'), it('m.2', PP, 4, role='secondary', ajout=8)],
+                          zones=zones, douleurs=[{'zone': 'shoulder', 'intensity': 4}])
+    assert [(x['slotId'], x['sets']) for x in out] == [('m.2', 6)]
+    rv = k.seances.retour_vol
+    assert (rv['limites'][CHEST], rv['ecrit'][CHEST], rv['plafonds'][CHEST]) == (6.0, 4.0, 6.0)
+    assert [r['params']['series'] for r in codes(raisons, 'koach.ajout_borne')] == [6]
+    assert codes(raisons, 'koach.douleur_retrait')
+
+
+def test_allegement_decide_sur_l_ecrit_du_programme():
+    """Relecture KM5 (M2) : une semaine écrite en allègement (6 ≤ 0,7 × 10)
+    le reste malgré les ajouts de Koach (+3) : le total est borné à
+    max(0,7 × 10 ; 6) = 7."""
+    k = koach()
+    for w in range(3):
+        seance(k, 7 * w, [it('x%d' % w, DL, 10, role='main')])
+    out, raisons = seance(k, 21, [it('m.1', DL, 6, role='main', ajout=3)])
+    rv = k.seances.retour_vol
+    assert (rv['limite_dures'], rv['plafond_dures']) == (7.0, 7.0)
+    assert series(out, 'm.1') == 7
+    assert [r['params']['groupe'] for r in codes(raisons, 'koach.ajout_borne')] == ['allegement']
+
+
+def test_deux_prescriptions_de_la_meme_seance():
+    """Relecture KM5 (m1) : un second `prescrire` de la même séance ne
+    compte pas son écrit deux fois (mêmes séries servies)."""
+    k = koach()
+    for w in range(3):
+        seance(k, 7 * w, [it('x%d' % w, DL, 10, role='main')])
+    c = {'semaine': 3, 'genre': 'accumulation', 'reste_semaine': [], 'manquees': []}
+    k.garde.avancer(21)
+    k.seances.ouvrir(21, None, c)
+    s = [it('m.1', DL, 6, role='main', ajout=2), it('m.2', PP, 6, role='secondary', ajout=4)]
+    a = k.seances.prescrire(copy.deepcopy(s), {}, {}, roles_de(s))
+    b = k.seances.prescrire(copy.deepcopy(s), {}, {}, roles_de(s))
+    assert [x['sets'] for x in a] == [x['sets'] for x in b] == [6, 6]
+    assert k.seances.ecrit_vol[3][CHEST] == 12.0
+
+
+def test_filtre_du_validateur_volume_ecrit():
+    """Définition KM5 de `volume_trop_vite` (banc) : gardé seulement si le
+    servi dépasse max(limite, écrit de la semaine) ; groupe trouvé par la
+    valeur servie (à égalité, le premier qui dépasse) ; semaine inconnue ou
+    groupe introuvable : gardé (prudent) ; autres codes inchangés."""
+    from banc import securite_banc as sb
+    v = lambda w, val, lim: {'code': 'volume_trop_vite', 'week': w, 'value': val, 'limit': lim}
+    servi = [{0: 10.0, 4: 12.0}, {0: 14.0, 4: 12.0, 7: 9.0}]
+    ecrit = [{0: 10.0, 4: 12.0}, {0: 12.0, 4: 13.0, 7: 9.0}]
+    found = [v(1, 14.0, 10.0), v(1, 12.0, 10.0), v(1, 9.0, 8.0), v(5, 3.0, 2.0), v(1, 7.0, 6.0),
+             {'code': 'charge_trop_vite', 'week': 1, 'value': 0.2, 'limit': 0.05}]
+    out = sb.filtrer_volume_ecrit(found, servi, ecrit)
+    assert [(c['code'], c.get('value'), c.get('ecrit', 'absent')) for c in out] == [
+        ('volume_trop_vite', 14.0, 12.0),     # 14 > max(10, 12)
+        ('volume_trop_vite', 3.0, None),      # semaine hors lecture : gardé
+        ('volume_trop_vite', 7.0, None),      # aucun groupe à 7 : gardé
+        ('charge_trop_vite', 0.2, 'absent')]
+    # Deux groupes à la même valeur : gardé si l'un d'eux dépasse.
+    out = sb.filtrer_volume_ecrit([v(0, 12.0, 10.0)], [{0: 12.0, 4: 12.0}], [{0: 6.0, 4: 12.0}])
+    assert [c['ecrit'] for c in out] == [6.0]
+
+
 def test_parametres_1_0_7():
     assert PARAMS['version'] == '1.0.7-ref.1'
     for cle in ('retour_plancher_principal', 'retour_repartition_semaines', 'retour_emprunt_plancher'):

@@ -618,6 +618,83 @@ void main() {
     expect(_codes(raisons, ['koach.ajout_borne']), isEmpty);
   });
 
+  test('douleur sur une ligne, ajouts sur une autre (relecture M1)', () {
+    final zones = <String, (Json, Set<String>)>{
+      _dl: (<String, Object?>{'shoulder': 1.0}, <String>{'shoulder'}),
+    };
+    final k = _koach();
+    for (var w = 0; w < 4; w++) {
+      _seance(k, 7 * w, [_it('x$w', _dl, 4, role: 'main')], zones: zones);
+    }
+    final (out, raisons) = _seance(
+      k,
+      28,
+      [
+        _it('m.1', _dl, 12, role: 'main'),
+        _it('m.2', _pp, 4, role: 'secondary', ajout: 8),
+      ],
+      zones: zones,
+      douleurs: <Object?>[
+        <String, Object?>{'zone': 'shoulder', 'intensity': 4},
+      ],
+    );
+    expect(_lignes(out), [('m.2', 6)]);
+    final rv = k.seances.retourVol!;
+    expect([rv.limites[_chest], rv.ecrit[_chest], rv.plafonds[_chest]], [
+      6.0,
+      4.0,
+      6.0,
+    ]);
+    expect([
+      for (final r in _codes(raisons, ['koach.ajout_borne']))
+        jm(r['params'])['series'],
+    ], [6]);
+    expect(_codes(raisons, ['koach.douleur_retrait']), isNotEmpty);
+  });
+
+  test('allègement décidé sur l’écrit du programme (relecture M2)', () {
+    final k = _koach();
+    _semainesDips(k, 10);
+    final (out, raisons) = _seance(k, 21, [
+      _it('m.1', _dl, 6, role: 'main', ajout: 3),
+    ]);
+    final rv = k.seances.retourVol!;
+    expect([rv.limiteDures, rv.plafondDures], [7.0, 7.0]);
+    expect(_series(out, 'm.1'), 7);
+    expect([
+      for (final r in _codes(raisons, ['koach.ajout_borne']))
+        jm(r['params'])['groupe'],
+    ], ['allegement']);
+  });
+
+  test('deux prescriptions de la même séance (relecture m1)', () {
+    final k = _koach();
+    _semainesDips(k, 10);
+    k.garde.avancer(21);
+    k.seances.ouvrir(21, null, <String, Object?>{
+      'semaine': 3,
+      'genre': 'accumulation',
+      'reste_semaine': <Object?>[],
+      'manquees': <Object?>[],
+    });
+    final s = [
+      _it('m.1', _dl, 6, role: 'main', ajout: 2),
+      _it('m.2', _pp, 6, role: 'secondary', ajout: 4),
+    ];
+    List<int> servir() => [
+      for (final x in k.seances.prescrire(
+        [for (final x in s) copieJson(x)],
+        <String, Grille>{},
+        const {},
+        _rolesDe(s),
+      ))
+        ent(x['sets']),
+    ];
+    expect(servir(), [6, 6]);
+    expect(servir(), [6, 6]);
+    expect(k.seances.ecritVol[3]![_chest], 12.0);
+  });
+
   test('paramètres 1.0.7', () {
     expect(_params['version'], '1.0.7-ref.1');
     for (final cle in const [

@@ -198,6 +198,8 @@ def agreger(chemins):
                              'sous_ecrit_series': rampe.get('sous_ecrit_series', 0),
                              'ajouts_bornes': rampe.get('ajouts_bornes', 0),
                              'ajouts_bornes_series': rampe.get('ajouts_bornes_series', 0),
+                             'sans_cause_items': rampe.get('sans_cause_items', 0),
+                             'sans_cause_series': rampe.get('sans_cause_series', 0),
                              'total': _rampe_ind(rampe),
                              'par_scenario': {k: _rampe_ind(v) for k, v in sorted(rampe_scen.items())},
                              'exemples': rampe_ex},
@@ -247,8 +249,10 @@ def markdown(r):
         t = rp['total']
         L += ['## Rampe de volume sous l\'écrit (KM5, C17.40)', '',
               '**Série ou item retiré sous l\'écrit par la rampe de volume : %d item(s), %d série(s)**. Ajouts de '
-              'Koach bornés : %d (%d séries).' % (rp.get('sous_ecrit_items', 0), rp.get('sous_ecrit_series', 0),
-                                                  rp.get('ajouts_bornes', 0), rp.get('ajouts_bornes_series', 0)),
+              'Koach bornés : %d (%d séries). Mesure indépendante, ligne servie sous l\'écrit sans cause dite ni '
+              'visible : %d item(s), %d série(s).' % (rp.get('sous_ecrit_items', 0), rp.get('sous_ecrit_series', 0),
+                                                  rp.get('ajouts_bornes', 0), rp.get('ajouts_bornes_series', 0),
+                                                  rp.get('sans_cause_items', 0), rp.get('sans_cause_series', 0)),
               '']
         L += ['## Rampe de volume et principaux (KM4, C17.37)', '',
               '**Principal retiré par la rampe sans douleur : %d** (séances : %d). Séances avec un principal : %d ; '

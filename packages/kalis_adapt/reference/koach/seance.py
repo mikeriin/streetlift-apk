@@ -298,11 +298,13 @@ class Seances(object):
         self.allegees = {}       # semaine -> semaine allégée par nature (`semaines_allegees`)
         self.genres = {}         # semaine -> intention ou genre de la semaine (affûtage, compétition…)
         self.servis = None       # items servis de la séance en cours (comptés à la fin de séance)
+        self.entree = None       # items reçus par le dernier `prescrire` (lecture du banc)
         self.retour_vol = None   # budgets de la séance en cours (`_budgets_retour`)
         # 1.0.7 (KM5, C17.40) : écrit du PROGRAMME de l'athlète (séries
         # avant les ajouts de Koach, `ecrites`), séances vues et manquées :
         self.ecrit_vol = {}      # semaine -> séries dures créditées écrites par groupe majeur
         self.ecrit_dures = {}    # semaine -> séries dures écrites, tous groupes (allègements)
+        self.ecrit_compte = None   # (semaine, écrit servi compté) de la séance en cours : un seul `prescrire` compté
 
     def mem(self, ex_id):
         if ex_id not in self.memoire:
@@ -431,6 +433,7 @@ class Seances(object):
         self.budget_zone = {}
         self.servis = None
         self.retour_vol = None
+        self.ecrit_compte = None
         c = contexte or {}
         legeres = self.s['semaines_allegees']
         for m in c.get('manquees') or []:
@@ -440,9 +443,11 @@ class Seances(object):
                 continue
             if 'genre' in m and m['semaine'] not in self.allegees:
                 self.allegees[m['semaine']] = m.get('genre') in legeres
-            self._compter(m['semaine'], m.get('items') or [])
+            # 1.0.7 : au volume écrit par le programme (`_item_ecrit`).
+            ecrits_m = [self._item_ecrit(p) for p in m.get('items') or []]
+            self._compter(m['semaine'], ecrits_m)
             self.ecrit_semaines[m['semaine']] = self.ecrit_semaines.get(m['semaine'], 0.0) + \
-                sum(self._series_dures(p) for p in m.get('items') or [])
+                sum(self._series_dures(p) for p in ecrits_m)
             self._compter_ecrit_zone(m['semaine'], m.get('items') or [])
             self._compter_manque_zone(m['semaine'], m.get('items') or [])
             self._compter_ecrit(m['semaine'], m.get('items') or [])
@@ -881,15 +886,19 @@ class Seances(object):
         servis (mêmes champs, plus `koach`)."""
         out = []
         testes = set()
+        # Items reçus (lecture du banc, mesure KM5 ; n'entre dans aucun calcul).
+        self.entree = [dict(p) for p in items]
         for ex_id, zz in zones.items():
             self.zones_ex[ex_id] = zz
         self.retour_vol = self._budgets_retour(items)
         sem = (self.contexte or {}).get('semaine')
         if sem is not None:
-            self.ecrit_semaines[sem] = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(p) for p in items)
+            # 1.0.7 : écrit du programme (sans les ajouts de Koach), aussi
+            # pour décider d'une semaine d'allègement.
+            self.ecrit_semaines[sem] = self.ecrit_semaines.get(sem, 0.0) + \
+                sum(self._series_dures(self._item_ecrit(p)) for p in items)
             self._compter_ecrit_zone(sem, items)
             self._entrer_retour(items)
-            self._compter_ecrit(sem, items)
         self.budget_zone = self._budgets_zone_jour(items)
         # Réserve de l'échauffement : ce que le permis du jour laisse après
         # les séries de travail écrites sur la zone (le travail d'abord).
@@ -912,7 +921,7 @@ class Seances(object):
             servi = self._item(item, grilles.get(item['exerciseId']), zones.get(item['exerciseId']),
                                roles.get(item['slotId']))
             premiers.append((item, servi))
-        self._plan_retour([(item, servi) for (item, servi) in premiers if servi is not None])
+        self._plan_retour(premiers)
         for (item, servi) in premiers:
             if servi is None:
                 continue
@@ -970,6 +979,12 @@ class Seances(object):
             out.append(servi)
         out = self._duree_bornee(self._endurance(out), items)
         self.servis = [dict(it) for it in out]
+        if sem is not None and self.ecrit_compte is None:
+            # 1.0.7 : écrit SERVI de la séance (ligne par ligne, au plus ses
+            # séries écrites par le programme), compté une fois par séance ;
+            # un nouvel appel de la même séance le retire de ses budgets.
+            v, t = self._compter_ecrit(sem, self._ecrits_servis(items, out))
+            self.ecrit_compte = (sem, v, t)
         return out
 
     def _raison(self, code, **params):
@@ -1240,6 +1255,23 @@ class Seances(object):
                     v[g] += dures * c
         return v, t
 
+    def _ecrits_servis(self, items, servis):
+        """Lignes écrites [items] ramenées à leur écrit SERVI : min(séries
+        écrites par le programme, séries servies de la ligne dans
+        [servis] ; 0 si retirée), sans `koachVolume`."""
+        n = {}
+        for x in servis:
+            n[x.get('slotId')] = int(x.get('sets') or 0)
+        out = []
+        for p in items:
+            q = dict(p)
+            q.pop('koachVolume', None)
+            e = self._ecrites(p)
+            v = n.get(p.get('slotId'), 0)
+            q['sets'] = e if e < v else v
+            out.append(q)
+        return out
+
     def _compter_ecrit(self, semaine, items):
         """Ajoute à l'écrit du programme de la semaine [semaine] (séances
         vues et manquées) les séries dures créditées écrites de [items]."""
@@ -1250,6 +1282,7 @@ class Seances(object):
         for g in range(len(v)):
             e[g] += v[g]
         self.ecrit_dures[semaine] = self.ecrit_dures.get(semaine, 0.0) + t
+        return v, t
 
     def _limite_rampe(self, allegees, serie, index, hausse, tolerance):
         """`rampLimit` du banc : plus haute valeur admise en semaine
@@ -1357,7 +1390,7 @@ class Seances(object):
         for seance in c.get('reste_semaine') or []:
             r_t = {}
             for p in seance:
-                ecrit_reste += self._series_dures(p)
+                ecrit_reste += self._series_dures(self._item_ecrit(p))
                 fam, sec = self._tenue_bras_tendus(p)
                 if fam is not None:
                     r_t[fam] = r_t.get(fam, 0.0) + float(p.get('sets') or 0) * sec
@@ -1380,7 +1413,8 @@ class Seances(object):
         # `decharge_part` × la plus haute des trois semaines servies d'avant.
         part = self.s['decharge_part']
         legere = self.allegees.get(sem, False)
-        ecrit = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(p) for p in items) + ecrit_reste
+        ecrit = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(self._item_ecrit(p)) for p in items) + \
+            ecrit_reste
         ref_e = max([self.ecrit_semaines.get(k, 0.0) for k in range(sem - 3, sem) if k >= 0] or [0.0])
         allegement = (ecrit <= part * ref_e + 1e-9) if ref_e > 0 else legere
         limite_d = None
@@ -1390,22 +1424,25 @@ class Seances(object):
             if ref_s > 0:
                 limite_d = part * ref_s
                 fait_d = self.dures_semaines.get(sem, 0.0)
-        # 1.0.7 : écrit du programme de la semaine (`_compter_ecrit` des
-        # séances vues et manquées, puis la séance du jour et les séances
-        # restantes à leurs séries écrites).
+        # 1.0.7 : écrit servi de la semaine hors séance du jour (séances
+        # vues : écrit servi, `_ecrits_servis` ; manquées et restantes :
+        # écrit du programme) ; la séance du jour et les plafonds sont
+        # ajoutés par `_plan_retour` (écrit servi après `_item`).
         e_vol = list(self.ecrit_vol.get(sem) or [0.0] * n)
         e_dures = self.ecrit_dures.get(sem, 0.0)
-        for seance in [list(items)] + reste:
+        if self.ecrit_compte is not None and self.ecrit_compte[0] == sem:
+            # Séance déjà prescrite (nouvel appel) : son écrit servi compté
+            # par le premier appel est retiré (compté une seule fois).
+            for g in range(n):
+                e_vol[g] -= self.ecrit_compte[1][g]
+            e_dures -= self.ecrit_compte[2]
+        for seance in reste:
             v, t = self._credits_ecrits(seance)
             for g in range(n):
                 e_vol[g] += v[g]
             e_dures += t
-        plafonds = [limites[g] if limites[g] > e_vol[g] else e_vol[g] for g in range(n)]
-        plafond_d = None
-        if limite_d is not None:
-            plafond_d = limite_d if limite_d > e_dures else e_dures
         return {'limites': limites, 'fait': list(fait), 'limite_dures': limite_d, 'fait_dures': fait_d,
-                'ecrit': e_vol, 'ecrit_dures': e_dures, 'plafonds': plafonds, 'plafond_dures': plafond_d,
+                'ecrit': e_vol, 'ecrit_dures': e_dures, 'plafonds': None, 'plafond_dures': None,
                 'reste': reste, 'plan': {}, 'cause': {}, 'prevues': {}, 'depasse': [],
                 'limites_tenue': limites_t, 'budgets_tenue': budgets_t, 'jour_tenue': {}}
 
@@ -1430,9 +1467,16 @@ class Seances(object):
         programme** ; elle borne seulement ce que Koach AJOUTE au-dessus.
 
         Lignes : chaque groupe majeur, plafond = max(limite de la rampe L,
-        volume écrit par le programme dans la semaine E) ; une semaine
-        d'allègement, le total des séries dures, plafond = max(limite de
-        l'allègement, écrit de la semaine). Excès d'une ligne = réalisé de
+        écrit SERVI de la semaine E) ; une semaine d'allègement, le total des
+        séries dures, plafond = max(limite de l'allègement, écrit servi de la
+        semaine). Écrit servi : chaque ligne écrite au plus à ses séries
+        servies (une ligne retirée ou réduite par la douleur, un test
+        reporté… ne compte que ce qui est servi : Koach ne remplace pas par
+        ses ajouts ce que la conduite sous douleur retire) ; séances vues
+        (`_ecrits_servis`), séance du jour (après `_item`, [paires] : (écrit,
+        servi ou None)), séances manquées et restantes (écrit du programme).
+        E ≤ écrit du programme : plus prudent que le validateur du banc
+        (servi ≤ max(L, écrit du programme)). Excès d'une ligne = réalisé de
         la semaine (séances fermées, séances manquées à leur écrit) + séries
         créditées de la séance du jour (servies par `_item`) et des séances
         restantes (écrit) − plafond.
@@ -1458,6 +1502,15 @@ class Seances(object):
         s = self.s
         n = len(s['volume_groupes_majeurs'])
         total = rv['limite_dures'] is not None
+        v, t = self._credits_ecrits(self._ecrits_servis([item for (item, servi) in paires],
+                                                        [servi for (item, servi) in paires if servi is not None]))
+        for g in range(n):
+            rv['ecrit'][g] += v[g]
+        rv['ecrit_dures'] += t
+        rv['plafonds'] = [rv['limites'][g] if rv['limites'][g] > rv['ecrit'][g] else rv['ecrit'][g] for g in range(n)]
+        if total:
+            rv['plafond_dures'] = rv['limite_dures'] if rv['limite_dures'] > rv['ecrit_dures'] else rv['ecrit_dures']
+        paires = [(item, servi) for (item, servi) in paires if servi is not None]
         exces = [rv['fait'][g] - rv['plafonds'][g] for g in range(n)]
         if total:
             exces.append(rv['fait_dures'] - rv['plafond_dures'])

@@ -219,6 +219,7 @@ def rampe_json(c, par_scenario, exemples):
             # de volume » (0 attendu) ; ajouts de Koach bornés (indicateur).
             'sous_ecrit_items': c.get('sous_ecrit_items', 0), 'sous_ecrit_series': c.get('sous_ecrit_series', 0),
             'ajouts_bornes': c.get('ajouts_bornes', 0), 'ajouts_bornes_series': c.get('ajouts_bornes_series', 0),
+            'sans_cause_items': c.get('sans_cause_items', 0), 'sans_cause_series': c.get('sans_cause_series', 0),
             'total': _rampe_indicateurs(c),
             'par_scenario': {k: _rampe_indicateurs(v) for k, v in sorted(par_scenario.items())},
             'exemples': exemples}
@@ -256,8 +257,10 @@ def markdown(r, titre):
         t = rp['total']
         L += ['## Rampe de volume sous l\'écrit (KM5, C17.40)', '',
               '**Série ou item retiré sous l\'écrit par la rampe de volume : %d item(s), %d série(s)**. Ajouts de '
-              'Koach bornés : %d (%d séries).' % (rp.get('sous_ecrit_items', 0), rp.get('sous_ecrit_series', 0),
-                                                  rp.get('ajouts_bornes', 0), rp.get('ajouts_bornes_series', 0)),
+              'Koach bornés : %d (%d séries). Mesure indépendante, ligne servie sous l\'écrit sans cause dite ni '
+              'visible : %d item(s), %d série(s).' % (rp.get('sous_ecrit_items', 0), rp.get('sous_ecrit_series', 0),
+                                                  rp.get('ajouts_bornes', 0), rp.get('ajouts_bornes_series', 0),
+                                                  rp.get('sans_cause_items', 0), rp.get('sans_cause_series', 0)),
               '']
         L += ['## Rampe de volume et principaux (KM4, C17.37)', '',
               '**Principal retiré par la rampe sans douleur : %d** (séances : %d). Séances avec un principal : %d ; '

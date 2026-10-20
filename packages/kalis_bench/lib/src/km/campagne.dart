@@ -868,10 +868,8 @@ List<kc.Json> kmFiltrerVolumeEcrit(
   return out;
 }
 
-/// Filtre de la définition KM5 appliqué aux constats [found] des blocs
-/// [blocs].
-typedef KmFiltre =
-    List<kc.Json> Function(List<kc.Json> found, List<Object?> blocs);
+/// Constats des blocs donnés à la définition KM5 des blocs servis.
+typedef KmFiltre = List<kc.Json> Function(List<Object?> blocs);
 
 /// Blocs de référence où chaque séance faite est remplacée par les items
 /// servis par Koach, tels que prescrits ; [testsFaits] : un test ajouté par
@@ -1082,10 +1080,7 @@ Map<String, Object?> kmConstatsDusAuxManquees(
   final clesIni = <(Object?, Object?, Object?, Object?)>{
     for (final c in initial) kmCleConstat(c),
   };
-  var trouves = constats(vide);
-  if (filtre != null) {
-    trouves = filtre(trouves, vide);
-  }
+  final trouves = filtre == null ? constats(vide) : filtre(vide);
   final restent = <(Object?, Object?, Object?, Object?)>{
     for (final c in trouves) kmCleConstat(c),
   };
@@ -1167,10 +1162,7 @@ Map<String, Object?> kmConstatsDusAuxManquees(
           }
         }
       }
-      var trouves = constats(hyb);
-      if (filtre != null) {
-        trouves = filtre(trouves, hyb);
-      }
+      final trouves = filtre == null ? constats(hyb) : filtre(hyb);
       cache[wi0] = <(Object?, Object?, Object?, Object?)>{
         for (final x in trouves) kmCleConstat(x),
       };
@@ -1210,8 +1202,7 @@ Map<String, Object?> kmSecuriteSaison(
     return (found, kmFiltrerVolumeEcrit(found, servi, ecrit));
   }
 
-  List<kc.Json> filtre(List<kc.Json> found, List<Object?> blocs) =>
-      kmFiltrerVolumeEcrit(found, constatsSeries(blocs).$2, ecrit);
+  List<kc.Json> filtre(List<Object?> blocs) => lire(blocs).$2;
 
   final ancienne = <String, Object?>{};
   if (blocsModules != null) {

@@ -153,6 +153,8 @@ Map<String, Object> kmRampeVide() => <String, Object>{
   'sous_ecrit_series': 0,
   'ajouts_bornes': 0,
   'ajouts_bornes_series': 0,
+  'sans_cause_items': 0,
+  'sans_cause_series': 0,
 };
 
 void _ajouterEnt(Map<String, Object> acc, String k, int v) {
@@ -163,14 +165,20 @@ void _ajouterEnt(Map<String, Object> acc, String k, int v) {
 /// [acc] pour une séance ; critère de KM5 (C17.40) : lignes écrites servies
 /// sous leurs séries écrites alors qu'une raison de la rampe de VOLUME porte
 /// sur leur exercice (`sous_ecrit_items`, `sous_ecrit_series`) ; ajouts de
-/// Koach bornés (`ajouts_bornes`, `ajouts_bornes_series`).
+/// Koach bornés (`ajouts_bornes`, `ajouts_bornes_series`) ; mesure
+/// indépendante (relecture KM5, M3) : ligne écrite servie sous ses séries
+/// écrites sans cause dite ni visible (`sans_cause_items`,
+/// `sans_cause_series` ; [seances] après la prescription, [zones] : id ->
+/// (niveaux, zones d'arrêt)).
 void kmMesureRampe(
   Map<String, Object> acc,
   List<Object?> items,
   Json roles,
   List<Object?> servis,
-  List<Object?> raisons,
-) {
+  List<Object?> raisons, {
+  kc.Seances? seances,
+  Map<String, (Json, Set<String>)>? zones,
+}) {
   _ajouterEnt(acc, 'seances', 1);
   final servi = <Object?, int>{};
   for (final it0 in servis) {
@@ -208,6 +216,57 @@ void kmMesureRampe(
     } else if (_pkRaisonsDouleur.contains(code) ||
         '$code'.startsWith('koach.douleur')) {
       douleur.add(ex);
+    }
+  }
+  if (seances != null) {
+    final dites = <Object?>{};
+    for (final r0 in raisons) {
+      final r = kc.jm(r0);
+      final pr = kc.jm(r['params'] ?? <String, Object?>{});
+      if (r['code'] != 'koach.ajout_borne' && pr['exercice'] != null) {
+        dites.add(pr['exercice']);
+      }
+    }
+    final recus = <Object?, int>{};
+    for (final p0 in seances.entree ?? const <Json>[]) {
+      recus[p0['slotId']] = kc.ent(p0['sets'] ?? 0);
+    }
+    final g = seances.g;
+    for (final it0 in items) {
+      final it = kc.jm(it0);
+      final n0 = kc.ent(it['sets'] ?? 0);
+      final ex = it['exerciseId'];
+      if (it['kind'] == 'warmup' ||
+          it['kind'] == 'test' ||
+          n0 <= 0 ||
+          dites.contains(ex) ||
+          seances.palier > 0) {
+        continue;
+      }
+      if ((recus[it['slotId']] ?? 0) < n0) {
+        continue;
+      }
+      final zz = zones?[ex];
+      final zs = <String>{
+        if (zz != null)
+          for (final e in zz.$1.entries)
+            if ((e.value! as num) >= 0.5) e.key,
+        ...?zz?.$2,
+      }.toList()..sort();
+      if (zs.any(
+        (z) =>
+            g.active(z) > 0 ||
+            g.arret(z) ||
+            g.reprise(z) != null ||
+            g.sensible(z),
+      )) {
+        continue;
+      }
+      final n = servi[it['slotId']] ?? 0;
+      if (n < n0) {
+        _ajouterEnt(acc, 'sans_cause_items', 1);
+        _ajouterEnt(acc, 'sans_cause_series', n0 - n);
+      }
     }
   }
   for (final it0 in items) {
@@ -1286,6 +1345,8 @@ final class PolitiqueKoach implements KmPolitique {
       roles,
       kc.jl(r['items']),
       kc.listeOuVide(r['raisons']),
+      seances: koach.seances,
+      zones: _zones,
     );
     return <String, Object?>{'items': r['items']};
   }
