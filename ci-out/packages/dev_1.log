@@ -1,0 +1,5 @@
+tests kalis_adapt : échec
+01:55 +348 -1: test/koach_textes_test.dart: tous les codes du contrat (§ 3.5) ont un texte propre [E]
+  Expected: an object with length of <23>
+    Actual: Set:[
+01:58 +387 -1: Some tests failed.

@@ -1,0 +1,5 @@
+tests kalis_bench : échec
+00:18 +84 -1: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) evaluer_saison : adv-7ee0da71, graine 0 [E]
+  Expected: null
+    Actual: 'saison.echecs : 0.004093 contre 0.004292'
+01:29 +267 -1: Some tests failed.
