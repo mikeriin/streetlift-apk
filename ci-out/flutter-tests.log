@@ -1,0 +1,28 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart
+lib/athlete_profile_store.dart:337:11: Error: 'before' is already declared in this scope.
+    final before = old?.profile.bodyWeightKg;
+          ^^^^^^
+lib/athlete_profile_store.dart:244:11: Context: Previous declaration of 'before'.
+    final before = profile;
+          ^^^^^^
+lib/athlete_profile_store.dart:338:56: Error: A value of type 'UserProfile' can't be assigned to a variable of type 'num'.
+ - 'UserProfile' is from 'package:streetlift_tracker/profile.dart' ('lib/profile.dart').
+    final edited = before == null || w == null || (w - before).abs() > 1e-9;
+                                                       ^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: lib/athlete_profile_store.dart:337:11: Error: 'before' is already declared in this scope.
+      final before = old?.profile.bodyWeightKg;
+            ^^^^^^
+  lib/athlete_profile_store.dart:244:11: Context: Previous declaration of 'before'.
+      final before = profile;
+            ^^^^^^
+  lib/athlete_profile_store.dart:338:56: Error: A value of type 'UserProfile' can't be assigned to a variable of type 'num'.
+   - 'UserProfile' is from 'package:streetlift_tracker/profile.dart' ('lib/profile.dart').
+      final edited = before == null || w == null || (w - before).abs() > 1e-9;
+                                                         ^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart
