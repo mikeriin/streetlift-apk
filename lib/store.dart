@@ -1780,7 +1780,10 @@ class AppStore extends ChangeNotifier {
     // RV1 : import strict : l'instance générée doit donner un programme
     // (avant : acceptée, puis remplacée en silence par le programme
     // embarqué et effacée à l'écriture suivante).
-    if (limits != null && nextProgram != null && nextProgram.generated) {
+    if (limits != null &&
+        m['planProgram'] == null &&
+        nextProgram != null &&
+        nextProgram.generated) {
       try {
         Program.fromJson(nextProgram.programJson(_baseProgramJson));
       } catch (_) {
@@ -3385,13 +3388,20 @@ class AppStore extends ChangeNotifier {
   /// Une séance du journal qui n'a que l'empreinte d'une consultation :
   /// rien de validé, aucune note, aucun bilan donné, aucune décision de
   /// l'ancien Koach. Elle ne porte aucune donnée de l'utilisateur.
+  /// RV1 : résultat de groupe réellement saisi (tours, reps du tour
+  /// entamé, temps) ; `{rounds: 0}` laissé par une série validée puis
+  /// annulée ne compte pas.
+  static bool _groupResult(Map<String, dynamic> g) => g.entries.any(
+    (x) => x.key != 'completed' && x.value is num && (x.value as num) > 0,
+  );
+
   bool isConsultation(String key) {
     final l = logs[key];
     if (l == null || l.done || l.finishedAt != null) return false;
     // RV1 : résultat d'un groupe saisi (AMRAP, tours pour le temps,
     // chipper : tours, reps du tour entamé, temps) : jamais une simple
     // consultation (avant : effacé à la fermeture de la séance).
-    if (l.groups.isNotEmpty) return false;
+    if (l.groups.values.any(_groupResult)) return false;
     for (final x in l.ex.values) {
       if (x.note.trim().isNotEmpty ||
           x.prescribed != null ||
@@ -3645,7 +3655,7 @@ class AppStore extends ChangeNotifier {
     final log = logs[key];
     if (log == null || log.done) return false;
     // RV1 : un résultat de groupe saisi compte (séance à reprendre).
-    if (log.groups.isNotEmpty) return true;
+    if (log.groups.values.any(_groupResult)) return true;
     return log.ex.values.any(
       (e) => e.note.trim().isNotEmpty || e.sets.any((s) => s.done),
     );

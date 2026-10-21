@@ -830,7 +830,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         else
           store.exLog(widget.week.n, widget.day.j, e),
     ];
-    specs = [for (final e in widget.exs) store.logSpec(e)];
+    // RV1 : séance d'intervalles faite avant dev7.5.0 (une ligne pour toute
+    // la séance) : relue comme avant, pas comme un tour en secondes.
+    specs = [
+      for (var k = 0; k < widget.exs.length; k++)
+        widget.exs[k].interval != null &&
+                logs[k].sets.length == 1 &&
+                store.setCount(widget.exs[k]) > 1
+            ? const LogSpec('interval')
+            : store.logSpec(widget.exs[k]),
+    ];
     for (var k = 0; k < widget.exs.length; k++) {
       if (!widget.readOnly) _prefill(widget.exs[k], specs[k], logs[k]);
       if (logs[k].note.isNotEmpty) _notesOpen.add(k);

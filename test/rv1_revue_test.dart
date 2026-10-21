@@ -201,6 +201,14 @@ void main() {
       expect(g?.format, kc.GroupFormat.intervals);
       expect(g!.rounds, app.setCount(e));
       expect(app.setCount(e), e.interval!.rounds);
+      // Journal des moteurs : un tour = une tenue en secondes (comme quand
+      // Koach servait la ligne avant RV1), pas des répétitions de burpees.
+      app.exLog(3, 6, e).sets
+        ..clear()
+        ..addAll(List.generate(8, (_) => SetEntry(reps: '30', done: true)));
+      final line = app.journalLineOf(3, 6, e.id, false);
+      expect(line.seconds, isTrue);
+      expect(line.technique, isNull);
       _sonde('hiit', {
         'ligne': app.setsLabel(e),
         'lignes': app.setCount(e),
@@ -334,6 +342,12 @@ void main() {
       expect(app.inProgress(key), isTrue);
       app.forgetConsultation(3, 2);
       expect(app.logs.containsKey(key), isTrue);
+      // Série validée puis annulée dans un groupe : `{rounds: 0}` ne compte
+      // pas (la séance reste une consultation).
+      final k2 = app.sessionKey(3, 4);
+      app.sessionLog(3, 4).groups['g2'] = {'rounds': 0, 'completed': false};
+      expect(app.isConsultation(k2), isTrue);
+      expect(app.inProgress(k2), isFalse);
     });
 
     test('enregistrer une autre rubrique du profil ne remet pas l’ancien '
