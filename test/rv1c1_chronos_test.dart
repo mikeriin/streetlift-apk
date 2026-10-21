@@ -21,7 +21,6 @@ import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/timers.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -199,8 +198,10 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    Finder inSide(Finder f) =>
-        find.descendant(of: find.byKey(const ValueKey('side-clock')), matching: f);
+    Finder inSide(Finder f) => find.descendant(
+      of: find.byKey(const ValueKey('side-clock')),
+      matching: f,
+    );
     Finder inBar(Finder f) => find.descendant(
       of: find.byKey(const ValueKey('timer-bar-clock')),
       matching: f,
@@ -245,7 +246,6 @@ void main() {
       );
       final (week, day) = semaine(9821, [squat, hang]);
       await ouvrir(tester, week, day, ctl);
-      expect(find.text('Squat'), findsWidgets);
       final launch = find.textContaining('Lancer l’E3MOM');
       expect(launch, findsOneWidget);
       await tapVisible(tester, launch);

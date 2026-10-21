@@ -462,9 +462,9 @@ void main() {
     });
   });
 
-  test('version affichée : « 7.5.0 » hors build de développement '
-      '(revue complète, RV1)', () {
-    expect(kVersion, '7.5.0');
-    expect(kAppVersion, '7.5.0');
+  test('version affichée : « 7.5.1 » hors build de développement '
+      '(chronos des groupes, RV1c1)', () {
+    expect(kVersion, '7.5.1');
+    expect(kAppVersion, '7.5.1');
   });
 }

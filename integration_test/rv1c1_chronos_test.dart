@@ -114,11 +114,7 @@ void main() {
               ).copyWith(textScaler: TextScaler.linear(scale)),
               child: child!,
             ),
-            home: SessionScreen(
-              week: week,
-              day: week.days.single,
-              timer: ctl,
-            ),
+            home: SessionScreen(week: week, day: week.days.single, timer: ctl),
           ),
         ),
       );

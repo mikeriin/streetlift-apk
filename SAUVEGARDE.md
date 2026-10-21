@@ -15,3 +15,8 @@
 ## Reste
 - Résultat du rapide (format.patch, analyse, tests) ; ci-3d après le run RV1 ; publication après dev7.5.0 (version 7.5.1 : pubspec, kVersion, tests de version) ; build ; livraison ; ETAT ; page ; notification.
 - Limite à signaler : chemin C sans groupId (échange moteur hors bloc importé) : sablier par tour possible, pas de « Lancer » (paquet).
+
+## Avancement 20:40 UTC
+- Contrôle rapide vert (run 39671097026, 8 tests rv1c1, format, analyse) ; version 7.5.1+150 et tests de version faits (commit 09d7f2d).
+- Run RV1 sur ci-3d fini vert (39660495300) ; contrôle complet RV1c1 poussé sur `claude/ci-3d` 61718d87 à 20:39 UTC (RV1 ne relancera pas : son run est vert).
+- Reste : résultat ci-3d (checks + émulateur, captures rv1c1_*), attendre dev7.5.0 sur main, rebase, publier, build, livraison, ETAT, page, notification.
