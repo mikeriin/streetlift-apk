@@ -1,4 +1,1 @@
 00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart
-00:00 +0: charges charge calculée à 22,000000000000004 : « 22 », jamais « 22, »
-00:00 +1: charges poulie : pas de 2,5 kg donné aux moteurs quand le profil n’en dit rien ; un pas du profil est gardé
-00:00 +2: charges livres en livres : virgule décimale ; la cible passe par le même libellé
