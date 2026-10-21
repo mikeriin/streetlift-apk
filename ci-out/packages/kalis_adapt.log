@@ -66,7 +66,7 @@ Warning: Package resolution error when reading "analysis_options.yaml" file for 
 Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
 Warning: Package resolution error when reading "analysis_options.yaml" file for "./lib/src/validateur/profil.dart":
 Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
-Formatted 52 files (0 changed) in 0.31 seconds.
+Formatted 52 files (0 changed) in 0.47 seconds.
 Analyzing kalis_adapt...
 No issues found!
 tests : sans objet (copie sans test/, testée sur moteurs)

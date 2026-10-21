@@ -1,0 +1,60 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             45.9s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,372ms
+D/FlutterRenderer( 6262): Width is zero. 0,0
+D/FlutterJNI( 6262): Sending viewport metrics to the engine.
+I/eetlift_tracker( 6262): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 6262): Skipped 53 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 6262): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:34477/huRHPcx_7us=/
+VMServiceFlutterDriver: Isolate found with number: 219576202011823
+VMServiceFlutterDriver: Isolate 219576202011823 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 6262): 00:00 +0: KB3 b (clair, violet) : Koach sur le programme PR2 (KB4 : accessoire « chest » gardé)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/EGL_emulation( 6262): app_time_stats: avg=927.76ms min=176.17ms max=1679.35ms count=2
+D/ProfileInstaller( 6262): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 6262): app_time_stats: avg=160.41ms min=3.31ms max=413.54ms count=6
+D/EGL_emulation( 6262): app_time_stats: avg=256.28ms min=24.89ms max=967.36ms count=6
+D/FlutterJNI( 6262): Sending viewport metrics to the engine.
+D/EGL_emulation( 6262): app_time_stats: avg=304.50ms min=101.23ms max=852.23ms count=6
+D/EGL_emulation( 6262): app_time_stats: avg=6506.39ms min=553.88ms max=12458.90ms count=2
+D/EGL_emulation( 6262): app_time_stats: avg=124.45ms min=12.60ms max=213.25ms count=8
+D/EGL_emulation( 6262): app_time_stats: avg=104.85ms min=6.65ms max=214.66ms count=10
+D/EGL_emulation( 6262): app_time_stats: avg=86.54ms min=7.48ms max=192.63ms count=11
+D/EGL_emulation( 6262): app_time_stats: avg=111.12ms min=11.87ms max=193.22ms count=9
+D/EGL_emulation( 6262): app_time_stats: avg=89.17ms min=3.91ms max=174.08ms count=11
+D/EGL_emulation( 6262): app_time_stats: avg=86.88ms min=61.44ms max=103.22ms count=10
+D/EGL_emulation( 6262): app_time_stats: avg=273.93ms min=89.66ms max=821.86ms count=4
+D/EGL_emulation( 6262): app_time_stats: avg=252.59ms min=168.32ms max=452.99ms count=4
+D/EGL_emulation( 6262): app_time_stats: avg=1286.80ms min=161.53ms max=3535.07ms count=3
+W/WindowOnBackDispatcher( 6262): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 6262): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 6262): app_time_stats: avg=138.33ms min=16.09ms max=281.99ms count=8
+D/EGL_emulation( 6262): app_time_stats: avg=100.94ms min=5.24ms max=198.12ms count=10
+D/EGL_emulation( 6262): app_time_stats: avg=95.07ms min=11.65ms max=182.31ms count=11
+D/EGL_emulation( 6262): app_time_stats: avg=282.10ms min=88.65ms max=736.71ms count=5
+D/EGL_emulation( 6262): app_time_stats: avg=132.82ms min=82.74ms max=196.77ms count=8
+D/EGL_emulation( 6262): app_time_stats: avg=166.44ms min=103.64ms max=329.56ms count=7
+D/EGL_emulation( 6262): app_time_stats: avg=145.44ms min=61.22ms max=230.95ms count=6
+I/eetlift_tracker( 6262): Background concurrent mark compact GC freed 407KB AllocSpace bytes, 27(2224KB) LOS objects, 49% free, 2916KB/5833KB, paused 74us,2.151ms total 174.434ms
+W/eetlift_tracker( 6262): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 6262): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+I/flutter ( 6262): 00:41 +1: (tearDownAll)
+I/flutter ( 6262): 00:41 +2: All tests passed!
+D/EGL_emulation( 6262): app_time_stats: avg=181.34ms min=68.78ms max=398.37ms count=6
+All tests passed.

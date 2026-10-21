@@ -1,0 +1,40 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             24.5s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,196ms
+I/flutter (12713): The Dart VM service is listening on http://127.0.0.1:44509/oJt42fs873E=/
+D/FlutterRenderer(12713): Width is zero. 0,0
+D/FlutterRenderer(12713): Width is zero. 0,0
+D/FlutterJNI(12713): Sending viewport metrics to the engine.
+W/HWUI    (12713): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    (12713): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4(12713): mapper 4.x is not supported
+I/eetlift_tracker(12713): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer(12713): Skipped 63 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI(12713): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:42317/OOUxdqKtsH0=/
+VMServiceFlutterDriver: Isolate found with number: 4661340312286271
+VMServiceFlutterDriver: Isolate 4661340312286271 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter (12713): 00:00 +0: CI1c b (clair, violet) : ajustement de Koach accepté appliqué tout de suite ; séance consultée jamais figée
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller(12713): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation(12713): app_time_stats: avg=431.18ms min=217.52ms max=618.89ms count=4
+D/EGL_emulation(12713): app_time_stats: avg=177.94ms min=4.65ms max=395.58ms count=5
+D/EGL_emulation(12713): app_time_stats: avg=1206.08ms min=1206.08ms max=1206.08ms count=1
+D/FlutterJNI(12713): Sending viewport metrics to the engine.
+D/EGL_emulation(12713): app_time_stats: avg=528.28ms min=159.19ms max=897.36ms count=2
+D/EGL_emulation(12713): app_time_stats: avg=858.78ms min=858.78ms max=858.78ms count=1

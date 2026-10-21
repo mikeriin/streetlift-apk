@@ -54,12 +54,12 @@ Downloading packages...
 Changed 50 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 15 files (0 changed) in 0.64 seconds.
+Formatted 15 files (0 changed) in 0.94 seconds.
 Analyzing kalis_koach...
 No issues found!
-00:00 +0: loading test/art_test.dart
-00:00 +0: test/art_test.dart: catalogue des poses 36 poses, identifiants uniques et alignés sur les dessins
-00:00 +1: test/art_test.dart: catalogue des poses 12 poses par planche, cases distinctes
+00:00 +0: loading test/lines_test.dart
+00:00 +0: test/lines_test.dart: couverture chaque événement a une règle (sauf « pourquoi », dérivé)
+00:00 +1: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +2: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +3: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +4: test/properties_test.dart: 10 000 demandes aléatoires seedées
@@ -78,21 +78,21 @@ No issues found!
 00:00 +17: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +18: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +19: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +20: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +21: test/lines_test.dart: couverture table des raisons extensible
-00:00 +22: test/properties_test.dart: toutes les variantes sont atteintes
-00:00 +23: test/properties_test.dart: toutes les variantes sont atteintes
-00:00 +24: test/properties_test.dart: toutes les variantes sont atteintes
-00:00 +25: test/lines_test.dart: textes longueur des bulles, explications et libellés
-00:00 +26: test/lines_test.dart: textes aucune allégation médicale ni promesse de résultat
-00:00 +27: test/lines_test.dart: textes tutoiement : jamais de vouvoiement
-00:00 +28: test/lines_test.dart: textes douleur : renvoi vers un professionnel de santé
-00:00 +29: test/lines_test.dart: choix déterministe
-00:00 +30: test/lines_test.dart: choix pas de répétition entre deux occurrences successives
-00:00 +31: test/lines_test.dart: choix raison connue : messages de la raison ; inconnue : générique
-00:00 +32: test/lines_test.dart: choix explication « Pourquoi ? »
-00:00 +33: test/lines_test.dart: choix rendu
-00:00 +34: test/lines_test.dart: flammes 10 flammes croissantes, base commune
-00:00 +35: test/lines_test.dart: flammes teinte et libellé
+00:00 +20: test/art_test.dart: catalogue des poses 36 poses, identifiants uniques et alignés sur les dessins
+00:00 +21: test/art_test.dart: catalogue des poses 36 poses, identifiants uniques et alignés sur les dessins
+00:00 +22: test/art_test.dart: catalogue des poses 12 poses par planche, cases distinctes
+00:00 +23: test/art_test.dart: catalogue des poses yeux : calque présent si et seulement si yeux ouverts
+00:00 +24: test/art_test.dart: catalogue des poses poses connues aux yeux fermés
+00:00 +25: test/art_test.dart: catalogue des poses bustes : choix, idée, réglages
+00:00 +26: test/art_test.dart: catalogue des poses chaque usage a au moins une pose
+00:00 +27: test/art_test.dart: dessins calques bien formés, fermés, sans opcode inconnu
+00:00 +28: test/art_test.dart: dessins normalisation : pieds sur y = 0, hauteur 1 000 pour les poses en pied
+00:00 +29: test/art_test.dart: dessins boîte déclarée = boîte des extrémités, à 2 unités près
+00:00 +30: test/art_test.dart: dessins papier et yeux à l’intérieur de la silhouette
+00:00 +31: test/art_test.dart: dessins cadre commun : contient toutes les poses
+00:00 +32: test/art_test.dart: dessins poids total des commandes raisonnable
+00:00 +33: test/art_test.dart: rejeu des commandes mise à l’échelle et translation
+00:00 +34: test/art_test.dart: rejeu des commandes opcode inconnu et commande tronquée refusés
+00:00 +35: test/art_test.dart: rejeu des commandes SVG
 00:00 +36: All tests passed!
-Rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_koach : 36 poses, 10 flammes, 28 événements, 2.26 µs par réplique.
+Rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_koach : 36 poses, 10 flammes, 28 événements, 4.14 µs par réplique.

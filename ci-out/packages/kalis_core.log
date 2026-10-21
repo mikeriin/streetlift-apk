@@ -54,352 +54,351 @@ Downloading packages...
 Changed 50 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 42 files (0 changed) in 0.27 seconds.
+Formatted 42 files (0 changed) in 0.42 seconds.
 Analyzing kalis_core...
 No issues found!
-00:00 +0: loading test/contracts_roundtrip_test.dart
-00:00 +0: test/contracts_roundtrip_test.dart: chaque type du contrat a son codec
-00:00 +1: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +2: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +3: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +4: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +5: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +6: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +7: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +8: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +9: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +10: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +11: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +12: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +13: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +14: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +15: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +16: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +17: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +18: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
-00:00 +19: test/contracts_roundtrip_test.dart: DisciplineShare : aller-retour JSON sur 10000 valeurs seedées
-00:00 +20: test/contracts_roundtrip_test.dart: DisciplineMix : aller-retour JSON sur 10000 valeurs seedées
-00:00 +21: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +22: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +23: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +24: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +25: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +26: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +27: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +28: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +29: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +30: test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
-00:00 +31: test/validation_test.dart: journal série : au moins une mesure
-00:00 +32: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +33: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +34: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +35: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +36: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +37: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +38: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +39: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +40: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +41: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +42: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +43: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +44: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +45: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +46: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +47: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +48: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +49: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
-00:00 +50: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
-00:00 +51: test/contracts_roundtrip_test.dart: DaySlot : aller-retour JSON sur 10000 valeurs seedées
-00:00 +52: test/advanced_test.dart: types à variantes sept types à variantes
-00:00 +53: test/contracts_roundtrip_test.dart: PlaceEquipment : aller-retour JSON sur 10000 valeurs seedées
-00:00 +54: test/contracts_roundtrip_test.dart: PlaceEquipment : aller-retour JSON sur 10000 valeurs seedées
-00:00 +55: test/contracts_roundtrip_test.dart: PlaceEquipment : aller-retour JSON sur 10000 valeurs seedées
-00:00 +56: test/contracts_roundtrip_test.dart: PlaceEquipment : aller-retour JSON sur 10000 valeurs seedées
-00:00 +57: test/contracts_roundtrip_test.dart: PlaceEquipment : aller-retour JSON sur 10000 valeurs seedées
-00:00 +58: test/contracts_roundtrip_test.dart: PlaceEquipment : aller-retour JSON sur 10000 valeurs seedées
-00:00 +59: test/advanced_test.dart: types à variantes IntensityTarget : chaque variante porte exactement ses paramètres
-00:00 +60: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +61: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +62: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +63: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +64: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +65: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +66: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +67: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +68: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +69: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +70: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +71: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +72: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +73: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +74: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +75: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
-00:00 +76: test/advanced_test.dart: prescriptions avancées intensité : valeur obligatoire, bases, bornes par base
-00:00 +77: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +78: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +79: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +80: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +81: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +82: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +83: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +84: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +85: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +86: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +87: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +88: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +89: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +90: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +91: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +92: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +93: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +94: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
-00:00 +95: test/advanced_test.dart: interfaces nouvelles un planificateur de saison et un conseiller du jour J se réalisent sans toucher aux interfaces de 0.3.0
-00:00 +96: test/advanced_test.dart: interfaces nouvelles un planificateur de saison et un conseiller du jour J se réalisent sans toucher aux interfaces de 0.3.0
-00:00 +97: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +98: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +99: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +100: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +101: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +102: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +103: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +104: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +105: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +106: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +107: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +108: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +109: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +110: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +111: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:00 +112: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +113: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +114: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +115: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +116: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +117: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +118: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +119: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +120: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +121: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +122: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +123: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +124: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +125: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +126: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +127: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +128: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +129: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:01 +130: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:02 +131: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:02 +132: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:02 +133: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
-00:02 +134: test/contracts_roundtrip_test.dart: PainReport : aller-retour JSON sur 10000 valeurs seedées
-00:02 +135: test/contracts_roundtrip_test.dart: HealthCheck : aller-retour JSON sur 10000 valeurs seedées
-00:02 +136: test/contracts_roundtrip_test.dart: SetTarget : aller-retour JSON sur 10000 valeurs seedées
-00:02 +137: test/contracts_roundtrip_test.dart: SetRecord : aller-retour JSON sur 10000 valeurs seedées
-00:02 +138: test/contracts_roundtrip_test.dart: SetRecord : aller-retour JSON sur 10000 valeurs seedées
-00:02 +139: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 profils du schéma 2 aléatoires : lecture puis écriture identiques, aucune clé du schéma 3 inventée
-00:02 +140: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 profils du schéma 2 aléatoires : lecture puis écriture identiques, aucune clé du schéma 3 inventée
-00:02 +141: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 profils du schéma 2 aléatoires : lecture puis écriture identiques, aucune clé du schéma 3 inventée
-00:03 +142: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 profils du schéma 2 aléatoires : lecture puis écriture identiques, aucune clé du schéma 3 inventée
-00:03 +143: test/contracts_roundtrip_test.dart: TrainingLog : aller-retour JSON sur 10000 valeurs seedées
-00:04 +144: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 journaux aléatoires sans les champs 0.4.0 : lecture puis écriture identiques
-00:04 +145: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 journaux aléatoires sans les champs 0.4.0 : lecture puis écriture identiques
-00:04 +146: test/contracts_roundtrip_test.dart: PlanSlot : aller-retour JSON sur 10000 valeurs seedées
-00:04 +147: test/contracts_roundtrip_test.dart: PlanSlot : aller-retour JSON sur 10000 valeurs seedées
-00:04 +148: test/contracts_roundtrip_test.dart: PlanSlot : aller-retour JSON sur 10000 valeurs seedées
-00:04 +149: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : ni perte ni invention, mêmes violations, migration du JSON équivalente
-00:04 +150: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : ni perte ni invention, mêmes violations, migration du JSON équivalente
-00:04 +151: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : ni perte ni invention, mêmes violations, migration du JSON équivalente
-00:04 +152: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : ni perte ni invention, mêmes violations, migration du JSON équivalente
-00:05 +153: test/contracts_roundtrip_test.dart: Pass1Plan : aller-retour JSON sur 10000 valeurs seedées
-00:05 +154: test/contracts_roundtrip_test.dart: Pass1Plan : aller-retour JSON sur 10000 valeurs seedées
-00:05 +155: test/contracts_roundtrip_test.dart: Pass1Plan : aller-retour JSON sur 10000 valeurs seedées
-00:05 +156: test/contracts_roundtrip_test.dart: Pass1Plan : aller-retour JSON sur 10000 valeurs seedées
-00:05 +157: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
-00:05 +158: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
-00:05 +159: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
-00:06 +160: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
-00:07 +161: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +162: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +163: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +164: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +165: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +166: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +167: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +168: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +169: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +170: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +171: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +172: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +173: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +174: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +175: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +176: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +177: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +178: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +179: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +180: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +181: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +182: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +183: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +184: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +185: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +186: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +187: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +188: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +189: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +190: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +191: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +192: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +193: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +194: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +195: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +196: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
-00:07 +197: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +198: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +199: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +200: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +201: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +202: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +203: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +204: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +205: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +206: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +207: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +208: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +209: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +210: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +211: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +212: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +213: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +214: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +215: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +216: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +217: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +218: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +219: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +220: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +221: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +222: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +223: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +224: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:07 +225: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +226: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +227: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +228: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +228: test/catalog_test.dart: chargement temps de chargement ≤ 150 ms (décompression comprise)
-chargement du catalogue : meilleur de 9 = 26.859 ms
-00:08 +229: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +230: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +231: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +232: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +233: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +234: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +235: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +236: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:08 +237: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +238: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +239: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +240: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +241: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +242: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +243: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +244: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +245: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +246: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +247: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +248: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +249: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +250: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
-00:09 +251: test/contracts_roundtrip_test.dart: Variant : aller-retour JSON sur 10000 valeurs seedées
-00:09 +252: test/contracts_roundtrip_test.dart: VariantSet : aller-retour JSON sur 10000 valeurs seedées
-00:10 +253: test/contracts_roundtrip_test.dart: ExercisePrescription : aller-retour JSON sur 10000 valeurs seedées
-00:10 +254: test/contracts_roundtrip_test.dart: DayPrescription : aller-retour JSON sur 10000 valeurs seedées
-00:11 +255: test/contracts_roundtrip_test.dart: WeekPrescription : aller-retour JSON sur 10000 valeurs seedées
-00:11 +256: test/contracts_roundtrip_test.dart: Pass2Plan : aller-retour JSON sur 10000 valeurs seedées
-00:13 +257: test/contracts_roundtrip_test.dart: ProgramBlock : aller-retour JSON sur 10000 valeurs seedées
-00:15 +258: test/contracts_roundtrip_test.dart: ExerciseEstimate : aller-retour JSON sur 10000 valeurs seedées
-00:15 +259: test/contracts_roundtrip_test.dart: FatigueState : aller-retour JSON sur 10000 valeurs seedées
-00:15 +260: test/contracts_roundtrip_test.dart: PainTrend : aller-retour JSON sur 10000 valeurs seedées
-00:15 +261: test/contracts_roundtrip_test.dart: AdaptationSummary : aller-retour JSON sur 10000 valeurs seedées
-00:16 +262: test/contracts_roundtrip_test.dart: AdaptInput : aller-retour JSON sur 10000 valeurs seedées
-00:21 +263: test/contracts_roundtrip_test.dart: SessionRequest : aller-retour JSON sur 10000 valeurs seedées
-00:26 +264: test/contracts_roundtrip_test.dart: AdviceRequest : aller-retour JSON sur 10000 valeurs seedées
-00:33 +265: test/contracts_roundtrip_test.dart: ProposalDecision : aller-retour JSON sur 10000 valeurs seedées
-00:33 +266: test/contracts_roundtrip_test.dart: PersonalRecord : aller-retour JSON sur 10000 valeurs seedées
-00:33 +267: test/contracts_roundtrip_test.dart: SessionAdjustment : aller-retour JSON sur 10000 valeurs seedées
-00:33 +268: test/contracts_roundtrip_test.dart: SessionPlan : aller-retour JSON sur 10000 valeurs seedées
-00:34 +269: test/contracts_roundtrip_test.dart: IntraSessionAdvice : aller-retour JSON sur 10000 valeurs seedées
-00:34 +270: test/contracts_roundtrip_test.dart: Proposal : aller-retour JSON sur 10000 valeurs seedées
-00:36 +271: test/contracts_roundtrip_test.dart: EngineLogEntry : aller-retour JSON sur 10000 valeurs seedées
-00:37 +272: test/contracts_roundtrip_test.dart: AdaptReview : aller-retour JSON sur 10000 valeurs seedées
-00:41 +273: test/contracts_roundtrip_test.dart: XpEntry : aller-retour JSON sur 10000 valeurs seedées
-00:41 +274: test/contracts_roundtrip_test.dart: KreditEntry : aller-retour JSON sur 10000 valeurs seedées
-00:41 +275: test/contracts_roundtrip_test.dart: LevelState : aller-retour JSON sur 10000 valeurs seedées
-00:41 +276: test/contracts_roundtrip_test.dart: AttributeScore : aller-retour JSON sur 10000 valeurs seedées
-00:41 +277: test/contracts_roundtrip_test.dart: MovementRank : aller-retour JSON sur 10000 valeurs seedées
-00:41 +278: test/contracts_roundtrip_test.dart: Quest : aller-retour JSON sur 10000 valeurs seedées
-00:41 +279: test/contracts_roundtrip_test.dart: Milestone : aller-retour JSON sur 10000 valeurs seedées
-00:41 +280: test/contracts_roundtrip_test.dart: Prediction : aller-retour JSON sur 10000 valeurs seedées
-00:41 +281: test/contracts_roundtrip_test.dart: GoalProgress : aller-retour JSON sur 10000 valeurs seedées
-00:41 +282: test/contracts_roundtrip_test.dart: DelightEvent : aller-retour JSON sur 10000 valeurs seedées
-00:42 +283: test/contracts_roundtrip_test.dart: QuestState : aller-retour JSON sur 10000 valeurs seedées
-00:42 +284: test/contracts_roundtrip_test.dart: QuestClaim : aller-retour JSON sur 10000 valeurs seedées
-00:42 +285: test/contracts_roundtrip_test.dart: QuestInput : aller-retour JSON sur 10000 valeurs seedées
-00:47 +286: test/contracts_roundtrip_test.dart: QuestOutcome : aller-retour JSON sur 10000 valeurs seedées
-00:48 +287: test/contracts_roundtrip_test.dart: PlanRequest : aller-retour JSON sur 10000 valeurs seedées
-00:51 +288: test/contracts_roundtrip_test.dart: NextBlockRequest : aller-retour JSON sur 10000 valeurs seedées
-00:56 +289: test/contracts_roundtrip_test.dart: RestructureRequest : aller-retour JSON sur 10000 valeurs seedées
-01:01 +290: test/contracts_roundtrip_test.dart: ReviewRequest : aller-retour JSON sur 10000 valeurs seedées
-01:05 +291: test/contracts_roundtrip_test.dart: VariantsRequest : aller-retour JSON sur 10000 valeurs seedées
-01:09 +292: test/contracts_roundtrip_test.dart: Pass2Request : aller-retour JSON sur 10000 valeurs seedées
-01:13 +293: test/contracts_roundtrip_test.dart: BlockProposal : aller-retour JSON sur 10000 valeurs seedées
-01:16 +294: test/contracts_roundtrip_test.dart: OtherSport : aller-retour JSON sur 10000 valeurs seedées
-01:16 +295: test/contracts_roundtrip_test.dart: RecentTraining : aller-retour JSON sur 10000 valeurs seedées
-01:16 +296: test/contracts_roundtrip_test.dart: EnduranceBase : aller-retour JSON sur 10000 valeurs seedées
-01:16 +297: test/contracts_roundtrip_test.dart: Benchmark : aller-retour JSON sur 10000 valeurs seedées
-01:16 +298: test/contracts_roundtrip_test.dart: WeakPoint : aller-retour JSON sur 10000 valeurs seedées
-01:16 +299: test/contracts_roundtrip_test.dart: CompetitionLift : aller-retour JSON sur 10000 valeurs seedées
-01:16 +300: test/contracts_roundtrip_test.dart: EventStation : aller-retour JSON sur 10000 valeurs seedées
-01:16 +301: test/contracts_roundtrip_test.dart: SeasonEvent : aller-retour JSON sur 10000 valeurs seedées
-01:17 +302: test/contracts_roundtrip_test.dart: Specialization : aller-retour JSON sur 10000 valeurs seedées
-01:17 +303: test/contracts_roundtrip_test.dart: SkillState : aller-retour JSON sur 10000 valeurs seedées
-01:17 +304: test/contracts_roundtrip_test.dart: StepCriterion : aller-retour JSON sur 10000 valeurs seedées
-01:17 +305: test/contracts_roundtrip_test.dart: SkillStep : aller-retour JSON sur 10000 valeurs seedées
-01:17 +306: test/contracts_roundtrip_test.dart: SkillLadder : aller-retour JSON sur 10000 valeurs seedées
-01:17 +307: test/contracts_roundtrip_test.dart: SkillProgress : aller-retour JSON sur 10000 valeurs seedées
-01:17 +308: test/contracts_roundtrip_test.dart: PhaseOverride : aller-retour JSON sur 10000 valeurs seedées
-01:17 +309: test/contracts_roundtrip_test.dart: SeasonPhase : aller-retour JSON sur 10000 valeurs seedées
-01:17 +310: test/contracts_roundtrip_test.dart: SeasonPlan : aller-retour JSON sur 10000 valeurs seedées
-01:18 +311: test/contracts_roundtrip_test.dart: BlockIntent : aller-retour JSON sur 10000 valeurs seedées
-01:18 +312: test/contracts_roundtrip_test.dart: VolumeTolerance : aller-retour JSON sur 10000 valeurs seedées
-01:18 +313: test/contracts_roundtrip_test.dart: AttemptResult : aller-retour JSON sur 10000 valeurs seedées
-01:18 +314: test/contracts_roundtrip_test.dart: AttemptSuggestion : aller-retour JSON sur 10000 valeurs seedées
-01:18 +315: test/contracts_roundtrip_test.dart: WarmupStep : aller-retour JSON sur 10000 valeurs seedées
-01:18 +316: test/contracts_roundtrip_test.dart: LiftAttempts : aller-retour JSON sur 10000 valeurs seedées
-01:18 +317: test/contracts_roundtrip_test.dart: PacingSegment : aller-retour JSON sur 10000 valeurs seedées
-01:18 +318: test/contracts_roundtrip_test.dart: EventDayRequest : aller-retour JSON sur 10000 valeurs seedées
-01:23 +319: test/contracts_roundtrip_test.dart: EventDayPlan : aller-retour JSON sur 10000 valeurs seedées
-01:24 +320: test/contracts_roundtrip_test.dart: SeasonRequest : aller-retour JSON sur 10000 valeurs seedées
-01:27 +321: test/contracts_roundtrip_test.dart: Tempo : aller-retour JSON sur 10000 valeurs seedées
-01:27 +322: test/contracts_roundtrip_test.dart: SetTechnique : aller-retour JSON sur 10000 valeurs seedées
-01:27 +323: test/contracts_roundtrip_test.dart: IntensityTarget : aller-retour JSON sur 10000 valeurs seedées
-01:27 +324: test/contracts_roundtrip_test.dart: AutoregulationRule : aller-retour JSON sur 10000 valeurs seedées
-01:27 +325: test/contracts_roundtrip_test.dart: GroupSpec : aller-retour JSON sur 10000 valeurs seedées
-01:27 +326: test/contracts_roundtrip_test.dart: GroupResult : aller-retour JSON sur 10000 valeurs seedées
-01:27 +327: test/contracts_roundtrip_test.dart: SetPart : aller-retour JSON sur 10000 valeurs seedées
-01:27 +328: test/contracts_roundtrip_test.dart: TestSpec : aller-retour JSON sur 10000 valeurs seedées
-01:27 +329: test/contracts_roundtrip_test.dart: DayType : aller-retour JSON sur 10000 valeurs seedées
-01:27 +330: test/contracts_roundtrip_test.dart: SplitChoice : aller-retour JSON sur 10000 valeurs seedées
-01:27 +331: test/contracts_roundtrip_test.dart: même graine, mêmes valeurs (aucun hasard caché)
-01:27 +332: test/contracts_roundtrip_test.dart: un type racine écrit sa version de schéma
-01:27 +333: test/contracts_roundtrip_test.dart: lecture stricte : champ manquant ou de mauvais type refusé
-01:27 +334: test/contracts_roundtrip_test.dart: un nombre entier est accepté pour un champ décimal
-01:27 +335: All tests passed!
+00:00 +0: loading test/engines_test.dart
+00:00 +0: test/engines_test.dart: PlanEngine : requête, passes, variantes, bloc suivant
+00:00 +1: test/engines_test.dart: AdaptEngine et QuestEngine : entrées et sorties valides
+00:00 +2: test/fixtures_test.dart: profils types 40 profils, clés uniques, descriptions
+00:00 +3: test/purity_test.dart: lib/ contient des sources
+00:00 +4: test/fixtures_test.dart: profils types chaque profil est valide et ne cite que le catalogue
+00:00 +5: test/fixtures_test.dart: profils types chaque profil est valide et ne cite que le catalogue
+00:00 +6: test/purity_test.dart: lib/ sans dart:ui (« import 'dart:ui' »)
+00:00 +7: test/purity_test.dart: lib/ sans dart:ui (« import 'dart:ui' »)
+00:00 +8: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +9: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +10: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +11: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +12: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +13: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +14: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +15: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +16: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +17: test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+00:00 +18: test/fixtures_test.dart: journaux synthétiques les unités des séries suivent le catalogue
+00:00 +19: test/fixtures_test.dart: journaux synthétiques vérité de la simulation fournie pour chaque journal
+00:00 +20: test/fixtures_test.dart: journaux synthétiques séances « reprise », séries sans note, bilans partiels
+00:00 +21: test/fixtures_test.dart: champs optionnels utilisés par les jeux de données lieu par jour, matériel par lieu, expérience, su / pas su
+00:00 +22: test/fixtures_test.dart: champs optionnels utilisés par les jeux de données pause déclarée dans le journal irrégulier
+00:00 +23: test/fixtures_test.dart: champs optionnels utilisés par les jeux de données douleurs du bilan : absentes quand la question n'est pas posée
+00:00 +24: test/fixtures_test.dart: programme du propriétaire (lecture seule) 40 semaines, marqué en lecture seule, source tracée
+00:00 +25: test/fixtures_test.dart: programme du propriétaire (lecture seule) la correspondance indicative ne cite que le catalogue
+00:00 +26: test/fixtures_test.dart: ancien journal et conversion le journal converti est valide et ne cite que le catalogue
+00:00 +27: test/fixtures_test.dart: ancien journal et conversion le rapport de conversion compte tout ce qui est lu
+00:00 +28: test/fixtures_test.dart: ancien journal et conversion difficulté : RIR de l'ancien journal → flammes, absence conservée
+00:00 +29: test/fixtures_test.dart: ancien journal et conversion bilan : forme /10 → 1 à 5, sommeil en heures, douleur par mouvement non convertie
+00:00 +30: test/reasons_test.dart: codes uniques, bien formés, sans texte
+00:00 +31: test/reasons_test.dart: recherche dans le registre
+00:00 +32: test/reasons_test.dart: une raison valide passe
+00:00 +33: test/reasons_test.dart: code inconnu, paramètre manquant, en trop ou mal typé
+00:00 +34: test/advanced_test.dart: types à variantes sept types à variantes
+00:00 +35: test/advanced_test.dart: types à variantes chaque valeur du discriminant a sa règle, dans l'ordre
+00:00 +36: test/advanced_test.dart: types à variantes Benchmark : chaque variante porte exactement ses paramètres
+00:00 +37: test/advanced_test.dart: types à variantes SeasonEvent : chaque variante porte exactement ses paramètres
+00:00 +38: test/advanced_test.dart: types à variantes Specialization : chaque variante porte exactement ses paramètres
+00:00 +39: test/advanced_test.dart: types à variantes SetTechnique : chaque variante porte exactement ses paramètres
+00:00 +40: test/advanced_test.dart: types à variantes IntensityTarget : chaque variante porte exactement ses paramètres
+00:00 +41: test/advanced_test.dart: types à variantes AutoregulationRule : chaque variante porte exactement ses paramètres
+00:00 +42: test/advanced_test.dart: types à variantes GroupSpec : chaque variante porte exactement ses paramètres
+00:00 +43: test/advanced_test.dart: types à variantes toutes les techniques de série ont une règle
+00:00 +44: test/advanced_test.dart: types à variantes un groupe par format : paramètres exacts
+00:00 +45: test/advanced_test.dart: prescriptions avancées série de tête puis séries allégées, autorégulées
+00:00 +46: test/advanced_test.dart: prescriptions avancées un test se déclare sur une prescription de rôle test
+00:00 +47: test/advanced_test.dart: prescriptions avancées sans les champs 0.4.0, une prescription s'écrit comme en 0.3.0
+00:00 +48: test/advanced_test.dart: prescriptions avancées plages et listes des techniques
+00:00 +49: test/advanced_test.dart: prescriptions avancées technique au temps, temps total visé, dernière série seulement
+00:00 +50: test/advanced_test.dart: prescriptions avancées nombre de séries : une ligne de journal par série
+00:00 +51: test/advanced_test.dart: prescriptions avancées plage de répétitions : celle d'une ligne de journal
+00:00 +52: test/advanced_test.dart: prescriptions avancées deux écritures de la même intensité s'accordent
+00:00 +53: test/advanced_test.dart: prescriptions avancées série indivisible, nature de la récupération
+00:00 +54: test/advanced_test.dart: prescriptions avancées groupes d'exercices enchaînés : séance prescrite, séance du jour
+00:00 +55: test/advanced_test.dart: prescriptions avancées intensité et autorégulation : plages
+00:00 +56: test/advanced_test.dart: prescriptions avancées intensité : valeur obligatoire, bases, bornes par base
+00:00 +57: test/advanced_test.dart: prescriptions avancées autorégulation : arrêt sur baisse de propreté, allègement
+00:00 +58: test/advanced_test.dart: prescriptions avancées journal : mini-séries, tentatives, qualité
+00:00 +59: test/advanced_test.dart: prescriptions avancées journal : parties d'une série
+00:00 +60: test/advanced_test.dart: prescriptions avancées journal : résultats des groupes d'exercices enchaînés
+00:00 +61: test/advanced_test.dart: saison, compétition, figures plan de saison : phases contiguës, rangs exacts
+00:00 +62: test/advanced_test.dart: saison, compétition, figures phases de saison : dix natures, dont entretien et reprise
+00:00 +63: test/advanced_test.dart: saison, compétition, figures plan de saison : échéances connues, sans doublon
+00:00 +64: test/advanced_test.dart: saison, compétition, figures phase propre à un mouvement : mouvements distincts
+00:00 +65: test/advanced_test.dart: saison, compétition, figures le plan de saison voyage dans les requêtes sans les casser
+00:00 +66: test/advanced_test.dart: saison, compétition, figures intention du bloc, de la semaine, ondulation
+00:00 +67: test/advanced_test.dart: saison, compétition, figures échelle de figure : étapes distinctes, la dernière est la cible
+00:00 +68: test/advanced_test.dart: saison, compétition, figures compétition de force : mouvements distincts, tentatives
+00:00 +69: test/advanced_test.dart: saison, compétition, figures échéances : répétitions, freestyle, course, objectifs liés
+00:00 +70: test/advanced_test.dart: saison, compétition, figures tentatives proposées : jamais décroissantes
+00:00 +71: test/advanced_test.dart: saison, compétition, figures tentative faite : cause de l'échec
+00:00 +72: test/advanced_test.dart: saison, compétition, figures rythme d'une épreuve : poste, tour, répétitions par série
+00:00 +73: test/advanced_test.dart: saison, compétition, figures volume toléré : plage ordonnée
+00:00 +74: test/advanced_test.dart: interfaces nouvelles un planificateur de saison et un conseiller du jour J se réalisent sans toucher aux interfaces de 0.3.0
+00:01 +75: test/advanced_test.dart: interfaces nouvelles un planificateur de saison et un conseiller du jour J se réalisent sans toucher aux interfaces de 0.3.0
+00:01 +76: test/catalog_test.dart: source la base est conservée telle quelle dans le catalogue
+00:01 +77: test/catalog_test.dart: source la base est conservée telle quelle dans le catalogue
+00:01 +78: test/catalog_test.dart: source la base est conservée telle quelle dans le catalogue
+00:01 +79: test/catalog_test.dart: source la base est conservée telle quelle dans le catalogue
+00:01 +80: test/catalog_test.dart: schéma de la base 1 039 exercices, 8 disciplines aux effectifs attendus
+00:01 +81: test/catalog_test.dart: schéma de la base vocabulaires fermés : 56 muscles, 68 matériels, 56 catégories
+00:01 +82: test/catalog_test.dart: schéma de la base identifiants uniques et bien formés
+00:01 +83: test/catalog_test.dart: schéma de la base un muscle figure dans une seule colonne par exercice
+00:01 +84: test/catalog_test.dart: schéma de la base variante_de : existe, sans cycle, racine et profondeur cohérentes
+00:01 +85: test/catalog_test.dart: champs calculés les vocabulaires calculés sont ceux des enums du contrat
+00:01 +86: test/catalog_test.dart: champs calculés domaines : difficulté, fatigue, lieux, contraintes, fraction
+00:01 +87: test/catalog_test.dart: champs calculés la difficulté ne décroît jamais quand le niveau monte
+00:01 +88: test/catalog_test.dart: champs calculés tenues et étirements se mesurent en secondes
+00:01 +89: test/catalog_test.dart: champs calculés prérequis : existants, au plus 2, plus faciles, sans cycle
+00:01 +90: test/catalog_test.dart: champs calculés vecteur musculaire : principal 1, secondaire 0,5, stabilisateur 0,2
+00:01 +91: test/catalog_test.dart: champs calculés cas types relus
+00:01 +92: test/catalog_test.dart: index par identifiant
+00:01 +93: test/catalog_test.dart: index par nom et alias, sans casse ni accents
+00:01 +94: test/catalog_test.dart: index par discipline, catégorie, schéma, famille : partitions
+00:01 +95: test/catalog_test.dart: index par muscle et par matériel
+00:01 +96: test/catalog_test.dart: index faisabilité selon le matériel disponible
+00:01 +97: test/catalog_test.dart: index faisabilité selon le lieu (0.4.2)
+00:01 +98: test/catalog_test.dart: index tables de lieu et de remplacement cohérentes avec le catalogue
+00:01 +99: test/catalog_test.dart: index contrôles de références
+00:01 +100: test/catalog_test.dart: proximité symétrique, bornée, 1 pour soi-même (10 000 paires seedées)
+00:01 +101: test/structure_test.dart: 0.4.4 : structure de la semaine un Pass1Plan de 0.4.3 se relit et se réécrit à l'identique
+00:01 +102: test/structure_test.dart: 0.4.4 : structure de la semaine un Pass1Plan de 0.4.3 se relit et se réécrit à l'identique
+00:01 +103: test/structure_test.dart: 0.4.4 : structure de la semaine un Pass1Plan de 0.4.3 se relit et se réécrit à l'identique
+00:01 +104: test/structure_test.dart: 0.4.4 : structure de la semaine un Pass1Plan de 0.4.3 se relit et se réécrit à l'identique
+00:01 +105: test/catalog_test.dart: chargement refuse un schéma plus récent
+00:01 +106: test/catalog_test.dart: chargement refuse un schéma plus récent
+00:01 +107: test/catalog_test.dart: chargement refuse un schéma plus récent
+00:01 +108: test/catalog_test.dart: chargement refuse un schéma plus récent
+00:01 +109: test/catalog_test.dart: chargement refuse un schéma plus récent
+00:01 +110: test/catalog_test.dart: chargement refuse un identifiant en double
+00:01 +111: test/catalog_test.dart: chargement refuse un code inconnu
+00:01 +112: test/catalog_test.dart: chargement refuse une variante_de inconnue ou cyclique
+00:01 +113: test/catalog_test.dart: chargement refuse une variante_de inconnue ou cyclique
+00:01 +114: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
+00:01 +115: test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
+00:02 +116: test/catalog_test.dart: chargement temps de chargement ≤ 150 ms (décompression comprise)
+00:02 +117: test/catalog_test.dart: chargement temps de chargement ≤ 150 ms (décompression comprise)
+00:02 +118: test/catalog_test.dart: chargement temps de chargement ≤ 150 ms (décompression comprise)
+00:02 +119: test/catalog_test.dart: chargement temps de chargement ≤ 150 ms (décompression comprise)
+chargement du catalogue : meilleur de 9 = 37.281 ms
+00:02 +120: test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
+00:02 +121: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +122: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +123: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +124: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +125: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +126: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +127: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +128: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +129: test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+00:02 +130: test/contracts_roundtrip_test.dart: DaySlot : aller-retour JSON sur 10000 valeurs seedées
+00:02 +131: test/contracts_roundtrip_test.dart: PlaceEquipment : aller-retour JSON sur 10000 valeurs seedées
+00:02 +132: test/validation_test.dart: profil le profil de référence est valide
+00:02 +133: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +134: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +135: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +136: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +137: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +138: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +139: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +140: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +141: test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+00:02 +142: test/validation_test.dart: journal série : au moins une mesure
+00:02 +143: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +144: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +145: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +146: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +147: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +148: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +149: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +150: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +151: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +152: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +153: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +154: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +155: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +156: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +157: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +158: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +159: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +160: test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+00:02 +161: test/contracts_roundtrip_test.dart: HealthScreeningRef : aller-retour JSON sur 10000 valeurs seedées
+00:02 +162: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+00:02 +163: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+00:02 +164: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+00:03 +165: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+00:03 +166: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+00:03 +167: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+00:03 +168: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+00:05 +169: test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+00:06 +170: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 journaux aléatoires sans les champs 0.4.0 : lecture puis écriture identiques
+00:06 +171: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 journaux aléatoires sans les champs 0.4.0 : lecture puis écriture identiques
+00:06 +172: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 journaux aléatoires sans les champs 0.4.0 : lecture puis écriture identiques
+00:06 +173: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 journaux aléatoires sans les champs 0.4.0 : lecture puis écriture identiques
+00:06 +174: test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 journaux aléatoires sans les champs 0.4.0 : lecture puis écriture identiques
+00:06 +175: test/contracts_roundtrip_test.dart: TrainingBreak : aller-retour JSON sur 10000 valeurs seedées
+00:06 +176: test/contracts_roundtrip_test.dart: TrainingBreak : aller-retour JSON sur 10000 valeurs seedées
+00:06 +177: test/contracts_roundtrip_test.dart: TrainingBreak : aller-retour JSON sur 10000 valeurs seedées
+00:06 +178: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : ni perte ni invention, mêmes violations, migration du JSON équivalente
+00:06 +179: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : ni perte ni invention, mêmes violations, migration du JSON équivalente
+00:07 +180: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : ni perte ni invention, mêmes violations, migration du JSON équivalente
+00:08 +181: test/contracts_roundtrip_test.dart: TrainingLog : aller-retour JSON sur 10000 valeurs seedées
+00:08 +182: test/contracts_roundtrip_test.dart: TrainingLog : aller-retour JSON sur 10000 valeurs seedées
+00:08 +183: test/contracts_roundtrip_test.dart: TrainingLog : aller-retour JSON sur 10000 valeurs seedées
+00:08 +184: test/contracts_roundtrip_test.dart: TrainingLog : aller-retour JSON sur 10000 valeurs seedées
+00:08 +185: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:08 +186: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:09 +187: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:09 +188: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:09 +189: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:09 +190: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:11 +191: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:11 +192: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:11 +193: test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+00:12 +194: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +195: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +196: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +197: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +198: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +199: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +200: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +201: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +202: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +203: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +204: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +205: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +206: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +207: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +208: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +209: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +210: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +211: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +212: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +213: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +214: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +215: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +216: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +217: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +218: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +219: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +220: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +221: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +222: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +223: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +224: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +225: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +226: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +227: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +228: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:12 +229: test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+00:13 +230: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +231: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +232: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +233: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +234: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +235: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +236: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +237: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +238: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +239: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +240: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +241: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +242: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +243: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +244: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +245: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:13 +246: test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+00:14 +247: test/questionnaire_test.dart: 10000 profils aléatoires : le parcours ne lève jamais, garde l'ordre et pose toujours les questions obligatoires
+00:15 +248: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
+00:15 +249: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
+00:15 +250: test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
+00:18 +251: test/contracts_roundtrip_test.dart: Variant : aller-retour JSON sur 10000 valeurs seedées
+00:18 +252: test/contracts_roundtrip_test.dart: VariantSet : aller-retour JSON sur 10000 valeurs seedées
+00:18 +253: test/contracts_roundtrip_test.dart: ExercisePrescription : aller-retour JSON sur 10000 valeurs seedées
+00:19 +254: test/contracts_roundtrip_test.dart: DayPrescription : aller-retour JSON sur 10000 valeurs seedées
+00:20 +255: test/contracts_roundtrip_test.dart: WeekPrescription : aller-retour JSON sur 10000 valeurs seedées
+00:22 +256: test/contracts_roundtrip_test.dart: Pass2Plan : aller-retour JSON sur 10000 valeurs seedées
+00:25 +257: test/contracts_roundtrip_test.dart: ProgramBlock : aller-retour JSON sur 10000 valeurs seedées
+00:30 +258: test/contracts_roundtrip_test.dart: ExerciseEstimate : aller-retour JSON sur 10000 valeurs seedées
+00:30 +259: test/contracts_roundtrip_test.dart: FatigueState : aller-retour JSON sur 10000 valeurs seedées
+00:30 +260: test/contracts_roundtrip_test.dart: PainTrend : aller-retour JSON sur 10000 valeurs seedées
+00:30 +261: test/contracts_roundtrip_test.dart: AdaptationSummary : aller-retour JSON sur 10000 valeurs seedées
+00:31 +262: test/contracts_roundtrip_test.dart: AdaptInput : aller-retour JSON sur 10000 valeurs seedées
+00:40 +263: test/contracts_roundtrip_test.dart: SessionRequest : aller-retour JSON sur 10000 valeurs seedées
+00:50 +264: test/contracts_roundtrip_test.dart: AdviceRequest : aller-retour JSON sur 10000 valeurs seedées
+01:01 +265: test/contracts_roundtrip_test.dart: ProposalDecision : aller-retour JSON sur 10000 valeurs seedées
+01:01 +266: test/contracts_roundtrip_test.dart: PersonalRecord : aller-retour JSON sur 10000 valeurs seedées
+01:01 +267: test/contracts_roundtrip_test.dart: SessionAdjustment : aller-retour JSON sur 10000 valeurs seedées
+01:02 +268: test/contracts_roundtrip_test.dart: SessionPlan : aller-retour JSON sur 10000 valeurs seedées
+01:03 +269: test/contracts_roundtrip_test.dart: IntraSessionAdvice : aller-retour JSON sur 10000 valeurs seedées
+01:04 +270: test/contracts_roundtrip_test.dart: Proposal : aller-retour JSON sur 10000 valeurs seedées
+01:08 +271: test/contracts_roundtrip_test.dart: EngineLogEntry : aller-retour JSON sur 10000 valeurs seedées
+01:08 +272: test/contracts_roundtrip_test.dart: AdaptReview : aller-retour JSON sur 10000 valeurs seedées
+01:16 +273: test/contracts_roundtrip_test.dart: XpEntry : aller-retour JSON sur 10000 valeurs seedées
+01:16 +274: test/contracts_roundtrip_test.dart: KreditEntry : aller-retour JSON sur 10000 valeurs seedées
+01:16 +275: test/contracts_roundtrip_test.dart: LevelState : aller-retour JSON sur 10000 valeurs seedées
+01:16 +276: test/contracts_roundtrip_test.dart: AttributeScore : aller-retour JSON sur 10000 valeurs seedées
+01:16 +277: test/contracts_roundtrip_test.dart: MovementRank : aller-retour JSON sur 10000 valeurs seedées
+01:16 +278: test/contracts_roundtrip_test.dart: Quest : aller-retour JSON sur 10000 valeurs seedées
+01:16 +279: test/contracts_roundtrip_test.dart: Milestone : aller-retour JSON sur 10000 valeurs seedées
+01:16 +280: test/contracts_roundtrip_test.dart: Prediction : aller-retour JSON sur 10000 valeurs seedées
+01:17 +281: test/contracts_roundtrip_test.dart: GoalProgress : aller-retour JSON sur 10000 valeurs seedées
+01:17 +282: test/contracts_roundtrip_test.dart: DelightEvent : aller-retour JSON sur 10000 valeurs seedées
+01:17 +283: test/contracts_roundtrip_test.dart: QuestState : aller-retour JSON sur 10000 valeurs seedées
+01:18 +284: test/contracts_roundtrip_test.dart: QuestClaim : aller-retour JSON sur 10000 valeurs seedées
+01:18 +285: test/contracts_roundtrip_test.dart: QuestInput : aller-retour JSON sur 10000 valeurs seedées
+01:26 +286: test/contracts_roundtrip_test.dart: QuestOutcome : aller-retour JSON sur 10000 valeurs seedées
+01:29 +287: test/contracts_roundtrip_test.dart: PlanRequest : aller-retour JSON sur 10000 valeurs seedées
+01:35 +288: test/contracts_roundtrip_test.dart: NextBlockRequest : aller-retour JSON sur 10000 valeurs seedées
+01:44 +289: test/contracts_roundtrip_test.dart: RestructureRequest : aller-retour JSON sur 10000 valeurs seedées
+01:52 +290: test/contracts_roundtrip_test.dart: ReviewRequest : aller-retour JSON sur 10000 valeurs seedées
+02:00 +291: test/contracts_roundtrip_test.dart: VariantsRequest : aller-retour JSON sur 10000 valeurs seedées
+02:08 +292: test/contracts_roundtrip_test.dart: Pass2Request : aller-retour JSON sur 10000 valeurs seedées
+02:15 +293: test/contracts_roundtrip_test.dart: BlockProposal : aller-retour JSON sur 10000 valeurs seedées
+02:22 +294: test/contracts_roundtrip_test.dart: OtherSport : aller-retour JSON sur 10000 valeurs seedées
+02:22 +295: test/contracts_roundtrip_test.dart: RecentTraining : aller-retour JSON sur 10000 valeurs seedées
+02:22 +296: test/contracts_roundtrip_test.dart: EnduranceBase : aller-retour JSON sur 10000 valeurs seedées
+02:22 +297: test/contracts_roundtrip_test.dart: Benchmark : aller-retour JSON sur 10000 valeurs seedées
+02:22 +298: test/contracts_roundtrip_test.dart: WeakPoint : aller-retour JSON sur 10000 valeurs seedées
+02:22 +299: test/contracts_roundtrip_test.dart: CompetitionLift : aller-retour JSON sur 10000 valeurs seedées
+02:22 +300: test/contracts_roundtrip_test.dart: EventStation : aller-retour JSON sur 10000 valeurs seedées
+02:22 +301: test/contracts_roundtrip_test.dart: SeasonEvent : aller-retour JSON sur 10000 valeurs seedées
+02:23 +302: test/contracts_roundtrip_test.dart: Specialization : aller-retour JSON sur 10000 valeurs seedées
+02:23 +303: test/contracts_roundtrip_test.dart: SkillState : aller-retour JSON sur 10000 valeurs seedées
+02:23 +304: test/contracts_roundtrip_test.dart: StepCriterion : aller-retour JSON sur 10000 valeurs seedées
+02:23 +305: test/contracts_roundtrip_test.dart: SkillStep : aller-retour JSON sur 10000 valeurs seedées
+02:23 +306: test/contracts_roundtrip_test.dart: SkillLadder : aller-retour JSON sur 10000 valeurs seedées
+02:23 +307: test/contracts_roundtrip_test.dart: SkillProgress : aller-retour JSON sur 10000 valeurs seedées
+02:23 +308: test/contracts_roundtrip_test.dart: PhaseOverride : aller-retour JSON sur 10000 valeurs seedées
+02:23 +309: test/contracts_roundtrip_test.dart: SeasonPhase : aller-retour JSON sur 10000 valeurs seedées
+02:23 +310: test/contracts_roundtrip_test.dart: SeasonPlan : aller-retour JSON sur 10000 valeurs seedées
+02:24 +311: test/contracts_roundtrip_test.dart: BlockIntent : aller-retour JSON sur 10000 valeurs seedées
+02:24 +312: test/contracts_roundtrip_test.dart: VolumeTolerance : aller-retour JSON sur 10000 valeurs seedées
+02:25 +313: test/contracts_roundtrip_test.dart: AttemptResult : aller-retour JSON sur 10000 valeurs seedées
+02:25 +314: test/contracts_roundtrip_test.dart: AttemptSuggestion : aller-retour JSON sur 10000 valeurs seedées
+02:25 +315: test/contracts_roundtrip_test.dart: WarmupStep : aller-retour JSON sur 10000 valeurs seedées
+02:25 +316: test/contracts_roundtrip_test.dart: LiftAttempts : aller-retour JSON sur 10000 valeurs seedées
+02:25 +317: test/contracts_roundtrip_test.dart: PacingSegment : aller-retour JSON sur 10000 valeurs seedées
+02:25 +318: test/contracts_roundtrip_test.dart: EventDayRequest : aller-retour JSON sur 10000 valeurs seedées
+02:35 +319: test/contracts_roundtrip_test.dart: EventDayPlan : aller-retour JSON sur 10000 valeurs seedées
+02:36 +320: test/contracts_roundtrip_test.dart: SeasonRequest : aller-retour JSON sur 10000 valeurs seedées
+02:42 +321: test/contracts_roundtrip_test.dart: Tempo : aller-retour JSON sur 10000 valeurs seedées
+02:43 +322: test/contracts_roundtrip_test.dart: SetTechnique : aller-retour JSON sur 10000 valeurs seedées
+02:43 +323: test/contracts_roundtrip_test.dart: IntensityTarget : aller-retour JSON sur 10000 valeurs seedées
+02:43 +324: test/contracts_roundtrip_test.dart: AutoregulationRule : aller-retour JSON sur 10000 valeurs seedées
+02:43 +325: test/contracts_roundtrip_test.dart: GroupSpec : aller-retour JSON sur 10000 valeurs seedées
+02:43 +326: test/contracts_roundtrip_test.dart: GroupResult : aller-retour JSON sur 10000 valeurs seedées
+02:43 +327: test/contracts_roundtrip_test.dart: SetPart : aller-retour JSON sur 10000 valeurs seedées
+02:43 +328: test/contracts_roundtrip_test.dart: TestSpec : aller-retour JSON sur 10000 valeurs seedées
+02:43 +329: test/contracts_roundtrip_test.dart: DayType : aller-retour JSON sur 10000 valeurs seedées
+02:43 +330: test/contracts_roundtrip_test.dart: SplitChoice : aller-retour JSON sur 10000 valeurs seedées
+02:43 +331: test/contracts_roundtrip_test.dart: même graine, mêmes valeurs (aucun hasard caché)
+02:43 +332: test/contracts_roundtrip_test.dart: un type racine écrit sa version de schéma
+02:43 +333: test/contracts_roundtrip_test.dart: lecture stricte : champ manquant ou de mauvais type refusé
+02:43 +334: test/contracts_roundtrip_test.dart: un nombre entier est accepté pour un champ décimal
+02:43 +335: All tests passed!
 kalis_core 0.4.4 — rapport de contrôle
 
 Catalogue : 1039 exercices, base v1.1.0, règles 1.1.0, schéma 1
-Chargement (décompression comprise) : meilleur 29.1 ms, médiane 32.5 ms (budget 150 ms)
+Chargement (décompression comprise) : meilleur 41.3 ms, médiane 59.2 ms (budget 150 ms)
 Contrats : 111 types, 144 codes de raison
 Profils types : 40 (0 violation(s))
 Journaux : 12, 468 séances dont 12 « reprise », 5480 séries dont 319 sans note (0 violation(s))
