@@ -2,7 +2,7 @@
 
 Lot de la voie App du pipeline CP (DECISIONS_CP.md C17.41, C17.43), demande du propriétaire du 20/10/2026 : « passe en revue tout le code pour corriger des bugs de logique, des bugs graphiques et autres ». Base : `main` 0e063fde (dev7.4.0, aucune publication du propriétaire pendant le lot). Données synthétiques seulement (C17.33.2) ; aucune clé, aucune référence, aucune donnée réelle.
 
-- Publication : __MAIN__ ; build signé __BUILD__ ; contrôle complet `claude/ci-3d` __CI3D__.
+- Publication : `main` c963a215 (avance rapide depuis 0e063fde, un commit, arbre identique à celui contrôlé) ; build signé __BUILD__ ; contrôle complet `claude/ci-3d` run 39660495300 vert sur l'arbre publié (commit de contrôle e0337102) : contrôles, analyse, formatage, 1 186 tests Dart, mode dev, Python, paquets, builds debug et profile, émulateur : **toutes les cibles vertes** (RV1 a et b, KB4 à M7, `drive-code` à 0).
 - Paquets (`kalis_core`, `kalis_plan`, `kalis_adapt`, `kalis_bench`) : **inchangés**, revus en lecture (§ 5).
 
 ## 1. Ce qui change pour le propriétaire
@@ -118,14 +118,26 @@ Recommandation : un lot moteur court (`kalis_adapt` 1.0.7 / Koach 1.0.8) pour X1
 
 ## 7. Parcours sur l'émulateur
 
-__EMU__
+Cible `integration_test/rv1_parcours_test.dart` (inscrite dans `tools/ci3d_drive.sh`, avant KB4), deux parties : **a** sombre, palette bordeaux, taille d'affichage 90 % ; **b** clair, palette neon, taille 110 %. Programme PR2 synthétique (trois semaines d'historique, nouveau programme affiché à partir de S1) ; 38 captures par partie (`ci-out/emulateur/rv1_*` de `claude/ci-3d`, commit bc72952e), toutes lues.
+
+- J1, J2 servies par Koach (pages capturées : E2MOM avec ligne enchaînée, finisher en superset) ; extension triceps poulie servie à **27,5 kg** ;
+- arrêt d'urgence ; J3, J4 telles qu'écrites : intervalles **8 lignes de 30 s**, chrono des tours en en-tête, aucun sablier par tour ; EMOM minute par minute (8 × 3, 10 × 8) avec « Minute ratée : laisse sa ligne non validée. », E2MOM avec « Départ raté » ; drop set mécanique nommé palier par palier ;
+- réactivation ; J5, J6 servies par Koach (EMOM 12 × 18, drop set 5 paliers, squat à 70 kg fixes, intervalles 6 × 40 s) ;
+- accueil (GtG hors séance), Mon programme (« Fin du programme (S10) »), Stats, Réglages ;
+- sauvegarde exportée puis réimportée : **toutes les sections identiques** (hors `lastLevel`, relevé au niveau atteint par un import : voulu, aucune cérémonie pour des acquis restaurés) ;
+- six séances faites, aucune exception.
+
+Captures lues : deux défauts PR2 trouvés et corrigés avant le contrôle final (titre du bilan de séance « S15-J1 » → « S1, J1 » ; « Fin du programme (S24) » → « (S10) »). En clair, les champs des séries ont maintenant leur contour `filet` (R4).
+
+Contrôles précédents du lot (pour mémoire) : runs 39611467071 et 39633654254 coupés à 140 puis 175 min (VM de l'émulateur injoignable pour plusieurs cibles, 2 × 10 min perdues chacune), aucune ligne de test rouge ; délai du job porté à 300 min (accepté, C17.45.3) ; le run final a duré 70 min.
 
 ## 8. Limites et recommandations au pilotage
 
 1. Valider dev7.5.0.
 2. Lot moteur pour X1-X3 (§ 5) ; l'application contourne X1 et X2.
 3. Signalés majeurs à traiter dans un lot application suivant : K3, K4 (robustesse du journal de Koach), P1 (PR2 après un bloc suivant), P3, A2 ; F4 (avertir avant d'effacer).
-4. Les intervalles servis tels qu'écrits ne sont plus modulés par Koach (aucune réduction de tours) : choix de cohérence (C17.43.3) ; à changer seulement si le propriétaire veut que Koach raccourcisse ses finishers.
+4. Constats du propriétaire du 21/10 au soir (sablier d'une tenue qui remplace le chrono d'un E3MOM ; sabliers des tours d'intervalles) : RV1 retire le sablier des tours d'intervalles (`rowPrefix` `I`, vu sur la cible émulateur) et ne lance plus de repos individuel dans un groupe au chrono ; le sablier d'une tenue dans un enchaînement au chrono relève de **RV1c1** (C17.45), lancé en parallèle.
+5. Les intervalles servis tels qu'écrits ne sont plus modulés par Koach (aucune réduction de tours) : choix de cohérence (C17.43.3) ; à changer seulement si le propriétaire veut que Koach raccourcisse ses finishers.
 
 ## 9. À tester (propriétaire)
 
