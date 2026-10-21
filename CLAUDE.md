@@ -99,8 +99,10 @@ committer les fichiers déchiffrés.
 - Notation (PR5) : une série validée montre sa flamme à la place de la
   coche ; un appui ouvre le curseur en popup (note validée au lâcher), un
   appui long annule la validation. En lecture, séries résumées en une ligne.
-- `EMOM 12 min × 18 reps par minute` · `EMOM 20 min · 10 reps, +1 rep/min
-  jusqu'à l'échec` (EMOM montant, PR1).
+- `EMOM 12 min × 18 reps par minute` : une ligne par minute, départ toutes
+  les 60 s, servie telle qu'écrite (KB4, comme `12×6 · EMOM`) ·
+  `EMOM 20 min · 10 reps, +1 rep/min jusqu'à l'échec` (EMOM montant, PR1,
+  une ligne).
 - `1×max puis 2×max (15 s intra) · rest-pause` (PR1).
 - `2 tours × 4 paliers` : drop set mécanique, une ligne par palier (PR1).
 - `8× (30 s effort / 30 s repos)` intervalles · `3×30 s` tenues ·

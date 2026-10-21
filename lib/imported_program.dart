@@ -1188,10 +1188,12 @@ extension ImportedProgramStore on AppStore {
           restBetweenRoundsSeconds: iv.rest,
         ),
       );
-    } else if (sp.kind == 'emom') {
+    } else if (sp.kind == 'emom' || emomPerMinute(text) != null) {
       // « EMOM 12 min × 5 reps par minute » : une ligne par minute
       // (technique `emom`), dans un groupe au temps qui réunit les
-      // exercices enchaînés dans la même minute.
+      // exercices enchaînés dans la même minute. KB4 : reps fixes par
+      // minute : départ chronométré à reps fixes, servi tel qu'écrit (règle
+      // PR8) ; la séance le note minute par minute (`logSpec`, `every` 60).
       final m = RegExp(
         r'^emom\s*(\d+)\s*min\s*[×x]\s*(\d+)\s*reps',
       ).firstMatch(text);
@@ -1226,6 +1228,7 @@ extension ImportedProgramStore on AppStore {
           intervalSeconds: 60,
           durationSeconds: minutes * 60,
         ),
+        asWritten: emomPerMinute(text) != null,
       );
     } else if (sp.every != null) {
       // PR1 : « 8×3 · E2MOM » : une ligne par série, départ toutes les

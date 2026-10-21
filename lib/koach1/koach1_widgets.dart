@@ -383,6 +383,62 @@ class KoachEngineCard extends StatelessWidget {
   );
 }
 
+/// KB4 (dev7.4.0, C17.40) : carte de l'accueil au premier lancement avec
+/// Koach arrêté : Koach 1.0.7 ne coupe plus le programme pour le volume ;
+/// « Réactiver Koach » (jamais automatique) ou « Plus tard ».
+class KoachRepriseCard extends StatelessWidget {
+  const KoachRepriseCard({super.key});
+
+  static bool get visible => store.koachAnnonceReprise;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!visible) return const SizedBox.shrink();
+    final k = KTokens.of(context);
+    return KCard(
+      key: const ValueKey('koach-reprise-card'),
+      child: KoachSays(
+        pose: koachPose(KoachUsage.proposal),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Koach ne coupe plus ton programme',
+              style: KType.corpsFort.copyWith(color: k.texte),
+            ),
+            const SizedBox(height: KSpacing.s4),
+            Text(
+              'Il garde chaque exercice et chaque série écrits ; il ne '
+              'limite que ce qu’il ajoute. Tes séances faites pendant '
+              'l’arrêt lui seront transmises.',
+              style: KType.corps.copyWith(color: k.texte2),
+            ),
+            const SizedBox(height: KSpacing.s8),
+            Wrap(
+              spacing: KSpacing.s8,
+              runSpacing: KSpacing.s4,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                KPrimaryButton(
+                  key: const ValueKey('koach-reprise-reactiver'),
+                  label: 'Réactiver Koach',
+                  expand: false,
+                  onPressed: () => store.koachResume(),
+                ),
+                KTextButton(
+                  key: const ValueKey('koach-reprise-plus-tard'),
+                  label: 'Plus tard',
+                  onPressed: store.koachAnnonceRepriseVue,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// Carte « Bloc suivant : ce qui change et pourquoi » (accueil, Mon
 /// programme) ; rien quand il n'y a rien à valider.
 class KoachRecapCard extends StatelessWidget {
