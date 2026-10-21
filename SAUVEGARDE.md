@@ -10,3 +10,8 @@
 
 ## Reste
 - Correctifs + tests, cible émulateur `integration_test/rv1_parcours_test.dart`, ci-3d, main dev7.5.0, build, livraison.
+
+## Avancement 13:12 UTC
+- Correctifs faits (commit local f969c2a0 sur base main 0e063fde) ; contrôle rapide `claude/ci-ui-rv1-rapide` vert (run 39604545643, 28 suites touchées + rv1).
+- Contrôle complet `claude/ci-3d` lancé sur 965e6fd9 (13:10 UTC) ; résultats attendus vers 15:25 UTC.
+- Reste : lire ci-out (checks, émulateur, captures rv1_*), corriger si rouge ; publier sur main (avance rapide de 0e063fde), build signé, LIVRAISON_RV1.md (pipeline + projet), ETAT « à valider », page de suivi, notification.

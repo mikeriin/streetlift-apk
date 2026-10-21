@@ -92,7 +92,8 @@ Map<String, dynamic>? perfBackup(AppStore app, String profile) {
         log.exerciseNames[ex.id] = ex.name;
         log.ex[ex.id] = ExerciseLog(
           sets: List.generate(
-            app.setCount(ex).clamp(1, 12),
+            // RV1 : historique d'avant dev7.5.0 : intervalles en une ligne.
+            (ex.interval != null ? 1 : app.setCount(ex)).clamp(1, 12),
             (_) => SetEntry(
               kg: _kg(r),
               reps: '${3 + r.next(10)}',
