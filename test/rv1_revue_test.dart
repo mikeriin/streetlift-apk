@@ -69,7 +69,7 @@ void main() {
       const bruit = 22.000000000000004;
       expect(adaptKgField(bruit), '22');
       expect(koachKg(bruit), '22');
-      expect(adaptKg(bruit), '22 kg');
+      expect(adaptKg(bruit), '22\u00A0kg');
       expect(adaptKgField(36.25), '36.25');
       expect(koachKg(36.25), '36,25');
       expect(adaptKgField(62.5), '62.5');
