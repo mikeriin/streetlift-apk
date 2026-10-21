@@ -211,6 +211,7 @@ extension ProgramOriginStore on AppStore {
       return false;
     }
     programInstance = o.programInstance;
+    _instanceRaw = o.instanceRaw;
     programLoadIssues = o.programIssues;
     planProgram = o.planProgram;
     _planRaw = o.planRaw;

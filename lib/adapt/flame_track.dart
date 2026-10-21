@@ -289,7 +289,13 @@ class _FlameTrackState extends State<FlameTrack> {
                   onHorizontalDragUpdate: (d) => _dragTo(d.localPosition.dx, w),
                   onHorizontalDragEnd: (_) {
                     final f = _drag;
-                    if (f != null) _commit(f);
+                    if (f != null) {
+                      _commit(f);
+                    } else {
+                      // RV1 (PR5) : glissement resté sur la note donnée :
+                      // la popup se ferme aussi au lâcher.
+                      widget.onReleased?.call();
+                    }
                   },
                   onHorizontalDragCancel: () => setState(() => _drag = null),
                   child: SizedBox(

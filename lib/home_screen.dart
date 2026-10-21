@@ -127,11 +127,42 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   late int week;
+
+  /// RV1 : semaine du jour au moment où [week] l'a suivie ; null : semaine
+  /// choisie par l'utilisateur (gardée).
+  int? _followed;
   DateTime get now => widget.referenceDate ?? KalisClock.now();
+
+  /// Semaine du jour, dans les semaines affichées.
+  int get _todayWeek => _clampWeek(store.program.weekFor(now));
+
+  int _clampWeek(int n) => n.clamp(
+    store.program.firstShown,
+    math.max(store.program.firstShown, store.program.weeks.length),
+  );
+
   @override
   void initState() {
     super.initState();
-    week = math.max(store.program.weekFor(now), store.program.firstShown);
+    week = _todayWeek;
+    _followed = week;
+  }
+
+  /// RV1 : semaine affichée valable à chaque construction : l'onglet garde
+  /// son état (`IndexedStack`) ; un programme plus court (programme créé,
+  /// sauvegarde restaurée) faisait planter `program.week` (StateError), une
+  /// semaine sous `firstShown` donnait « Semaine 0 » ; l'accueil laissé
+  /// ouvert du dimanche au lundi restait sur l'ancienne semaine.
+  void _syncWeek() {
+    final today = _todayWeek;
+    if (_followed != null && _followed != today) {
+      week = today;
+      _followed = today;
+    }
+    week = _clampWeek(week);
+    if (!store.program.weeks.any((w) => w.n == week)) {
+      week = store.program.weeks.first.n;
+    }
   }
 
   final ScrollController _scroll = ScrollController();
@@ -149,7 +180,10 @@ class _HomeScreenState extends State<HomeScreen> {
       store.program.weeks.length,
     );
     if (next == week) return;
-    setState(() => week = next);
+    setState(() {
+      week = next;
+      _followed = next == _todayWeek ? next : null;
+    });
     if (_scroll.hasClients) _scroll.jumpTo(0);
   }
 
@@ -284,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _summary(WeekPlan w, DayPlan d) {
     final done = store.isDone(w.n, d.j);
     final estimate = store.dayEstimate(d);
-    final title = 'Résumé · S${w.n} · J${d.j}';
+    final title = 'Résumé · ${store.program.sessionLabel(w.n, d.j)}';
     Widget overview(BuildContext context) {
       final k = KTokens.of(context);
       return Column(
@@ -357,6 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // G10 : revue du moteur dynamique (une par état du journal) ; ses
       // propositions apparaissent dans la carte de Koach ci-dessous.
       _scheduleEvolutionRefresh();
+      _syncWeek();
       final k = KTokens.of(context);
       final w = store.program.week(week), current = store.program.weekFor(now);
       final today = store.program.containsDate(now) && current == week

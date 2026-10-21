@@ -1159,8 +1159,10 @@ extension ImportedProgramStore on AppStore {
         ),
         kc.SlotRole.mobility,
       );
-    } else if (sp.kind == 'interval' && e.interval != null) {
-      // « 8× (30 s effort / 30 s repos) » : groupe d'intervalles.
+    } else if (e.interval != null) {
+      // « 8× (30 s effort / 30 s repos) » : groupe d'intervalles. RV1
+      // (C17.43.3) : servi tel qu'écrit (une ligne par tour, comme Koach
+      // arrêté ; tours du groupe = séries de la ligne, jamais coupés).
       final iv = e.interval!;
       if (info.mode != null) return null;
       if (iv.rounds < 1 || iv.rounds > 20) return null;
@@ -1187,6 +1189,7 @@ extension ImportedProgramStore on AppStore {
           intervalSeconds: iv.work,
           restBetweenRoundsSeconds: iv.rest,
         ),
+        asWritten: true,
       );
     } else if (sp.kind == 'emom' || emomPerMinute(text) != null) {
       // « EMOM 12 min × 5 reps par minute » : une ligne par minute

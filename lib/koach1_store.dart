@@ -278,27 +278,38 @@ class KoachEngineData {
 
   bool get active => snap != null && stop == null;
 
-  bool get pristine => snap == null && journal.isEmpty && forced == null;
+  /// RV1 : section lue avec un instantané illisible : gardée telle quelle
+  /// et réécrite à l'identique tant que Koach n'a pas d'autre instantané
+  /// (avant : état neuf, section omise à l'écriture suivante, journal de
+  /// Koach perdu).
+  Map<String, Object?>? raw;
 
-  Map<String, Object?> toJson() => {
-    'v': 1,
-    if (installedOn != null) 'installedOn': installedOn,
-    if (openedOn != null) 'openedOn': openedOn,
-    if (snap != null) 'snap': snap!.toJson(),
-    if (journal.isNotEmpty) 'journal': journal,
-    if (fromWeek != null) 'fromWeek': fromWeek,
-    if (activatedOn != null) 'activatedOn': activatedOn,
-    if (closed > 0) 'closed': closed,
-    if (versed.isNotEmpty) 'versed': [...versed]..sort(),
-    if (stop != null) 'stop': stop,
-    if (recaps.isNotEmpty) 'recaps': recaps,
-    if (dispo != null) 'dispo': dispo,
-    if (manquees.isNotEmpty) 'manquees': manquees,
-    if (forced != null) 'forced': forced,
-    if (blocked != null) 'blocked': blocked,
-    if (refSig != null) 'refSig': refSig,
-    if (annonce107 != null) 'annonce107': annonce107,
-  };
+  bool get pristine =>
+      raw == null && snap == null && journal.isEmpty && forced == null;
+
+  Map<String, Object?> toJson() {
+    final r = raw;
+    if (r != null && snap == null) return r;
+    return {
+      'v': 1,
+      if (installedOn != null) 'installedOn': installedOn,
+      if (openedOn != null) 'openedOn': openedOn,
+      if (snap != null) 'snap': snap!.toJson(),
+      if (journal.isNotEmpty) 'journal': journal,
+      if (fromWeek != null) 'fromWeek': fromWeek,
+      if (activatedOn != null) 'activatedOn': activatedOn,
+      if (closed > 0) 'closed': closed,
+      if (versed.isNotEmpty) 'versed': [...versed]..sort(),
+      if (stop != null) 'stop': stop,
+      if (recaps.isNotEmpty) 'recaps': recaps,
+      if (dispo != null) 'dispo': dispo,
+      if (manquees.isNotEmpty) 'manquees': manquees,
+      if (forced != null) 'forced': forced,
+      if (blocked != null) 'blocked': blocked,
+      if (refSig != null) 'refSig': refSig,
+      if (annonce107 != null) 'annonce107': annonce107,
+    };
+  }
 
   /// Lecture tolérante (une section illisible donne un état neuf : le
   /// moteur 0.3.1 continue de servir, rien n'est perdu de l'historique de
@@ -319,8 +330,11 @@ class KoachEngineData {
     out.annonce107 = day('annonce107');
     try {
       if (m['snap'] != null) out.snap = KoachInstantane.fromJson(m['snap']);
-    } on FormatException {
+    } catch (_) {
+      // RV1 : toute erreur de lecture (un élément d'un autre type levait
+      // une TypeError : application bloquée au démarrage).
       issues?.add('snap');
+      out.raw = koachCopie(m) as Map<String, Object?>;
     }
     if (out.snap != null) out.journal = koachJournalDe(m['journal']);
     final fw = m['fromWeek'];
@@ -1243,6 +1257,10 @@ extension KoachStore on AppStore {
           final log = logs[key];
           if (log?.done ?? false) continue;
           if (e.versed.contains(key) || versedNow.contains(key)) continue;
+          // RV1 : séance commencée (servie par Koach, ou séries validées)
+          // passée minuit : jamais déclarée manquée (avant : manquée puis
+          // faite, son volume redistribué sur la semaine suivante).
+          if (key == open || servie(key) || inProgress(key)) continue;
           if (programResume?.keys.contains(key) ?? false) continue;
           if (program.start == null) continue;
           final date = civilOf(program.dateFor(week, d.j));
@@ -2075,6 +2093,8 @@ extension KoachStore on AppStore {
     final a = sessionAdaptOf(key);
     final slot = e.slotId;
     if (a == null || slot == null || !koachOpen(week, base.j)) return;
+    // RV1 : rien versé au moteur pendant un arrêt d'urgence.
+    if (!koachEngine.active) return;
     final st0 = a.koach!;
     if (st0['state'] != 'open') return;
     final cibles = (st0['cibles'] as Map?) ?? const {};
@@ -2228,6 +2248,11 @@ extension KoachStore on AppStore {
     if (pain && load != null && load < kg) return cible;
     final out = Map<String, Object?>.of(cible);
     out['loadKg'] = kg;
+    // RV1 : charge fixée par le programme (C15) : pas de suggestion d'une
+    // autre charge (toutes les propositions de Koach sont des charges ;
+    // avant : « Je te propose 22,5 kg » sur 20 kg fixes, et « Valider »
+    // pré-remplissait 22,5).
+    out.remove('proposition');
     kc.ExercisePrescription? written;
     for (final x in place.day?.items ?? const <kc.ExercisePrescription>[]) {
       if (x.slotId == it.slotId) written = x;
@@ -2257,7 +2282,8 @@ extension KoachStore on AppStore {
   /// (demandée tout de suite), et ce que Koach en dit (null : rien de
   /// neuf).
   KoachSetNews? koachAfterSet(int week, DayPlan day, Exercise e, int index) {
-    if (!koachOpen(week, day.j)) return null;
+    // RV1 : rien versé au moteur pendant un arrêt d'urgence.
+    if (!koachEngine.active || !koachOpen(week, day.j)) return null;
     final key = sessionKey(week, day.j);
     final before = sessionAdaptOf(key);
     final log = logs[key]?.ex[e.id];
@@ -2741,6 +2767,11 @@ extension KoachStore on AppStore {
         for (final m in modules.entries) m.key: [m.value.$1, m.value.$2],
       },
     };
+    // RV1 : un calcul en cours (rattrapage, rejeu) lancé avant l'arrêt ne
+    // réinstalle pas le moteur vivant à sa fin (génération changée).
+    _koachRt
+      ..gen += 1
+      ..busy = null;
     _koachRt.live = null;
     _koachBackToWritten();
     _g9Cache.clear();

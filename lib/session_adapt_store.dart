@@ -2114,6 +2114,7 @@ extension SessionAdaptStore on AppStore {
                 // ligne du total avant dev7.4.0) : même lecture qu'avant.
                 emomPerMinute(setsLabel(e!)) != null ||
                 sp.kind == 'interval' ||
+                sp.rowPrefix == 'I' ||
                 sp.kind == 'amrap' ||
                 sp.rowPrefix == 'É' ||
                 sp.rowPrefix == 'R' ||

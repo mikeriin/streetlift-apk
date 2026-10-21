@@ -91,9 +91,14 @@ const gtgReminderHours = [9, 11, 13, 15, 17, 19, 21];
 const gtgReminderDays = 14;
 
 /// Identifiants des rappels de GtG : 2000 + (jour du programme) × 8 +
-/// créneau.
+/// créneau. RV1 : bornes pour 60 semaines (un programme créé va jusqu'à 52
+/// semaines, plus les semaines masquées d'un programme repris) ; avant :
+/// 40, les rappels d'après la semaine 40 n'étaient jamais annulés.
 const gtgReminderFirstId = 2000;
-const gtgReminderLastId = 2000 + 40 * 7 * 8 + 7;
+const gtgReminderLastId = 2000 + kReminderMaxWeeks * 7 * 8 + 7;
+
+/// RV1 : semaines couvertes par les identifiants des rappels.
+const kReminderMaxWeeks = 60;
 
 /// Correctif 20/10/2026 : rappels de GtG d'un jour qui en porte (lignes
 /// GtG sorties de la séance, [DayPlan.gtg]) : toutes les 2 h avec
@@ -425,7 +430,8 @@ class NotificationService {
 
   static bool _ours(int id) =>
       (id >= 100 && id <= 106) ||
-      (id >= 1001 && id <= 1280) ||
+      // RV1 : rappels de séance jusqu'à la semaine 60 (avant : 40).
+      (id >= 1001 && id <= 1000 + kReminderMaxWeeks * 7) ||
       (id >= gtgReminderFirstId && id <= gtgReminderLastId);
   Future<void> _reschedule(int revision) async {
     status.value = ReminderStatus(access: status.value.access, busy: true);

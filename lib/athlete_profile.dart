@@ -869,10 +869,10 @@ String durationText(num seconds) {
 
 String _num(num v) {
   if (v == v.roundToDouble()) return v.toInt().toString();
-  return v
-      .toStringAsFixed(2)
-      .replaceAll(RegExp(r'0+$'), '')
-      .replaceAll('.', ',');
+  // RV1 : jamais « 72, » (valeur à 72,000000001).
+  var t = v.toStringAsFixed(2).replaceAll(RegExp(r'0+$'), '');
+  if (t.endsWith('.')) t = t.substring(0, t.length - 1);
+  return t.replaceAll('.', ',');
 }
 
 String numText(num v) => _num(v);

@@ -1,3 +1,4 @@
+import 'search.dart' show normalizeText;
 import 'store.dart';
 
 /// Vue en lecture seule : toutes les séances terminées.
@@ -23,8 +24,10 @@ List<StatsHistoryEntry> statsHistory(AppStore source) {
       StatsHistoryEntry(
         id: item.key,
         title: title,
-        searchText: '$title ${log.ex.values.map((e) => e.note).join(' ')}'
-            .toLowerCase(),
+        // RV1 : sans accents ni casse (« epaule » trouve « épaule »).
+        searchText: normalizeText(
+          '$title ${log.ex.values.map((e) => e.note).join(' ')}',
+        ),
         at: DateTime.tryParse(log.finishedAt ?? '')?.toLocal(),
         session: log,
       ),

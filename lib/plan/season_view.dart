@@ -310,6 +310,7 @@ SeasonOverview? storeSeasonOverview() {
   final plan = store.planProgram;
   final n = store.storeClock();
   final today = DateTime(n.year, n.month, n.day);
+  final todayDay = kc.CivilDate(today.year, today.month, today.day).dayNumber;
   final start = store.program.start;
   // CI1e (C11) : semaine du programme importé (programme de 40 semaines
   // du propriétaire, ou semaines d'avant un programme créé) : saison de
@@ -332,8 +333,12 @@ SeasonOverview? storeSeasonOverview() {
       events: [
         ...?store.athlete?.profile.events,
         if (event != null &&
+            // RV1 : une échéance principale déjà passée ne masque plus la
+            // fin du programme.
             !(store.athlete?.profile.events ?? const <kc.SeasonEvent>[]).any(
-              (e) => e.priority == kc.EventPriority.main,
+              (e) =>
+                  e.priority == kc.EventPriority.main &&
+                  e.date.dayNumber >= todayDay,
             ))
           event,
       ],

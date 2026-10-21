@@ -86,7 +86,8 @@ class _SessionHostState extends State<SessionHost> {
     try {
       await store.flush();
     } catch (_) {}
-    setState(() => _switching = true);
+    // RV1 : pas de `setState` sur un état démonté pendant l'écriture.
+    if (mounted) setState(() => _switching = true);
     // L'arbre de l'application est démonté (écrans, routes, écouteurs du
     // magasin) avant le changement de session.
     await WidgetsBinding.instance.endOfFrame;

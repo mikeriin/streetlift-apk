@@ -169,14 +169,18 @@ class _InitErrorApp extends StatelessWidget {
 }
 
 // Thèmes construits une seule fois par palette, luminosité et contraste
-// (ThemeData est coûteux à recréer) : 32 combinaisons au plus.
+// (ThemeData est coûteux à recréer), intensité des couleurs et densité.
 final Map<String, ThemeData> _themes = {};
 
 /// Thème d'une combinaison, sans modifier la palette courante de [SL]
 /// ([buildTheme] la positionne pour les usages directs et les tests).
 ThemeData themeFor(bool dark, KAccentSpec accent, [bool? contrast]) {
   final strong = contrast ?? SL.contrast;
-  return _themes.putIfAbsent('${accent.id}-$dark-$strong', () {
+  // RV1 : l'intensité des couleurs et la densité entrent dans la clé
+  // (avant : « Couleurs » et « Espacements » ne changeaient le kit qu'au
+  // redémarrage).
+  final key = '${accent.id}-$dark-$strong-$kColorIntensity-${KDensity.factor}';
+  return _themes.putIfAbsent(key, () {
     final previousDark = SL.dark,
         previousAccent = SL.accentSpec,
         previousContrast = SL.contrast;

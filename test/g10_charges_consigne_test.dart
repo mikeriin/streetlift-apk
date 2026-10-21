@@ -111,6 +111,39 @@ List<Object?> _kb4(List<Object?> row) {
   ];
 }
 
+/// RV1 (C17.43.3) : intervalles « N× (T s effort / R s repos) » : une
+/// ligne par tour (tenue de T s pré-remplie, préfixe `I`, sans repos après
+/// la ligne : le chrono des tours le donne) au lieu d'une ligne pour toute
+/// la séance d'intervalles : seul changement voulu de RV1 par rapport à
+/// 2.x.
+List<Object?> _rv1(List<Object?> row) {
+  // RV1 : charge en livres à la virgule décimale (« 16,5 lb »).
+  final label = row[2];
+  if (label is String && label.endsWith('lb')) {
+    final fr = label
+        .replaceAll('.', ',')
+        .replaceFirst(RegExp(r',0(?=\s*lb$)'), '');
+    row = [...row.take(2), fr, ...row.skip(3)];
+  }
+  if (row[5] != 'interval') return row;
+  final m = RegExp(r'^(\d+)\s*[×x]\s*\((\d+)\s*s').firstMatch('${row[3]}');
+  if (m == null) return row;
+  final n = int.parse(m.group(1)!);
+  return [
+    ...row.take(4),
+    n,
+    'hold',
+    'I',
+    row[7],
+    row[8],
+    row[9],
+    int.parse(m.group(2)!),
+    List<Object?>.filled(n, null),
+    List<Object?>.filled(n, null),
+    ...row.skip(13),
+  ];
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -156,7 +189,7 @@ void main() {
       for (var i = 0; i < expected.length; i++) {
         expect(
           actual[i],
-          _kb4((expected[i] as List).cast<Object?>()),
+          _rv1(_kb4((expected[i] as List).cast<Object?>())),
           reason: '$label · ${entry.key} · ${(expected[i] as List).first}',
         );
       }
