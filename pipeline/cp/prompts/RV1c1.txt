@@ -1,7 +1,13 @@
 LOT RV1 — CORRECTION 1 : CHRONOS DES GROUPES AU CHRONO ET SABLIERS DES TENUES (dev7.5.1)
 Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
-Prérequis : RV1 validé (dev7.5.0 sur `main`). **Aucune donnée réelle, aucun déchiffrement, aucune clé (C17.33.2).**
-Base : pointe de `main` (dev7.5.0 ou suivant ; C17.28 : `CLAUDE.md` de `main`, rebase avant de publier, ne défais rien des lots du propriétaire). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/RV1c1`.
+Prérequis : **lancé en parallèle de la fin de RV1 (C17.45)** : RV1 n'a pas besoin d'être livré pour commencer. **Aucune donnée réelle, aucun déchiffrement, aucune clé (C17.33.2).**
+**ÉCHÉANCE : dev7.5.1 publiée, build signé compris, le 22/10/2026 à 04:00 UTC (06:00 heure de Paris)** (demande du propriétaire). Sans rien sauter du contrôle ; si l'échéance ne peut pas être tenue, livre dès que possible et dis-le.
+Base et ordre (C17.45) :
+1. Pars de l'arbre de RV1 en cours de contrôle : commit `e0337102` de `claude/ci-3d` (« RV1 (dev7.5.0) : contrôle complet sur 1676c9ee » ; sans `ci-out/`) ou, s'il a avancé, la dernière sauvegarde de `cp-sauvegardes/RV1` qui porte le code. Ne touche jamais aux branches de RV1 (`cp-sauvegardes/RV1`, son brouillon de livraison, sa ligne d'ETAT).
+2. Code, tests widget, cible émulateur ; contrôle rapide sur `claude/ci-ui-rv1c1-rapide` ; sauvegardes `cp-sauvegardes/RV1c1`.
+3. **`claude/ci-3d` est partagé avec RV1** : n'y pousse rien tant qu'un run « CI 3D (mannequin) » est en cours ou en file (`gh run list -b claude/ci-3d`) ; dès que le run de RV1 est fini (vert ou rouge), pousse ton contrôle complet (arbre de RV1 + ta correction) sans attendre la publication de dev7.5.0. Si RV1 doit relancer un contrôle après le tien (son run rouge), ne le bloque pas : attends la fin du tien, puis laisse-lui la branche (préviens par une ligne dans ta sauvegarde).
+4. Publication : **seulement après la publication de dev7.5.0 par RV1 sur `main`** ; rebase sur la pointe ; si `lib/` diffère de l'arbre que tu as contrôlé au-delà de ta correction, relance le contrôle complet sur l'arbre publié. Version 7.5.1.
+Contrôle `claude/ci-3d`.
 Décisions : C17.41, C17.44 (validation de RV1) ; règles graphiques de `pipeline/ui/DECISIONS_UI.md` et `CAHIER_UI.md`. Livraison à lire : `LIVRAISON_RV1.md`.
 
 CONSTATS DU PROPRIÉTAIRE (21/10/2026, en séance, dev7.4.0)

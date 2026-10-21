@@ -419,3 +419,9 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Base `main` : dev7.4.0 0e063fde ou suivant (le propriétaire peut publier depuis son PC : rebase, ne défais rien).
 - Bugs à traiter en priorité : liste en fin de `prompts/RV1.txt` et C17.43.3 (intervalles 30/30 alignés, charge de la poulie à 20,41 kg, minute d'EMOM ratée) ; § 7-8 de `LIVRAISON_KB4.md`.
 - La ligne RV1 d'ETAT a dit « en attente de KB4 » (session du 21/10 04:20 sans « Lot : ») : sans effet, le lot n'avait pas commencé.
+
+## RV1c1 — correction 1 de RV1 : chronos des groupes au chrono, dev7.5.1 (lancé le 21/10/2026 vers 20:10 UTC, tâche « Opus 5.5, effort élevé, application » ; C17.45)
+
+- Prompt : `prompts/RV1c1.txt`. Lot distinct de RV1 (ligne `RV1c1` d'ETAT) : **RV1 tourne encore** (session cse_016zGJ7kknAVyUVfGwKbuFrA, contrôle complet n°4 sur `claude/ci-3d` depuis 19:18 UTC) ; ne touche à rien de RV1.
+- Échéance : dev7.5.1 publiée et build signé pour le 22/10 à 04:00 UTC (06:00 Paris). Ordre et partage de `claude/ci-3d` : § « Base et ordre » du prompt.
+- Constats : deux captures du propriétaire du 21/10 au soir (en fin de `prompts/RV1.txt`).
