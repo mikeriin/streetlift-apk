@@ -3612,7 +3612,9 @@ class AppStore extends ChangeNotifier {
       before: before,
       after: after,
       heading: 'Séance validée',
-      title: title ?? s.title ?? sessionKey(week, j),
+      // RV1 : numérotation affichée (PR2) quand la séance n'a pas de titre
+      // (avant : « S15-J1 » au lieu de « S1 · J1 »).
+      title: title ?? s.title ?? program.sessionLabel(week, j),
       baseXp: 100,
       baseLabel: 'Journée du programme',
       records: sessionRecords(sessionKey(week, j)),

@@ -332,8 +332,10 @@ jobs:
     # 55 min (cible CI1e en plus) ; CI1f : 70 min (cible CI1f en plus) ;
     # CI1g : 80 min (cible CI1g en plus) ; CIF : 95 min ; BV11 : 110 min
     # (cible BV11 en plus) ; KB1 : 125 min (cible KB1 en plus) ; KB2 :
-    # 140 min (cible KB2 en plus).
-    timeout-minutes: 140
+    # 140 min (cible KB2 en plus) ; RV1 : 175 min (cibles KB3, KB4 et RV1
+    # en plus ; le run 39611467071 a été coupé à 140 min pendant les
+    # cibles des lots précédents).
+    timeout-minutes: 175
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     defaults:
