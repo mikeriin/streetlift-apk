@@ -1,0 +1,12 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv1c1_chronos_test.dart
+00:00 +0: chrono du groupe (contrôleur) E3MOM 6 × 3 : tenue lancée au tour 3 → chrono secondaire ; le tour 4 part à 9:00
+00:00 +1: chrono du groupe (contrôleur) tenue au maximum pendant le groupe : chrono montant secondaire ; un second appui le fige
+00:00 +2: chrono du groupe (contrôleur) second appui sur le sablier : la tenue secondaire s’arrête
+00:00 +3: chrono du groupe (contrôleur) intervalles, AMRAP, pour le temps : chronos de groupe protégés ; arrêtés par l’athlète, le repos repart
+00:00 +4: chrono du groupe (contrôleur) hors groupe au chrono : la tenue prend le chrono principal, comme avant ; un repos le remplace, comme avant
+00:00 +5: écran de séance (setUpAll)
+00:00 +5: écran de séance E3MOM avec dead hang dans la pause : sablier au tour 3, série validée, chrono des tours intact, tour 4 au bon moment
+00:02 +6: écran de séance intervalles 8 × 30 s / 30 s (exercice remplacé) : aucun sablier par tour ; Lancer rythme effort et récupération
+00:02 +7: écran de séance tenue hors groupe : le sablier lance le chrono principal, comme avant (−15 s / +15 s)
+00:02 +8: écran de séance (tearDownAll)
+00:02 +8: All tests passed!
