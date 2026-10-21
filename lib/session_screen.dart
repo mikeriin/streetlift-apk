@@ -2236,7 +2236,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         !readOnly &&
         sp.timed &&
         sp.rowPrefix != 'I' &&
-        _group?.format != kc.GroupFormat.intervals;
+        (widget.week.n < 1 ||
+            store.exerciseGroupOf(widget.week.n, widget.day.j, ex)?.format !=
+                kc.GroupFormat.intervals);
     // Correctif 19/10/2026 : plage de répétitions (« 1 × 15-21 ») : champ
     // vide, haut de la plage en indication (« max 21 ») et mis en avant
     // dans le volume.
