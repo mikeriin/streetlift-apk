@@ -126,8 +126,20 @@ extension AthleteProfileStore on AppStore {
   /// débutant au chemin calibré (niveau tiré de l'expérience déclarée).
   /// Seul le passage d'un bloc 0.1 au chemin calibré a encore besoin d'une
   /// ancienneté (`planNextBlockProfile`).
-  kc.AthleteProfile? get athleteProfileForEngines =>
-      athlete?.profile.copyWith(healthScreening: athleteHealthRef);
+  ///
+  /// RV1 : pas de la poulie donné aux moteurs quand le profil n'en a pas.
+  /// Sans lui, `kalis_adapt` compte la poulie en livres (2,5 lb = 1,134 kg)
+  /// et servait des charges impossibles sur une pile en kg (« 20,41 kg » à
+  /// l'extension triceps). 2,5 kg (minimum 2,5) est le défaut de
+  /// `kalis_plan` (`defaultIncrement`) : le programme créé ne change pas.
+  kc.AthleteProfile? get athleteProfileForEngines {
+    final p = athlete?.profile;
+    if (p == null) return null;
+    return p.copyWith(
+      healthScreening: athleteHealthRef,
+      loadIncrements: withCableIncrement(p.loadIncrements),
+    );
+  }
 
   /// Mode prudent avec le profil v2 : âge et gênes du profil v2.
   CautionStatus _cautionWith(UserProfile? legacy, AthleteRecord? a) {
@@ -315,10 +327,19 @@ extension AthleteProfileStore on AppStore {
             ),
     );
     _athleteRaw = null;
-    // 3. Poids : pesée du jour s'il a changé.
+    // 3. Poids : pesée du jour s'il a changé. RV1 : seulement si le poids
+    // du brouillon diffère de celui du profil d'avant (saisi dans le
+    // parcours) : le poids du profil n'est pas tenu à jour par les pesées
+    // de « Mes références » ; enregistrer une autre rubrique ajoutait une
+    // pesée à l'ancien poids et remettait B4 en arrière.
     final w = d.weightValue;
     final bw = currentBodyweight;
-    if (w != null && !w.isNaN && (bw == null || (w - bw).abs() > 1e-9)) {
+    final before = old?.profile.bodyWeightKg;
+    final edited = before == null || w == null || (w - before).abs() > 1e-9;
+    if (w != null &&
+        !w.isNaN &&
+        edited &&
+        (bw == null || (w - bw).abs() > 1e-9)) {
       addWeighIn(now, w);
     }
     // G10 : l'activation de Koach L7 à l'enregistrement du profil (G6
@@ -596,3 +617,20 @@ extension AthleteProfileStore on AppStore {
       ..consent = 'refused',
   );
 }
+
+/// RV1 : incréments de charge donnés aux moteurs : ceux du profil, plus la
+/// poulie au pas de 2,5 kg (minimum 2,5 kg) si le profil n'en dit rien.
+List<kc.LoadIncrement> withCableIncrement(List<kc.LoadIncrement> own) {
+  if (own.any((i) => i.loadType == kc.LoadType.cable)) return own;
+  return [
+    ...own,
+    const kc.LoadIncrement(
+      loadType: kc.LoadType.cable,
+      stepKg: kRv1CableStepKg,
+      minKg: kRv1CableStepKg,
+    ),
+  ];
+}
+
+/// RV1 : pas de la poulie par défaut, en kg (défaut de `kalis_plan`).
+const double kRv1CableStepKg = 2.5;

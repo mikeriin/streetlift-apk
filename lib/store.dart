@@ -26,7 +26,7 @@ import 'kalis_clock.dart';
 import 'session_prefs.dart';
 import 'game.dart';
 import 'journal_adapter.dart';
-import 'kit/format.dart' show estimateLabelText;
+import 'kit/format.dart' show estimateLabelText, formatDecimal;
 import 'koach_data.dart';
 import 'koach1/koach_journal.dart';
 import 'koach1/koach_moteur.dart';
@@ -76,14 +76,7 @@ part 'koach1_store.dart';
 /// Charge à la grille du matériel : deux décimales au plus (« 2,5 » ;
 /// « 35 » ; « 36,25 »). Charges du moteur dynamique (et, avant G10, de
 /// Koach L7).
-String koachKg(double kg) {
-  if (kg == kg.roundToDouble()) return kg.toInt().toString();
-  var t = kg.toStringAsFixed(2);
-  while (t.endsWith('0')) {
-    t = t.substring(0, t.length - 1);
-  }
-  return t.replaceAll('.', ',');
-}
+String koachKg(double kg) => adaptKgField(kg).replaceAll('.', ',');
 
 /// CI1f : mini-série d'une série découpée (cluster, rest-pause, myo-reps),
 /// saisie une à une pendant la séance : répétitions (ou secondes pour un
@@ -577,7 +570,8 @@ class LogSpec {
   final int? intra; // micro-repos myo-reps / clusters
   final bool myo;
   final bool cluster;
-  // M (myo) · C (cluster) · É (échelle) · R (round) · T (test) · D (drop set).
+  // M (myo) · C (cluster) · É (échelle) · R (round) · T (test) · D (drop set)
+  // · I (tour d'intervalles, RV1).
   final String rowPrefix;
 
   /// PR1 : départ de chaque série au chrono (« 8×3 · E2MOM », « · E90s ») :
@@ -2503,13 +2497,19 @@ class AppStore extends ChangeNotifier {
     if (kg == null && loadNeedsReference(e)) return 'à renseigner';
     if (kg == null) return '—';
     if (kg <= 0) return 'PdC';
+    return massLabel(kg, engine: e.engine);
+  }
+
+  /// Charge affichée (kg, ou lb au réglage « Charges suggérées en
+  /// livres »). Charge du moteur (grille du matériel, 1,25 kg…) : deux
+  /// décimales au plus ; sinon une. RV1 : en lb, virgule décimale (avant
+  /// « 137.8 lb ») ; la cible de Koach passe aussi par ici (avant : en lb,
+  /// la charge de la 1re série était affichée à la place de la cible).
+  String massLabel(double kg, {bool engine = false}) {
     if (settings.lb) {
-      final lb = kg * 2.20462;
-      return '${lb.toStringAsFixed(lb == lb.roundToDouble() ? 0 : 1)}\u00A0lb';
+      return '${formatDecimal(kg * 2.20462, maxDecimals: 1)}\u00A0lb';
     }
-    // Charge du moteur (grille du matériel, 1,25 kg…) : deux décimales au
-    // plus ; sinon une.
-    final t = e.engine
+    final t = engine
         ? koachKg(kg)
         : kg == kg.roundToDouble()
         ? kg.toInt().toString()
@@ -2663,7 +2663,10 @@ class AppStore extends ChangeNotifier {
     if (e.forcedSets != null) return e.forcedSets!.clamp(1, 1000);
     final txt = setsLabel(e);
     final low = txt.toLowerCase().trim();
-    if (e.interval != null) return 1;
+    // RV1 (C17.43.3) : intervalles « 8× (30 s effort / 30 s repos) » : une
+    // ligne par tour (avant : une ligne pour toute la séance d'intervalles
+    // écrite, une ligne par tour quand Koach servait).
+    if (e.interval case final iv?) return iv.rounds.clamp(1, 1000);
     // KB4 : EMOM à reps fixes par minute : une ligne par minute (avant :
     // une ligne du total, « 24 reps » pour 8 × 3).
     if (emomPerMinute(txt) case final m?) return m.minutes;
@@ -2946,6 +2949,13 @@ class AppStore extends ChangeNotifier {
     // comptés sur les séries validées ; une minute ratée reste non validée
     // (ou notée avec les reps faites).
     if (emomPerMinute(low) != null) return const LogSpec('reps', every: 60);
+    // RV1 (C17.43.3) : intervalles : une ligne par tour, effort en secondes
+    // (pré-rempli), sans repos ni chrono de tenue par ligne : le chrono des
+    // tours (bouton de la carte, ou en-tête du groupe) donne effort et
+    // récupération.
+    if (e.interval case final iv?) {
+      return LogSpec('hold', seconds: iv.work, rowPrefix: 'I');
+    }
     if (tm != null) {
       switch (tm['type'] as String) {
         case 'hiit':
@@ -2969,7 +2979,6 @@ class AppStore extends ChangeNotifier {
           return LogSpec('hold', seconds: tm['sec'] as int);
       }
     }
-    if (e.interval != null) return const LogSpec('interval');
     // PR1 : séries au départ chronométré (« 8×3 · E2MOM », « 6×2 · E90s »,
     // « 12×6 · EMOM ») : une ligne par série, pas de repos après la série,
     // le chrono de l'intervalle donne les départs.
@@ -3133,6 +3142,8 @@ class AppStore extends ChangeNotifier {
     final last = i >= total - 1;
     // PR1 : le chrono de l'intervalle donne le départ de chaque série.
     if (sp.every != null) return null;
+    // RV1 : tour d'intervalles : le chrono des tours donne la récupération.
+    if (sp.rowPrefix == 'I') return null;
     // PR1 : paliers d'un tour enchaînés ; repos à la fin du tour.
     final k = sp.stages;
     if (k != null && k > 1 && i % k != k - 1) return null;
@@ -3213,7 +3224,11 @@ class AppStore extends ChangeNotifier {
     // KB4 : EMOM à reps fixes ouvert avant dev7.4.0 (une ligne du total) :
     // une ligne par minute tant que rien n'est noté ni validé (jamais sur
     // une séance faite).
-    if (!s.done && !e.engine && emomPerMinute(setsLabel(e)) != null) {
+    // RV1 : même chose pour les intervalles ouverts avant dev7.5.0 (une
+    // ligne pour toute la séance d'intervalles).
+    if (!s.done &&
+        !e.engine &&
+        (emomPerMinute(setsLabel(e)) != null || e.interval != null)) {
       final n = setCount(e);
       if (log.sets.length != n && log.sets.every((x) => !x.done && !x.edited)) {
         log.sets
@@ -3301,6 +3316,10 @@ class AppStore extends ChangeNotifier {
   bool isConsultation(String key) {
     final l = logs[key];
     if (l == null || l.done || l.finishedAt != null) return false;
+    // RV1 : résultat d'un groupe saisi (AMRAP, tours pour le temps,
+    // chipper : tours, reps du tour entamé, temps) : jamais une simple
+    // consultation (avant : effacé à la fermeture de la séance).
+    if (l.groups.isNotEmpty) return false;
     for (final x in l.ex.values) {
       if (x.note.trim().isNotEmpty ||
           x.prescribed != null ||
@@ -3553,6 +3572,8 @@ class AppStore extends ChangeNotifier {
   bool inProgress(String key) {
     final log = logs[key];
     if (log == null || log.done) return false;
+    // RV1 : un résultat de groupe saisi compte (séance à reprendre).
+    if (log.groups.isNotEmpty) return true;
     return log.ex.values.any(
       (e) => e.note.trim().isNotEmpty || e.sets.any((s) => s.done),
     );

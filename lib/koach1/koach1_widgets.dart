@@ -457,7 +457,8 @@ class KoachRecapCard extends StatelessWidget {
       child: KoachSays(
         pose: koachPose(KoachUsage.analysis),
         child: Text(
-          'Nouveau bloc en S${r.week} : ce qui change et pourquoi. '
+          'Nouveau bloc en ${store.program.weekLabel(r.week)} : ce qui change '
+          'et pourquoi. '
           'Touche pour voir et valider.',
           style: KType.corpsFort.copyWith(color: k.texte),
         ),
@@ -515,7 +516,7 @@ class KoachRecapScreen extends StatelessWidget {
     ];
     return KPage.sub(
       key: const ValueKey('koach-recap'),
-      title: 'Bloc suivant (S${r.week})',
+      title: 'Bloc suivant (${store.program.weekLabel(r.week)})',
       children: [
         KCard(
           child: KoachSays(
