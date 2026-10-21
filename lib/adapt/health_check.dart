@@ -266,6 +266,9 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     var check = kc.HealthCheck.fromJson(j);
     if (low) {
       final initial = check;
+      // RV1 : occupé pendant le détail (un double appui empilait deux
+      // écrans « Bilan du jour » et appliquait le bilan deux fois).
+      setState(() => _busy = true);
       final detail = await Navigator.of(context).push<kc.HealthCheck>(
         MaterialPageRoute(builder: (_) => HealthDetailScreen(initial: initial)),
       );
@@ -486,6 +489,11 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     return [
       // Ce qui change d'abord : la carte de Koach, puis le bilan.
       if (a.base != null) _adjustmentCard(a),
+      // RV1 : douleur ou temps disponible (faits du jour) : la séance sans
+      // bilan est déjà la séance ajustée (pas de `base`) ; un exercice
+      // retiré ou réduit est dit ici (avant : retiré sans explication).
+      if (a.base == null && a.koach == null && a.plan.adjustments.isNotEmpty)
+        _factsCard(a),
       if (zones.isNotEmpty)
         KCard(
           key: const ValueKey('health-referral'),
@@ -565,6 +573,47 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
           label: 'Premier exercice',
         ),
     ];
+  }
+
+  /// RV1 : ce que les faits du jour (douleur, temps) ont changé, quand la
+  /// séance sans bilan est déjà ajustée (aucun choix à faire).
+  Widget _factsCard(SessionAdapt a) {
+    final k = KTokens.of(context);
+    final lines = <String>[];
+    for (final x in a.plan.adjustments) {
+      final t = adjustmentText(
+        x,
+        store.adaptExerciseName,
+        test: a.plan.items.any(
+          (b) => b.exerciseId == x.exerciseId && b.kind == kc.SetKind.test,
+        ),
+      );
+      if (!lines.contains(t)) lines.add(t);
+    }
+    return KCard(
+      key: const ValueKey('health-facts'),
+      child: KoachSays(
+        pose: koachPose(KoachUsage.adjustment),
+        koachHeight: 64,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'J’ai adapté ta séance :',
+              style: KType.corpsFort.copyWith(color: k.texte),
+            ),
+            for (final l in lines.take(6))
+              Padding(
+                padding: const EdgeInsets.only(top: KSpacing.s4),
+                child: Text(
+                  '• $l',
+                  style: KType.corps.copyWith(color: k.texte),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// Carte de Koach : ce que l'ajustement du bilan change (6 lignes au

@@ -179,8 +179,7 @@ ThemeData themeFor(bool dark, KAccentSpec accent, [bool? contrast]) {
   // RV1 : l'intensité des couleurs et la densité entrent dans la clé
   // (avant : « Couleurs » et « Espacements » ne changeaient le kit qu'au
   // redémarrage).
-  final key =
-      '${accent.id}-$dark-$strong-$kColorIntensity-${KDensity.factor}';
+  final key = '${accent.id}-$dark-$strong-$kColorIntensity-${KDensity.factor}';
   return _themes.putIfAbsent(key, () {
     final previousDark = SL.dark,
         previousAccent = SL.accentSpec,

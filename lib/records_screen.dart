@@ -25,7 +25,7 @@ class StatsRecord {
 
 /// Records de tout le journal, par exercice (ordre alphabétique).
 List<StatsRecord> statsRecords(AppStore source) {
-  final bests = exerciseBests(source.logs);
+  final bests = exerciseBests(source.logs, skipNames: source.notRepsNames);
   final names = <String, String>{};
   final weightedAt = <String, DateTime>{};
   final repsAt = <String, DateTime>{};

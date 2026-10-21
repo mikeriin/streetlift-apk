@@ -90,13 +90,29 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
   final Map<String, TextEditingController> _fields = {};
   bool _saving = false;
 
+  /// RV1 (PR2) : l'écran parle en semaines affichées : la date choisie est
+  /// celle du S1 affiché ; le départ enregistré est [_firstShownDays] jours
+  /// plus tôt (semaines masquées). Avant : « Semaine 1 » datait le départ
+  /// interne, 14 semaines plus tôt pour le propriétaire, et choisir la date
+  /// de son S1 affiché faisait glisser tout le programme.
+  int get _firstShownDays => (store.program.firstShown - 1) * 7;
+
+  DateTime _shownOf(DateTime internal) =>
+      DateTime(internal.year, internal.month, internal.day + _firstShownDays);
+
+  DateTime _internalOf(DateTime shown) =>
+      DateTime(shown.year, shown.month, shown.day - _firstShownDays);
+
   @override
   void initState() {
     super.initState();
     _pending = !store.program.scheduled;
     final today = _civil(store.storeClock());
-    final proposed = _civil(widget.initialDate ?? store.program.start ?? today);
-    _date = store.startAllowed(proposed) ? proposed : today;
+    final start = store.program.start;
+    final proposed = _civil(
+      widget.initialDate ?? (start == null ? today : _shownOf(start)),
+    );
+    _date = store.startAllowed(_internalOf(proposed)) ? proposed : today;
     if (_pending) {
       for (final f in _startFields()) {
         final v = store.values[f.$1];
@@ -117,11 +133,23 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
 
   Future<void> _pick() async {
     final today = _civil(store.storeClock());
+    // RV1 : bornes du départ enregistré, en date du S1 affiché.
+    final first = _shownOf(
+      DateTime(today.year, today.month, today.day - AppStore.startPastDays),
+    );
+    final last = _shownOf(
+      DateTime(today.year, today.month, today.day + AppStore.startFutureDays),
+    );
+    final initial = _date.isBefore(first)
+        ? first
+        : _date.isAfter(last)
+        ? last
+        : _date;
     final picked = await showDatePicker(
       context: context,
-      initialDate: _date,
-      firstDate: today.subtract(const Duration(days: AppStore.startPastDays)),
-      lastDate: today.add(const Duration(days: AppStore.startFutureDays)),
+      initialDate: initial,
+      firstDate: first,
+      lastDate: last,
       helpText: 'Date de départ (semaine 1, jour 1)',
       cancelText: 'Annuler',
       confirmText: 'Choisir',
@@ -153,7 +181,7 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
     if (!(_form.currentState?.validate() ?? true)) return;
     setState(() => _saving = true);
     final result = await store.configureStart(
-      _date,
+      _internalOf(_date),
       references: _pending ? _changedReferences() : const {},
     );
     if (!mounted) return;
@@ -193,10 +221,11 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     final program = store.program;
-    final weeks = program.weeks.length;
+    // RV1 (PR2) : semaines affichées, départ du S1 affiché.
+    final weeks = program.shownWeeks.length;
     final today = _civil(store.storeClock());
     final end = DateTime(_date.year, _date.month, _date.day + weeks * 7 - 1);
-    final current = program.start;
+    final current = program.shownStart;
     final changed =
         current == null ||
         Program.civilIndex(current) != Program.civilIndex(_date);
@@ -445,7 +474,8 @@ class ProgramStartBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = store.program;
-    final start = p.start;
+    // RV1 (PR2) : départ et semaines affichés.
+    final start = p.shownStart;
     final String title, body, action;
     final VoidCallback onAction;
     void open() => Navigator.of(
@@ -469,7 +499,7 @@ class ProgramStartBanner extends StatelessWidget {
     } else if (p.afterEnd(now)) {
       title = 'Programme terminé le ${longCivilDate(p.endDate!)}';
       body =
-          'Les ${p.weeks.length} semaines sont passées. Ton historique reste '
+          'Les ${p.shownWeeks.length} semaines sont passées. Ton historique reste '
           'consultable ; aucun nouveau cycle n’est lancé.';
       action = 'Créer un nouveau programme';
       onAction = () => openPlanCreation(context);

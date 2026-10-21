@@ -204,6 +204,7 @@ extension PlanStore on AppStore {
     planProgram = next;
     _planRaw = null;
     programInstance = null;
+    _instanceRaw = null;
     if (s.firstWeek == 1) programResume = null;
     startOrigin = 'user';
     _materializeProgram(s.programStart);
