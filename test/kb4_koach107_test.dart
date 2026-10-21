@@ -178,13 +178,16 @@ void main() {
       ];
       for (final r in [raisons, raisons.reversed.toList()]) {
         final g = koachGardeSeance(ecrit, const [], r, budgetDonne: true);
-        expect({for (final x in g.retraits) x['slotId']: x['code']}, {
-          'j1-a': 'koach.douleur_retrait',
-          'j1-b': 'koach.endurance_retrait',
-          'j1-c': 'koach.seance_bornee',
-          'j1-d': 'koach.retour_gradue',
-          'j1-e': 'koach.test_reporte',
-        });
+        expect(
+          {for (final x in g.retraits) x['slotId']: x['code']},
+          {
+            'j1-a': 'koach.douleur_retrait',
+            'j1-b': 'koach.endurance_retrait',
+            'j1-c': 'koach.seance_bornee',
+            'j1-d': 'koach.retour_gradue',
+            'j1-e': 'koach.test_reporte',
+          },
+        );
         // Un test reporté ne retire qu'une ligne de test.
         expect(g.ecrites, [
           {'slotId': 'j1-f', 'exercice': 'f', 'cause': 'koach.test_reporte'},
@@ -204,27 +207,20 @@ void main() {
     });
 
     test('ordre écrit gardé ; vrai test devant sa ligne ; ajout écarté', () {
-      final g = koachGardeSeance(
-        ecrit,
-        [
-          {'slotId': 'j1-c', 'exerciseId': 'c', 'sets': 3},
-          {'slotId': 'j1-a', 'exerciseId': 'a', 'sets': 4},
-          {'slotId': 'j1-a.t', 'exerciseId': 'a', 'sets': 1},
-          {'slotId': 'j9-z', 'exerciseId': 'z', 'sets': 2},
-        ],
-        const [],
+      final g = koachGardeSeance(ecrit, [
+        {'slotId': 'j1-c', 'exerciseId': 'c', 'sets': 3},
+        {'slotId': 'j1-a', 'exerciseId': 'a', 'sets': 4},
+        {'slotId': 'j1-a.t', 'exerciseId': 'a', 'sets': 1},
+        {'slotId': 'j9-z', 'exerciseId': 'z', 'sets': 2},
+      ], const []);
+      expect(
+        [for (final x in g.servis) x['slotId']],
+        ['j1-a', 'j1-a.t', 'j1-c'],
       );
-      expect([for (final x in g.servis) x['slotId']], [
-        'j1-a',
-        'j1-a.t',
-        'j1-c',
-      ]);
-      expect([for (final x in g.ecrites) x['slotId']], [
-        'j1-b',
-        'j1-d',
-        'j1-e',
-        'j1-f',
-      ]);
+      expect(
+        [for (final x in g.ecrites) x['slotId']],
+        ['j1-b', 'j1-d', 'j1-e', 'j1-f'],
+      );
     });
 
     test('ligne au départ chronométré (PR8) : message seulement si les '
@@ -259,8 +255,10 @@ void main() {
         minutes: 8,
         reps: 3,
       ));
-      expect(emomPerMinute('EMOM 20 min · 10 reps, +1 rep/min jusqu’à l’échec'),
-          isNull);
+      expect(
+        emomPerMinute('EMOM 20 min · 10 reps, +1 rep/min jusqu’à l’échec'),
+        isNull,
+      );
       expect(emomPerMinute('12×6 · EMOM'), isNull);
       // Références du constat (S1·J4, J5) : coefficient × référence ÷
       // minutes, arrondi comme l'écrit.
@@ -381,9 +379,7 @@ void main() {
     }
 
     /// Séries servies et écrites par emplacement de la séance ouverte.
-    ({Map<String, int> servis, Map<String, int> ecrites, Map st}) etat(
-      int j,
-    ) {
+    ({Map<String, int> servis, Map<String, int> ecrites, Map st}) etat(int j) {
       final st = app.sessionAdapt(15, j)!.koach!;
       final servis = <String, int>{
         for (final x in st['items'] as List)
@@ -441,7 +437,9 @@ void main() {
             for (final r in e.st['raisons'] as List)
               texteRaisonKoach((r as Map).cast<String, Object?>()),
           ],
-          'cartes': [for (final x in shown) '${x.catalogId}:${app.setsLabel(x)}'],
+          'cartes': [
+            for (final x in shown) '${x.catalogId}:${app.setsLabel(x)}',
+          ],
           'entete': app.koachSessionReasons(15, j, max: 9),
           'rampe': rampe,
           'temps_ms': ms,
@@ -467,9 +465,9 @@ void main() {
         );
         // Plus de « Je retire … » au nom du volume.
         expect(
-          app.koachSessionReasons(15, j, max: 9).where(
-            (t) => t.startsWith('Je retire'),
-          ),
+          app
+              .koachSessionReasons(15, j, max: 9)
+              .where((t) => t.startsWith('Je retire')),
           isEmpty,
         );
         doAll(j);
@@ -547,97 +545,106 @@ void main() {
       }
     });
 
-    test('réactivation après un arrêt : deux séances faites pendant l’arrêt '
-        'versées dans l’ordre, jamais réécrites, Koach reprend à la '
-        'suivante ; séance servie finie pendant l’arrêt fermée une fois',
-        () async {
-      await activate();
-      // Lundi : J1 servie par Koach, une série notée, puis arrêt.
-      final j1 = app.program.week(15).day(1)!;
-      expect(app.adaptOpen(15, j1)?.koach?['state'], 'preview');
-      expect(await app.koachStart(15, j1), isTrue);
-      final first = app
-          .adaptDay(15, j1, app.sessionAdapt(15, 1)!)
-          .exercises
-          .firstWhere((x) => x.engine);
-      app.koachEnsureTarget(15, j1, first, 0);
-      final log1 = app.exLog(15, 1, first);
-      app.adaptPrefill(15, 1, first, log1);
-      if (log1.sets[0].reps.isEmpty) log1.sets[0].reps = '5';
-      log1.sets[0].flames = 8;
-      expect(app.toggleSet(log1, 0, app.logSpec(first)).ok, isTrue);
-      app.koachAfterSet(15, j1, first, 0);
-      // Aperçu de J2 calculé avant l'arrêt (aperçu périmé ensuite).
-      final j2 = app.program.week(15).day(2)!;
-      expect(app.adaptOpen(15, j2)?.koach?['state'], 'preview');
-      final journal0 = [for (final x in app.koachEngine.journal) jsonEncode(x)];
-      app.koachStop();
-      expect(app.koachEngine.stop, isNotNull);
-      // Arrêt décidé avec dev7.4.0 : pas de carte de reprise.
-      expect(app.koachAnnonceReprise, isFalse);
-      // J1 finie pendant l'arrêt (séance écrite), puis J2 et J3 faites
-      // telles qu'écrites.
-      for (final j in const [1, 2, 3]) {
-        clock = DateTime(2026, 10, 18 + j, 19);
-        final d = app.program.week(15).day(j)!;
-        expect(app.adaptOpen(15, d), isNull, reason: 'J$j');
-        for (final e in d.exercises) {
-          final log = app.exLog(15, j, e);
-          for (var i = 0; i < log.sets.length; i++) {
-            final s = log.sets[i];
-            if (s.done) continue;
-            if (s.reps.isEmpty) s.reps = '6';
-            s.flames = 7;
-            app.toggleSet(log, i, app.logSpec(e));
+    test(
+      'réactivation après un arrêt : deux séances faites pendant l’arrêt '
+      'versées dans l’ordre, jamais réécrites, Koach reprend à la '
+      'suivante ; séance servie finie pendant l’arrêt fermée une fois',
+      () async {
+        await activate();
+        // Lundi : J1 servie par Koach, une série notée, puis arrêt.
+        final j1 = app.program.week(15).day(1)!;
+        expect(app.adaptOpen(15, j1)?.koach?['state'], 'preview');
+        expect(await app.koachStart(15, j1), isTrue);
+        final first = app
+            .adaptDay(15, j1, app.sessionAdapt(15, 1)!)
+            .exercises
+            .firstWhere((x) => x.engine);
+        app.koachEnsureTarget(15, j1, first, 0);
+        final log1 = app.exLog(15, 1, first);
+        app.adaptPrefill(15, 1, first, log1);
+        if (log1.sets[0].reps.isEmpty) log1.sets[0].reps = '5';
+        log1.sets[0].flames = 8;
+        expect(app.toggleSet(log1, 0, app.logSpec(first)).ok, isTrue);
+        app.koachAfterSet(15, j1, first, 0);
+        // Aperçu de J2 calculé avant l'arrêt (aperçu périmé ensuite).
+        final j2 = app.program.week(15).day(2)!;
+        expect(app.adaptOpen(15, j2)?.koach?['state'], 'preview');
+        final journal0 = [
+          for (final x in app.koachEngine.journal) jsonEncode(x),
+        ];
+        app.koachStop();
+        expect(app.koachEngine.stop, isNotNull);
+        // Arrêt décidé avec dev7.4.0 : pas de carte de reprise.
+        expect(app.koachAnnonceReprise, isFalse);
+        // J1 finie pendant l'arrêt (séance écrite), puis J2 et J3 faites
+        // telles qu'écrites.
+        for (final j in const [1, 2, 3]) {
+          clock = DateTime(2026, 10, 18 + j, 19);
+          final d = app.program.week(15).day(j)!;
+          expect(app.adaptOpen(15, d), isNull, reason: 'J$j');
+          for (final e in d.exercises) {
+            final log = app.exLog(15, j, e);
+            for (var i = 0; i < log.sets.length; i++) {
+              final s = log.sets[i];
+              if (s.done) continue;
+              if (s.reps.isEmpty) s.reps = '6';
+              s.flames = 7;
+              app.toggleSet(log, i, app.logSpec(e));
+            }
           }
+          app.markSessionDone(15, j, true);
         }
-        app.markSessionDone(15, j, true);
-      }
-      final logs = _series(app);
-      expect(app.koachEngine.journal.length, journal0.length);
-      // Jeudi : réactivation.
-      clock = DateTime(2026, 10, 22, 7);
-      await app.koachResume();
-      final e = app.koachEngine;
-      expect(e.stop, isNull);
-      expect(app.koachLive, isNotNull);
-      expect(app.koachRuntimeError, isNull);
-      // Journal d'avant l'arrêt gardé tel quel.
-      for (var i = 0; i < journal0.length; i++) {
-        expect(jsonEncode(e.journal[i]), journal0[i], reason: 'événement $i');
-      }
-      // J1 fermée une fois, J2 et J3 versées dans l'ordre (un début et une
-      // fin par séance).
-      for (final j in const [1, 2, 3]) {
-        expect(e.versed, contains(app.sessionKey(15, j)));
-      }
-      final types = [for (final x in e.journal) '${x['type']}'];
-      expect(
-        types.where((t) => t == 'seance_debut').length,
-        types.where((t) => t == 'seance_fin').length,
-      );
-      final jours = [
-        for (final x in e.journal.skip(journal0.length))
-          if (x['type'] == 'seance_debut' || x['type'] == 'seance_fin')
-            (x['jour'] as num).toInt(),
-      ];
-      final tri = [...jours]..sort();
-      expect(jours, tri);
-      _sonde('reactivation', {
-        'ajoutes': types.skip(journal0.length).toList(),
-        'jours': jours,
-      });
-      // Séances faites jamais réécrites (séries notées identiques).
-      expect(_series(app), logs);
-      // Koach reprend à la première séance non faite (J4), modulation de
-      // l'arrêt abandonnée.
-      final j4 = app.program.week(15).day(4)!;
-      expect(app.koachServesDay(15, 4), isTrue);
-      expect(app.adaptOpen(15, j4)?.koach?['state'], 'preview');
-      expect(await app.koachStart(15, j4), isTrue);
-      expect(app.koachOpen(15, 4), isTrue);
-      expect(app.sessionAdapt(15, 2)?.koach, isNull);
-    });
+        final logs = _series(app);
+        expect(app.koachEngine.journal.length, journal0.length);
+        // Jeudi : réactivation.
+        clock = DateTime(2026, 10, 22, 7);
+        await app.koachResume();
+        final e = app.koachEngine;
+        expect(e.stop, isNull);
+        expect(app.koachLive, isNotNull);
+        expect(app.koachRuntimeError, isNull);
+        // Journal d'avant l'arrêt gardé tel quel.
+        for (var i = 0; i < journal0.length; i++) {
+          expect(jsonEncode(e.journal[i]), journal0[i], reason: 'événement $i');
+        }
+        // J1 fermée une fois, J2 et J3 versées dans l'ordre (un début et une
+        // fin par séance).
+        for (final j in const [1, 2, 3]) {
+          expect(e.versed, contains(app.sessionKey(15, j)));
+        }
+        final types = [for (final x in e.journal) '${x['type']}'];
+        expect(
+          types.where((t) => t == 'seance_debut').length,
+          types.where((t) => t == 'seance_fin').length,
+        );
+        final jours = [
+          for (final x in e.journal.skip(journal0.length))
+            if (x['type'] == 'seance_debut' || x['type'] == 'seance_fin')
+              (x['jour'] as num).toInt(),
+        ];
+        final tri = [...jours]..sort();
+        expect(jours, tri);
+        _sonde('reactivation', {
+          'ajoutes': types.skip(journal0.length).toList(),
+          'jours': jours,
+        });
+        // Séances faites jamais réécrites (séries notées identiques).
+        expect(_series(app), logs);
+        // Koach reprend à la première séance non faite (J4), modulation de
+        // l'arrêt abandonnée.
+        final j4 = app.program.week(15).day(4)!;
+        expect(app.koachServesDay(15, 4), isTrue);
+        expect(app.adaptOpen(15, j4)?.koach?['state'], 'preview');
+        expect(await app.koachStart(15, j4), isTrue);
+        expect(app.koachOpen(15, 4), isTrue);
+        // J2 faite pendant l'arrêt : hors de Koach, bilan gardé.
+        expect(app.sessionAdapt(15, 2)?.koach?['state'], 'ecrite');
+        expect(
+          app.koachStartNow(15, app.program.week(15).day(2)!),
+          isFalse,
+        );
+      },
+    );
 
     test('carte de reprise : arrêt d’avant dev7.4.0, « Plus tard » puis '
         '« Réactiver » (jamais automatique)', () async {
@@ -670,6 +677,7 @@ void main() {
         'identiques ; sauvegarde réimportée à l’identique', () async {
       await activate();
       final j1 = app.program.week(15).day(1)!;
+      expect(app.adaptOpen(15, j1)?.koach?['state'], 'preview');
       expect(await app.koachStart(15, j1), isTrue);
       doAll(1);
       await app.flush();
@@ -742,8 +750,11 @@ void main() {
       expect(await app.importAll(out1), isTrue);
       for (final k in keys) {
         if (k == 'exportedAt' || k == 'savedAt') continue;
-        expect(_section(app, k), jsonEncode((jsonDecode(out1) as Map)[k]),
-            reason: k);
+        expect(
+          _section(app, k),
+          jsonEncode((jsonDecode(out1) as Map)[k]),
+          reason: k,
+        );
       }
       // Réactivation : la série notée est gardée, la séance reste servie.
       await app.koachResume();
@@ -772,7 +783,10 @@ void main() {
               'label': label,
               'lignes': app.setCount(e),
               'every': sp.every,
-              'ecrit': app.adaptAsWritten(15, e.slotId ?? app.adaptSlotOf(15, j, e.id)),
+              'ecrit': app.adaptAsWritten(
+                15,
+                e.slotId ?? app.adaptSlotOf(15, j, e.id),
+              ),
             };
             expect(e.engine, isFalse, reason: label);
             expect(sp.every, 60, reason: label);
@@ -876,9 +890,7 @@ void main() {
         name: 'Dips PdC — EMOM',
         setsText: 'EMOM 12 min × 18 reps par minute',
       );
-      s.ex[f.id] = ExerciseLog(
-        sets: [SetEntry(reps: '200', done: true)],
-      );
+      s.ex[f.id] = ExerciseLog(sets: [SetEntry(reps: '200', done: true)]);
       expect(store.exLog(0, 9805, f).sets.length, 1);
       expect(store.exLog(0, 9805, f).sets.single.reps, '200');
     });

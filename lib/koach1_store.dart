@@ -1215,7 +1215,7 @@ extension KoachStore on AppStore {
     // seconde fois ici.
     bool servie(String key) {
       final st = logs[key]?.adapt?['koach'];
-      return st is Map && st['state'] == 'open';
+      return st is Map && st['state'] == 'open' && _koachDebutOuvert(st);
     }
 
     void verseDone(bool Function(int jour) when) {
@@ -1420,8 +1420,8 @@ extension KoachStore on AppStore {
     if (it == null) return null;
     // KB4 : ligne au départ chronométré servie telle qu'écrite (PR8) : pas
     // de modulation affichée ; une modulation à 0 série ne retire rien.
-    if (adaptAsWritten(week, slot)) return null;
-    final sets = m.$1 > 0 ? m.$1 : it.sets;
+    if (adaptAsWritten(week, slot) || m.$1 <= 0) return null;
+    final sets = m.$1;
     if (sets == it.sets && m.$2.abs() < 0.005) return null;
     return (sets: sets, written: it.sets, intensity: m.$2);
   }
@@ -1522,6 +1522,11 @@ extension KoachStore on AppStore {
     final lundi = koachLundi;
     final place = _koachPlace(week, base.j);
     final book = _adaptBook();
+    // KB4 : une séance faite (ou déjà versée au journal) n'est jamais
+    // commencée par Koach après coup.
+    if ((logs[key]?.done ?? false) || koachEngine.versed.contains(key)) {
+      return false;
+    }
     if (a == null ||
         k == null ||
         lundi == null ||
@@ -1638,31 +1643,30 @@ extension KoachStore on AppStore {
     final gardees = garde.ecrites;
     // (Calculées seulement si une ligne manque à l'aperçu.)
     late final ecritesDuJour = {
-      for (final it
-          in _fixedConstrain(
-            place,
-            kc.SessionPlan(
-              date: today,
-              blockId: place.blockId,
-              weekIndex: place.weekIndex,
-              dayIndex: place.dayIndex,
-              items: [
-                for (final it
-                    in place.day?.items ?? const <kc.ExercisePrescription>[])
-                  _koachRange(
-                    place,
-                    it,
-                    kc.SlotRole.values
-                        .where((r) => r.code == info.roles[it.slotId])
-                        .firstOrNull,
-                  ),
-              ],
-              adjustments: const [],
-              confidence: 1,
-              reasons: const [],
-              groups: place.day?.groups,
-            ),
-          ).items)
+      for (final it in _fixedConstrain(
+        place,
+        kc.SessionPlan(
+          date: today,
+          blockId: place.blockId,
+          weekIndex: place.weekIndex,
+          dayIndex: place.dayIndex,
+          items: [
+            for (final it
+                in place.day?.items ?? const <kc.ExercisePrescription>[])
+              _koachRange(
+                place,
+                it,
+                kc.SlotRole.values
+                    .where((r) => r.code == info.roles[it.slotId])
+                    .firstOrNull,
+              ),
+          ],
+          adjustments: const [],
+          confidence: 1,
+          reasons: const [],
+          groups: place.day?.groups,
+        ),
+      ).items)
         it.slotId: it,
     };
     final items = <kc.ExercisePrescription>[];
@@ -1675,7 +1679,7 @@ extension KoachStore on AppStore {
         // comme à l'écran. Une réduction de Koach 1.0.6 y casserait le
         // groupe (tours ≠ séries) et ferait retomber toute la séance sur
         // l'aperçu ; elle est dite sur la carte (`koachTexteReduitEcrit`).
-        final pr8 = apercu[slot];
+        final pr8 = apercu[slot] ?? ecritesDuJour[slot];
         if (it['slotId'] == slot && pr8 != null && adaptAsWritten(week, slot)) {
           items.add(pr8);
           continue;
@@ -2835,7 +2839,11 @@ extension KoachStore on AppStore {
       final started =
           log.done || log.ex.values.any((x) => x.sets.any((s) => s.done));
       if (st['state'] == 'preview' && started) {
-        log.adapt = null;
+        // Hors de Koach (bilan et lieu du jour gardés).
+        log.adapt = {
+          ...log.adapt!,
+          'koach': {'state': 'ecrite', 'refus': 'arret', 'date': _kToday.iso},
+        };
         continue;
       }
       if (st['state'] != 'open' || log.done) continue;
@@ -2850,6 +2858,22 @@ extension KoachStore on AppStore {
     }
   }
 
+  /// KB4 : la séance d'état Koach [st] (`open`) a son `seance_debut` au
+  /// journal, encore ouvert (le dernier début, après la dernière fin, au
+  /// même jour) : sa fermeture lui revient ; sinon elle se verse hors de
+  /// Koach au rattrapage.
+  bool _koachDebutOuvert(Map st) {
+    final j = koachEngine.journal;
+    for (var i = j.length - 1; i >= 0; i--) {
+      final t = j[i]['type'];
+      if (t == 'seance_fin') return false;
+      if (t == 'seance_debut') {
+        return (j[i]['jour'] as num?)?.toInt() == (st['jour'] as num?)?.toInt();
+      }
+    }
+    return false;
+  }
+
   /// KB4 : séances servies par Koach (`open`, début versé au journal),
   /// finies et pas encore versées : fermées dans l'ordre (séries restantes,
   /// `seance_fin`, décisions), comme à la fin d'une séance.
@@ -2861,6 +2885,7 @@ extension KoachStore on AppStore {
       final st = log.adapt?['koach'];
       if (!log.done || st is! Map || st['state'] != 'open') continue;
       if (koachEngine.versed.contains(entry.key)) continue;
+      if (!_koachDebutOuvert(st)) continue;
       final m = re.firstMatch(entry.key);
       if (m == null) continue;
       keys.add((int.parse(m[1]!), int.parse(m[2]!)));
@@ -2939,7 +2964,7 @@ extension KoachStore on AppStore {
       if (stored != null && st == null) return stored;
       // KB4 : une séance faite n'est jamais commencée par Koach après coup
       // (aperçu périmé d'une séance faite hors de lui).
-      if (log?.done ?? false) return stored;
+      if (log.done) return stored;
       if (st != null && koachStartNow(week, base)) {
         return sessionAdaptOf(key) ?? stored;
       }

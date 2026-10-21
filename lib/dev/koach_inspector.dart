@@ -161,12 +161,16 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
         // 1.0.7, jamais pour le volume) ; séance servie illisible.
         final garde = raw['garde'];
         if (garde is List && garde.isNotEmpty) {
-          seance.add('Garde : servi tel qu’écrit sans retrait motivé : '
-              '${garde.join(', ')}');
+          seance.add(
+            'Garde : servi tel qu’écrit sans retrait motivé : '
+            '${garde.join(', ')}',
+          );
         }
         final invalide = raw['invalide'];
         if (invalide is List && invalide.isNotEmpty) {
-          seance.add('Séance servie illisible (aperçu) : ${invalide.join(' ; ')}');
+          seance.add(
+            'Séance servie illisible (aperçu) : ${invalide.join(' ; ')}',
+          );
         }
         for (final r in (raw['raisons'] as List? ?? const [])) {
           if (r is! Map) continue;

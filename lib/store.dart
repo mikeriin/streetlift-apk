@@ -556,7 +556,10 @@ final RegExp _dropSet = RegExp(r'^(\d+)\s*tours?\s*[×x]\s*(\d+)\s*paliers?');
 /// rep/min jusqu'à l'échec », pas de cible fixe). Pur (testé).
 ({int minutes, int reps})? emomPerMinute(String label) {
   final low = label.toLowerCase().trim();
-  if (low.contains('+') || low.contains('échec')) return null;
+  // EMOM montant : « +1 rep/min », « jusqu'à l'échec ».
+  if (RegExp(r'\+\s*\d+\s*rep').hasMatch(low) || low.contains('échec')) {
+    return null;
+  }
   final m = RegExp(
     r'^emom\s*(\d+)\s*min\s*[×x]\s*(\d+)\s*reps?\b',
   ).firstMatch(low);
