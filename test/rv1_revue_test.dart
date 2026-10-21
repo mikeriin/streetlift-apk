@@ -551,10 +551,12 @@ void main() {
       expect(bests[normalizeText('Pompes')]!.bestReps, 30);
     });
 
-    test('rappels : identifiants couverts jusqu’à la semaine 52 et au-delà',
-        () {
-      expect(gtgReminderFirstId, 2000);
-      expect(gtgReminderLastId, greaterThanOrEqualTo(2000 + (52 * 7) * 8));
-    });
+    test(
+      'rappels : identifiants couverts jusqu’à la semaine 52 et au-delà',
+      () {
+        expect(gtgReminderFirstId, 2000);
+        expect(gtgReminderLastId, greaterThanOrEqualTo(2000 + (52 * 7) * 8));
+      },
+    );
   });
 }

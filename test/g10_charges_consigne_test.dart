@@ -120,7 +120,10 @@ List<Object?> _rv1(List<Object?> row) {
   // RV1 : charge en livres à la virgule décimale (« 16,5 lb »).
   final label = row[2];
   if (label is String && label.endsWith('lb')) {
-    row = [...row.take(2), label.replaceAll('.', ','), ...row.skip(3)];
+    final fr = label
+        .replaceAll('.', ',')
+        .replaceFirst(RegExp(r',0(?=\s*lb$)'), '');
+    row = [...row.take(2), fr, ...row.skip(3)];
   }
   if (row[5] != 'interval') return row;
   final m = RegExp(r'^(\d+)\s*[×x]\s*\((\d+)\s*s').firstMatch('${row[3]}');
