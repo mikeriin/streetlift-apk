@@ -203,7 +203,8 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
                     ),
                     title: 'J${d.j} · ${d.title}',
                     subtitle:
-                        '${d.exercises.length} exercices'
+                        '${d.exercises.length} '
+                        '${d.exercises.length > 1 ? 'exercices' : 'exercice'}'
                         '${store.isDone(_week, d.j) ? ', déjà faite' : ''}',
                     chevron: false,
                     onTap: () => setState(() => _day = d.j),

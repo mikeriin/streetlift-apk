@@ -332,8 +332,11 @@ jobs:
     # 55 min (cible CI1e en plus) ; CI1f : 70 min (cible CI1f en plus) ;
     # CI1g : 80 min (cible CI1g en plus) ; CIF : 95 min ; BV11 : 110 min
     # (cible BV11 en plus) ; KB1 : 125 min (cible KB1 en plus) ; KB2 :
-    # 140 min (cible KB2 en plus).
-    timeout-minutes: 140
+    # 140 min (cible KB2 en plus) ; RV1 : 300 min (cibles KB3, KB4 et RV1
+    # en plus ; runs 39611467071 et 39633654254 coupés à 140 puis 175 min
+    # pendant les cibles des lots précédents, la VM de l'émulateur ne
+    # répondant pas à plusieurs cibles : 2 × 10 min perdues chacune).
+    timeout-minutes: 300
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     defaults:

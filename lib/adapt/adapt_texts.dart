@@ -11,15 +11,7 @@ import '../plan/reason_texts_0_4.dart' show reasonText04;
 
 /// « 62,5 kg », « 60 kg », « 7,25 kg ». Texte enregistré tel quel au
 /// journal (« Prescrit ce jour-là ») : inchangé. À l'écran, [adaptKgLabel].
-String adaptKg(double kg) {
-  final t = kg == kg.roundToDouble()
-      ? kg.toInt().toString()
-      : kg
-            .toStringAsFixed(2)
-            .replaceAll(RegExp(r'0+$'), '')
-            .replaceAll('.', ',');
-  return '$t kg';
-}
+String adaptKg(double kg) => '${adaptKgField(kg).replaceAll('.', ',')}\u00A0kg';
 
 /// UI5 (C9) : pas d'affichage d'une charge proposée par le moteur, le quart
 /// de kilo. C'est le pas commun de ses grilles en kg (lest par 1,25 kg,
@@ -35,10 +27,17 @@ const kAdaptKgDisplayStep = 0.25;
 /// (« 62,5 kg », « 36,25 kg »). La charge servie ne change pas.
 String adaptKgLabel(double kg) => formatKg(kg, step: kAdaptKgDisplayStep);
 
-/// Texte de la colonne kg (point décimal, comme la saisie).
-String adaptKgField(double kg) => kg == kg.roundToDouble()
-    ? kg.toInt().toString()
-    : kg.toStringAsFixed(2).replaceAll(RegExp(r'0+$'), '');
+/// Texte de la colonne kg (point décimal, comme la saisie). RV1 : arrondi
+/// au centième d'abord : une charge calculée à 22,000000000000004 donnait
+/// « 22. » (champ « 22, » refusé à la validation).
+String adaptKgField(double kg) {
+  if (!kg.isFinite) return '$kg';
+  final t = kg.toStringAsFixed(2);
+  if (!t.contains('.')) return t;
+  var r = t.replaceFirst(RegExp(r'0+$'), '');
+  if (r.endsWith('.')) r = r.substring(0, r.length - 1);
+  return r == '-0' ? '0' : r;
+}
 
 String _range(int? a, int? b) {
   if (a == null && b == null) return '';

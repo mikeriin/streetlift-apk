@@ -28,7 +28,7 @@ import 'kit/kit.dart';
 import 'wellbeing_screens.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '7.4.0';
+const kVersion = '7.5.0';
 
 /// Version affichée (D0.9) : « dev6.8.0 » dans le build de développement
 /// (APK du propriétaire), « 6.8.0 » dans l’AAB du Play Store.
@@ -1155,13 +1155,15 @@ class _PasteBackupPageState extends State<PasteBackupPage> {
     lead:
         'Un aperçu du contenu s’affichera avant tout remplacement de tes '
         'données.',
+    // RV1 : le bouton reste au-dessus du clavier (avant : caché, il fallait
+    // fermer le clavier pour valider).
     bottom: SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: EdgeInsets.fromLTRB(
           KSpacing.page,
           KSpacing.s8,
           KSpacing.page,
-          KSpacing.s16,
+          KSpacing.s16 + MediaQuery.viewInsetsOf(context).bottom,
         ),
         child: KPrimaryButton(
           key: const ValueKey('paste-preview'),

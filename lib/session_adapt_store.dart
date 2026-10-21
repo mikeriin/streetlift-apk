@@ -226,7 +226,8 @@ extension SessionAdaptStore on AppStore {
       kind: kc.EventKind.personalTest,
       priority: kc.EventPriority.main,
       date: day,
-      name: 'Fin du programme (S$last)',
+      // RV1 : semaine affichée (PR2), « S10 » et non « S24 ».
+      name: 'Fin du programme (${program.weekLabel(last)})',
     );
   }
 
@@ -2106,6 +2107,12 @@ extension SessionAdaptStore on AppStore {
     // traite ; une durée se note en minutes.
     final e = _shownExercise(week, j, key);
     final sp = e == null || e.engine ? null : logSpec(e);
+    // RV1 : intervalles notés une ligne par tour (depuis dev7.5.0, servis
+    // tels qu'écrits) : une tenue en secondes par tour, comme Koach les
+    // servait avant ; une ancienne séance d'une ligne garde sa lecture.
+    final rounds =
+        sp?.rowPrefix == 'I' &&
+        (logs[sessionKey(week, j)]?.ex[key]?.sets.length ?? 0) > 1;
     final aggregate =
         written ||
         (sp != null &&
@@ -2114,15 +2121,16 @@ extension SessionAdaptStore on AppStore {
                 // ligne du total avant dev7.4.0) : même lecture qu'avant.
                 emomPerMinute(setsLabel(e!)) != null ||
                 sp.kind == 'interval' ||
+                sp.rowPrefix == 'I' ||
                 sp.kind == 'amrap' ||
                 sp.rowPrefix == 'É' ||
                 sp.rowPrefix == 'R' ||
                 sp.rowPrefix == 'D'));
     return (
       exerciseId: exerciseId,
-      seconds: sp?.kind == 'duration' ? true : null,
+      seconds: sp?.kind == 'duration' || rounds ? true : null,
       scale: sp?.kind == 'duration' ? 60 : 1,
-      technique: withParts
+      technique: withParts || rounds
           ? null
           : aggregate
           ? kc.SetTechniqueKind.density.code
@@ -2461,7 +2469,12 @@ extension SessionAdaptStore on AppStore {
       // CIF (point 9) : contre-la-montre : temps réalisé (secondes) et
       // distance écrite.
       final trial = it != null && prescriptionTimeTrial(it);
-      final seconds = it != null && (prescriptionInSeconds(it) || trial)
+      // RV1 : intervalles servis tels qu'écrits, une ligne par tour : en
+      // secondes (effort du tour), comme avant RV1 quand le moteur servait.
+      final rounds =
+          written && logSpec(e).rowPrefix == 'I' && x.sets.length > 1;
+      final seconds =
+          rounds || (it != null && (prescriptionInSeconds(it) || trial))
           ? true
           : content.byId[id]?.ex.unit.code == 'secondes';
       final meters = it != null && prescriptionInMeters(it);
@@ -2522,7 +2535,9 @@ extension SessionAdaptStore on AppStore {
             target: g?.toTarget(),
             technique:
                 kind ??
-                (written && total == null ? kc.SetTechniqueKind.density : null),
+                (written && total == null && !rounds
+                    ? kc.SetTechniqueKind.density
+                    : null),
             parts: total == null || kind == null
                 ? null
                 : [

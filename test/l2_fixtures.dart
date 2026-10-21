@@ -53,8 +53,10 @@ Map<String, dynamic> filledBackup(AppStore app) {
       for (final ex in day.exercises) {
         log.exerciseNames[ex.id] = ex.name;
         log.ex[ex.id] = ExerciseLog(
+          // RV1 : historique d'avant dev7.5.0 : une ligne pour une séance
+          // d'intervalles (une ligne par tour depuis RV1).
           sets: List.generate(
-            app.setCount(ex),
+            ex.interval != null ? 1 : app.setCount(ex),
             (_) => SetEntry(
               kg: '62,5',
               reps: '8',

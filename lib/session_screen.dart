@@ -792,6 +792,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   late final List<LogSpec> specs;
   final Set<int> _notesOpen = {};
 
+  /// RV1 : un message (Koach ou record) est déjà affiché pour la série qui
+  /// vient d'être validée : les suivants ne l'effacent pas.
+  bool _spoke = false;
+
   /// Exercices dont la séance précédente est affichée (correctifs UI).
   final Set<int> _prevOpen = {};
 
@@ -826,7 +830,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         else
           store.exLog(widget.week.n, widget.day.j, e),
     ];
-    specs = [for (final e in widget.exs) store.logSpec(e)];
+    // RV1 : séance d'intervalles faite avant dev7.5.0 (une ligne pour toute
+    // la séance) : relue comme avant, pas comme un tour en secondes.
+    specs = [
+      for (var k = 0; k < widget.exs.length; k++)
+        widget.exs[k].interval != null &&
+                logs[k].sets.length == 1 &&
+                store.setCount(widget.exs[k]) > 1
+            ? const LogSpec('interval')
+            : store.logSpec(widget.exs[k]),
+    ];
     for (var k = 0; k < widget.exs.length; k++) {
       if (!widget.readOnly) _prefill(widget.exs[k], specs[k], logs[k]);
       if (logs[k].note.isNotEmpty) _notesOpen.add(k);
@@ -923,7 +936,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         }
       }
     }
-    if (sp.kind == 'duration' || sp.kind == 'interval') return;
+    if (sp.kind == 'duration' || sp.kind == 'interval' || sp.rowPrefix == 'I') {
+      return;
+    }
     final kg = store.sessionLoad(widget.week.n, ex, day: widget.day.j);
     if (kg != null && kg > 0) {
       final t = store.kgFieldText(kg);
@@ -1031,6 +1046,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   bool _needsFlames(Exercise ex, LogSpec sp) {
     const kinds = {'reps', 'repsMax', 'hold', 'holdMax'};
     if (!kinds.contains(sp.kind)) return false;
+    // RV1 : tours d'intervalles : pas de note par tour (comme avant, la
+    // séance d'intervalles d'une ligne).
+    if (sp.rowPrefix == 'I') return false;
     const roles = {'warmup', 'mobility', 'cooldown', 'ramp'};
     if (roles.contains(ex.role)) return false;
     if (ex.name.toLowerCase().contains('échauffement')) return false;
@@ -1112,6 +1130,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     }
     _recordGroupRounds();
     if (store.settings.vibration) HapticFeedback.lightImpact();
+    // RV1 : un seul message après la série : Koach d'abord, puis le
+    // record, puis « Enchaîne » (avant : chaque message effaçait le
+    // précédent, la cible de Koach et son « Annuler » disparaissaient).
+    _spoke = false;
     int? adviceRest;
     if (s.done && widget.adapt && ex.engine) {
       log.prescribed ??= store.adaptPrescribedText(
@@ -1126,15 +1148,28 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         adviceRest = _adaptAdvice(k, i);
       }
     }
-    if (s.done) _celebrateRecord(ex, s);
+    if (s.done && !_spoke) _spoke = _celebrateRecord(ex, s);
     if (!s.done || !store.settings.autoTimer) return;
-    if (widget.exs.length == 2 && k == 0) {
-      showKSnack(
-        context,
-        message: 'Enchaîne : ${store.splitName(widget.exs[1].name).$1}',
-        bottom: KBottomInset.of(context),
-        duration: const Duration(seconds: 2),
-      );
+    // RV1 : groupe du moteur : pas de repos individuel au milieu d'un tour
+    // (circuit de 3 compris), ni dans un format au chrono (EMOM,
+    // intervalles, AMRAP, pour le temps, chipper) : le chrono du groupe
+    // tourne.
+    final group = _group;
+    final members = widget.exs.length;
+    if ((members == 2 && k == 0) || (group != null && k < members - 1)) {
+      if (!_spoke) {
+        showKSnack(
+          context,
+          message: 'Enchaîne : ${store.splitName(widget.exs[k + 1].name).$1}',
+          bottom: KBottomInset.of(context),
+          duration: const Duration(seconds: 2),
+        );
+      }
+      return;
+    }
+    if (group != null &&
+        group.format != kc.GroupFormat.superset &&
+        group.format != kc.GroupFormat.circuit) {
       return;
     }
     final rest =
@@ -1173,6 +1208,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // C8 : le message de Koach se pose au-dessus de la barre de repos.
     final kt = KTokens.of(context);
     final large = koachLargeText(context);
+    _spoke = true;
     showKSnack(
       context,
       message: 'Koach : $text',
@@ -1220,6 +1256,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     setState(() => epoch++);
     final kt = KTokens.of(context);
     final large = koachLargeText(context);
+    _spoke = true;
     showKSnack(
       context,
       message: 'Koach : ${news.text}',
@@ -1606,15 +1643,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// maximum de reps au poids de corps) de cet exercice dans les autres
   /// séances. Message court au-dessus de la barre de repos, retour haptique
   /// plus marqué.
-  void _celebrateRecord(Exercise ex, SetEntry s) {
-    if (!store.settings.celebrations) return;
+  /// Vrai : le message du record est affiché.
+  bool _celebrateRecord(Exercise ex, SetEntry s) {
+    if (!store.settings.celebrations) return false;
     final hit = store.liveRecord(
       store.sessionKey(widget.week.n, widget.day.j),
       ex.name,
       s.kg,
       s.reps,
     );
-    if (hit == null || !mounted) return;
+    if (hit == null || !mounted) return false;
     if (store.settings.vibration) HapticFeedback.mediumImpact();
     final k = KTokens.of(context);
     showKSnack(
@@ -1628,6 +1666,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         size: KSize.icon,
       ),
     );
+    return true;
   }
 
   /// Une série déjà validée puis modifiée repasse « non validée » si sa
@@ -1775,21 +1814,37 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (l.sets.length > n) n = l.sets.length;
     }
     final k = KTokens.of(context);
-    return Row(
+    return Column(
       key: const ValueKey('timing-header'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(
-          child: Text(
-            '${ct.everyFormatName(every)} · $n tours · ${_minutes(n * every)}',
-            style: KType.corpsFort.copyWith(color: k.encre),
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                '${ct.everyFormatName(every)} · $n ${n > 1 ? 'tours' : 'tour'}'
+                ' · ${_minutes(n * every)}',
+                style: KType.corpsFort.copyWith(color: k.encre),
+              ),
+            ),
+            const SizedBox(width: KSpacing.s8),
+            KTonalButton(
+              key: const ValueKey('timing-clock'),
+              icon: Icons.timer_outlined,
+              label: 'Lancer',
+              onPressed: () => widget.timer.emom(n, every),
+            ),
+          ],
         ),
-        const SizedBox(width: KSpacing.s8),
-        KTonalButton(
-          key: const ValueKey('timing-clock'),
-          icon: Icons.timer_outlined,
-          label: 'Lancer',
-          onPressed: () => widget.timer.emom(n, every),
+        // RV1 (C17.43.3) : un départ raté se note en laissant sa ligne non
+        // validée (0 rep est refusé) : dit sous l'en-tête.
+        Padding(
+          padding: const EdgeInsets.only(top: KSpacing.s4),
+          child: Text(
+            emomMissedHint(every),
+            key: const ValueKey('timing-missed-hint'),
+            style: KType.detail.copyWith(color: k.texte2),
+          ),
         ),
       ],
     );
@@ -2057,6 +2112,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         sp.kind == 'duration' ||
         sp.kind == 'distance' ||
         sp.kind == 'interval' ||
+        sp.rowPrefix == 'I' ||
         sp.kind == 'emom' ||
         sp.kind == 'amrap';
     final showKg = readOnly
@@ -2089,8 +2145,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         : null;
     final loadLabel = readOnly
         ? recordedLoad
-        : koachKgTarget != null && koachKgTarget > 0 && !store.settings.lb
-        ? '${koachKg(koachKgTarget)} kg'
+        : koachKgTarget != null && koachKgTarget > 0
+        ? store.massLabel(koachKgTarget, engine: true)
         : store.loadLabel(ex, week: widget.week.n, day: widget.day.j);
     final shownLoad =
         (readOnly || !noLoad) &&
@@ -2170,7 +2226,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         : next != null
         ? (next.$1 == k ? next.$2 : -1)
         : log.sets.indexWhere((s) => !s.done);
-    final hasTimer = !readOnly && sp.timed;
+    final hasTimer = !readOnly && sp.timed && sp.rowPrefix != 'I';
     // Correctif 19/10/2026 : plage de répétitions (« 1 × 15-21 ») : champ
     // vide, haut de la plage en indication (« max 21 ») et mis en avant
     // dans le volume.
@@ -2719,7 +2775,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             onLongPressLabel: !readOnly && flameSets && log.sets[i].done
                 ? () => _openFlames(k, i, rowLabel(i))
                 : null,
-            onTimer: readOnly
+            // RV1 : un tour d'intervalles n'a pas de chrono de tenue : le
+            // chrono des tours le donne.
+            onTimer: readOnly || sp.rowPrefix == 'I'
                 ? null
                 : sp.kind == 'hold'
                 ? () => widget.timer.single(
@@ -2970,11 +3028,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       'emom': 'EMOM',
       'amrap': 'AMRAP',
     };
+    if (sp.rowPrefix == 'I') return 'Intervalles · une ligne par tour';
     if (sp.restPause) return 'Rest-pause, mini-repos ${sp.intra} s';
     if (sp.myo) return 'Myo-reps, mini-repos ${sp.intra} s';
     // PR6 : « E2MOM · départ toutes les 2 min », « E90s · départ toutes
     // les 90 s ».
     if (sp.every case final e?) {
+      // RV1 : « EMOM · départ chaque minute » (avant : « toutes les 1 min »).
+      if (e == 60) return '${ct.everyFormatName(e)} · départ chaque minute';
       return '${ct.everyFormatName(e)} · départ toutes les '
           '${e % 60 == 0 ? '${e ~/ 60} min' : '$e s'}';
     }
@@ -3611,6 +3672,12 @@ String groupTitle(kc.GroupSpec g) {
   };
 }
 
+/// RV1 (C17.43.3) : indication d'un départ chronométré raté (EMOM, E2MOM) :
+/// sa ligne reste non validée (0 rep est refusé à la validation).
+String emomMissedHint(int every) => every == 60
+    ? 'Minute ratée : laisse sa ligne non validée.'
+    : 'Départ raté : laisse sa ligne non validée.';
+
 /// Tours prévus d'un groupe (null : maximum, AMRAP ; une fois, chipper).
 int? groupPlannedRounds(kc.GroupSpec g) => switch (g.format) {
   kc.GroupFormat.amrap || kc.GroupFormat.chipper => null,
@@ -3822,6 +3889,10 @@ class _GroupCardState extends State<_GroupCard> {
     // consigne n'est dite que là où le résultat se note autrement (AMRAP,
     // temps).
     final hint = switch (g.format) {
+      // RV1 (C17.43.3) : départ raté (EMOM, E2MOM…) : ligne non validée.
+      kc.GroupFormat.emom when !widget.readOnly => emomMissedHint(
+        g.intervalSeconds ?? 60,
+      ),
       kc.GroupFormat.amrap ||
       kc.GroupFormat.roundsForTime ||
       kc.GroupFormat.chipper => groupHint(g, names.length),
@@ -3842,7 +3913,12 @@ class _GroupCardState extends State<_GroupCard> {
                 ),
               ),
             ),
-            if (!widget.readOnly) ...[
+            // RV1 : superset ou circuit sans repos entre les tours : pas de
+            // bouton « Repos » sans effet.
+            if (!widget.readOnly &&
+                !((g.format == kc.GroupFormat.superset ||
+                        g.format == kc.GroupFormat.circuit) &&
+                    (g.restBetweenRoundsSeconds ?? 0) <= 0)) ...[
               const SizedBox(width: KSpacing.s8),
               KTonalButton(
                 key: ValueKey('group-clock-${g.groupId}'),
@@ -4992,7 +5068,8 @@ class _RestDay extends StatelessWidget {
                 week.n,
                 day.j,
                 false,
-                title: 'S${week.n} · J${day.j}',
+                // RV1 : numérotation affichée (PR2).
+                title: store.program.sessionLabel(week.n, day.j),
               ),
             )
           else
@@ -5003,7 +5080,8 @@ class _RestDay extends StatelessWidget {
                 week.n,
                 day.j,
                 true,
-                title: 'S${week.n} · J${day.j}',
+                // RV1 : numérotation affichée (PR2).
+                title: store.program.sessionLabel(week.n, day.j),
               ),
             ),
         ],

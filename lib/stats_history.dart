@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'kit/kit.dart';
 import 'nav_bar.dart';
+import 'search.dart' show normalizeText;
 import 'session_history.dart';
 import 'store.dart';
 import 'stats_data.dart';
@@ -48,7 +49,7 @@ class _StatsHistoryState extends State<StatsHistory> {
   @override
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
-    final query = _search.text.trim().toLowerCase();
+    final query = normalizeText(_search.text.trim());
     final all = statsHistory(store);
     final entries = all
         .where((e) => query.isEmpty || e.searchText.contains(query))

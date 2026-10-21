@@ -1,8 +1,19 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : KB4 — Koach 1.0.7 dans l'application, version dev7.4.0 ; précédent : dev7.3.0 (KB3)**  
-**Date : 21 octobre 2026, Europe/Paris — version : 7.4.0+148, affichée « dev7.4.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.40, C17.42) ; `kalis_adapt` 1.0.6 copié à l'octet de son étiquette ; build signé sur `main`.**
+**Passe actuelle : RV1 — revue complète du code, version dev7.5.0 ; précédent : dev7.4.0 (KB4)**  
+**Date : 21 octobre 2026, Europe/Paris — version : 7.5.0+149, affichée « dev7.5.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.41, C17.43) ; paquets inchangés (revus en lecture) ; build signé sur `main`.**
+
+## RV1 — revue complète du code (version dev7.5.0, pipeline CP, DECISIONS_CP.md C17.41)
+
+- Revue de tout `lib/` par zone (9 sous-agents), chaque constat vérifié dans le code et couvert par un test avant correction ; paquets en lecture seulement (bugs décrits pour un lot moteur). Détail : `pipeline/cp/livraisons/LIVRAISON_RV1.md`.
+- Charges : poulie au pas de 2,5 kg donné aux moteurs quand le profil n'en dit rien (avant : grille en livres de `kalis_adapt`, « 20,41 kg » à l'extension triceps) ; plus de charge « 22, » refusée ; livres à la virgule ; cible de Koach affichée aussi en livres.
+- Intervalles « 8× (30 s effort / 30 s repos) » : une ligne par tour, Koach actif comme arrêté (ligne importée servie telle qu'écrite) ; départ chronométré raté dit sous l'en-tête (« Minute ratée : laisse sa ligne non validée. »).
+- Séance : le message de Koach (et son « Annuler ») n'est plus effacé par le record ou « Enchaîne » ; pas de repos individuel au milieu d'un tour de groupe ; « départ chaque minute », « 1 tour » ; pas de bouton « Repos » sans repos.
+- Données : résultat d'AMRAP jamais effacé comme une consultation ; programme personnel illisible gardé tel quel (et refusé à l'import) ; journal de Koach illisible gardé ; copie de session de test reconnue même compressée ; poids du profil plus jamais remis à une ancienne pesée ; « Je ne sais pas » n'efface plus les records ; origine d'un record gardée.
+- Koach : séance commencée jamais déclarée manquée après minuit ; arrêt d'urgence : plus rien versé, calcul en cours sans effet ; charge fixe (C15) sans suggestion d'une autre charge.
+- Écrans : accueil sans plantage quand le programme change de longueur et qui suit la nouvelle semaine ; numéros de semaine affichés (PR2) partout ; « Départ du programme » en semaines affichées ; thème : couleurs et espacements appliqués sans redémarrer, champs visibles en clair, choix des segments et puces lisibles en Bordeaux sombre ; records sans tenues ni durées ; rappels au-delà de la semaine 40 annulés.
+- Tests : `test/rv1_revue_test.dart` ; G3, G10, KB4 mis à jour (changements voulus) ; cible émulateur `integration_test/rv1_parcours_test.dart` (une semaine du programme PR2, deux thèmes, deux palettes, tailles 90 et 110 %).
 
 ## KB4 — Koach 1.0.7 dans l'application (version dev7.4.0, pipeline CP, DECISIONS_CP.md C17.40)
 

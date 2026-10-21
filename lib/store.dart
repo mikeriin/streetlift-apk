@@ -26,7 +26,7 @@ import 'kalis_clock.dart';
 import 'session_prefs.dart';
 import 'game.dart';
 import 'journal_adapter.dart';
-import 'kit/format.dart' show estimateLabelText;
+import 'kit/format.dart' show estimateLabelText, formatDecimal;
 import 'koach_data.dart';
 import 'koach1/koach_journal.dart';
 import 'koach1/koach_moteur.dart';
@@ -76,14 +76,7 @@ part 'koach1_store.dart';
 /// Charge à la grille du matériel : deux décimales au plus (« 2,5 » ;
 /// « 35 » ; « 36,25 »). Charges du moteur dynamique (et, avant G10, de
 /// Koach L7).
-String koachKg(double kg) {
-  if (kg == kg.roundToDouble()) return kg.toInt().toString();
-  var t = kg.toStringAsFixed(2);
-  while (t.endsWith('0')) {
-    t = t.substring(0, t.length - 1);
-  }
-  return t.replaceAll('.', ',');
-}
+String koachKg(double kg) => adaptKgField(kg).replaceAll('.', ',');
 
 /// CI1f : mini-série d'une série découpée (cluster, rest-pause, myo-reps),
 /// saisie une à une pendant la séance : répétitions (ou secondes pour un
@@ -577,7 +570,8 @@ class LogSpec {
   final int? intra; // micro-repos myo-reps / clusters
   final bool myo;
   final bool cluster;
-  // M (myo) · C (cluster) · É (échelle) · R (round) · T (test) · D (drop set).
+  // M (myo) · C (cluster) · É (échelle) · R (round) · T (test) · D (drop set)
+  // · I (tour d'intervalles, RV1).
   final String rowPrefix;
 
   /// PR1 : départ de chaque série au chrono (« 8×3 · E2MOM », « · E90s ») :
@@ -633,6 +627,12 @@ class AppStore extends ChangeNotifier {
   /// Section `planProgram` illisible au démarrage : gardée telle quelle et
   /// réécrite à l'identique (aucune perte).
   Map<String, dynamic>? _planRaw;
+
+  /// RV1 : instance de programme (`programInstance`) illisible au démarrage
+  /// ou au passage au programme : gardée telle quelle et réécrite à
+  /// l'identique (avant : perdue à la première écriture, le programme
+  /// personnel remplacé par le programme embarqué).
+  Map<String, dynamic>? _instanceRaw;
   int planLoadIssues = 0;
 
   /// G7 (D4.9) : « Où j'en suis » (section `programResume`).
@@ -736,6 +736,7 @@ class AppStore extends ChangeNotifier {
             : const LegacyWeekKinds.empty();
       } catch (_) {
         programLoadIssues++;
+        _instanceRaw = inst.toJson().cast<String, dynamic>();
         programInstance = null;
         program = _baseProgram;
         weekKinds = _baseWeekKinds;
@@ -1161,14 +1162,14 @@ class AppStore extends ChangeNotifier {
   List<RecordHit> sessionRecords(String key) {
     final log = logs[key];
     if (log == null) return const [];
-    final bests = exerciseBests(logs, excludeKey: key);
+    final bests = exerciseBests(logs, excludeKey: key, skipNames: notRepsNames);
     final out = <RecordHit>[];
     final seen = <String>{};
     for (final ex in log.ex.entries) {
       final name = log.exerciseNames[ex.key];
       if (name == null) continue;
       RecordHit? best;
-      for (final set in ex.value.sets.where((s) => s.done)) {
+      for (final set in ex.value.sets.where((s) => s.done && !s.excluded)) {
         final hit = recordFor(bests, name, set.kg, set.reps);
         if (hit != null && (best == null || hit.current > best.current)) {
           best = hit;
@@ -1182,7 +1183,41 @@ class AppStore extends ChangeNotifier {
   /// Record battu par une série en cours de séance (séance `key` exclue de
   /// l'historique), pour la bannière en direct.
   RecordHit? liveRecord(String key, String exercise, String kg, String reps) =>
-      recordFor(exerciseBests(logs, excludeKey: key), exercise, kg, reps);
+      recordFor(
+        exerciseBests(logs, excludeKey: key, skipNames: notRepsNames),
+        exercise,
+        kg,
+        reps,
+      );
+
+  Set<String>? _notReps;
+  int _notRepsGen = -1;
+
+  /// RV1 : noms (normalisés) des exercices du programme suivi notés en
+  /// secondes, minutes ou mètres, jamais en répétitions (records et 1RM
+  /// estimés les écartent). Un nom aussi noté en répétitions ailleurs
+  /// reste compté.
+  Set<String> get notRepsNames {
+    final hit = _notReps;
+    if (hit != null && _notRepsGen == _overlayGen) return hit;
+    final other = <String>{}, reps = <String>{};
+    for (final w in program.weeks) {
+      for (final d in w.days) {
+        for (final e in d.exercises) {
+          final k = logSpec(e).kind;
+          final n = normalizeText(e.name);
+          if (k == 'reps' || k == 'repsMax') {
+            reps.add(n);
+          } else {
+            other.add(n);
+          }
+        }
+      }
+    }
+    other.removeAll(reps);
+    _notRepsGen = _overlayGen;
+    return _notReps = other;
+  }
 
   int get xp => progression.totalXp;
   static int needFor(int l) => Progression.needFor(l);
@@ -1296,6 +1331,7 @@ class AppStore extends ChangeNotifier {
     athlete: athlete,
     athleteRaw: _athleteRaw,
     programInstance: programInstance,
+    instanceRaw: _instanceRaw,
     planProgram: planProgram,
     planRaw: _planRaw,
     programResume: programResume,
@@ -1345,7 +1381,9 @@ class AppStore extends ChangeNotifier {
       // L10 : instance de programme écrite seulement si elle existe (export
       // identique à 3.2.0 sinon) ; ignorée par les versions antérieures.
       if (data.programInstance != null)
-        'programInstance': data.programInstance!.toJson(),
+        'programInstance': data.programInstance!.toJson()
+      else if (data.instanceRaw != null)
+        'programInstance': data.instanceRaw,
       // G7 : programme créé par kalis_plan et « Où j'en suis », écrits
       // seulement s'ils existent ; ignorés par les versions antérieures
       // (sections versionnées, facultatives).
@@ -1513,7 +1551,16 @@ class AppStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  String exportCompact() => _pack(exportAll());
+  /// Texte compact de la sauvegarde (Réglages › copier). RV1 : en session
+  /// de test, marqué comme l'export de fichier (G1) ; avant, la copie
+  /// collée dans la session personnelle passait sans l'avertissement.
+  String exportCompact() {
+    if (!SessionSpace.isDev) return _pack(exportAll());
+    final data = jsonDecode(exportAll()) as Map<String, dynamic>;
+    data['sessionDeTest'] = true;
+    data['decalageJours'] = KalisClock.offsetDays;
+    return _pack(jsonEncode(data));
+  }
 
   /// [limits] : import d'un texte externe (KT-015). Sans limites : état
   /// produit par l'application elle-même, relu au démarrage.
@@ -1725,6 +1772,26 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: programIssues,
     );
+    // RV1 : démarrage tolérant : section illisible gardée telle quelle.
+    final rawInstance = m['programInstance'];
+    final instanceRaw = nextProgram == null && rawInstance is Map
+        ? Map<String, dynamic>.from(rawInstance)
+        : null;
+    // RV1 : import strict : l'instance générée doit donner un programme
+    // (avant : acceptée, puis remplacée en silence par le programme
+    // embarqué et effacée à l'écriture suivante).
+    if (limits != null &&
+        m['planProgram'] == null &&
+        nextProgram != null &&
+        nextProgram.generated) {
+      try {
+        Program.fromJson(nextProgram.programJson(_baseProgramJson));
+      } catch (_) {
+        throw const FormatException(
+          'Programme personnel illisible dans la sauvegarde.',
+        );
+      }
+    }
     // G7 : programme kalis_plan. Import strict ; démarrage tolérant
     // (section illisible gardée telle quelle, jamais perdue).
     PlanProgram? nextPlan;
@@ -1796,6 +1863,7 @@ class AppStore extends ChangeNotifier {
       athleteRaw: athleteRaw,
       athleteIssues: athleteIssues,
       programInstance: nextProgram,
+      instanceRaw: instanceRaw,
       programIssues: programIssues.length,
       planProgram: nextPlan,
       planRaw: planRaw,
@@ -1883,6 +1951,7 @@ class AppStore extends ChangeNotifier {
       ..clear()
       ..addAll(data.refStatus);
     programInstance = data.programInstance;
+    _instanceRaw = data.instanceRaw;
     programLoadIssues = data.programIssues;
     planProgram = data.planProgram;
     _planRaw = data.planRaw;
@@ -2503,13 +2572,19 @@ class AppStore extends ChangeNotifier {
     if (kg == null && loadNeedsReference(e)) return 'à renseigner';
     if (kg == null) return '—';
     if (kg <= 0) return 'PdC';
+    return massLabel(kg, engine: e.engine);
+  }
+
+  /// Charge affichée (kg, ou lb au réglage « Charges suggérées en
+  /// livres »). Charge du moteur (grille du matériel, 1,25 kg…) : deux
+  /// décimales au plus ; sinon une. RV1 : en lb, virgule décimale (avant
+  /// « 137.8 lb ») ; la cible de Koach passe aussi par ici (avant : en lb,
+  /// la charge de la 1re série était affichée à la place de la cible).
+  String massLabel(double kg, {bool engine = false}) {
     if (settings.lb) {
-      final lb = kg * 2.20462;
-      return '${lb.toStringAsFixed(lb == lb.roundToDouble() ? 0 : 1)}\u00A0lb';
+      return '${formatDecimal(kg * 2.20462, maxDecimals: 1)}\u00A0lb';
     }
-    // Charge du moteur (grille du matériel, 1,25 kg…) : deux décimales au
-    // plus ; sinon une.
-    final t = e.engine
+    final t = engine
         ? koachKg(kg)
         : kg == kg.roundToDouble()
         ? kg.toInt().toString()
@@ -2663,7 +2738,10 @@ class AppStore extends ChangeNotifier {
     if (e.forcedSets != null) return e.forcedSets!.clamp(1, 1000);
     final txt = setsLabel(e);
     final low = txt.toLowerCase().trim();
-    if (e.interval != null) return 1;
+    // RV1 (C17.43.3) : intervalles « 8× (30 s effort / 30 s repos) » : une
+    // ligne par tour (avant : une ligne pour toute la séance d'intervalles
+    // écrite, une ligne par tour quand Koach servait).
+    if (e.interval case final iv?) return iv.rounds.clamp(1, 1000);
     // KB4 : EMOM à reps fixes par minute : une ligne par minute (avant :
     // une ligne du total, « 24 reps » pour 8 × 3).
     if (emomPerMinute(txt) case final m?) return m.minutes;
@@ -2946,6 +3024,13 @@ class AppStore extends ChangeNotifier {
     // comptés sur les séries validées ; une minute ratée reste non validée
     // (ou notée avec les reps faites).
     if (emomPerMinute(low) != null) return const LogSpec('reps', every: 60);
+    // RV1 (C17.43.3) : intervalles : une ligne par tour, effort en secondes
+    // (pré-rempli), sans repos ni chrono de tenue par ligne : le chrono des
+    // tours (bouton de la carte, ou en-tête du groupe) donne effort et
+    // récupération.
+    if (e.interval case final iv?) {
+      return LogSpec('hold', seconds: iv.work, rowPrefix: 'I');
+    }
     if (tm != null) {
       switch (tm['type'] as String) {
         case 'hiit':
@@ -2969,7 +3054,6 @@ class AppStore extends ChangeNotifier {
           return LogSpec('hold', seconds: tm['sec'] as int);
       }
     }
-    if (e.interval != null) return const LogSpec('interval');
     // PR1 : séries au départ chronométré (« 8×3 · E2MOM », « 6×2 · E90s »,
     // « 12×6 · EMOM ») : une ligne par série, pas de repos après la série,
     // le chrono de l'intervalle donne les départs.
@@ -3133,6 +3217,8 @@ class AppStore extends ChangeNotifier {
     final last = i >= total - 1;
     // PR1 : le chrono de l'intervalle donne le départ de chaque série.
     if (sp.every != null) return null;
+    // RV1 : tour d'intervalles : le chrono des tours donne la récupération.
+    if (sp.rowPrefix == 'I') return null;
     // PR1 : paliers d'un tour enchaînés ; repos à la fin du tour.
     final k = sp.stages;
     if (k != null && k > 1 && i % k != k - 1) return null;
@@ -3213,7 +3299,11 @@ class AppStore extends ChangeNotifier {
     // KB4 : EMOM à reps fixes ouvert avant dev7.4.0 (une ligne du total) :
     // une ligne par minute tant que rien n'est noté ni validé (jamais sur
     // une séance faite).
-    if (!s.done && !e.engine && emomPerMinute(setsLabel(e)) != null) {
+    // RV1 : même chose pour les intervalles ouverts avant dev7.5.0 (une
+    // ligne pour toute la séance d'intervalles).
+    if (!s.done &&
+        !e.engine &&
+        (emomPerMinute(setsLabel(e)) != null || e.interval != null)) {
       final n = setCount(e);
       if (log.sets.length != n && log.sets.every((x) => !x.done && !x.edited)) {
         log.sets
@@ -3298,9 +3388,20 @@ class AppStore extends ChangeNotifier {
   /// Une séance du journal qui n'a que l'empreinte d'une consultation :
   /// rien de validé, aucune note, aucun bilan donné, aucune décision de
   /// l'ancien Koach. Elle ne porte aucune donnée de l'utilisateur.
+  /// RV1 : résultat de groupe réellement saisi (tours, reps du tour
+  /// entamé, temps) ; `{rounds: 0}` laissé par une série validée puis
+  /// annulée ne compte pas.
+  static bool _groupResult(Map<String, dynamic> g) => g.entries.any(
+    (x) => x.key != 'completed' && x.value is num && (x.value as num) > 0,
+  );
+
   bool isConsultation(String key) {
     final l = logs[key];
     if (l == null || l.done || l.finishedAt != null) return false;
+    // RV1 : résultat d'un groupe saisi (AMRAP, tours pour le temps,
+    // chipper : tours, reps du tour entamé, temps) : jamais une simple
+    // consultation (avant : effacé à la fermeture de la séance).
+    if (l.groups.values.any(_groupResult)) return false;
     for (final x in l.ex.values) {
       if (x.note.trim().isNotEmpty ||
           x.prescribed != null ||
@@ -3511,7 +3612,9 @@ class AppStore extends ChangeNotifier {
       before: before,
       after: after,
       heading: 'Séance validée',
-      title: title ?? s.title ?? sessionKey(week, j),
+      // RV1 : numérotation affichée (PR2) quand la séance n'a pas de titre
+      // (avant : « S15-J1 » au lieu de « S1 · J1 »).
+      title: title ?? s.title ?? program.sessionLabel(week, j),
       baseXp: 100,
       baseLabel: 'Journée du programme',
       records: sessionRecords(sessionKey(week, j)),
@@ -3553,6 +3656,8 @@ class AppStore extends ChangeNotifier {
   bool inProgress(String key) {
     final log = logs[key];
     if (log == null || log.done) return false;
+    // RV1 : un résultat de groupe saisi compte (séance à reprendre).
+    if (log.groups.values.any(_groupResult)) return true;
     return log.ex.values.any(
       (e) => e.note.trim().isNotEmpty || e.sets.any((s) => s.done),
     );
@@ -3795,6 +3900,9 @@ class _BackupData {
 
   /// L10 : instance de programme (null si la section est absente).
   final ProgramInstance? programInstance;
+
+  /// RV1 : instance illisible au démarrage, gardée telle quelle.
+  final Map<String, dynamic>? instanceRaw;
   final int programIssues;
 
   /// G7 : programme kalis_plan (null si absent ; illisible : [planRaw]) et
@@ -3840,6 +3948,7 @@ class _BackupData {
     this.athleteRaw,
     this.athleteIssues = 0,
     this.programInstance,
+    this.instanceRaw,
     this.programIssues = 0,
     this.planProgram,
     this.planRaw,

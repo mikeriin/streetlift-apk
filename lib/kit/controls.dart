@@ -294,7 +294,11 @@ class KSegmented<T> extends StatelessWidget {
                 onTap: onChanged == null ? null : () => onChanged!(s.value),
                 child: Material(
                   color: s.value == selected ? k.pleine : k.haute,
-                  shape: s.value == selected ? KRadius.pill : k.controlPill,
+                  // RV1 : contour `encre` du choix : `pleine` sur `haute` ne
+                  // se distingue pas en Bordeaux sombre (1,01:1).
+                  shape: s.value == selected
+                      ? StadiumBorder(side: BorderSide(color: k.encre))
+                      : k.controlPill,
                   child: InkWell(
                     key: ValueKey('$keyPrefix-${s.value}'),
                     customBorder: KRadius.pill,
@@ -380,7 +384,13 @@ class KSegmented<T> extends StatelessWidget {
                               color: segments[i].value == selected
                                   ? k.pleine
                                   : k.haute.withValues(alpha: 0),
-                              shape: KRadius.pill,
+                              // RV1 : contour `encre` du choix (Bordeaux
+                              // sombre : `pleine` ≈ `haute`).
+                              shape: segments[i].value == selected
+                                  ? StadiumBorder(
+                                      side: BorderSide(color: k.encre),
+                                    )
+                                  : KRadius.pill,
                             ),
                             alignment: Alignment.center,
                             child: Text(
@@ -449,7 +459,10 @@ class KChip extends StatelessWidget {
       ),
       decoration: ShapeDecoration(
         color: selected ? k.pleine : k.haute,
-        shape: selected ? KRadius.pill : k.controlPill,
+        // RV1 : contour `encre` de la puce choisie (Bordeaux sombre).
+        shape: selected
+            ? StadiumBorder(side: BorderSide(color: k.encre))
+            : k.controlPill,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
