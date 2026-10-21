@@ -1,0 +1,935 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: charges charge calculée à 22,000000000000004 : « 22 », jamais « 22, »
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: charges poulie : pas de 2,5 kg donné aux moteurs quand le profil n’en dit rien ; un pas du profil est gardé
+00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: charges livres en livres : virgule décimale ; la cible passe par le même libellé
+00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: charges livres en livres : virgule décimale ; la cible passe par le même libellé
+00:00 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: retrait du pack 2.0.0 groupes historiques : copie exacte du champ g du pack
+00:00 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: retrait du pack 2.0.0 groupes historiques : copie exacte du champ g du pack
+00:00 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: retrait du pack 2.0.0 groupes historiques : copie exacte du champ g du pack
+00:00 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: intervalles : une ligne par tour programme de 40 semaines : la ligne HIIT importée est servie telle qu’écrite ; tours du groupe = lignes de la carte
+RV1|hiit|{"ligne":"8× (30 s effort / 30 s repos)","lignes":8,"groupe":8}
+00:00 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: migration depuis dev6.18.0 (S1 à S14, programme de 40 semaines) mêmes séances, séries, records et statistiques ; ids v1.1 ; sauvegarde d'origine intacte
+BV11|journal|noms=68|sans-id=[BILAN — report des résultats]
+BV11|programme|lignes=1812|reliees=1806
+00:01 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: écran de séance EMOM minute par minute : « Minute ratée : laisse sa ligne non validée. » sous l’en-tête
+00:01 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: écran de séance EMOM minute par minute : « Minute ratée : laisse sa ligne non validée. » sous l’en-tête
+00:01 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: écran de séance EMOM minute par minute : « Minute ratée : laisse sa ligne non validée. » sous l’en-tête
+00:01 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: bibliothèque v1.1 filtres catégorie et muscle, puis fiche (sombre)
+00:01 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: bibliothèque v1.1 filtres catégorie et muscle, puis fiche (sombre)
+00:01 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: bibliothèque v1.1 filtres catégorie et muscle, puis fiche (sombre)
+00:01 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: bibliothèque v1.1 filtres catégorie et muscle, puis fiche (sombre)
+00:02 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: bibliothèque v1.1 filtres catégorie et muscle, puis fiche (sombre)
+00:03 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: Koach (programme PR2 synthétique) extension triceps poulie servie au pas de 2,5 kg (avant : 20,41 kg) ; toute charge servie sur la grille de son matériel
+RV1|charges_j2|{"sl-pompe-lestee-gilet":null,"mu-developpe-militaire-barre-debout":null,"mu-rotation-externe-haltere-couche":null,"mu-pushdown-corde":null,"mu-elevation-laterale-halteres":null}
+00:04 +17 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_bv11_base_test.dart: bibliothèque v1.1 filtres catégorie et muscle, puis fiche (clair)
+00:04 +17 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: Koach (programme PR2 synthétique) extension triceps poulie servie au pas de 2,5 kg (avant : 20,41 kg) ; toute charge servie sur la grille de son matériel [E]
+  Expected: <1>
+    Actual: <0>
+  {"sl-pompe-lestee-gilet":null,"mu-developpe-militaire-barre-debout":null,"mu-rotation-externe-haltere-couche":null,"mu-pushdown-corde":null,"mu-elevation-laterale-halteres":null}
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/rv1_revue_test.dart 403:9                      main.<fn>.<fn>
+  
+00:05 +18 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: Koach (programme PR2 synthétique) arrêt d’urgence : rien versé au moteur ensuite ; séance commencée passée minuit jamais déclarée manquée
+RV1|arret|{"manquees":[99,100,101,102,103],"journal":365}
+00:06 +19 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) découpage : un bloc par bloc du programme, coupé après une semaine allégée au-delà de 6 semaines
+00:06 +20 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) annotation du programme du propriétaire : blocs valides au contrat 0.4.0, mode coach, saison et échéance fin S40
+00:07 +21 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) annotation du programme du propriétaire : blocs valides au contrat 0.4.0, mode coach, saison et échéance fin S40
+00:07 +22 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) annotation du programme du propriétaire : blocs valides au contrat 0.4.0, mode coach, saison et échéance fin S40
+CI1E absent {"N × ? reps":71,"EMOM N min × ? reps par minute":2}
+CI1E segments [legacy-programme-v33/S1:test:test/test/intro, legacy-programme-v33/S4:accumulation:accumulation/accumulation/accumulation/deload, legacy-programme-v33/S8:accumulation:accumulation/accumulation/accumulation/deload, legacy-programme-v33/S12:intensification:test/intensification/intensification/deload, legacy-programme-v33/S16:intensification:intensification/intensification/realization/deload, legacy-programme-v33/S20:realization:intensification/intensification/realization/deload/realization/test, legacy-programme-v33/S26:accumulation:accumulation/accumulation/accumulation/accumulation/deload/test, legacy-programme-v33/S32:intensification:intensification/intensification/intensification/deload, legacy-programme-v33/S36:realization:realization/realization/realization/test/test]
+00:07 +23 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) myo-reps, durées, HIIT, EMOM, contrastes, échelles : blocs valides, groupes, lignes servies telles qu’écrites
+CI1F absent {"N × ? reps":33}
+00:07 +24 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) migration 6.9.3 → 6.10.0 : sauvegarde d’origine automatique, séances du moteur relues sur le bloc annoté, journal intact
+00:07 +24 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) « N × ? reps » : référence estimée d’après le journal (test au maximum), sinon servi tel qu’écrit
+CI1F estimates {B18: 8.0/journal, B19: 8.0/journal}
+00:07 +25 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) migration 6.9.3 → 6.10.0 : sauvegarde d’origine automatique, séances du moteur relues sur le bloc annoté, journal intact
+00:08 +26 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) séance : myo-reps saisis mini-série par mini-série, une série au journal du moteur avec ses parties
+00:08 +27 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) séance : myo-reps saisis mini-série par mini-série, une série au journal du moteur avec ses parties
+CI1F myo servi {"slotId":"j5-mu-elevation-laterale-halteres","exerciseId":"mu-elevation-laterale-halteres","sets":1,"repsLow":15,"repsHigh":15,"targetFlames":9,"startLoadKg":56.0,"percentOfOneRm":0.647,"toCalibrate":true,"loadBasis":"external","setTargets":[{"repsLow":15,"repsHigh":15,"loadKg":56.0,"flames":9}],"reasons":[{"code":"adapt.low_confidence","params":{"confidence":0.431}},{"code":"adapt.load_down","params":{"deltaKg":6.5}}]} ; bloc {"kind":"myo_reps","miniSets":4,"miniSetReps":4,"intraRestSeconds":10} ; niveau ExperienceLevel.advanced
+00:08 +28 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+00:08 +28 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) installation neuve en S20 (cible émulateur) : myo-reps servis mini-série par mini-série
+CI1F S20 B3-6 MUSCLE-UP LESTÉ — lift n°1, avant tout tirage engine=true servi=5/cluster/null bloc=5/cluster raisons=[adapt.calibration] plan=cluster
+CI1F S20 B3-7 TRACTION LESTÉE — lift principal engine=true servi=5/null/null bloc=5/cluster raisons=[adapt.calibration] plan=cluster
+CI1F S20 B3-8 Rowing barre penché engine=true servi=4/null/null bloc=4/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-9 Tirage vertical prise neutre engine=true servi=3/null/null bloc=3/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-10 Curl barre EZ engine=true servi=1/myo_reps/null bloc=1/myo_reps raisons=[adapt.calibration] plan=myo_reps
+CI1F S20 B3-11 Face pulls engine=true servi=4/null/null bloc=4/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-12 Rotations externes (par haltère) engine=true servi=3/null/null bloc=3/null raisons=[] plan=null
+CI1F S20 B3-13 Scapular pull-ups engine=true servi=3/null/null bloc=3/null raisons=[] plan=null
+CI1F S20 B3-14 Travail poignet excentrique (haltère) engine=true servi=3/null/null bloc=3/null raisons=[adapt.calibration] plan=null
+00:08 +29 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+00:08 +30 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+00:09 +31 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) propositions réelles de la revue (relevé) et restructuration acceptée puis annulée, montrée dans le programme
+CI1E revue free : legacy-programme-v33/S12 déblocage=block_restructure propositions=[]
+CI1E revue assisted : legacy-programme-v33/S12 déblocage=block_restructure propositions=[]
+00:09 +32 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) ajustement de Koach accepté en 6.9.3 (bloc unique) : ramené sur le bloc annoté, toujours appliqué et annulable
+00:09 +33 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe inventaire : lignes à charge fixe du programme de 40 semaines, exception « lesté ou PdC »
+00:09 +34 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe inventaire : lignes à charge fixe du programme de 40 semaines, exception « lesté ou PdC »
+00:09 +34 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) installation neuve : sauvegarde d’origine au départ du programme ; retour puis revue du moteur (mode assisté) : programme d’origine
+CI1E neuve : avant=false apres=false entrees=[] sections=[]
+00:09 +35 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe inventaire : lignes à charge fixe du programme de 40 semaines, exception « lesté ou PdC »
+00:10 +35 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1e_programme_40s_test.dart: programme de 40 semaines (C11) retour au programme d’origine : sections du programme identiques à la sauvegarde, journal gardé
+CI1E apres retour : differe=false entrees=[] propositions=[]
+00:10 +35 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe inventaire : lignes à charge fixe du programme de 40 semaines, exception « lesté ou PdC »
+CI1H|ligne|Négatifs de muscle-up|3|0.0|3
+CI1H|ligne|Mobilité épaules + poignets|64|0.0|64
+CI1H|ligne|Pompes PdC — très léger|9|0.0|9
+CI1H|ligne|Hollow body hold|29|0.0|29
+CI1H|ligne|Pallof press|29|0.0|29
+CI1H|ligne|Marche ou vélo très léger|6|0.0|6
+CI1H|ligne|Mobilité complète|3|0.0|3
+CI1H|ligne|HIIT court|28|0.0|28
+CI1H|ligne|BILAN — report des résultats|6|0.0|0
+CI1H|ligne|TEST MAX MUSCLE-UPS PdC|3|0.0|3
+CI1H|ligne|TEST MAX DIPS PdC|4|0.0|4
+CI1H|ligne|TEST MAX POMPES PdC|4|0.0|4
+CI1H|ligne|Repos actif|3|0.0|3
+CI1H|ligne|TEST MAX TRACTIONS PdC|4|0.0|4
+CI1H|ligne|TEST MAX SQUAT @ 70 kg|4|70.0|4
+CI1H|ligne|Scapular pull-ups|52|0.0|52
+CI1H|ligne|YTW à plat ventre (banc incliné)|26|0.0|26
+CI1H|ligne|Ab wheel|34|0.0|34
+CI1H|ligne|Tractions PdC — séries longues|13|0.0|13
+CI1H|ligne|Dips PdC — séries longues|13|0.0|13
+CI1H|ligne|Pompes PdC — séries longues — enchaîné après les dips|13|0.0|13
+CI1H|ligne|Isométrie maximale — transition MU, 3 angles|25|0.0|25
+CI1H|ligne|Tractions explosives poitrine-barre|34|0.0|34
+CI1H|ligne|Négatifs de muscle-up complets|25|0.0|25
+CI1H|ligne|Transitions de muscle-up à l'élastique|25|0.0|25
+CI1H|ligne|Isométrie maximale — bas de dip|25|0.0|25
+CI1H|ligne|Squat endurance @ 70 kg|33|70.0|33
+CI1H|ligne|False grip hold (anneaux ou barre)|25|0.0|25
+CI1H|ligne|Muscle-ups PdC explosifs|9|0.0|9
+CI1H|ligne|GtG muscle-up — dans la journée|16|0.0|16
+CI1H|ligne|Tractions PdC — séries continues|1|0.0|1
+CI1H|ligne|Tractions PdC — série de référence|7|0.0|7
+CI1H|ligne|Tractions PdC — clusters|17|0.0|17
+CI1H|ligne|Dips PdC — série de référence|7|0.0|7
+CI1H|ligne|Dips PdC — clusters|17|0.0|17
+CI1H|ligne|Pompes PdC — série de référence|7|0.0|7
+CI1H|ligne|Pompes PdC — clusters|7|0.0|7
+CI1H|ligne|Contraste français — squat|10|0.0|10
+CI1H|ligne|Pompes PdC — clusters — enchaîné après les dips|10|0.0|10
+CI1H|ligne|Tractions PdC — EMOM|2|0.0|2
+CI1H|ligne|Dips PdC — EMOM|2|0.0|2
+CI1H|ligne|Pompes PdC — EMOM — enchaîné après les dips|2|0.0|2
+CI1H|ligne|Tractions PdC — échelles dégressives|1|0.0|1
+CI1H|ligne|Dips PdC — échelles dégressives|1|0.0|1
+CI1H|ligne|Pompes PdC — échelles dégressives — enchaîné après les dips|1|0.0|1
+00:10 +36 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe inventaire : lignes à charge fixe du programme de 40 semaines, exception « lesté ou PdC »
+00:10 +37 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe S14·J6 : squat endurance servi à 70 kg (sans la contrainte : plus lourd, cause confirmée)
+CI1H|avant|S14J6|squat|[72.5, 72.5, 72.5]|15
+CI1H|apres|S14J6|squat|[70.0, 70.0, 70.0]|15
+00:10 +38 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe série très dure : jamais sous la moitié de la cible
+00:10 +39 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe ligne PdC à charge fixe : jamais de lest, même facile
+CI1H|pdc|S14J4|[Tractions PdC — série de référence, Tractions PdC — clusters]
+00:10 +40 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe douleur au-dessus du seuil : conduite sous douleur appliquée
+CI1H|douleur|S14J6|[]
+00:10 +41 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut A — séance future au jour réel S14·J6 ouverte le dimanche d’avant (S14·J1 à J5 pas faites) : ordre et exercices écrits, pas de dead-hang, squat 70 kg × 14
+00:11 +42 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut A — séance future au jour réel S14·J6 ouverte le dimanche d’avant (S14·J1 à J5 pas faites) : ordre et exercices écrits, pas de dead-hang, squat 70 kg × 14
+CI1H1|A|dimanche|écrit=[j6-cd-muscle-up-barre-strict, j6-cd-traction-explosive-poitrine-barre, j6-sl-squat-competition, j6-sl-releve-jambes-suspendu-leste, j6-mo-routine-mobilite-epaules-poignets]|servi=[j6-cd-muscle-up-barre-strict, j6-cd-traction-explosive-poitrine-barre, j6-sl-squat-competition, j6-sl-releve-jambes-suspendu-leste, j6-mo-routine-mobilite-epaules-poignets]
+00:11 +43 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:12 +43 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut A — séance future au jour réel même séance ouverte le samedi avec J4 et J5 réellement manquées : le report du test reste possible (moteur inchangé le jour même) ; cause du défaut A
+CI1H1|A|samedi|ajoutés=[j4-sl-dead-hang-leste:sl-dead-hang-leste:test]|[Dead-hang lesté ou PdC, Muscle-ups PdC explosifs, Tractions explosives poitrine-barre, Squat endurance @ 70 kg, Leg raises lestés (suspendu), Mobilité épaules + poignets]
+00:12 +44 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:13 +44 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut A — séance future au jour réel prévision de fin de séance = séance ouverte juste après, même jour
+CI1H1|A|prevision|6
+00:13 +45 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:13 +45 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut B — volume écrit des lignes à charge fixe cause des 11 répétitions : prescription du moteur seul (journal proche du propriétaire), au jour réel et à la date prévue
+CI1H1|B|cause|S13J6=77.5×14@rir1|jour=11/10|écrit=3×14-14|moteur=3×14-20@75.0|raisons=adapt.load_down,adapt.benchmark_set|séance=adapt.readiness|dev6.11.2=3×14@70.0|servi=3×14@70.0
+CI1H1|B|cause|S13J6=77.5×14@rir1|jour=17/10|écrit=3×14-14|moteur=3×13-19@77.5|raisons=adapt.benchmark_set|séance=adapt.readiness,adapt.resume_after_break|dev6.11.2=3×13@70.0|servi=3×14@70.0
+00:13 +45 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S1-S7 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S1-S7|125|0
+00:13 +46 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut B — volume écrit des lignes à charge fixe cause des 11 répétitions : prescription du moteur seul (journal proche du propriétaire), au jour réel et à la date prévue
+CI1H1|B|cause|S13J6=77.5×11@rir0|jour=11/10|écrit=3×14-14|moteur=3×14-14@75.0|raisons=adapt.load_down|séance=adapt.readiness|dev6.11.2=3×14@70.0|servi=3×14@70.0
+CI1H1|B|cause|S13J6=77.5×11@rir0|jour=17/10|écrit=3×14-14|moteur=3×13-14@77.5|raisons=adapt.load_held|séance=adapt.readiness,adapt.resume_after_break|dev6.11.2=3×13@70.0|servi=3×14@70.0
+CI1H1|B|cause|S13J6=77.5×14@rir3|jour=11/10|écrit=3×14-14|moteur=3×13-19@77.5|raisons=adapt.benchmark_set|séance=adapt.readiness|dev6.11.2=3×13@70.0|servi=3×14@70.0
+CI1H1|B|cause|S13J6=77.5×14@rir3|jour=17/10|écrit=3×14-14|moteur=3×13-19@77.5|raisons=adapt.benchmark_set|séance=adapt.readiness,adapt.resume_after_break|dev6.11.2=3×13@70.0|servi=3×14@70.0
+00:13 +47 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S8-S13 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:14 +47 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut B — volume écrit des lignes à charge fixe lignes PdC à charge fixe : répétitions et séries écrites, même après des séances dures
+CI1H1|B|pdc|j4-sw-traction-pronation|écrit=1×18|servi=1×18
+CI1H1|B|pdc|j4-sw-traction-pronation#2|écrit=5×10|servi=5×10
+00:14 +48 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S8-S13 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:14 +49 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S8-S13 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:14 +49 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut B — volume écrit des lignes à charge fixe dernière séance il y a 8 jours (sans réduction du moteur) : volume écrit tenu
+CI1H1|B|coupure8|3×14@70.0|raisons=adapt.benchmark_set,adapt.load_held|séance=adapt.readiness,adapt.resume_after_break
+00:14 +50 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S8-S13 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:14 +50 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_correction1_test.dart: défaut B — volume écrit des lignes à charge fixe bilan bas : le volume du squat peut baisser, charge 70
+CI1H1|B|bilan_bas|3×14@70.0|écrit=3×14|séance=adapt.readiness,adapt.health_low,adapt.sleep_low,adapt.load_held
+00:14 +51 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S8-S13 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S8-S13|102|0
+00:14 +52 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S14-S19 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S14-S19|78|0
+00:16 +53 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cif_seance_test.dart: 8 : carte « Pas encore » gêne à 6/10 : « En attendant » dit une fois (sombre)
+CIF8|Avis médical pas encore confirmé / Gêne déclarée à 6/10 : avant la première semaine, prends l'avis d'un médecin ou d'un kinésithérapeute et montre-lui ce programme. En attendant, seuls les mouvements qui ne réveillent pas la douleur se font. / J’ai l’avis
+00:16 +54 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S20-S25 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:16 +54 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cif_seance_test.dart: 8 : carte « Pas encore » gêne à 6/10 : « En attendant » dit une fois (clair)
+CIF8|Avis médical pas encore confirmé / Gêne déclarée à 6/10 : avant la première semaine, prends l'avis d'un médecin ou d'un kinésithérapeute et montre-lui ce programme. En attendant, seuls les mouvements qui ne réveillent pas la douleur se font. / J’ai l’avis
+00:16 +55 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S20-S25 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S20-S25|107|0
+00:17 +56 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cif_seance_test.dart: 12 : bandeau des mini-séries à hauteur stable dernier bloc noté : même hauteur (sombre)
+CIF12|sombre|bandeau [212.0, 212.0, 212.0, 212.0, 212.0, 212.0]|ligne 44.0 → 44.0
+00:18 +57 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S26-S31 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:19 +57 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cif_seance_test.dart: 12 : bandeau des mini-séries à hauteur stable dernier bloc noté : même hauteur (clair)
+CIF12|clair|bandeau [212.0, 212.0, 212.0, 212.0, 212.0, 212.0]|ligne 44.0 → 44.0
+00:19 +58 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S26-S31 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S26-S31|103|0
+00:19 +59 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S32-S36 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S32-S36|94|0
+00:20 +60 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +61 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +62 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +63 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +64 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +65 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +66 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +67 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +68 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:20 +69 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:21 +70 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+CI1H|global|S37-S40|64|0
+00:21 +71 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 1 — charge fixe contrôle global S37-S40 : journal facile, aucune série d’une ligne verrouillée hors de sa charge écrite
+00:21 +72 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: magasin sauvegarde : réponses du schéma 3 exportées et relues à l’identique
+00:21 +73 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 2 — prévision de fin de séance prévision égale à la séance ouverte juste après (S13·J6 → S14, dont S14·J6 ; S14·J4 → S14·J5…)
+00:21 +74 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 2 — prévision de fin de séance prévision égale à la séance ouverte juste après (S13·J6 → S14, dont S14·J6 ; S14·J4 → S14·J5…)
+CI1H|prevision|S13J6|6
+00:21 +75 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ci1h_charge_fixe_test.dart: défaut 2 — prévision de fin de séance prévision égale à la séance ouverte juste après (S13·J6 → S14, dont S14·J6 ; S14·J4 → S14·J5…)
+CI1H|prevision|S14J4|6
+CI1H|prevision|S14J5|4
+00:21 +76 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:22 +77 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:22 +78 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:23 +79 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:23 +79 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:23 +79 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g10_charges_consigne_test.dart: sans données de l’ancien Koach : identique à 2.x [E]
+  Expected: [
+              'P0-6',
+              7.5,
+              '16.5 lb',
+              'Montée en singles puis 2-3 tentatives',
+              6,
+              'reps',
+              'T',
+              false,
+              false,
+              null,
+              null,
+              [1, 1, 1, 1, 1, 1],
+              [300, 300, 300, 300, 300, 300],
+              true,
+              null,
+              false
+            ]
+    Actual: [
+              'P0-6',
+              7.5,
+              '16,5 lb',
+              'Montée en singles puis 2-3 tentatives',
+              6,
+              'reps',
+              'T',
+              false,
+              false,
+              null,
+              null,
+              [1, 1, 1, 1, 1, 1],
+              [300, 300, 300, 300, 300, 300],
+              true,
+              null,
+              false
+            ]
+     Which: at location [2] is '16,5 lb' instead of '16.5 lb'
+  sans Koach · programme-lb · P0-6
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/rv1_zz_g10_charges_consigne_test.dart 184:9    main.compareAll
+  test/rv1_zz_g10_charges_consigne_test.dart 208:5    main.<fn>
+  
+00:23 +79 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:23 +79 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite [E]
+  Expected: [
+              'P0-6',
+              7.5,
+              '16.5 lb',
+              'Montée en singles puis 2-3 tentatives',
+              6,
+              'reps',
+              'T',
+              false,
+              false,
+              null,
+              null,
+              [1, 1, 1, 1, 1, 1],
+              [300, 300, 300, 300, 300, 300],
+              true,
+              null,
+              false
+            ]
+    Actual: [
+              'P0-6',
+              7.5,
+              '16,5 lb',
+              'Montée en singles puis 2-3 tentatives',
+              6,
+              'reps',
+              'T',
+              false,
+              false,
+              null,
+              null,
+              [1, 1, 1, 1, 1, 1],
+              [300, 300, 300, 300, 300, 300],
+              true,
+              null,
+              false
+            ]
+     Which: at location [2] is '16,5 lb' instead of '16.5 lb'
+  données L7 présentes · programme-lb · P0-6
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/rv1_zz_g10_charges_consigne_test.dart 184:9    main.compareAll
+  test/rv1_zz_g10_charges_consigne_test.dart 226:5    main.<fn>
+  
+00:24 +80 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:24 +81 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:24 +82 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:24 +83 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:25 +84 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:25 +85 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g1_mode_dev_test.dart: toujours import Sauvegarde d’une session de test : avertissement avant tout aperçu
+00:25 +86 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:25 +86 ~1 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:25 +86 ~2 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:25 +86 ~3 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:25 +86 ~4 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:25 +86 ~5 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:28 +87 ~5 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3
+00:28 +88 ~5 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3
+00:28 +89 ~5 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3
+00:29 +90 ~5 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3
+00:29 +91 ~5 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3
+00:29 +92 ~5 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3
+00:29 +93 ~5 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3
+00:30 +93 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: (setUpAll)
+00:30 +93 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3 [E]
+  Expected: empty
+    Actual: [
+              '/banc_charge/seances/S39-J6/series : 3 → 8',
+              '/banc_charge/seances/S38-J6/series : 37 → 44',
+              '/banc_charge/seances/S37-J6/series : 37 → 44',
+              '/banc_charge/seances/S36-J6/series : 37 → 44',
+              '/banc_charge/seances/S35-J6/series : 33 → 38',
+              '/banc_charge/seances/S34-J6/series : 37 → 44',
+              '/banc_charge/seances/S33-J6/series : 37 → 44',
+              '/banc_charge/seances/S32-J6/series : 37 → 44',
+              '/banc_charge/seances/S30-J6/series : 33 → 38',
+              '/banc_charge/seances/S29-J6/series : 34 → 41',
+              '/banc_charge/seances/S28-J6/series : 34 → 41',
+              '/banc_charge/seances/S27-J6/series : 34 → 41',
+              '/banc_charge/seances/S26-J6/series : 34 → 41',
+              '/banc_charge/seances/S25-J6/series : 3 → 8',
+              '/banc_charge/seances/S24-J6/series : 37 → 44',
+              '/banc_charge/seances/S23-J6/series : 33 → 38',
+              '/banc_charge/seances/S22-J6/series : 37 → 44',
+              '/banc_charge/seances/S21-J6/series : 37 → 44',
+              '/banc_charge/seances/S20-J6/series : 37 → 44',
+              '/banc_charge/seances/S10-J6/series : 34 → 41',
+              '/banc_charge/seances/S9-J6/series : 34 → 41',
+              '/banc_charge/seances/S8-J6/series : 34 → 41',
+              '/banc_charge/seances/S7-J6/series : 33 → 38',
+              '/banc_charge/seances/S6-J6/series : 34 → 41',
+              ...
+            ]
+  /banc_charge/seances/S39-J6/series : 3 → 8
+  /banc_charge/seances/S38-J6/series : 37 → 44
+  /banc_charge/seances/S37-J6/series : 37 → 44
+  /banc_charge/seances/S36-J6/series : 37 → 44
+  /banc_charge/seances/S35-J6/series : 33 → 38
+  /banc_charge/seances/S34-J6/series : 37 → 44
+  /banc_charge/seances/S33-J6/series : 37 → 44
+  /banc_charge/seances/S32-J6/series : 37 → 44
+  /banc_charge/seances/S30-J6/series : 33 → 38
+  /banc_charge/seances/S29-J6/series : 34 → 41
+  /banc_charge/seances/S28-J6/series : 34 → 41
+  /banc_charge/seances/S27-J6/series : 34 → 41
+  /banc_charge/seances/S26-J6/series : 34 → 41
+  /banc_charge/seances/S25-J6/series : 3 → 8
+  /banc_charge/seances/S24-J6/series : 37 → 44
+  /banc_charge/seances/S23-J6/series : 33 → 38
+  /banc_charge/seances/S22-J6/series : 37 → 44
+  /banc_charge/seances/S21-J6/series : 37 → 44
+  /banc_charge/seances/S20-J6/series : 37 → 44
+  /banc_charge/seances/S10-J6/series : 34 → 41
+  /banc_charge/seances/S9-J6/series : 34 → 41
+  /banc_charge/seances/S8-J6/series : 34 → 41
+  /banc_charge/seances/S7-J6/series : 33 → 38
+  /banc_charge/seances/S6-J6/series : 34 → 41
+  /banc_charge/seances/S5-J6/series : 34 → 41
+  /banc_charge/seances/S4-J6/series : 34 → 41
+  /banc_charge/seances/S3-J6/series : 34 → 41
+  /banc_charge/seances/S1-J6/series : 3 → 8
+  /banc_charge/meilleures/ab wheel[0] : 152.6 → 144.2
+  /banc_charge/meilleures/ab wheel[1] : 109.0 → 103.0
+  /banc_charge/meilleures/back squat lift principal[0] : 151.9 → 146.0
+  /banc_charge/meilleures/back squat lift principal[1] : 108.5 → 109.5
+  /banc_charge/meilleures/back squat lift principal[2] : 12 → 10
+  /banc_charge/meilleures/bilan report des resultats[0] : 132.367 → 82.017
+  /banc_charge/meilleures/bilan report des resultats[1] : 104.5 → 66.5
+  /banc_charge/meilleures/bilan report des resultats[2] : 8 → 7
+  /banc_charge/meilleures/contraste francais muscle-up[0] : 145.55 → 147.6
+  /banc_charge/meilleures/contraste francais muscle-up[1] : 106.5 → 108.0
+  /banc_charge/meilleures/contraste francais squat[0] : 138.6 → 135.2
+  /banc_charge/meilleures/contraste francais squat[1] : 99.0 → 104.0
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/rv1_zz_g3_historique_test.dart 175:7           main.<fn>
+  
+00:30 +93 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle (setUpAll)
+00:30 +93 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle matériel regroupé : tout le vocabulaire de la base, une fois
+00:30 +94 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle mouvements de référence : exercices du catalogue, fourchettes ordonnées, disciplines couvertes
+00:30 +95 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle dosage : 1 à 2 secondaires, principale la plus grande, somme 100
+00:30 +96 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle étapes : chaque réponse obligatoire est demandée
+00:30 +97 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle profil v2 construit : contrat, catalogue, matériel par lieu
+00:30 +98 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle brouillon et section : aller-retour JSON identique
+00:30 +99 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle objectifs proposés (provisoires, G12) : valides et prudents
+00:30 +100 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle rubriques changées et effet sur le programme
+00:30 +101 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle référence santé : sans réponse, prudent, standard
+00:30 +102 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: modèle (tearDownAll)
+00:30 +102 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: magasin installation neuve : profil v2 enregistré, relu, sauvegardé
+00:30 +103 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: magasin mode prudent avec le profil v2 : âge, gêne, accord daté
+00:31 +104 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: magasin retrait du consentement : gênes v2 effacées, sans réponse
+00:31 +105 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: magasin sauvegardes : ancienne sans profil v2, import strict, section illisible gardée au démarrage
+00:31 +106 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: magasin refaire son profil (session personnelle) : rien d’autre ne change
+00:31 +107 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: magasin sans profil v2 : séance hors moteur (L7 inchangé)
+00:31 +108 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: magasin sans profil v2 : séance hors moteur (L7 inchangé)
+00:31 +109 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:32 +110 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:32 +111 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:32 +112 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:32 +113 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:33 +114 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:33 +115 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:33 +116 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: magasin mode libre : l’ajustement est proposé, rien n’est appliqué sans accord
+00:33 +117 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans moins de 18 ans : message neutre, aucune écriture
+00:33 +118 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: magasin douleur : zone épargnée ; règle L13 (> 3/10 plus de 2 séances de suite) → renvoi vers un professionnel
+00:33 +119 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans fermer pendant la création : reprise à la même étape
+00:34 +120 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans fermer pendant la création : reprise à la même étape
+00:34 +121 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: magasin conseil en mode libre : proposé, appliqué seulement après accord
+00:34 +122 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans texte à 200 % sans débordement (sombre)
+00:34 +123 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans texte à 200 % sans débordement (sombre)
+00:34 +124 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: magasin résumé de fin : calibrage, capacité avant / après, prochaine fois
+00:34 +125 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans texte à 200 % sans débordement (clair)
+00:34 +126 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans texte à 200 % sans débordement (clair)
+00:34 +127 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans texte à 200 % sans débordement (clair)
+00:34 +128 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans (setUpAll)
+00:34 +128 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g6_profil_test.dart: écrans Réglages › Profil : rubrique modifiée, Koach signale le programme ; santé
+00:35 +129 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:35 +130 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:36 +131 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'flame-pos-8'>]: [
+  Positioned-[<'flame-pos-8'>](left: 228.2, top: 0.0, width: 32.6, height: 48.0),
+]" derived an Offset (Offset(280.5, 357.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#a2369
+The hit test result at that offset is: HitTestResult(RenderCustomPaint#ddf2d@Offset(244.5, 24.0), RenderStack#bbf89@Offset(244.5, 24.0), RenderConstrainedBox#56f4b@Offset(244.5, 24.0), RenderPointerListener#71b53@Offset(244.5, 24.0), RenderSemanticsGestureHandler#eded4@Offset(244.5, 24.0), _RenderLayoutBuilder#8279c@Offset(244.5, 24.0), RenderSemanticsAnnotations#de6e8@Offset(244.5, 24.0), RenderFlex#ceb6b@Offset(244.5, 72.0), RenderPadding#37e39@Offset(248.5, 72.0), RenderFlex#13acb@Offset(248.5, 104.0), _RenderSingleChildViewport#b40a0@Offset(248.5, 104.0), RenderIgnorePointer#59096@Offset(248.5, 104.0), RenderSemanticsAnnotations#5cc37@Offset(248.5, 104.0), RenderPointerListener#53a48@Offset(248.5, 104.0), RenderSemanticsGestureHandler#f10db@Offset(248.5, 104.0), RenderPointerListener#074ac@Offset(248.5, 104.0), _RenderScrollSemantics#6c626@Offset(248.5, 104.0), RenderClipRect#052c3@Offset(248.5, 104.0), RenderPadding#7851d@Offset(264.5, 120.0), _RenderInkFeatures#22c43@Offset(264.5, 120.0), RenderCustomPaint#c02f2@Offset(264.5, 120.0), RenderPhysicalShape#4e50b@Offset(264.5, 120.0), RenderConstrainedBox#07903@Offset(264.5, 120.0), RenderPositionedBox#581fb@Offset(264.5, 333.0), RenderPadding#d3c60@Offset(280.5, 357.0), RenderSemanticsAnnotations#7fddd@Offset(280.5, 357.0), RenderPadding#8749d@Offset(280.5, 357.0), RenderSemanticsAnnotations#d0516@Offset(280.5, 357.0), RenderPadding#d89f6@Offset(280.5, 357.0), RenderSemanticsAnnotations#62d5e@Offset(280.5, 357.0), RenderRepaintBoundary#56a94@Offset(280.5, 357.0), RenderIgnorePointer#70197@Offset(280.5, 357.0), RenderAnimatedOpacity#4828b@Offset(280.5, 357.0), RenderRepaintBoundary#59d67@Offset(280.5, 357.0), RenderSemanticsAnnotations#03820@Offset(280.5, 357.0), RenderOffstage#e07b1@Offset(280.5, 357.0), RenderSemanticsAnnotations#7d9f9@Offset(280.5, 357.0), _RenderTheater#c6da3@Offset(280.5, 357.0), RenderAbsorbPointer#46241@Offset(280.5, 357.0), RenderPointerListener#248d5@Offset(280.5, 357.0), RenderSemanticsAnnotations#422e4@Offset(280.5, 357.0), RenderCustomPaint#d4dcf@Offset(280.5, 357.0), RenderSemanticsAnnotations#b2879@Offset(280.5, 357.0), RenderSemanticsAnnotations#b388d@Offset(280.5, 357.0), RenderSemanticsAnnotations#1a259@Offset(280.5, 357.0), RenderTapRegionSurface#36cdd@Offset(280.5, 357.0), RenderSemanticsAnnotations#17166@Offset(280.5, 357.0), RenderSemanticsAnnotations#ba389@Offset(280.5, 357.0), HitTestEntry<HitTestTarget>#78f8b(_ReusableRenderView#f0b7d), HitTestEntry<HitTestTarget>#c346a(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart:667:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:36 +132 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:36 +133 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'flame-pos-8'>]: [
+  Positioned-[<'flame-pos-8'>](left: 228.2, top: 0.0, width: 32.6, height: 48.0),
+]" derived an Offset (Offset(280.5, 431.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#76a68
+The hit test result at that offset is: HitTestResult(RenderCustomPaint#28aad@Offset(244.5, 24.0), RenderStack#d06b7@Offset(244.5, 24.0), RenderConstrainedBox#df3d9@Offset(244.5, 24.0), RenderPointerListener#a0588@Offset(244.5, 24.0), RenderSemanticsGestureHandler#c026b@Offset(244.5, 24.0), _RenderLayoutBuilder#8fed7@Offset(244.5, 24.0), RenderSemanticsAnnotations#3a8c7@Offset(244.5, 24.0), RenderFlex#50e3b@Offset(244.5, 72.0), RenderPadding#9727c@Offset(248.5, 72.0), RenderFlex#c1637@Offset(248.5, 104.0), _RenderSingleChildViewport#082cd@Offset(248.5, 104.0), RenderIgnorePointer#509da@Offset(248.5, 104.0), RenderSemanticsAnnotations#e3761@Offset(248.5, 104.0), RenderPointerListener#9714f@Offset(248.5, 104.0), RenderSemanticsGestureHandler#84594@Offset(248.5, 104.0), RenderPointerListener#b1243@Offset(248.5, 104.0), _RenderScrollSemantics#f5530@Offset(248.5, 104.0), RenderClipRect#27b18@Offset(248.5, 104.0), RenderPadding#75750@Offset(264.5, 120.0), _RenderInkFeatures#b8bbf@Offset(264.5, 120.0), RenderCustomPaint#facc8@Offset(264.5, 120.0), RenderPhysicalShape#015c1@Offset(264.5, 120.0), RenderConstrainedBox#ef369@Offset(264.5, 120.0), RenderPositionedBox#48bca@Offset(264.5, 407.0), RenderPadding#0de1c@Offset(280.5, 431.0), RenderSemanticsAnnotations#894ba@Offset(280.5, 431.0), RenderPadding#7c71a@Offset(280.5, 431.0), RenderSemanticsAnnotations#9fc50@Offset(280.5, 431.0), RenderPadding#cdd52@Offset(280.5, 431.0), RenderSemanticsAnnotations#f2de9@Offset(280.5, 431.0), RenderRepaintBoundary#f825f@Offset(280.5, 431.0), RenderIgnorePointer#707cd@Offset(280.5, 431.0), RenderAnimatedOpacity#40f6b@Offset(280.5, 431.0), RenderRepaintBoundary#e12bf@Offset(280.5, 431.0), RenderSemanticsAnnotations#c7425@Offset(280.5, 431.0), RenderOffstage#81218@Offset(280.5, 431.0), RenderSemanticsAnnotations#a7614@Offset(280.5, 431.0), _RenderTheater#c6da3@Offset(280.5, 431.0), RenderAbsorbPointer#46241@Offset(280.5, 431.0), RenderPointerListener#248d5@Offset(280.5, 431.0), RenderSemanticsAnnotations#422e4@Offset(280.5, 431.0), RenderCustomPaint#d4dcf@Offset(280.5, 431.0), RenderSemanticsAnnotations#b2879@Offset(280.5, 431.0), RenderSemanticsAnnotations#b388d@Offset(280.5, 431.0), RenderSemanticsAnnotations#1a259@Offset(280.5, 431.0), RenderTapRegionSurface#36cdd@Offset(280.5, 431.0), RenderSemanticsAnnotations#17166@Offset(280.5, 431.0), RenderSemanticsAnnotations#ba389@Offset(280.5, 431.0), HitTestEntry<HitTestTarget>#1c073(_ReusableRenderView#f0b7d), HitTestEntry<HitTestTarget>#b9c30(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart:677:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'flame-pos-6'>]: [
+  Positioned-[<'flame-pos-6'>](left: 163.0, top: 0.0, width: 32.6, height: 48.0),
+]" derived an Offset (Offset(215.3, 431.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#b35ea
+The hit test result at that offset is: HitTestResult(RenderCustomPaint#6264f@Offset(179.3, 24.0), RenderStack#4cca3@Offset(179.3, 24.0), RenderConstrainedBox#4ddf4@Offset(179.3, 24.0), RenderPointerListener#f4205@Offset(179.3, 24.0), RenderSemanticsGestureHandler#3c3c6@Offset(179.3, 24.0), _RenderLayoutBuilder#19748@Offset(179.3, 24.0), RenderSemanticsAnnotations#71328@Offset(179.3, 24.0), RenderFlex#a4feb@Offset(179.3, 72.0), RenderPadding#ea49b@Offset(183.3, 72.0), RenderFlex#b1578@Offset(183.3, 104.0), _RenderSingleChildViewport#9b102@Offset(183.3, 104.0), RenderIgnorePointer#56189@Offset(183.3, 104.0), RenderSemanticsAnnotations#a1d7e@Offset(183.3, 104.0), RenderPointerListener#a3279@Offset(183.3, 104.0), RenderSemanticsGestureHandler#1f542@Offset(183.3, 104.0), RenderPointerListener#41393@Offset(183.3, 104.0), _RenderScrollSemantics#1e142@Offset(183.3, 104.0), RenderClipRect#17196@Offset(183.3, 104.0), RenderPadding#da291@Offset(199.3, 120.0), _RenderInkFeatures#a6089@Offset(199.3, 120.0), RenderCustomPaint#9a97b@Offset(199.3, 120.0), RenderPhysicalShape#9ee25@Offset(199.3, 120.0), RenderConstrainedBox#d75f1@Offset(199.3, 120.0), RenderPositionedBox#0eedc@Offset(199.3, 407.0), RenderPadding#1e65a@Offset(215.3, 431.0), RenderSemanticsAnnotations#a0c3c@Offset(215.3, 431.0), RenderPadding#f1480@Offset(215.3, 431.0), RenderSemanticsAnnotations#5ed15@Offset(215.3, 431.0), RenderPadding#00a89@Offset(215.3, 431.0), RenderSemanticsAnnotations#bc2a4@Offset(215.3, 431.0), RenderRepaintBoundary#39e1c@Offset(215.3, 431.0), RenderIgnorePointer#9039a@Offset(215.3, 431.0), RenderAnimatedOpacity#10bce@Offset(215.3, 431.0), RenderRepaintBoundary#d5f2c@Offset(215.3, 431.0), RenderSemanticsAnnotations#c9b85@Offset(215.3, 431.0), RenderOffstage#1f3d2@Offset(215.3, 431.0), RenderSemanticsAnnotations#36194@Offset(215.3, 431.0), _RenderTheater#c6da3@Offset(215.3, 431.0), RenderAbsorbPointer#46241@Offset(215.3, 431.0), RenderPointerListener#248d5@Offset(215.3, 431.0), RenderSemanticsAnnotations#422e4@Offset(215.3, 431.0), RenderCustomPaint#d4dcf@Offset(215.3, 431.0), RenderSemanticsAnnotations#b2879@Offset(215.3, 431.0), RenderSemanticsAnnotations#b388d@Offset(215.3, 431.0), RenderSemanticsAnnotations#1a259@Offset(215.3, 431.0), RenderTapRegionSurface#36cdd@Offset(215.3, 431.0), RenderSemanticsAnnotations#17166@Offset(215.3, 431.0), RenderSemanticsAnnotations#ba389@Offset(215.3, 431.0), HitTestEntry<HitTestTarget>#44a67(_ReusableRenderView#f0b7d), HitTestEntry<HitTestTarget>#946ad(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart:690:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:37 +134 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans ligne des flammes : 9 points et la flamme, toucher, glisser, « Je ne sais pas », écarter, clair et sombre
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'flame-pos-3'>]: [
+  Positioned-[<'flame-pos-3'>](left: 70.0, top: 0.0, width: 35.0, height: 48.0),
+]" derived an Offset (Offset(107.5, 88.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#6d1bd
+The hit test result at that offset is: HitTestResult(RenderCustomPaint#f9455@Offset(87.5, 24.0), RenderStack#8fb8b@Offset(87.5, 24.0), RenderConstrainedBox#30935@Offset(87.5, 24.0), RenderPointerListener#59969@Offset(87.5, 24.0), RenderSemanticsGestureHandler#6df9b@Offset(87.5, 24.0), _RenderLayoutBuilder#bf5e9@Offset(87.5, 24.0), RenderSemanticsAnnotations#0045e@Offset(87.5, 24.0), RenderFlex#9a40b@Offset(87.5, 72.0), RenderPadding#e1f81@Offset(91.5, 72.0), RenderFlex#cf818@Offset(91.5, 72.0), RenderPadding#957b8@Offset(107.5, 88.0), RenderCustomMultiChildLayoutBox#dbff3@Offset(107.5, 88.0), _RenderInkFeatures#3745e@Offset(107.5, 88.0), RenderPhysicalModel#48d9c@Offset(107.5, 88.0), RenderSemanticsAnnotations#c9b6a@Offset(107.5, 88.0), RenderRepaintBoundary#37326@Offset(107.5, 88.0), RenderIgnorePointer#9197c@Offset(107.5, 88.0), RenderAnimatedOpacity#297b9@Offset(107.5, 88.0), RenderRepaintBoundary#f407c@Offset(107.5, 88.0), RenderSemanticsAnnotations#3d582@Offset(107.5, 88.0), RenderOffstage#9ff32@Offset(107.5, 88.0), RenderSemanticsAnnotations#4b269@Offset(107.5, 88.0), _RenderTheater#1b450@Offset(107.5, 88.0), RenderAbsorbPointer#6f9cf@Offset(107.5, 88.0), RenderPointerListener#7ece5@Offset(107.5, 88.0), RenderSemanticsAnnotations#a4957@Offset(107.5, 88.0), RenderCustomPaint#db041@Offset(107.5, 88.0), RenderSemanticsAnnotations#208b3@Offset(107.5, 88.0), RenderSemanticsAnnotations#e2682@Offset(107.5, 88.0), RenderSemanticsAnnotations#5e657@Offset(107.5, 88.0), RenderTapRegionSurface#5fb2f@Offset(107.5, 88.0), RenderSemanticsAnnotations#cbc23@Offset(107.5, 88.0), RenderSemanticsAnnotations#81055@Offset(107.5, 88.0), HitTestEntry<HitTestTarget>#85ad3(_ReusableRenderView#f0b7d), HitTestEntry<HitTestTarget>#eb2cb(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart:786:22)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'flame-pos-3'>]: [
+  Positioned-[<'flame-pos-3'>](left: 70.0, top: 0.0, width: 35.0, height: 48.0),
+]" derived an Offset (Offset(107.5, 88.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#6d1bd
+The hit test result at that offset is: HitTestResult(RenderCustomPaint#f9455@Offset(87.5, 24.0), RenderStack#8fb8b@Offset(87.5, 24.0), RenderConstrainedBox#30935@Offset(87.5, 24.0), RenderPointerListener#59969@Offset(87.5, 24.0), RenderSemanticsGestureHandler#6df9b@Offset(87.5, 24.0), _RenderLayoutBuilder#bf5e9@Offset(87.5, 24.0), RenderSemanticsAnnotations#0045e@Offset(87.5, 24.0), RenderFlex#9a40b@Offset(87.5, 72.0), RenderPadding#e1f81@Offset(91.5, 72.0), RenderFlex#cf818@Offset(91.5, 72.0), RenderPadding#957b8@Offset(107.5, 88.0), RenderCustomMultiChildLayoutBox#dbff3@Offset(107.5, 88.0), _RenderInkFeatures#3745e@Offset(107.5, 88.0), RenderPhysicalModel#48d9c@Offset(107.5, 88.0), RenderSemanticsAnnotations#c9b6a@Offset(107.5, 88.0), RenderRepaintBoundary#37326@Offset(107.5, 88.0), RenderIgnorePointer#9197c@Offset(107.5, 88.0), RenderAnimatedOpacity#297b9@Offset(107.5, 88.0), RenderRepaintBoundary#f407c@Offset(107.5, 88.0), RenderSemanticsAnnotations#3d582@Offset(107.5, 88.0), RenderOffstage#9ff32@Offset(107.5, 88.0), RenderSemanticsAnnotations#4b269@Offset(107.5, 88.0), _RenderTheater#1b450@Offset(107.5, 88.0), RenderAbsorbPointer#6f9cf@Offset(107.5, 88.0), RenderPointerListener#7ece5@Offset(107.5, 88.0), RenderSemanticsAnnotations#a4957@Offset(107.5, 88.0), RenderCustomPaint#db041@Offset(107.5, 88.0), RenderSemanticsAnnotations#208b3@Offset(107.5, 88.0), RenderSemanticsAnnotations#e2682@Offset(107.5, 88.0), RenderSemanticsAnnotations#5e657@Offset(107.5, 88.0), RenderTapRegionSurface#5fb2f@Offset(107.5, 88.0), RenderSemanticsAnnotations#cbc23@Offset(107.5, 88.0), RenderSemanticsAnnotations#81055@Offset(107.5, 88.0), HitTestEntry<HitTestTarget>#eb521(_ReusableRenderView#f0b7d), HitTestEntry<HitTestTarget>#c2921(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart:786:22)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:37 +135 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans ligne des flammes : 9 points et la flamme, toucher, glisser, « Je ne sais pas », écarter, clair et sombre
+00:37 +136 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans ligne des flammes : 9 points et la flamme, toucher, glisser, « Je ne sais pas », écarter, clair et sombre
+00:37 +137 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans ligne des flammes : 9 points et la flamme, toucher, glisser, « Je ne sais pas », écarter, clair et sombre
+00:37 +138 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans ligne des flammes : 9 points et la flamme, toucher, glisser, « Je ne sais pas », écarter, clair et sombre
+00:37 +139 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_game_test.dart: avec le programme objectif hebdo adaptatif : entre 2 et les journées du programme
+00:37 +140 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_game_test.dart: avec le programme objectif hebdo adaptatif : entre 2 et les journées du programme
+00:37 +141 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans ligne résumée : flamme alignée avec le texte
+00:37 +142 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_game_test.dart: avec le programme campagne : 6 chapitres, 4 boss, 4 saisons, aucun titre au départ
+00:37 +143 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans résumé de fin de séance : Koach, calibrage, progrès, prochaine fois
+00:37 +144 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans résumé de fin de séance : Koach, calibrage, progrès, prochaine fois
+00:37 +145 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans résumé de fin de séance : Koach, calibrage, progrès, prochaine fois
+00:38 +146 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans résumé de fin de séance : Koach, calibrage, progrès, prochaine fois
+00:38 +147 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g9_seance_test.dart: écrans (tearDownAll)
+00:38 +147 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: paquets kalis_adapt 1.0.6 (KB4) et kalis_plan 0.4.2 : copies à l’octet de leurs étiquettes ; kalis_core 0.4.4 inchangé
+00:39 +148 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: paquets kalis_adapt : Dart et assets seulement dans l’arbre (C17.19.3)
+00:39 +149 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: paquets asset de paramètres 1.0.7 (KB4) : SHA-256, déclaration, chemin lu
+00:39 +150 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: paquets deux textes de raison de 1.0.5 (retour progressif)
+00:39 +151 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: bascule fermée bascule fermée (repli) : le moteur d’avant sert le bloc en cours
+00:39 +152 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: bascule fermée bascule fermée (repli) : le moteur d’avant sert le bloc en cours
+00:39 +153 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: bascule ouverte (C17.34) date d’ouverture notée au premier lancement ; la date d’installation de dev7.0.0 à dev7.2.0 ne compte pas
+00:39 +153 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: bascule fermée export du journal moteur avant la bascule (KB2) : versions de 1.0.5, séances au format de walk_forward
+KB1|export|seances=84|series=1839
+00:39 +154 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: bascule ouverte (C17.34) date d’ouverture notée au premier lancement ; la date d’installation de dev7.0.0 à dev7.2.0 ne compte pas
+00:39 +155 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: session de test : bascule forcée avec Koach 1.0.5 prise de main par 1.0.5 : instantané et paramètres de 1.0.5
+00:42 +156 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: programme importé PR2 (départ affiché S15) ouverture le dimanche 18/10 : prise de main en S15 interne (S1 affichée) dès J1
+KB2|dimanche|prise_de_main_ms=2733|evenements=2024
+00:43 +157 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: session de test : bascule forcée avec Koach 1.0.5 journal d’une version d’avant (dev7.1.x, Koach 1.0.3) rejoué par 1.0.5 sans perte ; l’export le dit
+00:45 +158 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: session de test : bascule forcée avec Koach 1.0.5 journal d’une version d’avant (dev7.1.x, Koach 1.0.3) rejoué par 1.0.5 sans perte ; l’export le dit
+00:45 +159 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: session de test : bascule forcée avec Koach 1.0.5 journal d’une version d’avant (dev7.1.x, Koach 1.0.3) rejoué par 1.0.5 sans perte ; l’export le dit
+00:47 +160 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: session de test : bascule forcée avec Koach 1.0.5 journal d’une version d’avant (dev7.1.x, Koach 1.0.3) rejoué par 1.0.5 sans perte ; l’export le dit
+00:47 +161 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: session de test : bascule forcée avec Koach 1.0.5 journal d’une version d’avant (dev7.1.x, Koach 1.0.3) rejoué par 1.0.5 sans perte ; l’export le dit
+00:48 +162 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: session de test : bascule forcée avec Koach 1.0.5 journal d’une version d’avant (dev7.1.x, Koach 1.0.3) rejoué par 1.0.5 sans perte ; l’export le dit
+00:48 +163 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: programme importé PR2 (départ affiché S15) charge fixe (C15) : squat d’endurance servi à 70 kg par Koach ; arrêt d’urgence puis réactivation
+00:49 +163 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: migration depuis dev7.1.9 programme de 40 semaines, S1 à S14 : mêmes séances, séries et records ; rien réécrit ; sauvegarde d’origine intacte
+KB1|migration|seances=84|series=2057|records=0
+00:49 +164 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: programme importé PR2 (départ affiché S15) charge fixe (C15) : squat d’endurance servi à 70 kg par Koach ; arrêt d’urgence puis réactivation
+00:49 +165 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: programme importé PR2 (départ affiché S15) charge fixe (C15) : squat d’endurance servi à 70 kg par Koach ; arrêt d’urgence puis réactivation
+00:49 +165 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb1_koach105_test.dart: carte « Structure de la semaine » profil street 50 / 50, poignet très gêné : kalis_plan 0.4.2 change le type des jours de poussée et dit pourquoi
+KB1|structure|Mardi devient « Récupération » pour ménager ton poignet (gêne 6/10).
+KB1|structure|Vendredi devient « Récupération » pour ménager ton poignet (gêne 6/10).
+00:49 +166 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: programme importé PR2 (départ affiché S15) charge fixe (C15) : squat d’endurance servi à 70 kg par Koach ; arrêt d’urgence puis réactivation
+00:50 +167 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: programme importé PR2 (départ affiché S15) charge fixe (C15) : squat d’endurance servi à 70 kg par Koach ; arrêt d’urgence puis réactivation
+00:50 +168 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: programme importé PR2 (départ affiché S15) charge fixe (C15) : squat d’endurance servi à 70 kg par Koach ; arrêt d’urgence puis réactivation
+00:50 +169 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: programme importé PR2 (départ affiché S15) charge fixe (C15) : squat d’endurance servi à 70 kg par Koach ; arrêt d’urgence puis réactivation
+00:51 +170 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique S1·J1 servie par Koach : mêmes exercices, même ordre que l’écrit ; muscle-up et traction lestés servis par Koach 1.0.6, réduits au plus
+00:53 +171 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique S1·J1 servie par Koach : mêmes exercices, même ordre que l’écrit ; muscle-up et traction lestés servis par Koach 1.0.6, réduits au plus
+00:53 +172 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: données migration depuis dev7.2.0 : aucune séance réécrite, sauvegarde d’origine intacte ; export après la prise de main réimporté à l’identique
+00:57 +173 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: données migration depuis dev7.2.0 : aucune séance réécrite, sauvegarde d’origine intacte ; export après la prise de main réimporté à l’identique
+00:58 +174 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « douleur » menée de bout en bout : réponse acceptée, action « conduite_douleur », séance servie par Koach
+00:59 +175 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+01:01 +176 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2_prise_de_main_test.dart: données application fermée pendant la prise de main : rien d’écrit, reprise propre au lancement suivant
+01:01 +177 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « fatigue » menée de bout en bout : réponse acceptée, action « semaine_allegee », séance servie par Koach
+01:02 +178 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « fatigue » menée de bout en bout : réponse acceptée, action « semaine_allegee », séance servie par Koach
+01:02 +179 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « fatigue » menée de bout en bout : réponse acceptée, action « semaine_allegee », séance servie par Koach
+01:02 +180 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « fatigue » menée de bout en bout : réponse acceptée, action « semaine_allegee », séance servie par Koach
+01:03 +181 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « rien » menée de bout en bout : réponse acceptée, action « elargir », séance servie par Koach
+01:03 +182 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « rien » menée de bout en bout : réponse acceptée, action « elargir », séance servie par Koach
+01:03 +183 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « rien » menée de bout en bout : réponse acceptée, action « elargir », séance servie par Koach
+01:03 +184 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique cause « rien » menée de bout en bout : réponse acceptée, action « elargir », séance servie par Koach
+01:05 +185 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) raisons gardées après la première série (`plan(serie)`)
+01:07 +186 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique réponse refusée (objet du choix au lieu de son code) : jamais en silence — séance écrite servie, question reposée
+01:07 +187 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) séances manquées : rôle de l’emplacement sur chaque item
+01:09 +188 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb2c1_seance_servie_test.dart: programme PR2 synthétique arrêt d’urgence pendant une séance commencée : retour à la séance écrite, séries notées gardées ; réactivation
+01:11 +189 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:11 +190 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:11 +191 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:11 +192 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:11 +193 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:11 +194 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:11 +195 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:12 +195 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: lignes EMOM « volume » : une ligne par minute « EMOM 8 min × 3 reps par minute » : 8 lignes de 3, départ toutes les 60 s, reps arrondies comme l’écrit
+KB4|emom_B16|{"label":"EMOM 8 min × 3 reps par minute","lignes":8}
+KB4|emom_B17|{"label":"EMOM 10 min × 8 reps par minute","lignes":10}
+KB4|emom_B18|{"label":"EMOM 12 min × 18 reps par minute","lignes":12}
+01:12 +196 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:12 +197 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb3_koach106_test.dart: programme PR2 synthétique (C17.37) passage depuis dev7.2.4 : prise de main de 1.0.5 gardée, séances faites, journal et programme d’origine intacts
+01:14 +198 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) lundi de tirage et mardi de poussée servis avec toutes leurs lignes à leurs séries écrites ; le programme dépasse la limite de la rampe (chest, delt_anterior, triceps)
+01:14 +199 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) lundi de tirage et mardi de poussée servis avec toutes leurs lignes à leurs séries écrites ; le programme dépasse la limite de la rampe (chest, delt_anterior, triceps)
+01:16 +199 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: assets et paquet assets de Koach = copies à l’octet du paquet, SHA-256 attendus
+KM3|paquet|1.0.7-ref.1|1.0.7-ref.1
+01:16 +200 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) lundi de tirage et mardi de poussée servis avec toutes leurs lignes à leurs séries écrites ; le programme dépasse la limite de la rampe (chest, delt_anterior, triceps)
+01:16 +201 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) lundi de tirage et mardi de poussée servis avec toutes leurs lignes à leurs séries écrites ; le programme dépasse la limite de la rampe (chest, delt_anterior, triceps)
+01:16 +202 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) lundi de tirage et mardi de poussée servis avec toutes leurs lignes à leurs séries écrites ; le programme dépasse la limite de la rampe (chest, delt_anterior, triceps)
+01:17 +203 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) lundi de tirage et mardi de poussée servis avec toutes leurs lignes à leurs séries écrites ; le programme dépasse la limite de la rampe (chest, delt_anterior, triceps)
+KB4|scenario|{"J1":{"servis":{"j1-sl-muscle-up-leste":6,"j1-sl-traction-lestee":8,"j1-sw-pompe":8,"j1-mu-rowing-barre-pronation":3,"j1-mu-reverse-wrist-curl-haltere":3,"j1-mu-face-pull-corde":3,"j1-mu-curl-marteau-halteres":3},"ecrites":{"j1-sl-muscle-up-leste":6,"j1-sl-traction-lestee":8,"j1-sw-pompe":8,"j1-mu-rowing-barre-pronation":3,"j1-mu-reverse-wrist-curl-haltere":3,"j1-mu-face-pull-corde":3,"j1-mu-curl-marteau-halteres":3},"garde":null,"retraits":null,"raisons":[],"cartes":["sl-muscle-up-leste:6×2 · E2MOM","sl-traction-lestee:8×3 · E2MOM","sw-pompe:8×11 · E2MOM","mu-rowing-barre-pronation:3 × 6-12","mu-reverse-wrist-curl-haltere:3 × 13-19","mu-face-pull-corde:3 × 13-19","mu-curl-marteau-halteres:3 × 8-14"],"entete":[],"rampe":{"chest":{"limite":55.8,"ecrit":66.5,"fait":0.0},"delt_anterior":{"limite":39.6,"ecrit":47.5,"fait":0.0},"triceps":{"limite":51.6,"ecrit":60.5,"fait":0.0}},"temps_ms":67.165},"J2":{"servis":{"j2-sl-dips-leste":8,"j2-sw-traction-pronation":8,"j2-sl-pompe-lestee-gilet":4,"j2-mu-developpe-militaire-barre-debout":3,"j2-mu-rotation-externe-haltere-couche":2,"j2-mu-pushdown-corde":3,"j2-mu-elevation-laterale-halteres":3},"ecrites":{"j2-sl-dips-leste":8,"j2-sw-traction-pronation":8,"j2-sl-pompe-lestee-gilet":4,"j2-mu-developpe-militaire-barre-debout":3,"j2-mu-rotation-externe-haltere-couche":2,"j2-mu-pushdown-corde":3,"j2-mu-elevation-laterale-halteres":3},"garde":null,"retraits":null,"raisons":[],"cartes":["sl-dips-leste:8×3 · E2MOM","sw-traction-pronation:8×6 · E2MOM","sl-pompe-lestee-gilet:4 × 4-10","mu-developpe-militaire-barre-debout:3 × 6-12","mu-rotation-externe-haltere-couche:2 × 13-19","mu-pushdown-corde:3 × 10-16","mu-elevation-laterale-halteres:3 × 13-19"],"entete":[],"rampe":{"chest":{"limite":55.8,"ecrit":66.5,"fait":10.0},"delt_anterior":{"limite":39.6,"ecrit":47.5,"fait":3.0},"triceps":{"limite":51.6,"ecrit":60.5,"fait":6.0}},"temps_ms":24.094}}
+01:18 +204 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) prise de main : historique versé sans plan, référence, rejeu exact
+01:20 +204 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) douleur à l’épaule signalée le mardi : conduite sous douleur (retraits motivés), les autres lignes à leur écrit
+KB4|douleur|{"servis":{"j2-mu-pushdown-corde":3},"retraits":[{"slotId":"j2-sl-dips-leste","exercice":"sl-dips-leste","code":"koach.douleur_retrait"},{"slotId":"j2-sw-traction-pronation","exercice":"sw-traction-pronation","code":"koach.douleur_retrait"},{"slotId":"j2-sl-pompe-lestee-gilet","exercice":"sl-pompe-lestee-gilet","code":"koach.douleur_retrait"},{"slotId":"j2-mu-developpe-militaire-barre-debout","exercice":"mu-developpe-militaire-barre-debout","code":"koach.douleur_retrait"},{"slotId":"j2-mu-rotation-externe-haltere-couche","exercice":"mu-rotation-externe-haltere-couche","code":"koach.douleur_retrait"},{"slotId":"j2-mu-elevation-laterale-halteres","exercice":"mu-elevation-laterale-halteres","code":"koach.douleur_retrait"}],"garde":null}
+01:20 +205 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) prise de main : historique versé sans plan, référence, rejeu exact
+KM3|prise_de_main|evenements=2022|seances=84|temps={prise_de_main: {dernier_ms: 2456.488, max_ms: 2456.488}}
+01:21 +206 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) réactivation après un arrêt : deux séances faites pendant l’arrêt versées dans l’ordre, jamais réécrites, Koach reprend à la suivante ; séance servie finie pendant l’arrêt fermée une fois
+KB4|reactivation|{"ajoutes":["serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","seance_fin","seance_debut","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","seance_fin","seance_debut","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","serie","seance_fin"],"jours":[98,99,99,100,100]}
+01:23 +207 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) séance servie : aperçu, début réel, cible par série, fin versée
+KM3|prevision|{"sl-muscle-up-leste":{"week":16,"j":1,"cible":{"repsLow":2,"repsHigh":2,"loadKg":91.25,"flames":9,"role":null,"trace":["modele 93.2 (rir 1.0)","hausse bornee 93.75 -> 91.25"],"proposition":{"type":"charge_plus","depart":83.75,"cible":91.25,"pas":1.25,"ampleur":6.0,"paliers":[86.25,88.75,91.25],"moment":"debut_de_seance","proba_min":0.6576795681242888}}},"sl-traction-lestee":{"week":16,"j":1,"cible":{"repsLow":3,"repsHigh":3,"loadKg":82.5,"flames":9,"role":null,"trace":["modele 85.9 (rir 1.0)","hausse bornee 86.25 -> 82.50"],"proposition":{"type":"charge_plus","depart":76.25,"cible":82.5,"pas":1.25,"ampleur":5.0,"paliers":[78.75,80.0,82.5],"moment":"debut_de_seance","proba_min":0.6576795681242888}}}}
+KM3|seance|temps={prise_de_main: {dernier_ms: 1563.576, max_ms: 1563.576}, plan_seance: {dernier_ms: 10.456, max_ms: 10.456}, debut_seance: {dernier_ms: 57.434, max_ms: 57.434}, plan_serie: {dernier_ms: 0.05, max_ms: 2.769}, observe_serie: {dernier_ms: 0.567, max_ms: 0.876}, prevision: {dernier_ms: 1744.303, max_ms: 1744.303}}
+01:25 +208 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) carte de reprise : arrêt d’avant dev7.4.0, « Plus tard » puis « Réactiver » (jamais automatique)
+01:25 +209 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) suggestion refusée « trop lourd » : décision versée après la fin
+01:27 +210 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) passage depuis dev7.3.0 : Koach actif, puis Koach arrêté avec une séance commencée : logs, programInstance, programOrigin identiques ; sauvegarde réimportée à l’identique
+01:31 +211 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) passage depuis dev7.3.0 : Koach actif, puis Koach arrêté avec une séance commencée : logs, programInstance, programOrigin identiques ; sauvegarde réimportée à l’identique
+01:32 +212 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) calculs dans un isolat, comme sur le téléphone : prise de main, rattrapage, début de séance, nouvelle référence, prévision, arrêt et réactivation (rien d’inenvoyable dans les messages)
+01:33 +212 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_kb4_koach107_test.dart: programme PR2 synthétique (C17.40) lignes EMOM « volume » de J4 et J5 : une ligne par minute, Koach actif comme arrêté
+KB4|emom_programme|{"actif_J4_NA-S15J4-01":{"label":"EMOM 8 min × 3 reps par minute","lignes":8,"every":60,"ecrit":true},"actif_J4_NA-S15J4-04":{"label":"EMOM 10 min × 8 reps par minute","lignes":10,"every":60,"ecrit":true},"actif_J5_NA-S15J5-03":{"label":"EMOM 12 min × 18 reps par minute","lignes":12,"every":60,"ecrit":true},"arrete_J4_NA-S15J4-01":{"label":"EMOM 8 min × 3 reps par minute","lignes":8,"every":60,"ecrit":true},"arrete_J4_NA-S15J4-04":{"label":"EMOM 10 min × 8 reps par minute","lignes":10,"every":60,"ecrit":true},"arrete_J5_NA-S15J5-03":{"label":"EMOM 12 min × 18 reps par minute","lignes":12,"every":60,"ecrit":true}}
+01:33 +213 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) calculs dans un isolat, comme sur le téléphone : prise de main, rattrapage, début de séance, nouvelle référence, prévision, arrêt et réactivation (rien d’inenvoyable dans les messages)
+01:34 +214 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) calculs dans un isolat, comme sur le téléphone : prise de main, rattrapage, début de séance, nouvelle référence, prévision, arrêt et réactivation (rien d’inenvoyable dans les messages)
+01:34 +215 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) calculs dans un isolat, comme sur le téléphone : prise de main, rattrapage, début de séance, nouvelle référence, prévision, arrêt et réactivation (rien d’inenvoyable dans les messages)
+KM3|isolat|{prise_de_main: {dernier_ms: 1630.039, max_ms: 1630.039}, replanification: {dernier_ms: 487.182, max_ms: 532.237}, plan_seance: {dernier_ms: 0.942, max_ms: 0.942}, debut_seance: {dernier_ms: 71.093, max_ms: 71.093}, plan_serie: {dernier_ms: 0.099, max_ms: 0.185}, observe_serie: {dernier_ms: 0.846, max_ms: 0.846}, prevision: {dernier_ms: 166.921, max_ms: 166.921}, rejeu: {dernier_ms: 2590.393, max_ms: 2590.393}}
+01:37 +216 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_seance_ecran_test.dart: bilan puis premier exercice : la séance de Koach commence
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'bilan-start'>] (ignoring all but first): [
+  KPrimaryButton-[<'bilan-start'>](dependencies: [InheritedCupertinoTheme, _InheritedTheme, _LocalizationsScope-[GlobalKey#34441]]),
+]" derived an Offset (Offset(195.0, 500.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderSemanticsAnnotations#34c53 relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(RenderPointerListener#4d36b@Offset(195.0, 328.0), RenderSemanticsGestureHandler#731dd@Offset(195.0, 328.0), RenderPointerListener#1dd30@Offset(195.0, 328.0), _RenderScrollSemantics#e3d1f@Offset(195.0, 328.0), RenderClipRect#9bd9b@Offset(195.0, 328.0), RenderFlex#97569@Offset(195.0, 500.0), RenderConstrainedBox#07caa@Offset(195.0, 500.0), RenderPositionedBox#f0882@Offset(195.0, 500.0), RenderPadding#1a022@Offset(195.0, 500.0), RenderCustomMultiChildLayoutBox#c89c2@Offset(195.0, 500.0), _RenderInkFeatures#6829e@Offset(195.0, 500.0), RenderPhysicalModel#45d68@Offset(195.0, 500.0), RenderSemanticsAnnotations#30318@Offset(195.0, 500.0), RenderRepaintBoundary#dd7eb@Offset(195.0, 500.0), RenderIgnorePointer#7aa56@Offset(195.0, 500.0), RenderAnimatedOpacity#d10f0@Offset(195.0, 500.0), RenderRepaintBoundary#911a7@Offset(195.0, 500.0), RenderSemanticsAnnotations#d2454@Offset(195.0, 500.0), RenderOffstage#b30c8@Offset(195.0, 500.0), RenderSemanticsAnnotations#27966@Offset(195.0, 500.0), _RenderTheater#04b25@Offset(195.0, 500.0), RenderAbsorbPointer#a7065@Offset(195.0, 500.0), RenderPointerListener#22cd5@Offset(195.0, 500.0), RenderSemanticsAnnotations#667e7@Offset(195.0, 500.0), RenderCustomPaint#f6e74@Offset(195.0, 500.0), RenderSemanticsAnnotations#34cee@Offset(195.0, 500.0), RenderSemanticsAnnotations#fe84d@Offset(195.0, 500.0), RenderSemanticsAnnotations#7e9ba@Offset(195.0, 500.0), RenderTapRegionSurface#5680e@Offset(195.0, 500.0), RenderSemanticsAnnotations#68f56@Offset(195.0, 500.0), RenderSemanticsAnnotations#4201e@Offset(195.0, 500.0), HitTestEntry<HitTestTarget>#0b7b2(_ReusableRenderView#a979a), HitTestEntry<HitTestTarget>#b20dd(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_seance_ecran_test.dart:99:24)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+KM3|ecran|S14-J5|etat=open|appuis=[bilan-start, bilan-start]|diag=false|items=6
+01:39 +217 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) lundi suivant : séances manquées, fin de semaine, replanification (≤ 10 s) ; hors modèle après deux semaines sans séance
+KM3|replanification|{prise_de_main: {dernier_ms: 1474.759, max_ms: 1474.759}, replanification: {dernier_ms: 935.651, max_ms: 935.651}}|hors_modele=true|[assiduite]
+01:40 +218 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +219 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +220 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +221 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +222 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +223 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +224 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +225 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +226 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +227 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +228 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +229 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:41 +230 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +231 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +232 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +233 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +234 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +235 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +236 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +237 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +238 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +239 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +240 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +241 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +242 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +243 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +244 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +245 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +246 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +247 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +248 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +249 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +250 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +251 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +251 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_l4_depart_test.dart: Rappels : erreurs et ouverture échec de programmation : visible, départ conservé, reprise possible
+Kalis notifications: Bad state: schedule_native_error
+01:42 +252 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +253 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+01:42 +253 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_l4_depart_test.dart: Comparaison avant / après (migration synthétique) utilisateur avancé : semaine, dates, séances, références, récompenses, rappels
+L4-COMPARE migration {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":174,"premierRappel":"S12-J1 2026-09-28T07:30"}
+L4-COMPARE relance {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":174,"premierRappel":"S12-J1 2026-09-28T07:30"}
+L4-COMPARE depart-21-09 {"semaine":"S1 · J6","depart":"2026-09-21","origine":"user","datesS11":"30/11→06/12/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":180,"premierRappel":"S11-J1 2026-11-30T07:30"}
+01:42 +254 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) export du journal moteur (format de walk_forward) et rejeu walk-forward
+KM3|walk_forward|{"n":380,"erreur_moyenne":0.094,"erreur_mediane":0.0218,"biais_signe_moyen":-0.0103,"couverture_90":0.905,"demi_largeur_mediane_pct":14.03}
+01:43 +255 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:43 +256 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:43 +257 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:44 +258 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:44 +259 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:44 +260 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:44 +261 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:44 +262 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:44 +263 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:45 +264 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:45 +265 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) sauvegarde : section koachEngine relue, journal rejouable ; ancienne sauvegarde sans la section : rien ne change
+01:45 +266 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_l4_depart_test.dart: Écrans accueil non démarré 390 px · 100 % : bandeau dans la liste, journées accessibles
+01:45 +267 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+01:45 +268 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+01:45 +269 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+01:45 +270 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+01:46 +271 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+KM3|charge_fixe|j3-mu-roue-abdominale-genoux|0.0|10-10
+01:47 +272 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+01:47 +273 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+01:47 +274 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+01:47 +275 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) charge fixe (C15) au-dessus de Koach : ligne écrite servie à sa charge
+01:47 +276 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin coche refusée : rien validé, texte gardé ; puis acceptée
+01:47 +277 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +278 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +279 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +280 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +281 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +282 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +283 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +284 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +285 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +286 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +287 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:47 +288 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:48 +288 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_l4b_seances_test.dart: Écrans coche refusée : message nommant le champ, saisie gardée
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'flame-pos-7'>]: [
+  Positioned-[<'flame-pos-7'>](left: 195.6, top: 0.0, width: 32.6, height: 48.0),
+]" derived an Offset (Offset(247.9, 357.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#455bc
+The hit test result at that offset is: HitTestResult(RenderCustomPaint#b3aee@Offset(211.9, 24.0), RenderStack#1b40b@Offset(211.9, 24.0), RenderConstrainedBox#74633@Offset(211.9, 24.0), RenderPointerListener#5ba7d@Offset(211.9, 24.0), RenderSemanticsGestureHandler#eb8e0@Offset(211.9, 24.0), _RenderLayoutBuilder#2fe02@Offset(211.9, 24.0), RenderSemanticsAnnotations#03c20@Offset(211.9, 24.0), RenderFlex#4a766@Offset(211.9, 72.0), RenderPadding#d9078@Offset(215.9, 72.0), RenderFlex#54f1c@Offset(215.9, 104.0), _RenderSingleChildViewport#6e485@Offset(215.9, 104.0), RenderIgnorePointer#48b1e@Offset(215.9, 104.0), RenderSemanticsAnnotations#4aa17@Offset(215.9, 104.0), RenderPointerListener#ceb29@Offset(215.9, 104.0), RenderSemanticsGestureHandler#2b17a@Offset(215.9, 104.0), RenderPointerListener#fdeda@Offset(215.9, 104.0), _RenderScrollSemantics#c1c85@Offset(215.9, 104.0), RenderClipRect#d5f6c@Offset(215.9, 104.0), RenderPadding#50504@Offset(231.9, 120.0), _RenderInkFeatures#26a0c@Offset(231.9, 120.0), RenderCustomPaint#c870a@Offset(231.9, 120.0), RenderPhysicalShape#18bb1@Offset(231.9, 120.0), RenderConstrainedBox#c6c04@Offset(231.9, 120.0), RenderPositionedBox#85252@Offset(231.9, 333.0), RenderPadding#04207@Offset(247.9, 357.0), RenderSemanticsAnnotations#c5829@Offset(247.9, 357.0), RenderPadding#ea03f@Offset(247.9, 357.0), RenderSemanticsAnnotations#bf89a@Offset(247.9, 357.0), RenderPadding#cdcf6@Offset(247.9, 357.0), RenderSemanticsAnnotations#0c20e@Offset(247.9, 357.0), RenderRepaintBoundary#966d0@Offset(247.9, 357.0), RenderIgnorePointer#478c2@Offset(247.9, 357.0), RenderAnimatedOpacity#c192a@Offset(247.9, 357.0), RenderRepaintBoundary#b5c56@Offset(247.9, 357.0), RenderSemanticsAnnotations#0c674@Offset(247.9, 357.0), RenderOffstage#1bc9b@Offset(247.9, 357.0), RenderSemanticsAnnotations#97cf9@Offset(247.9, 357.0), _RenderTheater#5d9e1@Offset(247.9, 357.0), RenderAbsorbPointer#07ee2@Offset(247.9, 357.0), RenderPointerListener#6e6fa@Offset(247.9, 357.0), RenderSemanticsAnnotations#bded6@Offset(247.9, 357.0), RenderCustomPaint#20cf5@Offset(247.9, 357.0), RenderSemanticsAnnotations#72dda@Offset(247.9, 357.0), RenderSemanticsAnnotations#8ab4e@Offset(247.9, 357.0), RenderSemanticsAnnotations#10b32@Offset(247.9, 357.0), RenderTapRegionSurface#8a3f0@Offset(247.9, 357.0), RenderSemanticsAnnotations#c0227@Offset(247.9, 357.0), RenderSemanticsAnnotations#baeb1@Offset(247.9, 357.0), HitTestEntry<HitTestTarget>#51028(_ReusableRenderView#7f47a), HitTestEntry<HitTestTarget>#54bda(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_l4b_seances_test.dart:535:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+01:48 +289 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:48 +290 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:49 +291 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:49 +292 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:49 +293 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:49 +294 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+01:49 +295 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) textes : aucune raison affichée en code brut
+KM3|raisons|10|Tu reviens après 16 jours sans entraînement : moins de séries sur « Muscle-up lesté de compétition » cette semaine. / Tu reviens après 16 jours sans entraînement : moins de séries sur « Traction lestée de compétition » cette semaine. / Tu reviens après 16 jours sans entraînement : moins de séries sur « Rowing barre buste penché prise pronation » cette semaine.
+01:50 +296 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) migration : la prise de main ne réécrit aucune séance ni série ; sauvegarde d’origine ; retour au programme d’origine
+01:52 +297 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) migration : la prise de main ne réécrit aucune séance ni série ; sauvegarde d’origine ; retour au programme d’origine
+01:52 +298 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) migration : la prise de main ne réécrit aucune séance ni série ; sauvegarde d’origine ; retour au programme d’origine
+01:52 +298 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_programme_test.dart: appui long sur le slider choisit directement une semaine
+
+Warning: A call to longPress() with finder "Found 1 widget with key [<'selected-week'>]: [
+  KeyedSubtree-[<'selected-week'>],
+]" derived an Offset (Offset(180.0, 120.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderSemanticsAnnotations#185a4 relayoutBoundary=up13
+The hit test result at that offset is: HitTestResult(RenderDecoratedBox#68399@Offset(160.0, 24.0), RenderPointerListener#fdefa@Offset(160.0, 24.0), RenderSemanticsGestureHandler#8ddf0@Offset(160.0, 24.0), RenderSemanticsAnnotations#1d0e2@Offset(160.0, 24.0), RenderSemanticsAnnotations#4f463@Offset(160.0, 24.0), _RenderLayoutBuilder#6b2fb@Offset(160.0, 24.0), RenderRepaintBoundary#39327@Offset(160.0, 24.0), RenderIndexedSemantics#51fcd@Offset(160.0, 24.0), RenderSliverList@(mainAxis: 88.0, crossAxis: 160.0), RenderSliverPadding@(mainAxis: 96.0, crossAxis: 180.0), RenderViewport#3c982@Offset(180.0, 96.0), RenderIgnorePointer#d5c8b@Offset(180.0, 96.0), RenderSemanticsAnnotations#06799@Offset(180.0, 96.0), RenderPointerListener#6c9db@Offset(180.0, 96.0), RenderSemanticsGestureHandler#b01ce@Offset(180.0, 96.0), RenderPointerListener#fb962@Offset(180.0, 96.0), _RenderScrollSemantics#7c206@Offset(180.0, 96.0), RenderClipRect#12f3e@Offset(180.0, 96.0), RenderAnimatedOpacity#ddd6f@Offset(180.0, 96.0), RenderClipRect#cfc88@Offset(180.0, 96.0), RenderPointerListener#e7d49@Offset(180.0, 96.0), RenderSemanticsGestureHandler#199a9@Offset(180.0, 96.0), RenderConstrainedBox#f55a0@Offset(180.0, 96.0), RenderPositionedBox#34138@Offset(180.0, 96.0), RenderPadding#66ebb@Offset(180.0, 120.0), RenderCustomMultiChildLayoutBox#d3d9d@Offset(180.0, 120.0), _RenderInkFeatures#70a50@Offset(180.0, 120.0), RenderPhysicalModel#8355b@Offset(180.0, 120.0), RenderIndexedStack#bdac0@Offset(180.0, 120.0), RenderAnimatedOpacity#6dac9@Offset(180.0, 120.0), RenderClipRect#db061@Offset(180.0, 120.0), _RenderLayoutBuilder#d0691@Offset(180.0, 120.0), RenderCustomMultiChildLayoutBox#112ed@Offset(180.0, 120.0), _RenderInkFeatures#2194e@Offset(180.0, 120.0), RenderPhysicalModel#aee42@Offset(180.0, 120.0), RenderSemanticsAnnotations#d96a4@Offset(180.0, 120.0), RenderRepaintBoundary#bedf6@Offset(180.0, 120.0), RenderIgnorePointer#ec1ed@Offset(180.0, 120.0), RenderAnimatedOpacity#b15b1@Offset(180.0, 120.0), RenderRepaintBoundary#b578f@Offset(180.0, 120.0), RenderSemanticsAnnotations#a3675@Offset(180.0, 120.0), RenderOffstage#55605@Offset(180.0, 120.0), RenderSemanticsAnnotations#0597c@Offset(180.0, 120.0), _RenderTheater#76196@Offset(180.0, 120.0), RenderAbsorbPointer#4d148@Offset(180.0, 120.0), RenderPointerListener#603b5@Offset(180.0, 120.0), RenderSemanticsAnnotations#9cc7a@Offset(180.0, 120.0), RenderCustomPaint#b3dba@Offset(180.0, 120.0), RenderSemanticsAnnotations#bbff9@Offset(180.0, 120.0), RenderSemanticsAnnotations#88847@Offset(180.0, 120.0), RenderSemanticsAnnotations#08440@Offset(180.0, 120.0), RenderTapRegionSurface#26e7f@Offset(180.0, 120.0), RenderSemanticsAnnotations#f4646@Offset(180.0, 120.0), RenderSemanticsAnnotations#314a4@Offset(180.0, 120.0), HitTestEntry<HitTestTarget>#17bd5(_ReusableRenderView#b70cc), HitTestEntry<HitTestTarget>#d63ab(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.longPress (package:flutter_test/src/controller.dart:1212:7)
+#3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_programme_test.dart:176:18)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "longPress()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+01:52 +299 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_programme_test.dart: appui long sur le slider choisit directement une semaine
+01:52 +300 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:52 +301 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:53 +302 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:53 +303 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:53 +303 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_programme_test.dart: la fiche semaine donne accès au choix de semaine et conserve les gestes des cartes
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'selected-week'>]: [
+  KeyedSubtree-[<'selected-week'>],
+]" derived an Offset (Offset(180.0, 120.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderSemanticsAnnotations#7aea8 relayoutBoundary=up13
+The hit test result at that offset is: HitTestResult(RenderDecoratedBox#51cb0@Offset(160.0, 24.0), RenderPointerListener#1017b@Offset(160.0, 24.0), RenderSemanticsGestureHandler#c0d7b@Offset(160.0, 24.0), RenderSemanticsAnnotations#b2bac@Offset(160.0, 24.0), RenderSemanticsAnnotations#abbd6@Offset(160.0, 24.0), _RenderLayoutBuilder#0b529@Offset(160.0, 24.0), RenderRepaintBoundary#7e7a2@Offset(160.0, 24.0), RenderIndexedSemantics#fba80@Offset(160.0, 24.0), RenderSliverList@(mainAxis: 88.0, crossAxis: 160.0), RenderSliverPadding@(mainAxis: 96.0, crossAxis: 180.0), RenderViewport#bc6c2@Offset(180.0, 96.0), RenderIgnorePointer#c085b@Offset(180.0, 96.0), RenderSemanticsAnnotations#a1ead@Offset(180.0, 96.0), RenderPointerListener#3eb32@Offset(180.0, 96.0), RenderSemanticsGestureHandler#198e2@Offset(180.0, 96.0), RenderPointerListener#aa51b@Offset(180.0, 96.0), _RenderScrollSemantics#440be@Offset(180.0, 96.0), RenderClipRect#a719f@Offset(180.0, 96.0), RenderAnimatedOpacity#8c8c2@Offset(180.0, 96.0), RenderClipRect#95bfa@Offset(180.0, 96.0), RenderPointerListener#411ef@Offset(180.0, 96.0), RenderSemanticsGestureHandler#c95e7@Offset(180.0, 96.0), RenderConstrainedBox#e3a1d@Offset(180.0, 96.0), RenderPositionedBox#5cfa3@Offset(180.0, 96.0), RenderPadding#dff7a@Offset(180.0, 120.0), RenderCustomMultiChildLayoutBox#7efc0@Offset(180.0, 120.0), _RenderInkFeatures#13f32@Offset(180.0, 120.0), RenderPhysicalModel#1142f@Offset(180.0, 120.0), RenderIndexedStack#5451f@Offset(180.0, 120.0), RenderAnimatedOpacity#14afc@Offset(180.0, 120.0), RenderClipRect#fb487@Offset(180.0, 120.0), _RenderLayoutBuilder#c823d@Offset(180.0, 120.0), RenderCustomMultiChildLayoutBox#60215@Offset(180.0, 120.0), _RenderInkFeatures#9ea4b@Offset(180.0, 120.0), RenderPhysicalModel#06f07@Offset(180.0, 120.0), RenderSemanticsAnnotations#1d45f@Offset(180.0, 120.0), RenderRepaintBoundary#36247@Offset(180.0, 120.0), RenderIgnorePointer#3449f@Offset(180.0, 120.0), RenderAnimatedOpacity#622ba@Offset(180.0, 120.0), RenderRepaintBoundary#6bbcd@Offset(180.0, 120.0), RenderSemanticsAnnotations#ecb7a@Offset(180.0, 120.0), RenderOffstage#94fcf@Offset(180.0, 120.0), RenderSemanticsAnnotations#b54ab@Offset(180.0, 120.0), _RenderTheater#3d69f@Offset(180.0, 120.0), RenderAbsorbPointer#f1b22@Offset(180.0, 120.0), RenderPointerListener#80b06@Offset(180.0, 120.0), RenderSemanticsAnnotations#1bc50@Offset(180.0, 120.0), RenderCustomPaint#ea6b7@Offset(180.0, 120.0), RenderSemanticsAnnotations#d3c4f@Offset(180.0, 120.0), RenderSemanticsAnnotations#51249@Offset(180.0, 120.0), RenderSemanticsAnnotations#5afcd@Offset(180.0, 120.0), RenderTapRegionSurface#56881@Offset(180.0, 120.0), RenderSemanticsAnnotations#6b934@Offset(180.0, 120.0), RenderSemanticsAnnotations#97427@Offset(180.0, 120.0), HitTestEntry<HitTestTarget>#3cb5a(_ReusableRenderView#b70cc), HitTestEntry<HitTestTarget>#415f7(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_programme_test.dart:294:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+01:53 +304 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:54 +305 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:54 +306 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+KM3|semaine|S15·J1|6
+01:54 +307 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:54 +308 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:55 +309 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+KM3|semaine|S16·J1|6
+KM3|semaine|S17·J1|6
+KM3|semaine|S18·J1|6
+01:57 +310 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+KM3|semaine|S19·J1|6
+01:57 +311 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+01:57 +312 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) chaque semaine de S15 à S20 : séance servie par Koach avec ses exercices
+KM3|semaine|S20·J1|9
+01:58 +313 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui1_programme_test.dart: accueil (programme du propriétaire) accueil à 320 dp et 200 % : rien de coupé ni de débordant (clair)
+01:58 +314 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+01:58 +315 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+01:58 +316 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+01:58 +317 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+01:59 +318 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+01:59 +319 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+02:00 +320 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+02:00 +321 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+02:01 +322 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+02:01 +323 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+02:01 +324 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+02:01 +325 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+02:01 +326 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+02:01 +327 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_km3_koach_test.dart: Koach sert le programme de 40 semaines (bascule forcée) reprise après quatre semaines sans séance : ce que Koach sert (relevé)
+KM3|reprise|S19·J1|servis=6|ecrits=6|raisons=["koach.reprise_coupure","koach.reprise_coupure"]
+02:02 +328 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: (setUpAll)
+02:02 +328 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: menu ⋮ : feuille d’actions au contenu du §4.1, suppression dans le dernier groupe, confirmée
+02:04 +329 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille
+02:04 +330 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: Mes références depuis la séance : 2 appuis, même page
+02:04 +331 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: Aperçu : « Aller plus loin » ouvre les trois autres onglets
+02:05 +332 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: fiche d’exercice pendant la séance : ⓘ › Voir la fiche (2)
+02:05 +333 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: objectif de la semaine : segments Adaptatif, 2 à 6 ; une valeur 1 reste affichée
+02:05 +334 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: douleur pendant la séance : ⋮ › Douleur ou malaise ? › zone › Enregistrer (4 appuis), sur la section Douleur
+02:05 +335 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: douleur pendant la séance : ⋮ › Douleur ou malaise ? › zone › Enregistrer (4 appuis), sur la section Douleur
+02:05 +336 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: douleur pendant la séance : ⋮ › Douleur ou malaise ? › zone › Enregistrer (4 appuis), sur la section Douleur
+02:05 +337 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: Performances : Mes références et Records ouvrent leur page
+02:06 +338 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: liste des exercices : feuille de liste, page courante cernée ; « J’ai seulement… minutes » garde l’exercice en cours
+02:06 +339 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: liste des exercices : feuille de liste, page courante cernée ; « J’ai seulement… minutes » garde l’exercice en cours
+02:06 +340 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui2_seance_test.dart: liste des exercices : feuille de liste, page courante cernée ; « J’ai seulement… minutes » garde l’exercice en cours
+02:06 +341 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: Stats tient à 320 dp et 200 % de texte, thème true
+02:06 +342 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: Stats tient à 320 dp et 200 % de texte, thème false
+02:07 +343 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: Stats tient à 320 dp et 130 % de texte, références connues
+02:07 +344 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: (setUpAll)
+02:07 +344 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: cibles nommées et de 48 dp dans les quatre rubriques
+02:07 +345 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui3_stats_test.dart: cibles nommées et de 48 dp dans les quatre rubriques
+02:07 +346 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: racine : recherche, carte Profil, six rubriques, rien d’autre
+02:08 +347 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: carte Profil : prénom, initiale, ouvre le Profil
+02:08 +348 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: (setUpAll)
+02:09 +348 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+02:10 +349 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+Kalis notifications: LateInitializationError: Field '_instance@1829271368' has not been initialized.
+Kalis notifications: LateInitializationError: Field '_instance@1829271368' has not been initialized.
+02:11 +350 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+02:11 +351 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+02:12 +352 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: chaque réglage est à deux appuis au plus de la racine (R4)
+02:12 +353 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: les exercices enchaînés ont chacun leur bloc et leur note
+02:12 +354 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: les exercices enchaînés ont chacun leur bloc et leur note
+02:12 +355 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: objectif de la semaine : segments Adaptatif, 2 à 6 (§4.3)
+02:12 +356 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: les séances suivent une rotation et une grande largeur
+02:12 +357 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui4_settings_test.dart: supprimer les anciennes réponses : confirmation destructive
+02:12 +358 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+02:12 +359 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+02:12 +360 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+02:12 +361 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+02:12 +362 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+02:12 +363 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème false
+02:13 +364 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: cinq séries, charge et effort restent visibles sans défilement
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'flame-pos-7'>]: [
+  Positioned-[<'flame-pos-7'>](left: 177.6, top: 0.0, width: 29.6, height: 48.0),
+]" derived an Offset (Offset(228.4, 351.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderConstrainedBox#7dfff
+The hit test result at that offset is: HitTestResult(RenderCustomPaint#57aeb@Offset(192.4, 24.0), RenderStack#cd24b@Offset(192.4, 24.0), RenderConstrainedBox#2b1b9@Offset(192.4, 24.0), RenderPointerListener#8e298@Offset(192.4, 24.0), RenderSemanticsGestureHandler#dcddd@Offset(192.4, 24.0), _RenderLayoutBuilder#cc757@Offset(192.4, 24.0), RenderSemanticsAnnotations#6c583@Offset(192.4, 24.0), RenderFlex#4f2b0@Offset(192.4, 72.0), RenderPadding#c1db1@Offset(196.4, 72.0), RenderFlex#bfee9@Offset(196.4, 104.0), _RenderSingleChildViewport#1c748@Offset(196.4, 104.0), RenderIgnorePointer#444cf@Offset(196.4, 104.0), RenderSemanticsAnnotations#a7557@Offset(196.4, 104.0), RenderPointerListener#635b9@Offset(196.4, 104.0), RenderSemanticsGestureHandler#7e7af@Offset(196.4, 104.0), RenderPointerListener#b8b55@Offset(196.4, 104.0), _RenderScrollSemantics#28830@Offset(196.4, 104.0), RenderClipRect#220e8@Offset(196.4, 104.0), RenderPadding#eec55@Offset(212.4, 120.0), _RenderInkFeatures#d6658@Offset(212.4, 120.0), RenderCustomPaint#26093@Offset(212.4, 120.0), RenderPhysicalShape#c0b39@Offset(212.4, 120.0), RenderConstrainedBox#ddf8a@Offset(212.4, 120.0), RenderPositionedBox#67568@Offset(212.4, 303.0), RenderPadding#40133@Offset(228.4, 327.0), RenderSemanticsAnnotations#fa05a@Offset(228.4, 327.0), RenderPadding#d5413@Offset(228.4, 351.0), RenderSemanticsAnnotations#e5f64@Offset(228.4, 351.0), RenderPadding#33386@Offset(228.4, 351.0), RenderSemanticsAnnotations#3764d@Offset(228.4, 351.0), RenderRepaintBoundary#25d3c@Offset(228.4, 351.0), RenderIgnorePointer#485ad@Offset(228.4, 351.0), RenderAnimatedOpacity#676c0@Offset(228.4, 351.0), RenderRepaintBoundary#12217@Offset(228.4, 351.0), RenderSemanticsAnnotations#eeedf@Offset(228.4, 351.0), RenderOffstage#60aed@Offset(228.4, 351.0), RenderSemanticsAnnotations#7e9ee@Offset(228.4, 351.0), _RenderTheater#4b0d5@Offset(228.4, 351.0), RenderAbsorbPointer#b0742@Offset(228.4, 351.0), RenderPointerListener#672b6@Offset(228.4, 351.0), RenderSemanticsAnnotations#d02ee@Offset(228.4, 351.0), RenderCustomPaint#29552@Offset(228.4, 351.0), RenderSemanticsAnnotations#9661d@Offset(228.4, 351.0), RenderSemanticsAnnotations#45f32@Offset(228.4, 351.0), RenderSemanticsAnnotations#94065@Offset(228.4, 351.0), RenderTapRegionSurface#5e6e2@Offset(228.4, 351.0), RenderSemanticsAnnotations#74b68@Offset(228.4, 351.0), RenderSemanticsAnnotations#c8cbe@Offset(228.4, 351.0), HitTestEntry<HitTestTarget>#48a72(_ReusableRenderView#297a5), HitTestEntry<HitTestTarget>#7ae44(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart:424:20)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+02:13 +365 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: les actions de sauvegarde ouvrent l’export et l’import
+02:13 +366 ~5 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_ui_refactor_test.dart: (tearDownAll)
+02:13 +366 ~5 -4: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_revue_test.dart: Koach (programme PR2 synthétique) extension triceps poulie servie au pas de 2,5 kg (avant : 20,41 kg) ; toute charge servie sur la grille de son matériel
+  /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+  /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g10_charges_consigne_test.dart: sans données de l’ancien Koach : identique à 2.x
+  /home/runner/work/streetlift-apk/streetlift-apk/test/rv1_zz_g3_historique_test.dart: historique, records et statistiques identiques avant / après G3
