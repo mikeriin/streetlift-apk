@@ -4640,13 +4640,9 @@ class _TimerBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (side.visible)
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: ctl.visible ? KSpacing.s8 : 0,
-                    ),
-                    child: _SideClock(ctl: side),
-                  ),
+                if (side.visible) _SideClock(ctl: side),
+                if (side.visible && ctl.visible)
+                  const SizedBox(height: KSpacing.s8),
                 if (ctl.visible) _mainBar(),
               ],
             ),
