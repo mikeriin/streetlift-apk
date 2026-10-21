@@ -10,5 +10,8 @@ Base : main 88fb1965 (dev7.3.0). Session lancée 21/10/2026 04:22 UTC (« Lot : 
 - Garde : tous les rôles ; motifs : douleur, endurance, test reporté, séance bornée au temps donné, rampe tendineuse (retour_gradue bras_tendus à 0).
 - Réactivation : séances « open » finies pendant l'arrêt fermées (seance_fin) avant le rattrapage ; aperçus périmés retirés ; carte d'accueil « Réactiver Koach » (jamais automatique).
 
+## Fait aussi
+- Code complet (garde, réactivation, EMOM, carte, inspecteur), tests kb4 (rapide run 39545379840 : 14/15 verts, 1 test corrigé), kb3/kb1/versions, cible koach_kb4_test + ci3d_drive.sh, relecture Opus traitée (commit 6f35433c sur claude/ci-ui-kb4-rapide).
+
 ## Reste
 - Code (garde, réactivation, EMOM, carte), tests kb4, mise à jour kb3/kb1/versions, cible émulateur, CI rapide puis ci-3d, main, build, livraison.

@@ -157,6 +157,21 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
         final raw = entry.value.adapt?['koach'];
         if (raw is! Map || raw['state'] == 'preview') continue;
         seance.add('${entry.key} (${raw['state']}, jour ${raw['jour']})');
+        // KB4 : lignes servies telles qu'écrites par la garde (avec Koach
+        // 1.0.7, jamais pour le volume) ; séance servie illisible.
+        final garde = raw['garde'];
+        if (garde is List && garde.isNotEmpty) {
+          seance.add(
+            'Garde : servi tel qu’écrit sans retrait motivé : '
+            '${garde.join(', ')}',
+          );
+        }
+        final invalide = raw['invalide'];
+        if (invalide is List && invalide.isNotEmpty) {
+          seance.add(
+            'Séance servie illisible (aperçu) : ${invalide.join(' ; ')}',
+          );
+        }
         for (final r in (raw['raisons'] as List? ?? const [])) {
           if (r is! Map) continue;
           seance.add(

@@ -96,8 +96,9 @@ void main() {
       'semaines sans séance).',
     );
     // KM3 : kalis_adapt 1.0.x embarque le code de 0.3.1 à l'identique
-    // (KB1 : 1.0.4, Koach 1.0.5 ; KB3 : 1.0.5, Koach 1.0.6).
-    expect(ka.kalisAdaptVersion, '1.0.5');
+    // (KB1 : 1.0.4, Koach 1.0.5 ; KB3 : 1.0.5, Koach 1.0.6 ; KB4 : 1.0.6,
+    // Koach 1.0.7).
+    expect(ka.kalisAdaptVersion, '1.0.6');
   });
 
   test('journal : une série avec ses mini-séries est une ligne (total et '
