@@ -178,11 +178,16 @@ class SessionScreen extends StatefulWidget {
   /// Ouvrir sur l'exercice en cours (reprise). Faux pour une correction
   /// depuis l'historique : on repart du premier exercice.
   final bool resume;
+
+  /// RV1c1 (tests) : chrono de la séance à horloge simulée ; null : chrono
+  /// propre à l'écran. Un chrono donné n'est pas libéré par l'écran.
+  final TimerCtl? timer;
   const SessionScreen({
     super.key,
     required this.week,
     required this.day,
     this.resume = true,
+    this.timer,
   });
 
   @override
@@ -190,7 +195,7 @@ class SessionScreen extends StatefulWidget {
 }
 
 class _SessionScreenState extends State<SessionScreen> {
-  final ctl = TimerCtl();
+  late final TimerCtl ctl = widget.timer ?? TimerCtl();
   late final PageController pageCtl;
   late List<List<Exercise>> groups;
   int page = 0;
@@ -286,13 +291,13 @@ class _SessionScreenState extends State<SessionScreen> {
     // CI1c : une simple consultation ne laisse aucune entrée d'historique.
     store.forgetConsultation(widget.week.n, widget.day.j);
     store.flush();
-    ctl.dispose();
+    if (widget.timer == null) ctl.dispose();
     pageCtl.dispose();
     super.dispose();
   }
 
   /// Hauteur de la barre de chrono quand elle est affichée.
-  double _barHeight() => ctl.visible && page != bilanPage
+  double _barHeight() => ctl.shown && page != bilanPage
       ? (_barKey.currentContext?.size?.height ?? 0)
       : 0;
 
@@ -1568,8 +1573,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 key: ValueKey('coach-intra-${ex.id}'),
                 icon: Icons.av_timer_rounded,
                 label: 'Mini-repos $intra s',
+                // RV1c1 : chrono secondaire pendant le chrono d'un groupe.
                 onPressed: () =>
-                    widget.timer.single('INTRA', intra, prepare: false),
+                    widget.timer.solo('INTRA', intra, prepare: false),
               ),
             ),
           ),
@@ -2226,7 +2232,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         : next != null
         ? (next.$1 == k ? next.$2 : -1)
         : log.sets.indexWhere((s) => !s.done);
-    final hasTimer = !readOnly && sp.timed && sp.rowPrefix != 'I';
+    final hasTimer =
+        !readOnly &&
+        sp.timed &&
+        sp.rowPrefix != 'I' &&
+        _group?.format != kc.GroupFormat.intervals;
     // Correctif 19/10/2026 : plage de répétitions (« 1 × 15-21 ») : champ
     // vide, haut de la plage en indication (« max 21 ») et mis en avant
     // dans le volume.
@@ -2665,7 +2675,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         _big(
           Icons.timer_outlined,
           'Lancer ${sp.seconds! ~/ 60} min',
-          () => widget.timer.single('DURÉE', sp.seconds!),
+          () => widget.timer.solo('DURÉE', sp.seconds!),
         ),
       // Correctifs UI : le mini-repos d'un cluster servi par le moteur
       // part du bandeau des mini-séries ; pas de second bouton.
@@ -2673,7 +2683,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         _big(
           Icons.av_timer_rounded,
           'Mini-repos du cluster, ${sp.intra} s',
-          () => widget.timer.single('INTRA', sp.intra!, prepare: false),
+          () => widget.timer.solo('INTRA', sp.intra!, prepare: false),
         ),
       // KM3 : suggestion de Koach (charge de la première série, test
       // court), validée d'un tap ou refusée avec une raison.
@@ -2776,18 +2786,21 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 ? () => _openFlames(k, i, rowLabel(i))
                 : null,
             // RV1 : un tour d'intervalles n'a pas de chrono de tenue : le
-            // chrono des tours le donne.
-            onTimer: readOnly || sp.rowPrefix == 'I'
+            // chrono des tours le donne (RV1c1 : groupe d'intervalles servi
+            // par le moteur compris). RV1c1 : pendant le chrono d'un
+            // groupe (E3MOM avec tenue dans la pause), la tenue a son
+            // chrono secondaire : le chrono du groupe continue.
+            onTimer: !hasTimer
                 ? null
                 : sp.kind == 'hold'
-                ? () => widget.timer.single(
+                ? () => widget.timer.solo(
                     'TENUE',
                     int.tryParse(log.sets[i].reps) ?? sp.seconds ?? 30,
                   )
                 : sp.kind == 'holdMax'
-                ? () => widget.timer.stopwatch('MAX')
+                ? () => widget.timer.soloStopwatch('MAX')
                 : sp.kind == 'duration'
-                ? () => widget.timer.single(
+                ? () => widget.timer.solo(
                     'DURÉE',
                     (int.tryParse(log.sets[i].reps) ?? (sp.seconds! ~/ 60)) *
                         60,
@@ -2819,7 +2832,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 setState(() => epoch++);
               },
               onIntra: (sec) =>
-                  widget.timer.single('INTRA', sec, prepare: false),
+                  widget.timer.solo('INTRA', sec, prepare: false),
             ),
       ],
     ];
@@ -2985,7 +2998,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         return _big(
           Icons.timer_outlined,
           'Lancer l’AMRAP de ${s ~/ 60} min',
-          () => widget.timer.single('AMRAP', s),
+          () => widget.timer.single('AMRAP', s, group: true),
         );
       case 'hiit':
         final r = tm['rounds'] as int,
@@ -3001,7 +3014,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         return _big(
           Icons.timer_outlined,
           'Lancer le chrono de $s s',
-          () => widget.timer.single('TENUE', s),
+          () => widget.timer.solo('TENUE', s),
         );
     }
     return const SizedBox.shrink();
@@ -3814,7 +3827,7 @@ class _GroupCardState extends State<_GroupCard> {
           interval,
         );
       case kc.GroupFormat.amrap:
-        widget.timer.single('AMRAP', g.durationSeconds ?? 60);
+        widget.timer.single('AMRAP', g.durationSeconds ?? 60, group: true);
       case kc.GroupFormat.intervals:
         widget.timer.startInterval(
           g.rounds ?? 1,
@@ -3822,7 +3835,7 @@ class _GroupCardState extends State<_GroupCard> {
           g.restBetweenRoundsSeconds ?? interval,
         );
       case kc.GroupFormat.roundsForTime || kc.GroupFormat.chipper:
-        widget.timer.stopwatch('CHRONO');
+        widget.timer.stopwatch('CHRONO', group: true);
       default:
         final rest = g.restBetweenRoundsSeconds;
         if (rest != null && rest > 0) widget.timer.startRest(rest);
@@ -4599,45 +4612,21 @@ String phaseLabel(String raw) {
 }
 
 /// Barre de chrono flottante en bas de la séance (C8) : la barre de repos
-/// du kit ([KRestBar]) pour tout décompte ; chronomètre montant ou décompte
-/// terminé : même barre sans le groupe −15 s / +15 s.
+/// du kit ([KRestBar]) pour tout décompte ; chronomètre montant, décompte
+/// terminé ou (RV1c1) chrono d'un groupe : même barre sans le groupe
+/// −15 s / +15 s. RV1c1 : le chrono secondaire (tenue pendant le chrono
+/// d'un groupe) se pose au-dessus, sans toucher à la barre du groupe.
 class _TimerBar extends StatelessWidget {
   final TimerCtl ctl;
   const _TimerBar({super.key, required this.ctl});
 
   @override
   Widget build(BuildContext context) {
+    final side = ctl.side;
     return ListenableBuilder(
-      listenable: ctl,
+      listenable: Listenable.merge([ctl, side]),
       builder: (context, _) {
-        if (!ctl.visible) return const SizedBox.shrink();
-        final done = !ctl.running;
-        final frac = ctl.up
-            ? 1.0
-            : (ctl.total == 0 ? 0.0 : ctl.remaining / ctl.total);
-        final time = ctl.up
-            ? fmt(ctl.elapsed)
-            : (done ? '0:00' : fmt(ctl.remaining));
-        final label = phaseLabel(ctl.label);
-        final bar = done || ctl.up
-            ? _ClockBar(
-                label: label,
-                time: time,
-                progress: done ? 1 : frac,
-                done: done,
-                onStop: ctl.stop,
-              )
-            : KRestBar(
-                label: label,
-                remaining: time,
-                progress: frac,
-                onMinus: () => ctl.add(-15),
-                onPlus: () => ctl.add(15),
-                onStop: ctl.stop,
-                stopLabel: 'Arrêter',
-              );
-        // 6.17.0 : le contenu qui arrive sous la barre se floute
-        // progressivement.
+        if (!ctl.shown) return const SizedBox.shrink();
         return KFloatingBottom(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -4646,10 +4635,137 @@ class _TimerBar extends StatelessWidget {
               KSpacing.s16,
               KSpacing.s12 + MediaQuery.paddingOf(context).bottom,
             ),
-            child: bar,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (side.visible)
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: ctl.visible ? KSpacing.s8 : 0,
+                    ),
+                    child: _SideClock(ctl: side),
+                  ),
+                if (ctl.visible) _mainBar(),
+              ],
+            ),
           ),
         );
       },
+    );
+  }
+
+  Widget _mainBar() {
+    final done = !ctl.running;
+    final frac = ctl.up
+        ? 1.0
+        : (ctl.total == 0 ? 0.0 : ctl.remaining / ctl.total);
+    final time = ctl.up
+        ? fmt(ctl.elapsed)
+        : (done ? '0:00' : fmt(ctl.remaining));
+    final label = phaseLabel(ctl.label);
+    // RV1c1 : le chrono d'un groupe ne se décale pas : pas de −15 s / +15 s.
+    return done || ctl.up || ctl.groupClock
+        ? _ClockBar(
+            key: const ValueKey('timer-bar-clock'),
+            label: label,
+            time: time,
+            progress: done ? 1 : frac,
+            done: done,
+            onStop: ctl.stop,
+          )
+        : KRestBar(
+            key: const ValueKey('timer-bar-rest'),
+            label: label,
+            remaining: time,
+            progress: frac,
+            onMinus: () => ctl.add(-15),
+            onPlus: () => ctl.add(15),
+            onStop: ctl.stop,
+            stopLabel: 'Arrêter',
+          );
+  }
+}
+
+/// RV1c1 : chrono secondaire (tenue, mini-repos, durée lancés pendant le
+/// chrono d'un groupe) : une ligne compacte au-dessus de la barre du
+/// groupe ; arrêter puis fermer, comme la barre.
+class _SideClock extends StatelessWidget {
+  final TimerCtl ctl;
+  const _SideClock({required this.ctl});
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final done = !ctl.running;
+    final time = ctl.up
+        ? fmt(ctl.elapsed)
+        : (done ? '0:00' : fmt(ctl.remaining));
+    final label = phaseLabel(ctl.label);
+    final stopLabel = done ? 'Fermer' : 'Arrêter';
+    return Material(
+      key: const ValueKey('side-clock'),
+      color: k.haute,
+      shape: RoundedRectangleBorder(
+        borderRadius: KRadius.cardRadius,
+        side: BorderSide(color: k.filet),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          KSpacing.s20,
+          KSpacing.s4,
+          KSpacing.s4,
+          KSpacing.s4,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              ctl.up ? Icons.timer_outlined : Icons.hourglass_bottom_rounded,
+              size: KSize.iconSmall,
+              color: done ? k.validation : k.texte2,
+            ),
+            const SizedBox(width: KSpacing.s8),
+            Expanded(
+              child: Semantics(
+                label: label,
+                value: time,
+                liveRegion: done,
+                excludeSemantics: true,
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: KType.detail.copyWith(
+                    color: done ? k.validation : k.texte2,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: KSpacing.s8),
+            Text(
+              time,
+              key: const ValueKey('side-clock-time'),
+              style: KType.corpsFort.copyWith(color: k.texte),
+            ),
+            const SizedBox(width: KSpacing.s4),
+            IconButton(
+              key: const ValueKey('side-clock-stop'),
+              tooltip: stopLabel,
+              onPressed: ctl.stop,
+              style: IconButton.styleFrom(
+                foregroundColor: k.texte,
+                minimumSize: const Size(KSize.target, KSize.target),
+                shape: KRadius.pill,
+              ),
+              icon: Icon(
+                done ? Icons.close_rounded : Icons.stop_rounded,
+                size: KSize.icon,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -4663,6 +4779,7 @@ class _ClockBar extends StatelessWidget {
   final bool done;
   final VoidCallback onStop;
   const _ClockBar({
+    super.key,
     required this.label,
     required this.time,
     required this.progress,
