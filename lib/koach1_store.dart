@@ -278,27 +278,38 @@ class KoachEngineData {
 
   bool get active => snap != null && stop == null;
 
-  bool get pristine => snap == null && journal.isEmpty && forced == null;
+  /// RV1 : section lue avec un instantané illisible : gardée telle quelle
+  /// et réécrite à l'identique tant que Koach n'a pas d'autre instantané
+  /// (avant : état neuf, section omise à l'écriture suivante, journal de
+  /// Koach perdu).
+  Map<String, Object?>? raw;
 
-  Map<String, Object?> toJson() => {
-    'v': 1,
-    if (installedOn != null) 'installedOn': installedOn,
-    if (openedOn != null) 'openedOn': openedOn,
-    if (snap != null) 'snap': snap!.toJson(),
-    if (journal.isNotEmpty) 'journal': journal,
-    if (fromWeek != null) 'fromWeek': fromWeek,
-    if (activatedOn != null) 'activatedOn': activatedOn,
-    if (closed > 0) 'closed': closed,
-    if (versed.isNotEmpty) 'versed': [...versed]..sort(),
-    if (stop != null) 'stop': stop,
-    if (recaps.isNotEmpty) 'recaps': recaps,
-    if (dispo != null) 'dispo': dispo,
-    if (manquees.isNotEmpty) 'manquees': manquees,
-    if (forced != null) 'forced': forced,
-    if (blocked != null) 'blocked': blocked,
-    if (refSig != null) 'refSig': refSig,
-    if (annonce107 != null) 'annonce107': annonce107,
-  };
+  bool get pristine =>
+      raw == null && snap == null && journal.isEmpty && forced == null;
+
+  Map<String, Object?> toJson() {
+    final r = raw;
+    if (r != null && snap == null) return r;
+    return {
+      'v': 1,
+      if (installedOn != null) 'installedOn': installedOn,
+      if (openedOn != null) 'openedOn': openedOn,
+      if (snap != null) 'snap': snap!.toJson(),
+      if (journal.isNotEmpty) 'journal': journal,
+      if (fromWeek != null) 'fromWeek': fromWeek,
+      if (activatedOn != null) 'activatedOn': activatedOn,
+      if (closed > 0) 'closed': closed,
+      if (versed.isNotEmpty) 'versed': [...versed]..sort(),
+      if (stop != null) 'stop': stop,
+      if (recaps.isNotEmpty) 'recaps': recaps,
+      if (dispo != null) 'dispo': dispo,
+      if (manquees.isNotEmpty) 'manquees': manquees,
+      if (forced != null) 'forced': forced,
+      if (blocked != null) 'blocked': blocked,
+      if (refSig != null) 'refSig': refSig,
+      if (annonce107 != null) 'annonce107': annonce107,
+    };
+  }
 
   /// Lecture tolérante (une section illisible donne un état neuf : le
   /// moteur 0.3.1 continue de servir, rien n'est perdu de l'historique de
@@ -319,8 +330,11 @@ class KoachEngineData {
     out.annonce107 = day('annonce107');
     try {
       if (m['snap'] != null) out.snap = KoachInstantane.fromJson(m['snap']);
-    } on FormatException {
+    } catch (_) {
+      // RV1 : toute erreur de lecture (un élément d'un autre type levait
+      // une TypeError : application bloquée au démarrage).
       issues?.add('snap');
+      out.raw = koachCopie(m) as Map<String, Object?>;
     }
     if (out.snap != null) out.journal = koachJournalDe(m['journal']);
     final fw = m['fromWeek'];

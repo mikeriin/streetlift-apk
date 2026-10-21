@@ -379,6 +379,9 @@ class CharacterSheet {
         'Endurance',
         enduranceScore,
         'Maxima de répétitions au poids de corps (Mes références).',
+        // RV1 : sans maximum renseigné, « indisponible » (comme Force),
+        // jamais un niveau inventé.
+        available: endurance.isNotEmpty,
         note: enduranceNote,
       ),
       GameAttribute(
