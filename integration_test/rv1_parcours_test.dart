@@ -412,7 +412,10 @@ void main() {
     releve['reimport'] = await store.importAll(before);
     final after = store.exportForFile(appVersion: 'rv1');
     await wait(tester, 900);
-    final a0 = sections(before), a1 = sections(after);
+    // `lastLevel` : niveau déjà vu, relevé au niveau atteint par un import
+    // (aucune cérémonie pour des acquis restaurés) : voulu.
+    final a0 = sections(before)..remove('lastLevel');
+    final a1 = sections(after)..remove('lastLevel');
     releve['sections_differentes'] = [
       for (final k in {...a0.keys, ...a1.keys})
         if (jsonEncode(a0[k]) != jsonEncode(a1[k])) k,

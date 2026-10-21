@@ -226,7 +226,8 @@ extension SessionAdaptStore on AppStore {
       kind: kc.EventKind.personalTest,
       priority: kc.EventPriority.main,
       date: day,
-      name: 'Fin du programme (S$last)',
+      // RV1 : semaine affichée (PR2), « S10 » et non « S24 ».
+      name: 'Fin du programme (${program.weekLabel(last)})',
     );
   }
 

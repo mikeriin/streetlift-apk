@@ -327,7 +327,11 @@ SeasonOverview? storeSeasonOverview() {
         (week != null && week > imp.segments.last.last
             ? imp.segments.last
             : imp.segments.first);
-    final event = imp.event;
+    // RV1 : fin du programme à la semaine affichée (PR2), « S10 » et non
+    // « S24 » (le bloc du moteur garde son nom).
+    final ev0 = imp.event;
+    final endLabel = store.program.weekLabel(store.importedLastWeek);
+    final event = ev0?.copyWith(name: 'Fin du programme ($endLabel)');
     final view = seasonOverviewOf(
       season,
       events: [
