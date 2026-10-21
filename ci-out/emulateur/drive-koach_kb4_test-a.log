@@ -1,0 +1,160 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             87.5s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           5.5s
+I/eetlift_tracker( 3992): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 3992): Skipped 174 frames!  The application may be doing too much work on its main thread.
+D/ProfileInstaller( 3992): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 3992): Sending viewport metrics to the engine.
+I/eetlift_tracker( 3992): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:43995/8N9ncVDel1w=/
+VMServiceFlutterDriver: Isolate found with number: 4852299277634999
+VMServiceFlutterDriver: Isolate 4852299277634999 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/Choreographer( 3992): Skipped 42 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 3992): 00:00 +0: KB4 a (sombre, rouge) : Koach 1.0.7 sert le programme PR2 à ses séries écrites ; EMOM minute par minute ; reprise
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 3992): Skipped 75 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 3992): app_time_stats: avg=333.93ms min=84.53ms max=825.24ms count=5
+D/EGL_emulation( 3992): app_time_stats: avg=909.40ms min=909.40ms max=909.40ms count=1
+D/EGL_emulation( 3992): app_time_stats: avg=263.02ms min=2.81ms max=809.49ms count=4
+I/eetlift_tracker( 3992): Background concurrent mark compact GC freed 2127KB AllocSpace bytes, 17(772KB) LOS objects, 49% free, 2708KB/5417KB, paused 71us,1.838ms total 327.213ms
+D/EGL_emulation( 3992): app_time_stats: avg=122.81ms min=9.25ms max=243.86ms count=8
+D/EGL_emulation( 3992): app_time_stats: avg=547.21ms min=8.79ms max=1489.17ms count=4
+D/EGL_emulation( 3992): app_time_stats: avg=647.48ms min=267.16ms max=1027.79ms count=2
+D/EGL_emulation( 3992): app_time_stats: avg=8449.40ms min=222.83ms max=16675.98ms count=2
+D/EGL_emulation( 3992): app_time_stats: avg=152.50ms min=116.70ms max=211.72ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=97.55ms min=12.07ms max=204.01ms count=10
+D/EGL_emulation( 3992): app_time_stats: avg=107.92ms min=10.71ms max=212.15ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=112.48ms min=8.45ms max=217.53ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=111.28ms min=43.98ms max=139.65ms count=8
+D/EGL_emulation( 3992): app_time_stats: avg=280.16ms min=94.42ms max=1501.31ms count=8
+D/EGL_emulation( 3992): app_time_stats: avg=267.34ms min=167.62ms max=443.34ms count=4
+D/EGL_emulation( 3992): app_time_stats: avg=1074.05ms min=179.54ms max=2843.08ms count=3
+D/EGL_emulation( 3992): app_time_stats: avg=219.11ms min=143.81ms max=419.27ms count=6
+W/WindowOnBackDispatcher( 3992): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 3992): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 3992): app_time_stats: avg=208.04ms min=113.44ms max=339.67ms count=5
+I/eetlift_tracker( 3992): Background concurrent mark compact GC freed 366KB AllocSpace bytes, 30(2140KB) LOS objects, 49% free, 2900KB/5801KB, paused 73us,7.037ms total 505.612ms
+D/EGL_emulation( 3992): app_time_stats: avg=89.87ms min=5.13ms max=142.05ms count=10
+D/EGL_emulation( 3992): app_time_stats: avg=120.05ms min=13.04ms max=218.87ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=303.72ms min=130.94ms max=735.76ms count=4
+D/EGL_emulation( 3992): app_time_stats: avg=142.85ms min=111.05ms max=250.96ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=310.99ms min=114.83ms max=1023.84ms count=5
+D/EGL_emulation( 3992): app_time_stats: avg=203.40ms min=105.76ms max=430.51ms count=5
+D/EGL_emulation( 3992): app_time_stats: avg=254.11ms min=116.74ms max=509.99ms count=4
+D/EGL_emulation( 3992): app_time_stats: avg=138.33ms min=122.04ms max=151.90ms count=8
+D/EGL_emulation( 3992): app_time_stats: avg=112.72ms min=14.08ms max=154.87ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=161.03ms min=15.74ms max=454.25ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=99.56ms min=11.47ms max=219.88ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=86.17ms min=12.20ms max=109.33ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=122.72ms min=16.66ms max=264.18ms count=8
+W/eetlift_tracker( 3992): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 3992): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 3992): app_time_stats: avg=124.40ms min=27.32ms max=240.84ms count=8
+D/EGL_emulation( 3992): app_time_stats: avg=94.82ms min=11.06ms max=196.96ms count=10
+D/EGL_emulation( 3992): app_time_stats: avg=137.74ms min=9.94ms max=328.89ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=136.48ms min=21.51ms max=235.82ms count=8
+D/EGL_emulation( 3992): app_time_stats: avg=112.37ms min=8.64ms max=141.89ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=169.48ms min=101.68ms max=296.69ms count=6
+W/WindowOnBackDispatcher( 3992): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 3992): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 3992): app_time_stats: avg=215.39ms min=166.35ms max=288.82ms count=5
+D/EGL_emulation( 3992): app_time_stats: avg=170.62ms min=136.73ms max=199.24ms count=6
+D/EGL_emulation( 3992): app_time_stats: avg=165.11ms min=79.52ms max=236.02ms count=5
+D/EGL_emulation( 3992): app_time_stats: avg=187.97ms min=172.80ms max=208.61ms count=6
+D/EGL_emulation( 3992): app_time_stats: avg=214.80ms min=179.97ms max=304.47ms count=5
+D/EGL_emulation( 3992): app_time_stats: avg=85.29ms min=11.78ms max=115.08ms count=10
+D/EGL_emulation( 3992): app_time_stats: avg=115.39ms min=98.29ms max=152.01ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=112.98ms min=96.03ms max=121.99ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=116.29ms min=114.15ms max=117.82ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=116.92ms min=114.30ms max=118.60ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=116.64ms min=107.60ms max=127.56ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=116.39ms min=109.13ms max=121.57ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=116.56ms min=108.89ms max=123.21ms count=9
+D/EGL_emulation( 3992): app_time_stats: avg=272.21ms min=237.79ms max=346.15ms count=4
+D/EGL_emulation( 3992): app_time_stats: avg=145.90ms min=64.08ms max=188.62ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=144.74ms min=56.07ms max=253.11ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=93.96ms min=84.34ms max=101.19ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=140.94ms min=87.69ms max=198.45ms count=6
+D/EGL_emulation( 3992): app_time_stats: avg=107.22ms min=67.14ms max=197.38ms count=8
+D/EGL_emulation( 3992): app_time_stats: avg=154.59ms min=83.67ms max=236.69ms count=6
+D/EGL_emulation( 3992): app_time_stats: avg=201.52ms min=156.39ms max=332.51ms count=5
+I/eetlift_tracker( 3992): Background concurrent mark compact GC freed 872KB AllocSpace bytes, 24(2208KB) LOS objects, 49% free, 2780KB/5561KB, paused 61us,122.877ms total 363.136ms
+W/eetlift_tracker( 3992): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 3992): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 3992): app_time_stats: avg=146.79ms min=26.12ms max=218.49ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=182.12ms min=147.08ms max=205.86ms count=6
+D/EGL_emulation( 3992): app_time_stats: avg=174.05ms min=117.00ms max=234.37ms count=6
+D/EGL_emulation( 3992): app_time_stats: avg=169.41ms min=148.88ms max=211.00ms count=6
+D/EGL_emulation( 3992): app_time_stats: avg=157.11ms min=140.12ms max=166.50ms count=7
+D/EGL_emulation( 3992): app_time_stats: avg=142.62ms min=52.88ms max=202.01ms count=7
+I/flutter ( 3992): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 3992): The following TestFailure was thrown running a test:
+I/flutter ( 3992): Expected: true
+I/flutter ( 3992):   Actual: <false>
+I/flutter ( 3992): 
+I/flutter ( 3992): When the exception was thrown, this was the stack:
+I/flutter ( 3992): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/koach_kb4_test.dart:463:5)
+I/flutter ( 3992): <asynchronous suspension>
+I/flutter ( 3992): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 3992): <asynchronous suspension>
+I/flutter ( 3992): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 3992): <asynchronous suspension>
+I/flutter ( 3992): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 3992): <asynchronous suspension>
+I/flutter ( 3992): 
+I/flutter ( 3992): This was caught by the test expectation on the following line:
+I/flutter ( 3992):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/koach_kb4_test.dart line 463
+I/flutter ( 3992): The test description was:
+I/flutter ( 3992):   KB4 a (sombre, rouge) : Koach 1.0.7 sert le programme PR2 à ses séries écrites ; EMOM minute par
+I/flutter ( 3992):   minute ; reprise
+I/flutter ( 3992): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 3992): 01:32 +0: KB4 a (sombre, rouge) : Koach 1.0.7 sert le programme PR2 à ses séries écrites ; EMOM minute par minute ; reprise [E]
+I/flutter ( 3992):   Test failed. See exception logs above.
+I/flutter ( 3992):   The test description was: KB4 a (sombre, rouge) : Koach 1.0.7 sert le programme PR2 à ses séries écrites ; EMOM minute par minute ; reprise
+I/flutter ( 3992):   
+I/flutter ( 3992): 01:32 +0 -1: (tearDownAll)
+D/EGL_emulation( 3992): app_time_stats: avg=284.33ms min=56.04ms max=627.90ms count=4
+I/flutter ( 3992): 01:32 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: KB4 a (sombre, rouge) : Koach 1.0.7 sert le programme PR2 à ses séries écrites ; EMOM minute par minute ; reprise
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <false>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/koach_kb4_test.dart:463:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/koach_kb4_test.dart line 463
+The test description was:
+  KB4 a (sombre, rouge) : Koach 1.0.7 sert le programme PR2 à ses
+  séries écrites ; EMOM minute par minute ; reprise
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
