@@ -1,0 +1,689 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 110.0.0
++ analyzer 14.6.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ cli_util 0.6.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.16.0
++ crypto 3.0.7
++ ffi 2.2.0
++ file 7.0.1
++ frontend_server_client 4.2.0
++ glob 2.2.0
++ http_multi_server 3.2.3
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.4.4 from path ../kalis_core
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.3
++ shelf_packages_handler 3.0.2
++ shelf_static 1.2.0
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.33.0
++ test_api 0.7.15
++ test_core 0.6.21
++ typed_data 1.4.0
++ vm_service 15.4.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 51 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 70 files (0 changed) in 0.52 seconds.
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/units_test.dart
+00:00 +0: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +1: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +2: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +3: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +4: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +5: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +6: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +7: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +8: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +9: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +10: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +11: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +12: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +13: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +14: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +15: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +16: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +17: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +18: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:05 +19: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:07 +20: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:09 +21: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:12 +22: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:14 +23: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:15 +24: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:17 +25: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:19 +26: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:21 +27: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:27 +28: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
+00:29 +29: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:32 +30: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:35 +31: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:38 +32: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:40 +33: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:41 +34: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8480 à 8639
+00:42 +35: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+00:44 +36: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+00:47 +37: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+00:55 +38: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+01:08 +39: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4320 à 4479
+01:09 +40: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1440 à 1599
+01:21 +41: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4480 à 4639
+01:23 +42: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1600 à 1759
+01:36 +43: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4640 à 4799
+01:37 +44: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1760 à 1919
+01:50 +45: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4800 à 4959
+01:51 +46: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
+02:05 +47: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
+02:06 +48: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 2560 à 2719
+02:14 +49: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
+02:17 +50: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
+02:20 +51: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
+02:20 +52: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 3040 à 3199
+02:22 +53: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+02:25 +54: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+02:27 +55: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+02:29 +56: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+02:32 +57: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+02:34 +58: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 2560 à 2719
+02:39 +59: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+02:41 +60: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+02:44 +61: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+02:46 +62: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+02:48 +63: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+02:49 +64: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +65: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +66: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +67: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +68: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +69: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +70: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +71: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +72: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +73: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +74: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +75: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +76: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +77: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +78: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:49 +79: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:50 +80: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119
+02:53 +81: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119
+02:55 +82: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119
+02:58 +83: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+03:01 +84: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+03:04 +85: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+03:06 +86: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+03:09 +87: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+03:12 +88: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+03:14 +89: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9920 à 10079
+03:14 +90: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+03:15 +91: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 10080 à 10239
+03:15 +92: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 10080 à 10239
+03:16 +93: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:17 +94: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:17 +95: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:17 +96: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:17 +97: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:17 +98: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:17 +99: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:17 +100: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:17 +101: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +102: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +103: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +104: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +105: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +106: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +107: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +108: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +109: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +110: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +111: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +112: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +113: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +114: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +115: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +116: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +117: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +118: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +119: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +120: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +121: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +122: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +123: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +124: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +125: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +126: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +127: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +128: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +129: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +130: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +131: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +132: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +133: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +134: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +135: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +136: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +137: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +138: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +139: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +140: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +141: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +142: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +143: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +144: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +145: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +146: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +147: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +148: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +149: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +150: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +151: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +152: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +153: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +154: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +155: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +156: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +157: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +158: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +159: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +160: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +161: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +162: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +163: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +164: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +165: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +166: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +167: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +168: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +169: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +170: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +171: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +172: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +173: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +174: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +175: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +176: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:18 +177: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +178: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +179: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +180: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +181: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +182: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +183: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +184: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +185: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +186: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +187: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +188: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +189: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +190: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +191: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +192: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +193: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +194: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +195: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +196: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +197: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +198: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +199: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +200: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +201: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +202: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +203: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +204: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +205: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +206: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +207: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +208: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +209: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +210: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +211: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +212: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +213: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +214: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +215: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +216: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +217: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +218: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +219: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +220: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +221: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +222: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +223: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +224: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +225: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +226: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +227: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +228: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +229: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +230: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +231: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +232: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +233: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +234: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +235: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +236: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +237: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +238: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +239: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +240: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +241: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +242: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +243: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +244: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +245: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +246: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +247: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +248: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +249: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +250: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +251: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +252: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +253: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +254: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +255: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +256: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +257: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +258: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +259: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +260: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +261: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +262: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +263: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +264: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +265: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +266: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +267: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +268: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +269: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +270: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +271: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +272: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +273: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +274: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +275: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +276: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +277: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +278: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +279: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +280: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +281: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +282: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +283: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +284: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +285: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +286: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +287: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +288: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +289: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +290: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:19 +291: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +292: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +293: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +294: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +295: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +296: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +297: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +298: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +299: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +300: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +301: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +302: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +303: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +304: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +305: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +306: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +307: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +308: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +309: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +310: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +311: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +312: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +313: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +314: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +315: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +316: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +317: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +318: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +319: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +320: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +321: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +322: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +323: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +324: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +325: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +326: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +327: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +328: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +329: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +330: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +331: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +332: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +333: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +334: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +335: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +336: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +337: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +338: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +339: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +340: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +341: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +342: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +343: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +344: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +345: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +346: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +347: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +348: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +349: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +350: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +351: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +352: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +353: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +354: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +355: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +356: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +357: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +358: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +359: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +360: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +361: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +362: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +363: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +364: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +365: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +366: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +367: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +368: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +369: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +370: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +371: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +372: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +373: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +374: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +375: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +376: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +377: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +378: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +379: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +380: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +381: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +382: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +383: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +384: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +385: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +386: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +387: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +388: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +389: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +390: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +391: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +392: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +393: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +394: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +395: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:20 +396: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:21 +397: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:21 +398: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:21 +399: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:21 +400: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:21 +401: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:21 +402: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:21 +403: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+03:21 +404: test/structure_test.dart: profil de test : ppl6_q (§ 7) (setUpAll)
+03:22 +404: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+03:22 +405: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+03:22 +406: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+03:22 +407: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+03:22 +408: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+03:22 +409: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+03:22 +410: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+03:22 +411: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+03:22 +412: test/engine_test.dart: verrous exercice exigé présent, exercice exclu absent
+03:23 +413: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+03:23 +414: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+03:23 +415: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+03:23 +416: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+03:23 +417: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+03:24 +418: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+03:28 +419: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+03:31 +420: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+03:34 +421: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+03:37 +422: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+03:40 +423: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+03:44 +424: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+03:47 +425: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+03:49 +426: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+03:51 +427: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4960 à 5119
+03:52 +428: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:53 +429: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +430: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +431: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +432: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +433: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +434: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +435: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +436: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +437: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +438: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:54 +439: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:55 +440: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:55 +441: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:55 +442: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:55 +443: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:55 +444: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +445: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +446: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +447: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +448: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +449: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +450: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +451: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +452: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +453: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +454: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:56 +455: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +456: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +457: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +458: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +459: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +460: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +461: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +462: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +463: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +464: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +465: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +466: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +467: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +468: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +469: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +470: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +471: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +472: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +473: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +474: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +475: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:57 +476: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +477: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +478: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +479: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +480: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +481: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +482: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +483: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +484: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +485: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +486: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:58 +487: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+04:05 +488: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+04:09 +489: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+04:24 +490: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+04:37 +491: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+04:37 +492: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+04:37 +493: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+04:37 +494: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+04:40 +495: test/resemblance_test.dart: profils types, graines 0 à 3 : ressemblance sous le seuil
+04:44 +496: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3200 à 3359
+04:55 +497: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+05:10 +498: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+05:17 +499: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+05:23 +500: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+05:26 +501: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+05:27 +502: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5440 à 5599
+05:29 +503: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+05:31 +504: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+05:32 +505: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+05:34 +506: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+05:36 +507: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+05:38 +508: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+05:42 +509: test/smoke_test.dart: les 40 profils types : passe 1, revue, passe 2 sans violation
+05:46 +510: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+05:54 +511: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+05:56 +512: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+05:58 +513: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+06:00 +514: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+06:02 +515: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+06:04 +516: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+06:05 +517: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+06:07 +518: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+06:08 +519: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+06:24 +520: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+06:27 +521: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+06:40 +522: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+06:42 +523: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+06:56 +524: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+06:58 +525: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:10 +526: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+07:14 +527: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5760 à 5919
+07:24 +528: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+07:30 +529: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:39 +530: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+07:47 +531: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+07:54 +532: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+08:03 +533: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+08:07 +534: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 1280 à 1439
+08:11 +535: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+08:13 +536: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+08:15 +537: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 1600 à 1759
+08:15 +538: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+08:17 +539: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+08:17 +540: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 1920 à 2079
+08:17 +541: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 1920 à 2079
+08:19 +542: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+08:21 +543: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+08:23 +544: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+08:25 +545: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 2400 à 2559
+08:25 +546: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319
+08:28 +547: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279
+08:31 +548: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279
+08:33 +549: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 480 à 639
+08:34 +550: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5280 à 5439
+08:36 +551: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 640 à 799
+08:37 +552: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5440 à 5599
+08:39 +553: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 800 à 959
+08:39 +554: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5600 à 5759
+08:41 +555: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 960 à 1119
+08:42 +556: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5760 à 5919
+08:44 +557: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279
+08:44 +558: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5920 à 6079
+08:47 +559: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+08:50 +560: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+08:52 +561: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+09:05 +562: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+09:18 +563: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+09:19 +564: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9120 à 9279
+09:34 +565: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+09:34 +566: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
+09:50 +567: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
+09:51 +568: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+10:03 +569: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599
+10:09 +570: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+10:18 +571: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+10:26 +572: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+10:32 +573: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+10:42 +574: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+10:45 +575: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+10:51 +576: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+10:53 +577: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+10:55 +578: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+10:57 +579: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+10:58 +580: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+11:00 +581: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 8480 à 8639
+11:00 +582: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+11:02 +583: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+11:03 +584: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+11:10 +585: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+11:12 +586: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+11:14 +587: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+11:16 +588: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+11:16 +589: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 7040 à 7199
+11:18 +590: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+11:20 +591: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+11:23 +592: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+11:24 +593: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+11:32 +594: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+11:34 +595: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+11:37 +596: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1600 à 1759
+11:37 +597: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+11:39 +598: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+11:42 +599: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+11:44 +600: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+11:46 +601: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+11:48 +602: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+11:51 +603: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 8960 à 9119
+11:56 +604: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+11:58 +605: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+12:00 +606: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+12:02 +607: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+12:03 +608: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+12:05 +609: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+12:06 +610: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 9920 à 10079
+12:07 +611: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+12:08 +612: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+12:17 +613: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+12:19 +614: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+12:20 +615: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6720 à 6879
+12:22 +616: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+12:24 +617: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+12:26 +618: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+12:28 +619: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+12:31 +620: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+12:33 +621: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+12:34 +622: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8480 à 8639
+12:47 +623: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8640 à 8799
+13:01 +624: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8800 à 8959
+13:14 +625: All tests passed!
+kalis_plan 0.4.2 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (171 s).
