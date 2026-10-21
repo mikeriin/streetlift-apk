@@ -21,3 +21,6 @@
 - Délai du job porté à 300 min (commit 1676c9ee) ; contrôle complet relancé 19:18 (commit ci-3d e0337102).
 - Relecture indépendante faite et traitée ; captures lues (deux défauts PR2 corrigés : titre du bilan « S15-J1 », « Fin du programme (S24) »).
 - Reste : résultat du run, publication main, build, livraison (brouillon LIVRAISON_RV1.md), page de suivi (scratchpad/page.py), ETAT, notification.
+
+## Fin 21/10
+- Publié : main c963a215 (dev7.5.0), build 39677849445 vert, ci-3d 39660495300 vert, LIVRAISON_RV1 (pipeline + projet), ETAT « à valider », page de suivi republiée (version 66), notification envoyée. Lot terminé.

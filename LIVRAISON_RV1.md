@@ -2,7 +2,7 @@
 
 Lot de la voie App du pipeline CP (DECISIONS_CP.md C17.41, C17.43), demande du propriétaire du 20/10/2026 : « passe en revue tout le code pour corriger des bugs de logique, des bugs graphiques et autres ». Base : `main` 0e063fde (dev7.4.0, aucune publication du propriétaire pendant le lot). Données synthétiques seulement (C17.33.2) ; aucune clé, aucune référence, aucune donnée réelle.
 
-- Publication : `main` c963a215 (avance rapide depuis 0e063fde, un commit, arbre identique à celui contrôlé) ; build signé __BUILD__ ; contrôle complet `claude/ci-3d` run 39660495300 vert sur l'arbre publié (commit de contrôle e0337102) : contrôles, analyse, formatage, 1 186 tests Dart, mode dev, Python, paquets, builds debug et profile, émulateur : **toutes les cibles vertes** (RV1 a et b, KB4 à M7, `drive-code` à 0).
+- Publication : `main` c963a215 (avance rapide depuis 0e063fde, un commit, arbre identique à celui contrôlé) ; build signé run 39677849445 vert (APK : artefact kalis-track-apk 12381959884, https://github.com/mikeriin/streetlift-apk/actions/runs/39677849445) ; contrôle complet `claude/ci-3d` run 39660495300 vert sur l'arbre publié (commit de contrôle e0337102) : contrôles, analyse, formatage, 1 186 tests Dart, mode dev, Python, paquets, builds debug et profile, émulateur : **toutes les cibles vertes** (RV1 a et b, KB4 à M7, `drive-code` à 0).
 - Paquets (`kalis_core`, `kalis_plan`, `kalis_adapt`, `kalis_bench`) : **inchangés**, revus en lecture (§ 5).
 
 ## 1. Ce qui change pour le propriétaire
