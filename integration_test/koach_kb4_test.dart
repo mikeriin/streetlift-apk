@@ -372,8 +372,10 @@ void main() {
     }
     // En-tête du départ chronométré : celui du groupe au temps du bloc
     // (« EMOM · 8 min », Lancer) ou, hors groupe, « EMOM · 8 tours ».
+    // (Espaces insécables possibles : `\s`.)
     final entete = find.textContaining(
-      RegExp('EMOM · ${store.setCount(mu)} (min|tours)'),
+      RegExp('EMOM\\s*·\\s*${store.setCount(mu)}\\s*(min|tours)'),
+      findRichText: true,
     );
     await until(tester, entete, max: 60);
     releve['emom_entete'] = entete.evaluate().isNotEmpty;
