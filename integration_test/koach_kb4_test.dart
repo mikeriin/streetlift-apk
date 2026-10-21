@@ -453,9 +453,7 @@ void main() {
     }
     expect(releve['j2_affiche'], releve['j2_ecrit']);
     expect(
-      (releve['j2_entete'] as List).where(
-        (t) => '$t'.startsWith('Je retire'),
-      ),
+      (releve['j2_entete'] as List).where((t) => '$t'.startsWith('Je retire')),
       isEmpty,
     );
     expect(releve['arret'], isTrue);

@@ -13,5 +13,7 @@ Base : main 88fb1965 (dev7.3.0). Session lancée 21/10/2026 04:22 UTC (« Lot : 
 ## Fait aussi
 - Code complet (garde, réactivation, EMOM, carte, inspecteur), tests kb4 (rapide run 39545379840 : 14/15 verts, 1 test corrigé), kb3/kb1/versions, cible koach_kb4_test + ci3d_drive.sh, relecture Opus traitée (commit 6f35433c sur claude/ci-ui-kb4-rapide).
 
+- Rapide vert (run 39547004881) sur 53016cac ; contrôle complet poussé sur claude/ci-3d (5e7545ca) à 05:05 UTC.
+
 ## Reste
 - Code (garde, réactivation, EMOM, carte), tests kb4, mise à jour kb3/kb1/versions, cible émulateur, CI rapide puis ci-3d, main, build, livraison.
