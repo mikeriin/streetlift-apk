@@ -29,10 +29,13 @@ Map<String, dynamic> pr2Semaine() =>
 /// programme jusqu'à S[lastWeek]·J[lastJ], nouveau programme de S15 à S24
 /// (deux blocs), départ affiché S15 ; profil d'athlète enregistré.
 /// KB3 : [semaine] remplace la semaine type (variante d'un test).
+/// KB4 : [firstWeek] : journal de l'ancien programme à partir de cette
+/// semaine seulement (historique court).
 Future<void> importPr2Nouveau(
   AppStore app, {
   int lastWeek = 14,
   int lastJ = 7,
+  int firstWeek = 1,
   Map<String, dynamic>? semaine,
 }) async {
   final b = filledBackup(app);
@@ -40,7 +43,10 @@ Future<void> importPr2Nouveau(
   logs.removeWhere((k, _) {
     final w = int.parse(k.substring(1, k.indexOf('-')));
     final j = int.parse(k.substring(k.indexOf('J') + 1));
-    return w > lastWeek || (w == lastWeek && j > lastJ) || w > 14;
+    return w > lastWeek ||
+        (w == lastWeek && j > lastJ) ||
+        w > 14 ||
+        w < firstWeek;
   });
   final base = _asset('programme_v33.json.gz');
   final koach = _asset('koach_program.json.gz');

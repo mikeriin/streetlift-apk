@@ -9,10 +9,10 @@
 // programme à partir de S15 = S1 affichée, semaine type `kb2c1_semaine.dart`
 // avec un pull-over « chest » ajouté au lundi de tirage) ; jamais l'export
 // réel (C17.33.2). Horloge au lundi de la prise de main :
-// 1. J1 servi par Koach 1.0.6 : muscle-up lesté en tête et traction lestée
-//    servis par Koach (séries réduites au plus, raison « au lieu de » sur
-//    la carte), pull-over retiré d'abord (« Je retire … aujourd’hui »
-//    affiché) ; temps de la séance servie mesuré ;
+// 1. J1 servi par Koach (KB4 : 1.0.7) : muscle-up lesté en tête et traction
+//    lestée servis par Koach, pull-over gardé (KB3 : 1.0.6 le retirait
+//    d'abord ; C17.40 : la rampe ne coupe plus sous l'écrit) ; temps de la
+//    séance servie mesuré ;
 // 2. rôles transmis dans `reste_semaine`.
 // Relevé `kb3_releve_<partie>.json`, captures `kb3_*_<thème>.png`.
 import 'dart:async';
@@ -188,8 +188,8 @@ void main() {
     await wait(tester, 800);
   }
 
-  testWidgets('KB3 $_part ($theme, $accent) : Koach 1.0.6 sur le '
-      'programme PR2, accessoire « chest » retiré d’abord', (tester) async {
+  testWidgets('KB3 $_part ($theme, $accent) : Koach sur le programme PR2 '
+      '(KB4 : accessoire « chest » gardé)', (tester) async {
     KalisClock.setOffsetDays(0);
     final raw = await SharedPreferences.getInstance();
     await raw.clear();
@@ -290,7 +290,7 @@ void main() {
     releve['koach_actif'] = store.koachEngine.snap != null;
     releve['depuis'] = store.koachEngine.fromWeek;
 
-    // 1. J1 : séance servie par Koach 1.0.6.
+    // 1. J1 : séance servie par Koach.
     final w15 = store.program.week(wk);
     final j1 = w15.day(1)!;
     releve['j1_ecrit'] = _structure(wk, 1);
@@ -369,12 +369,17 @@ void main() {
     expect(releve['j1_servie'], isTrue);
     expect((servis['sl-muscle-up-leste'] as num?) ?? 0, inInclusiveRange(1, 6));
     expect((servis['sl-traction-lestee'] as num?) ?? 0, inInclusiveRange(1, 8));
-    expect(servis.containsKey('mu-pull-over-haltere'), isFalse);
-    expect([
-      for (final x in (st['retraits'] as List? ?? const []))
-        (x as Map)['exercice'],
-    ], contains('mu-pull-over-haltere'));
-    expect(entete.first, startsWith('Je retire'));
+    // KB4 (Koach 1.0.7, C17.40) : la rampe de volume ne coupe plus sous
+    // l'écrit : le pull-over « chest » reste servi, aucun retrait, aucun
+    // « Je retire … » en tête de séance.
+    expect(
+      (releve['cartes'] as List).any(
+        (c) => '$c'.startsWith('mu-pull-over-haltere'),
+      ),
+      isTrue,
+    );
+    expect((st['retraits'] as List?) ?? const [], isEmpty);
+    expect(entete.where((t) => t.startsWith('Je retire')), isEmpty);
     expect((releve['j1_affiche'] as List).first, startsWith('MUSCLE-UP LESTÉ'));
     expect(releve['mu_carte'], '6×2 · E2MOM');
     if (((servis['sl-muscle-up-leste'] as num?) ?? 6) < 6) {

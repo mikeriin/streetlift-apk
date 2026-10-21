@@ -70,21 +70,21 @@ String koachSlotEcrit(String slot) =>
 ///   (`koach.test_reporte` sur une ligne de test), séance bornée au temps
 ///   donné par l'athlète (`koach.seance_bornee`, [budgetDonne]).
 ///
-/// KB3 (Koach 1.0.6, DECISIONS_CP.md C17.39.5) : la garde ne vaut plus que
-/// pour les **principaux** ([roles] : emplacement → rôle ; rôle `main`, ou
-/// rôle inconnu par prudence). Une ligne d'un autre rôle (accessoire,
-/// secondaire…) que le retour gradué de Koach met à 0 série (raison
-/// `koach.retour_gradue`, `series` 0, accessoires coupés d'abord) reste
-/// retirée : `retraits`, raison affichée (« Je retire … aujourd’hui »). Un
-/// principal ne l'est que sous douleur (`douleur` de la raison). Sinon,
-/// servie telle qu'écrite (jamais de retrait en silence).
+/// KB4 (Koach 1.0.7, DECISIONS_CP.md C17.40) : la garde vaut pour **tous
+/// les rôles** (règle de KB2 correction 1 ; le retrait d'un accessoire par
+/// le retour gradué de KB3 est retiré) : la rampe de volume ne coupe plus
+/// jamais sous l'écrit. Retraits motivés en plus de ceux de KB2 correction
+/// 1 : la rampe tendineuse des tenues bras tendus (`koach.retour_gradue`
+/// d'un groupe `bras_tendus_*` à 0 série, sous douleur ou non). Toute
+/// autre ligne absente du servi est servie telle qu'écrite (`ecrites`,
+/// avec la raison de Koach sur l'exercice) : avec 1.0.7, cela ne doit plus
+/// arriver pour le volume (diagnostic du mode dev, état `garde`).
 /// Pur (testé).
 ({List<Json> servis, List<Json> ecrites, List<Json> retraits}) koachGardeSeance(
   List<Json> ecrit,
   List<Json> servi,
   List<Json> raisons, {
   bool budgetDonne = false,
-  Map<String, Object?>? roles,
 }) {
   final rang = <String, int>{};
   for (var i = 0; i < ecrit.length; i++) {
@@ -108,36 +108,19 @@ String koachSlotEcrit(String slot) =>
     final ex = w['exerciseId'];
     String? motif;
     String? cause;
-    // KB3 : retrait par le retour gradué (0 série) de cette ligne
-    // (`ecrites` = séries écrites de la ligne quand Koach les dit).
-    Map? retour;
     for (final r in raisons) {
       final p = r['params'];
       if (p is! Map || p['exercice'] != ex) continue;
       final code = '${r['code']}';
-      if (code == 'koach.retour_gradue' &&
-          p['series'] == 0 &&
-          (p['ecrites'] == null || p['ecrites'] == w['sets'])) {
-        retour ??= p;
-      }
       if (code == 'koach.douleur_retrait' ||
           code == 'koach.endurance_retrait' ||
           (code == 'koach.test_reporte' && w['kind'] == 'test') ||
-          (code == 'koach.seance_bornee' && budgetDonne)) {
+          (code == 'koach.seance_bornee' && budgetDonne) ||
+          (code == 'koach.retour_gradue' && koachRampeTendineuse(p))) {
         motif ??= code;
       } else {
         cause ??= code;
       }
-    }
-    final role = roles?[slot];
-    final principal = role == null || role == 'main';
-    // Seul le retour gradué retire un non-principal (jamais une autre
-    // raison, quel que soit l'ordre des raisons) ; un principal seulement
-    // sous douleur sur une zone qu'il sollicite (C17.37.2).
-    if (motif == null &&
-        retour != null &&
-        (!principal || retour['douleur'] == true)) {
-      motif = 'koach.retour_gradue';
     }
     if (motif != null) {
       retraits.add({'slotId': slot, 'exercice': ex, 'code': motif});
@@ -156,13 +139,19 @@ String koachSlotEcrit(String slot) =>
   );
 }
 
+/// KB4 : raison `koach.retour_gradue` de la rampe tendineuse des tenues
+/// bras tendus à 0 série ([p] : paramètres de la raison ; groupe
+/// `bras_tendus_*`) : seul retour gradué que Koach 1.0.7 émet encore
+/// (`koach_textes.dart`). Pur.
+bool koachRampeTendineuse(Map p) =>
+    '${p['groupe']}'.startsWith('bras_tendus') && p['series'] == 0;
+
 /// KB2 correction 1 : raison affichée d'une ligne écrite que Koach n'a
 /// pas servie (garde de la séance) ; [cause] : code de la raison de Koach
 /// sur l'exercice.
+/// KB4 (Koach 1.0.7) : le volume de la semaine ne retire plus rien
+/// (`koach.retour_gradue`, `koach.ajout_borne` : texte général).
 String koachTexteEcrite(String? cause) => switch (cause) {
-  'koach.retour_gradue' =>
-    'Servi tel qu’écrit. Koach l’aurait retiré pour rester dans le volume '
-        'de la semaine : écoute tes sensations.',
   'koach.seance_bornee' =>
     'Servi tel qu’écrit. Koach l’aurait retiré pour tenir la durée de la '
         'séance.',
@@ -213,6 +202,22 @@ String? koachTexteReduitEcrit(Map r) {
       'aurait fait ${n.round()} série${n.round() > 1 ? 's' : ''} sur '
       '${w.round()} pour rester dans le volume de la semaine : écoute tes '
       'sensations.';
+}
+
+/// KB4 (Koach 1.0.7 planifie les lignes au départ chronométré à leurs
+/// séries écrites) : texte d'une ligne PR8 servie telle qu'écrite quand les
+/// séries que Koach a servies ([servies]) diffèrent encore de l'écrit
+/// ([ecrites]) ; null quand elles sont égales. Pur (testé).
+String? koachTexteEcartEcrit(int servies, int ecrites) {
+  if (servies == ecrites || servies < 0 || ecrites <= 0) return null;
+  final s = servies > 1 ? 's' : '';
+  return servies < ecrites
+      ? 'Servi tel qu’écrit (départ chronométré du programme). Koach '
+            'aurait fait $servies série$s sur $ecrites : écoute tes '
+            'sensations.'
+      : 'Servi tel qu’écrit (départ chronométré du programme). Koach '
+            'aurait fait $servies série$s au lieu de $ecrites : garde le '
+            'programme, et note tes flammes au plus juste.';
 }
 
 /// Section `koachEngine` du document.
@@ -266,6 +271,11 @@ class KoachEngineData {
   /// retour au programme d'origine).
   String? refSig;
 
+  /// KB4 : carte « Koach ne coupe plus ton programme » vue (réactivation
+  /// ou « Plus tard », AAAA-MM-JJ) ; null : à montrer tant que Koach est
+  /// arrêté.
+  String? annonce107;
+
   bool get active => snap != null && stop == null;
 
   bool get pristine => snap == null && journal.isEmpty && forced == null;
@@ -287,6 +297,7 @@ class KoachEngineData {
     if (forced != null) 'forced': forced,
     if (blocked != null) 'blocked': blocked,
     if (refSig != null) 'refSig': refSig,
+    if (annonce107 != null) 'annonce107': annonce107,
   };
 
   /// Lecture tolérante (une section illisible donne un état neuf : le
@@ -305,6 +316,7 @@ class KoachEngineData {
     out.openedOn = day('openedOn');
     out.activatedOn = day('activatedOn');
     out.forced = day('forced');
+    out.annonce107 = day('annonce107');
     try {
       if (m['snap'] != null) out.snap = KoachInstantane.fromJson(m['snap']);
     } on FormatException {
@@ -589,6 +601,11 @@ extension KoachStore on AppStore {
     if (res == null || gen != _koachRt.gen) return;
     if (e.stop != null) return;
     await _koachEnsureLive(gen);
+    if (gen != _koachRt.gen) return;
+    // KB4 : séance servie par Koach finie hors de lui (pendant un arrêt
+    // d'urgence, ou moteur pas prêt à la fin) : fermée d'abord (séries
+    // restantes, `seance_fin`), jamais versée une seconde fois.
+    await _koachCloseOrphans(gen);
     if (gen != _koachRt.gen) return;
     await _koachCatchUp(gen);
     if (gen != _koachRt.gen) return;
@@ -1193,10 +1210,18 @@ extension KoachStore on AppStore {
     final versedNow = <String>[];
     final manquees = <Json>[];
     final open = _koachOpenKey();
+    // KB4 : séance servie par Koach (début déjà au journal) : versée par sa
+    // fermeture ([koachOnSessionDone], [_koachCloseOrphans]), jamais une
+    // seconde fois ici.
+    bool servie(String key) {
+      final st = logs[key]?.adapt?['koach'];
+      return st is Map && st['state'] == 'open';
+    }
+
     void verseDone(bool Function(int jour) when) {
       for (final s in done) {
         if (e.versed.contains(s.key) || versedNow.contains(s.key)) continue;
-        if (s.key == open) continue;
+        if (s.key == open || servie(s.key)) continue;
         final c = _koachConvert(res, lundi, s);
         if (c == null || !when(c.jour)) continue;
         steps
@@ -1306,8 +1331,14 @@ extension KoachStore on AppStore {
     for (final it in day.items) {
       final m = modules?['${place.dayIndex}|${it.slotId}'];
       var next = it;
-      if (m != null && m.$1 != it.sets && m.$1 >= 0) {
-        if (m.$1 == 0) continue;
+      // KB4 (C17.40) : jamais une ligne écrite retirée de l'aperçu (une
+      // modulation à 0 série garde la ligne écrite) ; une ligne au départ
+      // chronométré servie telle qu'écrite (PR8) garde ses séries écrites
+      // (tours du groupe).
+      if (m != null &&
+          m.$1 != it.sets &&
+          m.$1 > 0 &&
+          !adaptAsWritten(week, it.slotId)) {
         next = it.copyWith(sets: m.$1, setTargets: null);
       }
       // Correctif 20/10/2026 : accessoires servis en plage (aperçu comme
@@ -1387,8 +1418,12 @@ extension KoachStore on AppStore {
       if (x.slotId == slot) it = x;
     }
     if (it == null) return null;
-    if (m.$1 == it.sets && m.$2.abs() < 0.005) return null;
-    return (sets: m.$1, written: it.sets, intensity: m.$2);
+    // KB4 : ligne au départ chronométré servie telle qu'écrite (PR8) : pas
+    // de modulation affichée ; une modulation à 0 série ne retire rien.
+    if (adaptAsWritten(week, slot)) return null;
+    final sets = m.$1 > 0 ? m.$1 : it.sets;
+    if (sets == it.sets && m.$2.abs() < 0.005) return null;
+    return (sets: sets, written: it.sets, intensity: m.$2);
   }
 
   /// La séance de S[week]·J[j] attend son début réel (bilan réglé ou
@@ -1591,24 +1626,45 @@ extension KoachStore on AppStore {
       ],
       raisons,
       budgetDonne: contexte['budget'] != null,
-      roles: info.roles,
     );
     final served = garde.servis;
     final apercu = {for (final it in a.plan.items) it.slotId: it};
-    final ecrites = {
-      for (final x in garde.ecrites)
-        if (apercu.containsKey(x['slotId'])) '${x['slotId']}',
+    // KB4 (C17.40) : toute ligne écrite absente du servi sans retrait
+    // motivé est servie telle qu'écrite, tous rôles ; une ligne absente de
+    // l'aperçu (planification à 0 série) n'est plus retirée : sa ligne
+    // écrite (charge fixe C15 comprise) la remplace.
+    final ecrites = {for (final x in garde.ecrites) '${x['slotId']}'};
+    final retraits = garde.retraits;
+    final gardees = garde.ecrites;
+    // (Calculées seulement si une ligne manque à l'aperçu.)
+    late final ecritesDuJour = {
+      for (final it
+          in _fixedConstrain(
+            place,
+            kc.SessionPlan(
+              date: today,
+              blockId: place.blockId,
+              weekIndex: place.weekIndex,
+              dayIndex: place.dayIndex,
+              items: [
+                for (final it
+                    in place.day?.items ?? const <kc.ExercisePrescription>[])
+                  _koachRange(
+                    place,
+                    it,
+                    kc.SlotRole.values
+                        .where((r) => r.code == info.roles[it.slotId])
+                        .firstOrNull,
+                  ),
+              ],
+              adjustments: const [],
+              confidence: 1,
+              reasons: const [],
+              groups: place.day?.groups,
+            ),
+          ).items)
+        it.slotId: it,
     };
-    final retraits = [
-      ...garde.retraits,
-      for (final x in garde.ecrites)
-        if (!apercu.containsKey(x['slotId']))
-          {...x, 'code': 'koach.planification'},
-    ];
-    final gardees = [
-      for (final x in garde.ecrites)
-        if (apercu.containsKey(x['slotId'])) x,
-    ];
     final items = <kc.ExercisePrescription>[];
     for (final w in info.items) {
       final slot = '${w['slotId']}';
@@ -1638,10 +1694,9 @@ extension KoachStore on AppStore {
         }
       }
       if (!ecrites.contains(slot)) continue;
-      // La ligne de l'aperçu (séries de la semaine, charge fixe) ; une
-      // ligne que la planification de la semaine a mise à 0 série n'est
-      // pas dans l'aperçu : elle reste retirée, comme l'aperçu le montrait.
-      final p = apercu[slot];
+      // La ligne de l'aperçu (séries de la semaine, charge fixe) ; KB4 :
+      // absente de l'aperçu, la ligne écrite du jour.
+      final p = apercu[slot] ?? ecritesDuJour[slot];
       if (p != null) items.add(p);
     }
     var plan = kc.SessionPlan(
@@ -1688,6 +1743,10 @@ extension KoachStore on AppStore {
         // remplace `raisons`) : retraits et séries réduites restent dits.
         'ouverture': raisons,
         if (gardees.isNotEmpty) 'ecrites': gardees,
+        // KB4 : diagnostic du mode dev : lignes que la garde a servies
+        // telles qu'écrites (avec 1.0.7, plus jamais pour le volume).
+        if (gardees.isNotEmpty)
+          'garde': [for (final x in gardees) '${x['slotId']}'],
         if (retraits.isNotEmpty) 'retraits': retraits,
         'cibles': <String, Object?>{},
         'versed': <Object?>[],
@@ -2287,6 +2346,15 @@ extension KoachStore on AppStore {
         final t = koachTexteReduitEcrit(r);
         if (t != null) return t;
       }
+      // KB4 : séries servies par Koach différentes de l'écrit (1.0.7 les
+      // planifie à l'écrit : ne devrait plus se voir) ; rien sinon.
+      final served = a == null || slot0 == null
+          ? null
+          : _koachServed(a, slot0)?['sets'];
+      if (served is num && n is num) {
+        final t = koachTexteEcartEcrit(served.round(), n.round());
+        if (t != null) return t;
+      }
     }
     // KB3 : raison la plus importante d'abord (ordre du contrat), sans
     // dépendre de l'ordre rendu par le moteur ; à défaut, raison de
@@ -2659,6 +2727,9 @@ extension KoachStore on AppStore {
     final lundi = koachLundi;
     final g = lundi == null ? 0 : koachJour(lundi, _kToday) ~/ 7;
     final modules = _koachModules(g) ?? const {};
+    // KB4 : un arrêt décidé avec dev7.4.0 ou suivant ne montre pas la
+    // carte de la réactivation après 1.0.7.
+    e.annonce107 ??= _kToday.iso;
     e.stop = {
       'since': _kToday.iso,
       'week': g,
@@ -2713,15 +2784,98 @@ extension KoachStore on AppStore {
 
   /// Réactivation : rejeu du journal gardé, puis rattrapage de tout ce
   /// qui s'est passé depuis l'arrêt (séances versées sans `plan`).
+  ///
+  /// KB4 (C17.40.6) : les séances faites pendant l'arrêt sont versées au
+  /// journal du moteur dans l'ordre (observations, jamais réécrites) ; une
+  /// séance que Koach servait à l'arrêt et finie pendant l'arrêt est fermée
+  /// (`seance_fin`) ; un aperçu d'avant l'arrêt d'une séance commencée ou
+  /// faite telle qu'écrite pendant l'arrêt est retiré (elle reste telle
+  /// quelle, hors de Koach) ; une séance que Koach servait, pas finie,
+  /// reprend ses séries servies (séries notées gardées) ; Koach reprend à
+  /// la première séance non faite, la modulation figée à l'arrêt est
+  /// abandonnée (planification du moteur rejoué). Jamais automatique.
   Future<void> koachResume() async {
     final e = koachEngine;
     if (e.stop == null) return;
     e.stop = null;
+    e.annonce107 ??= _kToday.iso;
     _koachRt.live = null;
+    _koachReprise();
     _g9Cache.clear();
+    saveLogs();
     _persist();
     notifyListeners();
     await koachRefresh();
+  }
+
+  /// KB4 : carte de l'accueil au premier lancement de dev7.4.0 avec Koach
+  /// arrêté (arrêt décidé avant 1.0.7) : Koach ne coupe plus le programme
+  /// pour le volume, « Réactiver Koach » proposé (jamais automatique).
+  bool get koachAnnonceReprise {
+    final e = koachEngine;
+    return e.snap != null && e.stop != null && e.annonce107 == null;
+  }
+
+  /// KB4 : « Plus tard » sur la carte de reprise : elle ne revient pas (la
+  /// réactivation reste dans Réglages et l'écran Koach).
+  void koachAnnonceRepriseVue() {
+    if (koachEngine.annonce107 != null) return;
+    koachEngine.annonce107 = _kToday.iso;
+    _persist();
+    notifyListeners();
+  }
+
+  /// KB4 : état des séances à la réactivation (voir [koachResume]).
+  void _koachReprise() {
+    final re = RegExp(r'^S(\d+)-J(\d+)$');
+    for (final entry in logs.entries) {
+      final log = entry.value;
+      final st = log.adapt?['koach'];
+      if (st is! Map) continue;
+      final started =
+          log.done || log.ex.values.any((x) => x.sets.any((s) => s.done));
+      if (st['state'] == 'preview' && started) {
+        log.adapt = null;
+        continue;
+      }
+      if (st['state'] != 'open' || log.done) continue;
+      final m = re.firstMatch(entry.key);
+      if (m == null) continue;
+      final week = int.parse(m[1]!), j = int.parse(m[2]!);
+      if (week < 1 || week > program.weeks.length) continue;
+      final base = program.week(week).day(j);
+      final a = sessionAdaptOf(entry.key);
+      if (base == null || a == null) continue;
+      _adaptResync(week, base, a, a, log, entry.key);
+    }
+  }
+
+  /// KB4 : séances servies par Koach (`open`, début versé au journal),
+  /// finies et pas encore versées : fermées dans l'ordre (séries restantes,
+  /// `seance_fin`, décisions), comme à la fin d'une séance.
+  Future<void> _koachCloseOrphans(int gen) async {
+    final re = RegExp(r'^S(\d+)-J(\d+)$');
+    final keys = <(int, int)>[];
+    for (final entry in logs.entries) {
+      final log = entry.value;
+      final st = log.adapt?['koach'];
+      if (!log.done || st is! Map || st['state'] != 'open') continue;
+      if (koachEngine.versed.contains(entry.key)) continue;
+      final m = re.firstMatch(entry.key);
+      if (m == null) continue;
+      keys.add((int.parse(m[1]!), int.parse(m[2]!)));
+    }
+    keys.sort((a, b) {
+      final c = a.$1.compareTo(b.$1);
+      return c != 0 ? c : a.$2.compareTo(b.$2);
+    });
+    for (final (week, j) in keys) {
+      if (week < 1 || week > program.weeks.length) continue;
+      if (_koachRt.live == null) await _koachEnsureLive(gen);
+      if (gen != _koachRt.gen || _koachRt.live == null) return;
+      koachOnSessionDone(week, j);
+    }
+    if (_koachRt.live == null) await _koachEnsureLive(gen);
   }
 
   /// Session de test du mode dev : bascule forcée au jour [d] (null :
@@ -2783,6 +2937,9 @@ extension KoachStore on AppStore {
     if (st != null && st['state'] != 'preview' && !stale) return stored;
     if (started) {
       if (stored != null && st == null) return stored;
+      // KB4 : une séance faite n'est jamais commencée par Koach après coup
+      // (aperçu périmé d'une séance faite hors de lui).
+      if (log?.done ?? false) return stored;
       if (st != null && koachStartNow(week, base)) {
         return sessionAdaptOf(key) ?? stored;
       }
@@ -2881,10 +3038,8 @@ extension KoachStore on AppStore {
           out.add(e);
           continue;
         }
-        if (m.sets == 0) {
-          changed = true;
-          continue;
-        }
+        // (KB4 : `koachWeekLine` ne rend jamais 0 série : aucune ligne
+        // écrite retirée de la semaine.)
         changed = true;
         final pct = (m.intensity * 100).round();
         final why = [
