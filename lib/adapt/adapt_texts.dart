@@ -11,7 +11,7 @@ import '../plan/reason_texts_0_4.dart' show reasonText04;
 
 /// « 62,5 kg », « 60 kg », « 7,25 kg ». Texte enregistré tel quel au
 /// journal (« Prescrit ce jour-là ») : inchangé. À l'écran, [adaptKgLabel].
-String adaptKg(double kg) => '${adaptKgField(kg).replaceAll('.', ',')} kg';
+String adaptKg(double kg) => '${adaptKgField(kg).replaceAll('.', ',')}\u00A0kg';
 
 /// UI5 (C9) : pas d'affichage d'une charge proposée par le moteur, le quart
 /// de kilo. C'est le pas commun de ses grilles en kg (lest par 1,25 kg,
