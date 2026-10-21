@@ -1,0 +1,71 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "import": true,
+  "prevue": 15,
+  "koach_actif": true,
+  "depuis": 15,
+  "j1_ecrit": [
+    "MUSCLE-UP LESTÉ",
+    "TRACTION LESTÉE + Pompes PdC",
+    "Pull-over haltère",
+    "Rowing barre penché",
+    "Poignets excentriques (haltère)",
+    "Face pulls (poulie) + Curl marteau (par haltère)"
+  ],
+  "popup_s15-j1": false,
+  "j1_servie": true,
+  "temps_debut_ms": 4229,
+  "temps": {
+    "prise_de_main": {
+      "dernier_ms": 3218.187,
+      "max_ms": 3218.187
+    },
+    "plan_seance": {
+      "dernier_ms": 24.463,
+      "max_ms": 24.463
+    },
+    "debut_seance": {
+      "dernier_ms": 55.328,
+      "max_ms": 55.328
+    }
+  },
+  "servis": {
+    "sl-muscle-up-leste": 6,
+    "sl-traction-lestee": 8,
+    "sw-pompe": 8,
+    "mu-pull-over-haltere": 3,
+    "mu-rowing-barre-pronation": 3,
+    "mu-reverse-wrist-curl-haltere": 3,
+    "mu-face-pull-corde": 3,
+    "mu-curl-marteau-halteres": 3
+  },
+  "ecrites": null,
+  "retraits": null,
+  "j1_affiche": [
+    "MUSCLE-UP LESTÉ",
+    "TRACTION LESTÉE + Pompes PdC",
+    "Pull-over haltère",
+    "Rowing barre penché",
+    "Poignets excentriques (haltère)",
+    "Face pulls (poulie) + Curl marteau (par haltère)"
+  ],
+  "cartes": [
+    "sl-muscle-up-leste · 6×2 · E2MOM",
+    "sl-traction-lestee · 8×3 · E2MOM",
+    "sw-pompe · 8×11 · E2MOM",
+    "mu-pull-over-haltere · 3 × 10-16",
+    "mu-rowing-barre-pronation · 3 × 6-12",
+    "mu-reverse-wrist-curl-haltere · 3 × 13-19",
+    "mu-face-pull-corde · 3 × 13-19",
+    "mu-curl-marteau-halteres · 3 × 8-14"
+  ],
+  "entete": [],
+  "raisons_cartes": {},
+  "je_retire_affiche": false,
+  "mu_carte": "6×2 · E2MOM",
+  "reduction_affichee": false,
+  "reste_seances": 5,
+  "reste_roles": true
+}
