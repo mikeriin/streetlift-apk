@@ -380,6 +380,7 @@ void main() {
         clock = DateTime(2026, 10, 20, 7);
         await app.koachRefresh();
         final base = app.program.week(15).day(2)!;
+        expect(app.adaptOpen(15, base)?.koach?['state'], 'preview');
         expect(await app.koachStart(15, base), isTrue);
         final a = app.sessionAdapt(15, 2)!;
         final shown = app.adaptDay(15, base, a).exercises;
@@ -405,6 +406,7 @@ void main() {
     test('arrêt d’urgence : rien versé au moteur ensuite ; séance commencée '
         'passée minuit jamais déclarée manquée', () async {
       final j1 = app.program.week(15).day(1)!;
+      expect(app.adaptOpen(15, j1)?.koach?['state'], 'preview');
       expect(await app.koachStart(15, j1), isTrue);
       final e = app
           .adaptDay(15, j1, app.sessionAdapt(15, 1)!)

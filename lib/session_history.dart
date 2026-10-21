@@ -304,7 +304,10 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
               ),
               const SizedBox(height: KSpacing.s12),
               Text(
-                '${_snapshot.ex.length} exercices enregistrés',
+                // RV1 : accord au singulier.
+                _snapshot.ex.length > 1
+                    ? '${_snapshot.ex.length} exercices enregistrés'
+                    : '${_snapshot.ex.length} exercice enregistré',
                 style: KType.corps.copyWith(color: k.texte),
               ),
               if (date != null) ...[

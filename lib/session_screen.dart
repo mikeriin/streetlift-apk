@@ -3904,7 +3904,12 @@ class _GroupCardState extends State<_GroupCard> {
                 ),
               ),
             ),
-            if (!widget.readOnly) ...[
+            // RV1 : superset ou circuit sans repos entre les tours : pas de
+            // bouton « Repos » sans effet.
+            if (!widget.readOnly &&
+                !((g.format == kc.GroupFormat.superset ||
+                        g.format == kc.GroupFormat.circuit) &&
+                    (g.restBetweenRoundsSeconds ?? 0) <= 0)) ...[
               const SizedBox(width: KSpacing.s8),
               KTonalButton(
                 key: ValueKey('group-clock-${g.groupId}'),

@@ -1162,11 +1162,7 @@ class AppStore extends ChangeNotifier {
   List<RecordHit> sessionRecords(String key) {
     final log = logs[key];
     if (log == null) return const [];
-    final bests = exerciseBests(
-      logs,
-      excludeKey: key,
-      skipNames: notRepsNames,
-    );
+    final bests = exerciseBests(logs, excludeKey: key, skipNames: notRepsNames);
     final out = <RecordHit>[];
     final seen = <String>{};
     for (final ex in log.ex.entries) {
