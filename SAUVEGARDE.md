@@ -17,5 +17,7 @@ Base : main 88fb1965 (dev7.3.0). Session lancée 21/10/2026 04:22 UTC (« Lot : 
 
 - ci-3d 39547568156 : tests sauf G10 (instantané EMOM, corrigé), émulateur : KB4 sur l'en-tête (corrigé), ci1c/ci1f pannes VM. Relance ci-3d 01f7a4a0 (07:24 UTC) sur d522c365. Brouillon de livraison dans le scratchpad (LIVRAISON_KB4.md) copié ici.
 
+- ci-3d 39561707144 : checks tous verts (1168 tests), émulateur : KB4 assertion d'en-tête (espaces insécables, corrigée), ci1e/cif pannes VM (vertes au run précédent). Relance ci-3d e4a497d7 (09:15 UTC) sur 4ccdb8ed.
+
 ## Reste
 - Code (garde, réactivation, EMOM, carte), tests kb4, mise à jour kb3/kb1/versions, cible émulateur, CI rapide puis ci-3d, main, build, livraison.
