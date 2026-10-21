@@ -190,6 +190,8 @@ class _ArsenalScreenState extends State<ArsenalScreen> {
         KMenuGroup(
           key: const ValueKey('arsenal-results-muscles'),
           title: 'Muscles',
+          // RV1 : lignes sans pastille : séparateurs alignés au texte.
+          dividerIndent: KSpacing.s16,
           children: [
             for (final m in shownMuscles)
               KMenuRow(

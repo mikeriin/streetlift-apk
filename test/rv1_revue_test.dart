@@ -387,6 +387,7 @@ void main() {
         final relev = <String, Object?>{};
         var poulie = 0;
         for (final e in shown.where((x) => x.engine)) {
+          app.koachEnsureTarget(15, base, e, 0);
           final goal = app.adaptGoal(15, 2, e, 0);
           final kg = goal?.kg;
           relev['${e.catalogId}'] = kg;

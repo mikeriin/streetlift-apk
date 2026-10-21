@@ -577,8 +577,14 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
         const _Bullets('Supprimé de ce téléphone', [
           'le journal : séances du programme, séries, notes, dates',
           'les exercices ajoutés',
-          'les références (poids de corps, 1RM, max) : retour aux valeurs '
-              'du programme',
+          // RV1 : textes exacts (les références deviennent non
+          // renseignées ; profils, programme personnel et journal de Koach
+          // sont aussi effacés).
+          'les références (poids de corps, 1RM, max) : non renseignées',
+          'ton profil et ton profil d’athlète',
+          'ton programme personnel ou créé, son départ et ton programme '
+              'd’origine sauvegardé',
+          'le journal de Koach',
           'les réglages (thème, sons, rappels)',
           'les copies de secours internes (dont la copie d’avant la '
               'suppression des WOD) et les anciennes données de migration',
@@ -590,7 +596,8 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
               'restaurer ces données si l’application est réinstallée',
           'les autorisations système (notifications, alarmes) : elles se '
               'gèrent dans les réglages Android',
-          'le programme intégré',
+          'le programme de 40 semaines intégré à l’application (il reste '
+              'disponible pour repartir de zéro)',
         ]),
         KMenuGroup(
           title: 'Confirmation',

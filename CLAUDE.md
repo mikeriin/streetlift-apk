@@ -88,7 +88,8 @@ committer les fichiers déchiffrés.
   chrono et un libellé de format (« E2MOM · départ toutes les 2 min »,
   PR6). Une ligne au départ chronométré à reps fixes est servie telle
   qu'écrite (PR8, `asWritten` de l'import) : charge et reps du programme,
-  Koach la journalise sans la recalculer. (Les annotations Koach du
+  Koach la journalise sans la recalculer. Un départ raté se note en
+  laissant sa ligne non validée, dit sous l'en-tête (RV1). (Les annotations Koach du
   programme ne décident pas du service : l'import passe par le catalogue.)
 - Carte d'exercice compacte en séance (PR7) : une seule carte par page,
   en-tête du groupe ou du départ chronométré dedans (« E2MOM · 8 tours ·
@@ -105,6 +106,8 @@ committer les fichiers déchiffrés.
   une ligne).
 - `1×max puis 2×max (15 s intra) · rest-pause` (PR1).
 - `2 tours × 4 paliers` : drop set mécanique, une ligne par palier (PR1).
-- `8× (30 s effort / 30 s repos)` intervalles · `3×30 s` tenues ·
+- `8× (30 s effort / 30 s repos)` intervalles : une ligne par tour (effort
+  pré-rempli, ni repos ni chrono de tenue par ligne, chrono des tours),
+  servie telle qu'écrite, Koach actif comme arrêté (RV1) · `3×30 s` tenues ·
   `10 min` durée · `1 × maximum` test · `Montée en singles puis 3
   tentatives` test de 1RM.
