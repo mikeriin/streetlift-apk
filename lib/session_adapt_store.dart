@@ -2110,6 +2110,9 @@ extension SessionAdaptStore on AppStore {
         written ||
         (sp != null &&
             (sp.kind == 'emom' ||
+                // KB4 : EMOM à reps fixes noté minute par minute (ou en une
+                // ligne du total avant dev7.4.0) : même lecture qu'avant.
+                emomPerMinute(setsLabel(e!)) != null ||
                 sp.kind == 'interval' ||
                 sp.kind == 'amrap' ||
                 sp.rowPrefix == 'É' ||

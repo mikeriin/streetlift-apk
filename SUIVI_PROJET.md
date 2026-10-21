@@ -1,8 +1,17 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : KB3 — Koach 1.0.6 dans l'application, version dev7.3.0 ; précédent : dev7.2.6 (paliers des drop sets nommés)**  
-**Date : 20 octobre 2026, Europe/Paris — version : 7.3.0+147, affichée « dev7.3.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.39) ; `kalis_adapt` 1.0.5 copié à l'octet de son étiquette ; build signé sur `main`.**
+**Passe actuelle : KB4 — Koach 1.0.7 dans l'application, version dev7.4.0 ; précédent : dev7.3.0 (KB3)**  
+**Date : 21 octobre 2026, Europe/Paris — version : 7.4.0+148, affichée « dev7.4.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.40, C17.42) ; `kalis_adapt` 1.0.6 copié à l'octet de son étiquette ; build signé sur `main`.**
+
+## KB4 — Koach 1.0.7 dans l'application (version dev7.4.0, pipeline CP, DECISIONS_CP.md C17.40)
+
+- Paquet : `kalis_adapt` 1.0.6 (Koach 1.0.7) copié à l'octet de `etiquettes/kalis_adapt-v1.0.6` (`lib/`, `assets/koach/`, `pubspec.yaml`) ; asset `koach_params_1_0_7.json` (`1.0.7-ref.1`, 344 clés, SHA-256 `2f055c51…f42c`) à la place de `koach_params_1_0_6.json`. La rampe de volume ne coupe plus jamais sous l'écrit ; elle borne seulement ce que Koach ajoute (`koach.ajout_borne`).
+- Garde de la séance (`koachGardeSeance`) pour tous les rôles : une ligne écrite absente du servi sans retrait motivé (douleur, endurance, test reporté, séance bornée au temps donné, rampe tendineuse des tenues bras tendus) est servie telle qu'écrite, raison affichée, diagnostic `garde` dans l'inspecteur du mode dev ; le retrait d'un accessoire par le retour gradué de KB3 est retiré ; une ligne mise à 0 série par la planification garde sa ligne écrite.
+- Lignes au départ chronométré (PR8) : séries écrites dans l'aperçu et la semaine affichée ; « Koach aurait fait … » seulement si les séries servies diffèrent encore de l'écrit.
+- Réactivation après l'arrêt d'urgence : séance servie par Koach finie pendant l'arrêt fermée une fois (`seance_fin`), séances faites pendant l'arrêt versées dans l'ordre (jamais réécrites), aperçus périmés retirés, Koach reprend à la première séance non faite (modulation de l'arrêt abandonnée). Carte d'accueil « Koach ne coupe plus ton programme » avec « Réactiver Koach » / « Plus tard » au premier lancement avec Koach arrêté (jamais de réactivation automatique).
+- EMOM à reps fixes par minute (« EMOM 8 min × 3 reps par minute », constat du 20/10, S1·J4) : une ligne par minute, départ toutes les 60 s (en-tête « EMOM · 8 tours », chrono), reps par minute arrondies comme l'écrit ; servie telle qu'écrite Koach actif comme arrêté (règle PR8) ; une séance ouverte avant dev7.4.0 sans rien de noté passe à une ligne par minute.
+- Tests : `test/kb4_koach107_test.dart` ; KB3, KB1 et versions à jour ; cible émulateur `integration_test/koach_kb4_test.dart` (cible KB3 à jour de 1.0.7).
 
 ## KB3 — Koach 1.0.6 dans l'application (version dev7.3.0, pipeline CP, DECISIONS_CP.md C17.39)
 

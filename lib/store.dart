@@ -550,6 +550,25 @@ final RegExp _everySets = RegExp(
 /// PR1 : drop set mécanique « 2 tours × 4 paliers : … ».
 final RegExp _dropSet = RegExp(r'^(\d+)\s*tours?\s*[×x]\s*(\d+)\s*paliers?');
 
+/// KB4 (constat du propriétaire du 20/10/2026, S1·J4) : EMOM à reps fixes
+/// par minute (« EMOM 8 min × 3 reps par minute ») : minutes et reps par
+/// minute ; null pour un autre libellé, et pour l'EMOM montant (« +1
+/// rep/min jusqu'à l'échec », pas de cible fixe). Pur (testé).
+({int minutes, int reps})? emomPerMinute(String label) {
+  final low = label.toLowerCase().trim();
+  // EMOM montant : « +1 rep/min », « jusqu'à l'échec ».
+  if (RegExp(r'\+\s*\d+\s*rep').hasMatch(low) || low.contains('échec')) {
+    return null;
+  }
+  final m = RegExp(
+    r'^emom\s*(\d+)\s*min\s*[×x]\s*(\d+)\s*reps?\b',
+  ).firstMatch(low);
+  if (m == null) return null;
+  final minutes = int.parse(m.group(1)!), reps = int.parse(m.group(2)!);
+  if (minutes < 1 || minutes > 60 || reps < 1 || reps > 100) return null;
+  return (minutes: minutes, reps: reps);
+}
+
 /// Nature de la saisie d'un exercice, déduite des données.
 class LogSpec {
   final String
@@ -2547,8 +2566,11 @@ class AppStore extends ChangeNotifier {
       }
       if (block.length > 1) {
         final first = estimates.first, second = estimates.last;
-        if (logSpec(block.first).kind == 'emom' &&
-            logSpec(block.last).kind == 'emom' &&
+        // KB4 : EMOM à reps fixes noté minute par minute : même horloge.
+        bool clock(Exercise x) =>
+            logSpec(x).kind == 'emom' || emomPerMinute(setsLabel(x)) != null;
+        if (clock(block.first) &&
+            clock(block.last) &&
             first.clock?.high == second.clock?.high) {
           // Both movements share the same clock, as in the session runner.
           final seconds = first.elapsed.high;
@@ -2642,6 +2664,9 @@ class AppStore extends ChangeNotifier {
     final txt = setsLabel(e);
     final low = txt.toLowerCase().trim();
     if (e.interval != null) return 1;
+    // KB4 : EMOM à reps fixes par minute : une ligne par minute (avant :
+    // une ligne du total, « 24 reps » pour 8 × 3).
+    if (emomPerMinute(txt) case final m?) return m.minutes;
     if (low.startsWith('emom')) return 1;
     if (RegExp(r'^(\d+)(?:-(\d+))?\s*min$').hasMatch(low)) return 1;
     final myo = RegExp(r'puis\s*(\d+)\s*[×x]').firstMatch(txt);
@@ -2915,6 +2940,12 @@ class AppStore extends ChangeNotifier {
     final nm = e.name.toLowerCase();
     final tp = e.tempo.toLowerCase();
     final tm = e.timer;
+    // KB4 : EMOM à reps fixes par minute (« EMOM 8 min × 3 reps par
+    // minute ») : une ligne par minute, départ toutes les 60 s, comme
+    // « 8×3 · EMOM » (PR1) : en-tête du départ chronométré, chrono, tours
+    // comptés sur les séries validées ; une minute ratée reste non validée
+    // (ou notée avec les reps faites).
+    if (emomPerMinute(low) != null) return const LogSpec('reps', every: 60);
     if (tm != null) {
       switch (tm['type'] as String) {
         case 'hiit':
@@ -3036,6 +3067,8 @@ class AppStore extends ChangeNotifier {
       return out;
     }
     if (sp.kind != 'reps') return out;
+    // KB4 : reps de chaque minute d'un EMOM à reps fixes.
+    if (emomPerMinute(low) case final m?) return List.filled(n, m.reps);
     if (sp.myo) {
       final act = num(RegExp(r'^1\s*[×x]\s*(\d+)'));
       final mini = num(RegExp(r'puis\s*\d+\s*[×x]\s*\(?(\d+)'));
@@ -3172,11 +3205,23 @@ class AppStore extends ChangeNotifier {
   ExerciseLog exLog(int week, int j, Exercise e) {
     final s = sessionLog(week, j);
     s.exerciseNames[e.id] = e.name;
-    return s.ex.putIfAbsent(e.id, () {
+    final log = s.ex.putIfAbsent(e.id, () {
       // G9 : un exercice servi par kalis_adapt garde les séries du moteur.
       final n = setCount(e);
       return ExerciseLog(sets: List.generate(n, (_) => SetEntry()));
     });
+    // KB4 : EMOM à reps fixes ouvert avant dev7.4.0 (une ligne du total) :
+    // une ligne par minute tant que rien n'est noté ni validé (jamais sur
+    // une séance faite).
+    if (!s.done && !e.engine && emomPerMinute(setsLabel(e)) != null) {
+      final n = setCount(e);
+      if (log.sets.length != n && log.sets.every((x) => !x.done && !x.edited)) {
+        log.sets
+          ..clear()
+          ..addAll(List.generate(n, (_) => SetEntry()));
+      }
+    }
+    return log;
   }
 
   Timer? _saveT;

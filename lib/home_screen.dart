@@ -25,7 +25,8 @@ import 'resume_banner.dart';
 import 'stats_mannequin.dart';
 import 'guided_tests.dart';
 import 'profile_completion.dart';
-import 'koach1/koach1_widgets.dart' show KoachRecapCard, awaitKoachTakeover;
+import 'koach1/koach1_widgets.dart'
+    show KoachRecapCard, KoachRepriseCard, awaitKoachTakeover;
 import 'store.dart';
 import 'store_widget.dart';
 import 'kit/kit.dart';
@@ -393,6 +394,8 @@ class _HomeScreenState extends State<HomeScreen> {
         if (EvolutionHomeCard.visible) const EvolutionHomeCard(),
         // KM3 : bloc suivant de Koach 1.0, à valider d'un tap.
         if (store.koachRecap() != null) const KoachRecapCard(),
+        // KB4 : Koach arrêté avant 1.0.7 : réactivation proposée.
+        if (KoachRepriseCard.visible) const KoachRepriseCard(),
         // CU : compléter son profil (une fois) ; test guidé proposé à la
         // première séance.
         if (ProfileCompletionCard.visible) const ProfileCompletionCard(),

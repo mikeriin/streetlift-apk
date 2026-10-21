@@ -397,6 +397,8 @@ class BudgetsRetour {
     required this.fait,
     required this.limiteDures,
     required this.faitDures,
+    required this.ecrit,
+    required this.ecritDures,
     required this.reste,
     required this.limitesTenue,
     required this.budgetsTenue,
@@ -413,20 +415,30 @@ class BudgetsRetour {
   final double? limiteDures;
   final double? faitDures;
 
+  /// 1.0.7 (KM5, C17.40) : écrit SERVI de la semaine par groupe majeur et
+  /// en séries dures (séances vues : écrit servi ; manquées et restantes :
+  /// écrit du programme ; la séance du jour est ajoutée par [_planRetour]) ;
+  /// plafonds = max(limite, écrit servi), posés par [_planRetour].
+  final List<double> ecrit;
+  double ecritDures;
+  List<double> plafonds = <double>[];
+  double? plafondDures;
+
   /// Séances restantes de la semaine (écrit).
   final List<List<Json>> reste;
 
-  /// slotId -> séries permises par le plan de la semaine (1.0.6).
+  /// slotId -> séries permises par le plan de la séance du jour.
   final Map<String?, int> plan = {};
 
-  /// slotId -> cause d'une coupure du plan : ('groupe', indice) ou
+  /// slotId -> cause d'une borne du plan : ('groupe', indice) ou
   /// ('total', null).
   final Map<String?, (String, Object?)> cause = {};
 
-  /// Vrai si le plan a réparti les coupes sur la semaine.
-  bool? repartie;
+  /// slotId -> séries prévues avant le plan (lignes bornées).
+  final Map<String?, int> prevues = {};
 
-  /// Lignes encore en excès après le plan (planchers des principaux).
+  /// Lignes encore en excès après le plan (écrit du programme ou réalisé
+  /// déjà au-dessus : aucune coupe sous l'écrit).
   List<int> depasse = [];
 
   final Map<String, double?> limitesTenue;
@@ -434,26 +446,20 @@ class BudgetsRetour {
   final Map<String, double> jourTenue;
 }
 
-/// Unité du plan du retour gradué (`_plan_retour`).
+/// Ligne de la séance du jour dans le plan de la rampe de volume
+/// (`_plan_retour`, 1.0.7) : [e] = séries écrites par le programme (au
+/// plus [n]) ; seules les séries au-dessus de [e] peuvent être retirées.
 class _UniteRetour {
-  _UniteRetour(
-    this.seance,
-    this.pos,
-    this.slot,
-    this.n,
-    this.poids,
-    this.rang,
-    this.plancher,
-  ) : m = n;
+  _UniteRetour(this.pos, this.slot, this.n, this.e, this.poids, this.rang)
+    : m = n;
 
-  final int seance;
   final int pos;
   final String? slot;
   final int n;
+  final int e;
   int m;
   final List<(int, double)> poids;
   final int rang;
-  final int plancher;
 }
 
 // ----------------------------------------------------------------------
@@ -563,11 +569,23 @@ class Seances {
   /// Items servis de la séance en cours.
   List<Json>? servis;
 
+  /// Items reçus par le dernier `prescrire` (lecture du banc, mesure KM5 ;
+  /// n'entre dans aucun calcul).
+  List<Json>? entree;
+
   /// Budgets de la séance en cours.
   BudgetsRetour? retourVol;
 
-  /// Semaines où une séance a été manquée (1.0.6, répartition).
-  final Set<int> semainesManquees = {};
+  /// 1.0.7 (KM5, C17.40) : semaine -> séries dures créditées ÉCRITES par
+  /// le programme, par groupe majeur (séances vues et manquées).
+  final Map<int, List<double>> ecritVol = {};
+
+  /// 1.0.7 : semaine -> séries dures écrites par le programme, tous groupes.
+  final Map<int, double> ecritDures = {};
+
+  /// 1.0.7 : (semaine, écrit servi compté) de la séance en cours (un seul
+  /// `prescrire` compté par séance).
+  (int, List<double>, double)? ecritCompte;
 
   num _n(String k) => s[k] as num;
 
@@ -747,6 +765,7 @@ class Seances {
     budgetZone = {};
     servis = null;
     retourVol = null;
+    ecritCompte = null;
     final c = dictOuVide(this.contexte);
     final legeres = jl(s['semaines_allegees']);
     for (final mq0 in listeOuVide(c['manquees'])) {
@@ -756,20 +775,22 @@ class Seances {
         continue;
       }
       final sem = ent(mq['semaine']);
-      semainesManquees.add(sem);
       if (mq.containsKey('genre') && !allegees.containsKey(sem)) {
         allegees[sem] = dans(mq['genre'], legeres);
       }
-      _compter(sem, [for (final x in listeOuVide(mq['items'])) jm(x)]);
+      // 1.0.7 : au volume écrit par le programme (`_itemEcrit`).
+      final ecritsM = [
+        for (final x in listeOuVide(mq['items'])) _itemEcrit(jm(x)),
+      ];
+      _compter(sem, ecritsM);
       ecritSemaines[sem] =
           (ecritSemaines[sem] ?? 0.0) +
-          somme([
-            for (final x in listeOuVide(mq['items'])) _seriesDures(jm(x)),
-          ]);
+          somme([for (final x in ecritsM) _seriesDures(x)]);
       _compterEcritZone(sem, [for (final x in listeOuVide(mq['items'])) jm(x)]);
       _compterManqueZone(sem, [
         for (final x in listeOuVide(mq['items'])) jm(x),
       ]);
+      _compterEcrit(sem, [for (final x in listeOuVide(mq['items'])) jm(x)]);
     }
     if (c['semaine'] != null) {
       allegees[ent(c['semaine'])] = dans(c['genre'], legeres);
@@ -1326,6 +1347,7 @@ class Seances {
   ) {
     var out = <Json>[];
     final testes = <String>{};
+    entree = [for (final p0 in items) Map<String, Object?>.of(p0)];
     for (final e in zones.entries) {
       zonesEx[e.key] = e.value;
     }
@@ -1333,9 +1355,11 @@ class Seances {
     final semO = dictOuVide(contexte)['semaine'];
     if (semO != null) {
       final sem = ent(semO);
+      // 1.0.7 : écrit du programme (sans les ajouts de Koach), aussi pour
+      // décider d'une semaine d'allègement.
       ecritSemaines[sem] =
           (ecritSemaines[sem] ?? 0.0) +
-          somme([for (final x in items) _seriesDures(x)]);
+          somme([for (final x in items) _seriesDures(_itemEcrit(x))]);
       _compterEcritZone(sem, items);
       _entrerRetour(items);
     }
@@ -1367,10 +1391,7 @@ class Seances {
       );
       premiers.add((item, servi));
     }
-    _planRetour([
-      for (final (item, servi) in premiers)
-        if (servi != null) (item, servi),
-    ]);
+    _planRetour(premiers);
     for (final (item, servi0) in premiers) {
       if (servi0 == null) {
         continue;
@@ -1473,6 +1494,13 @@ class Seances {
     }
     out = _dureeBornee(_endurance(out), items);
     servis = [for (final it in out) Map<String, Object?>.of(it)];
+    if (semO != null && ecritCompte == null) {
+      // 1.0.7 : écrit servi de la séance, compté une fois par séance ; un
+      // nouvel appel de la même séance le retire de ses budgets.
+      final sem = ent(semO);
+      final (v, t) = _compterEcrit(sem, _ecritsServis(items, out));
+      ecritCompte = (sem, v, t);
+    }
     return out;
   }
 
@@ -1785,6 +1813,84 @@ class Seances {
     return (fam as String, dbl(ou(sh, 0)));
   }
 
+  /// Séries écrites par le PROGRAMME de l'athlète pour l'item [it] (1.0.7,
+  /// KM5) : `sets` − `koachVolume` (séries ajoutées, ou retirées si
+  /// négatif, par la planification de Koach et les transformations qui
+  /// gardent ce champ à jour) ; `sets` sans `koachVolume`.
+  int _ecrites(Json it) {
+    final n = ent(ou(it['sets'], 0));
+    final kv = it['koachVolume'];
+    if (kv == null) {
+      return n;
+    }
+    final e = n - ent(kv);
+    return e > 0 ? e : 0;
+  }
+
+  /// L'item [it] à ses séries écrites par le programme (copie si elles
+  /// diffèrent de `sets`).
+  Json _itemEcrit(Json it) {
+    final e = _ecrites(it);
+    if (e == ent(ou(it['sets'], 0))) {
+      return it;
+    }
+    return <String, Object?>{...it, 'sets': e};
+  }
+
+  /// (séries dures créditées écrites par groupe majeur, séries dures
+  /// écrites) de [items], au volume écrit par le programme.
+  (List<double>, double) _creditsEcrits(List<Json> items) {
+    final v = List<double>.filled(jl(s['volume_groupes_majeurs']).length, 0.0);
+    var t = 0.0;
+    for (final it in items) {
+      final q = _itemEcrit(it);
+      final dures = _seriesDures(q);
+      if (dures > 0) {
+        t += dures;
+        for (final (gi, c) in _credits(q['exerciseId'] as String)) {
+          v[gi] += dures * c;
+        }
+      }
+    }
+    return (v, t);
+  }
+
+  /// Lignes écrites [items] ramenées à leur écrit servi : min(séries
+  /// écrites par le programme, séries servies de la ligne dans [servis] ;
+  /// 0 si retirée), sans `koachVolume`.
+  List<Json> _ecritsServis(List<Json> items, List<Json> servis) {
+    final n = <Object?, int>{};
+    for (final x in servis) {
+      n[x['slotId']] = ent(ou(x['sets'], 0));
+    }
+    return <Json>[
+      for (final p0 in items)
+        () {
+          final q = Map<String, Object?>.of(p0)..remove('koachVolume');
+          final e = _ecrites(p0);
+          final v = n[p0['slotId']] ?? 0;
+          q['sets'] = e < v ? e : v;
+          return q;
+        }(),
+    ];
+  }
+
+  /// Ajoute à l'écrit de la semaine [semaine] (séances vues et manquées)
+  /// les séries dures créditées écrites de [items] ; les rend.
+  (List<double>, double) _compterEcrit(int semaine, List<Json> items) {
+    final (v, t) = _creditsEcrits(items);
+    var e = ecritVol[semaine];
+    if (e == null) {
+      e = List<double>.filled(v.length, 0.0);
+      ecritVol[semaine] = e;
+    }
+    for (var gi = 0; gi < v.length; gi++) {
+      e[gi] += v[gi];
+    }
+    ecritDures[semaine] = (ecritDures[semaine] ?? 0.0) + t;
+    return (v, t);
+  }
+
   /// Ajoute au volume de la semaine [semaine] les séries dures créditées
   /// et les secondes bras tendus de [items].
   void _compter(int semaine, List<Json> items) {
@@ -1919,21 +2025,22 @@ class Seances {
     );
   }
 
-  /// Rang de priorité du retour gradué par rôle d'emplacement (1.0.6, KM4) :
-  /// 0 coupé d'abord, 1 ensuite (secondaire, technique), 2 en dernier
-  /// (principal).
+  /// Rang de priorité par rôle d'emplacement (1.0.6, KM4 ; depuis 1.0.7,
+  /// ordre dans lequel les AJOUTS de Koach sont bornés) : 0 d'abord, 1
+  /// ensuite (secondaire, technique), 2 en dernier (principal).
   static const Map<String, int> rangRole = {
     'main': 2,
     'secondary': 1,
     'skill': 1,
   };
 
-  /// Données du retour gradué de la séance du jour (1.0.6) : limites et
-  /// réalisé de la semaine par groupe majeur ; une semaine d'allègement,
-  /// limite et réalisé des séries dures ; séances restantes (réparties par
-  /// [_planRetour]) ; tenues bras tendus : budget = limite − fait − écrit
-  /// restant. null la première semaine du programme ou du journal, ou sans
-  /// semaine connue.
+  /// Données de la rampe de volume de la séance du jour : limites et
+  /// réalisé de la semaine par groupe majeur et, depuis 1.0.7 (KM5,
+  /// C17.40), écrit du programme de la semaine et plafonds = max(limite,
+  /// écrit) ; une semaine d'allègement, limite, réalisé, écrit et plafond
+  /// des séries dures ; séances restantes ; tenues bras tendus : budget =
+  /// limite − fait − écrit restant. null la première semaine du programme
+  /// ou du journal, ou sans semaine connue.
   BudgetsRetour? _budgetsRetour([List<Json> items = const []]) {
     final c = dictOuVide(contexte);
     final semO = c['semaine'];
@@ -1956,7 +2063,7 @@ class Seances {
       for (final x in jl(seance)) {
         final it = jm(x);
         items0.add(it);
-        ecritReste += _seriesDures(it);
+        ecritReste += _seriesDures(_itemEcrit(it));
         final (fam, sec) = _tenueBrasTendus(it);
         if (fam != null) {
           rT[fam] = (rT[fam] ?? 0.0) + dbl(ou(it['sets'], 0)) * sec;
@@ -1989,7 +2096,7 @@ class Seances {
     final legere = allegees[sem] ?? false;
     final ecrit =
         (ecritSemaines[sem] ?? 0.0) +
-        somme([for (final it in items) _seriesDures(it)]) +
+        somme([for (final it in items) _seriesDures(_itemEcrit(it))]) +
         ecritReste;
     final refE = _seMaxListe([
       for (var k = sem - 3; k < sem; k++)
@@ -2008,11 +2115,37 @@ class Seances {
         faitD = duresSemaines[sem] ?? 0.0;
       }
     }
+    // 1.0.7 : écrit servi de la semaine hors séance du jour (séances vues :
+    // écrit servi ; manquées et restantes : écrit du programme) ; la séance
+    // du jour et les plafonds sont ajoutés par `_planRetour`.
+    final eVolV = ecritVol[sem];
+    final eVol = (eVolV != null && eVolV.isNotEmpty)
+        ? List<double>.of(eVolV)
+        : List<double>.filled(n, 0.0);
+    var eDures = ecritDures[sem] ?? 0.0;
+    final ec = ecritCompte;
+    if (ec != null && ec.$1 == sem) {
+      // Séance déjà prescrite (nouvel appel) : son écrit servi compté par le
+      // premier appel est retiré (compté une seule fois).
+      for (var gi = 0; gi < n; gi++) {
+        eVol[gi] -= ec.$2[gi];
+      }
+      eDures -= ec.$3;
+    }
+    for (final seance in reste) {
+      final (v, t) = _creditsEcrits(seance);
+      for (var gi = 0; gi < n; gi++) {
+        eVol[gi] += v[gi];
+      }
+      eDures += t;
+    }
     return BudgetsRetour(
       limites: limites,
       fait: fait,
       limiteDures: limiteD,
       faitDures: faitD,
+      ecrit: eVol,
+      ecritDures: eDures,
       reste: reste,
       limitesTenue: limitesT,
       budgetsTenue: budgetsT,
@@ -2039,84 +2172,57 @@ class Seances {
     return false;
   }
 
-  /// Plan du retour gradué au volume de la semaine (1.0.6, KM4 ;
-  /// `_plan_retour`) : lignes = groupes majeurs (et total d'une semaine
-  /// d'allègement), unités = lignes dures du jour ([paires] : écrit, servi
-  /// par `_item`) et des séances restantes ; coupes une série à la fois par
-  /// étapes (rang 0 à 0, rang 1 à 1, principaux au plancher, rang 1 à 0,
-  /// principaux à 1), l'unité qui garde la plus grande part de son écrit
-  /// d'abord, à égalité la plus tardive ; répartie sur la semaine sans
-  /// séance manquée dans les `retour_repartition_semaines` dernières
-  /// semaines, sinon la séance du jour d'abord.
-  void _planRetour(List<(Json, Json)> paires) {
+  /// Plan de la rampe de volume de la séance du jour (1.0.7, KM5 ;
+  /// `_plan_retour`) : la rampe ne coupe jamais sous l'écrit du programme,
+  /// elle borne seulement les séries que Koach ajoute. Lignes = groupes
+  /// majeurs (plafond max(limite, écrit de la semaine)) et total d'une
+  /// semaine d'allègement ; excès = réalisé + séance du jour (servie par
+  /// `_item`) + séances restantes (écrit) − plafond ; les séries ajoutées
+  /// d'une ligne du jour (au-dessus de [_ecrites]) sont retirées une à une
+  /// tant qu'une ligne qu'elles créditent est en excès, rang le plus bas
+  /// d'abord, dans un rang la ligne la plus tardive ; les séances restantes
+  /// ne sont jamais coupées d'avance.
+  void _planRetour(List<(Json, Json?)> premiers) {
     final rv = retourVol;
     if (rv == null) {
       return;
     }
     final n = jl(s['volume_groupes_majeurs']).length;
     final total = rv.limiteDures != null;
-    final exces = <double>[
-      for (var gi = 0; gi < n; gi++) rv.fait[gi] - rv.limites[gi],
+    // Écrit servi de la séance du jour (après `_item`), puis plafonds.
+    final (vj, tj) = _creditsEcrits(
+      _ecritsServis(
+        [for (final (item, _) in premiers) item],
+        [
+          for (final (_, servi) in premiers)
+            if (servi != null) servi,
+        ],
+      ),
+    );
+    for (var gi = 0; gi < n; gi++) {
+      rv.ecrit[gi] += vj[gi];
+    }
+    rv.ecritDures += tj;
+    rv.plafonds = <double>[
+      for (var gi = 0; gi < n; gi++)
+        rv.limites[gi] > rv.ecrit[gi] ? rv.limites[gi] : rv.ecrit[gi],
     ];
     if (total) {
-      exces.add(rv.faitDures! - rv.limiteDures!);
+      rv.plafondDures = rv.limiteDures! > rv.ecritDures
+          ? rv.limiteDures
+          : rv.ecritDures;
     }
-    final part = dbl(s['retour_plancher_principal']);
+    final paires = <(Json, Json)>[
+      for (final (item, servi) in premiers)
+        if (servi != null) (item, servi),
+    ];
+    final exces = <double>[
+      for (var gi = 0; gi < n; gi++) rv.fait[gi] - rv.plafonds[gi],
+    ];
+    if (total) {
+      exces.add(rv.faitDures! - rv.plafondDures!);
+    }
     final unites = <_UniteRetour>[];
-
-    bool ajouter(
-      int seance,
-      int pos,
-      String? slot,
-      String exId,
-      int series,
-      int ecrites,
-      Object? role,
-      bool douleur,
-      bool premier,
-    ) {
-      final poids = <(int, double)>[..._credits(exId)];
-      if (total) {
-        poids.add((n, 1.0));
-      }
-      if (poids.isEmpty) {
-        return false;
-      }
-      int rang;
-      if (role == null) {
-        // Sans rôle : la première ligne dure de la séance du jour est le
-        // principal, les autres de rang 0 ; une ligne d'une séance restante
-        // sans rôle n'est pas coupée d'avance (rang 3, écrit réservé).
-        if (seance > 0) {
-          rang = 3;
-        } else {
-          rang = premier ? 2 : 0;
-        }
-      } else {
-        rang = rangRole[role] ?? 0;
-      }
-      if (rang == 2 && douleur) {
-        rang = 1;
-      }
-      var plancher = 0;
-      if (rang == 2) {
-        plancher = (ecrites * part - 1e-9).ceil();
-        if (plancher < 1) {
-          plancher = 1;
-        }
-        if (plancher > series) {
-          plancher = series;
-        }
-      }
-      for (final (r, w) in poids) {
-        exces[r] += w * series;
-      }
-      unites.add(
-        _UniteRetour(seance, pos, slot, series, poids, rang, plancher),
-      );
-      return true;
-    }
-
     var pos = 0;
     var premier = true;
     for (final (item, servi) in paires) {
@@ -2124,140 +2230,69 @@ class Seances {
       if (series <= 0 || _seriesDures(servi) <= 0) {
         continue;
       }
-      final plan = plans[item['slotId']];
-      final exId = item['exerciseId'] as String;
-      if (ajouter(
-        0,
-        pos,
-        item['slotId'] as String?,
-        exId,
-        series,
-        ent(ou(item['sets'], 0)),
-        plan?['role'],
-        _douleurUnite(exId, plan),
-        premier,
-      )) {
-        premier = false;
+      final poids = <(int, double)>[..._credits(item['exerciseId'] as String)];
+      if (total) {
+        poids.add((n, 1.0));
       }
+      if (poids.isEmpty) {
+        pos += 1;
+        continue;
+      }
+      final role = plans[item['slotId']]?['role'];
+      final int rang;
+      if (role == null) {
+        rang = premier ? 2 : 0;
+      } else {
+        rang = rangRole[role] ?? 0;
+      }
+      premier = false;
+      final ecrites = _ecrites(item);
+      for (final (r, w) in poids) {
+        exces[r] += w * series;
+      }
+      unites.add(
+        _UniteRetour(
+          pos,
+          item['slotId'] as String?,
+          series,
+          ecrites < series ? ecrites : series,
+          poids,
+          rang,
+        ),
+      );
       pos += 1;
     }
-    for (var k = 0; k < rv.reste.length; k++) {
-      pos = 0;
-      premier = true;
-      for (final p0 in rv.reste[k]) {
-        final series = ent(ou(p0['sets'], 0));
-        if (series <= 0 || _seriesDures(p0) <= 0) {
-          continue;
-        }
-        if (ajouter(
-          k + 1,
-          pos,
-          p0['slotId'] as String?,
-          p0['exerciseId'] as String,
-          series,
-          series,
-          p0['role'],
-          false,
-          premier,
-        )) {
-          premier = false;
-        }
-        pos += 1;
+    for (final seance in rv.reste) {
+      final (v, t) = _creditsEcrits(seance);
+      for (var gi = 0; gi < n; gi++) {
+        exces[gi] += v[gi];
+      }
+      if (total) {
+        exces[n] += t;
       }
     }
     final initial = List<double>.of(exces);
-    final sem = ent(dictOuVide(contexte)['semaine']);
-    final fenetre = ent(s['retour_repartition_semaines']);
-    var repartie = fenetre > 0;
-    for (var w = sem - fenetre + 1; w < sem + 1; w++) {
-      if (semainesManquees.contains(w)) {
-        repartie = false;
-      }
-    }
-    rv.repartie = repartie;
-
-    void couper(
-      String portee,
-      int rang,
-      int Function(_UniteRetour) plancherDe,
-    ) {
-      while (true) {
-        if (!exces.any((x) => x > 1e-9)) {
-          return;
+    while (exces.any((x) => x > 1e-9)) {
+      _UniteRetour? best;
+      for (final u in unites) {
+        if (u.m <= u.e) {
+          continue;
         }
-        _UniteRetour? best;
-        var bf = 0.0;
-        for (final u in unites) {
-          if ((portee == 'jour' && u.seance != 0) ||
-              (portee == 'reste' && u.seance == 0)) {
-            continue;
-          }
-          if (u.rang != rang || u.m <= plancherDe(u)) {
-            continue;
-          }
-          var utile = false;
-          for (final (r, _) in u.poids) {
-            if (exces[r] > 1e-9) {
-              utile = true;
-              break;
-            }
-          }
-          if (!utile) {
-            continue;
-          }
-          final f = u.m / u.n;
-          if (best == null ||
-              f > bf ||
-              (f == bf &&
-                  (u.seance > best.seance ||
-                      (u.seance == best.seance && u.pos > best.pos)))) {
-            best = u;
-            bf = f;
-          }
+        if (!u.poids.any((rw) => exces[rw.$1] > 1e-9)) {
+          continue;
         }
-        if (best == null) {
-          return;
-        }
-        best.m -= 1;
-        for (final (r, w) in best.poids) {
-          exces[r] -= w;
+        if (best == null ||
+            u.rang < best.rang ||
+            (u.rang == best.rang && u.pos > best.pos)) {
+          best = u;
         }
       }
-    }
-
-    int zero(_UniteRetour u) => 0;
-    int un(_UniteRetour u) => 1;
-    int plancher(_UniteRetour u) => u.plancher;
-    final etapes = <(int, int Function(_UniteRetour))>[
-      (0, zero),
-      (1, un),
-      (2, plancher),
-      (1, zero),
-      (2, un),
-    ];
-    if (repartie) {
-      for (final (rang, f) in etapes) {
-        couper('tous', rang, f);
+      if (best == null) {
+        break;
       }
-    } else if (ent(s['retour_emprunt_plancher']) != 0) {
-      for (final (rang, f) in etapes.sublist(0, 3)) {
-        couper('jour', rang, f);
-      }
-      for (final (rang, f) in etapes.sublist(0, 3)) {
-        couper('reste', rang, f);
-      }
-      for (final (rang, f) in etapes.sublist(3)) {
-        couper('jour', rang, f);
-        couper('reste', rang, f);
-      }
-    } else {
-      // Emprunt minimal : la séance du jour paie jusqu'à une série par
-      // principal avant toute coupe promise à une séance restante.
-      for (final (rang, f) in etapes) {
-        couper('jour', rang, f);
-      }
-      for (final (rang, f) in etapes) {
-        couper('reste', rang, f);
+      best.m -= 1;
+      for (final (r, w) in best.poids) {
+        exces[r] -= w;
       }
     }
     rv.depasse = [
@@ -2265,11 +2300,9 @@ class Seances {
         if (exces[r] > 1e-9) r,
     ];
     for (final u in unites) {
-      if (u.seance != 0) {
-        continue;
-      }
       rv.plan[u.slot] = u.m;
       if (u.m < u.n) {
+        rv.prevues[u.slot] = u.n;
         int? cause;
         for (final (r, _) in u.poids) {
           if (initial[r] > 1e-9 &&
@@ -2282,76 +2315,89 @@ class Seances {
     }
   }
 
-  /// Retour gradué au volume : séries de l'item ramenées à celles que le
-  /// plan de la semaine lui laisse ([_planRetour]), puis à ce que sa famille
-  /// de tenue bras tendus permet encore. Zéro série : item retiré (jamais un
-  /// principal sans douleur par le plan). Raison `koach.retour_gradue`.
-  /// Renvoie l'item ou null.
+  /// Rampe de volume puis rampe tendineuse de l'item servi : (1) ajouts de
+  /// Koach bornés par le plan (1.0.7), jamais sous les séries écrites par le
+  /// programme, raison `koach.ajout_borne` ; (2) tenues bras tendus
+  /// raccourcies (5 s au moins) puis une série de moins selon ce que la
+  /// famille permet encore (rampe tendineuse, inchangée), raison
+  /// `koach.retour_gradue`. Zéro série : item retiré. Renvoie l'item ou
+  /// null.
   Json? _retourGradue(Json servi) {
     final rv = retourVol;
     if (rv == null) {
       return servi;
     }
-    final series = ent(ou(servi['sets'], 0));
+    var series = ent(ou(servi['sets'], 0));
     if (series <= 0) {
       return servi;
     }
-    var maxi = series;
-    (String, Object?)? cause;
     final pl = rv.plan[servi['slotId']];
-    if (pl != null && pl < maxi) {
-      maxi = pl;
-      cause = rv.cause[servi['slotId']];
+    if (pl != null && pl < series) {
+      final cz = rv.cause[servi['slotId']]!;
+      String groupe;
+      double limite;
+      double ecrit;
+      if (cz.$1 == 'groupe') {
+        final gi = cz.$2 as int;
+        groupe = jl(s['volume_groupes_majeurs'])[gi] as String;
+        limite = rv.limites[gi];
+        ecrit = rv.ecrit[gi];
+      } else {
+        groupe = 'allegement';
+        limite = rv.limiteDures!;
+        ecrit = rv.ecritDures;
+      }
+      final planItem = plans[servi['slotId']];
+      final ecritItem = (planItem?['ecrit'] as Json?) ?? servi;
+      _raison('koach.ajout_borne', {
+        'exercice': servi['exerciseId'],
+        'groupe': groupe,
+        'limite': arrondi(limite, 1),
+        'ecrit': arrondi(ecrit, 1),
+        'series': pl,
+        'ecrites': _ecrites(ecritItem),
+        'prevues': series,
+      });
+      if (pl <= 0) {
+        return null;
+      }
+      servi['sets'] = pl;
+      if (vrai(servi['setTargets'])) {
+        final st = jl(servi['setTargets']);
+        servi['setTargets'] = st.sublist(0, math.min(pl, st.length));
+      }
+      series = pl;
     }
     var (fam, sec) = _tenueBrasTendus(servi);
-    if (fam != null && (rv.budgetsTenue[fam] == null || sec <= 0)) {
-      fam = null;
-    }
-    int? secondes;
-    if (fam != null && maxi > 0) {
-      final resteT = rv.budgetsTenue[fam]! - (rv.jourTenue[fam] ?? 0.0);
-      if (maxi * sec > resteT + 1e-9) {
-        // Tenues trop longues pour la semaine : mêmes séries, tenues
-        // raccourcies (5 s au moins) ; sinon une série de moins, et ainsi
-        // de suite.
-        cause = ('famille', fam);
-        var trouve = 0;
-        for (var k = maxi; k > 0; k--) {
-          var h = (resteT / k + 1e-9).floor();
-          if (h > sec) {
-            h = sec.truncate();
-          }
-          if (h >= tenueMinS) {
-            trouve = k;
-            if (h < sec) {
-              secondes = h;
-            }
-            break;
-          }
-        }
-        maxi = trouve;
-      }
-    }
-    if (maxi >= series && secondes == null) {
-      if (fam != null) {
-        rv.jourTenue[fam] = (rv.jourTenue[fam] ?? 0.0) + series * sec;
-      }
+    if (fam == null || rv.budgetsTenue[fam] == null || sec <= 0) {
       return servi;
     }
-    final cz = cause!;
-    String groupe;
-    double? limite;
-    if (cz.$1 == 'groupe') {
-      final gi = cz.$2 as int;
-      groupe = jl(s['volume_groupes_majeurs'])[gi] as String;
-      limite = rv.limites[gi];
-    } else if (cz.$1 == 'total') {
-      groupe = 'allegement';
-      limite = rv.limiteDures;
-    } else {
-      final f = cz.$2 as String;
-      groupe = 'bras_tendus_$f';
-      limite = rv.limitesTenue[f];
+    var maxi = series;
+    int? secondes;
+    final resteT = rv.budgetsTenue[fam]! - (rv.jourTenue[fam] ?? 0.0);
+    if (maxi * sec > resteT + 1e-9) {
+      // Tenues trop longues pour la semaine : mêmes séries, tenues
+      // raccourcies (5 s au moins) ; sinon une série de moins, et ainsi de
+      // suite.
+      var trouve = 0;
+      for (var k = maxi; k > 0; k--) {
+        var h = (resteT / k + 1e-9).floor();
+        if (h > sec) {
+          h = sec.truncate();
+        }
+        if (h >= tenueMinS) {
+          trouve = k;
+          if (h < sec) {
+            secondes = h;
+          }
+          break;
+        }
+      }
+      maxi = trouve;
+    }
+    if (maxi >= series && secondes == null) {
+      rv.jourTenue[fam] = (rv.jourTenue[fam] ?? 0.0) + series * sec;
+      return servi;
     }
     final planItem = plans[servi['slotId']];
     final ecritItem = planItem == null
@@ -2359,8 +2405,8 @@ class Seances {
         : (planItem['ecrit'] as Json?) ?? servi;
     _raison('koach.retour_gradue', {
       'exercice': servi['exerciseId'],
-      'groupe': groupe,
-      'limite': arrondi(limite!, 1),
+      'groupe': 'bras_tendus_$fam',
+      'limite': arrondi(rv.limitesTenue[fam]!, 1),
       'series': maxi,
       'secondes': secondes,
       'ecrites': ent(ou(ecritItem['sets'], 0)),
@@ -2382,9 +2428,7 @@ class Seances {
       }
       sec = secondes.toDouble();
     }
-    if (fam != null) {
-      rv.jourTenue[fam] = (rv.jourTenue[fam] ?? 0.0) + maxi * sec;
-    }
+    rv.jourTenue[fam] = (rv.jourTenue[fam] ?? 0.0) + maxi * sec;
     return servi;
   }
 
