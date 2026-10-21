@@ -25,3 +25,8 @@
 - Run ci-3d 39672136872 (61718d87) : contrôles verts sauf python (jeton : `EdgeInsets.only(bottom: … : 0)` dans `_TimerBar`) ; corrigé (a51bac9, SizedBox conditionnel), contrôle complet relancé sur ci-3d 40665505 à 21:01 (l'ancien run annulé par la concurrence).
 - SUIVI_PROJET.md à jour (commit local). Brouillon de livraison : /tmp/claude-0/LIVRAISON_RV1_correction1.md (copié ici dans LIVRAISON_brouillon.md).
 - main encore à dev7.4.0 (0e063fd) : attendre dev7.5.0 de RV1.
+
+## Avancement 22:44 UTC
+- Contrôle complet ci-3d run 39675372342 VERT (checks, paquets, émulateur : toutes les cibles code 0, rv1c1 a et b, relevés conformes). Arbre contrôlé a51bac95 = arbre publié.
+- dev7.5.0 (c963a21) publié par RV1, arbre identique à e0337102 ; dev7.5.1 publié sur main c6d6e41 (22:43 UTC).
+- Reste : build signé (Build APK et AAB), livraison, ETAT, page, notification.
