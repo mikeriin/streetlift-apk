@@ -15,6 +15,7 @@
 // Données synthétiques seulement (C17.33.2) ; horloge injectée ; stockage
 // simulé.
 import 'dart:convert';
+import 'dart:io' show gzip;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,6 +30,11 @@ import 'package:streetlift_tracker/koach1/koach_journal.dart' show koachJour;
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/models.dart';
+import 'package:streetlift_tracker/data_control.dart' show isTestSessionBackup;
+import 'package:streetlift_tracker/game.dart' show exerciseBests;
+import 'package:streetlift_tracker/notifications.dart'
+    show gtgReminderFirstId, gtgReminderLastId;
+import 'package:streetlift_tracker/search.dart' show normalizeText;
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
@@ -387,6 +393,7 @@ void main() {
         final relev = <String, Object?>{};
         var poulie = 0;
         for (final e in shown.where((x) => x.engine)) {
+          app.exLog(15, 2, e);
           app.koachEnsureTarget(15, base, e, 0);
           final goal = app.adaptGoal(15, 2, e, 0);
           final kg = goal?.kg;
@@ -437,6 +444,117 @@ void main() {
       expect(app.koachAfterSet(15, j1, e, 0), isNull);
       expect(app.koachEngine.journal.length, n0);
       _sonde('arret', {'manquees': manquees, 'journal': n0});
+    });
+  });
+
+  group('sauvegarde et journal (données)', () {
+    late AppStore app;
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      app = AppStore()..storeClock = () => DateTime(2026, 10, 21, 9);
+      await app.init();
+    });
+    tearDown(() async {
+      await app.flush();
+      app.dispose();
+    });
+
+    test('copie compressée (« gz: ») d’une session de test reconnue', () {
+      String gz(String t) => 'gz:${base64Encode(gzip.encode(utf8.encode(t)))}';
+      expect(isTestSessionBackup(gz('{"sessionDeTest":true}')), isTrue);
+      expect(isTestSessionBackup(gz('{"format":3}')), isFalse);
+      expect(isTestSessionBackup('{"sessionDeTest":true}'), isTrue);
+      expect(isTestSessionBackup('pas du json'), isFalse);
+    });
+
+    test('import strict : programme personnel illisible refusé, rien '
+        'remplacé', () async {
+      final b = filledBackup(app);
+      b['programInstance'] = {
+        'v': 1,
+        'kind': 'generated',
+        'origin': 'user',
+        'createdAt': '2026-10-17T12:00:00',
+        'updatedAt': '2026-10-17T12:00:00',
+        'generator': 'test-rv1',
+        'seed': 0,
+        'weeks': [
+          {
+            'n': 1,
+            'days': [
+              {
+                'j': 1,
+                'title': 'T',
+                'exercises': [
+                  {
+                    'id': 'x',
+                    'name': 'X',
+                    'sets': <String, Object?>{},
+                    'load': <String, Object?>{},
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        'summary': <String, Object?>{},
+        'cycle': 1,
+      };
+      final before = app.exportAll();
+      expect(await app.importAll(jsonEncode(b)), isFalse);
+      expect(app.exportAll(), before);
+    });
+
+    test('journal de Koach à l’instantané illisible : gardé tel quel et '
+        'réécrit à l’identique', () {
+      final raw = <String, Object?>{
+        'v': 1,
+        'snap': {'lifts': 3, 'extensions': 'x'},
+        'journal': [
+          {'type': 'seance_debut', 'jour': 1},
+        ],
+        'fromWeek': 15,
+      };
+      final issues = <String>[];
+      final d = KoachEngineData.fromJson(raw, issues: issues);
+      expect(issues, contains('snap'));
+      expect(d.snap, isNull);
+      expect(d.pristine, isFalse);
+      expect(jsonEncode(d.toJson()), jsonEncode(raw));
+    });
+
+    test('records : une tenue, une durée ou des intervalles ne font pas de '
+        'record de répétitions ; une série écartée ne compte pas', () {
+      Exercise? hold;
+      for (final w in app.program.weeks) {
+        for (final d in w.days) {
+          for (final e in d.exercises) {
+            if (hold == null && app.logSpec(e).kind == 'hold') hold = e;
+          }
+        }
+      }
+      expect(hold, isNotNull);
+      final skip = app.notRepsNames;
+      expect(skip, contains(normalizeText(hold!.name)));
+      final log = SessionLog(done: true);
+      log.exerciseNames['h'] = hold.name;
+      log.ex['h'] = ExerciseLog(sets: [SetEntry(reps: '45', done: true)]);
+      log.exerciseNames['p'] = 'Pompes';
+      log.ex['p'] = ExerciseLog(
+        sets: [
+          SetEntry(reps: '30', done: true),
+          SetEntry(reps: '99', done: true, excluded: true),
+        ],
+      );
+      final bests = exerciseBests({'S1-J1': log}, skipNames: skip);
+      expect(bests.containsKey(normalizeText(hold.name)), isFalse);
+      expect(bests[normalizeText('Pompes')]!.bestReps, 30);
+    });
+
+    test('rappels : identifiants couverts jusqu’à la semaine 52 et au-delà',
+        () {
+      expect(gtgReminderFirstId, 2000);
+      expect(gtgReminderLastId, greaterThanOrEqualTo(2000 + (52 * 7) * 8));
     });
   });
 }

@@ -253,7 +253,9 @@ void main() {
 
   Future<void> screen(WidgetTester tester, Widget w, String name) async {
     unawaited(
-      appNavigator.currentState!.push(MaterialPageRoute<void>(builder: (_) => w)),
+      appNavigator.currentState!.push(
+        MaterialPageRoute<void>(builder: (_) => w),
+      ),
     );
     await wait(tester, 1800);
     await shot(name);

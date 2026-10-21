@@ -117,10 +117,13 @@ List<Object?> _kb4(List<Object?> row) {
 /// la séance d'intervalles : seul changement voulu de RV1 par rapport à
 /// 2.x.
 List<Object?> _rv1(List<Object?> row) {
+  // RV1 : charge en livres à la virgule décimale (« 16,5 lb »).
+  final label = row[2];
+  if (label is String && label.endsWith('lb')) {
+    row = [...row.take(2), label.replaceAll('.', ','), ...row.skip(3)];
+  }
   if (row[5] != 'interval') return row;
-  final m = RegExp(
-    r'^(\d+)\s*[×x]\s*\((\d+)\s*s',
-  ).firstMatch('${row[3]}');
+  final m = RegExp(r'^(\d+)\s*[×x]\s*\((\d+)\s*s').firstMatch('${row[3]}');
   if (m == null) return row;
   final n = int.parse(m.group(1)!);
   return [
