@@ -11,3 +11,6 @@ Session Opus 5.5 (20/10/2026, depuis 16:36 UTC). Base : `moteurs` 91d8ea70. Pas 
 
 ## Reste
 - Attendre run B et le contrôle complet ; remplir docs/CRITERES_KM5.md, livraison ; push moteurs (rebase), étiquettes kalis_adapt-v1.0.6 et kalis_bench-v0.5.8 ; LIVRAISON_KM5 (pipeline + projet), ETAT_CP, page de suivi, notification.
+
+## Fin (21/10 02:0x UTC)
+- Contrôle complet (2) 39509091986 vert ; moteurs 737d528d poussé, étiquettes kalis_adapt-v1.0.6 et kalis_bench-v0.5.8 ; LIVRAISON_KM5 (pipeline 23e5f95 + projet), ETAT_CP « livré », page de suivi v64. Lot terminé.
