@@ -370,15 +370,14 @@ void main() {
         await wait(tester, 900);
       }
     }
-    await until(tester, find.byKey(const ValueKey('timing-header')), max: 60);
-    releve['emom_entete'] = find
-        .byKey(const ValueKey('timing-header'))
-        .evaluate()
-        .isNotEmpty;
-    releve['emom_tours_affiches'] = find
-        .textContaining('EMOM · ${store.setCount(mu)} tours')
-        .evaluate()
-        .isNotEmpty;
+    // En-tête du départ chronométré : celui du groupe au temps du bloc
+    // (« EMOM · 8 min », Lancer) ou, hors groupe, « EMOM · 8 tours ».
+    final entete = find.textContaining(
+      RegExp('EMOM · ${store.setCount(mu)} (min|tours)'),
+    );
+    await until(tester, entete, max: 60);
+    releve['emom_entete'] = entete.evaluate().isNotEmpty;
+    releve['emom_lancer'] = find.text('Lancer').evaluate().isNotEmpty;
     releve['j4_lignes_log'] = store.exLog(wk, 4, mu).sets.length;
     await shot('2_emom_minute_par_minute');
     await home(tester);
@@ -461,7 +460,7 @@ void main() {
     expect(releve['emom_every'], 60);
     expect(releve['j4_lignes_log'], 8);
     expect(releve['emom_entete'], isTrue);
-    expect(releve['emom_tours_affiches'], isTrue);
+    expect(releve['emom_lancer'], isTrue);
     expect(releve['carte_reprise'], isTrue);
     expect(releve['reactive'], isTrue);
     expect(releve['carte_apres'], isFalse);
