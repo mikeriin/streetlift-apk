@@ -15,5 +15,7 @@ Base : main 88fb1965 (dev7.3.0). Session lancée 21/10/2026 04:22 UTC (« Lot : 
 
 - Rapide vert (run 39547004881) sur 53016cac ; contrôle complet poussé sur claude/ci-3d (5e7545ca) à 05:05 UTC.
 
+- ci-3d 39547568156 : tests sauf G10 (instantané EMOM, corrigé), émulateur : KB4 sur l'en-tête (corrigé), ci1c/ci1f pannes VM. Relance ci-3d 01f7a4a0 (07:24 UTC) sur d522c365. Brouillon de livraison dans le scratchpad (LIVRAISON_KB4.md) copié ici.
+
 ## Reste
 - Code (garde, réactivation, EMOM, carte), tests kb4, mise à jour kb3/kb1/versions, cible émulateur, CI rapide puis ci-3d, main, build, livraison.
