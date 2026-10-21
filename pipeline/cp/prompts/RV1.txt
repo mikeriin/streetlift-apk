@@ -27,3 +27,6 @@ FIN DE LOT
 
 BUGS SIGNALÉS PAR LE PROPRIÉTAIRE (à traiter en priorité, liste tenue par le pilotage)
 - 20/10 21:32 : lignes EMOM « volume » affichées en une seule ligne de 24 reps (traité dans KB4, point 5 : vérifier que c'est tenu et chercher les formes voisines).
+- 21/10 (KB4, C17.43.3) : intervalles « 8× (30 s effort / 30 s repos) » : une ligne sur la séance écrite, une ligne par tour quand Koach sert — aligner (une ligne par tour dans les deux cas, chrono des tours).
+- 21/10 (KB4 § 8.6) : charge de l'extension triceps poulie servie à « 20,41 kg » (pas de la grille de la poulie non appliqué ?) — chercher toutes les charges servies hors de leur grille (poulie, haltères, barre, lest).
+- 21/10 (KB4 § 8.3) : minute d'EMOM ratée : rien ne dit à l'athlète de laisser la ligne non validée ; une indication dans l'écran, sans refonte.

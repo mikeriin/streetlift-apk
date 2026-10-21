@@ -415,4 +415,7 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 ## RV1 — revue complète du code, dev7.5.0 (à lancer après validation de KB4, tâche « Opus 5.5, effort élevé, application » ; C17.41)
 
-- Prompt : `prompts/RV1.txt`. Demande du propriétaire du 20/10/2026 (C17.41). Section complétée au lancement (base `main`, bugs signalés par le propriétaire d'ici là).
+- Prompt : `prompts/RV1.txt`. Demande du propriétaire du 20/10/2026 (C17.41). **Lancé le 21/10/2026 vers 12:15 UTC** après validation de KB4 (C17.43).
+- Base `main` : dev7.4.0 0e063fde ou suivant (le propriétaire peut publier depuis son PC : rebase, ne défais rien).
+- Bugs à traiter en priorité : liste en fin de `prompts/RV1.txt` et C17.43.3 (intervalles 30/30 alignés, charge de la poulie à 20,41 kg, minute d'EMOM ratée) ; § 7-8 de `LIVRAISON_KB4.md`.
+- La ligne RV1 d'ETAT a dit « en attente de KB4 » (session du 21/10 04:20 sans « Lot : ») : sans effet, le lot n'avait pas commencé.
