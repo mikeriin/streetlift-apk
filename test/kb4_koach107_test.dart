@@ -305,10 +305,12 @@ void main() {
       expect(app.plannedReps(b, app.logSpec(b), 2), [15, 15]);
       expect(app.setCount(t('2 tours × 4 paliers')), 8);
       expect(app.setCount(t('8×3 · E2MOM')), 8);
-      // Intervalles : une ligne pour la séance d'intervalles, le chrono
-      // compte les tours (pas de reps par tour à noter).
+      // Intervalles : RV1 (C17.43.3) : une ligne par tour (avant KB4 et
+      // dans KB4 : une ligne pour la séance d'intervalles écrite).
       final iv = t('8× (30 s effort / 30 s repos)');
-      expect(app.logSpec(iv).kind, 'interval');
+      expect(app.logSpec(iv).kind, 'hold');
+      expect(app.logSpec(iv).rowPrefix, 'I');
+      expect(app.setCount(iv), 8);
       // EMOM montant (« +1 rep/min jusqu'à l'échec ») : une ligne, sans
       // cible (PR1).
       final m = t('EMOM 20 min · 10 reps, +1 rep/min jusqu’à l’échec');

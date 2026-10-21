@@ -339,15 +339,19 @@ extension _FlowV3 on AthleteProfileFlowState {
           label: 'Ajouter un record',
           onPressed: () => _editBenchmark(null),
         ),
-        const SizedBox(height: KSpacing.s8),
-        KTonalButton(
-          key: const ValueKey('benchmarks-unknown'),
-          label: 'Je ne sais pas',
-          onPressed: () => _update(() {
-            _d.benchmarks = null;
-            _unknownBenchmarks = true;
-          }),
-        ),
+        // RV1 : « Je ne sais pas » seulement sans record : il effaçait
+        // toute la liste (tests guidés compris), sans confirmation.
+        if (_d.benchmarks?.isEmpty ?? true) ...[
+          const SizedBox(height: KSpacing.s8),
+          KTonalButton(
+            key: const ValueKey('benchmarks-unknown'),
+            label: 'Je ne sais pas',
+            onPressed: () => _update(() {
+              _d.benchmarks = null;
+              _unknownBenchmarks = true;
+            }),
+          ),
+        ],
       ],
       onSkip: () {
         _d.benchmarks = null;
@@ -1362,7 +1366,7 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
       setState(() => _error = 'Remplis chaque valeur demandée.');
       return;
     }
-    final b = Benchmark(
+    var b = Benchmark(
       exerciseId: e,
       kind: k,
       source: _source,
@@ -1375,6 +1379,30 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
       bodyWeightKg: _bodyweightish && bw != null ? bw : null,
       competitionStandard: widget.askStandard ? _standard : null,
     );
+    // RV1 : record enregistré sans changer ses valeurs : son origine (test
+    // guidé, protocole) est gardée (avant : ramenée à « déclaré », et le
+    // moteur pouvait proposer le test une seconde fois).
+    final first = widget.initial;
+    if (first != null &&
+        _source == BenchmarkSource.declared &&
+        first.source != BenchmarkSource.declared &&
+        first.source != BenchmarkSource.competition &&
+        _sameMeasure(first, b)) {
+      b = Benchmark(
+        exerciseId: b.exerciseId,
+        kind: b.kind,
+        source: first.source,
+        date: b.date,
+        externalLoadKg: b.externalLoadKg,
+        reps: b.reps,
+        rir: b.rir,
+        seconds: b.seconds,
+        distanceMeters: b.distanceMeters,
+        bodyWeightKg: b.bodyWeightKg,
+        protocolId: first.protocolId,
+        competitionStandard: b.competitionStandard,
+      );
+    }
     final err = _firstViolation(b.validate());
     if (err != null) {
       setState(() => _error = err);
@@ -2959,4 +2987,13 @@ class _EventSheetState extends State<_EventSheet> {
       },
     ),
   ];
+}
+
+/// RV1 : même mesure (exercice, type, date, valeurs) : seule l'origine peut
+/// différer.
+bool _sameMeasure(Benchmark a, Benchmark b) {
+  Map<String, Object?> core(Benchmark x) =>
+      Map.of(x.toJson())
+        ..removeWhere((k, _) => k == 'source' || k == 'protocolId');
+  return '${core(a)}' == '${core(b)}';
 }

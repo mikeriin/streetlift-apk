@@ -1013,7 +1013,7 @@ class MainQuestCard extends StoreWidget {
               const SizedBox(width: KSpacing.s12),
               Expanded(
                 child: Text(
-                  'Quête principale\u00A0· S${week.n} J${day.j}',
+                  'Quête principale\u00A0· ${store.program.weekLabel(week.n)} J${day.j}',
                   style: KType.titreCarte.copyWith(color: k.texte),
                 ),
               ),
@@ -1177,7 +1177,7 @@ class _ChapterCard extends StatelessWidget {
           Text(c.name, style: KType.corpsFort.copyWith(color: k.texte)),
           const SizedBox(height: KSpacing.s4),
           Text(
-            'S${c.firstWeek} à S${c.lastWeek}\u00A0· ${c.doneDays}/${c.trainingDays} journées',
+            '${store.program.weekLabel(c.firstWeek)} à ${store.program.weekLabel(c.lastWeek)}\u00A0· ${c.doneDays}/${c.trainingDays} journées',
             style: KType.detail.copyWith(color: k.texte2),
           ),
           const Spacer(),
@@ -1281,7 +1281,7 @@ String bossHint(GameState g, Boss boss) {
       ? 'Tests à rattraper : ${boss.tests.length} journées'
       : weeksAway == 1
       ? 'La semaine prochaine\u00A0· deload conseillé avant'
-      : 'Dans $weeksAway semaines (S${boss.firstWeek})';
+      : 'Dans $weeksAway semaines (${store.program.weekLabel(boss.firstWeek)})';
 }
 
 /// Feuille « Boss » (Parcours) : chaque semaine de tests, ses journées et
@@ -1315,7 +1315,7 @@ class _BossDetail extends StatelessWidget {
     final k = KTokens.of(context);
     final program = store.program;
     final weeks =
-        'S${boss.firstWeek}${boss.lastWeek > boss.firstWeek ? ' à S${boss.lastWeek}' : ''}';
+        '${store.program.weekLabel(boss.firstWeek)}${boss.lastWeek > boss.firstWeek ? ' à ${store.program.weekLabel(boss.lastWeek)}' : ''}';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -1395,7 +1395,7 @@ class SeasonCard extends StoreWidget {
           ),
           const SizedBox(height: KSpacing.s8),
           Text(
-            'S${s.firstWeek} à S${s.lastWeek}\u00A0· ${_plural(left, 'semaine restante', 'semaines restantes')}\u00A0· ${(s.fraction * 100).round()}\u00A0%',
+            '${store.program.weekLabel(s.firstWeek)} à ${store.program.weekLabel(s.lastWeek)}\u00A0· ${_plural(left, 'semaine restante', 'semaines restantes')}\u00A0· ${(s.fraction * 100).round()}\u00A0%',
             style: KType.detail.copyWith(color: k.texte2),
           ),
           const SizedBox(height: KSpacing.s12),
@@ -1449,7 +1449,7 @@ void showSeasons(BuildContext context) {
                   iconColor: st.color,
                   title: 'Saison ${s.index}\u00A0· ${s.name}',
                   subtitle:
-                      'S${s.firstWeek} à S${s.lastWeek}\u00A0· ${s.doneDays}/${s.trainingDays} journées\u00A0· titre « ${s.title} »',
+                      '${store.program.weekLabel(s.firstWeek)} à ${store.program.weekLabel(s.lastWeek)}\u00A0· ${s.doneDays}/${s.trainingDays} journées\u00A0· titre « ${s.title} »',
                 );
               },
             ),
@@ -1531,7 +1531,7 @@ class _ChapterDetail extends StatelessWidget {
             ),
             const SizedBox(height: KSpacing.s4),
             Text(
-              'Semaines S${c.firstWeek} à S${c.lastWeek}\u00A0· ${c.doneDays} journées validées sur ${c.trainingDays}',
+              'Semaines ${store.program.weekLabel(c.firstWeek)} à ${store.program.weekLabel(c.lastWeek)}\u00A0· ${c.doneDays} journées validées sur ${c.trainingDays}',
               style: KType.detail.copyWith(color: k.texte2),
             ),
             const SizedBox(height: KSpacing.s12),

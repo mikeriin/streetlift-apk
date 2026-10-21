@@ -154,8 +154,12 @@ ThemeData kitTheme({
         minHeight: KSize.target,
       ),
       border: field,
+      // RV1 (UI0.5) : en clair, `haute` = `fond` : contour `filet`, sinon le
+      // champ posé sur la page (« Coller une sauvegarde ») est invisible.
       enabledBorder: field.copyWith(
-        borderSide: const BorderSide(color: Colors.transparent),
+        borderSide: dark
+            ? const BorderSide(color: Colors.transparent)
+            : BorderSide(color: r.filet),
       ),
       focusedBorder: field.copyWith(
         borderSide: BorderSide(color: r.encre, width: KSize.current),

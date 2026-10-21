@@ -1243,6 +1243,10 @@ extension KoachStore on AppStore {
           final log = logs[key];
           if (log?.done ?? false) continue;
           if (e.versed.contains(key) || versedNow.contains(key)) continue;
+          // RV1 : séance commencée (servie par Koach, ou séries validées)
+          // passée minuit : jamais déclarée manquée (avant : manquée puis
+          // faite, son volume redistribué sur la semaine suivante).
+          if (key == open || servie(key) || inProgress(key)) continue;
           if (programResume?.keys.contains(key) ?? false) continue;
           if (program.start == null) continue;
           final date = civilOf(program.dateFor(week, d.j));
@@ -2075,6 +2079,8 @@ extension KoachStore on AppStore {
     final a = sessionAdaptOf(key);
     final slot = e.slotId;
     if (a == null || slot == null || !koachOpen(week, base.j)) return;
+    // RV1 : rien versé au moteur pendant un arrêt d'urgence.
+    if (!koachEngine.active) return;
     final st0 = a.koach!;
     if (st0['state'] != 'open') return;
     final cibles = (st0['cibles'] as Map?) ?? const {};
@@ -2228,6 +2234,11 @@ extension KoachStore on AppStore {
     if (pain && load != null && load < kg) return cible;
     final out = Map<String, Object?>.of(cible);
     out['loadKg'] = kg;
+    // RV1 : charge fixée par le programme (C15) : pas de suggestion d'une
+    // autre charge (toutes les propositions de Koach sont des charges ;
+    // avant : « Je te propose 22,5 kg » sur 20 kg fixes, et « Valider »
+    // pré-remplissait 22,5).
+    out.remove('proposition');
     kc.ExercisePrescription? written;
     for (final x in place.day?.items ?? const <kc.ExercisePrescription>[]) {
       if (x.slotId == it.slotId) written = x;
@@ -2257,7 +2268,8 @@ extension KoachStore on AppStore {
   /// (demandée tout de suite), et ce que Koach en dit (null : rien de
   /// neuf).
   KoachSetNews? koachAfterSet(int week, DayPlan day, Exercise e, int index) {
-    if (!koachOpen(week, day.j)) return null;
+    // RV1 : rien versé au moteur pendant un arrêt d'urgence.
+    if (!koachEngine.active || !koachOpen(week, day.j)) return null;
     final key = sessionKey(week, day.j);
     final before = sessionAdaptOf(key);
     final log = logs[key]?.ex[e.id];
@@ -2741,6 +2753,11 @@ extension KoachStore on AppStore {
         for (final m in modules.entries) m.key: [m.value.$1, m.value.$2],
       },
     };
+    // RV1 : un calcul en cours (rattrapage, rejeu) lancé avant l'arrêt ne
+    // réinstalle pas le moteur vivant à sa fin (génération changée).
+    _koachRt
+      ..gen += 1
+      ..busy = null;
     _koachRt.live = null;
     _koachBackToWritten();
     _g9Cache.clear();
