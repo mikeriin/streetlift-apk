@@ -1,0 +1,14 @@
+# Sauvegarde KB4 (dev7.4.0)
+
+Base : main 88fb1965 (dev7.3.0). Session lancée 21/10/2026 04:22 UTC (« Lot : KB4 »).
+
+## Fait
+- Paquet kalis_adapt 1.0.6 copié à l'octet (lib/, assets/koach/, pubspec.yaml), asset koach_params_1_0_7.json (app + paquet), kKoachParamsAsset, version 7.4.0+148.
+
+## Décisions
+- Lignes « EMOM N min × R reps par minute » (reps fixes) : une ligne par minute, départ chronométré 60 s (comme « 12×6 · EMOM », PR1), servies telles qu'écrites (asWritten, règle PR8) Koach actif comme arrêté.
+- Garde : tous les rôles ; motifs : douleur, endurance, test reporté, séance bornée au temps donné, rampe tendineuse (retour_gradue bras_tendus à 0).
+- Réactivation : séances « open » finies pendant l'arrêt fermées (seance_fin) avant le rattrapage ; aperçus périmés retirés ; carte d'accueil « Réactiver Koach » (jamais automatique).
+
+## Reste
+- Code (garde, réactivation, EMOM, carte), tests kb4, mise à jour kb3/kb1/versions, cible émulateur, CI rapide puis ci-3d, main, build, livraison.

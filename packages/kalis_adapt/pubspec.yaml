@@ -1,0 +1,35 @@
+name: kalis_adapt
+description: >-
+  Moteur dynamique de Kalis Track : suivi et adaptation du programme séance
+  après séance (capacité par exercice estimée par filtre de Kalman, forme et
+  fatigue, forme du jour, charges et répétitions du jour, conseil pendant la
+  séance, propositions de volume, d'échange et de restructuration). Dart pur,
+  sans Flutter, sans stockage, sans horloge.
+version: 1.0.6
+publish_to: none
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+
+dependencies:
+  kalis_core:
+    path: ../kalis_core
+  kalis_plan:
+    path: ../kalis_plan
+
+dev_dependencies:
+  # SHA-256 des assets de Koach (test/koach_parametres_test.dart), comme
+  # kalis_core.
+  crypto: ^3.0.3
+  lints: ^4.0.0
+  test: ^1.25.0
+
+# Assets de Koach (lot KM2) : fichier de paramètres versionné et fiches
+# d'exercices, copies à l'octet près de reference/params/koach_params_v1.json
+# et reference/qualites/vecteurs_qualites_v1.json (SHA-256 vérifiés par
+# test/koach_parametres_test.dart). Le paquet est du Dart pur : il ne lit
+# aucun fichier, il décode le texte (lireParametresKoach, lireFichesKoach de
+# package:kalis_adapt/koach.dart). L'application (KM3) copie ces deux
+# fichiers dans ses propres assets, comme elle le fait déjà pour la base
+# d'exercices de kalis_core, et vérifie leur SHA-256 (koachParametresSha256,
+# koachFichesSha256) : docs/INTEGRATION_KM3.md, § 3.
