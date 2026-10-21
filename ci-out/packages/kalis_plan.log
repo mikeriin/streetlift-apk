@@ -1,0 +1,688 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 110.0.0
++ analyzer 14.6.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ cli_util 0.6.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.16.0
++ crypto 3.0.7
++ ffi 2.2.0
++ file 7.0.1
++ frontend_server_client 4.2.0
++ glob 2.2.0
++ http_multi_server 3.2.3
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.4.4 from path ../kalis_core
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.3
++ shelf_packages_handler 3.0.2
++ shelf_static 1.2.0
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.33.0
++ test_api 0.7.15
++ test_core 0.6.21
++ typed_data 1.4.0
++ vm_service 15.4.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 51 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 70 files (0 changed) in 0.39 seconds.
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/units_test.dart
+00:00 +0: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +1: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +2: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +3: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +4: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +5: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +6: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +7: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +8: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +9: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +10: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +11: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +12: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +13: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +14: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +15: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +16: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +17: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:00 +18: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999
+00:04 +19: test/units_test.dart: charges de départ des 40 profils types jamais au-dessus de 90 % de la charge d'Epley en haut de plage, multiples du pas déclaré
+00:04 +20: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 4000 à 4159
+00:06 +21: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:08 +22: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:09 +23: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:10 +24: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:12 +25: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:13 +26: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:14 +27: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+00:20 +28: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
+00:21 +29: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:23 +30: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:25 +31: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:26 +32: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:28 +33: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:30 +34: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+00:31 +35: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8640 à 8799
+00:32 +36: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+00:33 +37: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+00:41 +38: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+00:49 +39: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4320 à 4479
+00:52 +40: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1440 à 1599
+00:59 +41: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4480 à 4639
+01:02 +42: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1600 à 1759
+01:10 +43: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4640 à 4799
+01:13 +44: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1760 à 1919
+01:20 +45: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4800 à 4959
+01:23 +46: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
+01:31 +47: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4960 à 5119
+01:33 +48: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
+01:40 +49: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
+01:42 +50: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 2720 à 2879
+01:42 +51: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+01:44 +52: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+01:45 +53: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+01:47 +54: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+01:49 +55: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+01:51 +56: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+01:52 +57: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+01:52 +58: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 2560 à 2719
+01:58 +59: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+01:59 +60: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+02:01 +61: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+02:02 +62: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+02:03 +63: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +64: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +65: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +66: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +67: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +68: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +69: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +70: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +71: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +72: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +73: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +74: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +75: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +76: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +77: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:03 +78: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3200 à 3359
+02:04 +79: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3360 à 3519
+02:05 +80: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119
+02:07 +81: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119
+02:09 +82: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119
+02:09 +83: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:12 +84: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:14 +85: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:15 +86: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:17 +87: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:19 +88: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:20 +89: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:22 +90: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:22 +91: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +92: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +93: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +94: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +95: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +96: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +97: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +98: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +99: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +100: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +101: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +102: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +103: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +104: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +105: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +106: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +107: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +108: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +109: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +110: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +111: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +112: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +113: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +114: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +115: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +116: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +117: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +118: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +119: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +120: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +121: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +122: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +123: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +124: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +125: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +126: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +127: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +128: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +129: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +130: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +131: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +132: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +133: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +134: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +135: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +136: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +137: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +138: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +139: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +140: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +141: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +142: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +143: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +144: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +145: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +146: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +147: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +148: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +149: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +150: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +151: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +152: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +153: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +154: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +155: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +156: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +157: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +158: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +159: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +160: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +161: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +162: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +163: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +164: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +165: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +166: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +167: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +168: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +169: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +170: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +171: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +172: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +173: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +174: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +175: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +176: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +177: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +178: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +179: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +180: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +181: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:23 +182: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +183: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +184: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +185: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +186: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +187: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +188: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +189: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +190: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +191: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +192: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +193: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +194: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +195: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +196: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +197: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +198: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +199: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +200: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +201: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +202: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +203: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +204: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +205: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +206: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +207: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +208: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +209: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +210: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +211: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +212: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +213: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +214: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +215: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +216: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +217: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:24 +218: test/ks1c2_test.dart: KS1c2 — grille des profils incomplets 4 séances, repères tous, santé standard, elite
+02:24 +219: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +220: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +221: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +222: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +223: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +224: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +225: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +226: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +227: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +228: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +229: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +230: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +231: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +232: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +233: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +234: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +235: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +236: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +237: test/engine_test.dart: déterminisme la graine est lue modulo 16
+02:24 +238: test/ks1c2_test.dart: KS1c2 — grille des profils incomplets 4 séances, repères sans tirage, santé not_answered, advanced
+02:24 +239: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +240: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +241: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +242: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +243: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +244: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +245: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +246: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +247: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +248: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +249: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +250: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +251: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +252: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +253: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +254: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +255: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +256: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +257: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +258: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +259: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +260: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +261: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +262: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +263: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +264: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +265: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +266: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +267: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +268: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +269: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +270: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +271: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +272: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +273: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +274: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +275: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +276: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +277: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +278: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +279: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +280: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +281: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +282: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +283: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +284: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +285: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +286: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +287: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +288: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +289: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +290: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +291: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +292: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +293: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +294: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +295: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +296: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +297: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +298: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +299: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +300: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +301: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +302: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +303: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +304: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +305: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +306: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +307: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +308: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +309: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +310: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +311: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +312: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +313: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +314: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +315: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +316: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +317: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +318: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +319: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +320: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +321: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +322: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +323: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +324: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +325: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +326: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +327: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +328: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +329: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +330: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +331: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +332: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +333: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +334: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +335: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +336: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +337: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +338: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +339: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +340: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +341: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +342: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +343: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +344: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +345: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +346: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +347: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +348: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +349: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +350: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +351: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +352: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +353: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +354: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +355: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +356: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +357: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +358: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +359: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +360: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +361: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +362: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:24 +363: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +364: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +365: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +366: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +367: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +368: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +369: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +370: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +371: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +372: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +373: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +374: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +375: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +376: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +377: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +378: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +379: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +380: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +381: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +382: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +383: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +384: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +385: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +386: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +387: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +388: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +389: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +390: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +391: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +392: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +393: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +394: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +395: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +396: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +397: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +398: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +399: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +400: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +401: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +402: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:25 +403: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:26 +404: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:26 +405: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:26 +406: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:26 +407: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:26 +408: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:26 +409: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:26 +410: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:28 +411: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+02:29 +412: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+02:29 +413: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+02:30 +414: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+02:30 +415: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+02:30 +416: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+02:30 +417: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+02:30 +418: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+02:31 +419: test/engine_test.dart: ligne de commande dart run kalis_plan:plan rend le programme du moteur
+02:33 +420: test/engine_test.dart: ligne de commande dart run kalis_plan:plan rend le programme du moteur
+02:33 +421: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4160 à 4319
+02:35 +422: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:37 +423: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:39 +424: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:41 +425: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:42 +426: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:44 +427: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:45 +428: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +429: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +430: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +431: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +432: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +433: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +434: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +435: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +436: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +437: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +438: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +439: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +440: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +441: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +442: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:46 +443: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +444: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +445: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +446: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +447: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +448: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +449: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +450: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +451: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +452: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +453: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +454: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +455: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +456: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +457: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +458: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +459: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +460: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +461: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +462: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +463: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:47 +464: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +465: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +466: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +467: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +468: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +469: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +470: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +471: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +472: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +473: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +474: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +475: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +476: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +477: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +478: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +479: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +480: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +481: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +482: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +483: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +484: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +485: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:48 +486: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+02:51 +487: test/admission_test.dart: 40 profils types, graines 0 à 2 : mode prudent et exercices réservés relus sans le vivier
+02:53 +488: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+03:03 +489: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+03:13 +490: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+03:18 +491: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+03:18 +492: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+03:18 +493: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+03:18 +494: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+03:24 +495: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+03:25 +496: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+03:36 +497: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+03:47 +498: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+03:48 +499: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+03:53 +500: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+03:55 +501: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+03:57 +502: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+03:58 +503: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5600 à 5759
+03:58 +504: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+03:59 +505: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+04:01 +506: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+04:02 +507: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+04:03 +508: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+04:09 +509: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+04:09 +510: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:15 +511: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:17 +512: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:18 +513: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:20 +514: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:21 +515: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:23 +516: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:24 +517: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:25 +518: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:26 +519: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+04:37 +520: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+04:40 +521: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+04:48 +522: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+04:52 +523: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+05:00 +524: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+05:02 +525: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+05:11 +526: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+05:13 +527: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+05:21 +528: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5760 à 5919
+05:23 +529: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+05:33 +530: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+05:35 +531: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+05:43 +532: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+05:46 +533: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 1280 à 1439
+05:49 +534: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+05:50 +535: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+05:52 +536: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+05:53 +537: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+05:55 +538: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+05:56 +539: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+05:57 +540: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+05:57 +541: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 2400 à 2559
+05:59 +542: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+06:03 +543: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+06:05 +544: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+06:05 +545: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319
+06:05 +546: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319
+06:07 +547: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279
+06:09 +548: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279
+06:11 +549: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 480 à 639
+06:12 +550: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5280 à 5439
+06:13 +551: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 640 à 799
+06:14 +552: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5440 à 5599
+06:15 +553: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 800 à 959
+06:16 +554: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5600 à 5759
+06:17 +555: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 960 à 1119
+06:17 +556: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5760 à 5919
+06:19 +557: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279
+06:19 +558: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5920 à 6079
+06:21 +559: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+06:22 +560: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+06:24 +561: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+06:34 +562: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+06:41 +563: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+06:45 +564: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9120 à 9279
+06:51 +565: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+06:57 +566: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
+07:03 +567: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+07:08 +568: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599
+07:15 +569: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+07:18 +570: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+07:26 +571: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+07:30 +572: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+07:37 +573: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+07:40 +574: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:48 +575: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+07:50 +576: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:55 +577: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:57 +578: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:58 +579: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:59 +580: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 8160 à 8319
+08:00 +581: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 6400 à 6559
+08:02 +582: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 6400 à 6559
+08:03 +583: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 6400 à 6559
+08:03 +584: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 8640 à 8799
+08:05 +585: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 6560 à 6719
+08:05 +586: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 8800 à 8959
+08:06 +587: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 6720 à 6879
+08:07 +588: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:08 +589: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:10 +590: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:12 +591: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:13 +592: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:14 +593: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:20 +594: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:22 +595: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:24 +596: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+08:25 +597: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1760 à 1919
+08:25 +598: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+08:27 +599: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+08:29 +600: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+08:31 +601: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+08:32 +602: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+08:37 +603: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 8960 à 9119
+08:38 +604: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+08:39 +605: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+08:41 +606: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+08:42 +607: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+08:44 +608: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+08:45 +609: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+08:46 +610: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+08:47 +611: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+08:51 +612: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6400 à 6559
+08:53 +613: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+08:55 +614: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+08:57 +615: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+08:59 +616: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+09:01 +617: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+09:02 +618: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+09:04 +619: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 7360 à 7519
+09:04 +620: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+09:06 +621: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+09:16 +622: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8480 à 8639
+09:28 +623: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8640 à 8799
+09:41 +624: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8800 à 8959
+09:53 +625: All tests passed!
+kalis_plan 0.4.2 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (131 s).
