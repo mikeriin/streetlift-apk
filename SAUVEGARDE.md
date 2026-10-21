@@ -30,3 +30,6 @@
 - Contrôle complet ci-3d run 39675372342 VERT (checks, paquets, émulateur : toutes les cibles code 0, rv1c1 a et b, relevés conformes). Arbre contrôlé a51bac95 = arbre publié.
 - dev7.5.0 (c963a21) publié par RV1, arbre identique à e0337102 ; dev7.5.1 publié sur main c6d6e41 (22:43 UTC).
 - Reste : build signé (Build APK et AAB), livraison, ETAT, page, notification.
+
+## Fin 23:10 UTC
+- Build signé run 39688534010 vert (APK artefact 12388925016). Livraison `pipeline/cp/livraisons/LIVRAISON_RV1_correction1.md` + projet claude.ai ; ETAT ligne RV1c1 « à valider (correction 1 de RV1) » (pipeline 368c191) ; page de suivi version 67. Notification envoyée. Lot terminé.
