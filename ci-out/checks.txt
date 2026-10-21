@@ -1,13 +1,13 @@
 lot=RV1
 rapide=true
 pub=success
-format=failure
+format=success
 analyze=success
 ui_tokens_zone=failure
 python=skipped
-dart=cancelled
+dart=failure
 dart_dev=skipped
-captures_ui=skipped
+captures_ui=success
 captures=skipped
 build_debug=skipped
 build_profile=skipped
