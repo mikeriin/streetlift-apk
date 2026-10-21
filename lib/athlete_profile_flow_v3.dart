@@ -569,7 +569,9 @@ extension _FlowV3 on AthleteProfileFlowState {
       final next = RecentTraining(
         exerciseId: id,
         sessionsPerWeek: s,
-        hardSets: clearHard ? null : (hard ?? old?.hardSets),
+        // RV1 : « Pas en ce moment » (0 séance) : pas de séries dures
+        // gardées en silence.
+        hardSets: clearHard || s == 0 ? null : (hard ?? old?.hardSets),
       );
       if (i < 0) {
         list.add(next);
@@ -2553,7 +2555,8 @@ class _EventSheetState extends State<_EventSheet> {
         CivilDate(
           widget.today.year + (widget.today.month - 1 + i) ~/ 12,
           (widget.today.month - 1 + i) % 12 + 1,
-          15,
+          // RV1 : le mois en cours, passé le 15, ne tombe pas dans le passé.
+          i == 0 && widget.today.day > 15 ? widget.today.day : 15,
         ),
     ];
     // UI4 : sous-page titrée du libellé du bouton qui y mène (R3).
