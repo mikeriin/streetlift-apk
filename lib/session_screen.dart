@@ -2833,8 +2833,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 store.saveLogs(affectsProgression: false);
                 setState(() => epoch++);
               },
-              onIntra: (sec) =>
-                  widget.timer.solo('INTRA', sec, prepare: false),
+              onIntra: (sec) => widget.timer.solo('INTRA', sec, prepare: false),
             ),
       ],
     ];
