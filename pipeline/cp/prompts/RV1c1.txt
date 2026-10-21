@@ -1,0 +1,24 @@
+LOT RV1 — CORRECTION 1 : CHRONOS DES GROUPES AU CHRONO ET SABLIERS DES TENUES (dev7.5.1)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : RV1 validé (dev7.5.0 sur `main`). **Aucune donnée réelle, aucun déchiffrement, aucune clé (C17.33.2).**
+Base : pointe de `main` (dev7.5.0 ou suivant ; C17.28 : `CLAUDE.md` de `main`, rebase avant de publier, ne défais rien des lots du propriétaire). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/RV1c1`.
+Décisions : C17.41, C17.44 (validation de RV1) ; règles graphiques de `pipeline/ui/DECISIONS_UI.md` et `CAHIER_UI.md`. Livraison à lire : `LIVRAISON_RV1.md`.
+
+CONSTATS DU PROPRIÉTAIRE (21/10/2026, en séance, dev7.4.0)
+(a) S1·J3, squat E3MOM 6 × 3 à 95 kg avec dead hang 30 s dans la pause : lancer le **sablier** de la tenue (ligne B d'un enchaînement) **casse le chrono de l'E3MOM** : la barre du bas passe en « Repos 1:43 » au lieu du chrono des tours. RV1 a retiré le repos automatique après une série validée dans un groupe au chrono, mais `widget.timer.single(...)` du sablier remplace toujours le chrono du groupe (un seul minuteur).
+(b) S1·J3, finisher « Intervalles · 8 × 30 s, récupération 30 s » (burpees, exercice remplacé par l'athlète) : un sablier par tour à côté du bouton Lancer. RV1 retire le sablier des tours d'intervalles (`rowPrefix 'I'`) : vérifier que c'est tenu sur cette forme exacte, exercice remplacé compris ; sinon corriger.
+
+ATTENDU
+- Dans un groupe au chrono (EMOM, E2MOM, E3MOM, E90s, intervalles, AMRAP, pour le temps), **le chrono du groupe ne s'arrête jamais et n'est jamais remplacé** par un autre chrono tant que le groupe n'est pas fini ou arrêté par l'athlète.
+- Une tenue dans un tel groupe : soit un chrono de tenue **secondaire** (affiché à côté ou dans la ligne, sans toucher au minuteur du groupe ni à sa barre), soit pas de sablier et la ligne validée à sa durée écrite (pré-remplie). Choisis la solution la plus simple qui respecte les jetons UI, sans refonte ; dis-la dans la livraison.
+- Hors groupe au chrono, le sablier d'une tenue garde son comportement actuel.
+- Chercher les autres chemins qui remplacent le minuteur du groupe (repos manuel « +15 s / −15 s », bouton de repos d'une ligne, changement de page de la séance, retour à l'écran après mise en arrière-plan, notification du minuteur) et corriger ceux qui le cassent.
+
+TESTS
+- Widget : E3MOM avec tenue dans la pause, sablier lancé au tour 3 → chrono des tours intact (tour 4 au bon moment), tenue comptée ; intervalles 8 × 30 s / 30 s : aucun sablier par tour, Lancer rythme effort et récupération ; tenue hors groupe : sablier comme avant.
+- Cible émulateur (dans `integration_test/rv1_parcours_test.dart` ou une cible `rv1c1`) : mêmes scénarios, captures avant / après (deux thèmes).
+- Toutes les cibles d'avant vertes.
+
+FIN DE LOT
+- dev7.5.1 sur `main`, contrôle complet `claude/ci-3d` vert sur l'arbre publié, build signé réussi (push refusé : `cp-sauvegardes/RV1c1-candidat` et arrête-toi).
+- `LIVRAISON_RV1_correction1.md` (pipeline et projet claude.ai) ; ligne RV1 de `ETAT_CP.md` « à valider (correction 1) » ; notification « Kalis Track dev7.5.1 prêt — chronos des EMOM corrigés » ; arrête-toi (aucun fire_trigger).
