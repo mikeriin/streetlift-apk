@@ -373,31 +373,34 @@ void main() {
       app.dispose();
     });
 
-    test('extension triceps poulie servie au pas de 2,5 kg (avant : '
-        '20,41 kg) ; toute charge servie sur la grille de son matériel', () async {
-      clock = DateTime(2026, 10, 20, 7);
-      await app.koachRefresh();
-      final base = app.program.week(15).day(2)!;
-      expect(await app.koachStart(15, base), isTrue);
-      final a = app.sessionAdapt(15, 2)!;
-      final shown = app.adaptDay(15, base, a).exercises;
-      final relev = <String, Object?>{};
-      var poulie = 0;
-      for (final e in shown.where((x) => x.engine)) {
-        final goal = app.adaptGoal(15, 2, e, 0);
-        final kg = goal?.kg;
-        relev['${e.catalogId}'] = kg;
-        if (kg == null || kg <= 0) continue;
-        if (e.catalogId == 'mu-pushdown-corde') {
-          poulie++;
-          expect(_surGrille(kg, 2.5), isTrue, reason: '$kg');
+    test(
+      'extension triceps poulie servie au pas de 2,5 kg (avant : '
+      '20,41 kg) ; toute charge servie sur la grille de son matériel',
+      () async {
+        clock = DateTime(2026, 10, 20, 7);
+        await app.koachRefresh();
+        final base = app.program.week(15).day(2)!;
+        expect(await app.koachStart(15, base), isTrue);
+        final a = app.sessionAdapt(15, 2)!;
+        final shown = app.adaptDay(15, base, a).exercises;
+        final relev = <String, Object?>{};
+        var poulie = 0;
+        for (final e in shown.where((x) => x.engine)) {
+          final goal = app.adaptGoal(15, 2, e, 0);
+          final kg = goal?.kg;
+          relev['${e.catalogId}'] = kg;
+          if (kg == null || kg <= 0) continue;
+          if (e.catalogId == 'mu-pushdown-corde') {
+            poulie++;
+            expect(_surGrille(kg, 2.5), isTrue, reason: '$kg');
+          }
+          // Aucune charge à plus de deux décimales.
+          expect(_surGrille(kg, 0.01), isTrue, reason: '${e.catalogId} $kg');
         }
-        // Aucune charge à plus de deux décimales.
-        expect(_surGrille(kg, 0.01), isTrue, reason: '${e.catalogId} $kg');
-      }
-      _sonde('charges_j2', relev);
-      expect(poulie, 1, reason: jsonEncode(relev));
-    });
+        _sonde('charges_j2', relev);
+        expect(poulie, 1, reason: jsonEncode(relev));
+      },
+    );
 
     test('arrêt d’urgence : rien versé au moteur ensuite ; séance commencée '
         'passée minuit jamais déclarée manquée', () async {

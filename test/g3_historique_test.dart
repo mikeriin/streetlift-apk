@@ -20,6 +20,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/game.dart';
+import 'package:streetlift_tracker/search.dart' show normalizeText;
 import 'package:streetlift_tracker/stats_data.dart';
 import 'package:streetlift_tracker/store.dart';
 
@@ -90,6 +91,9 @@ Map<String, Object?> releve(AppStore app) {
         ],
     },
     'records': records,
+    // RV1 : exercices notés en secondes, minutes ou mètres (sans record de
+    // répétitions) : retirés des records du relevé de référence.
+    'sansReps': (app.notRepsNames.toList()..sort()),
     'groupes': {for (final n in names) n: app.groupsFor(n)},
     'semaines': weeks,
   };
@@ -146,6 +150,24 @@ void main() {
       final before =
           (jsonDecode(golden.readAsStringSync())
               as Map<String, dynamic>)['releves'];
+      // RV1 : une tenue, une durée, une distance ou des intervalles ne font
+      // plus de record de répétitions (bug corrigé) : leurs records sont
+      // retirés de la référence d'avant G3, le reste est identique.
+      for (final e in now.entries) {
+        final skip = {...(e.value.remove('sansReps') as List)};
+        final recs = (before as Map)[e.key]['records'] as Map;
+        for (final id in recs.keys.toList()) {
+          final kept = [
+            for (final r in recs[id] as List)
+              if (!skip.contains(normalizeText('${(r as List).first}'))) r,
+          ];
+          if (kept.isEmpty) {
+            recs.remove(id);
+          } else {
+            recs[id] = kept;
+          }
+        }
+      }
       final d = diff(
         jsonDecode(jsonEncode(before)),
         jsonDecode(jsonEncode(now)),

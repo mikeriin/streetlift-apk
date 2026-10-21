@@ -633,7 +633,8 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
 /// G1 : sauvegarde exportée depuis une session de test (mode dev).
 bool isTestSessionBackup(String raw) {
   try {
-    final data = jsonDecode(raw);
+    // RV1 : texte compressé (« gz: ») décompressé d'abord.
+    final data = jsonDecode(boundedUnpack(raw, ImportLimits.standard));
     return data is Map && data['sessionDeTest'] == true;
   } catch (_) {
     return false;

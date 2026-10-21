@@ -334,8 +334,9 @@ extension AthleteProfileStore on AppStore {
     // pesée à l'ancien poids et remettait B4 en arrière.
     final w = d.weightValue;
     final bw = currentBodyweight;
-    final before = old?.profile.bodyWeightKg;
-    final edited = before == null || w == null || (w - before).abs() > 1e-9;
+    final weightBefore = old?.profile.bodyWeightKg;
+    final edited =
+        weightBefore == null || w == null || (w - weightBefore).abs() > 1e-9;
     if (w != null &&
         !w.isNaN &&
         edited &&

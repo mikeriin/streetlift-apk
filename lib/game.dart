@@ -35,9 +35,16 @@ int? _reps(String s) => int.tryParse(s.trim());
 
 /// Meilleures performances par exercice, toutes séances confondues (clé de
 /// séance `excludeKey` ignorée : la séance en cours).
+///
+/// RV1 : [skipNames] (noms normalisés) : exercices notés en secondes, minutes
+/// ou mètres (tenues, durées, distances, intervalles), jamais des
+/// répétitions (avant : « 45 répétitions » pour une tenue de 45 s, 1RM
+/// gonflé par une tenue lestée). Une série écartée (incident, D11) ne
+/// compte pas.
 Map<String, ExerciseBests> exerciseBests(
   Map<String, SessionLog> logs, {
   String? excludeKey,
+  Set<String> skipNames = const {},
 }) {
   final out = <String, ExerciseBests>{};
   for (final entry in logs.entries) {
@@ -46,9 +53,11 @@ Map<String, ExerciseBests> exerciseBests(
     for (final ex in log.ex.entries) {
       final name = log.exerciseNames[ex.key];
       if (name == null || name.isEmpty) continue;
-      final best = out.putIfAbsent(normalizeText(name), ExerciseBests.new);
+      final key = normalizeText(name);
+      if (skipNames.contains(key)) continue;
+      final best = out.putIfAbsent(key, ExerciseBests.new);
       for (final set in ex.value.sets) {
-        if (!set.done) continue;
+        if (!set.done || set.excluded) continue;
         _fold(best, set.kg, set.reps);
       }
     }

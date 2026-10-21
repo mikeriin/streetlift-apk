@@ -927,9 +927,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         }
       }
     }
-    if (sp.kind == 'duration' ||
-        sp.kind == 'interval' ||
-        sp.rowPrefix == 'I') {
+    if (sp.kind == 'duration' || sp.kind == 'interval' || sp.rowPrefix == 'I') {
       return;
     }
     final kg = store.sessionLoad(widget.week.n, ex, day: widget.day.j);
@@ -1153,8 +1151,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (!_spoke) {
         showKSnack(
           context,
-          message:
-              'Enchaîne : ${store.splitName(widget.exs[k + 1].name).$1}',
+          message: 'Enchaîne : ${store.splitName(widget.exs[k + 1].name).$1}',
           bottom: KBottomInset.of(context),
           duration: const Duration(seconds: 2),
         );

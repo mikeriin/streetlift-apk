@@ -627,6 +627,12 @@ class AppStore extends ChangeNotifier {
   /// Section `planProgram` illisible au démarrage : gardée telle quelle et
   /// réécrite à l'identique (aucune perte).
   Map<String, dynamic>? _planRaw;
+
+  /// RV1 : instance de programme (`programInstance`) illisible au démarrage
+  /// ou au passage au programme : gardée telle quelle et réécrite à
+  /// l'identique (avant : perdue à la première écriture, le programme
+  /// personnel remplacé par le programme embarqué).
+  Map<String, dynamic>? _instanceRaw;
   int planLoadIssues = 0;
 
   /// G7 (D4.9) : « Où j'en suis » (section `programResume`).
@@ -730,6 +736,7 @@ class AppStore extends ChangeNotifier {
             : const LegacyWeekKinds.empty();
       } catch (_) {
         programLoadIssues++;
+        _instanceRaw = inst.toJson().cast<String, dynamic>();
         programInstance = null;
         program = _baseProgram;
         weekKinds = _baseWeekKinds;
@@ -1155,14 +1162,18 @@ class AppStore extends ChangeNotifier {
   List<RecordHit> sessionRecords(String key) {
     final log = logs[key];
     if (log == null) return const [];
-    final bests = exerciseBests(logs, excludeKey: key);
+    final bests = exerciseBests(
+      logs,
+      excludeKey: key,
+      skipNames: notRepsNames,
+    );
     final out = <RecordHit>[];
     final seen = <String>{};
     for (final ex in log.ex.entries) {
       final name = log.exerciseNames[ex.key];
       if (name == null) continue;
       RecordHit? best;
-      for (final set in ex.value.sets.where((s) => s.done)) {
+      for (final set in ex.value.sets.where((s) => s.done && !s.excluded)) {
         final hit = recordFor(bests, name, set.kg, set.reps);
         if (hit != null && (best == null || hit.current > best.current)) {
           best = hit;
@@ -1176,7 +1187,41 @@ class AppStore extends ChangeNotifier {
   /// Record battu par une série en cours de séance (séance `key` exclue de
   /// l'historique), pour la bannière en direct.
   RecordHit? liveRecord(String key, String exercise, String kg, String reps) =>
-      recordFor(exerciseBests(logs, excludeKey: key), exercise, kg, reps);
+      recordFor(
+        exerciseBests(logs, excludeKey: key, skipNames: notRepsNames),
+        exercise,
+        kg,
+        reps,
+      );
+
+  Set<String>? _notReps;
+  int _notRepsGen = -1;
+
+  /// RV1 : noms (normalisés) des exercices du programme suivi notés en
+  /// secondes, minutes ou mètres, jamais en répétitions (records et 1RM
+  /// estimés les écartent). Un nom aussi noté en répétitions ailleurs
+  /// reste compté.
+  Set<String> get notRepsNames {
+    final hit = _notReps;
+    if (hit != null && _notRepsGen == _overlayGen) return hit;
+    final other = <String>{}, reps = <String>{};
+    for (final w in program.weeks) {
+      for (final d in w.days) {
+        for (final e in d.exercises) {
+          final k = logSpec(e).kind;
+          final n = normalizeText(e.name);
+          if (k == 'reps' || k == 'repsMax') {
+            reps.add(n);
+          } else {
+            other.add(n);
+          }
+        }
+      }
+    }
+    other.removeAll(reps);
+    _notRepsGen = _overlayGen;
+    return _notReps = other;
+  }
 
   int get xp => progression.totalXp;
   static int needFor(int l) => Progression.needFor(l);
@@ -1290,6 +1335,7 @@ class AppStore extends ChangeNotifier {
     athlete: athlete,
     athleteRaw: _athleteRaw,
     programInstance: programInstance,
+    instanceRaw: _instanceRaw,
     planProgram: planProgram,
     planRaw: _planRaw,
     programResume: programResume,
@@ -1339,7 +1385,9 @@ class AppStore extends ChangeNotifier {
       // L10 : instance de programme écrite seulement si elle existe (export
       // identique à 3.2.0 sinon) ; ignorée par les versions antérieures.
       if (data.programInstance != null)
-        'programInstance': data.programInstance!.toJson(),
+        'programInstance': data.programInstance!.toJson()
+      else if (data.instanceRaw != null)
+        'programInstance': data.instanceRaw,
       // G7 : programme créé par kalis_plan et « Où j'en suis », écrits
       // seulement s'ils existent ; ignorés par les versions antérieures
       // (sections versionnées, facultatives).
@@ -1507,7 +1555,16 @@ class AppStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  String exportCompact() => _pack(exportAll());
+  /// Texte compact de la sauvegarde (Réglages › copier). RV1 : en session
+  /// de test, marqué comme l'export de fichier (G1) ; avant, la copie
+  /// collée dans la session personnelle passait sans l'avertissement.
+  String exportCompact() {
+    if (!SessionSpace.isDev) return _pack(exportAll());
+    final data = jsonDecode(exportAll()) as Map<String, dynamic>;
+    data['sessionDeTest'] = true;
+    data['decalageJours'] = KalisClock.offsetDays;
+    return _pack(jsonEncode(data));
+  }
 
   /// [limits] : import d'un texte externe (KT-015). Sans limites : état
   /// produit par l'application elle-même, relu au démarrage.
@@ -1719,6 +1776,23 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: programIssues,
     );
+    // RV1 : démarrage tolérant : section illisible gardée telle quelle.
+    final rawInstance = m['programInstance'];
+    final instanceRaw = nextProgram == null && rawInstance is Map
+        ? Map<String, dynamic>.from(rawInstance)
+        : null;
+    // RV1 : import strict : l'instance générée doit donner un programme
+    // (avant : acceptée, puis remplacée en silence par le programme
+    // embarqué et effacée à l'écriture suivante).
+    if (limits != null && nextProgram != null && nextProgram.generated) {
+      try {
+        Program.fromJson(nextProgram.programJson(_baseProgramJson));
+      } catch (_) {
+        throw const FormatException(
+          'Programme personnel illisible dans la sauvegarde.',
+        );
+      }
+    }
     // G7 : programme kalis_plan. Import strict ; démarrage tolérant
     // (section illisible gardée telle quelle, jamais perdue).
     PlanProgram? nextPlan;
@@ -1790,6 +1864,7 @@ class AppStore extends ChangeNotifier {
       athleteRaw: athleteRaw,
       athleteIssues: athleteIssues,
       programInstance: nextProgram,
+      instanceRaw: instanceRaw,
       programIssues: programIssues.length,
       planProgram: nextPlan,
       planRaw: planRaw,
@@ -1877,6 +1952,7 @@ class AppStore extends ChangeNotifier {
       ..clear()
       ..addAll(data.refStatus);
     programInstance = data.programInstance;
+    _instanceRaw = data.instanceRaw;
     programLoadIssues = data.programIssues;
     planProgram = data.planProgram;
     _planRaw = data.planRaw;
@@ -3816,6 +3892,9 @@ class _BackupData {
 
   /// L10 : instance de programme (null si la section est absente).
   final ProgramInstance? programInstance;
+
+  /// RV1 : instance illisible au démarrage, gardée telle quelle.
+  final Map<String, dynamic>? instanceRaw;
   final int programIssues;
 
   /// G7 : programme kalis_plan (null si absent ; illisible : [planRaw]) et
@@ -3861,6 +3940,7 @@ class _BackupData {
     this.athleteRaw,
     this.athleteIssues = 0,
     this.programInstance,
+    this.instanceRaw,
     this.programIssues = 0,
     this.planProgram,
     this.planRaw,

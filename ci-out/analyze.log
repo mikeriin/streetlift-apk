@@ -1,7 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-warning • The value of the local variable 'before' isn't used. Try removing the variable or using it • lib/athlete_profile_store.dart:337:11 • unused_local_variable
-  error • The name 'before' is already defined. Try renaming one of the declarations • lib/athlete_profile_store.dart:337:11 • duplicate_definition
-  error • The argument type 'UserProfile' can't be assigned to the parameter type 'num'.  • lib/athlete_profile_store.dart:338:56 • argument_type_not_assignable
-
-3 issues found. (ran in 15.1s)
