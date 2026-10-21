@@ -407,7 +407,11 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 ## KB4 — Koach 1.0.7 dans l'application, dev7.4.0 (à lancer après validation de KM5, tâche « Opus 5.5, effort élevé, application » ; C17.40)
 
-- Prompt : `prompts/KB4.txt`. Section complétée au lancement (décision de validation de KM5, étiquette, SHA de l'asset).
+- Prompt : `prompts/KB4.txt`. **Lancé le 21/10/2026 vers 02:40 UTC** après validation de KM5 (C17.42).
+- Paquet à monter : `etiquettes/kalis_adapt-v1.0.6` (`moteurs` 737d528d) ; asset `koach_params_1_0_7.json`, version `1.0.7-ref.1`, 344 clés, SHA-256 `2f055c5181743089afd0c3602bc270f77b01063ebc1bab32b293c81c6816f42c`. Lis § 7 de `LIVRAISON_KM5.md` (items modulés avec `koachVolume`, `manquees` et `reste_semaine` à l'écrit, un seul `prescrire` compté par séance, texte de `koach.ajout_borne`).
+- Base `main` : dev7.3.0 (88fb1965) ou suivant (le propriétaire peut avoir publié depuis).
+- Point 5 (lignes EMOM « volume » affichées en une seule ligne) : constat du propriétaire du 20/10 à 21:32, S1·J4, Koach arrêté.
+- Le propriétaire a Koach à l'arrêt depuis le 20/10 au soir : la réactivation (point 3) sera faite par lui après installation.
 
 ## RV1 — revue complète du code, dev7.5.0 (à lancer après validation de KB4, tâche « Opus 5.5, effort élevé, application » ; C17.41)
 
