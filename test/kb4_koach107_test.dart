@@ -639,10 +639,7 @@ void main() {
         expect(app.koachOpen(15, 4), isTrue);
         // J2 faite pendant l'arrêt : hors de Koach, bilan gardé.
         expect(app.sessionAdapt(15, 2)?.koach?['state'], 'ecrite');
-        expect(
-          app.koachStartNow(15, app.program.week(15).day(2)!),
-          isFalse,
-        );
+        expect(app.koachStartNow(15, app.program.week(15).day(2)!), isFalse);
       },
     );
 
@@ -680,6 +677,12 @@ void main() {
       expect(app.adaptOpen(15, j1)?.koach?['state'], 'preview');
       expect(await app.koachStart(15, j1), isTrue);
       doAll(1);
+      // Prévisions de la séance (calcul en arrière-plan) finies avant de
+      // fermer cette instance.
+      for (var i = 0; i < 200; i++) {
+        if (app.sessionAdapt(15, 1)?.koach?['prevision'] != null) break;
+        await Future<void>.delayed(const Duration(milliseconds: 50));
+      }
       await app.flush();
       // Instantané d'une prise de main de 1.0.6 (dev7.3.0).
       final doc = jsonDecode(app.exportAll()) as Map<String, dynamic>;
