@@ -279,9 +279,9 @@ class KoachEngineData {
   bool get active => snap != null && stop == null;
 
   /// RV1 : section lue avec un instantané illisible : gardée telle quelle
-  /// et réécrite à l'identique tant que Koach n'a pas d'autre instantané
-  /// (avant : état neuf, section omise à l'écriture suivante, journal de
-  /// Koach perdu).
+  /// et réécrite à l'identique tant que Koach n'a pas d'autre instantané,
+  /// puis sous `illisible` (avant : état neuf, section omise à l'écriture
+  /// suivante, journal de Koach perdu).
   Map<String, Object?>? raw;
 
   bool get pristine =>
@@ -308,6 +308,9 @@ class KoachEngineData {
       if (blocked != null) 'blocked': blocked,
       if (refSig != null) 'refSig': refSig,
       if (annonce107 != null) 'annonce107': annonce107,
+      // RV1 : section illisible d'avant, gardée quand Koach repart d'un
+      // nouvel instantané (jamais perdue).
+      if (r != null) 'illisible': r,
     };
   }
 
@@ -335,6 +338,10 @@ class KoachEngineData {
       // une TypeError : application bloquée au démarrage).
       issues?.add('snap');
       out.raw = koachCopie(m) as Map<String, Object?>;
+    }
+    final ill = m['illisible'];
+    if (out.raw == null && ill is Map) {
+      out.raw = koachCopie(ill) as Map<String, Object?>;
     }
     if (out.snap != null) out.journal = koachJournalDe(m['journal']);
     final fw = m['fromWeek'];
@@ -1257,14 +1264,19 @@ extension KoachStore on AppStore {
           final log = logs[key];
           if (log?.done ?? false) continue;
           if (e.versed.contains(key) || versedNow.contains(key)) continue;
-          // RV1 : séance commencée (servie par Koach, ou séries validées)
-          // passée minuit : jamais déclarée manquée (avant : manquée puis
-          // faite, son volume redistribué sur la semaine suivante).
-          if (key == open || servie(key) || inProgress(key)) continue;
+          // RV1 : séance servie par Koach ouverte passée minuit : jamais
+          // déclarée manquée (avant : manquée puis faite, son volume
+          // redistribué sur la semaine suivante).
+          if (key == open || servie(key)) continue;
           if (programResume?.keys.contains(key) ?? false) continue;
           if (program.start == null) continue;
           final date = civilOf(program.dateFor(week, d.j));
           if (date.compareTo(today) >= 0) continue;
+          // RV1 : séance commencée la veille (séries validées), finie après
+          // minuit : pas manquée ; plus ancienne et abandonnée : manquée.
+          if (inProgress(key) && date.dayNumber >= today.dayNumber - 1) {
+            continue;
+          }
           final jour = koachJour(lundi, date);
           steps.add(
             KoachEtape.evenement({
