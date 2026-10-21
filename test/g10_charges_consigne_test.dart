@@ -89,6 +89,28 @@ List<Object?> _row(AppStore app, int week, Exercise e) {
   ];
 }
 
+/// KB4 (dev7.4.0, constat du propriétaire du 20/10/2026) : une ligne « EMOM
+/// N min × R reps par minute » se note minute par minute (N lignes de R,
+/// départ toutes les 60 s, sans repos après la série) et non plus en une
+/// ligne du total : seul changement voulu par rapport à 2.x.
+List<Object?> _kb4(List<Object?> row) {
+  final m = emomPerMinute('${row[3]}');
+  if (m == null || row[5] != 'emom') return row;
+  return [
+    ...row.take(4),
+    m.minutes,
+    'reps',
+    row[6],
+    row[7],
+    row[8],
+    row[9],
+    null,
+    List.filled(m.minutes, m.reps),
+    List.filled(m.minutes, null),
+    ...row.skip(13),
+  ];
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -134,7 +156,7 @@ void main() {
       for (var i = 0; i < expected.length; i++) {
         expect(
           actual[i],
-          expected[i],
+          _kb4((expected[i] as List).cast<Object?>()),
           reason: '$label · ${entry.key} · ${(expected[i] as List).first}',
         );
       }
