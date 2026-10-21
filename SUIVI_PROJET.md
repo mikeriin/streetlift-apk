@@ -1,8 +1,15 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : RV1 — revue complète du code, version dev7.5.0 ; précédent : dev7.4.0 (KB4)**  
-**Date : 21 octobre 2026, Europe/Paris — version : 7.5.0+149, affichée « dev7.5.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.41, C17.43) ; paquets inchangés (revus en lecture) ; build signé sur `main`.**
+**Passe actuelle : RV1 correction 1 — chronos des groupes au chrono, version dev7.5.1 ; précédent : dev7.5.0 (RV1)**  
+**Date : 22 octobre 2026, Europe/Paris — version : 7.5.1+150, affichée « dev7.5.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.45) ; paquets inchangés ; build signé sur `main`.**
+
+## RV1c1 — chronos des groupes au chrono (version dev7.5.1, pipeline CP, DECISIONS_CP.md C17.45)
+
+- Constat du 21/10 (S1·J3, squat E3MOM 6 × 3 avec dead hang 30 s dans la pause) : le sablier de la tenue remplaçait le chrono des tours (« Repos 1:43 »). Le chrono d'un groupe (EMOM, E2MOM, E3MOM, E90s, intervalles, AMRAP, pour le temps) n'est plus jamais remplacé tant qu'il tourne : la tenue (sablier, chrono montant), la durée et le mini-repos lancés pendant ce chrono ont un **chrono secondaire**, une ligne compacte au-dessus de la barre du groupe (arrêter puis fermer) ; le repos automatique après une série ne part pas ; la barre du groupe n'a plus de −15 s / +15 s (le chrono ne se décale pas). Seul l'athlète l'arrête, ou relance un groupe.
+- Constat du 21/10 (finisher « Intervalles · 8 × 30 s, récupération 30 s », exercice remplacé) : aucun sablier par tour, y compris quand la ligne est servie par le moteur ou échangée (groupe d'intervalles de l'exercice).
+- Hors groupe au chrono : sablier et repos inchangés.
+- Tests : `test/rv1c1_chronos_test.dart` ; cible émulateur `integration_test/rv1c1_chronos_test.dart` (captures avant / après, deux thèmes). Détail : `pipeline/cp/livraisons/LIVRAISON_RV1_correction1.md`.
 
 ## RV1 — revue complète du code (version dev7.5.0, pipeline CP, DECISIONS_CP.md C17.41)
 

@@ -60,9 +60,32 @@ class TimerCtl extends ChangeNotifier {
   TimerCtl({DateTime Function()? now, int Function()? mono})
     : clock = now == null && mono == null
           ? ElapsedClock.system
-          : ElapsedClock(now ?? DateTime.now, mono);
+          : ElapsedClock(now ?? DateTime.now, mono),
+      _isSide = false;
+
+  /// RV1c1 : chrono secondaire (tenue, mini-repos, durée) lancé pendant le
+  /// chrono d'un groupe : même horloge, sans chrono secondaire à son tour.
+  TimerCtl._side(this.clock) : _isSide = true;
+  final bool _isSide;
+  TimerCtl? _side;
   Timer? _t;
   bool running = false;
+
+  /// RV1c1 (C17.45) : le chrono en cours est celui d'un groupe au chrono
+  /// (EMOM, E2MOM, E3MOM, E90s, intervalles, AMRAP, pour le temps) : tant
+  /// qu'il tourne, aucun autre chrono ne le remplace (repos, tenue,
+  /// mini-repos) ; seul l'athlète l'arrête ou relance un groupe.
+  bool groupClock = false;
+  bool get groupRunning => running && groupClock;
+
+  /// RV1c1 : chrono secondaire, affiché au-dessus de la barre du groupe.
+  TimerCtl get side {
+    assert(!_isSide, 'pas de chrono secondaire d’un chrono secondaire');
+    return _side ??= TimerCtl._side(clock);
+  }
+
+  /// Barre du bas affichée : chrono principal ou secondaire.
+  bool get shown => visible || (_side?.visible ?? false);
   bool up = false; // chronomètre (max temps)
   String label = 'REPOS';
   int total = 0;
@@ -84,23 +107,64 @@ class TimerCtl extends ChangeNotifier {
   bool get visible => running || label == 'TERMINÉ';
 
   void startRest(int seconds) {
+    // RV1c1 : le repos ne remplace jamais le chrono d'un groupe.
+    if (groupRunning) return;
     if (seconds <= 0) {
       stop();
       return;
     }
     _phases = [];
+    groupClock = false;
     _beginPhase('REPOS', seconds);
   }
 
-  void single(String lbl, int seconds, {bool prepare = true}) =>
-      _startPhases([(lbl, seconds)], prepare: prepare);
+  /// Décompte lancé par un bouton « Lancer » ([group] : chrono d'un groupe,
+  /// AMRAP).
+  void single(
+    String lbl,
+    int seconds, {
+    bool prepare = true,
+    bool group = false,
+  }) => _startPhases([(lbl, seconds)], prepare: prepare, group: group);
+
+  /// RV1c1 : chrono d'une ligne (tenue, durée, mini-repos) : le chrono
+  /// principal comme avant, ou, pendant le chrono d'un groupe, le chrono
+  /// secondaire (sans préparation : l'athlète est déjà dans le tour). Un
+  /// second appui sur le même chrono secondaire en cours l'arrête.
+  void solo(String lbl, int seconds, {bool prepare = true}) {
+    if (!groupRunning) {
+      single(lbl, seconds, prepare: prepare);
+      return;
+    }
+    final s = side;
+    if (s.running && !s.up && s.label == lbl) {
+      s.stop();
+      return;
+    }
+    s.single(lbl, seconds, prepare: false);
+  }
+
+  /// RV1c1 : chrono montant d'une ligne (tenue au maximum) : principal, ou
+  /// secondaire pendant le chrono d'un groupe.
+  void soloStopwatch(String lbl) {
+    if (!groupRunning) {
+      stopwatch(lbl);
+      return;
+    }
+    final s = side;
+    if (s.running && s.up) {
+      s.stop();
+      return;
+    }
+    s.stopwatch(lbl);
+  }
 
   /// PR1 : départ toutes les [interval] s (EMOM, E2MOM, E90s).
   void emom(int rounds, int interval) {
     final unit = interval == 60 ? 'MINUTE' : 'TOUR';
     _startPhases([
       for (var i = 1; i <= rounds; i++) ('$unit $i/$rounds', interval),
-    ]);
+    ], group: true);
   }
 
   void startInterval(int rounds, int work, int rest) => _startPhases([
@@ -108,11 +172,12 @@ class TimerCtl extends ChangeNotifier {
       ('EFFORT $i/$rounds', work),
       if (i < rounds) ('REPOS $i/$rounds', rest),
     ],
-  ]);
+  ], group: true);
 
-  void stopwatch(String lbl) {
+  void stopwatch(String lbl, {bool group = false}) {
     _t?.cancel();
     _phases = [];
+    groupClock = group && !_isSide;
     up = true;
     label = lbl;
     total = 0;
@@ -124,7 +189,11 @@ class TimerCtl extends ChangeNotifier {
     _t = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
   }
 
-  void _startPhases(List<(String, int)> phases, {bool prepare = true}) {
+  void _startPhases(
+    List<(String, int)> phases, {
+    bool prepare = true,
+    bool group = false,
+  }) {
     phases = phases.where((p) => p.$2 > 0).toList();
     if (phases.isEmpty) {
       stop();
@@ -133,6 +202,7 @@ class TimerCtl extends ChangeNotifier {
     final prep = prepare ? store.settings.prepSec : 0;
     _phases = [if (prep > 0) ('PRÊT', prep), ...phases];
     _pi = 0;
+    groupClock = group && !_isSide;
     _beginPhase(_phases[0].$1, _phases[0].$2);
   }
 
@@ -194,7 +264,8 @@ class TimerCtl extends ChangeNotifier {
   }
 
   void add(int s) {
-    if (!running || up) return;
+    // RV1c1 : le chrono d'un groupe ne se décale pas (−15 s / +15 s).
+    if (!running || up || groupClock) return;
     final ms = clock.msSince(_origin!);
     _endMs = math.max(_endMs + s * 1000, ms + 1000);
     remaining = ((_endMs - ms) / 1000).ceil();
@@ -215,6 +286,7 @@ class TimerCtl extends ChangeNotifier {
     _t?.cancel();
     running = false;
     up = false;
+    groupClock = false;
     remaining = 0;
     elapsed = 0;
     label = 'REPOS';
@@ -224,6 +296,7 @@ class TimerCtl extends ChangeNotifier {
   @override
   void dispose() {
     _t?.cancel();
+    _side?.dispose();
     super.dispose();
   }
 }
