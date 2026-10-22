@@ -1,0 +1,22 @@
+LOT KB5 — KOACH 1.0.8 ET KALIS_PLAN 0.4.3 DANS L'APPLICATION (dev7.7.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : KM6 validé (C17.48) ; RV2 publié sur `main` (dev7.6.0). **Aucune donnée réelle, aucun déchiffrement, aucune clé (C17.33.2).**
+Base : pointe de `main` (dev7.6.0 ou suivant ; C17.28 : `CLAUDE.md` de `main`, rebase avant de publier, ne défais rien des lots du propriétaire ni de RV2). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/KB5`.
+Décisions : C17.40, C17.43, C17.44.4, C17.46, C17.47, C17.48 (et la décision du propriétaire sur la modulation hebdomadaire si elle est prise avant la fin du lot : voir LANCEMENTS). Livraisons à lire : `LIVRAISON_KM6.md` (§ 6 « Ce que KB5 doit monter »), `LIVRAISON_KB4.md`, `LIVRAISON_RV1.md`, `LIVRAISON_RV1_correction1.md`, `LIVRAISON_RV2.md`. Détail technique : `packages/kalis_adapt/docs/INTEGRATION_KM3.md` § 12.
+
+CONTENU
+1. **Paquets** : copier à l'octet `packages/kalis_adapt/lib/`, `assets/koach/` et `pubspec.yaml` depuis `etiquettes/kalis_adapt-v1.0.7`, et `packages/kalis_plan/` (lib, données, pubspec) depuis `etiquettes/kalis_plan-v0.4.3` (`moteurs` 25d5bfe6) ; asset `koach_params_1_0_8.json` à la place de `koach_params_1_0_7.json` (SHA-256 `9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1`), fiches `vecteurs_qualites_v1.json` 1.0.1 (SHA-256 `99b0cae2d0b29d18d5daa30ee92b91990225124e38e44d522e80e8ae01a196e0`) ; tests d'empreinte ; `pubspec.lock` régénéré par l'outil (piège de KB3).
+2. **Groupes (X2, X7)** : passer les `GroupSpec` de la séance écrite à `plan({'horizon': 'seance', …, 'groups': […]})` et lire `groups` de la sortie. La colle de RV1 qui sert les intervalles **telle qu'écrite** (C17.44.4) reste en place : Koach ne raccourcit pas les finishers d'intervalles (cohérence chrono / lignes, et C17.40 : rien sous l'écrit pour le volume) ; les groupes recalés servent aux EMOM et aux cas de douleur / bilan / séance bornée. L'item servi garde `groupId` et `format` de son emplacement ; la colle de RV2 pour le groupe perdu reste comme filet.
+3. **Technique (X3)** : la technique servie est cohérente avec `sets` ; `coherentTechnique` de l'application reste une sécurité ; aucun plan refusé par l'application sur le scénario.
+4. **Raison `koach.volume_semaine` (X8)** : affichée comme les autres raisons (en tête de séance et sur la carte de la ligne), texte de `koach_textes.dart` 1.0.8 ; ce n'est pas une coupe pour `koachGardeSeance`. La semaine affichée (MON PROGRAMME, accueil) montre la ligne modulée avec son écrit, comme aujourd'hui.
+5. **Crédits « chest »** : le rapport « séries par groupe » et la structure de la semaine de l'application suivent `kalis_plan` 0.4.3 (tractions 0, muscle-up et pull-over haltère 0,5).
+6. **Poulie (X1)** : le correctif de colle de RV1 (`athleteProfileForEngines`) peut rester (même valeur) ; vérifier qu'il n'y a plus d'écart entre l'aperçu et le servi.
+7. **Version** 7.7.0 (`pubspec.yaml`, `SUIVI_PROJET.md`).
+
+TESTS
+- `test/kb5_koach108_test.dart` : empreintes ; PR2 synthétique (lundi de tirage, mardi de poussée) servi à toutes ses lignes écrites ; EMOM avec douleur ou bilan bas : lignes et tours cohérents ; intervalles servis tels qu'écrits ; raison `koach.volume_semaine` affichée sur une semaine modulée ; extension triceps poulie à 2,5 kg près ; crédits du rapport « séries par groupe » ; passage depuis dev7.6.0 sans perte, export / import à l'identique.
+- Cible émulateur `integration_test/koach_kb5_test.dart` (deux thèmes) : séance de poussée servie, EMOM, raison de modulation ; toutes les cibles d'avant vertes.
+
+FIN DE LOT
+- dev7.7.0 sur `main`, contrôle complet `claude/ci-3d` vert sur l'arbre publié, build signé réussi (push refusé : `cp-sauvegardes/KB5-candidat` et arrête-toi).
+- `LIVRAISON_KB5.md` (pipeline et projet claude.ai) ; ligne KB5 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.7.0 prêt — Koach 1.0.8 » ; arrête-toi (aucun fire_trigger).

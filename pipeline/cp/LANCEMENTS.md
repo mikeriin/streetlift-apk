@@ -441,3 +441,8 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Les deux sessions du 22/10 09:05 UTC se sont arrêtées vers 12:10 UTC sur la **limite d'utilisation du compte** (`USAGE_LIMIT_REACHED`), sans livrer. Reprise depuis `cp-sauvegardes/KM6` (daec4b26) et `cp-sauvegardes/RV2` (39a8e0d7), PIPELINE_CP.md §9 : relis SAUVEGARDE.md, ne refais pas ce qui est fait.
 - Budget : les deux lots tournent en parallèle et ont épuisé la limite en trois heures. Sous-agents seulement quand ils font gagner du temps réel ; sauvegarde toutes les 30 minutes (une nouvelle coupure reste possible) ; pas de surveillance en boucle.
+
+## KB5 — Koach 1.0.8 et `kalis_plan` 0.4.3 dans l'application, dev7.7.0 (à lancer dès la publication de RV2, C17.48)
+
+- Prompt : `prompts/KB5.txt`. Paquets : `etiquettes/kalis_adapt-v1.0.7` et `etiquettes/kalis_plan-v0.4.3` (`moteurs` 25d5bfe6).
+- Modulation hebdomadaire sous l'écrit (X8) : question posée au propriétaire le 22/10 ; s'il répond avant la fin du lot, sa réponse est ajoutée ici. Sans réponse : raison affichée (C17.48.4).
