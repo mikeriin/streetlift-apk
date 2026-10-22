@@ -84,14 +84,18 @@ const kAlertAdvice =
     'est intense ou ne passe pas au repos, appelle le 15 (ou le 112). Dans '
     'tous les cas, parles-en à un médecin avant de t’entraîner de nouveau.';
 
+/// RV2 (A5) : ce que fait l'application d'une douleur notée, depuis que la
+/// séance est servie par le moteur (G9, G10) ; avant : la règle de l'ancien
+/// Koach L7 (« allègement de 20 % » deux séances de suite), retirée.
 const kPainAdvice =
     'Une douleur pendant un exercice n’est pas un signal à ignorer. Note-la '
-    'de 0 à 10 dans le Bilan du jour : au-dessus de 3/10, aucune hausse de '
-    'charge n’est proposée ; deux séances de suite, un allègement de 20 % '
-    'est proposé sur les mouvements principaux. Pendant la séance, touche le '
-    'menu ⋮ puis « Douleur ou malaise ? » : Koach peut remplacer l’exercice '
-    'par un équivalent qui ménage la zone. Kalis Track ne dit pas d’où vient '
-    'une douleur.';
+    'de 0 à 10 dans le Bilan du jour ; pendant la séance, touche le menu ⋮ '
+    'puis « Douleur ou malaise ? ». Au-dessus de 3/10, Koach épargne la '
+    'zone : pas de hausse de charge, et les exercices qui la chargent sont '
+    'remplacés par un équivalent qui la ménage, ou retirés pour la séance. '
+    'Une douleur qui dure ou qui revient met ces mouvements à l’arrêt, puis '
+    'ils reviennent par paliers quand la gêne reste basse. Kalis Track ne '
+    'dit pas d’où vient une douleur.';
 
 /// Seuil du renvoi vers un professionnel : douleur > 3/10 notée sur plus de
 /// 2 séances de suite pour un même mouvement.

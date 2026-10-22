@@ -1201,6 +1201,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       r.advice,
       seconds: seconds,
       exerciseName: store.adaptExerciseName,
+      // RV2 (A3) : charge dans l'unité choisie (kg ou livres).
+      lb: store.settings.lb,
     );
     final step = r.step;
     final changedRest =
@@ -1292,7 +1294,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final seconds = specs[k].kind == 'hold' || specs[k].kind == 'holdMax';
     final amount = adaptAmount(step.low, step.high, seconds: seconds);
     final target = [
-      if (step.kg != null && step.kg! > 0) adaptKgLabel(step.kg!),
+      // RV2 (A3) : charge dans l'unité choisie (kg ou livres).
+      if (step.kg != null && step.kg! > 0)
+        adaptKgLabel(step.kg!, lb: store.settings.lb),
       if (amount.isNotEmpty) amount,
     ].join(' × ');
     void decide(String status) {
@@ -1328,6 +1332,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                         r,
                         exerciseName: store.adaptExerciseName,
                         seconds: seconds,
+                        lb: store.settings.lb,
                       )
                       case final x?)
                     Text(x, style: KType.detail.copyWith(color: t.texte2)),
@@ -1597,6 +1602,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         r,
         exerciseName: store.adaptExerciseName,
         seconds: prescriptionInSeconds(it),
+        // RV2 (A3) : écarts de charge dans l'unité choisie.
+        lb: store.settings.lb,
       );
       if (t == null || lines.contains(t)) continue;
       // Calibrage d'abord : c'est ce qui explique la charge du jour.
