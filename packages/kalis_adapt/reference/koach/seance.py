@@ -167,9 +167,12 @@ def groupes_servis(groupes, ecrits, servis):
     sans membre servi disparaît ; un groupe dont les tours comptent les
     lignes de ses membres (`rounds` = plus grand nombre de séries écrites
     d'un membre : tours, circuit, intervalles, superset en tours) prend le
-    plus grand nombre de séries servies d'un membre ; un EMOM dont la durée
-    vaut `intervalSeconds` × le total des lignes écrites de ses membres prend
-    `intervalSeconds` × le total servi. Les autres champs sont gardés (un
+    plus grand nombre de séries servies d'un membre (contre la montre : le
+    plus petit, des deux côtés) ; un EMOM dont la durée vaut
+    `intervalSeconds` × le total des lignes écrites de ses membres prend
+    `intervalSeconds` × le total servi, ou, si elle compte ses tours,
+    `intervalSeconds` × les tours servis. Un membre servi à 0 série ne compte
+    pas. Les autres champs sont gardés (un
     AMRAP ou un chipper au temps ne dépend pas des séries). Renvoie une
     nouvelle liste ; les groupes reçus ne sont pas modifiés. Séries écrites
     d'un membre : `sets` − `koachVolume` (l'écrit du programme, que les
@@ -181,21 +184,32 @@ def groupes_servis(groupes, ecrits, servis):
     for g in groupes or []:
         gid = g.get('groupId')
         membres_e = [p for p in ecrits or [] if gid is not None and p.get('groupId') == gid]
-        membres_s = [p for p in servis or [] if gid is not None and p.get('groupId') == gid]
+        membres_s = [p for p in servis or [] if gid is not None and p.get('groupId') == gid
+                     and int(p.get('sets') or 0) > 0]
         if not membres_s:
             continue
         g = dict(g)
-        n_s = max(int(p.get('sets') or 0) for p in membres_s)
-        if membres_e and g.get('rounds') is not None and n_s >= 1:
-            n_e = max(ecrites(p) for p in membres_e)
-            if g['rounds'] == n_e:
-                g['rounds'] = n_s
+        # Tours : le plus grand nombre de séries d'un membre (toutes les
+        # lignes servies trouvent leur tour) ; contre la montre, le plus petit
+        # (le moins de tours fait foi, comme `kalis_plan`).
+        if g.get('format') == 'rounds_for_time':
+            n_s = min(int(p.get('sets') or 0) for p in membres_s)
+            n_e = min(ecrites(p) for p in membres_e) if membres_e else None
+        else:
+            n_s = max(int(p.get('sets') or 0) for p in membres_s)
+            n_e = max(ecrites(p) for p in membres_e) if membres_e else None
+        tours_e = g.get('rounds')
+        if n_e is not None and tours_e is not None and tours_e == n_e:
+            g['rounds'] = n_s
         iv = g.get('intervalSeconds')
         if membres_e and g.get('format') == 'emom' and iv and g.get('durationSeconds') is not None:
             tot_e = sum(ecrites(p) for p in membres_e)
             tot_s = sum(int(p.get('sets') or 0) for p in membres_s)
-            if tot_e > 0 and tot_s > 0 and g['durationSeconds'] == iv * tot_e:
+            if tot_e > 0 and g['durationSeconds'] == iv * tot_e:
                 g['durationSeconds'] = iv * tot_s
+            elif tours_e is not None and g['durationSeconds'] == iv * tours_e:
+                # Durée qui compte les tours (E2MOM A/B : 8 tours, 960 s).
+                g['durationSeconds'] = iv * g['rounds']
         out.append(g)
     return out
 
@@ -1130,11 +1144,14 @@ class Seances(object):
             if p is None or it.get('koach') == 'vrai_test' or p.get('kind') in ('warmup', 'test'):
                 continue
             km = p.get('koachModule')
-            if km is not None and km < 0:
+            if km is not None and km < 0 and it['exerciseId'] == p['exerciseId']:
+                # (Un exercice remplacé — course facile… — porte la raison de
+                # son remplacement : la baisse de la semaine ne le concerne
+                # plus.)
                 ecrites = int(p.get('sets') or 0) - int(p.get('koachVolume') or 0)
                 semaine = ecrites + int(km)
                 if semaine < ecrites:
-                    self._raison('koach.volume_semaine', exercice=it['exerciseId'], ecrites=ecrites,
+                    self._raison('koach.volume_semaine', exercice=p['exerciseId'], ecrites=ecrites,
                                  series=semaine, cause='planification')
 
     def _raison(self, code, **params):

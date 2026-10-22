@@ -73,54 +73,70 @@ class _PlanificationFixe extends Planification {
   };
 }
 
+/// Une ligne modulée de 4 à 5 séries (test du cumul de `koachVolume`).
+class _PlanificationUne extends Planification {
+  _PlanificationUne()
+    : super(copieJson(_params), _fiches, null, <String, Object?>{
+        'sans_validateur': true,
+      });
+
+  @override
+  Map<(int, String), (int, double)> itemsModules(int semaine) => {
+    (1, 'a'): (5, 0.0),
+  };
+}
+
 void main() {
   group('X1 : poulie par 2,5 kg', () {
-    test('extension triceps poulie servie à 2,5 kg près sans profil de pas', () {
-      final g = LoadGrid.of(LoadType.cable, null);
-      expect([g.step, g.minimum], [2.5, 2.5]);
-      final k = _koach(
-        declares: <String, Object?>{
-          _et: <Object?>['one_rm_kg', 33.0],
-        },
-      );
-      _debut(k, null);
-      final r = _plan(k, <String, Object?>{
-        'horizon': 'seance',
-        'items': <Object?>[
-          <String, Object?>{
-            'slotId': 's1',
-            'exerciseId': _et,
-            'kind': 'work',
-            'sets': 3,
-            'repsLow': 12,
-            'repsHigh': 12,
-            'targetFlames': 7,
+    test(
+      'extension triceps poulie servie à 2,5 kg près sans profil de pas',
+      () {
+        final g = LoadGrid.of(LoadType.cable, null);
+        expect([g.step, g.minimum], [2.5, 2.5]);
+        final k = _koach(
+          declares: <String, Object?>{
+            _et: <Object?>['one_rm_kg', 33.0],
           },
-        ],
-        'grilles': <String, Object?>{
-          _et: <String, Object?>{
-            'pas': g.step,
-            'minimum': g.minimum,
-            'halteres': false,
+        );
+        _debut(k, null);
+        final r = _plan(k, <String, Object?>{
+          'horizon': 'seance',
+          'items': <Object?>[
+            <String, Object?>{
+              'slotId': 's1',
+              'exerciseId': _et,
+              'kind': 'work',
+              'sets': 3,
+              'repsLow': 12,
+              'repsHigh': 12,
+              'targetFlames': 7,
+            },
+          ],
+          'grilles': <String, Object?>{
+            _et: <String, Object?>{
+              'pas': g.step,
+              'minimum': g.minimum,
+              'halteres': false,
+            },
           },
-        },
-        'zones': <String, Object?>{},
-        'roles': <String, Object?>{'s1': 'accessory'},
-      });
-      final item = jm(jl(r['items'])[0]);
-      final charges = [
-        for (var i = 0; i < 3; i++)
-          jm(
-            k.plan(<String, Object?>{
-              'horizon': 'serie',
-              'item': item,
-              'index': i,
-              'faites': <Object?>[],
-            }),
-          )['loadKg'],
-      ];
-      expect(charges, [22.5, 22.5, 22.5]);
-    });
+          'zones': <String, Object?>{},
+          'roles': <String, Object?>{'s1': 'accessory'},
+        });
+        final item = jm(jl(r['items'])[0]);
+        final charges = [
+          for (var i = 0; i < 3; i++)
+            jm(
+              k.plan(<String, Object?>{
+                'horizon': 'serie',
+                'item': item,
+                'index': i,
+                'faites': <Object?>[],
+              }),
+            )['loadKg'],
+        ];
+        expect(charges, [22.5, 22.5, 22.5]);
+      },
+    );
   });
 
   group('X2 : groupe d’intervalles recalé', () {
@@ -364,8 +380,10 @@ void main() {
       };
       expect(t(2, densite)['technique'], isNull);
       expect(t(1, densite)['technique'], isNotNull);
-      expect(t(2, <String, Object?>{'kind': 'cluster', 'miniSets': 3})['technique'],
-          <String, Object?>{'kind': 'cluster', 'miniSets': 3});
+      expect(
+        t(2, <String, Object?>{'kind': 'cluster', 'miniSets': 3})['technique'],
+        <String, Object?>{'kind': 'cluster', 'miniSets': 3},
+      );
       expect(
         jm(
           t(2, <String, Object?>{
@@ -493,7 +511,12 @@ void main() {
     });
 
     test('sans plafond : inchangé', () {
-      final (charge, _) = premiere(_sq, null, 'accumulation', Grille(2.5, 20.0));
+      final (charge, _) = premiere(
+        _sq,
+        null,
+        'accumulation',
+        Grille(2.5, 20.0),
+      );
       expect(charge, 100.0);
     });
   });
@@ -647,8 +670,7 @@ void main() {
       final out = _PlanificationFixe().appliquer(0, 1, items);
       expect(
         [
-          for (final x in out)
-            [x['sets'], x['koachVolume'], x['koachModule']],
+          for (final x in out) [x['sets'], x['koachVolume'], x['koachModule']],
         ],
         [
           [2, -1, -1],
@@ -707,6 +729,95 @@ void main() {
           expect(chest(e.key), lessThanOrEqualTo(0.5), reason: e.key);
         }
       }
+    });
+  });
+
+  group('relecture indépendante', () {
+    test(
+      'groupes : contre la montre au moins, EMOM aux tours, membres à 0',
+      () {
+        final ecrits = <Object?>[
+          <String, Object?>{'slotId': 'a', 'groupId': 'r', 'sets': 5},
+          <String, Object?>{'slotId': 'b', 'groupId': 'r', 'sets': 5},
+          <String, Object?>{'slotId': 'c', 'groupId': 'e', 'sets': 8},
+          <String, Object?>{'slotId': 'd', 'groupId': 'e', 'sets': 8},
+          <String, Object?>{'slotId': 'z', 'groupId': 'z', 'sets': 3},
+        ];
+        final servis = <Json>[
+          <String, Object?>{'slotId': 'a', 'groupId': 'r', 'sets': 5},
+          <String, Object?>{'slotId': 'b', 'groupId': 'r', 'sets': 3},
+          <String, Object?>{'slotId': 'c', 'groupId': 'e', 'sets': 6},
+          <String, Object?>{'slotId': 'd', 'groupId': 'e', 'sets': 6},
+          <String, Object?>{'slotId': 'z', 'groupId': 'z', 'sets': 0},
+        ];
+        final groupes = <Object?>[
+          <String, Object?>{
+            'groupId': 'r',
+            'format': 'rounds_for_time',
+            'rounds': 5,
+            'timeCapSeconds': 900,
+          },
+          <String, Object?>{
+            'groupId': 'e',
+            'format': 'emom',
+            'rounds': 8,
+            'intervalSeconds': 120,
+            'durationSeconds': 960,
+          },
+          <String, Object?>{'groupId': 'z', 'format': 'circuit', 'rounds': 3},
+        ];
+        expect(groupesServis(groupes, ecrits, servis), [
+          <String, Object?>{
+            'groupId': 'r',
+            'format': 'rounds_for_time',
+            'rounds': 3,
+            'timeCapSeconds': 900,
+          },
+          <String, Object?>{
+            'groupId': 'e',
+            'format': 'emom',
+            'rounds': 6,
+            'intervalSeconds': 120,
+            'durationSeconds': 720,
+          },
+        ]);
+      },
+    );
+
+    test('volume_semaine sur l’exercice écrit seulement', () {
+      final k = _koach(niveau: 1);
+      _debut(k, <String, Object?>{'overall': 1});
+      final r = _plan(k, <String, Object?>{
+        'horizon': 'seance',
+        'items': <Object?>[
+          <String, Object?>{
+            'slotId': 's1',
+            'exerciseId': 'ca-fractionne-400m',
+            'kind': 'work',
+            'sets': 5,
+            'distanceMeters': 400,
+            'targetFlames': 8,
+            'restSeconds': 90,
+            'koachVolume': -1,
+            'koachModule': -1,
+          },
+        ],
+        'grilles': <String, Object?>{},
+        'zones': <String, Object?>{},
+        'roles': <String, Object?>{},
+      });
+      expect(_codes(r), contains('koach.course_facile'));
+      expect(_codes(r), isNot(contains('koach.volume_semaine')));
+    });
+
+    test('koachVolume cumulé', () {
+      final out = _PlanificationUne().appliquer(0, 1, [
+        <String, Object?>{'slotId': 'a', 'sets': 4, 'koachVolume': 1},
+      ]);
+      expect(
+        [out[0]['sets'], out[0]['koachVolume'], out[0]['koachModule']],
+        [5, 2, 1],
+      );
     });
   });
 }

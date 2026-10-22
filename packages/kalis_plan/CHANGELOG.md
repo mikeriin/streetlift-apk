@@ -12,6 +12,10 @@ Lot KM6 (Koach 1.0.8, crédits de groupes, `pipeline/cp/prompts/KM6.txt`, DECISI
   règle dans les fiches de Koach (`kalis_adapt/reference/qualites/regles.py`, R8-a) ; le validateur du banc lit ces
   crédits ; `kalis_bench/test/km6_credits_test.dart` compare les trois tables exercice par exercice. 53 exercices
   changent (27 à 0, 26 de une série à une demi-série).
+- **Test au-dessus de la rampe** (`_fitVolume`) : en dernier recours, un test qui fait seul dépasser la rampe de
+  volume d'un groupe perd une tentative (jamais la dernière), `TestSpec.attempts` et les notes de tentatives suivent
+  (profil aléatoire 3770 des propriétés, squat de compétition en semaine de test sans travail des jambes avant :
+  révélé par les nouveaux crédits ; `test/km6_test.dart`). Les 34 profils du banc sont inchangés par cette règle.
 - Rampe de volume du plan, équilibre des schémas et rapport « séries par groupe » suivent les nouveaux crédits ;
   programmes du banc régénérés.
 

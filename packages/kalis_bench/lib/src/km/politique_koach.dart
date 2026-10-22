@@ -171,14 +171,17 @@ void _ajouterEnt(Map<String, Object> acc, String k, int v) {
 
 /// `mesure_module` (KM6, X8, C17.43.4) : lignes reçues par Koach que la
 /// modulation hebdomadaire de la planification a baissées sous l'écrit
-/// (`koachModule` < 0), baisses servies sans raison `koach.volume_semaine`,
-/// et contrôle « rampe déguisée » (lignes dont un groupe majeur crédité a un
-/// écrit de la semaine au-dessus de la limite de la rampe).
+/// (`koachModule` < 0), baisses servies (même emplacement, même exercice)
+/// sans raison `koach.volume_semaine`, et contrôle « rampe déguisée » :
+/// lignes dont un groupe majeur crédité a un écrit du PROGRAMME de la
+/// semaine ([ecritSemaine], items écrits de toutes les séances de la
+/// semaine) au-dessus de la limite de la rampe.
 void _kmMesureModule(
   Map<String, Object> acc,
-  Map<Object?, int> servi,
+  List<Object?> servis,
   List<Object?> raisons,
   kc.Seances seances,
+  List<Json>? ecritSemaine,
 ) {
   final dites = <Object?>{};
   for (final r0 in raisons) {
@@ -187,10 +190,16 @@ void _kmMesureModule(
       dites.add(kc.jm(r['params'] ?? <String, Object?>{})['exercice']);
     }
   }
+  final servisPar = <Object?, Json>{};
+  for (final it0 in servis) {
+    final it = kc.jm(it0);
+    servisPar.putIfAbsent(it['slotId'], () => it);
+  }
   final rv = seances.retourVol;
-  final plafonds = rv == null ? const <double>[] : rv.plafonds;
+  final ecritG = (rv != null && ecritSemaine != null)
+      ? seances.creditsEcrits(ecritSemaine)
+      : null;
   final limites = rv == null ? const <double>[] : rv.limites;
-  final avecPlafonds = plafonds.isNotEmpty;
   var une = false;
   for (final p in seances.entree ?? const <Json>[]) {
     if (p['kind'] == 'warmup' ||
@@ -205,11 +214,15 @@ void _kmMesureModule(
       une = true;
       _ajouterEnt(acc, 'module_items', 1);
       _ajouterEnt(acc, 'module_series', -kc.ent(km));
-      if ((servi[p['slotId']] ?? 0) > 0 && !dites.contains(p['exerciseId'])) {
+      final it = servisPar[p['slotId']];
+      if (it != null &&
+          kc.ent(it['sets'] ?? 0) > 0 &&
+          it['exerciseId'] == p['exerciseId'] &&
+          !dites.contains(p['exerciseId'])) {
         _ajouterEnt(acc, 'module_sans_raison', 1);
       }
     }
-    if (avecPlafonds) {
+    if (ecritG != null) {
       final groupes = <int>[
         for (final (g, _) in seances.creditsGroupes(p['exerciseId'] as String))
           g,
@@ -218,7 +231,7 @@ void _kmMesureModule(
         continue;
       }
       _ajouterEnt(acc, 'module_lignes', 1);
-      final sur = groupes.any((g) => plafonds[g] > limites[g] + 1e-9);
+      final sur = groupes.any((g) => ecritG[g] > limites[g] + 1e-9);
       if (sur) {
         _ajouterEnt(acc, 'module_lignes_sur_limite', 1);
       }
@@ -252,6 +265,7 @@ void kmMesureRampe(
   List<Object?> raisons, {
   kc.Seances? seances,
   Map<String, (Json, Set<String>)>? zones,
+  List<Json>? ecritSemaine,
 }) {
   _ajouterEnt(acc, 'seances', 1);
   final servi = <Object?, int>{};
@@ -344,7 +358,7 @@ void kmMesureRampe(
     }
   }
   if (seances != null) {
-    _kmMesureModule(acc, servi, raisons, seances);
+    _kmMesureModule(acc, servis, raisons, seances, ecritSemaine);
   }
   for (final it0 in items) {
     final it = kc.jm(it0);
@@ -1424,6 +1438,13 @@ final class PolitiqueKoach implements KmPolitique {
       kc.listeOuVide(r['raisons']),
       seances: koach.seances,
       zones: _zones,
+      ecritSemaine: <Json>[
+        for (final j in List<int>.of(
+          _parSemaine[ctx.semaine] ?? const <int>[],
+        )..sort())
+          if (_ecrits.containsKey(j))
+            for (final x in _ecrits[j]!.$3) x,
+      ],
     );
     return <String, Object?>{'items': r['items']};
   }

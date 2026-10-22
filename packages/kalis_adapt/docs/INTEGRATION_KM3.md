@@ -780,3 +780,24 @@ Koach n'en a pas (contrat § 10.2) : c'est un état de l'application, hors du jo
   `bras_tendus_*`) n'est jamais un choix de Koach 1.0.7.
 - **Un seul `prescrire` compté par séance** : un second appel de la même séance (après `ouvrir`) ne recompte pas son
   écrit (`ecritCompte`) ; l'aperçu doit continuer de se faire sur une copie du moteur.
+
+## 12. Koach 1.0.8 (lot KM6, pour KB5)
+
+- Copier `lib/`, `assets/koach/` et `pubspec.yaml` de `etiquettes/kalis_adapt-v1.0.7`, et `kalis_plan` 0.4.3
+  (`etiquettes/kalis_plan-v0.4.3`) ; asset `koach_params_1_0_8.json` à la place de `koach_params_1_0_7.json`
+  (`1.0.8-ref.1`, 344 clés, SHA-256 `9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1`) ; fiches
+  `vecteurs_qualites_v1.json` version `1.0.1`, SHA-256 `99b0cae2d0b29d18d5daa30ee92b91990225124e38e44d522e80e8ae01a196e0`
+  (crédits « chest » des tirages) ; tests d'empreinte.
+- **Groupes** : passer les `GroupSpec` de la séance écrite dans `plan({'horizon': 'seance', …, 'groups': [...]})` et
+  lire `groups` de la sortie (tours et durée recalés sur les lignes servies). La colle de RV1 qui sert les intervalles
+  telle qu'écrite pour garder chrono et lignes d'accord peut tomber (X2) ; à décider avec le propriétaire (C17.44.4).
+- **Technique** : l'item servi a déjà `technique.intervals`, `backoffSets` et `setTargets` cohérents avec `sets`
+  (X3) : la recomposition côté application (`coherentTechnique`) devient une sécurité, plus une nécessité.
+- **Groupe gardé** : un item servi garde le `groupId` et le `format` de son emplacement (X7) ; le chemin
+  `exerciseGroupOf` de RV1c1 § 4 n'a plus à le reconstruire.
+- **Poulie** : `LoadGrid.of(LoadType.cable, null)` vaut 2,5 kg (X1) ; la colle de RV1 qui donnait ce pas aux moteurs
+  sans profil reste juste (même valeur).
+- **Raison nouvelle** `koach.volume_semaine` (texte dans `koach_textes.dart`) : la modulation hebdomadaire sert une
+  ligne sous l'écrit ; l'afficher comme les autres raisons ; ne pas la traiter comme une coupe à garder
+  (`koachGardeSeance`) : c'est un choix dit de Koach, au plus −15 % par qualité, au moins une série.
+- `koachModule` (champ posé par la planification, interne à la façade) : rien à faire côté application.

@@ -1,5 +1,18 @@
 # Journal
 
+## 0.5.9 — 22/10/2026 (lot KM6)
+
+Lot KM6 (DECISIONS_CP.md C17.47) : campagne du couple `kalis_plan` 0.4.3 × Koach 1.0.8.
+
+- `test/km6_credits_test.dart` : crédits de groupes identiques dans les trois tables (crédits de `kalis_plan`, fiches
+  exportées pour le validateur Python et `donnees/catalogue_infos.json.gz`, fiches de Koach de la référence et de
+  l'asset), exercice par exercice ; table avant / après ; grilles de charge par défaut de `kalis_plan` et de
+  `kalis_adapt` alignées (poulie 2,5 kg).
+- Mesure de la modulation hebdomadaire sous l'écrit (`_kmMesureModule`, X8) : lignes et séances baissées, baisses sans
+  raison `koach.volume_semaine`, contrôle « rampe déguisée » ; agrégée par `tool/kr1_securite.py`
+  (`rampe_principaux.modulation`).
+- Données de référence de Koach régénérées sur `kalis_plan` 0.4.3 (`test/km2_banc_test.dart` : version `0.4.3`) ;
+  fixtures km2 régénérées.
 
 ## 0.5.8 — 20/10/2026 (lot KM5)
 
