@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.5.1 : chronos des groupes au chrono (RV1c1, dev7.5.1).
-        self.assertEqual(version, '7.5.1')
+        # 7.6.0 : suite de la revue (RV2, dev7.6.0).
+        self.assertEqual(version, '7.6.0')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)
