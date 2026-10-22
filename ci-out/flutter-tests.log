@@ -1,0 +1,19 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv2m_donnees_test.dart
+00:00 +0: M5 « Où j’en suis » illisible gardé tel quel au démarrage, réécrit à l’identique, jamais lu par les moteurs
+00:00 +1: M5 « Où j’en suis » illisible import strict : refusé, rien remplacé
+00:00 +2: M5 « Où j’en suis » illisible un nouveau « Où j’en suis » le remplace (choix explicite)
+00:00 +3: M6 échecs d’écriture répétés chaque échec compte ; une écriture acceptée remet à zéro
+00:00 +4: M6 échecs d’écriture répétés texte : le nombre d’échecs d’affilée à partir du deuxième
+00:00 +5: M6 échecs d’écriture répétés bannière (setUpAll)
+00:00 +5: M6 échecs d’écriture répétés bannière fixe tant que l’échec dure, mise à jour sur place, retirée à la première écriture acceptée
+00:01 +6: M6 échecs d’écriture répétés bannière (tearDownAll)
+00:01 +6: M7 export et données retirées pas encore copiées copie de sécurité refusée : le fichier et la copie compacte les contiennent ; l’aperçu de l’import les annonce
+00:01 +7: M7 export et données retirées pas encore copiées copie faite : export sans elles (inchangé)
+00:01 +8: M9 copie locale de la sauvegarde d’origine copie refusée à l’import : réalignée dès que le stockage accepte
+00:02 +9: M9 copie locale de la sauvegarde d’origine relance après une écriture refusée : l’origine reprise est la bonne, jamais l’ancienne copie locale
+00:03 +10: M9 copie locale de la sauvegarde d’origine démarrage : copie locale différente du document réalignée
+00:03 +11: M9 départ refusé par le stockage la sauvegarde d’origine prise sur le départ refusé ne reste nulle part ; le départ suivant prend la bonne
+00:03 +12: D1 sauvegarde d’origine illisible gardée telle quelle, jamais remplacée par une prise du jour
+00:03 +13: aller-retour (magasin synthétique riche, Koach actif) export → import → export identique
+00:05 +14: aller-retour (magasin synthétique riche, Koach actif) relance sur le document écrit (format de dev7.5.1) : relu et réécrit à l’identique, rien perdu
+00:06 +15: All tests passed!
