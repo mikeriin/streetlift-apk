@@ -51,7 +51,13 @@ extension ProgramOriginStore on AppStore {
       programOrigin = local;
       return true;
     }
-    final backup = _backupJson(_currentBackup())..remove('programOrigin');
+    // RV2 : copie profonde de l'état du jour. Avant, la sauvegarde
+    // d'origine partageait les tables vivantes du magasin (références,
+    // réglages) : une référence saisie ensuite dans la même session la
+    // modifiait en mémoire, puis dans le document, jamais dans la copie
+    // locale prise au même instant.
+    final now = _backupJson(_currentBackup())..remove('programOrigin');
+    final backup = jsonDecode(jsonEncode(now)) as Map<String, dynamic>;
     programOrigin = {
       'v': 1,
       'at': storeClock().toIso8601String(),

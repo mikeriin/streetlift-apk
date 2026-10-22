@@ -541,6 +541,12 @@ void main() {
       releve['import'] = await seed.importAll(jsonEncode(b));
       await seed.flush();
       seed.dispose();
+      // Magasin global de la partie 1 déjà initialisé : l'application le
+      // relance comme un changement de session (SessionHost), sur un
+      // magasin neuf qui relit la sauvegarde importée.
+      await store.flush();
+      store.dispose();
+      store = AppStore();
 
       tester.platformDispatcher.accessibilityFeaturesTestValue =
           const FakeAccessibilityFeatures();
