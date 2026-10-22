@@ -1,0 +1,10 @@
+tests kalis_bench : échec
+00:00 +8 -1: test/km2_adversaire_test.dart: mesures du témoin et comparaison sans rejeu (référence Python) [E]
+  Expected: '{"aggravations": 0, "codes_violations": {}, "e1rm6": 0.055765, "e1rm_famille": "loadedMain", "gain": -0.000155, "perf_a": 0.887516, "poussees": 0, "seed": 0, "violations": 0}'
+    Actual: '{"aggravations": 0, "codes_violations": {}, "e1rm6": 0.060134, "e1rm_famille": "loadedMain", "gain": -0.000157, "perf_a": 0.870663, "poussees": 0, "seed": 0, "violations": 0}'
+            Expected: ... 1rm6": 0.055765, "e1 ...
+              Actual: ... 1rm6": 0.060134, "e1 ...
+00:04 +16 -2: test/km2_adversaire_test.dart: saison adverse conduite par Koach (Dart) evaluer_saison : adv-7ee0da71, graine 0 [E]
+  Expected: null
+    Actual: 'saison.perf_a : 0.946564 contre 0.947542'
+01:16 +294 -2: Some tests failed.

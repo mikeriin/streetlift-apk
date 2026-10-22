@@ -1,0 +1,7 @@
+durée : 24 s
+tous     n=40  jour J koach moy 0.867488 pire 0.628362 | témoin moy 0.606485 pire 0.0
+pires    n=32  jour J koach moy 0.849203 pire 0.628362 | témoin moy 0.612863 pire 0.0
+temoins  n=8  jour J koach moy 0.922343 pire 0.908849 | témoin moy 0.587352 pire 0.0
+critère : {"libelle": "pire cas de Koach >= pire cas du témoin (performance le jour J, moyenne par adversaire)", "pire_koach": 0.628362, "pire_temoin": 0.0, "respecte": true, "saisons_temoin_manquantes": 0}
+référence (../kalis_adapt/reference/donnees/comparaison_adversaires.json) : pire Koach 0.798913, pire témoin 0.0, respecté true
+écrit : /home/runner/work/streetlift-apk/streetlift-apk/out-packages/adversaires/comparaison_adversaires_km6_km1c2.json (21 s)
