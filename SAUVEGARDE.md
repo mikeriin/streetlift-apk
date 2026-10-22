@@ -57,3 +57,4 @@ docs/data/km6 + CRITERES_KM6.md ; contrôle complet sur claude/ci-cp-a ; push mo
   commit de livraison 25d5bfe6 (base moteurs 737d528d, non poussé sur moteurs) ; contrôle complet poussé sur
   claude/ci-cp-a (5c5c8a17). Reste : contrôle vert → push moteurs + étiquettes kalis_adapt-v1.0.7,
   kalis_plan-v0.4.3, kalis_bench-v0.5.9 → LIVRAISON_KM6 (pipeline + projet), ETAT « livré », page de suivi, notification.
+- 20:35 UTC : LIVRÉ. moteurs 25d5bfe6, étiquettes, contrôle 39831895492 vert, LIVRAISON_KM6 (pipeline + projet), ETAT « livré », page de suivi v68.
