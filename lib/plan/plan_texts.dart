@@ -35,6 +35,14 @@ const kFocusLabels = <String, String>{
 
 String focusLabel(String code) => kFocusLabels[code] ?? 'Séance';
 
+/// RV2 (P5) : numéro de la semaine [n] du programme tel qu'il s'affiche
+/// (PR2 : la numérotation repart de 1 à la première semaine affichée
+/// [firstShown], comme `Program.shownNumber`) ; une semaine d'avant
+/// l'affichage garde son numéro, marqué comme ancien. Avant : « semaine
+/// 24 » dans les phrases quand l'accueil disait « Semaine 10 ».
+String shownWeekNumber(int n, {required int firstShown}) =>
+    n >= firstShown ? '${n - firstShown + 1}' : '$n (ancienne numérotation)';
+
 /// Rôle d'un exercice dans la séance.
 const kRoleLabels = <kc.SlotRole, String>{
   kc.SlotRole.main: 'Principal',

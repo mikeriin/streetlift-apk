@@ -18,10 +18,18 @@ import 'kit/kit.dart';
 
 /// Ouvre « Compléter mon profil » ([deferredOnly] : seulement les
 /// questions reportées).
+///
+/// RV2 (H10) : le remerciement passe par la zone de messages prise avant
+/// l'ouverture. Depuis l'invitation de l'accueil, la carte disparaît dès
+/// l'appui (invitation vue) : son contexte n'existait plus au retour et le
+/// « Merci ! » n'était jamais affiché.
 Future<void> openProfileCompletion(
   BuildContext context, {
   bool deferredOnly = false,
 }) async {
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  final colors = KoachToastColors.of(context);
+  final large = koachLargeText(context);
   final res = await Navigator.of(context)
       .push<({Set<String> rubrics, bool program})>(
         MaterialPageRoute(
@@ -31,11 +39,14 @@ Future<void> openProfileCompletion(
           ),
         ),
       );
-  if (res == null || !context.mounted) return;
-  showKoachToast(
-    context,
-    'Merci ! Ton profil est à jour. Ton programme ne change pas.',
-    pose: KoachPose.thumbsUp,
+  if (res == null || messenger == null || !messenger.mounted) return;
+  messenger.showSnackBar(
+    koachSnackBar(
+      colors,
+      'Merci ! Ton profil est à jour. Ton programme ne change pas.',
+      pose: KoachPose.thumbsUp,
+      large: large,
+    ),
   );
 }
 

@@ -305,6 +305,19 @@ String countdownText(int days) => days == 0
     ? 'dans $days jours'
     : 'dans ${days ~/ 7} semaines ($days jours)';
 
+/// RV2 (P6) : phase [p] limitée à ses semaines à partir du jour [from]
+/// (première semaine affichée, PR2).
+SeasonPhaseView _phaseFrom(SeasonPhaseView p, DateTime from, DateTime today) =>
+    SeasonPhaseView(
+      code: p.code,
+      start: from,
+      end: p.end,
+      weeks: p.weeks - _days(p.start, from) ~/ 7,
+      eventName: p.eventName,
+      current: p.current && _days(from, today) >= 0,
+      past: p.past,
+    );
+
 /// Vue de la saison du programme en place (null : pas de saison).
 SeasonOverview? storeSeasonOverview() {
   final plan = store.planProgram;
@@ -322,11 +335,18 @@ SeasonOverview? storeSeasonOverview() {
     final imp = store.importedProgram;
     final season = imp?.season;
     if (imp == null || season == null) return null;
-    final seg =
+    final first = store.program.firstShown;
+    var seg =
         (week == null ? null : imp.segmentOf(week)) ??
         (week != null && week > imp.segments.last.last
             ? imp.segments.last
             : imp.segments.first);
+    // RV2 (P6) : bloc entièrement masqué (jour d'avant la première semaine
+    // affichée, PR2) : premier bloc affiché.
+    if (seg.last < first) {
+      final shown = imp.segments.where((s) => s.last >= first);
+      if (shown.isNotEmpty) seg = shown.first;
+    }
     // RV1 : fin du programme à la semaine affichée (PR2), « S10 » et non
     // « S24 » (le bloc du moteur garde son nom).
     final ev0 = imp.event;
@@ -355,18 +375,29 @@ SeasonOverview? storeSeasonOverview() {
     );
     // PR2 : phases d'avant le départ affiché masquées.
     final from = store.program.shownStart;
-    if (from == null || store.program.firstShown <= 1) return view;
+    if (from == null || first <= 1) return view;
+    // RV2 (P6) : phase ou bloc à cheval sur la première semaine affichée :
+    // ses semaines masquées sont retirées (phase datée du départ affiché et
+    // comptée depuis lui, semaines du bloc à partir de S1 affichée, blocs
+    // numérotés depuis le premier bloc affiché). Avant : phase datée de
+    // semaines masquées, « S16 (ancien) » et « Semaine -1 » dans le bloc en
+    // cours, « Bloc 5 » pour le premier bloc affiché.
+    final hidden = imp.segments.where((s) => s.last < first).length;
     return SeasonOverview(
       phases: [
         for (final p in view.phases)
-          if (!p.end.isBefore(from)) p,
+          if (!p.end.isBefore(from))
+            p.start.isBefore(from) ? _phaseFrom(p, from, today) : p,
       ],
       eventName: view.eventName,
       eventDate: view.eventDate,
       event: view.event,
       daysToEvent: view.daysToEvent,
-      blockWeeks: view.blockWeeks,
-      blockIndex: view.blockIndex,
+      blockWeeks: [
+        for (final w in view.blockWeeks)
+          if (w.n >= first) w,
+      ],
+      blockIndex: view.blockIndex >= hidden ? view.blockIndex - hidden : 0,
       rules: view.rules,
       ladders: view.ladders,
     );

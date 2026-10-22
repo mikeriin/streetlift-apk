@@ -3104,6 +3104,22 @@ class AppStore extends ChangeNotifier {
         seconds: int.parse(hold.group(2) ?? hold.group(1)!),
       );
     }
+    // RV2 (P8) : ligne écrite d'un programme créé (`prescriptionLabel`) :
+    // distance « 4 × 400 m » en mètres, durée « 2 × 10-15 min » en
+    // secondes, comme une ligne servie par le moteur (avant : lues en
+    // répétitions, 400 répétitions pré-remplies).
+    if (RegExp(r'^\d+\s*[×x]\s*\d+\s*m$').hasMatch(low)) {
+      return const LogSpec('distance');
+    }
+    final setsDur = RegExp(
+      r'^\d+\s*[×x]\s*(\d+)(?:-(\d+))?\s*min$',
+    ).firstMatch(low);
+    if (setsDur != null) {
+      return LogSpec(
+        'duration',
+        seconds: int.parse(setsDur.group(2) ?? setsDur.group(1)!) * 60,
+      );
+    }
     if (low.contains('max')) {
       final iso =
           tp.contains('isom') ||
@@ -3674,7 +3690,8 @@ class AppStore extends ChangeNotifier {
       final week = program.week(n);
       final day = week.day(j);
       if (day == null || day.exercises.isEmpty) continue;
-      final title = 'S$n · J$j — ${day.title}';
+      // RV2 (H5) : numérotation affichée (PR2), comme l'accueil.
+      final title = '${program.sessionLabel(n, j)} — ${day.title}';
       var done = 0, total = 0;
       DateTime? last;
       for (final e in entry.value.ex.values) {
