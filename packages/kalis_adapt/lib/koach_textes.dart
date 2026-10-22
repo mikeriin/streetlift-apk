@@ -5,7 +5,7 @@
 ///
 /// Codes couverts :
 ///
-/// - les 23 codes `koach.*` émis par la séance (`reference/CONTRAT_1_0.md`,
+/// - les 24 codes `koach.*` émis par la séance (`reference/CONTRAT_1_0.md`,
 ///   § 3.5 ; `lib/src/koach/seance.dart`), avec leurs paramètres et leurs
 ///   causes ([koachCodesRaisons], [koachCausesRaisons]) ;
 /// - la surveillance hors modèle (`Surveillance`, contrat § 3.7.2) : causes
@@ -59,6 +59,7 @@ const List<String> koachCodesRaisons = <String>[
   'koach.retour_gradue',
   'koach.seance_bornee',
   'koach.ajout_borne',
+  'koach.volume_semaine',
 ];
 
 /// Valeurs du paramètre `cause` que la séance émet, par code (relevé dans
@@ -114,6 +115,7 @@ const Map<String, List<String>> koachCausesRaisons = <String, List<String>>{
   'koach.arret_exercice': <String>['echecs', 'volume_test'],
   'koach.zone_fragile': <String>['surcharge', 'hausse'],
   'koach.tendon': <String>['total'],
+  'koach.volume_semaine': <String>['planification'],
 };
 
 /// Causes de l'alerte hors modèle (`ruptureCauses`, contrat § 3.7.2).
@@ -375,6 +377,8 @@ String _texteKoach(String code, Map<String, Object?> p, NomExercice? noms) {
       return _texteRetourGradue(p, ex);
     case 'koach.ajout_borne':
       return _texteAjoutBorne(p, ex);
+    case 'koach.volume_semaine':
+      return _texteVolumeSemaine(p, ex);
     case 'koach.seance_bornee':
       final minutes = _entier(p['minutes']);
       final duree = minutes == null
@@ -511,6 +515,23 @@ String _texteAjoutBorne(Map<String, Object?> p, String ex) {
   }
   return 'J’ajoute moins de séries que prévu à ton programme sur $ex : $qui '
       'ne permet pas plus.';
+}
+
+/// 1.0.8 (KM6, X8, C17.43.4) : la modulation hebdomadaire de la
+/// planification sert une ligne sous l'écrit du programme (récupération
+/// prévue sur la semaine, jamais la rampe de volume) ; la phrase dit
+/// combien, sans jugement.
+String _texteVolumeSemaine(Map<String, Object?> p, String ex) {
+  final series = _entier(p['series']);
+  final ecrites = _entier(p['ecrites']);
+  if (series != null && ecrites != null && series < ecrites) {
+    final s = series == 1 ? 'une série' : '$series séries';
+    return 'Cette semaine, je te propose $s sur $ex au lieu des $ecrites '
+        'écrites : je répartis l’effort de la semaine d’après ta '
+        'récupération prévue.';
+  }
+  return 'Cette semaine, je te propose un peu moins de séries sur $ex : je '
+      'répartis l’effort de la semaine d’après ta récupération prévue.';
 }
 
 String _brasTendus(String groupe) {

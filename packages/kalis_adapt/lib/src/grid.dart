@@ -11,8 +11,9 @@ const double poundKg = 0.45359237;
 /// Les charges sont la plus petite charge plus un nombre entier de pas.
 /// Les incréments viennent du profil (`loadIncrements`) ; sinon : haltères
 /// par 1 kg jusqu'à 10 kg puis par 2 kg, barre par paire de disques de
-/// 1,25 kg (2,5 kg), poulie par 2,5 lb, machine par 5 kg, kettlebell par
-/// 4 kg, lest par 1,25 kg.
+/// 1,25 kg (2,5 kg), poulie par 2,5 kg (minimum 2,5 kg, le défaut de
+/// `kalis_plan` ; 2,5 lb avant 1.0.7, X1 de RV1), machine par 5 kg,
+/// kettlebell par 4 kg, lest par 1,25 kg.
 final class LoadGrid {
   const LoadGrid._(this.step, this.minimum, this.dumbbellRule);
 
@@ -32,7 +33,7 @@ final class LoadGrid {
       case LoadType.barbell:
         return const LoadGrid._(2.5, 20, false);
       case LoadType.cable:
-        return const LoadGrid._(2.5 * poundKg, 2.5 * poundKg, false);
+        return const LoadGrid._(2.5, 2.5, false);
       case LoadType.machine:
         return const LoadGrid._(5, 5, false);
       case LoadType.kettlebell:
@@ -64,7 +65,7 @@ final class LoadGrid {
       case LoadType.kettlebell:
         return 4;
       case LoadType.cable:
-        return 2.5 * poundKg;
+        return 2.5;
       case LoadType.addedWeight:
       case LoadType.none:
       case LoadType.bodyweight:

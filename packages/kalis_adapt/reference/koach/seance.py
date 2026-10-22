@@ -85,6 +85,135 @@ def equivalent_standard(item):
     return item
 
 
+def technique_coherente(item):
+    """1.0.8 (KM6, X3 de RV1) : technique de l'item rendue cohérente avec
+    son nombre de lignes (`sets`), comme `coherentTechnique`
+    (A/session.dart:1550-1615) : séries allégées d'une série de tête
+    (`backoffSets` < `sets`) et intervalles d'un EMOM (`intervals` =
+    `sets`) recomptés ; vagues, pyramide, échelle dont les paliers ne
+    tiennent plus et bloc au temps (densité, contre la montre) de plus d'une
+    ligne : séries classiques (technique retirée, règles de la série de tête
+    retirées) ; `setTargets` ramené à `sets` éléments (tronqué, ou retiré
+    s'il est plus court). Une technique de dernière série
+    (`lastSetOnly`) est gardée telle quelle. Modifie [item] en place ; vrai
+    si quelque chose a changé."""
+    change = False
+    sets = int(item.get('sets') or 0)
+    st = item.get('setTargets')
+    if st and len(st) != sets:
+        item['setTargets'] = list(st[:sets]) if len(st) > sets else None
+        change = True
+    t = item.get('technique')
+    if not t or t.get('lastSetOnly') is True:
+        return change
+    kind = t.get('kind')
+
+    def classique():
+        regles = [r for r in item.get('autoregulation') or []
+                  if r.get('kind') not in ('backoff_from_top_set', 'stop_on_rep_drop')]
+        item['technique'] = None
+        item['autoregulation'] = regles or None
+        return True
+
+    if kind == 'top_set_backoff':
+        if sets < 2:
+            return classique()
+        b = t.get('backoffSets')
+        if b is not None and b >= sets:
+            t = dict(t)
+            t['backoffSets'] = sets - 1
+            item['technique'] = t
+            return True
+        return change
+    if kind == 'emom':
+        if t.get('intervals') != sets:
+            t = dict(t)
+            t['intervals'] = sets
+            item['technique'] = t
+            return True
+        return change
+    if kind == 'wave':
+        reps = t.get('waveReps')
+        vagues = t.get('waves')
+        if reps is not None and vagues is not None and vagues * len(reps) != sets:
+            return classique()
+        return change
+    if kind == 'pyramid':
+        reps = t.get('pyramidReps')
+        if reps is not None and len(reps) != sets:
+            return classique()
+        return change
+    if kind == 'ladder':
+        debut, pas, haut = t.get('ladderStart'), t.get('ladderStep'), t.get('ladderTop')
+        if debut is None or pas is None or haut is None or pas <= 0:
+            return change
+        # Division entière tronquée vers 0 (`~/` de Dart).
+        q = abs(haut - debut) // pas
+        q = q if haut >= debut else -q
+        marches = (q + 1) * (t.get('ladderCount') or 1)
+        if marches != sets:
+            return classique()
+        return change
+    if kind in ('density', 'for_time'):
+        if sets != 1:
+            return classique()
+        return change
+    return change
+
+
+def groupes_servis(groupes, ecrits, servis):
+    """1.0.8 (KM6, X2 de RV1) : groupes de la séance (`GroupSpec`, reçus
+    dans les contraintes `groups`) recalés sur les items servis. Un groupe
+    sans membre servi disparaît ; un groupe dont les tours comptent les
+    lignes de ses membres (`rounds` = plus grand nombre de séries écrites
+    d'un membre : tours, circuit, intervalles, superset en tours) prend le
+    plus grand nombre de séries servies d'un membre (contre la montre : le
+    plus petit, des deux côtés) ; un EMOM dont la durée vaut
+    `intervalSeconds` × le total des lignes écrites de ses membres prend
+    `intervalSeconds` × le total servi, ou, si elle compte ses tours,
+    `intervalSeconds` × les tours servis. Un membre servi à 0 série ne compte
+    pas. Les autres champs sont gardés (un
+    AMRAP ou un chipper au temps ne dépend pas des séries). Renvoie une
+    nouvelle liste ; les groupes reçus ne sont pas modifiés. Séries écrites
+    d'un membre : `sets` − `koachVolume` (l'écrit du programme, que les
+    items reçus soient déjà modulés ou non)."""
+    def ecrites(p):
+        return int(p.get('sets') or 0) - int(p.get('koachVolume') or 0)
+
+    out = []
+    for g in groupes or []:
+        gid = g.get('groupId')
+        membres_e = [p for p in ecrits or [] if gid is not None and p.get('groupId') == gid]
+        membres_s = [p for p in servis or [] if gid is not None and p.get('groupId') == gid
+                     and int(p.get('sets') or 0) > 0]
+        if not membres_s:
+            continue
+        g = dict(g)
+        # Tours : le plus grand nombre de séries d'un membre (toutes les
+        # lignes servies trouvent leur tour) ; contre la montre, le plus petit
+        # (le moins de tours fait foi, comme `kalis_plan`).
+        if g.get('format') == 'rounds_for_time':
+            n_s = min(int(p.get('sets') or 0) for p in membres_s)
+            n_e = min(ecrites(p) for p in membres_e) if membres_e else None
+        else:
+            n_s = max(int(p.get('sets') or 0) for p in membres_s)
+            n_e = max(ecrites(p) for p in membres_e) if membres_e else None
+        tours_e = g.get('rounds')
+        if n_e is not None and tours_e is not None and tours_e == n_e:
+            g['rounds'] = n_s
+        iv = g.get('intervalSeconds')
+        if membres_e and g.get('format') == 'emom' and iv and g.get('durationSeconds') is not None:
+            tot_e = sum(ecrites(p) for p in membres_e)
+            tot_s = sum(int(p.get('sets') or 0) for p in membres_s)
+            if tot_e > 0 and g['durationSeconds'] == iv * tot_e:
+                g['durationSeconds'] = iv * tot_s
+            elif tours_e is not None and g['durationSeconds'] == iv * tours_e:
+                # Durée qui compte les tours (E2MOM A/B : 8 tours, 960 s).
+                g['durationSeconds'] = iv * g['rounds']
+        out.append(g)
+    return out
+
+
 def secondes_prescrites(item, sets, vitesse):
     """Durée prescrite d'une ligne d'endurance, toutes séries (secondes) ;
     0 sans durée ni distance (`prescribedSeconds`, A/endurance.dart:283-293)."""
@@ -978,6 +1107,7 @@ class Seances(object):
                     plan['series_ecrites'] = lignes
             out.append(servi)
         out = self._duree_bornee(self._endurance(out), items)
+        self._coherence(out, items)
         self.servis = [dict(it) for it in out]
         if sem is not None and self.ecrit_compte is None:
             # 1.0.7 : écrit SERVI de la séance (ligne par ligne, au plus ses
@@ -986,6 +1116,43 @@ class Seances(object):
             v, t = self._compter_ecrit(sem, self._ecrits_servis(items, out))
             self.ecrit_compte = (sem, v, t)
         return out
+
+    def _coherence(self, out, items):
+        """1.0.8 (KM6) : passe finale de la séance servie, après toutes les
+        règles qui changent les séries :
+        - X7 (RV1c1 § 4) : un item servi sans `groupId` à l'emplacement d'un
+          item écrit qui en avait un (course facile qui remplace une course
+          de qualité…) garde le groupe de l'emplacement (et son `format`) ;
+        - X3 (RV1 § 5) : technique recalée sur les séries servies
+          (`technique_coherente`) ;
+        - X8 (C17.43.4) : une ligne que la modulation hebdomadaire de la
+          planification a baissée sous l'écrit du programme (`koachModule`
+          < 0, posé par `Planification.appliquer`) porte la raison
+          `koach.volume_semaine` (séries écrites, séries de la semaine,
+          cause `planification`). Modifie [out] en place."""
+        ecrits = {}
+        for p in items:
+            ecrits.setdefault(p.get('slotId'), p)
+        for it in out:
+            p = ecrits.get(it.get('slotId'))
+            if p is not None and it.get('koach') != 'vrai_test':
+                if it.get('groupId') is None and p.get('groupId') is not None:
+                    it['groupId'] = p['groupId']
+                    if it.get('format') is None and p.get('format') is not None:
+                        it['format'] = p['format']
+            technique_coherente(it)
+            if p is None or it.get('koach') == 'vrai_test' or p.get('kind') in ('warmup', 'test'):
+                continue
+            km = p.get('koachModule')
+            if km is not None and km < 0 and it['exerciseId'] == p['exerciseId']:
+                # (Un exercice remplacé — course facile… — porte la raison de
+                # son remplacement : la baisse de la semaine ne le concerne
+                # plus.)
+                ecrites = int(p.get('sets') or 0) - int(p.get('koachVolume') or 0)
+                semaine = ecrites + int(km)
+                if semaine < ecrites:
+                    self._raison('koach.volume_semaine', exercice=p['exerciseId'], ecrites=ecrites,
+                                 series=semaine, cause='planification')
 
     def _raison(self, code, **params):
         self.raisons.append({'code': code, 'params': params})
@@ -2302,12 +2469,20 @@ class Seances(object):
             prudence += self.p['planification'].get('prudence_charge_fiabilite', 0.0) * (kappa - 1.0)
         voulu = self.charge_pour(ex_id, reps, rir, prudence)
         trace = ['modele %.1f (rir %.1f)' % (voulu, rir)]
+        # 1.0.8 (KM6, X5 et X6 de RV1) : vrai quand un plafond (série
+        # allégée, part écrite du 1RM, part maximale, simple) a ramené la
+        # charge visée ; elle est alors arrondie vers le bas sur la grille, et
+        # le test adaptatif ne choisit jamais une charge au-dessus.
+        plafonne = False
         if tech.get('kind') == 'top_set_backoff' and index >= 1 and plan['tete'] is not None:
             # Séries allégées : part de la série de tête, corrigée par ce
             # que la série de tête vient d'apprendre.
             drop = tech.get('backoffDropPct') or 0.08
             tete = plan['tete'] + t.fraction * m.poids_kg
-            voulu = min(voulu, tete * (1 - drop) - t.fraction * m.poids_kg)
+            allegee = tete * (1 - drop) - t.fraction * m.poids_kg
+            if allegee < voulu:
+                voulu = allegee
+                plafonne = True
             trace.append('allegee %.1f' % voulu)
         # Intensité : la charge vise l'effort écrit (répétitions et réserve),
         # déplacé par la planification dans son plafond de ±5 % ; la part
@@ -2334,15 +2509,22 @@ class Seances(object):
                 haut = self.charge_de_part(ex_id, part * (1 + self.s['couloir_haut_max'])) - bw
             if voulu > haut:
                 voulu = haut
+                plafonne = True
                 trace.append('part ecrite %.3f%s -> %.1f' % (part, ' verrou' if plan['verrou'] else '', voulu))
         if plan['part_max'] is not None and voulu > self.charge_de_part(ex_id, plan['part_max']) - bw:
             voulu = self.charge_de_part(ex_id, plan['part_max']) - bw
+            plafonne = True
         if lo == hi == 1 and not plan['test']:
             plafond = self.s['simple_part_max_bilan_bas'] if self.palier >= 1 else self.s['simple_part_max']
             haut_simple = self.charge_de_part(ex_id, plafond, du_jour=True) - bw
             if voulu > haut_simple:
                 voulu = haut_simple
-        charge = grille.proche(max(voulu, grille.minimum))
+                plafonne = True
+        if plafonne:
+            # X5 : jamais au-dessus du plafond par l'arrondi.
+            charge = grille.plancher(max(voulu, grille.minimum))
+        else:
+            charge = grille.proche(max(voulu, grille.minimum))
         # Test adaptatif : parmi les charges de la zone prescrite (réserve à
         # moins de la tolérance de la cible), la plus informative.
         ta = self.p['test_adaptatif']
@@ -2355,7 +2537,10 @@ class Seances(object):
                 if r_prev is None:
                     continue
                 ecart_rir = abs((r_prev - reps) - rir)
-                if ecart_rir <= ta['ecart_rir_tolere'] and cand <= voulu * 1.0 + grille._pas(charge):
+                # X6 : sous un plafond, le candidat le respecte (avant : un
+                # cran au-dessus permis).
+                borne = voulu + 1e-9 if plafonne else voulu * 1.0 + grille._pas(charge)
+                if ecart_rir <= ta['ecart_rir_tolere'] and cand <= borne:
                     inf = self.information(ex_id, cand, reps)
                     if inf > info0 * (1 + 0.02):
                         meilleur, info0 = cand, inf
@@ -2755,7 +2940,10 @@ class Seances(object):
             if plan['verrou'] and ecrite is not None and charge > ecrite + 1e-9:
                 # A6.5 : semaine allégée ou de test, jamais plus lourd que la
                 # charge écrite (A/coach.dart:2144-2152).
-                charge = ecrite if grille.plancher(ecrite) > ecrite else grille.plancher(ecrite)
+                # 1.0.8 (KM6, X4 de RV1) : une charge écrite hors de la
+                # grille est gardée telle qu'écrite (avant : ramenée au cran
+                # du dessous, sous l'écrit).
+                charge = ecrite
             evenement = bool((self.contexte or {}).get('jour_evenement'))
             if (plan['sans_hausse'] or mem.echec or (plan.get('reprise') and not evenement)) \
                     and mem.charge_derniere is not None and charge > mem.charge_derniere:

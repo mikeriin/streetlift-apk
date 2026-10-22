@@ -127,5 +127,6 @@ export 'src/traits.dart'
         MobilityRegion,
         MuscleGroup,
         SlotKind,
+        chestCreditRule,
         muscleGroupOf;
 export 'src/version.dart';

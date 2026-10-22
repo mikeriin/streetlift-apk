@@ -75,6 +75,11 @@ def semaines_de_reference(blocs, block_weeks, horizon):
     return out
 
 
+#: 1.0.8 : techniques dont le nombre de lignes est fixé par leurs paliers ou
+#: leur durée (`technique_coherente` les ramènerait à des séries classiques).
+TECHNIQUES_LIGNES_FIXES = ('wave', 'pyramid', 'ladder', 'density', 'for_time')
+
+
 def verrouillee(semaine):
     g = semaine.get('intention') or semaine.get('genre')
     return g in SEMAINES_VERROUILLEES or semaine.get('genre') in ('deload', 'test', 'intro')
@@ -781,6 +786,12 @@ class Planification(Extension):
                 if mod is None or item.get('kind') in ('warmup', 'test') or n <= 0:
                     out[(jour, item['slotId'])] = (n, 0.0)
                     continue
+                if (item.get('technique') or {}).get('kind') in TECHNIQUES_LIGNES_FIXES:
+                    # 1.0.8 (KM6, relecture) : une technique qui fixe le nombre
+                    # de lignes (vagues, pyramide, échelle, bloc au temps)
+                    # garde ses séries ; seule l'intensité est modulée.
+                    out[(jour, item['slotId'])] = (n, mod['intensite'])
+                    continue
                 ex = item['exerciseId']
                 voulu = n * self.facteur_exercice(ex, mod) + reste.get(ex, 0.0)
                 servi = int(math.floor(voulu + 0.5))
@@ -827,7 +838,9 @@ class Planification(Extension):
 
     def appliquer(self, semaine, jour, items):
         """Items du jour modulés (copie) : `sets` changé, `koachIntensite`
-        posé (lu par la prescription de séance)."""
+        posé (lu par la prescription de séance) ; `koachVolume` (séries
+        servies − écrites) et, quand la modulation change les séries,
+        `koachModule` (même écart, propre à la modulation : 1.0.8)."""
         mods = self.items_modules(semaine)
         out = []
         for item in items:
@@ -843,7 +856,14 @@ class Planification(Extension):
             it['sets'] = n
             if ecart:
                 it['koachIntensite'] = ecart
-            it['koachVolume'] = n - (item.get('sets') or 0)
+            # (Cumulé avec un `koachVolume` déjà posé : l'écrit du programme
+            # reste `sets − koachVolume`.)
+            it['koachVolume'] = int(item.get('koachVolume') or 0) + n - (item.get('sets') or 0)
+            if n != (item.get('sets') or 0):
+                # 1.0.8 (KM6, X8) : séries ajoutées (> 0) ou retirées (< 0)
+                # par la modulation de la semaine ; une baisse sous l'écrit
+                # est dite par la séance (`koach.volume_semaine`).
+                it['koachModule'] = n - (item.get('sets') or 0)
             out.append(it)
         return out
 

@@ -155,10 +155,97 @@ Map<String, Object> kmRampeVide() => <String, Object>{
   'ajouts_bornes_series': 0,
   'sans_cause_items': 0,
   'sans_cause_series': 0,
+  'module_items': 0,
+  'module_series': 0,
+  'module_seances': 0,
+  'module_sans_raison': 0,
+  'module_lignes': 0,
+  'module_baisses': 0,
+  'module_lignes_sur_limite': 0,
+  'module_baisses_sur_limite': 0,
 };
 
 void _ajouterEnt(Map<String, Object> acc, String k, int v) {
   acc[k] = (acc[k]! as int) + v;
+}
+
+/// `mesure_module` (KM6, X8, C17.43.4) : lignes reçues par Koach que la
+/// modulation hebdomadaire de la planification a baissées sous l'écrit
+/// (`koachModule` < 0), baisses servies (même emplacement, même exercice)
+/// sans raison `koach.volume_semaine`, et contrôle « rampe déguisée » :
+/// lignes dont un groupe majeur crédité a un écrit du PROGRAMME de la
+/// semaine ([ecritSemaine], items écrits de toutes les séances de la
+/// semaine) au-dessus de la limite de la rampe.
+void _kmMesureModule(
+  Map<String, Object> acc,
+  List<Object?> servis,
+  List<Object?> raisons,
+  kc.Seances seances,
+  List<Json>? ecritSemaine,
+) {
+  final dites = <Object?>{};
+  for (final r0 in raisons) {
+    final r = kc.jm(r0);
+    if (r['code'] == 'koach.volume_semaine') {
+      dites.add(kc.jm(r['params'] ?? <String, Object?>{})['exercice']);
+    }
+  }
+  final servisPar = <Object?, Json>{};
+  for (final it0 in servis) {
+    final it = kc.jm(it0);
+    servisPar.putIfAbsent(it['slotId'], () => it);
+  }
+  final rv = seances.retourVol;
+  final ecritG = (rv != null && ecritSemaine != null)
+      ? seances.creditsEcrits(ecritSemaine)
+      : null;
+  final limites = rv == null ? const <double>[] : rv.limites;
+  var une = false;
+  for (final p in seances.entree ?? const <Json>[]) {
+    if (p['kind'] == 'warmup' ||
+        p['kind'] == 'test' ||
+        kc.ent(p['sets'] ?? 0) < 1 ||
+        p['koach'] == 'vrai_test') {
+      continue;
+    }
+    final km = p['koachModule'];
+    final baisse = km != null && (km as num) < 0;
+    if (baisse) {
+      une = true;
+      _ajouterEnt(acc, 'module_items', 1);
+      _ajouterEnt(acc, 'module_series', -kc.ent(km));
+      final it = servisPar[p['slotId']];
+      if (it != null &&
+          kc.ent(it['sets'] ?? 0) > 0 &&
+          it['exerciseId'] == p['exerciseId'] &&
+          !dites.contains(p['exerciseId'])) {
+        _ajouterEnt(acc, 'module_sans_raison', 1);
+      }
+    }
+    if (ecritG != null) {
+      final groupes = <int>[
+        for (final (g, _) in seances.creditsGroupes(p['exerciseId'] as String))
+          g,
+      ];
+      if (groupes.isEmpty) {
+        continue;
+      }
+      _ajouterEnt(acc, 'module_lignes', 1);
+      final sur = groupes.any((g) => ecritG[g] > limites[g] + 1e-9);
+      if (sur) {
+        _ajouterEnt(acc, 'module_lignes_sur_limite', 1);
+      }
+      if (baisse) {
+        _ajouterEnt(acc, 'module_baisses', 1);
+        if (sur) {
+          _ajouterEnt(acc, 'module_baisses_sur_limite', 1);
+        }
+      }
+    }
+  }
+  if (une) {
+    _ajouterEnt(acc, 'module_seances', 1);
+  }
 }
 
 /// `mesure_rampe` : retour gradué sur les principaux (KM4, C17.37) ajouté à
@@ -178,6 +265,7 @@ void kmMesureRampe(
   List<Object?> raisons, {
   kc.Seances? seances,
   Map<String, (Json, Set<String>)>? zones,
+  List<Json>? ecritSemaine,
 }) {
   _ajouterEnt(acc, 'seances', 1);
   final servi = <Object?, int>{};
@@ -268,6 +356,9 @@ void kmMesureRampe(
         _ajouterEnt(acc, 'sans_cause_series', n0 - n);
       }
     }
+  }
+  if (seances != null) {
+    _kmMesureModule(acc, servis, raisons, seances, ecritSemaine);
   }
   for (final it0 in items) {
     final it = kc.jm(it0);
@@ -1347,6 +1438,13 @@ final class PolitiqueKoach implements KmPolitique {
       kc.listeOuVide(r['raisons']),
       seances: koach.seances,
       zones: _zones,
+      ecritSemaine: <Json>[
+        for (final j in List<int>.of(
+          _parSemaine[ctx.semaine] ?? const <int>[],
+        )..sort())
+          if (_ecrits.containsKey(j))
+            for (final x in _ecrits[j]!.$3) x,
+      ],
     );
     return <String, Object?>{'items': r['items']};
   }

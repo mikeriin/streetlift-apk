@@ -146,12 +146,12 @@ _decodages = <(String, String, String, String)>[
 /// extension ; lot KM5) pour l'adversaire `adv-7ee0da71`, graine 0.
 const String _evaluationPython =
     '{"aggravations": 0, "codes_violations": {"volume_trop_vite": 3}, '
-    '"e1rm6": 0.034142, "e1rm_famille": "loadedMain", "e1rm_n": 4, '
+    '"e1rm6": 0.027601, "e1rm_famille": "loadedMain", "e1rm_n": 4, '
     '"echeance": true, "echecs": 0.004093, "evenements": '
-    '[["sl-muscle-up-leste", "loaded", 111.35, 115.900709, 0.960736], '
-    '["sl-traction-lestee", "loaded", 152.6, 156.39159, 0.975756], '
-    '["sl-dips-leste", "loaded", 160.55, 177.181342, 0.906134]], '
-    '"faites": 57, "gain": -0.000389, "perf_a": 0.947542, "plantage": '
+    '[["sl-muscle-up-leste", "loaded", 111.35, 115.898935, 0.960751], '
+    '["sl-traction-lestee", "loaded", 152.6, 156.428935, 0.975523], '
+    '["sl-dips-leste", "loaded", 160.55, 177.714004, 0.903418]], '
+    '"faites": 57, "gain": -0.000386, "perf_a": 0.946564, "plantage": '
     'null, "poussees": 0, "present": true, "prevues": 80, "seed": 0, '
     '"violations": 3}';
 
@@ -441,8 +441,8 @@ void main() {
     ];
     expect(
       _py(kmMesuresDart(temoin[0], true, true)),
-      '{"aggravations": 0, "codes_violations": {}, "e1rm6": 0.055765, '
-      '"e1rm_famille": "loadedMain", "gain": -0.000155, "perf_a": 0.887516, '
+      '{"aggravations": 0, "codes_violations": {}, "e1rm6": 0.060134, '
+      '"e1rm_famille": "loadedMain", "gain": -0.000157, "perf_a": 0.870663, '
       '"poussees": 0, "seed": 0, "violations": 0}',
     );
     expect(kmMesuresDart(temoin[0], true, false)['perf_a'], isNull);
@@ -457,14 +457,14 @@ void main() {
     expect(
       _py(kc.jm(cmp['groupes'])['tous']),
       '{"e1rm6": {"koach": {"moyenne": 0.087267, "n": 40, "pire": 0.236824}, '
-      '"temoin": {"moyenne": 0.115072, "n": 40, "pire": 0.353069}}, "n": 40, '
+      '"temoin": {"moyenne": 0.117216, "n": 40, "pire": 0.353069}}, "n": 40, '
       '"perf_a": {"koach": {"moyenne": 0.872389, "n": 24, "pire": 0.788516}, '
-      '"temoin": {"moyenne": 0.599347, "n": 24, "pire": 0.0}}, '
+      '"temoin": {"moyenne": 0.594567, "n": 24, "pire": 0.0}}, '
       '"perf_a_par_saison": {"koach": {"moyenne": 0.83449, "n": 24, '
-      '"pire": 0.732583}, "temoin": {"moyenne": 0.54942, "n": 24, '
+      '"pire": 0.732583}, "temoin": {"moyenne": 0.546151, "n": 24, '
       '"pire": 0.0}}, "securite": {"koach": {"aggravations": 0, '
       '"plantages": 0, "poussees": 0, "violations_indicatives": 157}, '
-      '"temoin": {"aggravations": 0, "poussees": 10, "violations": 18}}}',
+      '"temoin": {"aggravations": 0, "poussees": 11, "violations": 11}}}',
     );
     expect(
       _py(kc.jl(cmp['adversaires'])[0]),
@@ -474,8 +474,8 @@ void main() {
       '"perf_a": 0.788516, "perf_a_min": 0.772397, "plantages": [], '
       '"poussees": 0, "violations": 3}, "role": "pire", "scenario": '
       '"reference", "seeds": [0, 1, 2], "temoin": {"aggravations": 0, '
-      '"e1rm6": 0.097789, "manquants": [], "perf_a": 0.893672, '
-      '"perf_a_min": 0.887516, "poussees": 0, "violations": 0}}',
+      '"e1rm6": 0.099962, "manquants": [], "perf_a": 0.884031, '
+      '"perf_a_min": 0.870663, "poussees": 0, "violations": 0}}',
     );
     // Critère 7 bis (C13.12, `critere_apparie`) : même sortie que la
     // référence Python sur les mêmes lignes.
@@ -483,16 +483,14 @@ void main() {
     expect(c7['n'], 24);
     expect(c7['tenus'], 22);
     expect(c7['part'], 0.916667);
-    expect(c7['sous_plancher_non_excuses'], 2);
-    expect(c7['pire_ecart'], -0.139835);
-    expect(c7['ecart_moyen'], 0.273041);
+    expect(c7['sous_plancher_non_excuses'], 1);
+    expect(c7['pire_ecart'], -0.141417);
+    expect(c7['ecart_moyen'], 0.277822);
     expect(c7['respecte'], isFalse);
     expect(
       kmJsonPython(c7['sous_plancher'], ensureAscii: false),
-      '[{"id": "adv-7ee0da71", "ecart": -0.105156, "koach": 0.788516, '
-      '"temoin": 0.893672, "violations_temoin": 0, "excuse": false}, '
-      '{"id": "adv-f3afdf8d", "ecart": -0.139835, "koach": 0.824402, '
-      '"temoin": 0.964237, "violations_temoin": 0, "excuse": false}]',
+      '[{"id": "adv-f3afdf8d", "ecart": -0.141417, "koach": 0.824402, '
+      '"temoin": 0.965819, "violations_temoin": 0, "excuse": false}]',
     );
     expect(
       c7['libelle'],
@@ -504,7 +502,7 @@ void main() {
     expect(c7b['n'], 18);
     expect(c7b['tenus'], 16);
     expect(c7b['part'], 0.888889);
-    expect(c7b['ecart_moyen'], 0.064819);
+    expect(c7b['ecart_moyen'], 0.071193);
     expect(c7b['respecte'], isFalse);
     expect(
       kmJsonPython(c7['hors_critere'], ensureAscii: false),
@@ -514,11 +512,11 @@ void main() {
     expect(kc.jm(cmp).keys.last, 'critere_7_bis');
     expect(kmResumeTexteComparaison(cmp).split('\n').sublist(0, 3), <String>[
       'tous     n=40  jour J koach moy 0.872389 pire 0.788516 | témoin moy '
-          '0.599347 pire 0.0',
+          '0.594567 pire 0.0',
       'pires    n=32  jour J koach moy 0.857102 pire 0.788516 | témoin moy '
-          '0.603271 pire 0.0',
+          '0.596972 pire 0.0',
       'temoins  n=8  jour J koach moy 0.918249 pire 0.90614 | témoin moy '
-          '0.587577 pire 0.0',
+          '0.587352 pire 0.0',
     ]);
   });
 

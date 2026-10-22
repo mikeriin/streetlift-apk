@@ -75,7 +75,7 @@ def items_volume(items, roles=None):
 RAISONS_DOULEUR = ('koach.douleur_retrait', 'koach.reprise_dose', 'koach.douleur_persistante')
 
 
-def mesure_rampe(acc, items, roles, servis, raisons, seances=None, zones=None):
+def mesure_rampe(acc, items, roles, servis, raisons, seances=None, zones=None, ecrit_semaine=None):
     """Mesure du retour gradué sur les principaux (KM4, C17.37) ajoutée à
     [acc] pour une séance : [items] écrits, [roles] slotId -> rôle,
     [servis] items servis, [raisons] de Koach. Principal : ligne écrite de
@@ -152,6 +152,8 @@ def mesure_rampe(acc, items, roles, servis, raisons, seances=None, zones=None):
             if n < n0:
                 acc['sans_cause_items'] += 1
                 acc['sans_cause_series'] += n0 - n
+    if seances is not None:
+        mesure_module(acc, servis, raisons, seances, ecrit_semaine)
     for it in items:
         n0 = int(it.get('sets') or 0)
         if it.get('kind') == 'warmup' or n0 <= 0 or it['exerciseId'] not in volume:
@@ -185,11 +187,76 @@ def mesure_rampe(acc, items, roles, servis, raisons, seances=None, zones=None):
         acc['seances_principal_retire'] += 1
 
 
+def mesure_module(acc, servis, raisons, seances, ecrit_semaine=None):
+    """Mesure de KM6 (X8, C17.43.4) ajoutée à [acc] pour une séance : lignes
+    reçues par Koach (`seances.entree`, items modulés) que la modulation
+    hebdomadaire de la planification a baissées sous l'écrit du programme
+    (`koachModule` < 0 ; hors échauffements, tests et montées) :
+    `module_items`, `module_series` (séries retirées par la modulation),
+    `module_seances` (séances avec au moins une baisse) ;
+    `module_sans_raison` : ligne baissée servie (même emplacement, même
+    exercice) sans raison `koach.volume_semaine` sur son exercice (0
+    attendu).
+
+    Contrôle « rampe déguisée » : sur les lignes reçues un jour où la rampe
+    de volume a des limites (`seances.retour_vol`) et dont la semaine écrite
+    est connue ([ecrit_semaine] : items ÉCRITS de toutes les séances de la
+    semaine), `module_lignes` et `module_baisses` ; `module_lignes_sur_limite`
+    et `module_baisses_sur_limite` : celles dont un groupe majeur crédité a
+    un écrit du PROGRAMME de la semaine au-dessus de la limite de la rampe
+    (c'est là qu'une rampe couperait ; écrit lu avant toute modulation, pour
+    que la baisse mesurée ne déplace pas la ligne hors de la zone). Une
+    modulation qui serait une rampe déguisée baisserait surtout ces
+    lignes-là."""
+    dites = set()
+    for r in raisons:
+        if r.get('code') == 'koach.volume_semaine':
+            dites.add((r.get('params') or {}).get('exercice'))
+    servis_par = {}
+    for it in servis:
+        servis_par.setdefault(it.get('slotId'), it)
+    rv = seances.retour_vol
+    ecrit_g = None
+    if rv is not None and ecrit_semaine is not None:
+        ecrit_g = seances._credits_ecrits(ecrit_semaine)[0]
+    une = False
+    for p in seances.entree or []:
+        if p.get('kind') in ('warmup', 'test') or int(p.get('sets') or 0) < 1 or p.get('koach') == 'vrai_test':
+            continue
+        km = p.get('koachModule')
+        baisse = km is not None and km < 0
+        if baisse:
+            une = True
+            acc['module_items'] += 1
+            acc['module_series'] += -int(km)
+            it = servis_par.get(p.get('slotId'))
+            if it is not None and int(it.get('sets') or 0) > 0 and it.get('exerciseId') == p['exerciseId'] \
+                    and p['exerciseId'] not in dites:
+                acc['module_sans_raison'] += 1
+        if ecrit_g is not None:
+            groupes = [g for (g, c) in seances._credits(p['exerciseId'])]
+            if not groupes:
+                continue
+            acc['module_lignes'] += 1
+            sur = any(ecrit_g[g] > rv['limites'][g] + 1e-9 for g in groupes)
+            if sur:
+                acc['module_lignes_sur_limite'] += 1
+            if baisse:
+                acc['module_baisses'] += 1
+                if sur:
+                    acc['module_baisses_sur_limite'] += 1
+    if une:
+        acc['module_seances'] += 1
+
+
 def rampe_vide():
     return {'seances': 0, 'seances_principal': 0, 'seances_principal_reduit': 0, 'principaux_reduits': 0,
             'part_servie': 0.0, 'principal_retire': 0, 'seances_principal_retire': 0,
             'sous_ecrit_items': 0, 'sous_ecrit_series': 0, 'ajouts_bornes': 0, 'ajouts_bornes_series': 0,
-            'sans_cause_items': 0, 'sans_cause_series': 0}
+            'sans_cause_items': 0, 'sans_cause_series': 0,
+            'module_items': 0, 'module_series': 0, 'module_seances': 0, 'module_sans_raison': 0,
+            'module_lignes': 0, 'module_baisses': 0, 'module_lignes_sur_limite': 0,
+            'module_baisses_sur_limite': 0}
 
 
 class PolitiqueKoach(Politique):
@@ -286,8 +353,10 @@ class PolitiqueKoach(Politique):
                 roles[s['slotId']] = s.get('role')
         r = self.koach.plan({'horizon': 'seance', 'items': items, 'grilles': self.grilles,
                              'zones': self.zones, 'roles': roles})
+        semaine = [x for j in sorted(self.par_semaine.get(ctx.semaine, [])) if j in self.ecrits
+                   for x in self.ecrits[j][2]]
         mesure_rampe(self.rampe, ctx.ecrit['items'], roles, r['items'], r.get('raisons') or [],
-                     self.koach.seances, self.zones)
+                     self.koach.seances, self.zones, semaine)
         return {'items': r['items']}
 
     def _verser(self, done):
