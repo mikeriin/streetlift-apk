@@ -1,0 +1,17 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv2hp_accueil_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: P5 : numéros de semaine affichés (PR2) fin du programme importé : « S10 » et non « S24 »
+00:00 +1: P5 : numéros de semaine affichés (PR2) phrases de Mon programme : numéro affiché, ancien numéro marqué
+00:00 +2: P5 : numéros de semaine affichés (PR2) boss au-delà des quatre nommés : « Tests · S25 » et non « Tests · semaine 39 »
+00:00 +3: H5 : une seule numérotation à l’écran séance à reprendre : « S1 · J… », comme l’accueil (avant : « S15 · J… »)
+00:00 +4: H5 : une seule numérotation à l’écran historique : séances de l’ancien programme marquées « (ancien) », jamais confondues avec les semaines affichées
+00:00 +5: H7 : jauge des journées du programme semaines affichées seulement (avant : journées masquées comptées)
+00:00 +6: P6 : Ma saison, bloc à cheval sur la première semaine affichée ni semaine masquée dans le bloc, ni phase datée avant S1 affichée, premier bloc affiché numéroté 1
+00:00 +7: P8 : lignes de course d’un programme créé « 4 × 400 m » en mètres, « 2 × 10-15 min » en durée (avant : répétitions)
+00:00 +8: H8 : titre « Gardien du repos » pas obtenu tant que des deloads de la saison restent à venir (avant : obtenu dès le premier)
+00:00 +9: H8 : titre « Gardien du repos » obtenu quand tous les deloads d’une saison sont honorés, et gardé à la saison suivante (avant : perdu)
+00:00 +10: H8 : titre « Gardien du repos » deload manqué ou à venir : pas obtenu
+00:00 +11: H8 : titre « Gardien du repos » « Décharge » d’un programme créé : semaine de deload
+00:00 +12: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:01 +13: (tearDownAll)
+00:01 +13: All tests passed!
