@@ -253,6 +253,14 @@ class PlanProgram {
   /// l'export. 1 : tout s'affiche. Jamais après [firstWeek].
   final int firstShown;
 
+  /// RV2 (P3, migration) : jour de la semaine (ISO, 1 à 7) de J1 pour tous
+  /// les blocs : fixé à la création (jour du départ), ou, pour un
+  /// programme créé avant RV2, au premier chargement (jour du départ
+  /// enregistré, l'ancrage d'avant : les J restent ceux que l'utilisateur
+  /// voyait). Ne change plus ensuite, même si le départ change. Null :
+  /// départ de chaque bloc ([planBlockJ]).
+  final int? jWeekday;
+
   const PlanProgram({
     this.version = kPlanProgramVersion,
     required this.origin,
@@ -267,6 +275,7 @@ class PlanProgram {
     this.keepLegacyEngine = false,
     this.eventsKey,
     this.firstShown = 1,
+    this.jWeekday,
   });
 
   int get totalWeeks => firstWeek - 1 + blocks.fold(0, (a, b) => a + b.weeks);
@@ -302,6 +311,7 @@ class PlanProgram {
     bool clearSeason = false,
     bool? keepLegacyEngine,
     String? eventsKey,
+    int? jWeekday,
   }) => PlanProgram(
     version: version,
     origin: origin,
@@ -320,6 +330,7 @@ class PlanProgram {
     // RV2 (P1) : la numérotation affichée suit le programme, bloc après
     // bloc.
     firstShown: firstShown,
+    jWeekday: jWeekday ?? this.jWeekday,
   );
 
   Map<String, Object?> toJson() => {
@@ -336,6 +347,7 @@ class PlanProgram {
     if (keepLegacyEngine) 'keepLegacyEngine': true,
     if (eventsKey != null) 'eventsKey': eventsKey,
     if (firstShown > 1) 'firstShownWeek': firstShown,
+    if (jWeekday != null) 'jWeekday': jWeekday,
   };
 
   /// Lecture ; [FormatException] hors contrat.
@@ -386,6 +398,12 @@ class PlanProgram {
     if (shown is! int || shown < 1 || shown > first) {
       throw const FormatException('Programme : semaine affichée invalide.');
     }
+    // RV2 (P3) : ancrage des J ; absent : programme d'avant RV2 (migré au
+    // chargement par le magasin).
+    final jw = m['jWeekday'];
+    if (jw != null && (jw is! int || jw < 1 || jw > 7)) {
+      throw const FormatException('Programme : jour de départ invalide.');
+    }
     final pk = m['prefixKoach'];
     if (pk != null && pk is! Map) {
       throw const FormatException('Programme : annotations.');
@@ -428,6 +446,7 @@ class PlanProgram {
           ? m['eventsKey'] as String
           : null,
       firstShown: shown,
+      jWeekday: jw as int?,
     );
   }
 }
@@ -460,15 +479,16 @@ int planJ(int isoWeekday, int startWeekday) =>
     (isoWeekday - startWeekday + 7) % 7 + 1;
 
 /// RV2 (P3) : jour J d'une journée du bloc [block] (jour ISO [isoWeekday]),
-/// compté depuis le premier jour du bloc tel qu'il a été validé (J1 = jour
-/// de départ du programme à la validation du bloc). Les jours J d'un
-/// programme créé sont ainsi fixes : changer la date de départ (réglage du
-/// départ, « Où j'en suis ») vers un autre jour de la semaine déplace les
-/// dates des séances, comme pour le programme importé, sans renuméroter
-/// les J (avant : comptés depuis le départ du moment, une séance J3
-/// devenait J2 et le journal, rangé par S·J, se décalait).
-int planBlockJ(kc.ProgramBlock block, int isoWeekday) =>
-    planJ(isoWeekday, block.pass1.startDate.weekday);
+/// compté depuis l'ancrage fixe du programme ([anchor] :
+/// `PlanProgram.jWeekday`), à défaut depuis le premier jour du bloc tel
+/// qu'il a été validé. Les jours J d'un programme créé sont ainsi fixes :
+/// changer la date de départ (réglage du départ, « Où j'en suis ») vers un
+/// autre jour de la semaine déplace les dates des séances, comme pour le
+/// programme importé, sans renuméroter les J (avant : comptés depuis le
+/// départ du moment, une séance J3 devenait J2 et le journal, rangé par
+/// S·J, se décalait).
+int planBlockJ(kc.ProgramBlock block, int isoWeekday, {int? anchor}) =>
+    planJ(isoWeekday, anchor ?? block.pass1.startDate.weekday);
 
 String _weekColor(kc.WeekKind k) => switch (k) {
   kc.WeekKind.intro => '6B0C0C',
@@ -517,6 +537,7 @@ Map<String, dynamic> planWeekJson({
   required int weekIndex,
   required int weekNumber,
   required PlanLabels labels,
+  int? jWeekday,
 }) {
   final pass1 = entry.block.pass1;
   final week = entry.block.pass2.weeks[weekIndex];
@@ -528,7 +549,10 @@ Map<String, dynamic> planWeekJson({
     for (final x in days) {
       if (x.dayIndex == d.dayIndex) items = x;
     }
-    byJ[planBlockJ(entry.block, d.weekday)] = (day: d, items: items);
+    byJ[planBlockJ(entry.block, d.weekday, anchor: jWeekday)] = (
+      day: d,
+      items: items,
+    );
   }
   final out = <Map<String, dynamic>>[];
   for (var j = 1; j <= 7; j++) {
@@ -651,7 +675,7 @@ String _rir(int flames) {
 /// Toutes les semaines du programme (précédentes puis blocs). [view] (G10)
 /// donne le bloc tel qu'il est une semaine donnée (propositions du moteur
 /// dynamique en place) ; sans lui, le bloc enregistré. RV2 (P3) : jours J
-/// de chaque bloc comptés depuis son propre départ ([planBlockJ]), jamais
+/// comptés depuis l'ancrage fixe du programme ([planBlockJ]), jamais
 /// depuis le départ du programme du moment.
 List<Map<String, dynamic>> planWeeks(
   PlanProgram p, {
@@ -670,6 +694,7 @@ List<Map<String, dynamic>> planWeeks(
           weekIndex: w,
           weekNumber: n,
           labels: labels,
+          jWeekday: p.jWeekday,
         ),
       );
       n++;

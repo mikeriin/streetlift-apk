@@ -682,14 +682,27 @@ class AppStore extends ChangeNotifier {
   /// KM3 : moteur vivant, ressources et temps mesurés (jamais sauvegardés).
   final KoachRuntime _koachRt = KoachRuntime();
 
+  /// RV2 (P3, migration) : programme créé avant RV2 (sans `jWeekday`) :
+  /// J1 reste le jour de la semaine du départ enregistré, comme avant
+  /// (à défaut de départ, celui du premier bloc) ; écrit à l'écriture
+  /// suivante, il ne bouge plus quand le départ change.
+  PlanProgram? _planWithJAnchor(PlanProgram? plan, DateTime? start) {
+    if (plan == null || plan.jWeekday != null) return plan;
+    return plan.copyWith(
+      jWeekday:
+          start?.weekday ?? plan.blocks.first.block.pass1.startDate.weekday,
+    );
+  }
+
   /// Programme à afficher selon l'instance ; le départ est conservé.
   void _materializeProgram(DateTime? start) {
     final plan = planProgram;
     if (plan != null) {
       try {
-        // RV2 (P3) : jours J de chaque bloc comptés depuis le départ du
-        // bloc (`planBlockJ`), pas depuis [start] : un départ déplacé vers
-        // un autre jour de la semaine ne renumérote pas les séances.
+        // RV2 (P3) : jours J comptés depuis l'ancrage fixe du programme
+        // (`jWeekday`, `planBlockJ`), pas depuis [start] : un départ
+        // déplacé vers un autre jour de la semaine ne renumérote pas les
+        // séances.
         final weeks = planWeeks(
           plan,
           labels: PlanStore(this).planLabels,
@@ -1962,7 +1975,7 @@ class AppStore extends ChangeNotifier {
     programInstance = data.programInstance;
     _instanceRaw = data.instanceRaw;
     programLoadIssues = data.programIssues;
-    planProgram = data.planProgram;
+    planProgram = _planWithJAnchor(data.planProgram, data.start);
     _planRaw = data.planRaw;
     planLoadIssues = data.planIssues;
     programResume = data.programResume;
