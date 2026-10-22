@@ -112,6 +112,9 @@ class _PersistenceAlertState extends State<PersistenceAlert> {
     await widget.store.retrySave();
   }
 
+  @override
+  Widget build(BuildContext context) => widget.child;
+
   MaterialBanner _build() {
     final k = KTokens.of(context);
     final store = widget.store;

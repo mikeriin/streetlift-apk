@@ -134,10 +134,7 @@ void main() {
       final b = await userDocument();
       b['programResume'] = _futureResume;
       final before = app.exportAll();
-      expect(
-        await app.importBackup(jsonEncode(b)),
-        ImportStatus.invalid,
-      );
+      expect(await app.importBackup(jsonEncode(b)), ImportStatus.invalid);
       expect(app.exportAll(), before);
       app.dispose();
     });
@@ -180,8 +177,10 @@ void main() {
     });
 
     test('texte : le nombre d’échecs d’affilée à partir du deuxième', () {
-      expect(persistenceAlertText('Sauvegarde impossible.', 1),
-          'Sauvegarde impossible.');
+      expect(
+        persistenceAlertText('Sauvegarde impossible.', 1),
+        'Sauvegarde impossible.',
+      );
       expect(
         persistenceAlertText('Sauvegarde impossible.', 3),
         contains('3 essais refusés d’affilée'),
@@ -271,8 +270,10 @@ void main() {
           }
         }
         final logs = doc['logs'] as Map<String, dynamic>;
-        expect(jsonDeepEquals(logs['S0-J1'], (old['logs'] as Map)['S0-J1']),
-            isTrue);
+        expect(
+          jsonDeepEquals(logs['S0-J1'], (old['logs'] as Map)['S0-J1']),
+          isTrue,
+        );
         expect(logs['S0-J1@a1'], isNotNull);
         // Le reste du journal est entier.
         expect(logs.length, (old['logs'] as Map).length);
