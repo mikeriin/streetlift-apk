@@ -21,6 +21,7 @@ export 'app_theme.dart' show SL, buildTheme;
 
 import 'home_screen.dart';
 import 'notifications.dart';
+import 'persistence_alert.dart';
 import 'arsenal_screen.dart';
 import 'stats_screen.dart';
 import 'stats_navigation.dart';
@@ -337,7 +338,6 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     store.themeMode.addListener(_onTheme);
     store.accentMode.addListener(_onTheme);
     store.contrastMode.addListener(_onTheme);
-    store.persistenceError.addListener(_onPersistenceError);
     // KM3 : Koach 1.0 (prise de main, rejeu, rattrapage) en arrière-plan.
     unawaited(store.koachRefresh());
     // G2 (D1.1) : annonce de la suppression des WOD et des séances perso,
@@ -358,7 +358,6 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     store.themeMode.removeListener(_onTheme);
     store.accentMode.removeListener(_onTheme);
     store.contrastMode.removeListener(_onTheme);
-    store.persistenceError.removeListener(_onPersistenceError);
     super.dispose();
   }
 
@@ -384,28 +383,6 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
   }
 
   void _onTheme() => setState(() {});
-  void _onPersistenceError() {
-    final message = store.persistenceError.value;
-    if (message != null && mounted) {
-      final messenger = ScaffoldMessenger.of(context);
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(message),
-          duration: const Duration(seconds: 8),
-          action: SnackBarAction(
-            label: 'Réessayer',
-            onPressed: () async {
-              if (await store.retrySave()) {
-                messenger.showSnackBar(
-                  const SnackBar(content: Text('Modifications enregistrées.')),
-                );
-              }
-            },
-          ),
-        ),
-      );
-    }
-  }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -445,33 +422,38 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     final inset = keyboard
         ? 0.0
         : HeroNavBar.extent + MediaQuery.viewPaddingOf(context).bottom;
-    return Scaffold(
-      extendBody: true,
-      body: KNavigationInset(
-        bottom: inset,
-        child: KContentTransition(
-          key: const ValueKey('navigation-transition'),
-          position: _tabIndex,
-          child: IndexedStack(
-            index: _tabIndex,
-            children: [
-              for (var i = 0; i < pages.length; i++)
-                _visited.contains(i)
-                    ? TickerMode(
-                        enabled: i == _tabIndex,
-                        child: KeyedSubtree(
-                          key: ValueKey('tab-$i'),
-                          child: pages[i],
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-            ],
+    // RV2 (M6) : écritures refusées signalées par une bannière fixe tant
+    // qu'elles durent (persistence_alert.dart).
+    return PersistenceAlert(
+      store: store,
+      child: Scaffold(
+        extendBody: true,
+        body: KNavigationInset(
+          bottom: inset,
+          child: KContentTransition(
+            key: const ValueKey('navigation-transition'),
+            position: _tabIndex,
+            child: IndexedStack(
+              index: _tabIndex,
+              children: [
+                for (var i = 0; i < pages.length; i++)
+                  _visited.contains(i)
+                      ? TickerMode(
+                          enabled: i == _tabIndex,
+                          child: KeyedSubtree(
+                            key: ValueKey('tab-$i'),
+                            child: pages[i],
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+              ],
+            ),
           ),
         ),
+        bottomNavigationBar: keyboard
+            ? null
+            : HeroNavBar(index: _tabIndex, onTap: _selectTab),
       ),
-      bottomNavigationBar: keyboard
-          ? null
-          : HeroNavBar(index: _tabIndex, onTap: _selectTab),
     );
   }
 }
