@@ -687,11 +687,11 @@ class AppStore extends ChangeNotifier {
     final plan = planProgram;
     if (plan != null) {
       try {
-        final weekday =
-            start?.weekday ?? plan.blocks.first.block.pass1.startDate.weekday;
+        // RV2 (P3) : jours J de chaque bloc comptés depuis le départ du
+        // bloc (`planBlockJ`), pas depuis [start] : un départ déplacé vers
+        // un autre jour de la semaine ne renumérote pas les séances.
         final weeks = planWeeks(
           plan,
-          startWeekday: weekday,
           labels: PlanStore(this).planLabels,
           view: EvolutionStore(this)._evoWeekEntry,
         );
@@ -710,6 +710,15 @@ class AppStore extends ChangeNotifier {
               )
             : const LegacyWeekKinds.empty();
         program.start = start;
+        // RV2 (P1) : départ affiché (PR2) gardé par le programme créé :
+        // après un bloc suivant, un redémarrage ou un import, la
+        // numérotation affichée reste celle du programme repris.
+        program.firstShown = plan.firstShown.clamp(1, program.weeks.length);
+        if (program.firstShown > 1) {
+          // Comme pour l'instance générée (correctif 20/10/2026) : GtG hors
+          // séance dans les semaines gardées du programme suivi.
+          program.detachGtg(fromWeek: program.firstShown);
+        }
         _overlayGen++;
         SessionAdaptStore(this).syncImportedOverlay();
         return;

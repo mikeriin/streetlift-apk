@@ -1094,10 +1094,9 @@ extension KoachStore on AppStore {
       final loc = plan.locate(week);
       if (loc == null) return null;
       final block = adjustedBlock(plan.blocks[loc.block]);
-      final startWeekday =
-          program.start?.weekday ?? block.pass1.startDate.weekday;
+      // RV2 (P3) : J fixes, comptés depuis le départ du bloc.
       for (final d in block.pass1.days) {
-        if (planJ(d.weekday, startWeekday) == j) {
+        if (planBlockJ(block, d.weekday) == j) {
           return AdaptPlace(block, loc.weekIndex, d.dayIndex, false);
         }
       }

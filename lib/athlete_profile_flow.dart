@@ -660,7 +660,30 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     _go(i < 0 ? _nearestStep(_step) : steps[i + 1]);
   }
 
+  /// RV2 (F4) : avant d'enregistrer, les réponses que le profil va perdre
+  /// (questions qui ne comptent plus : niveau baissé, discipline changée,
+  /// règle voulue C1.6) sont nommées ; « Annuler » n'enregistre rien.
+  /// Rien à effacer (ou profil incomplet, refusé plus loin) : pas
+  /// d'avertissement.
   void _save() {
+    final p = store.content.questionnaire;
+    final lost = p == null || _d.firstIncomplete(_now, parcours: p) != null
+        ? const <ProfileQuestion>[]
+        : _d.prunedAnswers(p, _now.year);
+    if (lost.isEmpty) {
+      _saveNow();
+      return;
+    }
+    unawaited(_confirmPruned(lost));
+  }
+
+  Future<void> _confirmPruned(List<ProfileQuestion> lost) async {
+    final ok = await _confirmPrunedAnswers(context, _d, lost);
+    if (!mounted) return;
+    if (ok) _saveNow();
+  }
+
+  void _saveNow() {
     // CU : questions du schéma 3 montrées et laissées sans réponse =
     // passées (retenues hors du profil, jamais reproposées d'office).
     final passed = <String>[

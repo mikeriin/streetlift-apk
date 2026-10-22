@@ -109,6 +109,38 @@ String _durationField(int s) {
 String? _firstViolation(List<Violation> v) =>
     v.isEmpty ? null : 'Réponse incomplète ou hors limites (${v.first.path}).';
 
+/// RV2 (F4) : avertissement avant d'enregistrer un profil qui perd des
+/// réponses ([lost], `prunedAnswers`) : la liste de ce qui sera effacé,
+/// « Annuler » ou « Continuer ». Vrai : « Continuer ».
+Future<bool> _confirmPrunedAnswers(
+  BuildContext context,
+  ProfileDraft d,
+  List<ProfileQuestion> lost,
+) => showKChoice(
+  context,
+  dialogKey: const ValueKey('pruned-answers'),
+  title: 'Des réponses vont être effacées',
+  message:
+      'Avec ce changement, ces questions ne comptent plus pour ton profil : '
+      'en enregistrant, leurs réponses sont effacées.',
+  body: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      for (final q in lost)
+        Padding(
+          key: ValueKey('pruned-${q.id}'),
+          padding: const EdgeInsets.only(top: KSpacing.s4),
+          child: Text('• ${prunedAnswerLabel(q, d)}'),
+        ),
+    ],
+  ),
+  confirmLabel: 'Continuer',
+  cancelLabel: 'Annuler',
+  confirmKey: const ValueKey('pruned-continue'),
+  cancelKey: const ValueKey('pruned-cancel'),
+  destructive: true,
+);
+
 /// Libellé d'une question dans un formulaire (ex-feuille).
 Widget _sheetLabel(BuildContext context, String t) => Padding(
   padding: const EdgeInsets.only(top: KSpacing.s12, bottom: KSpacing.s8),

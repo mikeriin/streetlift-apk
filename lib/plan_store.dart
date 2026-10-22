@@ -123,13 +123,7 @@ extension PlanStore on AppStore {
   List<Map<String, dynamic>> _displayedWeeksJson() {
     final plan = planProgram;
     if (plan != null) {
-      return planWeeks(
-        plan,
-        startWeekday:
-            program.start?.weekday ??
-            plan.blocks.first.block.pass1.startDate.weekday,
-        labels: planLabels,
-      );
+      return planWeeks(plan, labels: planLabels);
     }
     final inst = programInstance;
     if (inst != null && inst.generated) return copyWeeks(inst.weeks);
@@ -199,6 +193,12 @@ extension PlanStore on AppStore {
       previous: previous,
       season: _planSeasonFor(c.entry(at).block, c.profile),
       eventsKey: planEventsKey(c.profile.events),
+      // RV2 (P1) : semaines gardées d'un programme repris en cours de route
+      // (PR2) : son départ affiché reste S1 ; sans semaines gardées, tout
+      // le nouveau programme s'affiche.
+      firstShown: s.firstWeek > 1
+          ? program.firstShown.clamp(1, s.firstWeek)
+          : 1,
     );
     _planProfileLearned(c.profile);
     planProgram = next;
