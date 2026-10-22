@@ -1,0 +1,16 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv2a_adaptation_test.dart
+00:00 +0: magasin A2 : douleur signalée après « Annuler » (mode assisté) : l’ajustement refusé n’est pas rétabli ; un nouveau bilan le repropose
+00:01 +1: magasin A2 : séance commencée, mode libre : « Garder ma séance » tient après une douleur ; conseils d’un exercice inchangé gardés
+00:01 +2: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +3: magasin A4 : zones du Bilan du jour au-dessus de 3/10 plus de 2 séances de suite : renvoi listé pour « Santé et sécurité »
+00:01 +4: magasin RV1c1 § 4 : groupe de l’emplacement écrit remplacement servi sans groupId : groupe écrit (intervalles, chrono des tours)
+00:02 +5: magasin RV1c1 § 4 : groupe de l’emplacement écrit groupId servi : inchangé ; groupId servi différent : le servi
+00:02 +6: magasin RV1c1 § 4 : groupe de l’emplacement écrit course facile servie à la place du fractionné : seule
+00:02 +7: textes A9 : écart de charge invisible à l’affichage : non dit ; séries qui changent dites
+00:02 +8: textes A3 : réglage « lb » : charges des textes du moteur en livres
+00:02 +9: textes A5 : conseils de douleur à jour (moteur : zone épargnée, arrêt puis reprise par paliers)
+00:02 +10: écrans (setUpAll)
+00:02 +10: écrans A7 : « Aucune douleur », zone ajoutée puis retirée : « aucune » gardé
+00:04 +11: écrans A4 : « Santé et sécurité » : renvoi des zones du Bilan du jour
+00:04 +12: écrans (tearDownAll)
+00:04 +12: All tests passed!
