@@ -1,0 +1,40 @@
+Analyzing streetlift-apk...                                     
+
+   info • The import of 'package:streetlift_tracker/nav_bar.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/main.dart'. Try removing the import directive • integration_test/base_bv11_test.dart:33:8 • unnecessary_import
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/base_bv11_test.dart:90:3 • prefer_const_declarations
+warning • The declaration 'back' isn't referenced. Try removing the declaration of 'back' • integration_test/base_bv11_test.dart:163:16 • unused_element
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/catalogue_g3_test.dart:55:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/clearance_ci1g_test.dart:44:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/evolution_g10_test.dart:72:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_ci1c_test.dart:144:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_ci1e_test.dart:44:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_ci1f_test.dart:41:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_g5_test.dart:46:3 • prefer_const_declarations
+   info • The import of 'package:streetlift_tracker/nav_bar.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/main.dart'. Try removing the import directive • integration_test/koach_kb1_test.dart:36:8 • unnecessary_import
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_kb1_test.dart:82:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_kb2_test.dart:57:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_kb2c1_test.dart:71:3 • prefer_const_declarations
+warning • Unused import: 'package:streetlift_tracker/koach1/koach_moteur.dart'. Try removing the import directive • integration_test/koach_kb3_test.dart:33:8 • unused_import
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_kb3_test.dart:89:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_kb4_test.dart:69:3 • prefer_const_declarations
+   info • The import of 'package:streetlift_tracker/nav_bar.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/main.dart'. Try removing the import directive • integration_test/koach_km3_test.dart:37:8 • unnecessary_import
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/koach_km3_test.dart:57:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/lot_cif_test.dart:56:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/profil_cu_test.dart:49:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/profil_g6_test.dart:45:3 • prefer_const_declarations
+warning • Unused import: 'package:streetlift_tracker/athlete_profile.dart'. Try removing the import directive • integration_test/programme_g7_test.dart:26:8 • unused_import
+warning • The library 'package:streetlift_tracker/athlete_profile.dart' doesn't export a member with the shown name 'kHealthQuestions'. Try removing the name from the list of shown members • integration_test/programme_g7_test.dart:26:63 • undefined_shown_name
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/programme_g7_test.dart:46:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/retrait_g2_test.dart:41:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/rv1_parcours_test.dart:59:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/rv1c1_chronos_test.dart:40:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/seance_g9_test.dart:45:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/street_ci1_test.dart:66:3 • prefer_const_declarations
+   info • The type of the right operand ('(int, int, ExercisePrescription)') isn't a subtype or a supertype of the left operand ('(int, int)'). Try changing one or both of the operands • integration_test/street_ci1_test.dart:579:36 • unrelated_type_equality_checks
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/tour_ui_test.dart:65:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/tour_ui_test.dart:66:3 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/tour_ui_test.dart:67:3 • prefer_const_declarations
+   info • The import of 'package:streetlift_tracker/nav_bar.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/main.dart'. Try removing the import directive • integration_test/types_ks1a_test.dart:34:8 • unnecessary_import
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • integration_test/types_ks1a_test.dart:56:3 • prefer_const_declarations
+
+36 issues found. (ran in 17.3s)
