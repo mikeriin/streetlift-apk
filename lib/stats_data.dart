@@ -15,11 +15,34 @@ class StatsHistoryEntry {
   });
 }
 
+/// Titres posés par l'application pour une journée du programme
+/// (« S3 · J2 », « S3 (ancien) · J2 ») : numéros d'une numérotation qui a pu
+/// changer depuis (PR2).
+final _autoTitle = RegExp(r'^S\d+(?: \(ancien\))? · J\d+$');
+final _programKey = RegExp(r'^S(\d+)-J(\d+)$');
+
+/// RV2 (H5, P5) : titre d'une séance de l'historique. Une journée du
+/// programme sans titre, ou au titre posé par l'application, prend le
+/// libellé de la numérotation affichée (PR2 : « S1 · J2 », « S12 (ancien) ·
+/// J2 » avant la première semaine affichée). Avant : « S15 · J2 » (numéro
+/// interne) ou, pour une séance de l'ancien programme, « S3 · J2 », confondu
+/// avec la semaine 3 affichée. Un titre choisi ailleurs reste tel quel.
+String historyTitle(AppStore source, String key, String? title) {
+  final m = _programKey.firstMatch(key);
+  if (m != null && (title == null || _autoTitle.hasMatch(title))) {
+    final n = int.parse(m[1]!), j = int.parse(m[2]!);
+    if (n >= 1 && source.program.weeks.any((w) => w.n == n)) {
+      return source.program.sessionLabel(n, j);
+    }
+  }
+  return title ?? key.replaceAll('-', ' · ');
+}
+
 List<StatsHistoryEntry> statsHistory(AppStore source) {
   final entries = <StatsHistoryEntry>[];
   for (final item in source.logs.entries.where((entry) => entry.value.done)) {
     final log = item.value;
-    final title = log.title ?? item.key.replaceAll('-', ' · ');
+    final title = historyTitle(source, item.key, log.title);
     entries.add(
       StatsHistoryEntry(
         id: item.key,

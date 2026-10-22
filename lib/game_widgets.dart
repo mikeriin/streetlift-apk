@@ -1336,7 +1336,8 @@ class _BossDetail extends StatelessWidget {
                     : Icons.radio_button_unchecked_rounded,
                 iconColor: store.isDone(week, day) ? k.validation : k.texte2,
                 title: program.week(week).day(day)?.title ?? 'Test',
-                subtitle: 'S$week\u00A0· J$day',
+                // RV2 (P5) : semaine affichée (PR2).
+                subtitle: '${program.weekLabel(week)}\u00A0· J$day',
               ),
           ],
         ),
@@ -1365,7 +1366,8 @@ class SeasonCard extends StoreWidget {
       return KCard(
         onTap: onTap,
         child: Text(
-          'Hors programme : les saisons reprennent avec le calendrier des 40 semaines.',
+          // RV2 (P5) : pas de « 40 semaines » (programme créé, PR2).
+          'Hors programme : les saisons reprennent avec le calendrier de ton programme.',
           style: KType.corps.copyWith(color: k.texte),
         ),
       );

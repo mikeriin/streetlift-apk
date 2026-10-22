@@ -646,8 +646,15 @@ const _bossNames = [
 const _bossTitles = ['Testé au feu', 'Maître des 1RM', 'Diesel', 'Finisseur'];
 
 bool isTestDay(DayPlan d) => d.title.trim().toLowerCase().startsWith('test');
-bool isDeloadWeek(WeekPlan w) =>
-    w.days.any((d) => d.cycle.toLowerCase().contains('deload'));
+
+/// Semaine de deload. RV2 (H8) : aussi la « Décharge » d'un programme créé
+/// (`kWeekKindLabels`) ; avant, seul le mot « deload » du programme
+/// d'origine comptait (titre « Gardien du repos » jamais obtenu avec un
+/// programme créé).
+bool isDeloadWeek(WeekPlan w) => w.days.any((d) {
+  final c = normalizeText(d.cycle);
+  return c.contains('deload') || c.contains('decharge');
+});
 
 List<Boss> computeBosses(
   Program program,
@@ -663,7 +670,10 @@ List<Boss> computeBosses(
     out.add(
       Boss(
         id: 'boss$i',
-        name: i < _bossNames.length ? _bossNames[i] : 'Tests · semaine $first',
+        // RV2 (P5) : semaine affichée (PR2), « Tests · S3 ».
+        name: i < _bossNames.length
+            ? _bossNames[i]
+            : 'Tests · ${program.weekLabel(first!)}',
         title: i < _bossTitles.length ? _bossTitles[i] : 'Vainqueur $i',
         firstWeek: first!,
         lastWeek: last!,
@@ -756,6 +766,38 @@ List<Season> computeSeasons(
     );
   }
   return out;
+}
+
+/// RV2 (H8) : titre « Gardien du repos » : obtenu dès qu'une saison a
+/// toutes ses semaines de deload passées ([past] : semaine terminée) et
+/// honorées (au moins une journée d'entraînement validée chacune), puis
+/// gardé, comme les autres titres. Avant : seule la saison en cours
+/// comptait, et dès son premier deload honoré : le titre était annoncé
+/// obtenu alors que les deloads suivants de la saison restaient à venir
+/// (et repris si l'un d'eux était manqué), puis perdu au changement de
+/// saison.
+bool guardianEarned(
+  Program program,
+  List<Season> seasons,
+  bool Function(int week, int day) isDone,
+  bool Function(int week) past,
+) {
+  for (final s in seasons) {
+    var deloads = 0;
+    var honored = true;
+    for (var n = s.firstWeek; n <= s.lastWeek; n++) {
+      final w = program.week(n);
+      if (!isDeloadWeek(w)) continue;
+      deloads++;
+      final done = w.days.any((d) => d.exercises.isNotEmpty && isDone(n, d.j));
+      if (!past(n) || !done) {
+        honored = false;
+        break;
+      }
+    }
+    if (deloads > 0 && honored) return true;
+  }
+  return false;
 }
 
 // ---------------------------------------------------------------------------
@@ -864,19 +906,14 @@ class GameState {
     final chapters = computeChapters(program, isDone, week);
     final bosses = computeBosses(program, isDone);
     final seasons = computeSeasons(program, isDone, week);
-    final season = seasons.where((s) => s.current).firstOrNull;
-    final deloadDone = <bool>[];
-    if (season != null) {
-      for (var n = season.firstWeek; n <= season.lastWeek && n < week; n++) {
-        final w = program.week(n);
-        if (isDeloadWeek(w)) {
-          final done = w.days
-              .where((d) => d.exercises.isNotEmpty && isDone(n, d.j))
-              .length;
-          deloadDone.add(done >= 1);
-        }
-      }
-    }
+    // RV2 (H8) : semaines passées (toutes après la fin du programme).
+    final afterEnd = week == 0 && program.afterEnd(now);
+    final guardian = guardianEarned(
+      program,
+      seasons,
+      isDone,
+      (n) => week > 0 ? n < week : afterEnd,
+    );
     final titles = <GameTitle>[
       for (final c in chapters)
         GameTitle('chapter-${c.key}', c.title, c.name, c.complete),
@@ -892,8 +929,8 @@ class GameState {
       GameTitle(
         'guardian',
         'Gardien du repos',
-        'Chaque semaine de deload de la saison honorée',
-        deloadDone.isNotEmpty && deloadDone.every((d) => d),
+        'Toutes les semaines de deload d’une saison honorées',
+        guardian,
       ),
       for (final b in progression.badges)
         if (rarityOf(b.badge) == BadgeRarity.legendaire)
