@@ -1464,9 +1464,12 @@ extension SessionAdaptStore on AppStore {
       final target = sessionLog(week, base.j);
       target.adapt = a.toJson().cast<String, dynamic>();
       // Séries préparées (non validées) : nombre et cibles du moteur.
+      // RV2 (A8) : une saisie de l'athlète dans une série pas encore
+      // validée (brouillon, CI1c) est gardée un autre jour comme le même
+      // jour ; seules les valeurs pré-remplies sont refaites.
       for (final x in target.ex.values) {
         for (final s in x.sets) {
-          if (s.done) continue;
+          if (s.done || s.edited) continue;
           s.kg = '';
           s.reps = '';
         }
@@ -1586,6 +1589,24 @@ extension SessionAdaptStore on AppStore {
   static String _defaultChoice(String mode) =>
       mode == 'assisted' ? 'applied' : 'pending';
 
+  /// RV2 (A2) : mêmes réponses de forme dans les bilans [x] et [y] (le
+  /// bilan sans ses faits : temps disponible et douleurs). Deux bilans
+  /// absents ont la même forme.
+  static bool sameHealthForm(kc.HealthCheck? x, kc.HealthCheck? y) {
+    Map<String, Object?> form(kc.HealthCheck? c) =>
+        <String, Object?>{...?c?.toJson()}
+          ..remove('minutesAvailable')
+          ..remove('pains');
+    return jsonDeepEquals(form(x), form(y));
+  }
+
+  /// RV2 (A2) : l'emplacement [slot] est servi à l'identique dans les
+  /// séances [x] et [y] (prescription faite).
+  bool _sameServedItem(SessionAdapt x, SessionAdapt y, String? slot) {
+    final a = _adaptItem(x, slot), b = _adaptItem(y, slot);
+    return a != null && b != null && jsonDeepEquals(a.toJson(), b.toJson());
+  }
+
   void _adaptStore(
     int week,
     DayPlan base,
@@ -1634,7 +1655,17 @@ extension SessionAdaptStore on AppStore {
         if (!jsonDeepEquals(b.toJson(), plan.toJson())) without = b;
       }
       final mode = adaptMode;
-      final next = SessionAdapt(
+      // CI1c : à la réouverture (quiet), la suite déjà donnée à
+      // l'ajustement du bilan est gardée. RV2 (A2) : aussi quand seuls les
+      // faits du jour changent (douleur signalée pendant la séance, temps
+      // disponible, lieu) : la forme du jour est la même, un ajustement
+      // refusé (« Annuler », « Garder ma séance ») n'est pas rétabli.
+      final keepChoice =
+          a.base != null &&
+          a.choice != null &&
+          a.mode == mode &&
+          (quiet || sameHealthForm(a.check, useCheck));
+      final draft = SessionAdapt(
         blockId: a.blockId,
         weekIndex: a.weekIndex,
         dayIndex: a.dayIndex,
@@ -1645,16 +1676,20 @@ extension SessionAdaptStore on AppStore {
         place: where,
         plan: plan,
         base: without,
-        // CI1c : à la réouverture (quiet), la suite déjà donnée à
-        // l'ajustement du bilan est gardée.
         choice: without == null
             ? null
-            : (quiet && a.base != null && a.choice != null && a.mode == mode
-                  ? a.choice
-                  : _defaultChoice(mode)),
-        // Conseils calculés pour l'ancienne prescription : retirés.
-        advice: const {},
+            : (keepChoice ? a.choice : _defaultChoice(mode)),
         source: _adaptSourceOf(place),
+      );
+      // Conseils calculés pour l'ancienne prescription : retirés. RV2
+      // (A2) : ceux d'un exercice dont la prescription servie ne change
+      // pas sont gardés (séries déjà réglées pendant la séance).
+      final next = draft.copyWith(
+        advice: {
+          for (final e in a.advice.entries)
+            if (_sameServedItem(a, draft, adaptSlotOf(week, base.j, e.key)))
+              e.key: e.value,
+        },
       );
       if (quiet) {
         // Réouverture : séance gardée si rien n'a changé ; séries
@@ -2006,15 +2041,23 @@ extension SessionAdaptStore on AppStore {
   /// CI1f : groupe d'exercices enchaînés (`GroupSpec` : EMOM, circuit,
   /// superset, AMRAP, intervalles…) de la ligne [e] : celui de la séance
   /// servie, sinon celui du bloc ; null : exercice seul.
+  ///
+  /// RV2 (RV1c1 § 4) : un item servi sans `groupId` (exercice de
+  /// remplacement du moteur dans un bloc d'intervalles, d'EMOM…, hors
+  /// programme importé) reprend le groupe de son emplacement écrit dans la
+  /// journée du bloc : lignes au chrono des tours, « Lancer », format. Un
+  /// `groupId` servi est toujours gardé (même s'il diffère de l'écrit) ;
+  /// un item sorti exprès de son groupe par le moteur (course facile à la
+  /// place d'un fractionné : une durée continue) reste seul.
   kc.GroupSpec? exerciseGroupOf(int week, int j, Exercise e) {
     final slot = e.slotId ?? adaptSlotOf(week, j, e.id);
     if (slot == null) return null;
     final a = sessionAdapt(week, j);
+    kc.ExercisePrescription? served;
     if (a != null) {
-      final it = _adaptItem(a, slot);
-      if (it != null) {
-        final id = it.groupId;
-        if (id == null) return null;
+      served = _adaptItem(a, slot);
+      final id = served?.groupId;
+      if (id != null) {
         for (final g in a.active.groups ?? const <kc.GroupSpec>[]) {
           if (g.groupId == id) return g;
         }
@@ -2023,15 +2066,43 @@ extension SessionAdaptStore on AppStore {
     }
     final day = adaptPlaceOf(week, j)?.day;
     if (day == null) return null;
-    String? id;
+    kc.ExercisePrescription? written;
     for (final it in day.items) {
-      if (it.slotId == slot) id = it.groupId;
+      if (it.slotId == slot) written = it;
     }
+    final id = written?.groupId;
     if (id == null) return null;
+    if (served != null) {
+      if (_leftGroupOnPurpose(served, written!)) return null;
+      // Groupe tel que servi (mêmes membres, tours réglés par le moteur),
+      // sinon tel qu'écrit.
+      for (final g in a!.active.groups ?? const <kc.GroupSpec>[]) {
+        if (g.groupId == id) return g;
+      }
+    }
     for (final g in day.groups ?? const <kc.GroupSpec>[]) {
       if (g.groupId == id) return g;
     }
     return null;
+  }
+
+  /// RV2 (RV1c1 § 4) : l'item [served] a été sorti exprès de son groupe
+  /// écrit ([written]) par le moteur : course facile servie à la place
+  /// d'un fractionné (`adapt.easy_instead`, ou une seule durée continue
+  /// d'un autre exercice à la place de plusieurs séries).
+  static bool _leftGroupOnPurpose(
+    kc.ExercisePrescription served,
+    kc.ExercisePrescription written,
+  ) {
+    if (served.reasons.any((r) => r.code == 'adapt.easy_instead')) return true;
+    final continuous =
+        served.sets == 1 &&
+        served.repsLow == null &&
+        served.repsHigh == null &&
+        (served.secondsLow ?? 0) >= 60;
+    return continuous &&
+        written.sets > 1 &&
+        served.exerciseId != written.exerciseId;
   }
 
   /// CI1f : emplacement du programme importé servi tel qu'écrit

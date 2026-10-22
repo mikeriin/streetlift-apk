@@ -62,7 +62,8 @@ class SafetyScreen extends StatelessWidget {
     listenable: store,
     builder: (context, _) {
       final k = KTokens.of(context);
-      final referral = store.painReferralMovements;
+      // RV2 (A4) : zones du Bilan du jour comprises.
+      final referral = store.painReferralLabels;
       return KPage.sub(
         key: const ValueKey('safety-screen'),
         title: 'Santé et sécurité',
@@ -107,8 +108,7 @@ class SafetyScreen extends StatelessWidget {
                   const SizedBox(height: KSpacing.s12),
                   _text(
                     context,
-                    '${referral.map(koachMovementName).join(', ')} : '
-                    '$kPainReferral',
+                    '${referral.join(', ')} : $kPainReferral',
                     key: const ValueKey('safety-referral'),
                     strong: true,
                   ),
