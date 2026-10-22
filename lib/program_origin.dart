@@ -41,7 +41,11 @@ extension ProgramOriginStore on AppStore {
   /// Prend la sauvegarde d'origine si elle manque et qu'un programme
   /// importé est en place. Vrai si elle vient d'être prise.
   bool captureProgramOrigin() {
-    if (programOrigin != null || !programOriginNeeded) return false;
+    // RV2 (D1) : une sauvegarde d'origine illisible reste la seule : jamais
+    // remplacée par une prise de l'état du jour.
+    if (programOrigin != null || _originRaw != null || !programOriginNeeded) {
+      return false;
+    }
     final local = _readLocalOrigin();
     if (local != null) {
       programOrigin = local;
@@ -86,6 +90,38 @@ extension ProgramOriginStore on AppStore {
   /// Copie locale alignée sur la sauvegarde d'origine du document (import
   /// d'une sauvegarde qui porte la sienne).
   Future<void> syncLocalOrigin() => _storeLocalOrigin();
+
+  /// RV2 (M9) : copie locale telle qu'écrite (null : aucune), gardée avant
+  /// une prise qui peut être annulée.
+  String? get localOriginRaw {
+    try {
+      return _prefs.getString(_kOrigin);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// RV2 (M9) : prise de la sauvegarde d'origine annulée (départ refusé
+  /// par le stockage) : mémoire et copie locale reviennent à l'état
+  /// d'avant. Avant : la copie locale, prise sur un état jamais écrit
+  /// (départ et références refusés), restait et était reprise telle
+  /// quelle comme origine à la prise suivante.
+  Future<void> undoProgramOriginCapture(String? previousLocal) async {
+    programOrigin = null;
+    _originLocalStale = false;
+    try {
+      final hook = debugOriginWriteHook;
+      if (previousLocal == null) {
+        await _prefs.remove(_kOrigin);
+      } else if (hook != null) {
+        await hook(previousLocal);
+      } else {
+        await _prefs.setString(_kOrigin, previousLocal);
+      }
+    } catch (_) {
+      // Copie locale impossible à rétablir : elle reste, comme avant.
+    }
+  }
 
   /// RV2 (M9) : nouvel essai de la copie locale refusée plus tôt.
   Future<void> retryLocalOrigin() => _storeLocalOrigin();

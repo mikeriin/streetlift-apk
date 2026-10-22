@@ -677,6 +677,13 @@ class AppStore extends ChangeNotifier {
   /// migration ({v, at, appVersion, backup}) ; null : pas encore fait.
   Map<String, dynamic>? programOrigin;
 
+  /// RV2 (D1) : section `programOrigin` illisible au démarrage (fichier
+  /// retouché, version plus récente) : gardée telle quelle et réécrite à
+  /// l'identique, jamais remplacée par une prise neuve (avant : perdue à
+  /// la première écriture, et une « origine » prise sur l'état du jour la
+  /// remplaçait sans le dire).
+  Object? _originRaw;
+
   /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
   /// présenté au moteur), clés de signature ; jamais sauvegardés.
   final Map<String, Object?> _g9Cache = {};
@@ -1378,6 +1385,7 @@ class AppStore extends ChangeNotifier {
     evolutionRaw: _evoRaw,
     adapt: adapt,
     programOrigin: programOrigin,
+    originRaw: _originRaw,
     koachEngine: koachEngine,
   );
 
@@ -1448,7 +1456,11 @@ class AppStore extends ChangeNotifier {
       // CI1e (C11.2) : programme d'origine sauvegardé avant la première
       // migration (programme et journal d'avant 6.10.0), écrit seulement
       // s'il existe ; ignoré par les versions antérieures.
-      if (data.programOrigin != null) 'programOrigin': data.programOrigin,
+      if (data.programOrigin != null)
+        'programOrigin': data.programOrigin
+      // RV2 (D1) : section illisible au démarrage, réécrite à l'identique.
+      else if (data.originRaw != null)
+        'programOrigin': data.originRaw,
       // KM3 : Koach 1.0 (journal du moteur, instantanés, bascule), écrit
       // seulement s'il sert ; ignoré par les versions antérieures.
       if (!data.koachEngine.pristine) 'koachEngine': data.koachEngine.toJson(),
@@ -1900,6 +1912,8 @@ class AppStore extends ChangeNotifier {
         }
       }
     }
+    // CI1e (C11.2) : sauvegarde d'origine (lecture tolérante).
+    final origin = _readProgramOrigin(m['programOrigin']);
     // L11 : adaptations. Import strict ; démarrage tolérant.
     final adaptIssues = <String>[];
     final nextAdapt = AdaptData.fromJson(
@@ -1937,7 +1951,8 @@ class AppStore extends ChangeNotifier {
       adapt: nextAdapt,
       adaptIssues: adaptIssues.length,
       retired: RetiredData.of(m).summary,
-      programOrigin: _readProgramOrigin(m['programOrigin']),
+      programOrigin: origin,
+      originRaw: origin == null && limits == null ? m['programOrigin'] : null,
       koachEngine: KoachEngineData.fromJson(m['koachEngine']),
     );
   }
@@ -1999,6 +2014,7 @@ class AppStore extends ChangeNotifier {
     // CI1e (C11.2) : programme d'origine de la sauvegarde (un import
     // d'avant 6.10.0 garde celui de cet appareil : _commitImport).
     programOrigin = data.programOrigin;
+    _originRaw = data.originRaw;
     // KM3 : journal de Koach de la sauvegarde ; moteur vivant reconstruit.
     koachEngine = data.koachEngine;
     _koachRt
@@ -2155,6 +2171,7 @@ class AppStore extends ChangeNotifier {
         return ImportStatus.writeFailed;
       }
       final keptOrigin = programOrigin;
+      final keptOriginRaw = _originRaw;
       _applyBackup(data);
       // Aucune cérémonie de niveau ni bilan pour des acquis déjà présents
       // dans la sauvegarde restaurée.
@@ -2181,6 +2198,10 @@ class AppStore extends ChangeNotifier {
         }
       } else if (data.programOrigin != null) {
         await ProgramOriginStore(this).syncLocalOrigin();
+      } else if (keptOriginRaw != null) {
+        // RV2 (D1) : origine illisible de l'appareil gardée de même.
+        _originRaw = keptOriginRaw;
+        write = true;
       }
       if (ProgramOriginStore(this).captureProgramOrigin()) write = true;
       if (ImportedProgramStore(this).migrateLegacyEvolution()) write = true;
@@ -2583,13 +2604,17 @@ class AppStore extends ChangeNotifier {
     _dataRevision++;
     _changeSeq++;
     // CI1e (C11.2) : programme importé qui démarre : sauvegarde d'origine.
-    final hadOrigin = programOrigin != null;
-    ProgramOriginStore(this).captureProgramOrigin();
+    // RV2 (M9) : copie locale d'avant, rétablie si l'écriture est refusée.
+    final localBefore = ProgramOriginStore(this).localOriginRaw;
+    final captured = ProgramOriginStore(this).captureProgramOrigin();
     notifyListeners();
     final ok = _initialized && await _serialize(_commitState);
     if (ok) return StartSave.saved;
-    // Écriture refusée : pas de départ annoncé, l'état précédent revient.
-    if (!hadOrigin) programOrigin = null;
+    // Écriture refusée : pas de départ annoncé, l'état précédent revient
+    // (sauvegarde d'origine prise ici comprise, copie locale aussi).
+    if (captured) {
+      await ProgramOriginStore(this).undoProgramOriginCapture(localBefore);
+    }
     program.start = previous.start;
     startOrigin = previous.origin;
     values
@@ -4010,6 +4035,10 @@ class _BackupData {
   /// migration (null si absent).
   final Map<String, dynamic>? programOrigin;
 
+  /// RV2 (D1) : section `programOrigin` illisible au démarrage, gardée
+  /// telle quelle.
+  final Object? originRaw;
+
   /// KM3 : Koach 1.0 (neuf si la section est absente).
   final KoachEngineData koachEngine;
   _BackupData({
@@ -4043,6 +4072,7 @@ class _BackupData {
     this.adaptIssues = 0,
     this.retired = const RetiredSummary(),
     this.programOrigin,
+    this.originRaw,
     KoachEngineData? koachEngine,
   }) : koach = koach ?? KoachData(),
        adapt = adapt ?? AdaptData(),

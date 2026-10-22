@@ -10,7 +10,6 @@
 // bannière se met à jour sur place et compte les échecs d'affilée. Au
 // retour à la normale : « Modifications enregistrées. ».
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 import 'kit/kit.dart';
 import 'store.dart';
@@ -72,15 +71,21 @@ class _PersistenceAlertState extends State<PersistenceAlert> {
     super.dispose();
   }
 
-  /// Le magasin peut prévenir pendant une construction : la bannière est
-  /// alors posée après l'image.
+  /// Une mise à jour en attente (plusieurs changements, une seule image).
+  bool _pending = false;
+
+  /// Le magasin peut prévenir à tout moment (pendant une construction,
+  /// depuis une écriture en arrière-plan) : la bannière est posée ou
+  /// retirée après l'image suivante, demandée ici.
   void _onChange() {
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _sync());
-    } else {
+    if (_pending) return;
+    _pending = true;
+    final binding = WidgetsBinding.instance;
+    binding.addPostFrameCallback((_) {
+      _pending = false;
       _sync();
-    }
+    });
+    binding.ensureVisualUpdate();
   }
 
   void _sync() {

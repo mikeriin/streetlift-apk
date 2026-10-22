@@ -377,6 +377,78 @@ void main() {
     });
   });
 
+  group('M9 départ refusé par le stockage', () {
+    test('la sauvegarde d’origine prise sur le départ refusé ne reste '
+        'nulle part ; le départ suivant prend la bonne', () async {
+      final app = await launch({});
+      expect(app.program.start, isNull);
+      app.debugWriteHook = (_) async => false;
+      expect(
+        await app.configureStart(
+          DateTime(2026, 10, 20),
+          references: {'B4': 80.0},
+        ),
+        StartSave.unsaved,
+      );
+      expect(app.program.start, isNull);
+      expect(app.programOrigin, isNull);
+      // Avant : copie locale prise sur l'état refusé, gardée.
+      expect(await _stored(_originKey), isNull);
+
+      app.debugWriteHook = null;
+      expect(
+        await app.configureStart(
+          DateTime(2026, 10, 21),
+          references: {'B4': 81.0},
+        ),
+        StartSave.saved,
+      );
+      final backup = app.programOrigin!['backup'] as Map<String, dynamic>;
+      expect((backup['programStart'] as Map)['date'], '2026-10-21');
+      expect((backup['pilotage'] as Map)['B4'], 81.0);
+      expect((await _stored(_originKey))!['at'], app.programOrigin!['at']);
+      app.dispose();
+    });
+  });
+
+  group('D1 sauvegarde d’origine illisible', () {
+    test('gardée telle quelle, jamais remplacée par une prise du jour',
+        () async {
+      final doc = await userDocument();
+      const unreadable = <String, Object?>{
+        'v': 2,
+        'at': '2026-09-01T08:00:00.000',
+        'backup': {'kalisTrack': 2, 'format': 9},
+      };
+      doc['programOrigin'] = unreadable;
+      final app = await launch({_stateKey: jsonEncode(doc)});
+      expect(app.programOrigin, isNull);
+      expect(app.canRestoreProgramOrigin, isFalse);
+      app.settings.theme = 'light';
+      app.saveSettings();
+      await app.flush();
+      final disk = (await _stored(_stateKey))!;
+      expect(jsonDeepEquals(disk['programOrigin'], unreadable), isTrue);
+      expect(
+        jsonDeepEquals(
+          (jsonDecode(app.exportAll()) as Map)['programOrigin'],
+          unreadable,
+        ),
+        isTrue,
+      );
+      // Import d'une sauvegarde d'avant 6.10.0 : gardée de même.
+      final old = jsonDecode(app.exportAll()) as Map<String, dynamic>
+        ..remove('programOrigin');
+      expect(await app.importAll(jsonEncode(old)), isTrue);
+      await app.flush();
+      expect(
+        jsonDeepEquals((await _stored(_stateKey))!['programOrigin'], unreadable),
+        isTrue,
+      );
+      app.dispose();
+    });
+  });
+
   group('aller-retour (magasin synthétique riche, Koach actif)', () {
     late AppStore app;
     var now = DateTime(2026, 10, 19, 7);
@@ -392,8 +464,10 @@ void main() {
       await importPr2Nouveau(app, firstWeek: 12);
       app.koachNoteInstall();
       await app.koachRefresh();
+      expect(app.koachEngine.fromWeek, 15);
       // Une séance de Koach commencée, une série validée et notée.
       final j1 = app.program.week(15).day(1)!;
+      expect(app.adaptOpen(15, j1)?.koach?['state'], 'preview');
       expect(await app.koachStart(15, j1), isTrue);
       final e = app
           .adaptDay(15, j1, app.sessionAdapt(15, 1)!)
