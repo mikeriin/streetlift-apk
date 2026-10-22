@@ -1,0 +1,26 @@
+LOT RV2 — SUITE DE LA REVUE : BUGS SIGNALÉS PAR RV1 ET NON CORRIGÉS (dev7.6.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : RV1 et RV1c1 validés (C17.44, C17.46) ; décision C17.47. **Aucune donnée réelle, aucun déchiffrement, aucune clé (C17.33.2).**
+Base : pointe de `main` (dev7.5.1, c6d6e41c, ou suivant ; C17.28 : `CLAUDE.md` de `main`, rebase avant de publier, ne défais rien des lots du propriétaire). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/RV2`. Tourne en parallèle de KM6 (moteur, branches distinctes) ; `packages/` intacts à l'octet (les bugs de moteur sont dans KM6).
+Livraisons à lire : `LIVRAISON_RV1.md` (§ 3 « signalés », mineurs signalés), `LIVRAISON_RV1_correction1.md` (§ 4).
+
+À CORRIGER (chacun : reproduction par un test, correctif, test de non-régression ; un constat non reproduit est « non confirmé »)
+Majeurs signalés par RV1 :
+- K1 lignes d'endurance servies par Koach versées sans `demand` : verser l'endurance par `koachSerieEndurance` (API existante de `kalis_adapt`), lecture du journal inchangée pour l'existant.
+- K3 course entre le rattrapage en arrière-plan et une série validée : rejouer les événements ajoutés pendant le calcul, ou sérialiser ; test de course (horloge et futures contrôlées).
+- K4 journal non tronqué si un calcul échoue après versement (doubles versements possibles) : `couper()` (ou équivalent) sur tous les chemins d'échec ; test.
+- K5 jour 0 de Koach = lundi de la semaine de départ quand le programme part un autre jour : jour 0 = jour réel de départ, migration sans perte pour un départ un lundi (cas du propriétaire : rien ne doit bouger, testé).
+- P1 `firstShownWeek` (PR2) perdu après « bloc suivant » depuis l'instance générée : garder la numérotation affichée dans `PlanProgram` ; test.
+- P3 jours J d'un programme créé recalculés si le départ change de jour de semaine : jours gardés ; test.
+- A2 signaler une douleur pendant la séance (moteur 0.x) rétablit un ajustement refusé : refus gardé ; test.
+- F4 baisser son expérience efface records et échéances sans avertir : avertissement clair avant (la règle C1.6 ne change pas) ; test widget.
+- RV1c1 § 4 : remplacement servi sans `groupId` hors programme importé : côté colle, reprendre le groupe de l'emplacement du bloc quand l'item n'en a pas (KM6 X7 le corrige dans le moteur ; la colle ne doit pas casser quand les deux sont là) ; test.
+Mineurs signalés par RV1 : corrige ensuite, par gravité, ceux qui touchent la séance et les données (S6, S10, S11, S13, M5, M6, M7, M9, A3, A5, A7, A8, A9, P5, P6, P8, H5, H8, H10), puis les autres si le budget le permet ; liste dans la livraison ce qui reste.
+
+TESTS ET CONTRÔLE
+- `test/rv2_test.dart` (unitaires et widget) ; cible émulateur `integration_test/rv2_parcours_test.dart` (deux thèmes) pour ce qui se voit ; toutes les cibles d'avant vertes ; passage depuis dev7.5.1 sans perte, export / import à l'identique.
+
+FIN DE LOT
+- dev7.6.0 sur `main`, contrôle complet `claude/ci-3d` vert sur l'arbre publié, build signé réussi (push refusé : `cp-sauvegardes/RV2-candidat` et arrête-toi).
+- `LIVRAISON_RV2.md` (pipeline et projet claude.ai) : tableau des constats (corrigé / non confirmé / reste), « À tester » court.
+- Ligne RV2 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.6.0 prêt — suite de la revue » ; arrête-toi (aucun fire_trigger).

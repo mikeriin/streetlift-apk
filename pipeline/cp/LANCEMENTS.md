@@ -425,3 +425,14 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Prompt : `prompts/RV1c1.txt`. Lot distinct de RV1 (ligne `RV1c1` d'ETAT) : **RV1 tourne encore** (session cse_016zGJ7kknAVyUVfGwKbuFrA, contrôle complet n°4 sur `claude/ci-3d` depuis 19:18 UTC) ; ne touche à rien de RV1.
 - Échéance : dev7.5.1 publiée et build signé pour le 22/10 à 04:00 UTC (06:00 Paris). Ordre et partage de `claude/ci-3d` : § « Base et ordre » du prompt.
 - Constats : deux captures du propriétaire du 21/10 au soir (en fin de `prompts/RV1.txt`).
+
+## KM6 — Koach 1.0.8 : bugs moteur de RV1 et crédits de groupes (lancé le 22/10/2026 vers 09:10 UTC, C17.47, tâche « Opus 5.5, effort maximal, moteurs »)
+
+- Prompt : `prompts/KM6.txt`. Fusion du lot moteur recommandé par RV1 (X1-X6) et du lot KS des crédits (C17.39.4), plus X7 et X8.
+- RV2 (application) tourne en parallèle sur `main` et `claude/ci-3d` : aucune interférence (`moteurs`, `claude/ci-cp-a`/`b`).
+- Aucune donnée réelle (C17.33). Le propriétaire utilise dev7.5.1 avec Koach 1.0.7.
+
+## RV2 — suite de la revue, dev7.6.0 (lancé le 22/10/2026 vers 09:10 UTC, C17.47, tâche « Opus 5.5, effort élevé, application »)
+
+- Prompt : `prompts/RV2.txt`. Base `main` c6d6e41c (dev7.5.1) ou suivant. `packages/` intacts (KM6 en parallèle sur `moteurs`).
+- Bugs signalés par le propriétaire d'ici la fin du lot : ajoutés ici par le pilotage.

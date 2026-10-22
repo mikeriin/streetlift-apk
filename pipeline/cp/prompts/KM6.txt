@@ -1,0 +1,31 @@
+LOT KM6 — KOACH 1.0.8 : BUGS MOTEUR TROUVÉS PAR RV1 ET CRÉDITS DE GROUPES (référence Python + Dart `kalis_adapt` 1.0.7, `kalis_plan` 0.4.3, `kalis_bench` suivant)
+Modèle : Opus 5.5, effort maximal (tâche « Opus 5.5, effort maximal, moteurs »). Lot KM : pas de panel, pas de relecture documentée (C13.3). Validation : automatique, par le pilotage.
+Prérequis : KM5 validé (C17.42), RV1 et RV1c1 validés (C17.44, C17.46) ; décision C17.47 (fusion du lot moteur de RV1 et du lot KS des crédits, recommandés en C17.39.4 et C17.44.3).
+Base : `moteurs` à la pointe (737d528d ou suivant : Koach 1.0.7, `kalis_adapt` 1.0.6, `kalis_bench` 0.5.8, `kalis_plan` 0.4.2). Contrôles `claude/ci-cp-a` (et `claude/ci-cp-b` si `kalis_plan` l'exige, PIPELINE_CP.md §0). Sauvegardes `cp-sauvegardes/KM6`.
+Décisions : C13.3, C13.12, C17.33 (aucune donnée réelle, aucun déchiffrement, aucune clé), C17.37 à C17.47. Livraisons à lire : `LIVRAISON_RV1.md` § 5 (bugs X1-X6), `LIVRAISON_RV1_correction1.md` § 4, `LIVRAISON_KB4.md` § 8.4, `LIVRAISON_KM4.md` § 5 (crédits), `LIVRAISON_KM5.md`.
+Une seule campagne complète, une fois le code figé ; mesures intermédiaires `--rapide` seulement pour attribuer un écart (partie A ou B).
+
+PARTIE A — BUGS DU MOTEUR (RV1 § 5 ; chacun avec un test de non-régression Python et Dart)
+- X1 `grid.dart:35, 67` (et la référence) : grille `cable` par défaut en livres (2,5 lb = 1,134 kg) au lieu de 2,5 kg (défaut de `kalis_plan`) → défaut (2,5 ; minimum 2,5) kg ; une seule table des pas par défaut, partagée (dans `kalis_core` si c'est sans risque, sinon dite et alignée).
+- X2 `seance.dart` 3000-3023, 2626-2632 : groupe `intervals` resté à l'écrit quand ses lignes sont réduites (`wod_echelle`, reprise, séance bornée) → renvoyer les tours servis du groupe, cohérents avec ses lignes.
+- X3 `seance.dart` 1679, 1486 : EMOM (`technique.intervals`) dont Koach baisse les séries (douleur, coupure, bilan) → technique recalée après chaque changement de séries (`coherentTechnique` ou équivalent) ; jamais de plan que l'application refuserait.
+- X4 test xRM verrouillé, écrit hors grille servi sous l'écrit → garder l'écrit hors grille.
+- X5 charge plafonnée puis arrondie au-dessus du plafond (`proche()`) → arrondi vers le bas après un plafond.
+- X6 test adaptatif série 0 un cran au-dessus du plafond écrit → comparer au plafond.
+- X7 (RV1c1 § 4) : un exercice de remplacement servi sans `groupId` dans un bloc d'intervalles ou d'EMOM perd son groupe → l'item servi garde le groupe de l'emplacement.
+- X8 (KB4 § 8.4, C17.43.4) : la modulation hebdomadaire de la planification (±15 %, au moins une série) peut baisser une ligne sous l'écrit : chaque baisse sous l'écrit porte une raison affichable (code existant ou nouveau, texte français neutre) ; mesurer combien de lignes et de séances sont concernées sur la campagne ; ne pas changer la règle sans mesure (C17.40.3 : jamais sous l'écrit au nom du volume — vérifier qu'aucune de ces baisses n'est une rampe déguisée).
+
+PARTIE B — CRÉDITS DE GROUPES (ex-lot KS ; LIVRAISON_KM4.md § 5 et § 9)
+- Table de KM4 § 5, sur sources : tractions (et variantes de tirage vertical) « chest » 0 ; muscle-up 0,5 ; pull-over 0,5 ; revoir dips, pompes, rowing, tirages et les exercices de street workout et de streetlifting comparables avec la même méthode ; une part changée est sourcée.
+- Changement **ensemble** dans les trois tables : correspondance muscles → groupes de `kalis_plan` (`traits.dart`, `groupCredits` ; `kalis_plan` 0.4.3, programmes du banc régénérés), validateur du banc (`kalis_bench`), fiches de Koach (`vecteurs_qualites_v1.json`, champ `groupes`, et asset des paramètres si concerné). Aucun écart de comptage possible entre les trois (test qui compare les trois tables exercice par exercice).
+- Table avant / après dans la livraison.
+
+CRITÈRES (mêmes campagnes que KM5 : 34 profils, 100 graines, 90 600 saisons ; graines 0-5 pour les critères du cahier)
+- 0 violation de sécurité (définition C17.40.3), 0 série ou item retiré sous l'écrit par la rampe, 0 coupe silencieuse, 0 saison plantée, en Python **et** en Dart ; parité une à une.
+- Critères KM 1 à 6, 7 bis et 11 : aucun recul au-delà du bruit (KR1 § 5).
+- Scénarios dédiés (synthétiques) : les reproductions de X1 à X7 ; PR2 (lundi de tirage, mardi de poussée) avec les nouveaux crédits : toutes lignes à l'écrit ; extension triceps poulie à 2,5 kg près sans profil de pas.
+
+FIN DE LOT
+- Koach 1.0.8 (paramètres `1.0.8-ref.1`, `CHANGEMENTS_1_0_8.md`, `SOURCES.md`, note datée au contrat) ; `kalis_adapt` 1.0.7 (asset et SHA-256 dans la livraison) ; `kalis_plan` 0.4.3 ; `kalis_bench` suivant ; `kalis_core` suivant seulement s'il change ; étiquettes de chaque paquet changé ; contrôles complets verts ; push `moteurs` (rebase avant chaque push).
+- `LIVRAISON_KM6.md` (pipeline et projet claude.ai) : bugs avant / après, table des crédits, critères avant / après (Python et Dart), ce que KB5 doit monter.
+- Ligne KM6 de `ETAT_CP.md` « livré » ; notification « Kalis Track KM6 livré — Koach 1.0.8 » ; arrête-toi (aucun fire_trigger).
