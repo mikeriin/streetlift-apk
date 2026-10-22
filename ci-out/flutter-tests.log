@@ -1,0 +1,12 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv2pf_programme_test.dart
+00:00 +0: P1 : départ affiché (PR2) gardé par le programme créé PlanProgram : semaine affichée écrite, relue, gardée par copyWith ; hors bornes refusée
+00:00 +1: P1 : départ affiché (PR2) gardé par le programme créé nouveau programme créé en cours de route : S1 affichée inchangée ; redémarrage, export et import
+00:02 +2: P1 : départ affiché (PR2) gardé par le programme créé bloc suivant depuis l’instance générée, puis bloc suivant du programme créé : numérotation affichée inchangée
+00:03 +3: P3 : jours J d’un programme créé fixes départ déplacé du jeudi au vendredi : séances, places dans le bloc et journal gardés ; dates décalées d’un jour
+00:03 +4: P3 : migration d’un programme créé avant RV2 sauvegarde d’avant RV2 au départ déplacé (jeudi → vendredi) : J d’avant gardés (ancrés au vendredi), puis fixes
+00:03 +5: F4 : baisser son expérience (setUpAll)
+00:03 +5: F4 : baisser son expérience réponses effacées listées sans toucher au brouillon
+00:03 +6: F4 : baisser son expérience avertissement : « Annuler » ne change rien, « Continuer » efface records et échéances
+00:05 +7: F4 : baisser son expérience rien à effacer (niveau monté) : enregistré sans avertissement
+00:05 +8: F4 : baisser son expérience (tearDownAll)
+00:05 +8: All tests passed!
