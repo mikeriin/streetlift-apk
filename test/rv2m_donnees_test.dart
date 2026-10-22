@@ -412,41 +412,46 @@ void main() {
   });
 
   group('D1 sauvegarde d’origine illisible', () {
-    test('gardée telle quelle, jamais remplacée par une prise du jour',
-        () async {
-      final doc = await userDocument();
-      const unreadable = <String, Object?>{
-        'v': 2,
-        'at': '2026-09-01T08:00:00.000',
-        'backup': {'kalisTrack': 2, 'format': 9},
-      };
-      doc['programOrigin'] = unreadable;
-      final app = await launch({_stateKey: jsonEncode(doc)});
-      expect(app.programOrigin, isNull);
-      expect(app.canRestoreProgramOrigin, isFalse);
-      app.settings.theme = 'light';
-      app.saveSettings();
-      await app.flush();
-      final disk = (await _stored(_stateKey))!;
-      expect(jsonDeepEquals(disk['programOrigin'], unreadable), isTrue);
-      expect(
-        jsonDeepEquals(
-          (jsonDecode(app.exportAll()) as Map)['programOrigin'],
-          unreadable,
-        ),
-        isTrue,
-      );
-      // Import d'une sauvegarde d'avant 6.10.0 : gardée de même.
-      final old = jsonDecode(app.exportAll()) as Map<String, dynamic>
-        ..remove('programOrigin');
-      expect(await app.importAll(jsonEncode(old)), isTrue);
-      await app.flush();
-      expect(
-        jsonDeepEquals((await _stored(_stateKey))!['programOrigin'], unreadable),
-        isTrue,
-      );
-      app.dispose();
-    });
+    test(
+      'gardée telle quelle, jamais remplacée par une prise du jour',
+      () async {
+        final doc = await userDocument();
+        const unreadable = <String, Object?>{
+          'v': 2,
+          'at': '2026-09-01T08:00:00.000',
+          'backup': {'kalisTrack': 2, 'format': 9},
+        };
+        doc['programOrigin'] = unreadable;
+        final app = await launch({_stateKey: jsonEncode(doc)});
+        expect(app.programOrigin, isNull);
+        expect(app.canRestoreProgramOrigin, isFalse);
+        app.settings.theme = 'light';
+        app.saveSettings();
+        await app.flush();
+        final disk = (await _stored(_stateKey))!;
+        expect(jsonDeepEquals(disk['programOrigin'], unreadable), isTrue);
+        expect(
+          jsonDeepEquals(
+            (jsonDecode(app.exportAll()) as Map)['programOrigin'],
+            unreadable,
+          ),
+          isTrue,
+        );
+        // Import d'une sauvegarde d'avant 6.10.0 : gardée de même.
+        final old = jsonDecode(app.exportAll()) as Map<String, dynamic>
+          ..remove('programOrigin');
+        expect(await app.importAll(jsonEncode(old)), isTrue);
+        await app.flush();
+        expect(
+          jsonDeepEquals(
+            (await _stored(_stateKey))!['programOrigin'],
+            unreadable,
+          ),
+          isTrue,
+        );
+        app.dispose();
+      },
+    );
   });
 
   group('aller-retour (magasin synthétique riche, Koach actif)', () {
