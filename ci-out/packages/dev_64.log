@@ -1,8 +1,0 @@
-tests kalis_plan : échec
-01:54 +56 -1: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 3680 à 3839 [E]
-  Expected: empty
-    Actual: [
-06:07 +535 -2: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour [E]
-06:09 +537 -3: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour [E]
-09:58 +622 -3: Some tests failed.
-format kalis_bench : échec

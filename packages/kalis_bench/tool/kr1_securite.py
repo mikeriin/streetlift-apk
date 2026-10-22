@@ -200,10 +200,27 @@ def agreger(chemins):
                              'ajouts_bornes_series': rampe.get('ajouts_bornes_series', 0),
                              'sans_cause_items': rampe.get('sans_cause_items', 0),
                              'sans_cause_series': rampe.get('sans_cause_series', 0),
+                             # KM6 (X8, C17.43.4) : modulation hebdomadaire
+                             # sous l'écrit (mêmes champs que la référence).
+                             'modulation': _module(rampe),
                              'total': _rampe_ind(rampe),
                              'par_scenario': {k: _rampe_ind(v) for k, v in sorted(rampe_scen.items())},
                              'exemples': rampe_ex},
     }
+
+
+def _module(c):
+    """KM6 (X8) : comme `module_json` de `reference/banc/securite_campagne.py`."""
+    lg = c.get('module_lignes', 0)
+    ls = c.get('module_lignes_sur_limite', 0)
+    bs = c.get('module_baisses_sur_limite', 0)
+    b = c.get('module_baisses', 0)
+    return {'items': c.get('module_items', 0), 'series': c.get('module_series', 0),
+            'seances': c.get('module_seances', 0), 'seances_total': c.get('seances', 0),
+            'sans_raison': c.get('module_sans_raison', 0),
+            'lignes': lg, 'baisses': b, 'lignes_sur_limite': ls, 'baisses_sur_limite': bs,
+            'part_baisse_sur_limite': round(bs / float(ls), 6) if ls else None,
+            'part_baisse_hors_limite': round((b - bs) / float(lg - ls), 6) if lg - ls > 0 else None}
 
 
 def _rampe_ind(c):
@@ -254,6 +271,17 @@ def markdown(r):
                                                   rp.get('ajouts_bornes', 0), rp.get('ajouts_bornes_series', 0),
                                                   rp.get('sans_cause_items', 0), rp.get('sans_cause_series', 0)),
               '']
+        md = rp.get('modulation') or {}
+        if md:
+            L += ['## Modulation hebdomadaire sous l\'écrit (KM6, X8, C17.43.4)', '',
+                  '**%d ligne(s) baissée(s) sous l\'écrit par la modulation de la planification** (%d série(s)), '
+                  'dans %d séance(s) sur %d ; **sans raison `koach.volume_semaine` : %d**. Contrôle « rampe '
+                  'déguisée » : part des lignes baissées là où la rampe de volume couperait (écrit de la semaine '
+                  'au-dessus de la limite) %s (%d sur %d), ailleurs %s (%d sur %d).' % (
+                      md['items'], md['series'], md['seances'], md['seances_total'], md['sans_raison'],
+                      md['part_baisse_sur_limite'], md['baisses_sur_limite'], md['lignes_sur_limite'],
+                      md['part_baisse_hors_limite'], md['baisses'] - md['baisses_sur_limite'],
+                      md['lignes'] - md['lignes_sur_limite']), '']
         L += ['## Rampe de volume et principaux (KM4, C17.37)', '',
               '**Principal retiré par la rampe sans douleur : %d** (séances : %d). Séances avec un principal : %d ; '
               'dont un principal réduit par le retour gradué : %d (part %s) ; part moyenne des séries écrites servie '

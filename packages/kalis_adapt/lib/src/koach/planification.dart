@@ -1646,7 +1646,9 @@ class Planification extends Extension implements AvecItemsDuJour {
   }
 
   /// Items du jour modulés (copie) : `sets` changé, `koachIntensite`
-  /// posé (lu par la prescription de séance).
+  /// posé (lu par la prescription de séance) ; `koachVolume` (séries
+  /// servies − écrites) et, quand la modulation change les séries,
+  /// `koachModule` (même écart, propre à la modulation : 1.0.8).
   List<Json> appliquer(int semaine, int jour, List<Json> items) {
     final mods = itemsModules(semaine);
     final out = <Json>[];
@@ -1668,6 +1670,12 @@ class Planification extends Extension implements AvecItemsDuJour {
         it['koachIntensite'] = ecart;
       }
       it['koachVolume'] = n - _plSeries(item);
+      if (n != _plSeries(item)) {
+        // 1.0.8 (KM6, X8) : séries ajoutées (> 0) ou retirées (< 0) par la
+        // modulation de la semaine ; une baisse sous l'écrit est dite par la
+        // séance (`koach.volume_semaine`).
+        it['koachModule'] = n - _plSeries(item);
+      }
       out.add(it);
     }
     return out;

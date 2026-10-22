@@ -108,13 +108,13 @@ void main() {
         expect(avec, contains('« $_nomEssai »'), reason: code);
       }
     }
-    // 19 des 23 codes apparaissent dans les fixtures.
+    // 19 des 24 codes apparaissent dans les fixtures.
     expect(vus.length, greaterThanOrEqualTo(19));
   });
 
   test('tous les codes du contrat (§ 3.5) ont un texte propre', () {
     final contrat = _codesDuContrat();
-    expect(contrat, hasLength(23));
+    expect(contrat, hasLength(24));
     expect(contrat, equals(koachCodesRaisons.toSet()));
     for (final code in koachCodesRaisons) {
       final r = <String, Object?>{
@@ -233,6 +233,23 @@ void main() {
       a1,
       'J’ajoute une série à ton programme sur cet exercice, au lieu des 3 '
       'prévues : ton volume de la semaine pour tes triceps ne permet pas plus.',
+    );
+    // 1.0.8 (KM6, X8) : baisse hebdomadaire de la planification dite.
+    final v1 = texteRaisonKoach(<String, Object?>{
+      'code': 'koach.volume_semaine',
+      'params': <String, Object?>{
+        'exercice': 'mu-exercice-essai',
+        'ecrites': 4,
+        'series': 3,
+        'cause': 'planification',
+      },
+    });
+    _lisible(v1, 'volume_semaine');
+    expect(
+      v1,
+      'Cette semaine, je te propose 3 séries sur cet exercice au lieu des 4 '
+      'écrites : je répartis l’effort de la semaine d’après ta récupération '
+      'prévue.',
     );
     final a2 = texteRaisonKoach(ajout('allegement', 6, 7));
     expect(a2.contains('cette semaine d’allègement'), isTrue, reason: a2);

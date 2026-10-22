@@ -190,9 +190,11 @@ def ecrit_de(slot, prog):
 
 def test_volumes_du_scenario():
     a, b = programme_a(), programme_b()
-    assert (ecrit(a, CHEST), ecrit(a, DANT), ecrit(a, TRI)) == (26.5, 17.5, 21.0)
-    assert (ecrit(b, CHEST), ecrit(b, DANT), ecrit(b, TRI)) == (38.0, 27.5, 33.5)
-    assert round(ecrit(b, CHEST) / ecrit(a, CHEST), 2) == 1.43
+    # 1.0.8 (KM6, C17.47) : crédits « chest » revus (tractions 0, muscle-up
+    # 0,5) ; avec ceux de 1.0.7 : 26,5 et 38,0 « chest » (+43 %).
+    assert (ecrit(a, CHEST), ecrit(a, DANT), ecrit(a, TRI)) == (17.5, 17.5, 21.0)
+    assert (ecrit(b, CHEST), ecrit(b, DANT), ecrit(b, TRI)) == (24.5, 27.5, 33.5)
+    assert round(ecrit(b, CHEST) / ecrit(a, CHEST), 2) == 1.4
     assert round(ecrit(b, DANT) / ecrit(a, DANT), 2) == 1.57
     assert round(ecrit(b, TRI) / ecrit(a, TRI), 2) == 1.6
 
