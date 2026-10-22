@@ -20,8 +20,6 @@ analyzer:
     # travail de la CI (tools/ci3d_drive.sh, voir docs/CI_3D.md) : dépendance
     # de développement, Flutter 3.47 la référencerait dans le registre des
     # plugins de l'APK release. Analysés par la CI 3D après cet ajout.
-    - integration_test/**
-    - test_driver/**
     - build/**
     - android/**
     # G3 : paquets Dart purs (packages/), analysés par la tâche `packages`
