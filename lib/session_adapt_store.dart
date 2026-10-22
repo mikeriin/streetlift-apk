@@ -276,7 +276,7 @@ extension SessionAdaptStore on AppStore {
       final block = _adaptPlanBlock(loc.block);
       // RV2 (P3) : J fixes, comptés depuis le départ du bloc.
       for (final d in block.pass1.days) {
-        if (planBlockJ(block, d.weekday) == j) {
+        if (planBlockJ(block, d.weekday, anchor: plan.jWeekday) == j) {
           return AdaptPlace(block, loc.weekIndex, d.dayIndex, false);
         }
       }

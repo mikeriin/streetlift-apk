@@ -300,6 +300,107 @@ void main() {
     });
   });
 
+  group('P3 : migration d’un programme créé avant RV2', () {
+    final others = <AppStore>[];
+    var clock = DateTime(2026, 10, 1, 9);
+
+    setUp(() {
+      KoachCalcul.isolat = false;
+      clock = DateTime(2026, 10, 1, 9); // jeudi
+    });
+    tearDown(() {
+      for (final o in others) {
+        o.dispose();
+      }
+      others.clear();
+    });
+
+    Future<AppStore> open({String? text}) async {
+      if (text != null) SharedPreferences.setMockInitialValues({});
+      final a = AppStore()..storeClock = () => clock;
+      await a.init();
+      others.add(a);
+      if (text != null) expect(await a.importAll(text), isTrue);
+      return a;
+    }
+
+    /// Séances de la semaine 1 : J → noms des exercices.
+    Map<int, List<String>> noms(AppStore a) => {
+      for (final d in a.program.week(1).days)
+        if (d.exercises.isNotEmpty) d.j: [for (final e in d.exercises) e.name],
+    };
+
+    test('sauvegarde d’avant RV2 au départ déplacé (jeudi → vendredi) : J '
+        'd’avant gardés (ancrés au vendredi), puis fixes', () async {
+      SharedPreferences.setMockInitialValues({});
+      final app = await open();
+      app.saveAthleteProfile(
+        ProfileDraft.of(
+          sampleAthleteProfile(
+            on: civilOf(clock),
+            guidance: kc.GuidanceMode.assisted,
+          ),
+        )..consent = 'refused',
+      );
+      final c = PlanStore(app).newPlanCreation(journal: false)!;
+      c.start();
+      c.createPass2();
+      PlanStore(app).applyPlanCreation(c);
+      expect(app.planProgram!.jWeekday, DateTime.thursday);
+      final jeudi = noms(app);
+      final placesJeudi = _places(app, 1);
+      // Sauvegarde de la forme d'avant RV2 : pas d'ancrage, départ déplacé
+      // au vendredi (les J étaient alors comptés depuis le vendredi).
+      final doc = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+      final plan = (doc['planProgram'] as Map).cast<String, dynamic>();
+      expect(plan['jWeekday'], DateTime.thursday);
+      plan.remove('jWeekday');
+      doc['planProgram'] = plan;
+      doc['programStart'] = {
+        'status': 'set',
+        'date': '2026-10-02',
+        'origin': 'user',
+      };
+      // J d'avant RV2 : jour ISO de la séance compté depuis le vendredi.
+      int avant(int j) {
+        final wd = (DateTime.thursday - 1 + j - 1) % 7 + 1;
+        return planJ(wd, DateTime.friday);
+      }
+
+      final attendu = {for (final e in jeudi.entries) avant(e.key): e.value};
+      final placesAttendues = {
+        for (final e in placesJeudi.entries) avant(e.key): e.value,
+      };
+      expect(attendu.keys.toSet(), isNot(jeudi.keys.toSet()));
+      await app.flush();
+      final migre = await open(text: jsonEncode(doc));
+      expect(migre.program.start, DateTime(2026, 10, 2));
+      expect(migre.planProgram!.jWeekday, DateTime.friday);
+      expect(noms(migre), attendu);
+      expect(_places(migre, 1), placesAttendues);
+      // Ancrage écrit, puis fixe : départ déplacé au samedi, redémarrage.
+      expect(
+        await migre.configureStart(DateTime(2026, 10, 3)),
+        StartSave.saved,
+      );
+      expect(_places(migre, 1), placesAttendues);
+      await migre.flush();
+      final out = jsonDecode(migre.exportAll()) as Map<String, dynamic>;
+      expect((out['planProgram'] as Map)['jWeekday'], DateTime.friday);
+      final relu = await open();
+      expect(relu.program.start, DateTime(2026, 10, 3));
+      expect(relu.planProgram!.jWeekday, DateTime.friday);
+      expect(noms(relu), attendu);
+      expect(_places(relu, 1), placesAttendues);
+      // Ancrage hors bornes refusé à l'import.
+      plan['jWeekday'] = 8;
+      doc['planProgram'] = plan;
+      SharedPreferences.setMockInitialValues({});
+      final strict = await open();
+      expect(await strict.importAll(jsonEncode(doc)), isFalse);
+    });
+  });
+
   group('F4 : baisser son expérience', () {
     final now = DateTime(2026, 10, 1, 12);
 

@@ -199,6 +199,8 @@ extension PlanStore on AppStore {
       firstShown: s.firstWeek > 1
           ? program.firstShown.clamp(1, s.firstWeek)
           : 1,
+      // RV2 (P3) : J1 = jour du départ, fixé une fois pour toutes.
+      jWeekday: s.start.weekday,
     );
     _planProfileLearned(c.profile);
     planProgram = next;
