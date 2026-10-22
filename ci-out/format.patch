@@ -1,0 +1,30 @@
+diff --git a/test/rv2_z_montage_test.dart b/test/rv2_z_montage_test.dart
+index fc04515..6f3aef5 100644
+--- a/test/rv2_z_montage_test.dart
++++ b/test/rv2_z_montage_test.dart
+@@ -77,8 +77,10 @@ void main() {
+     };
+     final ok = await seed.importAll(jsonEncode(b));
+     // ignore: avoid_print
+-    print('DIAG import=$ok seedStart=${seed.program.start} '
+-        'issues=${seed.programLoadIssues}');
++    print(
++      'DIAG import=$ok seedStart=${seed.program.start} '
++      'issues=${seed.programLoadIssues}',
++    );
+     await seed.flush();
+     // ignore: avoid_print
+     print('DIAG keys=${raw.getKeys()}');
+@@ -86,8 +88,10 @@ void main() {
+ 
+     await bootSession();
+     // ignore: avoid_print
+-    print('DIAG start=${store.program.start} '
+-        'issues=${store.programLoadIssues} first=${store.program.firstShown}');
++    print(
++      'DIAG start=${store.program.start} '
++      'issues=${store.programLoadIssues} first=${store.program.firstShown}',
++    );
+     expect(store.program.start, isNotNull);
+   });
+ }

@@ -1,0 +1,97 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A2 : douleur signalée après « Annuler » (mode assisté) : l’ajustement refusé n’est pas rétabli ; un nouveau bilan le repropose
+00:01 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: (setUpAll)
+00:01 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A2 : séance commencée, mode libre : « Garder ma séance » tient après une douleur ; conseils d’un exercice inchangé gardés
+00:01 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: P5 : numéros de semaine affichés (PR2) fin du programme importé : « S10 » et non « S24 »
+00:01 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: P5 : numéros de semaine affichés (PR2) phrases de Mon programme : numéro affiché, ancien numéro marqué
+00:01 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:01 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: magasin A8 : séance pas commencée rouverte le lendemain : les saisies préparées de l’athlète restent, le pré-rempli est refait
+00:02 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:02 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:02 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:02 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:02 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:02 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:02 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:02 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_hp_accueil_test.dart: H10 : remerciement de « Compléter mon profil » affiché au retour, même quand l’invitation a disparu (avant : jamais)
+00:03 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: écrans A7 : « Aucune douleur », zone ajoutée puis retirée : « aucune » gardé
+00:04 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: écrans A4 : « Santé et sécurité » : renvoi des zones du Bilan du jour
+00:04 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_a_adaptation_test.dart: écrans (tearDownAll)
+00:04 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’intervalles servie : une seule série d’endurance (demande, part faite, dose), versée la ligne finie, jamais tour par tour ; un tour corrigé remplace la série à la fin
+00:08 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’intervalles servie : une seule série d’endurance (demande, part faite, dose), versée la ligne finie, jamais tour par tour ; un tour corrigé remplace la série à la fin
+00:08 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’intervalles servie : une seule série d’endurance (demande, part faite, dose), versée la ligne finie, jamais tour par tour ; un tour corrigé remplace la série à la fin
+00:08 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’intervalles servie : une seule série d’endurance (demande, part faite, dose), versée la ligne finie, jamais tour par tour ; un tour corrigé remplace la série à la fin
+00:08 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’intervalles servie : une seule série d’endurance (demande, part faite, dose), versée la ligne finie, jamais tour par tour ; un tour corrigé remplace la série à la fin
+00:08 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’intervalles servie : une seule série d’endurance (demande, part faite, dose), versée la ligne finie, jamais tour par tour ; un tour corrigé remplace la série à la fin
+00:09 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’intervalles servie : une seule série d’endurance (demande, part faite, dose), versée la ligne finie, jamais tour par tour ; un tour corrigé remplace la série à la fin
+RV2K|k1|{"tours":8,"serie":{"exerciseId":"ca-air-bike-sprints","slotId":"j3-ca-air-bike-sprints","setIndex":0,"kind":"work","reps":null,"seconds":30,"flames":7,"failed":false,"target":{"flames":null},"restSeconds":null,"technique":null,"role":null,"repere":null,"externalLoadKg":null,"demand":5.0,"doneShare":1.0,"dose":0.09583333333333334,"fatigueSets":0.38333333333333336}}
+00:09 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_m_donnees_test.dart: M7 export et données retirées pas encore copiées copie de sécurité refusée : le fichier et la copie compacte les contiennent ; l’aperçu de l’import les annonce
+00:10 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’endurance pas finie à la fin de la séance : versée une fois, à la fin
+00:10 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’endurance pas finie à la fin de la séance : versée une fois, à la fin
+00:12 +35: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’endurance pas finie à la fin de la séance : versée une fois, à la fin
+00:12 +36: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_m_donnees_test.dart: M9 copie locale de la sauvegarde d’origine relance après une écriture refusée : l’origine reprise est la bonne, jamais l’ancienne copie locale
+00:13 +37: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K3 : série validée pendant le rattrapage (isolat) : rejouée sur l’instance adoptée, rangs justes, ni perte ni doublon
+00:14 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K3 : série validée pendant le rattrapage (isolat) : rejouée sur l’instance adoptée, rangs justes, ni perte ni doublon
+00:14 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K3 : série validée pendant le rattrapage (isolat) : rejouée sur l’instance adoptée, rangs justes, ni perte ni doublon
+00:14 +40: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K3 : série validée pendant le rattrapage (isolat) : rejouée sur l’instance adoptée, rangs justes, ni perte ni doublon
+00:15 +41: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K3 : série validée pendant le rattrapage (isolat) : rejouée sur l’instance adoptée, rangs justes, ni perte ni doublon
+RV2K|k3|{"journal":369,"versed":[["j2-sl-pompe-lestee-gilet",0,"5|null|71.25|8",358],["j2-sl-pompe-lestee-gilet",1,"5|null|71.25|8",366]]}
+00:17 +42: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_m_donnees_test.dart: aller-retour (magasin synthétique riche, Koach actif) export → import → export identique
+00:18 +43: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K4 : panne à la demande de la série suivante : journal remis tel qu’avant, série versée une seule fois au passage suivant
+00:20 +44: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K4 : panne à la demande de la série suivante : journal remis tel qu’avant, série versée une seule fois au passage suivant
+00:20 +45: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K4 : panne à la fin de la séance : journal remis tel qu’avant, séance fermée une seule fois au passage suivant
+00:23 +46: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K4 : panne à la fin de la séance : journal remis tel qu’avant, séance fermée une seule fois au passage suivant
+00:24 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_pf_programme_test.dart: P1 : départ affiché (PR2) gardé par le programme créé nouveau programme créé en cours de route : S1 affichée inchangée ; redémarrage, export et import
+00:25 +48: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K5 : départ un lundi : jour 0 inchangé (lundi = jour du départ), instantané et journal relus à l’identique
+00:27 +49: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K5 : départ un lundi : jour 0 inchangé (lundi = jour du départ), instantané et journal relus à l’identique
+00:27 +50: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K5 : départ un lundi : jour 0 inchangé (lundi = jour du départ), instantané et journal relus à l’identique
+00:27 +51: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un lundi) K5 : départ un lundi : jour 0 inchangé (lundi = jour du départ), instantané et journal relus à l’identique
+00:28 +52: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_pf_programme_test.dart: F4 : baisser son expérience (setUpAll)
+00:28 +52: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un mercredi) K5 : jour 0 = jour du départ : semaine de Koach = semaine du programme chaque jour de S1, S2 et S15 ; séances manquées au bon jour
+00:28 +53: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un mercredi) K5 : jour 0 = jour du départ : semaine de Koach = semaine du programme chaque jour de S1, S2 et S15 ; séances manquées au bon jour
+00:29 +54: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un mercredi) K5 : jour 0 = jour du départ : semaine de Koach = semaine du programme chaque jour de S1, S2 et S15 ; séances manquées au bon jour
+00:29 +55: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un mercredi) K5 : jour 0 = jour du départ : semaine de Koach = semaine du programme chaque jour de S1, S2 et S15 ; séances manquées au bon jour
+RV2K|k5|{"manquees":[98,99,100,101,102,103]}
+00:30 +56: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_k_koach_test.dart: Koach (programme PR2 synthétique, départ un mercredi) K5 : instantané pris avant RV2 au lundi de la semaine du départ : cadre gardé, journal jamais réécrit
+00:33 +57: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_s_koach_arret_test.dart: S13 : arrêt d’urgence écran ouvert : séance écrite à l’écran, séries validées gardées
+00:35 +58: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_s_koach_arret_test.dart: S13 : arrêt d’urgence écran ouvert : séance écrite à l’écran, séries validées gardées
+00:35 +59: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_s_koach_arret_test.dart: S13 : arrêt d’urgence écran ouvert : séance écrite à l’écran, séries validées gardées
+00:37 +60: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_s_koach_arret_test.dart: S13 : arrêt d’urgence écran ouvert : séance écrite à l’écran, séries validées gardées
+
+Warning: A call to tap() with finder "Found 1 widget with key [<'bilan-start'>] (ignoring all but first): [
+  KPrimaryButton-[<'bilan-start'>](dependencies: [InheritedCupertinoTheme, _InheritedTheme, _LocalizationsScope-[GlobalKey#4264b]]),
+]" derived an Offset (Offset(195.0, 500.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderSemanticsAnnotations#b6eeb relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(RenderPointerListener#d6261@Offset(195.0, 328.0), RenderSemanticsGestureHandler#4ae77@Offset(195.0, 328.0), RenderPointerListener#d10a3@Offset(195.0, 328.0), _RenderScrollSemantics#0018c@Offset(195.0, 328.0), RenderClipRect#7bcc9@Offset(195.0, 328.0), RenderFlex#2d937@Offset(195.0, 500.0), RenderConstrainedBox#a109f@Offset(195.0, 500.0), RenderPositionedBox#29137@Offset(195.0, 500.0), RenderPadding#f3d1a@Offset(195.0, 500.0), RenderCustomMultiChildLayoutBox#bde8d@Offset(195.0, 500.0), _RenderInkFeatures#f9058@Offset(195.0, 500.0), RenderPhysicalModel#a3c39@Offset(195.0, 500.0), RenderSemanticsAnnotations#16acb@Offset(195.0, 500.0), RenderRepaintBoundary#e70b8@Offset(195.0, 500.0), RenderIgnorePointer#35e40@Offset(195.0, 500.0), RenderAnimatedOpacity#3fa56@Offset(195.0, 500.0), RenderRepaintBoundary#27650@Offset(195.0, 500.0), RenderSemanticsAnnotations#2e669@Offset(195.0, 500.0), RenderOffstage#33cb5@Offset(195.0, 500.0), RenderSemanticsAnnotations#fb08b@Offset(195.0, 500.0), _RenderTheater#da4ac@Offset(195.0, 500.0), RenderAbsorbPointer#a768d@Offset(195.0, 500.0), RenderPointerListener#736ab@Offset(195.0, 500.0), RenderSemanticsAnnotations#31dee@Offset(195.0, 500.0), RenderCustomPaint#59483@Offset(195.0, 500.0), RenderSemanticsAnnotations#28ee3@Offset(195.0, 500.0), RenderSemanticsAnnotations#bc39e@Offset(195.0, 500.0), RenderSemanticsAnnotations#24bd8@Offset(195.0, 500.0), RenderTapRegionSurface#78bd7@Offset(195.0, 500.0), RenderSemanticsAnnotations#c15c0@Offset(195.0, 500.0), RenderSemanticsAnnotations#235ef@Offset(195.0, 500.0), HitTestEntry<HitTestTarget>#9ce1a(_ReusableRenderView#dadd0), HitTestEntry<HitTestTarget>#dfc05(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/rv2_s_koach_arret_test.dart:97:24)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:37 +61: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_s_koach_arret_test.dart: S13 : arrêt d’urgence écran ouvert : séance écrite à l’écran, séries validées gardées
+00:37 +62: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_s_koach_arret_test.dart: S13 : arrêt d’urgence écran ouvert : séance écrite à l’écran, séries validées gardées
+00:38 +63: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_s_koach_arret_test.dart: (tearDownAll)
+00:38 +63: /home/runner/work/streetlift-apk/streetlift-apk/test/rv2_z_montage_test.dart: diagnostic montage rv2
+DIAG import=true seedStart=2026-07-13 00:00:00.000 issues=0
+DIAG keys={kalis_state_v3, kalis_recovery_v1, program_origin_v1}
+DIAG start=2026-07-13 00:00:00.000 issues=0 first=15
+00:39 +64: All tests passed!
