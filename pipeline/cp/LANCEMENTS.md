@@ -436,3 +436,8 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Prompt : `prompts/RV2.txt`. Base `main` c6d6e41c (dev7.5.1) ou suivant. `packages/` intacts (KM6 en parallèle sur `moteurs`).
 - Bugs signalés par le propriétaire d'ici la fin du lot : ajoutés ici par le pilotage.
+
+### KM6 et RV2 — reprise (22/10/2026 vers 17:55 UTC)
+
+- Les deux sessions du 22/10 09:05 UTC se sont arrêtées vers 12:10 UTC sur la **limite d'utilisation du compte** (`USAGE_LIMIT_REACHED`), sans livrer. Reprise depuis `cp-sauvegardes/KM6` (daec4b26) et `cp-sauvegardes/RV2` (39a8e0d7), PIPELINE_CP.md §9 : relis SAUVEGARDE.md, ne refais pas ce qui est fait.
+- Budget : les deux lots tournent en parallèle et ont épuisé la limite en trois heures. Sous-agents seulement quand ils font gagner du temps réel ; sauvegarde toutes les 30 minutes (une nouvelle coupure reste possible) ; pas de surveillance en boucle.
