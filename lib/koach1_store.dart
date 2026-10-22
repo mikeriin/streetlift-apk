@@ -2914,8 +2914,7 @@ extension KoachStore on AppStore {
       if (cur == null) {
         remove.add(i);
         changed = true;
-      } else if ((v[1] == 'E' ? _koachSigLigne(cur) : _koachSig(cur)) !=
-          v[2]) {
+      } else if ((v[1] == 'E' ? _koachSigLigne(cur) : _koachSig(cur)) != v[2]) {
         ev['serie'] = cur;
         changed = true;
       }

@@ -47,14 +47,13 @@ List<Map<String, Object?>> _seance(AppStore app) {
 
 /// Séries de la séance en cours de l'emplacement [slot] (et du rang
 /// [index] s'il est donné).
-List<Map<String, Object?>> _series(AppStore app, String slot, [int? index]) =>
-    [
-      for (final x in _seance(app))
-        if (x['type'] == 'serie' &&
-            (x['serie'] as Map)['slotId'] == slot &&
-            (index == null || (x['serie'] as Map)['setIndex'] == index))
-          (x['serie'] as Map).cast<String, Object?>(),
-    ];
+List<Map<String, Object?>> _series(AppStore app, String slot, [int? index]) => [
+  for (final x in _seance(app))
+    if (x['type'] == 'serie' &&
+        (x['serie'] as Map)['slotId'] == slot &&
+        (index == null || (x['serie'] as Map)['setIndex'] == index))
+      (x['serie'] as Map).cast<String, Object?>(),
+];
 
 /// Exercices servis de la journée.
 List<Exercise> _served(AppStore app, int week, int j) {
@@ -146,19 +145,27 @@ void main() {
         'par tour ; un tour corrigé remplace la série à la fin', () async {
       clock = DateTime(2026, 10, 21, 7); // S15·J3
       await app.koachRefresh();
-      await _start(app, 15, 3);
-      final e = _served(app, 15, 3).firstWhere(
-        (x) => x.name.toLowerCase().contains('air bike'),
-      );
+      final base = await _start(app, 15, 3);
+      final e = _served(
+        app,
+        15,
+        3,
+      ).firstWhere((x) => x.name.toLowerCase().contains('air bike'));
       final slot = e.slotId ?? app.adaptSlotOf(15, 3, e.id)!;
       final tours = app.exLog(15, 3, e).sets.length;
       expect(tours, greaterThan(1));
+      // Autre exercice servi : sa cible demandée verse ce qui est fait.
+      final e2 = _served(app, 15, 3).firstWhere(
+        (x) => x.engine && x.slotId != null && x.slotId != slot,
+      );
       for (var i = 0; i < tours - 1; i++) {
         _validate(app, 15, 3, e, i, '30');
       }
+      app.koachEnsureTarget(15, base, e2, 0);
       // Ligne pas finie : rien versé (avant : un tour = une série).
       expect(_series(app, slot), isEmpty);
       _validate(app, 15, 3, e, tours - 1, '30');
+      _validate(app, 15, 3, e2, 0, '3', 8);
       final une = _series(app, slot);
       expect(une, hasLength(1));
       final s = une.single;
@@ -195,9 +202,11 @@ void main() {
       clock = DateTime(2026, 10, 21, 7);
       await app.koachRefresh();
       await _start(app, 15, 3);
-      final e = _served(app, 15, 3).firstWhere(
-        (x) => x.name.toLowerCase().contains('air bike'),
-      );
+      final e = _served(
+        app,
+        15,
+        3,
+      ).firstWhere((x) => x.name.toLowerCase().contains('air bike'));
       final slot = e.slotId ?? app.adaptSlotOf(15, 3, e.id)!;
       for (var i = 0; i < 3; i++) {
         _validate(app, 15, 3, e, i, '30');
@@ -272,10 +281,7 @@ void main() {
       await app.koachRefresh();
       expect(app.koachEngine.versed, contains(app.sessionKey(15, 2)));
       final j2 = app.koachEngine.journal;
-      expect(
-        j2.skip(d).where((x) => x['type'] == 'seance_fin'),
-        hasLength(1),
-      );
+      expect(j2.skip(d).where((x) => x['type'] == 'seance_fin'), hasLength(1));
       expect(
         j2
             .skip(d)
@@ -441,7 +447,9 @@ void main() {
         (x) => x['type'] == 'semaine_fin' && x['semaine'] == 14,
       );
       expect(fin['jour'], 105);
-      _sonde('k5', {'manquees': [for (final x in manquees) x['jour']]});
+      _sonde('k5', {
+        'manquees': [for (final x in manquees) x['jour']],
+      });
     });
 
     test('K5 : instantané pris avant RV2 au lundi de la semaine du départ : '
