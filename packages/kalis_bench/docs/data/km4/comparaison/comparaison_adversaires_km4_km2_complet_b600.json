@@ -1,0 +1,1468 @@
+{
+ "adversaires": [
+  {
+   "echeance": true,
+   "id": "adv-d6008f3e",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.053908,
+    "echecs": 0.014664,
+    "perf_a": 0.957908,
+    "perf_a_min": 0.938315,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.037428,
+    "manquants": [],
+    "perf_a": 0.9133,
+    "perf_a_min": 0.87761,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-f4c54868",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.043879,
+    "echecs": 0.007755,
+    "perf_a": 0.918238,
+    "perf_a_min": 0.868441,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 5
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.16277,
+    "manquants": [],
+    "perf_a": 0.0,
+    "perf_a_min": 0.0,
+    "poussees": 0,
+    "violations": 5
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-a0dd8069",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.043012,
+    "echecs": 0.020022,
+    "perf_a": 0.848513,
+    "perf_a_min": 0.63245,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.03642,
+    "manquants": [],
+    "perf_a": 0.951228,
+    "perf_a_min": 0.931366,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-38cd0c06",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.034195,
+    "echecs": 0.001985,
+    "perf_a": 0.880315,
+    "perf_a_min": 0.858113,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 17
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.108445,
+    "manquants": [],
+    "perf_a": 0.773989,
+    "perf_a_min": 0.734205,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-29f6c491",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.067535,
+    "echecs": 0.007827,
+    "perf_a": 0.872115,
+    "perf_a_min": 0.845785,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.057171,
+    "manquants": [],
+    "perf_a": 0.804626,
+    "perf_a_min": 0.774168,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-aed6cec9",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.036121,
+    "echecs": 0.029662,
+    "perf_a": 0.923675,
+    "perf_a_min": 0.872994,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 30
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.092118,
+    "manquants": [],
+    "perf_a": 0.871762,
+    "perf_a_min": 0.788929,
+    "poussees": 0,
+    "violations": 8
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-a1750f65",
+   "key": "street_06_inter_sets_reps",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.163212,
+    "echecs": 0.007763,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.116099,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-9f8e6eed",
+   "key": "street_06_inter_sets_reps",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.130117,
+    "echecs": 0.011922,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.21076,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-e4a074f2",
+   "key": "street_06_inter_sets_reps",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.121003,
+    "echecs": 0.005608,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 2
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.173951,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-8acefaee",
+   "key": "autres_01_debutant_musculation",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.066692,
+    "echecs": 0.03019,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 9
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.113489,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-776bfa71",
+   "key": "autres_01_debutant_musculation",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.092257,
+    "echecs": 0.015817,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 14
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.22974,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-59fe70b3",
+   "key": "autres_01_debutant_musculation",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.110074,
+    "echecs": 0.124453,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 10
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.087493,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-bbe40fc3",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.051438,
+    "echecs": 0.017514,
+    "perf_a": 0.888489,
+    "perf_a_min": 0.882504,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 1
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.099589,
+    "manquants": [],
+    "perf_a": 0.948829,
+    "perf_a_min": 0.940836,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-0bc27fcd",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.072388,
+    "echecs": 0.001595,
+    "perf_a": 0.932962,
+    "perf_a_min": 0.89128,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 1
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.150664,
+    "manquants": [],
+    "perf_a": 0.877142,
+    "perf_a_min": 0.839235,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-4c6f484e",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.052317,
+    "echecs": 0.028751,
+    "perf_a": 0.961103,
+    "perf_a_min": 0.950406,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 2
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.046322,
+    "manquants": [],
+    "perf_a": 0.914636,
+    "perf_a_min": 0.88209,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-2f13a620",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.01459,
+    "echecs": 0.001674,
+    "perf_a": 0.908728,
+    "perf_a_min": 0.907668,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 8
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.093661,
+    "manquants": [],
+    "perf_a": 0.820886,
+    "perf_a_min": 0.815549,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-188ccd6a",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.038993,
+    "echecs": 0.004775,
+    "perf_a": 0.911533,
+    "perf_a_min": 0.865077,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 6
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.04227,
+    "manquants": [],
+    "perf_a": 0.857315,
+    "perf_a_min": 0.805204,
+    "poussees": 2,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-0cfa9933",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.090202,
+    "echecs": 0.03344,
+    "perf_a": 0.817335,
+    "perf_a_min": 0.749263,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 8
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.117498,
+    "manquants": [],
+    "perf_a": 0.817803,
+    "perf_a_min": 0.762938,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-9d9d9d9b",
+   "key": "street_06_inter_sets_reps",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.160471,
+    "echecs": 0.004193,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.14157,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-ed452491",
+   "key": "street_06_inter_sets_reps",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.115609,
+    "echecs": 0.011988,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 2
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.199698,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-80482bda",
+   "key": "street_06_inter_sets_reps",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.122136,
+    "echecs": 0.011027,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 19
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.145039,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-ad3d0518",
+   "key": "autres_01_debutant_musculation",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.083693,
+    "echecs": 0.016378,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 10
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.099624,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-eafe0c9c",
+   "key": "autres_01_debutant_musculation",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.197918,
+    "echecs": 0.031187,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 3
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.366976,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-89461c0f",
+   "key": "autres_01_debutant_musculation",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.085525,
+    "echecs": 0.088575,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 3
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.133697,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-51198816",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.036026,
+    "echecs": 0.016045,
+    "perf_a": 0.449578,
+    "perf_a_min": 0.0,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 1
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.035561,
+    "manquants": [],
+    "perf_a": 0.0,
+    "perf_a_min": 0.0,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-c857f501",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.069526,
+    "echecs": 0.008031,
+    "perf_a": 0.900783,
+    "perf_a_min": 0.896776,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 1
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.049184,
+    "manquants": [],
+    "perf_a": 0.0,
+    "perf_a_min": 0.0,
+    "poussees": 1,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-0a0b9d66",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.079777,
+    "echecs": 0.017535,
+    "perf_a": 0.883377,
+    "perf_a_min": 0.857317,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.092373,
+    "manquants": [],
+    "perf_a": 0.847311,
+    "perf_a_min": 0.803697,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-56f0e21d",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.027153,
+    "echecs": 0.0,
+    "perf_a": 0.929775,
+    "perf_a_min": 0.913979,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.064272,
+    "manquants": [],
+    "perf_a": 0.868438,
+    "perf_a_min": 0.861972,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-32f99b5f",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.075483,
+    "echecs": 0.00449,
+    "perf_a": 0.801782,
+    "perf_a_min": 0.681332,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 9
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.14517,
+    "manquants": [],
+    "perf_a": 0.768087,
+    "perf_a_min": 0.711074,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-519d4f03",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.067199,
+    "echecs": 0.052899,
+    "perf_a": 0.896909,
+    "perf_a_min": 0.891033,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 14
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.047202,
+    "manquants": [],
+    "perf_a": 0.905142,
+    "perf_a_min": 0.902936,
+    "poussees": 2,
+    "violations": 8
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-fad2d2e4",
+   "key": "street_06_inter_sets_reps",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.162164,
+    "echecs": 0.008106,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.120435,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-c6a7f72b",
+   "key": "street_06_inter_sets_reps",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.113165,
+    "echecs": 0.007749,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "pire",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.240118,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-175fcadf",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.062164,
+    "echecs": 0.00654,
+    "perf_a": 0.920117,
+    "perf_a_min": 0.876777,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 11
+   },
+   "role": "temoin",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.128528,
+    "manquants": [],
+    "perf_a": 0.0,
+    "perf_a_min": 0.0,
+    "poussees": 0,
+    "violations": 2
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-85b22c44",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.084154,
+    "echecs": 0.001708,
+    "perf_a": 0.915153,
+    "perf_a_min": 0.898451,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 1
+   },
+   "role": "temoin",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.171641,
+    "manquants": [],
+    "perf_a": 0.820531,
+    "perf_a_min": 0.788177,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-a744ac78",
+   "key": "street_07_avance_streetlifting_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.066903,
+    "echecs": 0.010767,
+    "perf_a": 0.912311,
+    "perf_a_min": 0.895418,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "temoin",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.043396,
+    "manquants": [],
+    "perf_a": 0.0,
+    "perf_a_min": 0.0,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-9166af9d",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.029775,
+    "echecs": 0.016657,
+    "perf_a": 0.927102,
+    "perf_a_min": 0.922185,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 5
+   },
+   "role": "temoin",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.057694,
+    "manquants": [],
+    "perf_a": 0.935928,
+    "perf_a_min": 0.92182,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-c7133987",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.031142,
+    "echecs": 0.005281,
+    "perf_a": 0.918465,
+    "perf_a_min": 0.885872,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "temoin",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.023946,
+    "manquants": [],
+    "perf_a": 0.880828,
+    "perf_a_min": 0.864646,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": true,
+   "id": "adv-dbd1ebe2",
+   "key": "autres_03_powerlifter_competition",
+   "kind": "c",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.0482,
+    "echecs": 0.043891,
+    "perf_a": 0.932999,
+    "perf_a_min": 0.910278,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 5
+   },
+   "role": "temoin",
+   "scenario": "reference",
+   "seeds": [
+    1,
+    2
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.060161,
+    "manquants": [],
+    "perf_a": 0.888174,
+    "perf_a_min": 0.863398,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-d824e2b5",
+   "key": "street_06_inter_sets_reps",
+   "kind": "a",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.111363,
+    "echecs": 0.001625,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 2
+   },
+   "role": "temoin",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.109627,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  },
+  {
+   "echeance": false,
+   "id": "adv-12d16d03",
+   "key": "street_06_inter_sets_reps",
+   "kind": "b",
+   "koach": {
+    "aggravations": 0,
+    "e1rm6": 0.094653,
+    "echecs": 0.001119,
+    "perf_a": null,
+    "perf_a_min": null,
+    "plantages": [],
+    "poussees": 0,
+    "violations": 0
+   },
+   "role": "temoin",
+   "scenario": "reference",
+   "seeds": [
+    0,
+    1
+   ],
+   "temoin": {
+    "aggravations": 0,
+    "e1rm6": 0.179115,
+    "manquants": [],
+    "perf_a": null,
+    "perf_a_min": null,
+    "poussees": 0,
+    "violations": 0
+   }
+  }
+ ],
+ "critere": {
+  "libelle": "pire cas de Koach >= pire cas du témoin (performance le jour J, moyenne par adversaire)",
+  "pire_koach": 0.449578,
+  "pire_temoin": 0.0,
+  "respecte": true,
+  "saisons_temoin_manquantes": 0
+ },
+ "critere_7_bis": {
+  "ecart_moyen": 0.197638,
+  "hors_critere": {
+   "aucun_jour_j": 16,
+   "koach_sans_jour_j": [],
+   "temoin_sans_jour_j": []
+  },
+  "libelle": "adversaires appariés (jour J pour les deux moteurs) : Koach >= témoin − 0.03 dans au moins 90 % des cas, aucun cas sous témoin − 0.10 sauf violation de sécurité du témoin",
+  "n": 24,
+  "part": 0.916667,
+  "pire_ecart": -0.102715,
+  "respecte": false,
+  "sous_plancher": [
+   {
+    "ecart": -0.102715,
+    "excuse": false,
+    "id": "adv-a0dd8069",
+    "koach": 0.848513,
+    "temoin": 0.951228,
+    "violations_temoin": 0
+   }
+  ],
+  "sous_plancher_non_excuses": 1,
+  "temoin_avec_barre": {
+   "ecart_moyen": 0.033804,
+   "n": 19,
+   "part": 0.894737,
+   "pire_ecart": -0.102715,
+   "respecte": false,
+   "sous_plancher": [
+    {
+     "ecart": -0.102715,
+     "excuse": false,
+     "id": "adv-a0dd8069",
+     "koach": 0.848513,
+     "temoin": 0.951228,
+     "violations_temoin": 0
+    }
+   ],
+   "sous_plancher_non_excuses": 1,
+   "tenus": 17
+  },
+  "tenus": 22
+ },
+ "groupes": {
+  "pires": {
+   "e1rm6": {
+    "koach": {
+     "moyenne": 0.083681,
+     "n": 32,
+     "pire": 0.197918
+    },
+    "temoin": {
+     "moyenne": 0.120525,
+     "n": 32,
+     "pire": 0.366976
+    }
+   },
+   "n": 32,
+   "perf_a": {
+    "koach": {
+     "moyenne": 0.871284,
+     "n": 18,
+     "pire": 0.449578
+    },
+    "temoin": {
+     "moyenne": 0.718916,
+     "n": 18,
+     "pire": 0.0
+    }
+   },
+   "perf_a_par_saison": {
+    "koach": {
+     "moyenne": 0.805707,
+     "n": 18,
+     "pire": 0.0
+    },
+    "temoin": {
+     "moyenne": 0.690656,
+     "n": 18,
+     "pire": 0.0
+    }
+   },
+   "securite": {
+    "koach": {
+     "aggravations": 0,
+     "plantages": 0,
+     "poussees": 0,
+     "violations_indicatives": 175
+    },
+    "temoin": {
+     "aggravations": 0,
+     "poussees": 5,
+     "violations": 21
+    }
+   }
+  },
+  "temoins": {
+   "e1rm6": {
+    "koach": {
+     "moyenne": 0.066044,
+     "n": 8,
+     "pire": 0.111363
+    },
+    "temoin": {
+     "moyenne": 0.096764,
+     "n": 8,
+     "pire": 0.179115
+    }
+   },
+   "n": 8,
+   "perf_a": {
+    "koach": {
+     "moyenne": 0.921025,
+     "n": 6,
+     "pire": 0.912311
+    },
+    "temoin": {
+     "moyenne": 0.587577,
+     "n": 6,
+     "pire": 0.0
+    }
+   },
+   "perf_a_par_saison": {
+    "koach": {
+     "moyenne": 0.898164,
+     "n": 6,
+     "pire": 0.876777
+    },
+    "temoin": {
+     "moyenne": 0.573007,
+     "n": 6,
+     "pire": 0.0
+    }
+   },
+   "securite": {
+    "koach": {
+     "aggravations": 0,
+     "plantages": 0,
+     "poussees": 0,
+     "violations_indicatives": 24
+    },
+    "temoin": {
+     "aggravations": 0,
+     "poussees": 0,
+     "violations": 2
+    }
+   }
+  },
+  "tous": {
+   "e1rm6": {
+    "koach": {
+     "moyenne": 0.080153,
+     "n": 40,
+     "pire": 0.197918
+    },
+    "temoin": {
+     "moyenne": 0.115773,
+     "n": 40,
+     "pire": 0.366976
+    }
+   },
+   "n": 40,
+   "perf_a": {
+    "koach": {
+     "moyenne": 0.883719,
+     "n": 24,
+     "pire": 0.449578
+    },
+    "temoin": {
+     "moyenne": 0.686081,
+     "n": 24,
+     "pire": 0.0
+    }
+   },
+   "perf_a_par_saison": {
+    "koach": {
+     "moyenne": 0.828821,
+     "n": 24,
+     "pire": 0.0
+    },
+    "temoin": {
+     "moyenne": 0.661244,
+     "n": 24,
+     "pire": 0.0
+    }
+   },
+   "securite": {
+    "koach": {
+     "aggravations": 0,
+     "plantages": 0,
+     "poussees": 0,
+     "violations_indicatives": 199
+    },
+    "temoin": {
+     "aggravations": 0,
+     "poussees": 5,
+     "violations": 23
+    }
+   }
+  }
+ },
+ "moteur": {
+  "briques": [],
+  "koach": "package:kalis_adapt/koach.dart (Dart)",
+  "politique": "PolitiqueKoach (kmSimuler)",
+  "temoin": "lu dans /home/runner/work/streetlift-apk/streetlift-apk/packages/kalis_adapt/reference/donnees/temoin_adversaires/adversaires_km2_complet_b600_temoin.json.gz",
+  "trajectoires": null
+ },
+ "schema": 1
+}

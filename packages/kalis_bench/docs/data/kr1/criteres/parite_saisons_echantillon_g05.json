@@ -1,0 +1,23 @@
+{
+ "schema": "kalis_bench/kr1_parite_saisons/1",
+ "tolerance": 1e-09,
+ "python": 20,
+ "comparees": 20,
+ "egales": 20,
+ "absentes_python": 2698,
+ "absentes_exemples": [
+  "autres_01_debutant_musculation__reference__a__0",
+  "autres_01_debutant_musculation__reference__a__2",
+  "autres_01_debutant_musculation__reference__a__4",
+  "autres_01_debutant_musculation__reference__b__0",
+  "autres_01_debutant_musculation__reference__b__2",
+  "autres_01_debutant_musculation__reference__b__4",
+  "autres_01_debutant_musculation__reference__c__0",
+  "autres_01_debutant_musculation__reference__c__2",
+  "autres_01_debutant_musculation__reference__c__4",
+  "autres_01_debutant_musculation__seances_manquees__a__0"
+ ],
+ "ecarts": 0,
+ "ecarts_exemples": [],
+ "python_absentes_dart": []
+}

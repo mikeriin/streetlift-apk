@@ -1,0 +1,124 @@
+{
+ "schemaVersion": 1,
+ "key": "ks1a_street_5050",
+ "group": "street",
+ "title": "Profil du constat de KS1A : street 50 / 50, six séances, questionnaire de santé non rempli",
+ "summary": "Équivalent au banc du profil d'exemple de l'application (`sampleStreet5050Profile`, dev7.1.0) qui a montré le constat de KS1A : homme avancé (2 à 5 ans), 75 kg, streetlifting 50 % / sets & reps 50 %, six séances de 120 minutes en salle, questionnaire de santé non rempli (programme prudent). Seuls repères : traction lestée 1RM 35 kg, 13 tractions ; aucun repère de dips, de pompes, de squat ni de muscle-up. Objectif traction lestée 60 kg à 26 semaines ; compétition principale de streetlifting dans 12 semaines (traction lestée).",
+ "level": "advanced",
+ "trainingAgeMonths": 36,
+ "core": {
+  "sex": "male",
+  "birthYear": 1990,
+  "heightCm": 178,
+  "bodyWeightKg": 75.0,
+  "streetMode": {
+   "primary": "streetlifting",
+   "streetliftingPct": 50,
+   "setsRepsPct": 50,
+   "calisthenicsPct": 0
+  },
+  "disciplines": {
+   "primary": "streetlifting",
+   "primaryPct": 50,
+   "secondaries": [
+    {
+     "discipline": "street_workout",
+     "pct": 50
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 120
+   },
+   {
+    "weekday": 2,
+    "minutes": 120
+   },
+   {
+    "weekday": 3,
+    "minutes": 120
+   },
+   {
+    "weekday": 4,
+    "minutes": 120
+   },
+   {
+    "weekday": 5,
+    "minutes": 120
+   },
+   {
+    "weekday": 6,
+    "minutes": 120
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "aucun (sol)",
+   "barre fixe",
+   "barres parallèles",
+   "barre olympique",
+   "disques",
+   "cage / rack",
+   "ceinture de lest"
+  ],
+  "loadIncrements": [],
+  "limitations": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "outcome": "not_answered"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "sl-traction-lestee",
+   "measure": "one_rm_kg",
+   "value": 35
+  },
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 13
+  }
+ ],
+ "events": [
+  {
+   "id": "e1",
+   "kind": "competition",
+   "label": "championnat de streetlifting",
+   "weeksOut": 12,
+   "priority": "A",
+   "format": "streetlifting",
+   "targets": [
+    {
+     "exerciseId": "sl-traction-lestee",
+     "metric": "one_rm_kg",
+     "targetValue": 50
+    }
+   ]
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sl-traction-lestee",
+   "metric": "one_rm_kg",
+   "targetValue": 60,
+   "weeksOut": 26
+  }
+ ],
+ "weakPoints": [],
+ "recovery": {},
+ "expectations": {
+  "text": [
+   "Constat de KS1A (LIVRAISON_KS1A.md § 1.5) : le jour « Poussée — endurance de force » ne contenait aucun exercice de poussée. KS1c2 : chaque jour typé porte au moins un exercice principal de son schéma."
+  ],
+  "checks": []
+ }
+}

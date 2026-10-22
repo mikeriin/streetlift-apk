@@ -1,0 +1,19 @@
+{
+ "comparees": 90600,
+ "dart_sans_python": [],
+ "differentes": 0,
+ "ecarts_par_champ": {},
+ "exemples": [],
+ "identiques": 90600,
+ "liste_differentes": [],
+ "plantees_dart": [],
+ "python_sans_dart": [],
+ "python_sans_dart_nombre": 0,
+ "saisons_dart": 90600,
+ "saisons_par_champ": {},
+ "saisons_python": 90600,
+ "tolerance": {
+  "absolue": 1e-12,
+  "relative": 1e-09
+ }
+}

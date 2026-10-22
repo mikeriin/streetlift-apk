@@ -1,0 +1,264 @@
+{
+ "schemaVersion": 1,
+ "key": "street_08_avance_sets_reps_competition",
+ "group": "street",
+ "title": "Avancé sets & reps, compétition dans 8 semaines",
+ "summary": "Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 dips, 65 pompes ; traction +45 kg, dips +70 kg. Compétition de sets & reps dans 8 semaines. Cinq séances de 75 minutes, parc et salle.",
+ "level": "advanced",
+ "trainingAgeMonths": 48,
+ "core": {
+  "sex": "male",
+  "birthYear": 2001,
+  "heightCm": 176,
+  "bodyWeightKg": 72.0,
+  "streetMode": {
+   "primary": "sets_reps",
+   "streetliftingPct": 20,
+   "setsRepsPct": 70,
+   "calisthenicsPct": 10
+  },
+  "disciplines": {
+   "primary": "street_workout",
+   "primaryPct": 70,
+   "secondaries": [
+    {
+     "discipline": "streetlifting",
+     "pct": 20
+    },
+    {
+     "discipline": "calisthenics",
+     "pct": 10
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 75
+   },
+   {
+    "weekday": 2,
+    "minutes": 75
+   },
+   {
+    "weekday": 4,
+    "minutes": 75
+   },
+   {
+    "weekday": 5,
+    "minutes": 75
+   },
+   {
+    "weekday": 6,
+    "minutes": 75
+   }
+  ],
+  "places": [
+   "exterieur",
+   "salle"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "ceinture de lest",
+   "disques",
+   "barre olympique",
+   "cage / rack",
+   "magnésie",
+   "banc plat",
+   "haltères",
+   "poulie",
+   "anneaux",
+   "tapis",
+   "box / plinth"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "advanced",
+  "guidanceMode": "free",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  },
+  "knownExerciseIds": [
+   "cd-muscle-up-barre-strict"
+  ]
+ },
+ "records": [
+  {
+   "exerciseId": "cd-muscle-up-barre-strict",
+   "measure": "max_reps",
+   "value": 12
+  },
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 28
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 50
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 65
+  },
+  {
+   "exerciseId": "sl-traction-lestee",
+   "measure": "one_rm_kg",
+   "value": 45
+  },
+  {
+   "exerciseId": "sl-dips-leste",
+   "measure": "one_rm_kg",
+   "value": 70
+  }
+ ],
+ "events": [
+  {
+   "id": "e1",
+   "kind": "competition",
+   "label": "compétition de sets & reps",
+   "weeksOut": 8,
+   "priority": "A",
+   "format": "sets_reps",
+   "targets": [
+    {
+     "exerciseId": "cd-muscle-up-barre-strict",
+     "metric": "max_reps",
+     "targetValue": 14
+    },
+    {
+     "exerciseId": "sw-traction-pronation",
+     "metric": "max_reps",
+     "targetValue": 32
+    },
+    {
+     "exerciseId": "sw-dips-barres-paralleles",
+     "metric": "max_reps",
+     "targetValue": 56
+    }
+   ]
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Muscle-ups, tractions et dips quatre fois par semaine ou plus, dont une ou deux expositions légères (R4-G8) ; les trois quarts du volume dans la zone et la densité de l'épreuve en bloc spécifique (R4-G1).",
+   "Circuits et sets au format de l'épreuve, dans l'ordre de l'épreuve, simulation complète toutes les une à deux semaines, la dernière 7 à 10 jours avant (R4-G7, R3-P17).",
+   "Une séance lourde par semaine et par mouvement pour entretenir la force (lest, 3 à 6 répétitions) (R4-G2, R3-P18).",
+   "Affûtage de 8 à 14 jours, volume réduit de 40 à 60 %, allure et densité de compétition conservées sur des fractions courtes, 1 à 2 jours de repos seulement (R3-P21).",
+   "Échec réservé aux simulations ; ailleurs 1 à 3 répétitions en réserve (R4-G3)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "has_taper",
+    "label": "Volume réduit de 40 à 60 % la semaine de la compétition",
+    "minDrop": 0.4,
+    "maxDrop": 0.65
+   },
+   {
+    "id": "c2",
+    "type": "min_frequency",
+    "label": "Tractions au moins quatre fois par semaine",
+    "exerciseIds": [
+     "sw-traction-pronation"
+    ],
+    "perWeek": 4
+   },
+   {
+    "id": "c3",
+    "type": "min_frequency",
+    "label": "Muscle-ups au moins trois fois par semaine",
+    "exerciseIds": [
+     "cd-muscle-up-barre-strict"
+    ],
+    "perWeek": 3
+   },
+   {
+    "id": "c4",
+    "type": "min_frequency",
+    "label": "Dips au moins trois fois par semaine",
+    "exerciseIds": [
+     "sw-dips-barres-paralleles"
+    ],
+    "perWeek": 3
+   },
+   {
+    "id": "c5",
+    "type": "short_rest_share",
+    "label": "Au moins la moitié des séries de tractions, dips et muscle-ups en densité",
+    "exerciseIds": [
+     "sw-traction-pronation",
+     "sw-dips-barres-paralleles",
+     "cd-muscle-up-barre-strict"
+    ],
+    "maxRestSeconds": 90,
+    "minShare": 0.5
+   },
+   {
+    "id": "c6",
+    "type": "format_present",
+    "label": "Formats de l'épreuve : tours, EMOM, AMRAP, séries dégressives",
+    "formats": [
+     "emom",
+     "amrap",
+     "rounds",
+     "drop_set",
+     "ladder"
+    ]
+   },
+   {
+    "id": "c7",
+    "type": "min_frequency",
+    "label": "Une séance lestée lourde par semaine en traction",
+    "exerciseIds": [
+     "sl-traction-lestee"
+    ],
+    "exact": true,
+    "perWeek": 1
+   },
+   {
+    "id": "c8",
+    "type": "test_at_event",
+    "label": "Épreuve sur les mouvements visés la semaine de la compétition"
+   }
+  ]
+ }
+}
