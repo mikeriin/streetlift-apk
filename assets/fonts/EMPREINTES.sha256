@@ -1,0 +1,11 @@
+# Polices Barlow (SIL Open Font License 1.1, voir OFL.txt).
+# Source : https://github.com/google/fonts, dossiers ofl/barlow, ofl/barlowsemicondensed, ofl/barlowcondensed,
+# commit bd8f81ddb5c74d5c8897b36ad88b440266245103 (branche main, 10/10/2026). Version des polices : 1.408.
+# Empreintes SHA-256 (sha256sum -c EMPREINTES.sha256) :
+f8906f762cb73dca441da034bc363b2d8e2e68bc10d5c05e58717646c20cc4b4  Barlow-Medium.ttf
+95aa02c7c43096e0dd44d787ba6216864a67157e402adab59b35572e0c1577ea  Barlow-Regular.ttf
+86577cb32f8abe3673db53ca0f4221e6856751a4f6730c867e00f720f8bb1fc5  Barlow-SemiBold.ttf
+262bd143292ce479ee0cd09a42b47ab173fca8e9c6eb5ed0b5c8a845bc371d17  BarlowCondensed-Medium.ttf
+7b619d14bc2327509a9ef32b0890f709626f7ecc9ff61191c2a4314c5499d2d9  BarlowCondensed-SemiBold.ttf
+bd299f4bc5b44d30be8d42e9bad3a5df7d66af1cd55d0ed72a8b8916360a1424  BarlowSemiCondensed-SemiBold.ttf
+186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f  OFL.txt
