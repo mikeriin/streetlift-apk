@@ -646,6 +646,7 @@ const _bossNames = [
 const _bossTitles = ['Testé au feu', 'Maître des 1RM', 'Diesel', 'Finisseur'];
 
 bool isTestDay(DayPlan d) => d.title.trim().toLowerCase().startsWith('test');
+
 /// Semaine de deload. RV2 (H8) : aussi la « Décharge » d'un programme créé
 /// (`kWeekKindLabels`) ; avant, seul le mot « deload » du programme
 /// d'origine comptait (titre « Gardien du repos » jamais obtenu avec un

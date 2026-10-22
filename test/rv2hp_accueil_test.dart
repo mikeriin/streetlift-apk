@@ -28,6 +28,8 @@ import 'package:streetlift_tracker/athlete_profile_flow.dart'
     show AthleteProfileFlow;
 import 'package:streetlift_tracker/game.dart'
     show GameState, computeBosses, isDeloadWeek;
+import 'package:streetlift_tracker/koach1/koach1_widgets.dart'
+    show debugResetKoachTakeoverWait;
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/plan/plan_texts.dart' show shownWeekNumber;
@@ -47,9 +49,7 @@ import 'kb2c1_fixtures.dart';
 Map<String, dynamic> _base() =>
     jsonDecode(
           utf8.decode(
-            gzip.decode(
-              File('assets/programme_v33.json.gz').readAsBytesSync(),
-            ),
+            gzip.decode(File('assets/programme_v33.json.gz').readAsBytesSync()),
           ),
         )
         as Map<String, dynamic>;
@@ -247,8 +247,7 @@ void main() {
   group('H8 : titre « Gardien du repos »', () {
     // Programme embarqué : deloads S7 (saison 1), S11, S15, S19 (saison 2),
     // S23 (saison 3)…
-    final program = Program.fromJson(_base())
-      ..start = DateTime(2026, 7, 13);
+    final program = Program.fromJson(_base())..start = DateTime(2026, 7, 13);
 
     bool gardien(Set<int> honorees, int semaine, {int jour = 3}) {
       final now = DateTime(2026, 7, 13 + (semaine - 1) * 7 + jour - 1, 12);
@@ -329,9 +328,10 @@ void main() {
       }
       expect(find.byType(AthleteProfileFlow), findsOneWidget);
       expect(find.byKey(const ValueKey('rv2-carte')), findsNothing);
-      tester
-          .state<NavigatorState>(find.byType(Navigator).first)
-          .pop((rubrics: <String>{}, program: false));
+      tester.state<NavigatorState>(find.byType(Navigator).first).pop((
+        rubrics: <String>{},
+        program: false,
+      ));
       for (var i = 0; i < 5; i++) {
         await tester.pump(const Duration(milliseconds: 200));
       }
