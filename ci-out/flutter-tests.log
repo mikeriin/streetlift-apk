@@ -1,0 +1,13 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/rv2k_koach_test.dart
+00:00 +0: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’intervalles servie : une seule série d’endurance (demande, part faite, dose), versée la ligne finie, jamais tour par tour ; un tour corrigé remplace la série à la fin
+RV2K|k1|{"tours":8,"serie":{"exerciseId":"ca-air-bike-sprints","slotId":"j3-ca-air-bike-sprints","setIndex":0,"kind":"work","reps":null,"seconds":30,"flames":7,"failed":false,"target":{"flames":null},"restSeconds":null,"technique":null,"role":null,"repere":null,"externalLoadKg":null,"demand":5.0,"doneShare":1.0,"dose":0.09583333333333334,"fatigueSets":0.38333333333333336}}
+00:04 +1: Koach (programme PR2 synthétique, départ un lundi) K1 : ligne d’endurance pas finie à la fin de la séance : versée une fois, à la fin
+00:06 +2: Koach (programme PR2 synthétique, départ un lundi) K3 : série validée pendant le rattrapage (isolat) : rejouée sur l’instance adoptée, rangs justes, ni perte ni doublon
+RV2K|k3|{"journal":369,"versed":[["j2-sl-pompe-lestee-gilet",0,"5|null|71.25|8",358],["j2-sl-pompe-lestee-gilet",1,"5|null|71.25|8",366]]}
+00:10 +3: Koach (programme PR2 synthétique, départ un lundi) K4 : panne à la demande de la série suivante : journal remis tel qu’avant, série versée une seule fois au passage suivant
+00:13 +4: Koach (programme PR2 synthétique, départ un lundi) K4 : panne à la fin de la séance : journal remis tel qu’avant, séance fermée une seule fois au passage suivant
+00:16 +5: Koach (programme PR2 synthétique, départ un lundi) K5 : départ un lundi : jour 0 inchangé (lundi = jour du départ), instantané et journal relus à l’identique
+00:19 +6: Koach (programme PR2 synthétique, départ un mercredi) K5 : jour 0 = jour du départ : semaine de Koach = semaine du programme chaque jour de S1, S2 et S15 ; séances manquées au bon jour
+RV2K|k5|{"manquees":[98,99,100,101,102,103]}
+00:21 +7: Koach (programme PR2 synthétique, départ un mercredi) K5 : instantané pris avant RV2 au lundi de la semaine du départ : cadre gardé, journal jamais réécrit
+00:23 +8: All tests passed!
