@@ -155,9 +155,11 @@ void main() {
       final tours = app.exLog(15, 3, e).sets.length;
       expect(tours, greaterThan(1));
       // Autre exercice servi : sa cible demandée verse ce qui est fait.
-      final e2 = _served(app, 15, 3).firstWhere(
-        (x) => x.engine && x.slotId != null && x.slotId != slot,
-      );
+      final e2 = _served(
+        app,
+        15,
+        3,
+      ).firstWhere((x) => x.engine && x.slotId != null && x.slotId != slot);
       for (var i = 0; i < tours - 1; i++) {
         _validate(app, 15, 3, e, i, '30');
       }
