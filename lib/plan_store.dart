@@ -205,7 +205,11 @@ extension PlanStore on AppStore {
     _planRaw = null;
     programInstance = null;
     _instanceRaw = null;
-    if (s.firstWeek == 1) programResume = null;
+    if (s.firstWeek == 1) {
+      programResume = null;
+      // RV2 (M5) : « Où j'en suis » illisible de l'ancien programme aussi.
+      _resumeRaw = null;
+    }
     startOrigin = 'user';
     _materializeProgram(s.programStart);
     if (c.journalOn) unawaited(savePlanJournal(c));
@@ -799,6 +803,8 @@ extension PlanStore on AppStore {
           (week: wk.n, j: dp.j, training: dp.exercises.isNotEmpty),
     ];
     final keys = resumeKeysFor(days: days, week: w, day: d, logged: _loggedAt);
+    // RV2 (M5) : un nouveau choix remplace l'ancien, même illisible.
+    _resumeRaw = null;
     programResume = ProgramResume(
       at: _planAt,
       week: w,

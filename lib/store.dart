@@ -638,6 +638,12 @@ class AppStore extends ChangeNotifier {
   /// G7 (D4.9) : « Où j'en suis » (section `programResume`).
   ProgramResume? programResume;
 
+  /// RV2 (M5) : section `programResume` illisible au démarrage (version
+  /// plus récente, champ abîmé) : gardée telle quelle et réécrite à
+  /// l'identique (avant : perdue à la première écriture), jusqu'à un
+  /// nouveau « Où j'en suis » ou un programme créé à partir de S1.
+  Object? _resumeRaw;
+
   /// G10 : propositions du moteur dynamique et suites données (section
   /// `planEvolution`) ; illisible au démarrage : gardée telle quelle
   /// ([_evoRaw]) et réécrite à l'identique.
@@ -867,6 +873,34 @@ class AppStore extends ChangeNotifier {
   static const _kRecovery = 'kalis_recovery_v1';
   static const _recoveryLimit = 3;
   final ValueNotifier<String?> persistenceError = ValueNotifier<String?>(null);
+
+  /// RV2 (M6) : échecs d'écriture d'affilée depuis la dernière écriture
+  /// acceptée (0 : tout est enregistré). [persistenceError] ne prévient
+  /// qu'au changement de message : un échec répété garde le même texte ;
+  /// ce compteur change à chaque échec, la bannière le montre.
+  final ValueNotifier<int> persistenceFailures = ValueNotifier<int>(0);
+
+  /// RV2 (M6) : écriture refusée ([message] affiché tant qu'elle dure).
+  void _writeFailed(String message) {
+    persistenceError.value = message;
+    persistenceFailures.value = persistenceFailures.value + 1;
+  }
+
+  /// RV2 (M6) : écriture acceptée, plus rien à signaler.
+  void _writeSucceeded() {
+    persistenceError.value = null;
+    persistenceFailures.value = 0;
+  }
+
+  /// RV2 (M9) : copie locale de la sauvegarde d'origine
+  /// (`program_origin_v1`) pas alignée sur [programOrigin] (écriture
+  /// refusée) : nouvel essai après chaque écriture acceptée du document.
+  bool _originLocalStale = false;
+
+  /// RV2 (M9) : injection d'échecs d'écriture de la copie locale de la
+  /// sauvegarde d'origine (tests uniquement).
+  @visibleForTesting
+  Future<bool> Function(String packed)? debugOriginWriteHook;
 
   /// File unique des écritures (KT-013) : sauvegardes ordinaires, achats et
   /// imports s'exécutent un par un, dans l'ordre de leur demande. La file est
@@ -1295,7 +1329,11 @@ class AppStore extends ChangeNotifier {
   /// journal reste la source et n'est jamais réécrit.
   ({TrainingLog log, JournalConversionReport report}) coreTrainingLog() =>
       convertLegacyJournal(
-        jsonDecode(exportAll()) as Map<String, dynamic>,
+        // RV2 (M5) : « Où j'en suis » illisible gardé tel quel, jamais lu
+        // par les moteurs.
+        (jsonDecode(exportAll()) as Map<String, dynamic>)..removeWhere(
+          (k, _) => k == 'programResume' && programResume == null,
+        ),
         exerciseId: content.idFor,
         usesSeconds: (id) => content.byId[id]?.ex.unit.code == 'secondes',
         dayOrder: (w, j) => w >= 1 && w <= program.weeks.length
@@ -1335,6 +1373,7 @@ class AppStore extends ChangeNotifier {
     planProgram: planProgram,
     planRaw: _planRaw,
     programResume: programResume,
+    resumeRaw: _resumeRaw,
     planEvolution: planEvolution,
     evolutionRaw: _evoRaw,
     adapt: adapt,
@@ -1392,7 +1431,10 @@ class AppStore extends ChangeNotifier {
       else if (data.planRaw != null)
         'planProgram': data.planRaw,
       if (data.programResume != null)
-        'programResume': data.programResume!.toJson(),
+        'programResume': data.programResume!.toJson()
+      // RV2 (M5) : section illisible au démarrage, réécrite à l'identique.
+      else if (data.resumeRaw != null)
+        'programResume': data.resumeRaw,
       // G10 : propositions du moteur dynamique et suites données, écrites
       // seulement s'il y en a ; ignorées par les versions antérieures
       // (section versionnée, facultative).
@@ -1554,12 +1596,27 @@ class AppStore extends ChangeNotifier {
   /// Texte compact de la sauvegarde (Réglages › copier). RV1 : en session
   /// de test, marqué comme l'export de fichier (G1) ; avant, la copie
   /// collée dans la session personnelle passait sans l'avertissement.
+  /// RV2 (M7) : avec les données retirées pas encore copiées (comme
+  /// l'export de fichier).
   String exportCompact() {
-    if (!SessionSpace.isDev) return _pack(exportAll());
-    final data = jsonDecode(exportAll()) as Map<String, dynamic>;
-    data['sessionDeTest'] = true;
-    data['decalageJours'] = KalisClock.offsetDays;
+    final data = _exportDocument();
+    if (SessionSpace.isDev) {
+      data['sessionDeTest'] = true;
+      data['decalageJours'] = KalisClock.offsetDays;
+    }
     return _pack(jsonEncode(data));
+  }
+
+  /// RV2 (M7) : document des exports de l'utilisateur (fichier, copie
+  /// compacte). Données retirées (WOD, séances perso, crédits : G2) dont
+  /// la copie de sécurité a échoué : elles sont encore dans le document du
+  /// téléphone et vont avec lui, telles quelles (avant : absentes du
+  /// fichier, sans le dire). Le fichier se relit comme une sauvegarde de
+  /// 6.0.x : à l'import, l'aperçu les annonce comme ignorées.
+  Map<String, dynamic> _exportDocument() {
+    final data = _backupJson(_currentBackup());
+    _retiredPending.restoreInto(data);
+    return data;
   }
 
   /// [limits] : import d'un texte externe (KT-015). Sans limites : état
@@ -1810,6 +1867,7 @@ class AppStore extends ChangeNotifier {
       }
     }
     ProgramResume? nextResume;
+    Object? resumeRaw;
     final rawResume = m['programResume'];
     if (rawResume != null) {
       try {
@@ -1818,6 +1876,9 @@ class AppStore extends ChangeNotifier {
         if (limits != null) {
           throw const FormatException('« Où j’en suis » illisible.');
         }
+        // RV2 (M5) : démarrage tolérant : section illisible gardée telle
+        // quelle, jamais perdue (comme le programme personnel, RV1 M1).
+        resumeRaw = rawResume;
       }
     }
     // G10 : évolution du programme. Import strict ; démarrage tolérant
@@ -1869,6 +1930,7 @@ class AppStore extends ChangeNotifier {
       planRaw: planRaw,
       planIssues: planIssues,
       programResume: nextResume,
+      resumeRaw: resumeRaw,
       planEvolution: nextEvolution,
       evolutionRaw: evolutionRaw,
       evolutionIssues: evolutionIssues,
@@ -1957,6 +2019,7 @@ class AppStore extends ChangeNotifier {
     _planRaw = data.planRaw;
     planLoadIssues = data.planIssues;
     programResume = data.programResume;
+    _resumeRaw = data.resumeRaw;
     planEvolution = data.planEvolution;
     _evoRaw = data.evolutionRaw;
     evolutionLoadIssues = data.evolutionIssues;
@@ -2080,13 +2143,15 @@ class AppStore extends ChangeNotifier {
         return ImportStatus.conflict;
       }
       if (!await _keepRecoveryCopy('import')) {
-        persistenceError.value =
-            'Import interrompu : copie de sécurité impossible. Tes données actuelles sont conservées.';
+        _writeFailed(
+          'Import interrompu : copie de sécurité impossible. Tes données actuelles sont conservées.',
+        );
         return ImportStatus.writeFailed;
       }
       if (!await _writeRaw(encoded)) {
-        persistenceError.value =
-            'La sauvegarde a échoué. Tes données actuelles sont conservées.';
+        _writeFailed(
+          'La sauvegarde a échoué. Tes données actuelles sont conservées.',
+        );
         return ImportStatus.writeFailed;
       }
       final keptOrigin = programOrigin;
@@ -2099,7 +2164,7 @@ class AppStore extends ChangeNotifier {
       // Mémoire et document écrit sont identiques : plus rien d'antérieur à
       // écrire. Une sauvegarde déjà demandée réécrira simplement cet état.
       _acceptedSeq = _changeSeq;
-      persistenceError.value = null;
+      _writeSucceeded();
       // CI1e (C11.2) : sauvegarde d'avant 6.10.0 importée sans programme
       // d'origine connu : celui d'avant l'import est gardé, sinon il est
       // pris maintenant (puis écrit) ; ajustements de Koach d'avant 6.10.0
@@ -2108,8 +2173,14 @@ class AppStore extends ChangeNotifier {
       if (data.programOrigin == null && keptOrigin != null) {
         programOrigin = keptOrigin;
         write = true;
+        // RV2 (M9) : copie locale refusée plus tôt, réalignée avant
+        // l'écriture du document (si celle-ci échoue, c'est elle qui garde
+        // l'origine au prochain lancement).
+        if (_originLocalStale) {
+          await ProgramOriginStore(this).retryLocalOrigin();
+        }
       } else if (data.programOrigin != null) {
-        ProgramOriginStore(this).syncLocalOrigin();
+        await ProgramOriginStore(this).syncLocalOrigin();
       }
       if (ProgramOriginStore(this).captureProgramOrigin()) write = true;
       if (ImportedProgramStore(this).migrateLegacyEvolution()) write = true;
@@ -2123,7 +2194,7 @@ class AppStore extends ChangeNotifier {
   /// d'export et la version de l'application (champs optionnels, ignorés
   /// par les versions précédentes). Instantané synchrone de la mémoire.
   String exportForFile({required String appVersion, DateTime? at}) {
-    final data = _backupJson(_currentBackup());
+    final data = _exportDocument();
     data['exportedAt'] = (at ?? KalisClock.now()).toIso8601String();
     data['appVersion'] = appVersion;
     // G1 : export d'une session de test, reconnu à l'import (champs
@@ -2156,8 +2227,9 @@ class AppStore extends ChangeNotifier {
       if (!_initialized) return const EraseResult(EraseStatus.failed);
       final fresh = _freshData();
       if (!await _writeRaw(_pack(jsonEncode(_backupJson(fresh))))) {
-        persistenceError.value =
-            'Suppression impossible : écriture refusée. Tes données sont intactes.';
+        _writeFailed(
+          'Suppression impossible : écriture refusée. Tes données sont intactes.',
+        );
         return const EraseResult(EraseStatus.failed);
       }
       _applyBackup(fresh);
@@ -2177,7 +2249,7 @@ class AppStore extends ChangeNotifier {
         }
         if (!removed || _prefs.containsKey(key)) remaining.add(key);
       }
-      persistenceError.value = null;
+      _writeSucceeded();
       notifyListeners();
       return EraseResult(
         remaining.isEmpty ? EraseStatus.success : EraseStatus.partial,
@@ -2314,10 +2386,16 @@ class AppStore extends ChangeNotifier {
     final ok = await _writeRaw(_pack(_stateDocument()));
     if (ok) {
       if (seq > _acceptedSeq) _acceptedSeq = seq;
-      persistenceError.value = null;
+      _writeSucceeded();
+      // RV2 (M9) : copie locale de la sauvegarde d'origine refusée plus
+      // tôt : nouvel essai maintenant que le stockage accepte.
+      if (_originLocalStale) {
+        await ProgramOriginStore(this).retryLocalOrigin();
+      }
     } else {
-      persistenceError.value =
-          'Sauvegarde impossible. Tes modifications restent sur cet écran : réessaie avant de fermer l’application.';
+      _writeFailed(
+        'Sauvegarde impossible. Tes modifications restent sur cet écran : réessaie avant de fermer l’application.',
+      );
     }
     return ok;
   }
@@ -3912,6 +3990,9 @@ class _BackupData {
   final int planIssues;
   final ProgramResume? programResume;
 
+  /// RV2 (M5) : « Où j'en suis » illisible au démarrage, gardé tel quel.
+  final Object? resumeRaw;
+
   /// G10 : évolution du programme (vide si absente ; illisible :
   /// [evolutionRaw]).
   final PlanEvolution planEvolution;
@@ -3954,6 +4035,7 @@ class _BackupData {
     this.planRaw,
     this.planIssues = 0,
     this.programResume,
+    this.resumeRaw,
     this.planEvolution = PlanEvolution.empty,
     this.evolutionRaw,
     this.evolutionIssues = 0,
