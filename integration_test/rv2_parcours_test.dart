@@ -474,6 +474,14 @@ void main() {
 
     var monte = false;
     await etape(tester, 'montage', () async {
+      // Magasin global de la partie 1 (déjà initialisé) écrit puis
+      // remplacé avant la sauvegarde importée : l'application relit
+      // celle-ci sur un magasin neuf, comme après un changement de session
+      // (SessionHost). Après l'import, une écriture de l'ancien magasin
+      // l'écraserait.
+      await store.flush();
+      store.dispose();
+      store = AppStore();
       await raw.clear();
       final seed = AppStore();
       await seed.init();
@@ -541,12 +549,6 @@ void main() {
       releve['import'] = await seed.importAll(jsonEncode(b));
       await seed.flush();
       seed.dispose();
-      // Magasin global de la partie 1 déjà initialisé : l'application le
-      // relance comme un changement de session (SessionHost), sur un
-      // magasin neuf qui relit la sauvegarde importée.
-      await store.flush();
-      store.dispose();
-      store = AppStore();
 
       tester.platformDispatcher.accessibilityFeaturesTestValue =
           const FakeAccessibilityFeatures();

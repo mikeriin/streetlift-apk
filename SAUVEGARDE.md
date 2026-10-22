@@ -7,3 +7,5 @@ Reprise 22/10 17:55 UTC (session 012ahWYqqvxV3C5XoT248gh7). Branche rv2 (tête 2
 - émulateur : rv2_parcours_test « montage » — magasin global déjà initialisé (late final _prefs) ; partie 2 sur un magasin neuf.
 
 BLOCAGE : pushes git de cette session acceptés (claude/ci-3d aeb92f92, claude/ci-ui-rv2-rapide 28af7175) mais AUCUN workflow déclenché (outil add_repo absent de la session ; identité de push sans déclenchement). Reste : contrôle complet ci-3d sur 28af7175 (re-pousser avec une identité qui déclenche les workflows), publication main dev7.6.0, build signé, livraison (tableau : tous les majeurs et les 19 mineurs prioritaires corrigés + S15, A4, H7, D1 ; restent P10, R6-R8, R10, R13, F5-F7, F9, F11-F16).
+
+21:15 UTC : débloqué (incident GitHub ; workflow_dispatch). rv2 = 6a8de725 (cible émulateur : ancien magasin remplacé avant l import). ci-3d 39834444805 : tout vert sauf rv2 (corrigé) et kb4/ks1a (VM). Contrôle ci-3d relancé sur 6a8de725. Brouillon de livraison prêt.
