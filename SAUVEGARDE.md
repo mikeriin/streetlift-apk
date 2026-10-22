@@ -53,3 +53,7 @@ fixtures régénérées + pytest + tests Dart locaux ; run B (campagne) ; livrai
 - Environnement de reprise : Dart 3.13.6 conda-forge dans /opt/dart, cache pub de a74f7710 (ci-out/packages/pubcache).
 ## Reste
 docs/data/km6 + CRITERES_KM6.md ; contrôle complet sur claude/ci-cp-a ; push moteurs + étiquettes ; livraison.
+- 18:12 UTC : tests locaux verts (pytest 341 en Python 3.13 ; kalis_bench 296, kalis_adapt 409 ; format, analyse) ;
+  commit de livraison 25d5bfe6 (base moteurs 737d528d, non poussé sur moteurs) ; contrôle complet poussé sur
+  claude/ci-cp-a (5c5c8a17). Reste : contrôle vert → push moteurs + étiquettes kalis_adapt-v1.0.7,
+  kalis_plan-v0.4.3, kalis_bench-v0.5.9 → LIVRAISON_KM6 (pipeline + projet), ETAT « livré », page de suivi, notification.
