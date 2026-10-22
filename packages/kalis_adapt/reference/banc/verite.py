@@ -772,7 +772,7 @@ POUND_KG = 0.45359237
 
 def _default_minimum(t):
     return {'barbell': 20.0, 'dumbbells': 1.0, 'machine': 5.0, 'kettlebell': 4.0,
-            'cable': 2.5 * POUND_KG}.get(t, 0.0)
+            'cable': 2.5}.get(t, 0.0)
 
 
 def grid_of(load_type, profile):
@@ -786,7 +786,9 @@ def grid_of(load_type, profile):
     if load_type == 'barbell':
         return LoadGrid(2.5, 20.0, False)
     if load_type == 'cable':
-        return LoadGrid(2.5 * POUND_KG, 2.5 * POUND_KG, False)
+        # 1.0.8 (KM6, X1 de RV1) : poulie par 2,5 kg (minimum 2,5 kg), le
+        # défaut de `kalis_plan` (`defaultIncrement`), et non plus 2,5 lb.
+        return LoadGrid(2.5, 2.5, False)
     if load_type == 'machine':
         return LoadGrid(5.0, 5.0, False)
     if load_type == 'kettlebell':

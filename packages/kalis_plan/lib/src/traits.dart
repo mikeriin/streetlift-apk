@@ -430,6 +430,43 @@ final class CatalogTraits {
   }
 }
 
+/// Schémas où une traction reste une traction (figure, gymnastique
+/// CrossFit, freestyle) : crédit « chest » nul comme au tirage vertical.
+const Set<MovementPattern> _pullUpPatterns = <MovementPattern>{
+  MovementPattern.figureDynamiqueTirage,
+  MovementPattern.gymnastiqueCrossfit,
+  MovementPattern.freestyle,
+};
+
+/// Crédit « chest » (en demi-séries) de l'exercice [id] de schéma
+/// [pattern], depuis le crédit [credit] lu dans ses muscles (0.4.3, lot
+/// KM6, DECISIONS_CP.md C17.47 ; revue sur sources du lot KM4,
+/// `kalis_adapt/reference/SOURCES.md`) — même règle que les fiches de Koach
+/// (`kalis_adapt/reference/qualites/regles.py`, R8-a) et donc que le
+/// validateur du banc, qui lit ces crédits ; un test compare les trois
+/// tables exercice par exercice :
+/// - tirage vertical et tractions classées en figure, en gymnastique
+///   CrossFit ou en freestyle : 0 (grand pectoral 44-57 % de la contraction
+///   maximale contre 117-130 % pour le grand dorsal, Youdas et al. 2010,
+///   JSCR 24(12) ; aucune donnée d'hypertrophie du pectoral par les
+///   tractions) ;
+/// - muscle-ups et transitions : au plus une demi-série (phase de poussée
+///   réelle mais courte, Walker et al. 2023, Int J Exerc Sci 16(1)) ;
+/// - pull-over en isolation du dos : au plus une demi-série (grand pectoral
+///   environ moitié moins actif qu'au développé couché, Campos et Silva
+///   2014, Motriz 20(2)).
+int chestCreditRule(String id, MovementPattern pattern, int credit) {
+  if (pattern == MovementPattern.tirageVertical ||
+      (id.contains('traction') && _pullUpPatterns.contains(pattern))) {
+    return 0;
+  }
+  if (pattern == MovementPattern.transitionMuscleUp ||
+      (pattern == MovementPattern.isolationDos && id.contains('pull-over'))) {
+    return credit < 1 ? credit : 1;
+  }
+  return credit;
+}
+
 final RegExp _metersPattern = RegExp(r'-(\d{2,4})m$');
 
 ExerciseTraits _traitsOf(
@@ -450,6 +487,11 @@ ExerciseTraits _traitsOf(
       credits[group.index] = credit;
     }
   }
+  credits[MuscleGroup.chest.index] = chestCreditRule(
+    e.id,
+    e.pattern,
+    credits[MuscleGroup.chest.index],
+  );
   final kind = slotKindOf(e);
   var mask = 0;
   final regionNames = kind == SlotKind.mobility && e.stretchedMuscles.isNotEmpty

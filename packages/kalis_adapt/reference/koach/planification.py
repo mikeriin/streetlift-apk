@@ -827,7 +827,9 @@ class Planification(Extension):
 
     def appliquer(self, semaine, jour, items):
         """Items du jour modulés (copie) : `sets` changé, `koachIntensite`
-        posé (lu par la prescription de séance)."""
+        posé (lu par la prescription de séance) ; `koachVolume` (séries
+        servies − écrites) et, quand la modulation change les séries,
+        `koachModule` (même écart, propre à la modulation : 1.0.8)."""
         mods = self.items_modules(semaine)
         out = []
         for item in items:
@@ -844,6 +846,11 @@ class Planification(Extension):
             if ecart:
                 it['koachIntensite'] = ecart
             it['koachVolume'] = n - (item.get('sets') or 0)
+            if n != (item.get('sets') or 0):
+                # 1.0.8 (KM6, X8) : séries ajoutées (> 0) ou retirées (< 0)
+                # par la modulation de la semaine ; une baisse sous l'écrit
+                # est dite par la séance (`koach.volume_semaine`).
+                it['koachModule'] = n - (item.get('sets') or 0)
             out.append(it)
         return out
 
