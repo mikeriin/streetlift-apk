@@ -178,6 +178,164 @@ Json equivalentStandard(Json item) {
   return item;
 }
 
+/// 1.0.8 (KM6, X3 de RV1) : technique de l'item rendue cohérente avec son
+/// nombre de lignes (`sets`), comme `coherentTechnique` (référence
+/// `technique_coherente`) : séries allégées et intervalles d'un EMOM
+/// recomptés ; paliers qui ne tiennent plus et bloc au temps de plus d'une
+/// ligne en séries classiques ; `setTargets` ramené à `sets` éléments
+/// (tronqué, ou retiré s'il est plus court). Modifie [item] en place ; vrai
+/// si quelque chose a changé.
+bool techniqueCoherente(Json item) {
+  var change = false;
+  final sets = ent(ou(item['sets'], 0));
+  final st = item['setTargets'];
+  if (vrai(st) && jl(st).length != sets) {
+    item['setTargets'] = jl(st).length > sets
+        ? List<Object?>.of(jl(st).sublist(0, sets))
+        : null;
+    change = true;
+  }
+  final t0 = item['technique'];
+  if (!vrai(t0) || jm(t0)['lastSetOnly'] == true) {
+    return change;
+  }
+  final t = jm(t0);
+  final kind = t['kind'];
+  bool classique() {
+    final regles = <Object?>[
+      for (final r in listeOuVide(item['autoregulation']))
+        if (!const [
+          'backoff_from_top_set',
+          'stop_on_rep_drop',
+        ].contains(jm(r)['kind']))
+          r,
+    ];
+    item['technique'] = null;
+    item['autoregulation'] = regles.isNotEmpty ? regles : null;
+    return true;
+  }
+
+  if (kind == 'top_set_backoff') {
+    if (sets < 2) {
+      return classique();
+    }
+    final b = t['backoffSets'];
+    if (b != null && (b as num) >= sets) {
+      item['technique'] = Map<String, Object?>.of(t)..['backoffSets'] = sets - 1;
+      return true;
+    }
+    return change;
+  }
+  if (kind == 'emom') {
+    if (!egalJson(t['intervals'], sets)) {
+      item['technique'] = Map<String, Object?>.of(t)..['intervals'] = sets;
+      return true;
+    }
+    return change;
+  }
+  if (kind == 'wave') {
+    final reps = t['waveReps'];
+    final vagues = t['waves'];
+    if (reps != null &&
+        vagues != null &&
+        (vagues as num) * jl(reps).length != sets) {
+      return classique();
+    }
+    return change;
+  }
+  if (kind == 'pyramid') {
+    final reps = t['pyramidReps'];
+    if (reps != null && jl(reps).length != sets) {
+      return classique();
+    }
+    return change;
+  }
+  if (kind == 'ladder') {
+    final debut = t['ladderStart'] as num?;
+    final pas = t['ladderStep'] as num?;
+    final haut = t['ladderTop'] as num?;
+    if (debut == null || pas == null || haut == null || pas <= 0) {
+      return change;
+    }
+    // Division entière tronquée vers 0 (`~/`).
+    final q = (haut - debut) ~/ pas;
+    final marches = (q + 1) * ent(ou(t['ladderCount'], 1));
+    if (marches != sets) {
+      return classique();
+    }
+    return change;
+  }
+  if (kind == 'density' || kind == 'for_time') {
+    if (sets != 1) {
+      return classique();
+    }
+    return change;
+  }
+  return change;
+}
+
+/// 1.0.8 (KM6, X2 de RV1) : groupes de la séance (`GroupSpec` reçus dans
+/// les contraintes `groups`) recalés sur les items servis (référence
+/// `groupes_servis`) : un groupe sans membre servi disparaît ; des tours qui
+/// comptent les lignes de ses membres prennent le plus grand nombre de
+/// séries servies d'un membre ; un EMOM dont la durée vaut
+/// `intervalSeconds` × le total des lignes écrites prend `intervalSeconds`
+/// × le total servi. Séries écrites d'un membre : `sets` − `koachVolume`.
+/// Renvoie une nouvelle liste.
+List<Json> groupesServis(Object? groupes, Object? ecrits, List<Json> servis) {
+  int ecritesDe(Json p) => ent(ou(p['sets'], 0)) - ent(ou(p['koachVolume'], 0));
+  final out = <Json>[];
+  for (final g0 in listeOuVide(groupes)) {
+    final gid = jm(g0)['groupId'];
+    final membresE = <Json>[
+      for (final p in listeOuVide(ecrits))
+        if (gid != null && jm(p)['groupId'] == gid) jm(p),
+    ];
+    final membresS = <Json>[
+      for (final p in servis)
+        if (gid != null && p['groupId'] == gid) p,
+    ];
+    if (membresS.isEmpty) {
+      continue;
+    }
+    final g = Map<String, Object?>.of(jm(g0));
+    var nS = ent(ou(membresS.first['sets'], 0));
+    for (final p in membresS) {
+      nS = math.max(nS, ent(ou(p['sets'], 0)));
+    }
+    if (membresE.isNotEmpty && g['rounds'] != null && nS >= 1) {
+      var nE = ecritesDe(membresE.first);
+      for (final p in membresE) {
+        nE = math.max(nE, ecritesDe(p));
+      }
+      if (egalJson(g['rounds'], nE)) {
+        g['rounds'] = nS;
+      }
+    }
+    final iv = g['intervalSeconds'];
+    if (membresE.isNotEmpty &&
+        g['format'] == 'emom' &&
+        vrai(iv) &&
+        g['durationSeconds'] != null) {
+      var totE = 0;
+      for (final p in membresE) {
+        totE += ecritesDe(p);
+      }
+      var totS = 0;
+      for (final p in membresS) {
+        totS += ent(ou(p['sets'], 0));
+      }
+      if (totE > 0 &&
+          totS > 0 &&
+          egalJson(g['durationSeconds'], (iv as num) * totE)) {
+        g['durationSeconds'] = iv * totS;
+      }
+    }
+    out.add(g);
+  }
+  return out;
+}
+
 /// Durée prescrite d'une ligne d'endurance, toutes séries (secondes) ; 0
 /// sans durée ni distance (`prescribedSeconds`).
 double secondesPrescrites(Json item, Object? sets, double vitesse) {
@@ -1493,6 +1651,7 @@ class Seances {
       out.add(servi);
     }
     out = _dureeBornee(_endurance(out), items);
+    _coherence(out, items);
     servis = [for (final it in out) Map<String, Object?>.of(it)];
     if (semO != null && ecritCompte == null) {
       // 1.0.7 : écrit servi de la séance, compté une fois par séance ; un
@@ -1502,6 +1661,50 @@ class Seances {
       ecritCompte = (sem, v, t);
     }
     return out;
+  }
+
+  /// 1.0.8 (KM6) : passe finale de la séance servie, après toutes les
+  /// règles qui changent les séries (référence `Seances._coherence`) :
+  /// groupe de l'emplacement gardé (X7, RV1c1 § 4), technique recalée sur
+  /// les séries servies (X3, `techniqueCoherente`), baisse de la modulation
+  /// hebdomadaire sous l'écrit dite par `koach.volume_semaine` (X8,
+  /// C17.43.4). Modifie [out] en place.
+  void _coherence(List<Json> out, List<Json> items) {
+    final ecrits = <Object?, Json>{};
+    for (final p in items) {
+      ecrits.putIfAbsent(p['slotId'], () => p);
+    }
+    for (final it in out) {
+      final p = ecrits[it['slotId']];
+      if (p != null && it['koach'] != 'vrai_test') {
+        if (it['groupId'] == null && p['groupId'] != null) {
+          it['groupId'] = p['groupId'];
+          if (it['format'] == null && p['format'] != null) {
+            it['format'] = p['format'];
+          }
+        }
+      }
+      techniqueCoherente(it);
+      if (p == null ||
+          it['koach'] == 'vrai_test' ||
+          const ['warmup', 'test'].contains(p['kind'])) {
+        continue;
+      }
+      final km = p['koachModule'];
+      if (km != null && (km as num) < 0) {
+        final ecrites =
+            ent(ou(p['sets'], 0)) - ent(ou(p['koachVolume'], 0));
+        final semaine = ecrites + ent(km);
+        if (semaine < ecrites) {
+          _raison('koach.volume_semaine', {
+            'exercice': it['exerciseId'],
+            'ecrites': ecrites,
+            'series': semaine,
+            'cause': 'planification',
+          });
+        }
+      }
+    }
   }
 
   void _raison(String code, Json params) {
@@ -1765,6 +1968,10 @@ class Seances {
   // ------------------------------------------------------------------
   // Retour gradué au volume
   // ------------------------------------------------------------------
+
+  /// Crédits de la fiche [exId] sur les groupes majeurs (lecture du banc,
+  /// mesure de KM6 ; n'entre dans aucun calcul).
+  List<(int, double)> creditsGroupes(String exId) => _credits(exId);
 
   /// Crédits de la fiche sur les groupes majeurs : [(indice, séries
   /// créditées par série dure)], en demi-séries.
@@ -3375,13 +3582,22 @@ class Seances {
     }
     var voulu = chargePour(exId, reps, rir, prudence)!;
     final trace = <Object?>['modele ${fixe(voulu, 1)} (rir ${fixe(rir, 1)})'];
+    // 1.0.8 (KM6, X5 et X6 de RV1) : vrai quand un plafond (série allégée,
+    // part écrite du 1RM, part maximale, simple) a ramené la charge visée ;
+    // elle est alors arrondie vers le bas sur la grille, et le test
+    // adaptatif ne choisit jamais une charge au-dessus.
+    var plafonne = false;
     if (tech['kind'] == 'top_set_backoff' &&
         index >= 1 &&
         plan['tete'] != null) {
       // Séries allégées : part de la série de tête.
       final drop = dbl(ou(tech['backoffDropPct'], 0.08));
       final tete = (plan['tete'] as num) + t.fraction * m.poidsKg;
-      voulu = _seMin(voulu, tete * (1 - drop) - t.fraction * m.poidsKg);
+      final allegee = tete * (1 - drop) - t.fraction * m.poidsKg;
+      if (allegee < voulu) {
+        voulu = allegee;
+        plafonne = true;
+      }
       trace.add('allegee ${fixe(voulu, 1)}');
     }
     // Intensité : la charge vise l'effort écrit, déplacé par la
@@ -3418,6 +3634,7 @@ class Seances {
       }
       if (voulu > haut) {
         voulu = haut;
+        plafonne = true;
         trace.add(
           'part ecrite ${fixe(part, 3)}'
           '${vrai(plan['verrou']) ? ' verrou' : ''} -> '
@@ -3428,6 +3645,7 @@ class Seances {
     if (plan['part_max'] != null &&
         voulu > chargeDePart(exId, dbl(plan['part_max'])) - bw) {
       voulu = chargeDePart(exId, dbl(plan['part_max'])) - bw;
+      plafonne = true;
     }
     if (egalJson(lo, hi) && egalJson(hi, 1) && !vrai(plan['test'])) {
       final plafondS = palier >= 1
@@ -3436,9 +3654,13 @@ class Seances {
       final hautSimple = chargeDePart(exId, plafondS, duJour: true) - bw;
       if (voulu > hautSimple) {
         voulu = hautSimple;
+        plafonne = true;
       }
     }
-    num charge = grille.proche(_seMax(voulu, grille.minimum));
+    // X5 : jamais au-dessus du plafond par l'arrondi.
+    num charge = plafonne
+        ? grille.plancher(_seMax(voulu, grille.minimum))
+        : grille.proche(_seMax(voulu, grille.minimum));
     // Test adaptatif : parmi les charges de la zone prescrite, la plus
     // informative.
     final ta = jm(p['test_adaptatif']);
@@ -3458,8 +3680,12 @@ class Seances {
           continue;
         }
         final ecartRir = ((rPrev - reps) - rir).abs();
-        if (ecartRir <= dbl(ta['ecart_rir_tolere']) &&
-            cand <= voulu * 1.0 + grille._pas(charge.toDouble())) {
+        // X6 : sous un plafond, le candidat le respecte (avant : un cran
+        // au-dessus permis).
+        final borne = plafonne
+            ? voulu + 1e-9
+            : voulu * 1.0 + grille._pas(charge.toDouble());
+        if (ecartRir <= dbl(ta['ecart_rir_tolere']) && cand <= borne) {
           final info = information(exId, cand, reps);
           if (info > info0 * (1 + 0.02)) {
             meilleur = cand;
@@ -4094,10 +4320,10 @@ class Seances {
       final ecrite = item['startLoadKg'] as num?;
       if (vrai(plan['verrou']) && ecrite != null && charge > ecrite + 1e-9) {
         // A6.5 : semaine allégée ou de test, jamais plus lourd que la
-        // charge écrite.
-        charge = grille.plancher(ecrite.toDouble()) > ecrite
-            ? ecrite
-            : grille.plancher(ecrite.toDouble());
+        // charge écrite ; 1.0.8 (KM6, X4 de RV1) : une charge écrite hors de
+        // la grille est gardée telle qu'écrite (avant : ramenée au cran du
+        // dessous, sous l'écrit).
+        charge = ecrite;
       }
       final evenement = vrai(dictOuVide(contexte)['jour_evenement']);
       if ((vrai(plan['sans_hausse']) ||

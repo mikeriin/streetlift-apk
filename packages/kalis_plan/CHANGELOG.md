@@ -1,5 +1,20 @@
 # Journal des versions de kalis_plan
 
+## 0.4.3
+
+Lot KM6 (Koach 1.0.8, crédits de groupes, `pipeline/cp/prompts/KM6.txt`, DECISIONS_CP.md C17.47). API étendue
+(additif) : `chestCreditRule` exportée. Contrat § 12.18.
+
+- **Crédits « chest » des tirages revus sur sources** (`traits.dart`, `chestCreditRule`) : tirage vertical et
+  tractions classées en figure, en gymnastique CrossFit ou en freestyle 0 (avant : une demi-série, une série pour la
+  traction explosive aux hanches) ; muscle-ups et transitions au plus une demi-série (avant : une série) ; pull-over
+  haltère une demi-série (avant : une série). Dips, pompes, rowing, tirages bras tendus, leviers : inchangés. Même
+  règle dans les fiches de Koach (`kalis_adapt/reference/qualites/regles.py`, R8-a) ; le validateur du banc lit ces
+  crédits ; `kalis_bench/test/km6_credits_test.dart` compare les trois tables exercice par exercice. 53 exercices
+  changent (27 à 0, 26 de une série à une demi-série).
+- Rampe de volume du plan, équilibre des schémas et rapport « séries par groupe » suivent les nouveaux crédits ;
+  programmes du banc régénérés.
+
 ## 0.4.2
 
 Lot KS1c2 (« aucun jour sans son principal », `pipeline/cp/prompts/KS1c2.txt`, C17.21, C17.22). API inchangée ;

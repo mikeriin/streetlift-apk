@@ -259,6 +259,36 @@ GROUPE_DE = {
 }
 
 
+# R8-a (lot KM6, DECISIONS_CP.md C17.47 ; revue sur sources du lot KM4,
+# `SOURCES.md` § crédits de groupes) — Part « chest » des tirages, la même
+# que `kalis_plan` (`chestCreditRule`, traits.dart) : le changement est fait
+# ENSEMBLE dans `kalis_plan`, le validateur du banc (qui lit les crédits de
+# `kalis_plan`) et ces fiches ; un test compare les trois exercice par
+# exercice.
+# - tirage vertical (tractions, chin-ups, tirages à la poulie haute) et
+#   tractions classées en figure, en gymnastique CrossFit ou en freestyle
+#   (un bras, archer, kipping, butterfly, 360) : 0 (grand pectoral 44-57 %
+#   de la contraction maximale contre 117-130 % pour le grand dorsal,
+#   Youdas et al. 2010, JSCR 24(12) ; aucune donnée d'hypertrophie du
+#   pectoral par les tractions) ;
+# - muscle-ups et transitions (`transition_muscle_up`) : au plus 0,5 (phase
+#   de poussée réelle mais courte, Walker et al. 2023, Int J Exerc Sci
+#   16(1) ; analogie avec le haut d'un dip) ;
+# - pull-over en isolation du dos : au plus 0,5 (grand pectoral environ
+#   moitié moins actif qu'au développé couché, Campos et Silva 2014, Motriz
+#   20(2)).
+SCHEMAS_TRACTION = ('figure_dynamique_tirage', 'gymnastique_crossfit', 'freestyle')
+
+
+def part_chest(ident, schema, part):
+    """Part « chest » d'un exercice après la règle R8-a."""
+    if schema == 'tirage_vertical' or ('traction' in ident and schema in SCHEMAS_TRACTION):
+        return 0.0
+    if schema == 'transition_muscle_up' or (schema == 'isolation_dos' and 'pull-over' in ident):
+        return min(part, 0.5)
+    return part
+
+
 def groupes_de(e):
     """Parts des groupes musculaires : liste creuse [[indice, part], ...]."""
     parts = {}
@@ -267,6 +297,10 @@ def groupes_de(e):
             g = GROUPE_DE.get(m)
             if g is not None and poids > parts.get(g, 0.0):
                 parts[g] = poids
+    if 'chest' in parts:
+        parts['chest'] = part_chest(e['id'], e['calc']['schema'], parts['chest'])
+        if parts['chest'] <= 0.0:
+            del parts['chest']
     return [[i, parts[g]] for i, g in enumerate(GROUPES) if g in parts]
 
 
@@ -472,7 +506,7 @@ def generer(catalogue):
         }
     return {
         'schema': 1,
-        'version': '1.0.0',
+        'version': '1.0.1',
         'source': catalogue['source'],
         'qualites': QUALITES,
         'groupes': GROUPES,

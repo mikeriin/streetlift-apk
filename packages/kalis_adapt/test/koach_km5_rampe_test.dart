@@ -280,11 +280,13 @@ void main() {
     final b = _programmeB();
     expect(
       [_ecrit(a, _chest), _ecrit(a, _dant), _ecrit(a, _tri)],
-      [26.5, 17.5, 21.0],
+      // 1.0.8 (KM6, C17.47) : crédits « chest » revus (tractions 0,
+      // muscle-up 0,5) ; avec ceux de 1.0.7 : 26,5 et 38,0.
+      [17.5, 17.5, 21.0],
     );
     expect(
       [_ecrit(b, _chest), _ecrit(b, _dant), _ecrit(b, _tri)],
-      [38.0, 27.5, 33.5],
+      [24.5, 27.5, 33.5],
     );
   });
 
@@ -716,7 +718,7 @@ void main() {
   });
 
   test('paramètres 1.0.7', () {
-    expect(_params['version'], '1.0.7-ref.1');
+    expect(_params['version'], '1.0.8-ref.1');
     for (final cle in const [
       'retour_plancher_principal',
       'retour_repartition_semaines',

@@ -68,10 +68,10 @@ void main() {
         sha256.convert(_octets(koachFichierFiches)).toString(),
         koachFichesSha256,
       );
-      // En-tête du contrat 1.0.7 (CONTRAT_1_0.md).
+      // En-tête du contrat 1.0.8 (CONTRAT_1_0.md).
       expect(
         koachParametresSha256,
-        '2f055c5181743089afd0c3602bc270f77b01063ebc1bab32b293c81c6816f42c',
+        '9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1',
       );
     });
 
@@ -91,7 +91,7 @@ void main() {
       expect(p['schema'], koachParametresSchema);
       expect(p['version'], koachParametresVersion);
       expect(koachParametresVersion, koachVersion);
-      expect(koachVersion, '1.0.7-ref.1');
+      expect(koachVersion, '1.0.8-ref.1');
       final racine = [
         for (final e in p.entries)
           if (e.value is! Map<String, Object?>) e.key,

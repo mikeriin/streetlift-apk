@@ -13,7 +13,7 @@ import math
 
 from .modele import Modele, NQ, TH, RHO, EPS, KN, KM, KL, KG, BA, BP, LAM, KU, FI, HH
 from .securite import Gardefous
-from .seance import Seances, Grille
+from .seance import Seances, Grille, groupes_servis
 
 
 class Koach(object):
@@ -164,6 +164,10 @@ class Koach(object):
             zones = {k: (dict(z[0]), set(z[1])) for k, z in (c.get('zones') or {}).items()}
             items = self.seances.prescrire(c['items'], grilles, zones, c.get('roles') or {})
             self.raisons = list(self.seances.raisons)
+            if c.get('groups') is not None:
+                # 1.0.8 (KM6, X2) : groupes de la séance recalés sur le servi.
+                return {'items': items, 'raisons': self.raisons,
+                        'groups': groupes_servis(c['groups'], c['items'], items)}
             return {'items': items, 'raisons': self.raisons}
         if h == 'serie':
             cible = self.seances.cible(c['item'], c['index'], c.get('faites') or [])

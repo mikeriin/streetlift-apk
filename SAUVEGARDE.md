@@ -17,5 +17,17 @@ Session Opus 5.5 lancée le 22/10/2026 vers 09:05 UTC (sans ligne « Lot : » ; 
 - Crédits : règles dans `kalis_plan` traits.dart ET `qualites/regles.py` (R8) ; tirage vertical et tractions chest 0,
   muscle-ups chest 0,5, pull-over haltère 0,5.
 
+## Fait (suite, 10:20 UTC)
+- Python : X1-X8 et crédits (regles.py R8-a, fiches 1.0.1) codés ; tests/test_km6.py (20 tests, 1 attend les
+  données régénérées) ; test_km5_rampe.py mis à jour (volumes chest 17,5 / 24,5).
+- Dart : grid.dart, traits.dart (chestCreditRule, kalis_plan 0.4.3), seance.dart (techniqueCoherente,
+  groupesServis, _coherence, X4-X6, creditsGroupes), moteur.dart (groups), planification.dart (koachModule),
+  koach_textes.dart (koach.volume_semaine), parametres.dart (1.0.8-ref.1, asset koach_params_1_0_8.json) ;
+  tests koach_km6_test.dart, kalis_bench km6_credits_test.dart ; mesure X8 (mesure_module / _kmMesureModule,
+  agrégats kr1_securite.py et securite_campagne.py).
+- Run A (CI 39755953616) : export km1 sur kalis_plan 0.4.3, témoins adversaires, tests Dart.
+
 ## Reste
-Tout le code, données régénérées (km1 export), campagne, livraison.
+Intégrer les données du run A (donnees/reference, temoin, catalogue_infos, traces, securite_dart, témoins
+adversaires) ; régénérer les fixtures Python (fixtures/generer.py, generer_banc_km2.py) ; pytest complet ;
+run B (tests Dart, campagne Dart 34 parts + Python 50 parts + adversaires) ; docs ; livraison.
