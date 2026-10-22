@@ -1,5 +1,28 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.7
+
+Lot KM6 (DECISIONS_CP.md C17.47) : **Koach 1.0.8** (référence Python et portage Dart dans le même lot,
+`reference/CHANGEMENTS_1_0_8.md`) — bugs X1 à X8 de la revue RV1 et crédits de groupes des tirages. API et schéma du
+journal inchangés ; champ additif `groups` des contraintes de séance (sortie `groups` quand il est reçu) ; raison
+nouvelle `koach.volume_semaine` ; champ additif `koachModule` (planification).
+
+- **X1** (`grid.dart`) : poulie par défaut 2,5 kg, minimum 2,5 kg (le défaut de `kalis_plan`), au lieu de 2,5 lb.
+- **X2** (`moteur.dart`, `groupesServis`) : groupes de la séance recalés sur les lignes servies (tours, durée d'un EMOM).
+- **X3, X7, X8** (`seance.dart`, `_coherence`, `techniqueCoherente`) : technique recalée sur les séries servies
+  (`backoffSets`, `intervals`, paliers, blocs au temps, `setTargets`) ; groupe et format de l'emplacement gardés par un
+  item servi qui les perdait (course facile) ; baisse de la modulation hebdomadaire sous l'écrit dite
+  (`koach.volume_semaine`, `planification.dart` pose `koachModule`).
+- **X4 à X6** (`_cibleCharge`, test xRM) : charge plafonnée arrondie vers le bas, test adaptatif jamais au-dessus du
+  plafond, charge écrite hors grille d'un test verrouillé gardée.
+- **Fiches** : `assets/koach/vecteurs_qualites_v1.json` version `1.0.1` (crédits « chest » des tirages, règle R8-a :
+  tractions 0, muscle-ups 0,5, pull-over 0,5), SHA-256 `99b0cae2d0b29d18d5daa30ee92b91990225124e38e44d522e80e8ae01a196e0`.
+- **Paramètres** : asset `assets/koach/koach_params_1_0_8.json` (`1.0.8-ref.1`, 344 clés, aucune valeur changée,
+  SHA-256 `9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1`).
+- **Textes** : `koach.volume_semaine` (« Cette semaine, je te propose N séries sur … au lieu des M écrites… »).
+- `Seances.creditsGroupes` (lecture du banc, mesure de KM6).
+- **Tests** : `test/koach_km6_test.dart` (port de `reference/tests/test_km6.py`) ; fixtures régénérées.
+
 ## 1.0.6
 
 Lot KM5 (DECISIONS_CP.md C17.40) : **Koach 1.0.7** (référence Python et portage Dart dans le même lot,

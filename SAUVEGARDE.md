@@ -31,3 +31,14 @@ Session Opus 5.5 lancée le 22/10/2026 vers 09:05 UTC (sans ligne « Lot : » ; 
 Intégrer les données du run A (donnees/reference, temoin, catalogue_infos, traces, securite_dart, témoins
 adversaires) ; régénérer les fixtures Python (fixtures/generer.py, generer_banc_km2.py) ; pytest complet ;
 run B (tests Dart, campagne Dart 34 parts + Python 50 parts + adversaires) ; docs ; livraison.
+
+## Fait (suite, 12:00 UTC)
+- SDK Dart 3.13.6 de conda-forge dans /opt/dart (+ /opt/dart/version), cache pub du run B0 (39758174959) dans
+  /root/.pub-cache : tests et analyse Dart en local (hors ligne).
+- Données du run A intégrées (reference, temoin, catalogue_infos, traces_verite, securite_dart, 6 témoins
+  d'adversaires). kalis_plan : test au-dessus de la rampe (_fitVolume) pour le profil 3770 ; banc identique.
+- Relecture indépendante faite (M1, M2, m3, m4, m6 corrigés ; m5, m7 dits) ; docs régénérés (PROFILS_TYPES,
+  COMPARAISON_L10, MESURES, PROPRIETAIRE, campagne.json, proprietaire.json.gz) ; SOURCES § 4 (sources vérifiées :
+  muscle-up et pull-over = choix raisonnés, dits).
+## Reste
+fixtures régénérées + pytest + tests Dart locaux ; run B (campagne) ; livraison.

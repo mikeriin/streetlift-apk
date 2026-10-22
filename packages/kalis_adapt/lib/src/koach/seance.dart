@@ -221,7 +221,8 @@ bool techniqueCoherente(Json item) {
     }
     final b = t['backoffSets'];
     if (b != null && (b as num) >= sets) {
-      item['technique'] = Map<String, Object?>.of(t)..['backoffSets'] = sets - 1;
+      item['technique'] = Map<String, Object?>.of(t)
+        ..['backoffSets'] = sets - 1;
       return true;
     }
     return change;
@@ -293,24 +294,27 @@ List<Json> groupesServis(Object? groupes, Object? ecrits, List<Json> servis) {
     ];
     final membresS = <Json>[
       for (final p in servis)
-        if (gid != null && p['groupId'] == gid) p,
+        if (gid != null && p['groupId'] == gid && ent(ou(p['sets'], 0)) > 0) p,
     ];
     if (membresS.isEmpty) {
       continue;
     }
     final g = Map<String, Object?>.of(jm(g0));
+    // Tours : le plus grand nombre de séries d'un membre ; contre la montre,
+    // le plus petit (comme `kalis_plan`).
+    final auMoins = g['format'] == 'rounds_for_time';
+    int choisir(int a, int b) => auMoins ? math.min(a, b) : math.max(a, b);
     var nS = ent(ou(membresS.first['sets'], 0));
     for (final p in membresS) {
-      nS = math.max(nS, ent(ou(p['sets'], 0)));
+      nS = choisir(nS, ent(ou(p['sets'], 0)));
     }
-    if (membresE.isNotEmpty && g['rounds'] != null && nS >= 1) {
-      var nE = ecritesDe(membresE.first);
-      for (final p in membresE) {
-        nE = math.max(nE, ecritesDe(p));
-      }
-      if (egalJson(g['rounds'], nE)) {
-        g['rounds'] = nS;
-      }
+    int? nE;
+    for (final p in membresE) {
+      nE = nE == null ? ecritesDe(p) : choisir(nE, ecritesDe(p));
+    }
+    final toursE = g['rounds'];
+    if (nE != null && toursE != null && egalJson(toursE, nE)) {
+      g['rounds'] = nS;
     }
     final iv = g['intervalSeconds'];
     if (membresE.isNotEmpty &&
@@ -325,10 +329,12 @@ List<Json> groupesServis(Object? groupes, Object? ecrits, List<Json> servis) {
       for (final p in membresS) {
         totS += ent(ou(p['sets'], 0));
       }
-      if (totE > 0 &&
-          totS > 0 &&
-          egalJson(g['durationSeconds'], (iv as num) * totE)) {
+      if (totE > 0 && egalJson(g['durationSeconds'], (iv as num) * totE)) {
         g['durationSeconds'] = iv * totS;
+      } else if (toursE != null &&
+          egalJson(g['durationSeconds'], (iv as num) * (toursE as num))) {
+        // Durée qui compte les tours (E2MOM A/B : 8 tours, 960 s).
+        g['durationSeconds'] = iv * (g['rounds']! as num);
       }
     }
     out.add(g);
@@ -1691,13 +1697,15 @@ class Seances {
         continue;
       }
       final km = p['koachModule'];
-      if (km != null && (km as num) < 0) {
-        final ecrites =
-            ent(ou(p['sets'], 0)) - ent(ou(p['koachVolume'], 0));
+      if (km != null &&
+          (km as num) < 0 &&
+          it['exerciseId'] == p['exerciseId']) {
+        // (Un exercice remplacé porte la raison de son remplacement.)
+        final ecrites = ent(ou(p['sets'], 0)) - ent(ou(p['koachVolume'], 0));
         final semaine = ecrites + ent(km);
         if (semaine < ecrites) {
           _raison('koach.volume_semaine', {
-            'exercice': it['exerciseId'],
+            'exercice': p['exerciseId'],
             'ecrites': ecrites,
             'series': semaine,
             'cause': 'planification',
@@ -1972,6 +1980,10 @@ class Seances {
   /// Crédits de la fiche [exId] sur les groupes majeurs (lecture du banc,
   /// mesure de KM6 ; n'entre dans aucun calcul).
   List<(int, double)> creditsGroupes(String exId) => _credits(exId);
+
+  /// Séries dures créditées ÉCRITES par groupe majeur de [items] (lecture
+  /// du banc, mesure de KM6 ; `_creditsEcrits`).
+  List<double> creditsEcrits(List<Json> items) => _creditsEcrits(items).$1;
 
   /// Crédits de la fiche sur les groupes majeurs : [(indice, séries
   /// créditées par série dure)], en demi-séries.

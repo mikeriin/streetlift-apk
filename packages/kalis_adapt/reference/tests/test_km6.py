@@ -391,3 +391,77 @@ def test_credits_regles_a_jour():
     import sys
     r = subprocess.run([sys.executable, os.path.join(ICI, '..', 'qualites', 'regles.py'), '--verifier'])
     assert r.returncode == 0
+
+
+# ----------------------------------------------------------------------
+# Relecture indépendante (KM6) : constats traités
+# ----------------------------------------------------------------------
+def test_relecture_groupes_contre_la_montre_emom_aux_tours_membres_a_zero():
+    ecrits = [{'slotId': 'a', 'groupId': 'r', 'sets': 5}, {'slotId': 'b', 'groupId': 'r', 'sets': 5},
+              {'slotId': 'c', 'groupId': 'e', 'sets': 8}, {'slotId': 'd', 'groupId': 'e', 'sets': 8},
+              {'slotId': 'z', 'groupId': 'z', 'sets': 3}]
+    servis = [{'slotId': 'a', 'groupId': 'r', 'sets': 5}, {'slotId': 'b', 'groupId': 'r', 'sets': 3},
+              {'slotId': 'c', 'groupId': 'e', 'sets': 6}, {'slotId': 'd', 'groupId': 'e', 'sets': 6},
+              {'slotId': 'z', 'groupId': 'z', 'sets': 0}]
+    groupes = [{'groupId': 'r', 'format': 'rounds_for_time', 'rounds': 5, 'timeCapSeconds': 900},
+               {'groupId': 'e', 'format': 'emom', 'rounds': 8, 'intervalSeconds': 120, 'durationSeconds': 960},
+               {'groupId': 'z', 'format': 'circuit', 'rounds': 3}]
+    assert groupes_servis(groupes, ecrits, servis) == [
+        {'groupId': 'r', 'format': 'rounds_for_time', 'rounds': 3, 'timeCapSeconds': 900},   # le moins
+        {'groupId': 'e', 'format': 'emom', 'rounds': 6, 'intervalSeconds': 120, 'durationSeconds': 720}]
+
+
+def test_relecture_volume_semaine_sur_l_exercice_ecrit_seulement():
+    """Fractionné écrit à 6 séries, modulé à 5, remplacé par une course
+    facile (bilan très bas) : pas de `koach.volume_semaine` sur la course
+    (sa raison est `koach.course_facile`) ; la mesure ne compte pas de baisse
+    sans raison."""
+    k = koach(niveau=1)
+    k.observe({'type': 'seance_debut', 'jour': 0, 'bilan': {'overall': 1}, 'contexte': {}})
+    items = [{'slotId': 's1', 'exerciseId': 'ca-fractionne-400m', 'kind': 'work', 'sets': 5, 'distanceMeters': 400,
+              'targetFlames': 8, 'restSeconds': 90, 'koachVolume': -1, 'koachModule': -1}]
+    r = k.plan({'horizon': 'seance', 'items': items, 'grilles': {}, 'zones': {}, 'roles': {}})
+    codes = [x['code'] for x in r['raisons']]
+    assert 'koach.course_facile' in codes and 'koach.volume_semaine' not in codes
+    acc = pk.rampe_vide()
+    pk.mesure_rampe(acc, items, {}, r['items'], r['raisons'], k.seances, {})
+    assert (acc['module_items'], acc['module_sans_raison']) == (1, 0)
+
+
+def test_relecture_modulation_garde_les_techniques_a_lignes_fixes():
+    p = Planification.__new__(Planification)
+    p.semaines = [{'jours': [(1, [{'slotId': 'a', 'exerciseId': SQ, 'kind': 'work', 'sets': 5,
+                                   'technique': {'kind': 'pyramid', 'pyramidReps': [8, 6, 4, 6, 8]}},
+                                  {'slotId': 'b', 'exerciseId': SQ, 'kind': 'work', 'sets': 4}])]}]
+    p.plan = {0: {'volume': [0.15] * 10, 'intensite': 0.02}}
+    p.p = {'plafond_volume': 0.15}
+    p.facteur_exercice = lambda ex, mod: 1.15
+    p.fiches = FICHES
+    mods = Planification.items_modules(p, 0)
+    assert mods[(1, 'a')] == (5, 0.02)             # pyramide : séries gardées, intensité modulée
+    assert mods[(1, 'b')][0] == 5
+
+
+def test_relecture_koach_volume_cumule():
+    p = Planification.__new__(Planification)
+    p.items_modules = lambda semaine: {(1, 'a'): (5, 0.0)}
+    out = Planification.appliquer(p, 0, 1, [{'slotId': 'a', 'sets': 4, 'koachVolume': 1}])
+    assert (out[0]['sets'], out[0]['koachVolume'], out[0]['koachModule']) == (5, 2, 1)   # écrit 3
+
+
+def test_relecture_mesure_rampe_deguisee_sur_l_ecrit_du_programme():
+    """La ligne baissée par la modulation reste « sur limite » quand l'écrit
+    du PROGRAMME de la semaine dépasse la limite de la rampe."""
+    k = koach()
+    s = k.seances
+    ouvrir(k, 10)
+    item = {'slotId': 's1', 'exerciseId': SQ, 'kind': 'work', 'sets': 3, 'repsLow': 5, 'repsHigh': 5,
+            'targetFlames': 7, 'koachVolume': -3, 'koachModule': -3}
+    servis = s.prescrire([dict(item)], {SQ: Grille(2.5, 20.0)}, {}, {'s1': 'main'})
+    groupes = [g for (g, c) in s._credits(SQ)]
+    s.retour_vol = {'limites': [5.0] * 14, 'plafonds': [5.0] * 14}
+    ecrit = [{'slotId': 's1', 'exerciseId': SQ, 'kind': 'work', 'sets': 6, 'targetFlames': 7}]
+    acc = pk.rampe_vide()
+    pk.mesure_module(acc, servis, s.raisons, s, ecrit)
+    assert groupes and (acc['module_lignes'], acc['module_lignes_sur_limite'], acc['module_baisses_sur_limite']) \
+        == (1, 1, 1)
