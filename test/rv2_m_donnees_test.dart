@@ -377,6 +377,25 @@ void main() {
     });
   });
 
+  test('sauvegarde d’origine figée à la prise : une référence saisie '
+      'ensuite ne la change ni en mémoire, ni dans le document', () async {
+    final app = await launch({});
+    await app.configureStart(DateTime(2026, 9, 1));
+    await app.flush();
+    final prise = jsonEncode(app.programOrigin);
+    app.seedSampleAthleteProfile();
+    await app.flush();
+    expect(jsonEncode(app.programOrigin), prise);
+    final doc = (await _stored(_stateKey))!['programOrigin'];
+    expect(jsonEncode(doc), prise);
+    expect(jsonEncode(await _stored(_originKey)), prise);
+    app.dispose();
+    final next = await launch();
+    expect(jsonEncode(next.programOrigin), prise);
+    expect(jsonEncode(await _stored(_originKey)), prise);
+    next.dispose();
+  });
+
   group('M9 départ refusé par le stockage', () {
     test('la sauvegarde d’origine prise sur le départ refusé ne reste '
         'nulle part ; le départ suivant prend la bonne', () async {
