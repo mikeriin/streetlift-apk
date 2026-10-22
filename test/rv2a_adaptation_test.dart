@@ -425,10 +425,7 @@ void main() {
         ['Extension : 38,6 lb au lieu de 44,1 lb.'],
       );
       const up = kc.Reason(code: 'adapt.load_up', params: {'deltaKg': 2.5});
-      expect(
-        adaptReasonText(up),
-        '+2,5 kg par rapport à la dernière fois.',
-      );
+      expect(adaptReasonText(up), '+2,5 kg par rapport à la dernière fois.');
       expect(
         adaptReasonText(up, lb: true),
         '+5,5 lb par rapport à la dernière fois.',
