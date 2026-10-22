@@ -1,0 +1,46 @@
+diff --git a/test/km6_credits_test.dart b/test/km6_credits_test.dart
+index b57bbe6..df6686f 100644
+--- a/test/km6_credits_test.dart
++++ b/test/km6_credits_test.dart
+@@ -56,11 +56,11 @@ void main() {
+         (_lire('../kalis_adapt/assets/koach/vecteurs_qualites_v1.json')!
+                 as Map<String, Object?>)['exercices']!
+             as Map<String, Object?>;
+-    final export =
+-        kmCatalogInfos(catalog)['exercises']! as List<Object?>;
++    final export = kmCatalogInfos(catalog)['exercises']! as List<Object?>;
+     final exportParId = <String, Map<String, Object?>>{
+       for (final e in export)
+-        (e! as Map<String, Object?>)['id']! as String: e as Map<String, Object?>,
++        (e! as Map<String, Object?>)['id']! as String:
++            e as Map<String, Object?>,
+     };
+     final donnees =
+         (_lire('$_reference/donnees/catalogue_infos.json.gz')!
+@@ -68,7 +68,8 @@ void main() {
+             as List<Object?>;
+     final donneesParId = <String, Map<String, Object?>>{
+       for (final e in donnees)
+-        (e! as Map<String, Object?>)['id']! as String: e as Map<String, Object?>,
++        (e! as Map<String, Object?>)['id']! as String:
++            e as Map<String, Object?>,
+     };
+ 
+     test('kalis_plan = fiches de Koach (référence et asset), partout', () {
+@@ -157,8 +158,14 @@ void main() {
+         chestCreditRule('cd-traction-un-bras', MovementPattern.freestyle, 1),
+         0,
+       );
+-      expect(chestCreditRule('cf-burpee', MovementPattern.conditionnement, 2), 2);
+-      expect(chestCreditRule('mu-pull-over-x', MovementPattern.isolationDos, 2), 1);
++      expect(
++        chestCreditRule('cf-burpee', MovementPattern.conditionnement, 2),
++        2,
++      );
++      expect(
++        chestCreditRule('mu-pull-over-x', MovementPattern.isolationDos, 2),
++        1,
++      );
+       expect(
+         chestCreditRule('mu-pompe', MovementPattern.pousseeHorizontale, 2),
+         2,
