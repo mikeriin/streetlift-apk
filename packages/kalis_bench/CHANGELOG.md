@@ -13,6 +13,10 @@ Lot KM6 (DECISIONS_CP.md C17.47) : campagne du couple `kalis_plan` 0.4.3 × Koac
   (`rampe_principaux.modulation`).
 - Données de référence de Koach régénérées sur `kalis_plan` 0.4.3 (`test/km2_banc_test.dart` : version `0.4.3`) ;
   fixtures km2 régénérées.
+- `test/km2_adversaire_test.dart` : valeurs attendues du témoin (régénéré sur `kalis_plan` 0.4.3) et de
+  `evaluer_saison` pour `adv-7ee0da71` recalculées par la référence 1.0.8 (le Dart donnait déjà ces valeurs).
+- Campagne complète (run 39764317745) : `docs/CRITERES_KM6.md`, `docs/data/km6/` (sécurité Dart et Python, 100
+  graines ; critères 0-5 ; critère 5 par groupe ; six jeux d'adversaires ; comparaison saison par saison).
 
 ## 0.5.8 — 20/10/2026 (lot KM5)
 
