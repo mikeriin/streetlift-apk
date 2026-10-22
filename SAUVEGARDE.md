@@ -42,3 +42,14 @@ run B (tests Dart, campagne Dart 34 parts + Python 50 parts + adversaires) ; doc
   muscle-up et pull-over = choix raisonnés, dits).
 ## Reste
 fixtures régénérées + pytest + tests Dart locaux ; run B (campagne) ; livraison.
+
+## Reprise (session du 22/10/2026 17:55 UTC, après la limite d'utilisation)
+- Run B (39764317745, a58e94ec) terminé : 90 600 saisons Dart et Python, 0 violation (nouvelle et ancienne
+  définition), 0 plantée, 0 sous l'écrit par la rampe ; X8 : 1 825 960 lignes baissées, toutes avec
+  `koach.volume_semaine` ; parité 90 599 / 90 600 (1 à 1,2e-12 sur une estimation, comme KM5).
+- Échecs du run B : pytest test_fixtures (Python 3.11 de la CI, connu depuis KM4 : fixtures canoniques = Python
+  3.13 de la session, `generer.py --verifier` vert en session) ; km2_adversaire_test.dart (valeurs attendues du
+  témoin et de `evaluer_saison` recalculées par la référence 1.0.8 : corrigé, vert en local).
+- Environnement de reprise : Dart 3.13.6 conda-forge dans /opt/dart, cache pub de a74f7710 (ci-out/packages/pubcache).
+## Reste
+docs/data/km6 + CRITERES_KM6.md ; contrôle complet sur claude/ci-cp-a ; push moteurs + étiquettes ; livraison.
