@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart' show SchedulerBinding, SchedulerPhase;
 import 'package:flutter/services.dart';
 import 'package:kalis_core/kalis_core.dart'
     as kc
@@ -206,8 +207,9 @@ class _SessionScreenState extends State<SessionScreen> {
 
   /// Page « Bilan du jour » avant l'exercice 1 (G9) : seulement dans une
   /// séance servie par le moteur dynamique (G10 : la page « Koach · séance
-  /// du jour » de L7/L11 est retirée).
-  late final bool koachPage;
+  /// du jour » de L7/L11 est retirée). RV2 (S13) : retirée à l'arrêt
+  /// d'urgence de Koach pendant que l'écran est ouvert.
+  late bool koachPage;
   int get koachPages => koachPage ? 1 : 0;
 
   /// Nombre de pages d'exercices (hors page Koach et bilan).
@@ -220,8 +222,18 @@ class _SessionScreenState extends State<SessionScreen> {
   int get exerciseIndex => page - koachPages;
 
   /// G9 : séance servie par `kalis_adapt` (bilan santé, charges du moteur,
-  /// flammes et conseils) ; décidé une fois à l'ouverture.
-  late final bool adaptOn;
+  /// flammes et conseils) ; décidé une fois à l'ouverture. RV2 (S13) : faux
+  /// dès l'arrêt d'urgence de Koach pendant que l'écran est ouvert (séance
+  /// écrite).
+  late bool adaptOn;
+
+  /// RV2 (S13) : arrêt d'urgence déjà en cours à l'ouverture (rien à
+  /// changer ensuite : la séance est déjà lue telle qu'écrite).
+  late final bool _stoppedAtOpen;
+
+  /// RV2 (S13) : séance repassée telle qu'écrite par un arrêt d'urgence
+  /// survenu écran ouvert : pages d'exercices recréées.
+  bool _writtenAfterStop = false;
 
   /// G9 : journée servie par le moteur dynamique ; sinon celle du
   /// programme.
@@ -255,6 +267,8 @@ class _SessionScreenState extends State<SessionScreen> {
     adaptOn = store.adaptOpen(widget.week.n, widget.day) != null;
     groups = _groups();
     koachPage = adaptOn;
+    _stoppedAtOpen = store.koachStoppedWeek(widget.week.n);
+    store.addListener(_onStoreChanged);
     // Reprise : même occurrence (même clé de journal), ouverte sur
     // l'exercice en cours (une séance entamée saute la page Koach). Le
     // repos n'est pas relancé (décision 26/09).
@@ -284,8 +298,41 @@ class _SessionScreenState extends State<SessionScreen> {
     registerDayRoute(store.sessionKey(widget.week.n, widget.day.j), _route);
   }
 
+  /// RV2 (S13) : arrêt d'urgence de Koach (Réglages) pendant que l'écran
+  /// est ouvert : le magasin a ramené la séance à la séance écrite
+  /// (`koachStop`, `_koachBackToWritten` : séries validées ou saisies
+  /// gardées, les autres reprennent le programme) ; l'écran suit : pages
+  /// de la séance écrite, plus de bilan du jour ni de conseils de Koach,
+  /// même exercice affiché quand il est encore là (sinon même rang).
+  /// Avant, l'écran gardait les exercices et les cibles servis par Koach
+  /// jusqu'à sa fermeture.
+  void _onStoreChanged() {
+    if (!mounted || !adaptOn || _stoppedAtOpen) return;
+    if (!store.koachStoppedWeek(widget.week.n)) return;
+    final binding = SchedulerBinding.instance;
+    if (binding.schedulerPhase == SchedulerPhase.persistentCallbacks) {
+      binding.addPostFrameCallback((_) => _onStoreChanged());
+      return;
+    }
+    final from = _currentKey();
+    final rank = exerciseIndex;
+    setState(() {
+      adaptOn = false;
+      koachPage = false;
+      _writtenAfterStop = true;
+      groups = _groups();
+      var target = from == 'fin' ? bilanPage : rank;
+      for (var i = 0; i < nPages; i++) {
+        if (groups[i].any((e) => e.id == from)) target = i;
+      }
+      page = target.clamp(0, bilanPage);
+    });
+    if (pageCtl.hasClients) pageCtl.jumpToPage(page);
+  }
+
   @override
   void dispose() {
+    store.removeListener(_onStoreChanged);
     unregisterDayRoute(_route);
     keepAwake(false);
     // CI1c : une simple consultation ne laisse aucune entrée d'historique.
@@ -683,8 +730,12 @@ class _SessionScreenState extends State<SessionScreen> {
                               )
                             : i < bilanPage
                             ? SessionExercisePage(
+                                // RV2 (S13) : séance repassée telle
+                                // qu'écrite : pages recréées (séries et
+                                // saisies relues dans le journal).
                                 key: ValueKey(
-                                  '${groups[i - koachPages].first.id}|${groups[i - koachPages].length}|${store.setCount(groups[i - koachPages].first)}',
+                                  '${groups[i - koachPages].first.id}|${groups[i - koachPages].length}|${store.setCount(groups[i - koachPages].first)}'
+                                  '${_writtenAfterStop ? '|écrite' : ''}',
                                 ),
                                 week: w,
                                 day: _day,
@@ -1087,10 +1138,26 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// RIR convertis comme le journal du moteur, règle C9).
   static int? flamesOf(SetEntry s) => setFlamesOf(s);
 
+  /// RV2 (S11) : nature de la saisie de la ligne [i] de l'exercice [k] :
+  /// celle de l'exercice, sauf le palier de tenue d'un drop set mécanique
+  /// (« 3. tenue menton au-dessus de la barre jusqu’à l’échec ») : des
+  /// secondes, vérifiées et nommées comme telles (avant : validées comme
+  /// des répétitions, « Indique le nombre de reps »).
+  LogSpec _rowSpec(int k, int i) {
+    final sp = specs[k];
+    if (sp.rowPrefix != 'D' || sp.stages == null) return sp;
+    final stages = dropStages(widget.exs[k].cue, sp.stages!);
+    if (stages == null) return sp;
+    return stages[i % stages.length].seconds ? const LogSpec('hold') : sp;
+  }
+
   Future<void> _checkSet(int k, int i) async {
     if (widget.readOnly) return;
     final ex = widget.exs[k];
     final sp = specs[k];
+    // RV2 (S11) : palier de tenue d'un drop set : saisie vérifiée en
+    // secondes (le reste, repos et flammes, suit l'exercice).
+    final rowSp = _rowSpec(k, i);
     final log = logs[k];
     final s = log.sets[i];
     // G9 correction 1 : saisie valide d'abord ; la coche valide la série
@@ -1101,7 +1168,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       // notée en minutes (marquée pour le journal).
       if (s.partsTotal case final total?) s.reps = '$total';
       s.minutes = sp.kind == 'duration';
-      final pre = checkSet(sp, s, rpe: store.settings.rpe);
+      final pre = checkSet(rowSp, s, rpe: store.settings.rpe);
       if (!pre.ok) {
         setState(() => _issues[(k, i)] = pre);
         if (store.settings.vibration) HapticFeedback.heavyImpact();
@@ -1121,7 +1188,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     }
     // Validation métier (store) : la coche n'est acceptée qu'avec une saisie
     // valide ; sinon le texte reste tel quel et le champ est nommé.
-    final check = store.toggleSet(log, i, sp);
+    final check = store.toggleSet(log, i, rowSp);
     setState(() {
       if (check.ok) {
         _issues.remove((k, i));
@@ -1153,7 +1220,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         adviceRest = _adaptAdvice(k, i);
       }
     }
-    if (s.done && !_spoke) _spoke = _celebrateRecord(ex, s);
+    // RV2 (S11) : des secondes de tenue ne sont pas des répétitions : pas de
+    // record en direct sur un palier de tenue.
+    final holdStage = rowSp.kind == 'hold' && sp.kind != 'hold';
+    if (s.done && !_spoke && !holdStage) {
+      _spoke = _celebrateRecord(ex, s);
+    }
     if (!s.done || !store.settings.autoTimer) return;
     // RV1 : groupe du moteur : pas de repos individuel au milieu d'un tour
     // (circuit de 3 compris), ni dans un format au chrono (EMOM,
@@ -1163,10 +1235,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final members = widget.exs.length;
     if ((members == 2 && k == 0) || (group != null && k < members - 1)) {
       if (!_spoke) {
-        showKSnack(
-          context,
+        _snackAboveBar(
           message: 'Enchaîne : ${store.splitName(widget.exs[k + 1].name).$1}',
-          bottom: KBottomInset.of(context),
           duration: const Duration(seconds: 2),
         );
       }
@@ -1214,10 +1284,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final kt = KTokens.of(context);
     final large = koachLargeText(context);
     _spoke = true;
-    showKSnack(
-      context,
+    _snackAboveBar(
       message: 'Koach : $text',
-      bottom: KBottomInset.of(context),
       duration: const Duration(seconds: 6),
       // Grand texte : le message garde toute la largeur, Koach s'efface.
       leading: KeyedSubtree(
@@ -1247,6 +1315,35 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     return rest;
   }
 
+  /// RV2 (S6) : message après une série (Koach, record, « Enchaîne »),
+  /// posé au-dessus de la barre de chrono. Il est affiché après l'image qui
+  /// suit la validation : la barre du repos lancé par la série
+  /// (`startRest`, après le message dans [_checkSet]) est alors en place et
+  /// sa hauteur est connue. Avant, la hauteur était lue avant le repos (0
+  /// sans barre affichée) : la barre apparue ensuite masquait le message.
+  void _snackAboveBar({
+    required String message,
+    required Duration duration,
+    Widget? leading,
+    String? actionLabel,
+    VoidCallback? onAction,
+  }) {
+    final binding = WidgetsBinding.instance;
+    binding.addPostFrameCallback((_) {
+      if (!mounted) return;
+      showKSnack(
+        context,
+        message: message,
+        bottom: KBottomInset.of(context),
+        duration: duration,
+        leading: leading,
+        actionLabel: actionLabel,
+        onAction: onAction,
+      );
+    });
+    binding.ensureVisualUpdate();
+  }
+
   /// KM3 : après une série validée, Koach donne la cible de la suivante
   /// (et peut arrêter l'exercice) : message au-dessus de la barre de repos.
   void _koachNews(int k, int i) {
@@ -1262,10 +1359,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final kt = KTokens.of(context);
     final large = koachLargeText(context);
     _spoke = true;
-    showKSnack(
-      context,
+    _snackAboveBar(
       message: 'Koach : ${news.text}',
-      bottom: KBottomInset.of(context),
       duration: const Duration(seconds: 5),
       leading: KeyedSubtree(
         key: const ValueKey('koach-set-news'),
@@ -1661,10 +1756,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     if (hit == null || !mounted) return false;
     if (store.settings.vibration) HapticFeedback.mediumImpact();
     final k = KTokens.of(context);
-    showKSnack(
-      context,
+    _snackAboveBar(
       message: 'Record : ${store.splitName(ex.name).$1}, ${hit.label}',
-      bottom: KBottomInset.of(context),
       duration: const Duration(seconds: 3),
       leading: Icon(
         Icons.emoji_events_rounded,
@@ -1678,7 +1771,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// Une série déjà validée puis modifiée repasse « non validée » si sa
   /// saisie n'est plus valide ; un problème affiché disparaît dès la frappe.
   void _edited(int k, int i) {
-    final check = store.revalidateSet(logs[k], i, specs[k]);
+    // RV2 (S11) : palier de tenue d'un drop set vérifié en secondes.
+    final check = store.revalidateSet(logs[k], i, _rowSpec(k, i));
     if (check == null && !_issues.containsKey((k, i))) return;
     setState(() {
       if (check == null) {
@@ -2771,7 +2865,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               _ => null,
             },
             entry: log.sets[i],
-            spec: sp,
+            // RV2 (S11) : palier de tenue d'un drop set : « Secondes ».
+            spec: _rowSpec(k, i),
             showKg: showKg,
             showRir: showRir,
             showV: showV,
@@ -3692,6 +3787,17 @@ String emomMissedHint(int every) => every == 60
     ? 'Minute ratée : laisse sa ligne non validée.'
     : 'Départ raté : laisse sa ligne non validée.';
 
+/// RV2 (S10) : récupération entre deux efforts d'un groupe d'intervalles,
+/// celle du programme (« 8× (30 s effort / 30 s repos) » : 30 s). Sans
+/// récupération écrite, aucune : les efforts s'enchaînent, un départ toutes
+/// les `intervalSeconds` (comme le dit l'en-tête « Intervalles · 8 × 30 s »,
+/// sans « récupération ») ; avant, une récupération égale à l'effort était
+/// inventée (2 × plus long que prescrit).
+int groupIntervalRest(kc.GroupSpec g) {
+  final rest = g.restBetweenRoundsSeconds;
+  return rest == null || rest < 0 ? 0 : rest;
+}
+
 /// Tours prévus d'un groupe (null : maximum, AMRAP ; une fois, chipper).
 int? groupPlannedRounds(kc.GroupSpec g) => switch (g.format) {
   kc.GroupFormat.amrap || kc.GroupFormat.chipper => null,
@@ -3833,7 +3939,7 @@ class _GroupCardState extends State<_GroupCard> {
         widget.timer.startInterval(
           g.rounds ?? 1,
           interval,
-          g.restBetweenRoundsSeconds ?? interval,
+          groupIntervalRest(g),
         );
       case kc.GroupFormat.roundsForTime || kc.GroupFormat.chipper:
         widget.timer.stopwatch('CHRONO', group: true);
@@ -5156,11 +5262,13 @@ class _RestDay extends StatelessWidget {
                   color: k.encre,
                 ),
                 const SizedBox(height: KSpacing.s12),
+                // RV2 (S15) : titre de carte, pas d'écran : casse du reste de
+                // l'application (les capitales U3 sont réservées aux titres
+                // d'écran, de séance, de jour et à l'onglet actif).
                 Text(
-                  k.title('Repos complet'),
-                  style: k.titleStyle(
-                    KType.titreCarte.copyWith(color: k.texte),
-                  ),
+                  'Repos complet',
+                  key: const ValueKey('rest-day-title'),
+                  style: KType.titreCarte.copyWith(color: k.texte),
                 ),
                 const SizedBox(height: KSpacing.s8),
                 Text(
