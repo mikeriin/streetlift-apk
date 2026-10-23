@@ -455,3 +455,5 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Prompt : `prompts/RV3.txt`. Base `main` 83a0170e (dev7.7.0). Décision du propriétaire sur la modulation : C17.51.1.
 - Aucun autre lot ne tourne : `claude/ci-3d` est libre.
+- **Précision du propriétaire (23/10, 13:44 UTC, C17.51.4) — prime sur le prompt** : le mode qui décide est **celui du profil** (Assisté / Libre), jamais celui d'une séance ou du programme. Le profil du propriétaire est en **Libre** alors que ses séances portent `mode: assisted` : l'application doit suivre le profil (modulation de la semaine et bilan du jour) ; corrige toute lecture du mode ailleurs que dans le profil, séances déjà faites jamais réécrites, testé.
+
