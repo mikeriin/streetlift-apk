@@ -6,6 +6,5 @@ Analyzing streetlift-apk...
    info • Invalid use of a private type in a public API. Try making the private type public, or making the API that uses the private type also be private • lib/koach1/koach_groupes.dart:46:8 • library_private_types_in_public_api
    info • Invalid use of a private type in a public API. Try making the private type public, or making the API that uses the private type also be private • lib/koach1/koach_groupes.dart:77:8 • library_private_types_in_public_api
    info • Invalid use of a private type in a public API. Try making the private type public, or making the API that uses the private type also be private • lib/koach1/koach_groupes.dart:78:8 • library_private_types_in_public_api
-  error • The function 'debugResetKoachTakeoverWait' isn't defined. Try importing the library that defines 'debugResetKoachTakeoverWait', correcting the name to the name of an existing function, or defining a function named 'debugResetKoachTakeoverWait' • test/kb5_koach108_test.dart:505:7 • undefined_function
 
-7 issues found. (ran in 22.3s)
+6 issues found. (ran in 19.5s)
