@@ -119,3 +119,11 @@ committer les fichiers déchiffrés.
   profil (`GuidanceMode`, jamais le `mode` d'une séance) : assisté =
   appliquée et dite, « Annuler » ; libre = l'écrit est servi, la
   proposition a « Accepter » / « Garder l'écrit ».
+- Changements du jour (RV4, C17.51.5) : menu ⋯ de la carte, « Remplacer
+  pour aujourd'hui » (propositions ; en mode Libre, toute la base et les
+  exercices perso) et « Retirer pour aujourd'hui » (raison) ; gardés dans
+  `SessionLog.changes`, posés sur la journée affichée (`withDayChanges`),
+  jamais dans le programme écrit. Bilan du jour sous Koach selon le mode du
+  profil (C17.52.4) : libre = écrit servi, « Accepter » / « Garder
+  l'écrit » ; assisté = appliqué, « Annuler » (retour au `seance_debut`
+  avant la première série).

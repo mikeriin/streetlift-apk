@@ -3855,7 +3855,7 @@ extension KoachStore on AppStore {
     final bc = bil is Map ? bil['choix'] : null;
     final bl = bil is Map ? bil['lignes'] : null;
     if ((bc == 'applique' || bc == 'ecrit') && bl is Map && bl.isNotEmpty) {
-      final forme = bil['forme'] == true;
+      final forme = (bil as Map)['forme'] == true;
       var plus = false;
       for (final l in bl.values) {
         if (l is! Map) continue;
