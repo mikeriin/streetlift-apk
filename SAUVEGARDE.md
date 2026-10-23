@@ -7,7 +7,7 @@ Session du 23/10/2026, début 04:37 UTC. Branche de travail locale `kb5` (base `
 - lib/koach1/koach_groupes.dart : koachGroupesServis (= ko.groupesServis), koachGroupesDeLaSeance (groupe du moteur si lignes inchangées, sinon recalé), koachTechniqueCoherente (= ko.techniqueCoherente).
 - koach1_store.dart : `groups` passés à plan(seance), groupes de la séance servie recalés, diag `groupesRecales` ; aperçu : technique et groupes recalés ; volume_semaine dans kKoachRaisonsDeSeance ; retirée de l'en-tête pour une ligne PR8.
 - test/kb5_koach108_test.dart.
-- Contrôle rapide n°1 vert hors 2 tests (corrigés) ; relecture indépendante faite (empreintes kb1, type privé, raison par ligne, groupes toujours recalés : corrigés) ; contrôle rapide n°3 en cours.
+- Contrôle rapide vert (run 39904076619, 16 tests KB5, analyse, format) ; relecture indépendante traitée. Contrôle complet claude/ci-3d run 39905071701 (commit 7a2bbc68, arbre b619f51c = kb5 7466e453) en cours depuis 05:19 UTC.
 
 ## Reste
 - Résultat du contrôle rapide ; cible émulateur integration_test/koach_kb5_test.dart (+ ci3d_drive.sh) ; SUIVI_PROJET.md, CLAUDE.md ; relecture indépendante ; contrôle complet claude/ci-3d ; publication main, build signé, livraison, ETAT, page de suivi, notification.
