@@ -29,6 +29,8 @@ import 'package:kalis_adapt/koach_textes.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_plan/kalis_plan.dart' as kp;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streetlift_tracker/koach1/koach1_widgets.dart'
+    show debugResetKoachTakeoverWait;
 import 'package:streetlift_tracker/koach1/koach_groupes.dart';
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
 import 'package:streetlift_tracker/store.dart';
