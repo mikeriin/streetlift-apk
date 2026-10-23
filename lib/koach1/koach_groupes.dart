@@ -21,10 +21,6 @@
 import 'package:kalis_adapt/koach.dart' as ko;
 import 'package:kalis_core/kalis_core.dart' as kc;
 
-typedef _Json = Map<String, Object?>;
-
-int _ent(Object? v) => v is num ? v.round() : 0;
-
 /// Groupes [groupes] (JSON du contrat, séance écrite) recalés sur les
 /// lignes [servis] (JSON des items servis), [ecrits] étant les items écrits
 /// du jour : la règle du moteur lui-même (`groupesServis` de Koach 1.0.8,
@@ -40,10 +36,10 @@ int _ent(Object? v) => v is num ? v.round() : 0;
 ///   tours (E2MOM A/B : 8 tours, 960 s) suit les tours.
 ///
 /// Les séries écrites d'un item sont `sets − koachVolume`. Pur.
-List<_Json> koachGroupesServis(
-  List<_Json> groupes,
-  List<_Json> ecrits,
-  List<_Json> servis,
+List<Map<String, Object?>> koachGroupesServis(
+  List<Map<String, Object?>> groupes,
+  List<Map<String, Object?>> ecrits,
+  List<Map<String, Object?>> servis,
 ) => ko.groupesServis(groupes, ecrits, servis);
 
 /// Groupes lus d'une sortie de `plan(seance)` (`groups`) ; null : sortie
@@ -62,65 +58,56 @@ List<kc.GroupSpec>? koachGroupesDeSortie(Object? groups) {
 
 /// KB5 (X2) : groupes de la séance servie. [ecrits] : groupes de la
 /// journée écrite ; [moteur] : groupes recalés rendus par Koach (null :
-/// non rendus) ; [itemsEcrits] : items écrits du jour (JSON) ; [servisMoteur]
-/// : items servis par Koach (JSON, avant les remplacements de
-/// l'application) ; [servis] : lignes réellement servies.
+/// non rendus) ; [itemsEcrits] : items écrits du jour (JSON) ; [servis] :
+/// lignes réellement servies (après les remplacements de l'application).
 ///
-/// Un groupe dont toutes les lignes servies sont celles du moteur (mêmes
-/// séries) est pris tel que Koach le rend ; sinon (ligne remplacée par
-/// l'application, groupe absent de la sortie) il est recalé par
-/// [koachGroupesServis] sur les lignes servies. Rend aussi les groupes
-/// recalés par l'application (diagnostic du mode dev). Pur.
+/// Chaque groupe est recalé par [koachGroupesServis] (la règle du moteur)
+/// sur les lignes réellement servies ; quand le résultat est celui que
+/// Koach rend, c'est le groupe du moteur qui sert. Sinon (ligne remplacée
+/// ou écartée par l'application, groupe absent de la sortie) le groupe
+/// recalé sert et son identifiant est rendu dans `recales` (diagnostic du
+/// mode dev). Un groupe sans membre servi n'est plus déclaré. Pur.
 ({List<kc.GroupSpec>? groupes, List<String> recales}) koachGroupesDeLaSeance(
   List<kc.GroupSpec>? ecrits,
   List<kc.GroupSpec>? moteur,
-  List<_Json> itemsEcrits,
-  List<_Json> servisMoteur,
+  List<Map<String, Object?>> itemsEcrits,
   List<kc.ExercisePrescription> servis,
 ) {
   if (ecrits == null) return (groupes: null, recales: const []);
-  final servisJson = [
-    for (final it in servis) it.toJson().cast<String, Object?>(),
-  ];
-  final recalage = {
-    for (final g in koachGroupesServis(
-      [for (final g in ecrits) g.toJson().cast<String, Object?>()],
-      itemsEcrits,
-      servisJson,
-    ))
-      '${g['groupId']}': g,
-  };
   final parMoteur = {
     for (final g in moteur ?? const <kc.GroupSpec>[]) g.groupId: g,
   };
-  final seriesMoteur = <String, int>{
-    for (final it in servisMoteur)
-      if (it['groupId'] != null) '${it['slotId']}': _ent(it['sets']),
-  };
   final out = <kc.GroupSpec>[];
   final recales = <String>[];
-  for (final g in ecrits) {
-    final r = recalage[g.groupId];
-    if (r == null) continue; // aucun membre servi
-    final membres = [
-      for (final it in servis)
-        if (it.groupId == g.groupId && it.sets > 0) it,
-    ];
-    final m = parMoteur[g.groupId];
-    final commeLeMoteur =
-        m != null && membres.every((it) => seriesMoteur[it.slotId] == it.sets);
-    if (commeLeMoteur) {
+  for (final r in koachGroupesServis(
+    [for (final g in ecrits) g.toJson().cast<String, Object?>()],
+    itemsEcrits,
+    [for (final it in servis) it.toJson().cast<String, Object?>()],
+  )) {
+    final id = '${r['groupId']}';
+    final m = parMoteur[id];
+    if (m != null && _memeJson(m.toJson(), r)) {
       out.add(m);
       continue;
     }
     try {
       out.add(kc.GroupSpec.fromJson(r));
-      recales.add(g.groupId);
     } catch (_) {
-      out.add(g);
+      out.add(ecrits.firstWhere((g) => g.groupId == id));
     }
+    recales.add(id);
   }
   return (groupes: out, recales: recales);
+}
+
+bool _memeJson(Map<String, Object?> a, Map<String, Object?> b) {
+  if (a.length != b.length) return false;
+  for (final e in a.entries) {
+    final v = b[e.key];
+    final w = e.value;
+    if (w is num && v is num ? w != v : w != v) return false;
+  }
+  return true;
 }
 
 /// La prescription [item] dont la technique est rendue cohérente avec son

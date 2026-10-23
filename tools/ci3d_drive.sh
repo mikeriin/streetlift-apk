@@ -121,6 +121,28 @@ for part in a b; do
   [ "$c" -ne 0 ] && code_rv1c1=$c
   tail -n 30 "$out/drive-rv1c1_chronos_test-$part.log"
 done
+# KB5 (dev7.7.0, C17.48) : Koach 1.0.8 et kalis_plan 0.4.3 sur le
+# programme PR2 synthétique : lundi de tirage et mardi de poussée servis
+# (captures de chaque page de la poussée, groupes recalés : E2MOM 8 tours) ;
+# jeudi servi, EMOM des muscle-ups minute par minute ; raison de la
+# modulation hebdomadaire (koach.volume_semaine) en tête de séance et sur
+# la carte. Deux parties : a = sombre, rouge ; b = clair, violet.
+code_kb5=0
+for part in a b; do
+  cible koach_kb5_test "$part" dev
+  c=$?
+  if [ "$c" -ne 0 ] && [ ! -f "$out/kb5_releve_$part.json" ]; then
+    echo "KB5 $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-koach_kb5_test-$part.log" "$out/drive-kb5-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible koach_kb5_test "$part" dev
+    c=$?
+  fi
+  [ "$c" -ne 0 ] && code_kb5=$c
+  tail -n 30 "$out/drive-koach_kb5_test-$part.log"
+done
 # KB4 (dev7.4.0, C17.40) : Koach 1.0.7 sur le programme PR2 synthétique
 # (trois semaines d'historique) : lundi de tirage puis mardi de poussée
 # servis avec toutes leurs lignes à leurs séries écrites (captures de la
@@ -669,7 +691,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_rv2=$code_rv2 code_rv1c1=$code_rv1c1 code_rv1=$code_rv1 code_kb4=$code_kb4 code_kb3=$code_kb3 code_kb2c1=$code_kb2c1 code_kb2=$code_kb2 code_kb1=$code_kb1 code_ks1a=$code_ks1a code_km3=$code_km3 code_bv11=$code_bv11 code_cif=$code_cif code_ci1g=$code_ci1g code_ci1f=$code_ci1f code_ci1e=$code_ci1e code_ci1c=$code_ci1c code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_kb5=$code_kb5 code_rv2=$code_rv2 code_rv1c1=$code_rv1c1 code_rv1=$code_rv1 code_kb4=$code_kb4 code_kb3=$code_kb3 code_kb2c1=$code_kb2c1 code_kb2=$code_kb2 code_kb1=$code_kb1 code_ks1a=$code_ks1a code_km3=$code_km3 code_bv11=$code_bv11 code_cif=$code_cif code_ci1g=$code_ci1g code_ci1f=$code_ci1f code_ci1e=$code_ci1e code_ci1c=$code_ci1c code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_rv2" -eq 0 ] && [ "$code_rv1c1" -eq 0 ] && [ "$code_rv1" -eq 0 ] && [ "$code_kb4" -eq 0 ] && [ "$code_kb3" -eq 0 ] && [ "$code_kb2c1" -eq 0 ] && [ "$code_kb2" -eq 0 ] && [ "$code_kb1" -eq 0 ] && [ "$code_ks1a" -eq 0 ] && [ "$code_km3" -eq 0 ] && [ "$code_bv11" -eq 0 ] && [ "$code_cif" -eq 0 ] && [ "$code_ci1g" -eq 0 ] && [ "$code_ci1f" -eq 0 ] && [ "$code_ci1e" -eq 0 ] && [ "$code_ci1c" -eq 0 ] && [ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_kb5" -eq 0 ] && [ "$code_rv2" -eq 0 ] && [ "$code_rv1c1" -eq 0 ] && [ "$code_rv1" -eq 0 ] && [ "$code_kb4" -eq 0 ] && [ "$code_kb3" -eq 0 ] && [ "$code_kb2c1" -eq 0 ] && [ "$code_kb2" -eq 0 ] && [ "$code_kb1" -eq 0 ] && [ "$code_ks1a" -eq 0 ] && [ "$code_km3" -eq 0 ] && [ "$code_bv11" -eq 0 ] && [ "$code_cif" -eq 0 ] && [ "$code_ci1g" -eq 0 ] && [ "$code_ci1f" -eq 0 ] && [ "$code_ci1e" -eq 0 ] && [ "$code_ci1c" -eq 0 ] && [ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

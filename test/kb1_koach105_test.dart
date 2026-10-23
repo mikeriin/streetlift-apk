@@ -176,16 +176,17 @@ void main() {
   });
 
   group('paquets', () {
-    test('kalis_adapt 1.0.6 (KB4) et kalis_plan 0.4.2 : copies à l’octet de '
+    test('kalis_adapt 1.0.7 et kalis_plan 0.4.3 (KB5) : copies à l’octet de '
         'leurs étiquettes ; kalis_core 0.4.4 inchangé', () {
       expect(ka.kalisAdaptVersion, '1.0.7');
       expect(kp.kalisPlanVersion, '0.4.3');
       expect(kc.kalisCoreVersion, '0.4.4');
       expect(ko.koachVersion, '1.0.8-ref.1');
-      // Empreintes calculées sur `etiquettes/kalis_adapt-v1.0.6` (KB4,
-      // `moteurs` 737d528d) et `etiquettes/kalis_plan-v0.4.2` (bcb8422b).
+      // Empreintes calculées sur `etiquettes/kalis_adapt-v1.0.7` et
+      // `etiquettes/kalis_plan-v0.4.3` (KB5, `moteurs` 25d5bfe6).
       // (KB1, `etiquettes/kalis_adapt-v1.0.4` : 55 fichiers, 06c8f971… ;
-      // KB3, v1.0.5 : 447ffbeb….)
+      // KB3, v1.0.5 : 447ffbeb… ; KB4, v1.0.6 : cebaa39f…, kalis_plan
+      // 0.4.2 : 9ce7e5a0….)
       expect(
         _empreinte(const [
           'packages/kalis_adapt/lib',
@@ -194,7 +195,7 @@ void main() {
         ]),
         (
           55,
-          'cebaa39f3c2358ed4b043c7afe45e4f4885ddaa1e72f52ed5c230a32eb314d42',
+          'dcf0f3226f953cd1ab615ce186729ef57975288bd07cb492bab05f75e3fbf9b6',
         ),
       );
       expect(
@@ -204,7 +205,7 @@ void main() {
         ]),
         (
           32,
-          '9ce7e5a06633084455909dc4a517e4481e62f91f816e788260d6b9b9a9b35ace',
+          '0f01164123fbf05223a375a81b9d391471425b526dd0d32f58c91108f20eb258',
         ),
       );
     });
