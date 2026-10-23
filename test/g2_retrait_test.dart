@@ -462,9 +462,9 @@ void main() {
     });
   });
 
-  test('version affichée : « 7.7.0 » hors build de développement '
-      '(Koach 1.0.8, KB5)', () {
-    expect(kVersion, '7.7.0');
-    expect(kAppVersion, '7.7.0');
+  test('version affichée : « 7.7.1 » hors build de développement '
+      '(RV3)', () {
+    expect(kVersion, '7.7.1');
+    expect(kAppVersion, '7.7.1');
   });
 }

@@ -1,8 +1,16 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : KB5 — Koach 1.0.8 et `kalis_plan` 0.4.3 dans l'application, version dev7.7.0 ; précédent : dev7.6.0 (RV2)**  
-**Date : 23 octobre 2026, Europe/Paris — version : 7.7.0+152, affichée « dev7.7.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.47, C17.48) ; `kalis_adapt` 1.0.7 et `kalis_plan` 0.4.3 copiés à l'octet de leurs étiquettes ; build signé sur `main`.**
+**Passe actuelle : RV3 — modulation de la semaine selon le mode du profil, dead hang au bilan bas, mineurs restants, version dev7.7.1 ; précédent : dev7.7.0 (KB5)**  
+**Date : 23 octobre 2026, Europe/Paris — version : 7.7.1+153, affichée « dev7.7.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.51) ; `packages/` inchangés ; build signé sur `main`.**
+
+## RV3 — lot rapide (version dev7.7.1, pipeline CP, DECISIONS_CP.md C17.51)
+
+- Modulation des séries par la semaine (Koach 1.0.8, `koachModule` de la ligne servie) selon le mode du profil (C17.51.1) : assisté = servie modulée et dite, « Annuler » (séries sans la modulation pour cette séance) ; libre = servie sans la modulation, proposée au conditionnel avec « Accepter » / « Garder l'écrit », jamais appliquée sans action de l'athlète. Même règle pour les ajouts au-dessus de l'écrit (dits en tête quand appliqués). Choix possible dès l'aperçu, gardé à l'ouverture, versé au moteur à la fin de la séance (`decision` `volume_moins` / `volume_plus`, acceptée ou refusée). Carte `KoachVolumeCard` sur la carte d'exercice ; « Mon programme » dit la proposition en mode libre.
+- Le mode qui décide est celui du profil (C17.51.4) : séances de Koach et aperçus enregistrent le mode du profil (trace), le moteur 0.x lit le mode du profil pour un bilan recalculé et pour les conseils pendant la séance (avant : le mode enregistré dans la séance).
+- Dead hang de la pause du squat E3MOM au bilan bas : servi à ses six tenues, enchaîné au squat à l'écran (il n'est jamais dans le `GroupSpec` écrit : seul le squat y est) ; rien de retiré (test).
+- Mineurs de RV1 : P10, R6, R7, R8, R10, R13, F5, F6, F7, F9, F11 à F16 corrigés (`test/rv3_mineurs_test.dart`).
+- Tests : `test/rv3_koach_mode_test.dart`, `test/rv3_mineurs_test.dart`, `test/ui_rv3_capture_test.dart` ; cible émulateur `integration_test/rv3_modulation_test.dart`.
 
 ## KB5 — Koach 1.0.8 et `kalis_plan` 0.4.3 dans l'application (version dev7.7.0, pipeline CP, DECISIONS_CP.md C17.48)
 

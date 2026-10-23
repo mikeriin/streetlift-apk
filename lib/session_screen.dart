@@ -2798,6 +2798,17 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           exercise: ex,
           onChanged: () => setState(() => epoch++),
         ),
+      // RV3 (C17.51.1) : modulation des séries par la semaine : appliquée
+      // avec « Annuler » (assisté), proposée avec « Accepter » / « Garder
+      // l'écrit » (libre).
+      if (!readOnly && widget.adapt && ex.engine)
+        KoachVolumeCard(
+          key: ValueKey('koach-volume-card-${ex.id}-$epoch'),
+          week: widget.week.n,
+          day: widget.baseDay ?? widget.day,
+          exercise: ex,
+          onChanged: () => setState(() => epoch++),
+        ),
     ];
     // Correctif 20/10/2026 : en séance, une série validée et notée passe
     // en ligne compacte ; enchaînement : quand tout le tour est fait. Un

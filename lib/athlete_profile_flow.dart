@@ -3038,11 +3038,19 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
               title: 'D’ici le ${civilText(_date)}',
               onTap: () async {
                 final first = dateOfCivil(widget.today.addDays(7));
+                final last = DateTime(first.year + 5);
                 final d = await showDatePicker(
                   context: context,
-                  initialDate: dateOfCivil(_date),
+                  // RV3 (F12) : objectif dont l'échéance tombe dans moins
+                  // d'une semaine (ou passée) : le calendrier s'ouvre au
+                  // premier jour permis. Avant : erreur, rien ne s'ouvrait.
+                  initialDate: pickerInitialDate(
+                    dateOfCivil(_date),
+                    first,
+                    last,
+                  ),
                   firstDate: first,
-                  lastDate: DateTime(first.year + 5),
+                  lastDate: last,
                 );
                 if (d != null && mounted) setState(() => _date = civilOf(d));
               },

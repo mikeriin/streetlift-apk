@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'device.dart';
 import 'dev/dev_flags.dart';
 import 'dev/dev_session.dart';
+import 'mannequin_3d.dart' show Display3DSettings;
 import 'mannequin_preload.dart';
 import 'muscle_map_2d.dart' show mapPrecacheInBackground;
 import 'session_host.dart';
@@ -59,6 +60,12 @@ void registerFontLicences() {
 Future<void> bootSession() async {
   await DevSession.load();
   await store.init();
+  // RV3 (R8) : réglages d'affichage 3D (nom au toucher, halo) lus avant le
+  // premier écran. Avant : lus à la première ouverture de Réglages ›
+  // Apparence ou du mannequin ; l'Anatomie et la recherche des réglages
+  // montraient d'ici là les valeurs par défaut (nom au toucher coupé mais
+  // affiché).
+  await Display3DSettings.instance.load();
 }
 
 /// Application complète (racine de [main] et des tests d'intégration) :

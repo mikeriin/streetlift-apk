@@ -691,7 +691,14 @@ class _Sheet extends StatelessWidget {
 
 /// Sources et licences des contenus (assets/legal/licences.md ; BV11 : base
 /// v1.1 seule, pack 2.0.0 retiré).
-class MentionsScreen extends StatelessWidget {
+///
+/// RV3 (R13) : en bas de page, « Licences des logiciels » ouvre la page des
+/// licences de l'application (polices Barlow, SIL OFL 1.1, enregistrée au
+/// démarrage, et bibliothèques). Avant : aucune entrée n'y menait, la
+/// licence des polices n'était jamais montrée. Le texte est lu une fois
+/// (plus à chaque reconstruction) ; une lecture impossible le dit au lieu
+/// de tourner sans fin.
+class MentionsScreen extends StatefulWidget {
   const MentionsScreen({super.key});
 
   static const asset = 'assets/legal/licences.md';
@@ -709,15 +716,51 @@ class MentionsScreen extends StatelessWidget {
   }
 
   @override
+  State<MentionsScreen> createState() => _MentionsScreenState();
+}
+
+class _MentionsScreenState extends State<MentionsScreen> {
+  late final Future<String> _text = MentionsScreen._load();
+
+  @override
   Widget build(BuildContext context) => Scaffold(
     appBar: const KTopBar.sub(title: 'Sources et licences'),
     body: FutureBuilder<String>(
-      future: _load(),
+      future: _text,
       builder: (context, snap) {
+        if (snap.hasError) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(KSpacing.page),
+              child: Text(
+                'Les mentions n’ont pas pu être lues.',
+                key: const ValueKey('mentions-error'),
+                textAlign: TextAlign.center,
+                style: KType.corps.copyWith(color: KTokens.of(context).texte),
+              ),
+            ),
+          );
+        }
         if (!snap.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
-        final blocks = markdownBlocks(context, snap.data!);
+        final blocks = [
+          ...markdownBlocks(context, snap.data!),
+          KMenuGroup(
+            children: [
+              KMenuRow(
+                key: const ValueKey('mentions-software-licences'),
+                icon: Icons.description_outlined,
+                title: 'Licences des logiciels',
+                subtitle: 'Polices Barlow et bibliothèques de l’application',
+                onTap: () => showLicensePage(
+                  context: context,
+                  applicationName: 'Kalis Track',
+                ),
+              ),
+            ],
+          ),
+        ];
         return _framed(
           ListView.separated(
             padding: _listPadding(context),

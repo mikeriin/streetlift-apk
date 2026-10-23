@@ -327,6 +327,12 @@ extension ImportedProgramStore on AppStore {
       identityHashCode(weekKinds),
       identityHashCode(book),
       for (final e in values.entries) '${e.key}=${e.value}',
+      // RV3 (P10) : charges de départ portées par `loadFor`, plafonnées à
+      // 80 % du 1RM en mode prudent : le mode prudent est dans la clé.
+      // Avant, il n'y entrait que par le profil enregistré ; un mode
+      // prudent qui change sans lui (65 ans atteints au 1er janvier, par
+      // exemple) gardait les charges d'avant.
+      'prudent=${ProfileStore(this).cautionActive}',
     ].join('|');
     return _g9Memo(sig, () {
       try {

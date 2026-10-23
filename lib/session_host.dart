@@ -103,13 +103,21 @@ class _SessionHostState extends State<SessionHost> {
     setState(() {
       _generation++;
       _switching = false;
-      _init = store.init();
+      _init = _load(store);
     });
     if (failure == null) {
       _say(message, detail, koach);
     } else {
       _say('Opération impossible : $failure', null, KoachPose.oops);
     }
+  }
+
+  /// RV3 (R8) : magasin de la session rejointe, puis ses réglages
+  /// d'affichage 3D (remis aux valeurs par défaut au changement de
+  /// session) relus avant le premier écran, comme au démarrage.
+  static Future<void> _load(AppStore next) async {
+    await next.init();
+    await Display3DSettings.instance.load();
   }
 
   void _say(String? message, String? detail, KoachPose koach) {

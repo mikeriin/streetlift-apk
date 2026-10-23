@@ -32,6 +32,12 @@ CivilDate civilOf(DateTime d) => CivilDate(d.year, d.month, d.day);
 /// Date locale (minuit) d'un jour civil.
 DateTime dateOfCivil(CivilDate d) => DateTime(d.year, d.month, d.day);
 
+/// RV3 (F12) : jour ouvert par un calendrier, ramené dans [first, last]
+/// (`showDatePicker` lève une erreur sinon : objectif ou échéance déjà
+/// proche, date d'un ancien profil hors des bornes).
+DateTime pickerInitialDate(DateTime initial, DateTime first, DateTime last) =>
+    initial.isBefore(first) ? first : (initial.isAfter(last) ? last : initial);
+
 final RegExp _atRe = RegExp(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$');
 bool _okAt(Object? v) =>
     v is String && _atRe.hasMatch(v) && DateTime.tryParse(v) != null;
@@ -1421,10 +1427,20 @@ class ProfileDraft {
   List<MovementLevel> get movementLevels {
     final out = <MovementLevel>[];
     final seen = <String>{};
-    for (final m in movements) {
+    final shown = movements;
+    // RV3 (F11) : fourchettes déclarées sur des mouvements que les
+    // disciplines choisies ne proposent plus (discipline changée en cours
+    // de parcours ou à la modification) : gardées, après celles des
+    // mouvements proposés. Avant, elles étaient perdues à l'enregistrement.
+    final keys = {for (final m in shown) m.key};
+    final others = [
+      for (final k in levels.keys)
+        if (!keys.contains(k)) ?levelMovement(k),
+    ];
+    for (final m in [...shown, ...others]) {
       final i = levels[m.key];
       if (i == null) continue;
-      seen.add('${m.exerciseId}|${m.measure.code}');
+      if (!seen.add('${m.exerciseId}|${m.measure.code}')) continue;
       if (i < 0 || i >= m.bands.length) {
         out.add(
           MovementLevel(

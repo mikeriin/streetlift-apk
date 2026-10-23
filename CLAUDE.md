@@ -115,3 +115,7 @@ committer les fichiers déchiffrés.
   passent à `plan(seance)`, tours et durée d'un EMOM au temps suivent les
   lignes servies (`groups` de la sortie ; une ligne remplacée par
   l'application fait recaler son groupe par `groupesServis`).
+- Modulation des séries par la semaine (RV3, C17.51) : selon le mode du
+  profil (`GuidanceMode`, jamais le `mode` d'une séance) : assisté =
+  appliquée et dite, « Annuler » ; libre = l'écrit est servi, la
+  proposition a « Accepter » / « Garder l'écrit ».
