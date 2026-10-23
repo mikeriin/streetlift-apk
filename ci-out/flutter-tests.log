@@ -1,0 +1,764 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_correction1_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_correction1_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/ci1h_correction1_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ks1a_types_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/ks1a_types_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/ks1a_types_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/test/pr2_depart_affiche_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/pr2_depart_affiche_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/pr2_depart_affiche_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/ui5_installation_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/test/km3_koach_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/km3_koach_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/km3_koach_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -13: loading /home/runner/work/streetlift-apk/streetlift-apk/test/pr8_e2mom_ecrit_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/pr8_e2mom_ecrit_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/pr8_e2mom_ecrit_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -13: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -14: loading /home/runner/work/streetlift-apk/streetlift-apk/test/kb4_koach107_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/kb4_koach107_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/kb4_koach107_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -14: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -15: loading /home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -15: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -16: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/ui4_arsenal_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -16: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -17: loading /home/runner/work/streetlift-apk/streetlift-apk/test/kb2c1_seance_servie_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/kb2c1_seance_servie_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/kb2c1_seance_servie_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -17: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -18: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g7_mode_dev_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/g7_mode_dev_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/g7_mode_dev_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -18: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -19: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -19: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -20: loading /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -20: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -21: loading /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -21: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -22: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui5_texte_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/ui5_texte_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/ui5_texte_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -22: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
+00:00 +0 -23: loading /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+   - 'Object' is from 'dart:core'.
+  Try correcting the operator to an existing operator, or defining a '[]' operator.
+        final forme = bil['forme'] == true;
+                         ^
+  .
+00:00 +0 -23: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cif_points_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/koach1_store.dart:3854:24: Error: The operator '[]' isn't defined for the type 'Object?'.
+ - 'Object' is from 'dart:core'.
+Try correcting the operator to an existing operator, or defining a '[]' operator.
+      final forme = bil['forme'] == true;
+                       ^
