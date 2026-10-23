@@ -48,7 +48,10 @@ void main() {
       expect(dayChangeKey('NA-S15J5-01~$_hspu'), 'NA-S15J5-01');
       expect(dayChangeKey('k15.5.j5-a#t'), 'k15.5.j5-a');
       expect(dayChangeKey('k15.5.j5-a#t~x'), 'k15.5.j5-a');
-      expect(dayCustomId('Pompes pike surélevées'), 'perso-pompes-pike-surelevees');
+      expect(
+        dayCustomId('Pompes pike surélevées'),
+        'perso-pompes-pike-surelevees',
+      );
     });
 
     test('séries dans l’unité du remplaçant', () {
@@ -89,8 +92,13 @@ void main() {
             modifiable: true,
             lignes: {'a': l['a']! as Map},
           );
-      expect(koachTexteBilan(b()), startsWith('Avec ton bilan du jour, Koach '
-          'te propose d’ajuster un exercice'));
+      expect(
+        koachTexteBilan(b()),
+        startsWith(
+          'Avec ton bilan du jour, Koach '
+          'te propose d’ajuster un exercice',
+        ),
+      );
       expect(
         koachTexteBilan(b(forme: true, assiste: true)),
         startsWith('Ton bilan du jour : Koach ajuste un exercice'),
@@ -177,75 +185,78 @@ void main() {
         if (ev['type'] == 'serie') '${(ev['serie'] as Map)['exerciseId']}',
     };
 
-    test('HSPU au mur à la place du dip lesté dans l’E2MOM de la J5 : '
-        'groupe, chrono et séries gardés ; Koach reçoit l’exercice réel', () async {
-      app.setGuidanceMode('free');
-      final base = await jour(5);
-      final dip = ex(5, 'DIP LESTÉ');
-      final key = dayChangeKey(dip.id);
-      final groupe = app.exerciseGroupOf(15, 5, dip);
-      final pages = app.groups(shown(5), week: 15);
-      final page = pages.firstWhere((g) => g.any((e) => e.id == dip.id));
-      _sonde('avant', {
-        'dip': dip.id,
-        'series': app.setsLabel(dip),
-        'groupe': groupe?.toJson(),
-        'page': [for (final e in page) e.name],
-        'propositions': app.dayReplaceProposals(dip),
-      });
-      expect(app.dayCanChange(15, 5, dip), isTrue);
-      app.dayReplace(15, shown(5), dip, to: _hspu, name: 'HSPU');
-      final h = ex(5, 'HSPU AU MUR');
-      expect(h.id, '$key~$_hspu');
-      expect(h.catalogId, _hspu);
-      expect(h.engine, isFalse);
-      expect(h.why, contains('Remplace « DIP LESTÉ » aujourd’hui'));
-      // Même emplacement : séries, format au départ chronométré, groupe.
-      expect(app.setsLabel(h), app.setsLabel(dip));
-      expect(app.setCount(h), app.setCount(dip));
-      expect(app.logSpec(h).every, app.logSpec(dip).every);
-      expect(app.exerciseGroupOf(15, 5, h)?.toJson(), groupe?.toJson());
-      final page2 = app
-          .groups(shown(5), week: 15)
-          .firstWhere((g) => g.any((e) => e.id == h.id));
-      expect(page2.length, page.length);
-      // Répétitions au poids du corps : pas de colonne de charge.
-      expect(app.showKgFor(h, app.exLog(15, 5, h)), isFalse);
-      // Programme écrit inchangé.
-      expect(
-        app.program.week(15).day(5)!.exercises.map((e) => e.name),
-        isNot(contains(startsWith('HSPU'))),
-      );
-      // Journal du moteur : l'exercice réel.
-      expect(app.journalLineOf(15, 5, h.id, false).exerciseId, _hspu);
-      expect(await app.koachStart(15, base), isTrue);
-      expect(ex(5, 'HSPU AU MUR').id, h.id);
-      expect(
-        app
+    test(
+      'HSPU au mur à la place du dip lesté dans l’E2MOM de la J5 : '
+      'groupe, chrono et séries gardés ; Koach reçoit l’exercice réel',
+      () async {
+        app.setGuidanceMode('free');
+        final base = await jour(5);
+        final dip = ex(5, 'DIP LESTÉ');
+        final key = dayChangeKey(dip.id);
+        final groupe = app.exerciseGroupOf(15, 5, dip);
+        final pages = app.groups(shown(5), week: 15);
+        final page = pages.firstWhere((g) => g.any((e) => e.id == dip.id));
+        _sonde('avant', {
+          'dip': dip.id,
+          'series': app.setsLabel(dip),
+          'groupe': groupe?.toJson(),
+          'page': [for (final e in page) e.name],
+          'propositions': app.dayReplaceProposals(dip),
+        });
+        expect(app.dayCanChange(15, 5, dip), isTrue);
+        app.dayReplace(15, shown(5), dip, to: _hspu, name: 'HSPU');
+        final h = ex(5, 'HSPU AU MUR');
+        expect(h.id, '$key~$_hspu');
+        expect(h.catalogId, _hspu);
+        expect(h.engine, isFalse);
+        expect(h.why, contains('Remplace « DIP LESTÉ » aujourd’hui'));
+        // Même emplacement : séries, format au départ chronométré, groupe.
+        expect(app.setsLabel(h), app.setsLabel(dip));
+        expect(app.setCount(h), app.setCount(dip));
+        expect(app.logSpec(h).every, app.logSpec(dip).every);
+        expect(app.exerciseGroupOf(15, 5, h)?.toJson(), groupe?.toJson());
+        final page2 = app
             .groups(shown(5), week: 15)
-            .firstWhere((g) => g.any((e) => e.id == h.id))
-            .length,
-        page.length,
-      );
-      finir(5);
-      final verses = exercicesVerses();
-      _sonde('verses', verses.toList());
-      expect(verses, contains(_hspu));
-      final dipId = app.content.idFor(dip.name);
-      expect(dipId, isNotNull);
-      expect(
-        app.koachEngine.journal.where(
-          (ev) =>
-              ev['type'] == 'serie' &&
-              (ev['serie'] as Map)['slotId'] ==
-                  app.adaptSlotOf(15, 5, dip.id) &&
-              (ev['serie'] as Map)['exerciseId'] == dipId,
-        ),
-        isEmpty,
-      );
-      // Séance faite : plus de changement possible.
-      expect(app.dayCanChange(15, 5, h), isFalse);
-    });
+            .firstWhere((g) => g.any((e) => e.id == h.id));
+        expect(page2.length, page.length);
+        // Répétitions au poids du corps : pas de colonne de charge.
+        expect(app.showKgFor(h, app.exLog(15, 5, h)), isFalse);
+        // Programme écrit inchangé.
+        expect(
+          app.program.week(15).day(5)!.exercises.map((e) => e.name),
+          isNot(contains(startsWith('HSPU'))),
+        );
+        // Journal du moteur : l'exercice réel.
+        expect(app.journalLineOf(15, 5, h.id, false).exerciseId, _hspu);
+        expect(await app.koachStart(15, base), isTrue);
+        expect(ex(5, 'HSPU AU MUR').id, h.id);
+        expect(
+          app
+              .groups(shown(5), week: 15)
+              .firstWhere((g) => g.any((e) => e.id == h.id))
+              .length,
+          page.length,
+        );
+        finir(5);
+        final verses = exercicesVerses();
+        _sonde('verses', verses.toList());
+        expect(verses, contains(_hspu));
+        final dipId = app.content.idFor(dip.name);
+        expect(dipId, isNotNull);
+        expect(
+          app.koachEngine.journal.where(
+            (ev) =>
+                ev['type'] == 'serie' &&
+                (ev['serie'] as Map)['slotId'] ==
+                    app.adaptSlotOf(15, 5, dip.id) &&
+                (ev['serie'] as Map)['exerciseId'] == dipId,
+          ),
+          isEmpty,
+        );
+        // Séance faite : plus de changement possible.
+        expect(app.dayCanChange(15, 5, h), isFalse);
+      },
+    );
 
     test('tenue à la place de répétitions, exercice personnel, retour à '
         'l’écrit', () async {
@@ -294,29 +305,32 @@ void main() {
       expect(shown(5).exercises.map((e) => e.id), contains(expl.id));
     });
 
-    test('retrait sans groupe pendant la séance : Koach ne reçoit rien de la '
-        'ligne ; Koach arrêté : changements gardés sur la séance écrite', () async {
-      final base = await jour(5);
-      expect(await app.koachStart(15, base), isTrue);
-      final front = ex(5, 'BARRE AU FRONT');
-      app.dayRemove(15, shown(5), front, 'temps');
-      expect(shown(5).exercises.map((e) => e.id), isNot(contains(front.id)));
-      finir(5);
-      expect(exercicesVerses(), isNot(contains(front.catalogId)));
-      // J6 : arrêt d'urgence, séance écrite : le remplacement tient.
-      final b6 = await jour(6);
-      app.koachStop();
-      expect(app.koachStoppedWeek(15), isTrue);
-      final squat = app
-          .withDayChanges(15, b6)
-          .exercises
-          .firstWhere((e) => e.name.startsWith('Hip thrust'));
-      app.dayReplace(15, b6, squat, to: _hspu, name: 'HSPU');
-      expect(
-        app.withDayChanges(15, b6).exercises.map((e) => e.catalogId),
-        contains(_hspu),
-      );
-    });
+    test(
+      'retrait sans groupe pendant la séance : Koach ne reçoit rien de la '
+      'ligne ; Koach arrêté : changements gardés sur la séance écrite',
+      () async {
+        final base = await jour(5);
+        expect(await app.koachStart(15, base), isTrue);
+        final front = ex(5, 'BARRE AU FRONT');
+        app.dayRemove(15, shown(5), front, 'temps');
+        expect(shown(5).exercises.map((e) => e.id), isNot(contains(front.id)));
+        finir(5);
+        expect(exercicesVerses(), isNot(contains(front.catalogId)));
+        // J6 : arrêt d'urgence, séance écrite : le remplacement tient.
+        final b6 = await jour(6);
+        app.koachStop();
+        expect(app.koachStoppedWeek(15), isTrue);
+        final squat = app
+            .withDayChanges(15, b6)
+            .exercises
+            .firstWhere((e) => e.name.startsWith('Hip thrust'));
+        app.dayReplace(15, b6, squat, to: _hspu, name: 'HSPU');
+        expect(
+          app.withDayChanges(15, b6).exercises.map((e) => e.catalogId),
+          contains(_hspu),
+        );
+      },
+    );
 
     test('passage depuis dev7.7.1 et export / import à l’identique', () async {
       // Une sauvegarde de dev7.7.1 n'a pas de changements du jour.
@@ -388,7 +402,10 @@ void main() {
       final ligne = app.koachBilanLigne(b, slot);
       _sonde('ligne_libre', ligne);
       // Écrit servi : les séries servies sont celles sans la forme du jour.
-      final avant = app.sessionAdapt(15, j)!.plan.items
+      final avant = app
+          .sessionAdapt(15, j)!
+          .plan
+          .items
           .map((x) => x.toJson())
           .toList();
       expect(b.lignes[slot]!['servi'], isA<Map>());
@@ -408,9 +425,9 @@ void main() {
         app.koachEngine.journal.where((e) => e['type'] == 'seance_debut'),
         hasLength(
           app.koachEngine.journal
-              .take(n0)
-              .where((e) => e['type'] == 'seance_debut')
-              .length +
+                  .take(n0)
+                  .where((e) => e['type'] == 'seance_debut')
+                  .length +
               1,
         ),
       );
@@ -420,45 +437,51 @@ void main() {
       expect(d.single['accepte'], isTrue);
     });
 
-    test('mode libre : « Garder l’écrit » note le choix, refus versé', () async {
-      app.setGuidanceMode('free');
-      final j = await bilanBas();
-      final base = app.program.week(15).day(j)!;
-      final avant = jsonEncode(app.sessionAdapt(15, j)!.plan.toJson());
-      expect(await app.koachBilanChoose(15, base, false), isTrue);
-      final c = app.koachBilan(15, j)!;
-      expect(c.forme, isFalse);
-      expect(c.choix, 'ecrit');
-      expect(jsonEncode(app.sessionAdapt(15, j)!.plan.toJson()), avant);
-      finir(j);
-      final d = decisionsBilan();
-      expect(d, hasLength(1));
-      expect(d.single['accepte'], isFalse);
-    });
+    test(
+      'mode libre : « Garder l’écrit » note le choix, refus versé',
+      () async {
+        app.setGuidanceMode('free');
+        final j = await bilanBas();
+        final base = app.program.week(15).day(j)!;
+        final avant = jsonEncode(app.sessionAdapt(15, j)!.plan.toJson());
+        expect(await app.koachBilanChoose(15, base, false), isTrue);
+        final c = app.koachBilan(15, j)!;
+        expect(c.forme, isFalse);
+        expect(c.choix, 'ecrit');
+        expect(jsonEncode(app.sessionAdapt(15, j)!.plan.toJson()), avant);
+        finir(j);
+        final d = decisionsBilan();
+        expect(d, hasLength(1));
+        expect(d.single['accepte'], isFalse);
+      },
+    );
 
-    test('mode assisté : bilan appliqué et dit ; « Annuler » repart du début '
-        'sans la forme du jour ; plus de choix après la première série', () async {
-      expect(app.adaptMode, 'assisted');
-      final j = await bilanBas();
-      final base = app.program.week(15).day(j)!;
-      final b = app.koachBilan(15, j)!;
-      expect(b.forme, isTrue);
-      expect(b.assiste, isTrue);
-      expect(app.koachBilanLigne(b, b.lignes.keys.first), isNotNull);
-      expect(await app.koachBilanChoose(15, base, false), isTrue);
-      final c = app.koachBilan(15, j)!;
-      expect(c.forme, isFalse);
-      expect(c.choix, 'ecrit');
-      expect(koachTexteBilan(c), startsWith('Annulé'));
-      // Première série validée : le choix est figé.
-      final e = shown(j).exercises.first;
-      final log = app.exLog(15, j, e);
-      log.sets.first.reps = '5';
-      log.sets.first.flames = 8;
-      app.toggleSet(log, 0, app.logSpec(e));
-      expect(app.koachBilan(15, j)!.modifiable, isFalse);
-      expect(await app.koachBilanChoose(15, base, true), isFalse);
-    });
+    test(
+      'mode assisté : bilan appliqué et dit ; « Annuler » repart du début '
+      'sans la forme du jour ; plus de choix après la première série',
+      () async {
+        expect(app.adaptMode, 'assisted');
+        final j = await bilanBas();
+        final base = app.program.week(15).day(j)!;
+        final b = app.koachBilan(15, j)!;
+        expect(b.forme, isTrue);
+        expect(b.assiste, isTrue);
+        expect(app.koachBilanLigne(b, b.lignes.keys.first), isNotNull);
+        expect(await app.koachBilanChoose(15, base, false), isTrue);
+        final c = app.koachBilan(15, j)!;
+        expect(c.forme, isFalse);
+        expect(c.choix, 'ecrit');
+        expect(koachTexteBilan(c), startsWith('Annulé'));
+        // Première série validée : le choix est figé.
+        final e = shown(j).exercises.first;
+        final log = app.exLog(15, j, e);
+        log.sets.first.reps = '5';
+        log.sets.first.flames = 8;
+        app.toggleSet(log, 0, app.logSpec(e));
+        expect(app.koachBilan(15, j)!.modifiable, isFalse);
+        expect(await app.koachBilanChoose(15, base, true), isFalse);
+      },
+    );
 
     test('bilan haut : sans changement ou dit de même ; douleur : conduite '
         'gardée dans les deux modes', () async {
@@ -588,8 +611,9 @@ void main() {
       expect(pick?.name, 'Pompes pike surélevées');
     });
 
-    testWidgets('mode assisté : propositions seules, le choix libre est dit',
-        (tester) async {
+    testWidgets('mode assisté : propositions seules, le choix libre est dit', (
+      tester,
+    ) async {
       final pick = await ouvrir(
         tester,
         free: false,

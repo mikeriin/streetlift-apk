@@ -1843,7 +1843,11 @@ extension KoachStore on AppStore {
       final r = await koachSeanceAutreCopie(k, fab, [
         d.debut,
         if (withAnswer)
-          {'type': 'decision', 'jour': d.debut['jour'], kKoachCleDiag: diagnostic},
+          {
+            'type': 'decision',
+            'jour': d.debut['jour'],
+            kKoachCleDiag: diagnostic,
+          },
       ], d.seance);
       _koachRt.temps.noter('bilan_autre', sw.elapsed);
       return (forme: forme, sortie: r, n0: n0);
@@ -3859,7 +3863,8 @@ extension KoachStore on AppStore {
         final sans = (forme ? l['autre'] : l['servi']) as Map? ?? const {};
         final a = avec['sets'], b = sans['sets'];
         final x = avec['kg'], y = sans['kg'];
-        if ((a is num && b is num && a > b) || (x is num && y is num && x > y)) {
+        if ((a is num && b is num && a > b) ||
+            (x is num && y is num && x > y)) {
           plus = true;
         }
       }

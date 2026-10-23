@@ -3209,7 +3209,9 @@ class AppStore extends ChangeNotifier {
       if (secs >= 15 && secs <= 600) {
         // RV4 : tenue au départ chronométré (« 6×30 s · E2MOM » : exercice
         // remplacé pour aujourd'hui par une tenue) : secondes par série.
-        final h = RegExp(r'^\d+\s*[×x]\s*(\d+)(?:-(\d+))?\s*s\b').firstMatch(low);
+        final h = RegExp(
+          r'^\d+\s*[×x]\s*(\d+)(?:-(\d+))?\s*s\b',
+        ).firstMatch(low);
         if (h != null) {
           return LogSpec(
             'hold',
