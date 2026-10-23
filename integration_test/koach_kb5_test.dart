@@ -15,7 +15,7 @@
 // 2. jeudi servi par Koach : EMOM des muscle-ups minute par minute
 //    (en-tête du départ chronométré, une ligne par minute, tours = lignes) ;
 // 3. raison de la modulation hebdomadaire (`koach.volume_semaine`) posée
-//    sur une ligne libre du jeudi : dite en tête de séance et sur la carte.
+//    sur une ligne libre du jeudi : sur la carte (feuille ⓘ) ; en tête (relevé).
 // Relevé `kb5_releve_<partie>.json`, captures `kb5_*_<thème>.png`.
 import 'dart:async';
 import 'dart:convert';
@@ -489,9 +489,8 @@ void main() {
         .contains(texte);
     releve['modulation_carte'] = store.koachReasonLine(wk, 4, libre) == texte;
     final vu = find.textContaining('Cette semaine, je te propose');
-    releve['modulation_ecran_debut'] = vu.evaluate().isNotEmpty;
-    await shot('3_modulation_entete');
-    // Page de la ligne : la carte le dit.
+    // Page de la ligne, puis sa feuille ⓘ (carte compacte PR7 : les notes
+    // de Koach y sont, la raison de Koach en tête).
     final idx = store
         .groups(store.adaptDay(wk, j4, a4), week: wk)
         .indexWhere((g) => g.any((e) => e.id == libre.id));
@@ -502,8 +501,18 @@ void main() {
       await wait(tester, 900);
     }
     releve['modulation_page'] = idx + 1;
+    await shot('3_modulation_page');
+    final info = find.byKey(ValueKey('${libre.id}-instructions')).hitTestable();
+    releve['modulation_bouton_info'] = info.evaluate().isNotEmpty;
+    if (info.evaluate().isNotEmpty) {
+      await tester.tap(info.first);
+      await until(tester, vu, max: 40);
+      await wait(tester, 600);
+    }
     releve['modulation_ecran_carte'] = vu.evaluate().isNotEmpty;
-    await shot('4_modulation_carte');
+    await shot('4_modulation_feuille');
+    await tester.binding.handlePopRoute();
+    await wait(tester, 600);
     await home(tester);
     await store.flush();
     KalisClock.setOffsetDays(0);
@@ -535,10 +544,7 @@ void main() {
     expect(releve['emom_lancer'], isTrue);
     expect(releve['modulation_entete'], isTrue);
     expect(releve['modulation_carte'], isTrue);
-    expect(
-      releve['modulation_ecran_debut'] == true ||
-          releve['modulation_ecran_carte'] == true,
-      isTrue,
-    );
+    expect(releve['modulation_bouton_info'], isTrue);
+    expect(releve['modulation_ecran_carte'], isTrue);
   }, timeout: _limit);
 }

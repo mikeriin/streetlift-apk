@@ -11,3 +11,7 @@ Session du 23/10/2026, début 04:37 UTC. Branche de travail locale `kb5` (base `
 
 ## Reste
 - Résultat du contrôle rapide ; cible émulateur integration_test/koach_kb5_test.dart (+ ci3d_drive.sh) ; SUIVI_PROJET.md, CLAUDE.md ; relecture indépendante ; contrôle complet claude/ci-3d ; publication main, build signé, livraison, ETAT, page de suivi, notification.
+
+## Avancement 07:42 UTC
+- Contrôle complet n°1 (run 39905071701) : contrôles, tests Dart, paquets VERTS ; émulateur : toutes les cibles vertes sauf KB5 (raison cherchée sur l'écran : elle est dans la feuille ⓘ de la carte compacte PR7). Cible corrigée (tap `<id>-instructions`).
+- Contrôle complet n°2 : run 39919503229, commit 51885773, arbre 31cade4f = kb5 72a6cf1f. À sa fin (vert) : publier main (avance rapide de ae9d6e1a si main n'a pas bougé, sinon rebase), build signé, livraison (brouillon dans LIVRAISON_KB5_brouillon.md), ETAT « à valider », page de suivi, notification.

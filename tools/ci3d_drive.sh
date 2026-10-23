@@ -125,8 +125,8 @@ done
 # programme PR2 synthétique : lundi de tirage et mardi de poussée servis
 # (captures de chaque page de la poussée, groupes recalés : E2MOM 8 tours) ;
 # jeudi servi, EMOM des muscle-ups minute par minute ; raison de la
-# modulation hebdomadaire (koach.volume_semaine) en tête de séance et sur
-# la carte. Deux parties : a = sombre, rouge ; b = clair, violet.
+# modulation hebdomadaire (koach.volume_semaine) sur la carte (feuille ⓘ)
+# et en tête de séance (relevé). Deux parties : a = sombre, rouge ; b = clair, violet.
 code_kb5=0
 for part in a b; do
   cible koach_kb5_test "$part" dev
