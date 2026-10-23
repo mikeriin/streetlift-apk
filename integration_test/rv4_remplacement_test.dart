@@ -296,9 +296,18 @@ void main() {
             await wait(tester, 900);
             await shot('2_recherche');
             final row = find.byKey(const ValueKey('replace-cd-hspu-mur-dos'));
-            if (await until(tester, row, max: 40)) {
-              await tester.tap(row.first);
+            // Clavier fermé, ligne visible, appui répété tant que l'écran
+            // de remplacement est encore là (transition, clavier).
+            FocusManager.instance.primaryFocus?.unfocus();
+            await wait(tester, 900);
+            final ouvert = find.byKey(const ValueKey('replace-page'));
+            for (var essai = 0; essai < 4; essai++) {
+              if (!await until(tester, row, max: 40)) break;
+              await tester.ensureVisible(row.first);
+              await wait(tester, 900);
+              await tester.tap(row.first, warnIfMissed: false);
               await wait(tester, 1500);
+              if (ouvert.evaluate().isEmpty) break;
             }
           }
         }
