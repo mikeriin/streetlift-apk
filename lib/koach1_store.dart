@@ -1843,7 +1843,11 @@ extension KoachStore on AppStore {
       final r = await koachSeanceAutreCopie(k, fab, [
         d.debut,
         if (withAnswer)
-          {'type': 'decision', 'jour': d.debut['jour'], kKoachCleDiag: diagnostic},
+          {
+            'type': 'decision',
+            'jour': d.debut['jour'],
+            kKoachCleDiag: diagnostic,
+          },
       ], d.seance);
       _koachRt.temps.noter('bilan_autre', sw.elapsed);
       return (forme: forme, sortie: r, n0: n0);
@@ -2169,7 +2173,12 @@ extension KoachStore on AppStore {
     final bilan = autre == null || autre.n0 != n0
         ? null
         : koachBilanLignes(
-            ecritJour,
+            // Une ligne au départ chronométré servie telle qu'écrite (PR8)
+            // ne change jamais avec le bilan : rien à proposer.
+            [
+              for (final w in ecritJour)
+                if (!adaptAsWritten(week, '${w['slotId']}')) w,
+            ],
             garde.servis,
             koachGardeSeance(
               ecritJour,
@@ -3851,7 +3860,7 @@ extension KoachStore on AppStore {
     final bc = bil is Map ? bil['choix'] : null;
     final bl = bil is Map ? bil['lignes'] : null;
     if ((bc == 'applique' || bc == 'ecrit') && bl is Map && bl.isNotEmpty) {
-      final forme = bil['forme'] == true;
+      final forme = (bil as Map)['forme'] == true;
       var plus = false;
       for (final l in bl.values) {
         if (l is! Map) continue;
@@ -3859,7 +3868,8 @@ extension KoachStore on AppStore {
         final sans = (forme ? l['autre'] : l['servi']) as Map? ?? const {};
         final a = avec['sets'], b = sans['sets'];
         final x = avec['kg'], y = sans['kg'];
-        if ((a is num && b is num && a > b) || (x is num && y is num && x > y)) {
+        if ((a is num && b is num && a > b) ||
+            (x is num && y is num && x > y)) {
           plus = true;
         }
       }

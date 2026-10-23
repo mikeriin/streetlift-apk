@@ -3209,7 +3209,9 @@ class AppStore extends ChangeNotifier {
       if (secs >= 15 && secs <= 600) {
         // RV4 : tenue au départ chronométré (« 6×30 s · E2MOM » : exercice
         // remplacé pour aujourd'hui par une tenue) : secondes par série.
-        final h = RegExp(r'^\d+\s*[×x]\s*(\d+)(?:-(\d+))?\s*s\b').firstMatch(low);
+        final h = RegExp(
+          r'^\d+\s*[×x]\s*(\d+)(?:-(\d+))?\s*s\b',
+        ).firstMatch(low);
         if (h != null) {
           return LogSpec(
             'hold',
@@ -3574,6 +3576,9 @@ class AppStore extends ChangeNotifier {
     // chipper : tours, reps du tour entamé, temps) : jamais une simple
     // consultation (avant : effacé à la fermeture de la séance).
     if (l.groups.values.any(_groupResult)) return false;
+    // RV4 (C17.51.5) : exercice remplacé ou retiré pour aujourd'hui : un
+    // choix de l'athlète, jamais une simple consultation.
+    if (l.changes.isNotEmpty) return false;
     for (final x in l.ex.values) {
       if (x.note.trim().isNotEmpty ||
           x.prescribed != null ||

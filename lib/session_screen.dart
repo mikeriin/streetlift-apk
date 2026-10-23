@@ -1960,24 +1960,25 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ],
         // RV4 (C17.51.5) : pour la séance du jour seulement (le programme
         // écrit ne change pas), tant que la ligne n'a aucune série validée.
-        if (changeable) [
-          const KAction(
-            icon: Icons.swap_horiz_rounded,
-            label: 'Remplacer pour aujourd’hui',
-            value: 'replace',
-          ),
-          if (replacedFrom != null)
-            KAction(
-              icon: Icons.undo_rounded,
-              label: 'Revenir à « $replacedFrom »',
-              value: 'undo',
+        if (changeable)
+          [
+            const KAction(
+              icon: Icons.swap_horiz_rounded,
+              label: 'Remplacer pour aujourd’hui',
+              value: 'replace',
             ),
-          const KAction(
-            icon: Icons.remove_circle_outline_rounded,
-            label: 'Retirer pour aujourd’hui',
-            value: 'remove',
-          ),
-        ],
+            if (replacedFrom != null)
+              KAction(
+                icon: Icons.undo_rounded,
+                label: 'Revenir à « $replacedFrom »',
+                value: 'undo',
+              ),
+            const KAction(
+              icon: Icons.remove_circle_outline_rounded,
+              label: 'Retirer pour aujourd’hui',
+              value: 'remove',
+            ),
+          ],
       ],
     );
     if (!mounted || v == null) return;
@@ -3004,7 +3005,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           key: ValueKey('koach-bilan-card-${ex.id}-$epoch'),
           week: widget.week.n,
           day: widget.baseDay ?? widget.day,
-          slot: ex.slotId ?? store.adaptSlotOf(widget.week.n, widget.day.j, ex.id),
+          slot:
+              ex.slotId ??
+              store.adaptSlotOf(widget.week.n, widget.day.j, ex.id),
           onChanged: () {
             final cb = widget.onExercisesChanged;
             if (cb != null) {

@@ -253,7 +253,9 @@ void main() {
     releve['servie'] = store.koachOpen(wk, 5);
     DayPlan shownDay() {
       final a = store.sessionAdapt(wk, 5);
-      return a == null ? store.withDayChanges(wk, j5) : store.adaptDay(wk, j5, a);
+      return a == null
+          ? store.withDayChanges(wk, j5)
+          : store.adaptDay(wk, j5, a);
     }
 
     final dip = shownDay().exercises
@@ -312,8 +314,8 @@ void main() {
         releve['kg'] = store.showKgFor(h, store.exLog(wk, 5, h));
         final carte = find.byKey(ValueKey('exercise-card-${h.id}'));
         final seule = find.byKey(ValueKey('${h.id}-menu'));
-        releve['carte'] = await until(tester, seule, max: 60) ||
-            carte.evaluate().isNotEmpty;
+        releve['carte'] =
+            await until(tester, seule, max: 60) || carte.evaluate().isNotEmpty;
         await wait(tester, 600);
         await shot('3_carte');
       }

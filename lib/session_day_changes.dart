@@ -253,8 +253,7 @@ extension SessionDayChanges on AppStore {
       'to': to,
       'name': entry?.nom ?? name,
       'from': before?['from'] ?? e.name,
-      if (entry != null)
-        'secondes': entry.ex.unit == kc.MeasureUnit.seconds,
+      if (entry != null) 'secondes': entry.ex.unit == kc.MeasureUnit.seconds,
       if (perf?.value case final v? when v > 0) 'valeur': v,
       if (kg != null && kg > 0) 'kg': kg,
     };
