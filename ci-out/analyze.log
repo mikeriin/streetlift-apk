@@ -1,5 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-  error • The method '[]' can't be unconditionally invoked because the receiver can be 'null'. Try making the call conditional (using '?.') or adding a null check to the target ('!') • lib/koach1_store.dart:3854:24 • unchecked_use_of_nullable_value
-
-1 issue found. (ran in 25.6s)
