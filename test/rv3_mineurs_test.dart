@@ -22,6 +22,8 @@
 // Données synthétiques seulement ; horloge injectée ; stockage simulé.
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart'
+    show LicenseEntryWithLineBreaks, LicenseRegistry;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -44,6 +46,7 @@ import 'package:streetlift_tracker/muscle_map_2d.dart'
         debugSetMapLabels,
         mapLabelsIfLoaded;
 import 'package:streetlift_tracker/notifications.dart';
+import 'package:streetlift_tracker/profile_v3.dart';
 import 'package:streetlift_tracker/store.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 

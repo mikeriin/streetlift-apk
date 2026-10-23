@@ -157,6 +157,100 @@ class KoachSuggestionCard extends StatelessWidget {
   }
 }
 
+/// RV3 (C17.51.1) : modulation des séries de la ligne par la semaine.
+/// Mode assisté (mode du profil, C17.51.4) : appliquée et dite, avec
+/// « Annuler » (séries écrites pour cette séance). Mode libre : l'écrit est
+/// servi, la proposition est dite au conditionnel avec « Accepter » et
+/// « Garder l'écrit » (jamais appliquée sans action de l'athlète). Après le
+/// choix (ou une fois la ligne commencée au-delà), une ligne de texte.
+class KoachVolumeCard extends StatelessWidget {
+  final int week;
+  final DayPlan day;
+  final Exercise exercise;
+  final VoidCallback onChanged;
+  const KoachVolumeCard({
+    super.key,
+    required this.week,
+    required this.day,
+    required this.exercise,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final v = store.koachVolume(week, day.j, exercise);
+    if (v == null) return const SizedBox.shrink();
+    final k = KTokens.of(context);
+    final id = exercise.id;
+    final text = koachTexteVolumeCarte(v);
+    final choisi = v.choix == 'ecrit' || (v.choix == 'applique' && !v.assiste);
+    if (choisi || !v.modifiable) {
+      return Padding(
+        key: ValueKey('koach-volume-done-$id'),
+        padding: const EdgeInsets.only(top: KSpacing.s8),
+        child: Text(text, style: KType.detail.copyWith(color: k.texte2)),
+      );
+    }
+    void choose(bool appliquer) {
+      store.koachVolumeChoose(week, day, exercise, appliquer);
+      onChanged();
+    }
+
+    return Padding(
+      key: ValueKey('koach-volume-$id'),
+      padding: const EdgeInsets.only(top: KSpacing.s8),
+      child: Material(
+        color: k.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: KRadius.menuRadius,
+          side: BorderSide(color: k.filet),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(KSpacing.s12),
+          child: KoachSays(
+            pose: koachPose(
+              v.assiste ? KoachUsage.explanation : KoachUsage.proposal,
+            ),
+            koachHeight: KSize.menuIcon + KSpacing.s4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(text, style: KType.corpsFort.copyWith(color: k.texte)),
+                const SizedBox(height: KSpacing.s8),
+                Wrap(
+                  spacing: KSpacing.s8,
+                  runSpacing: KSpacing.s8,
+                  children: v.assiste
+                      ? [
+                          KTonalButton(
+                            key: ValueKey('koach-volume-undo-$id'),
+                            label: 'Annuler',
+                            onPressed: () => choose(false),
+                          ),
+                        ]
+                      : [
+                          KPrimaryButton(
+                            key: ValueKey('koach-volume-accept-$id'),
+                            label: 'Accepter',
+                            expand: false,
+                            onPressed: () => choose(true),
+                          ),
+                          KTonalButton(
+                            key: ValueKey('koach-volume-keep-$id'),
+                            label: 'Garder l’écrit',
+                            onPressed: () => choose(false),
+                          ),
+                        ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// KB2 correction 1 (C17.36) : code d'un choix d'une question du
 /// diagnostic (`{code, texte}` de `Surveillance.questions`, ou le code
 /// lui-même) : chaîne ou entier, c'est lui que `Surveillance.repondre`

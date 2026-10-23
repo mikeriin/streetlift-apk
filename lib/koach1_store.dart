@@ -231,6 +231,85 @@ String? koachTexteEcartEcrit(int servies, int ecrites) {
             'programme, et note tes flammes au plus juste.';
 }
 
+/// RV3 (C17.51.1) : modulation des séries d'une ligne par la semaine
+/// ([AppStore.koachVolume]).
+typedef KoachVolume = ({
+  int series,
+  int ecrites,
+  bool applique,
+  String? choix,
+  bool assiste,
+  bool modifiable,
+});
+
+/// RV3 (C17.51.1) : choix de l'athlète sur la modulation de la semaine,
+/// par emplacement, lus dans l'état de Koach [koach] (`volume`) : `choix`
+/// `applique` ou `ecrit`, `mode` du profil au moment du choix (trace).
+/// Pur.
+Map<String, ({String choix, String? mode})> koachVolumeChoix(Map? koach) {
+  final v = koach?['volume'];
+  if (v is! Map) return const {};
+  return {
+    for (final e in v.entries)
+      if (e.value is Map &&
+          const ['applique', 'ecrit'].contains((e.value as Map)['choix']))
+        '${e.key}': (
+          choix: '${(e.value as Map)['choix']}',
+          mode: (e.value as Map)['mode'] as String?,
+        ),
+  };
+}
+
+/// RV3 (C17.51.1, C17.51.4) : la modulation de la semaine est servie : choix
+/// de l'athlète [c] d'abord (« Accepter » : oui ; « Annuler », « Garder
+/// l'écrit » : non), sinon le mode du profil [mode] (assisté : appliquée ;
+/// libre : proposée, jamais appliquée sans action de l'athlète). Pur.
+bool koachVolumeApplique(({String choix, String? mode})? c, String mode) =>
+    c == null ? mode == 'assisted' : c.choix == 'applique';
+
+/// RV3 : « une série », « N séries ». Pur.
+String koachSeriesTexte(int n) => n == 1 ? 'une série' : '$n séries';
+
+/// RV3 (C17.51.1) : texte de la carte de la modulation de la semaine [v]
+/// (mode du profil, choix fait ou non). Pur (testé).
+String koachTexteVolumeCarte(KoachVolume v) {
+  final n = koachSeriesTexte(v.series);
+  final w = v.ecrites;
+  if (v.choix == 'ecrit') {
+    return v.assiste
+        ? 'Annulé : $w série${w > 1 ? 's' : ''} comme écrit, pour cette '
+              'séance.'
+        : 'Écrit gardé : $w série${w > 1 ? 's' : ''}.';
+  }
+  if (v.choix == 'applique' && !v.assiste) return 'Accepté : $n.';
+  if (v.applique) {
+    return 'Cette semaine : $n au lieu de $w. Koach répartit l’effort de '
+        'la semaine d’après ta récupération prévue.';
+  }
+  return 'Koach te propose $n au lieu de $w cette semaine : il répartirait '
+      'l’effort de la semaine d’après ta récupération prévue.';
+}
+
+/// RV3 : texte d'en-tête d'une modulation de la semaine [v] de
+/// l'exercice [nom] qui n'a pas de raison du moteur à dire : proposée (mode
+/// libre, sans choix) ou ajout appliqué (Koach ne dit que les baisses).
+/// Null : rien à dire en tête. Pur (testé).
+String? koachTexteVolumeEntete(
+KoachVolume v, String nom,
+) {
+  if (!v.applique && v.choix == null && !v.assiste) {
+    return 'Koach te propose ${koachSeriesTexte(v.series)} sur $nom au '
+        'lieu de ${v.ecrites} cette semaine : accepte-les ou garde l’écrit '
+        'sur sa carte.';
+  }
+  if (v.applique && v.series > v.ecrites) {
+    return 'Cette semaine, je te propose ${koachSeriesTexte(v.series)} sur '
+        '$nom au lieu de ${v.ecrites} : je répartis l’effort de la semaine '
+        'd’après ta récupération prévue.';
+  }
+  return null;
+}
+
 /// Section `koachEngine` du document.
 class KoachEngineData {
   /// Première ouverture d'une version avec Koach 1.0 (AAAA-MM-JJ).
@@ -1393,10 +1472,20 @@ extension KoachStore on AppStore {
         if (d.dayIndex == place.dayIndex)
           for (final s in d.slots) s.slotId: s.role,
     };
+    // RV3 (C17.51.1) : choix de l'athlète sur la modulation de la semaine,
+    // gardés dans l'aperçu du jour.
+    final choix = koachVolumeChoix(keep?.koach);
     final items = <kc.ExercisePrescription>[];
     for (final it in day.items) {
       final m = modules?['${place.dayIndex}|${it.slotId}'];
       var next = it;
+      // RV3 (C17.51.1) : modulation des séries appliquée en mode assisté
+      // (sauf « Annuler »), proposée en mode libre (appliquée seulement
+      // après « Accepter ») ; le mode est celui du profil (C17.51.4).
+      if (!koachVolumeApplique(choix[it.slotId], adaptMode)) {
+        items.add(_koachRange(place, next, roles[it.slotId]));
+        continue;
+      }
       // KB4 (C17.40) : jamais une ligne écrite retirée de l'aperçu (une
       // modulation à 0 série garde la ligne écrite) ; une ligne au départ
       // chronométré servie telle qu'écrite (PR8) garde ses séries écrites
@@ -1436,12 +1525,20 @@ extension KoachStore on AppStore {
       weekIndex: place.weekIndex,
       dayIndex: place.dayIndex,
       date: _kToday.iso,
-      mode: 'assisted',
+      // RV3 (C17.51.4) : trace du mode du profil ; elle ne décide jamais.
+      mode: adaptMode,
       asked: keep?.asked ?? false,
       check: keep?.check,
       place: keep?.place,
       plan: fixed.validate().isEmpty ? fixed : plan,
-      koach: const {'state': 'preview'},
+      koach: {
+        'state': 'preview',
+        if (choix.isNotEmpty)
+          'volume': {
+            for (final e in choix.entries)
+              e.key: {'choix': e.value.choix, 'mode': e.value.mode},
+          },
+      },
     );
   }
 
@@ -1713,8 +1810,47 @@ extension KoachStore on AppStore {
       raisons,
       budgetDonne: contexte['budget'] != null,
     );
-    final served = garde.servis;
     final apercu = {for (final it in a.plan.items) it.slotId: it};
+    // RV3 (C17.51.1) : modulation des séries par la semaine (`koachModule`
+    // de la ligne servie) : appliquée et dite en mode assisté (« Annuler »
+    // possible), proposée en mode libre (« Accepter » / « Garder
+    // l'écrit ») ; la ligne est alors servie sans la modulation. Le mode
+    // est celui du profil (C17.51.4), jamais celui d'une séance.
+    final choixApercu = koachVolumeChoix(a.koach);
+    final volume = <String, Object?>{};
+    final served = <Json>[];
+    for (final it0 in garde.servis) {
+      final slot = '${it0['slotId']}';
+      final d = it0['koachModule'];
+      final n = it0['sets'];
+      if (d is! num ||
+          d == 0 ||
+          n is! num ||
+          koachSlotEcrit(slot) != slot ||
+          adaptAsWritten(week, slot)) {
+        served.add(it0);
+        continue;
+      }
+      final sans = math.max(1, n.round() - d.round());
+      if (sans == n.round()) {
+        served.add(it0);
+        continue;
+      }
+      final c = choixApercu[slot];
+      volume[slot] = {
+        'exerciseId': it0['exerciseId'],
+        'series': n.round(),
+        'ecrites': sans,
+        'module': d.round(),
+        if (c != null) 'choix': c.choix,
+        if (c?.mode != null) 'mode': c!.mode,
+      };
+      if (koachVolumeApplique(c, adaptMode)) {
+        served.add(it0);
+        continue;
+      }
+      served.add(_koachVolumeJson(it0, sans, d.round(), appliquer: false));
+    }
     // KB4 (C17.40) : toute ligne écrite absente du servi sans retrait
     // motivé est servie telle qu'écrite, tous rôles ; une ligne absente de
     // l'aperçu (planification à 0 série) n'est plus retirée : sa ligne
@@ -1814,7 +1950,8 @@ extension KoachStore on AppStore {
       weekIndex: place.weekIndex,
       dayIndex: place.dayIndex,
       date: today.iso,
-      mode: 'assisted',
+      // RV3 (C17.51.4) : trace du mode du profil ; elle ne décide jamais.
+      mode: adaptMode,
       asked: true,
       check: a.check,
       place: a.place,
@@ -1843,6 +1980,8 @@ extension KoachStore on AppStore {
         // (ligne remplacée), les autres tels que Koach les rend.
         if (groupes.recales.isNotEmpty) 'groupesRecales': groupes.recales,
         if (retraits.isNotEmpty) 'retraits': retraits,
+        // RV3 (C17.51.1) : lignes modulées par la semaine et choix.
+        if (volume.isNotEmpty) 'volume': volume,
         'cibles': <String, Object?>{},
         'versed': <Object?>[],
         if (check != null) 'debut': check,
@@ -2593,14 +2732,19 @@ extension KoachStore on AppStore {
     // KB5 : la baisse de la modulation hebdomadaire (`koach.volume_semaine`)
     // porte sur une ligne (ses séries écrites) : jamais dite sur une autre
     // ligne du même exercice (tractions en EMOM et en drop set le jeudi).
+    // RV3 (C17.51.1) : modulation non servie (proposée en mode libre,
+    // annulée, écrit gardé) : sa carte la dit, pas la raison du moteur.
+    final vol = koachVolume(week, j, e);
+    final volSans = vol != null && !vol.applique;
     List<Map> pour(Object? raisons) => [
       if (raisons is List)
         for (final r in raisons)
           if (r is Map &&
               _koachRaisonDe(r, id) &&
               (r['code'] != 'koach.volume_semaine' ||
-                  n == null ||
-                  (r['params'] as Map?)?['ecrites'] == n))
+                  (!volSans &&
+                      (n == null ||
+                          (r['params'] as Map?)?['ecrites'] == n))))
             r,
     ];
     // KB3 : ligne au départ chronométré servie telle qu'écrite (PR8, nombre
@@ -2722,16 +2866,212 @@ extension KoachStore on AppStore {
           p is Map &&
           ecritsPr8.contains('${p['exercice']}|${p['ecrites']}');
     });
+    // RV3 (C17.51.1) : modulation de la semaine non servie (mode libre,
+    // « Annuler », « Garder l'écrit ») : pas la raison du moteur ; une
+    // proposition du mode libre et un ajout appliqué sont dits en tête.
+    final vol = (st?['volume'] as Map?) ?? const {};
+    final choix = koachVolumeChoix(st);
+    final mode = adaptMode;
+    final sans = <String>{
+      for (final e in vol.entries)
+        if (e.value is Map &&
+            !koachVolumeApplique(choix['${e.key}'], mode))
+          '${(e.value as Map)['exerciseId']}',
+    };
+    raisons.removeWhere((r) {
+      final p = r['params'];
+      return r['code'] == 'koach.volume_semaine' &&
+          p is Map &&
+          sans.contains('${p['exercice']}');
+    });
     final out = <String>[];
     for (final r in raisons) {
+      if (out.length >= max) break;
       final t = texteRaisonKoach(
         r.cast<String, Object?>(),
         nomExercice: (x) => content.byId[x]?.nom,
       );
       if (!out.contains(t)) out.add(t);
-      if (out.length >= max) break;
     }
+    for (final e in vol.entries) {
+      if (out.length >= max) break;
+      final v = e.value;
+      if (v is! Map) continue;
+      final series = (v['series'] as num?)?.round();
+      final ecrites = (v['ecrites'] as num?)?.round();
+      if (series == null || ecrites == null) continue;
+      final c = choix['${e.key}'];
+      final id = '${v['exerciseId']}';
+      final t = koachTexteVolumeEntete((
+        series: series,
+        ecrites: ecrites,
+        applique: koachVolumeApplique(c, mode),
+        choix: c?.choix,
+        assiste: mode == 'assisted',
+        modifiable: true,
+      ), content.byId[id]?.nom ?? id);
+      if (t != null && !out.contains(t)) out.add(t);
+    }
+    return out.length > max ? out.sublist(0, max) : out;
+  }
+
+  // ------------------------------------- modulation de la semaine (RV3)
+
+  /// RV3 (C17.51.1) : ligne servie [it] (JSON de Koach) à [n] séries, avec
+  /// ([appliquer]) ou sans la modulation de la semaine de [module] séries
+  /// (`koachVolume`, `koachModule` tenus d'accord ; technique recalée sur
+  /// les séries, `techniqueCoherente` du moteur). Copie.
+  static Json _koachVolumeJson(
+    Map it,
+    int n,
+    int module, {
+    required bool appliquer,
+  }) {
+    final out = (koachCopie(it) as Map).cast<String, Object?>();
+    final avec = out['koachModule'] is num && out['koachModule'] != 0;
+    final kv = (out['koachVolume'] as num?)?.round() ?? 0;
+    out['sets'] = n;
+    if (appliquer && !avec) {
+      out['koachModule'] = module;
+      out['koachVolume'] = kv + module;
+    } else if (!appliquer && avec) {
+      out.remove('koachModule');
+      out['koachVolume'] = kv - module;
+    }
+    ko.techniqueCoherente(out);
     return out;
+  }
+
+  /// RV3 (C17.51.1) : modulation de la semaine de la ligne de [e] (séance
+  /// S[week]·J[j] servie par Koach, aperçu ou séance ouverte) : [series]
+  /// proposées par Koach, [ecrites] sans la modulation, [applique] (servie
+  /// modulée), [choix] (`applique` / `ecrit` : action de l'athlète ; null :
+  /// le défaut du mode), [assiste] (mode du profil, C17.51.4) et
+  /// [modifiable] (aucune série de la ligne au-delà de la plus petite des
+  /// deux). Null : ligne sans modulation des séries.
+  KoachVolume? koachVolume(int week, int j, Exercise e) {
+    final a = sessionAdapt(week, j);
+    final st = a?.koach;
+    if (a == null || st == null) return null;
+    final slot = e.slotId ?? adaptSlotOf(week, j, e.id);
+    if (slot == null || adaptAsWritten(week, slot)) return null;
+    final key = sessionKey(week, j);
+    final log = logs[key];
+    if (log?.done ?? false) return null;
+    final mode = adaptMode;
+    final choix = koachVolumeChoix(st)[slot];
+    int? series, ecrites;
+    if (st['state'] == 'preview') {
+      if (!koachServesWeek(week)) return null;
+      final place = _koachPlace(week, j);
+      if (place == null) return null;
+      final m = _koachModules(week - 1)?['${place.dayIndex}|$slot'];
+      kc.ExercisePrescription? it;
+      for (final x in place.day?.items ?? const <kc.ExercisePrescription>[]) {
+        if (x.slotId == slot) it = x;
+      }
+      if (m == null || it == null || m.$1 <= 0 || m.$1 == it.sets) {
+        return null;
+      }
+      series = m.$1;
+      ecrites = it.sets;
+    } else if (st['state'] == 'open') {
+      final v = (st['volume'] as Map?)?[slot];
+      if (v is! Map) return null;
+      series = (v['series'] as num?)?.round();
+      ecrites = (v['ecrites'] as num?)?.round();
+    }
+    if (series == null || ecrites == null || series == ecrites) return null;
+    final faites = log?.ex[e.id]?.sets.where((s) => s.done).length ?? 0;
+    return (
+      series: series,
+      ecrites: ecrites,
+      applique: koachVolumeApplique(choix, mode),
+      choix: choix?.choix,
+      assiste: mode == 'assisted',
+      modifiable:
+          st['state'] == 'preview' || faites < math.min(series, ecrites),
+    );
+  }
+
+  /// RV3 (C17.51.1) : choix de l'athlète sur la modulation de la semaine
+  /// de la ligne de [e] : [appliquer] (« Accepter » en mode libre) ou non
+  /// (« Annuler » en mode assisté, « Garder l'écrit » en mode libre). La
+  /// ligne passe aux séries choisies pour cette séance (séries validées
+  /// gardées), son groupe au chrono est recalé sur les lignes servies ; le
+  /// choix est gardé et versé au moteur comme une décision (acceptée ou
+  /// refusée) à la fin de la séance.
+  void koachVolumeChoose(int week, DayPlan day, Exercise e, bool appliquer) {
+    final v = koachVolume(week, day.j, e);
+    if (v == null || !v.modifiable) return;
+    final key = sessionKey(week, day.j);
+    final a = sessionAdaptOf(key);
+    final slot = e.slotId ?? adaptSlotOf(week, day.j, e.id);
+    if (a == null || slot == null) return;
+    final st = Map<String, Object?>.of(a.koach!);
+    final choix = {'choix': appliquer ? 'applique' : 'ecrit', 'mode': adaptMode};
+    final vol = Map<String, Object?>.of(
+      (st['volume'] as Map?)?.cast<String, Object?>() ?? {},
+    );
+    if (st['state'] == 'preview') {
+      vol[slot] = choix;
+      st['volume'] = vol;
+      final keep = a.copyWith(koach: st);
+      final next = koachPreview(week, day, keep: keep) ?? keep;
+      _adaptStore(week, day, a, next);
+      notifyListeners();
+      return;
+    }
+    final avant = (vol[slot] as Map).cast<String, Object?>();
+    vol[slot] = {...avant, ...choix};
+    st['volume'] = vol;
+    if (v.applique == appliquer) {
+      // Même service : seul le choix est noté.
+      _adaptStore(week, day, a, a.copyWith(koach: st));
+      notifyListeners();
+      return;
+    }
+    final n = appliquer ? v.series : v.ecrites;
+    final module = (avant['module'] as num?)?.round() ?? v.series - v.ecrites;
+    st['items'] = [
+      for (final it in (st['items'] as List? ?? const []))
+        if (it is Map && it['slotId'] == slot)
+          _koachVolumeJson(it, n, module, appliquer: appliquer)
+        else
+          it,
+    ];
+    final cibles = ((st['cibles'] as Map?)?[slot] as Map?)
+        ?.cast<String, Object?>();
+    final items = [
+      for (final it in a.plan.items)
+        if (it.slotId == slot)
+          koachTechniqueCoherente(
+            it.copyWith(
+              sets: n,
+              setTargets: it.setTargets == null
+                  ? null
+                  : _koachTargets(it, cibles ?? const {}, n),
+            ),
+          )
+        else
+          it,
+    ];
+    final place = _koachPlace(week, day.j);
+    final groupes = koachGroupesDeLaSeance(
+      place?.day?.groups,
+      null,
+      koachJourInfo(week, day.j)?.items ?? const [],
+      items,
+    );
+    var plan = a.plan.copyWith(items: items, groups: groupes.groupes);
+    if (plan.validate().isNotEmpty) plan = plan.copyWith(groups: null);
+    if (plan.validate().isNotEmpty) return;
+    final next = a.copyWith(plan: plan, koach: st);
+    final log = sessionLog(week, day.j);
+    log.adapt = next.toJson().cast<String, dynamic>();
+    _adaptResync(week, day, a, next, log, key);
+    saveLogs();
+    notifyListeners();
   }
 
   // ------------------------------------------------------ suggestions
@@ -2991,9 +3331,8 @@ extension KoachStore on AppStore {
   /// Décisions de la séance (suggestions), dans l'ordre des emplacements.
   void _koachDecisions(ko.Koach k, SessionAdapt a, Json st, int jour) {
     final dec = st['decisions'];
-    if (dec is! Map) return;
     var n = 0;
-    for (final e in dec.entries) {
+    for (final e in dec is Map ? dec.entries : const <MapEntry>[]) {
       final d = e.value;
       if (d is! Map) continue;
       final slot = '${e.key}';
@@ -3029,6 +3368,42 @@ extension KoachStore on AppStore {
         },
         'accepte': d['accepte'] == true,
         'raison': d['raison'],
+      });
+    }
+    // RV3 (C17.51.1) : choix de l'athlète sur la modulation de la semaine
+    // (« Accepter » : acceptée ; « Annuler », « Garder l'écrit » : refusée,
+    // sans raison) ; aucun choix : rien n'est versé.
+    final vol = st['volume'];
+    if (vol is! Map) return;
+    final choix = koachVolumeChoix(st);
+    for (final e in vol.entries) {
+      final v = e.value;
+      final c = choix['${e.key}'];
+      if (v is! Map || c == null) continue;
+      final series = (v['series'] as num?)?.round();
+      final ecrites = (v['ecrites'] as num?)?.round();
+      if (series == null || ecrites == null || series == ecrites) continue;
+      final ex = '${v['exerciseId']}';
+      k.observe({
+        'type': 'decision',
+        'jour': jour,
+        'proposition': {
+          'id': 'v$jour-$ex-${n++}',
+          'type': series > ecrites ? 'volume_plus' : 'volume_moins',
+          'exerciseId': ex,
+          'ampleur': (series - ecrites).abs().toDouble(),
+          'charge_kg': null,
+          'reps': null,
+          'rir': null,
+          'contexte': {
+            'bilan_bas': false,
+            'semaine_allegement': false,
+            'moment': 'debut_de_seance',
+            'refus_recents': k.adherence?.refusRecents(jour) ?? 0,
+          },
+        },
+        'accepte': c.choix == 'applique',
+        'raison': null,
       });
     }
   }
@@ -3415,8 +3790,9 @@ extension KoachStore on AppStore {
   String koachOverlaySignature() {
     final e = koachEngine;
     if (!e.active && e.stop == null) return '-';
+    // RV3 (C17.51.1) : la modulation affichée suit le mode du profil.
     return '${e.fromWeek}|${e.closed}|${e.journal.length}|'
-        '${e.stop?['since']}|${identityHashCode(_koachRt.live)}';
+        '${e.stop?['since']}|${identityHashCode(_koachRt.live)}|$adaptMode';
   }
 
   /// Semaine en cours servie par Koach : lignes dont les séries ou la
@@ -3440,11 +3816,42 @@ extension KoachStore on AppStore {
       if (koachStartedBefore(week, d.j)) continue;
       final out = <Exercise>[];
       var changed = false;
+      // RV3 (C17.51.1) : choix de l'athlète dans l'aperçu du jour.
+      final choix = koachVolumeChoix(
+        logs[sessionKey(week, d.j)]?.adapt?['koach'] as Map?,
+      );
       for (final e in d.exercises) {
         final slot = imp.slotOf(week, d.j, e.id);
         final m = slot == null ? null : koachWeekLine(week, d.j, slot);
         if (m == null) {
           out.add(e);
+          continue;
+        }
+        // RV3 (C17.51.1) : modulation des séries proposée (mode libre) ou
+        // annulée : la ligne garde ses séries écrites, la proposition est
+        // dite.
+        if (m.sets != m.written &&
+            !koachVolumeApplique(choix[slot], adaptMode)) {
+          changed = true;
+          out.add(
+            Exercise.koach(
+              e,
+              name: e.name,
+              sets: e.sets,
+              intensity: e.intensity,
+              load: e.load,
+              rest: e.rest,
+              restSec: e.restSec,
+              cue: e.cue,
+              why: [
+                'Koach te propose cette semaine '
+                    '${koachSeriesTexte(m.sets)} au lieu de ${m.written} : '
+                    'à accepter en séance.',
+                if (e.why.isNotEmpty) e.why,
+              ].join(' '),
+              catalogId: e.catalogId,
+            ),
+          );
           continue;
         }
         // (KB4 : `koachWeekLine` ne rend jamais 0 série : aucune ligne

@@ -1562,13 +1562,15 @@ extension SessionAdaptStore on AppStore {
         weekIndex: a.weekIndex,
         dayIndex: a.dayIndex,
         date: a.date,
-        mode: a.mode,
+        // RV3 (C17.51.4) : le mode qui décide est celui du profil, jamais
+        // celui enregistré dans la séance (une trace).
+        mode: adaptMode,
         asked: a.asked,
         check: a.check,
         place: a.place,
         plan: plan,
         base: without,
-        choice: without == null ? null : (a.choice ?? _defaultChoice(a.mode)),
+        choice: without == null ? null : (a.choice ?? _defaultChoice(adaptMode)),
         advice: {
           for (final e in a.advice.entries)
             if (startedSlots.contains(adaptSlotOf(week, base.j, e.key)))
@@ -2722,7 +2724,8 @@ extension SessionAdaptStore on AppStore {
         kg: advice.nextLoadKg,
         low: seconds ? advice.nextSeconds : advice.nextRepsLow,
         high: seconds ? advice.nextSeconds : advice.nextRepsHigh,
-        status: a.assisted ? 'applied' : 'pending',
+        // RV3 (C17.51.4) : mode du profil (pas celui de la séance).
+        status: adaptMode == 'assisted' ? 'applied' : 'pending',
         reasons: advice.reasons,
         rest: advice.restSeconds,
       );
