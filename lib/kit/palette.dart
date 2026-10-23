@@ -276,7 +276,7 @@ const int kAvertissementSombre = 0xFFE6A23C, kAvertissementClair = 0xFF8A5300;
 ///   `surface` et `haute`.
 ///
 /// Contraste renforcé (U6) : mêmes règles à 7:1 (4,5:1 au lieu de 3:1), et
-/// `texte2` porté à 7:1 sur `surface`.
+/// `texte2` porté à 7:1 sur `surface` et sur `haute` (RV3, R10).
 class KRoles {
   final String paletteId;
   final bool dark, contrast;
@@ -380,7 +380,14 @@ class KRoles {
         1,
       );
       accent = kAdjustTone(p.accent, surface, strong, 1);
-      if (contrast) texte2 = kAdjustTone(texte2, surface, 7, 1);
+      // RV3 (R10) : en sombre, `haute` est plus claire que `surface` : le
+      // texte secondaire y tombait sous 7:1 (environ 6,4:1 sur fond neutre :
+      // lignes mises en évidence, groupes des feuilles, bulles). Éclairci
+      // jusqu'à 7:1 sur `haute` aussi (plus clair, il garde 7:1 sur
+      // `surface`). En clair, `haute` est le fond, déjà couvert.
+      if (contrast) {
+        texte2 = kAdjustTone(kAdjustTone(texte2, surface, 7, 1), haute, 7, 1);
+      }
     } else {
       final f = Hct.fromInt(p.fondClair);
       fond = p.fondClair;

@@ -18,6 +18,7 @@ void _sonde(String nom, Object? v) {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   late AppStore app;
   var clock = DateTime(2026, 10, 19, 7);
 

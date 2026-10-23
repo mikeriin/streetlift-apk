@@ -105,9 +105,57 @@ String _durationField(int s) {
   return h > 0 ? '$h:${two(m)}:${two(r)}' : '$m:${two(r)}';
 }
 
+/// RV3 (F15) : valeur facultative saisie mais illisible.
+const _kUnreadable =
+    'Une valeur saisie n’est pas lisible : corrige-la ou efface-la.';
+
 /// Première violation lisible d'une valeur du contrat (null : valide).
 String? _firstViolation(List<Violation> v) =>
-    v.isEmpty ? null : 'Réponse incomplète ou hors limites (${v.first.path}).';
+    v.isEmpty ? null : violationText(v.first);
+
+/// RV3 (F6) : noms affichés des champs contrôlés par le contrat (dernier
+/// segment du chemin).
+const _kViolationFields = <String, String>{
+  'reps': 'répétitions',
+  'rir': 'répétitions en réserve',
+  'seconds': 'durée',
+  'externalLoadKg': 'charge',
+  'bodyWeightKg': 'poids du corps',
+  'distanceMeters': 'distance',
+  'bestKg': 'meilleure barre',
+  'targetKg': 'barre visée',
+  'attempts': 'tentatives',
+  'minIncrementKg': 'saut de charge',
+  'weightClassKg': 'catégorie de poids',
+  'plannedBodyWeightKg': 'poids prévu',
+  'heats': 'passages',
+  'bestTotalReps': 'meilleur total',
+  'bestSeconds': 'meilleur temps',
+  'targetSeconds': 'temps visé',
+  'timeLimitSeconds': 'limite de temps',
+  'name': 'nom',
+  'date': 'date',
+  'weeks': 'durée',
+  'sessionsPerWeek': 'séances par semaine',
+  'minutes': 'durée',
+  'minutesPerSession': 'durée',
+  'holdSeconds': 'maintien',
+  'exerciseId': 'mouvement',
+  'muscle': 'muscle',
+  'pattern': 'mouvement',
+};
+
+/// RV3 (F6) : message d'une violation du contrat, en mots : le champ en
+/// cause quand il est connu, jamais le chemin technique (« $.reps »),
+/// affiché avant.
+String violationText(Violation v) {
+  if (v.code == 'no_measure') return 'Indique au moins une valeur.';
+  final m = RegExp(r'([A-Za-z]+)(?:\[\d+\])*$').firstMatch(v.path);
+  final field = m == null ? null : _kViolationFields[m[1]];
+  return field == null
+      ? 'Réponse incomplète ou hors limites : vérifie les valeurs saisies.'
+      : 'Réponse incomplète ou hors limites : $field.';
+}
 
 /// RV2 (F4) : avertissement avant d'enregistrer un profil qui perd des
 /// réponses ([lost], `prunedAnswers`) : la liste de ce qui sera effacé,
@@ -1153,7 +1201,17 @@ extension _FlowV3 on AthleteProfileFlowState {
     return _choiceQuestion(
       'body_weight_goal',
       g?.code,
-      (c) => _d.bodyWeightGoal = c == null ? null : BodyWeightGoal.fromCode(c),
+      (c) {
+        final next = c == null ? null : BodyWeightGoal.fromCode(c);
+        _d.bodyWeightGoal = next;
+        // RV3 (F5) : sans perte ni prise de poids, le poids visé est retiré
+        // du brouillon : le champ aussi. Avant, il gardait l'ancien poids
+        // et le réaffichait au retour sur « perdre » ou « prendre », sans
+        // qu'il soit enregistré.
+        if (next != BodyWeightGoal.lose && next != BodyWeightGoal.gain) {
+          _targetWeight.clear();
+        }
+      },
       extra: [
         if (target) ...[
           const SizedBox(height: KSpacing.s8),
@@ -1236,11 +1294,29 @@ const kMonthNames = [
   'décembre',
 ];
 
+/// Schémas de mouvement proposés pour une priorité, dans l'ordre de la
+/// feuille (RV3, F7 : aussi le texte de la priorité choisie).
+const _kSpecPatternLabels = <MovementPattern, String>{
+  MovementPattern.tirageVertical: 'Tirage vertical (tractions)',
+  MovementPattern.tirageHorizontal: 'Tirage horizontal (rowing)',
+  MovementPattern.pousseeHorizontale: 'Poussée horizontale (pompes, développé)',
+  MovementPattern.pousseeVerticaleHaute: 'Poussée au-dessus de la tête',
+  MovementPattern.pousseeVerticaleBasse: 'Poussée vers le bas (dips)',
+  MovementPattern.squat: 'Squat',
+  MovementPattern.charniereHanche: 'Charnière de hanche (soulevé de terre)',
+  MovementPattern.fente: 'Fente',
+};
+
 /// Texte d'une spécialisation.
 String specializationText(Specialization s, ProfileQuestion? q) {
   final what = switch (s.kind) {
     SpecializationKind.muscle => s.muscle ?? '',
-    SpecializationKind.pattern => s.pattern?.code.replaceAll('_', ' ') ?? '',
+    // RV3 (F7) : schéma de mouvement en mots, comme dans la feuille de la
+    // priorité. Avant : le code du contrat (« poussee horizontale »).
+    SpecializationKind.pattern => switch (s.pattern) {
+      null => '',
+      final p => _kSpecPatternLabels[p] ?? p.code.replaceAll('_', ' '),
+    },
     _ => _exerciseName(s.exerciseId ?? ''),
   };
   return [
@@ -1357,10 +1433,15 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
 
   Future<void> _pickDate() async {
     final now = dateOfCivil(widget.today);
+    final first = DateTime(now.year - 10);
     final d = await showDatePicker(
       context: context,
-      initialDate: _date == null ? now : dateOfCivil(_date!),
-      firstDate: DateTime(now.year - 10),
+      // RV3 (F12) : record daté hors des bornes (plus de 10 ans, ou après
+      // aujourd'hui) ramené dans le calendrier.
+      initialDate: _date == null
+          ? now
+          : pickerInitialDate(dateOfCivil(_date!), first, now),
+      firstDate: first,
       lastDate: now,
     );
     if (d == null || !mounted) return;
@@ -1939,20 +2020,6 @@ class _SpecializationSheetState extends State<_SpecializationSheet> {
     Navigator.pop(context, s);
   }
 
-  static const _patterns = [
-    (MovementPattern.tirageVertical, 'Tirage vertical (tractions)'),
-    (MovementPattern.tirageHorizontal, 'Tirage horizontal (rowing)'),
-    (
-      MovementPattern.pousseeHorizontale,
-      'Poussée horizontale (pompes, développé)',
-    ),
-    (MovementPattern.pousseeVerticaleHaute, 'Poussée au-dessus de la tête'),
-    (MovementPattern.pousseeVerticaleBasse, 'Poussée vers le bas (dips)'),
-    (MovementPattern.squat, 'Squat'),
-    (MovementPattern.charniereHanche, 'Charnière de hanche (soulevé de terre)'),
-    (MovementPattern.fente, 'Fente'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final q = widget.question;
@@ -2014,12 +2081,12 @@ class _SpecializationSheetState extends State<_SpecializationSheet> {
             ],
           )
         else
-          for (final p in _patterns)
+          for (final p in _kSpecPatternLabels.entries)
             _ChoiceRow(
-              key: ValueKey('spec-pattern-${p.$1.code}'),
-              label: p.$2,
-              selected: _pattern == p.$1,
-              onTap: () => setState(() => _pattern = p.$1),
+              key: ValueKey('spec-pattern-${p.key.code}'),
+              label: p.value,
+              selected: _pattern == p.key,
+              onTap: () => setState(() => _pattern = p.key),
             ),
         _sheetLabel(
           context,
@@ -2254,6 +2321,13 @@ class _LiftDraft {
   _LiftDraft(this.exerciseId, {this.attempts = 3, this.minIncrementKg})
     : best = TextEditingController(),
       target = TextEditingController();
+
+  /// RV3 (F14) : champs libérés (ligne retirée, règlement changé, feuille
+  /// fermée).
+  void dispose() {
+    best.dispose();
+    target.dispose();
+  }
 }
 
 class _StationDraft {
@@ -2265,7 +2339,21 @@ class _StationDraft {
       seconds = TextEditingController(),
       load = TextEditingController(),
       limit = TextEditingController();
+
+  /// RV3 (F14) : champs libérés (poste retiré, règlement changé, feuille
+  /// fermée).
+  void dispose() {
+    for (final c in [reps, seconds, load, limit]) {
+      c.dispose();
+    }
+  }
 }
+
+/// RV3 (F14) : libère les champs d'une ligne retirée après l'image en
+/// cours, quand ses champs ne sont plus affichés (les libérer tout de
+/// suite les ôterait à des champs encore montés).
+void _disposeLater(void Function() dispose) =>
+    WidgetsBinding.instance.addPostFrameCallback((_) => dispose());
 
 /// Échéance : nature, date (ou mois), priorité, nom, et selon la nature
 /// les mouvements et tentatives, le format des postes, la distance.
@@ -2388,16 +2476,45 @@ class _EventSheetState extends State<_EventSheet> {
       c.dispose();
     }
     for (final l in _lifts) {
-      l.best.dispose();
-      l.target.dispose();
+      l.dispose();
     }
     for (final s in _stations) {
-      s.reps.dispose();
-      s.seconds.dispose();
-      s.load.dispose();
-      s.limit.dispose();
+      s.dispose();
     }
     super.dispose();
+  }
+
+  /// RV3 (F14) : retire les mouvements (ou postes) en libérant leurs champs.
+  /// Avant : `clear` et `removeAt` laissaient leurs contrôleurs ouverts.
+  void _clearLifts() {
+    final old = List.of(_lifts);
+    _lifts.clear();
+    _disposeLater(() {
+      for (final l in old) {
+        l.dispose();
+      }
+    });
+  }
+
+  void _clearStations() {
+    final old = List.of(_stations);
+    _stations.clear();
+    _disposeLater(() {
+      for (final s in old) {
+        s.dispose();
+      }
+    });
+  }
+
+  /// RV3 (F9) : catégorie de poids choisie qui n'est plus proposée (autre
+  /// règlement, « Autre », autre nature) : retirée. Avant, elle restait
+  /// enregistrée sans être affichée (catégorie fantôme).
+  void _dropHiddenClass() {
+    final c = _weightClass;
+    if (c != null && !_classes.contains(c)) {
+      _weightClass = null;
+      _openClass = false;
+    }
   }
 
   List<Map<String, Object?>> get _kindPresets => [
@@ -2408,7 +2525,7 @@ class _EventSheetState extends State<_EventSheet> {
   void _applyPreset(Map<String, Object?> p) {
     _ruleset = p['code'] as String?;
     if (_kind == EventKind.strengthCompetition) {
-      _lifts.clear();
+      _clearLifts();
       for (final l in (p['lifts'] as List? ?? const [])) {
         final m = (l as Map).cast<String, Object?>();
         _lifts.add(
@@ -2422,7 +2539,7 @@ class _EventSheetState extends State<_EventSheet> {
     } else if (_kind == EventKind.repsCompetition) {
       final mode = p['mode'];
       if (mode is String) _mode = RepsEventMode.fromCode(mode);
-      _stations.clear();
+      _clearStations();
       _formatUnknown = false;
       for (final s in (p['stations'] as List? ?? const [])) {
         final m = (s as Map).cast<String, Object?>();
@@ -2450,13 +2567,16 @@ class _EventSheetState extends State<_EventSheet> {
 
   Future<void> _pickDay() async {
     final first = dateOfCivil(widget.today);
+    final last = DateTime(first.year + 3, 12, 31);
     final d = await showDatePicker(
       context: context,
-      initialDate: _date == null || _date! < widget.today
+      // RV3 (F12) : date enregistrée hors des bornes (au-delà de la
+      // dernière année proposée) ramenée dans le calendrier.
+      initialDate: _date == null
           ? first
-          : dateOfCivil(_date!),
+          : pickerInitialDate(dateOfCivil(_date!), first, last),
       firstDate: first,
-      lastDate: DateTime(first.year + 3, 12, 31),
+      lastDate: last,
     );
     if (d == null || !mounted) return;
     setState(() {
@@ -2470,6 +2590,46 @@ class _EventSheetState extends State<_EventSheet> {
     final k = _kind, date = _date, prio = _priority;
     if (k == null || date == null || prio == null) {
       setState(() => _error = 'Choisis la nature, la date et la priorité.');
+      return;
+    }
+    final repsKind = k == EventKind.repsCompetition;
+    final strength = k == EventKind.strengthCompetition;
+    final race = k == EventKind.race;
+    // RV3 (F16) : test perso : meilleur résultat et temps visé (permis par
+    // le contrat pour `personal_test`). Avant : aucun champ.
+    final personal = k == EventKind.personalTest;
+    // RV3 (F15) : une valeur saisie mais illisible (« 1.30 » pour un temps,
+    // « 2 passages ») est signalée. Avant, elle était ignorée en silence et
+    // l'échéance enregistrée sans elle.
+    int? whole(String t) => int.tryParse(t.trim());
+    final typed = <(TextEditingController, Object? Function(String))>[
+      if (strength) ...[
+        for (final l in _lifts) ...[
+          (l.best, _parseNum),
+          (l.target, _parseNum),
+        ],
+        (_plannedWeight, _parseNum),
+      ],
+      if (repsKind) ...[
+        if (!_formatUnknown)
+          for (final s in _stations) ...[
+            (s.reps, whole),
+            (s.seconds, whole),
+            (s.load, _parseNum),
+            (s.limit, whole),
+          ],
+        (_heats, whole),
+        (_plannedWeight, _parseNum),
+      ],
+      if (repsKind || personal) (_bestReps, whole),
+      if (repsKind || race || personal) (_bestTime, _parseDuration),
+      if (race || personal) (_targetTime, _parseDuration),
+      if (race) (_otherDistance, _parseNum),
+    ];
+    bool unreadable((TextEditingController, Object? Function(String)) f) =>
+        f.$1.text.trim().isNotEmpty && f.$2(f.$1.text) == null;
+    if (typed.any(unreadable)) {
+      setState(() => _error = _kUnreadable);
       return;
     }
     List<CompetitionLift>? lifts;
@@ -2521,8 +2681,6 @@ class _EventSheetState extends State<_EventSheet> {
         return;
       }
     }
-    final repsKind = k == EventKind.repsCompetition;
-    final strength = k == EventKind.strengthCompetition;
     final name = _name.text.trim();
     final e = SeasonEvent(
       id: widget.id,
@@ -2541,12 +2699,14 @@ class _EventSheetState extends State<_EventSheet> {
       stations: stations,
       formatKnown: repsKind && _formatUnknown ? false : null,
       heats: repsKind || strength ? int.tryParse(_heats.text.trim()) : null,
-      bestTotalReps: repsKind ? int.tryParse(_bestReps.text.trim()) : null,
-      bestSeconds: repsKind || k == EventKind.race
+      bestTotalReps: repsKind || personal
+          ? int.tryParse(_bestReps.text.trim())
+          : null,
+      bestSeconds: repsKind || race || personal
           ? _parseDuration(_bestTime.text)
           : null,
       distanceMeters: distance,
-      targetSeconds: k == EventKind.race || repsKind
+      targetSeconds: race || repsKind || personal
           ? _parseDuration(_targetTime.text)
           : null,
       elements: k == EventKind.freestyleCompetition && _elements.isNotEmpty
@@ -2613,6 +2773,7 @@ class _EventSheetState extends State<_EventSheet> {
             onTap: () => setState(() {
               _kind = EventKind.fromCode(o.$1);
               _ruleset = null;
+              _dropHiddenClass();
             }),
           ),
         _sheetLabel(context, itemText(q, 'date', 'Quel jour ?')),
@@ -2689,6 +2850,7 @@ class _EventSheetState extends State<_EventSheet> {
                 } else {
                   _applyPreset(_kindPresets.firstWhere((p) => p['code'] == c));
                 }
+                _dropHiddenClass();
               }),
             ),
             _sheetHint(
@@ -2702,6 +2864,7 @@ class _EventSheetState extends State<_EventSheet> {
         if (k == EventKind.repsCompetition) ..._reps(context),
         if (k == EventKind.race) ..._race(context),
         if (k == EventKind.freestyleCompetition) ..._freestyle(context),
+        if (k == EventKind.personalTest) ..._personalTest(context),
         if (_error != null) ...[
           const SizedBox(height: KSpacing.s12),
           Text(
@@ -2738,7 +2901,10 @@ class _EventSheetState extends State<_EventSheet> {
                       key: ValueKey('event-lift-remove-$i'),
                       tooltip: 'Retirer ce mouvement',
                       icon: Icons.close_rounded,
-                      onPressed: () => setState(() => _lifts.removeAt(i)),
+                      onPressed: () => setState(() {
+                        final l = _lifts.removeAt(i);
+                        _disposeLater(l.dispose);
+                      }),
                     ),
                   ],
                 ),
@@ -2860,7 +3026,10 @@ class _EventSheetState extends State<_EventSheet> {
                         key: ValueKey('event-station-remove-$i'),
                         tooltip: 'Retirer ce poste',
                         icon: Icons.close_rounded,
-                        onPressed: () => setState(() => _stations.removeAt(i)),
+                        onPressed: () => setState(() {
+                          final s = _stations.removeAt(i);
+                          _disposeLater(s.dispose);
+                        }),
                       ),
                     ],
                   ),
@@ -2984,6 +3153,54 @@ class _EventSheetState extends State<_EventSheet> {
           keyboardType: TextInputType.datetime,
           decoration: const InputDecoration(
             labelText: 'Ton meilleur temps sur cette distance (facultatif)',
+            helperText: 'h:min:s ou min:s',
+          ),
+        ),
+      ),
+    ];
+  }
+
+  /// RV3 (F16) : test perso : meilleur résultat (total de répétitions ou
+  /// temps) et temps visé, facultatifs (PARCOURS_V3.md, `bestSeconds` /
+  /// `bestTotalReps`).
+  List<Widget> _personalTest(BuildContext context) {
+    final q = widget.question;
+    return [
+      _sheetLabel(
+        context,
+        itemText(
+          q,
+          'bestSeconds|bestTotalReps',
+          'Tu l’as déjà fait ? Ton meilleur résultat',
+        ),
+      ),
+      _num(
+        'event-best-reps',
+        _bestReps,
+        'Ton meilleur total de répétitions (facultatif)',
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: KSpacing.s8),
+        child: TextField(
+          key: const ValueKey('event-best-time'),
+          controller: _bestTime,
+          keyboardType: TextInputType.datetime,
+          decoration: const InputDecoration(
+            labelText: 'Ou ton meilleur temps (facultatif)',
+            helperText: 'h:min:s ou min:s',
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: KSpacing.s8),
+        child: TextField(
+          key: const ValueKey('event-target-time'),
+          controller: _targetTime,
+          keyboardType: TextInputType.datetime,
+          decoration: InputDecoration(
+            labelText:
+                '${itemText(q, 'targetSeconds', 'Ton temps visé ?')} '
+                '(facultatif)',
             helperText: 'h:min:s ou min:s',
           ),
         ),

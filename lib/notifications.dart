@@ -364,9 +364,21 @@ class NotificationService {
     // Le départ fait partie de la signature : le changer replanifie les
     // mêmes identifiants S·J (pas de doublon), sans attendre un autre signal.
     final start = app.program.start;
+    // RV3 (R7) : le contenu des rappels fait aussi partie de la signature
+    // (titre, texte, jour, heure de chaque rappel de séance et de GtG).
+    // Avant : réglages, départ et séances faites seulement ; un programme
+    // remplacé au même départ, une numérotation affichée changée (PR2) ou
+    // une référence qui change les répétitions d'un GtG laissaient les
+    // anciens rappels jusqu'à la réouverture des réglages.
+    final at = now();
+    final planned = [
+      ...planReminders(app, at),
+      ...planGtgReminders(app, at),
+    ];
+    final content = planned.map((r) => '${r.id}:${r.signature}').join(',');
     final signature =
         '${s.notifOn}|${s.notifHour}|${s.notifMinute}|${s.notifSkipRest}|'
-        '${start == null ? '-' : civilDateString(start)}|$done';
+        '${start == null ? '-' : civilDateString(start)}|$done|$content';
     if (signature == _source) return;
     _source = signature;
     unawaited(reschedule());
@@ -432,7 +444,11 @@ class NotificationService {
       (id >= 100 && id <= 106) ||
       // RV1 : rappels de séance jusqu'à la semaine 60 (avant : 40).
       (id >= 1001 && id <= 1000 + kReminderMaxWeeks * 7) ||
-      (id >= gtgReminderFirstId && id <= gtgReminderLastId);
+      _gtg(id);
+
+  /// RV3 (R6) : identifiant d'un rappel de GtG.
+  static bool _gtg(int id) =>
+      id >= gtgReminderFirstId && id <= gtgReminderLastId;
   Future<void> _reschedule(int revision) async {
     status.value = ReminderStatus(access: status.value.access, busy: true);
     await init(); // Retente après un échec initial.
@@ -479,7 +495,12 @@ class NotificationService {
           _scheduled[reminder.id] = '${reminder.signature}|$exact';
         }
         count++;
-        next ??= location == null ? reminder.at.toLocal() : reminder.at;
+        // RV3 (R6) : « Prochain rappel » des réglages = prochain rappel de
+        // séance, à l'heure choisie ; un rappel de GtG (toutes les 2 h, de
+        // 9 h à 21 h) passait avant et affichait une autre heure.
+        if (!_gtg(reminder.id)) {
+          next ??= location == null ? reminder.at.toLocal() : reminder.at;
+        }
       } catch (e) {
         failure ??= e;
       }
