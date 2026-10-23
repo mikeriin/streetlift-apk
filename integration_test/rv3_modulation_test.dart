@@ -26,6 +26,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/home_screen.dart' show openProgramDay;
 import 'package:streetlift_tracker/kalis_clock.dart';
+import 'package:streetlift_tracker/koach1/koach_moteur.dart'
+    show KoachExtensions;
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/store.dart';
 
