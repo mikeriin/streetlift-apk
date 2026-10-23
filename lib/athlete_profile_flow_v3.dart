@@ -2604,10 +2604,7 @@ class _EventSheetState extends State<_EventSheet> {
     int? whole(String t) => int.tryParse(t.trim());
     final typed = <(TextEditingController, Object? Function(String))>[
       if (strength) ...[
-        for (final l in _lifts) ...[
-          (l.best, _parseNum),
-          (l.target, _parseNum),
-        ],
+        for (final l in _lifts) ...[(l.best, _parseNum), (l.target, _parseNum)],
         (_plannedWeight, _parseNum),
       ],
       if (repsKind) ...[

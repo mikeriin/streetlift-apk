@@ -281,7 +281,7 @@ String koachTexteVolumeCarte(KoachVolume v) {
               'séance.'
         : 'Écrit gardé : $w série${w > 1 ? 's' : ''}.';
   }
-  if (v.choix == 'applique' && !v.assiste) return 'Accepté : $n.';
+  if (v.choix == 'applique') return 'Accepté : $n.';
   if (v.applique) {
     return 'Cette semaine : $n au lieu de $w. Koach répartit l’effort de '
         'la semaine d’après ta récupération prévue.';
@@ -294,10 +294,8 @@ String koachTexteVolumeCarte(KoachVolume v) {
 /// l'exercice [nom] qui n'a pas de raison du moteur à dire : proposée (mode
 /// libre, sans choix) ou ajout appliqué (Koach ne dit que les baisses).
 /// Null : rien à dire en tête. Pur (testé).
-String? koachTexteVolumeEntete(
-KoachVolume v, String nom,
-) {
-  if (!v.applique && v.choix == null && !v.assiste) {
+String? koachTexteVolumeEntete(KoachVolume v, String nom) {
+  if (!v.applique && v.choix == null) {
     return 'Koach te propose ${koachSeriesTexte(v.series)} sur $nom au '
         'lieu de ${v.ecrites} cette semaine : accepte-les ou garde l’écrit '
         'sur sa carte.';
@@ -1831,21 +1829,32 @@ extension KoachStore on AppStore {
         served.add(it0);
         continue;
       }
-      final sans = math.max(1, n.round() - d.round());
+      // Séries sans la modulation : une baisse rendue (jamais au-dessus de
+      // l'écrit), un ajout retiré (jamais au-dessus de ce que Koach sert :
+      // un ajout plafonné n'ajoute rien).
+      final w0 = info.items
+          .where((x) => x['slotId'] == slot)
+          .firstOrNull?['sets'];
+      final w = w0 is num ? w0.round() : n.round();
+      final sans = d < 0
+          ? math.max(1, math.min(w, n.round() - d.round()))
+          : math.min(n.round(), w);
       if (sans == n.round()) {
         served.add(it0);
         continue;
       }
       final c = choixApercu[slot];
+      final applique = koachVolumeApplique(c, adaptMode);
       volume[slot] = {
         'exerciseId': it0['exerciseId'],
         'series': n.round(),
         'ecrites': sans,
         'module': d.round(),
+        'applique': applique,
         if (c != null) 'choix': c.choix,
         if (c?.mode != null) 'mode': c!.mode,
       };
-      if (koachVolumeApplique(c, adaptMode)) {
+      if (applique) {
         served.add(it0);
         continue;
       }
@@ -2743,8 +2752,7 @@ extension KoachStore on AppStore {
               _koachRaisonDe(r, id) &&
               (r['code'] != 'koach.volume_semaine' ||
                   (!volSans &&
-                      (n == null ||
-                          (r['params'] as Map?)?['ecrites'] == n))))
+                      (n == null || (r['params'] as Map?)?['ecrites'] == n))))
             r,
     ];
     // KB3 : ligne au départ chronométré servie telle qu'écrite (PR8, nombre
@@ -2872,10 +2880,12 @@ extension KoachStore on AppStore {
     final vol = (st?['volume'] as Map?) ?? const {};
     final choix = koachVolumeChoix(st);
     final mode = adaptMode;
+    bool applique(String slot, Map v) => v['applique'] is bool
+        ? v['applique'] as bool
+        : koachVolumeApplique(choix[slot], mode);
     final sans = <String>{
       for (final e in vol.entries)
-        if (e.value is Map &&
-            !koachVolumeApplique(choix['${e.key}'], mode))
+        if (e.value is Map && !applique('${e.key}', e.value as Map))
           '${(e.value as Map)['exerciseId']}',
     };
     raisons.removeWhere((r) {
@@ -2905,7 +2915,7 @@ extension KoachStore on AppStore {
       final t = koachTexteVolumeEntete((
         series: series,
         ecrites: ecrites,
-        applique: koachVolumeApplique(c, mode),
+        applique: applique('${e.key}', v),
         choix: c?.choix,
         assiste: mode == 'assisted',
         modifiable: true,
@@ -2961,6 +2971,7 @@ extension KoachStore on AppStore {
     final mode = adaptMode;
     final choix = koachVolumeChoix(st)[slot];
     int? series, ecrites;
+    var applique = koachVolumeApplique(choix, mode);
     if (st['state'] == 'preview') {
       if (!koachServesWeek(week)) return null;
       final place = _koachPlace(week, j);
@@ -2970,7 +2981,13 @@ extension KoachStore on AppStore {
       for (final x in place.day?.items ?? const <kc.ExercisePrescription>[]) {
         if (x.slotId == slot) it = x;
       }
-      if (m == null || it == null || m.$1 <= 0 || m.$1 == it.sets) {
+      // (Une ligne à charge fixe, C15, garde son volume écrit dans
+      // l'aperçu : la modulation n'y est dite qu'à l'ouverture.)
+      if (m == null ||
+          it == null ||
+          m.$1 <= 0 ||
+          m.$1 == it.sets ||
+          _fixedLoadAt(place, slot, it.exerciseId) != null) {
         return null;
       }
       series = m.$1;
@@ -2980,13 +2997,16 @@ extension KoachStore on AppStore {
       if (v is! Map) return null;
       series = (v['series'] as num?)?.round();
       ecrites = (v['ecrites'] as num?)?.round();
+      // Séance ouverte : ce qui est servi (le mode du profil a pu changer
+      // depuis l'ouverture ; rien n'est changé sans action de l'athlète).
+      if (v['applique'] is bool) applique = v['applique'] as bool;
     }
     if (series == null || ecrites == null || series == ecrites) return null;
     final faites = log?.ex[e.id]?.sets.where((s) => s.done).length ?? 0;
     return (
       series: series,
       ecrites: ecrites,
-      applique: koachVolumeApplique(choix, mode),
+      applique: applique,
       choix: choix?.choix,
       assiste: mode == 'assisted',
       modifiable:
@@ -3009,7 +3029,10 @@ extension KoachStore on AppStore {
     final slot = e.slotId ?? adaptSlotOf(week, day.j, e.id);
     if (a == null || slot == null) return;
     final st = Map<String, Object?>.of(a.koach!);
-    final choix = {'choix': appliquer ? 'applique' : 'ecrit', 'mode': adaptMode};
+    final choix = {
+      'choix': appliquer ? 'applique' : 'ecrit',
+      'mode': adaptMode,
+    };
     final vol = Map<String, Object?>.of(
       (st['volume'] as Map?)?.cast<String, Object?>() ?? {},
     );
@@ -3023,7 +3046,7 @@ extension KoachStore on AppStore {
       return;
     }
     final avant = (vol[slot] as Map).cast<String, Object?>();
-    vol[slot] = {...avant, ...choix};
+    vol[slot] = {...avant, ...choix, 'applique': appliquer};
     st['volume'] = vol;
     if (v.applique == appliquer) {
       // Même service : seul le choix est noté.

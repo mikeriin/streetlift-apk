@@ -110,8 +110,10 @@ void main() {
       expect(koachTexteVolumeEntete(v(), 'Dips'), isNull);
       expect(
         koachTexteVolumeEntete(v(series: 4), 'Dips'),
-        startsWith('Cette semaine, je te propose 4 séries sur Dips au lieu '
-            'de 3'),
+        startsWith(
+          'Cette semaine, je te propose 4 séries sur Dips au lieu '
+          'de 3',
+        ),
       );
       expect(
         koachTexteVolumeEntete(v(applique: false, choix: 'ecrit'), 'Dips'),
@@ -163,7 +165,9 @@ void main() {
       return app
           .adaptDay(15, base, a)
           .exercises
-          .firstWhere((x) => (x.slotId ?? app.adaptSlotOf(15, j, x.id)) == slot);
+          .firstWhere(
+            (x) => (x.slotId ?? app.adaptSlotOf(15, j, x.id)) == slot,
+          );
     }
 
     /// Séance de Koach ouverte au premier jour de S15 dont une ligne (hors
@@ -248,12 +252,17 @@ void main() {
       expect(seriesPlan(j, slot), v.series);
       expect(app.exLog(15, j, e).sets.length, v.series);
       // Raison du moteur sur la carte et en tête.
-      expect(app.koachReasonLine(15, j, e), startsWith('Cette semaine, je te '
-          'propose'));
       expect(
-        app.koachSessionReasons(15, j, max: 9).any(
-          (t) => t.startsWith('Cette semaine, je te propose'),
+        app.koachReasonLine(15, j, e),
+        startsWith(
+          'Cette semaine, je te '
+          'propose',
         ),
+      );
+      expect(
+        app
+            .koachSessionReasons(15, j, max: 9)
+            .any((t) => t.startsWith('Cette semaine, je te propose')),
         isTrue,
       );
       app.koachVolumeChoose(15, base, e, false);
@@ -264,12 +273,21 @@ void main() {
       expect(seriesServies(j, slot), v.ecrites);
       expect(app.exLog(15, j, e).sets.length, v.ecrites);
       expect(app.sessionAdapt(15, j)!.plan.validate(), isEmpty);
-      expect(app.koachReasonLine(15, j, e) ?? '', isNot(contains('je te '
-          'propose')));
       expect(
-        app.koachSessionReasons(15, j, max: 9).where(
-          (t) => t.contains(app.content.byId[e.catalogId]?.nom ?? '§'),
+        app.koachReasonLine(15, j, e) ?? '',
+        isNot(
+          contains(
+            'je te '
+            'propose',
+          ),
         ),
+      );
+      expect(
+        app
+            .koachSessionReasons(15, j, max: 9)
+            .where(
+              (t) => t.contains(app.content.byId[e.catalogId]?.nom ?? '§'),
+            ),
         isEmpty,
       );
       final d = decisionsVolume(j);
@@ -300,14 +318,24 @@ void main() {
         contains(startsWith('Koach te propose ${v.series} série')),
       );
       expect(
-        app.koachSessionReasons(15, j, max: 9).where(
-          (t) => t.startsWith('Cette semaine, je te propose') &&
-              t.contains(nom),
-        ),
+        app
+            .koachSessionReasons(15, j, max: 9)
+            .where(
+              (t) =>
+                  t.startsWith('Cette semaine, je te propose') &&
+                  t.contains(nom),
+            ),
         isEmpty,
       );
-      expect(app.koachReasonLine(15, j, e) ?? '', isNot(contains('je te '
-          'propose')));
+      expect(
+        app.koachReasonLine(15, j, e) ?? '',
+        isNot(
+          contains(
+            'je te '
+            'propose',
+          ),
+        ),
+      );
       app.koachVolumeChoose(15, base, e, true);
       final w = app.koachVolume(15, j, e)!;
       expect(w.applique, isTrue);

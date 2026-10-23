@@ -371,10 +371,7 @@ class NotificationService {
     // une référence qui change les répétitions d'un GtG laissaient les
     // anciens rappels jusqu'à la réouverture des réglages.
     final at = now();
-    final planned = [
-      ...planReminders(app, at),
-      ...planGtgReminders(app, at),
-    ];
+    final planned = [...planReminders(app, at), ...planGtgReminders(app, at)];
     final content = planned.map((r) => '${r.id}:${r.signature}').join(',');
     final signature =
         '${s.notifOn}|${s.notifHour}|${s.notifMinute}|${s.notifSkipRest}|'

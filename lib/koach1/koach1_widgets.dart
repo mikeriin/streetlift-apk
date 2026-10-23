@@ -183,8 +183,7 @@ class KoachVolumeCard extends StatelessWidget {
     final k = KTokens.of(context);
     final id = exercise.id;
     final text = koachTexteVolumeCarte(v);
-    final choisi = v.choix == 'ecrit' || (v.choix == 'applique' && !v.assiste);
-    if (choisi || !v.modifiable) {
+    if (v.choix != null || !v.modifiable) {
       return Padding(
         key: ValueKey('koach-volume-done-$id'),
         padding: const EdgeInsets.only(top: KSpacing.s8),
@@ -209,7 +208,7 @@ class KoachVolumeCard extends StatelessWidget {
           padding: const EdgeInsets.all(KSpacing.s12),
           child: KoachSays(
             pose: koachPose(
-              v.assiste ? KoachUsage.explanation : KoachUsage.proposal,
+              v.applique ? KoachUsage.explanation : KoachUsage.proposal,
             ),
             koachHeight: KSize.menuIcon + KSpacing.s4,
             child: Column(
@@ -220,27 +219,29 @@ class KoachVolumeCard extends StatelessWidget {
                 Wrap(
                   spacing: KSpacing.s8,
                   runSpacing: KSpacing.s8,
-                  children: v.assiste
-                      ? [
-                          KTonalButton(
-                            key: ValueKey('koach-volume-undo-$id'),
-                            label: 'Annuler',
-                            onPressed: () => choose(false),
-                          ),
-                        ]
-                      : [
-                          KPrimaryButton(
-                            key: ValueKey('koach-volume-accept-$id'),
-                            label: 'Accepter',
-                            expand: false,
-                            onPressed: () => choose(true),
-                          ),
-                          KTonalButton(
-                            key: ValueKey('koach-volume-keep-$id'),
-                            label: 'Garder l’écrit',
-                            onPressed: () => choose(false),
-                          ),
-                        ],
+                  children: [
+                    // Servie modulée : retour à l'écrit (« Annuler » en
+                    // mode assisté) ; proposée : « Accepter ».
+                    if (!v.applique)
+                      KPrimaryButton(
+                        key: ValueKey('koach-volume-accept-$id'),
+                        label: 'Accepter',
+                        expand: false,
+                        onPressed: () => choose(true),
+                      ),
+                    if (v.applique && v.assiste)
+                      KTonalButton(
+                        key: ValueKey('koach-volume-undo-$id'),
+                        label: 'Annuler',
+                        onPressed: () => choose(false),
+                      )
+                    else
+                      KTonalButton(
+                        key: ValueKey('koach-volume-keep-$id'),
+                        label: 'Garder l’écrit',
+                        onPressed: () => choose(false),
+                      ),
+                  ],
                 ),
               ],
             ),

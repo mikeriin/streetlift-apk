@@ -165,12 +165,12 @@ void main() {
     });
 
     test(
-      'pubspec : assets de Koach déclarés, version 7.7.0 (Koach 1.0.8, KB5)',
+      'pubspec : assets de Koach déclarés, version 7.7.1 (RV3)',
       () {
         final p = File('pubspec.yaml').readAsStringSync();
         expect(p, contains('- assets/koach/koach_params_1_0_8.json'));
         expect(p, contains('- assets/koach/vecteurs_qualites_v1.json'));
-        expect(p, contains('version: 7.7.0+'));
+        expect(p, contains('version: 7.7.1+'));
       },
     );
   });

@@ -350,9 +350,8 @@ void main() {
     );
 
     // Hors écran quand la feuille d'une échéance est ouverte par-dessus.
-    AthleteProfileFlowState flow(WidgetTester tester) => tester.state(
-      find.byType(AthleteProfileFlow, skipOffstage: false),
-    );
+    AthleteProfileFlowState flow(WidgetTester tester) =>
+        tester.state(find.byType(AthleteProfileFlow, skipOffstage: false));
 
     Future<void> tap(WidgetTester tester, String key, {bool up = false}) async {
       final f = find.byKey(ValueKey(key));
@@ -499,12 +498,15 @@ void main() {
       addTearDown(() => debugSetMapLabels(MapView.face, saved));
       final intensity = kColorIntensity;
       addTearDown(() => kColorIntensity = intensity);
+      // (Nouvelle instance à chaque construction, comme l'application qui se
+      // reconstruit : un widget constant identique n'est pas remis à jour.)
       Widget figure() => page(
-        const MapFigure(
-          key: ValueKey('rv3-map'),
+        // ignore: prefer_const_constructors
+        MapFigure(
+          key: const ValueKey('rv3-map'),
           view: MapView.face,
           height: 200,
-          intensities: {},
+          intensities: const {},
           dark: true,
         ),
       );

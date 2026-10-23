@@ -1570,7 +1570,9 @@ extension SessionAdaptStore on AppStore {
         place: a.place,
         plan: plan,
         base: without,
-        choice: without == null ? null : (a.choice ?? _defaultChoice(adaptMode)),
+        choice: without == null
+            ? null
+            : (a.choice ?? _defaultChoice(adaptMode)),
         advice: {
           for (final e in a.advice.entries)
             if (startedSlots.contains(adaptSlotOf(week, base.j, e.key)))
