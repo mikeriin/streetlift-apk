@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app_theme.dart';
+import 'kit/palette.dart' show kColorIntensity;
 import 'muscle_map_regions.dart';
 
 export 'muscle_map_regions.dart';
@@ -539,8 +540,12 @@ class MapFigureState extends State<MapFigure> {
   String _signature() {
     final e = widget.intensities.entries.toList()
       ..sort((a, b) => a.key.compareTo(b.key));
+    // RV3 (F13) : intensité des couleurs (Réglages › Apparence, « Couleurs »)
+    // dans la clé : elle change le haut de la rampe (`KRoles.rampe`). Avant,
+    // la carte gardait les couleurs d'avant le changement.
     return '${widget.dark}|${widget.tint?.toARGB32()}|${widget.selected}|'
-        '${SL.accentSpec.id}|${e.map((x) => '${x.key}=${x.value}').join(',')}';
+        '${SL.accentSpec.id}|$kColorIntensity|'
+        '${e.map((x) => '${x.key}=${x.value}').join(',')}';
   }
 
   @override
@@ -557,7 +562,14 @@ class MapFigureState extends State<MapFigure> {
 
   Future<void> _refresh() async {
     final key = _signature();
-    if (key == _key || key == _pending) return;
+    if (key == _key) {
+      // RV3 (F13) : revenu à l'image affichée pendant qu'une autre se
+      // peignait (A → B → A) : celle en cours est abandonnée. Avant, B
+      // arrivait ensuite et restait affichée pour A.
+      _pending = null;
+      return;
+    }
+    if (key == _pending) return;
     _pending = key;
     final colors = lut;
     try {
