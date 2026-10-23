@@ -234,9 +234,7 @@ void main() {
       ProfileDraft.of(
         sampleAthleteProfile(
           on: civilOf(KalisClock.now()),
-          guidance: libre
-              ? kc.GuidanceMode.free
-              : kc.GuidanceMode.assisted,
+          guidance: libre ? kc.GuidanceMode.free : kc.GuidanceMode.assisted,
         ),
       )..consent = 'refused',
     );
@@ -244,7 +242,6 @@ void main() {
     await store.koachRefresh();
     releve['koach_actif'] = store.koachEngine.snap != null;
     releve['depuis'] = store.koachEngine.fromWeek;
-
 
     // Mardi : modulation de la semaine forcée sur le plan de Koach (facteur
     // de volume 0,4), séance de poussée ouverte par l'écran.
