@@ -1942,7 +1942,9 @@ extension SessionAdaptStore on AppStore {
         out.insertAll(at, moved);
       }
     }
-    return DayPlan.adapted(base, out);
+    // RV4 (C17.51.5) : changements du jour (exercice remplacé, ligne
+    // retirée) posés sur la journée servie.
+    return withDayChanges(week, DayPlan.adapted(base, out));
   }
 
   /// CI1b : jour de la semaine (« mardi ») de la journée S[week]·J[j].
@@ -2054,6 +2056,46 @@ extension SessionAdaptStore on AppStore {
   /// un item sorti exprès de son groupe par le moteur (course facile à la
   /// place d'un fractionné : une durée continue) reste seul.
   kc.GroupSpec? exerciseGroupOf(int week, int j, Exercise e) {
+    final g = _exerciseGroupOf(week, j, e);
+    if (g == null) return null;
+    // RV4 (C17.51.5) : ligne du groupe retirée pour aujourd'hui : groupe
+    // recalé sur les lignes restantes (règle de KB5 : tours et durée d'un
+    // EMOM au temps suivent les lignes servies).
+    final removed = dayRemovedSlots(week, j);
+    if (removed.isEmpty) return g;
+    final place = adaptPlaceOf(week, j);
+    final written = [
+      for (final it in place?.day?.items ?? const <kc.ExercisePrescription>[])
+        it.toJson().cast<String, Object?>(),
+    ];
+    final a = sessionAdapt(week, j);
+    final served = a == null
+        ? written
+        : [
+            for (final it in a.active.items)
+              it.toJson().cast<String, Object?>(),
+          ];
+    final members = {
+      for (final x in served)
+        if (x['groupId'] == g.groupId) koachSlotEcrit('${x['slotId']}'),
+    };
+    if (!members.any(removed.contains)) return g;
+    try {
+      final out = koachGroupesServis(
+        [g.toJson().cast<String, Object?>()],
+        written,
+        [
+          for (final x in served)
+            if (!removed.contains(koachSlotEcrit('${x['slotId']}'))) x,
+        ],
+      );
+      return out.isEmpty ? null : kc.GroupSpec.fromJson(out.first);
+    } catch (_) {
+      return g;
+    }
+  }
+
+  kc.GroupSpec? _exerciseGroupOf(int week, int j, Exercise e) {
     final slot = e.slotId ?? adaptSlotOf(week, j, e.id);
     if (slot == null) return null;
     final a = sessionAdapt(week, j);
@@ -2157,6 +2199,24 @@ extension SessionAdaptStore on AppStore {
       exerciseId = importedProgram?.exerciseOf['$week|$slot'];
     }
     final written = adaptAsWritten(week, slot);
+    // RV4 (C17.51.5) : exercice remplacé pour aujourd'hui
+    // (`<ligne>~<exercice>`) : l'exercice réel (null : exercice personnel,
+    // lu par son nom), jamais la ligne servie (un autre exercice).
+    final ch = key.contains('~')
+        ? logs[sessionKey(week, j)]?.changes[dayChangeKey(key)]
+        : null;
+    if (ch?['type'] == 'remplace') {
+      exerciseId = ch!['to'] as String?;
+      if (served != null && !written) {
+        return (
+          exerciseId: exerciseId,
+          seconds: null,
+          scale: 1,
+          technique: null,
+          meters: false,
+        );
+      }
+    }
     if (served != null && !written) {
       final kind = _servedMiniKind(week, j, slot, served, 0);
       return (
@@ -2535,8 +2595,15 @@ extension SessionAdaptStore on AppStore {
       // CI1f : ligne servie telle qu'écrite (contraste, échelle) : pas de
       // cible du moteur ; tours notés sans lecture de capacité.
       final written = adaptAsWritten(week, slot);
-      final it = written ? null : item;
-      final id = e.catalogId ?? item?.exerciseId ?? content.idFor(e.name);
+      // RV4 (C17.51.5) : exercice remplacé pour aujourd'hui : l'exercice
+      // réel, sans la cible de la ligne servie (un autre exercice) ; un
+      // exercice personnel n'est pas versé (inconnu du moteur).
+      final ch = dayChangeOf(week, day.j, e.id);
+      final replaced = ch?['type'] == 'remplace';
+      final it = written || replaced ? null : item;
+      final id = replaced
+          ? ch!['to'] as String?
+          : e.catalogId ?? item?.exerciseId ?? content.idFor(e.name);
       if (id == null) continue;
       // CI1f : mesure de la ligne servie (secondes, minutes) avant l'unité
       // du catalogue (intervalles au temps d'un exercice en répétitions).

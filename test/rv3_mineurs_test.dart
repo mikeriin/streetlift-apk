@@ -15,10 +15,12 @@
 // - F9 : catégorie de poids d'un autre règlement retirée ;
 // - F11 : fourchettes gardées au changement de discipline ;
 // - F12 : calendrier d'une échéance proche ;
+// - F13 : carte 2D repeinte quand l'intensité des couleurs change ;
 // - F15 : valeur facultative illisible signalée ;
 // - F16 : champs du test perso.
 //
 // Données synthétiques seulement ; horloge injectée ; stockage simulé.
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart'
     show LicenseEntryWithLineBreaks, LicenseRegistry;
@@ -35,6 +37,14 @@ import 'package:streetlift_tracker/kit/kit.dart'
     show KRoles, kColorIntensity, kContrast, kPaletteSources;
 import 'package:streetlift_tracker/main.dart' show bootSession;
 import 'package:streetlift_tracker/mannequin_3d.dart' show Display3DSettings;
+import 'package:streetlift_tracker/muscle_map_2d.dart'
+    show
+        MapFigure,
+        MapFigureState,
+        MapLabels,
+        MapView,
+        debugSetMapLabels,
+        mapLabelsIfLoaded;
 import 'package:streetlift_tracker/notifications.dart';
 import 'package:streetlift_tracker/profile_v3.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -478,6 +488,51 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 600));
       expect(find.byType(LicensePage), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
+    });
+
+    testWidgets('F13 : carte 2D repeinte quand l’intensité des couleurs '
+        'change', (tester) async {
+      final saved = mapLabelsIfLoaded(MapView.face);
+      debugSetMapLabels(MapView.face, MapLabels(4, 4, Uint8List(16)));
+      addTearDown(() => debugSetMapLabels(MapView.face, saved));
+      final intensity = kColorIntensity;
+      addTearDown(() => kColorIntensity = intensity);
+      // (Nouvelle instance à chaque construction, comme l'application qui se
+      // reconstruit : un widget constant identique n'est pas remis à jour.)
+      Widget figure() => page(
+        // ignore: prefer_const_constructors
+        MapFigure(
+          key: const ValueKey('rv3-map'),
+          view: MapView.face,
+          height: 200,
+          intensities: const {},
+          dark: true,
+        ),
+      );
+      MapFigureState state() =>
+          tester.state<MapFigureState>(find.byKey(const ValueKey('rv3-map')));
+      Future<void> waitFor(bool Function() done) async {
+        for (var i = 0; i < 100 && !done(); i++) {
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 10)),
+          );
+          await tester.pump();
+        }
+      }
+
+      kColorIntensity = 1;
+      await tester.pumpWidget(figure());
+      await waitFor(() => state().image != null);
+      final first = state().image;
+      expect(first, isNotNull);
+      // « Couleurs » changé dans les réglages : l'application se reconstruit.
+      kColorIntensity = 2;
+      await tester.pumpWidget(figure());
+      await waitFor(() => !identical(state().image, first));
+      // Avant RV3 : même image (couleurs d'avant le changement).
+      expect(identical(state().image, first), isFalse);
+      expect(state().image, isNotNull);
       await tester.pumpWidget(const SizedBox());
     });
   });

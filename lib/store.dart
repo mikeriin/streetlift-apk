@@ -73,6 +73,7 @@ part 'program_store.dart';
 part 'safety_store.dart';
 part 'session_adapt_store.dart';
 part 'koach1_store.dart';
+part 'session_day_changes.dart';
 
 /// Charge à la grille du matériel : deux décimales au plus (« 2,5 » ;
 /// « 35 » ; « 36,25 »). Charges du moteur dynamique (et, avant G10, de
@@ -272,6 +273,14 @@ class SessionLog {
   /// AMRAP…), par identifiant de groupe : `rounds` (tours complets),
   /// `extraReps` (répétitions du tour entamé), `elapsed` (s), `completed`.
   Map<String, Map<String, dynamic>> groups;
+
+  /// RV4 (C17.51.5) : changements du jour, par identifiant de la ligne
+  /// écrite (sans `~…`) : exercice remplacé pour cette séance seulement
+  /// (`type: remplace`, `to` : identifiant de la base ou null pour un
+  /// exercice personnel, `name`, `from`) ou ligne retirée
+  /// (`type: retrait`, `reason` : `materiel`, `douleur`, `temps`, `autre`,
+  /// `from`). Le programme écrit n'est jamais modifié.
+  Map<String, Map<String, dynamic>> changes;
   SessionLog({
     this.done = false,
     this.finishedAt,
@@ -280,9 +289,11 @@ class SessionLog {
     Map<String, String>? exerciseNames,
     this.adapt,
     Map<String, Map<String, dynamic>>? groups,
+    Map<String, Map<String, dynamic>>? changes,
   }) : ex = ex ?? {},
        exerciseNames = exerciseNames ?? {},
-       groups = groups ?? {};
+       groups = groups ?? {},
+       changes = changes ?? {};
 
   Map<String, dynamic> toJson() => {
     'done': done,
@@ -292,6 +303,7 @@ class SessionLog {
     'ex': ex.map((k, v) => MapEntry(k, v.toJson())),
     if (adapt != null) 'adapt': adapt,
     if (groups.isNotEmpty) 'groups': groups,
+    if (changes.isNotEmpty) 'changes': changes,
   };
   SessionLog.fromJson(Map<String, dynamic> j)
     : done = j['done'] as bool? ?? false,
@@ -309,6 +321,12 @@ class SessionLog {
       groups = {
         if (j['groups'] is Map)
           for (final e in (j['groups'] as Map).entries)
+            if (e.key is String && e.value is Map)
+              e.key as String: (e.value as Map).cast<String, dynamic>(),
+      },
+      changes = {
+        if (j['changes'] is Map)
+          for (final e in (j['changes'] as Map).entries)
             if (e.key is String && e.value is Map)
               e.key as String: (e.value as Map).cast<String, dynamic>(),
       };

@@ -252,6 +252,141 @@ class KoachVolumeCard extends StatelessWidget {
   }
 }
 
+/// RV4 (C17.52.4) : bilan du jour d'une séance de Koach selon le mode du
+/// profil. Mode assisté : ajustement appliqué et dit, avec « Annuler ».
+/// Mode libre : la séance reste celle de l'écrit, la proposition est dite
+/// au conditionnel avec « Accepter » et « Garder l'écrit » (par défaut
+/// l'écrit). Le choix vaut pour toute la séance, avant la première série ;
+/// ensuite (ou après le choix), une ligne de texte. [slot] : carte d'un
+/// exercice (la ligne de cet exercice) ; null : carte du bilan du jour
+/// (toutes les lignes). La douleur signalée garde sa conduite (sécurité),
+/// quel que soit le mode.
+class KoachBilanCard extends StatefulWidget {
+  final int week;
+  final DayPlan day;
+  final String? slot;
+  final VoidCallback onChanged;
+  const KoachBilanCard({
+    super.key,
+    required this.week,
+    required this.day,
+    this.slot,
+    required this.onChanged,
+  });
+
+  @override
+  State<KoachBilanCard> createState() => _KoachBilanCardState();
+}
+
+class _KoachBilanCardState extends State<KoachBilanCard> {
+  bool _busy = false;
+
+  Future<void> _choose(bool appliquer) async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    final cb = widget.onChanged;
+    try {
+      await store.koachBilanChoose(widget.week, widget.day, appliquer);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+    cb();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final b = store.koachBilan(widget.week, widget.day.j);
+    if (b == null) return const SizedBox.shrink();
+    final k = KTokens.of(context);
+    final slot = widget.slot;
+    final lines = slot == null
+        ? [
+            for (final s in b.lignes.keys)
+              if (store.koachBilanLigne(b, s) case final t?) t,
+          ]
+        : [?store.koachBilanLigne(b, slot)];
+    if (slot != null && lines.isEmpty) return const SizedBox.shrink();
+    final id = slot ?? 'jour';
+    final text = koachTexteBilan(b);
+    final open = b.choix == null && b.modifiable;
+    final body = <Widget>[
+      Text(
+        text,
+        style: (open ? KType.corpsFort : KType.detail).copyWith(
+          color: open ? k.texte : k.texte2,
+        ),
+      ),
+      for (final l in lines)
+        Padding(
+          padding: const EdgeInsets.only(top: KSpacing.s4),
+          child: Text(l, style: KType.detail.copyWith(color: k.texte2)),
+        ),
+    ];
+    if (!open) {
+      return Padding(
+        key: ValueKey('koach-bilan-done-$id'),
+        padding: const EdgeInsets.only(top: KSpacing.s8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: body,
+        ),
+      );
+    }
+    return Padding(
+      key: ValueKey('koach-bilan-$id'),
+      padding: const EdgeInsets.only(top: KSpacing.s8),
+      child: Material(
+        color: k.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: KRadius.menuRadius,
+          side: BorderSide(color: k.filet),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(KSpacing.s12),
+          child: KoachSays(
+            pose: koachPose(
+              b.forme ? KoachUsage.explanation : KoachUsage.proposal,
+            ),
+            koachHeight: KSize.menuIcon + KSpacing.s4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ...body,
+                const SizedBox(height: KSpacing.s8),
+                Wrap(
+                  spacing: KSpacing.s8,
+                  runSpacing: KSpacing.s8,
+                  children: [
+                    if (!b.forme)
+                      KPrimaryButton(
+                        key: ValueKey('koach-bilan-accept-$id'),
+                        label: 'Accepter',
+                        expand: false,
+                        onPressed: _busy ? null : () => _choose(true),
+                      ),
+                    if (b.forme && b.assiste)
+                      KTonalButton(
+                        key: ValueKey('koach-bilan-undo-$id'),
+                        label: 'Annuler',
+                        onPressed: _busy ? null : () => _choose(false),
+                      )
+                    else
+                      KTonalButton(
+                        key: ValueKey('koach-bilan-keep-$id'),
+                        label: 'Garder l’écrit',
+                        onPressed: _busy ? null : () => _choose(false),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// KB2 correction 1 (C17.36) : code d'un choix d'une question du
 /// diagnostic (`{code, texte}` de `Surveillance.questions`, ou le code
 /// lui-même) : chaîne ou entier, c'est lui que `Surveillance.repondre`
