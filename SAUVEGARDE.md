@@ -15,3 +15,7 @@ Session du 23/10/2026, début 04:37 UTC. Branche de travail locale `kb5` (base `
 ## Avancement 07:42 UTC
 - Contrôle complet n°1 (run 39905071701) : contrôles, tests Dart, paquets VERTS ; émulateur : toutes les cibles vertes sauf KB5 (raison cherchée sur l'écran : elle est dans la feuille ⓘ de la carte compacte PR7). Cible corrigée (tap `<id>-instructions`).
 - Contrôle complet n°2 : run 39919503229, commit 51885773, arbre 31cade4f = kb5 72a6cf1f. À sa fin (vert) : publier main (avance rapide de ae9d6e1a si main n'a pas bougé, sinon rebase), build signé, livraison (brouillon dans LIVRAISON_KB5_brouillon.md), ETAT « à valider », page de suivi, notification.
+
+## Avancement 10:40 UTC
+- Contrôle complet n°2 (run 39919503229, arbre 31cade4f) : contrôles, 1 273 tests Dart, mode dev, paquets VERTS ; émulateur : KB5 a et b VERTS (raison lue dans la feuille ⓘ), RV2, RV1c1, RV1, KB4, CU, G*, M* verts ; à partir de KB3 b : « No supported devices found » (perte de la VM). Ces cibles étaient vertes au run 1 (même lib/).
+- Relance des jobs en échec du run 39919503229 demandée à 10:35 UTC (une fois). Captures KB5 du run 2 dans /tmp (non sauvegardées).
