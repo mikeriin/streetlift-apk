@@ -1426,13 +1426,9 @@ extension KoachStore on AppStore {
       reasons: const [],
       // KB5 (X2) : groupes recalés sur les séries de la semaine (tours et
       // durée d'un EMOM au temps), même règle que Koach 1.0.8.
-      groups: koachGroupesDeLaSeance(
-        day.groups,
-        null,
-        [for (final it in day.items) it.toJson().cast<String, Object?>()],
-        const [],
-        items,
-      ).groupes,
+      groups: koachGroupesDeLaSeance(day.groups, null, [
+        for (final it in day.items) it.toJson().cast<String, Object?>(),
+      ], items).groupes,
     );
     final fixed = _fixedConstrain(place, plan);
     return SessionAdapt(
@@ -1797,7 +1793,6 @@ extension KoachStore on AppStore {
       place.day?.groups,
       koachGroupesDeSortie(r['groups']),
       info.items,
-      served,
       items,
     );
     var plan = kc.SessionPlan(
@@ -2589,25 +2584,43 @@ extension KoachStore on AppStore {
       }
     }
     final id = e.catalogId;
+    final slot0 = e.slotId ?? adaptSlotOf(week, j, e.id);
+    // Séries écrites de la ligne (journée écrite du jour).
+    final n = koachJourInfo(
+      week,
+      j,
+    )?.items.where((x) => x['slotId'] == slot0).firstOrNull?['sets'];
+    // KB5 : la baisse de la modulation hebdomadaire (`koach.volume_semaine`)
+    // porte sur une ligne (ses séries écrites) : jamais dite sur une autre
+    // ligne du même exercice (tractions en EMOM et en drop set le jeudi).
     List<Map> pour(Object? raisons) => [
       if (raisons is List)
         for (final r in raisons)
-          if (r is Map && _koachRaisonDe(r, id)) r,
+          if (r is Map &&
+              _koachRaisonDe(r, id) &&
+              (r['code'] != 'koach.volume_semaine' ||
+                  n == null ||
+                  (r['params'] as Map?)?['ecrites'] == n))
+            r,
     ];
     // KB3 : ligne au départ chronométré servie telle qu'écrite (PR8, nombre
     // de séries fixé par le programme) que le retour gradué de Koach 1.0.6
-    // réduit : la carte garde les séries écrites et le dit.
-    final slot0 = e.slotId ?? adaptSlotOf(week, j, e.id);
+    // réduit : la carte garde les séries écrites et le dit. KB5 : de même
+    // pour la baisse de la modulation hebdomadaire.
     if (adaptAsWritten(week, slot0)) {
-      final n = koachJourInfo(
-        week,
-        j,
-      )?.items.where((x) => x['slotId'] == slot0).firstOrNull?['sets'];
       for (final r in [...pour(st['raisons']), ...pour(st['ouverture'])]) {
         // La raison de cette ligne (séries écrites de la ligne), pas celle
         // d'une autre ligne du même exercice.
-        if ((r['params'] as Map?)?['ecrites'] != n) continue;
-        final t = koachTexteReduitEcrit(r);
+        final p = r['params'] as Map?;
+        if (p?['ecrites'] != n) continue;
+        final t = r['code'] == 'koach.volume_semaine'
+            ? (p?['series'] is num && n is num
+                  ? koachTexteEcartEcrit(
+                      (p!['series'] as num).round(),
+                      n.round(),
+                    )
+                  : null)
+            : koachTexteReduitEcrit(r);
         if (t != null) return t;
       }
       // KB4 : séries servies par Koach différentes de l'écrit (1.0.7 les
@@ -2620,15 +2633,22 @@ extension KoachStore on AppStore {
         if (t != null) return t;
       }
     }
+    // KB5 : une raison de la modulation n'est pas dite telle quelle sur une
+    // ligne servie telle qu'écrite (elle garde ses séries écrites).
+    final pr8 = adaptAsWritten(week, slot0);
     // KB3 : raison la plus importante d'abord (ordre du contrat), sans
     // dépendre de l'ordre rendu par le moteur ; à défaut, raison de
     // structure de l'ouverture (séries réduites par le retour gradué,
     // tenue raccourcie, séance bornée), que `plan(serie)` efface.
-    var choix = koachTrierRaisons(pour(st['raisons']));
+    bool dite(Map r) => !pr8 || r['code'] != 'koach.volume_semaine';
+    var choix = koachTrierRaisons([
+      for (final r in pour(st['raisons']))
+        if (dite(r)) r,
+    ]);
     if (choix.isEmpty) {
       choix = koachTrierRaisons([
         for (final r in pour(st['ouverture']))
-          if (kKoachRaisonsDeSeance.contains(r['code'])) r,
+          if (kKoachRaisonsDeSeance.contains(r['code']) && dite(r)) r,
       ]);
     }
     if (choix.isEmpty) return null;

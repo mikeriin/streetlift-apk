@@ -33,6 +33,7 @@ import 'package:streetlift_tracker/koach1/koach1_widgets.dart'
     show debugResetKoachTakeoverWait;
 import 'package:streetlift_tracker/koach1/koach_groupes.dart';
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
+import 'package:streetlift_tracker/models.dart' show Exercise;
 import 'package:streetlift_tracker/store.dart';
 
 import 'kb2c1_fixtures.dart';
@@ -353,7 +354,6 @@ void main() {
         'restSeconds': 30,
         'groupId': 'g1',
       };
-      final servi = {...w, 'sets': 6};
       final ligneEcrite = kc.ExercisePrescription.fromJson({
         ...w,
         'toCalibrate': false,
@@ -361,30 +361,25 @@ void main() {
         'reasons': <Object?>[],
       });
       // Servie telle qu'écrite (8) : groupe recalé à 8 tours.
-      final a = koachGroupesDeLaSeance([ecrit], [moteur], [w], [servi], [
-        ligneEcrite,
-      ]);
+      final a = koachGroupesDeLaSeance([ecrit], [moteur], [w], [ligneEcrite]);
       expect(a.groupes!.single.rounds, 8);
       expect(a.recales, ['g1']);
       // Servie par Koach (6) : le groupe du moteur.
-      final b = koachGroupesDeLaSeance([ecrit], [moteur], [w], [servi], [
-        ligneEcrite.copyWith(sets: 6),
-      ]);
+      final b = koachGroupesDeLaSeance(
+        [ecrit],
+        [moteur],
+        [w],
+        [ligneEcrite.copyWith(sets: 6)],
+      );
       expect(identical(b.groupes!.single, moteur), isTrue);
       expect(b.recales, isEmpty);
       // Groupe sans membre servi : plus déclaré ; sans groupes écrits : rien.
       expect(
-        koachGroupesDeLaSeance(
-          [ecrit],
-          [moteur],
-          [w],
-          [servi],
-          const [],
-        ).groupes,
+        koachGroupesDeLaSeance([ecrit], [moteur], [w], const []).groupes,
         isEmpty,
       );
       expect(
-        koachGroupesDeLaSeance(null, null, [w], [servi], [ligneEcrite]).groupes,
+        koachGroupesDeLaSeance(null, null, [w], [ligneEcrite]).groupes,
         isNull,
       );
     });
@@ -472,8 +467,8 @@ void main() {
       final t = texteRaisonKoach(r, nomExercice: (_) => 'Rowing barre');
       expect(
         t,
-        'Cette semaine, je te propose 2 séries sur Rowing barre au lieu des '
-        '3 écrites : je répartis l’effort de la semaine d’après ta '
+        'Cette semaine, je te propose 2 séries sur « Rowing barre » au lieu '
+        'des 3 écrites : je répartis l’effort de la semaine d’après ta '
         'récupération prévue.',
       );
       expect(kKoachRaisonsDeSeance, contains('koach.volume_semaine'));
@@ -831,9 +826,8 @@ void main() {
       final libre = shown.firstWhere(
         (x) => x.engine && !app.adaptAsWritten(15, x.slotId),
       );
-      final pr8 = shown.firstWhere(
-        (x) => x.engine && app.adaptAsWritten(15, x.slotId),
-      );
+      String? slotDe(Exercise x) => x.slotId ?? app.adaptSlotOf(15, 1, x.id);
+      final pr8 = shown.firstWhere((x) => app.adaptAsWritten(15, slotDe(x)));
       final ecrites = {
         for (final x in app.koachJourInfo(15, 1)!.items)
           '${x['slotId']}': (x['sets'] as num).round(),
@@ -848,7 +842,7 @@ void main() {
         },
       };
       final nLibre = ecrites[libre.slotId]!;
-      final nPr8 = ecrites[pr8.slotId]!;
+      final nPr8 = ecrites[slotDe(pr8)]!;
       final rLibre = raison(libre.catalogId!, nLibre - 1, nLibre);
       final rPr8 = raison(pr8.catalogId!, nPr8 - 1, nPr8);
       void poser(List<Json> raisons, List<Json> ouverture) {
@@ -877,6 +871,12 @@ void main() {
       poser(const [], [rLibre, rPr8]);
       expect(app.koachReasonLine(15, 1, libre), texte(rLibre));
       expect(app.koachSessionReasons(15, 1, max: 9), contains(texte(rLibre)));
+      // Ligne au départ chronométré servie telle qu'écrite : sa carte dit
+      // ce que Koach aurait fait, la ligne garde ses séries écrites.
+      expect(
+        app.koachReasonLine(15, 1, pr8),
+        koachTexteEcartEcrit(nPr8 - 1, nPr8),
+      );
       _sonde('volume_semaine', {
         'libre': libre.catalogId,
         'pr8': pr8.catalogId,

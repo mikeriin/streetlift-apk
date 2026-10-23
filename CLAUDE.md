@@ -111,3 +111,7 @@ committer les fichiers déchiffrés.
   servie telle qu'écrite, Koach actif comme arrêté (RV1) · `3×30 s` tenues ·
   `10 min` durée · `1 × maximum` test · `Montée en singles puis 3
   tentatives` test de 1RM.
+- Groupes servis par Koach (KB5, Koach 1.0.8) : les `GroupSpec` écrits
+  passent à `plan(seance)`, tours et durée d'un EMOM au temps suivent les
+  lignes servies (`groups` de la sortie ; une ligne remplacée par
+  l'application fait recaler son groupe par `groupesServis`).
