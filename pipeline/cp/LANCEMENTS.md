@@ -446,3 +446,7 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 - Prompt : `prompts/KB5.txt`. Paquets : `etiquettes/kalis_adapt-v1.0.7` et `etiquettes/kalis_plan-v0.4.3` (`moteurs` 25d5bfe6).
 - Modulation hebdomadaire sous l'écrit (X8) : question posée au propriétaire le 22/10 ; s'il répond avant la fin du lot, sa réponse est ajoutée ici. Sans réponse : raison affichée (C17.48.4).
+- **Lancé le 23/10/2026 vers 02:30 UTC.** Base `main` ae9d6e1a (dev7.6.0, RV2, publié par le pilotage en avance rapide depuis le candidat : la session RV2 n'a pas pu publier, garde de l'environnement ; contrôle 39855154714 : chaque cible émulateur verte dans au moins un des deux essais sur le même arbre, pertes de VM seulement). Build signé de dev7.6.0 en cours au lancement : s'il échoue, le pilotage le dira dans cette section.
+- Modulation hebdomadaire (X8) : pas de réponse du propriétaire au lancement → raison affichée (C17.48.4).
+- Si la publication sur `main` est refusée par l'environnement (comme pour RV2) : candidat sur `cp-sauvegardes/KB5-candidat`, livraison et ETAT « à valider », le pilotage publie.
+
