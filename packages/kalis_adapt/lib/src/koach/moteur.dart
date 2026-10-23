@@ -391,6 +391,14 @@ class Koach {
         dictOuVide(c['roles']),
       );
       raisons = List<Json>.of(seances.raisons);
+      if (c['groups'] != null) {
+        // 1.0.8 (KM6, X2) : groupes de la séance recalés sur le servi.
+        return <String, Object?>{
+          'items': items,
+          'raisons': raisons,
+          'groups': groupesServis(c['groups'], c['items'], items),
+        };
+      }
       return <String, Object?>{'items': items, 'raisons': raisons};
     }
     if (h == 'serie') {

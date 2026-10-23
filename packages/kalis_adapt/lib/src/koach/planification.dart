@@ -170,6 +170,16 @@ class TablePlanification {
   };
 }
 
+/// 1.0.8 : techniques dont le nombre de lignes est fixé par leurs paliers
+/// ou leur durée (`TECHNIQUES_LIGNES_FIXES` de la référence).
+const List<String> _plTechniquesLignesFixes = [
+  'wave',
+  'pyramid',
+  'ladder',
+  'density',
+  'for_time',
+];
+
 /// Extension de planification : replanification hebdomadaire.
 class Planification extends Extension implements AvecItemsDuJour {
   /// [validateur] : fonction(blocs) → liste de constats de sécurité
@@ -1565,6 +1575,14 @@ class Planification extends Extension implements AvecItemsDuJour {
           out[(jour, item['slotId'] as String)] = (n, 0.0);
           continue;
         }
+        if (_plTechniquesLignesFixes.contains(
+          dictOuVide(item['technique'])['kind'],
+        )) {
+          // 1.0.8 (KM6, relecture) : une technique qui fixe le nombre de
+          // lignes garde ses séries ; seule l'intensité est modulée.
+          out[(jour, item['slotId'] as String)] = (n, dbl(mod['intensite']));
+          continue;
+        }
         final ex = item['exerciseId'] as String;
         final voulu = n * facteurExercice(ex, mod) + (reste[ex] ?? 0.0);
         var servi = (voulu + 0.5).floor();
@@ -1646,7 +1664,9 @@ class Planification extends Extension implements AvecItemsDuJour {
   }
 
   /// Items du jour modulés (copie) : `sets` changé, `koachIntensite`
-  /// posé (lu par la prescription de séance).
+  /// posé (lu par la prescription de séance) ; `koachVolume` (séries
+  /// servies − écrites) et, quand la modulation change les séries,
+  /// `koachModule` (même écart, propre à la modulation : 1.0.8).
   List<Json> appliquer(int semaine, int jour, List<Json> items) {
     final mods = itemsModules(semaine);
     final out = <Json>[];
@@ -1667,7 +1687,15 @@ class Planification extends Extension implements AvecItemsDuJour {
       if (ecart != 0.0) {
         it['koachIntensite'] = ecart;
       }
-      it['koachVolume'] = n - _plSeries(item);
+      // (Cumulé avec un `koachVolume` déjà posé : l'écrit du programme reste
+      // `sets − koachVolume`.)
+      it['koachVolume'] = ent(ou(item['koachVolume'], 0)) + n - _plSeries(item);
+      if (n != _plSeries(item)) {
+        // 1.0.8 (KM6, X8) : séries ajoutées (> 0) ou retirées (< 0) par la
+        // modulation de la semaine ; une baisse sous l'écrit est dite par la
+        // séance (`koach.volume_semaine`).
+        it['koachModule'] = n - _plSeries(item);
+      }
       out.add(it);
     }
     return out;

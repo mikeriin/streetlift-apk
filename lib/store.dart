@@ -28,6 +28,7 @@ import 'game.dart';
 import 'journal_adapter.dart';
 import 'kit/format.dart' show estimateLabelText, formatDecimal;
 import 'koach_data.dart';
+import 'koach1/koach_groupes.dart';
 import 'koach1/koach_journal.dart';
 import 'koach1/koach_moteur.dart';
 import 'koach1/koach_rejeu.dart';

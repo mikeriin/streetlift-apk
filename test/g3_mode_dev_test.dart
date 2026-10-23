@@ -17,8 +17,8 @@ void main() {
   group('build de développement (G3)', skip: !kDevBuild, () {
     tearDown(() => SessionSpace.devActive = false);
 
-    test('version affichée : « dev7.6.0 » (suite de la revue, RV2)', () {
-      expect(kAppVersion, 'dev7.6.0');
+    test('version affichée : « dev7.7.0 » (Koach 1.0.8, KB5)', () {
+      expect(kAppVersion, 'dev7.7.0');
     });
 
     test('session de test : même base d\'exercices, session personnelle '

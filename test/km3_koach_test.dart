@@ -134,7 +134,7 @@ void main() {
   group('assets et paquet', () {
     test('assets de Koach = copies à l’octet du paquet, SHA-256 attendus', () {
       for (final name in const [
-        'koach_params_1_0_7.json',
+        'koach_params_1_0_8.json',
         'vecteurs_qualites_v1.json',
       ]) {
         final a = File('assets/koach/$name').readAsBytesSync();
@@ -145,7 +145,7 @@ void main() {
       }
       expect(
         sha256Hex(
-          File('assets/koach/koach_params_1_0_7.json').readAsBytesSync(),
+          File('assets/koach/koach_params_1_0_8.json').readAsBytesSync(),
         ),
         ko.koachParametresSha256,
       );
@@ -156,7 +156,7 @@ void main() {
         ko.koachFichesSha256,
       );
       final res = KoachRessources.lire(
-        File('assets/koach/koach_params_1_0_7.json').readAsStringSync(),
+        File('assets/koach/koach_params_1_0_8.json').readAsStringSync(),
         File('assets/koach/vecteurs_qualites_v1.json').readAsStringSync(),
       );
       expect(res.fiches.length, 1039);
@@ -165,12 +165,12 @@ void main() {
     });
 
     test(
-      'pubspec : assets de Koach déclarés, version 7.6.0 (Koach 1.0.7, RV2)',
+      'pubspec : assets de Koach déclarés, version 7.7.0 (Koach 1.0.8, KB5)',
       () {
         final p = File('pubspec.yaml').readAsStringSync();
-        expect(p, contains('- assets/koach/koach_params_1_0_7.json'));
+        expect(p, contains('- assets/koach/koach_params_1_0_8.json'));
         expect(p, contains('- assets/koach/vecteurs_qualites_v1.json'));
-        expect(p, contains('version: 7.6.0+'));
+        expect(p, contains('version: 7.7.0+'));
       },
     );
   });
@@ -237,7 +237,7 @@ void main() {
         // Rejeu exact : même journal (aller-retour JSON) = même état.
         final live = app.koachLive!;
         final res = KoachRessources.lire(
-          File('assets/koach/koach_params_1_0_7.json').readAsStringSync(),
+          File('assets/koach/koach_params_1_0_8.json').readAsStringSync(),
           File('assets/koach/vecteurs_qualites_v1.json').readAsStringSync(),
         );
         final fab = KoachFabrique(res, e.snap!, app.content.catalog!);

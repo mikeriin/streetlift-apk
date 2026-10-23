@@ -178,10 +178,10 @@ void main() {
   group('paquets', () {
     test('kalis_adapt 1.0.6 (KB4) et kalis_plan 0.4.2 : copies à l’octet de '
         'leurs étiquettes ; kalis_core 0.4.4 inchangé', () {
-      expect(ka.kalisAdaptVersion, '1.0.6');
-      expect(kp.kalisPlanVersion, '0.4.2');
+      expect(ka.kalisAdaptVersion, '1.0.7');
+      expect(kp.kalisPlanVersion, '0.4.3');
       expect(kc.kalisCoreVersion, '0.4.4');
-      expect(ko.koachVersion, '1.0.7-ref.1');
+      expect(ko.koachVersion, '1.0.8-ref.1');
       // Empreintes calculées sur `etiquettes/kalis_adapt-v1.0.6` (KB4,
       // `moteurs` 737d528d) et `etiquettes/kalis_plan-v0.4.2` (bcb8422b).
       // (KB1, `etiquettes/kalis_adapt-v1.0.4` : 55 fichiers, 06c8f971… ;
@@ -227,31 +227,31 @@ void main() {
     test('asset de paramètres 1.0.7 (KB4) : SHA-256, déclaration, chemin '
         'lu', () {
       const sha =
-          '2f055c5181743089afd0c3602bc270f77b01063ebc1bab32b293c81c6816f42c';
-      expect(kKoachParamsAsset, 'assets/koach/koach_params_1_0_7.json');
+          '9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1';
+      expect(kKoachParamsAsset, 'assets/koach/koach_params_1_0_8.json');
       final a = File(kKoachParamsAsset).readAsBytesSync();
       expect(sha256Hex(a), sha);
       expect(ko.koachParametresSha256, sha);
       expect(
         a,
         File(
-          'packages/kalis_adapt/assets/koach/koach_params_1_0_7.json',
+          'packages/kalis_adapt/assets/koach/koach_params_1_0_8.json',
         ).readAsBytesSync(),
       );
       for (final v in const ['1_0_3', '1_0_5', '1_0_6']) {
         expect(File('assets/koach/koach_params_$v.json').existsSync(), false);
       }
       final p = File('pubspec.yaml').readAsStringSync();
-      expect(p, contains('- assets/koach/koach_params_1_0_7.json'));
+      expect(p, contains('- assets/koach/koach_params_1_0_8.json'));
       expect(p, isNot(contains('koach_params_1_0_3')));
       expect(p, isNot(contains('koach_params_1_0_5')));
       expect(p, isNot(contains('koach_params_1_0_6')));
-      expect(p, contains('version: 7.6.0+'));
+      expect(p, contains('version: 7.7.0+'));
       final res = KoachRessources.lire(
         File(kKoachParamsAsset).readAsStringSync(),
         File(kKoachFichesAsset).readAsStringSync(),
       );
-      expect(res.versionParametres, '1.0.7-ref.1');
+      expect(res.versionParametres, '1.0.8-ref.1');
     });
 
     test('deux textes de raison de 1.0.5 (retour progressif)', () {
@@ -301,8 +301,8 @@ void main() {
       await _owner(app);
       final exp = (await app.koachJournalExport())!;
       expect(exp['type'], 'journal_moteur');
-      expect(exp['version_moteur'], '1.0.7-ref.1');
-      expect(exp['version_parametres'], '1.0.7-ref.1');
+      expect(exp['version_moteur'], '1.0.8-ref.1');
+      expect(exp['version_parametres'], '1.0.8-ref.1');
       expect(exp['sha256_parametres'], ko.koachParametresSha256);
       expect(exp.containsKey('prise_de_main'), isFalse);
       final seances = exp['seances'] as List;
@@ -335,10 +335,10 @@ void main() {
       () async {
         await activate();
         final snap = app.koachEngine.snap!;
-        expect(snap.versionMoteur, '1.0.7-ref.1');
-        expect(snap.versionParametres, '1.0.7-ref.1');
+        expect(snap.versionMoteur, '1.0.8-ref.1');
+        expect(snap.versionParametres, '1.0.8-ref.1');
         expect(snap.shaParametres, ko.koachParametresSha256);
-        expect(app.koachLive!.params['version'], '1.0.7-ref.1');
+        expect(app.koachLive!.params['version'], '1.0.8-ref.1');
         expect(app.koachEngine.fromWeek, 15);
       },
     );
@@ -365,7 +365,7 @@ void main() {
       expect(jsonEncode(e.journal), journal);
       expect(jsonEncode([...e.versed]..sort()), versed);
       final live = app.koachLive!;
-      expect(live.params['version'], '1.0.7-ref.1');
+      expect(live.params['version'], '1.0.8-ref.1');
       // Rejeu exact par 1.0.5 : même journal = même état.
       final res = KoachRessources.lire(
         File(kKoachParamsAsset).readAsStringSync(),
@@ -382,7 +382,7 @@ void main() {
         jsonEncode(live.planification!.etat()),
       );
       final exp = (await app.koachJournalExport())!;
-      expect(exp['version_moteur'], '1.0.7-ref.1');
+      expect(exp['version_moteur'], '1.0.8-ref.1');
       expect(exp['sha256_parametres'], ko.koachParametresSha256);
       expect((exp['prise_de_main'] as Map)['version_moteur'], '1.0.3-ref.1');
       expect(jsonEncode(exp['journal']), journal);

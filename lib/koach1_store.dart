@@ -169,11 +169,15 @@ String koachTexteEcrite(String? cause) => switch (cause) {
 };
 
 /// KB3 : raisons de structure de la séance, dites sur leur carte toute la
-/// séance (gardées de l'ouverture).
+/// séance (gardées de l'ouverture). KB5 (Koach 1.0.8, X8) : la baisse de
+/// la modulation hebdomadaire (`koach.volume_semaine`) en est une : dite
+/// en tête de séance et sur la carte de la ligne, jamais une coupe pour
+/// [koachGardeSeance] (la ligne reste servie, au moins une série).
 const kKoachRaisonsDeSeance = {
   'koach.retour_gradue',
   'koach.tendon',
   'koach.seance_bornee',
+  'koach.volume_semaine',
 };
 
 /// KB3 (Koach 1.0.6 change l'ordre de ses raisons) : raisons triées dans
@@ -1401,7 +1405,11 @@ extension KoachStore on AppStore {
           m.$1 != it.sets &&
           m.$1 > 0 &&
           !adaptAsWritten(week, it.slotId)) {
-        next = it.copyWith(sets: m.$1, setTargets: null);
+        // KB5 (X3) : technique recomptée sur les séries de la semaine
+        // (intervalles d'un EMOM), comme la séance servie par Koach 1.0.8.
+        next = koachTechniqueCoherente(
+          it.copyWith(sets: m.$1, setTargets: null),
+        );
       }
       // Correctif 20/10/2026 : accessoires servis en plage (aperçu comme
       // séance ouverte).
@@ -1416,7 +1424,15 @@ extension KoachStore on AppStore {
       adjustments: const [],
       confidence: 1,
       reasons: const [],
-      groups: day.groups,
+      // KB5 (X2) : groupes recalés sur les séries de la semaine (tours et
+      // durée d'un EMOM au temps), même règle que Koach 1.0.8.
+      groups: koachGroupesDeLaSeance(
+        day.groups,
+        null,
+        [for (final it in day.items) it.toJson().cast<String, Object?>()],
+        const [],
+        items,
+      ).groupes,
     );
     final fixed = _fixedConstrain(place, plan);
     return SessionAdapt(
@@ -1661,6 +1677,13 @@ extension KoachStore on AppStore {
                 'grilles': grilles,
                 'zones': zones,
                 'roles': info.roles,
+                // KB5 (Koach 1.0.8, X2) : groupes de la séance écrite,
+                // rendus recalés sur les lignes servies (`groups`).
+                if (place.day?.groups?.isNotEmpty ?? false)
+                  'groups': [
+                    for (final g in place.day!.groups!)
+                      g.toJson().cast<String, Object?>(),
+                  ],
               })!
               as Json;
     } catch (_) {
@@ -1765,6 +1788,18 @@ extension KoachStore on AppStore {
       final p = apercu[slot] ?? ecritesDuJour[slot];
       if (p != null) items.add(p);
     }
+    // KB5 (Koach 1.0.8, X2) : groupes recalés rendus par Koach ; un groupe
+    // dont une ligne est remplacée par l'application (PR8, intervalles tels
+    // qu'écrits, garde) est recalé par la même règle sur les lignes
+    // servies : chrono, tours et lignes d'accord. Un groupe sans membre
+    // servi n'est plus déclaré (KB3).
+    final groupes = koachGroupesDeLaSeance(
+      place.day?.groups,
+      koachGroupesDeSortie(r['groups']),
+      info.items,
+      served,
+      items,
+    );
     var plan = kc.SessionPlan(
       date: today,
       blockId: place.blockId,
@@ -1774,11 +1809,7 @@ extension KoachStore on AppStore {
       adjustments: const [],
       confidence: 1,
       reasons: const [],
-      // KB3 : un groupe dont tous les membres sont retirés (accessoires
-      // coupés par Koach 1.0.6) n'est plus déclaré.
-      groups: place.day?.groups
-          ?.where((g) => items.any((x) => x.groupId == g.groupId))
-          .toList(),
+      groups: groupes.groupes,
     );
     if (plan.validate().isNotEmpty) {
       plan = plan.copyWith(groups: null);
@@ -1813,6 +1844,9 @@ extension KoachStore on AppStore {
         // telles qu'écrites (avec 1.0.7, plus jamais pour le volume).
         if (gardees.isNotEmpty)
           'garde': [for (final x in gardees) '${x['slotId']}'],
+        // KB5 : diagnostic du mode dev : groupes recalés par l'application
+        // (ligne remplacée), les autres tels que Koach les rend.
+        if (groupes.recales.isNotEmpty) 'groupesRecales': groupes.recales,
         if (retraits.isNotEmpty) 'retraits': retraits,
         'cibles': <String, Object?>{},
         'versed': <Object?>[],
@@ -1869,10 +1903,13 @@ extension KoachStore on AppStore {
               ? (e.value as num).round()
               : e.value,
     }..['reasons'] = const <Object?>[];
+    // KB5 (X3) : Koach 1.0.8 rend une technique cohérente avec `sets` ;
+    // `koachTechniqueCoherente` reste une sécurité (jamais une séance
+    // refusée pour des intervalles d'EMOM qui ne tombent pas juste).
     for (final test in const [true, false]) {
       try {
         final p = kc.ExercisePrescription.fromJson(clean(test: test));
-        final q = p.copyWith(setTargets: null);
+        final q = koachTechniqueCoherente(p.copyWith(setTargets: null));
         if (q.validate().isEmpty) return q;
       } catch (_) {}
     }
@@ -1881,7 +1918,9 @@ extension KoachStore on AppStore {
       try {
         final p = kc.ExercisePrescription.fromJson(w);
         final n = (it['sets'] as num?)?.round() ?? p.sets;
-        return p.copyWith(sets: n < 1 ? 1 : n, setTargets: null);
+        return koachTechniqueCoherente(
+          p.copyWith(sets: n < 1 ? 1 : n, setTargets: null),
+        );
       } catch (_) {}
     }
     return null;
@@ -2653,9 +2692,13 @@ extension KoachStore on AppStore {
         if (adaptAsWritten(week, '${x['slotId']}'))
           '${x['exerciseId']}|${x['sets']}',
     };
+    // KB5 : la baisse de la modulation hebdomadaire d'une ligne PR8
+    // (`koach.volume_semaine`) non plus : la ligne garde ses séries
+    // écrites, sa carte dit ce que Koach aurait fait.
     raisons.removeWhere((r) {
       final p = r['params'];
-      return koachTexteReduitEcrit(r) != null &&
+      return (koachTexteReduitEcrit(r) != null ||
+              r['code'] == 'koach.volume_semaine') &&
           p is Map &&
           ecritsPr8.contains('${p['exercice']}|${p['ecrites']}');
     });

@@ -182,7 +182,7 @@ void main() {
         .evaluate()
         .isNotEmpty;
     out['versions_1_0_5'] = find
-        .textContaining('1.0.7-ref.1')
+        .textContaining('1.0.8-ref.1')
         .evaluate()
         .isNotEmpty;
     await shot(name);
@@ -401,8 +401,8 @@ void main() {
     expect(perso['inspecteur'], isTrue);
     expect(perso['fichier'], 'koach_journal_moteur.json');
     expect(perso['type'], 'journal_moteur');
-    expect(perso['version_moteur'], '1.0.7-ref.1');
-    expect(perso['version_parametres'], '1.0.7-ref.1');
+    expect(perso['version_moteur'], '1.0.8-ref.1');
+    expect(perso['version_parametres'], '1.0.8-ref.1');
     expect(perso['seances'] as int, greaterThan(0));
     expect(releve['dev_actif'], isTrue);
     expect(releve['profil'], isTrue);
@@ -414,12 +414,12 @@ void main() {
     );
     expect(releve['dev_import'], isTrue);
     expect(releve['dev_koach_actif'], isTrue);
-    expect(releve['dev_version_moteur'], '1.0.7-ref.1');
-    expect(releve['dev_parametres'], '1.0.7-ref.1');
+    expect(releve['dev_version_moteur'], '1.0.8-ref.1');
+    expect(releve['dev_parametres'], '1.0.8-ref.1');
     final dev = releve['dev_inspecteur']! as Map;
     expect(dev['versions_1_0_5'], isTrue);
     expect(dev['type'], 'journal_moteur');
-    expect(dev['version_moteur'], '1.0.7-ref.1');
+    expect(dev['version_moteur'], '1.0.8-ref.1');
     expect(dev['seances'] as int, greaterThan(0));
     expect(releve['retour_perso'], isTrue);
     expect(releve['perso_intacte'], isTrue);
