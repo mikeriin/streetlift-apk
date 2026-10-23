@@ -3206,7 +3206,19 @@ class AppStore extends ChangeNotifier {
       final secs = ev.group(2) != null
           ? int.parse(ev.group(2)!)
           : 60 * (ev.group(1)!.isEmpty ? 1 : int.parse(ev.group(1)!));
-      if (secs >= 15 && secs <= 600) return LogSpec('reps', every: secs);
+      if (secs >= 15 && secs <= 600) {
+        // RV4 : tenue au départ chronométré (« 6×30 s · E2MOM » : exercice
+        // remplacé pour aujourd'hui par une tenue) : secondes par série.
+        final h = RegExp(r'^\d+\s*[×x]\s*(\d+)(?:-(\d+))?\s*s\b').firstMatch(low);
+        if (h != null) {
+          return LogSpec(
+            'hold',
+            seconds: int.parse(h.group(2) ?? h.group(1)!),
+            every: secs,
+          );
+        }
+        return LogSpec('reps', every: secs);
+      }
     }
     final drop = _dropSet.firstMatch(low);
     if (drop != null) {
