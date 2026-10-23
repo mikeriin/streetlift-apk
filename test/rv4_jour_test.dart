@@ -342,6 +342,10 @@ void main() {
       final dip = ex(5, 'DIP LESTÉ');
       app.dayReplace(15, shown(5), dip, to: _hspu, name: 'HSPU');
       app.dayRemove(15, shown(5), ex(5, 'FACE PULLS'), 'douleur');
+      // Fermeture de la séance sans série : les changements du jour ne sont
+      // pas une simple consultation (gardés).
+      app.forgetConsultation(15, 5);
+      expect(app.dayChanges(15, 5), hasLength(2));
       await app.flush();
       final out1 = app.exportAll();
       final doc = jsonDecode(out1) as Map<String, dynamic>;
@@ -580,7 +584,8 @@ void main() {
             findsNothing,
           );
           final row = find.byKey(const ValueKey('replace-$_hspu'));
-          await tester.scrollUntilVisible(row, 200);
+          await tester.ensureVisible(row);
+          await tester.pumpAndSettle();
           await tester.tap(row);
         },
       );

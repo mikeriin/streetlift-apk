@@ -2173,7 +2173,12 @@ extension KoachStore on AppStore {
     final bilan = autre == null || autre.n0 != n0
         ? null
         : koachBilanLignes(
-            ecritJour,
+            // Une ligne au départ chronométré servie telle qu'écrite (PR8)
+            // ne change jamais avec le bilan : rien à proposer.
+            [
+              for (final w in ecritJour)
+                if (!adaptAsWritten(week, '${w['slotId']}')) w,
+            ],
             garde.servis,
             koachGardeSeance(
               ecritJour,
