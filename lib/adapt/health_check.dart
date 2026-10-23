@@ -28,6 +28,7 @@ import '../athlete_profile.dart'
 import '../koach/koach_bubble.dart';
 import '../koach/koach_explanations.dart';
 import '../koach/koach_view.dart';
+import '../koach1/koach1_widgets.dart' show KoachBilanCard;
 import '../models.dart';
 import '../muscle_map_2d.dart';
 import '../plan/coach_texts.dart'
@@ -331,6 +332,16 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
           // KM3 : ce que Koach dit de la séance servie (renvois, reprise,
           // séance bornée…), textes lisibles.
           ..._koachCard(a),
+          // RV4 (C17.52.4) : bilan du jour selon le mode du profil
+          // (appliqué avec « Annuler », ou proposé avec « Accepter » /
+          // « Garder l'écrit »).
+          if (store.koachBilan(_w, widget.base.j) != null)
+            KoachBilanCard(
+              key: const ValueKey('health-koach-bilan'),
+              week: _w,
+              day: widget.base,
+              onChanged: widget.onChanged,
+            ),
           ..._painStopCard(a),
           ...(!a.asked || _redo ? _question(a) : _answered(a)),
         ]),

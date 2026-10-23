@@ -247,7 +247,7 @@ void main() {
       expect(p, isNot(contains('koach_params_1_0_3')));
       expect(p, isNot(contains('koach_params_1_0_5')));
       expect(p, isNot(contains('koach_params_1_0_6')));
-      expect(p, contains('version: 7.7.1+'));
+      expect(p, contains('version: 7.7.2+'));
       final res = KoachRessources.lire(
         File(kKoachParamsAsset).readAsStringSync(),
         File(kKoachFichesAsset).readAsStringSync(),

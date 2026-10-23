@@ -108,7 +108,7 @@ void main() {
       final pub = File('pubspec.yaml').readAsStringSync();
       expect(pub, contains('- assets/koach/koach_params_1_0_8.json'));
       expect(pub, isNot(contains('koach_params_1_0_7.json')));
-      expect(pub, contains('version: 7.7.1+153'));
+      expect(pub, contains('version: 7.7.2+154'));
       final lock = File('pubspec.lock').readAsStringSync();
       expect(lock, contains('version: "1.0.7"'));
       expect(lock, contains('version: "0.4.3"'));

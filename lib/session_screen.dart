@@ -31,6 +31,7 @@ import 'koach/koach_view.dart' show KoachColors, KoachView;
 import 'timers.dart';
 export 'timers.dart' show TimerCtl;
 import 'kit/kit.dart';
+import 'session_replace_screen.dart';
 import 'koach1/koach1_widgets.dart';
 import 'wellbeing_screens.dart' show SafetyScreen;
 import 'models.dart';
@@ -243,7 +244,8 @@ class _SessionScreenState extends State<SessionScreen> {
       final a = store.sessionAdapt(widget.week.n, widget.day.j);
       if (a != null) return store.adaptDay(widget.week.n, widget.day, a);
     }
-    return widget.day;
+    // RV4 (C17.51.5) : changements du jour (remplacé, retiré).
+    return store.withDayChanges(widget.week.n, widget.day);
   }
 
   List<List<Exercise>> _groups() => store.groups(_day, week: widget.week.n);
@@ -256,6 +258,48 @@ class _SessionScreenState extends State<SessionScreen> {
       if (page > bilanPage) page = bilanPage;
     });
     if (pageCtl.hasClients) pageCtl.jumpToPage(page);
+  }
+
+  /// RV4 (C17.51.5) : exercice remplacé, retiré ou remis pour aujourd'hui :
+  /// pages recalculées ; on reste sur la page de la ligne [key] (ligne
+  /// écrite) quand elle est encore là, sinon au même rang.
+  void _dayChanged(String key) {
+    if (!mounted) return;
+    final rank = page;
+    setState(() {
+      groups = _groups();
+      var target = rank.clamp(0, bilanPage);
+      for (var i = 0; i < nPages; i++) {
+        if (groups[i].any((e) => dayChangeKey(e.id) == key)) {
+          target = koachPages + i;
+        }
+      }
+      page = target;
+    });
+    if (pageCtl.hasClients) pageCtl.jumpToPage(page);
+  }
+
+  /// RV4 (C17.51.5) : « Remettre un exercice retiré » (menu de la séance).
+  Future<void> _restoreRemoved() async {
+    final lines = store.dayRemovedLines(widget.week.n, widget.day.j);
+    if (lines.isEmpty) return;
+    final i = await showKListSheet(
+      context,
+      title: 'Remettre un exercice',
+      summary: 'Retiré pour aujourd’hui ; il revient dans la séance.',
+      items: [
+        for (final l in lines)
+          KListItem(
+            l.name,
+            detail: l.reason,
+            icon: Icons.undo_rounded,
+            state: KListState.todo,
+          ),
+      ],
+    );
+    if (i == null || !mounted) return;
+    store.dayUndo(widget.week.n, widget.day, lines[i].key);
+    _dayChanged(lines[i].key);
   }
 
   @override
@@ -611,6 +655,16 @@ class _SessionScreenState extends State<SessionScreen> {
             ),
           ],
         ],
+        // RV4 (C17.51.5) : lignes retirées pour aujourd'hui, à remettre.
+        if (store.dayRemovedLines(w.n, d.j).isNotEmpty &&
+            !(store.logs[store.sessionKey(w.n, d.j)]?.done ?? false))
+          [
+            const KAction(
+              icon: Icons.undo_rounded,
+              label: 'Remettre un exercice retiré',
+              value: 'restore',
+            ),
+          ],
         [
           // L13 (KT-073) : douleur ou signal d'alerte pendant la séance.
           const KAction(
@@ -659,6 +713,8 @@ class _SessionScreenState extends State<SessionScreen> {
         );
       case 'clear':
         await _confirmClear();
+      case 'restore':
+        await _restoreRemoved();
     }
   }
 
@@ -734,7 +790,9 @@ class _SessionScreenState extends State<SessionScreen> {
                                 // qu'écrite : pages recréées (séries et
                                 // saisies relues dans le journal).
                                 key: ValueKey(
-                                  '${groups[i - koachPages].first.id}|${groups[i - koachPages].length}|${store.setCount(groups[i - koachPages].first)}'
+                                  // RV4 : tous les exercices de la page
+                                  // (un remplaçant recrée la page).
+                                  '${groups[i - koachPages].map((e) => e.id).join('+')}|${store.setCount(groups[i - koachPages].first)}'
                                   '${_writtenAfterStop ? '|écrite' : ''}',
                                 ),
                                 week: w,
@@ -744,6 +802,7 @@ class _SessionScreenState extends State<SessionScreen> {
                                 baseDay: widget.day,
                                 adapt: adaptOn,
                                 onSessionChanged: () => setState(() {}),
+                                onExercisesChanged: _dayChanged,
                               )
                             : _FinishPage(
                                 week: w,
@@ -810,6 +869,10 @@ class SessionExercisePage extends StatefulWidget {
   final DayPlan? baseDay;
   final VoidCallback? onSessionChanged;
 
+  /// RV4 (C17.51.5) : exercice remplacé, retiré ou remis pour aujourd'hui
+  /// (clé de la ligne écrite) : l'écran recalcule ses pages.
+  final void Function(String key)? onExercisesChanged;
+
   /// G9 : séance servie par `kalis_adapt` (charges et cibles du moteur,
   /// conseils après chaque série).
   final bool adapt;
@@ -824,6 +887,7 @@ class SessionExercisePage extends StatefulWidget {
     this.unresolvedIds = const {},
     this.baseDay,
     this.onSessionChanged,
+    this.onExercisesChanged,
     this.adapt = false,
   });
 
@@ -1853,6 +1917,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   }) async {
     FocusManager.instance.primaryFocus?.unfocus();
     final log = logs[k];
+    final ex = widget.exs[k];
+    final changeable =
+        !widget.readOnly &&
+        widget.onExercisesChanged != null &&
+        widget.week.n >= 1 &&
+        store.dayCanChange(widget.week.n, widget.day.j, ex);
+    final change = store.dayChangeOf(widget.week.n, widget.day.j, ex.id);
+    final replacedFrom = change?['type'] == 'remplace'
+        ? store.splitName('${change!['from']}').$1
+        : null;
     final v = await showKActionSheet<String>(
       context,
       title: store.splitName(widget.exs[k].name).$1,
@@ -1884,10 +1958,38 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               value: 'columns',
             ),
         ],
+        // RV4 (C17.51.5) : pour la séance du jour seulement (le programme
+        // écrit ne change pas), tant que la ligne n'a aucune série validée.
+        if (changeable) [
+          const KAction(
+            icon: Icons.swap_horiz_rounded,
+            label: 'Remplacer pour aujourd’hui',
+            value: 'replace',
+          ),
+          if (replacedFrom != null)
+            KAction(
+              icon: Icons.undo_rounded,
+              label: 'Revenir à « $replacedFrom »',
+              value: 'undo',
+            ),
+          const KAction(
+            icon: Icons.remove_circle_outline_rounded,
+            label: 'Retirer pour aujourd’hui',
+            value: 'remove',
+          ),
+        ],
       ],
     );
     if (!mounted || v == null) return;
     switch (v) {
+      case 'replace':
+        await _replaceToday(k);
+      case 'undo':
+        final key = dayChangeKey(widget.exs[k].id);
+        store.dayUndo(widget.week.n, widget.day, key);
+        widget.onExercisesChanged?.call(key);
+      case 'remove':
+        await _removeToday(k);
       case 'previous':
         setState(() {
           if (!_prevOpen.add(k)) _prevOpen.remove(k);
@@ -1899,6 +2001,92 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       case 'columns':
         await _columns(k, sp, showKg, showV);
     }
+  }
+
+  /// RV4 (C17.51.5) : « Remplacer pour aujourd'hui » : propositions (les
+  /// plus proches) ; en mode Libre (mode du profil, C17.51.4), toute la
+  /// base d'exercices et les exercices personnels.
+  Future<void> _replaceToday(int k) async {
+    final e = widget.exs[k];
+    final cb = widget.onExercisesChanged;
+    final pick = await Navigator.push<ReplacePick>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ReplaceExercisePage(
+          fromName: store.splitName(e.name).$1,
+          proposals: store.dayReplaceProposals(e),
+          free: store.adaptMode == 'free',
+        ),
+      ),
+    );
+    if (pick == null || !mounted) return;
+    final key = dayChangeKey(e.id);
+    store.dayReplace(
+      widget.week.n,
+      widget.day,
+      e,
+      to: pick.id,
+      name: pick.name,
+    );
+    cb?.call(key);
+  }
+
+  /// RV4 (C17.51.5) : « Retirer pour aujourd'hui » avec une raison ;
+  /// douleur : la conduite sous douleur habituelle (bilan du jour, section
+  /// Douleur ; sans moteur, la page de santé et sécurité). Annulable.
+  Future<void> _removeToday(int k) async {
+    final e = widget.exs[k];
+    final cb = widget.onExercisesChanged;
+    final reasons = kDayRemovalReasons.entries.toList();
+    final name = store.splitName(e.name).$1;
+    final i = await showKListSheet(
+      context,
+      title: 'Retirer « $name » pour aujourd’hui ?',
+      summary:
+          'La ligne disparaît de la séance du jour ; ton programme ne change '
+          'pas. Tu peux la remettre tant que la séance n’est pas finie.',
+      items: [
+        for (final r in reasons)
+          KListItem(
+            r.value,
+            icon: switch (r.key) {
+              'materiel' => Icons.fitness_center_rounded,
+              'douleur' => Icons.healing_rounded,
+              'temps' => Icons.timer_outlined,
+              _ => Icons.more_horiz_rounded,
+            },
+            state: KListState.todo,
+          ),
+      ],
+    );
+    if (i == null || !mounted) return;
+    final reason = reasons[i].key;
+    final key = dayChangeKey(e.id);
+    final week = widget.week;
+    final day = widget.baseDay ?? widget.day;
+    store.dayRemove(week.n, widget.day, e, reason);
+    if (reason == 'douleur') {
+      if (widget.adapt) {
+        await reportSessionPain(context, week, day);
+      } else {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const SafetyScreen()),
+        );
+      }
+      if (!mounted) return;
+    }
+    showKSnack(
+      context,
+      message: '« $name » retiré pour aujourd’hui.',
+      actionLabel: 'Annuler',
+      onAction: () {
+        store.dayUndo(week.n, day, key);
+        cb?.call(key);
+      },
+      bottom: KBottomInset.of(context),
+    );
+    cb?.call(key);
   }
 
   /// PR7 : départ chronométré commun à tous les exercices de la page (hors
@@ -2808,6 +2996,23 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           day: widget.baseDay ?? widget.day,
           exercise: ex,
           onChanged: () => setState(() => epoch++),
+        ),
+      // RV4 (C17.52.4) : bilan du jour sur la ligne (proposé en mode libre,
+      // appliqué avec « Annuler » en mode assisté ; choix pour la séance).
+      if (!readOnly && widget.adapt && ex.engine)
+        KoachBilanCard(
+          key: ValueKey('koach-bilan-card-${ex.id}-$epoch'),
+          week: widget.week.n,
+          day: widget.baseDay ?? widget.day,
+          slot: ex.slotId ?? store.adaptSlotOf(widget.week.n, widget.day.j, ex.id),
+          onChanged: () {
+            final cb = widget.onExercisesChanged;
+            if (cb != null) {
+              cb(dayChangeKey(ex.id));
+            } else if (mounted) {
+              setState(() => epoch++);
+            }
+          },
         ),
     ];
     // Correctif 20/10/2026 : en séance, une série validée et notée passe

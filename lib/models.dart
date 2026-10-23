@@ -208,7 +208,10 @@ class Exercise {
        engine = false;
 
   /// L11 : copie adaptée pour une séance (séries réduites, exercice
-  /// échangé). Sans argument : identique à [base].
+  /// échangé). Sans argument : identique à [base]. RV4 : exercice remplacé
+  /// pour la séance du jour ([catalogId], [clearCatalog] pour un exercice
+  /// personnel, [intensity], [engine] : faux, la ligne n'a plus de cible du
+  /// moteur).
   Exercise.adapted(
     Exercise base, {
     String? id,
@@ -219,10 +222,14 @@ class Exercise {
     String? why,
     String? role,
     String? exId,
+    String? catalogId,
+    bool clearCatalog = false,
+    String? intensity,
+    bool? engine,
   }) : id = id ?? base.id,
        name = name ?? base.name,
        sets = sets ?? base.sets,
-       intensity = base.intensity,
+       intensity = intensity ?? base.intensity,
        load = load ?? base.load,
        rest = base.rest,
        restSec = base.restSec,
@@ -235,9 +242,9 @@ class Exercise {
        exId = exId ?? base.exId,
        forcedSets = base.forcedSets,
        timer = base.timer,
-       catalogId = base.catalogId,
+       catalogId = clearCatalog ? null : catalogId ?? base.catalogId,
        slotId = base.slotId,
-       engine = base.engine;
+       engine = engine ?? base.engine;
 
   Exercise.fromJson(Map<String, dynamic> j)
     : id = j['id'] as String,

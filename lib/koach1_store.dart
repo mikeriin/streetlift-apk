@@ -308,6 +308,81 @@ String? koachTexteVolumeEntete(KoachVolume v, String nom) {
   return null;
 }
 
+/// RV4 (C17.52.4) : bilan du jour d'une séance de Koach ([AppStore.koachBilan]) :
+/// servie avec la forme du jour ([forme]), choix de l'athlète ([choix] :
+/// `applique`, `ecrit`, null), mode du profil ([assiste]), choix encore
+/// possible ([modifiable] : aucune série validée), lignes changées
+/// ([lignes] : `{slot : {exerciseId, servi, autre}}`).
+typedef KoachBilan = ({
+  bool forme,
+  String? choix,
+  bool assiste,
+  bool modifiable,
+  Map<String, Map> lignes,
+});
+
+/// RV4 : résumé d'une ligne servie [it] (JSON de Koach) pour comparer les
+/// deux lectures du bilan ; `retire` : ligne absente. Pur.
+Map<String, Object?> koachBilanResume(Map? it) {
+  if (it == null) return {'retire': true};
+  int? n(String k) => (it[k] as num?)?.round();
+  final kg = it['startLoadKg'];
+  return {
+    'sets': n('sets'),
+    if (kg is num) 'kg': (kg * 100).round() / 100,
+    if (it['repsLow'] != null) 'repsLow': n('repsLow'),
+    if (it['repsHigh'] != null) 'repsHigh': n('repsHigh'),
+    if (it['secondsLow'] != null) 'secondsLow': n('secondsLow'),
+    if (it['secondsHigh'] != null) 'secondsHigh': n('secondsHigh'),
+  };
+}
+
+/// RV4 (C17.52.4) : lignes écrites [ecrit] que les deux lectures du bilan
+/// servent différemment ([servis] : la lecture servie ; [autres] : l'autre),
+/// `{slot : {exerciseId, servi, autre}}`. Pur (testé).
+Map<String, Object?> koachBilanLignes(
+  List<Json> ecrit,
+  List<Json> servis,
+  List<Json> autres,
+) {
+  Map? of(List<Json> l, String slot) {
+    for (final x in l) {
+      if (x['slotId'] == slot) return x;
+    }
+    return null;
+  }
+
+  final out = <String, Object?>{};
+  for (final w in ecrit) {
+    final slot = '${w['slotId']}';
+    final a = koachBilanResume(of(servis, slot));
+    final b = koachBilanResume(of(autres, slot));
+    if (jsonDeepEquals(a, b)) continue;
+    out[slot] = {'exerciseId': w['exerciseId'], 'servi': a, 'autre': b};
+  }
+  return out;
+}
+
+/// RV4 (C17.52.4) : texte de la carte du bilan du jour [b] (une ligne).
+/// Pur (testé).
+String koachTexteBilan(KoachBilan b) {
+  final n = b.lignes.length;
+  final ex = n == 1 ? 'un exercice' : '$n exercices';
+  if (b.choix == 'ecrit') {
+    return b.assiste
+        ? 'Annulé : séance sans l’effet de ta forme du jour.'
+        : 'Écrit gardé : ta forme du jour ne change rien à la séance.';
+  }
+  if (b.choix == 'applique') {
+    return 'Accepté : Koach ajuste $ex d’après ton bilan du jour.';
+  }
+  if (b.forme) {
+    return 'Ton bilan du jour : Koach ajuste $ex (détail sur leur carte).';
+  }
+  return 'Avec ton bilan du jour, Koach te propose d’ajuster $ex : la '
+      'séance reste celle de l’écrit tant que tu n’acceptes pas.';
+}
+
 /// Section `koachEngine` du document.
 class KoachEngineData {
   /// Première ouverture d'une version avec Koach 1.0 (AAAA-MM-JJ).
@@ -1536,6 +1611,14 @@ extension KoachStore on AppStore {
             for (final e in choix.entries)
               e.key: {'choix': e.value.choix, 'mode': e.value.mode},
           },
+        // RV4 (C17.52.4) : choix de l'athlète sur le bilan du jour, gardé
+        // jusqu'au début (retour au début de la séance après un choix).
+        if ((keep?.koach?['bilan'] as Map?)?['choix'] case final String c)
+          'bilan': {
+            'choix': c,
+            if ((keep!.koach!['bilan'] as Map)['mode'] case final String m)
+              'mode': m,
+          },
       },
     );
   }
@@ -1633,8 +1716,292 @@ extension KoachStore on AppStore {
     if (!koachPending(week, base.j)) return false;
     final sw = Stopwatch()..start();
     await koachRefresh();
-    final ok = koachStartNow(week, base, diagnostic: diagnostic);
+    // RV4 (C17.52.4) : l'autre lecture du bilan du jour (avec ou sans la
+    // forme du jour), calculée sur une copie du moteur : proposée en mode
+    // libre, « Annuler » en mode assisté.
+    final autre = await _koachBilanAutre(week, base, diagnostic);
+    final ok = koachStartNow(week, base, diagnostic: diagnostic, autre: autre);
     if (ok) _koachRt.temps.noter('debut_seance', sw.elapsed);
+    return ok;
+  }
+
+  // ------------------------------------- bilan du jour selon le mode (RV4)
+
+  /// RV4 (C17.52.4) : la séance S[week]·J[j] est servie avec l'effet de la
+  /// forme du jour : choix de l'athlète d'abord (« Accepter » : oui ;
+  /// « Annuler », « Garder l'écrit » : non), sinon le mode du profil
+  /// (assisté : oui ; libre : non, la proposition est dite).
+  bool koachBilanForme(Map? koach) {
+    final c = (koach?['bilan'] as Map?)?['choix'];
+    if (c == 'applique') return true;
+    if (c == 'ecrit') return false;
+    return adaptMode == 'assisted';
+  }
+
+  /// RV4 : bilan versé à Koach pour la séance [a] : complet avec la forme
+  /// du jour ([forme]), sinon ses seuls faits (temps disponible, douleurs :
+  /// la conduite sous douleur ne dépend jamais du mode). Null : aucun.
+  Json? _koachBilanVerse(SessionAdapt a, {required bool forme}) {
+    final c = a.check;
+    if (c == null) return null;
+    final b = forme ? c : SessionAdaptStore.factsOf(c);
+    final j = b?.toJson().cast<String, Object?>();
+    return j == null || j.isEmpty ? null : j;
+  }
+
+  /// RV4 : le bilan de [a] a une forme du jour (réponses autres que le
+  /// temps disponible et les douleurs).
+  bool _koachBilanAForme(SessionAdapt a) {
+    final c = a.check?.toJson();
+    if (c == null || c.isEmpty) return false;
+    final f = SessionAdaptStore.factsOf(a.check!)?.toJson() ?? const {};
+    return !jsonDeepEquals(c, f);
+  }
+
+  /// RV4 : `seance_debut` et demande `plan(seance)` de la séance
+  /// S[week]·J[base.j] avec le bilan [bilan] (lignes retirées pour
+  /// aujourd'hui exclues des items écrits demandés).
+  ({Json debut, Json seance, Json contexte, List<Json> ecrit})?
+  _koachDemandeSeance(int week, DayPlan base, SessionAdapt a, Json? bilan) {
+    final lundi = koachLundi;
+    final place = _koachPlace(week, base.j);
+    final book = _adaptBook();
+    final info = koachJourInfo(week, base.j);
+    if (lundi == null || place == null || book == null || info == null) {
+      return null;
+    }
+    final inputs = _koachSeanceInputs(
+      week,
+      base.j,
+      info,
+      book,
+      check: a.check?.toJson().cast<String, Object?>(),
+      place: a.place,
+      minutes: a.check?.minutesAvailable,
+    );
+    // RV4 (C17.51.5) : une ligne retirée pour aujourd'hui avant le début :
+    // Koach sert la séance sans elle.
+    final retires = dayRemovedSlots(week, base.j);
+    final ecrit = [
+      for (final it in info.items)
+        if (!retires.contains('${it['slotId']}')) it,
+    ];
+    return (
+      debut: {
+        'type': 'seance_debut',
+        'jour': koachJour(lundi, _kToday),
+        'bilan': bilan,
+        'poids_kg': _koachPeseeAu(_kToday),
+        'contexte': inputs.contexte,
+      },
+      seance: {
+        'horizon': 'seance',
+        'items': ecrit,
+        'grilles': inputs.grilles,
+        'zones': inputs.zones,
+        'roles': info.roles,
+        // KB5 (Koach 1.0.8, X2) : groupes de la séance écrite, rendus
+        // recalés sur les lignes servies (`groups`).
+        if (place.day?.groups?.isNotEmpty ?? false)
+          'groups': [
+            for (final g in place.day!.groups!)
+              g.toJson().cast<String, Object?>(),
+          ],
+      },
+      contexte: inputs.contexte,
+      ecrit: ecrit,
+    );
+  }
+
+  /// RV4 (C17.52.4) : autre lecture du bilan de la séance qui commence
+  /// (sans la forme du jour si elle est servie avec, avec sinon), calculée
+  /// sur une copie du moteur ; null : bilan sans forme du jour, moteur pas
+  /// prêt, calcul impossible (la séance est alors servie sans choix).
+  Future<({bool forme, Json sortie, int n0})?> _koachBilanAutre(
+    int week,
+    DayPlan base,
+    Json? diagnostic,
+  ) async {
+    final a = sessionAdaptOf(sessionKey(week, base.j));
+    final k = _koachRt.live;
+    final fab = _koachFab();
+    if (a == null || k == null || fab == null || !_koachBilanAForme(a)) {
+      return null;
+    }
+    final forme = !koachBilanForme(a.koach);
+    final d = _koachDemandeSeance(
+      week,
+      base,
+      a,
+      _koachBilanVerse(a, forme: forme),
+    );
+    if (d == null) return null;
+    final withAnswer = diagnostic != null && koachNeedsDiagnostic;
+    final n0 = k.journal.length;
+    try {
+      final sw = Stopwatch()..start();
+      final r = await koachSeanceAutreCopie(k, fab, [
+        d.debut,
+        if (withAnswer)
+          {'type': 'decision', 'jour': d.debut['jour'], kKoachCleDiag: diagnostic},
+      ], d.seance);
+      _koachRt.temps.noter('bilan_autre', sw.elapsed);
+      return (forme: forme, sortie: r, n0: n0);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// RV4 (C17.52.4) : bilan du jour de la séance S[week]·J[j] servie par
+  /// Koach quand les deux lectures du bilan (avec ou sans la forme du jour)
+  /// la servent différemment ; null sinon (séance pas commencée ou faite,
+  /// bilan sans forme du jour, aucune ligne changée).
+  KoachBilan? koachBilan(int week, int j) {
+    final st = sessionAdapt(week, j)?.koach;
+    if (st == null || st['state'] != 'open') return null;
+    final b = st['bilan'];
+    if (b is! Map) return null;
+    final lignes = b['lignes'];
+    if (lignes is! Map || lignes.isEmpty) return null;
+    final log = logs[sessionKey(week, j)];
+    if (log?.done ?? false) return null;
+    final started =
+        log?.ex.values.any((x) => x.sets.any((s) => s.done)) ?? false;
+    final versed = (st['versed'] as List?)?.isNotEmpty ?? false;
+    return (
+      forme: b['forme'] == true,
+      choix: b['choix'] as String?,
+      assiste: adaptMode == 'assisted',
+      modifiable: !started && !versed && st['n0'] is num,
+      lignes: {
+        for (final e in lignes.entries)
+          if (e.value is Map) '${e.key}': e.value as Map,
+      },
+    );
+  }
+
+  /// RV4 (C17.52.4) : ce que le bilan du jour change pour la ligne [slot]
+  /// (« 3 séries au lieu de 4, 60 kg au lieu de 65 kg »), au conditionnel
+  /// quand il est proposé ; null : rien pour cette ligne.
+  String? koachBilanLigne(KoachBilan b, String? slot) {
+    final l = b.lignes[slot];
+    if (l == null) return null;
+    final servi = (l['servi'] as Map?) ?? const {};
+    final autre = (l['autre'] as Map?) ?? const {};
+    final avec = b.forme ? servi : autre;
+    final sans = b.forme ? autre : servi;
+    final nom = content.byId['${l['exerciseId']}']?.nom;
+    if (avec['retire'] == true) {
+      return '${nom ?? 'Exercice'} : retiré avec ta forme du jour.';
+    }
+    if (sans['retire'] == true) return null;
+    String plage(Map x, String lo, String hi, String u) {
+      final a = x[lo], z = x[hi];
+      if (a == null && z == null) return '';
+      if (a == null || z == null || a == z) return '${a ?? z} $u';
+      return '$a-$z $u';
+    }
+
+    final parts = <String>[];
+    if (avec['sets'] != sans['sets'] &&
+        avec['sets'] is num &&
+        sans['sets'] is num) {
+      parts.add(
+        '${koachSeriesTexte((avec['sets'] as num).round())} au lieu de '
+        '${sans['sets']}',
+      );
+    }
+    if (avec['kg'] != sans['kg'] && avec['kg'] is num && sans['kg'] is num) {
+      parts.add(
+        '${massLabel((avec['kg'] as num).toDouble(), engine: true)} au lieu '
+        'de ${massLabel((sans['kg'] as num).toDouble(), engine: true)}',
+      );
+    }
+    for (final (lo, hi, u) in const [
+      ('repsLow', 'repsHigh', 'reps'),
+      ('secondsLow', 'secondsHigh', 's'),
+    ]) {
+      final x = plage(avec, lo, hi, u), y = plage(sans, lo, hi, u);
+      if (x != y && x.isNotEmpty && y.isNotEmpty) {
+        parts.add('$x au lieu de $y');
+      }
+    }
+    if (parts.isEmpty) return null;
+    return '${nom ?? 'Exercice'} : ${parts.join(', ')}.';
+  }
+
+  /// RV4 (C17.52.4) : choix de l'athlète sur le bilan du jour de la séance
+  /// S[week]·J[base.j] : [appliquer] (« Accepter » en mode libre) ou non
+  /// (« Annuler » en mode assisté, « Garder l'écrit » en mode libre).
+  /// Même service : le choix est seulement noté. Sinon, avant toute série
+  /// validée, la séance repart de son début (journal de Koach ramené au
+  /// `seance_debut` de la séance, puis début réel avec l'autre lecture du
+  /// bilan). Le choix est versé au moteur à la fin de la séance. Faux :
+  /// rien n'a changé.
+  Future<bool> koachBilanChoose(int week, DayPlan base, bool appliquer) async {
+    final b = koachBilan(week, base.j);
+    final key = sessionKey(week, base.j);
+    final a = sessionAdaptOf(key);
+    final st = a?.koach;
+    if (b == null || a == null || st == null) return false;
+    final choix = {
+      'choix': appliquer ? 'applique' : 'ecrit',
+      'mode': adaptMode,
+    };
+    if (b.forme == appliquer) {
+      final next = Map<String, Object?>.of(st)
+        ..['bilan'] = {...(st['bilan'] as Map), ...choix};
+      _adaptStore(week, base, a, a.copyWith(koach: next));
+      notifyListeners();
+      return true;
+    }
+    if (!b.modifiable) return false;
+    final n0 = (st['n0'] as num).toInt();
+    final journal = koachEngine.journal;
+    if (journal.length <= n0 || journal[n0]['type'] != 'seance_debut') {
+      return false;
+    }
+    // Seuls les événements de ce début de séance suivent (réponse au
+    // diagnostic, demandes au moteur) : rien d'autre n'est jamais retiré.
+    for (final ev in journal.skip(n0 + 1)) {
+      final t = ev['type'];
+      if (t == 'plan') continue;
+      if (t == 'decision' && ev.containsKey(kKoachCleDiag)) continue;
+      return false;
+    }
+    final diag = st['diag'] is Map
+        ? (st['diag'] as Map).cast<String, Object?>()
+        : null;
+    koachEngine.journal = [...journal.take(n0)];
+    final mq = st['manquees'];
+    if (mq is List) {
+      koachEngine.manquees = [
+        for (final x in mq)
+          if (x is Map) x.cast<String, Object?>(),
+      ];
+    }
+    // Un calcul en cours (rejeu, rattrapage) lancé avant ce retour ne
+    // réinstalle pas le moteur d'avant (génération changée).
+    _koachRt
+      ..gen += 1
+      ..busy = null
+      ..live = null;
+    final keep = a.copyWith(
+      koach: {
+        'state': 'preview',
+        if (st['volume'] case final Map v) 'volume': v,
+        'bilan': choix,
+      },
+    );
+    final preview = koachPreview(week, base, keep: keep) ?? keep;
+    final log = sessionLog(week, base.j);
+    log.adapt = preview.toJson().cast<String, dynamic>();
+    _adaptResync(week, base, a, preview, log, key);
+    saveLogs();
+    _persist();
+    notifyListeners();
+    final ok = await koachStart(week, base, diagnostic: diag);
+    notifyListeners();
     return ok;
   }
 
@@ -1684,7 +2051,12 @@ extension KoachStore on AppStore {
   }
 
   /// [koachStart] sans attendre : le moteur doit être prêt.
-  bool koachStartNow(int week, DayPlan base, {Json? diagnostic}) {
+  bool koachStartNow(
+    int week,
+    DayPlan base, {
+    Json? diagnostic,
+    ({bool forme, Json sortie, int n0})? autre,
+  }) {
     final key = sessionKey(week, base.j);
     final a = sessionAdaptOf(key);
     final k = _koachRt.live;
@@ -1709,18 +2081,21 @@ extension KoachStore on AppStore {
     final today = _kToday;
     final jour = koachJour(lundi, today);
     final check = a.check?.toJson().cast<String, Object?>();
-    final inputs = _koachSeanceInputs(
+    // RV4 (C17.52.4) : bilan versé selon le mode du profil (ou le choix de
+    // l'athlète) : avec la forme du jour en mode assisté, ses seuls faits
+    // (temps, douleurs) en mode libre tant que l'athlète n'accepte pas.
+    final forme = koachBilanForme(a.koach);
+    final demande = _koachDemandeSeance(
       week,
-      base.j,
-      info,
-      book,
-      check: check,
-      place: a.place,
-      minutes: a.check?.minutesAvailable,
+      base,
+      a,
+      _koachBilanVerse(a, forme: forme),
     );
-    final contexte = inputs.contexte;
-    final grilles = inputs.grilles;
-    final zones = inputs.zones;
+    if (demande == null) return false;
+    final contexte = demande.contexte;
+    // RV4 (C17.51.5) : items écrits demandés (sans les lignes retirées pour
+    // aujourd'hui avant le début).
+    final ecritJour = demande.ecrit;
     // KB2 correction 1 (C17.36) : réponses validées avant l'envoi ; une
     // réponse refusée ne fait jamais tomber la séance en silence.
     final withAnswer = diagnostic != null && koachNeedsDiagnostic;
@@ -1738,13 +2113,7 @@ extension KoachStore on AppStore {
 
     Json r;
     try {
-      k.observe({
-        'type': 'seance_debut',
-        'jour': jour,
-        'bilan': check == null || check.isEmpty ? null : check,
-        'poids_kg': _koachPeseeAu(today),
-        'contexte': contexte,
-      });
+      k.observe(demande.debut);
       if (withAnswer) {
         try {
           k.observe({
@@ -1761,22 +2130,7 @@ extension KoachStore on AppStore {
           return false;
         }
       }
-      r =
-          k.plan({
-                'horizon': 'seance',
-                'items': info.items,
-                'grilles': grilles,
-                'zones': zones,
-                'roles': info.roles,
-                // KB5 (Koach 1.0.8, X2) : groupes de la séance écrite,
-                // rendus recalés sur les lignes servies (`groups`).
-                if (place.day?.groups?.isNotEmpty ?? false)
-                  'groups': [
-                    for (final g in place.day!.groups!)
-                      g.toJson().cast<String, Object?>(),
-                  ],
-              })!
-              as Json;
+      r = k.plan(demande.seance)! as Json;
     } catch (_) {
       // État du moteur partiel : journal coupé, rejeu au prochain passage.
       couper();
@@ -1785,6 +2139,7 @@ extension KoachStore on AppStore {
       return false;
     }
     _koachRt.temps.noter('plan_seance', sw.elapsed);
+    final manquees = [...koachEngine.manquees];
     koachEngine.manquees = [];
     // Capacités avant la séance (résumé de fin).
     final post = (k.posterior()['exercices'] as Map?) ?? const {};
@@ -1800,7 +2155,7 @@ extension KoachStore on AppStore {
     // l'aperçu), raison affichée, sauf retrait motivé (douleur, test
     // reporté, temps donné par l'athlète).
     final garde = koachGardeSeance(
-      info.items,
+      ecritJour,
       [
         for (final it in (r['items'] as List? ?? const []))
           if (it is Map) koachCopie(it) as Json,
@@ -1808,6 +2163,27 @@ extension KoachStore on AppStore {
       raisons,
       budgetDonne: contexte['budget'] != null,
     );
+    // RV4 (C17.52.4) : ce que l'autre lecture du bilan aurait servi (même
+    // garde), ligne par ligne ; rien quand le journal a bougé depuis son
+    // calcul.
+    final bilan = autre == null || autre.n0 != n0
+        ? null
+        : koachBilanLignes(
+            ecritJour,
+            garde.servis,
+            koachGardeSeance(
+              ecritJour,
+              [
+                for (final it in (autre.sortie['items'] as List? ?? const []))
+                  if (it is Map) koachCopie(it) as Json,
+              ],
+              (autre.sortie['raisons'] as List? ?? const [])
+                  .whereType<Map>()
+                  .map((x) => x.cast<String, Object?>())
+                  .toList(),
+              budgetDonne: contexte['budget'] != null,
+            ).servis,
+          );
     final apercu = {for (final it in a.plan.items) it.slotId: it};
     // RV3 (C17.51.1) : modulation des séries par la semaine (`koachModule`
     // de la ligne servie) : appliquée et dite en mode assisté (« Annuler »
@@ -1896,7 +2272,7 @@ extension KoachStore on AppStore {
         it.slotId: it,
     };
     final items = <kc.ExercisePrescription>[];
-    for (final w in info.items) {
+    for (final w in ecritJour) {
       final slot = '${w['slotId']}';
       for (final it in served) {
         if (koachSlotEcrit('${it['slotId']}') != slot) continue;
@@ -1991,6 +2367,21 @@ extension KoachStore on AppStore {
         if (retraits.isNotEmpty) 'retraits': retraits,
         // RV3 (C17.51.1) : lignes modulées par la semaine et choix.
         if (volume.isNotEmpty) 'volume': volume,
+        // RV4 (C17.52.4) : début du journal de la séance (retour possible
+        // avant la première série), séances manquées versées à ce début.
+        'n0': n0,
+        if (manquees.isNotEmpty) 'manquees': manquees,
+        // RV4 (C17.52.4) : bilan du jour servi avec ou sans la forme du
+        // jour, choix de l'athlète, lignes que l'autre lecture change.
+        if (bilan != null && bilan.isNotEmpty)
+          'bilan': {
+            'forme': forme,
+            if ((a.koach?['bilan'] as Map?)?['choix'] case final String c)
+              'choix': c,
+            if ((a.koach?['bilan'] as Map?)?['mode'] case final String m)
+              'mode': m,
+            'lignes': bilan,
+          },
         'cibles': <String, Object?>{},
         'versed': <Object?>[],
         if (check != null) 'debut': check,
@@ -2925,6 +3316,58 @@ extension KoachStore on AppStore {
     return out.length > max ? out.sublist(0, max) : out;
   }
 
+  // ------------------------------------- changements du jour (RV4)
+
+  /// RV4 (C17.51.5) : ligne [slot] retirée avant le début de la séance de
+  /// Koach (absente de la séance servie) puis remise : servie telle
+  /// qu'écrite (ligne du jour), groupes recalés sur les lignes servies
+  /// (règle de KB5). Rien si la séance n'est pas ouverte ou si la ligne
+  /// est déjà servie.
+  void koachRemettreLigne(int week, DayPlan day, String slot) {
+    final key = sessionKey(week, day.j);
+    final a = sessionAdaptOf(key);
+    final st = a?.koach;
+    if (a == null || st == null || st['state'] != 'open') return;
+    if (a.plan.items.any((x) => koachSlotEcrit(x.slotId) == slot)) return;
+    final place = _koachPlace(week, day.j);
+    final info = koachJourInfo(week, day.j);
+    if (place == null || info == null) return;
+    kc.ExercisePrescription? w;
+    for (final it in place.day?.items ?? const <kc.ExercisePrescription>[]) {
+      if (it.slotId == slot) w = it;
+    }
+    if (w == null) return;
+    final line = _koachRange(
+      place,
+      w,
+      kc.SlotRole.values.where((r) => r.code == info.roles[slot]).firstOrNull,
+    );
+    final order = [for (final x in info.items) '${x['slotId']}'];
+    final rank = order.indexOf(slot);
+    final items = [...a.plan.items];
+    final at = items.indexWhere(
+      (x) => order.indexOf(koachSlotEcrit(x.slotId)) > rank,
+    );
+    items.insert(at < 0 ? items.length : at, line);
+    final groupes = koachGroupesDeLaSeance(
+      place.day?.groups,
+      null,
+      info.items,
+      items,
+    );
+    var plan = a.plan.copyWith(items: items, groups: groupes.groupes);
+    if (plan.validate().isNotEmpty) plan = plan.copyWith(groups: null);
+    if (plan.validate().isNotEmpty) return;
+    final next = a.copyWith(
+      plan: plan,
+      koach: Map<String, Object?>.of(st)
+        ..['remises'] = [...?(st['remises'] as List?), slot],
+    );
+    final log = sessionLog(week, day.j);
+    log.adapt = next.toJson().cast<String, dynamic>();
+    _adaptResync(week, day, a, next, log, key);
+  }
+
   // ------------------------------------- modulation de la semaine (RV3)
 
   /// RV3 (C17.51.1) : ligne servie [it] (JSON de Koach) à [n] séries, avec
@@ -3401,6 +3844,48 @@ extension KoachStore on AppStore {
         'raison': d['raison'],
       });
     }
+    // RV4 (C17.52.4) : choix de l'athlète sur le bilan du jour
+    // (« Accepter » : accepté ; « Annuler », « Garder l'écrit » : refusé,
+    // sans raison) ; aucun choix : rien n'est versé.
+    final bil = st['bilan'];
+    final bc = bil is Map ? bil['choix'] : null;
+    final bl = bil is Map ? bil['lignes'] : null;
+    if ((bc == 'applique' || bc == 'ecrit') && bl is Map && bl.isNotEmpty) {
+      final forme = bil['forme'] == true;
+      var plus = false;
+      for (final l in bl.values) {
+        if (l is! Map) continue;
+        final avec = (forme ? l['servi'] : l['autre']) as Map? ?? const {};
+        final sans = (forme ? l['autre'] : l['servi']) as Map? ?? const {};
+        final a = avec['sets'], b = sans['sets'];
+        final x = avec['kg'], y = sans['kg'];
+        if ((a is num && b is num && a > b) || (x is num && y is num && x > y)) {
+          plus = true;
+        }
+      }
+      final first = bl.values.whereType<Map>().first;
+      k.observe({
+        'type': 'decision',
+        'jour': jour,
+        'proposition': {
+          'id': 'b$jour-bilan',
+          'type': plus ? 'volume_plus' : 'allegement',
+          'exerciseId': '${first['exerciseId']}',
+          'ampleur': bl.length.toDouble(),
+          'charge_kg': null,
+          'reps': null,
+          'rir': null,
+          'contexte': {
+            'bilan_bas': !plus,
+            'semaine_allegement': false,
+            'moment': 'debut_de_seance',
+            'refus_recents': k.adherence?.refusRecents(jour) ?? 0,
+          },
+        },
+        'accepte': bc == 'applique',
+        'raison': null,
+      });
+    }
     // RV3 (C17.51.1) : choix de l'athlète sur la modulation de la semaine
     // (« Accepter » : acceptée ; « Annuler », « Garder l'écrit » : refusée,
     // sans raison) ; aucun choix : rien n'est versé.
@@ -3802,6 +4287,11 @@ extension KoachStore on AppStore {
         clearCheck: useCheck == null,
         place: where,
         clearPlace: where == null,
+        // RV4 (C17.52.4) : un choix sur le bilan du jour ne vaut que pour
+        // la forme du jour à laquelle il répondait.
+        koach: SessionAdaptStore.sameHealthForm(a.check, useCheck)
+            ? null
+            : (Map<String, Object?>.of(st)..remove('bilan')),
       );
       next = koachPreview(week, base, keep: keep) ?? keep;
     } else {

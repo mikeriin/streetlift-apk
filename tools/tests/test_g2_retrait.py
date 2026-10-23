@@ -80,8 +80,9 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # 7.7.1 : modulation selon le mode, mineurs (RV3, dev7.7.1).
-        self.assertEqual(version, '7.7.1')
+        # 7.7.2 : remplacement libre, retrait du jour, bilan selon le mode
+        # (RV4, dev7.7.2).
+        self.assertEqual(version, '7.7.2')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)
