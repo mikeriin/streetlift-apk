@@ -48,6 +48,15 @@ extension SafetyStore on AppStore {
     ];
   }
 
+  /// RV2 (A4) : renvois vers un professionnel de santé affichés dans
+  /// « Santé et sécurité » : mouvements des anciens questionnaires de
+  /// Koach L7 et zones notées au Bilan du jour (séance servie par le
+  /// moteur, même règle L13) ; avant, seuls les premiers.
+  List<String> get painReferralLabels => [
+    for (final m in painReferralMovements) koachMovementName(m),
+    ...SessionAdaptStore(this).adaptPainReferralZones,
+  ];
+
   /// Profil chargé ou importé dont l'année de naissance indique moins de
   /// 18 ans (18 ans dans l'année : accepté, la question a été posée au
   /// démarrage). L'application est alors bloquée jusqu'à correction ou

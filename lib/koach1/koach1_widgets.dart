@@ -293,6 +293,8 @@ class KoachEngineCard extends StatelessWidget {
               'Je prends les commandes de ton programme '
               '(${store.program.weekLabel(w)}) : un instant, une seule fois.';
         } else {
+          // RV2 (K5) : premier jour de la semaine de prise de main (jour 0
+          // de Koach : jour du départ, plus le lundi de sa semaine).
           final m = store.koachLundi!.addDays(7 * (w - 1));
           wait =
               'Je prends les commandes de ton programme à partir de '

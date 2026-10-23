@@ -32,6 +32,13 @@ const bool kKoachBasculeAutorisee = true;
 @visibleForTesting
 bool debugKoachBasculeAutorisee = kKoachBasculeAutorisee;
 
+/// RV2 (K4) : tests : appelé aux étapes d'un versement à la séance
+/// (`plan_serie`, `fin_exercice`, `seance_fin`), après les événements
+/// versés et avant l'état de la séance ; une exception y simule une panne
+/// du moteur. Null dans l'application.
+@visibleForTesting
+void Function(String etape)? debugKoachPanne;
+
 /// KB2 : critère 10 (rejeu du journal réel par le pilotage, 18/10/2026,
 /// `pipeline/cp/donnees/rejeu_journal_agregats_kb2.json`, C17.33.3) :
 /// agrégats seulement, affichés par l'inspecteur du mode dev.
@@ -412,12 +419,28 @@ extension KoachStore on AppStore {
 
   // ------------------------------------------------------------ dates
 
-  /// Lundi de la semaine S1 (jour 0 de Koach) ; null : programme non
-  /// commencé.
+  /// Jour 0 de Koach : S1·J1, jour du départ du programme ; null :
+  /// programme non commencé.
+  ///
+  /// RV2 (K5) : avant, le lundi de la semaine du départ : pour un départ
+  /// un autre jour, la semaine de Koach (`semaine_fin`, `seance_manquee`,
+  /// prise de main, rattrapage) était décalée de celle du programme
+  /// (`Program.dateFor` : J1 = jour du départ). Le moteur ne compte qu'en
+  /// jours depuis ce jour 0 (aucun lundi attendu). Migration sans perte :
+  /// un départ un lundi ne change rien (même jour 0) ; un instantané pris
+  /// avant RV2 au lundi d'un départ un autre jour garde son cadre (journal
+  /// versé dans ce cadre, jamais réécrit) tant que Koach n'est pas repris
+  /// en main ; une nouvelle prise de main prend le jour du départ.
   kc.CivilDate? get koachLundi {
     final s = program.start;
     if (s == null) return null;
-    return koachLundiDe(civilOf(s));
+    final depart = civilOf(s);
+    final snap = koachEngine.snap;
+    final lundi = koachLundiDe(depart);
+    if (snap != null && snap.lundi != depart.iso && snap.lundi == lundi.iso) {
+      return lundi;
+    }
+    return depart;
   }
 
   /// Semaine S du programme contenant [d] (1 = S1).
@@ -429,7 +452,8 @@ extension KoachStore on AppStore {
     return days ~/ 7 + 1;
   }
 
-  kc.CivilDate? _mondayOfWeek(int s) => koachLundi?.addDays(7 * (s - 1));
+  /// Premier jour de la semaine S[s] de Koach (RV2 (K5) : S[s]·J1).
+  kc.CivilDate? _koachWeekStart(int s) => koachLundi?.addDays(7 * (s - 1));
 
   /// La bascule peut avoir lieu dans ce build (ou forcée dans la session
   /// de test).
@@ -510,7 +534,7 @@ extension KoachStore on AppStore {
     if (w == null) return null;
     final today = _kToday;
     final f = koachEngine.forced;
-    final start = f != null ? kc.CivilDate.parse(f) : _mondayOfWeek(w)!;
+    final start = f != null ? kc.CivilDate.parse(f) : _koachWeekStart(w)!;
     return start.compareTo(today) <= 0 ? w : null;
   }
 
@@ -1094,10 +1118,9 @@ extension KoachStore on AppStore {
       final loc = plan.locate(week);
       if (loc == null) return null;
       final block = adjustedBlock(plan.blocks[loc.block]);
-      final startWeekday =
-          program.start?.weekday ?? block.pass1.startDate.weekday;
+      // RV2 (P3) : J fixes, comptés depuis le départ du bloc.
       for (final d in block.pass1.days) {
-        if (planJ(d.weekday, startWeekday) == j) {
+        if (planBlockJ(block, d.weekday, anchor: plan.jWeekday) == j) {
           return AdaptPlace(block, loc.weekIndex, d.dayIndex, false);
         }
       }
@@ -1304,16 +1327,25 @@ extension KoachStore on AppStore {
     verseDone((_) => true);
     if (steps.isEmpty) return;
     final sw = Stopwatch()..start();
+    // RV2 (K3) : longueur du journal de l'instance vive au départ du calcul.
+    final n0 = k.journal.length;
     ko.Koach next;
     try {
       next = await KoachCalcul.rattraper(k, steps);
     } catch (_) {
-      // Instance d'avant gardée ; rejeu au prochain démarrage.
-      rt.live = null;
+      // Instance d'avant gardée ; rejeu au prochain démarrage (RV2 (K4) :
+      // calcul sur place coupé à sa longueur d'avant par `KoachCalcul`).
+      if (identical(rt.live, k)) rt.live = null;
       rt.error = 'Rattrapage de Koach impossible.';
       return;
     }
+    final avantAdoption = KoachCalcul.debugAvantAdoption;
+    if (avantAdoption != null) await avantAdoption();
     if (gen != rt.gen) return;
+    // RV2 (K3) : séries, débuts de séance… versés à l'instance vive pendant
+    // le calcul : rejoués sur la copie (sinon le résultat est abandonné et
+    // le rattrapage se refait au prochain passage).
+    if (!_koachAdopter(k, next, n0)) return;
     rt.temps.noter('replanification', sw.elapsed);
     rt.live = next;
     rt.error = null;
@@ -2042,25 +2074,83 @@ extension KoachStore on AppStore {
 
   /// Séries faites de la séance servie, pas encore versées, versées dans
   /// l'ordre de réalisation (§ 2.2 point 6). Rend l'état mis à jour.
+  ///
+  /// RV2 (K1) : une ligne d'endurance (fiche de Koach `cardio` ou `wod`)
+  /// est versée en une seule `serie` (`demand`, `doneShare`, `dose`,
+  /// `fatigueSets`, [koachSerieEndurance]), comme une séance faite hors de
+  /// Koach ([koachSeanceDe]) : une fois la ligne finie (toutes ses séries
+  /// validées, à la place de sa dernière série) ou, [fin], à la fin de la
+  /// séance ; jamais série par série (avant : chaque tour versé comme une
+  /// série de force, sans demande ni dose). Une ligne d'endurance déjà
+  /// versée série par série avant RV2 (séance ouverte à la mise à jour)
+  /// reste versée ainsi jusqu'à sa fin (rien n'est réécrit).
   Map<String, Object?> _koachVerse(
     int week,
     DayPlan day,
     SessionAdapt a,
-    ko.Koach k,
-  ) {
+    ko.Koach k, {
+    bool fin = false,
+  }) {
     final st = Map<String, Object?>.of(a.koach ?? const {});
     final versed = [...(st['versed'] as List? ?? const [])];
     final sigs = {
       for (final v in versed)
         if (v is List && v.length >= 3) '${v[0]}|${v[1]}',
     };
-    final done = _adaptDone(week, _koachDisplayDay(week, day, a), a);
+    final shown = _koachDisplayDay(week, day, a);
+    final done = _adaptDone(week, shown, a);
     final cibles = (st['cibles'] as Map?) ?? const {};
-    for (final rec in done) {
+    bool endurance(kc.SetRecord r) =>
+        r.slotId != null &&
+        _koachEndurance(r.exerciseId) &&
+        !_koachEnduranceAncienne(versed, r.slotId!);
+    // Dernière série faite de chaque ligne d'endurance (ordre de
+    // réalisation) : place de la `serie` de la ligne.
+    final derniere = <String, int>{};
+    for (var i = 0; i < done.length; i++) {
+      if (endurance(done[i])) derniere[done[i].slotId!] = i;
+    }
+    for (var i = 0; i < done.length; i++) {
+      final rec = done[i];
       final slot = rec.slotId;
       if (slot == null) continue;
       final id = '$slot|${rec.setIndex}';
       if (sigs.contains(id)) continue;
+      if (endurance(rec)) {
+        // Ligne déjà versée : la série s'y rattache (les corrections de fin
+        // de séance remplacent la `serie` de la ligne).
+        if (sigs.contains('$slot|E')) {
+          sigs.add(id);
+          versed.add([slot, rec.setIndex, '~']);
+          continue;
+        }
+        if (derniere[slot] != i ||
+            !(fin || _koachLigneFinie(week, shown, slot))) {
+          continue;
+        }
+        final faites = [
+          for (final r in done)
+            if (r.slotId == slot && r.exerciseId == rec.exerciseId)
+              r.toJson().cast<String, Object?>(),
+        ];
+        for (final r in done) {
+          if (r.slotId != slot || !endurance(r)) continue;
+          if (sigs.add('$slot|${r.setIndex}')) {
+            versed.add([slot, r.setIndex, '~']);
+          }
+        }
+        sigs.add('$slot|E');
+        final s = _koachSerieLigne(week, day.j, a, slot, faites);
+        if (s == null) {
+          versed.add([slot, 'E', '-']);
+          continue;
+        }
+        final sw = Stopwatch()..start();
+        k.observe({'type': 'serie', 'serie': s});
+        _koachRt.temps.noter('observe_serie', sw.elapsed);
+        versed.add([slot, 'E', _koachSigLigne(s), k.journal.length - 1]);
+        continue;
+      }
       final cible = (cibles[slot] as Map?)?['${rec.setIndex}'];
       final s = koachSerie(
         rec.toJson().cast<String, Object?>(),
@@ -2086,6 +2176,64 @@ extension KoachStore on AppStore {
     st['versed'] = versed;
     return st;
   }
+
+  /// RV2 (K1) : l'exercice [exerciseId] est d'endurance pour Koach (fiche
+  /// `cardio` ou `wod`, comme [koachSerieEndurance]).
+  bool _koachEndurance(String exerciseId) {
+    final t = _koachRt.res?.fiches[exerciseId]?['type'];
+    return t == 'cardio' || t == 'wod';
+  }
+
+  /// RV2 (K1) : ligne d'endurance [slot] déjà versée série par série avant
+  /// RV2 (une série versée à son rang) : elle finit ainsi.
+  static bool _koachEnduranceAncienne(List<Object?> versed, String slot) =>
+      versed.any(
+        (v) => v is List && v.length >= 4 && v[0] == slot && v[1] is int,
+      );
+
+  /// RV2 (K1) : toutes les séries des exercices de la ligne [slot] de la
+  /// journée affichée [shown] sont validées.
+  bool _koachLigneFinie(int week, DayPlan shown, String slot) {
+    final log = logs[sessionKey(week, shown.j)];
+    if (log == null) return false;
+    var any = false;
+    for (final e in shown.exercises) {
+      if ((e.slotId ?? adaptSlotOf(week, shown.j, e.id)) != slot) continue;
+      final x = log.ex[e.id];
+      if (x == null || x.sets.any((s) => !s.done)) return false;
+      any = true;
+    }
+    return any;
+  }
+
+  /// RV2 (K1) : `serie` unique de la ligne d'endurance [slot] ([faites] :
+  /// ses séries faites, `SetRecord.toJson()`), comparée à la ligne servie
+  /// affichée (ligne de Koach, ou ligne écrite servie telle quelle : c'est
+  /// ce que l'athlète avait à faire), à défaut à la ligne écrite. Même
+  /// format que l'item écrit de [koachSeanceDe] (`ExercisePrescription`).
+  Json? _koachSerieLigne(
+    int week,
+    int j,
+    SessionAdapt a,
+    String slot,
+    List<Json> faites,
+  ) {
+    final res = _koachRt.res;
+    if (res == null || faites.isEmpty) return null;
+    final fiche = res.fiches['${faites.first['exerciseId']}'];
+    if (fiche == null) return null;
+    Json? item = _adaptItem(a, slot)?.toJson().cast<String, Object?>();
+    if (item == null) {
+      for (final it in koachJourInfo(week, j)?.items ?? const <Json>[]) {
+        if (it['slotId'] == slot) item = it;
+      }
+    }
+    return koachSerieEndurance(fiche, item, faites, res.params);
+  }
+
+  /// RV2 (K1) : signature de la `serie` d'une ligne d'endurance (tous ses
+  /// champs : un tour corrigé change la durée faite).
+  static String _koachSigLigne(Json s) => 'E${fnv1a32(jsonEncode(s))}';
 
   static String _koachSig(Json s) =>
       '${s['reps']}|${s['seconds']}|${s['externalLoadKg']}|${s['flames']}';
@@ -2122,18 +2270,44 @@ extension KoachStore on AppStore {
     final k = _koachRt.live;
     final served = _koachServed(a, slot);
     if (k == null || served == null) return;
-    Json? cible;
-    Map<String, Object?> st;
+    // RV2 (K4) : longueur du journal avant les séries versées et la
+    // demande : un échec le coupe là (avant : séries versées gardées au
+    // journal sans être notées dans la séance, versées une seconde fois au
+    // passage suivant).
+    final n0 = k.journal.length;
+    final log2 = sessionLog(week, base.j);
+    final adaptAvant = log2.adapt;
     try {
-      st = _koachVerse(week, base, a, k);
-      final sw = Stopwatch()..start();
-      final out = k.plan({'horizon': 'serie', 'item': served, 'index': index});
-      _koachRt.temps.noter('plan_serie', sw.elapsed);
-      cible = out is Map ? out.cast<String, Object?>() : null;
+      _koachEnsureTarget(week, base, a, k, slot, served, index, log2, key);
     } catch (_) {
+      _koachCouper(k, n0);
+      log2.adapt = adaptAvant;
       _koachRt.live = null;
       return;
     }
+    _adaptQuietSave();
+  }
+
+  /// [koachEnsureTarget] : séries faites versées, `plan(serie)`, cible
+  /// gardée dans la séance [log2]. Une erreur se propage (l'appelant coupe
+  /// le journal).
+  void _koachEnsureTarget(
+    int week,
+    DayPlan base,
+    SessionAdapt a,
+    ko.Koach k,
+    String slot,
+    Json served,
+    int index,
+    SessionLog log2,
+    String key,
+  ) {
+    final st = _koachVerse(week, base, a, k);
+    final sw = Stopwatch()..start();
+    final out = k.plan({'horizon': 'serie', 'item': served, 'index': index});
+    _koachRt.temps.noter('plan_serie', sw.elapsed);
+    debugKoachPanne?.call('plan_serie');
+    Json? cible = out is Map ? out.cast<String, Object?>() : null;
     // Charge fixe (C15.2, INTEGRATION_KM3.md § 7.3).
     final place = _koachPlace(week, base.j);
     final it0 = _adaptItem(a, slot);
@@ -2184,11 +2358,16 @@ extension KoachStore on AppStore {
       plan: a.plan.copyWith(items: items),
       koach: st,
     );
-    final log2 = sessionLog(week, base.j);
     log2.adapt = next.toJson().cast<String, dynamic>();
     _adaptResync(week, base, a, next, log2, key);
     koachEngine.journal = k.journal;
-    _adaptQuietSave();
+  }
+
+  /// RV2 (K4) : journal de [k] ramené à [n0] événements (échec d'un calcul
+  /// après des versements). Le journal gardé est la même liste que celui du
+  /// moteur vivant : rien de versé à moitié n'y reste.
+  static void _koachCouper(ko.Koach k, int n0) {
+    if (k.journal.length > n0) k.journal.removeRange(n0, k.journal.length);
   }
 
   /// Cibles par série d'un item depuis les cibles de Koach [m] (rang →
@@ -2312,13 +2491,17 @@ extension KoachStore on AppStore {
       // suite de la séance).
       final k = _koachRt.live;
       if (k != null) {
+        // RV2 (K4) : un échec coupe le journal à sa longueur d'avant.
+        final n0 = k.journal.length;
         try {
           final st = _koachVerse(week, day, before, k);
+          debugKoachPanne?.call('fin_exercice');
           final a2 = before.copyWith(koach: st);
           sessionLog(week, day.j).adapt = a2.toJson().cast<String, dynamic>();
           koachEngine.journal = k.journal;
           _adaptQuietSave();
         } catch (_) {
+          _koachCouper(k, n0);
           _koachRt.live = null;
         }
       }
@@ -2615,11 +2798,18 @@ extension KoachStore on AppStore {
     final w = program.week(week);
     final base = w.day(j);
     if (base == null) return;
+    // RV2 (K4) : copie du journal avant la fermeture (les corrections le
+    // modifient en place) : un échec le remet tel quel, la séance reste
+    // ouverte et se ferme au passage suivant (avant : séries et fin versées
+    // gardées au journal, versées une seconde fois).
+    final avant = koachJournalDe(k.journal);
+    final SessionAdapt next;
+    final bool fixed;
     try {
-      final st2 = _koachVerse(week, base, a, k);
+      final st2 = _koachVerse(week, base, a, k, fin: true);
       // Séries versées puis corrigées (flammes, répétitions, charge) ou
       // décochées : événements remplacés ou retirés, puis rejeu (§ 2.7).
-      final fixed = _koachCorrections(week, base, a, st2, k);
+      fixed = _koachCorrections(week, base, a, st2, k);
       final jour = (st['jour'] as num?)?.toInt() ?? koachJour(lundi, _kToday);
       // Toutes les séries versées (dans l'ordre) pour `seance.sets`.
       final sets = <Object?>[];
@@ -2643,28 +2833,37 @@ extension KoachStore on AppStore {
         'seance': {'sets': sets},
       });
       _koachDecisions(k, a, st2, jour);
+      debugKoachPanne?.call('seance_fin');
       st2['state'] = 'closed';
-      final next = a.copyWith(koach: st2);
-      sessionLog(week, j).adapt = next.toJson().cast<String, dynamic>();
-      koachEngine.versed.add(key);
-      koachEngine.journal = k.journal;
-      if (!fixed) unawaited(_koachForecasts(week, j));
-      if (fixed) {
-        // Journal corrigé : l'état se reconstruit par rejeu (arrière-plan).
-        koachEngine.journal = koachJournalDe(k.journal);
-        _koachRt.live = null;
-        unawaited(koachRefresh());
-      }
-      _persist();
+      next = a.copyWith(koach: st2);
     } catch (_) {
+      // Journal gardé remis tel qu'avant la fermeture ; rejeu au prochain
+      // passage.
+      koachEngine.journal = avant;
       _koachRt.live = null;
+      return;
     }
+    sessionLog(week, j).adapt = next.toJson().cast<String, dynamic>();
+    koachEngine.versed.add(key);
+    koachEngine.journal = k.journal;
+    if (!fixed) unawaited(_koachForecasts(week, j));
+    if (fixed) {
+      // Journal corrigé : l'état se reconstruit par rejeu (arrière-plan).
+      koachEngine.journal = koachJournalDe(k.journal);
+      _koachRt.live = null;
+      unawaited(koachRefresh());
+    }
+    _persist();
   }
 
   /// Corrections des séries déjà versées de la séance : chaque série dont
   /// la saisie a changé depuis son versement est remplacée à sa place dans
   /// le journal ; une série décochée en est retirée. Vrai si le journal a
   /// changé (le moteur vivant n'est plus à jour : rejeu).
+  ///
+  /// RV2 (K1) : la `serie` d'une ligne d'endurance (`[slot, 'E', …]`) est
+  /// recalculée sur les séries faites de la ligne : remplacée si un tour a
+  /// changé (ou s'est ajouté), retirée si plus aucun tour n'est validé.
   bool _koachCorrections(
     int week,
     DayPlan base,
@@ -2674,9 +2873,18 @@ extension KoachStore on AppStore {
   ) {
     final versed = (st['versed'] as List?) ?? const [];
     final now = <String, Json>{};
+    final lignes = <String, List<Json>>{};
     for (final rec in _adaptDone(week, _koachDisplayDay(week, base, a), a)) {
       final slot = rec.slotId;
       if (slot == null) continue;
+      if (_koachEndurance(rec.exerciseId) &&
+          !_koachEnduranceAncienne(versed, slot)) {
+        final l = lignes.putIfAbsent(slot, () => []);
+        if (l.isEmpty || l.first['exerciseId'] == rec.exerciseId) {
+          l.add(rec.toJson().cast<String, Object?>());
+        }
+        continue;
+      }
       final cible =
           (((st['cibles'] as Map?)?[slot]) as Map?)?['${rec.setIndex}'];
       final s = koachSerie(
@@ -2688,6 +2896,10 @@ extension KoachStore on AppStore {
         (s['target'] as Map)['flames'] = cible['flames'];
       }
       now['$slot|${rec.setIndex}'] = s;
+    }
+    for (final e in lignes.entries) {
+      final s = _koachSerieLigne(week, base.j, a, e.key, e.value);
+      if (s != null) now['${e.key}|E'] = s;
     }
     final remove = <int>[];
     var changed = false;
@@ -2701,7 +2913,7 @@ extension KoachStore on AppStore {
       if (cur == null) {
         remove.add(i);
         changed = true;
-      } else if (_koachSig(cur) != v[2]) {
+      } else if ((v[1] == 'E' ? _koachSigLigne(cur) : _koachSig(cur)) != v[2]) {
         ev['serie'] = cur;
         changed = true;
       }
@@ -2965,18 +3177,84 @@ extension KoachStore on AppStore {
     final g = koachJour(lundi, _kToday) ~/ 7;
     final ev = _koachReferenceEvent(snap, g);
     final sw = Stopwatch()..start();
+    final gen = _koachRt.gen;
+    // RV2 (K3) : longueur du journal de l'instance vive au départ du calcul.
+    final n0 = k.journal.length;
+    ko.Koach next;
     try {
-      final next = await KoachCalcul.observer(k, ev);
-      _koachRt.live = next;
-      e
-        ..journal = next.journal
-        ..refSig = _koachRefSig();
-      _koachRt.temps.noter('replanification', sw.elapsed);
-      _persist();
-      notifyListeners();
+      next = await KoachCalcul.observer(k, ev);
     } catch (_) {
-      _koachRt.live = null;
+      if (identical(_koachRt.live, k)) _koachRt.live = null;
+      return;
     }
+    final avantAdoption = KoachCalcul.debugAvantAdoption;
+    if (avantAdoption != null) await avantAdoption();
+    // RV2 (K3) : arrêt pendant le calcul, ou événements versés à
+    // l'instance vive pendant le calcul et impossibles à rejouer : résultat
+    // abandonné (la référence se verse au prochain passage, `refSig`
+    // inchangée).
+    if (gen != _koachRt.gen || !_koachAdopter(k, next, n0)) return;
+    _koachRt.live = next;
+    e
+      ..journal = next.journal
+      ..refSig = _koachRefSig();
+    _koachRt.temps.noter('replanification', sw.elapsed);
+    _persist();
+    notifyListeners();
+  }
+
+  /// RV2 (K3) : adoption de [next], calculé hors du fil sur une copie de
+  /// l'instance vive [k] dont le journal comptait [n0] événements. Pendant
+  /// le calcul, la séance a pu verser à [k] (début de séance, séries,
+  /// `plan`, fin) : ces événements sont rejoués sur [next] dans l'ordre,
+  /// après ceux du calcul, et les rangs gardés par les séances ouvertes
+  /// (`versed`, lus par les corrections de fin de séance) sont décalés du
+  /// nombre d'événements versés par le calcul. Faux : résultat abandonné
+  /// (instance vive changée : arrêt, échec, rejeu demandé ; journal coupé
+  /// ou corrigé pendant le calcul ; rejeu impossible) : l'instance vive et
+  /// son journal restent tels quels, le calcul se refait au prochain
+  /// passage. Vrai sans rien faire pour un calcul sur place ([next] est
+  /// [k], tests).
+  bool _koachAdopter(ko.Koach k, ko.Koach next, int n0) {
+    if (identical(next, k)) return true;
+    if (!identical(_koachRt.live, k)) return false;
+    final n = k.journal.length;
+    final ajout = next.journal.length - n0;
+    if (n < n0 || ajout < 0) return false;
+    if (n == n0) return true;
+    try {
+      for (var i = n0; i < n; i++) {
+        next.observe(koachCopie(k.journal[i]) as Json);
+      }
+    } catch (_) {
+      return false;
+    }
+    if (ajout == 0) return true;
+    for (final log in logs.values) {
+      final adapt = log.adapt;
+      final st = adapt?['koach'];
+      if (adapt == null || st is! Map) continue;
+      final versed = st['versed'];
+      if (versed is! List) continue;
+      var moved = false;
+      final out = <Object?>[];
+      for (final v in versed) {
+        final i = v is List && v.length >= 4 ? v[3] : null;
+        if (v is List && i is int && i >= n0) {
+          out.add([...v.take(3), i + ajout, ...v.skip(4)]);
+          moved = true;
+        } else {
+          out.add(v);
+        }
+      }
+      if (!moved) continue;
+      log.adapt = {
+        ...adapt,
+        'koach': {...st.cast<String, Object?>(), 'versed': out},
+      };
+    }
+    _adaptQuietSave();
+    return true;
   }
 
   // ------------------------------------------------- séance (suite)

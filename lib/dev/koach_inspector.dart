@@ -253,9 +253,10 @@ class _KoachInspectorScreenState extends State<KoachInspectorScreen> {
             }
           }
         }
-        final g = e.snap == null
-            ? 0
-            : (today.dayNumber - e.snap!.lundiDate.dayNumber) ~/ 7;
+        // RV2 (K5) : semaine comptée depuis le jour 0 de Koach (jour du
+        // départ ; cadre d'un instantané d'avant RV2 gardé).
+        final jour0 = e.snap == null ? null : store.koachLundi;
+        final g = jour0 == null ? 0 : (today.dayNumber - jour0.dayNumber) ~/ 7;
         final mod = pl.plan[g];
         if (mod != null) {
           plan.add('Modulation de la semaine : ${jsonEncode(mod)}');

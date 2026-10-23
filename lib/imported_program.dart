@@ -321,6 +321,8 @@ extension ImportedProgramStore on AppStore {
       identityHashCode(planProgram),
       planProgram?.updatedAt ?? '-',
       program.weeks.length,
+      // RV2 (P5) : nom de l'échéance en semaine affichée (PR2).
+      program.firstShown,
       program.start?.toIso8601String() ?? '-',
       identityHashCode(weekKinds),
       identityHashCode(book),
@@ -480,7 +482,9 @@ extension ImportedProgramStore on AppStore {
             kind: kc.EventKind.personalTest,
             priority: kc.EventPriority.main,
             date: eventDay,
-            name: 'Fin du programme (S$lastWeek)',
+            // RV2 (P5) : semaine affichée (PR2), « S10 » et non « S24 »
+            // (comme `importedEndEvent`).
+            name: 'Fin du programme (${program.weekLabel(lastWeek)})',
           );
     // Intentions des semaines.
     final intents = <int, kc.WeekIntent>{};

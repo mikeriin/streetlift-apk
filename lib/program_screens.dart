@@ -81,8 +81,13 @@ String _modelText() {
     final days = [
       for (final d in last.pass1.days) weekdayLabel(d.weekday).toLowerCase(),
     ].join(', ');
+    // RV2 (P5) : semaine affichée (PR2), jamais le numéro interne.
+    final first = shownWeekNumber(
+      plan.firstWeek,
+      firstShown: store.program.firstShown,
+    );
     final since = plan.firstWeek > 1
-        ? ' Commence en semaine ${plan.firstWeek} ; les semaines d’avant '
+        ? ' Commence en semaine $first ; les semaines d’avant '
               'restent celles de ton programme précédent.'
         : start == null
         ? ''
@@ -185,7 +190,8 @@ class ProgramScreen extends StatelessWidget {
                     // faites.
                     : PlanStore(store).planDeadlineChanged
                     ? 'Ton échéance a changé : Koach peut réécrire la suite '
-                          'dès la semaine ${PlanStore(store).planNextFirstWeek}'
+                          // RV2 (P5) : semaine affichée (PR2).
+                          'dès la semaine ${shownWeekNumber(PlanStore(store).planNextFirstWeek, firstShown: store.program.firstShown)}'
                     : 'Fin d’un bloc de ton programme : Koach peut écrire '
                           'le suivant',
                 onTap: () => _openNextBlock(context),

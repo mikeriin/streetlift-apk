@@ -621,7 +621,13 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
   /// « Accepter » / « Garder ma séance »).
   Widget _adjustmentCard(SessionAdapt a) {
     final k = KTokens.of(context);
-    final all = sessionDiffLines(a.base!, a.plan, store.adaptExerciseName);
+    // RV2 (A3) : charges dans l'unité choisie (kg ou livres).
+    final all = sessionDiffLines(
+      a.base!,
+      a.plan,
+      store.adaptExerciseName,
+      lb: store.settings.lb,
+    );
     final shown = all.isEmpty
         ? const ['Charges et cibles un peu plus prudentes.']
         : all.take(6).toList();
@@ -1049,10 +1055,18 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
   /// « Aucune douleur » choisi.
   bool get _noPain => _pains != null && _pains!.isEmpty;
 
+  /// RV2 (A7) : « Aucune douleur » choisi sur cet écran (puis une zone
+  /// ajoutée) : la question de la douleur a reçu une réponse.
+  bool _saidNoPain = false;
+
   void _removePain(kc.PainReport p) => setState(() {
     final next = [...?_pains]..removeWhere((x) => x.zone == p.zone);
-    // Douleur déjà dite puis retirée : « aucune ».
-    _pains = next.isEmpty && widget.initial.pains == null ? null : next;
+    // Douleur déjà dite puis retirée : « aucune ». RV2 (A7) : de même
+    // après « Aucune douleur » choisi ici (avant : réponse perdue, la
+    // question passait pour non répondue).
+    _pains = next.isEmpty && widget.initial.pains == null && !_saidNoPain
+        ? null
+        : next;
   });
 
   Widget _title(KTokens k, String t) => Semantics(
@@ -1188,7 +1202,11 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
                 'Aucune douleur',
                 key: const ValueKey('detail-no-pain'),
                 selected: _noPain,
-                onTap: () => setState(() => _pains = _noPain ? null : []),
+                onTap: () => setState(() {
+                  // RV2 (A7) : la réponse « aucune » est retenue.
+                  _saidNoPain = !_noPain;
+                  _pains = _noPain ? null : [];
+                }),
               ),
               const SizedBox(height: KSpacing.s8),
               MuscleMap2D(

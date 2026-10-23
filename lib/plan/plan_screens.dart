@@ -41,11 +41,16 @@ Future<bool> openNextBlock(BuildContext context) async {
   final seg = PlanStore(store).planImportedSegment;
   if (seg != null) {
     final ends = seg.last >= store.importedLastWeek;
+    // RV2 (P5) : semaine affichée (PR2), jamais le numéro interne.
+    final last = shownWeekNumber(
+      seg.last,
+      firstShown: store.program.firstShown,
+    );
     final offer = ends
-        ? 'Ton programme se termine en semaine ${seg.last}. Je peux écrire '
+        ? 'Ton programme se termine en semaine $last. Je peux écrire '
               'ton prochain bloc d’après ton profil et tes séances.'
         : 'Ton programme continue tel qu’il est écrit après la semaine '
-              '${seg.last}. Je peux aussi écrire ton prochain bloc d’après '
+              '$last. Je peux aussi écrire ton prochain bloc d’après '
               'ton profil et tes séances : il remplace alors la suite de ton '
               'programme.';
     final choice = await showKoachSheet<String>(
@@ -452,9 +457,14 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     }
     final start = PlanStore(store).planStartFor();
     if (start.replacing) {
+      // RV2 (P5) : semaine affichée (PR2), jamais le numéro interne.
+      final week = shownWeekNumber(
+        start.firstWeek,
+        firstShown: store.program.firstShown,
+      );
       final when = start.firstWeek > 1
           ? 'à partir du ${planDayName(start.start)} ${_date(start.start)} '
-                '(semaine ${start.firstWeek}) ; tes semaines passées restent '
+                '(semaine $week) ; tes semaines passées restent '
                 'telles quelles'
           : 'dès aujourd’hui';
       // UI4 (§4.5, R8) : confirmation au gabarit, verbe exact.

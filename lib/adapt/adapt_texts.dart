@@ -22,10 +22,24 @@ String adaptKg(double kg) => '${adaptKgField(kg).replaceAll('.', ',')}\u00A0kg';
 /// servis et pré-remplis.
 const kAdaptKgDisplayStep = 0.25;
 
+/// RV2 (A3) : livres par kilo (même facteur que l'affichage des charges du
+/// magasin, `massLabel`).
+const double kAdaptLbPerKg = 2.20462;
+
 /// UI5 (C9) : charge proposée à l'écran, arrondie au pas d'affichage
 /// ([kAdaptKgDisplayStep]), virgule décimale, espace fine insécable
 /// (« 62,5 kg », « 36,25 kg »). La charge servie ne change pas.
-String adaptKgLabel(double kg) => formatKg(kg, step: kAdaptKgDisplayStep);
+///
+/// RV2 (A3) : [lb] (réglage « Charges suggérées en livres ») : en livres,
+/// une décimale au plus (« 137,8 lb »), comme les charges de la séance.
+String adaptKgLabel(double kg, {bool lb = false}) => lb
+    ? formatUnit(kg * kAdaptLbPerKg, 'lb', maxDecimals: 1)
+    : formatKg(kg, step: kAdaptKgDisplayStep);
+
+/// RV2 (A3) : écart de charge (« 2,5 kg », « 5,5 lb ») sans arrondi au pas
+/// d'affichage en kg.
+String _deltaLabel(double kg, bool lb) =>
+    lb ? adaptKgLabel(kg, lb: true) : formatKg(kg);
 
 /// Texte de la colonne kg (point décimal, comme la saisie). RV1 : arrondi
 /// au centième d'abord : une charge calculée à 22,000000000000004 donnait
@@ -307,11 +321,13 @@ String _dec(double v) =>
 /// interne, rien à dire à l'utilisateur).
 ///
 /// CIF (point 4) : [seconds] vrai sur un maintien (prescription en
-/// secondes) : la série repère se dit en secondes.
+/// secondes) : la série repère se dit en secondes. RV2 (A3) : [lb] :
+/// écarts de charge en livres.
 String? adaptReasonText(
   kc.Reason r, {
   String Function(String exerciseId)? exerciseName,
   bool seconds = false,
+  bool lb = false,
 }) {
   final p = r.params;
   String name(Object? id) =>
@@ -329,12 +345,12 @@ String? adaptReasonText(
       final d = _num(p['deltaKg'])?.toDouble();
       return d == null
           ? 'Charge en hausse.'
-          : '+${formatKg(d)} par rapport à la dernière fois.';
+          : '+${_deltaLabel(d, lb)} par rapport à la dernière fois.';
     case 'adapt.load_down':
       final d = _num(p['deltaKg'])?.toDouble();
       return d == null
           ? 'Charge en baisse.'
-          : '−${formatKg(d)} par rapport à la dernière fois.';
+          : '−${_deltaLabel(d, lb)} par rapport à la dernière fois.';
     case 'adapt.load_held':
       return switch (p['cause']) {
         'health' || 'health_strong' => 'Charge gardée : ton bilan est bas.',
@@ -363,8 +379,8 @@ String? adaptReasonText(
       final s = _num(p['stepKg'])?.toDouble();
       return s == null
           ? 'Le plus petit cran est gros : tu progresses par les répétitions.'
-          : 'Le plus petit cran (${formatKg(s)}) est gros : tu progresses '
-                'par les répétitions.';
+          : 'Le plus petit cran (${_deltaLabel(s, lb)}) est gros : tu '
+                'progresses par les répétitions.';
     case 'adapt.flames_below_target':
       return 'Tes séries étaient plus faciles que prévu : un cran de plus, '
           'au ressenti.';
@@ -542,11 +558,17 @@ String adjustmentText(
 
 /// Ce que l'ajustement du bilan change, ligne par ligne : ajustements du
 /// moteur, puis exercices dont la charge ou les séries changent.
+///
+/// RV2 (A3) : [lb] : charges en livres. RV2 (A9) : une charge dont l'écart
+/// disparaît à l'arrondi de l'affichage (20,4 et 20,5 kg, tous deux
+/// « 20,5 kg ») n'est pas dite (« 20,5 kg au lieu de 20,5 kg ») ; les
+/// séries ou les flammes qui changent le sont.
 List<String> sessionDiffLines(
   kc.SessionPlan base,
   kc.SessionPlan plan,
-  String Function(String exerciseId) exerciseName,
-) {
+  String Function(String exerciseId) exerciseName, {
+  bool lb = false,
+}) {
   final out = <String>[];
   final done = <String>{};
   for (final a in plan.adjustments) {
@@ -567,8 +589,10 @@ List<String> sessionDiffLines(
     final kgA = b.setTargets?.first.loadKg ?? b.startLoadKg;
     final kgB = it.setTargets?.first.loadKg ?? it.startLoadKg;
     String? line;
-    if (kgA != null && kgB != null && (kgA - kgB).abs() > 1e-6) {
-      line = '$name : ${adaptKgLabel(kgB)} au lieu de ${adaptKgLabel(kgA)}.';
+    final shownA = kgA == null ? null : adaptKgLabel(kgA, lb: lb);
+    final shownB = kgB == null ? null : adaptKgLabel(kgB, lb: lb);
+    if (shownA != null && shownB != null && shownA != shownB) {
+      line = '$name : $shownB au lieu de $shownA.';
     } else if (b.sets != it.sets &&
         // (CI1d : déjà dit par l'ajustement « séries de moins ».)
         !plan.adjustments.any(
@@ -607,19 +631,20 @@ List<String> sessionDiffLines(
 /// CIF (point 3) : l'étape plus facile conseillée (`stepExerciseId`) et
 /// les mini-séries conseillées encore à faire (`miniSetsLeft`) sont dites ;
 /// un arrêt des mini-séries (propreté, chute des répétitions) n'est plus dit
-/// « deux séries manquées ».
+/// « deux séries manquées ». RV2 (A3) : [lb] : charge en livres.
 String? adviceText(
   kc.IntraSessionAdvice a, {
   required bool seconds,
   double? previousKg,
   String Function(String exerciseId)? exerciseName,
+  bool lb = false,
 }) {
   final kg = a.nextLoadKg;
   final amount = seconds
       ? adaptAmount(a.nextSeconds, a.nextSeconds, seconds: true)
       : adaptAmount(a.nextRepsLow, a.nextRepsHigh, seconds: false);
   final target = [
-    if (kg != null && kg > 0) adaptKgLabel(kg),
+    if (kg != null && kg > 0) adaptKgLabel(kg, lb: lb),
     if (amount.isNotEmpty) amount,
   ].join(' × ');
   final why = a.reasons.any((r) => r.code == 'adapt.set_failed')
@@ -707,13 +732,17 @@ List<String> healthCheckLines(kc.HealthCheck c) {
 }
 
 /// Capacité estimée lisible (« 1RM estimé 117,5 kg », « 12 reps max »).
-String capacityText(kc.ExerciseEstimate e) {
+/// RV2 (A3) : [lb] : 1RM en livres.
+String capacityText(kc.ExerciseEstimate e, {bool lb = false}) {
   // Estimation : arrondie au demi-kilo, virgule décimale, espace fine
   // insécable (C9) ; secondes au-delà de 90 s en minutes.
   String n(double v) => formatDecimal((v * 2).round() / 2);
+  final mass = lb
+      ? adaptKgLabel(e.capacity, lb: true)
+      : formatKg(e.capacity, step: 0.5);
 
   return switch (e.unit) {
-    kc.CapacityUnit.oneRmKg => '1RM estimé ${formatKg(e.capacity, step: 0.5)}',
+    kc.CapacityUnit.oneRmKg => '1RM estimé $mass',
     kc.CapacityUnit.maxReps =>
       '${unitText('${e.capacity.round()}', 'reps')} max estimées',
     kc.CapacityUnit.maxHoldSeconds =>

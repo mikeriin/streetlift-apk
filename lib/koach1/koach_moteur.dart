@@ -247,16 +247,32 @@ class KoachCalcul {
   /// Vrai : calcul dans un isolat (application) ; faux : sur place (tests).
   static bool isolat = true;
 
+  /// RV2 (K3) : tests : attendu par le magasin entre la fin d'un calcul
+  /// hors du fil (rattrapage, nouvelle référence) et l'adoption de son
+  /// résultat ; une série validée pendant cette attente reproduit la course
+  /// entre le calcul et la séance. Null dans l'application.
+  static Future<void> Function()? debugAvantAdoption;
+
   /// Rattrapage ([koachRattraper]) sur une copie de [k] hors du fil
-  /// d'interface, rendue modifiée (INTEGRATION_KM3.md § 1.5 : aucun autre
-  /// événement n'est versé pendant le calcul, puis l'instance rendue
-  /// remplace l'instance vive). Une erreur se propage : l'appelant garde
+  /// d'interface, rendue modifiée (INTEGRATION_KM3.md § 1.5 : puis
+  /// l'instance rendue remplace l'instance vive ; RV2 (K3) : les
+  /// événements versés à l'instance vive pendant le calcul sont rejoués sur
+  /// la copie par le magasin). Une erreur se propage : l'appelant garde
   /// l'instance d'avant. Les fermetures envoyées à l'isolat sont créées
   /// ici, jamais dans le magasin : leur contexte ne doit porter que des
   /// données envoyables (le magasin ne l'est pas).
   static Future<ko.Koach> rattraper(ko.Koach k, List<KoachEtape> steps) {
     if (!isolat) {
-      koachRattraper(k, steps);
+      // RV2 (K4) : calcul sur place (tests) : un échec coupe le journal de
+      // [k] à sa longueur d'avant (aucune étape à moitié versée ne reste
+      // au journal gardé, qui est la même liste).
+      final n0 = k.journal.length;
+      try {
+        koachRattraper(k, steps);
+      } catch (e, st) {
+        if (k.journal.length > n0) k.journal.removeRange(n0, k.journal.length);
+        return Future.error(e, st);
+      }
       return Future.value(k);
     }
     return Isolate.run(() {

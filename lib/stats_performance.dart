@@ -9,6 +9,20 @@ import 'store.dart';
 import 'stats_mannequin.dart';
 import 'stats_widgets.dart';
 
+/// RV2 (H7) : journées validées et journées des semaines affichées du
+/// programme (PR2 : les semaines d'avant `firstShown` restent au journal
+/// mais ne s'affichent plus). Avant : la jauge comptait aussi les journées
+/// masquées (« 98 / 168 journées » pour un programme affiché de 10
+/// semaines). Les journées de récupération validées comptent.
+({int done, int total}) shownProgramDays(AppStore source) {
+  var done = 0, total = 0;
+  for (final w in source.program.shownWeeks) {
+    total += w.days.length;
+    done += w.days.where((d) => source.isDone(w.n, d.j)).length;
+  }
+  return (done: done, total: total);
+}
+
 /// Performances (UI3, cahier §4.1) : « Mes références » (raccourci R2, même
 /// page que Réglages › Profil) et « Records » en tête, puis le programme, la
 /// force, l'endurance et les muscles de la semaine.
@@ -25,10 +39,7 @@ class StatsPerformance extends StatelessWidget {
     final k = KTokens.of(context);
     final defaults = store.program.pilotage;
     final muscles = store.weeklyMuscles();
-    final total = store.program.weeks.fold<int>(
-      0,
-      (n, week) => n + week.days.length,
-    );
+    final (:done, :total) = shownProgramDays(store);
     final records = statsRecords(store);
     final unknownLifts = defaults.mainLifts.any((l) => !store.refKnown(l.ref));
     final unknownReps = defaults.repMax.any((r) => !store.refKnown(r.ref));
@@ -79,14 +90,14 @@ class StatsPerformance extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Programme · ${store.completedCount} / $total journées',
+                'Programme · $done / $total journées',
                 style: KType.titreCarte.copyWith(color: k.texte),
               ),
               const SizedBox(height: KSpacing.s12),
               KMeter(
-                value: total == 0 ? 0 : store.completedCount / total,
+                value: total == 0 ? 0 : done / total,
                 label: 'Journées du programme validées',
-                description: '${store.completedCount} sur $total',
+                description: '$done sur $total',
               ),
               const SizedBox(height: KSpacing.s8),
               Text(

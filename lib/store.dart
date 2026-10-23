@@ -638,6 +638,12 @@ class AppStore extends ChangeNotifier {
   /// G7 (D4.9) : « Où j'en suis » (section `programResume`).
   ProgramResume? programResume;
 
+  /// RV2 (M5) : section `programResume` illisible au démarrage (version
+  /// plus récente, champ abîmé) : gardée telle quelle et réécrite à
+  /// l'identique (avant : perdue à la première écriture), jusqu'à un
+  /// nouveau « Où j'en suis » ou un programme créé à partir de S1.
+  Object? _resumeRaw;
+
   /// G10 : propositions du moteur dynamique et suites données (section
   /// `planEvolution`) ; illisible au démarrage : gardée telle quelle
   /// ([_evoRaw]) et réécrite à l'identique.
@@ -671,6 +677,13 @@ class AppStore extends ChangeNotifier {
   /// migration ({v, at, appVersion, backup}) ; null : pas encore fait.
   Map<String, dynamic>? programOrigin;
 
+  /// RV2 (D1) : section `programOrigin` illisible au démarrage (fichier
+  /// retouché, version plus récente) : gardée telle quelle et réécrite à
+  /// l'identique, jamais remplacée par une prise neuve (avant : perdue à
+  /// la première écriture, et une « origine » prise sur l'état du jour la
+  /// remplaçait sans le dire).
+  Object? _originRaw;
+
   /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
   /// présenté au moteur), clés de signature ; jamais sauvegardés.
   final Map<String, Object?> _g9Cache = {};
@@ -682,16 +695,29 @@ class AppStore extends ChangeNotifier {
   /// KM3 : moteur vivant, ressources et temps mesurés (jamais sauvegardés).
   final KoachRuntime _koachRt = KoachRuntime();
 
+  /// RV2 (P3, migration) : programme créé avant RV2 (sans `jWeekday`) :
+  /// J1 reste le jour de la semaine du départ enregistré, comme avant
+  /// (à défaut de départ, celui du premier bloc) ; écrit à l'écriture
+  /// suivante, il ne bouge plus quand le départ change.
+  PlanProgram? _planWithJAnchor(PlanProgram? plan, DateTime? start) {
+    if (plan == null || plan.jWeekday != null) return plan;
+    return plan.copyWith(
+      jWeekday:
+          start?.weekday ?? plan.blocks.first.block.pass1.startDate.weekday,
+    );
+  }
+
   /// Programme à afficher selon l'instance ; le départ est conservé.
   void _materializeProgram(DateTime? start) {
     final plan = planProgram;
     if (plan != null) {
       try {
-        final weekday =
-            start?.weekday ?? plan.blocks.first.block.pass1.startDate.weekday;
+        // RV2 (P3) : jours J comptés depuis l'ancrage fixe du programme
+        // (`jWeekday`, `planBlockJ`), pas depuis [start] : un départ
+        // déplacé vers un autre jour de la semaine ne renumérote pas les
+        // séances.
         final weeks = planWeeks(
           plan,
-          startWeekday: weekday,
           labels: PlanStore(this).planLabels,
           view: EvolutionStore(this)._evoWeekEntry,
         );
@@ -710,6 +736,15 @@ class AppStore extends ChangeNotifier {
               )
             : const LegacyWeekKinds.empty();
         program.start = start;
+        // RV2 (P1) : départ affiché (PR2) gardé par le programme créé :
+        // après un bloc suivant, un redémarrage ou un import, la
+        // numérotation affichée reste celle du programme repris.
+        program.firstShown = plan.firstShown.clamp(1, program.weeks.length);
+        if (program.firstShown > 1) {
+          // Comme pour l'instance générée (correctif 20/10/2026) : GtG hors
+          // séance dans les semaines gardées du programme suivi.
+          program.detachGtg(fromWeek: program.firstShown);
+        }
         _overlayGen++;
         SessionAdaptStore(this).syncImportedOverlay();
         return;
@@ -867,6 +902,34 @@ class AppStore extends ChangeNotifier {
   static const _kRecovery = 'kalis_recovery_v1';
   static const _recoveryLimit = 3;
   final ValueNotifier<String?> persistenceError = ValueNotifier<String?>(null);
+
+  /// RV2 (M6) : échecs d'écriture d'affilée depuis la dernière écriture
+  /// acceptée (0 : tout est enregistré). [persistenceError] ne prévient
+  /// qu'au changement de message : un échec répété garde le même texte ;
+  /// ce compteur change à chaque échec, la bannière le montre.
+  final ValueNotifier<int> persistenceFailures = ValueNotifier<int>(0);
+
+  /// RV2 (M6) : écriture refusée ([message] affiché tant qu'elle dure).
+  void _writeFailed(String message) {
+    persistenceError.value = message;
+    persistenceFailures.value = persistenceFailures.value + 1;
+  }
+
+  /// RV2 (M6) : écriture acceptée, plus rien à signaler.
+  void _writeSucceeded() {
+    persistenceError.value = null;
+    persistenceFailures.value = 0;
+  }
+
+  /// RV2 (M9) : copie locale de la sauvegarde d'origine
+  /// (`program_origin_v1`) pas alignée sur [programOrigin] (écriture
+  /// refusée) : nouvel essai après chaque écriture acceptée du document.
+  bool _originLocalStale = false;
+
+  /// RV2 (M9) : injection d'échecs d'écriture de la copie locale de la
+  /// sauvegarde d'origine (tests uniquement).
+  @visibleForTesting
+  Future<bool> Function(String packed)? debugOriginWriteHook;
 
   /// File unique des écritures (KT-013) : sauvegardes ordinaires, achats et
   /// imports s'exécutent un par un, dans l'ordre de leur demande. La file est
@@ -1295,7 +1358,11 @@ class AppStore extends ChangeNotifier {
   /// journal reste la source et n'est jamais réécrit.
   ({TrainingLog log, JournalConversionReport report}) coreTrainingLog() =>
       convertLegacyJournal(
-        jsonDecode(exportAll()) as Map<String, dynamic>,
+        // RV2 (M5) : « Où j'en suis » illisible gardé tel quel, jamais lu
+        // par les moteurs.
+        (jsonDecode(exportAll()) as Map<String, dynamic>)..removeWhere(
+          (k, _) => k == 'programResume' && programResume == null,
+        ),
         exerciseId: content.idFor,
         usesSeconds: (id) => content.byId[id]?.ex.unit.code == 'secondes',
         dayOrder: (w, j) => w >= 1 && w <= program.weeks.length
@@ -1335,10 +1402,12 @@ class AppStore extends ChangeNotifier {
     planProgram: planProgram,
     planRaw: _planRaw,
     programResume: programResume,
+    resumeRaw: _resumeRaw,
     planEvolution: planEvolution,
     evolutionRaw: _evoRaw,
     adapt: adapt,
     programOrigin: programOrigin,
+    originRaw: _originRaw,
     koachEngine: koachEngine,
   );
 
@@ -1392,7 +1461,10 @@ class AppStore extends ChangeNotifier {
       else if (data.planRaw != null)
         'planProgram': data.planRaw,
       if (data.programResume != null)
-        'programResume': data.programResume!.toJson(),
+        'programResume': data.programResume!.toJson()
+      // RV2 (M5) : section illisible au démarrage, réécrite à l'identique.
+      else if (data.resumeRaw != null)
+        'programResume': data.resumeRaw,
       // G10 : propositions du moteur dynamique et suites données, écrites
       // seulement s'il y en a ; ignorées par les versions antérieures
       // (section versionnée, facultative).
@@ -1406,7 +1478,11 @@ class AppStore extends ChangeNotifier {
       // CI1e (C11.2) : programme d'origine sauvegardé avant la première
       // migration (programme et journal d'avant 6.10.0), écrit seulement
       // s'il existe ; ignoré par les versions antérieures.
-      if (data.programOrigin != null) 'programOrigin': data.programOrigin,
+      if (data.programOrigin != null)
+        'programOrigin': data.programOrigin
+      // RV2 (D1) : section illisible au démarrage, réécrite à l'identique.
+      else if (data.originRaw != null)
+        'programOrigin': data.originRaw,
       // KM3 : Koach 1.0 (journal du moteur, instantanés, bascule), écrit
       // seulement s'il sert ; ignoré par les versions antérieures.
       if (!data.koachEngine.pristine) 'koachEngine': data.koachEngine.toJson(),
@@ -1554,12 +1630,27 @@ class AppStore extends ChangeNotifier {
   /// Texte compact de la sauvegarde (Réglages › copier). RV1 : en session
   /// de test, marqué comme l'export de fichier (G1) ; avant, la copie
   /// collée dans la session personnelle passait sans l'avertissement.
+  /// RV2 (M7) : avec les données retirées pas encore copiées (comme
+  /// l'export de fichier).
   String exportCompact() {
-    if (!SessionSpace.isDev) return _pack(exportAll());
-    final data = jsonDecode(exportAll()) as Map<String, dynamic>;
-    data['sessionDeTest'] = true;
-    data['decalageJours'] = KalisClock.offsetDays;
+    final data = _exportDocument();
+    if (SessionSpace.isDev) {
+      data['sessionDeTest'] = true;
+      data['decalageJours'] = KalisClock.offsetDays;
+    }
     return _pack(jsonEncode(data));
+  }
+
+  /// RV2 (M7) : document des exports de l'utilisateur (fichier, copie
+  /// compacte). Données retirées (WOD, séances perso, crédits : G2) dont
+  /// la copie de sécurité a échoué : elles sont encore dans le document du
+  /// téléphone et vont avec lui, telles quelles (avant : absentes du
+  /// fichier, sans le dire). Le fichier se relit comme une sauvegarde de
+  /// 6.0.x : à l'import, l'aperçu les annonce comme ignorées.
+  Map<String, dynamic> _exportDocument() {
+    final data = _backupJson(_currentBackup());
+    _retiredPending.restoreInto(data);
+    return data;
   }
 
   /// [limits] : import d'un texte externe (KT-015). Sans limites : état
@@ -1810,6 +1901,7 @@ class AppStore extends ChangeNotifier {
       }
     }
     ProgramResume? nextResume;
+    Object? resumeRaw;
     final rawResume = m['programResume'];
     if (rawResume != null) {
       try {
@@ -1818,6 +1910,9 @@ class AppStore extends ChangeNotifier {
         if (limits != null) {
           throw const FormatException('« Où j’en suis » illisible.');
         }
+        // RV2 (M5) : démarrage tolérant : section illisible gardée telle
+        // quelle, jamais perdue (comme le programme personnel, RV1 M1).
+        resumeRaw = rawResume;
       }
     }
     // G10 : évolution du programme. Import strict ; démarrage tolérant
@@ -1839,6 +1934,8 @@ class AppStore extends ChangeNotifier {
         }
       }
     }
+    // CI1e (C11.2) : sauvegarde d'origine (lecture tolérante).
+    final origin = _readProgramOrigin(m['programOrigin']);
     // L11 : adaptations. Import strict ; démarrage tolérant.
     final adaptIssues = <String>[];
     final nextAdapt = AdaptData.fromJson(
@@ -1869,13 +1966,15 @@ class AppStore extends ChangeNotifier {
       planRaw: planRaw,
       planIssues: planIssues,
       programResume: nextResume,
+      resumeRaw: resumeRaw,
       planEvolution: nextEvolution,
       evolutionRaw: evolutionRaw,
       evolutionIssues: evolutionIssues,
       adapt: nextAdapt,
       adaptIssues: adaptIssues.length,
       retired: RetiredData.of(m).summary,
-      programOrigin: _readProgramOrigin(m['programOrigin']),
+      programOrigin: origin,
+      originRaw: origin == null && limits == null ? m['programOrigin'] : null,
       koachEngine: KoachEngineData.fromJson(m['koachEngine']),
     );
   }
@@ -1937,6 +2036,7 @@ class AppStore extends ChangeNotifier {
     // CI1e (C11.2) : programme d'origine de la sauvegarde (un import
     // d'avant 6.10.0 garde celui de cet appareil : _commitImport).
     programOrigin = data.programOrigin;
+    _originRaw = data.originRaw;
     // KM3 : journal de Koach de la sauvegarde ; moteur vivant reconstruit.
     koachEngine = data.koachEngine;
     _koachRt
@@ -1953,10 +2053,11 @@ class AppStore extends ChangeNotifier {
     programInstance = data.programInstance;
     _instanceRaw = data.instanceRaw;
     programLoadIssues = data.programIssues;
-    planProgram = data.planProgram;
+    planProgram = _planWithJAnchor(data.planProgram, data.start);
     _planRaw = data.planRaw;
     planLoadIssues = data.planIssues;
     programResume = data.programResume;
+    _resumeRaw = data.resumeRaw;
     planEvolution = data.planEvolution;
     _evoRaw = data.evolutionRaw;
     evolutionLoadIssues = data.evolutionIssues;
@@ -2080,16 +2181,19 @@ class AppStore extends ChangeNotifier {
         return ImportStatus.conflict;
       }
       if (!await _keepRecoveryCopy('import')) {
-        persistenceError.value =
-            'Import interrompu : copie de sécurité impossible. Tes données actuelles sont conservées.';
+        _writeFailed(
+          'Import interrompu : copie de sécurité impossible. Tes données actuelles sont conservées.',
+        );
         return ImportStatus.writeFailed;
       }
       if (!await _writeRaw(encoded)) {
-        persistenceError.value =
-            'La sauvegarde a échoué. Tes données actuelles sont conservées.';
+        _writeFailed(
+          'La sauvegarde a échoué. Tes données actuelles sont conservées.',
+        );
         return ImportStatus.writeFailed;
       }
       final keptOrigin = programOrigin;
+      final keptOriginRaw = _originRaw;
       _applyBackup(data);
       // Aucune cérémonie de niveau ni bilan pour des acquis déjà présents
       // dans la sauvegarde restaurée.
@@ -2099,7 +2203,7 @@ class AppStore extends ChangeNotifier {
       // Mémoire et document écrit sont identiques : plus rien d'antérieur à
       // écrire. Une sauvegarde déjà demandée réécrira simplement cet état.
       _acceptedSeq = _changeSeq;
-      persistenceError.value = null;
+      _writeSucceeded();
       // CI1e (C11.2) : sauvegarde d'avant 6.10.0 importée sans programme
       // d'origine connu : celui d'avant l'import est gardé, sinon il est
       // pris maintenant (puis écrit) ; ajustements de Koach d'avant 6.10.0
@@ -2108,8 +2212,18 @@ class AppStore extends ChangeNotifier {
       if (data.programOrigin == null && keptOrigin != null) {
         programOrigin = keptOrigin;
         write = true;
+        // RV2 (M9) : copie locale refusée plus tôt, réalignée avant
+        // l'écriture du document (si celle-ci échoue, c'est elle qui garde
+        // l'origine au prochain lancement).
+        if (_originLocalStale) {
+          await ProgramOriginStore(this).retryLocalOrigin();
+        }
       } else if (data.programOrigin != null) {
-        ProgramOriginStore(this).syncLocalOrigin();
+        await ProgramOriginStore(this).syncLocalOrigin();
+      } else if (keptOriginRaw != null) {
+        // RV2 (D1) : origine illisible de l'appareil gardée de même.
+        _originRaw = keptOriginRaw;
+        write = true;
       }
       if (ProgramOriginStore(this).captureProgramOrigin()) write = true;
       if (ImportedProgramStore(this).migrateLegacyEvolution()) write = true;
@@ -2123,7 +2237,7 @@ class AppStore extends ChangeNotifier {
   /// d'export et la version de l'application (champs optionnels, ignorés
   /// par les versions précédentes). Instantané synchrone de la mémoire.
   String exportForFile({required String appVersion, DateTime? at}) {
-    final data = _backupJson(_currentBackup());
+    final data = _exportDocument();
     data['exportedAt'] = (at ?? KalisClock.now()).toIso8601String();
     data['appVersion'] = appVersion;
     // G1 : export d'une session de test, reconnu à l'import (champs
@@ -2156,8 +2270,9 @@ class AppStore extends ChangeNotifier {
       if (!_initialized) return const EraseResult(EraseStatus.failed);
       final fresh = _freshData();
       if (!await _writeRaw(_pack(jsonEncode(_backupJson(fresh))))) {
-        persistenceError.value =
-            'Suppression impossible : écriture refusée. Tes données sont intactes.';
+        _writeFailed(
+          'Suppression impossible : écriture refusée. Tes données sont intactes.',
+        );
         return const EraseResult(EraseStatus.failed);
       }
       _applyBackup(fresh);
@@ -2177,7 +2292,7 @@ class AppStore extends ChangeNotifier {
         }
         if (!removed || _prefs.containsKey(key)) remaining.add(key);
       }
-      persistenceError.value = null;
+      _writeSucceeded();
       notifyListeners();
       return EraseResult(
         remaining.isEmpty ? EraseStatus.success : EraseStatus.partial,
@@ -2314,10 +2429,16 @@ class AppStore extends ChangeNotifier {
     final ok = await _writeRaw(_pack(_stateDocument()));
     if (ok) {
       if (seq > _acceptedSeq) _acceptedSeq = seq;
-      persistenceError.value = null;
+      _writeSucceeded();
+      // RV2 (M9) : copie locale de la sauvegarde d'origine refusée plus
+      // tôt : nouvel essai maintenant que le stockage accepte.
+      if (_originLocalStale) {
+        await ProgramOriginStore(this).retryLocalOrigin();
+      }
     } else {
-      persistenceError.value =
-          'Sauvegarde impossible. Tes modifications restent sur cet écran : réessaie avant de fermer l’application.';
+      _writeFailed(
+        'Sauvegarde impossible. Tes modifications restent sur cet écran : réessaie avant de fermer l’application.',
+      );
     }
     return ok;
   }
@@ -2505,13 +2626,17 @@ class AppStore extends ChangeNotifier {
     _dataRevision++;
     _changeSeq++;
     // CI1e (C11.2) : programme importé qui démarre : sauvegarde d'origine.
-    final hadOrigin = programOrigin != null;
-    ProgramOriginStore(this).captureProgramOrigin();
+    // RV2 (M9) : copie locale d'avant, rétablie si l'écriture est refusée.
+    final localBefore = ProgramOriginStore(this).localOriginRaw;
+    final captured = ProgramOriginStore(this).captureProgramOrigin();
     notifyListeners();
     final ok = _initialized && await _serialize(_commitState);
     if (ok) return StartSave.saved;
-    // Écriture refusée : pas de départ annoncé, l'état précédent revient.
-    if (!hadOrigin) programOrigin = null;
+    // Écriture refusée : pas de départ annoncé, l'état précédent revient
+    // (sauvegarde d'origine prise ici comprise, copie locale aussi).
+    if (captured) {
+      await ProgramOriginStore(this).undoProgramOriginCapture(localBefore);
+    }
     program.start = previous.start;
     startOrigin = previous.origin;
     values
@@ -3104,6 +3229,22 @@ class AppStore extends ChangeNotifier {
         seconds: int.parse(hold.group(2) ?? hold.group(1)!),
       );
     }
+    // RV2 (P8) : ligne écrite d'un programme créé (`prescriptionLabel`) :
+    // distance « 4 × 400 m » en mètres, durée « 2 × 10-15 min » en
+    // secondes, comme une ligne servie par le moteur (avant : lues en
+    // répétitions, 400 répétitions pré-remplies).
+    if (RegExp(r'^\d+\s*[×x]\s*\d+\s*m$').hasMatch(low)) {
+      return const LogSpec('distance');
+    }
+    final setsDur = RegExp(
+      r'^\d+\s*[×x]\s*(\d+)(?:-(\d+))?\s*min$',
+    ).firstMatch(low);
+    if (setsDur != null) {
+      return LogSpec(
+        'duration',
+        seconds: int.parse(setsDur.group(2) ?? setsDur.group(1)!) * 60,
+      );
+    }
     if (low.contains('max')) {
       final iso =
           tp.contains('isom') ||
@@ -3674,7 +3815,8 @@ class AppStore extends ChangeNotifier {
       final week = program.week(n);
       final day = week.day(j);
       if (day == null || day.exercises.isEmpty) continue;
-      final title = 'S$n · J$j — ${day.title}';
+      // RV2 (H5) : numérotation affichée (PR2), comme l'accueil.
+      final title = '${program.sessionLabel(n, j)} — ${day.title}';
       var done = 0, total = 0;
       DateTime? last;
       for (final e in entry.value.ex.values) {
@@ -3912,6 +4054,9 @@ class _BackupData {
   final int planIssues;
   final ProgramResume? programResume;
 
+  /// RV2 (M5) : « Où j'en suis » illisible au démarrage, gardé tel quel.
+  final Object? resumeRaw;
+
   /// G10 : évolution du programme (vide si absente ; illisible :
   /// [evolutionRaw]).
   final PlanEvolution planEvolution;
@@ -3928,6 +4073,10 @@ class _BackupData {
   /// CI1e (C11.2) : programme d'origine sauvegardé avant la première
   /// migration (null si absent).
   final Map<String, dynamic>? programOrigin;
+
+  /// RV2 (D1) : section `programOrigin` illisible au démarrage, gardée
+  /// telle quelle.
+  final Object? originRaw;
 
   /// KM3 : Koach 1.0 (neuf si la section est absente).
   final KoachEngineData koachEngine;
@@ -3954,6 +4103,7 @@ class _BackupData {
     this.planRaw,
     this.planIssues = 0,
     this.programResume,
+    this.resumeRaw,
     this.planEvolution = PlanEvolution.empty,
     this.evolutionRaw,
     this.evolutionIssues = 0,
@@ -3961,6 +4111,7 @@ class _BackupData {
     this.adaptIssues = 0,
     this.retired = const RetiredSummary(),
     this.programOrigin,
+    this.originRaw,
     KoachEngineData? koachEngine,
   }) : koach = koach ?? KoachData(),
        adapt = adapt ?? AdaptData(),

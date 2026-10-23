@@ -123,13 +123,7 @@ extension PlanStore on AppStore {
   List<Map<String, dynamic>> _displayedWeeksJson() {
     final plan = planProgram;
     if (plan != null) {
-      return planWeeks(
-        plan,
-        startWeekday:
-            program.start?.weekday ??
-            plan.blocks.first.block.pass1.startDate.weekday,
-        labels: planLabels,
-      );
+      return planWeeks(plan, labels: planLabels);
     }
     final inst = programInstance;
     if (inst != null && inst.generated) return copyWeeks(inst.weeks);
@@ -199,13 +193,25 @@ extension PlanStore on AppStore {
       previous: previous,
       season: _planSeasonFor(c.entry(at).block, c.profile),
       eventsKey: planEventsKey(c.profile.events),
+      // RV2 (P1) : semaines gardées d'un programme repris en cours de route
+      // (PR2) : son départ affiché reste S1 ; sans semaines gardées, tout
+      // le nouveau programme s'affiche.
+      firstShown: s.firstWeek > 1
+          ? program.firstShown.clamp(1, s.firstWeek)
+          : 1,
+      // RV2 (P3) : J1 = jour du départ, fixé une fois pour toutes.
+      jWeekday: s.start.weekday,
     );
     _planProfileLearned(c.profile);
     planProgram = next;
     _planRaw = null;
     programInstance = null;
     _instanceRaw = null;
-    if (s.firstWeek == 1) programResume = null;
+    if (s.firstWeek == 1) {
+      programResume = null;
+      // RV2 (M5) : « Où j'en suis » illisible de l'ancien programme aussi.
+      _resumeRaw = null;
+    }
     startOrigin = 'user';
     _materializeProgram(s.programStart);
     if (c.journalOn) unawaited(savePlanJournal(c));
@@ -799,6 +805,8 @@ extension PlanStore on AppStore {
           (week: wk.n, j: dp.j, training: dp.exercises.isNotEmpty),
     ];
     final keys = resumeKeysFor(days: days, week: w, day: d, logged: _loggedAt);
+    // RV2 (M5) : un nouveau choix remplace l'ancien, même illisible.
+    _resumeRaw = null;
     programResume = ProgramResume(
       at: _planAt,
       week: w,

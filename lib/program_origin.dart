@@ -41,13 +41,23 @@ extension ProgramOriginStore on AppStore {
   /// Prend la sauvegarde d'origine si elle manque et qu'un programme
   /// importé est en place. Vrai si elle vient d'être prise.
   bool captureProgramOrigin() {
-    if (programOrigin != null || !programOriginNeeded) return false;
+    // RV2 (D1) : une sauvegarde d'origine illisible reste la seule : jamais
+    // remplacée par une prise de l'état du jour.
+    if (programOrigin != null || _originRaw != null || !programOriginNeeded) {
+      return false;
+    }
     final local = _readLocalOrigin();
     if (local != null) {
       programOrigin = local;
       return true;
     }
-    final backup = _backupJson(_currentBackup())..remove('programOrigin');
+    // RV2 : copie profonde de l'état du jour. Avant, la sauvegarde
+    // d'origine partageait les tables vivantes du magasin (références,
+    // réglages) : une référence saisie ensuite dans la même session la
+    // modifiait en mémoire, puis dans le document, jamais dans la copie
+    // locale prise au même instant.
+    final now = _backupJson(_currentBackup())..remove('programOrigin');
+    final backup = jsonDecode(jsonEncode(now)) as Map<String, dynamic>;
     programOrigin = {
       'v': 1,
       'at': storeClock().toIso8601String(),
@@ -58,11 +68,18 @@ extension ProgramOriginStore on AppStore {
   }
 
   /// Au démarrage : sauvegarde d'origine prise et écrite si elle manque.
+  /// RV2 (M9) : copie locale réalignée aussi quand elle diffère de celle
+  /// du document (avant : seulement quand elle manquait ; une copie
+  /// restée périmée après une écriture refusée l'était pour toujours, puis
+  /// reprise comme origine d'un document qui n'en avait plus).
   Future<void> ensureProgramOrigin() async {
     if (captureProgramOrigin()) {
       _persist();
-    } else if (programOrigin != null && _readLocalOrigin() == null) {
-      _writeLocalOrigin();
+    } else if (programOrigin != null) {
+      final local = _readLocalOrigin();
+      if (local == null || !kc.jsonDeepEquals(local, programOrigin)) {
+        await _storeLocalOrigin();
+      }
     }
   }
 
@@ -78,16 +95,66 @@ extension ProgramOriginStore on AppStore {
 
   /// Copie locale alignée sur la sauvegarde d'origine du document (import
   /// d'une sauvegarde qui porte la sienne).
-  void syncLocalOrigin() => _writeLocalOrigin();
+  Future<void> syncLocalOrigin() => _storeLocalOrigin();
 
-  void _writeLocalOrigin() {
+  /// RV2 (M9) : copie locale telle qu'écrite (null : aucune), gardée avant
+  /// une prise qui peut être annulée.
+  String? get localOriginRaw {
+    try {
+      return _prefs.getString(_kOrigin);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// RV2 (M9) : prise de la sauvegarde d'origine annulée (départ refusé
+  /// par le stockage) : mémoire et copie locale reviennent à l'état
+  /// d'avant. Avant : la copie locale, prise sur un état jamais écrit
+  /// (départ et références refusés), restait et était reprise telle
+  /// quelle comme origine à la prise suivante.
+  Future<void> undoProgramOriginCapture(String? previousLocal) async {
+    programOrigin = null;
+    _originLocalStale = false;
+    try {
+      final hook = debugOriginWriteHook;
+      if (previousLocal == null) {
+        await _prefs.remove(_kOrigin);
+      } else if (hook != null) {
+        await hook(previousLocal);
+      } else {
+        await _prefs.setString(_kOrigin, previousLocal);
+      }
+    } catch (_) {
+      // Copie locale impossible à rétablir : elle reste, comme avant.
+    }
+  }
+
+  /// RV2 (M9) : nouvel essai de la copie locale refusée plus tôt.
+  Future<void> retryLocalOrigin() => _storeLocalOrigin();
+
+  void _writeLocalOrigin() => unawaited(_storeLocalOrigin());
+
+  /// RV2 (M9) : écriture de la copie locale, résultat contrôlé (avant :
+  /// lancée sans attendre ni regarder la réponse ; un refus laissait une
+  /// copie périmée sans le savoir, une erreur partait hors de toute
+  /// prise). Refusée : marquée à refaire (`_originLocalStale`) ;
+  /// celle du document reste.
+  Future<void> _storeLocalOrigin() async {
     final o = programOrigin;
     if (o == null) return;
+    _originLocalStale = true;
+    var ok = false;
     try {
-      unawaited(_prefs.setString(_kOrigin, AppStore._pack(jsonEncode(o))));
+      final packed = AppStore._pack(jsonEncode(o));
+      final hook = debugOriginWriteHook;
+      ok = hook != null
+          ? await hook(packed)
+          : await _prefs.setString(_kOrigin, packed);
     } catch (_) {
-      // Copie locale impossible : celle du document reste.
+      ok = false;
     }
+    // Une sauvegarde d'origine remplacée entre-temps a son propre essai.
+    if (identical(programOrigin, o)) _originLocalStale = !ok;
   }
 
   /// Date de la sauvegarde d'origine (null : aucune).
@@ -139,7 +206,10 @@ extension ProgramOriginStore on AppStore {
         'planProgram': d.planProgram!.toJson()
       else if (d.planRaw != null)
         'planProgram': d.planRaw,
-      if (d.programResume != null) 'programResume': d.programResume!.toJson(),
+      if (d.programResume != null)
+        'programResume': d.programResume!.toJson()
+      else if (d.resumeRaw != null)
+        'programResume': d.resumeRaw,
       if (!d.planEvolution.isEmpty)
         'planEvolution': d.planEvolution.toJson()
       else if (d.evolutionRaw != null)
@@ -217,6 +287,7 @@ extension ProgramOriginStore on AppStore {
     _planRaw = o.planRaw;
     planLoadIssues = o.planIssues;
     programResume = o.programResume;
+    _resumeRaw = o.resumeRaw;
     planEvolution = o.planEvolution;
     _evoRaw = o.evolutionRaw;
     startOrigin = o.startOrigin;

@@ -21,7 +21,8 @@ import 'health_check.dart' show KoachWhyHeader;
 String _goalText(SetGoal g) {
   final amount = adaptAmount(g.low, g.high, seconds: g.seconds);
   return [
-    if (g.kg != null && g.kg! > 0) adaptKgLabel(g.kg!),
+    // RV2 (A3) : charge dans l'unité choisie (kg ou livres).
+    if (g.kg != null && g.kg! > 0) adaptKgLabel(g.kg!, lb: store.settings.lb),
     if (amount.isNotEmpty) amount,
   ].join(' × ');
 }
@@ -129,6 +130,8 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
               'Tes charges sont calées, on continue.',
           ].join(' ');
     final k = KTokens.of(context);
+    // RV2 (A3) : charges dans l'unité choisie (kg ou livres).
+    final lb = store.settings.lb;
     return KPage.sub(
       key: const ValueKey('adapt-summary'),
       title: 'Fin de séance',
@@ -161,8 +164,8 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
                   ]
                 : [
                     for (final e in progressed)
-                      '${e.name} : ${capacityText(e.before!)} → '
-                          '${capacityText(e.after!)}.',
+                      '${e.name} : ${capacityText(e.before!, lb: lb)} → '
+                          '${capacityText(e.after!, lb: lb)}.',
                   ],
           ),
         if (next.isNotEmpty)

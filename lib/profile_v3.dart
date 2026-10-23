@@ -312,6 +312,70 @@ extension DraftV3 on ProfileDraft {
     }
     if (lifestyleJson.isEmpty) v3.remove('lifestyleUpdatedOn');
   }
+
+  /// RV2 (F4) : questions dont [pruneHidden] effacerait la réponse à
+  /// l'enregistrement (niveau baissé, discipline changée : règle voulue
+  /// C1.6, inchangée), dans l'ordre du parcours ; seulement les réponses
+  /// qui portent quelque chose (une liste vide, « aucune », ne perd rien).
+  /// Le brouillon n'est pas modifié.
+  List<ProfileQuestion> prunedAnswers(ProfileQuestionnaire parcours, int year) {
+    bool filled(ProfileQuestion q) {
+      for (final f in q.fields) {
+        final v = v3[f.split('.').first];
+        if (v == null) continue;
+        if (v is List && v.isEmpty) continue;
+        if (v is Map && v.isEmpty) continue;
+        return true;
+      }
+      return false;
+    }
+
+    final before = {
+      for (final q in parcours.questions)
+        if (q.since >= 3 && filled(q)) q.id,
+    };
+    if (before.isEmpty) return const [];
+    final saved = Map<String, Object?>.of(v3);
+    try {
+      pruneHidden(parcours, year);
+      return [
+        for (final q in parcours.questions)
+          if (before.contains(q.id) && !answered(q)) q,
+      ];
+    } finally {
+      v3
+        ..clear()
+        ..addAll(saved);
+    }
+  }
+}
+
+/// RV2 (F4) : ce que l'avertissement nomme pour une réponse effacée (repli :
+/// le texte de la question).
+const kPrunedAnswerLabels = <String, String>{
+  'training_age': 'ton ancienneté d’entraînement',
+  'training_gap': 'ta pratique en ce moment',
+  'benchmarks': 'tes records',
+  'skills': 'tes figures',
+  'recent_training': 'ton entraînement actuel',
+  'emphasis': 'ta priorité en musculation',
+  'events': 'tes échéances',
+  'specialization': 'ta priorité (mouvement, figure ou muscle)',
+  'weak_points': 'tes points faibles',
+  'running_base': 'ta base en course',
+  'body_weight_goal': 'ton objectif de poids',
+};
+
+/// RV2 (F4) : libellé d'une réponse effacée, avec le nombre d'éléments
+/// d'une liste (« tes records (2) »).
+String prunedAnswerLabel(ProfileQuestion q, ProfileDraft d) {
+  final base = kPrunedAnswerLabels[q.id] ?? q.text;
+  var count = 0;
+  for (final f in q.fields) {
+    final v = d.v3[f.split('.').first];
+    if (v is List) count += v.length;
+  }
+  return count > 0 ? '$base ($count)' : base;
 }
 
 // ======================================================= textes du parcours
