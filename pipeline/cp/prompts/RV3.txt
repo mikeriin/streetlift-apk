@@ -1,0 +1,19 @@
+LOT RV3 — LOT RAPIDE : MODULATION DE LA SEMAINE SELON LE MODE, DEAD HANG AU BILAN BAS, MINEURS RESTANTS (dev7.7.1)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : KB5 validé (C17.50) ; décision C17.51. **Aucune donnée réelle, aucun déchiffrement, aucune clé (C17.33.2).**
+Base : pointe de `main` (dev7.7.0, 83a0170e, ou suivant ; C17.28 : `CLAUDE.md` de `main`, rebase avant de publier, ne défais rien des lots du propriétaire). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/RV3`. `packages/` intacts à l'octet (un bug de moteur trouvé est décrit dans la livraison, pas corrigé ici).
+Lot **rapide** : pas de revue générale, seulement les points ci-dessous ; budget serré (la limite d'utilisation du compte a déjà coupé deux sessions le 22/10) : sous-agents seulement s'ils font gagner du temps réel.
+Livraisons à lire : `LIVRAISON_KB5.md` (§ 3, § 6.2, § 6.4), `LIVRAISON_RV2.md` (mineurs restants), `LIVRAISON_KM6.md` (X8).
+
+1. **Modulation hebdomadaire de Koach selon le mode (C17.51.1)** — décision du propriétaire : « il propose en mode libre et fait en assisté ». Le mode est celui du profil (`GuidanceMode` : Assisté / Libre, réglé dans Évolution), comme le bilan du jour (`adapt/health_check.dart` : assisté = appliqué avec « Annuler » ; libre = proposé avec « Accepter » / garder l'écrit).
+   - **Assisté** : comme dev7.7.0 — la ligne est servie modulée, raison `koach.volume_semaine` en tête et sur la carte ; ajouter « Annuler » (revient aux séries écrites pour cette séance, choix gardé, versé au moteur comme un refus si l'API le permet, sinon simplement servi tel qu'écrit).
+   - **Libre** : la ligne est servie **à ses séries écrites** ; la proposition de Koach est affichée (même texte, au conditionnel : « Koach te propose N séries … ») avec « Accepter » (passe à N séries pour cette séance) et « Garder l'écrit » (par défaut). Jamais de baisse appliquée sans action de l'athlète.
+   - Même règle pour les **ajouts** de la modulation au-dessus de l'écrit, s'il y en a (proposés en libre, appliqués et dits en assisté).
+   - Dire dans la livraison quel mode a le profil d'un utilisateur dont la session porte `mode: assisted` dans `adapt` et `guidanceMode: free` dans le profil (cas possible) : lequel décide, et le corriger si l'application lit le mauvais.
+   - Tests unitaires et widget (deux modes, accepter / garder / annuler), cible émulateur.
+2. **Dead hang au bilan bas (KB5 § 6.4)** : au bilan bas, le groupe E3MOM du squat ne compte plus que le squat ; dire si le dead hang de la pause est retiré par Koach (raison ?) ou servi hors du groupe, et corriger côté application pour que la ligne de la pause reste dans l'enchaînement (servie, ou retirée avec sa raison dite) ; si la cause est dans le moteur, la décrire pour un lot moteur.
+3. **Mineurs restants de RV2** : P10, R6, R7, R8, R10, R13, F5, F6, F7, F9, F11 à F16 (définitions dans `LIVRAISON_RV1.md` § 3) : chacun reproduit, corrigé et testé, ou « non confirmé ».
+
+FIN DE LOT
+- dev7.7.1 sur `main`, contrôle complet `claude/ci-3d` vert sur l'arbre publié (pertes de VM : relancer les jobs ; chaque cible verte dans un essai sur le même `lib/`), build signé réussi. Publication refusée par l'environnement : candidat sur `cp-sauvegardes/RV3-candidat`, livraison et ETAT « à valider », le pilotage publie (C17.49.3).
+- `LIVRAISON_RV3.md` (pipeline et projet claude.ai) ; ligne RV3 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.7.1 prêt » ; arrête-toi (aucun fire_trigger).

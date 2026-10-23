@@ -450,3 +450,8 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Modulation hebdomadaire (X8) : pas de réponse du propriétaire au lancement → raison affichée (C17.48.4).
 - Si la publication sur `main` est refusée par l'environnement (comme pour RV2) : candidat sur `cp-sauvegardes/KB5-candidat`, livraison et ETAT « à valider », le pilotage publie.
 
+
+## RV3 — lot rapide, dev7.7.1 (lancé le 23/10/2026 vers 13:50 UTC, C17.51, tâche « Opus 5.5, effort élevé, application »)
+
+- Prompt : `prompts/RV3.txt`. Base `main` 83a0170e (dev7.7.0). Décision du propriétaire sur la modulation : C17.51.1.
+- Aucun autre lot ne tourne : `claude/ci-3d` est libre.
