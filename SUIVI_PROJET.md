@@ -1,8 +1,18 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : RV1 correction 1 — chronos des groupes au chrono, version dev7.5.1 ; précédent : dev7.5.0 (RV1)**  
-**Date : 22 octobre 2026, Europe/Paris — version : 7.5.1+150, affichée « dev7.5.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.45) ; paquets inchangés ; build signé sur `main`.**
+**Passe actuelle : KB5 — Koach 1.0.8 et `kalis_plan` 0.4.3 dans l'application, version dev7.7.0 ; précédent : dev7.6.0 (RV2)**  
+**Date : 23 octobre 2026, Europe/Paris — version : 7.7.0+152, affichée « dev7.7.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.47, C17.48) ; `kalis_adapt` 1.0.7 et `kalis_plan` 0.4.3 copiés à l'octet de leurs étiquettes ; build signé sur `main`.**
+
+## KB5 — Koach 1.0.8 et `kalis_plan` 0.4.3 dans l'application (version dev7.7.0, pipeline CP, DECISIONS_CP.md C17.48)
+
+- Paquets : `kalis_adapt` 1.0.7 (Koach 1.0.8 ; `lib/`, `assets/koach/`, `pubspec.yaml` de `etiquettes/kalis_adapt-v1.0.7`) et `kalis_plan` 0.4.3 (`etiquettes/kalis_plan-v0.4.3`) copiés à l'octet ; asset `koach_params_1_0_8.json` (`1.0.8-ref.1`, 344 clés, SHA-256 `9d74365e…41d1`) à la place de `koach_params_1_0_7.json` ; fiches `vecteurs_qualites_v1.json` 1.0.1 (SHA-256 `99b0cae2…96e0`).
+- Groupes (X2, X7) : les `GroupSpec` de la séance écrite passent à `plan(seance)` ; les groupes recalés de la sortie (tours, durée d'un EMOM au temps) servent ; une ligne remplacée par l'application (départ chronométré servi tel qu'écrit, intervalles tels qu'écrits, garde) fait recaler son groupe par la règle du moteur (`groupesServis`) sur les lignes servies (diagnostic `groupesRecales` du mode dev). Aperçu : mêmes règles sur les séries de la semaine.
+- Technique (X3) : intervalles d'un EMOM et séries allégées recomptés par `techniqueCoherente` du moteur (sécurité de l'application ; 1.0.8 les rend déjà cohérents).
+- Raison `koach.volume_semaine` (X8, baisse de la modulation hebdomadaire, dite) : en tête de séance et sur la carte de la ligne, gardée après la première série ; jamais une coupe pour la garde ; pas en tête pour une ligne au départ chronométré servie telle qu'écrite (sa carte dit ce que Koach aurait fait).
+- Crédits « chest » (tractions 0, muscle-up et pull-over haltère une demi-série) : rapport « séries par groupe » et structure de la semaine de `kalis_plan`, fiches de Koach.
+- Poulie : 2,5 kg dans le moteur sans profil de pas (X1) ; la colle de RV1 (même valeur) reste.
+- Tests : `test/kb5_koach108_test.dart` ; versions et empreintes à jour ; cible émulateur `integration_test/koach_kb5_test.dart`.
 
 ## RV1c1 — chronos des groupes au chrono (version dev7.5.1, pipeline CP, DECISIONS_CP.md C17.45)
 

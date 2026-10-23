@@ -108,11 +108,11 @@ void main() {
   test('paquets 0.3.1 dans l’application', () {
     // KS1A : kalis_plan 0.4.1 (structure de la semaine, KS1 et KS1c1) ;
     // KB1 : 0.4.2 (KS1c2, aucun jour typé sans son principal).
-    expect(kp.kalisPlanVersion, '0.4.2');
+    expect(kp.kalisPlanVersion, '0.4.3');
     // KM3 : kalis_adapt 1.0.x embarque le code de 0.3.1 à l'identique
     // (KB1 : 1.0.4, Koach 1.0.5 ; KB3 : 1.0.5, Koach 1.0.6 ; KB4 : 1.0.6,
     // Koach 1.0.7).
-    expect(ka.kalisAdaptVersion, '1.0.6');
+    expect(ka.kalisAdaptVersion, '1.0.7');
     // C11 : défaut inchangé pour tous (option du lot CY).
     expect(ka.KalisAdapt().restructureImported, isFalse);
   });
