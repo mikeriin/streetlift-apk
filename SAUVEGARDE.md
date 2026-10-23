@@ -19,3 +19,6 @@ Session du 23/10/2026, début 04:37 UTC. Branche de travail locale `kb5` (base `
 ## Avancement 10:40 UTC
 - Contrôle complet n°2 (run 39919503229, arbre 31cade4f) : contrôles, 1 273 tests Dart, mode dev, paquets VERTS ; émulateur : KB5 a et b VERTS (raison lue dans la feuille ⓘ), RV2, RV1c1, RV1, KB4, CU, G*, M* verts ; à partir de KB3 b : « No supported devices found » (perte de la VM). Ces cibles étaient vertes au run 1 (même lib/).
 - Relance des jobs en échec du run 39919503229 demandée à 10:35 UTC (une fois). Captures KB5 du run 2 dans /tmp (non sauvegardées).
+
+## Fin 13:05 UTC
+- Publié : main 83a0170e ; build signé 39954106798 vert (APK 12502512401) ; livraison (pipeline + projet), ETAT « à valider » (pipeline 230c9a14), page de suivi republiée (version 69). Lot terminé.
