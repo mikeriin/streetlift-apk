@@ -1,0 +1,19 @@
+LOT RV4 — REMPLACEMENT LIBRE D'UN EXERCICE EN MODE LIBRE, RETRAIT D'UN EXERCICE DU JOUR (dev7.7.2)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : RV3 publié (dev7.7.1) ; décision C17.51.5. **Aucune donnée réelle, aucun déchiffrement, aucune clé (C17.33.2).**
+Base : pointe de `main` (dev7.7.1 ou suivant ; C17.28 : `CLAUDE.md` de `main`, rebase avant de publier). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/RV4`. `packages/` intacts à l'octet (si le moteur refuse un exercice hors de ses propositions, décrire la limite pour un lot moteur et faire au mieux côté application).
+Lot court : budget serré, sous-agents seulement s'ils font gagner du temps réel.
+
+CONSTAT DU PROPRIÉTAIRE (23/10/2026, en séance, dev7.7.0) : sans ceinture de lest, il voulait remplacer le dip lesté de la J5 par des HSPU au mur ; « Remplacer » ne proposait pas de HSPU. Demande : « je dois pouvoir choisir l'exercice à remplacer librement si je suis en mode libre ».
+
+1. **Remplacement libre en mode Libre (C17.51.5)** : le mode est celui du profil (C17.51.4).
+   - **Libre** : « Remplacer » ouvre, en plus des propositions actuelles (en tête), une recherche dans **toute la base d'exercices** (1 039 exercices, `kalis_core`) et les exercices personnels de l'utilisateur : recherche par nom sans accents, filtres utiles (discipline, matériel) si l'écran en a déjà, sans refonte. Le choix est appliqué pour **cette séance seulement** (le programme écrit n'est jamais modifié ; une option « aussi les semaines suivantes » seulement si le chemin existe déjà pour les échanges).
+   - L'exercice choisi garde l'**emplacement** : séries écrites, groupe et format (E2MOM, EMOM, intervalles, superset), chrono ; la charge proposée vient de l'historique de l'exercice s'il en a, sinon des a priori de Koach (ou champ vide à remplir), unité adaptée au type (reps, tenue en secondes, charge ajoutée).
+   - Koach reçoit l'exercice réel (observations à son nom) ; un exercice sans fiche Koach est versé comme le fait déjà l'application pour un exercice inconnu (dire lequel) ; jamais de plantage.
+   - **Assisté** : comportement actuel (propositions seulement) ; dire dans l'écran que le choix libre existe en mode Libre (une ligne, sans refonte).
+2. **Retirer un exercice du jour** (proposé au propriétaire le 23/10) : depuis le menu ⋯ de la carte, « Retirer pour aujourd'hui » avec une raison au choix (pas de matériel, douleur, temps, autre) ; la ligne disparaît de la séance du jour, le groupe au chrono se recale sur les lignes restantes (règle de KB5) ; Koach reçoit le retrait comme une séance sans cette ligne (douleur : la conduite sous douleur existante) ; annulable tant que la séance n'est pas finie. Le programme écrit n'est jamais modifié.
+3. **Tests** : widget (recherche, choix d'un exercice hors propositions, HSPU au mur à la place du dip lesté dans l'E2MOM : groupe et chrono gardés, tenue / reps bien saisies) ; Koach actif et arrêté ; Libre et Assisté ; retrait avec et sans groupe ; passage depuis dev7.7.1 sans perte, export / import à l'identique ; cible émulateur (deux thèmes) : J5 avec HSPU au mur à la place du dip lesté.
+
+FIN DE LOT
+- dev7.7.2 sur `main`, contrôle complet `claude/ci-3d` vert sur l'arbre publié (pertes de VM : relancer les jobs ; chaque cible verte dans un essai sur le même `lib/`), build signé réussi. Publication refusée : candidat `cp-sauvegardes/RV4-candidat`, le pilotage publie (C17.49.3).
+- `LIVRAISON_RV4.md` (pipeline et projet claude.ai) ; ligne RV4 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.7.2 prêt » ; arrête-toi (aucun fire_trigger).
