@@ -426,6 +426,14 @@ void main() {
       );
       final base = app.program.week(15).day(j)!;
       app.koachVolumeChoose(15, base, e, false);
+      final st = app.sessionAdapt(15, j)!.koach!;
+      _sonde('ajout_annule', {
+        'refus': st['volumeRefus'],
+        'item': app.sessionAdapt(15, j)!.plan.items
+            .firstWhere((x) => x.slotId == slot)
+            .toJson(),
+      });
+      expect(st['volumeRefus'], isNull);
       expect(seriesPlan(j, slot), v.ecrites);
       expect(app.exLog(15, j, e).sets.length, v.ecrites);
     });

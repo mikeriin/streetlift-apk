@@ -10,7 +10,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
-import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/koach1/koach1_widgets.dart';
 import 'package:streetlift_tracker/koach1/koach_moteur.dart';
 import 'package:streetlift_tracker/models.dart' show Exercise;

@@ -3088,7 +3088,15 @@ extension KoachStore on AppStore {
     );
     var plan = a.plan.copyWith(items: items, groups: groupes.groupes);
     if (plan.validate().isNotEmpty) plan = plan.copyWith(groups: null);
-    if (plan.validate().isNotEmpty) return;
+    if (plan.validate().isNotEmpty) {
+      // Séance gardée telle quelle ; diagnostic du mode dev.
+      st['volumeRefus'] = [
+        for (final x in plan.validate()) '${x.path} ${x.code} ${x.message}',
+      ];
+      _adaptStore(week, day, a, a.copyWith(koach: st));
+      notifyListeners();
+      return;
+    }
     final next = a.copyWith(plan: plan, koach: st);
     final log = sessionLog(week, day.j);
     log.adapt = next.toJson().cast<String, dynamic>();
