@@ -443,3 +443,29 @@ Future<Map<String, Json?>> koachPrevoirCopie(
   final copie = fab.rejouer(koachJournalDe(live.journal));
   return koachPrevoir(copie, p);
 }
+
+/// RV4 (DECISIONS_CP.md C17.52.4) : séance de l'autre lecture du bilan du
+/// jour (avec ou sans la forme du jour) sur une COPIE du moteur (jamais
+/// l'instance vive) : [evenements] versés (`seance_debut`, réponse au
+/// diagnostic), puis `plan(seance)` [seance]. Rend la sortie du plan.
+Json koachSeanceAutre(ko.Koach k, List<Json> evenements, Json seance) {
+  for (final ev in evenements) {
+    k.observe(ev);
+  }
+  return (k.plan(seance)! as Map).cast<String, Object?>();
+}
+
+/// RV4 : [koachSeanceAutre] dans un isolat (la copie est celle du passage
+/// de message), sinon par rejeu (tests).
+Future<Json> koachSeanceAutreCopie(
+  ko.Koach live,
+  KoachFabrique fab,
+  List<Json> evenements,
+  Json seance,
+) async {
+  if (KoachCalcul.isolat) {
+    return Isolate.run(() => koachSeanceAutre(live, evenements, seance));
+  }
+  final copie = fab.rejouer(koachJournalDe(live.journal));
+  return koachSeanceAutre(copie, evenements, seance);
+}

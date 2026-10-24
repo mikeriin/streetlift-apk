@@ -10,6 +10,10 @@ qui ne dessinent rien et ne sont pas suivis ici).
 
 Le relevé `tools/ui_illustrations_empreintes.json` donne l'empreinte SHA-256
 de chaque fichier suivi sur `main` b7996b3f (dev6.11.1, base de la refonte).
+RV4 (DECISIONS_CP.md C17.52.3) : seule exception, l'empreinte de
+`lib/muscle_map_2d.dart` est celle de dev7.7.2 (F13 : intensité « Couleurs »
+dans la clé du cache, dessin abandonné en cas de course) ; le dessin rendu ne
+change pas (rendus de référence identiques).
 
 Usage :
   python3 tools/check_ui_illustrations.py            # échoue si un fichier diffère

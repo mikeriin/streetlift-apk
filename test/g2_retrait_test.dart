@@ -462,9 +462,9 @@ void main() {
     });
   });
 
-  test('version affichée : « 7.7.1 » hors build de développement '
+  test('version affichée : « 7.7.2 » hors build de développement '
       '(RV3)', () {
-    expect(kVersion, '7.7.1');
-    expect(kAppVersion, '7.7.1');
+    expect(kVersion, '7.7.2');
+    expect(kAppVersion, '7.7.2');
   });
 }

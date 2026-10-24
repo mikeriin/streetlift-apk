@@ -1,8 +1,17 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : RV3 — modulation de la semaine selon le mode du profil, dead hang au bilan bas, mineurs restants, version dev7.7.1 ; précédent : dev7.7.0 (KB5)**  
-**Date : 23 octobre 2026, Europe/Paris — version : 7.7.1+153, affichée « dev7.7.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.51) ; `packages/` inchangés ; build signé sur `main`.**
+**Passe actuelle : RV4 — remplacement libre en mode Libre, retrait d'un exercice du jour, F13, bilan du jour selon le mode, version dev7.7.2 ; précédent : dev7.7.1 (RV3)**  
+**Date : 23 octobre 2026, Europe/Paris — version : 7.7.2+154, affichée « dev7.7.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.51.5, C17.52) ; `packages/` inchangés ; build signé sur `main`.**
+
+## RV4 — changements du jour et bilan selon le mode (version dev7.7.2, pipeline CP, DECISIONS_CP.md C17.51.5, C17.52)
+
+- « Remplacer pour aujourd'hui » (menu ⋯ de la carte, ligne sans série validée) : propositions (exercices les plus proches de la base) ; en mode Libre (mode du profil), recherche sans accents dans toute la base (1 039 exercices) et les exercices personnels ; en Assisté, propositions seules et une ligne qui dit que le choix libre existe en Libre. L'exercice choisi garde l'emplacement (séries, groupe, format, chrono, repos) ; unité du remplaçant (tenue en secondes ou répétitions, « 6×30 s · E2MOM »), charge de la dernière fois (sinon à saisir, colonne ouverte pour un exercice chargé). Journal `<ligne>~<exercice>` : Koach reçoit l'exercice réel (sans cible du moteur) ; un exercice personnel n'est pas versé (inconnu du moteur). « Revenir à … » annule.
+- « Retirer pour aujourd'hui » (pas de matériel, douleur, temps, autre) : la ligne disparaît de la séance du jour, son groupe au chrono est recalé (règle de KB5) ; avant le début, Koach sert la séance sans elle ; douleur : conduite sous douleur habituelle ; « Remettre un exercice retiré » (menu de la séance) ou « Annuler » du message, tant que la séance n'est pas finie.
+- Changements gardés dans `SessionLog.changes`, jamais dans le programme écrit ; export / import à l'identique.
+- Bilan du jour sous Koach selon le mode du profil (C17.52.4) : Libre = séance servie sans l'effet de la forme du jour (faits gardés : douleur, temps), proposition au conditionnel (bilan du jour et cartes concernées) avec « Accepter » / « Garder l'écrit » ; Assisté = appliqué et dit, « Annuler ». L'autre lecture est calculée sur une copie du moteur au début ; changer d'avis avant la première série ramène le journal de Koach au début de la séance ; choix versé au moteur à la fin (`allegement` / `volume_plus`).
+- F13 : carte 2D repeinte quand « Couleurs » change (empreinte de `lib/muscle_map_2d.dart` mise à jour, C17.52.3).
+- Tests : `test/rv4_jour_test.dart` ; cible émulateur `integration_test/rv4_remplacement_test.dart`.
 
 ## RV3 — lot rapide (version dev7.7.1, pipeline CP, DECISIONS_CP.md C17.51)
 
