@@ -50,3 +50,9 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
 - Commit local moteurs c7008e9 (non poussé : attendre la fin du run 40107907131). Contrôle complet poussé sur
   claude/ci-cp-a 8c7f9360 (workflow standard ; l'arbre ne recevra ensuite que kalis_bench/docs : CRITERES_KM7.md,
   docs/data/km7). Tests locaux : pytest 359 (après SOURCES.md), kalis_adapt 422, kalis_bench 296 verts.
+
+## 18:50 UTC — incident
+- Le run 40107907131 a vu 87 parts annulées à 18:12 UTC, au démarrage du contrôle complet 40111866107 poussé sur la
+  même branche (leçon : ne rien pousser sur claude/ci-cp-a pendant un run de mise au point). Contrôle complet annulé ;
+  « re-run failed jobs » du run 40107907131 lancé à 18:50 (attempt 2 ; 40 parts vertes gardées). Contrôle complet à
+  relancer APRÈS la publication du run (commit 8c7f936 déjà sur la branche : re-run du run 40111866107 ou nouveau push).
