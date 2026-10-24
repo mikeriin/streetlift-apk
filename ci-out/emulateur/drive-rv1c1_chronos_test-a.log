@@ -1,0 +1,67 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             46.2s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,013ms
+I/Choreographer( 7205): Skipped 49 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 7205): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:39725/5Gxa9QxfRd8=/
+VMServiceFlutterDriver: Isolate found with number: 2670937005722211
+VMServiceFlutterDriver: Isolate 2670937005722211 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 7205): 00:00 +0: RV1c1 a : chronos des groupes au chrono
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 7205): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 7205): app_time_stats: avg=324.04ms min=108.63ms max=683.32ms count=5
+D/EGL_emulation( 7205): app_time_stats: avg=375.88ms min=5.49ms max=1185.99ms count=4
+D/EGL_emulation( 7205): app_time_stats: avg=99.88ms min=17.82ms max=168.79ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=103.87ms min=14.92ms max=200.63ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=118.13ms min=10.49ms max=303.32ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=101.94ms min=12.91ms max=128.06ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=127.79ms min=100.00ms max=218.10ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=101.35ms min=18.94ms max=120.55ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=121.86ms min=13.70ms max=297.81ms count=7
+D/EGL_emulation( 7205): app_time_stats: avg=104.00ms min=13.72ms max=196.92ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=117.71ms min=108.23ms max=140.49ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=102.56ms min=11.69ms max=125.58ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=136.61ms min=101.22ms max=229.57ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=92.15ms min=60.04ms max=109.15ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=132.42ms min=28.18ms max=217.45ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=128.03ms min=16.59ms max=232.11ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=110.93ms min=19.94ms max=206.08ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=112.30ms min=13.91ms max=210.05ms count=10
+I/eetlift_tracker( 7205): Background concurrent mark compact GC freed 2558KB AllocSpace bytes, 11(476KB) LOS objects, 49% free, 2640KB/5281KB, paused 61us,5.015ms total 28.679ms
+W/eetlift_tracker( 7205): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 7205): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 7205): app_time_stats: avg=103.85ms min=15.90ms max=226.74ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=117.61ms min=19.74ms max=195.66ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=101.89ms min=3.88ms max=195.28ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=109.36ms min=11.48ms max=230.07ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=105.24ms min=14.48ms max=204.83ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=114.03ms min=110.34ms max=119.11ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=112.76ms min=12.65ms max=225.16ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=95.63ms min=14.52ms max=139.23ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=120.13ms min=19.75ms max=197.99ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=105.44ms min=24.16ms max=125.23ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=125.73ms min=16.29ms max=242.64ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=109.27ms min=12.89ms max=197.78ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=107.30ms min=6.08ms max=194.22ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=98.86ms min=14.74ms max=206.53ms count=9
+D/EGL_emulation( 7205): app_time_stats: avg=92.61ms min=10.39ms max=163.23ms count=10
+D/EGL_emulation( 7205): app_time_stats: avg=120.45ms min=94.04ms max=182.83ms count=8
+D/EGL_emulation( 7205): app_time_stats: avg=85.87ms min=5.23ms max=122.51ms count=10
+I/flutter ( 7205): 00:38 +1: (tearDownAll)
+I/flutter ( 7205): 00:38 +2: All tests passed!
+All tests passed.

@@ -1,0 +1,35 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "mode": "free",
+  "import": true,
+  "prevue": 15,
+  "koach_actif": true,
+  "depuis": 15,
+  "servie": true,
+  "dip": "NA-S15J5-01",
+  "groupe_avant": {
+    "groupId": "gj5-sl-dips-leste",
+    "format": "emom",
+    "durationSeconds": 720,
+    "intervalSeconds": 120
+  },
+  "series_avant": "6×2 · E2MOM",
+  "page": 1,
+  "menu": true,
+  "action": true,
+  "recherche": true,
+  "hspu": "NA-S15J5-01~cd-hspu-mur-dos",
+  "nom": "HSPU au mur dos au mur",
+  "series_apres": "6×2 · E2MOM",
+  "groupe_apres": {
+    "groupId": "gj5-sl-dips-leste",
+    "format": "emom",
+    "durationSeconds": 720,
+    "intervalSeconds": 120
+  },
+  "kg": false,
+  "carte": true,
+  "programme_intact": true
+}

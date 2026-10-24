@@ -1,0 +1,61 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "mode": "free",
+  "import": true,
+  "prevue": 15,
+  "koach_actif": true,
+  "depuis": 15,
+  "servie": true,
+  "mode_seance": "free",
+  "volume": {
+    "j2-sl-pompe-lestee-gilet": {
+      "exerciseId": "sl-pompe-lestee-gilet",
+      "series": 3,
+      "ecrites": 4,
+      "module": -1,
+      "applique": false
+    },
+    "j2-mu-developpe-militaire-barre-debout": {
+      "exerciseId": "mu-developpe-militaire-barre-debout",
+      "series": 2,
+      "ecrites": 3,
+      "module": -1,
+      "applique": false
+    },
+    "j2-mu-pushdown-corde": {
+      "exerciseId": "mu-pushdown-corde",
+      "series": 2,
+      "ecrites": 3,
+      "module": -1,
+      "applique": false
+    },
+    "j2-mu-elevation-laterale-halteres": {
+      "exerciseId": "mu-elevation-laterale-halteres",
+      "series": 2,
+      "ecrites": 3,
+      "module": -1,
+      "applique": false
+    }
+  },
+  "ligne": "sl-pompe-lestee-gilet",
+  "series": 3,
+  "ecrites": 4,
+  "applique_avant": false,
+  "lignes_avant": 4,
+  "entete": [
+    "Koach te propose 3 séries sur Pompe lestée au gilet au lieu de 4 cette semaine : accepte-les ou garde l’écrit sur sa carte.",
+    "Koach te propose 2 séries sur Développé militaire barre debout au lieu de 3 cette semaine : accepte-les ou garde l’écrit sur sa carte.",
+    "Koach te propose 2 séries sur Pushdown à la corde au lieu de 3 cette semaine : accepte-les ou garde l’écrit sur sa carte.",
+    "Koach te propose 2 séries sur Élévation latérale haltères au lieu de 3 cette semaine : accepte-les ou garde l’écrit sur sa carte."
+  ],
+  "page": 2,
+  "bouton": true,
+  "garder_ecrit": true,
+  "fait": true,
+  "applique_apres": true,
+  "choix": "applique",
+  "lignes_apres": 3,
+  "invalide": null
+}

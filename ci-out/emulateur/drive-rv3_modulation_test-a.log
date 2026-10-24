@@ -1,0 +1,68 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             47.8s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,485ms
+D/FlutterRenderer( 5049): Width is zero. 0,0
+I/WindowExtensionsImpl( 5049): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 5049): Width is zero. 0,0
+D/FlutterJNI( 5049): Sending viewport metrics to the engine.
+W/HWUI    ( 5049): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 5049): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 5049): mapper 4.x is not supported
+I/eetlift_tracker( 5049): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 5049): Skipped 58 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 5049): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40303/mtTlb15iNks=/
+VMServiceFlutterDriver: Isolate found with number: 1094512509659003
+VMServiceFlutterDriver: Isolate 1094512509659003 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 5049): 00:00 +0: RV3 a (sombre, rouge) : modulation de la semaine selon le mode du profil
+VMServiceFlutterDriver: Connected to Flutter application.
+D/EGL_emulation( 5049): app_time_stats: avg=253.90ms min=10.85ms max=471.80ms count=7
+D/ProfileInstaller( 5049): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 5049): app_time_stats: avg=285.41ms min=5.35ms max=972.96ms count=6
+D/EGL_emulation( 5049): app_time_stats: avg=121.29ms min=14.78ms max=261.31ms count=8
+D/EGL_emulation( 5049): app_time_stats: avg=4858.06ms min=133.33ms max=13736.59ms count=3
+D/EGL_emulation( 5049): app_time_stats: avg=117.96ms min=10.97ms max=255.56ms count=9
+D/EGL_emulation( 5049): app_time_stats: avg=109.71ms min=10.71ms max=220.26ms count=10
+D/EGL_emulation( 5049): app_time_stats: avg=119.10ms min=7.43ms max=312.57ms count=9
+D/EGL_emulation( 5049): app_time_stats: avg=94.45ms min=3.40ms max=125.89ms count=9
+D/EGL_emulation( 5049): app_time_stats: avg=118.04ms min=99.74ms max=192.09ms count=8
+D/EGL_emulation( 5049): app_time_stats: avg=165.37ms min=8.61ms max=658.24ms count=9
+D/EGL_emulation( 5049): app_time_stats: avg=221.58ms min=172.01ms max=337.88ms count=5
+D/EGL_emulation( 5049): app_time_stats: avg=1497.48ms min=184.70ms max=2810.27ms count=2
+W/WindowOnBackDispatcher( 5049): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5049): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5049): app_time_stats: avg=202.18ms min=171.34ms max=302.64ms count=6
+D/EGL_emulation( 5049): app_time_stats: avg=108.52ms min=14.59ms max=210.41ms count=8
+D/EGL_emulation( 5049): app_time_stats: avg=99.22ms min=17.20ms max=132.89ms count=10
+D/EGL_emulation( 5049): app_time_stats: avg=318.39ms min=108.76ms max=880.06ms count=5
+D/EGL_emulation( 5049): app_time_stats: avg=204.90ms min=10.30ms max=428.09ms count=5
+D/EGL_emulation( 5049): app_time_stats: avg=143.46ms min=111.92ms max=339.57ms count=9
+D/EGL_emulation( 5049): app_time_stats: avg=118.40ms min=12.99ms max=254.11ms count=8
+D/EGL_emulation( 5049): app_time_stats: avg=134.17ms min=115.43ms max=179.61ms count=8
+D/EGL_emulation( 5049): app_time_stats: avg=118.78ms min=13.16ms max=221.09ms count=8
+D/EGL_emulation( 5049): app_time_stats: avg=111.11ms min=11.94ms max=223.12ms count=9
+D/EGL_emulation( 5049): app_time_stats: avg=170.12ms min=110.22ms max=398.80ms count=6
+W/eetlift_tracker( 5049): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 5049): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 5049): app_time_stats: avg=90.91ms min=4.81ms max=139.68ms count=9
+D/EGL_emulation( 5049): app_time_stats: avg=165.35ms min=107.31ms max=236.95ms count=7
+D/EGL_emulation( 5049): app_time_stats: avg=222.87ms min=159.60ms max=296.52ms count=5
+D/EGL_emulation( 5049): app_time_stats: avg=175.56ms min=165.30ms max=186.56ms count=6
+I/flutter ( 5049): 00:47 +1: (tearDownAll)
+I/flutter ( 5049): 00:47 +2: All tests passed!
+All tests passed.

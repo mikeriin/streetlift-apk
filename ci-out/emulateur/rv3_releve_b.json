@@ -1,0 +1,61 @@
+{
+  "partie": "b",
+  "theme": "clair",
+  "couleur_dominante": "violet",
+  "mode": "assisted",
+  "import": true,
+  "prevue": 15,
+  "koach_actif": true,
+  "depuis": 15,
+  "servie": true,
+  "mode_seance": "assisted",
+  "volume": {
+    "j2-sl-pompe-lestee-gilet": {
+      "exerciseId": "sl-pompe-lestee-gilet",
+      "series": 3,
+      "ecrites": 4,
+      "module": -1,
+      "applique": true
+    },
+    "j2-mu-developpe-militaire-barre-debout": {
+      "exerciseId": "mu-developpe-militaire-barre-debout",
+      "series": 2,
+      "ecrites": 3,
+      "module": -1,
+      "applique": true
+    },
+    "j2-mu-pushdown-corde": {
+      "exerciseId": "mu-pushdown-corde",
+      "series": 2,
+      "ecrites": 3,
+      "module": -1,
+      "applique": true
+    },
+    "j2-mu-elevation-laterale-halteres": {
+      "exerciseId": "mu-elevation-laterale-halteres",
+      "series": 2,
+      "ecrites": 3,
+      "module": -1,
+      "applique": true
+    }
+  },
+  "ligne": "sl-pompe-lestee-gilet",
+  "series": 3,
+  "ecrites": 4,
+  "applique_avant": true,
+  "lignes_avant": 3,
+  "entete": [
+    "Cette semaine, je te propose 3 séries sur « Pompe lestée au gilet » au lieu des 4 écrites : je répartis l’effort de la semaine d’après ta récupération prévue.",
+    "Cette semaine, je te propose 2 séries sur « Développé militaire barre debout » au lieu des 3 écrites : je répartis l’effort de la semaine d’après ta récupération prévue.",
+    "Cette semaine, je te propose 2 séries sur « Pushdown à la corde » au lieu des 3 écrites : je répartis l’effort de la semaine d’après ta récupération prévue.",
+    "Cette semaine, je te propose 2 séries sur « Élévation latérale haltères » au lieu des 3 écrites : je répartis l’effort de la semaine d’après ta récupération prévue."
+  ],
+  "page": 2,
+  "bouton": true,
+  "garder_ecrit": false,
+  "fait": true,
+  "applique_apres": false,
+  "choix": "ecrit",
+  "lignes_apres": 4,
+  "invalide": null
+}

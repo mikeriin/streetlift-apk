@@ -1,0 +1,43 @@
+{
+  "partie": "b",
+  "theme": "clair",
+  "palette": "neon",
+  "taille": 110,
+  "avant": {
+    "barre": "TENUE",
+    "groupe": false
+  },
+  "captures": [
+    "avant_e3mom_tenue",
+    "apres_e3mom_tenue",
+    "apres_e3mom_tenue_finie",
+    "apres_e3mom_tour4",
+    "apres_intervalles",
+    "apres_tenue_hors_groupe"
+  ],
+  "e3mom": {
+    "tour3": "TOUR 3/6",
+    "sabliers": 6,
+    "apresSablier": "TOUR 3/6",
+    "secondaire": "TENUE",
+    "apresValidation": "TOUR 3/6",
+    "tenueValidee": true,
+    "tenue": "TERMINÉ",
+    "tour4": "TOUR 4/6"
+  },
+  "intervalles": {
+    "sabliers": 0,
+    "lancer": 1,
+    "effort1": "EFFORT 1/8",
+    "apresTour": "EFFORT 1/8",
+    "repos1": "REPOS 1/8",
+    "effort2": "EFFORT 2/8"
+  },
+  "horsGroupe": {
+    "barre": "TENUE",
+    "groupe": false,
+    "secondaire": false,
+    "plus15": 1
+  },
+  "exceptions": "null"
+}

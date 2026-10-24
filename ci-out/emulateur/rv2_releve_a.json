@@ -1,0 +1,113 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "palette": "bordeaux",
+  "taille": 90,
+  "s6": {
+    "prerempli": "8",
+    "validee": true,
+    "barre": "REPOS",
+    "messages": 1,
+    "record": 1,
+    "barres": 1,
+    "auDessus": true
+  },
+  "captures": [
+    "s6_record_barre_repos",
+    "s10_effort1",
+    "s10_effort2_sans_recuperation",
+    "s11_tenue_vide",
+    "s11_tenue_40s_validee",
+    "s15_repos_complet",
+    "accueil_s2_a_reprendre",
+    "mon_programme",
+    "ma_saison",
+    "ma_saison_bloc_a_cheval",
+    "profil_f4_avertissement",
+    "profil_f4_annule",
+    "m6_banniere_deux_echecs",
+    "m6_enregistre"
+  ],
+  "erreurs": [],
+  "s10": {
+    "recuperationSans": 0,
+    "recuperationAvec": 20,
+    "titreSans": "Intervalles · 3 × 30 s",
+    "titreAvec": "Intervalles · 3 × 30 s, récupération 20 s",
+    "effort1": "EFFORT 1/3",
+    "apres31s": "EFFORT 2/3",
+    "apres61s": "EFFORT 3/3"
+  },
+  "s11": {
+    "videValidee": false,
+    "messageSecondes": 1,
+    "messageReps": 0,
+    "validee40s": true,
+    "record": 0
+  },
+  "s15": {
+    "titres": 1,
+    "texte": "Repos complet",
+    "capitales": 0
+  },
+  "import": true,
+  "accueil": {
+    "libelles": [
+      "S14 (ancien)",
+      "S1",
+      "S2"
+    ],
+    "aReprendre": [
+      "S1 · J1 — TIRAGE LOURD + MUSCLE-UP"
+    ],
+    "finProgramme": "Fin du programme (S10)",
+    "semaine24": "10",
+    "numerosInternes": 0
+  },
+  "monProgramme": {
+    "numerosInternes": 0
+  },
+  "maSaison": {
+    "vue": true,
+    "semainesAffichees": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "phaseAvantS1": false
+  },
+  "maSaisonACheval": {
+    "semaines": [
+      17,
+      18,
+      19
+    ],
+    "blocAffiche": 0,
+    "premierePhase": true,
+    "phaseAvantS1": false
+  },
+  "profilF4": {
+    "dialogue": 1,
+    "records": 1,
+    "echeances": 1,
+    "annuler": 1,
+    "apresAnnuler": 0,
+    "parcoursOuvert": true,
+    "profilInchange": true
+  },
+  "m6": {
+    "avant": 0,
+    "premierEchec": 1,
+    "echecs1": 1,
+    "deuxiemeEchec": 1,
+    "echecs2": 2,
+    "echecsApres": 0,
+    "texteDeuxEchecs": 1,
+    "reessayer": 1,
+    "accepte": true,
+    "apres": 0,
+    "erreur": null
+  }
+}

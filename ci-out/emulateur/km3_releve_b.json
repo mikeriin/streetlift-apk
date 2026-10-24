@@ -1,0 +1,92 @@
+{
+  "partie": "b",
+  "theme": "clair",
+  "couleur_dominante": "violet",
+  "import": true,
+  "perso_koach_actif": false,
+  "perso_bascule": "fermée",
+  "perso_installation": "2026-10-24",
+  "perso_origine": true,
+  "perso_journal_identique": true,
+  "jour": "S15-J6",
+  "perso_export_seances": 84,
+  "perso_export_type": "journal_moteur",
+  "perso_carte_attente": true,
+  "dev_actif": true,
+  "dev_espace": true,
+  "dev_import": true,
+  "dev_prise_de_main_ms": 15000,
+  "dev_koach_actif": true,
+  "dev_depuis": 15,
+  "dev_evenements": 2022,
+  "dev_seance": "S15-J6",
+  "dev_apercu": true,
+  "dev_debut_ms": 6,
+  "dev_debut_appuis": [],
+  "dev_temps_debut": {
+    "prise_de_main": {
+      "dernier_ms": 14248.69,
+      "max_ms": 14248.69
+    },
+    "bilan_autre": {
+      "dernier_ms": 298.628,
+      "max_ms": 298.628
+    },
+    "plan_seance": {
+      "dernier_ms": 21.12,
+      "max_ms": 21.12
+    },
+    "debut_seance": {
+      "dernier_ms": 438.43,
+      "max_ms": 438.43
+    }
+  },
+  "dev_seance_ouverte": true,
+  "dev_items_servis": 4,
+  "dev_cible_0": {
+    "kg": 0.0,
+    "bas": 2,
+    "haut": 2,
+    "flammes": 6
+  },
+  "dev_serie_validee": true,
+  "dev_serie_ms": 4.667,
+  "dev_suggestion_visible": true,
+  "dev_suggestion_refusee": "non",
+  "dev_versee": true,
+  "dev_decision_raison": "too_heavy",
+  "dev_evolution_actif": true,
+  "dev_temps": {
+    "prise_de_main": {
+      "dernier_ms": 14248.69,
+      "max_ms": 14248.69
+    },
+    "bilan_autre": {
+      "dernier_ms": 298.628,
+      "max_ms": 298.628
+    },
+    "plan_seance": {
+      "dernier_ms": 21.12,
+      "max_ms": 21.12
+    },
+    "debut_seance": {
+      "dernier_ms": 438.43,
+      "max_ms": 438.43
+    },
+    "plan_serie": {
+      "dernier_ms": 0.132,
+      "max_ms": 2.429
+    },
+    "observe_serie": {
+      "dernier_ms": 1.621,
+      "max_ms": 1.621
+    },
+    "prevision": {
+      "dernier_ms": 110.237,
+      "max_ms": 110.237
+    }
+  },
+  "dev_arret": true,
+  "dev_reactive": true,
+  "perso_intacte": true
+}

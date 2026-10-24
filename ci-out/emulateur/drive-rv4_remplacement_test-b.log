@@ -1,0 +1,97 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             48.4s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,443ms
+D/FlutterRenderer( 4784): Width is zero. 0,0
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4784): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4784): Skipped 49 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:34945/D1CM-7D480M=/
+VMServiceFlutterDriver: Isolate found with number: 7421370041314683
+VMServiceFlutterDriver: Isolate 7421370041314683 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4784): 00:00 +0: RV4 b (clair, violet) : HSPU au mur à la place du dip lesté (J5, E2MOM)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4784): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4784): app_time_stats: avg=400.62ms min=116.35ms max=730.39ms count=4
+D/EGL_emulation( 4784): app_time_stats: avg=133.10ms min=6.34ms max=347.94ms count=8
+D/EGL_emulation( 4784): app_time_stats: avg=289.81ms min=6.56ms max=1004.72ms count=5
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+D/EGL_emulation( 4784): app_time_stats: avg=177.34ms min=121.86ms max=278.17ms count=6
+I/eetlift_tracker( 4784): Background concurrent mark compact GC freed 2200KB AllocSpace bytes, 25(1276KB) LOS objects, 49% free, 2740KB/5481KB, paused 49us,63.246ms total 167.175ms
+D/EGL_emulation( 4784): app_time_stats: avg=7397.46ms min=787.93ms max=14006.99ms count=2
+D/EGL_emulation( 4784): app_time_stats: avg=115.67ms min=5.16ms max=197.95ms count=8
+D/EGL_emulation( 4784): app_time_stats: avg=101.73ms min=9.46ms max=197.06ms count=10
+D/EGL_emulation( 4784): app_time_stats: avg=90.36ms min=10.42ms max=107.36ms count=10
+D/EGL_emulation( 4784): app_time_stats: avg=106.52ms min=7.62ms max=215.45ms count=9
+D/EGL_emulation( 4784): app_time_stats: avg=115.82ms min=82.06ms max=238.66ms count=8
+D/EGL_emulation( 4784): app_time_stats: avg=163.63ms min=10.88ms max=719.61ms count=8
+D/EGL_emulation( 4784): app_time_stats: avg=212.61ms min=163.68ms max=325.06ms count=5
+D/EGL_emulation( 4784): app_time_stats: avg=2889.31ms min=189.72ms max=5588.89ms count=2
+D/EGL_emulation( 4784): app_time_stats: avg=206.65ms min=74.82ms max=337.82ms count=5
+W/WindowOnBackDispatcher( 4784): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4784): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4784): app_time_stats: avg=175.86ms min=78.06ms max=313.05ms count=6
+D/EGL_emulation( 4784): app_time_stats: avg=111.43ms min=12.23ms max=212.64ms count=10
+D/EGL_emulation( 4784): app_time_stats: avg=103.29ms min=18.35ms max=201.18ms count=10
+D/EGL_emulation( 4784): app_time_stats: avg=437.76ms min=254.85ms max=697.88ms count=3
+D/EGL_emulation( 4784): app_time_stats: avg=129.67ms min=64.36ms max=190.47ms count=8
+D/EGL_emulation( 4784): app_time_stats: avg=145.41ms min=29.25ms max=280.32ms count=7
+D/EGL_emulation( 4784): app_time_stats: avg=96.90ms min=26.22ms max=137.95ms count=9
+D/EGL_emulation( 4784): app_time_stats: avg=251.89ms min=91.32ms max=624.34ms count=4
+D/EGL_emulation( 4784): app_time_stats: avg=97.04ms min=16.21ms max=120.06ms count=10
+I/ImeTracker( 4784): fr.tchoupi.streetlift_tracker:ad2a80c9: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4784): showSoftInput() view=io.flutter.embedding.android.FlutterView{1858841 VFE...... .F....ID 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4784): fr.tchoupi.streetlift_tracker:35cd672a: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4784): showSoftInput() view=io.flutter.embedding.android.FlutterView{1858841 VFE...... .F....ID 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/AssistStructure( 4784): Flattened final assist data: 544 bytes, containing 1 windows, 3 views
+D/InputConnectionAdaptor( 4784): The input method toggled cursor monitoring on
+D/EGL_emulation( 4784): app_time_stats: avg=199.63ms min=123.91ms max=348.34ms count=6
+D/InsetsController( 4784): show(ime(), fromIme=true)
+D/InsetsController( 4784): show(ime(), fromIme=true)
+I/ImeTracker( 4784): fr.tchoupi.streetlift_tracker:35cd672a: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+W/InteractionJankMonitor( 4784): Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+I/ImeTracker( 4784): fr.tchoupi.streetlift_tracker:ad2a80c9: onShown
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+D/EGL_emulation( 4784): app_time_stats: avg=23287.06ms min=916.97ms max=45657.16ms count=2
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+D/EGL_emulation( 4784): app_time_stats: avg=241.24ms min=124.14ms max=359.62ms count=5
+W/FrameTracker( 4784): Missed SF frame:UNKNOWN: 80, 49860, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@fr.tchoupi.streetlift_tracker>
+D/EGL_emulation( 4784): app_time_stats: avg=162.98ms min=149.63ms max=171.68ms count=7
+I/ImeTracker( 4784): fr.tchoupi.streetlift_tracker:f7e043f5: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+D/InsetsController( 4784): hide(ime(), fromIme=true)
+D/InputConnectionAdaptor( 4784): The input method toggled cursor monitoring off
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+I/ImeTracker( 4784): fr.tchoupi.streetlift_tracker:c6ec49d5: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_ON_ANIMATION_STATE_CHANGED fromUser false
+I/ImeTracker( 4784): fr.tchoupi.streetlift_tracker:f7e043f5: onHidden
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+D/FlutterJNI( 4784): Sending viewport metrics to the engine.
+D/EGL_emulation( 4784): app_time_stats: avg=860.76ms min=70.26ms max=1651.26ms count=2
+D/EGL_emulation( 4784): app_time_stats: avg=209.98ms min=10.14ms max=474.46ms count=5
+D/EGL_emulation( 4784): app_time_stats: avg=97.52ms min=12.19ms max=192.50ms count=10
+W/eetlift_tracker( 4784): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4784): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4784): app_time_stats: avg=140.35ms min=8.43ms max=405.11ms count=9
+D/EGL_emulation( 4784): app_time_stats: avg=129.68ms min=111.04ms max=174.21ms count=8
+D/EGL_emulation( 4784): app_time_stats: avg=115.66ms min=110.73ms max=119.64ms count=9
+D/EGL_emulation( 4784): app_time_stats: avg=145.06ms min=115.09ms max=248.51ms count=7
+D/EGL_emulation( 4784): app_time_stats: avg=173.63ms min=111.41ms max=227.60ms count=6
+D/EGL_emulation( 4784): app_time_stats: avg=197.98ms min=176.67ms max=227.46ms count=6
+I/flutter ( 4784): 00:57 +1: (tearDownAll)
+I/flutter ( 4784): 00:57 +2: All tests passed!
+All tests passed.

@@ -1,0 +1,16 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "perso_accueil": true,
+  "perso_jour": "S2-J4",
+  "perso_sans_etape": true,
+  "dev_actif": true,
+  "dev_jour": "S1-J3",
+  "dev_note_du_bloc": true,
+  "dev_etape": true,
+  "dev_rappel": true,
+  "dev_confirme": true,
+  "retour_perso": true,
+  "perso_intacte": true
+}

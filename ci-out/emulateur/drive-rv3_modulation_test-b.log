@@ -1,0 +1,69 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             46.6s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,304ms
+D/FlutterRenderer( 5268): Width is zero. 0,0
+D/FlutterJNI( 5268): Sending viewport metrics to the engine.
+W/HWUI    ( 5268): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 5268): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 5268): mapper 4.x is not supported
+I/eetlift_tracker( 5268): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 5268): Skipped 53 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 5268): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:38349/M9hRWcFLOZ4=/
+VMServiceFlutterDriver: Isolate found with number: 8026715616689891
+VMServiceFlutterDriver: Isolate 8026715616689891 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 5268): 00:00 +0: RV3 b (clair, violet) : modulation de la semaine selon le mode du profil
+VMServiceFlutterDriver: Connected to Flutter application.
+D/EGL_emulation( 5268): app_time_stats: avg=331.68ms min=29.73ms max=664.18ms count=4
+D/ProfileInstaller( 5268): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 5268): app_time_stats: avg=346.43ms min=134.66ms max=967.25ms count=5
+D/FlutterJNI( 5268): Sending viewport metrics to the engine.
+D/EGL_emulation( 5268): app_time_stats: avg=221.87ms min=123.26ms max=394.15ms count=5
+D/EGL_emulation( 5268): app_time_stats: avg=477.57ms min=112.32ms max=747.71ms count=3
+I/eetlift_tracker( 5268): Background concurrent mark compact GC freed 2232KB AllocSpace bytes, 25(1276KB) LOS objects, 49% free, 2740KB/5481KB, paused 92us,45.934ms total 3.051s
+D/EGL_emulation( 5268): app_time_stats: avg=13902.99ms min=13902.99ms max=13902.99ms count=1
+D/EGL_emulation( 5268): app_time_stats: avg=93.98ms min=8.44ms max=185.67ms count=9
+D/EGL_emulation( 5268): app_time_stats: avg=90.00ms min=10.67ms max=200.46ms count=10
+D/EGL_emulation( 5268): app_time_stats: avg=117.90ms min=99.43ms max=199.39ms count=8
+D/EGL_emulation( 5268): app_time_stats: avg=109.06ms min=9.74ms max=203.09ms count=9
+D/EGL_emulation( 5268): app_time_stats: avg=82.63ms min=1.92ms max=204.01ms count=10
+D/EGL_emulation( 5268): app_time_stats: avg=120.85ms min=14.55ms max=234.43ms count=8
+D/EGL_emulation( 5268): app_time_stats: avg=335.41ms min=167.98ms max=517.61ms count=3
+D/EGL_emulation( 5268): app_time_stats: avg=671.67ms min=172.45ms max=2625.00ms count=5
+D/EGL_emulation( 5268): app_time_stats: avg=164.15ms min=77.71ms max=248.83ms count=6
+W/WindowOnBackDispatcher( 5268): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5268): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5268): app_time_stats: avg=153.89ms min=113.96ms max=280.96ms count=7
+D/EGL_emulation( 5268): app_time_stats: avg=99.07ms min=15.93ms max=198.19ms count=10
+D/EGL_emulation( 5268): app_time_stats: avg=129.43ms min=27.30ms max=347.82ms count=7
+D/EGL_emulation( 5268): app_time_stats: avg=595.09ms min=422.38ms max=767.80ms count=2
+D/EGL_emulation( 5268): app_time_stats: avg=102.26ms min=2.57ms max=163.57ms count=9
+D/EGL_emulation( 5268): app_time_stats: avg=140.49ms min=117.01ms max=223.45ms count=8
+W/eetlift_tracker( 5268): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 5268): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 5268): app_time_stats: avg=136.37ms min=28.55ms max=228.07ms count=8
+D/EGL_emulation( 5268): app_time_stats: avg=117.96ms min=104.14ms max=134.40ms count=9
+D/EGL_emulation( 5268): app_time_stats: avg=100.14ms min=3.36ms max=226.32ms count=10
+D/EGL_emulation( 5268): app_time_stats: avg=143.41ms min=31.82ms max=335.63ms count=8
+D/EGL_emulation( 5268): app_time_stats: avg=119.17ms min=26.43ms max=212.49ms count=9
+D/EGL_emulation( 5268): app_time_stats: avg=180.30ms min=117.67ms max=280.82ms count=6
+D/EGL_emulation( 5268): app_time_stats: avg=130.56ms min=93.60ms max=203.20ms count=6
+D/EGL_emulation( 5268): app_time_stats: avg=149.49ms min=70.79ms max=200.62ms count=6
+I/flutter ( 5268): 00:47 +1: (tearDownAll)
+I/flutter ( 5268): 00:47 +2: All tests passed!
+All tests passed.
