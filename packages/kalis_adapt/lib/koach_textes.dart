@@ -5,7 +5,7 @@
 ///
 /// Codes couverts :
 ///
-/// - les 24 codes `koach.*` émis par la séance (`reference/CONTRAT_1_0.md`,
+/// - les 25 codes `koach.*` émis par la séance (1.0.9 : `koach.remplacement`) (`reference/CONTRAT_1_0.md`,
 ///   § 3.5 ; `lib/src/koach/seance.dart`), avec leurs paramètres et leurs
 ///   causes ([koachCodesRaisons], [koachCausesRaisons]) ;
 /// - la surveillance hors modèle (`Surveillance`, contrat § 3.7.2) : causes
@@ -60,6 +60,7 @@ const List<String> koachCodesRaisons = <String>[
   'koach.seance_bornee',
   'koach.ajout_borne',
   'koach.volume_semaine',
+  'koach.remplacement',
 ];
 
 /// Valeurs du paramètre `cause` que la séance émet, par code (relevé dans
@@ -116,6 +117,12 @@ const Map<String, List<String>> koachCausesRaisons = <String, List<String>>{
   'koach.zone_fragile': <String>['surcharge', 'hausse'],
   'koach.tendon': <String>['total'],
   'koach.volume_semaine': <String>['planification'],
+  'koach.remplacement': <String>[
+    'pas_de_materiel',
+    'douleur',
+    'trop_dur',
+    'autre',
+  ],
 };
 
 /// Causes de l'alerte hors modèle (`ruptureCauses`, contrat § 3.7.2).
@@ -379,6 +386,8 @@ String _texteKoach(String code, Map<String, Object?> p, NomExercice? noms) {
       return _texteAjoutBorne(p, ex);
     case 'koach.volume_semaine':
       return _texteVolumeSemaine(p, ex);
+    case 'koach.remplacement':
+      return _texteRemplacement(p, ex, noms);
     case 'koach.seance_bornee':
       final minutes = _entier(p['minutes']);
       final duree = minutes == null
@@ -521,6 +530,26 @@ String _texteAjoutBorne(Map<String, Object?> p, String ex) {
 /// planification sert une ligne sous l'écrit du programme (récupération
 /// prévue sur la semaine, jamais la rampe de volume) ; la phrase dit
 /// combien, sans jugement.
+/// 1.0.9 (KM7) : ligne remplacée pour aujourd'hui, servie à son emplacement
+/// avec les cibles du remplaçant.
+String _texteRemplacement(
+  Map<String, Object?> p,
+  String ex,
+  NomExercice? noms,
+) {
+  final nomDe = _nomExercice(p['de'], noms);
+  final de = nomDe == null ? 'l’exercice écrit' : '« $nomDe »';
+  final pourquoi = switch (p['cause']) {
+    'pas_de_materiel' => ' (matériel absent)',
+    'douleur' => ' pour ménager ta douleur',
+    'trop_dur' => ', plus accessible aujourd’hui',
+    _ => '',
+  };
+  final qui = ex == 'cet exercice' ? 'Cet exercice' : ex;
+  return 'Aujourd’hui, $qui remplace $de$pourquoi : même place dans ta '
+      'séance, avec ses propres cibles.';
+}
+
 String _texteVolumeSemaine(Map<String, Object?> p, String ex) {
   final series = _entier(p['series']);
   final ecrites = _entier(p['ecrites']);

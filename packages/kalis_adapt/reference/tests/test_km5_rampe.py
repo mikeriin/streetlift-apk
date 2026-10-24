@@ -501,7 +501,7 @@ def test_filtre_du_validateur_volume_ecrit():
 
 def test_parametres_1_0_7():
     # (1.0.8, KM6 : version suivante, aucune clé ni valeur changée.)
-    assert PARAMS['version'] == '1.0.8-ref.1'
+    assert PARAMS['version'] == '1.0.9-ref.1'
     for cle in ('retour_plancher_principal', 'retour_repartition_semaines', 'retour_emprunt_plancher'):
         assert cle not in S
     assert 'elargissement_rien_de_special' not in PARAMS['rupture']

@@ -1187,7 +1187,7 @@ class Seances(object):
                 'rir_min': cond['rir_min'], 'part_max': cond['part_max'], 'echecs': 0,
                 'baisse': 1.0, 'verrou': self.verrouillee(), 'ecrit': item, 'tete': None,
                 'repere': False, 'dose_plafonnee': cond['dose_plafonnee'], 'fragile': cond['fragile'],
-                'servi': servi}
+                'servi': servi, 'depart_kg': item.get('koachDepartKg')}
         if self.coupure > 0 and typ in ('reps', 'tenue'):
             # Semaine du retour après une coupure : répétitions et tenues
             # jamais au-dessus de la dernière séance (plus prudent que 0.3.1,
@@ -2456,7 +2456,11 @@ class Seances(object):
         # Exercice jamais mesuré et a priori vague : l'utilisateur choisit sa
         # première charge (calibrage), Koach l'apprend.
         if t.mesures == 0 and cap[1] > 0.12:
-            return {'repsLow': lo, 'repsHigh': hi, 'loadKg': None, 'flames': flammes, 'role': None}
+            # 1.0.9 (KM7) : remplaçant jamais mesuré, charge de départ
+            # transférée de l'exercice remplacé (table de transfert) ; None
+            # sinon.
+            return {'repsLow': lo, 'repsHigh': hi, 'loadKg': plan.get('depart_kg'), 'flames': flammes,
+                    'role': None}
         reps = hi if hi == lo else (lo + hi) / 2.0
         pr = self.p['planification']['prudence_charge']
         prudence = pr[1] if t.seances > 3 else pr[0]

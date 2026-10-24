@@ -114,7 +114,7 @@ void main() {
 
   test('tous les codes du contrat (§ 3.5) ont un texte propre', () {
     final contrat = _codesDuContrat();
-    expect(contrat, hasLength(24));
+    expect(contrat, hasLength(25));
     expect(contrat, equals(koachCodesRaisons.toSet()));
     for (final code in koachCodesRaisons) {
       final r = <String, Object?>{
