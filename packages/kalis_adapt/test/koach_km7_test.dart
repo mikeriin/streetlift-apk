@@ -1,6 +1,6 @@
 // Koach 1.0.9 (lot KM7, DECISIONS_CP.md C17.54) : parité une à une avec la
 // référence Python (`reference/tests/test_km7.py`, fixture
-// `reference/fixtures/km7.json` de `generer_km7.py`) : bilan versé sans
+// `test/fixtures/km7/km7.json` de `generer_km7.py`) : bilan versé sans
 // être appliqué (plan des seuls faits, forme apprise à la première série,
 // douleur toujours appliquée), remplaçants classés et étiquetés, remplaçant
 // versé servi à l'emplacement avec ses cibles, transfert de charge. Plus les
@@ -13,6 +13,7 @@ import 'dart:io';
 
 import 'package:kalis_adapt/kalis_adapt.dart' show koachInfosRemplacement;
 import 'package:kalis_adapt/koach.dart';
+import 'package:kalis_adapt/koach_textes.dart';
 import 'package:test/test.dart';
 
 import 'koach_parite_test.dart' show comparer, lireFixture;
@@ -41,8 +42,8 @@ final List<Json> _infos = [
 ];
 
 void main() {
-  group('KM7 : parité avec la référence (fixtures/km7.json)', () {
-    final fx = lireFixture('km7.json');
+  group('KM7 : parité avec la référence (test/fixtures/km7/km7.json)', () {
+    final fx = lireFixture('test/fixtures/km7/km7.json');
     for (final sc in jl(fx['scenarios'])) {
       final s = jm(sc);
       test('${s['nom']}', () {
@@ -122,7 +123,7 @@ void main() {
     });
 
     test('plan non appliqué = plan des faits, bilan appliqué différent', () {
-      final fx = lireFixture('km7.json');
+      final fx = lireFixture('test/fixtures/km7/km7.json');
       Json planJour11(String nom) {
         final s = jm(
           jl(fx['scenarios']).firstWhere((x) => jm(x)['nom'] == nom),
@@ -209,6 +210,37 @@ void main() {
         comparer(e.value, sous, e.key, ecarts);
       }
       expect(ecarts, isEmpty, reason: ecarts.join('\n'));
+    });
+  });
+
+  group('KM7 : texte de koach.remplacement', () {
+    String? nom(String id) => switch (id) {
+      'sw-dips-barres-paralleles' => 'Dips aux barres parallèles',
+      'sl-dips-leste' => 'Dips lesté',
+      _ => null,
+    };
+    test('cause, noms, sans noms', () {
+      expect(
+        texteRaisonKoach(<String, Object?>{
+          'code': 'koach.remplacement',
+          'params': <String, Object?>{
+            'exercice': 'sw-dips-barres-paralleles',
+            'de': 'sl-dips-leste',
+            'cause': 'pas_de_materiel',
+          },
+        }, nomExercice: nom),
+        'Aujourd’hui, « Dips aux barres parallèles » remplace « Dips lesté » '
+        '(matériel absent) : même place dans ta séance, avec ses propres '
+        'cibles.',
+      );
+      expect(
+        texteRaisonKoach(<String, Object?>{
+          'code': 'koach.remplacement',
+          'params': <String, Object?>{'cause': 'douleur'},
+        }),
+        'Aujourd’hui, cet exercice remplace l’exercice écrit pour ménager ta '
+        'douleur : même place dans ta séance, avec ses propres cibles.',
+      );
     });
   });
 }

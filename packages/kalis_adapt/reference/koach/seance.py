@@ -2457,10 +2457,17 @@ class Seances(object):
         # première charge (calibrage), Koach l'apprend.
         if t.mesures == 0 and cap[1] > 0.12:
             # 1.0.9 (KM7) : remplaçant jamais mesuré, charge de départ
-            # transférée de l'exercice remplacé (table de transfert) ; None
-            # sinon.
-            return {'repsLow': lo, 'repsHigh': hi, 'loadKg': plan.get('depart_kg'), 'flames': flammes,
-                    'role': None}
+            # transférée de l'exercice remplacé (table de transfert), servie
+            # seulement un jour sans aucune prudence (douleur, reprise, part
+            # maximale, réserve ajoutée, semaine verrouillée, test, simple,
+            # échec) : sinon l'athlète choisit, comme sans transfert.
+            dk = plan.get('depart_kg')
+            if dk is not None and (plan['cond']['raison'] is not None or plan['sans_hausse'] or plan['verrou']
+                                   or plan['part_max'] is not None or plan['rir_bonus'] > 0
+                                   or plan['rir_min'] is not None or plan.get('reprise') or plan['test']
+                                   or lo == hi == 1 or plan['echecs'] > 0):
+                dk = None
+            return {'repsLow': lo, 'repsHigh': hi, 'loadKg': dk, 'flames': flammes, 'role': None}
         reps = hi if hi == lo else (lo + hi) / 2.0
         pr = self.p['planification']['prudence_charge']
         prudence = pr[1] if t.seances > 3 else pr[0]

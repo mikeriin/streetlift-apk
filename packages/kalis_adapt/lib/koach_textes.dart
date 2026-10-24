@@ -545,8 +545,7 @@ String _texteRemplacement(
     'trop_dur' => ', plus accessible aujourd’hui',
     _ => '',
   };
-  final qui = ex == 'cet exercice' ? 'Cet exercice' : ex;
-  return 'Aujourd’hui, $qui remplace $de$pourquoi : même place dans ta '
+  return 'Aujourd’hui, $ex remplace $de$pourquoi : même place dans ta '
       'séance, avec ses propres cibles.';
 }
 

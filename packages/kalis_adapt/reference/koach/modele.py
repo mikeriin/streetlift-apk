@@ -755,6 +755,9 @@ class Modele(object):
         moments, innovations de la séance versées à la détection de rupture."""
         if not self.en_seance:
             return None
+        # 1.0.9 (KM7) : séance close sans série, forme versée quand même
+        # (même fusion des branches qu'un bilan appliqué).
+        self._verser_bilan()
         # Résidu d'e1RM de la séance : moyenne, sur les mouvements chargés
         # suivis depuis 3 séances au moins, de l'écart (ln) entre la capacité
         # du jour vue après la séance et celle prévue avant.

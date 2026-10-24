@@ -801,3 +801,30 @@ Koach n'en a pas (contrat § 10.2) : c'est un état de l'application, hors du jo
   ligne sous l'écrit ; l'afficher comme les autres raisons ; ne pas la traiter comme une coupe à garder
   (`koachGardeSeance`) : c'est un choix dit de Koach, au plus −15 % par qualité, au moins une série.
 - `koachModule` (champ posé par la planification, interne à la façade) : rien à faire côté application.
+
+## 13. Koach 1.0.9 (lot KM7, pour KB6)
+
+- Copier `lib/`, `assets/koach/` et `pubspec.yaml` de `etiquettes/kalis_adapt-v1.0.8` (`kalis_plan` 0.4.3 et
+  `kalis_core` inchangés) ; asset `koach_params_1_0_9.json` à la place de `koach_params_1_0_8.json` (`1.0.9-ref.1`,
+  344 clés, valeurs inchangées, SHA-256 `1a59e6756923ce348378ff356a25b0af4adc8e8114ae9ac1ba53b85c46808dc5`) ; fiches
+  `vecteurs_qualites_v1.json` 1.0.1 inchangées ; tests d'empreinte.
+- **Bilan versé sans être appliqué** (Libre « Garder l'écrit », Assisté « Annuler ») : verser le bilan **complet**
+  avec `applique: false` dans `seance_debut.bilan` au lieu de ses seuls faits (`SessionAdaptStore.factsOf`). La
+  séance servie est identique (item par item) à celle des faits ; la forme est apprise. Le drapeau doit arriver tel
+  quel dans la carte JSON versée à `observe` : `HealthCheck` de `kalis_core` n'a pas ce champ et ignore les champs
+  inconnus — ne pas faire passer le bilan versé par ce type (sinon le drapeau se perd et le bilan est appliqué en
+  silence) ; tester le journal. « Accepter » / « Annuler » avant la première série : la méthode actuelle (journal ramené
+  au `seance_debut`, nouveau début avec l'autre drapeau) reste exacte ; après : rien à rejouer.
+- **Remplacer pour aujourd'hui** : `Koach.remplacants(koachInfosRemplacement(catalog, profil), demande)` (fiches à
+  construire une fois) avec `exerciseId`, `item` (la ligne servie), `role`, `raison` ({code `pas_de_materiel` +
+  `materiel` manquant, `douleur` + `zone` (code `BodyZone`), `trop_dur`, `autre`}), `materiel` du profil s'il est
+  détaillé (sinon rien : celui de la ligne écrite moins le manquant), `lieu` (`salle`, `maison`, `exterieur`),
+  `niveau` (0-3), `exclus` (détestés, non sus, exercices déjà dans la séance), `grilles`. Sortie : propositions
+  groupées par `etiquette` (« Équivalent », « Plus facile », « Sans ce matériel », « Autre »), `texte` (« Pourquoi ? »),
+  `unite`, `depart` (`source` historique / transfert / a_priori / null ; charge ou plage). Lecture seule.
+- **Remplacement versé** : envoyer la ligne avec `exerciseId` = remplaçant et `remplace: {exerciseId: <écrit>, raison}`
+  dans `plan({'horizon': 'seance', …})` ; passer `grilles` et **`zones` sous l'identifiant du remplaçant** (la
+  conduite sous douleur ne s'applique qu'avec elles) ; Koach sert la ligne à son emplacement avec ses propres cibles
+  (plus de ligne « sans cible ») ; afficher `koach.remplacement` ; verser les séries sous l'exercice réel (déjà fait).
+- Limite : `remplacants` ne filtre une zone douloureuse que pour la raison `douleur` ; pour une autre raison un jour de
+  douleur active, passer `zones` (le service applique de toute façon la conduite) ou la raison `douleur`.

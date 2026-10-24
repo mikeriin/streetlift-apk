@@ -37,6 +37,7 @@ GRILLES = {DL: {'pas': 1.25, 'minimum': 0.0, 'halteres': False},
            SQ: {'pas': 2.5, 'minimum': 20.0, 'halteres': False},
            'sl-dips-barre-fixe-leste': {'pas': 1.25, 'minimum': 0.0, 'halteres': False}}
 BAS = {'overall': 1, 'sleepHours': 5, 'energy': 2, 'pains': []}
+ROLES_J5 = {'j5.1': 'main', 'j5.2': 'main'}
 
 
 def koach():
@@ -404,3 +405,39 @@ def test_remplacants_lecture_seule():
     assert np.array_equal(avant[0], k.modele.m) and np.array_equal(avant[1], k.modele.P)
     assert (avant[2], avant[3], avant[4]) == (k.modele.n, list(k.modele.ordre), len(k.journal))
     assert avant[5] == json.dumps(k.posterior(), sort_keys=True)
+
+
+def test_seance_sans_serie_forme_versee_a_la_fin():
+    """Séance close sans série, bilan gardé à l'écrit : état identique à celui
+    d'un bilan appliqué (forme versée à `fin_seance`)."""
+    base = koach()
+    histoire(base)
+    k_a, k_n = copy.deepcopy(base), copy.deepcopy(base)
+    for k, b in ((k_a, BAS), (k_n, dict(BAS, applique=False))):
+        _debut(k, 11, b)
+        k.observe({'type': 'seance_fin', 'jour': 11, 'douleurs': None, 'seance': {'sets': []}})
+    assert np.array_equal(k_a.modele.m, k_n.modele.m) and np.array_equal(k_a.modele.P, k_n.modele.P)
+    assert k_a.modele.logw == k_n.modele.logw
+
+
+def test_transfert_jamais_sous_douleur():
+    """Relecture M2 : pendant la conduite sous douleur (zone du remplaçant
+    signalée, reprise), la charge transférée n'est pas servie (charge à
+    choisir, plafonds de la conduite) ; hors conduite, elle l'est."""
+    zones = {'sl-dips-barre-fixe-leste': [{'elbow': 1.0}, []], DL: [{'elbow': 1.0}, []]}
+    k = koach()
+    histoire(k)
+    seance(k, 11, {'overall': 4, 'pains': [{'zone': 'elbow', 'intensity': 6}]})
+    vu = {}
+    for j in (14, 18):
+        k.observe({'type': 'seance_debut', 'jour': j, 'bilan': {'overall': 4, 'pains': []},
+                   'contexte': {'semaine': j // 7, 'genre': 'accumulation'}})
+        items = items_j5()
+        items[0] = dict(items[0], exerciseId='sl-dips-barre-fixe-leste', remplace={'exerciseId': DL, 'raison': 'autre'})
+        r = k.plan({'horizon': 'seance', 'items': items, 'grilles': GRILLES, 'zones': zones, 'roles': ROLES_J5})
+        it = [x for x in r['items'] if x['slotId'] == 'j5.1'][0]
+        c = k.plan({'horizon': 'serie', 'item': it, 'index': 0, 'faites': []})
+        vu[j] = (k.seances.plans['j5.1']['cond']['raison'], it['koachDepartKg'], c['loadKg'])
+        k.observe({'type': 'seance_fin', 'jour': j, 'douleurs': None, 'seance': {'sets': []}})
+    assert vu[14] == ('douleur', 10.0, None)
+    assert vu[18] == (None, 10.0, 10.0)
