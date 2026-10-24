@@ -7,7 +7,7 @@ import json
 import math
 import os
 
-from koach.moteur import Koach
+from koach.moteur import Koach, faits_du_bilan
 from koach.seance import Grille
 from . import donnees
 from .meneur import Politique, cible_de
@@ -259,6 +259,28 @@ def rampe_vide():
             'module_baisses_sur_limite': 0}
 
 
+def garde_vide():
+    """1.0.9 (KM7) : mesure de la variante « l'athlète garde l'écrit une
+    fois sur deux » (mode Libre, C17.52.4) : séances gardées, plans du bilan
+    versé comparés au plan des seuls faits (identiques / différents), et
+    erreur de prédiction des séances suivantes (résidu relatif moyen de la
+    séance, |·| ; résidu d'e1RM de la séance, |·|)."""
+    return {'seances': 0, 'gardees': 0, 'identiques': 0, 'differents': 0, 'premier_ecart': None,
+            'suivante_rel': [0.0, 0], 'suivante_e1rm': [0.0, 0], 'toutes_rel': [0.0, 0], 'toutes_e1rm': [0.0, 0],
+            'gardee_rel': [0.0, 0], 'gardee_e1rm': [0.0, 0]}
+
+
+def piece_garde(graine, jour):
+    """Pile ou face déterministe (une fois sur deux) de la séance du jour
+    [jour] de la saison de graine [graine] : hachage entier de Knuth."""
+    h = ((int(graine) * 1000003 + int(jour)) * 2654435761) % 4294967296
+    return h < 2147483648
+
+
+def _sans_trace(items):
+    return [{k: v for k, v in it.items() if k != 'trace'} for it in items]
+
+
 class PolitiqueKoach(Politique):
     nom = 'koach_1_0'
 
@@ -293,6 +315,8 @@ class PolitiqueKoach(Politique):
         self.ecrits = {}
         self.par_semaine = {}
         self.rampe = rampe_vide()
+        self.garde = garde_vide()
+        self.gardee_avant = False
         for (g, bi, wb, di, sim_day) in saison.get('sessions') or []:
             roles_bloc = {}
             for d1 in saison['blocks'][bi]['pass1']['days']:
@@ -339,7 +363,33 @@ class PolitiqueKoach(Politique):
                     'jour_evenement': ctx.jour_evenement, 'budget': ctx.budget, 'lieu': ctx.lieu,
                     'semaine': ctx.semaine, 'manquees': self.manquees, 'reste_semaine': reste}
         self.manquees = []
-        self.koach.observe({'type': 'seance_debut', 'jour': ctx.sim_day, 'bilan': ctx.bilan,
+        bilan = ctx.bilan
+        garde = getattr(self, 'bilan_garde', None)
+        self.gardee = False
+        clone = None
+        debut_faits = None
+        if garde and bilan and bilan.get('overall') is not None:
+            self.garde['seances'] += 1
+            if piece_garde(getattr(self, 'graine_garde', 0), ctx.sim_day):
+                # 1.0.9 (KM7) : l'athlète garde l'écrit (mode Libre) : bilan
+                # versé sans être appliqué, ou seulement ses faits.
+                self.gardee = True
+                self.garde['gardees'] += 1
+                if garde == 'verse':
+                    bilan = dict(bilan, applique=False)
+                    # Témoin : même moteur, seuls les faits du bilan.
+                    journal, ext = self.koach.journal, self.koach.extensions
+                    self.koach.journal, self.koach.extensions = [], []
+                    try:
+                        clone = copy.deepcopy(self.koach)
+                    finally:
+                        self.koach.journal, self.koach.extensions = journal, ext
+                    debut_faits = {'type': 'seance_debut', 'jour': ctx.sim_day,
+                                   'bilan': faits_du_bilan(ctx.bilan), 'poids_kg': None,
+                                   'contexte': copy.deepcopy(contexte)}
+                else:
+                    bilan = faits_du_bilan(bilan)
+        self.koach.observe({'type': 'seance_debut', 'jour': ctx.sim_day, 'bilan': bilan,
                             'poids_kg': None, 'contexte': contexte})
         items = []
         for it in self.items_du_jour(ctx):
@@ -353,6 +403,16 @@ class PolitiqueKoach(Politique):
                 roles[s['slotId']] = s.get('role')
         r = self.koach.plan({'horizon': 'seance', 'items': items, 'grilles': self.grilles,
                              'zones': self.zones, 'roles': roles})
+        if clone is not None:
+            clone.observe(debut_faits)
+            r2 = clone.plan({'horizon': 'seance', 'items': copy.deepcopy(items), 'grilles': self.grilles,
+                             'zones': self.zones, 'roles': roles})
+            if _sans_trace(r2['items']) == _sans_trace(r['items']) and r2['raisons'] == r['raisons']:
+                self.garde['identiques'] += 1
+            else:
+                self.garde['differents'] += 1
+                if self.garde['premier_ecart'] is None:
+                    self.garde['premier_ecart'] = ctx.sim_day
         semaine = [x for j in sorted(self.par_semaine.get(ctx.semaine, [])) if j in self.ecrits
                    for x in self.ecrits[j][2]]
         mesure_rampe(self.rampe, ctx.ecrit['items'], roles, r['items'], r.get('raisons') or [],
@@ -411,8 +471,24 @@ class PolitiqueKoach(Politique):
 
     def terminer(self, ctx, record):
         self._verser(record['sets'])
+        n = len(self.koach.modele.histoire_residus)
         self.koach.observe({'type': 'seance_fin', 'jour': ctx.sim_day, 'douleurs': record.get('pains'),
                             'seance': record})
+        if getattr(self, 'bilan_garde', None) and len(self.koach.modele.histoire_residus) > n:
+            # Erreur de prédiction de la séance (résidus du modèle, KM7).
+            res = self.koach.modele.histoire_residus[-1]
+            cles = ['toutes']
+            if self.gardee_avant:
+                cles.append('suivante')
+            if getattr(self, 'gardee', False):
+                cles.append('gardee')
+            for c in cles:
+                self.garde[c + '_rel'][0] += abs(res[2])
+                self.garde[c + '_rel'][1] += 1
+                if res[5] is not None:
+                    self.garde[c + '_e1rm'][0] += abs(res[5])
+                    self.garde[c + '_e1rm'][1] += 1
+        self.gardee_avant = getattr(self, 'gardee', False)
 
     def estimer(self, ex_id, n):
         m = self.koach.modele

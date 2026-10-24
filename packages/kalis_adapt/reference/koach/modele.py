@@ -361,6 +361,7 @@ class Modele(object):
         self.logw = 0.0
         self.en_seance = False
         self.bilan = None
+        self.bilan_differe = None  # 1.0.9 : forme versée à la première série
         self.residus_seance = []  # innovations normalisées de la séance
         self.histoire_residus = []  # (jour, résidu moyen normalisé, résidu relatif)
         # Hypothèses de réponse (contrôle dual) : poids a posteriori.
@@ -641,12 +642,33 @@ class Modele(object):
     # ------------------------------------------------------------------
     # Séance
     # ------------------------------------------------------------------
-    def debut_seance(self, jour, bilan=None, poids_kg=None):
+    def debut_seance(self, jour, bilan=None, poids_kg=None, differe=False):
         """Ouvre une séance : effet de jour remis à son a priori (informé par
-        le bilan de santé), branche « mauvais jour » ouverte."""
+        le bilan de santé), branche « mauvais jour » ouverte.
+
+        1.0.9 (KM7) : [differe] vrai (bilan versé sans être appliqué, mode
+        Libre « Garder l'écrit » ou Assisté « Annuler ») : l'a priori du jour
+        reste celui d'une séance sans forme du jour jusqu'à la première série
+        (le plan servi est celui d'un bilan sans forme), puis la forme est
+        versée (`_verser_bilan`) avant que la série soit interprétée : l'état
+        appris est exactement celui d'un bilan appliqué."""
         self.avancer(jour)
         if poids_kg:
             self.poids_kg = float(poids_kg)
+        j = self.p['jour']
+        self._reset(self.m, self.P, DE, 0.0, j['sigma_exercice'] ** 2)
+        self._poser_jour(None if differe else bilan)
+        self.bilan_differe = bilan if differe else None
+        self.en_seance = True
+        self.bilan = bilan
+        self.residus_seance = []
+        self._dernier_ex = None
+        for ex_id in self.ordre:
+            self.pistes[ex_id].series_seance = []
+
+    def _poser_jour(self, bilan):
+        """A priori de l'effet du jour (branche principale et branche
+        « mauvais jour ») d'après la forme du jour de [bilan]."""
         j = self.p['jour']
         moyenne = 0.0
         sd = j['sigma_seance']
@@ -658,18 +680,38 @@ class Modele(object):
             if general <= 2:
                 p_mauvais = j['mauvais_jour_proba_bilan_bas']
         self._reset(self.m, self.P, DS, moyenne, sd * sd)
-        self._reset(self.m, self.P, DE, 0.0, j['sigma_exercice'] ** 2)
         am = self.m.copy()
         aP = self.P.copy()
         self._reset(am, aP, DS, moyenne + j['mauvais_jour_moyenne'], j['mauvais_jour_sigma'] ** 2)
         self.alt = (am, aP, math.log(p_mauvais))
         self.logw = math.log(1.0 - p_mauvais)
-        self.en_seance = True
-        self.bilan = bilan
-        self.residus_seance = []
-        self._dernier_ex = None
-        for ex_id in self.ordre:
-            self.pistes[ex_id].series_seance = []
+
+    def _verser_bilan(self):
+        """1.0.9 (KM7) : forme du jour versée sans être appliquée — posée à
+        la première série de la séance. Rien n'a encore touché l'effet du
+        jour (aucune série ; une piste créée ou une observation hors série
+        agit de même sur les deux branches, qui ne diffèrent que par lui) :
+        l'état obtenu est celui d'une séance ouverte avec le bilan."""
+        if self.bilan_differe is not None:
+            self._poser_jour(self.bilan_differe)
+            self.bilan_differe = None
+
+    def instantane(self):
+        """1.0.9 (KM7) : état que la création d'une piste peut changer
+        (vecteur, covariance, branche « mauvais jour », pistes) ; avec
+        `restaurer`, un aperçu (cibles de départ des remplaçants) ne laisse
+        aucune trace : l'état reste celui que le journal recalcule."""
+        alt = None
+        if self.alt is not None:
+            alt = (self.alt[0].copy(), self.alt[1].copy(), self.alt[2])
+        return (self.m.copy(), self.P.copy(), self.n, alt, self.logw, dict(self.pistes), list(self.ordre))
+
+    def restaurer(self, etat):
+        m, P, n, alt, logw, pistes, ordre = etat
+        self.m, self.P, self.n, self.logw = m, P, n, logw
+        self.alt = alt
+        self.pistes = pistes
+        self.ordre = ordre
 
     def _reset(self, m, P, idx, moyenne, variance):
         P[idx, :] = 0.0
@@ -713,6 +755,9 @@ class Modele(object):
         moments, innovations de la séance versées à la détection de rupture."""
         if not self.en_seance:
             return None
+        # 1.0.9 (KM7) : séance close sans série, forme versée quand même
+        # (même fusion des branches qu'un bilan appliqué).
+        self._verser_bilan()
         # Résidu d'e1RM de la séance : moyenne, sur les mouvements chargés
         # suivis depuis 3 séances au moins, de l'écart (ln) entre la capacité
         # du jour vue après la séance et celle prévue avant.
@@ -734,6 +779,7 @@ class Modele(object):
             self.P[:n, :n] = P
         self.alt = None
         self.en_seance = False
+        self.bilan_differe = None
         j = self.p['jour']
         self._reset(self.m, self.P, DS, 0.0, j['sigma_seance'] ** 2)
         self._reset(self.m, self.P, DE, 0.0, j['sigma_exercice'] ** 2)
@@ -981,6 +1027,8 @@ class Modele(object):
         t = self.piste(s['exerciseId'])
         if t is None:
             return None
+        if self.bilan_differe is not None:
+            self._verser_bilan()
         if self._dernier_ex != t.id:
             self.debut_exercice(t)
         self._dernier_ex = t.id

@@ -718,7 +718,7 @@ void main() {
   });
 
   test('paramètres 1.0.7', () {
-    expect(_params['version'], '1.0.8-ref.1');
+    expect(_params['version'], '1.0.9-ref.1');
     for (final cle in const [
       'retour_plancher_principal',
       'retour_repartition_semaines',

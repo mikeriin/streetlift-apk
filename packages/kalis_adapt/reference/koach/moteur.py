@@ -14,6 +14,28 @@ import math
 from .modele import Modele, NQ, TH, RHO, EPS, KN, KM, KL, KG, BA, BP, LAM, KU, FI, HH
 from .securite import Gardefous
 from .seance import Seances, Grille, groupes_servis
+from .remplacants import item_remplace, remplacants as _remplacants
+
+
+#: 1.0.9 (KM7) : réponses de forme du jour du bilan (lues par l'a priori de
+#: l'effet du jour et par le palier du bilan) ; le reste (douleurs, temps
+#: disponible, drapeau) sont des faits.
+CLES_FORME = ('overall', 'sleepHours', 'sleepQuality', 'energy', 'mood', 'soreness', 'stress',
+              'motivation', 'nutrition', 'hydration')
+
+
+def bilan_applique(bilan):
+    """Vrai sauf pour un bilan qui porte `applique: false` (1.0.9, KM7) ; un
+    journal sans drapeau garde sa lecture (bilan appliqué)."""
+    return not (isinstance(bilan, dict) and bilan.get('applique') is False)
+
+
+def faits_du_bilan(bilan):
+    """Le bilan sans sa forme du jour (ni le drapeau) : ce qui sert le plan
+    quand la forme est versée sans être appliquée."""
+    if bilan is None:
+        return None
+    return {k: v for k, v in bilan.items() if k not in CLES_FORME and k != 'applique'}
 
 
 class Koach(object):
@@ -44,9 +66,16 @@ class Koach(object):
             self.garde.avancer(self.jour)
             bilan = e.get('bilan')
             if bilan is not None and bilan.get('pains') is not None:
+                # Douleur : appliquée toujours, le bilan servi ou non (sécurité).
                 self.garde.noter_seance(self.jour, bilan.get('pains'), posee=True)
-            m.debut_seance(self.jour, bilan, e.get('poids_kg'))
-            self.seances.ouvrir(self.jour, bilan, e.get('contexte') or {})
+            applique = bilan_applique(bilan)
+            # 1.0.9 (KM7) : bilan versé sans être appliqué (`applique` faux) :
+            # le plan est servi comme avec ses seuls faits (douleurs, temps
+            # disponible), la forme du jour est versée au modèle à la
+            # première série (interprétation des séries et suite).
+            m.debut_seance(self.jour, bilan, e.get('poids_kg'), differe=not applique)
+            self.seances.ouvrir(self.jour, bilan if applique else faits_du_bilan(bilan),
+                                e.get('contexte') or {})
         elif typ == 'serie':
             m.observer_serie(e['serie'])
             self.seances.serie_faite(e['serie'])
@@ -162,7 +191,21 @@ class Koach(object):
         if h == 'seance':
             grilles = {k: Grille(g['pas'], g['minimum'], g['halteres']) for k, g in (c.get('grilles') or {}).items()}
             zones = {k: (dict(z[0]), set(z[1])) for k, z in (c.get('zones') or {}).items()}
-            items = self.seances.prescrire(c['items'], grilles, zones, c.get('roles') or {})
+            ecrits = c['items']
+            if any(it.get('remplace') for it in ecrits):
+                # 1.0.9 (KM7) : ligne remplacée pour aujourd'hui (C17.51.5),
+                # servie avec le remplaçant à son emplacement et ses propres
+                # cibles ; ses séries sont versées sous l'exercice réel.
+                ecrits = [item_remplace(self, it, grilles.get(it['exerciseId'])) if it.get('remplace') else it
+                          for it in ecrits]
+            items = self.seances.prescrire(ecrits, grilles, zones, c.get('roles') or {})
+            if ecrits is not c['items']:
+                for it in ecrits:
+                    rem = it.get('remplace')
+                    if rem:
+                        self.seances.raisons.append({'code': 'koach.remplacement', 'params': {
+                            'exercice': it['exerciseId'], 'de': rem.get('exerciseId'),
+                            'cause': rem.get('raison')}})
             self.raisons = list(self.seances.raisons)
             if c.get('groups') is not None:
                 # 1.0.8 (KM6, X2) : groupes de la séance recalés sur le servi.
@@ -181,6 +224,12 @@ class Koach(object):
                     out = r
             return out
         raise ValueError('horizon inconnu : %r' % (h,))
+
+    def remplacants(self, infos, demande):
+        """1.0.9 (KM7) : remplaçants classés et étiquetés d'une ligne servie
+        (`remplacants.remplacants`), avec les cibles de départ de Koach.
+        Lecture seule : rien n'est versé au journal."""
+        return _remplacants(infos, demande, self)
 
     def explain(self):
         return list(self.raisons)
