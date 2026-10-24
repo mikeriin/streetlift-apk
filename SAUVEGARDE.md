@@ -38,3 +38,10 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
 - Reste : relecture indépendante (sous-agent), CHANGEMENTS_1_0_9.md, CHANGELOG, INTEGRATION_KM3 § 13, test texte
   koach.remplacement ; résultats du run -> docs/data/km7 + CRITERES_KM7.md (kalis_bench) ; contrôle complet ;
   commit moteurs + étiquette kalis_adapt-v1.0.8 ; livraison.
+
+## 16:10 UTC — relecture traitée
+- Relecture (sous-agent Opus) : M1 km7.json déplacé dans test/fixtures/km7/ ; M2 koachDepartKg servi seulement sans
+  prudence (douleur, reprise, part max, réserve, verrou, test, simple, échec) ; m3 forme versée à fin_seance sans
+  série ; m4 koachCible gardée ; m5 CHANGEMENTS_1_0_9.md écrit. Limites 6-8 dites (INTEGRATION_KM3 § 13).
+- Ces corrections ne touchent pas le chemin par défaut ni la variante du banc (run CI toujours valable).
+- CHANGELOG 1.0.8, INTEGRATION_KM3 § 13 écrits.

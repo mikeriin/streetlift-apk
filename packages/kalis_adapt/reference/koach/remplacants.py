@@ -479,7 +479,8 @@ def item_remplace(koach, item, grille=None):
     `item['remplace']` = {'exerciseId': exercice écrit, 'raison': code} et
     `item['exerciseId']` = remplaçant (C17.51.5 : emplacement, séries,
     groupe, format, repos gardés). Les champs propres à l'exercice écrit
-    sont retirés (charge écrite) ; une autre unité reçoit la plage de
+    sont retirés (charge écrite ; une `koachCible` de tentative posée sur
+    l'item vise le remplaçant, `exerciseId`, et reste) ; une autre unité reçoit la plage de
     départ de Koach (`depart`) ; un transfert de charge devient la charge
     de départ d'un exercice jamais mesuré (`koachDepartKg`)."""
     rem = item.get('remplace') or {}
@@ -491,7 +492,7 @@ def item_remplace(koach, item, grille=None):
     u_o = unite_fiche(fo)
     u_c = unite_fiche(fc)
     out = dict(item)
-    for k in ('startLoadKg', 'loadKg', 'koachCible', 'koachDepartKg'):
+    for k in ('startLoadKg', 'loadKg', 'koachDepartKg'):
         out.pop(k, None)
     if u_c is None or u_o is None:
         return out

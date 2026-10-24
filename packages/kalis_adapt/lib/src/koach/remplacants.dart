@@ -688,12 +688,7 @@ Json koachItemRemplace(Koach koach, Json item, [Grille? grille]) {
   final uO = koachUniteFiche(fo);
   final uC = koachUniteFiche(fc);
   final out = Map<String, Object?>.of(item);
-  for (final k in const [
-    'startLoadKg',
-    'loadKg',
-    'koachCible',
-    'koachDepartKg',
-  ]) {
+  for (final k in const ['startLoadKg', 'loadKg', 'koachDepartKg']) {
     out.remove(k);
   }
   if (uC == null || uO == null) {

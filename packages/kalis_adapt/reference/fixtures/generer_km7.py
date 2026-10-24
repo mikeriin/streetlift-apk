@@ -5,7 +5,7 @@
 séance suivante, remplaçants, remplacement versé, transfert) déroulés pas à
 pas, avec les sorties attendues de chaque pas.
 
-    python3 fixtures/generer_km7.py              # écrit fixtures/km7.json
+    python3 fixtures/generer_km7.py              # écrit ../test/fixtures/km7/km7.json
     python3 fixtures/generer_km7.py --verifier   # échoue s'il n'est pas à jour
 
 (depuis `packages/kalis_adapt/reference/`). Même codage que `generer.py`
@@ -164,6 +164,24 @@ def scenarios():
     seance(s, 14, None, items=items)
     s.posterior()
     out.append(s)
+    # 6 : séance close sans série, bilan non appliqué (forme versée à la fin).
+    s = Scenario('sans_serie_non_applique')
+    histoire(s)
+    seance(s, 11, dict(BAS, applique=False), series=False)
+    s.posterior()
+    out.append(s)
+    # 7 : transfert pendant la conduite sous douleur puis hors conduite.
+    s = Scenario('transfert_douleur')
+    histoire(s)
+    seance(s, 11, {'overall': 4, 'pains': [{'zone': 'elbow', 'intensity': 6}]})
+    zones = {'sl-dips-barre-fixe-leste': [{'elbow': 1.0}, []], DL: [{'elbow': 1.0}, []]}
+    for j in (14, 18):
+        items = items_j5()
+        items[0] = dict(items[0], exerciseId='sl-dips-barre-fixe-leste',
+                        remplace={'exerciseId': DL, 'raison': 'autre'})
+        seance(s, j, {'overall': 4, 'pains': []}, items=items, zones=zones)
+    s.posterior()
+    out.append(s)
     return [x.json() for x in out]
 
 
@@ -176,14 +194,16 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('--verifier', action='store_true')
     a = ap.parse_args(argv)
-    chemin = os.path.join(ICI, 'km7.json')
+    # Hors de `fixtures/` : `generer.py --verifier` n'y admet que ses propres
+    # fichiers (comme `test/fixtures/km2c2/`).
+    chemin = os.path.join(ICI, '..', '..', 'test', 'fixtures', 'km7', 'km7.json')
     texte = ecrire()
     if a.verifier:
         with open(chemin, encoding='utf-8') as f:
             if f.read() != texte:
-                print('fixtures/km7.json pas à jour')
+                print('test/fixtures/km7/km7.json pas à jour')
                 return 1
-        print('fixtures/km7.json à jour')
+        print('test/fixtures/km7/km7.json à jour')
         return 0
     with open(chemin, 'w', encoding='utf-8') as f:
         f.write(texte)

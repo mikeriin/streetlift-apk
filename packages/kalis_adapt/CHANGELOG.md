@@ -1,5 +1,22 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.8
+
+Lot KM7 (DECISIONS_CP.md C17.54) : **Koach 1.0.9** (référence Python et portage Dart dans le même lot,
+`reference/CHANGEMENTS_1_0_9.md`). Ajouts seulement : sans les nouveaux champs, comportement de 1.0.8.
+
+- **Bilan versé sans être appliqué** (`moteur.dart`, `modele.dart`) : `seance_debut.bilan.applique` faux : plan des
+  seuls faits du bilan (`koachFaitsDuBilan`), douleur toujours appliquée, forme du jour posée au modèle à la première
+  série (état identique à un bilan appliqué).
+- **Remplaçants** (`remplacants.dart`) : `Koach.remplacants(infos, demande)` / `koachRemplacants` (étiquettes
+  `equivalent`, `plus_facile`, `sans_materiel`, `autre`, texte, unité, cible de départ ; lecture seule) ; fiches
+  `koachInfosRemplacement(catalog)` (`remplacement_infos.dart`).
+- **Item remplacé** : `remplace` dans les items de `plan('seance')`, servi à l'emplacement avec ses propres cibles,
+  raison `koach.remplacement` (texte dans `koach_textes.dart`).
+- **Paramètres** : asset `assets/koach/koach_params_1_0_9.json` (`1.0.9-ref.1`, 344 clés, aucune valeur changée,
+  SHA-256 `1a59e6756923ce348378ff356a25b0af4adc8e8114ae9ac1ba53b85c46808dc5`). Fiches inchangées.
+- **Tests** : `test/koach_km7_test.dart`, fixture `test/fixtures/km7/km7.json` ; fixtures de parité régénérées.
+
 ## 1.0.7
 
 Lot KM6 (DECISIONS_CP.md C17.47) : **Koach 1.0.8** (référence Python et portage Dart dans le même lot,

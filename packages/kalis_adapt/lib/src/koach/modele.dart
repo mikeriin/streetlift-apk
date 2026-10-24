@@ -1053,6 +1053,9 @@ class Modele {
     if (!enSeance) {
       return null;
     }
+    // 1.0.9 (KM7) : séance close sans série, forme versée quand même (même
+    // fusion des branches qu'un bilan appliqué).
+    _verserBilan();
     final ecarts = <double>[];
     for (final exId in ordre) {
       final t = pistes[exId]!;
