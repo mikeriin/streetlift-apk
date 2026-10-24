@@ -469,6 +469,13 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Aucun lot d'application ne tourne : `claude/ci-3d` libre ; KB6 sera lancé après la validation de KM7.
 - Lot express : deux points, une campagne complète à la fin, sauvegarde toutes les 30 minutes.
 
+### KM7 — incident d'annulation par le pilotage (24/10/2026)
+
+- 18:12 UTC : le pilotage a annulé le run 40107907131 (campagne, 126 parts, 0b4d8b6c), resté en file 2 h 30, en le prenant pour un doublon du contrôle complet 40111866107 (8c7f9360) ; ce dernier a été annulé à son tour (concurrence `ci-paquets-${{ github.ref }}`, `cancel-in-progress` : deux runs sur la même branche de contrôle s'annulent).
+- 18:44 UTC : la session a relancé la campagne (essai 2) ; 19:15 UTC : le pilotage, croyant l'essai fantôme, l'a forcé à l'arrêt (`force-cancel`) — seconde erreur.
+- 20:18 UTC : le pilotage a relancé la campagne (`gh run rerun 40107907131`, essai 3). **Session KM7** : ne relance pas la campagne ; lance le contrôle complet (8c7f9360) **après** la fin de la campagne, ou sur `claude/ci-cp-b`, jamais en même temps sur `claude/ci-cp-a`.
+- Règle du pilotage : aucun run n'est annulé sans lecture de la `SAUVEGARDE.md` du lot.
+
 ## KB6 — lot express application, dev7.8.0 (à lancer dès la validation de KM7, C17.54)
 
 - Prompt : `prompts/KB6.txt`. Base `main` bb320350 (dev7.7.2) ou suivant. Étiquettes de KM7 : ajoutées ici par le pilotage à la validation.
