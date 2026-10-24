@@ -45,3 +45,8 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
   série ; m4 koachCible gardée ; m5 CHANGEMENTS_1_0_9.md écrit. Limites 6-8 dites (INTEGRATION_KM3 § 13).
 - Ces corrections ne touchent pas le chemin par défaut ni la variante du banc (run CI toujours valable).
 - CHANGELOG 1.0.8, INTEGRATION_KM3 § 13 écrits.
+
+## 16:45 UTC
+- Commit local moteurs c7008e9 (non poussé : attendre la fin du run 40107907131). Contrôle complet poussé sur
+  claude/ci-cp-a 8c7f9360 (workflow standard ; l'arbre ne recevra ensuite que kalis_bench/docs : CRITERES_KM7.md,
+  docs/data/km7). Tests locaux : pytest 359 (après SOURCES.md), kalis_adapt 422, kalis_bench 296 verts.
