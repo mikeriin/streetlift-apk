@@ -1,0 +1,16 @@
+LOT KB6 — LOT EXPRESS APPLICATION : KOACH 1.0.9 (FORME DU JOUR APPRISE EN « GARDER L'ÉCRIT », REMPLAÇANTS SELON LE MATÉRIEL) (dev7.8.0)
+Modèle : Opus 5.5, effort élevé (tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1).
+Prérequis : KM7 validé (C17.55 ou suivant) ; RV4 publié (dev7.7.2). **Aucune donnée réelle, aucun déchiffrement, aucune clé (C17.33.2).**
+Base : pointe de `main` (dev7.7.2, bb320350, ou suivant ; C17.28 : `CLAUDE.md` de `main`, rebase avant de publier). Contrôle `claude/ci-3d`. Sauvegardes `cp-sauvegardes/KB6`.
+Livraisons à lire : `LIVRAISON_KM7.md` (« Ce que KB6 doit monter »), `LIVRAISON_RV4.md`, `LIVRAISON_KB5.md` § 1 (montage des paquets, piège du `pubspec.lock`).
+**Lot express** : budget serré, sous-agents seulement s'ils font gagner du temps réel ; sauvegarde toutes les 30 minutes.
+
+1. **Paquets** : copier à l'octet depuis les étiquettes de KM7 (`kalis_adapt` 1.0.8 et tout paquet changé) ; asset des paramètres de Koach 1.0.9 (SHA-256 de la livraison KM7) ; tests d'empreinte ; `pubspec.lock` régénéré par l'outil.
+2. **Forme du jour apprise** : en Libre sans « Accepter » (et en Assisté après « Annuler »), passer le bilan à Koach avec le drapeau de KM7 (versé, non appliqué) au lieu de ses seuls faits (RV4 § 5) ; si KM7 fournit l'événement de changement de lecture après le début, l'utiliser à la place du retour du journal au `seance_debut`, sinon garder la méthode de RV4. Douleur : inchangée. Rien de visible ne change pour l'athlète (une ligne dans la carte du bilan : « Koach note ta forme du jour même si tu gardes l'écrit »).
+3. **Remplacer pour aujourd'hui** (RV4 § 2) : les propositions viennent de l'API de KM7, **groupées et étiquetées** (« Équivalent », « Plus facile », « Sans ce matériel »), chacune avec sa raison courte et sa cible de départ ; une question rapide en tête, facultative : « Pourquoi ? » (pas de matériel → « Il me manque : » matériel de l'exercice à cocher, douleur, trop dur, autre) qui recalcule les propositions ; la recherche dans toute la base (Libre) reste en dessous, inchangée ; Assisté : propositions seules (inchangé). Koach sert le remplaçant avec ses cibles quand l'API le permet (plus de ligne sans cible).
+4. **Version** 7.8.0 (`pubspec.yaml`, `SUIVI_PROJET.md`).
+5. **Tests** : unitaires et widget (propositions groupées, « Il me manque : ceinture de lest » pour le dip lesté de la J5, cible de départ servie, recherche toujours là, Assisté inchangé ; Libre « Garder l'écrit » : bilan versé non appliqué, séance identique à l'écrit ; douleur) ; passage depuis dev7.7.2 sans perte, export / import à l'identique ; cible émulateur (deux thèmes) : J5, dip lesté, « Pourquoi ? › pas de matériel › ceinture de lest », propositions étiquetées, choix d'un équivalent servi avec sa cible ; toutes les cibles d'avant vertes.
+
+FIN DE LOT
+- dev7.8.0 sur `main`, contrôle complet `claude/ci-3d` vert sur l'arbre publié (pertes de VM : relancer les jobs ; chaque cible verte dans un essai sur le même `lib/`), build signé réussi. Publication refusée : candidat `cp-sauvegardes/KB6-candidat`, le pilotage publie (C17.49.3).
+- `LIVRAISON_KB6.md` (pipeline et projet claude.ai) ; ligne KB6 de `ETAT_CP.md` « à valider » ; notification « Kalis Track dev7.8.0 prêt — Koach 1.0.9 » ; arrête-toi (aucun fire_trigger).

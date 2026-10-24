@@ -462,3 +462,13 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 - Prompt : `prompts/RV4.txt`. Base `main` e5d161a9 (dev7.7.1, RV3 validé, C17.52). `packages/` intacts.
 - Aucun autre lot ne tourne : `claude/ci-3d` est libre.
 - Budget : lot court ; sauvegarde toutes les 30 minutes (une coupure de la limite d'utilisation reste possible).
+
+## KM7 — lot express moteur, Koach 1.0.9 (lancé le 24/10/2026 vers 15:05 UTC, C17.54, tâche « Opus 5.5, effort maximal, moteurs »)
+
+- Prompt : `prompts/KM7.txt`. Base `moteurs` 25d5bfe6 (Koach 1.0.8). Le propriétaire utilise dev7.7.2.
+- Aucun lot d'application ne tourne : `claude/ci-3d` libre ; KB6 sera lancé après la validation de KM7.
+- Lot express : deux points, une campagne complète à la fin, sauvegarde toutes les 30 minutes.
+
+## KB6 — lot express application, dev7.8.0 (à lancer dès la validation de KM7, C17.54)
+
+- Prompt : `prompts/KB6.txt`. Base `main` bb320350 (dev7.7.2) ou suivant. Étiquettes de KM7 : ajoutées ici par le pilotage à la validation.
