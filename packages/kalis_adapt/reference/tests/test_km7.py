@@ -390,3 +390,17 @@ def test_sans_remplacement_rien_ne_change():
     r = _debut(k, 11, None)
     assert all('remplace' not in it and 'koachDepartKg' not in it for it in r['items'])
     assert not any(x['code'] == 'koach.remplacement' for x in r['raisons'])
+
+
+def test_remplacants_lecture_seule():
+    """L'aperçu ouvre des pistes pour les cibles de départ, puis les referme :
+    état, posterior et journal inchangés (l'état reste recalculable)."""
+    k = koach()
+    histoire(k)
+    avant = (k.modele.m.copy(), k.modele.P.copy(), k.modele.n, list(k.modele.ordre), len(k.journal),
+             json.dumps(k.posterior(), sort_keys=True))
+    r = k.remplacants(INFOS, _demande(role='accessory'))
+    assert r['remplacants']
+    assert np.array_equal(avant[0], k.modele.m) and np.array_equal(avant[1], k.modele.P)
+    assert (avant[2], avant[3], avant[4]) == (k.modele.n, list(k.modele.ordre), len(k.journal))
+    assert avant[5] == json.dumps(k.posterior(), sort_keys=True)

@@ -77,6 +77,40 @@ abstract interface class AvecCibleSerie {
   Json? cibleSerie(Koach koach, Json item, int index, Json? cible);
 }
 
+/// 1.0.9 (KM7) : réponses de forme du jour du bilan (lues par l'a priori de
+/// l'effet du jour et par le palier du bilan) ; le reste (douleurs, temps
+/// disponible, drapeau) sont des faits.
+const List<String> koachClesForme = <String>[
+  'overall',
+  'sleepHours',
+  'sleepQuality',
+  'energy',
+  'mood',
+  'soreness',
+  'stress',
+  'motivation',
+  'nutrition',
+  'hydration',
+];
+
+/// Vrai sauf pour un bilan qui porte `applique: false` (1.0.9, KM7) ; un
+/// journal sans drapeau garde sa lecture (bilan appliqué).
+bool koachBilanApplique(Object? bilan) =>
+    !(bilan is Map<String, Object?> && bilan['applique'] == false);
+
+/// Le bilan sans sa forme du jour (ni le drapeau) : ce qui sert le plan
+/// quand la forme est versée sans être appliquée (1.0.9, KM7).
+Json? koachFaitsDuBilan(Json? bilan) {
+  if (bilan == null) {
+    return null;
+  }
+  return <String, Object?>{
+    for (final e in bilan.entries)
+      if (!koachClesForme.contains(e.key) && e.key != 'applique')
+        e.key: e.value,
+  };
+}
+
 /// Le moteur Koach : estimation, prescription, garde-fous.
 class Koach {
   Koach(this.params, this.fiches, this.profil)
@@ -110,6 +144,12 @@ class Koach {
   /// propositions de l'adhérence).
   final Map<String, double> _derniereCharge = {};
 
+  /// 1.0.9 (KM7) : remplaçants classés et étiquetés d'une ligne servie
+  /// ([koachRemplacants]), avec les cibles de départ de Koach. Lecture
+  /// seule : rien n'est versé au journal.
+  Json remplacants(List<Json> infos, Json demande) =>
+      koachRemplacants(infos, demande, this);
+
   /// Verse un événement du journal (§ 2.1).
   void observe(Json e) {
     journal.add(e);
@@ -133,9 +173,13 @@ class Koach {
       if (bilan != null && bilan['pains'] != null) {
         garde.noterSeance(jour, jl(bilan['pains']), posee: true);
       }
-      m.debutSeance(jour, bilan, e['poids_kg']);
+      // 1.0.9 (KM7) : bilan versé sans être appliqué (`applique` faux) :
+      // plan servi comme avec ses seuls faits (douleurs, temps disponible),
+      // forme du jour versée au modèle à la première série.
+      final applique = koachBilanApplique(bilan);
+      m.debutSeance(jour, bilan, e['poids_kg'], differe: !applique);
       final ctx = dictOuVide(e['contexte']);
-      seances.ouvrir(jour, bilan, ctx);
+      seances.ouvrir(jour, applique ? bilan : koachFaitsDuBilan(bilan), ctx);
       contexteSeance = ContexteSeance(
         semaine: ctx['semaine'] == null ? null : ent(ctx['semaine']),
         jourIndex: ctx['jour_index'] == null ? null : ent(ctx['jour_index']),
@@ -384,12 +428,43 @@ class Koach {
         ];
       }
       grillesSeance = grilles;
+      final remplacement = modules.any((it) => vrai(it['remplace']));
+      if (remplacement) {
+        // 1.0.9 (KM7) : ligne remplacée pour aujourd'hui (C17.51.5), servie
+        // avec le remplaçant à son emplacement et ses propres cibles ; ses
+        // séries sont versées sous l'exercice réel.
+        modules = [
+          for (final it in modules)
+            vrai(it['remplace'])
+                ? koachItemRemplace(
+                    this,
+                    it,
+                    grilles[it['exerciseId'] as String],
+                  )
+                : it,
+        ];
+      }
       final items = seances.prescrire(
         modules,
         grilles,
         zones,
         dictOuVide(c['roles']),
       );
+      if (remplacement) {
+        for (final it in modules) {
+          final rem = it['remplace'];
+          if (vrai(rem)) {
+            seances.raisons.add(<String, Object?>{
+              'code': 'koach.remplacement',
+              'params': <String, Object?>{
+                'exercice': it['exerciseId'],
+                'de': jm(rem)['exerciseId'],
+                'cause': jm(rem)['raison'],
+              },
+            });
+          }
+        }
+      }
       raisons = List<Json>.of(seances.raisons);
       if (c['groups'] != null) {
         // 1.0.8 (KM6, X2) : groupes de la séance recalés sur le servi.

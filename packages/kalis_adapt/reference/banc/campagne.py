@@ -162,8 +162,12 @@ def empreinte_sources():
 
 def config_de(opts):
     """Ce qui change le résultat d'une saison (hors code)."""
-    return {'planificateur': not opts['sans_planificateur'], 'trajectoires': int(opts['trajectoires']),
-            'defaut_modele_sd': opts['defaut_modele']}
+    c = {'planificateur': not opts['sans_planificateur'], 'trajectoires': int(opts['trajectoires']),
+         'defaut_modele_sd': opts['defaut_modele']}
+    if opts.get('bilan_garde'):
+        # 1.0.9 (KM7) : variante « garde l'écrit une fois sur deux ».
+        c['bilan_garde'] = opts['bilan_garde']
+    return c
 
 
 def dossier_de(opts, sources):
@@ -218,7 +222,11 @@ def politique(opts, graine):
     options = {'trajectoires': int(opts['trajectoires'])}
     fab = [lambda pol: PlanificationCampagne(pol, options, True), ek.fabrique_surveillance(),
            ek.fabrique_controle_dual(graine), ek.fabrique_adherence(graine)]
-    return ek.PolitiqueBriques(parametres=prm, extensions=fab)
+    pol = ek.PolitiqueBriques(parametres=prm, extensions=fab)
+    if opts.get('bilan_garde'):
+        pol.bilan_garde = opts['bilan_garde']
+        pol.graine_garde = graine
+    return pol
 
 
 # ----------------------------------------------------------------------
@@ -568,7 +576,7 @@ def mesurer_saison(cle, scenario, verite, graine, opts):
         if isinstance(x, ek.SurveillanceBanc):
             alertes = sum(1 for j in x.journal if j.get('type') == 'alerte')
     unites, exclus = unites_calibration(saison, tour, previsions) if not opts['sans_planificateur'] else ([], {})
-    return {
+    out = {
         'saison': [cle, scenario, verite, graine], 'niveau': saison['level'],
         'echeance': any(saison.get('eventDaysByWeek') or []),
         'estimations': est,
@@ -582,6 +590,11 @@ def mesurer_saison(cle, scenario, verite, graine, opts):
         # KM4 (C17.37) : principaux réduits ou retirés par la rampe de volume.
         'rampe': dict(getattr(pol, 'rampe', None) or pk.rampe_vide()),
     }
+    if opts.get('bilan_garde'):
+        # KM7 (C17.54) : variante « garde l'écrit une fois sur deux » (clé
+        # absente de la campagne ordinaire, comparée une à une au Dart).
+        out['garde'] = dict(getattr(pol, 'garde', None) or pk.garde_vide())
+    return out
 
 
 def _nom(job):
@@ -1465,6 +1478,9 @@ def options_de(argv=None):
     ap.add_argument('--temps-existants', action='store_true',
                     help='critère 8 lu dans donnees/criteres_moteur.json au lieu d\'être remesuré')
     ap.add_argument('--semaines', type=int, default=None, help='tronque les saisons (essais)')
+    ap.add_argument('--bilan-garde', choices=('verse', 'non_verse'), default=None,
+                    help="KM7 : l'athlète garde l'écrit une fois sur deux (mode Libre) : bilan versé sans être "
+                         "appliqué (verse) ou seuls ses faits (non_verse)")
     ap.add_argument('--travail', default=DOSSIER_TRAVAIL)
     ap.add_argument('--partie', default=None,
                     help="i/n : calcule seulement la part i (1..n) des saisons, les écrit dans le dossier de "
@@ -1476,7 +1492,7 @@ def options_de(argv=None):
             'trajectoires': traj, 'coeurs': a.coeurs, 'sortie': a.sortie,
             'sans_planificateur': a.sans_planificateur, 'defaut_modele': a.defaut_modele,
             'caler_couverture': a.caler_couverture, 'rapide': a.rapide, 'temps_existants': a.temps_existants,
-            'semaines': a.semaines, 'travail': a.travail, 'partie': a.partie}
+            'semaines': a.semaines, 'travail': a.travail, 'partie': a.partie, 'bilan_garde': a.bilan_garde}
 
 
 def main(argv=None):

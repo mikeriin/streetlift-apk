@@ -54,6 +54,8 @@ export 'src/numeric.dart'
     show erfc, flamesOfRir, logShare, normCdf, normPdf, repsAt, rirOfFlames;
 export 'src/params.dart' show AdaptParams;
 export 'src/rater.dart' show RatingModel;
+export 'src/remplacement_infos.dart'
+    show koachInfoRemplacement, koachInfosRemplacement;
 export 'src/replay.dart'
     show
         BlockView,

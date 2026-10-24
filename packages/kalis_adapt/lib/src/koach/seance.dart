@@ -1786,6 +1786,7 @@ class Seances {
       'dose_plafonnee': cond['dose_plafonnee'],
       'fragile': cond['fragile'],
       'servi': servi,
+      'depart_kg': item['koachDepartKg'],
     };
     if (coupure > 0 && const ['reps', 'tenue'].contains(typ)) {
       // Semaine du retour après une coupure : répétitions et tenues
@@ -3568,10 +3569,12 @@ class Seances {
     // Exercice jamais mesuré et a priori vague : l'utilisateur choisit sa
     // première charge (calibrage), Koach l'apprend.
     if (t.mesures == 0 && cap.$2 > 0.12) {
+      // 1.0.9 (KM7) : remplaçant jamais mesuré, charge de départ transférée
+      // de l'exercice remplacé (table de transfert) ; null sinon.
       return <String, Object?>{
         'repsLow': lo,
         'repsHigh': hi,
-        'loadKg': null,
+        'loadKg': plan['depart_kg'],
         'flames': flammes,
         'role': null,
       };

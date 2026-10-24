@@ -135,7 +135,7 @@ def score(o, c):
         s += 0.15
     d = abs((c.get('difficulty') or 0) - (o.get('difficulty') or 0))
     s += 0.10 * max(0.0, 1.0 - d / 10.0)
-    return round(s, 9)
+    return s
 
 
 def _faisable(c, dispo, manque, lieu):
@@ -407,6 +407,19 @@ def remplacants(infos, demande, koach=None):
     zone = raison.get('zone') if code == 'douleur' else None
     item = demande.get('item') or {}
     u_o = unite_de(o)
+    etat = koach.modele.instantane() if koach is not None else None
+    try:
+        return _remplacants(infos, demande, koach, out, o, o_id, raison, code, role, manque, dispo, lieu,
+                            exclus, niveau_max, zone, item, u_o)
+    finally:
+        if etat is not None:
+            # Aperçu : les pistes ouvertes pour les cibles de départ sont
+            # refermées (rien n'est versé au journal).
+            koach.modele.restaurer(etat)
+
+
+def _remplacants(infos, demande, koach, out, o, o_id, raison, code, role, manque, dispo, lieu, exclus,
+                 niveau_max, zone, item, u_o):
     par = {e: [] for e in ETIQUETTES}
     for c in infos:
         cid = c['id']
@@ -447,7 +460,7 @@ def _choisir(cands, etiquette, par=None):
     = proximité moins 0,08 par niveau de profondeur dans la chaîne (la
     variante de base d'abord). Égalités : identifiant."""
     n = par if par is not None else PAR_ETIQUETTE + (2 if etiquette == 'sans_materiel' else 0)
-    rang = sorted(cands, key=lambda x: (-round(x[0] - PENALITE_PROFONDEUR * (x[2].get('depth') or 0), 9), x[1]))
+    rang = sorted(cands, key=lambda x: (-(x[0] - PENALITE_PROFONDEUR * (x[2].get('depth') or 0)), x[1]))
     pris = []
     vues = set()
     for x in rang:

@@ -17,7 +17,15 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
   (`item_remplace`), raison `koach.remplacement`, `koachDepartKg` pour le transfert.
 
 ## Fait
-- Python : modele.py, moteur.py, seance.py, remplacants.py ; tests/test_km7.py (15 tests verts).
+- Python : modele.py (bilan différé, instantane/restaurer), moteur.py, seance.py, remplacants.py ;
+  tests/test_km7.py (16 verts) ; pytest complet 356 verts (avant bump) ; fixtures/generer_km7.py -> km7.json.
+- Dart : modele.dart, moteur.dart, seance.dart, remplacants.dart (part), remplacement_infos.dart (export),
+  koach_textes.dart (koach.remplacement) ; test/koach_km7_test.dart (parité fixture + infos = fichier) ;
+  419 tests kalis_adapt verts (avant bump).
+- Version : Koach 1.0.9-ref.1, kalis_adapt 1.0.8, asset koach_params_1_0_9.json SHA 1a59e675…08dc5 ;
+  fixtures régénérées (seuls version/SHA changent, vérifié) ; CONTRAT note 24/10 + § 3.3, 3.5, 3.8.
+- Banc Python : variante --bilan-garde verse|non_verse (politique_koach.py garde, campagne.py) ;
+  clé 'garde' seulement avec la variante.
 
 ## Reste
 - pytest complet ; portage Dart (modele, moteur, seance, remplacants, textes) + test koach_km7_test.dart ;

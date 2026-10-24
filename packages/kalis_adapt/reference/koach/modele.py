@@ -696,6 +696,23 @@ class Modele(object):
             self._poser_jour(self.bilan_differe)
             self.bilan_differe = None
 
+    def instantane(self):
+        """1.0.9 (KM7) : état que la création d'une piste peut changer
+        (vecteur, covariance, branche « mauvais jour », pistes) ; avec
+        `restaurer`, un aperçu (cibles de départ des remplaçants) ne laisse
+        aucune trace : l'état reste celui que le journal recalcule."""
+        alt = None
+        if self.alt is not None:
+            alt = (self.alt[0].copy(), self.alt[1].copy(), self.alt[2])
+        return (self.m.copy(), self.P.copy(), self.n, alt, self.logw, dict(self.pistes), list(self.ordre))
+
+    def restaurer(self, etat):
+        m, P, n, alt, logw, pistes, ordre = etat
+        self.m, self.P, self.n, self.logw = m, P, n, logw
+        self.alt = alt
+        self.pistes = pistes
+        self.ordre = ordre
+
     def _reset(self, m, P, idx, moyenne, variance):
         P[idx, :] = 0.0
         P[:, idx] = 0.0
