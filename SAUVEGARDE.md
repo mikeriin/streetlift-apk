@@ -30,3 +30,11 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
 ## Reste
 - pytest complet ; portage Dart (modele, moteur, seance, remplacants, textes) + test koach_km7_test.dart ;
   infos de remplacement Dart ; mesure banc (variante « garde l'écrit 1 fois sur 2 ») ; campagne CI ; livraison.
+
+## 15:40 UTC — run CI unique lancé
+- claude/ci-cp-a 0b4d8b6c, run 40107907131 (126 parts : Dart 1-34, adversaires 41-46, tests 61-64, Python 101-150,
+  variante verse 151-174 (graines 0-17), non_verse 181-188 (graines 0-5)). Fichiers DEV dans /tmp/km7/ci (copie dans
+  ce commit de CI). Assemblage : ci-out/packages/km7/garde_*.json, criteres, securite, comparaison.
+- Reste : relecture indépendante (sous-agent), CHANGEMENTS_1_0_9.md, CHANGELOG, INTEGRATION_KM3 § 13, test texte
+  koach.remplacement ; résultats du run -> docs/data/km7 + CRITERES_KM7.md (kalis_bench) ; contrôle complet ;
+  commit moteurs + étiquette kalis_adapt-v1.0.8 ; livraison.
