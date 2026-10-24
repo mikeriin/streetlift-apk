@@ -56,3 +56,7 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
   même branche (leçon : ne rien pousser sur claude/ci-cp-a pendant un run de mise au point). Contrôle complet annulé ;
   « re-run failed jobs » du run 40107907131 lancé à 18:50 (attempt 2 ; 40 parts vertes gardées). Contrôle complet à
   relancer APRÈS la publication du run (commit 8c7f936 déjà sur la branche : re-run du run 40111866107 ou nouveau push).
+
+## 20:35 UTC
+- Essai 3 du run 40107907131 relancé par le pilotage à 20:18 (LANCEMENTS.md). Contrôle complet poussé sur
+  claude/ci-cp-b (a346870313fb83a4ab496f0977e9e0d41a4e670b). Ne rien pousser sur claude/ci-cp-a avant la publication du run.
