@@ -1,0 +1,8 @@
+{
+  "generator": "1.0.0",
+  "profiles": {
+    "force_intermediaire_salle": "fbeb12f8:91988",
+    "sante_maison": "15e79d77:82674",
+    "epreuve_parc": "2f3e9802:275480"
+  }
+}

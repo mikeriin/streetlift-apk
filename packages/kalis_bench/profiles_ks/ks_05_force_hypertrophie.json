@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "key": "ks_05_force_hypertrophie",
+ "group": "autres",
+ "title": "Force et hypertrophie, quatre séances",
+ "summary": "Homme de 33 ans, 82 kg, intermédiaire, en salle. Veut de la force sur les trois mouvements de base et du muscle (les deux à poids égal). Quatre séances de 75 minutes ; squat, développé couché et soulevé de terre visés dans 12 semaines.",
+ "level": "intermediate",
+ "trainingAgeMonths": 30,
+ "core": {
+  "sex": "male",
+  "birthYear": 1993,
+  "heightCm": 178,
+  "bodyWeightKg": 82.0,
+  "disciplines": {
+   "primary": "musculation",
+   "primaryPct": 100,
+   "secondaries": []
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 75
+   },
+   {
+    "weekday": 2,
+    "minutes": 75
+   },
+   {
+    "weekday": 4,
+    "minutes": 75
+   },
+   {
+    "weekday": 5,
+    "minutes": 75
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "barre olympique",
+   "disques",
+   "cage / rack",
+   "banc plat",
+   "banc inclinable",
+   "haltères",
+   "poulie",
+   "machine guidée",
+   "presse à cuisses",
+   "machine à mollets",
+   "barre EZ",
+   "kettlebell",
+   "barre fixe",
+   "barres parallèles",
+   "tapis",
+   "rameur",
+   "vélo / home-trainer",
+   "tapis de course",
+   "élastique",
+   "box / plinth"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "free",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  },
+  "emphasis": "both"
+ },
+ "records": [
+  {
+   "exerciseId": "mu-back-squat-barre-haute",
+   "measure": "one_rm_kg",
+   "value": 130,
+   "testedWeeksAgo": 3
+  },
+  {
+   "exerciseId": "mu-developpe-couche-barre",
+   "measure": "one_rm_kg",
+   "value": 100,
+   "testedWeeksAgo": 3
+  },
+  {
+   "exerciseId": "mu-souleve-de-terre-conventionnel",
+   "measure": "one_rm_kg",
+   "value": 160,
+   "testedWeeksAgo": 3
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "mu-back-squat-barre-haute",
+   "metric": "one_rm_kg",
+   "targetValue": 140,
+   "weeksOut": 12
+  },
+  {
+   "id": "g2",
+   "exerciseId": "mu-developpe-couche-barre",
+   "metric": "one_rm_kg",
+   "targetValue": 105,
+   "weeksOut": 12
+  },
+  {
+   "id": "g3",
+   "exerciseId": "mu-souleve-de-terre-conventionnel",
+   "metric": "one_rm_kg",
+   "targetValue": 170,
+   "weeksOut": 12
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Profil ajouté par le lot KS1 (structure de la semaine, CAHIER_KS.md § 9) : mesuré sur les critères automatiques du cahier, sans attentes de coach propres."
+  ],
+  "checks": []
+ }
+}
