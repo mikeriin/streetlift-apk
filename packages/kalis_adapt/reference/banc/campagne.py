@@ -162,8 +162,12 @@ def empreinte_sources():
 
 def config_de(opts):
     """Ce qui change le résultat d'une saison (hors code)."""
-    return {'planificateur': not opts['sans_planificateur'], 'trajectoires': int(opts['trajectoires']),
-            'defaut_modele_sd': opts['defaut_modele']}
+    c = {'planificateur': not opts['sans_planificateur'], 'trajectoires': int(opts['trajectoires']),
+         'defaut_modele_sd': opts['defaut_modele']}
+    if opts.get('bilan_garde'):
+        # 1.0.9 (KM7) : variante « garde l'écrit une fois sur deux ».
+        c['bilan_garde'] = opts['bilan_garde']
+    return c
 
 
 def dossier_de(opts, sources):
@@ -218,7 +222,11 @@ def politique(opts, graine):
     options = {'trajectoires': int(opts['trajectoires'])}
     fab = [lambda pol: PlanificationCampagne(pol, options, True), ek.fabrique_surveillance(),
            ek.fabrique_controle_dual(graine), ek.fabrique_adherence(graine)]
-    return ek.PolitiqueBriques(parametres=prm, extensions=fab)
+    pol = ek.PolitiqueBriques(parametres=prm, extensions=fab)
+    if opts.get('bilan_garde'):
+        pol.bilan_garde = opts['bilan_garde']
+        pol.graine_garde = graine
+    return pol
 
 
 # ----------------------------------------------------------------------
@@ -368,44 +376,71 @@ def classer_constats(initial, servi):
             cat = 'introduit'
         out[cat][c['code']] = out[cat].get(c['code'], 0) + 1
         if cat != 'deja_initial' and len(exemples) < 3:
-            exemples.append({'categorie': cat, 'code': c['code'], 'semaine': c.get('week'),
-                             'jour': c.get('dayIndex'), 'exercice': c.get('exerciseId'),
-                             'valeur': c.get('value'), 'limite': c.get('limit')})
+            e = {'categorie': cat, 'code': c['code'], 'semaine': c.get('week'),
+                 'jour': c.get('dayIndex'), 'exercice': c.get('exerciseId'),
+                 'valeur': c.get('value'), 'limite': c.get('limit')}
+            if 'ecrit' in c:
+                # KM5 : séries écrites de la semaine (définition C17.40.3).
+                e['ecrit'] = c['ecrit']
+            exemples.append(e)
     return out, exemples
 
 
 def securite_saison(saison, infos, tour, pol):
-    initial = sb.constats_saison(saison, infos)
+    """Vues de sécurité d'une saison servie par Koach, classées contre le
+    plan initial de `kalis_plan`. Depuis KM5 (Koach 1.0.7, C17.40.3), les
+    constats `volume_trop_vite` des vues de Koach (plan modulé, servies,
+    réalisée) suivent la nouvelle définition (`sb.filtrer_volume_ecrit` :
+    servi > max(limite de la rampe, écrit de la semaine)) ; le plan initial
+    et le contrefactuel apparié sont des programmes écrits, lus tels quels.
+    `ancienne_definition` : les deux vues du critère 7 classées avec
+    l'ancienne définition (dépassement de la limite seule), indicateur."""
+    initial, ecrit = sb.constats_et_series_saison(saison, infos)
     out = {'initial': sb.comptes(initial)}
+
+    def lire(blocs):
+        found, servi = sb.constats_et_series_saison(saison, infos, blocs=blocs)
+        return found, sb.filtrer_volume_ecrit(found, servi, ecrit)
+
+    def filtre(blocs):
+        return lire(blocs)[1]
+
+    ancienne = {}
     plan = None
     for x in pol.koach.extensions:
         if isinstance(x, pb.PlanificationBanc):
             plan = x
     if plan is not None:
-        mod = sb.constats_saison(saison, infos, blocs=plan.blocs_modules())
+        mod_a, mod = lire(plan.blocs_modules())
         cl, ex = classer_constats(initial, mod)
         out['plan_module'] = cl
         out['plan_module_exemples'] = ex
+        ancienne['plan_module'] = classer_constats(initial, mod_a)[0]
     for vue, sans in (('servi', False), ('servi_tests_faits', True)):
         blocs_s = blocs_servis_prescrits(saison, tour, sans)
-        serv = sb.constats_saison(saison, infos, blocs=blocs_s)
+        serv_a, serv = lire(blocs_s)
         cl, ex = classer_constats(initial, serv)
         if sans and (cl['introduit'] or cl['aggrave']):
-            cl, ex = retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s)
+            cl, ex = retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s, filtre)
             # Diagnostic seulement (ne change aucun classement) : constats
             # absents du plan initial qui disparaissent quand les séances
             # manquées sont vidées, c'est-à-dire dus au seul volume écrit des
             # séances manquées (que `blocs_servis_prescrits` garde).
             out[vue + '_dus_aux_manquees'] = constats_dus_aux_manquees(saison, infos, tour, initial, serv,
-                                                                        blocs_s)
+                                                                        blocs_s, filtre)
         out[vue] = cl
         out[vue + '_exemples'] = ex
+        if sans:
+            cl_a = classer_constats(initial, serv_a)[0]
+            if cl_a['introduit'] or cl_a['aggrave']:
+                cl_a = retirer_retours_a_l_ecrit(saison, infos, initial, serv_a, blocs_s)[0]
+            ancienne[vue] = cl_a
     # Lot KR1 (rapporté, hors critère 7) : saison RÉALISÉE — séances faites
     # telles que servies (tests comptés pour leurs tentatives faites),
     # séances manquées vidées ; constats classés contre le plan initial,
     # sans reclassement « retour à l'écrit » (ce que l'athlète a fait).
     blocs_r = vider_manquees(saison, tour, blocs_servis_prescrits(saison, tour, True))
-    real = sb.constats_saison(saison, infos, blocs=blocs_r)
+    real = lire(blocs_r)[1]
     cl, ex = classer_constats(initial, real)
     out['realise'] = cl
     out['realise_exemples'] = ex
@@ -417,6 +452,7 @@ def securite_saison(saison, infos, tour, pol):
     cl, ex = classer_constats(cf, real)
     out['realise_apparie'] = cl
     out['realise_apparie_exemples'] = ex
+    out['ancienne_definition'] = ancienne
     return out
 
 
@@ -435,14 +471,17 @@ def vider_manquees(saison, tour, blocs_s):
     return vide
 
 
-def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
+def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s, filtre=None):
     """{code: n} des constats de [serv] absents du plan initial (même clé)
     qui disparaissent quand chaque séance manquée de [blocs_s] est vidée
     (diagnostic : le volume écrit d'une séance manquée compte dans la vue
-    servie ; Koach ne le sert pas et ne peut que le réserver)."""
+    servie ; Koach ne le sert pas et ne peut que le réserver). [filtre]
+    (KM5) : blocs -> constats à la définition des blocs servis
+    (`securite_saison`)."""
     vide = vider_manquees(saison, tour, blocs_s)
     cles_ini = set(_cle_constat(c) for c in initial)
-    restent = set(_cle_constat(c) for c in sb.constats_saison(saison, infos, blocs=vide))
+    found = sb.constats_saison(saison, infos, blocs=vide) if filtre is None else filtre(vide)
+    restent = set(_cle_constat(c) for c in found)
     out = {}
     for c in serv:
         k = _cle_constat(c)
@@ -451,7 +490,7 @@ def constats_dus_aux_manquees(saison, infos, tour, initial, serv, blocs_s):
     return dict(sorted(out.items()))
 
 
-def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s):
+def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s, filtre=None):
     """Reclasse en `retour_ecrit` les constats « introduits » d'une semaine w
     qui disparaissent quand les semaines AVANT w sont celles de l'écrit et
     que la semaine w reste celle servie : la semaine servie n'a alors rien
@@ -459,7 +498,8 @@ def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s):
     douleur, bilan bas, coupure, arrêt après échecs) qui était plus bas que
     l'écrit, et le retour au plan écrit dépasse la rampe hebdomadaire
     calculée sur ce passé allégé. Les constats qui restent sont de vrais
-    dépassements de la semaine servie."""
+    dépassements de la semaine servie. [filtre] (KM5) : blocs -> constats à
+    la définition des blocs servis, appliquée aussi aux blocs hybrides."""
     cles_ini = {}
     for c in initial:
         cles_ini[_cle_constat(c)] = cles_ini.get(_cle_constat(c), 0) + 1
@@ -495,7 +535,8 @@ def retirer_retours_a_l_ecrit(saison, infos, initial, serv, blocs_s):
                         if sem_s['weekIndex'] == wi:
                             hyb[bi]['pass2']['weeks'][j] = copy.deepcopy(sem_s)
             cache[ident] = {}
-            for x in sb.constats_saison(saison, infos, blocs=hyb):
+            found = sb.constats_saison(saison, infos, blocs=hyb) if filtre is None else filtre(hyb)
+            for x in found:
                 cache[ident][_cle_constat(x)] = True
         if k in cache[ident]:
             restants.append(c)
@@ -535,7 +576,7 @@ def mesurer_saison(cle, scenario, verite, graine, opts):
         if isinstance(x, ek.SurveillanceBanc):
             alertes = sum(1 for j in x.journal if j.get('type') == 'alerte')
     unites, exclus = unites_calibration(saison, tour, previsions) if not opts['sans_planificateur'] else ([], {})
-    return {
+    out = {
         'saison': [cle, scenario, verite, graine], 'niveau': saison['level'],
         'echeance': any(saison.get('eventDaysByWeek') or []),
         'estimations': est,
@@ -546,7 +587,14 @@ def mesurer_saison(cle, scenario, verite, graine, opts):
         'alertes': alertes,
         'calibration': {'unites': unites, 'exclus': exclus},
         'securite': securite_saison(saison, infos, tour, pol),
+        # KM4 (C17.37) : principaux réduits ou retirés par la rampe de volume.
+        'rampe': dict(getattr(pol, 'rampe', None) or pk.rampe_vide()),
     }
+    if opts.get('bilan_garde'):
+        # KM7 (C17.54) : variante « garde l'écrit une fois sur deux » (clé
+        # absente de la campagne ordinaire, comparée une à une au Dart).
+        out['garde'] = dict(getattr(pol, 'garde', None) or pk.garde_vide())
+    return out
 
 
 def _nom(job):
@@ -1430,6 +1478,9 @@ def options_de(argv=None):
     ap.add_argument('--temps-existants', action='store_true',
                     help='critère 8 lu dans donnees/criteres_moteur.json au lieu d\'être remesuré')
     ap.add_argument('--semaines', type=int, default=None, help='tronque les saisons (essais)')
+    ap.add_argument('--bilan-garde', choices=('verse', 'non_verse'), default=None,
+                    help="KM7 : l'athlète garde l'écrit une fois sur deux (mode Libre) : bilan versé sans être "
+                         "appliqué (verse) ou seuls ses faits (non_verse)")
     ap.add_argument('--travail', default=DOSSIER_TRAVAIL)
     ap.add_argument('--partie', default=None,
                     help="i/n : calcule seulement la part i (1..n) des saisons, les écrit dans le dossier de "
@@ -1441,7 +1492,7 @@ def options_de(argv=None):
             'trajectoires': traj, 'coeurs': a.coeurs, 'sortie': a.sortie,
             'sans_planificateur': a.sans_planificateur, 'defaut_modele': a.defaut_modele,
             'caler_couverture': a.caler_couverture, 'rapide': a.rapide, 'temps_existants': a.temps_existants,
-            'semaines': a.semaines, 'travail': a.travail, 'partie': a.partie}
+            'semaines': a.semaines, 'travail': a.travail, 'partie': a.partie, 'bilan_garde': a.bilan_garde}
 
 
 def main(argv=None):

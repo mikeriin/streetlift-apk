@@ -154,3 +154,17 @@ isolates, fichiers, temps) est dans `bin/km2.dart`.
 ### `lib/src/km/adversaire.dart` (port de `adversaire.py`)
 
 Espace adversarial, recherche (μ+λ), évaluation contre le témoin (`kmAdversaryRun`).
+
+## Delta KM1c4 (17/10/2026) : modèle de vérité, douleur connue seulement une fois signalée
+
+`banc/verite.py` (`SimAthlete`) : `_pain_known = False` quand un épisode de douleur commence dans `advance`
+(douleur imposée par la fiche, `painFromDay`) et dans `end_week` (épisode tendineux du poignet, modèle b, tolérance
+de tenue dépassée), comme déjà dans `overuse` et dans les poussées de `_reactive_week`. Sans cette remise à faux, le
+drapeau restait vrai depuis un épisode antérieur signalé et une hausse de charge sur une douleur que Koach n'avait
+pas reçue était comptée comme aggravation (4 cas de KR1, `street_10`, séances manquées, vérité b, graines 10, 34,
+47, 64 : bilan `{'overall': 3}` sans douleur, derniers signalements à 0). **À porter dans
+`kalis_adapt/lib/src/sim/truth.dart`** (hors du périmètre de KM1c4, qui ne touche pas `kalis_adapt/lib/`) au lot
+KM2c3 : `_painKnown = false;` après `painIntensity = spec.painIntensity;` dans `advance`, et après `painUntil = _day
++ 10;` dans `endWeek`. La parité des fixtures du banc (`kalis_bench/test/fixtures/km2/`) exige la même vérité des deux
+côtés : elles sont régénérées au portage. Jusque-là, la campagne Dart compte ces aggravations contre une douleur non
+signalée (point de départ KM1c4 sur `kalis_plan` 0.4.2 : LIVRAISON_KM1c4.md § 2).

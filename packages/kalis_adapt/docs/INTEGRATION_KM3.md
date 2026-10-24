@@ -28,6 +28,29 @@ du journal et valeurs des paramètres inchangés : monter le paquet et remplacer
 (`koach_params_1_0_3.json` → `koach_params_1_0_4.json`, version `1.0.4-ref.1`, nouvelle empreinte au § 3). Mesuré
 sur le couple servi, `kalis_plan` 0.4.1 × Koach 1.0.4, 34 profils (`pipeline/cp/livraisons/LIVRAISON_KR1.md`).
 
+**Mise à jour du 19/10/2026 (`kalis_adapt` 1.0.5, lot KM4)** : portage de la référence Koach 1.0.6 (retour gradué
+au volume réparti sur la semaine et priorisé par rôle, `reference/CHANGEMENTS_1_0_6.md`). API et schéma du journal
+inchangés. À faire dans l'application (lot KB3) : (1) remplacer l'asset de paramètres (`koach_params_1_0_5.json` →
+`koach_params_1_0_6.json`, version `1.0.6-ref.1`, 347 clés, nouvelle empreinte au § 3) ; (2) donner à chaque item de
+`contexte['reste_semaine']` (et des séances manquées) le **rôle de son emplacement** (`role` : `main`, `secondary`,
+`accessory`…, tiré de `pass1.days[].slots[]` comme `roles` du plan de séance) — sans rôle, Koach prend la première
+ligne dure de chaque séance pour le principal ; (3) la garde de l'application sur le retour gradué (KB2 correction 1 :
+un exercice ramené à 0 série servi à la moitié de ses séries) peut rester en filet : Koach 1.0.6 ne retire plus un
+principal par la rampe sans douleur ; un accessoire ou un secondaire peut encore l'être (raison affichée) ; (4) la
+raison `koach.retour_gradue` porte `ecrites` et `douleur` (texte « N séries au lieu de M »).
+
+**Mise à jour du 18/10/2026 (`kalis_adapt` 1.0.4, lot KM2c3)** : portage de la référence Koach 1.0.5 (conduite sous
+douleur et rampe du réalisé, `reference/CHANGEMENTS_1_0_5.md`) : zone sensible douze semaines après tout épisode,
+rampe hebdomadaire de l'exposition réalisée par zone (échauffement compris) et au retour d'une coupure, aucune
+hausse de charge sous une gêne de la semaine, élargissement « rien de spécial » uniforme et borné. API, schéma du
+journal et codes de raison inchangés ; une valeur de paramètre change (`securite.reprise_dose_depart` 0,6 → 0,5),
+sept clés nouvelles : monter le paquet et remplacer l'asset de paramètres (`koach_params_1_0_4.json` →
+`koach_params_1_0_5.json`, version `1.0.5-ref.1`, 345 clés, nouvelle empreinte au § 3). Deux textes de raison sont
+neutres (`koach.reprise_dose`, retrait `reprise_dose` : la rampe vaut aussi après une coupure sans douleur). L'intégration
+(lot KB1) ne copie que le Dart (`lib/`) et les assets (`assets/koach/`), jamais `reference/` ni les fixtures (C17.19.3).
+Mesuré sur le couple servi, `kalis_plan` 0.4.2 × Koach 1.0.5 en Dart, 90 600 saisons
+(`pipeline/cp/livraisons/LIVRAISON_KM2c3.md`).
+
 Sources lues : `CONTRAT.md` § K ; `reference/CONTRAT_1_0.md` (§ 2, 3, 3.7, 7, 9.5, 10, annexe A) ;
 `reference/rejeu/journal_app.py` et `walk_forward.py` ; `lib/src/koach/moteur.dart`, `planification.dart`,
 `rupture.dart`, `adherence.dart`, `dual.dart`, `parametres.dart`, `seance.dart`, `securite.dart` ;
@@ -83,7 +106,7 @@ Textes des raisons : `package:kalis_adapt/koach_textes.dart` (§ 4), testé par 
 ### 1.2 Construction
 
 ```dart
-final params = lireParametresKoach(await rootBundle.loadString('assets/koach/koach_params_1_0_4.json'));
+final params = lireParametresKoach(await rootBundle.loadString('assets/koach/koach_params_1_0_6.json'));
 final fiches = lireFichesKoach(await rootBundle.loadString('assets/koach/vecteurs_qualites_v1.json'));
 final koach = Koach(params, fiches, profilKoach);           // profilKoach : § 2.6, figé (instantané)
 final validation = ProfilValidation.depuisProfil(athleteProfile, debut: lundiS1);
@@ -344,15 +367,15 @@ fiche sont ignorés par la planification (`chargerReference`, d'après le code).
 
 ## 3. Paramètres
 
-- **Assets.** Copier dans l'application, octet pour octet, `packages/kalis_adapt/assets/koach/koach_params_1_0_4.json`
+- **Assets.** Copier dans l'application, octet pour octet, `packages/kalis_adapt/assets/koach/koach_params_1_0_7.json`
   et `vecteurs_qualites_v1.json` dans `assets/koach/`, déclarés dans `pubspec.yaml` de l'application comme
   `assets/catalog/catalog_v1.json.gz` (copie de l'asset de `kalis_core`). Le paquet est du Dart pur et ne déclare
   aucun asset Flutter (son `pubspec.yaml` n'a pas de section `flutter`) : ne pas utiliser `koachAssetParametres` /
   `koachAssetFiches` (clés `packages/kalis_adapt/…`), qui supposent un asset déclaré par le paquet. Lecture :
   `rootBundle.loadString('assets/koach/…')`, puis `lireParametresKoach` / `lireFichesKoach` (`parametres.dart`),
   qui contrôlent schéma, version, types, bornes et positivité et lèvent `FormatException`.
-- **Empreintes.** Paramètres : version `1.0.4-ref.1`, 338 clés, SHA-256
-  `2d023854612110d0c3a925c79efeab6a34ac886f3be05089fac228845a2a9016` (`koachParametresSha256`). Fiches : version
+- **Empreintes.** Paramètres (Koach 1.0.7, `kalis_adapt` 1.0.6) : version `1.0.7-ref.1`, 344 clés, SHA-256
+  `2f055c5181743089afd0c3602bc270f77b01063ebc1bab32b293c81c6816f42c` (`koachParametresSha256`). Fiches : version
   `1.0.0`, 1 039 fiches, SHA-256 `71454d2d6fcc6df8823b23cb640eec5293f40e91822bda9afa75f5ca0098ba6c`
   (`koachFichesSha256`). Un test de l'application compare les octets de `assets/koach/` à ceux du paquet et leur
   SHA-256 aux constantes (comme `test/koach_parametres_test.dart` du paquet).
@@ -678,10 +701,10 @@ Koach n'en a pas (contrat § 10.2) : c'est un état de l'application, hors du jo
 
 ## 9. Liste de contrôle KM3
 
-- [ ] `packages/kalis_adapt` = la dernière étiquette **validée** de `kalis_adapt` (1.0.3 si le lot KR1 est validé, sinon 1.0.2) à l'octet ;
+- [ ] `packages/kalis_adapt` = la dernière étiquette **validée** de `kalis_adapt` (1.0.4 si le lot KM2c3 est validé) à l'octet ;
       `kalis_bench` absent ; `kalis_core` 0.4.3, `kalis_plan` 0.3.1 inchangés (`kalis_plan` 0.4.1 entre par le lot court
       de KS1 ; le couple `kalis_plan` 0.4.1 × Koach est celui que mesure KR1).
-- [ ] Assets `assets/koach/koach_params_1_0_4.json` et `vecteurs_qualites_v1.json` copiés, déclarés, SHA-256
+- [ ] Assets `assets/koach/koach_params_1_0_6.json` et `vecteurs_qualites_v1.json` copiés, déclarés, SHA-256
       vérifiés par un test ; lus par `lireParametresKoach` / `lireFichesKoach`.
 - [ ] Construction : `Koach` + `Planification` (validateur `validateurSecurite` + `ProfilValidation.depuisProfil`),
       `Surveillance`, `ControleDual`, `Adherence`, dans cet ordre ; même ordre pour `rejouer`.
@@ -741,3 +764,67 @@ Koach n'en a pas (contrat § 10.2) : c'est un état de l'application, hors du jo
     aujourd'hui) ; et `cibles` : `mainLifts.target` du programme ou objectifs du profil quand les deux existent ?
 11. **Données 0.x** : afficher l'historique de l'écran Évolution tel quel, ou le replier dans un écran « Avant
     Koach 1.0 » ?
+
+## 11. Koach 1.0.7 (lot KM5, pour KB4)
+
+- **Écrit du programme** : Koach lit l'écrit d'un item comme `sets − koachVolume`. L'application passe à
+  `plan('seance')` les items modulés par `Planification.appliquer` (qui pose `koachVolume`) ; toute transformation de
+  l'application qui change `sets` d'un item avant Koach garde `koachVolume` = « séries servies − séries écrites par
+  le programme » (sinon la rampe lit l'écrit transformé). `contexte['manquees']` et `contexte['reste_semaine']` :
+  items à leur écrit du programme (sans ajouts ; un `koachVolume` présent est soustrait).
+- **Aucune coupe sous l'écrit au nom du volume** : une ligne écrite n'est plus réduite ni retirée par la rampe de
+  volume (raison `koach.retour_gradue` d'un groupe majeur ou `allegement` : plus jamais émise). Seules les séries que
+  Koach ajoute sont bornées : raison `koach.ajout_borne` (texte dans `koach_textes.dart`). La garde
+  `koachGardeSeance` de l'application peut s'appliquer à tous les rôles : une ligne absente du servi sans raison de
+  douleur, de test reporté, de séance bornée, d'endurance ou de rampe tendineuse (`koach.retour_gradue`,
+  `bras_tendus_*`) n'est jamais un choix de Koach 1.0.7.
+- **Un seul `prescrire` compté par séance** : un second appel de la même séance (après `ouvrir`) ne recompte pas son
+  écrit (`ecritCompte`) ; l'aperçu doit continuer de se faire sur une copie du moteur.
+
+## 12. Koach 1.0.8 (lot KM6, pour KB5)
+
+- Copier `lib/`, `assets/koach/` et `pubspec.yaml` de `etiquettes/kalis_adapt-v1.0.7`, et `kalis_plan` 0.4.3
+  (`etiquettes/kalis_plan-v0.4.3`) ; asset `koach_params_1_0_8.json` à la place de `koach_params_1_0_7.json`
+  (`1.0.8-ref.1`, 344 clés, SHA-256 `9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1`) ; fiches
+  `vecteurs_qualites_v1.json` version `1.0.1`, SHA-256 `99b0cae2d0b29d18d5daa30ee92b91990225124e38e44d522e80e8ae01a196e0`
+  (crédits « chest » des tirages) ; tests d'empreinte.
+- **Groupes** : passer les `GroupSpec` de la séance écrite dans `plan({'horizon': 'seance', …, 'groups': [...]})` et
+  lire `groups` de la sortie (tours et durée recalés sur les lignes servies). La colle de RV1 qui sert les intervalles
+  telle qu'écrite pour garder chrono et lignes d'accord peut tomber (X2) ; à décider avec le propriétaire (C17.44.4).
+- **Technique** : l'item servi a déjà `technique.intervals`, `backoffSets` et `setTargets` cohérents avec `sets`
+  (X3) : la recomposition côté application (`coherentTechnique`) devient une sécurité, plus une nécessité.
+- **Groupe gardé** : un item servi garde le `groupId` et le `format` de son emplacement (X7) ; le chemin
+  `exerciseGroupOf` de RV1c1 § 4 n'a plus à le reconstruire.
+- **Poulie** : `LoadGrid.of(LoadType.cable, null)` vaut 2,5 kg (X1) ; la colle de RV1 qui donnait ce pas aux moteurs
+  sans profil reste juste (même valeur).
+- **Raison nouvelle** `koach.volume_semaine` (texte dans `koach_textes.dart`) : la modulation hebdomadaire sert une
+  ligne sous l'écrit ; l'afficher comme les autres raisons ; ne pas la traiter comme une coupe à garder
+  (`koachGardeSeance`) : c'est un choix dit de Koach, au plus −15 % par qualité, au moins une série.
+- `koachModule` (champ posé par la planification, interne à la façade) : rien à faire côté application.
+
+## 13. Koach 1.0.9 (lot KM7, pour KB6)
+
+- Copier `lib/`, `assets/koach/` et `pubspec.yaml` de `etiquettes/kalis_adapt-v1.0.8` (`kalis_plan` 0.4.3 et
+  `kalis_core` inchangés) ; asset `koach_params_1_0_9.json` à la place de `koach_params_1_0_8.json` (`1.0.9-ref.1`,
+  344 clés, valeurs inchangées, SHA-256 `1a59e6756923ce348378ff356a25b0af4adc8e8114ae9ac1ba53b85c46808dc5`) ; fiches
+  `vecteurs_qualites_v1.json` 1.0.1 inchangées ; tests d'empreinte.
+- **Bilan versé sans être appliqué** (Libre « Garder l'écrit », Assisté « Annuler ») : verser le bilan **complet**
+  avec `applique: false` dans `seance_debut.bilan` au lieu de ses seuls faits (`SessionAdaptStore.factsOf`). La
+  séance servie est identique (item par item) à celle des faits ; la forme est apprise. Le drapeau doit arriver tel
+  quel dans la carte JSON versée à `observe` : `HealthCheck` de `kalis_core` n'a pas ce champ et ignore les champs
+  inconnus — ne pas faire passer le bilan versé par ce type (sinon le drapeau se perd et le bilan est appliqué en
+  silence) ; tester le journal. « Accepter » / « Annuler » avant la première série : la méthode actuelle (journal ramené
+  au `seance_debut`, nouveau début avec l'autre drapeau) reste exacte ; après : rien à rejouer.
+- **Remplacer pour aujourd'hui** : `Koach.remplacants(koachInfosRemplacement(catalog, profil), demande)` (fiches à
+  construire une fois) avec `exerciseId`, `item` (la ligne servie), `role`, `raison` ({code `pas_de_materiel` +
+  `materiel` manquant, `douleur` + `zone` (code `BodyZone`), `trop_dur`, `autre`}), `materiel` du profil s'il est
+  détaillé (sinon rien : celui de la ligne écrite moins le manquant), `lieu` (`salle`, `maison`, `exterieur`),
+  `niveau` (0-3), `exclus` (détestés, non sus, exercices déjà dans la séance), `grilles`. Sortie : propositions
+  groupées par `etiquette` (« Équivalent », « Plus facile », « Sans ce matériel », « Autre »), `texte` (« Pourquoi ? »),
+  `unite`, `depart` (`source` historique / transfert / a_priori / null ; charge ou plage). Lecture seule.
+- **Remplacement versé** : envoyer la ligne avec `exerciseId` = remplaçant et `remplace: {exerciseId: <écrit>, raison}`
+  dans `plan({'horizon': 'seance', …})` ; passer `grilles` et **`zones` sous l'identifiant du remplaçant** (la
+  conduite sous douleur ne s'applique qu'avec elles) ; Koach sert la ligne à son emplacement avec ses propres cibles
+  (plus de ligne « sans cible ») ; afficher `koach.remplacement` ; verser les séries sous l'exercice réel (déjà fait).
+- Limite : `remplacants` ne filtre une zone douloureuse que pour la raison `douleur` ; pour une autre raison un jour de
+  douleur active, passer `zones` (le service applique de toute façon la conduite) ou la raison `douleur`.

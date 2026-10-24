@@ -7,7 +7,7 @@ import json
 import math
 import os
 
-from koach.moteur import Koach
+from koach.moteur import Koach, faits_du_bilan
 from koach.seance import Grille
 from . import donnees
 from .meneur import Politique, cible_de
@@ -57,10 +57,228 @@ def profil_koach(saison, profil):
 CHAMPS_VOLUME = ('slotId', 'exerciseId', 'kind', 'sets', 'targetFlames', 'secondsLow', 'secondsHigh')
 
 
-def items_volume(items):
+def items_volume(items, roles=None):
     """Items réduits aux champs de `CHAMPS_VOLUME` (contexte de séance plus
-    léger dans le journal)."""
-    return [{k: it.get(k) for k in CHAMPS_VOLUME} for it in items]
+    léger dans le journal), avec le rôle de l'emplacement (`role`, 1.0.6 :
+    priorité du retour gradué réparti sur la semaine) quand [roles]
+    (slotId -> rôle) est donné."""
+    out = []
+    for it in items:
+        d = {k: it.get(k) for k in CHAMPS_VOLUME}
+        if roles is not None:
+            d['role'] = roles.get(it.get('slotId'))
+        out.append(d)
+    return out
+
+
+#: Raisons de la conduite sous douleur (mesure de la rampe de volume, KM4).
+RAISONS_DOULEUR = ('koach.douleur_retrait', 'koach.reprise_dose', 'koach.douleur_persistante')
+
+
+def mesure_rampe(acc, items, roles, servis, raisons, seances=None, zones=None, ecrit_semaine=None):
+    """Mesure du retour gradué sur les principaux (KM4, C17.37) ajoutée à
+    [acc] pour une séance : [items] écrits, [roles] slotId -> rôle,
+    [servis] items servis, [raisons] de Koach. Principal : ligne écrite de
+    rôle `main`, hors échauffement, au moins une série. Réduit : une raison
+    `koach.retour_gradue` porte sur son exercice ; retiré : réduit à 0 série
+    et absent du servi, sans raison de douleur sur l'exercice (ni conduite
+    sous douleur dite par la raison, `douleur`, 1.0.6).
+
+    Critère de KM5 (C17.40) : « série ou item retiré sous l'écrit par la
+    rampe de volume » — ligne écrite (hors échauffement, au moins une
+    série) servie sous ses séries écrites alors qu'une raison de la rampe
+    de VOLUME porte sur son exercice (`koach.retour_gradue` d'un groupe
+    majeur ou de l'allègement, hors tenues bras tendus ; `koach.ajout_borne`
+    servie sous ses écrites) : `sous_ecrit_items`, `sous_ecrit_series`
+    (séries écrites − servies, borne haute quand une autre règle a aussi
+    réduit la ligne). Ajouts de Koach bornés (`koach.ajout_borne`, 1.0.7) :
+    `ajouts_bornes` (raisons), `ajouts_bornes_series` (prévues − servies).
+
+    Mesure indépendante (relecture KM5, M3) : `sans_cause_items`,
+    `sans_cause_series` — ligne écrite (hors échauffement et tests, au
+    moins une série) servie sous ses séries écrites sans cause dite ni
+    visible : aucune raison de Koach sur son exercice (hors
+    `koach.ajout_borne`), reçue par Koach à au moins ses séries écrites
+    (pas réduite avant : planification, allègement d'un diagnostic), bilan
+    du jour sans palier, aucune zone qu'elle sollicite (niveau ≥ 0,5 ou
+    arrêt) en douleur active, à l'arrêt, en reprise ou sensible
+    ([seances] : `Seances` de Koach après la prescription ; [zones] :
+    id -> (niveaux, zones d'arrêt))."""
+    acc['seances'] += 1
+    servi = {}
+    for it in servis:
+        servi[it.get('slotId')] = int(it.get('sets') or 0)
+    rampe = {}
+    douleur = set()
+    volume = set()
+    for r in raisons:
+        pr = r.get('params') or {}
+        ex = pr.get('exercice')
+        if r.get('code') == 'koach.ajout_borne':
+            acc['ajouts_bornes'] += 1
+            acc['ajouts_bornes_series'] += int(pr.get('prevues') or 0) - int(pr.get('series') or 0)
+            if int(pr.get('series') or 0) < int(pr.get('ecrites') or 0):
+                volume.add(ex)
+        if r.get('code') == 'koach.retour_gradue' and not str(pr.get('groupe')).startswith('bras_tendus'):
+            volume.add(ex)
+        if r.get('code') == 'koach.retour_gradue':
+            rampe.setdefault(ex, []).append(pr.get('series'))
+            if pr.get('douleur'):
+                douleur.add(ex)
+        elif r.get('code') in RAISONS_DOULEUR or str(r.get('code')).startswith('koach.douleur'):
+            douleur.add(ex)
+    if seances is not None:
+        dites = set()
+        for r in raisons:
+            pr = r.get('params') or {}
+            if r.get('code') != 'koach.ajout_borne' and pr.get('exercice') is not None:
+                dites.add(pr['exercice'])
+        recus = {}
+        for p in seances.entree or []:
+            recus[p.get('slotId')] = int(p.get('sets') or 0)
+        g = seances.g
+        for it in items:
+            n0 = int(it.get('sets') or 0)
+            ex = it['exerciseId']
+            if it.get('kind') in ('warmup', 'test') or n0 <= 0 or ex in dites or seances.palier > 0:
+                continue
+            if recus.get(it.get('slotId'), 0) < n0:
+                continue
+            niveaux, arrets = (zones or {}).get(ex) or ({}, set())
+            zs = sorted(set(z for z, v in niveaux.items() if v >= 0.5) | set(arrets))
+            if any(g.active(z) > 0 or g.arret(z) or g.reprise(z) is not None or g.sensible(z) for z in zs):
+                continue
+            n = servi.get(it.get('slotId'), 0)
+            if n < n0:
+                acc['sans_cause_items'] += 1
+                acc['sans_cause_series'] += n0 - n
+    if seances is not None:
+        mesure_module(acc, servis, raisons, seances, ecrit_semaine)
+    for it in items:
+        n0 = int(it.get('sets') or 0)
+        if it.get('kind') == 'warmup' or n0 <= 0 or it['exerciseId'] not in volume:
+            continue
+        n = servi.get(it.get('slotId'), 0)
+        if n < n0:
+            acc['sous_ecrit_items'] += 1
+            acc['sous_ecrit_series'] += n0 - n
+    avec = False
+    reduit = False
+    retire = 0
+    for it in items:
+        if roles.get(it.get('slotId')) != 'main' or it.get('kind') == 'warmup' or int(it.get('sets') or 0) <= 0:
+            continue
+        avec = True
+        ex = it['exerciseId']
+        if ex not in rampe:
+            continue
+        reduit = True
+        n = servi.get(it.get('slotId'), 0)
+        acc['principaux_reduits'] += 1
+        acc['part_servie'] += n / float(it['sets'])
+        if n == 0 and 0 in rampe[ex] and ex not in douleur:
+            retire += 1
+    if avec:
+        acc['seances_principal'] += 1
+    if reduit:
+        acc['seances_principal_reduit'] += 1
+    if retire:
+        acc['principal_retire'] += retire
+        acc['seances_principal_retire'] += 1
+
+
+def mesure_module(acc, servis, raisons, seances, ecrit_semaine=None):
+    """Mesure de KM6 (X8, C17.43.4) ajoutée à [acc] pour une séance : lignes
+    reçues par Koach (`seances.entree`, items modulés) que la modulation
+    hebdomadaire de la planification a baissées sous l'écrit du programme
+    (`koachModule` < 0 ; hors échauffements, tests et montées) :
+    `module_items`, `module_series` (séries retirées par la modulation),
+    `module_seances` (séances avec au moins une baisse) ;
+    `module_sans_raison` : ligne baissée servie (même emplacement, même
+    exercice) sans raison `koach.volume_semaine` sur son exercice (0
+    attendu).
+
+    Contrôle « rampe déguisée » : sur les lignes reçues un jour où la rampe
+    de volume a des limites (`seances.retour_vol`) et dont la semaine écrite
+    est connue ([ecrit_semaine] : items ÉCRITS de toutes les séances de la
+    semaine), `module_lignes` et `module_baisses` ; `module_lignes_sur_limite`
+    et `module_baisses_sur_limite` : celles dont un groupe majeur crédité a
+    un écrit du PROGRAMME de la semaine au-dessus de la limite de la rampe
+    (c'est là qu'une rampe couperait ; écrit lu avant toute modulation, pour
+    que la baisse mesurée ne déplace pas la ligne hors de la zone). Une
+    modulation qui serait une rampe déguisée baisserait surtout ces
+    lignes-là."""
+    dites = set()
+    for r in raisons:
+        if r.get('code') == 'koach.volume_semaine':
+            dites.add((r.get('params') or {}).get('exercice'))
+    servis_par = {}
+    for it in servis:
+        servis_par.setdefault(it.get('slotId'), it)
+    rv = seances.retour_vol
+    ecrit_g = None
+    if rv is not None and ecrit_semaine is not None:
+        ecrit_g = seances._credits_ecrits(ecrit_semaine)[0]
+    une = False
+    for p in seances.entree or []:
+        if p.get('kind') in ('warmup', 'test') or int(p.get('sets') or 0) < 1 or p.get('koach') == 'vrai_test':
+            continue
+        km = p.get('koachModule')
+        baisse = km is not None and km < 0
+        if baisse:
+            une = True
+            acc['module_items'] += 1
+            acc['module_series'] += -int(km)
+            it = servis_par.get(p.get('slotId'))
+            if it is not None and int(it.get('sets') or 0) > 0 and it.get('exerciseId') == p['exerciseId'] \
+                    and p['exerciseId'] not in dites:
+                acc['module_sans_raison'] += 1
+        if ecrit_g is not None:
+            groupes = [g for (g, c) in seances._credits(p['exerciseId'])]
+            if not groupes:
+                continue
+            acc['module_lignes'] += 1
+            sur = any(ecrit_g[g] > rv['limites'][g] + 1e-9 for g in groupes)
+            if sur:
+                acc['module_lignes_sur_limite'] += 1
+            if baisse:
+                acc['module_baisses'] += 1
+                if sur:
+                    acc['module_baisses_sur_limite'] += 1
+    if une:
+        acc['module_seances'] += 1
+
+
+def rampe_vide():
+    return {'seances': 0, 'seances_principal': 0, 'seances_principal_reduit': 0, 'principaux_reduits': 0,
+            'part_servie': 0.0, 'principal_retire': 0, 'seances_principal_retire': 0,
+            'sous_ecrit_items': 0, 'sous_ecrit_series': 0, 'ajouts_bornes': 0, 'ajouts_bornes_series': 0,
+            'sans_cause_items': 0, 'sans_cause_series': 0,
+            'module_items': 0, 'module_series': 0, 'module_seances': 0, 'module_sans_raison': 0,
+            'module_lignes': 0, 'module_baisses': 0, 'module_lignes_sur_limite': 0,
+            'module_baisses_sur_limite': 0}
+
+
+def garde_vide():
+    """1.0.9 (KM7) : mesure de la variante « l'athlète garde l'écrit une
+    fois sur deux » (mode Libre, C17.52.4) : séances gardées, plans du bilan
+    versé comparés au plan des seuls faits (identiques / différents), et
+    erreur de prédiction des séances suivantes (résidu relatif moyen de la
+    séance, |·| ; résidu d'e1RM de la séance, |·|)."""
+    return {'seances': 0, 'gardees': 0, 'identiques': 0, 'differents': 0, 'premier_ecart': None,
+            'suivante_rel': [0.0, 0], 'suivante_e1rm': [0.0, 0], 'toutes_rel': [0.0, 0], 'toutes_e1rm': [0.0, 0],
+            'gardee_rel': [0.0, 0], 'gardee_e1rm': [0.0, 0]}
+
+
+def piece_garde(graine, jour):
+    """Pile ou face déterministe (une fois sur deux) de la séance du jour
+    [jour] de la saison de graine [graine] : hachage entier de Knuth."""
+    h = ((int(graine) * 1000003 + int(jour)) * 2654435761) % 4294967296
+    return h < 2147483648
+
+
+def _sans_trace(items):
+    return [{k: v for k, v in it.items() if k != 'trace'} for it in items]
 
 
 class PolitiqueKoach(Politique):
@@ -96,12 +314,19 @@ class PolitiqueKoach(Politique):
         # à Koach dans le contexte (retour gradué au volume).
         self.ecrits = {}
         self.par_semaine = {}
+        self.rampe = rampe_vide()
+        self.garde = garde_vide()
+        self.gardee_avant = False
         for (g, bi, wb, di, sim_day) in saison.get('sessions') or []:
+            roles_bloc = {}
+            for d1 in saison['blocks'][bi]['pass1']['days']:
+                for sl in d1['slots']:
+                    roles_bloc[sl['slotId']] = sl.get('role')
             for w in saison['blocks'][bi]['pass2']['weeks']:
                 if w['weekIndex'] == wb:
                     for d in w['days']:
                         if d['dayIndex'] == di:
-                            self.ecrits[sim_day] = (g, w.get('kind'), items_volume(d['items']))
+                            self.ecrits[sim_day] = (g, w.get('kind'), items_volume(d['items'], roles_bloc))
             self.par_semaine.setdefault(g, []).append(sim_day)
         self.manquees = []
 
@@ -138,7 +363,33 @@ class PolitiqueKoach(Politique):
                     'jour_evenement': ctx.jour_evenement, 'budget': ctx.budget, 'lieu': ctx.lieu,
                     'semaine': ctx.semaine, 'manquees': self.manquees, 'reste_semaine': reste}
         self.manquees = []
-        self.koach.observe({'type': 'seance_debut', 'jour': ctx.sim_day, 'bilan': ctx.bilan,
+        bilan = ctx.bilan
+        garde = getattr(self, 'bilan_garde', None)
+        self.gardee = False
+        clone = None
+        debut_faits = None
+        if garde and bilan and bilan.get('overall') is not None:
+            self.garde['seances'] += 1
+            if piece_garde(getattr(self, 'graine_garde', 0), ctx.sim_day):
+                # 1.0.9 (KM7) : l'athlète garde l'écrit (mode Libre) : bilan
+                # versé sans être appliqué, ou seulement ses faits.
+                self.gardee = True
+                self.garde['gardees'] += 1
+                if garde == 'verse':
+                    bilan = dict(bilan, applique=False)
+                    # Témoin : même moteur, seuls les faits du bilan.
+                    journal, ext = self.koach.journal, self.koach.extensions
+                    self.koach.journal, self.koach.extensions = [], []
+                    try:
+                        clone = copy.deepcopy(self.koach)
+                    finally:
+                        self.koach.journal, self.koach.extensions = journal, ext
+                    debut_faits = {'type': 'seance_debut', 'jour': ctx.sim_day,
+                                   'bilan': faits_du_bilan(ctx.bilan), 'poids_kg': None,
+                                   'contexte': copy.deepcopy(contexte)}
+                else:
+                    bilan = faits_du_bilan(bilan)
+        self.koach.observe({'type': 'seance_debut', 'jour': ctx.sim_day, 'bilan': bilan,
                             'poids_kg': None, 'contexte': contexte})
         items = []
         for it in self.items_du_jour(ctx):
@@ -152,6 +403,20 @@ class PolitiqueKoach(Politique):
                 roles[s['slotId']] = s.get('role')
         r = self.koach.plan({'horizon': 'seance', 'items': items, 'grilles': self.grilles,
                              'zones': self.zones, 'roles': roles})
+        if clone is not None:
+            clone.observe(debut_faits)
+            r2 = clone.plan({'horizon': 'seance', 'items': copy.deepcopy(items), 'grilles': self.grilles,
+                             'zones': self.zones, 'roles': roles})
+            if _sans_trace(r2['items']) == _sans_trace(r['items']) and r2['raisons'] == r['raisons']:
+                self.garde['identiques'] += 1
+            else:
+                self.garde['differents'] += 1
+                if self.garde['premier_ecart'] is None:
+                    self.garde['premier_ecart'] = ctx.sim_day
+        semaine = [x for j in sorted(self.par_semaine.get(ctx.semaine, [])) if j in self.ecrits
+                   for x in self.ecrits[j][2]]
+        mesure_rampe(self.rampe, ctx.ecrit['items'], roles, r['items'], r.get('raisons') or [],
+                     self.koach.seances, self.zones, semaine)
         return {'items': r['items']}
 
     def _verser(self, done):
@@ -206,8 +471,24 @@ class PolitiqueKoach(Politique):
 
     def terminer(self, ctx, record):
         self._verser(record['sets'])
+        n = len(self.koach.modele.histoire_residus)
         self.koach.observe({'type': 'seance_fin', 'jour': ctx.sim_day, 'douleurs': record.get('pains'),
                             'seance': record})
+        if getattr(self, 'bilan_garde', None) and len(self.koach.modele.histoire_residus) > n:
+            # Erreur de prédiction de la séance (résidus du modèle, KM7).
+            res = self.koach.modele.histoire_residus[-1]
+            cles = ['toutes']
+            if self.gardee_avant:
+                cles.append('suivante')
+            if getattr(self, 'gardee', False):
+                cles.append('gardee')
+            for c in cles:
+                self.garde[c + '_rel'][0] += abs(res[2])
+                self.garde[c + '_rel'][1] += 1
+                if res[5] is not None:
+                    self.garde[c + '_e1rm'][0] += abs(res[5])
+                    self.garde[c + '_e1rm'][1] += 1
+        self.gardee_avant = getattr(self, 'gardee', False)
 
     def estimer(self, ex_id, n):
         m = self.koach.modele

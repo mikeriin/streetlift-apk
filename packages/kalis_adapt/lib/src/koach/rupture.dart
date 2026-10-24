@@ -35,7 +35,8 @@ const Json defautsRupture = <String, Object?>{
   'assiduite_secours': 0.7,
   'assiduite_secours_semaines': 2,
   'douleur_secours': 2,
-  'elargissement_rien_de_special': 4.0,
+  // 1.0.5 : part du chemin vers l'a priori à chaque « rien de spécial ».
+  'elargissement_vers_a_priori': 0.25,
   'semaine_allegee_series': 0.6,
   'semaine_allegee_rir': 2.0,
   'journal_dossier': 60,
@@ -839,8 +840,14 @@ class Surveillance extends Extension
         continue;
       }
       final it = Map<String, Object?>.of(it0);
+      final avant = ent(it['sets']);
       final n = (dbl(it['sets']) * fSeries + 0.5).floor();
       it['sets'] = n >= 1 ? n : 1;
+      // 1.0.7 (KM5) : `koachVolume` reste « séries servies − séries écrites
+      // par le programme » (la rampe de volume ne coupe jamais sous l'écrit
+      // et lit l'écrit par ce champ).
+      it['koachVolume'] =
+          ent(it['sets']) - (avant - ent(ou(it['koachVolume'], 0)));
       final f = it['targetFlames'];
       if (f != null) {
         final fn = f as num;
@@ -951,11 +958,15 @@ class Surveillance extends Extension
       final j = koach.jour;
       allegement = (j, j + 7, series, rir);
     } else {
-      final facteur = dbl(_ruParam(pr, 'elargissement_rien_de_special'));
-      koach.modele.elargir(facteur);
+      // 1.0.5 (KM1c4, règle 5) : élargissement uniforme et borné, part du
+      // chemin vers l'a priori (`Modele.elargir`) ;
+      // `elargissement_rien_de_special` (facteur de 1.0 à 1.0.4) n'est plus
+      // lu.
+      final part = dbl(_ruParam(pr, 'elargissement_vers_a_priori'));
+      koach.modele.elargir(part);
       bocpd.reinitialiser();
       p = 0.0;
-      action = <String, Object?>{'action': 'elargir', 'facteur': facteur};
+      action = <String, Object?>{'action': 'elargir', 'part': part};
     }
     mjSuite = 0;
     // Acquittement : chaque cause levée se tait `silence_semaines` semaines.
@@ -1214,7 +1225,7 @@ final Map<(String, String), (num, num)> bornes = {
   ('rupture', 'residu_secours'): (0.0, 1.0),
   ('rupture', 'assiduite_secours'): (0.0, 1.0),
   ('rupture', 'douleur_secours'): (0.0, 10.0),
-  ('rupture', 'elargissement_rien_de_special'): (1.0, 100.0),
+  ('rupture', 'elargissement_vers_a_priori'): (0.0, 1.0),
   ('rupture', 'semaine_allegee_series'): (0.1, 1.0),
   ('rupture', 'semaine_allegee_rir'): (0.0, 5.0),
   ('rupture', 'course_max'): (10, 1000),

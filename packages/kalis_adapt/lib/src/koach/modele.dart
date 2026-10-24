@@ -863,11 +863,39 @@ class Modele {
   // ------------------------------------------------------------------
   // Séance
   // ------------------------------------------------------------------
-  void debutSeance(int j, Json? bil, Object? poids) {
+  /// Ouvre une séance : effet de jour remis à son a priori (informé par le
+  /// bilan de santé), branche « mauvais jour » ouverte.
+  ///
+  /// 1.0.9 (KM7) : [differe] vrai (bilan versé sans être appliqué, mode
+  /// Libre « Garder l'écrit » ou Assisté « Annuler ») : l'a priori du jour
+  /// reste celui d'une séance sans forme du jour jusqu'à la première série
+  /// (le plan servi est celui d'un bilan sans forme), puis la forme est
+  /// versée ([_verserBilan]) avant que la série soit interprétée : l'état
+  /// appris est exactement celui d'un bilan appliqué.
+  void debutSeance(int j, Json? bil, Object? poids, {bool differe = false}) {
     avancer(j);
     if (vrai(poids)) {
       poidsKg = dbl(poids);
     }
+    final jj = jm(p['jour']);
+    _reset(m, pm, cap, de, 0.0, pw(dbl(jj['sigma_exercice']), 2));
+    _poserJour(differe ? null : bil);
+    bilanDiffere = differe ? bil : null;
+    enSeance = true;
+    bilan = bil;
+    residusSeance = [];
+    _dernierEx = null;
+    for (final exId in ordre) {
+      pistes[exId]!.seriesSeance = [];
+    }
+  }
+
+  /// 1.0.9 (KM7) : forme du jour versée à la première série (null : aucune).
+  Json? bilanDiffere;
+
+  /// A priori de l'effet du jour (branche principale et branche « mauvais
+  /// jour ») d'après la forme du jour de [bil].
+  void _poserJour(Json? bil) {
     final jj = jm(p['jour']);
     var moyenne = 0.0;
     var sd = dbl(jj['sigma_seance']);
@@ -882,7 +910,6 @@ class Modele {
       }
     }
     _reset(m, pm, cap, ds, moyenne, sd * sd);
-    _reset(m, pm, cap, de, 0.0, pw(dbl(jj['sigma_exercice']), 2));
     final am = Float64List.fromList(m);
     final aP = Float64List.fromList(pm);
     _reset(
@@ -896,13 +923,83 @@ class Modele {
     _alt = _Branche(am, aP, cap);
     altLw = math.log(pMauvais);
     logw = math.log(1.0 - pMauvais);
-    enSeance = true;
-    bilan = bil;
-    residusSeance = [];
-    _dernierEx = null;
-    for (final exId in ordre) {
-      pistes[exId]!.seriesSeance = [];
+  }
+
+  /// 1.0.9 (KM7) : forme du jour versée sans être appliquée, posée à la
+  /// première série de la séance. Rien n'a encore touché l'effet du jour
+  /// (une piste créée ou une observation hors série agit de même sur les
+  /// deux branches, qui ne diffèrent que par lui) : l'état obtenu est celui
+  /// d'une séance ouverte avec le bilan.
+  void _verserBilan() {
+    final b = bilanDiffere;
+    if (b != null) {
+      _poserJour(b);
+      bilanDiffere = null;
     }
+  }
+
+  /// 1.0.9 (KM7) : état que la création d'une piste peut changer (vecteur,
+  /// covariance, branche « mauvais jour », pistes) ; avec [restaurer], un
+  /// aperçu (cibles de départ des remplaçants) ne laisse aucune trace :
+  /// l'état reste celui que le journal recalcule.
+  Object instantane() {
+    final a = _alt;
+    return (
+      Float64List.fromList(m),
+      Float64List.fromList(pm),
+      cap,
+      n,
+      a == null
+          ? null
+          : _Branche(
+              Float64List.fromList(a.m),
+              Float64List.fromList(a.p),
+              a.cap,
+            ),
+      altLw,
+      logw,
+      Map<String, Piste?>.of(pistes),
+      List<String>.of(ordre),
+    );
+  }
+
+  /// Remet l'état pris par [instantane].
+  void restaurer(Object etat) {
+    final (
+      Float64List m0,
+      Float64List p0,
+      int cap0,
+      int n0,
+      _Branche? a0,
+      double altLw0,
+      double logw0,
+      Map<String, Piste?> pistes0,
+      List<String> ordre0,
+    ) = etat
+        as (
+          Float64List,
+          Float64List,
+          int,
+          int,
+          _Branche?,
+          double,
+          double,
+          Map<String, Piste?>,
+          List<String>,
+        );
+    m = m0;
+    pm = p0;
+    cap = cap0;
+    n = n0;
+    _alt = a0;
+    altLw = altLw0;
+    logw = logw0;
+    pistes
+      ..clear()
+      ..addAll(pistes0);
+    ordre
+      ..clear()
+      ..addAll(ordre0);
   }
 
   static void _reset(
@@ -956,6 +1053,9 @@ class Modele {
     if (!enSeance) {
       return null;
     }
+    // 1.0.9 (KM7) : séance close sans série, forme versée quand même (même
+    // fusion des branches qu'un bilan appliqué).
+    _verserBilan();
     final ecarts = <double>[];
     for (final exId in ordre) {
       final t = pistes[exId]!;
@@ -994,6 +1094,7 @@ class Modele {
     }
     _alt = null;
     enSeance = false;
+    bilanDiffere = null;
     final jj = jm(p['jour']);
     _reset(m, pm, cap, ds, 0.0, pw(dbl(jj['sigma_seance']), 2));
     _reset(m, pm, cap, de, 0.0, pw(dbl(jj['sigma_exercice']), 2));
@@ -1354,6 +1455,9 @@ class Modele {
     final t = piste(s['exerciseId'] as String);
     if (t == null) {
       return null;
+    }
+    if (bilanDiffere != null) {
+      _verserBilan();
     }
     if (_dernierEx != t.id) {
       debutExercice(t);
@@ -2139,29 +2243,57 @@ class Modele {
     return ligne;
   }
 
-  /// « Rien de spécial » : variance de toute capacité × [facteur].
+  /// « Rien de spécial » au diagnostic : incertitude élargie sur les
+  /// capacités, réapprentissage rapide (cahier § 9).
   ///
-  /// 1.0.4 (lot KR1) : jamais au-delà de l'a priori de population de la
-  /// composante ([variancesAPriori]) : variance nouvelle =
-  /// min(facteur · v ; max(v ; v0)), facteurs lus sur la diagonale d'avant
-  /// (P ← D P D). Sans ce plafond, des réponses « rien de spécial »
-  /// répétées faisaient diverger l'écart-type (saisons plantées de
-  /// `ks_test_ppl6`, séances manquées).
-  void elargir(double facteur) {
-    final r = math.sqrt(facteur);
-    final c = cap;
-    final fac = <(int, double)>[];
-    for (final (i, v0) in variancesAPriori()) {
-      final v = pm[i * c + i];
-      final ri = !(v > 0) ? r : math.min(r, math.max(1.0, math.sqrt(v0 / v)));
-      fac.add((i, ri));
+  /// 1.0.5 (lot KM1c4, règle 5) : élargissement UNIFORME et BORNÉ, mélange
+  /// convexe de l'a posteriori et de l'a priori de population sur les
+  /// composantes de capacité ([variancesAPriori]) : P ← (1 − part) P + part ·
+  /// diag(v0), les autres lignes et colonnes inchangées, sur toutes les
+  /// branches (principale et « mauvais jour »). La variance de toute capacité
+  /// devient (1 − part) V + part · V0 : jamais au-dessus de max(V ; V0) ;
+  /// P reste semi-définie positive. Même ordre d'opérations que la référence
+  /// (lignes puis colonnes × (1 − λ), bloc des composantes ÷ (1 − λ), puis
+  /// + λ · v0 sur la diagonale).
+  void elargir(double part) {
+    var lam = part;
+    if (lam < 0.0) {
+      lam = 0.0;
     }
-    for (final (i, ri) in fac) {
-      for (var j = 0; j < c; j++) {
-        pm[i * c + j] *= ri;
+    if (lam > 1.0) {
+      lam = 1.0;
+    }
+    final comps = variancesAPriori();
+    final idx = [for (final (i, _) in comps) i];
+    for (final br in _branches()) {
+      final c = br.cap;
+      final pp = br.p;
+      for (final i in idx) {
+        for (var j = 0; j < c; j++) {
+          pp[i * c + j] *= (1.0 - lam);
+        }
+        for (var j = 0; j < c; j++) {
+          pp[j * c + i] *= (1.0 - lam);
+        }
       }
-      for (var j = 0; j < c; j++) {
-        pm[j * c + i] *= ri;
+      // Les blocs croisés (composante, non composante) ont été multipliés
+      // une fois par (1 − λ), le bloc des composantes deux fois : on le
+      // ramène à (1 − λ) puis on ajoute λ · diag(v0).
+      if (lam < 1.0) {
+        for (final i in idx) {
+          for (final k in idx) {
+            pp[i * c + k] /= (1.0 - lam);
+          }
+        }
+      } else {
+        for (final i in idx) {
+          for (final k in idx) {
+            pp[i * c + k] = 0.0;
+          }
+        }
+      }
+      for (final (i, v0) in comps) {
+        pp[i * c + i] += lam * v0;
       }
     }
     elargi += 1;

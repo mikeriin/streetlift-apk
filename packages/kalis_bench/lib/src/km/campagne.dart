@@ -25,7 +25,7 @@ import 'package:kalis_adapt/koach.dart' as kc;
 
 import 'criteres_moteur.dart';
 import 'meneur.dart' show KmTour, kmSimuler;
-import 'politique_koach.dart' show PolitiqueKoach;
+import 'politique_koach.dart' show PolitiqueKoach, kmRampeVide;
 
 /// Schéma de la sortie.
 const String kmSchemaCriteres = 'kalis_bench/criteres_km2/1';
@@ -814,6 +814,63 @@ List<List<double>> kmPairesCouverture(
 /// (`securite_banc.constats_saison(saison, infos, blocs)`).
 typedef KmConstats = List<kc.Json> Function(List<Object?> blocs);
 
+/// KM5 : (constats, séries dures créditées par groupe majeur et par semaine)
+/// des blocs donnés, en une lecture (`KmConstatsSaison.constatsEtSeries`).
+typedef KmConstatsSeries =
+    (List<kc.Json>, List<Map<int, double>>) Function(List<Object?> blocs);
+
+/// Définition KM5 de « volume_trop_vite » pour une saison servie par Koach
+/// (C17.40.3 ; `securite_banc.filtrer_volume_ecrit`) : la rampe de volume
+/// protège contre ce que Koach ajoute, pas contre le programme choisi par
+/// l'athlète. Un constat `volume_trop_vite` de la semaine w n'est gardé que
+/// si les séries servies dépassent max(limite, séries écrites du groupe dans
+/// la semaine w) + 1e-9 ; il porte alors `ecrit`. Le groupe d'un constat est
+/// celui dont les séries servies valent sa valeur (à égalité, le premier qui
+/// dépasse ; aucun groupe trouvé : gardé, `ecrit` null).
+List<kc.Json> kmFiltrerVolumeEcrit(
+  List<kc.Json> found,
+  List<Map<int, double>> servi,
+  List<Map<int, double>> ecrit,
+) {
+  final out = <kc.Json>[];
+  for (final c in found) {
+    if (c['code'] != 'volume_trop_vite') {
+      out.add(c);
+      continue;
+    }
+    final w = c['week'] == null ? null : kc.ent(c['week']);
+    final v = kc.dbl(c['value']);
+    final lim = kc.dbl(c['limit']);
+    final sw = (w != null && w >= 0 && w < servi.length)
+        ? servi[w]
+        : const <int, double>{};
+    final ew = (w != null && w >= 0 && w < ecrit.length)
+        ? ecrit[w]
+        : const <int, double>{};
+    var trouve = false;
+    double? garde;
+    for (final gi in sw.keys.toList()..sort()) {
+      if ((sw[gi]! - v).abs() > 1e-9) {
+        continue;
+      }
+      trouve = true;
+      final e = ew[gi] ?? 0.0;
+      if (v > (lim > e ? lim : e) + 1e-9) {
+        garde = e;
+        break;
+      }
+    }
+    if (trouve && garde == null) {
+      continue;
+    }
+    out.add(<String, Object?>{...c, 'ecrit': garde});
+  }
+  return out;
+}
+
+/// Constats des blocs donnés à la définition KM5 des blocs servis.
+typedef KmFiltre = List<kc.Json> Function(List<Object?> blocs);
+
 /// Blocs de référence où chaque séance faite est remplacée par les items
 /// servis par Koach, tels que prescrits ; [testsFaits] : un test ajouté par
 /// Koach compte pour ses tentatives faites, un exercice arrêté avant la fin
@@ -954,6 +1011,8 @@ num _valeurOuZero(kc.Json c) {
         'exercice': c['exerciseId'],
         'valeur': c['value'],
         'limite': c['limit'],
+        // KM5 : séries écrites de la semaine (définition C17.40.3).
+        if (c.containsKey('ecrit')) 'ecrit': c['ecrit'],
       });
     }
   }
@@ -1014,14 +1073,16 @@ Map<String, Object?> kmConstatsDusAuxManquees(
   KmTour tour,
   List<kc.Json> initial,
   List<kc.Json> serv,
-  List<Object?> blocsS,
-) {
+  List<Object?> blocsS, [
+  KmFiltre? filtre,
+]) {
   final vide = kmViderManquees(saison, tour, blocsS);
   final clesIni = <(Object?, Object?, Object?, Object?)>{
     for (final c in initial) kmCleConstat(c),
   };
+  final trouves = filtre == null ? constats(vide) : filtre(vide);
   final restent = <(Object?, Object?, Object?, Object?)>{
-    for (final c in constats(vide)) kmCleConstat(c),
+    for (final c in trouves) kmCleConstat(c),
   };
   final out = <String, int>{};
   for (final c in serv) {
@@ -1043,8 +1104,9 @@ Map<String, Object?> kmConstatsDusAuxManquees(
   KmConstats constats,
   List<kc.Json> initial,
   List<kc.Json> serv,
-  List<Object?> blocsS,
-) {
+  List<Object?> blocsS, [
+  KmFiltre? filtre,
+]) {
   final clesIni = <(Object?, Object?, Object?, Object?), int>{};
   for (final c in initial) {
     final k = kmCleConstat(c);
@@ -1100,8 +1162,9 @@ Map<String, Object?> kmConstatsDusAuxManquees(
           }
         }
       }
+      final trouves = filtre == null ? constats(hyb) : filtre(hyb);
       cache[wi0] = <(Object?, Object?, Object?, Object?)>{
-        for (final x in constats(hyb)) kmCleConstat(x),
+        for (final x in trouves) kmCleConstat(x),
       };
     }
     if (cache[wi0]!.contains(k)) {
@@ -1118,27 +1181,43 @@ Map<String, Object?> kmConstatsDusAuxManquees(
 
 /// Sécurité d'une saison (`campagne.securite_saison`) : constats du plan
 /// initial ; s'il y a une planification, constats de ses blocs modulés
-/// [blocsModules] ; vues servies.
+/// [blocsModules] ; vues servies. Depuis KM5 (Koach 1.0.7, C17.40.3), les
+/// constats `volume_trop_vite` des vues de Koach (plan modulé, servies,
+/// réalisée) suivent la nouvelle définition ([kmFiltrerVolumeEcrit] :
+/// servi > max(limite, écrit de la semaine)) ; le plan initial et le
+/// contrefactuel apparié sont des programmes écrits, lus tels quels.
+/// `ancienne_definition` : les deux vues du critère 7 classées avec
+/// l'ancienne définition (dépassement de la limite seule), indicateur.
 Map<String, Object?> kmSecuriteSaison(
   kc.Json saison,
   KmConstats constats,
   KmTour tour, {
+  required KmConstatsSeries constatsSeries,
   List<kc.Json>? blocsModules,
 }) {
-  final initial = constats(kc.jl(saison['blocks']));
+  final (initial, ecrit) = constatsSeries(kc.jl(saison['blocks']));
   final out = <String, Object?>{'initial': kmComptes(initial)};
+  (List<kc.Json>, List<kc.Json>) lire(List<Object?> blocs) {
+    final (found, servi) = constatsSeries(blocs);
+    return (found, kmFiltrerVolumeEcrit(found, servi, ecrit));
+  }
+
+  List<kc.Json> filtre(List<Object?> blocs) => lire(blocs).$2;
+
+  final ancienne = <String, Object?>{};
   if (blocsModules != null) {
-    final mod = constats(blocsModules);
+    final (modA, mod) = lire(blocsModules);
     final (cl, ex) = kmClasserConstats(initial, mod);
     out['plan_module'] = cl;
     out['plan_module_exemples'] = ex;
+    ancienne['plan_module'] = kmClasserConstats(initial, modA).$1;
   }
   for (final (vue, sans) in const <(String, bool)>[
     ('servi', false),
     ('servi_tests_faits', true),
   ]) {
     final blocsS = kmBlocsServisPrescrits(saison, tour, testsFaits: sans);
-    final serv = constats(blocsS);
+    final (servA, serv) = lire(blocsS);
     var (cl, ex) = kmClasserConstats(initial, serv);
     if (sans && (kc.vrai(cl['introduit']) || kc.vrai(cl['aggrave']))) {
       (cl, ex) = kmRetirerRetoursALEcrit(
@@ -1147,6 +1226,7 @@ Map<String, Object?> kmSecuriteSaison(
         initial,
         serv,
         blocsS,
+        filtre,
       );
       // Diagnostic seulement : constats dus au seul volume écrit des
       // séances manquées.
@@ -1157,10 +1237,24 @@ Map<String, Object?> kmSecuriteSaison(
         initial,
         serv,
         blocsS,
+        filtre,
       );
     }
     out[vue] = cl;
     out['${vue}_exemples'] = ex;
+    if (sans) {
+      var clA = kmClasserConstats(initial, servA).$1;
+      if (kc.vrai(clA['introduit']) || kc.vrai(clA['aggrave'])) {
+        clA = kmRetirerRetoursALEcrit(
+          saison,
+          constats,
+          initial,
+          servA,
+          blocsS,
+        ).$1;
+      }
+      ancienne[vue] = clA;
+    }
   }
   // Lot KR1 (rapporté, hors critère 7) : saison réalisée — séances faites
   // telles que servies (tests comptés pour leurs tentatives faites), séances
@@ -1171,7 +1265,7 @@ Map<String, Object?> kmSecuriteSaison(
     tour,
     kmBlocsServisPrescrits(saison, tour, testsFaits: true),
   );
-  final reel = constats(blocsR);
+  final reel = lire(blocsR).$2;
   final (clR, exR) = kmClasserConstats(initial, reel);
   out['realise'] = clR;
   out['realise_exemples'] = exR;
@@ -1183,6 +1277,7 @@ Map<String, Object?> kmSecuriteSaison(
   final (clA, exA) = kmClasserConstats(cf, reel);
   out['realise_apparie'] = clA;
   out['realise_apparie_exemples'] = exA;
+  out['ancienne_definition'] = ancienne;
   return out;
 }
 
@@ -1210,10 +1305,12 @@ Map<String, Object?> kmMesureDeSaison(
   kc.Json saison,
   KmTour tour, {
   required KmConstats constats,
+  required KmConstatsSeries constatsSeries,
   required List<kc.Json> previsions,
   required int? alertes,
   required List<kc.Json>? blocsModules,
   required bool sansPlanificateur,
+  Map<String, Object>? rampe,
 }) {
   final est = <String, Object?>{};
   for (final m in kmModes) {
@@ -1252,8 +1349,11 @@ Map<String, Object?> kmMesureDeSaison(
       saison,
       constats,
       tour,
+      constatsSeries: constatsSeries,
       blocsModules: blocsModules,
     ),
+    // KM4 (C17.37) : principaux réduits ou retirés par la rampe de volume.
+    'rampe': Map<String, Object>.of(rampe ?? kmRampeVide()),
   };
 }
 
@@ -1281,10 +1381,12 @@ Map<String, Object?> kmMesurerSaison(
     saison,
     tour,
     constats: cs.constats,
+    constatsSeries: cs.constatsEtSeries,
     previsions: pol.previsions,
     alertes: _alertesDe(pol),
     blocsModules: pol.planification?.blocsModules(),
     sansPlanificateur: opts.sansPlanificateur,
+    rampe: pol.rampe,
   );
 }
 

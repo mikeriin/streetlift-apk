@@ -68,10 +68,10 @@ void main() {
         sha256.convert(_octets(koachFichierFiches)).toString(),
         koachFichesSha256,
       );
-      // En-tête du contrat 1.0.4 (CONTRAT_1_0.md).
+      // En-tête du contrat 1.0.9 (CONTRAT_1_0.md).
       expect(
         koachParametresSha256,
-        '2d023854612110d0c3a925c79efeab6a34ac886f3be05089fac228845a2a9016',
+        '1a59e6756923ce348378ff356a25b0af4adc8e8114ae9ac1ba53b85c46808dc5',
       );
     });
 
@@ -87,11 +87,11 @@ void main() {
   group('lireParametresKoach', () {
     final p = lireParametresKoach(_texte(koachFichierParametres));
 
-    test('version, schéma, nombre de clés (338 : 6 + 332)', () {
+    test('version, schéma, nombre de clés (344 : 6 + 338)', () {
       expect(p['schema'], koachParametresSchema);
       expect(p['version'], koachParametresVersion);
       expect(koachParametresVersion, koachVersion);
-      expect(koachVersion, '1.0.4-ref.1');
+      expect(koachVersion, '1.0.9-ref.1');
       final racine = [
         for (final e in p.entries)
           if (e.value is! Map<String, Object?>) e.key,
@@ -107,9 +107,9 @@ void main() {
         cles += jm(p[s]).length;
       }
       expect(racine.length, 6);
-      expect(cles - racine.length, 332);
+      expect(cles - racine.length, 338);
       expect(cles, koachParametresCles);
-      expect(cles, 338);
+      expect(cles, 344);
     });
 
     test('identique au fichier de référence décodé', () {
@@ -225,6 +225,24 @@ void main() {
         expect(validerParametres(p, q), isEmpty);
       },
     );
+
+    test('1.0.5 (KM1c4, règle 5) : part vers l\'a priori bornée à [0 ; 1], '
+        'ancien facteur retiré (1.0.6)', () {
+      expect(jm(p['rupture'])['elargissement_vers_a_priori'], 0.25);
+      refuse(
+        modifie((q) => jm(q['rupture'])['elargissement_vers_a_priori'] = 1.5),
+        'borne: rupture.elargissement_vers_a_priori',
+      );
+      refuse(
+        modifie((q) => jm(q['rupture'])['elargissement_vers_a_priori'] = -0.1),
+        'borne: rupture.elargissement_vers_a_priori',
+      );
+      // `elargissement_rien_de_special` retirée en 1.0.6 (KM4, C17.29.2).
+      expect(
+        jm(p['rupture']).containsKey('elargissement_rien_de_special'),
+        isFalse,
+      );
+    });
 
     test('une version mineure différente est admise', () {
       final q = modifie((x) => x['version'] = '1.7.0-ref.3');

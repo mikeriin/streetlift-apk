@@ -39,14 +39,16 @@ void main() {
       expect(belt.next(0, up: false), 0);
     });
 
-    test('poulie : 2,5 lb', () {
+    test('poulie : 2,5 kg, minimum 2,5 kg (KM6, X1 de RV1)', () {
       final g = LoadGrid.of(LoadType.cable, null);
-      expect(g.step, closeTo(1.13398, 1e-5));
-      expect(
-        g.next(10 * 2.5 * poundKg, up: true),
-        closeTo(27.5 * poundKg, 1e-9),
-      );
-      expect(g.floor(20), closeTo(17 * 2.5 * poundKg, 1e-9));
+      expect(g.step, 2.5);
+      expect(g.minimum, 2.5);
+      expect(g.next(20, up: true), 22.5);
+      expect(g.floor(21.2), 20);
+      expect(g.nearest(20.41), 20);
+      expect(g.floor(1), 2.5);
+      // Même défaut que `kalis_plan` (`defaultIncrement`).
+      expect(LoadGrid.of(LoadType.cable, null).positive.minimum, 2.5);
     });
 
     test('une charge hors grille rejoint la grille dans le sens demandé', () {

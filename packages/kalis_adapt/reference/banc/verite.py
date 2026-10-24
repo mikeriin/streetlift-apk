@@ -382,6 +382,9 @@ class SimAthlete(object):
         if pain_from is not None and day >= pain_from and self.pain_until < 0:
             self.pain_until = pain_from + self.spec.pain_days
             self.pain_intensity = self.spec.pain_intensity
+            # KM1c4 : un épisode qui commence n'est connu du moteur qu'une
+            # fois signalé (comme `overuse` et les poussées).
+            self._pain_known = False
         if self.pain_until >= 0 and day > self.pain_until:
             zone = self.pain_zone
             if self.kind != 'a' and self.pain_intensity >= 3 and zone is not None:
@@ -708,6 +711,13 @@ class SimAthlete(object):
                     self._tendon_zone = 'wrist_hand'
                     self.pain_intensity = 4
                     self.pain_until = self._day + 10
+                    # KM1c4 : l'épisode tendineux qui commence n'est connu du
+                    # moteur qu'une fois signalé (bilan ou fin de séance) ;
+                    # sans cette remise à faux, une aggravation était comptée
+                    # sur une douleur jamais signalée (4 cas de KR1,
+                    # `street_10`, poignet, dips lestés : le bilan du jour
+                    # ne listait aucune douleur).
+                    self._pain_known = False
                 self._tendon = tolerance + (self._hold_week - tolerance) / 6
             self._hold_week = 0.0
         for t in self.truths:
@@ -762,7 +772,7 @@ POUND_KG = 0.45359237
 
 def _default_minimum(t):
     return {'barbell': 20.0, 'dumbbells': 1.0, 'machine': 5.0, 'kettlebell': 4.0,
-            'cable': 2.5 * POUND_KG}.get(t, 0.0)
+            'cable': 2.5}.get(t, 0.0)
 
 
 def grid_of(load_type, profile):
@@ -776,7 +786,9 @@ def grid_of(load_type, profile):
     if load_type == 'barbell':
         return LoadGrid(2.5, 20.0, False)
     if load_type == 'cable':
-        return LoadGrid(2.5 * POUND_KG, 2.5 * POUND_KG, False)
+        # 1.0.8 (KM6, X1 de RV1) : poulie par 2,5 kg (minimum 2,5 kg), le
+        # défaut de `kalis_plan` (`defaultIncrement`), et non plus 2,5 lb.
+        return LoadGrid(2.5, 2.5, False)
     if load_type == 'machine':
         return LoadGrid(5.0, 5.0, False)
     if load_type == 'kettlebell':

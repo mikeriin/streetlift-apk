@@ -1,5 +1,116 @@
 # Journal des versions de kalis_adapt
 
+## 1.0.8
+
+Lot KM7 (DECISIONS_CP.md C17.54) : **Koach 1.0.9** (référence Python et portage Dart dans le même lot,
+`reference/CHANGEMENTS_1_0_9.md`). Ajouts seulement : sans les nouveaux champs, comportement de 1.0.8.
+
+- **Bilan versé sans être appliqué** (`moteur.dart`, `modele.dart`) : `seance_debut.bilan.applique` faux : plan des
+  seuls faits du bilan (`koachFaitsDuBilan`), douleur toujours appliquée, forme du jour posée au modèle à la première
+  série (état identique à un bilan appliqué).
+- **Remplaçants** (`remplacants.dart`) : `Koach.remplacants(infos, demande)` / `koachRemplacants` (étiquettes
+  `equivalent`, `plus_facile`, `sans_materiel`, `autre`, texte, unité, cible de départ ; lecture seule) ; fiches
+  `koachInfosRemplacement(catalog)` (`remplacement_infos.dart`).
+- **Item remplacé** : `remplace` dans les items de `plan('seance')`, servi à l'emplacement avec ses propres cibles,
+  raison `koach.remplacement` (texte dans `koach_textes.dart`).
+- **Paramètres** : asset `assets/koach/koach_params_1_0_9.json` (`1.0.9-ref.1`, 344 clés, aucune valeur changée,
+  SHA-256 `1a59e6756923ce348378ff356a25b0af4adc8e8114ae9ac1ba53b85c46808dc5`). Fiches inchangées.
+- **Tests** : `test/koach_km7_test.dart`, fixture `test/fixtures/km7/km7.json` ; fixtures de parité régénérées.
+
+## 1.0.7
+
+Lot KM6 (DECISIONS_CP.md C17.47) : **Koach 1.0.8** (référence Python et portage Dart dans le même lot,
+`reference/CHANGEMENTS_1_0_8.md`) — bugs X1 à X8 de la revue RV1 et crédits de groupes des tirages. API et schéma du
+journal inchangés ; champ additif `groups` des contraintes de séance (sortie `groups` quand il est reçu) ; raison
+nouvelle `koach.volume_semaine` ; champ additif `koachModule` (planification).
+
+- **X1** (`grid.dart`) : poulie par défaut 2,5 kg, minimum 2,5 kg (le défaut de `kalis_plan`), au lieu de 2,5 lb.
+- **X2** (`moteur.dart`, `groupesServis`) : groupes de la séance recalés sur les lignes servies (tours, durée d'un EMOM).
+- **X3, X7, X8** (`seance.dart`, `_coherence`, `techniqueCoherente`) : technique recalée sur les séries servies
+  (`backoffSets`, `intervals`, paliers, blocs au temps, `setTargets`) ; groupe et format de l'emplacement gardés par un
+  item servi qui les perdait (course facile) ; baisse de la modulation hebdomadaire sous l'écrit dite
+  (`koach.volume_semaine`, `planification.dart` pose `koachModule`).
+- **X4 à X6** (`_cibleCharge`, test xRM) : charge plafonnée arrondie vers le bas, test adaptatif jamais au-dessus du
+  plafond, charge écrite hors grille d'un test verrouillé gardée.
+- **Fiches** : `assets/koach/vecteurs_qualites_v1.json` version `1.0.1` (crédits « chest » des tirages, règle R8-a :
+  tractions 0, muscle-ups 0,5, pull-over 0,5), SHA-256 `99b0cae2d0b29d18d5daa30ee92b91990225124e38e44d522e80e8ae01a196e0`.
+- **Paramètres** : asset `assets/koach/koach_params_1_0_8.json` (`1.0.8-ref.1`, 344 clés, aucune valeur changée,
+  SHA-256 `9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1`).
+- **Textes** : `koach.volume_semaine` (« Cette semaine, je te propose N séries sur … au lieu des M écrites… »).
+- `Seances.creditsGroupes` (lecture du banc, mesure de KM6).
+- **Tests** : `test/koach_km6_test.dart` (port de `reference/tests/test_km6.py`) ; fixtures régénérées.
+
+## 1.0.6
+
+Lot KM5 (DECISIONS_CP.md C17.40) : **Koach 1.0.7** (référence Python et portage Dart dans le même lot,
+`reference/CHANGEMENTS_1_0_7.md`) — **la rampe de volume ne coupe jamais sous l'écrit du programme**. API et schéma du
+journal inchangés ; une raison nouvelle (`koach.ajout_borne`) ; `koachVolume` lu par la séance (écrit = `sets −
+koachVolume`).
+
+- **Rampe de volume** (`seance.dart`, `_planRetour`, `_retourGradue`) : aucun exercice, aucune série retirés au nom du
+  volume, tous rôles, toutes semaines ; seules les séries ajoutées par Koach (planification, bras A) sont bornées, par
+  groupe majeur et par semaine, à max(limite de la rampe, écrit servi de la semaine) (accessoires d'abord, puis la ligne
+  la plus tardive) ; écrit servi compté une fois par séance (`ecritVol`, `ecritDures`, `ecritCompte`) ; un allègement se
+  décide sur l'écrit du programme. Rampe tendineuse des tenues bras tendus inchangée (seule raison `koach.retour_gradue`
+  restante). Planchers, répartition et emprunt de 1.0.6 retirés.
+- `rupture.dart` (semaine allégée d'un diagnostic) et `dual.dart` (bras A) tiennent `koachVolume` à jour.
+- **Paramètres** : asset `assets/koach/koach_params_1_0_7.json` (`1.0.7-ref.1`, 344 clés, SHA-256 `2f055c5181743089afd0c3602bc270f77b01063ebc1bab32b293c81c6816f42c`) ; trois clés
+  `securite.retour_*` retirées.
+- **Textes** : `koach.ajout_borne` (« Je garde les N séries écrites de ton programme sur … »).
+- `Seances.entree` (items reçus par le dernier `prescrire`, lecture du banc).
+- **Tests** : `test/koach_km5_rampe_test.dart` (port de `reference/tests/test_km5_rampe.py`) ;
+  `test/koach_km4_retour_test.dart` retiré ; fixtures régénérées.
+
+## 1.0.5
+
+Lot KM4 (DECISIONS_CP.md C17.37) : **Koach 1.0.6** (référence Python et portage Dart dans le même lot,
+`reference/CHANGEMENTS_1_0_6.md`) — retour gradué au volume réparti sur la semaine et priorisé par rôle. API et schéma
+du journal inchangés ; champ additif `role` des items de `contexte['reste_semaine']` ; paramètres additifs `ecrites`
+et `douleur` de la raison `koach.retour_gradue`.
+
+- **Plan de la semaine** (`seance.dart`, `_planRetour`) : la limite de la rampe par groupe majeur (et le total d'une
+  semaine d'allègement) est tenue par des coupes planifiées sur la séance du jour et les séances restantes de la
+  semaine, par étapes de priorité (accessoires d'abord, secondaires ensuite, principaux en dernier), au prorata ; un
+  principal n'est jamais ramené à 0 série par la rampe sans douleur (plancher `max(1, ⌈écrit × 0,5⌉)` avant qu'un
+  secondaire tombe à 0) ; la répartition des coupes sur les séances restantes est programmée mais **désactivée**
+  (`retour_repartition_semaines` 0 : 40 constats introduits sur 90 600 saisons) : la séance du jour paie d'abord, les
+  séances restantes ne cèdent que pour les planchers. `prescrire` en deux passes. Tenues bras tendus inchangées.
+- **Paramètres** : asset `assets/koach/koach_params_1_0_6.json` (`1.0.6-ref.1`, 347 clés, SHA-256 `4156e61b674be1e983d22dba21067cb47cc16d25429b60588957549b9464045a`) ; trois
+  clés nouvelles (`securite.retour_plancher_principal`, `securite.retour_repartition_semaines`, `securite.retour_emprunt_plancher`),
+  `rupture.elargissement_rien_de_special` retirée (fichier, défauts, bornes).
+- **Textes** : « N séries au lieu de M » pour `koach.retour_gradue` quand les séries écrites sont dites.
+- **Tests** : `test/koach_km4_retour_test.dart` (port des 11 tests de `reference/tests/test_km4_retour.py`), fixtures
+  régénérées.
+
+## 1.0.4
+
+Lot KM2c3 (KM2 correction 3, DECISIONS_CP.md C13.9, C17.23, C17.26) : **portage Dart de la référence Koach 1.0.5**
+(lot KM1c4, `reference/CHANGEMENTS_1_0_5.md`), ligne pour ligne. API, schéma du journal, codes de raison et façade
+inchangés ; une valeur de paramètre change (`securite.reprise_dose_depart` 0,6 → 0,5) et sept clés sont nouvelles
+(une application intégrée sur 1.0.x monte de version et remplace l'asset de paramètres).
+
+- **Conduite sous douleur** (`securite.dart`, `seance.dart`) : zone sensible douze semaines après tout épisode, avec ou
+  sans arrêt (`Gardefous.episode`, `sensible`, `sensibles`, `geneRecente`) ; rampe hebdomadaire de l'exposition
+  RÉALISÉE de la zone (+1 série ou +20 %, départ à la moitié de la charge chronique, séances manquées à zéro, sortie
+  progressive jusqu'à l'écrit), répartie par séance au prorata de l'écrit, échauffement compris (réserve) ; même
+  rampe au retour d'une coupure sans douleur connue (règle 3 bis, suspendue en semaine verrouillée) ; pas de vrai test
+  sur une zone sensible sous rampe ; aucune hausse de charge sous une gêne > seuil des sept derniers jours (règle 4).
+  `_budgetReprise` disparaît. Journal public `Seances.appelsVraiTest` (tests).
+- **Élargissement « rien de spécial »** (`modele.dart`, `rupture.dart`) : `Modele.elargir(part)`, mélange convexe vers
+  l'a priori (`rupture.elargissement_vers_a_priori` 0,25, borne [0 ; 1]) sur toutes les branches ; l'action du
+  diagnostic porte `part`. `elargissement_rien_de_special` n'est plus lue (gardée dans le fichier, les défauts et les
+  bornes, comme la référence).
+- **Paramètres** : asset `assets/koach/koach_params_1_0_5.json` (`1.0.5-ref.1`, 345 clés, SHA-256 `d8a492b7…f26d`, copie
+  à l'octet près de `reference/params/koach_params_v1.json`) à la place de `koach_params_1_0_4.json`.
+- **Textes** (`koach_textes.dart`) : `koach.reprise_dose` et le retrait `reprise_dose` ont un texte neutre (la rampe vaut
+  aussi au retour d'une coupure, sans douleur).
+- **Banc** (`lib/src/sim/truth.dart`) : une douleur qui commence (fiche, épisode tendineux) n'est connue du moteur qu'une
+  fois signalée (`_painKnown` remis à faux, comme `reference/banc/verite.py`) ; `SimAthlete.painKnown`, `setForTest`.
+- **Tests** : repointés sur `reference/fixtures/` et `reference/params/koach_params_v1.json` (copies figées `fix_dart/` et
+  `koach_params_d4.json` supprimées) ; parité sur les 15 fixtures et les 3 complémentaires (`test/fixtures/km2c2/`,
+  régénérées) ; `test/koach_km1c4_douleur_test.dart` (les 23 tests de `reference/tests/test_km1c4_douleur.py`, mêmes
+  valeurs) ; `test/koach_elargir_test.dart` (1.0.5) ; `test/km2c3_verite_test.dart`.
+
 ## 1.0.3
 
 Lot KR1 (DECISIONS_CP.md C17.17.3, C17.18 : Koach sur `kalis_plan` 0.4.1, campagne du couple) : **portage Dart de

@@ -30,8 +30,10 @@ jobs:
     name: Paquets Dart et outils Python
     runs-on: ubuntu-24.04
     # (180 min depuis le lot CY : saisons croisées de tous les profils, dix
-    # scénarios ; la passe complète dépassait 90 min avec kalis_quest.)
-    timeout-minutes: 180
+    # scénarios ; la passe complète dépassait 90 min avec kalis_quest.
+    # 240 min depuis le lot KM1c4 : le contrôle complet de KR1 a pris 2 h 52,
+    # kalis_bench seul 7 170 s ; recommandation de LIVRAISON_KR1.md § 8.)
+    timeout-minutes: 240
     defaults:
       run:
         shell: bash

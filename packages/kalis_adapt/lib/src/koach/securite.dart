@@ -376,6 +376,51 @@ class Gardefous {
   }
 
   // ------------------------------------------------------------------
+  // Zone sensible (1.0.5, lot KM1c4 : conduite sous douleur)
+  // ------------------------------------------------------------------
+
+  /// (premier jour, dernier jour) des signalements ≥
+  /// `arret_persistance_min` de l'épisode en cours de la zone [z] (même
+  /// découpage que les arrêts : signalements à `arret_levee_j` jours au plus
+  /// l'un de l'autre), ou null sans épisode.
+  (int, int)? episode(String z) {
+    final d = zones[z];
+    if (d == null) {
+      return null;
+    }
+    final (ep, _) = _episode(d);
+    if (ep.isEmpty) {
+      return null;
+    }
+    return (ep[0].$1, ep[ep.length - 1].$1);
+  }
+
+  /// Zone sensible : un épisode (signalement ≥ `arret_persistance_min`) a
+  /// commencé et son dernier signalement date de `sensible_j` jours au plus
+  /// (douze semaines : horizon habituel de la rééducation d'un tendon,
+  /// Alfredson et al. 1998, Silbernagel et al. 2007). Avec ou sans arrêt
+  /// (règle 1 du lot KM1c4).
+  bool sensible(String z) {
+    final ep = episode(z);
+    return ep != null && 0 <= jour - ep.$2 && jour - ep.$2 <= _n('sensible_j');
+  }
+
+  List<String> sensibles() => [
+    for (final z in zones.keys.toList()..sort())
+      if (sensible(z)) z,
+  ];
+
+  /// Pire gêne de la zone [z] signalée dans les `douleur_hausse_j` derniers
+  /// jours (aujourd'hui compris) ; 0 sans signalement.
+  num geneRecente(String z) {
+    final d = zones[z];
+    if (d == null) {
+      return 0;
+    }
+    return d.pireEntre(jour - _n('douleur_hausse_j') + 1, jour);
+  }
+
+  // ------------------------------------------------------------------
   // Poignet (règles A4 de 0.3.1)
   // ------------------------------------------------------------------
 
@@ -680,6 +725,16 @@ class Gardefous {
           niveau >= 0.5 &&
           depuisJour != null &&
           d.pireEntre(depuisJour, jour) > _n('douleur_seuil')) {
+        out['sans_hausse'] = true;
+        out['rir'] = _secMax(dbl(out['rir']), dbl(s['douleur_rir_bonus']));
+        note(z, 'douleur');
+      }
+      if (act <= 0 && niveau >= 0.5 && geneRecente(z) > _n('douleur_seuil')) {
+        // 1.0.5 (KM1c4, règle 4) : une gêne au-dessus du seuil dans les
+        // `douleur_hausse_j` derniers jours interdit toute hausse de charge
+        // sur un exercice qui sollicite la zone (≥ 0,5), même si le dernier
+        // signalement est redescendu à 0 et même pour un exercice jamais
+        // fait depuis (Silbernagel et al. 2007 ; Malliaras et al. 2015).
         out['sans_hausse'] = true;
         out['rir'] = _secMax(dbl(out['rir']), dbl(s['douleur_rir_bonus']));
         note(z, 'douleur');

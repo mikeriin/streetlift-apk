@@ -33,7 +33,7 @@ const String _reference = '../kalis_adapt/reference';
 /// Version de `kalis_plan` qui a écrit les saisons de référence de Koach
 /// (lot KR1). Une version suivante de `kalis_plan` qui ne change pas ces
 /// saisons (lot KS1c2 : 0.4.2) ne diffère que par `engineVersion`.
-const String _planReference = '0.4.1';
+const String _planReference = '0.4.3';
 
 /// Texte JSON de la saison [s] écrite par le `kalis_plan` courant, la
 /// version du moteur ramenée à celle des données de référence.
@@ -474,6 +474,7 @@ void main() {
           saison,
           cs.constats,
           tour,
+          constatsSeries: cs.constatsEtSeries,
           blocsModules: politique.planification?.blocsModules(),
         );
         expect(attendu['securite'], isNotNull);

@@ -751,69 +751,99 @@ def seance_faite(k, jour, items, genre='accumulation', **contexte):
 
 
 def test_retour_gradue_apres_trois_semaines_reduites():
+    # 1.0.7 (KM5, C17.40) : le retour à l'écrit (10 séries après trois
+    # semaines à 4) est servi tel qu'écrit ; seules les séries que Koach
+    # ajoute sont bornées, à max(limite de la rampe, écrit de la semaine).
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)])
     assert k.seances.vol_semaines[2][0] == 4.0          # pectoraux : 4 séries dures créditées
-    # Retour à l'écrit (10 séries) : +20 % ou +2 séries, et +30 % ou +4 sur
-    # deux semaines ; la plus basse des deux limites tient (comme le banc).
+    # Limites du banc : +20 % ou +2 séries, et +30 % ou +4 sur deux semaines ;
+    # la plus basse des deux tient.
     l1, l2 = sb.limites_volume([False] * 4, [4.0, 4.0, 4.0, 10.0], 3)
     assert (l1, l2) == (6.0, 8.0)
     out = seance_faite(k, 22, [pompes('p', 10)])
+    assert out[0]['sets'] == 10
+    assert not [x for x in k.seances.raisons if x['code'] in ('koach.retour_gradue', 'koach.ajout_borne')]
+    # Écrit 4, Koach en ajoute 5 : plafond max(6, 4) = 6 séries.
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+    out = seance_faite(k, 22, [pompes('p', 9, koachVolume=5)])
     assert out[0]['sets'] == 6
-    r = [x for x in k.seances.raisons if x['code'] == 'koach.retour_gradue']
-    assert r and r[0]['params']['groupe'] == 'chest' and r[0]['params']['limite'] == 6.0
-    # La semaine suivante repart des 6 séries faites : 6 × 1,2 = 7,2 ou 8.
-    out = seance_faite(k, 29, [pompes('p', 10)])
+    r = [x['params'] for x in k.seances.raisons if x['code'] == 'koach.ajout_borne']
+    assert [(p['groupe'], p['limite'], p['ecrit'], p['series'], p['ecrites'], p['prevues']) for p in r] == [
+        ('chest', 6.0, 4.0, 6, 4, 9)]
+    # La semaine suivante repart des 6 séries faites : 6 × 1,2 = 7,2 ou 8 ;
+    # deux semaines : 4 × 1,3 = 5,2 ou 8.
+    out = seance_faite(k, 29, [pompes('p', 9, koachVolume=5)])
     assert out[0]['sets'] == 8
 
 
 def test_retour_gradue_reserve_les_seances_restantes_et_compte_les_manquees():
+    # 1.0.7 : les séances restantes (écrit) et manquées (écrit) comptent au
+    # réalisé ET à l'écrit de la semaine ; rien n'est coupé sous l'écrit.
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)])
-    # Séance restante de la semaine écrite à 4 séries : réservée en entier
-    # (manquée, le banc la compte à son volume écrit).
-    out = seance_faite(k, 22, [pompes('p', 10)], reste_semaine=[[pompes('p', 4)]])
-    assert out[0]['sets'] == 2
+    out = seance_faite(k, 22, [pompes('p', 10)], reste_semaine=[[pompes('q', 4)]])
+    assert out[0]['sets'] == 10
+    # Écrit 6 + 4 restantes = 10 > limite 6 : plafond 10 ; Koach ajoutait 4.
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)])
-    # Séance manquée plus tôt dans la semaine : son écrit compte.
-    out = seance_faite(k, 24, [pompes('p', 10)],
+    out = seance_faite(k, 22, [pompes('p', 10, koachVolume=4)], reste_semaine=[[pompes('q', 4)]])
+    assert out[0]['sets'] == 6
+    assert k.seances.retour_vol['plafonds'][0] == 10.0
+    out = seance_faite(k, 24, [pompes('q', 4)])
+    assert out[0]['sets'] == 4
+    assert k.seances.vol_semaines[3][0] == 10.0
+    # Séance manquée plus tôt dans la semaine (écrit 5) : plafond max(6, 5 +
+    # 3) = 8 ; réalisé 5 + 3 écrites + 4 ajoutées = 12 : les 4 ajouts retirés.
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+    out = seance_faite(k, 24, [pompes('p', 7, koachVolume=4)],
                        manquees=[{'semaine': 3, 'genre': 'accumulation', 'items': [pompes('p', 5)]}])
-    assert out[0]['sets'] == 1
-    # Plus rien de permis : ligne retirée.
+    assert out[0]['sets'] == 3
+    assert k.seances.retour_vol['ecrit'][0] == 8.0 and k.seances.retour_vol['fait'][0] == 5.0
+    # Au-delà du plafond par l'écrit seul : rien n'est coupé (accessoire
+    # compris), rien n'est en excès.
     out = seance_faite(k, 25, [pompes('p', 3)])
-    assert out == []
-    assert any(x['code'] == 'koach.retour_gradue' and x['params']['series'] == 0 for x in k.seances.raisons)
+    assert out[0]['sets'] == 3
+    ouvrir(k, 26)
+    out = k.seances.prescrire([pompes('a', 3)], {}, {}, {'a': 'accessory'})
+    assert out[0]['sets'] == 3
+    assert k.seances.retour_vol['depasse'] == []
 
 
 def test_retour_gradue_semaines_allegees():
     # Trois semaines allégées (décharge) : le volume peut revenir à la
-    # semaine allégée / 0,5 (`RAMP_SHARE`), soit 8 séries pour 4.
+    # semaine allégée / 0,5 (`RAMP_SHARE`), soit 8 séries pour 4 ; 1.0.7 :
+    # limite des ajouts de Koach au-dessus de l'écrit.
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)], genre='deload')
     assert sb.limite_rampe([True, True, True, False], [4.0, 4.0, 4.0, 0.0], 3, 0.2, 2.0) == 8.0
-    out = seance_faite(k, 22, [pompes('p', 10)])
+    out = seance_faite(k, 22, [pompes('p', 10, koachVolume=6)])
     assert out[0]['sets'] == 8
-    # Une semaine de charge parmi les trois : rampe ordinaire.
+    # Une semaine de charge parmi les trois : rampe ordinaire (6).
     k = koach()
     for w, genre in enumerate(('accumulation', 'deload', 'deload')):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)], genre=genre)
-    out = seance_faite(k, 22, [pompes('p', 10)])
+    out = seance_faite(k, 22, [pompes('p', 10, koachVolume=6)])
     assert out[0]['sets'] == 6
     # Première semaine : aucune limite.
     k = koach()
-    out = seance_faite(k, 1, [pompes('p', 10)], genre='intro')
+    out = seance_faite(k, 1, [pompes('p', 10, koachVolume=6)], genre='intro')
     assert out[0]['sets'] == 10
 
 
 def test_retour_gradue_semaine_d_allegement_reste_un_allegement():
     # Trois semaines servies à 4 séries (écrit : 10) ; la décharge écrite à 6
-    # séries est un allègement au vu de l'écrit (6 ≤ 0,7 × 10) : servie, elle
-    # doit l'être au vu du servi (≤ 0,7 × 4 = 2,8 séries dures).
+    # séries est un allègement au vu de l'écrit (6 ≤ 0,7 × 10). 1.0.7 :
+    # servie telle qu'écrite (6 séries, au-dessus de 0,7 × 4 = 2,8) ; seuls
+    # les ajouts de Koach sont bornés, à max(2,8 ; écrit).
     k = koach()
     for w in range(3):
         seance_faite(k, 7 * w + 1, [pompes('p', 4)])
@@ -821,9 +851,16 @@ def test_retour_gradue_semaine_d_allegement_reste_un_allegement():
     assert sb.semaine_allegee([4.0, 4.0, 4.0, 2.0], 3, [False] * 4)
     assert not sb.semaine_allegee([4.0, 4.0, 4.0, 3.0], 3, [False] * 4)
     out = seance_faite(k, 22, [pompes('p', 6)], genre='deload')
+    assert out[0]['sets'] == 6
+    assert k.seances.retour_vol['limite_dures'] == 0.7 * 4.0 and k.seances.retour_vol['plafond_dures'] == 6.0
+    k = koach()
+    for w in range(3):
+        seance_faite(k, 7 * w + 1, [pompes('p', 4)])
+        k.seances.ecrit_semaines[w] = 10.0
+    out = seance_faite(k, 22, [pompes('p', 6, koachVolume=4)], genre='deload')
     assert out[0]['sets'] == 2
-    r = [x for x in k.seances.raisons if x['code'] == 'koach.retour_gradue']
-    assert r[0]['params']['groupe'] == 'allegement'
+    r = [x for x in k.seances.raisons if x['code'] == 'koach.ajout_borne']
+    assert r[0]['params']['groupe'] == 'allegement' and r[0]['params']['ecrites'] == 2
     # Semaine de charge dont l'écrit n'est pas un allègement : pas de borne
     # d'allègement (seule la rampe : 6 séries).
     k = koach()

@@ -15,21 +15,24 @@ part of 'koach.dart';
 // lisent avec `dart:io` depuis la racine du paquet (`koachFichierParametres`).
 
 /// Version du moteur porté (`koach.VERSION` de la référence Python).
-const String koachVersion = '1.0.4-ref.1';
+const String koachVersion = '1.0.9-ref.1';
 
 /// Version du fichier de paramètres livré (champ `version`, contrat § 7.2).
-const String koachParametresVersion = '1.0.4-ref.1';
+const String koachParametresVersion = '1.0.9-ref.1';
 
 /// Schéma du fichier de paramètres (champ `schema`, contrat § 7.1).
 const int koachParametresSchema = 1;
 
 /// SHA-256 des octets du fichier de paramètres livré (en-tête du contrat).
 const String koachParametresSha256 =
-    '2d023854612110d0c3a925c79efeab6a34ac886f3be05089fac228845a2a9016';
+    '1a59e6756923ce348378ff356a25b0af4adc8e8114ae9ac1ba53b85c46808dc5';
 
-/// Nombre de clés du fichier de paramètres : 6 à la racine, 332 dans les
-/// onze sections (contrat § 7.4).
-const int koachParametresCles = 338;
+/// Nombre de clés du fichier de paramètres : 6 à la racine, 338 dans les
+/// onze sections (contrat § 7.4 ; 1.0.5 : 345 ; 1.0.6 : 347, trois clés de
+/// `securite` ajoutées, `rupture.elargissement_rien_de_special` retirée ;
+/// 1.0.7 : les trois clés de `securite` de 1.0.6 retirées, sans objet ;
+/// 1.0.8, 1.0.9 : inchangé).
+const int koachParametresCles = 344;
 
 /// Clés de la racine du fichier de paramètres (contrat § 7.1).
 const List<String> koachParametresRacine = [
@@ -59,20 +62,20 @@ const List<String> koachParametresSections = [
 
 /// Clé Flutter de l'asset de paramètres (asset déclaré par le paquet).
 const String koachAssetParametres =
-    'packages/kalis_adapt/assets/koach/koach_params_1_0_4.json';
+    'packages/kalis_adapt/assets/koach/koach_params_1_0_9.json';
 
 /// Chemin du fichier de paramètres, relatif à la racine du paquet.
-const String koachFichierParametres = 'assets/koach/koach_params_1_0_4.json';
+const String koachFichierParametres = 'assets/koach/koach_params_1_0_9.json';
 
 /// Version des fiches d'exercices livrées (champ `version`).
-const String koachFichesVersion = '1.0.0';
+const String koachFichesVersion = '1.0.1';
 
 /// Schéma des fiches d'exercices (champ `schema`).
 const int koachFichesSchema = 1;
 
 /// SHA-256 des octets du fichier des fiches livré.
 const String koachFichesSha256 =
-    '71454d2d6fcc6df8823b23cb640eec5293f40e91822bda9afa75f5ca0098ba6c';
+    '99b0cae2d0b29d18d5daa30ee92b91990225124e38e44d522e80e8ae01a196e0';
 
 /// Clé Flutter de l'asset des fiches (asset déclaré par le paquet).
 const String koachAssetFiches =

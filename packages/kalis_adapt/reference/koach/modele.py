@@ -361,6 +361,7 @@ class Modele(object):
         self.logw = 0.0
         self.en_seance = False
         self.bilan = None
+        self.bilan_differe = None  # 1.0.9 : forme versée à la première série
         self.residus_seance = []  # innovations normalisées de la séance
         self.histoire_residus = []  # (jour, résidu moyen normalisé, résidu relatif)
         # Hypothèses de réponse (contrôle dual) : poids a posteriori.
@@ -641,12 +642,33 @@ class Modele(object):
     # ------------------------------------------------------------------
     # Séance
     # ------------------------------------------------------------------
-    def debut_seance(self, jour, bilan=None, poids_kg=None):
+    def debut_seance(self, jour, bilan=None, poids_kg=None, differe=False):
         """Ouvre une séance : effet de jour remis à son a priori (informé par
-        le bilan de santé), branche « mauvais jour » ouverte."""
+        le bilan de santé), branche « mauvais jour » ouverte.
+
+        1.0.9 (KM7) : [differe] vrai (bilan versé sans être appliqué, mode
+        Libre « Garder l'écrit » ou Assisté « Annuler ») : l'a priori du jour
+        reste celui d'une séance sans forme du jour jusqu'à la première série
+        (le plan servi est celui d'un bilan sans forme), puis la forme est
+        versée (`_verser_bilan`) avant que la série soit interprétée : l'état
+        appris est exactement celui d'un bilan appliqué."""
         self.avancer(jour)
         if poids_kg:
             self.poids_kg = float(poids_kg)
+        j = self.p['jour']
+        self._reset(self.m, self.P, DE, 0.0, j['sigma_exercice'] ** 2)
+        self._poser_jour(None if differe else bilan)
+        self.bilan_differe = bilan if differe else None
+        self.en_seance = True
+        self.bilan = bilan
+        self.residus_seance = []
+        self._dernier_ex = None
+        for ex_id in self.ordre:
+            self.pistes[ex_id].series_seance = []
+
+    def _poser_jour(self, bilan):
+        """A priori de l'effet du jour (branche principale et branche
+        « mauvais jour ») d'après la forme du jour de [bilan]."""
         j = self.p['jour']
         moyenne = 0.0
         sd = j['sigma_seance']
@@ -658,18 +680,38 @@ class Modele(object):
             if general <= 2:
                 p_mauvais = j['mauvais_jour_proba_bilan_bas']
         self._reset(self.m, self.P, DS, moyenne, sd * sd)
-        self._reset(self.m, self.P, DE, 0.0, j['sigma_exercice'] ** 2)
         am = self.m.copy()
         aP = self.P.copy()
         self._reset(am, aP, DS, moyenne + j['mauvais_jour_moyenne'], j['mauvais_jour_sigma'] ** 2)
         self.alt = (am, aP, math.log(p_mauvais))
         self.logw = math.log(1.0 - p_mauvais)
-        self.en_seance = True
-        self.bilan = bilan
-        self.residus_seance = []
-        self._dernier_ex = None
-        for ex_id in self.ordre:
-            self.pistes[ex_id].series_seance = []
+
+    def _verser_bilan(self):
+        """1.0.9 (KM7) : forme du jour versée sans être appliquée — posée à
+        la première série de la séance. Rien n'a encore touché l'effet du
+        jour (aucune série ; une piste créée ou une observation hors série
+        agit de même sur les deux branches, qui ne diffèrent que par lui) :
+        l'état obtenu est celui d'une séance ouverte avec le bilan."""
+        if self.bilan_differe is not None:
+            self._poser_jour(self.bilan_differe)
+            self.bilan_differe = None
+
+    def instantane(self):
+        """1.0.9 (KM7) : état que la création d'une piste peut changer
+        (vecteur, covariance, branche « mauvais jour », pistes) ; avec
+        `restaurer`, un aperçu (cibles de départ des remplaçants) ne laisse
+        aucune trace : l'état reste celui que le journal recalcule."""
+        alt = None
+        if self.alt is not None:
+            alt = (self.alt[0].copy(), self.alt[1].copy(), self.alt[2])
+        return (self.m.copy(), self.P.copy(), self.n, alt, self.logw, dict(self.pistes), list(self.ordre))
+
+    def restaurer(self, etat):
+        m, P, n, alt, logw, pistes, ordre = etat
+        self.m, self.P, self.n, self.logw = m, P, n, logw
+        self.alt = alt
+        self.pistes = pistes
+        self.ordre = ordre
 
     def _reset(self, m, P, idx, moyenne, variance):
         P[idx, :] = 0.0
@@ -713,6 +755,9 @@ class Modele(object):
         moments, innovations de la séance versées à la détection de rupture."""
         if not self.en_seance:
             return None
+        # 1.0.9 (KM7) : séance close sans série, forme versée quand même
+        # (même fusion des branches qu'un bilan appliqué).
+        self._verser_bilan()
         # Résidu d'e1RM de la séance : moyenne, sur les mouvements chargés
         # suivis depuis 3 séances au moins, de l'écart (ln) entre la capacité
         # du jour vue après la séance et celle prévue avant.
@@ -734,6 +779,7 @@ class Modele(object):
             self.P[:n, :n] = P
         self.alt = None
         self.en_seance = False
+        self.bilan_differe = None
         j = self.p['jour']
         self._reset(self.m, self.P, DS, 0.0, j['sigma_seance'] ** 2)
         self._reset(self.m, self.P, DE, 0.0, j['sigma_exercice'] ** 2)
@@ -981,6 +1027,8 @@ class Modele(object):
         t = self.piste(s['exerciseId'])
         if t is None:
             return None
+        if self.bilan_differe is not None:
+            self._verser_bilan()
         if self._dernier_ex != t.id:
             self.debut_exercice(t)
         self._dernier_ex = t.id
@@ -1558,35 +1606,64 @@ class Modele(object):
         self.journal_semaines.append(ligne)
         return ligne
 
-    def elargir(self, facteur):
+    def elargir(self, part):
         """« Rien de spécial » au diagnostic : incertitude élargie sur les
-        capacités, réapprentissage rapide (cahier § 9). La variance de toute
-        capacité (combinaison des qualités et de l'écart de l'exercice) est
-        multipliée par [facteur] : lignes et colonnes des composantes de
-        capacité multipliées par √facteur (P ← D P D). Multiplier les seules
-        diagonales défaisait les covariances négatives entre qualités et
-        écarts d'exercice et multipliait l'écart-type d'une capacité par
-        bien plus que √facteur (mesuré : × 7 au lieu de × 2).
+        capacités, réapprentissage rapide (cahier § 9).
 
-        1.0.4 (lot KR1) : l'élargissement ne rend jamais une composante plus
-        incertaine que son a priori de population (`variances_a_priori`) :
-        variance nouvelle = min(facteur · v ; max(v ; v0)). Sans ce plafond,
-        des réponses « rien de spécial » répétées (saison de quarante
-        semaines aux séances manquées) multipliaient la variance par
-        facteur à chaque diagnostic, jusqu'à un écart-type de 20 en ln et
-        un dépassement de capacité des flottants (8 saisons plantées sur
-        5 436, `ks_test_ppl6`, scénario « séances manquées »). Les facteurs
-        sont lus sur la diagonale d'avant (P ← D P D, D diagonale positive :
-        P reste semi-définie positive)."""
-        r = math.sqrt(facteur)
-        fac = []
-        for i, v0 in self.variances_a_priori():
-            v = self.P[i, i]
-            ri = r if not v > 0 else min(r, max(1.0, math.sqrt(v0 / v)))
-            fac.append((i, ri))
-        for i, ri in fac:
-            self.P[i, :] *= ri
-            self.P[:, i] *= ri
+        1.0.5 (lot KM1c4, règle 5) : élargissement UNIFORME et BORNÉ, mélange
+        convexe de l'a posteriori et de l'a priori de population sur les
+        composantes de capacité (qualités et écarts propres des exercices
+        suivis, `variances_a_priori`) : P ← (1 − part) P + part · diag(v0),
+        les autres lignes et colonnes (effets de jour, fatigue, biais de
+        notation) inchangées. Propriétés : la variance de toute capacité
+        (combinaison linéaire h des composantes) devient (1 − part) V + part ·
+        h'diag(v0)h, donc jamais au-dessus de max(V ; V0) où V0 est la
+        variance a priori de cette capacité (« jamais plus incertain qu'un
+        athlète inconnu », pour chaque capacité et non plus par composante) ;
+        même part pour toutes (uniforme) ; P reste semi-définie positive
+        (combinaison convexe de deux matrices SDP) ; des diagnostics répétés
+        convergent géométriquement vers l'a priori sans jamais le dépasser ;
+        les covariances apprises s'effacent à proportion (oubli). Une
+        capacité apprise à un quart de son a priori de variance voit sa
+        variance multipliée par 1 + 3·part (≈ ×1,75 à part 0,25) ; une
+        capacité à un seizième par ×(1 + 15·part) ≈ ×4,75, soit l'ordre de
+        grandeur du facteur 4 de 1.0 à 1.0.4.
+
+        1.0 à 1.0.4 : variance de chaque composante multipliée par un facteur
+        (P ← D P D), plafonnée par composante à son a priori depuis 1.0.4 ;
+        quand une partie seulement des composantes d'une capacité était
+        plafonnée, sa variance était multipliée par un facteur entre 1 et plus
+        de 8 (mesuré sur la saison de quarante semaines : 1,0 à 8,6 par
+        diagnostic ; relecture M1 du lot KR1), et 5 à 8 composantes sur 35
+        dépassaient déjà leur a priori au premier diagnostic (un facteur
+        uniforme borné par composante aurait valu 1)."""
+        lam = float(part)
+        if lam < 0.0:
+            lam = 0.0
+        if lam > 1.0:
+            lam = 1.0
+        comps = self.variances_a_priori()
+        idx = [i for i, _ in comps]
+        # Toutes les branches (principale et « mauvais jour », séance
+        # ouverte) : le mélange des branches en fin de séance garde alors
+        # exactement V' = (1 − λ) V + λ V0 (relecture KM1c4, M4).
+        for _, P in self._branches():
+            for i in idx:
+                P[i, :] *= (1.0 - lam)
+                P[:, i] *= (1.0 - lam)
+            # Les blocs croisés (composante, non composante) ont été
+            # multipliés une fois par (1 − λ), le bloc des composantes deux
+            # fois : on le ramène à (1 − λ) puis on ajoute λ · diag(v0).
+            if lam < 1.0:
+                for i in idx:
+                    for k in idx:
+                        P[i, k] /= (1.0 - lam)
+            else:
+                for i in idx:
+                    for k in idx:
+                        P[i, k] = 0.0
+            for i, v0 in comps:
+                P[i, i] += lam * v0
         self.elargi += 1
 
     def variances_a_priori(self):

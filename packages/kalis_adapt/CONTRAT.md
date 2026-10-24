@@ -19,11 +19,12 @@ de `kalis_core` (programme importé du propriétaire compris). Le § 11 décrit 
 sert jusqu'à KM3 et que le banc garde comme témoin, et **Koach 1.0** (`package:kalis_adapt/koach.dart`), qui le
 remplacera (cahier `pipeline/cp/CAHIER_KM.md`, décision C13 : un seul moteur, un seul comportement, à KM3).
 
-**K.1 Contrat de référence.** Koach Dart est le portage à l'identique de la référence Python **1.0.4** depuis
-`kalis_adapt` 1.0.3 (lot KR1 ; 1.0.3 en 1.0.2, lot KM2c2 ; 1.0.2 en 1.0.1, lot KM2c1 ; 1.0.1 en 1.0.0 ; deltas :
-`reference/CHANGEMENTS_1_0_2.md`, `reference/CHANGEMENTS_1_0_3.md`, `reference/CHANGEMENTS_1_0_4.md`, sans changement
+**K.1 Contrat de référence.** Koach Dart est le portage à l'identique de la référence Python **1.0.6** depuis
+`kalis_adapt` 1.0.5 (lot KM4 ; 1.0.5 en 1.0.4, lot KM2c3 ; 1.0.4 en 1.0.3, lot KR1 ; 1.0.3 en 1.0.2, lot KM2c2 ; 1.0.2 en 1.0.1, lot KM2c1 ; 1.0.1 en 1.0.0 ; deltas :
+`reference/CHANGEMENTS_1_0_2.md`, `reference/CHANGEMENTS_1_0_3.md`, `reference/CHANGEMENTS_1_0_4.md`, `reference/CHANGEMENTS_1_0_5.md`, `reference/CHANGEMENTS_1_0_6.md`, sans changement
 d'API ni de schéma du journal ; `posterior()` gagne `fiabilite` en 1.0.3 ; en 1.0.4, l'élargissement « rien de
-spécial » est plafonné à l'a priori) (`reference/koach/`) : son contrat est `reference/CONTRAT_1_0.md` (API § 3, journal § 2, modèles § 4 et 5,
+spécial » est plafonné à l'a priori ; en 1.0.5, conduite sous douleur et rampe du réalisé, élargissement uniforme et
+borné vers l'a priori) (`reference/koach/`) : son contrat est `reference/CONTRAT_1_0.md` (API § 3, journal § 2, modèles § 4 et 5,
 séance § 6, paramètres § 7, garde-fous § 8, déterminisme § 9, limites § 10 et annexe A). Noms Dart : ceux du
 Python en `lowerCamelCase` (`observer_serie` → `observerSerie`), mêmes classes (`Koach`, `Modele`, `Seances`,
 `Gardefous`, `Planification`, `Surveillance`, `Adherence`, `ControleDual`), mêmes clés JSON partout
@@ -61,8 +62,8 @@ chaque replanification).
 des critères calculables du banc (`kalis_bench` `safetyFindings`) ; un plan modulé n'est retenu que s'il n'ajoute
 aucun constat à ceux de la référence (`_sur`, référence § 3.7.1).
 
-**K.5 Paramètres.** Le fichier de paramètres est un asset versionné (`assets/koach/koach_params_1_0_4.json`,
-version `1.0.4-ref.1`, 338 clés, SHA-256 `koachParametresSha256` ; 1.0.2 : `koach_params_1_0_3.json`, mêmes valeurs ;
+**K.5 Paramètres.** Le fichier de paramètres est un asset versionné (`assets/koach/koach_params_1_0_6.json`,
+version `1.0.6-ref.1`, 347 clés, SHA-256 `koachParametresSha256` ; 1.0.4 : `koach_params_1_0_5.json`, 345 clés ; 1.0.3 : `koach_params_1_0_4.json`, 338 clés ; 1.0.2 : `koach_params_1_0_3.json`, mêmes valeurs ;
 1.0.1 : `koach_params_1_0_2.json`, 322 clés ;
 1.0.0 : `koach_params_1_0_1.json`, 317 clés) avec les fiches d'exercices
 (`assets/koach/vecteurs_qualites_v1.json`) ; `lireParametresKoach` et `lireFichesKoach` les décodent et les

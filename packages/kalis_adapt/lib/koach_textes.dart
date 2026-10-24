@@ -5,7 +5,7 @@
 ///
 /// Codes couverts :
 ///
-/// - les 22 codes `koach.*` émis par la séance (`reference/CONTRAT_1_0.md`,
+/// - les 25 codes `koach.*` émis par la séance (1.0.9 : `koach.remplacement`) (`reference/CONTRAT_1_0.md`,
 ///   § 3.5 ; `lib/src/koach/seance.dart`), avec leurs paramètres et leurs
 ///   causes ([koachCodesRaisons], [koachCausesRaisons]) ;
 /// - la surveillance hors modèle (`Surveillance`, contrat § 3.7.2) : causes
@@ -58,6 +58,9 @@ const List<String> koachCodesRaisons = <String>[
   'koach.tendon',
   'koach.retour_gradue',
   'koach.seance_bornee',
+  'koach.ajout_borne',
+  'koach.volume_semaine',
+  'koach.remplacement',
 ];
 
 /// Valeurs du paramètre `cause` que la séance émet, par code (relevé dans
@@ -113,6 +116,13 @@ const Map<String, List<String>> koachCausesRaisons = <String, List<String>>{
   'koach.arret_exercice': <String>['echecs', 'volume_test'],
   'koach.zone_fragile': <String>['surcharge', 'hausse'],
   'koach.tendon': <String>['total'],
+  'koach.volume_semaine': <String>['planification'],
+  'koach.remplacement': <String>[
+    'pas_de_materiel',
+    'douleur',
+    'trop_dur',
+    'autre',
+  ],
 };
 
 /// Causes de l'alerte hors modèle (`ruptureCauses`, contrat § 3.7.2).
@@ -307,8 +317,10 @@ String _texteKoach(String code, Map<String, Object?> p, NomExercice? noms) {
     case 'koach.surmenage':
       return _texteSurmenage(p, ex);
     case 'koach.reprise_dose':
-      return 'Reprise après douleur : séries limitées sur $ex pour '
-          'ménager ${zone.nom}.';
+      // 1.0.5 : rampe du réalisé après une douleur ou après une coupure
+      // (règle 3 bis, sans douleur connue) : texte neutre.
+      return 'Retour progressif : séries limitées sur $ex pour ménager '
+          '${zone.nom}.';
     case 'koach.vrai_test':
       final sur = nom == null ? '' : ' sur $ex';
       return 'Test du jour$sur : une montée par paliers jusqu’à une série '
@@ -370,6 +382,12 @@ String _texteKoach(String code, Map<String, Object?> p, NomExercice? noms) {
           's’adapter.';
     case 'koach.retour_gradue':
       return _texteRetourGradue(p, ex);
+    case 'koach.ajout_borne':
+      return _texteAjoutBorne(p, ex);
+    case 'koach.volume_semaine':
+      return _texteVolumeSemaine(p, ex);
+    case 'koach.remplacement':
+      return _texteRemplacement(p, ex, noms);
     case 'koach.seance_bornee':
       final minutes = _entier(p['minutes']);
       final duree = minutes == null
@@ -399,8 +417,8 @@ String _texteRetrait(Object? cause, String ex, _Zone zone) {
       return 'Je retire $ex : il charge trop le poignet tant qu’il te fait '
           'mal.';
     case 'reprise_dose':
-      return 'Je retire $ex : la dose de reprise après ta douleur est '
-          'atteinte pour cette semaine.';
+      return 'Je retire $ex : la dose du jour pour ${zone.nom} est atteinte '
+          '(retour progressif).';
   }
   return 'Je retire $ex aujourd’hui pour ménager une zone douloureuse.';
 }
@@ -459,8 +477,8 @@ String _texteRetourGradue(Map<String, Object?> p, String ex) {
     borne = limite == null ? '' : ' (au plus $limite séries cette semaine)';
   }
   if (series == 0) {
-    return 'Je retire $ex cette semaine : pour $qui, le volume que la '
-        'reprise permet est déjà atteint$borne.';
+    return 'Je retire $ex aujourd’hui : pour $qui, le volume que la '
+        'semaine permet est déjà pris$borne.';
   }
   if (secondes != null) {
     return 'Tenue raccourcie à $secondes s sur $ex : pour $qui, le volume '
@@ -469,9 +487,79 @@ String _texteRetourGradue(Map<String, Object?> p, String ex) {
   var combien = 'Moins de séries';
   if (series != null) {
     combien = series == 1 ? 'Une série' : '$series séries';
+    // 1.0.6 : séries écrites de la ligne (`ecrites`), quand elles sont dites.
+    final ecrites = _entier(p['ecrites']);
+    if (ecrites != null && ecrites > series) {
+      combien = '$combien au lieu de $ecrites';
+    }
   }
   return '$combien sur $ex : pour $qui, le volume remonte '
       'progressivement$borne.';
+}
+
+/// 1.0.7 (KM5, C17.40) : Koach voulait ajouter des séries au-dessus de
+/// l'écrit du programme ; la rampe de volume les borne. L'écrit n'est
+/// jamais touché : la phrase le dit.
+String _texteAjoutBorne(Map<String, Object?> p, String ex) {
+  final groupe = p['groupe'];
+  final series = _entier(p['series']);
+  final prevues = _entier(p['prevues']);
+  final ecrites = _entier(p['ecrites']);
+  final qui = groupe == 'allegement'
+      ? 'cette semaine d’allègement'
+      : 'ton volume de la semaine pour ${_groupes[groupe] ?? 'ce groupe musculaire'}';
+  if (series != null && ecrites != null && series <= ecrites) {
+    final ecrit = ecrites == 1
+        ? 'la série écrite'
+        : 'les $ecrites séries écrites';
+    return 'Je garde $ecrit de ton programme sur $ex, sans en ajouter : '
+        '$qui est déjà atteint.';
+  }
+  final ajout = (series != null && ecrites != null) ? series - ecrites : null;
+  final avant = (prevues != null && ecrites != null) ? prevues - ecrites : null;
+  if (ajout != null && avant != null && ajout > 0 && avant > ajout) {
+    final a = ajout == 1 ? 'une série' : '$ajout séries';
+    return 'J’ajoute $a à ton programme sur $ex, au lieu des $avant '
+        'prévues : $qui ne permet pas plus.';
+  }
+  return 'J’ajoute moins de séries que prévu à ton programme sur $ex : $qui '
+      'ne permet pas plus.';
+}
+
+/// 1.0.8 (KM6, X8, C17.43.4) : la modulation hebdomadaire de la
+/// planification sert une ligne sous l'écrit du programme (récupération
+/// prévue sur la semaine, jamais la rampe de volume) ; la phrase dit
+/// combien, sans jugement.
+/// 1.0.9 (KM7) : ligne remplacée pour aujourd'hui, servie à son emplacement
+/// avec les cibles du remplaçant.
+String _texteRemplacement(
+  Map<String, Object?> p,
+  String ex,
+  NomExercice? noms,
+) {
+  final nomDe = _nomExercice(p['de'], noms);
+  final de = nomDe == null ? 'l’exercice écrit' : '« $nomDe »';
+  final pourquoi = switch (p['cause']) {
+    'pas_de_materiel' => ' (matériel absent)',
+    'douleur' => ' pour ménager ta douleur',
+    'trop_dur' => ', plus accessible aujourd’hui',
+    _ => '',
+  };
+  return 'Aujourd’hui, $ex remplace $de$pourquoi : même place dans ta '
+      'séance, avec ses propres cibles.';
+}
+
+String _texteVolumeSemaine(Map<String, Object?> p, String ex) {
+  final series = _entier(p['series']);
+  final ecrites = _entier(p['ecrites']);
+  if (series != null && ecrites != null && series < ecrites) {
+    final s = series == 1 ? 'une série' : '$series séries';
+    return 'Cette semaine, je te propose $s sur $ex au lieu des $ecrites '
+        'écrites : je répartis l’effort de la semaine d’après ta '
+        'récupération prévue.';
+  }
+  return 'Cette semaine, je te propose un peu moins de séries sur $ex : je '
+      'répartis l’effort de la semaine d’après ta récupération prévue.';
 }
 
 String _brasTendus(String groupe) {

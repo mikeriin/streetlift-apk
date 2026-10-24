@@ -1836,3 +1836,18 @@ répétitions à charge donnée n'est pas écrit (la ligne à charge fixe progre
 - **Note** `reps_calibrate` (`value` : réserve) ajoutée à `CoachNotes` ; texte de `coachReasonText`.
 - Hors périmètre : la durée des séances (créneau de 120 min servi en 20 à 40 min sur le profil du constat) reste
   celle de l'option (a) de C17.15 ; l'option (c) (technique et mobilité dans le créneau) est un lot ultérieur.
+
+### 12.18 Crédits de groupes des tirages (0.4.3, lot KM6)
+
+- **Crédit « chest »** (`ExerciseTraits.groupCredits`, `chestCreditRule`, DECISIONS_CP.md C17.47) : tirage vertical
+  (tractions, chin-ups, tirages à la poulie haute) et tractions classées en figure, en gymnastique CrossFit ou en
+  freestyle : 0 ; muscle-ups et transitions (`transition_muscle_up`) : une demi-série au plus ; pull-over en isolation
+  du dos : une demi-série au plus. Les autres groupes et les autres exercices sont inchangés. Même règle dans les
+  fiches de Koach (`kalis_adapt/reference/qualites/regles.py`, R8-a) ; le validateur du banc lit ces crédits ; les
+  trois tables sont comparées exercice par exercice (`kalis_bench/test/km6_credits_test.dart`). Sources :
+  `kalis_adapt/reference/SOURCES.md` § crédits de groupes. 53 exercices changent.
+- **Test au-dessus de la rampe** (`_fitVolume`) : quand plus rien d'autre ne peut être allégé et qu'un test fait
+  seul dépasser la rampe de volume d'un groupe (test d'un mouvement que les semaines d'avant ne travaillaient pas),
+  le test perd une tentative à la fois, jamais la dernière ; `TestSpec.attempts` suit les séries et les notes
+  `attempts_plan` et `attempts_goal` sont retirées. Cas révélé par les nouveaux crédits (profil aléatoire 3770 des
+  propriétés du chemin street) ; les 34 profils du banc sont identiques (`kalis_bench/test/km2_banc_test.dart`).

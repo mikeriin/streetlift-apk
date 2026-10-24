@@ -1,5 +1,88 @@
 # Journal
 
+## 0.5.9 — 22/10/2026 (lot KM6)
+
+Lot KM6 (DECISIONS_CP.md C17.47) : campagne du couple `kalis_plan` 0.4.3 × Koach 1.0.8.
+
+- `test/km6_credits_test.dart` : crédits de groupes identiques dans les trois tables (crédits de `kalis_plan`, fiches
+  exportées pour le validateur Python et `donnees/catalogue_infos.json.gz`, fiches de Koach de la référence et de
+  l'asset), exercice par exercice ; table avant / après ; grilles de charge par défaut de `kalis_plan` et de
+  `kalis_adapt` alignées (poulie 2,5 kg).
+- Mesure de la modulation hebdomadaire sous l'écrit (`_kmMesureModule`, X8) : lignes et séances baissées, baisses sans
+  raison `koach.volume_semaine`, contrôle « rampe déguisée » ; agrégée par `tool/kr1_securite.py`
+  (`rampe_principaux.modulation`).
+- Données de référence de Koach régénérées sur `kalis_plan` 0.4.3 (`test/km2_banc_test.dart` : version `0.4.3`) ;
+  fixtures km2 régénérées.
+- `test/km2_adversaire_test.dart` : valeurs attendues du témoin (régénéré sur `kalis_plan` 0.4.3) et de
+  `evaluer_saison` pour `adv-7ee0da71` recalculées par la référence 1.0.8 (le Dart donnait déjà ces valeurs).
+- Campagne complète (run 39764317745) : `docs/CRITERES_KM6.md`, `docs/data/km6/` (sécurité Dart et Python, 100
+  graines ; critères 0-5 ; critère 5 par groupe ; six jeux d'adversaires ; comparaison saison par saison).
+
+## 0.5.8 — 20/10/2026 (lot KM5)
+
+Lot KM5 (DECISIONS_CP.md C17.40) : validateur et mesures de Koach 1.0.7 (la rampe de volume ne coupe jamais sous
+l'écrit).
+
+- **Vue « volume_trop_vite » des saisons servies par Koach redéfinie** (critère 8, clé `7_securite`) : violation =
+  servi > max(limite de la rampe, écrit du programme de la semaine) ; `kmFiltrerVolumeEcrit`,
+  `KmConstatsSaison.constatsEtSeries`, `kmSecuriteSaison` (paramètre `constatsSeries`) ; indicateur
+  `ancienne_definition` (ancienne définition, limite seule) ; `docs/CRITERES_KM5.md`.
+- `kmMesureRampe` : critère KM5 `sous_ecrit_items` / `sous_ecrit_series`, mesure indépendante `sans_cause_items` /
+  `sans_cause_series`, ajouts bornés `ajouts_bornes` / `ajouts_bornes_series`.
+- `tool/kr1_securite.py` : agrégats `critere_7_ancienne_definition`, mesures KM5.
+- Test `test/km5_filtre_test.dart` ; fixtures `test/fixtures/km2/` régénérées (Koach 1.0.7).
+
+
+## 0.5.7 — 19/10/2026 (lot KM4)
+
+Lot KM4 (DECISIONS_CP.md C17.37) : mesure de la rampe de volume sur les principaux et rôle des emplacements dans le
+contexte de Koach.
+
+- `PolitiqueKoach` : les items des séances manquées et restantes de la semaine (`reste_semaine`) portent le rôle de
+  leur emplacement (`role`, lu par Koach 1.0.6) ; `kmMesureRampe` compte, séance par séance, les principaux écrits
+  (`main`) réduits par `koach.retour_gradue`, leur part servie et les principaux **retirés par la rampe sans douleur**
+  (critère KM4) ; `rampe` dans le résultat de chaque saison (`kmMesureDeSaison`), comme `reference/banc/campagne.py`.
+- `tool/kr1_securite.py` : agrégat `rampe_principaux` (total, par scénario, exemples) et tableau du rapport.
+- Fixtures `test/fixtures/km2/` régénérées (Koach 1.0.6).
+## 0.5.6 — 18/10/2026 (lot KM2c3)
+
+Mesure du couple `kalis_plan` 0.4.2 × Koach 1.0.5 **en Dart** (`kalis_adapt` 1.0.4, portage de la référence ;
+`pipeline/cp/prompts/KM2c3.txt`) ; sur 0.5.5 (lot KM1c4). Critères, profils, attentes et grilles inchangés.
+
+- **Tests et outils de Koach sur les paramètres de 1.0.5** : `test/km2_banc_test.dart`, `test/km2_validateur_test.dart`,
+  `test/km2_adversaire_test.dart`, `bin/km2.dart` et `bin/km2_adversaire.dart` relisent
+  `kalis_adapt/reference/params/koach_params_v1.json` (la copie figée `koach_params_d4.json` est supprimée).
+- **Fixtures du banc** (`test/fixtures/km2/`) régénérées avec le moteur 1.0.5 et le modèle de vérité corrigé (quatre
+  changent) ; trois saisons ajoutées, celles qui portent la conduite sous douleur : `autres_08` référence b 47 (zone
+  sensible sans arrêt), `ks_01` douleur à l'épaule b 38 (sortie progressive de la rampe), `street_03` séances
+  manquées b 57 (rampe de retour après une coupure).
+- **Modèle de vérité** (dans `kalis_adapt`, `lib/src/sim/truth.dart`) : une douleur qui commence n'est connue du moteur
+  qu'une fois signalée (KM1c4) ; les aggravations comptées sur une douleur jamais signalée disparaissent.
+- **Outil** `tool/km2c3_comparer.py` : campagne Dart contre campagne Python, saison par saison (dictionnaire complet
+  de `kmMesurerSaison` contre `campagne.mesurer_saison`, flottants à 1e-9).
+- Mesures : `docs/CRITERES_KM2C3.md`, `docs/data/km2c3/`.
+
+## 0.5.5 — 17/10/2026 (lot KM1c4)
+
+Mesure du couple `kalis_plan` 0.4.2 × Koach 1.0.5 (référence Python ; `pipeline/cp/prompts/KM1c4.txt`) ; sur 0.5.4
+(lot KS1c2). Critères, profils, attentes et grilles inchangés ; aucun code du banc Dart ne change.
+
+- **Tests et outils de Koach sur les paramètres de 1.0.4** : `test/km2_banc_test.dart`, `test/km2_validateur_test.dart`,
+  `test/km2_adversaire_test.dart`, `bin/km2.dart` et `bin/km2_adversaire.dart` lisent
+  `kalis_adapt/reference/params/koach_params_d4.json` (copie de `1.0.4-ref.1`) : le moteur Dart de `kalis_adapt` 1.0.3
+  est Koach 1.0.4 et `koach_params_v1.json` est passé en 1.0.5 (`securite.reprise_dose_depart` 0,5, sept clés
+  nouvelles). Le portage KM2c3 les repointe sur `koach_params_v1.json` et régénère `test/fixtures/km2/` (moteur 1.0.5,
+  modèle de vérité corrigé : `kalis_adapt/reference/PORTAGE_BANC.md`).
+- `test/km2_banc_test.dart` : saisons de référence de Koach régénérées sur `kalis_plan` 0.4.2 (`_planReference`
+  0.4.2 ; les saisons ne changent que par `engineVersion`, le témoin 0.3.1 sur cinq saisons « douleur à l'épaule »,
+  lot KS1c2).
+- `docs/CRITERES_KM1C4.md`, `docs/data/km1c4/` : point de départ du couple 0.4.2 × Koach 1.0.4 (campagne Dart, 100
+  graines : 63 violations, comme KR1), sécurité et critères du couple 0.4.2 × Koach 1.0.5 (campagne Python de la
+  référence, 100 graines, `kalis_adapt/reference/banc/securite_campagne.py` : 0 violation ; première campagne sans la
+  règle 3 bis : 4), temps Python ; adversaires appariés des six jeux dans `kalis_adapt/reference/donnees/`.
+- `.github/workflows/ci-paquets.yml` (branches de piste) : limite du job 180 → 240 min (le contrôle complet de KR1 a
+  pris 2 h 52).
+
 ## 0.5.4 — 17/10/2026 (lot KS1c2)
 
 Mesure du critère « aucun jour sans son principal » du lot KS1c2 (`pipeline/cp/prompts/KS1c2.txt`), pour `kalis_plan`

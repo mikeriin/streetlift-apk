@@ -85,6 +85,135 @@ def equivalent_standard(item):
     return item
 
 
+def technique_coherente(item):
+    """1.0.8 (KM6, X3 de RV1) : technique de l'item rendue cohérente avec
+    son nombre de lignes (`sets`), comme `coherentTechnique`
+    (A/session.dart:1550-1615) : séries allégées d'une série de tête
+    (`backoffSets` < `sets`) et intervalles d'un EMOM (`intervals` =
+    `sets`) recomptés ; vagues, pyramide, échelle dont les paliers ne
+    tiennent plus et bloc au temps (densité, contre la montre) de plus d'une
+    ligne : séries classiques (technique retirée, règles de la série de tête
+    retirées) ; `setTargets` ramené à `sets` éléments (tronqué, ou retiré
+    s'il est plus court). Une technique de dernière série
+    (`lastSetOnly`) est gardée telle quelle. Modifie [item] en place ; vrai
+    si quelque chose a changé."""
+    change = False
+    sets = int(item.get('sets') or 0)
+    st = item.get('setTargets')
+    if st and len(st) != sets:
+        item['setTargets'] = list(st[:sets]) if len(st) > sets else None
+        change = True
+    t = item.get('technique')
+    if not t or t.get('lastSetOnly') is True:
+        return change
+    kind = t.get('kind')
+
+    def classique():
+        regles = [r for r in item.get('autoregulation') or []
+                  if r.get('kind') not in ('backoff_from_top_set', 'stop_on_rep_drop')]
+        item['technique'] = None
+        item['autoregulation'] = regles or None
+        return True
+
+    if kind == 'top_set_backoff':
+        if sets < 2:
+            return classique()
+        b = t.get('backoffSets')
+        if b is not None and b >= sets:
+            t = dict(t)
+            t['backoffSets'] = sets - 1
+            item['technique'] = t
+            return True
+        return change
+    if kind == 'emom':
+        if t.get('intervals') != sets:
+            t = dict(t)
+            t['intervals'] = sets
+            item['technique'] = t
+            return True
+        return change
+    if kind == 'wave':
+        reps = t.get('waveReps')
+        vagues = t.get('waves')
+        if reps is not None and vagues is not None and vagues * len(reps) != sets:
+            return classique()
+        return change
+    if kind == 'pyramid':
+        reps = t.get('pyramidReps')
+        if reps is not None and len(reps) != sets:
+            return classique()
+        return change
+    if kind == 'ladder':
+        debut, pas, haut = t.get('ladderStart'), t.get('ladderStep'), t.get('ladderTop')
+        if debut is None or pas is None or haut is None or pas <= 0:
+            return change
+        # Division entière tronquée vers 0 (`~/` de Dart).
+        q = abs(haut - debut) // pas
+        q = q if haut >= debut else -q
+        marches = (q + 1) * (t.get('ladderCount') or 1)
+        if marches != sets:
+            return classique()
+        return change
+    if kind in ('density', 'for_time'):
+        if sets != 1:
+            return classique()
+        return change
+    return change
+
+
+def groupes_servis(groupes, ecrits, servis):
+    """1.0.8 (KM6, X2 de RV1) : groupes de la séance (`GroupSpec`, reçus
+    dans les contraintes `groups`) recalés sur les items servis. Un groupe
+    sans membre servi disparaît ; un groupe dont les tours comptent les
+    lignes de ses membres (`rounds` = plus grand nombre de séries écrites
+    d'un membre : tours, circuit, intervalles, superset en tours) prend le
+    plus grand nombre de séries servies d'un membre (contre la montre : le
+    plus petit, des deux côtés) ; un EMOM dont la durée vaut
+    `intervalSeconds` × le total des lignes écrites de ses membres prend
+    `intervalSeconds` × le total servi, ou, si elle compte ses tours,
+    `intervalSeconds` × les tours servis. Un membre servi à 0 série ne compte
+    pas. Les autres champs sont gardés (un
+    AMRAP ou un chipper au temps ne dépend pas des séries). Renvoie une
+    nouvelle liste ; les groupes reçus ne sont pas modifiés. Séries écrites
+    d'un membre : `sets` − `koachVolume` (l'écrit du programme, que les
+    items reçus soient déjà modulés ou non)."""
+    def ecrites(p):
+        return int(p.get('sets') or 0) - int(p.get('koachVolume') or 0)
+
+    out = []
+    for g in groupes or []:
+        gid = g.get('groupId')
+        membres_e = [p for p in ecrits or [] if gid is not None and p.get('groupId') == gid]
+        membres_s = [p for p in servis or [] if gid is not None and p.get('groupId') == gid
+                     and int(p.get('sets') or 0) > 0]
+        if not membres_s:
+            continue
+        g = dict(g)
+        # Tours : le plus grand nombre de séries d'un membre (toutes les
+        # lignes servies trouvent leur tour) ; contre la montre, le plus petit
+        # (le moins de tours fait foi, comme `kalis_plan`).
+        if g.get('format') == 'rounds_for_time':
+            n_s = min(int(p.get('sets') or 0) for p in membres_s)
+            n_e = min(ecrites(p) for p in membres_e) if membres_e else None
+        else:
+            n_s = max(int(p.get('sets') or 0) for p in membres_s)
+            n_e = max(ecrites(p) for p in membres_e) if membres_e else None
+        tours_e = g.get('rounds')
+        if n_e is not None and tours_e is not None and tours_e == n_e:
+            g['rounds'] = n_s
+        iv = g.get('intervalSeconds')
+        if membres_e and g.get('format') == 'emom' and iv and g.get('durationSeconds') is not None:
+            tot_e = sum(ecrites(p) for p in membres_e)
+            tot_s = sum(int(p.get('sets') or 0) for p in membres_s)
+            if tot_e > 0 and g['durationSeconds'] == iv * tot_e:
+                g['durationSeconds'] = iv * tot_s
+            elif tours_e is not None and g['durationSeconds'] == iv * tours_e:
+                # Durée qui compte les tours (E2MOM A/B : 8 tours, 960 s).
+                g['durationSeconds'] = iv * g['rounds']
+        out.append(g)
+    return out
+
+
 def secondes_prescrites(item, sets, vitesse):
     """Durée prescrite d'une ligne d'endurance, toutes séries (secondes) ;
     0 sans durée ni distance (`prescribedSeconds`, A/endurance.dart:283-293)."""
@@ -279,8 +408,15 @@ class Seances(object):
         self.contexte = None
         self.plans = {}          # slotId -> plan de l'item servi (séance en cours)
         self.dose_zone = {}      # zone -> {semaine: séries faites des mouvements qui la provoquent}
+        self.ecrit_zone = {}     # zone -> {semaine: séries écrites (séances vues et manquées)}
         self.zones_ex = {}       # id -> (niveaux de zone, zones provoquées), vu à la prescription
-        self.budget_zone = {}    # zone en reprise -> séries encore permises cette semaine
+        self.budget_zone = {}    # zone sensible -> séries encore permises aujourd'hui (rampe du réalisé)
+        self.budget_semaine = {}  # zone sensible -> séries permises cette semaine (total)
+        self.rampe_zone = set()  # zones encore sous rampe après la fenêtre sensible (sortie progressive)
+        self.retour_zone = {}    # zone -> (semaine d'entrée, départ) de la rampe de retour après coupure (règle 3 bis)
+        self.manque_zone = {}    # zone -> {semaine: séries écrites des séances manquées qui la provoquent}
+        self.expo_jour = {}      # zone -> dernier jour d'exposition réalisée (règle 3 bis)
+        self.reserve_echauffement = {}  # zone sous budget -> séries que l'échauffement peut prendre aujourd'hui
         # Retour gradué au volume (critères `volume_trop_vite` et
         # `tendon_figures` du banc), recalculé du journal (contexte des
         # séances, appels de plan, fins de séance) :
@@ -291,7 +427,13 @@ class Seances(object):
         self.allegees = {}       # semaine -> semaine allégée par nature (`semaines_allegees`)
         self.genres = {}         # semaine -> intention ou genre de la semaine (affûtage, compétition…)
         self.servis = None       # items servis de la séance en cours (comptés à la fin de séance)
+        self.entree = None       # items reçus par le dernier `prescrire` (lecture du banc)
         self.retour_vol = None   # budgets de la séance en cours (`_budgets_retour`)
+        # 1.0.7 (KM5, C17.40) : écrit du PROGRAMME de l'athlète (séries
+        # avant les ajouts de Koach, `ecrites`), séances vues et manquées :
+        self.ecrit_vol = {}      # semaine -> séries dures créditées écrites par groupe majeur
+        self.ecrit_dures = {}    # semaine -> séries dures écrites, tous groupes (allègements)
+        self.ecrit_compte = None   # (semaine, écrit servi compté) de la séance en cours : un seul `prescrire` compté
 
     def mem(self, ex_id):
         if ex_id not in self.memoire:
@@ -420,6 +562,7 @@ class Seances(object):
         self.budget_zone = {}
         self.servis = None
         self.retour_vol = None
+        self.ecrit_compte = None
         c = contexte or {}
         legeres = self.s['semaines_allegees']
         for m in c.get('manquees') or []:
@@ -429,18 +572,39 @@ class Seances(object):
                 continue
             if 'genre' in m and m['semaine'] not in self.allegees:
                 self.allegees[m['semaine']] = m.get('genre') in legeres
-            self._compter(m['semaine'], m.get('items') or [])
+            # 1.0.7 : au volume écrit par le programme (`_item_ecrit`).
+            ecrits_m = [self._item_ecrit(p) for p in m.get('items') or []]
+            self._compter(m['semaine'], ecrits_m)
             self.ecrit_semaines[m['semaine']] = self.ecrit_semaines.get(m['semaine'], 0.0) + \
-                sum(self._series_dures(p) for p in m.get('items') or [])
+                sum(self._series_dures(p) for p in ecrits_m)
+            self._compter_ecrit_zone(m['semaine'], m.get('items') or [])
+            self._compter_manque_zone(m['semaine'], m.get('items') or [])
+            self._compter_ecrit(m['semaine'], m.get('items') or [])
         if c.get('semaine') is not None:
             self.allegees[c['semaine']] = c.get('genre') in legeres
-        for z in list(self.g.zones):
-            dz = self.g.zones[z]
-            if dz.arret_leve is not None and not self.g.arret(z) \
-                    and 0 <= jour - dz.arret_leve <= self.s['reprise_surveillance_j']:
-                b = self._budget_reprise(z)
-                if b is not None:
-                    self.budget_zone[z] = b
+        self.budget_semaine = {}
+        for z in sorted(self.g.zones):
+            b, sortie = self._budget_zone_semaine(z)
+            if sortie:
+                self.rampe_zone.discard(z)
+            if b is not None:
+                self.budget_semaine[z] = b
+                self.rampe_zone.add(z)
+        # Règle 3 bis : zones en rampe de retour (séances manquées) ; la
+        # rampe de la zone sensible l'emporte dès qu'elle s'applique ; une
+        # semaine verrouillée (intro, allègement, affûtage, test, compétition,
+        # transition : volume déjà réduit ou échéance) la suspend.
+        for z in sorted(self.retour_zone):
+            if z in self.budget_semaine or self.g.sensible(z):
+                del self.retour_zone[z]
+                continue
+            if self.verrouillee():
+                continue
+            b, sortie = self._budget_retour(z)
+            if sortie or b is None:
+                del self.retour_zone[z]
+            else:
+                self.budget_semaine[z] = b
         for mem in self.memoire.values():
             mem.charge_seance = None
             mem.reps_seance = None
@@ -495,44 +659,350 @@ class Seances(object):
     def _dose_semaine(self, z, semaine):
         return self.dose_zone.get(z, {}).get(semaine, 0)
 
-    def _budget_reprise(self, z):
-        """Séries encore permises cette semaine, tous mouvements qui
-        provoquent la zone [z] confondus, pendant la reprise graduée. Plus
-        prudent que 0.3.1 (part du volume écrit) : la dose hebdomadaire de la
-        zone repart d'une fraction de l'habitude d'avant la douleur et ne
-        monte pas de plus d'un quart (ou d'une série) d'une semaine de charge
-        à la suivante, quel que soit le volume écrit."""
+    def _semaine_connue(self, w):
+        """Semaine [w] connue du journal : une séance y a été ouverte
+        (`garde.semaines`) ou une séance manquée y a été versée
+        (`allegees`, par `contexte['manquees']`) ; jamais tronqué (le journal
+        des jours de séance, lui, ne garde que les 20 derniers)."""
+        return w in self.g.semaines or w in self.allegees
+
+    def _semaine_de_charge(self, w):
+        """Semaine connue ET de charge (genre ou intention hors allègement,
+        test, affûtage, compétition, transition) ; une semaine entièrement
+        manquée est une semaine de charge connue à exposition 0."""
+        if w in self.g.semaines:
+            return bool(self.g.semaines[w])
+        if w in self.allegees:
+            return not self.allegees[w]
+        return False
+
+    def _compter_ecrit_zone(self, semaine, items):
+        """Séries écrites de la semaine [semaine] par zone provoquée
+        (exercices déjà vus à la prescription ; échauffement compris, comme le
+        réalisé de `fermer`)."""
+        for p in items:
+            zz = self.zones_ex.get(p['exerciseId'])
+            if not zz:
+                continue
+            n = int(p.get('sets') or 0)
+            if n <= 0:
+                continue
+            for z in zz[1]:
+                e = self.ecrit_zone.setdefault(z, {})
+                e[semaine] = e.get(semaine, 0) + n
+
+    def _ecrit_zone(self, z, semaine):
+        return self.ecrit_zone.get(z, {}).get(semaine, 0)
+
+    def _compter_manque_zone(self, semaine, items):
+        """Séries écrites des séances manquées de la semaine [semaine] par
+        zone provoquée (exercices déjà vus) : ce que la zone n'a pas reçu
+        (règle 3 bis)."""
+        for p in items:
+            zz = self.zones_ex.get(p['exerciseId'])
+            if not zz:
+                continue
+            n = int(p.get('sets') or 0)
+            if n <= 0:
+                continue
+            for z in zz[1]:
+                e = self.manque_zone.setdefault(z, {})
+                e[semaine] = e.get(semaine, 0) + n
+
+    def _manque_recent(self, z):
+        """Vrai si une séance manquée a privé la zone [z] d'exposition dans
+        la fenêtre de la charge chronique."""
+        semaine = self.g.semaine
+        m = self.manque_zone.get(z) or {}
+        return any(m.get(k, 0) > 0 for k in range(semaine - int(self.s['charge_chronique_semaines']), semaine))
+
+    def _budget_zone_semaine(self, z):
+        """1.0.5 (lot KM1c4, règles 1 à 3) : (permis, sortie) — séries
+        permises cette semaine, tous mouvements qui provoquent la zone [z]
+        confondus (échauffement compris), quand la zone est sensible
+        (`Gardefous.sensible` : épisode ≥ `arret_persistance_min`, avec ou
+        sans arrêt, douze semaines après son dernier signalement) ou encore
+        sous rampe après la fenêtre (sortie progressive) ; (None, False)
+        sinon ; `sortie` vrai quand la zone sort de la rampe. Fonction pure
+        (l'appelant tient `rampe_zone`). « Rampe du réalisé » :
+
+        * référence = exposition RÉALISÉE de la dernière semaine de charge
+          connue depuis la semaine du premier signalement de l'épisode et,
+          s'il y a eu un arrêt, après la semaine de sa levée (séances
+          manquées à 0, jamais comptées à l'écrit) ; une semaine de charge
+          sans exposition renvoie à la dernière semaine exposée parmi les
+          `rampe_zone_semaines_max` précédentes, strictement après la
+          semaine du signalement et après la levée ; la semaine du
+          signalement elle-même ne sert que si aucune semaine de charge
+          connue ne la sépare de la semaine en cours, et sans hausse
+          (tenue) ; dans la semaine du signalement, tenue au réalisé de la
+          semaine de charge précédente ;
+        * permis = max(référence + 1 ; référence × (1 + `reprise_dose_hausse`))
+          (hausse hebdomadaire bornée : Gabbett 2016, rapport aigu:chronique
+          0,8-1,3, danger ≥ 1,5 ; Nielsen et al. 2014) ; pas de hausse si la
+          zone a été signalée > `reprise_douleur_max` dans les
+          `douleur_hausse_j` derniers jours (Silbernagel et al. 2007 : la
+          douleur ne doit pas augmenter d'une semaine à l'autre) ;
+        * sans référence (aucune semaine de charge exposée depuis le début de
+          l'épisode ou depuis la levée de l'arrêt, ou arrêt en cours) :
+          départ à `reprise_dose_depart` × habitude, habitude = charge
+          chronique = somme de l'exposition réalisée des semaines de charge
+          connues parmi les quatre semaines précédant la semaine du premier
+          signalement, divisée par 4 (moyenne glissante sur quatre semaines
+          du rapport aigu:chronique, Gabbett 2016 ; une semaine inconnue ou
+          allégée compte 0) ; sans habitude : `reprise_dose_sans_habitude` ;
+        * jamais sous `reprise_dose_min`."""
         g = self.g
-        d = g.zones.get(z)
         s = self.s
-        if d is None or d.arret_leve is None:
-            return None
+        d = g.zones.get(z)
+        if d is None:
+            return None, False
         semaine = g.semaine
-        # Habitude : moyenne des 4 dernières semaines de charge avant le
-        # premier signalement de l'épisode.
-        debut = d.signalements[0][0] // 7 if d.signalements else semaine
-        for (j, i) in d.signalements:
-            if i >= s['arret_persistance_min']:
-                debut = j // 7
-                break
-        avant = [self._dose_semaine(z, w) for w in range(debut - 4, debut) if w >= 0 and g.semaines.get(w, False)]
-        habitude = sum(avant) / len(avant) if avant else None
-        # Dernière semaine de charge depuis la levée.
-        premiere = d.arret_leve // 7
-        precedente = None
-        for w in range(semaine - 1, premiere - 1, -1):
-            if g.semaines.get(w, False):
-                precedente = self._dose_semaine(z, w)
-                break
-        if precedente is None or precedente <= 0:
-            if habitude is None:
-                return None
-            total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
-            if total < 1:
-                total = 1
+        ep = g.episode(z)
+        sensible = g.sensible(z)
+        if not sensible and z not in self.rampe_zone:
+            return None, False
+        charge = self._semaine_de_charge
+        debut = ep[0] // 7 if ep is not None else semaine
+        # Après un arrêt levé dans l'épisode, rien d'avant la semaine de la
+        # levée ne sert de référence (la zone repart de l'arrêt).
+        apres = debut + 1
+        if ep is not None and d.arret_leve is not None and d.arret_leve >= ep[0]:
+            # Première semaine qui compte après la levée : celle de la levée
+            # si elle lui laisse au moins 4 jours (règle de
+            # `Gardefous._semaines_de_charge`), sinon la suivante.
+            leve = d.arret_leve
+            premiere = leve // 7 if 7 - (leve % 7) >= 4 else leve // 7 + 1
+            apres = max(apres, premiere)
+        ref = None
+        tenir = False
+        if semaine == debut:
+            # Semaine du signalement : tenue au réalisé de la semaine de
+            # charge précédente (un signalement sans retrait gèle, ne coupe
+            # pas) ; sans semaine de charge précédente, départ.
+            w = semaine - 1
+            while w >= 0 and w >= semaine - s['rampe_zone_semaines_max']:
+                if charge(w):
+                    ref = self._dose_semaine(z, w)
+                    tenir = True
+                    break
+                w -= 1
         else:
-            total = max(precedente + 1, int(math.floor(precedente * (1 + s['reprise_dose_hausse']) + 1e-9)))
-        return total - self._dose_semaine(z, semaine)
+            w = semaine - 1
+            while w >= debut and w >= 0:
+                if charge(w):
+                    if w < apres:
+                        break
+                    ref = self._dose_semaine(z, w)
+                    if ref <= 0:
+                        for k in range(w - 1, max(apres, w - s['rampe_zone_semaines_max']) - 1, -1):
+                            if charge(k) and self._dose_semaine(z, k) > 0:
+                                ref = self._dose_semaine(z, k)
+                                break
+                    break
+                w -= 1
+            if ref is None and (debut < semaine) and apres == debut + 1:
+                # Aucune semaine de charge connue entre le signalement et
+                # aujourd'hui : la semaine du signalement sert, tenue.
+                if charge(debut):
+                    ref = self._dose_semaine(z, debut)
+                    tenir = True
+        if ref is not None and ref > 0 and g.arret(z):
+            ref = None
+        if ref is not None and ref > 0:
+            if tenir or d.pire_entre(self.jour - s['douleur_hausse_j'] + 1, self.jour) > s['reprise_douleur_max']:
+                total = int(ref)
+            else:
+                total = max(int(ref) + 1, int(math.floor(ref * (1 + s['reprise_dose_hausse']) + 1e-9)))
+        else:
+            avant = [self._dose_semaine(z, k) for k in range(debut - 4, debut) if k >= 0 and charge(k)]
+            if avant:
+                habitude = sum(avant) / 4.0
+                total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
+            else:
+                total = int(s['reprise_dose_sans_habitude'])
+        if total < s['reprise_dose_min']:
+            total = int(s['reprise_dose_min'])
+        if not sensible:
+            # Sortie progressive (règle 2) : après la fenêtre, la rampe
+            # continue tant que le permis n'atteint pas l'écrit (dernière
+            # semaine de charge connue, et semaine en cours vue jusqu'ici) ;
+            # dès qu'il l'atteint, la zone sort.
+            ecrit_ref = self._ecrit_zone(z, semaine)
+            w = semaine - 1
+            while w >= 0:
+                if charge(w):
+                    ecrit_ref = max(ecrit_ref, self._ecrit_zone(z, w))
+                    break
+                w -= 1
+            if total >= ecrit_ref:
+                return None, True
+        return total, False
+
+    def _habitude_avant(self, z, fin):
+        """Habitude de la zone [z] avant une coupure (règle 3 bis) : moyenne
+        de l'exposition réalisée sur les `charge_chronique_semaines` (4)
+        semaines calendaires qui finissent à la semaine [fin] (celle de la
+        dernière exposition), limitées à celles qui suivent la première
+        semaine connue du journal (allègements compris, semaine manquée ou
+        sans séance à 0 : la charge chronique du rapport aigu:chronique,
+        Gabbett 2016, sur les semaines que le journal connaît). None sans
+        semaine connue."""
+        connues = list(self.g.semaines) + list(self.allegees)
+        if not connues:
+            return None
+        premiere = min(connues)
+        ks = [k for k in range(fin - int(self.s['charge_chronique_semaines']) + 1, fin + 1) if k >= premiere]
+        if not ks:
+            return None
+        return sum(self._dose_semaine(z, k) for k in ks) / float(len(ks))
+
+    def _depart_retour(self, z):
+        """Permis de la première semaine de retour d'une zone après une
+        coupure : `reprise_dose_depart` × habitude d'avant la coupure (la
+        moitié : règle A3 de 0.3.1, reprise à 50 %, et pratique du retour
+        après deux semaines d'arrêt), `reprise_dose_sans_habitude` sans
+        exposition connue, jamais sous `reprise_dose_min`."""
+        s = self.s
+        fin = self.expo_jour[z] // 7
+        habitude = self._habitude_avant(z, fin)
+        if habitude is None or habitude <= 0:
+            total = int(s['reprise_dose_sans_habitude'])
+        else:
+            total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
+        if total < s['reprise_dose_min']:
+            total = int(s['reprise_dose_min'])
+        return total
+
+    def _budget_retour(self, z, depart=None, debut=None):
+        """1.0.5 (lot KM1c4, règle 3 bis, « rampe du réalisé après une
+        coupure ») : (permis, sortie) pour une zone sans douleur connue qui
+        revient d'une coupure (`_entrer_retour`). Même rampe que la zone
+        sensible : permis = exposition réalisée de la dernière semaine de
+        charge connue depuis l'entrée dans la rampe ([debut]) + 1 ou
+        + `reprise_dose_hausse` (une semaine de charge sans exposition
+        renvoie à la dernière exposée parmi les `rampe_zone_semaines_max`
+        précédentes, jamais avant [debut]) ; sans référence, le départ
+        [depart] (`_depart_retour`, figé à l'entrée) ; jamais sous
+        `reprise_dose_min`. `sortie` dès que le permis atteint l'écrit de la
+        zone (dernière semaine de charge connue et semaine en cours vue
+        jusqu'ici). Fonction pure (l'appelant tient `retour_zone`)."""
+        s = self.s
+        semaine = self.g.semaine
+        if debut is None or depart is None:
+            r = self.retour_zone.get(z)
+            if r is None:
+                return None, False
+            debut, depart = r
+        charge = self._semaine_de_charge
+        ref = None
+        w = semaine - 1
+        while w >= debut and w >= 0:
+            if charge(w):
+                ref = self._dose_semaine(z, w)
+                if ref <= 0:
+                    for k in range(w - 1, max(debut, w - s['rampe_zone_semaines_max']) - 1, -1):
+                        if charge(k) and self._dose_semaine(z, k) > 0:
+                            ref = self._dose_semaine(z, k)
+                            break
+                break
+            w -= 1
+        if ref is not None and ref > 0:
+            total = max(int(ref) + 1, int(math.floor(ref * (1 + s['reprise_dose_hausse']) + 1e-9)))
+        else:
+            total = int(depart)
+        if total < s['reprise_dose_min']:
+            total = int(s['reprise_dose_min'])
+        ecrit_ref = self._ecrit_zone(z, semaine)
+        w = semaine - 1
+        while w >= 0:
+            if charge(w):
+                ecrit_ref = max(ecrit_ref, self._ecrit_zone(z, w))
+                break
+            w -= 1
+        if total >= ecrit_ref:
+            return None, True
+        return total, False
+
+    def _entrer_retour(self, items):
+        """Règle 3 bis : une zone sans douleur connue, ni sous rampe, qui
+        n'a reçu aucune exposition depuis `coupure_j` jours au moins (une
+        coupure, comme A6.1) alors qu'une séance manquée l'écrivait dans
+        les `charge_chronique_semaines` dernières semaines, entre dans la
+        rampe de retour quand l'écrit de la semaine (séances vues et
+        manquées, séance du jour, séances restantes) dépasse son départ ;
+        son permis est posé pour la semaine. Une douleur survenue pendant
+        la coupure n'a pu être signalée : la zone repart comme une zone
+        sensible, de la moitié de son habitude. Hors coupure, le plan (et
+        le retour gradué au volume) gouverne : une progression écrite, une
+        séance manquée ici ou là, ne sont pas bornées. Une zone jamais
+        exposée dans le journal est introduite par le plan. Une semaine
+        verrouillée (`verrouillee` : intro, allègement, affûtage, test,
+        compétition, transition) n'ouvre ni n'applique la rampe de retour :
+        son volume est déjà réduit ou c'est l'échéance (choix raisonné :
+        sans douleur connue, une précaution de volume ne coupe pas une
+        compétition ; la zone sensible, elle, s'applique partout)."""
+        c = self.contexte or {}
+        semaine = self.g.semaine
+        if self.verrouillee():
+            return
+        zones = set(self.dose_zone)
+        reste = {}
+        for seance in list(c.get('reste_semaine') or []) + [items]:
+            for p in seance:
+                zz = self.zones_ex.get(p['exerciseId'])
+                if not zz:
+                    continue
+                for z in zz[1]:
+                    zones.add(z)
+                    if seance is not items:
+                        reste[z] = reste.get(z, 0) + int(p.get('sets') or 0)
+        for z in sorted(zones):
+            if z in self.budget_semaine or z in self.retour_zone or z in self.rampe_zone or self.g.sensible(z):
+                continue
+            if z not in self.expo_jour or self.jour - self.expo_jour[z] < self.s['coupure_j']:
+                continue
+            if not self._manque_recent(z):
+                continue
+            ecrit = self._ecrit_zone(z, semaine) + reste.get(z, 0)
+            if ecrit <= 0:
+                continue
+            depart = self._depart_retour(z)
+            permis, _ = self._budget_retour(z, depart=depart, debut=semaine)
+            if permis is not None and permis < ecrit:
+                self.retour_zone[z] = (semaine, depart)
+                self.budget_semaine[z] = permis
+
+    def _budgets_zone_jour(self, items):
+        """Part du budget hebdomadaire de chaque zone sensible pour la séance
+        du jour : reste de la semaine réparti au prorata de l'écrit du jour et
+        des séances restantes de la semaine (`contexte['reste_semaine']`),
+        arrondi au plus proche (demi vers le haut) ; tout le reste quand rien
+        n'est écrit."""
+        out = {}
+        c = self.contexte or {}
+        semaine = self.g.semaine
+        for z, total in self.budget_semaine.items():
+            reste = total - self._dose_semaine(z, semaine)
+            if reste < 0:
+                reste = 0
+            e_jour = 0
+            for p in items:
+                zz = self.zones_ex.get(p['exerciseId'])
+                if zz and z in zz[1]:
+                    e_jour += int(p.get('sets') or 0)
+            e_reste = 0
+            for seance in c.get('reste_semaine') or []:
+                for p in seance:
+                    zz = self.zones_ex.get(p['exerciseId'])
+                    if zz and z in zz[1]:
+                        e_reste += int(p.get('sets') or 0)
+            if e_jour + e_reste > 0:
+                part = int(math.floor(reste * e_jour / float(e_jour + e_reste) + 0.5))
+            else:
+                part = reste
+            out[z] = part
+        return out
 
     def verrouillee(self):
         c = self.contexte or {}
@@ -545,15 +1015,43 @@ class Seances(object):
         servis (mêmes champs, plus `koach`)."""
         out = []
         testes = set()
+        # Items reçus (lecture du banc, mesure KM5 ; n'entre dans aucun calcul).
+        self.entree = [dict(p) for p in items]
         for ex_id, zz in zones.items():
             self.zones_ex[ex_id] = zz
         self.retour_vol = self._budgets_retour(items)
         sem = (self.contexte or {}).get('semaine')
         if sem is not None:
-            self.ecrit_semaines[sem] = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(p) for p in items)
+            # 1.0.7 : écrit du programme (sans les ajouts de Koach), aussi
+            # pour décider d'une semaine d'allègement.
+            self.ecrit_semaines[sem] = self.ecrit_semaines.get(sem, 0.0) + \
+                sum(self._series_dures(self._item_ecrit(p)) for p in items)
+            self._compter_ecrit_zone(sem, items)
+            self._entrer_retour(items)
+        self.budget_zone = self._budgets_zone_jour(items)
+        # Réserve de l'échauffement : ce que le permis du jour laisse après
+        # les séries de travail écrites sur la zone (le travail d'abord).
+        self.reserve_echauffement = {}
+        for z, b in self.budget_zone.items():
+            travail = 0
+            for p in items:
+                zz = self.zones_ex.get(p['exerciseId'])
+                if zz and z in zz[1] and p.get('kind') != 'warmup':
+                    travail += int(p.get('sets') or 0)
+            self.reserve_echauffement[z] = max(0, b - travail)
+        # 1.0.6 (KM4) : deux passes. D'abord la séance servie par les règles
+        # de chaque exercice (douleur, bilan, coupure, surmenage, rampe du
+        # réalisé) ; puis le plan de la rampe de volume (`_plan_retour` ;
+        # 1.0.7 : seuls les ajouts de Koach au-dessus de l'écrit du
+        # programme sont bornés, C17.40), appliqué ligne par ligne avec la
+        # rampe tendineuse et le vrai test.
+        premiers = []
         for item in items:
             servi = self._item(item, grilles.get(item['exerciseId']), zones.get(item['exerciseId']),
                                roles.get(item['slotId']))
+            premiers.append((item, servi))
+        self._plan_retour(premiers)
+        for (item, servi) in premiers:
             if servi is None:
                 continue
             servi = self._retour_gradue(servi)
@@ -562,7 +1060,15 @@ class Seances(object):
                 continue
             plan = self.plans.get(item['slotId'])
             ex_id = item['exerciseId']
-            if plan is not None and ex_id not in testes and item.get('kind') == 'work':
+            if plan is not None and ex_id not in testes and item.get('kind') == 'work' \
+                    and not any(z in self.budget_zone and z not in self.retour_zone
+                                for z in (zones.get(ex_id) or ({}, set()))[1]):
+                # 1.0.5 : pas de vrai test (montée de charge) sur un
+                # mouvement qui provoque une zone SENSIBLE sous rampe du
+                # réalisé ; la rampe de retour après une coupure (règle 3
+                # bis, sans douleur connue) ne l'interdit pas : A6.1 l'interdit
+                # déjà la semaine du retour, et la montée compte dans le
+                # permis comme toute série.
                 vt = self._vrai_test(servi, plan, self.m.pistes.get(ex_id))
                 if vt is not None and not self._duree_permet_test(items, item, vt, sum(
                         1 for x in out if x.get('koach') == 'vrai_test')):
@@ -601,8 +1107,52 @@ class Seances(object):
                     plan['series_ecrites'] = lignes
             out.append(servi)
         out = self._duree_bornee(self._endurance(out), items)
+        self._coherence(out, items)
         self.servis = [dict(it) for it in out]
+        if sem is not None and self.ecrit_compte is None:
+            # 1.0.7 : écrit SERVI de la séance (ligne par ligne, au plus ses
+            # séries écrites par le programme), compté une fois par séance ;
+            # un nouvel appel de la même séance le retire de ses budgets.
+            v, t = self._compter_ecrit(sem, self._ecrits_servis(items, out))
+            self.ecrit_compte = (sem, v, t)
         return out
+
+    def _coherence(self, out, items):
+        """1.0.8 (KM6) : passe finale de la séance servie, après toutes les
+        règles qui changent les séries :
+        - X7 (RV1c1 § 4) : un item servi sans `groupId` à l'emplacement d'un
+          item écrit qui en avait un (course facile qui remplace une course
+          de qualité…) garde le groupe de l'emplacement (et son `format`) ;
+        - X3 (RV1 § 5) : technique recalée sur les séries servies
+          (`technique_coherente`) ;
+        - X8 (C17.43.4) : une ligne que la modulation hebdomadaire de la
+          planification a baissée sous l'écrit du programme (`koachModule`
+          < 0, posé par `Planification.appliquer`) porte la raison
+          `koach.volume_semaine` (séries écrites, séries de la semaine,
+          cause `planification`). Modifie [out] en place."""
+        ecrits = {}
+        for p in items:
+            ecrits.setdefault(p.get('slotId'), p)
+        for it in out:
+            p = ecrits.get(it.get('slotId'))
+            if p is not None and it.get('koach') != 'vrai_test':
+                if it.get('groupId') is None and p.get('groupId') is not None:
+                    it['groupId'] = p['groupId']
+                    if it.get('format') is None and p.get('format') is not None:
+                        it['format'] = p['format']
+            technique_coherente(it)
+            if p is None or it.get('koach') == 'vrai_test' or p.get('kind') in ('warmup', 'test'):
+                continue
+            km = p.get('koachModule')
+            if km is not None and km < 0 and it['exerciseId'] == p['exerciseId']:
+                # (Un exercice remplacé — course facile… — porte la raison de
+                # son remplacement : la baisse de la semaine ne le concerne
+                # plus.)
+                ecrites = int(p.get('sets') or 0) - int(p.get('koachVolume') or 0)
+                semaine = ecrites + int(km)
+                if semaine < ecrites:
+                    self._raison('koach.volume_semaine', exercice=p['exerciseId'], ecrites=ecrites,
+                                 series=semaine, cause='planification')
 
     def _raison(self, code, **params):
         self.raisons.append({'code': code, 'params': params})
@@ -637,7 +1187,7 @@ class Seances(object):
                 'rir_min': cond['rir_min'], 'part_max': cond['part_max'], 'echecs': 0,
                 'baisse': 1.0, 'verrou': self.verrouillee(), 'ecrit': item, 'tete': None,
                 'repere': False, 'dose_plafonnee': cond['dose_plafonnee'], 'fragile': cond['fragile'],
-                'servi': servi}
+                'servi': servi, 'depart_kg': item.get('koachDepartKg')}
         if self.coupure > 0 and typ in ('reps', 'tenue'):
             # Semaine du retour après une coupure : répétitions et tenues
             # jamais au-dessus de la dernière séance (plus prudent que 0.3.1,
@@ -682,19 +1232,30 @@ class Seances(object):
                     if series > plancher:
                         series -= 1
                 series = self._surmenage(ex_id, mem, role, series)
-        if not echauffement:
-            for z in sorted(hits):
-                if z in self.budget_zone:
-                    reste = self.budget_zone[z]
-                    if series > reste:
-                        series = reste if reste > 0 else 0
-                        self._raison('koach.reprise_dose', exercice=ex_id, zone=z)
-            if series <= 0:
-                self._raison('koach.douleur_retrait', exercice=ex_id, zone=cond['zone'], cause='reprise_dose')
-                return None
-            for z in sorted(hits):
-                if z in self.budget_zone:
-                    self.budget_zone[z] -= series
+        # Rampe du réalisé (1.0.5, KM1c4) : séries de tout mouvement qui
+        # provoque une zone sous budget ramenées à ce que la séance permet
+        # encore, échauffement compris (chaque série expose la structure).
+        epuisee = None
+        for z in sorted(hits):
+            if z in self.budget_zone:
+                reste = self.budget_zone[z]
+                if echauffement:
+                    # L'échauffement ne prend que ce que le travail de la
+                    # séance laisse (réservé à la prescription).
+                    reste = min(reste, self.reserve_echauffement.get(z, reste))
+                if series > reste:
+                    series = reste if reste > 0 else 0
+                    if series <= 0:
+                        epuisee = z
+                    self._raison('koach.reprise_dose', exercice=ex_id, zone=z)
+        if series <= 0 and epuisee is not None:
+            self._raison('koach.douleur_retrait', exercice=ex_id, zone=epuisee, cause='reprise_dose')
+            return None
+        for z in sorted(hits):
+            if z in self.budget_zone:
+                self.budget_zone[z] -= series
+                if echauffement and z in self.reserve_echauffement:
+                    self.reserve_echauffement[z] -= series
         servi['sets'] = series
         self.plans[item['slotId']] = plan
         if typ in ('charge', 'reps', 'tenue') and not echauffement:
@@ -825,6 +1386,71 @@ class Seances(object):
             if fam is not None:
                 t[fam] = t.get(fam, 0.0) + float(p.get('sets') or 0) * sec
 
+    def _ecrites(self, p):
+        """Séries écrites par le PROGRAMME de l'athlète pour l'item [p]
+        (1.0.7, KM5) : `sets` − `koachVolume` (séries ajoutées, ou retirées
+        si négatif, par la planification de Koach et les transformations
+        qui gardent ce champ à jour) ; `sets` sans `koachVolume`."""
+        n = int(p.get('sets') or 0)
+        kv = p.get('koachVolume')
+        if kv is None:
+            return n
+        e = n - int(kv)
+        return e if e > 0 else 0
+
+    def _item_ecrit(self, p):
+        """L'item [p] à ses séries écrites par le programme (copie si elles
+        diffèrent de `sets`)."""
+        e = self._ecrites(p)
+        if e == int(p.get('sets') or 0):
+            return p
+        q = dict(p)
+        q['sets'] = e
+        return q
+
+    def _credits_ecrits(self, items):
+        """(séries dures créditées écrites par groupe majeur, séries dures
+        écrites) de [items], au volume écrit par le programme."""
+        v = [0.0] * len(self.s['volume_groupes_majeurs'])
+        t = 0.0
+        for p in items:
+            q = self._item_ecrit(p)
+            dures = self._series_dures(q)
+            if dures > 0:
+                t += dures
+                for (g, c) in self._credits(q['exerciseId']):
+                    v[g] += dures * c
+        return v, t
+
+    def _ecrits_servis(self, items, servis):
+        """Lignes écrites [items] ramenées à leur écrit SERVI : min(séries
+        écrites par le programme, séries servies de la ligne dans
+        [servis] ; 0 si retirée), sans `koachVolume`."""
+        n = {}
+        for x in servis:
+            n[x.get('slotId')] = int(x.get('sets') or 0)
+        out = []
+        for p in items:
+            q = dict(p)
+            q.pop('koachVolume', None)
+            e = self._ecrites(p)
+            v = n.get(p.get('slotId'), 0)
+            q['sets'] = e if e < v else v
+            out.append(q)
+        return out
+
+    def _compter_ecrit(self, semaine, items):
+        """Ajoute à l'écrit du programme de la semaine [semaine] (séances
+        vues et manquées) les séries dures créditées écrites de [items]."""
+        v, t = self._credits_ecrits(items)
+        e = self.ecrit_vol.get(semaine)
+        if e is None:
+            e = self.ecrit_vol[semaine] = [0.0] * len(v)
+        for g in range(len(v)):
+            e[g] += v[g]
+        self.ecrit_dures[semaine] = self.ecrit_dures.get(semaine, 0.0) + t
+        return v, t
+
     def _limite_rampe(self, allegees, serie, index, hausse, tolerance):
         """`rampLimit` du banc : plus haute valeur admise en semaine
         [index] au vu des trois semaines précédentes ; une semaine allégée
@@ -898,15 +1524,24 @@ class Seances(object):
         return self._limite_rampe(allegees, serie, semaine, self.s['tenue_hausse_par_niveau'][self.g.niveau],
                            self.s['tenue_hausse_hebdo_s'])
 
+    #: Rang de priorité par rôle d'emplacement (1.0.6, KM4 ; depuis 1.0.7,
+    #: ordre dans lequel les AJOUTS de Koach sont bornés) : 0 d'abord
+    #: (accessoire, gainage, conditionnement, mobilité, retour au calme), 1
+    #: ensuite (secondaire, technique), 2 en dernier (principal).
+    RANG_ROLE = {'main': 2, 'secondary': 1, 'skill': 1}
+
     def _budgets_retour(self, items=()):
-        """Budgets de la séance du jour : par groupe majeur (et par famille
-        de tenue bras tendus), limite de la semaine − déjà fait cette
-        semaine (séances fermées et manquées) − écrit des séances restantes
-        de la semaine (`contexte['reste_semaine']`, réservé en entier : une
-        séance restante manquée compte à son volume écrit) ; et, une semaine
-        d'allègement, séries dures de la semaine tous groupes confondus. None
-        la première semaine du programme ou du journal (aucune limite) ou
-        sans semaine connue."""
+        """Données de la rampe de volume de la séance du jour : limites de la
+        semaine par groupe majeur (`_limite_volume`, inchangées), réalisé de
+        la semaine (séances fermées, séances manquées à leur écrit) et, depuis
+        1.0.7 (KM5, C17.40), écrit du PROGRAMME de la semaine par groupe
+        (séances vues et manquées, séance du jour, séances restantes) et
+        plafonds = max(limite, écrit) ; une semaine d'allègement, limite,
+        réalisé, écrit et plafond des séries dures tous groupes confondus ;
+        séances restantes de la semaine (`contexte['reste_semaine']`) ;
+        tenues bras tendus : budget = limite − fait − écrit restant (réservé
+        en entier, comme 1.0.5). None la première semaine du programme ou du
+        journal (aucune limite) ou sans semaine connue."""
         c = self.contexte or {}
         sem = c.get('semaine')
         if sem is None or sem < 1:
@@ -916,33 +1551,22 @@ class Seances(object):
             # limite, comme la première semaine du programme pour le banc.
             return None
         n = len(self.s['volume_groupes_majeurs'])
-        reserve = [0.0] * n
+        reste = []
         reserve_t = {}
-        reserve_d = 0.0
         ecrit_reste = 0.0
         for seance in c.get('reste_semaine') or []:
-            r_s = [0.0] * n
             r_t = {}
-            r_d = 0.0
             for p in seance:
-                dures = self._series_dures(p)
-                r_d += dures
-                if dures > 0:
-                    for (g, cr) in self._credits(p['exerciseId']):
-                        r_s[g] += dures * cr
+                ecrit_reste += self._series_dures(self._item_ecrit(p))
                 fam, sec = self._tenue_bras_tendus(p)
                 if fam is not None:
                     r_t[fam] = r_t.get(fam, 0.0) + float(p.get('sets') or 0) * sec
-            ecrit_reste += r_d
-            reserve_d += r_d
-            for g in range(n):
-                reserve[g] += r_s[g]
             for fam in sorted(r_t):
                 reserve_t[fam] = reserve_t.get(fam, 0.0) + r_t[fam]
+            reste.append(list(seance))
         fait = self.vol_semaines.get(sem) or [0.0] * n
         fait_t = self.tenue_semaines.get(sem) or {}
         limites = [self._limite_volume(g, sem) for g in range(n)]
-        budgets = [limites[g] - fait[g] - reserve[g] for g in range(n)]
         limites_t = {}
         budgets_t = {}
         for fam in self.FAMILLES_BRAS_TENDUS:
@@ -956,97 +1580,232 @@ class Seances(object):
         # `decharge_part` × la plus haute des trois semaines servies d'avant.
         part = self.s['decharge_part']
         legere = self.allegees.get(sem, False)
-        ecrit = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(p) for p in items) + ecrit_reste
+        ecrit = self.ecrit_semaines.get(sem, 0.0) + sum(self._series_dures(self._item_ecrit(p)) for p in items) + \
+            ecrit_reste
         ref_e = max([self.ecrit_semaines.get(k, 0.0) for k in range(sem - 3, sem) if k >= 0] or [0.0])
         allegement = (ecrit <= part * ref_e + 1e-9) if ref_e > 0 else legere
         limite_d = None
-        budget_d = None
+        fait_d = None
         if allegement or legere:
             ref_s = max([self.dures_semaines.get(k, 0.0) for k in range(sem - 3, sem) if k >= 0] or [0.0])
             if ref_s > 0:
                 limite_d = part * ref_s
-                budget_d = limite_d - self.dures_semaines.get(sem, 0.0) - reserve_d
-        return {'limites': limites, 'budgets': budgets, 'jour': [0.0] * n,
-                'limites_tenue': limites_t, 'budgets_tenue': budgets_t, 'jour_tenue': {},
-                'limite_dures': limite_d, 'budget_dures': budget_d, 'jour_dures': 0.0}
+                fait_d = self.dures_semaines.get(sem, 0.0)
+        # 1.0.7 : écrit servi de la semaine hors séance du jour (séances
+        # vues : écrit servi, `_ecrits_servis` ; manquées et restantes :
+        # écrit du programme) ; la séance du jour et les plafonds sont
+        # ajoutés par `_plan_retour` (écrit servi après `_item`).
+        e_vol = list(self.ecrit_vol.get(sem) or [0.0] * n)
+        e_dures = self.ecrit_dures.get(sem, 0.0)
+        if self.ecrit_compte is not None and self.ecrit_compte[0] == sem:
+            # Séance déjà prescrite (nouvel appel) : son écrit servi compté
+            # par le premier appel est retiré (compté une seule fois).
+            for g in range(n):
+                e_vol[g] -= self.ecrit_compte[1][g]
+            e_dures -= self.ecrit_compte[2]
+        for seance in reste:
+            v, t = self._credits_ecrits(seance)
+            for g in range(n):
+                e_vol[g] += v[g]
+            e_dures += t
+        return {'limites': limites, 'fait': list(fait), 'limite_dures': limite_d, 'fait_dures': fait_d,
+                'ecrit': e_vol, 'ecrit_dures': e_dures, 'plafonds': None, 'plafond_dures': None,
+                'reste': reste, 'plan': {}, 'cause': {}, 'prevues': {}, 'depasse': [],
+                'limites_tenue': limites_t, 'budgets_tenue': budgets_t, 'jour_tenue': {}}
+
+    def _douleur_unite(self, ex_id, plan):
+        """Vrai si la conduite sous douleur tient l'exercice aujourd'hui
+        (raison de douleur notée par `conduite`, ou zone sensible sous la
+        rampe du réalisé qu'il provoque ; la rampe de retour après une coupure,
+        sans douleur connue, n'en est pas une)."""
+        cond = (plan or {}).get('cond') or {}
+        if cond.get('zone') is not None:
+            return True
+        zz = self.zones_ex.get(ex_id)
+        if zz:
+            for z in sorted(zz[1]):
+                if z in self.budget_zone and z not in self.retour_zone:
+                    return True
+        return False
+
+    def _plan_retour(self, paires):
+        """Plan de la rampe de volume de la séance du jour (1.0.7, KM5,
+        DECISIONS_CP.md C17.40) : **la rampe ne coupe jamais sous l'écrit du
+        programme** ; elle borne seulement ce que Koach AJOUTE au-dessus.
+
+        Lignes : chaque groupe majeur, plafond = max(limite de la rampe L,
+        écrit SERVI de la semaine E) ; une semaine d'allègement, le total des
+        séries dures, plafond = max(limite de l'allègement, écrit servi de la
+        semaine). Écrit servi : chaque ligne écrite au plus à ses séries
+        servies (une ligne retirée ou réduite par la douleur, un test
+        reporté… ne compte que ce qui est servi : Koach ne remplace pas par
+        ses ajouts ce que la conduite sous douleur retire) ; séances vues
+        (`_ecrits_servis`), séance du jour (après `_item`, [paires] : (écrit,
+        servi ou None)), séances manquées et restantes (écrit du programme).
+        E ≤ écrit du programme : plus prudent que le validateur du banc
+        (servi ≤ max(L, écrit du programme)). Excès d'une ligne = réalisé de
+        la semaine (séances fermées, séances manquées à leur écrit) + séries
+        créditées de la séance du jour (servies par `_item`) et des séances
+        restantes (écrit) − plafond.
+
+        Seules les séries ajoutées par Koach à une ligne du jour (au-dessus
+        de ses séries écrites par le programme, `_ecrites`) peuvent être
+        retirées, une série à la fois, tant qu'une ligne qu'elles créditent
+        est en excès : d'abord les lignes de rang le plus bas (accessoire,
+        gainage, conditionnement… ; puis secondaire et technique ; principal
+        en dernier ; sans rôle, la première ligne dure créditée du jour est
+        le principal, les autres de rang 0), dans un rang la ligne la plus
+        tardive de la séance (l'ajout le plus récent). Une ligne servie sous
+        son écrit (douleur, bilan, coupure, surmenage, rampe du réalisé,
+        allègement d'un diagnostic) n'a aucun ajout : elle n'est pas touchée.
+        Les séances restantes ne sont jamais coupées d'avance. Résultat dans
+        `retour_vol['plan']` (slotId -> séries permises), `['cause']`
+        (ligne cause) et `['prevues']` (séries avant le plan) ; lignes
+        encore en excès dans `['depasse']` (écrit du programme ou réalisé
+        déjà au-dessus : aucune coupe sous l'écrit)."""
+        rv = self.retour_vol
+        if rv is None:
+            return
+        s = self.s
+        n = len(s['volume_groupes_majeurs'])
+        total = rv['limite_dures'] is not None
+        v, t = self._credits_ecrits(self._ecrits_servis([item for (item, servi) in paires],
+                                                        [servi for (item, servi) in paires if servi is not None]))
+        for g in range(n):
+            rv['ecrit'][g] += v[g]
+        rv['ecrit_dures'] += t
+        rv['plafonds'] = [rv['limites'][g] if rv['limites'][g] > rv['ecrit'][g] else rv['ecrit'][g] for g in range(n)]
+        if total:
+            rv['plafond_dures'] = rv['limite_dures'] if rv['limite_dures'] > rv['ecrit_dures'] else rv['ecrit_dures']
+        paires = [(item, servi) for (item, servi) in paires if servi is not None]
+        exces = [rv['fait'][g] - rv['plafonds'][g] for g in range(n)]
+        if total:
+            exces.append(rv['fait_dures'] - rv['plafond_dures'])
+        unites = []
+        pos = 0
+        premier = True
+        for (item, servi) in paires:
+            series = int(servi.get('sets') or 0)
+            if series <= 0 or self._series_dures(servi) <= 0:
+                continue
+            poids = list(self._credits(item['exerciseId']))
+            if total:
+                poids.append((n, 1.0))
+            if not poids:
+                pos += 1
+                continue
+            role = (self.plans.get(item['slotId']) or {}).get('role')
+            if role is None:
+                rang = 2 if premier else 0
+            else:
+                rang = self.RANG_ROLE.get(role, 0)
+            premier = False
+            ecrites = self._ecrites(item)
+            for (r, w) in poids:
+                exces[r] += w * series
+            unites.append({'pos': pos, 'slot': item['slotId'], 'n': series, 'm': series,
+                           'e': ecrites if ecrites < series else series, 'poids': poids, 'rang': rang})
+            pos += 1
+        for seance in rv['reste']:
+            v, t = self._credits_ecrits(seance)
+            for g in range(n):
+                exces[g] += v[g]
+            if total:
+                exces[n] += t
+        initial = list(exces)
+        while any(x > 1e-9 for x in exces):
+            best = None
+            for u in unites:
+                if u['m'] <= u['e']:
+                    continue
+                if not any(exces[r] > 1e-9 for (r, w) in u['poids']):
+                    continue
+                if best is None or u['rang'] < best['rang'] or (u['rang'] == best['rang'] and u['pos'] > best['pos']):
+                    best = u
+            if best is None:
+                break
+            best['m'] -= 1
+            for (r, w) in best['poids']:
+                exces[r] -= w
+        rv['depasse'] = [r for r in range(len(exces)) if exces[r] > 1e-9]
+        for u in unites:
+            rv['plan'][u['slot']] = u['m']
+            if u['m'] < u['n']:
+                rv['prevues'][u['slot']] = u['n']
+                cause = None
+                for (r, w) in u['poids']:
+                    if initial[r] > 1e-9 and (cause is None or initial[r] > initial[cause]):
+                        cause = r
+                rv['cause'][u['slot']] = ('total', None) if cause == n else ('groupe', cause)
 
     def _retour_gradue(self, servi):
-        """Retour gradué au volume : séries de l'item ramenées à ce que la
-        semaine permet encore, pour chacun de ses groupes majeurs (séries
-        dures créditées), pour le total de la semaine une semaine
-        d'allègement, et pour sa famille de tenue bras tendus (secondes :
-        tenues raccourcies à séries égales, 5 s au moins, puis une série de
-        moins). Zéro série : item retiré. Raison `koach.retour_gradue`. Renvoie l'item ou None."""
+        """Rampe de volume puis rampe tendineuse de l'item servi.
+
+        1. Ajouts de Koach bornés (1.0.7, `_plan_retour`) : séries ramenées
+           à celles que le plan permet, jamais sous les séries écrites par
+           le programme ; raison `koach.ajout_borne` (groupe, limite de la
+           rampe, écrit de la semaine, séries servies, écrites, prévues).
+        2. Tenues bras tendus (rampe tendineuse, inchangée depuis 1.0.5,
+           exception M1 de KM4) : tenues raccourcies à séries égales, 5 s au
+           moins, puis une série de moins, selon ce que la famille permet
+           encore cette semaine ; raison `koach.retour_gradue` (groupe
+           `bras_tendus_<famille>`). Zéro série : item retiré.
+        Renvoie l'item ou None."""
         rv = self.retour_vol
         if rv is None:
             return servi
         series = int(servi.get('sets') or 0)
         if series <= 0:
             return servi
-        par_serie = []
-        dure = self._series_dures(servi) > 0
-        if dure:
-            par_serie = self._credits(servi['exerciseId'])
-        total = dure and rv['budget_dures'] is not None
+        p = rv['plan'].get(servi['slotId'])
+        if p is not None and p < series:
+            cause = rv['cause'][servi['slotId']]
+            if cause[0] == 'groupe':
+                groupe = self.s['volume_groupes_majeurs'][cause[1]]
+                limite = rv['limites'][cause[1]]
+                ecrit = rv['ecrit'][cause[1]]
+            else:
+                groupe = 'allegement'
+                limite = rv['limite_dures']
+                ecrit = rv['ecrit_dures']
+            plan = self.plans.get(servi['slotId']) or {}
+            self._raison('koach.ajout_borne', exercice=servi['exerciseId'], groupe=groupe,
+                         limite=arrondi_decimal(limite, 1), ecrit=arrondi_decimal(ecrit, 1), series=p,
+                         ecrites=self._ecrites(plan.get('ecrit') or servi), prevues=series)
+            if p <= 0:
+                return None
+            servi['sets'] = p
+            if servi.get('setTargets'):
+                servi['setTargets'] = servi['setTargets'][:p]
+            series = p
         fam, sec = self._tenue_bras_tendus(servi)
-        if fam is not None and (rv['budgets_tenue'].get(fam) is None or sec <= 0):
-            fam = None
-        if not par_serie and fam is None and not total:
+        if fam is None or rv['budgets_tenue'].get(fam) is None or sec <= 0:
             return servi
         maxi = series
-        cause = None
-        if total:
-            m = int(math.floor(rv['budget_dures'] - rv['jour_dures'] + 1e-9))
-            if m < 0:
-                m = 0
-            if m < maxi:
-                maxi = m
-                cause = ('total', None)
-        for (g, c) in par_serie:
-            m = int(math.floor((rv['budgets'][g] - rv['jour'][g]) / c + 1e-9))
-            if m < 0:
-                m = 0
-            if m < maxi:
-                maxi = m
-                cause = ('groupe', g)
         secondes = None
-        if fam is not None and maxi > 0:
-            reste_t = rv['budgets_tenue'][fam] - rv['jour_tenue'].get(fam, 0.0)
-            if maxi * sec > reste_t + 1e-9:
-                # Tenues trop longues pour la semaine : mêmes séries, tenues
-                # raccourcies (5 s au moins, le plancher de `reduire`) ; sinon
-                # une série de moins, et ainsi de suite.
-                cause = ('famille', fam)
-                trouve = 0
-                for n in range(maxi, 0, -1):
-                    h = int(math.floor(reste_t / n + 1e-9))
-                    if h > sec:
-                        h = int(sec)
-                    if h >= self.TENUE_MIN_S:
-                        trouve = n
-                        if h < sec:
-                            secondes = h
-                        break
-                maxi = trouve
+        reste_t = rv['budgets_tenue'][fam] - rv['jour_tenue'].get(fam, 0.0)
+        if maxi * sec > reste_t + 1e-9:
+            # Tenues trop longues pour la semaine : mêmes séries, tenues
+            # raccourcies (5 s au moins, le plancher de `reduire`) ; sinon
+            # une série de moins, et ainsi de suite.
+            trouve = 0
+            for k in range(maxi, 0, -1):
+                h = int(math.floor(reste_t / k + 1e-9))
+                if h > sec:
+                    h = int(sec)
+                if h >= self.TENUE_MIN_S:
+                    trouve = k
+                    if h < sec:
+                        secondes = h
+                    break
+            maxi = trouve
         if maxi >= series and secondes is None:
-            if total:
-                rv['jour_dures'] += series
-            for (g, c) in par_serie:
-                rv['jour'][g] += series * c
-            if fam is not None:
-                rv['jour_tenue'][fam] = rv['jour_tenue'].get(fam, 0.0) + series * sec
+            rv['jour_tenue'][fam] = rv['jour_tenue'].get(fam, 0.0) + series * sec
             return servi
-        if cause[0] == 'groupe':
-            groupe = self.s['volume_groupes_majeurs'][cause[1]]
-            limite = rv['limites'][cause[1]]
-        elif cause[0] == 'total':
-            groupe = 'allegement'
-            limite = rv['limite_dures']
-        else:
-            groupe = 'bras_tendus_' + cause[1]
-            limite = rv['limites_tenue'][cause[1]]
-        self._raison('koach.retour_gradue', exercice=servi['exerciseId'], groupe=groupe,
-                     limite=arrondi_decimal(limite, 1), series=maxi, secondes=secondes)
+        self._raison('koach.retour_gradue', exercice=servi['exerciseId'], groupe='bras_tendus_' + fam,
+                     limite=arrondi_decimal(rv['limites_tenue'][fam], 1), series=maxi, secondes=secondes,
+                     ecrites=int(((self.plans.get(servi['slotId']) or {}).get('ecrit') or servi).get('sets') or 0),
+                     douleur=self._douleur_unite(servi['exerciseId'], self.plans.get(servi['slotId'])))
         if maxi <= 0:
             return None
         servi['sets'] = maxi
@@ -1057,12 +1816,7 @@ class Seances(object):
             if servi.get('secondsLow') is not None and servi['secondsLow'] > secondes:
                 servi['secondsLow'] = secondes
             sec = float(secondes)
-        if total:
-            rv['jour_dures'] += maxi
-        for (g, c) in par_serie:
-            rv['jour'][g] += maxi * c
-        if fam is not None:
-            rv['jour_tenue'][fam] = rv['jour_tenue'].get(fam, 0.0) + maxi * sec
+        rv['jour_tenue'][fam] = rv['jour_tenue'].get(fam, 0.0) + maxi * sec
         return servi
 
     def _fermer_volume(self, sets):
@@ -1702,7 +2456,18 @@ class Seances(object):
         # Exercice jamais mesuré et a priori vague : l'utilisateur choisit sa
         # première charge (calibrage), Koach l'apprend.
         if t.mesures == 0 and cap[1] > 0.12:
-            return {'repsLow': lo, 'repsHigh': hi, 'loadKg': None, 'flames': flammes, 'role': None}
+            # 1.0.9 (KM7) : remplaçant jamais mesuré, charge de départ
+            # transférée de l'exercice remplacé (table de transfert), servie
+            # seulement un jour sans aucune prudence (douleur, reprise, part
+            # maximale, réserve ajoutée, semaine verrouillée, test, simple,
+            # échec) : sinon l'athlète choisit, comme sans transfert.
+            dk = plan.get('depart_kg')
+            if dk is not None and (plan['cond']['raison'] is not None or plan['sans_hausse'] or plan['verrou']
+                                   or plan['part_max'] is not None or plan['rir_bonus'] > 0
+                                   or plan['rir_min'] is not None or plan.get('reprise') or plan['test']
+                                   or lo == hi == 1 or plan['echecs'] > 0):
+                dk = None
+            return {'repsLow': lo, 'repsHigh': hi, 'loadKg': dk, 'flames': flammes, 'role': None}
         reps = hi if hi == lo else (lo + hi) / 2.0
         pr = self.p['planification']['prudence_charge']
         prudence = pr[1] if t.seances > 3 else pr[0]
@@ -1715,12 +2480,20 @@ class Seances(object):
             prudence += self.p['planification'].get('prudence_charge_fiabilite', 0.0) * (kappa - 1.0)
         voulu = self.charge_pour(ex_id, reps, rir, prudence)
         trace = ['modele %.1f (rir %.1f)' % (voulu, rir)]
+        # 1.0.8 (KM6, X5 et X6 de RV1) : vrai quand un plafond (série
+        # allégée, part écrite du 1RM, part maximale, simple) a ramené la
+        # charge visée ; elle est alors arrondie vers le bas sur la grille, et
+        # le test adaptatif ne choisit jamais une charge au-dessus.
+        plafonne = False
         if tech.get('kind') == 'top_set_backoff' and index >= 1 and plan['tete'] is not None:
             # Séries allégées : part de la série de tête, corrigée par ce
             # que la série de tête vient d'apprendre.
             drop = tech.get('backoffDropPct') or 0.08
             tete = plan['tete'] + t.fraction * m.poids_kg
-            voulu = min(voulu, tete * (1 - drop) - t.fraction * m.poids_kg)
+            allegee = tete * (1 - drop) - t.fraction * m.poids_kg
+            if allegee < voulu:
+                voulu = allegee
+                plafonne = True
             trace.append('allegee %.1f' % voulu)
         # Intensité : la charge vise l'effort écrit (répétitions et réserve),
         # déplacé par la planification dans son plafond de ±5 % ; la part
@@ -1747,15 +2520,22 @@ class Seances(object):
                 haut = self.charge_de_part(ex_id, part * (1 + self.s['couloir_haut_max'])) - bw
             if voulu > haut:
                 voulu = haut
+                plafonne = True
                 trace.append('part ecrite %.3f%s -> %.1f' % (part, ' verrou' if plan['verrou'] else '', voulu))
         if plan['part_max'] is not None and voulu > self.charge_de_part(ex_id, plan['part_max']) - bw:
             voulu = self.charge_de_part(ex_id, plan['part_max']) - bw
+            plafonne = True
         if lo == hi == 1 and not plan['test']:
             plafond = self.s['simple_part_max_bilan_bas'] if self.palier >= 1 else self.s['simple_part_max']
             haut_simple = self.charge_de_part(ex_id, plafond, du_jour=True) - bw
             if voulu > haut_simple:
                 voulu = haut_simple
-        charge = grille.proche(max(voulu, grille.minimum))
+                plafonne = True
+        if plafonne:
+            # X5 : jamais au-dessus du plafond par l'arrondi.
+            charge = grille.plancher(max(voulu, grille.minimum))
+        else:
+            charge = grille.proche(max(voulu, grille.minimum))
         # Test adaptatif : parmi les charges de la zone prescrite (réserve à
         # moins de la tolérance de la cible), la plus informative.
         ta = self.p['test_adaptatif']
@@ -1768,7 +2548,10 @@ class Seances(object):
                 if r_prev is None:
                     continue
                 ecart_rir = abs((r_prev - reps) - rir)
-                if ecart_rir <= ta['ecart_rir_tolere'] and cand <= voulu * 1.0 + grille._pas(charge):
+                # X6 : sous un plafond, le candidat le respecte (avant : un
+                # cran au-dessus permis).
+                borne = voulu + 1e-9 if plafonne else voulu * 1.0 + grille._pas(charge)
+                if ecart_rir <= ta['ecart_rir_tolere'] and cand <= borne:
                     inf = self.information(ex_id, cand, reps)
                     if inf > info0 * (1 + 0.02):
                         meilleur, info0 = cand, inf
@@ -2168,7 +2951,10 @@ class Seances(object):
             if plan['verrou'] and ecrite is not None and charge > ecrite + 1e-9:
                 # A6.5 : semaine allégée ou de test, jamais plus lourd que la
                 # charge écrite (A/coach.dart:2144-2152).
-                charge = ecrite if grille.plancher(ecrite) > ecrite else grille.plancher(ecrite)
+                # 1.0.8 (KM6, X4 de RV1) : une charge écrite hors de la
+                # grille est gardée telle qu'écrite (avant : ramenée au cran
+                # du dessous, sous l'écrit).
+                charge = ecrite
             evenement = bool((self.contexte or {}).get('jour_evenement'))
             if (plan['sans_hausse'] or mem.echec or (plan.get('reprise') and not evenement)) \
                     and mem.charge_derniere is not None and charge > mem.charge_derniere:
@@ -2585,6 +3371,7 @@ class Seances(object):
                     for z in zz[1]:
                         dz = self.dose_zone.setdefault(z, {})
                         dz[semaine] = dz.get(semaine, 0) + 1
+                        self.expo_jour[z] = jour
         vus = set()
         for (ex_id, slot), series in par_ex.items():
             mem = self.mem(ex_id)

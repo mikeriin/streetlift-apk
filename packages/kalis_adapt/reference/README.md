@@ -1,8 +1,8 @@
-# Koach 1.0.4 — référence Python (lot KM1, corrections 1 à 3 ; lot KR1)
+# Koach 1.0.6 — référence Python (lot KM1, corrections 1 à 4 ; lots KR1, KM4)
 
-Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.4 : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10), « KM1 correction 2 » (C13.12), « KM1 correction 3 » (C17.9 : estimation sous notes non fiables) et le lot KR1 (C17.18 : Koach sur `kalis_plan` 0.4.1 ; élargissement « rien de spécial » plafonné à l'a priori ; paramètres `1.0.4-ref.1`, mêmes valeurs). Ce qui change est dans les notes datées du 10/10, du 11/10, du 15/10 et du 16/10/2026 en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md` à `CHANGEMENTS_1_0_4.md`. `kalis_adapt` 1.0.3 (lot KR1) porte la version 1.0.4 : mêmes entrées, mêmes sorties à 1e-9 sur les fixtures. Elle n'est pas embarquée dans l'application.
+Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.6 (lot KM4, C17.37 : retour gradué au volume réparti sur la semaine et priorisé par rôle, `CHANGEMENTS_1_0_6.md`) : contrat 1.0 avec les passes « KM1 correction 1 » (DECISIONS_CP.md C13.10), « KM1 correction 2 » (C13.12), « KM1 correction 3 » (C17.9 : estimation sous notes non fiables), le lot KR1 (C17.18 : Koach sur `kalis_plan` 0.4.1 ; élargissement plafonné) et la passe « KM1 correction 4 » (lot KM1c4, C17.23, C17.25 : conduite sous douleur et rampe du réalisé par zone sensible, rampe de retour après une coupure, aucune hausse de charge sous une gêne de la semaine, élargissement « rien de spécial » uniforme et borné ; paramètres `1.0.5-ref.1`). Ce qui change est dans les notes datées en tête de `CONTRAT_1_0.md` et dans `CHANGEMENTS_1_0_1.md` à `CHANGEMENTS_1_0_5.md`. `kalis_adapt` 1.0.3 (lot KR1) porte la version 1.0.4 ; le portage de 1.0.5 est le lot KM2c3 (`PORTAGE_DART.md`, delta 1.0.4 → 1.0.5 ; `PORTAGE_BANC.md`, delta KM1c4 du modèle de vérité). La référence n'est pas embarquée dans l'application.
 
-Données de référence (`donnees/reference/`, `donnees/temoin/`) : saisons de `kalis_plan` 0.4.1, 34 profils (lot KR1) ; les saisons figées sur `kalis_plan` 0.3.1 (27 profils), lues par les mesures de KM1 à KM2c2, sont dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/` (`reference/`, `temoin/` ; hors de `kalis_adapt`, que l'application copie, C17.19.3).
+Données de référence (`donnees/reference/`, `donnees/temoin/`) : saisons de `kalis_plan` 0.4.2, 34 profils (régénérées au lot KM1c4 ; 0.4.1 au lot KR1, seules quatre saisons « douleur à l'épaule » diffèrent) ; les saisons figées sur `kalis_plan` 0.3.1 (27 profils), lues par les mesures de KM1 à KM2c2, sont dans `kalis_bench/docs/data/kr1/saisons_figees_0_3_1/` (`reference/`, `temoin/` ; hors de `kalis_adapt`, que l'application copie, C17.19.3).
 
 Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal réel ne publie que des agrégats.
 
@@ -12,12 +12,12 @@ Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal r�
 | --- | --- |
 | `CONTRAT_1_0.md` | Contrat gelé 1.0, modifié pour 1.0.1 et 1.0.2 par des notes datées (10/10 et 11/10/2026) : API `observe` / `posterior` / `plan` / `explain`, schéma du journal, modèles, règles de sécurité, paramètres, portage, écarts connus (annexe A). |
 | `SOURCES.md` | Origine de chaque paramètre de `params/koach_params_v1.json` (une ligne par clé). |
-| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.4-ref.1`, 338 clés), lu tel quel par les tests Dart de `kalis_adapt` 1.0.3 (asset `assets/koach/koach_params_1_0_4.json`, copie à l'octet près). |
+| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.5-ref.1`, 345 clés), lu par les tests Dart de `kalis_adapt` 1.0.4 (asset `assets/koach/koach_params_1_0_5.json`, copie à l'octet près) et de `kalis_bench` (portage KM2c3 ; la copie figée de 1.0.4 est supprimée). |
 | `qualites/` | Vecteurs de qualités des 1 039 exercices (`regles.py` → `vecteurs_qualites_v1.json`). |
 | `koach/` | Le moteur : `modele.py` (estimation), `seance.py` et `securite.py` (séance, garde-fous), `planification.py`, `rupture.py`, `adherence.py`, `dual.py`, `moteur.py` (façade), `numerique.py`. |
 | `banc/` | Port Python des modèles de vérité et des critères de sécurité de `kalis_bench`, meneur de saison, banc adversarial, campagne de mesure des critères. |
 | `rejeu/` | Rejeu walk-forward d'un export de l'application (agrégats seulement). |
-| `fixtures/` | Fixtures de parité Python/Dart (`generer.py`, format décrit dans `fixtures/README.md`). |
+| `fixtures/` | Fixtures de parité Python/Dart (`generer.py`, format décrit dans `fixtures/README.md`), moteur 1.0.5. `fix_dart/` : copies des fixtures de 1.0.4 lues par les tests de `kalis_adapt` 1.0.3 jusqu'au portage KM2c3. |
 | `donnees/` | Saisons de référence, témoin `kalis_adapt` 0.3.1 exporté par `kalis_bench` (Dart), résultats publiés. |
 | `tests/` | Tests (pytest). |
 
@@ -38,6 +38,12 @@ python3 -I rejeu/walk_forward.py <export.json> --programme <prog.json.gz> --koac
 
 Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `packages/kalis_bench/bin/km1.dart`
 (export des modèles de vérité, des saisons de référence et des mesures de `kalis_adapt` 0.3.1).
+
+## Résultats publiés (1.0.5, lot KM1c4)
+
+- Couple `kalis_plan` 0.4.2 × Koach 1.0.5 (34 profils, 100 graines, 90 600 saisons, campagne Python de la référence en 20 parts sur la CI, agrégée par `banc/securite_campagne.py`) : **0 violation du critère 7** (63 avec Koach 1.0.4 sur les mêmes saisons), 0 saison plantée : `kalis_bench` `docs/CRITERES_KM1C4.md` et `docs/data/km1c4/` (sécurité, point de départ, première campagne sans la règle 3 bis, critères, temps).
+- `donnees/criteres_km1c4.json` : critères du cahier sur six graines (5 436 saisons, Koach 1.0.5 complet contre 0.3.1 sur `kalis_plan` 0.4.2) ; `donnees/comparaison_adversaires_km1c4_*.json` : Koach 1.0.5 rejoué sur les six jeux d'adversaires (critère 7 bis).
+- Mécanismes des violations de KR1 et de la première campagne, rejoués à 0 : `tests/test_kr1_violations.py` ; liste des changements : `CHANGEMENTS_1_0_5.md`.
 
 ## Résultats publiés (1.0.4, lot KR1)
 

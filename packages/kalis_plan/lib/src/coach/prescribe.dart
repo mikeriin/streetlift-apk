@@ -6522,7 +6522,40 @@ final class Prescriber {
           }
         }
         if (ease == null) {
-          break;
+          // 0.4.3 (KM6) : plus rien d'autre à alléger — un test dont les
+          // séries font, à elles seules, dépasser la rampe du groupe (test
+          // d'un mouvement que les semaines d'avant ne travaillaient pas :
+          // squat de compétition après des semaines sans jambes) perd une
+          // tentative, jamais la dernière.
+          _Draft? test;
+          for (final items in days) {
+            for (final x in items) {
+              if (x.kind == SetKind.test &&
+                  x.creditOf(g) > 0 &&
+                  x.sets > 1 &&
+                  (test == null || x.sets > test.sets)) {
+                test = x;
+              }
+            }
+          }
+          if (test == null) {
+            break;
+          }
+          test.sets--;
+          // (Les tentatives annoncées suivent : plan d'ouverture et
+          // objectif retirés, tentatives du test ramenées aux séries.)
+          final spec = test.test;
+          final tries = spec?.attempts;
+          if (spec != null && tries != null && tries > test.sets) {
+            test.test = spec.copyWith(attempts: test.sets);
+          }
+          test.reasons.removeWhere(
+            (r) =>
+                r.code == ReasonCodes.planCoachNote &&
+                (r.params['note'] == CoachNotes.attemptsPlan ||
+                    r.params['note'] == CoachNotes.attemptsGoal),
+          );
+          continue;
         }
         ease.rir = 5;
       }

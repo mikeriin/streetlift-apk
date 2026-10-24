@@ -78,6 +78,13 @@ SAISONS = [
     # Lot KR1 : bloc interrompu (changement de discipline) suivi d'un « retour
     # à l'écrit » en semaine 11 (indice de semaine servie, `blockWeeks`).
     ('autres_08_crossfit_intermediaire', 'changement_discipline', 'a', 87),
+    # Lot KM2c3 (portage de Koach 1.0.5) : saisons de KR1 et KM1c4 qui
+    # portent la conduite sous douleur — zone sensible sans arrêt
+    # (`autres_08` b 47), sortie progressive de la rampe (`ks_01` b 38),
+    # rampe de retour après une coupure, séances manquées (`street_03` b 57).
+    ('autres_08_crossfit_intermediaire', 'reference', 'b', 47),
+    ('ks_01_streetlifting_sets_reps_4_seances', 'douleur_epaule', 'b', 38),
+    ('street_03_debutante', 'seances_manquees', 'b', 57),
 ]
 
 
