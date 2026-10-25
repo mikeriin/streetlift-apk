@@ -503,11 +503,14 @@ void main() {
         }
       }
       expect(base.j, 2);
-      // Les faits du bilan (douleurs, temps) sont toujours versés.
+      // KB6 (Koach 1.0.9) : l'écrit servi en mode libre, le bilan est
+      // versé complet sans être appliqué (avant : ses seuls faits, ici
+      // aucun).
       final ev = app.koachEngine.journal.lastWhere(
         (e) => e['type'] == 'seance_debut',
       );
-      expect(ev['bilan'], isNull);
+      expect((ev['bilan'] as Map)['applique'], isFalse);
+      expect((ev['bilan'] as Map)['overall'], 5);
     });
   });
 

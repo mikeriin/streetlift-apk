@@ -1924,7 +1924,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         widget.week.n >= 1 &&
         store.dayCanChange(widget.week.n, widget.day.j, ex);
     final change = store.dayChangeOf(widget.week.n, widget.day.j, ex.id);
-    final replacedFrom = change?['type'] == 'remplace'
+    // KB6 : un remplaçant servi par Koach ne revient à l'écrit que si la
+    // séance peut repartir de son début (aucune série validée).
+    final replacedFrom =
+        change?['type'] == 'remplace' &&
+            store.dayCanUndo(widget.week.n, widget.day.j, dayChangeKey(ex.id))
         ? store.splitName('${change!['from']}').$1
         : null;
     final v = await showKActionSheet<String>(
@@ -1987,8 +1991,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         await _replaceToday(k);
       case 'undo':
         final key = dayChangeKey(widget.exs[k].id);
+        final cb = widget.onExercisesChanged;
         store.dayUndo(widget.week.n, widget.day, key);
-        widget.onExercisesChanged?.call(key);
+        // KB6 : séance commencée par Koach sans série validée : Koach la
+        // sert de nouveau sans le remplaçant.
+        if (widget.baseDay case final b?) {
+          await store.dayServeChanges(widget.week.n, b);
+        }
+        cb?.call(key);
       case 'remove':
         await _removeToday(k);
       case 'previous':
@@ -2007,28 +2017,54 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// RV4 (C17.51.5) : « Remplacer pour aujourd'hui » : propositions (les
   /// plus proches) ; en mode Libre (mode du profil, C17.51.4), toute la
   /// base d'exercices et les exercices personnels.
+  ///
+  /// KB6 (Koach 1.0.9) : propositions de Koach groupées et étiquetées,
+  /// « Pourquoi ? » facultatif ; le remplaçant est servi par Koach avec
+  /// ses cibles quand la séance le permet, sinon à sa cible de départ.
   Future<void> _replaceToday(int k) async {
     final e = widget.exs[k];
     final cb = widget.onExercisesChanged;
+    final week = widget.week.n;
+    final day = widget.day;
+    final koach = store.dayReplaceOptions(week, day, e) != null;
     final pick = await Navigator.push<ReplacePick>(
       context,
       MaterialPageRoute(
         builder: (_) => ReplaceExercisePage(
           fromName: store.splitName(e.name).$1,
-          proposals: store.dayReplaceProposals(e),
+          proposals: koach ? const [] : store.dayReplaceProposals(e),
           free: store.adaptMode == 'free',
+          options: koach
+              ? (reason, missing) => store.dayReplaceOptions(
+                  week,
+                  day,
+                  e,
+                  reason: reason,
+                  missing: missing,
+                )
+              : null,
+          missingChoices: store.dayMissingChoices(week, day.j, e),
+          departOf: (id) => store.dayDepartFor(week, day, e, id),
+          kgLabel: (kg) => store.massLabel(kg, engine: true),
         ),
       ),
     );
     if (pick == null || !mounted) return;
     final key = dayChangeKey(e.id);
     store.dayReplace(
-      widget.week.n,
-      widget.day,
+      week,
+      day,
       e,
       to: pick.id,
       name: pick.name,
+      reason: pick.reason,
+      missing: pick.missing,
+      depart: pick.depart,
+      label: pick.label,
     );
+    // Séance commencée par Koach sans série validée : elle repart de son
+    // début et Koach sert le remplaçant à l'emplacement avec ses cibles.
+    if (widget.baseDay case final b?) await store.dayServeChanges(week, b);
     cb?.call(key);
   }
 

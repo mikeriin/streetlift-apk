@@ -124,14 +124,14 @@ void main() {
         'parcours v3 recopié à l’octet', () {
       expect(kc.kalisCoreVersion, '0.4.4');
       expect(kp.kalisPlanVersion, '0.4.3');
-      expect(ka.kalisAdaptVersion, '1.0.7');
+      expect(ka.kalisAdaptVersion, '1.0.8');
       expect(kc.reasonRegistry, hasLength(144));
       expect(
         File('assets/catalog/parcours_v3.json').readAsBytesSync(),
         File('packages/kalis_core/data/parcours_v3.json').readAsBytesSync(),
       );
       final pub = File('pubspec.yaml').readAsStringSync();
-      expect(pub, contains('version: 7.7.2+'));
+      expect(pub, contains('version: 7.8.0+'));
     });
 
     test('six codes de structure : phrases de l’application, aucun code '

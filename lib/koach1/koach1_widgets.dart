@@ -321,6 +321,14 @@ class _KoachBilanCardState extends State<KoachBilanCard> {
           padding: const EdgeInsets.only(top: KSpacing.s4),
           child: Text(l, style: KType.detail.copyWith(color: k.texte2)),
         ),
+      // KB6 (Koach 1.0.9, C17.54) : l'écrit gardé n'efface pas la forme du
+      // jour : Koach la note (versée sans être appliquée).
+      if (slot == null && koachTexteFormeNotee(b) case final t?)
+        Padding(
+          key: const ValueKey('koach-bilan-forme-notee'),
+          padding: const EdgeInsets.only(top: KSpacing.s4),
+          child: Text(t, style: KType.detail.copyWith(color: k.texte2)),
+        ),
     ];
     if (!open) {
       return Padding(

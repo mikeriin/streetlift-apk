@@ -112,7 +112,7 @@ void main() {
     // KM3 : kalis_adapt 1.0.x embarque le code de 0.3.1 à l'identique
     // (KB1 : 1.0.4, Koach 1.0.5 ; KB3 : 1.0.5, Koach 1.0.6 ; KB4 : 1.0.6,
     // Koach 1.0.7).
-    expect(ka.kalisAdaptVersion, '1.0.7');
+    expect(ka.kalisAdaptVersion, '1.0.8');
     // C11 : défaut inchangé pour tous (option du lot CY).
     expect(ka.KalisAdapt().restructureImported, isFalse);
   });

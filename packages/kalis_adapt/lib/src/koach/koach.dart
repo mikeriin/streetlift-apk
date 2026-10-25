@@ -21,3 +21,4 @@ part 'rupture.dart';
 part 'adherence.dart';
 part 'dual.dart';
 part 'parametres.dart';
+part 'remplacants.dart';
