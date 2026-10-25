@@ -60,3 +60,9 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
 ## 20:35 UTC
 - Essai 3 du run 40107907131 relancé par le pilotage à 20:18 (LANCEMENTS.md). Contrôle complet poussé sur
   claude/ci-cp-b (a346870313fb83a4ab496f0977e9e0d41a4e670b). Ne rien pousser sur claude/ci-cp-a avant la publication du run.
+
+## 00:30 UTC (25/10)
+- Contrôle complet VERT : run 40130237074 sur claude/ci-cp-b a3468703 (arbre c7008e9) : kalis_adapt, kalis_bench,
+  kalis_core, kalis_plan, kalis_quest, outils Python.
+- Campagne (essai 3) : 72/127 jobs faits, part 61 en échec attendu (test_fixtures 3.11 / km7.json, test_documents :
+  corrigés dans c7008e9).
