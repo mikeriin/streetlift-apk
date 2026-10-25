@@ -1,0 +1,12 @@
+verse {"saisons": 5436, "plantees": 0, "garde": {"differents": 0, "gardees": 128532, "identiques": 128532, "seances": 261900}, "erreurs": {"gardee_e1rm": 0.017665, "gardee_rel": 1.989506, "suivante_e1rm": 0.017892, "suivante_rel": 2.008552, "toutes_e1rm": 0.018058, "toutes_rel": 2.030758}}
+  1_erreur_e1rm_rang_6 {"respecte": false}
+  3_convergence_sous_3 {"respecte": true}
+  4_couverture_90 {"respecte": false}
+  6_performance_jour_j {"respecte": true}
+  7_securite {"respecte": true}
+verse_g0_17 {"saisons": 16308, "plantees": 0, "garde": {"differents": 0, "gardees": 395364, "identiques": 395364, "seances": 780783}, "erreurs": {"gardee_e1rm": 0.018623, "gardee_rel": 2.112447, "suivante_e1rm": 0.018789, "suivante_rel": 2.164617, "toutes_e1rm": 0.018851, "toutes_rel": 2.167457}}
+  1_erreur_e1rm_rang_6 {"respecte": false}
+  3_convergence_sous_3 {"respecte": true}
+  4_couverture_90 {"respecte": false}
+  6_performance_jour_j {"respecte": true}
+  7_securite {"respecte": true}
