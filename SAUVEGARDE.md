@@ -66,3 +66,13 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
   kalis_core, kalis_plan, kalis_quest, outils Python.
 - Campagne (essai 3) : 72/127 jobs faits, part 61 en échec attendu (test_fixtures 3.11 / km7.json, test_documents :
   corrigés dans c7008e9).
+
+## 04:30 UTC (25/10) — campagne publiée
+- Run 40107907131 (essai 3) publié sur claude/ci-cp-a 32f5de2. Campagne ordinaire Dart et Python : critères, sécurité,
+  adversaires IDENTIQUES à KM6 (diff des JSON : seuls la version du moteur et la durée) ; parité 90 599/90 600.
+- Variante run a : 274 plans « différents » sur 128 532 séances gardées (graines 0-5) = artefact du témoin (copie
+  sans extensions : la réponse au diagnostic de la surveillance, versée entre seance_debut et plan, manquait).
+  Témoin corrigé (bc79ece, copie avec extensions + mêmes événements) ; vérifié localement ; run b 40161629201
+  (24 parts verse, graines 0-17) en cours.
+- Données copiées dans packages/kalis_adapt/docs/data/km7 (variante_run_a = run a).
+- Contrôle complet vert 40130237074 (ci-cp-b, arbre c7008e9 ; bc79ece ne change que banc/politique_koach.py).

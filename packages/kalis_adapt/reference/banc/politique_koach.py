@@ -377,13 +377,17 @@ class PolitiqueKoach(Politique):
                 self.garde['gardees'] += 1
                 if garde == 'verse':
                     bilan = dict(bilan, applique=False)
-                    # Témoin : même moteur, seuls les faits du bilan.
-                    journal, ext = self.koach.journal, self.koach.extensions
-                    self.koach.journal, self.koach.extensions = [], []
+                    # Témoin : même moteur (extensions comprises, la politique
+                    # partagée), seuls les faits du bilan ; il reçoit ensuite
+                    # les mêmes événements que le moteur avant le plan
+                    # (réponse au diagnostic de la surveillance).
+                    journal = self.koach.journal
+                    self.koach.journal = []
                     try:
-                        clone = copy.deepcopy(self.koach)
+                        clone = copy.deepcopy(self.koach, {id(self): self})
                     finally:
-                        self.koach.journal, self.koach.extensions = journal, ext
+                        self.koach.journal = journal
+                    n0 = len(journal)
                     debut_faits = {'type': 'seance_debut', 'jour': ctx.sim_day,
                                    'bilan': faits_du_bilan(ctx.bilan), 'poids_kg': None,
                                    'contexte': copy.deepcopy(contexte)}
@@ -405,6 +409,9 @@ class PolitiqueKoach(Politique):
                              'zones': self.zones, 'roles': roles})
         if clone is not None:
             clone.observe(debut_faits)
+            for ev in self.koach.journal[n0 + 1:]:
+                if ev.get('type') != 'plan':
+                    clone.observe(copy.deepcopy(ev))
             r2 = clone.plan({'horizon': 'seance', 'items': copy.deepcopy(items), 'grilles': self.grilles,
                              'zones': self.zones, 'roles': roles})
             if _sans_trace(r2['items']) == _sans_trace(r['items']) and r2['raisons'] == r['raisons']:
