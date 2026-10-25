@@ -10,7 +10,8 @@ Base : `main` bb320350 (dev7.7.2). Branche locale `kb6`.
 - Tests : `test/kb6_koach109_test.dart`, `test/ui_kb6_capture_test.dart` ; RV4 bilan haut mis à jour.
 - Formatage local : dart 3.13.7 (conda) + `.dart_tool/package_config.json` minimal (languageVersion 3.10) = même résultat que la CI.
 
+- Contrôle rapide vert (run 40175790392, 17 tests KB6) ; cible émulateur KB6 écrite et inscrite ; cible RV4 adaptée (recherche sous les propositions, séries au format gardé) ; SUIVI_PROJET.md, CLAUDE.md.
+- Contrôle complet `claude/ci-3d` run 40176500592 sur 811408ff (lancé 08:24) : contrôles, tests, paquets verts ; émulateur en cours.
+
 ## Reste
-- Contrôle rapide `claude/ci-ui-kb6-rapide`, corrections.
-- Cible émulateur `integration_test/kb6_remplacement_test.dart` + `tools/ci3d_drive.sh`.
-- SUIVI_PROJET.md, CLAUDE.md (protocoles), contrôle complet `claude/ci-3d`, publication main, build signé, livraison.
+- Résultat émulateur, publication main (commit dev7.8.0), build signé, livraison, ETAT_CP, notification.
