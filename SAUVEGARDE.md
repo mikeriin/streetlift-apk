@@ -19,3 +19,8 @@ Base : `main` bb320350 (dev7.7.2). Branche locale `kb6`.
 ## 13:40 UTC
 - Run 40176500592 (811408ff) : contrôles, tests, paquets verts ; émulateur annulé à 300 min (pertes de VM) : KB6 a/b, RV4 a/b et la plupart des cibles vertes ; KB1 a rouge (attendu « 1.0.8-ref.1 » dans `integration_test/koach_kb1_test.dart`, corrigé) ; jamais lancées : CU, G1-G10, M7, M8, mesure.
 - Nouveau contrôle complet sur 1aa67411 (seule la cible KB1 change).
+
+## 18:40 UTC
+- Run 40197892244 (1aa67411) : contrôles verts ; émulateur annulé à 300 min (pertes de VM, « Connection refused ») ; KB1 a/b verts. Cibles jamais vertes sur ce lib/ : BV11 b, CIF b, CI1 a, et jamais lancées CU, G1-G10, M7, M8, mesure.
+- Commit de contrôle a3ff13db sur `claude/ci-3d` (branche locale `ctl-kb6`, jamais publié) : `cible()` saute les cibles déjà vertes.
+- Brouillon de livraison : /tmp (à refaire depuis ce fichier si reprise).

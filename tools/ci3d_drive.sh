@@ -43,6 +43,12 @@ logcat_pid=$!
 # (sans --keep-app-running, flutter drive la désinstalle : ses données
 # seraient perdues pour la partie suivante).
 cible() {
+  # Commit de contrôle KB6 (jamais publié) : seules les cibles pas encore
+  # vertes sur ce lib/ (runs 40176500592 et 40197892244) sont relancées.
+  case "$1-$2" in
+    base_bv11_test-b|lot_cif_test-b|street_ci1_test-a|profil_cu_test-*|evolution_g10_test-*|seance_g9_test-*|programme_g7_test-*|profil_g6_test-*|koach_g5_test-*|catalogue_g3_test-*|retrait_g2_test-*|mode_dev_g1_test-*|carte_2d_m8_test-*|animation_m7_test-*|mannequin_mesure_test-*) ;;
+    *) echo "KB6 : $1 $2 déjà verte sur ce lib/, sautée."; return 0;;
+  esac
   adb shell am force-stop fr.tchoupi.streetlift_tracker || true
   timeout "${CI3D_DELAI:-600}" flutter drive --no-pub \
     --driver=test_driver/integration_test.dart \
