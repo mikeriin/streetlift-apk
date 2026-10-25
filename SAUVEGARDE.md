@@ -15,3 +15,7 @@ Base : `main` bb320350 (dev7.7.2). Branche locale `kb6`.
 
 ## Reste
 - Résultat émulateur, publication main (commit dev7.8.0), build signé, livraison, ETAT_CP, notification.
+
+## 13:40 UTC
+- Run 40176500592 (811408ff) : contrôles, tests, paquets verts ; émulateur annulé à 300 min (pertes de VM) : KB6 a/b, RV4 a/b et la plupart des cibles vertes ; KB1 a rouge (attendu « 1.0.8-ref.1 » dans `integration_test/koach_kb1_test.dart`, corrigé) ; jamais lancées : CU, G1-G10, M7, M8, mesure.
+- Nouveau contrôle complet sur 1aa67411 (seule la cible KB1 change).
