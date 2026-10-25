@@ -79,22 +79,22 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('paquets et empreintes', () {
-    test('Koach 1.0.8 (`kalis_adapt` 1.0.7, paramètres 1.0.8-ref.1, 344 '
+    test('Koach 1.0.9 (`kalis_adapt` 1.0.8, paramètres 1.0.9-ref.1, 344 '
         'clés), `kalis_plan` 0.4.3 ; assets copiés à l’octet', () {
-      expect(ka.kalisAdaptVersion, '1.0.7');
+      expect(ka.kalisAdaptVersion, '1.0.8');
       expect(kp.kalisPlanVersion, '0.4.3');
-      expect(ko.koachVersion, '1.0.8-ref.1');
-      expect(ko.koachParametresVersion, '1.0.8-ref.1');
+      expect(ko.koachVersion, '1.0.9-ref.1');
+      expect(ko.koachParametresVersion, '1.0.9-ref.1');
       expect(ko.koachParametresCles, 344);
-      expect(kKoachParamsAsset, 'assets/koach/koach_params_1_0_8.json');
+      expect(kKoachParamsAsset, 'assets/koach/koach_params_1_0_9.json');
       const params =
-          '9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1';
+          '1a59e6756923ce348378ff356a25b0af4adc8e8114ae9ac1ba53b85c46808dc5';
       const fiches =
           '99b0cae2d0b29d18d5daa30ee92b91990225124e38e44d522e80e8ae01a196e0';
       expect(ko.koachParametresSha256, params);
       expect(ko.koachFichesSha256, fiches);
       for (final (name, sha) in const [
-        ('koach_params_1_0_8.json', params),
+        ('koach_params_1_0_9.json', params),
         ('vecteurs_qualites_v1.json', fiches),
       ]) {
         final a = File('assets/koach/$name').readAsBytesSync();
@@ -105,12 +105,13 @@ void main() {
         expect(sha256Hex(a), sha, reason: name);
       }
       expect(File('assets/koach/koach_params_1_0_7.json').existsSync(), false);
+      expect(File('assets/koach/koach_params_1_0_8.json').existsSync(), false);
       final pub = File('pubspec.yaml').readAsStringSync();
-      expect(pub, contains('- assets/koach/koach_params_1_0_8.json'));
+      expect(pub, contains('- assets/koach/koach_params_1_0_9.json'));
       expect(pub, isNot(contains('koach_params_1_0_7.json')));
-      expect(pub, contains('version: 7.7.2+154'));
+      expect(pub, contains('version: 7.8.0+155'));
       final lock = File('pubspec.lock').readAsStringSync();
-      expect(lock, contains('version: "1.0.7"'));
+      expect(lock, contains('version: "1.0.8"'));
       expect(lock, contains('version: "0.4.3"'));
       final f =
           jsonDecode(
@@ -950,7 +951,7 @@ void main() {
       final e = app.koachEngine;
       expect(e.fromWeek, 15);
       expect(e.snap!.versionMoteur, '1.0.7-ref.1');
-      expect(app.koachLive!.params['version'], '1.0.8-ref.1');
+      expect(app.koachLive!.params['version'], '1.0.9-ref.1');
       expect(_section(app, 'logs'), logs);
       expect(_section(app, 'programInstance'), instance);
       expect(_section(app, 'programOrigin'), origin);

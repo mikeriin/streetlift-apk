@@ -178,7 +178,96 @@ const kKoachRaisonsDeSeance = {
   'koach.tendon',
   'koach.seance_bornee',
   'koach.volume_semaine',
+  // KB6 (Koach 1.0.9) : remplaçant servi à l'emplacement de la ligne.
+  'koach.remplacement',
 };
+
+/// KB6 (Koach 1.0.9, INTEGRATION_KM3.md § 13) : ligne écrite [it] demandée
+/// à `plan(seance)` avec son remplaçant pour aujourd'hui [to] (identifiant
+/// de la base), raison [raison] (`pas_de_materiel`, `douleur`, `trop_dur`,
+/// `autre`) : emplacement, séries, groupe et format gardés ; Koach sert le
+/// remplaçant avec ses propres cibles. Pur.
+Json koachLigneRemplacee(Json it, String to, String raison) =>
+    <String, Object?>{
+      for (final e in it.entries) e.key: koachCopie(e.value),
+      'exerciseId': to,
+      'remplace': <String, Object?>{
+        'exerciseId': it['exerciseId'],
+        'raison': raison,
+      },
+    };
+
+/// Grille de charge et zones (niveaux, arrêts sous douleur) de l'exercice
+/// [id] pour Koach (INTEGRATION_KM3.md § 1.4) ; null : exercice inconnu du
+/// livre.
+({Json grille, List<Object?> zones})? koachGrilleZones(
+  ka.ExerciseBook book,
+  String id,
+) {
+  final x = book.find(id);
+  if (x == null) return null;
+  return (
+    grille: <String, Object?>{
+      'pas': x.grid.step,
+      'minimum': x.grid.minimum,
+      'halteres': x.grid.dumbbellRule,
+    },
+    zones: <Object?>[
+      {for (final z in kc.BodyZone.values) z.code: x.zoneLevel(z)},
+      [
+        for (final z in kc.BodyZone.values)
+          if (kp.coachPainStopHits(x.exercise, z)) z.code,
+      ],
+    ],
+  );
+}
+
+/// KB6 (Koach 1.0.9, INTEGRATION_KM3.md § 13) : bilan complet [check]
+/// (carte JSON du bilan du jour) versé sans être appliqué : drapeau
+/// `applique: false` ajouté à la carte elle-même (jamais par `HealthCheck`,
+/// qui ne connaît pas ce champ). Pur.
+Json koachBilanNonApplique(Map check) => <String, Object?>{
+  for (final e in check.entries) '${e.key}': koachCopie(e.value),
+  'applique': false,
+};
+
+/// KB6 (C17.55.3) : cible de la prochaine série d'une ligne servie [served]
+/// plus basse que celle de l'ouverture (autorégulation en séance, forme du
+/// jour comprise) : (avant, après) en texte (« 18,75 kg », « 6-8 reps ») ;
+/// null : rien de plus bas. [cibles] : cibles par série demandées à Koach
+/// (`plan(serie)`), [next] : rang de la prochaine série. [kg] : libellé
+/// d'une charge. Pur.
+({String avant, String apres})? koachBaisseCible(
+  Map served,
+  Map cibles,
+  int next,
+  String Function(double kg) kg,
+) {
+  if (next < 1) return null;
+  final c = cibles['$next'];
+  if (c is! Map) return null;
+  final l0 = served['startLoadKg'], l1 = c['loadKg'];
+  if (l0 is num && l1 is num && l1 < l0 - 1e-9) {
+    return (avant: kg(l0.toDouble()), apres: kg(l1.toDouble()));
+  }
+  for (final (lo, hi, u) in const [
+    ('repsLow', 'repsHigh', 'reps'),
+    ('secondsLow', 'secondsHigh', 's'),
+  ]) {
+    final h0 = served[hi] ?? served[lo], h1 = c[hi] ?? c[lo];
+    if (h0 is! num || h1 is! num || h1 >= h0 - 1e-9) continue;
+    String plage(Map x) {
+      final a = x[lo], z = x[hi];
+      if (a is num && z is num && a.round() != z.round()) {
+        return '${a.round()}-${z.round()} $u';
+      }
+      return '${((z ?? a) as num).round()} $u';
+    }
+
+    return (avant: plage(served), apres: plage(c));
+  }
+  return null;
+}
 
 /// KB3 (Koach 1.0.6 change l'ordre de ses raisons) : raisons triées dans
 /// l'ordre des codes du contrat (`koachCodesRaisons` : douleur d'abord),
@@ -381,6 +470,22 @@ String koachTexteBilan(KoachBilan b) {
   }
   return 'Avec ton bilan du jour, Koach te propose d’ajuster $ex : la '
       'séance reste celle de l’écrit tant que tu n’acceptes pas.';
+}
+
+/// KB6 (Koach 1.0.9, C17.54) : ligne de la carte du bilan du jour quand
+/// l'écrit est servi (ou peut l'être) : Koach note quand même la forme du
+/// jour (bilan versé sans être appliqué). Null : rien à dire (bilan
+/// accepté). Pur.
+String? koachTexteFormeNotee(KoachBilan b) {
+  if (b.choix == 'applique') return null;
+  if (!b.forme) {
+    return 'Koach note ta forme du jour même si tu gardes l’écrit.';
+  }
+  // Assisté, forme appliquée : « Annuler » encore possible.
+  if (b.assiste && b.choix == null && b.modifiable) {
+    return 'Si tu annules, Koach note quand même ta forme du jour.';
+  }
+  return null;
 }
 
 /// Section `koachEngine` du document.
@@ -1741,9 +1846,20 @@ extension KoachStore on AppStore {
   /// RV4 : bilan versé à Koach pour la séance [a] : complet avec la forme
   /// du jour ([forme]), sinon ses seuls faits (temps disponible, douleurs :
   /// la conduite sous douleur ne dépend jamais du mode). Null : aucun.
+  ///
+  /// KB6 (Koach 1.0.9, C17.55) : sans la forme du jour servie (Libre sans
+  /// « Accepter », Assisté après « Annuler »), le bilan est versé **complet**
+  /// avec `applique: false` : la séance servie est celle des seuls faits
+  /// (item par item), Koach apprend la forme du jour. La carte JSON est
+  /// versée telle quelle : elle ne repasse jamais par `HealthCheck` de
+  /// `kalis_core`, qui ignorerait le drapeau (bilan appliqué en silence).
+  /// Un bilan sans forme du jour reste versé comme avant (ses faits).
   Json? _koachBilanVerse(SessionAdapt a, {required bool forme}) {
     final c = a.check;
     if (c == null) return null;
+    if (!forme && _koachBilanAForme(a)) {
+      return koachBilanNonApplique(c.toJson());
+    }
     final b = forme ? c : SessionAdaptStore.factsOf(c);
     final j = b?.toJson().cast<String, Object?>();
     return j == null || j.isEmpty ? null : j;
@@ -1782,10 +1898,35 @@ extension KoachStore on AppStore {
     // RV4 (C17.51.5) : une ligne retirée pour aujourd'hui avant le début :
     // Koach sert la séance sans elle.
     final retires = dayRemovedSlots(week, base.j);
-    final ecrit = [
-      for (final it in info.items)
-        if (!retires.contains('${it['slotId']}')) it,
-    ];
+    // KB6 (Koach 1.0.9) : une ligne remplacée pour aujourd'hui par un
+    // exercice de la base que Koach suit est demandée avec son remplaçant
+    // (`remplace`) : Koach la sert à l'emplacement avec ses propres cibles.
+    // Grilles et zones sous l'identifiant du remplaçant (la conduite sous
+    // douleur en dépend).
+    final remplaces = dayReplacedSlots(week, base.j);
+    final fiches = _koachRt.live?.fiches;
+    final grilles = Map<String, Object?>.of(inputs.grilles);
+    final zones = Map<String, Object?>.of(inputs.zones);
+    final ecrit = <Json>[];
+    for (final it in info.items) {
+      final slot = '${it['slotId']}';
+      if (retires.contains(slot)) continue;
+      final c = remplaces[slot];
+      final to = c?['to'];
+      if (to is String &&
+          to != it['exerciseId'] &&
+          (fiches?.containsKey(to) ?? false) &&
+          book.find(to) != null) {
+        ecrit.add(koachLigneRemplacee(it, to, '${c?['raison'] ?? 'autre'}'));
+        final g = koachGrilleZones(book, to);
+        if (g != null) {
+          grilles[to] = g.grille;
+          zones[to] = g.zones;
+        }
+        continue;
+      }
+      ecrit.add(it);
+    }
     return (
       debut: {
         'type': 'seance_debut',
@@ -1797,8 +1938,8 @@ extension KoachStore on AppStore {
       seance: {
         'horizon': 'seance',
         'items': ecrit,
-        'grilles': inputs.grilles,
-        'zones': inputs.zones,
+        'grilles': grilles,
+        'zones': zones,
         'roles': info.roles,
         // KB5 (Koach 1.0.8, X2) : groupes de la séance écrite, rendus
         // recalés sur les lignes servies (`groups`).
@@ -1960,6 +2101,64 @@ extension KoachStore on AppStore {
       return true;
     }
     if (!b.modifiable) return false;
+    return _koachRecommencer(week, base, a, st, choix);
+  }
+
+  /// KB6 : la séance S[week]·J[j] servie par Koach peut repartir de son
+  /// début (aucune série validée ni versée, journal de la séance encore
+  /// au `seance_debut`) : un remplacement du jour y est alors servi par
+  /// Koach avec ses cibles (RV4 : même retour que le bilan du jour).
+  bool koachRecommencable(int week, int j) {
+    final st = sessionAdapt(week, j)?.koach;
+    if (st == null || st['state'] != 'open' || st['n0'] is! num) return false;
+    final log = logs[sessionKey(week, j)];
+    if (log?.done ?? false) return false;
+    if (log?.ex.values.any((x) => x.sets.any((s) => s.done)) ?? false) {
+      return false;
+    }
+    if ((st['versed'] as List?)?.isNotEmpty ?? false) return false;
+    final n0 = (st['n0'] as num).toInt();
+    final journal = koachEngine.journal;
+    if (journal.length <= n0 || journal[n0]['type'] != 'seance_debut') {
+      return false;
+    }
+    for (final ev in journal.skip(n0 + 1)) {
+      final t = ev['type'];
+      if (t == 'plan') continue;
+      if (t == 'decision' && ev.containsKey(kKoachCleDiag)) continue;
+      return false;
+    }
+    return true;
+  }
+
+  /// KB6 : remplacement du jour sur la séance S[week]·J[base.j] commencée
+  /// par Koach sans série validée : la séance repart de son début (choix du
+  /// bilan du jour gardé) et Koach sert le remplaçant avec ses cibles. Faux
+  /// : rien n'a changé (la ligne garde la cible de départ des remplaçants).
+  Future<bool> koachRecommencerPourChangement(int week, DayPlan base) async {
+    final a = sessionAdaptOf(sessionKey(week, base.j));
+    final st = a?.koach;
+    if (a == null || st == null || !koachRecommencable(week, base.j)) {
+      return false;
+    }
+    final b = st['bilan'];
+    return _koachRecommencer(week, base, a, st, {
+      if (b is Map && b['choix'] is String) 'choix': b['choix'],
+      if (b is Map && b['mode'] is String) 'mode': b['mode'],
+    });
+  }
+
+  /// RV4 / KB6 : journal de Koach ramené au `seance_debut` de la séance
+  /// S[week]·J[base.j], puis début réel avec [bilan] (choix sur le bilan
+  /// du jour) et les changements du jour. Faux : impossible.
+  Future<bool> _koachRecommencer(
+    int week,
+    DayPlan base,
+    SessionAdapt a,
+    Map<String, Object?> st,
+    Map<String, Object?> choix,
+  ) async {
+    final key = sessionKey(week, base.j);
     final n0 = (st['n0'] as num).toInt();
     final journal = koachEngine.journal;
     if (journal.length <= n0 || journal[n0]['type'] != 'seance_debut') {
@@ -1994,7 +2193,7 @@ extension KoachStore on AppStore {
       koach: {
         'state': 'preview',
         if (st['volume'] case final Map v) 'volume': v,
-        'bilan': choix,
+        if (choix.isNotEmpty) 'bilan': choix,
       },
     );
     final preview = koachPreview(week, base, keep: keep) ?? keep;
@@ -2441,7 +2640,9 @@ extension KoachStore on AppStore {
     };
     Json clean({required bool test}) => <String, Object?>{
       for (final e in it.entries)
-        if (!e.key.startsWith('koach') && (test || e.key != 'test'))
+        if (!e.key.startsWith('koach') &&
+            e.key != 'remplace' &&
+            (test || e.key != 'test'))
           e.key: ints.contains(e.key) && e.value is num
               ? (e.value as num).round()
               : e.value,
@@ -2504,20 +2705,10 @@ extension KoachStore on AppStore {
     final zones = <String, Object?>{};
     for (final it in info.items) {
       final id = '${it['exerciseId']}';
-      final x = book.find(id);
-      if (x == null) continue;
-      grilles[id] = {
-        'pas': x.grid.step,
-        'minimum': x.grid.minimum,
-        'halteres': x.grid.dumbbellRule,
-      };
-      zones[id] = [
-        {for (final z in kc.BodyZone.values) z.code: x.zoneLevel(z)},
-        [
-          for (final z in kc.BodyZone.values)
-            if (kp.coachPainStopHits(x.exercise, z)) z.code,
-        ],
-      ];
+      final g = koachGrilleZones(book, id);
+      if (g == null) continue;
+      grilles[id] = g.grille;
+      zones[id] = g.zones;
     }
     return (contexte: contexte, grilles: grilles, zones: zones);
   }
@@ -3133,6 +3324,13 @@ extension KoachStore on AppStore {
     }
     final id = e.catalogId;
     final slot0 = e.slotId ?? adaptSlotOf(week, j, e.id);
+    // KB6 (C17.55.3) : écrit gardé (forme du jour versée sans être
+    // appliquée) : quand la cible de la série suivante baisse après la
+    // première série, la carte le dit (autorégulation, pas une coupe).
+    if (a != null && slot0 != null) {
+      final t = _koachBaisseEcritGarde(week, j, e, a, slot0);
+      if (t != null) return t;
+    }
     // Séries écrites de la ligne (journée écrite du jour).
     final n = koachJourInfo(
       week,
@@ -3208,6 +3406,38 @@ extension KoachStore on AppStore {
       choix.first.cast<String, Object?>(),
       nomExercice: (x) => content.byId[x]?.nom,
     );
+  }
+
+  /// KB6 (C17.55.3) : ligne de la carte quand l'écrit est gardé (forme du
+  /// jour versée, non appliquée) et que la cible de la prochaine série de
+  /// [e] baisse après la première série ; null sinon.
+  String? _koachBaisseEcritGarde(
+    int week,
+    int j,
+    Exercise e,
+    SessionAdapt a,
+    String slot,
+  ) {
+    final st = a.koach;
+    if (st == null || koachBilanForme(st) || !_koachBilanAForme(a)) {
+      return null;
+    }
+    final served = _koachServed(a, slot);
+    final cibles = (st['cibles'] as Map?)?[slot];
+    final sets = logs[sessionKey(week, j)]?.ex[e.id]?.sets;
+    if (served == null || cibles is! Map || sets == null) return null;
+    final next = sets.indexWhere((s) => !s.done);
+    if (next < 1) return null;
+    final b = koachBaisseCible(
+      served,
+      cibles,
+      next,
+      (kg) => massLabel(kg, engine: true),
+    );
+    if (b == null) return null;
+    return 'Koach ajuste la suite d’après tes premières séries et ta forme '
+        'du jour : ${b.apres} au lieu de ${b.avant}. Ta séance reste '
+        'celle de l’écrit.';
   }
 
   /// Raison [r] de Koach qui porte sur l'exercice [id] (sans exercice :
