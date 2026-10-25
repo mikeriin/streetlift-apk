@@ -1033,10 +1033,9 @@
   "toutes_rel": 2.030758
  },
  "garde": {
-  "differents": 274,
+  "differents": 0,
   "gardees": 128532,
-  "identiques": 128258,
-  "saisons_avec_ecart": 265,
+  "identiques": 128532,
   "seances": 261900
  },
  "graines": [

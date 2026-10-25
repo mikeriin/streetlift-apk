@@ -76,3 +76,7 @@ Base : `moteurs` 25d5bfe6. Environnement : Dart 3.13.7 conda-forge (/tmp/dartpkg
   (24 parts verse, graines 0-17) en cours.
 - Données copiées dans packages/kalis_adapt/docs/data/km7 (variante_run_a = run a).
 - Contrôle complet vert 40130237074 (ci-cp-b, arbre c7008e9 ; bc79ece ne change que banc/politique_koach.py).
+
+## 06:05 UTC — LIVRÉ
+- moteurs 266f9626 + etiquettes/kalis_adapt-v1.0.8 ; LIVRAISON_KM7 (pipeline 3f8eb29 + projet claude.ai) ;
+  ETAT_CP « livré » ; page de suivi v72. Reste : notification, arrêt.
