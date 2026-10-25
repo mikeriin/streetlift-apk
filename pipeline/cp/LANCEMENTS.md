@@ -478,4 +478,11 @@ dev6.11.2 (dev6.12.1 si UI5 a publié dev6.12.0 avant toi), contrôle `claude/ci
 
 ## KB6 — lot express application, dev7.8.0 (à lancer dès la validation de KM7, C17.54)
 
-- Prompt : `prompts/KB6.txt`. Base `main` bb320350 (dev7.7.2) ou suivant. Étiquettes de KM7 : ajoutées ici par le pilotage à la validation.
+- Prompt : `prompts/KB6.txt`. Base `main` bb320350 (dev7.7.2) ou suivant. **Lancé le 25/10/2026 vers 06:15 UTC** (KM7 validé, C17.55).
+- Paquet : `etiquettes/kalis_adapt-v1.0.8` (`moteurs` 266f9626) ; asset `koach_params_1_0_9.json` (SHA-256 dans `LIVRAISON_KM7.md` § 1) ; les autres paquets ne changent pas. Montage : `LIVRAISON_KM7.md` § 7 et `packages/kalis_adapt/docs/INTEGRATION_KM3.md` § 13 — **primes sur le prompt** :
+  - le bilan versé avec `applique: false` ne doit **pas** passer par `HealthCheck` de `kalis_core` (champ inconnu ignoré → bilan appliqué en silence) : test du journal obligatoire ;
+  - plan avec `remplace` : passer `grilles` et `zones` **sous l'id du remplaçant** (la conduite sous douleur en dépend) ; afficher la raison `koach.remplacement` ;
+  - un jour de douleur active, appeler `remplacants` avec la raison `douleur` ou ses `zones` (sinon la zone n'est pas filtrée) ;
+  - « Il me manque : » propose le matériel de la ligne écrite ; le HSPU n'est pas proposé pour le dip lesté principal (règle de KM7) : la recherche libre reste en dessous ;
+  - en « Garder l'écrit », si une cible de série baisse après la première série (autorégulation, C17.55.3), la carte le dit en une ligne.
+- Contrôle complet sur `claude/ci-3d` ; rien d'autre ne tourne.
