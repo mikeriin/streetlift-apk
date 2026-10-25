@@ -92,17 +92,17 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('paquet', () {
-    test('Koach servi : 1.0.8 depuis KB5 (`kalis_adapt` 1.0.7, paramètres '
-        '1.0.8-ref.1, 344 clés)', () {
-      expect(ka.kalisAdaptVersion, '1.0.7');
-      expect(ko.koachVersion, '1.0.8-ref.1');
-      expect(ko.koachParametresVersion, '1.0.8-ref.1');
+    test('Koach servi : 1.0.9 depuis KB6 (`kalis_adapt` 1.0.8, paramètres '
+        '1.0.9-ref.1, 344 clés)', () {
+      expect(ka.kalisAdaptVersion, '1.0.8');
+      expect(ko.koachVersion, '1.0.9-ref.1');
+      expect(ko.koachParametresVersion, '1.0.9-ref.1');
       expect(ko.koachParametresCles, 344);
       expect(
         ko.koachParametresSha256,
-        '9d74365e58b84fe0e9db7801dd450c053e4ca870184fca5b480b534b116841d1',
+        '1a59e6756923ce348378ff356a25b0af4adc8e8114ae9ac1ba53b85c46808dc5',
       );
-      expect(kKoachParamsAsset, 'assets/koach/koach_params_1_0_8.json');
+      expect(kKoachParamsAsset, 'assets/koach/koach_params_1_0_9.json');
     });
 
     test('texte de `koach.ajout_borne` : l’écrit gardé, l’ajout borné', () {
@@ -712,7 +712,7 @@ void main() {
       final e = app.koachEngine;
       expect(e.fromWeek, 15);
       expect(e.snap!.versionMoteur, '1.0.6-ref.1');
-      expect(app.koachLive!.params['version'], '1.0.8-ref.1');
+      expect(app.koachLive!.params['version'], '1.0.9-ref.1');
       expect(app.koachAnnonceReprise, isFalse);
       expect(_section(app, 'logs'), logs);
       expect(_section(app, 'programInstance'), instance);
