@@ -127,3 +127,10 @@ committer les fichiers déchiffrés.
   profil (C17.52.4) : libre = écrit servi, « Accepter » / « Garder
   l'écrit » ; assisté = appliqué, « Annuler » (retour au `seance_debut`
   avant la première série).
+- Koach 1.0.9 (KB6, C17.54-55) : écrit gardé (Libre sans « Accepter »,
+  Assisté après « Annuler ») = bilan complet versé avec `applique: false`
+  (jamais par `HealthCheck`), séance identique à celle sans forme du jour.
+  « Remplacer pour aujourd'hui » : propositions de `remplacants` groupées
+  par étiquette, « Pourquoi ? › Il me manque : » ; remplaçant demandé à
+  `plan(seance)` avec `remplace` (avant le début, ou séance recommencée
+  sans série validée), sinon cible de départ (`cible` du changement).

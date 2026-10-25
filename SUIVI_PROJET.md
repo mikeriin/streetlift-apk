@@ -1,8 +1,16 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : RV4 — remplacement libre en mode Libre, retrait d'un exercice du jour, F13, bilan du jour selon le mode, version dev7.7.2 ; précédent : dev7.7.1 (RV3)**  
-**Date : 23 octobre 2026, Europe/Paris — version : 7.7.2+154, affichée « dev7.7.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
-**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.51.5, C17.52) ; `packages/` inchangés ; build signé sur `main`.**
+**Passe actuelle : KB6 — Koach 1.0.9 : forme du jour apprise en « Garder l'écrit », remplaçants selon le matériel, version dev7.8.0 ; précédent : dev7.7.2 (RV4)**  
+**Date : 25 octobre 2026, Europe/Paris — version : 7.8.0+155, affichée « dev7.8.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : pipeline CP, voie App (DECISIONS_CP.md C17.54, C17.55) ; `kalis_adapt` 1.0.8 copié à l'octet ; build signé sur `main`.**
+
+## KB6 — Koach 1.0.9 dans l'application (version dev7.8.0, pipeline CP, DECISIONS_CP.md C17.54-55)
+
+- Paquet : `kalis_adapt` 1.0.8 (Koach 1.0.9 ; `lib/`, `assets/koach/`, `pubspec.yaml` de `etiquettes/kalis_adapt-v1.0.8`, `moteurs` 266f9626) copié à l'octet ; asset `koach_params_1_0_9.json` (`1.0.9-ref.1`, 344 clés, valeurs inchangées, SHA-256 `1a59e675…08dc5`) à la place de `koach_params_1_0_8.json`.
+- Forme du jour apprise quand l'écrit est servi (Libre sans « Accepter », Assisté après « Annuler ») : le bilan complet est versé à Koach avec `applique: false` (carte JSON versée telle quelle, jamais par `HealthCheck`) ; la séance servie est celle sans forme du jour, item par item ; douleur inchangée. Carte du bilan : « Koach note ta forme du jour même si tu gardes l'écrit. » ; quand la cible de la série suivante baisse après la première série (autorégulation), la carte le dit en une ligne.
+- « Remplacer pour aujourd'hui » : propositions de Koach (`remplacants`) groupées et étiquetées (« Équivalent », « Plus facile », « Sans ce matériel », « Autre »), chacune avec sa raison courte et sa cible de départ ; « Pourquoi ? » facultatif (Pas de matériel → « Il me manque : » matériel de l'exercice écrit à cocher, Douleur, Trop dur, Autre) recalcule les propositions ; un jour de douleur active, aucune proposition ne sollicite la zone. Libre : la recherche dans toute la base reste en dessous ; Assisté : propositions seules.
+- Remplaçant servi : demandé à `plan(seance)` avec `remplace` (grilles et zones sous l'identifiant du remplaçant, raison `koach.remplacement`) ; avant le début ou sur une séance commencée sans série validée (la séance repart de son début) Koach le sert à l'emplacement avec ses propres cibles ; sinon (séries déjà validées, ligne au départ chronométré servie telle qu'écrite, Koach arrêté) la ligne prend la cible de départ de Koach (`cible` du changement). Un remplaçant servi par Koach ne revient à l'écrit que tant que la séance peut repartir de son début.
+- Tests : `test/kb6_koach109_test.dart`, `test/ui_kb6_capture_test.dart` ; cible émulateur `integration_test/kb6_remplacement_test.dart`.
 
 ## RV4 — changements du jour et bilan selon le mode (version dev7.7.2, pipeline CP, DECISIONS_CP.md C17.51.5, C17.52)
 

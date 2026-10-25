@@ -286,8 +286,22 @@ void main() {
         if (act.evaluate().isNotEmpty) {
           await tester.tap(act.first);
           await wait(tester, 1200);
+          // KB6 : la recherche est sous les propositions de Koach : on la
+          // fait venir à l'écran.
+          final recherche = find.byKey(const ValueKey('replace-search'));
+          final defile = find.byType(Scrollable);
+          if (recherche.evaluate().isEmpty && defile.evaluate().isNotEmpty) {
+            try {
+              await tester.scrollUntilVisible(
+                recherche,
+                300,
+                scrollable: defile.last,
+              );
+            } catch (_) {}
+            await wait(tester, 600);
+          }
           final champ = find.descendant(
-            of: find.byKey(const ValueKey('replace-search')),
+            of: recherche,
             matching: find.byType(EditableText),
           );
           releve['recherche'] = champ.evaluate().isNotEmpty;
@@ -360,7 +374,13 @@ void main() {
     expect(releve['action'], isTrue);
     expect(releve['recherche'], isTrue);
     expect(releve['hspu'], isNotNull);
-    expect(releve['series_apres'], releve['series_avant']);
+    // KB6 : même nombre de séries et même format (« · E2MOM ») ; la cible
+    // est celle de départ de Koach pour le remplaçant.
+    expect(
+      '${releve['series_apres']}'.split('×').first,
+      '${releve['series_avant']}'.split('×').first,
+    );
+    expect('${releve['series_apres']}', endsWith('· E2MOM'));
     expect(
       jsonEncode(releve['groupe_apres']),
       jsonEncode(releve['groupe_avant']),
