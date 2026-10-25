@@ -584,145 +584,158 @@ void main() {
       );
     });
 
+    /// Ligne non principale de S15·J[j] (ni départ chronométré servi tel
+    /// qu'écrit) qui a une proposition suivie par Koach ; [sauf] : lignes
+    /// écrites à ignorer.
+    ({Exercise e, DayReplaceProposal p}) accessoire(
+      int j, {
+      Set<String> sauf = const {},
+    }) {
+      for (final e in shown(j).exercises) {
+        if (sauf.contains(dayChangeKey(e.id)) || !e.engine) continue;
+        final slot = app.adaptSlotOf(15, j, e.id);
+        if (slot == null || app.adaptAsWritten(15, slot)) continue;
+        if (app.koachJourInfo(15, j)?.roles[slot] == 'main') continue;
+        if (!app.dayCanChange(15, j, e)) continue;
+        final o = app.dayReplaceOptions(15, shown(j), e);
+        final p = o?.proposals
+            .where((x) => app.koachLive!.fiches.containsKey(x.id))
+            .firstOrNull;
+        if (p != null) return (e: e, p: p);
+      }
+      fail('aucun accessoire remplaçable le J$j');
+    }
+
     test('accessoire remplacé avant le début : Koach le sert avec ses '
         'propres cibles et la raison du remplacement', () async {
       app.setGuidanceMode('free');
-      final base = await jour(5);
-      final front = ex(5, 'BARRE AU FRONT');
-      final slot = app.adaptSlotOf(15, 5, front.id)!;
-      final o = app.dayReplaceOptions(15, shown(5), front)!;
-      expect(o.proposals, isNotEmpty);
-      final p = o.proposals.firstWhere(
-        (x) => app.koachLive!.fiches.containsKey(x.id),
-      );
+      final base = await jour(1);
+      final (:e, :p) = accessoire(1);
+      final slot = app.adaptSlotOf(15, 1, e.id)!;
       app.dayReplace(
         15,
-        shown(5),
-        front,
+        shown(1),
+        e,
         to: p.id,
         name: p.name,
         depart: p.depart,
         label: p.label,
       );
       expect(await app.koachStart(15, base), isTrue);
-      final s = servi(5, slot)!;
+      final s = servi(1, slot)!;
       expect(s['exerciseId'], p.id);
-      final r = shown(5).exercises.firstWhere((e) => e.catalogId == p.id);
+      final r = shown(1).exercises.firstWhere((x) => x.catalogId == p.id);
       _sonde('accessoire', {
+        'de': e.name,
         'id': p.id,
+        'etiquette': p.label,
         'servi': s,
         'series': app.setsLabel(r),
         'engine': r.engine,
-        'raison': app.koachReasonLine(15, 5, r),
+        'raison': app.koachReasonLine(15, 1, r),
       });
       expect(r.engine, isTrue);
-      expect(r.id, '${dayChangeKey(front.id)}~${p.id}');
+      expect(r.id, '${dayChangeKey(e.id)}~${p.id}');
       final raisons = [
-        for (final x in (app.sessionAdapt(15, 5)!.koach!['ouverture'] as List))
+        for (final x in (app.sessionAdapt(15, 1)!.koach!['ouverture'] as List))
           '${(x as Map)['code']}',
       ];
       expect(raisons, contains('koach.remplacement'));
       // Cible de Koach demandée pour la première série.
-      app.exLog(15, 5, r);
+      app.exLog(15, 1, r);
       app.koachEnsureTarget(15, base, r, 0);
-      final cibles = app.sessionAdapt(15, 5)!.koach!['cibles'] as Map;
+      final cibles = app.sessionAdapt(15, 1)!.koach!['cibles'] as Map;
+      _sonde('accessoire_cible_0', cibles[slot]);
       expect(cibles[slot], isA<Map>());
       expect((cibles[slot] as Map).containsKey('0'), isTrue);
       // Un remplaçant servi par Koach revient à l'écrit tant que la séance
       // peut repartir de son début.
-      expect(app.dayCanUndo(15, 5, dayChangeKey(front.id)), isTrue);
+      expect(app.dayCanUndo(15, 1, dayChangeKey(e.id)), isTrue);
     });
 
     test('séance commencée sans série validée : elle repart de son début et '
         'Koach sert le remplaçant ; avec une série validée ailleurs : cible '
         'de départ, pas de retour possible du remplaçant servi', () async {
       app.setGuidanceMode('free');
-      final base = await jour(5);
+      final base = await jour(1);
       expect(await app.koachStart(15, base), isTrue);
-      final n0 = app.sessionAdapt(15, 5)!.koach!['n0'] as int;
+      final n0 = app.sessionAdapt(15, 1)!.koach!['n0'] as int;
       final debuts = app.koachEngine.journal
           .where((e) => e['type'] == 'seance_debut')
           .length;
-      final front = ex(5, 'BARRE AU FRONT');
-      final slot = app.adaptSlotOf(15, 5, front.id)!;
-      final p = app
-          .dayReplaceOptions(15, shown(5), front)!
-          .proposals
-          .firstWhere((x) => app.koachLive!.fiches.containsKey(x.id));
-      expect(app.koachRecommencable(15, 5), isTrue);
+      final (:e, :p) = accessoire(1);
+      final key = dayChangeKey(e.id);
+      final slot = app.adaptSlotOf(15, 1, e.id)!;
+      expect(app.koachRecommencable(15, 1), isTrue);
       app.dayReplace(
         15,
-        shown(5),
-        front,
+        shown(1),
+        e,
         to: p.id,
         name: p.name,
         depart: p.depart,
         label: p.label,
       );
       expect(await app.dayServeChanges(15, base), isTrue);
-      expect(servi(5, slot)!['exerciseId'], p.id);
-      expect(app.sessionAdapt(15, 5)!.koach!['n0'], n0);
+      expect(servi(1, slot)!['exerciseId'], p.id);
+      expect(app.sessionAdapt(15, 1)!.koach!['n0'], n0);
       expect(
-        app.koachEngine.journal.where((e) => e['type'] == 'seance_debut'),
+        app.koachEngine.journal.where((x) => x['type'] == 'seance_debut'),
         hasLength(debuts),
       );
       // Une série validée sur la première ligne : plus de retour au début.
-      final first = shown(5).exercises.first;
-      faire(5, first, count: 1);
-      expect(app.koachRecommencable(15, 5), isFalse);
-      expect(app.dayCanUndo(15, 5, dayChangeKey(front.id)), isFalse);
+      final first = shown(1).exercises.first;
+      faire(1, first, count: 1);
+      expect(app.koachRecommencable(15, 1), isFalse);
+      expect(app.dayCanUndo(15, 1, key), isFalse);
       // Un autre accessoire remplacé maintenant : cible de départ.
-      final face = ex(5, 'FACE PULLS');
-      final o = app.dayReplaceOptions(15, shown(5), face)!;
-      final q = o.proposals.firstWhere(
-        (x) => dayHasDepart(x.depart),
-        orElse: () => o.proposals.first,
-      );
+      final second = accessoire(1, sauf: {key, dayChangeKey(first.id)});
+      final q = second.p;
       app.dayReplace(
         15,
-        shown(5),
-        face,
+        shown(1),
+        second.e,
         to: q.id,
         name: q.name,
         depart: q.depart,
         label: q.label,
       );
       expect(await app.dayServeChanges(15, base), isFalse);
-      final r = shown(5).exercises.firstWhere((e) => e.catalogId == q.id);
+      final r = shown(1).exercises.firstWhere((x) => x.catalogId == q.id);
       _sonde('apres_serie', {
+        'de': second.e.name,
         'id': q.id,
         'depart': q.depart,
         'series': app.setsLabel(r),
         'pourquoi': r.why,
       });
       expect(r.engine, isFalse);
-      if (dayHasDepart(q.depart)) {
+      if (dayDepartText(q.depart, (x) => '$x kg') != null) {
         expect(r.why, contains('Cible de départ de Koach'));
       }
-      expect(app.dayCanUndo(15, 5, dayChangeKey(face.id)), isTrue);
+      expect(app.dayCanUndo(15, 1, dayChangeKey(second.e.id)), isTrue);
     });
 
     test('passage depuis dev7.7.2 et export / import à l’identique', () async {
       app.setGuidanceMode('free');
-      await jour(5);
-      final dip = ex(5, 'DIP LESTÉ');
-      final front = ex(5, 'BARRE AU FRONT');
+      await jour(1);
+      final (:e, :p) = accessoire(1);
+      final muscleUp = ex(1, 'MUSCLE-UP LESTÉ');
       // Changement au format de dev7.7.2 (sans raison ni cible) : lu tel
       // quel.
-      app.dayReplace(15, shown(5), dip, to: _hspu, name: 'HSPU');
-      final p = app.dayReplaceOptions(15, shown(5), front)!.proposals.first;
+      app.dayReplace(15, shown(1), muscleUp, to: _hspu, name: 'HSPU');
       app.dayReplace(
         15,
-        shown(5),
-        front,
+        shown(1),
+        e,
         to: p.id,
         name: p.name,
         reason: 'trop_dur',
         depart: p.depart,
         label: p.label,
       );
-      app.forgetConsultation(15, 5);
-      expect(app.dayChanges(15, 5), hasLength(2));
+      app.forgetConsultation(15, 1);
+      expect(app.dayChanges(15, 1), hasLength(2));
       await app.flush();
       final out1 = app.exportAll();
       final doc = jsonDecode(out1) as Map<String, dynamic>;
@@ -732,9 +745,9 @@ void main() {
         if (k == 'exportedAt' || k == 'savedAt') continue;
         expect(jsonEncode(out2[k]), jsonEncode(doc[k]), reason: k);
       }
-      final c = app.dayChanges(15, 5);
-      expect(c[dayChangeKey(dip.id)]!.containsKey('raison'), isFalse);
-      expect(c[dayChangeKey(front.id)]!['raison'], 'trop_dur');
+      final c = app.dayChanges(15, 1);
+      expect(c[dayChangeKey(muscleUp.id)]!.containsKey('raison'), isFalse);
+      expect(c[dayChangeKey(e.id)]!['raison'], 'trop_dur');
     });
   });
 
@@ -791,6 +804,9 @@ void main() {
     }) async {
       ReplacePick? out;
       calls.clear();
+      tester.view.physicalSize = const Size(800, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
       await tester.pumpWidget(
         MaterialApp(
           theme: buildTheme(false),
